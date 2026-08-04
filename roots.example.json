@@ -1,0 +1,6 @@
+{
+  "legacy_asr": "/data/asr",
+  "multilingual": "/data/multilingual",
+  "managed_fast": "/data/managed",
+  "managed_bulk": "/bulk/audio"
+}
