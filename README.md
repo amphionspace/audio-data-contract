@@ -19,6 +19,10 @@ registry, and the managed download queue. The icefall snapshot uses version
 `legacy-20260804`; recipe-specific punctuation, cleaning, and filtering policy
 is intentionally not duplicated here.
 
+The `eval-20260804` view also stores the 108 built-in open-audio-llm evaluation
+datasets. Its artifacts use root aliases; vLLM keeps only punctuation and
+post-filter policy overrides locally.
+
 ## Root configuration
 
 Catalog entries use `root_alias` plus a relative path. A machine-local JSON
