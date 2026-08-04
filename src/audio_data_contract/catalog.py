@@ -37,7 +37,15 @@ class DatasetCatalog:
         return iter(self._by_key.values())
 
     def get(self, dataset_id: str, version: str | None = None) -> DatasetSpec:
-        canonical = self._aliases.get(dataset_id, dataset_id)
+        # A stable dataset ID takes precedence over an alias owned by another
+        # versioned dataset. This permits migration entries such as the legacy
+        # ``common_voice_en`` ID to coexist with a newer canonical dataset that
+        # advertises that spelling as a compatibility alias.
+        canonical = (
+            dataset_id
+            if dataset_id in self._versions
+            else self._aliases.get(dataset_id, dataset_id)
+        )
         versions = self._versions.get(canonical)
         if not versions:
             raise ContractError(f"unknown dataset or alias: {dataset_id!r}")

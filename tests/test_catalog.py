@@ -74,3 +74,21 @@ def test_catalog_directory_loads_all_jsonl_files(tmp_path):
     (tmp_path / "a.jsonl").write_text(json.dumps(first) + "\n", encoding="utf-8")
     (tmp_path / "b.jsonl").write_text(json.dumps(second) + "\n", encoding="utf-8")
     assert len(load_catalog(tmp_path)) == 2
+
+
+def test_canonical_dataset_id_takes_precedence_over_an_alias(tmp_path):
+    legacy = _spec().to_dict()
+    legacy["dataset_id"] = "common_voice_en"
+    legacy["version"] = "legacy"
+    legacy["aliases"] = []
+    current = _spec().to_dict()
+    current["dataset_id"] = "common-voice-en"
+    current["version"] = "26.0"
+    current["aliases"] = ["common_voice_en"]
+    path = tmp_path / "catalog.jsonl"
+    path.write_text(
+        json.dumps(legacy) + "\n" + json.dumps(current) + "\n",
+        encoding="utf-8",
+    )
+    catalog = load_catalog(path)
+    assert catalog.get("common_voice_en", "legacy").dataset_id == "common_voice_en"

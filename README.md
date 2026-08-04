@@ -13,6 +13,12 @@ The core package uses only the Python standard library and requires Python
 3.10 or newer. It deliberately does not import Lhotse, PyTorch, ms-swift, or
 vLLM.
 
+The version-controlled catalog currently contains the 39 ordinary icefall
+datasets, 20 derived traffic/SNR views, the 42-entry multilingual legacy
+registry, and the managed download queue. The icefall snapshot uses version
+`legacy-20260804`; recipe-specific punctuation, cleaning, and filtering policy
+is intentionally not duplicated here.
+
 ## Root configuration
 
 Catalog entries use `root_alias` plus a relative path. A machine-local JSON
@@ -35,6 +41,9 @@ hard-coded machine paths in the package.
 ```bash
 audio-data-contract validate-catalog catalog/datasets.jsonl
 audio-data-contract validate-records records.jsonl.gz
+audio-data-contract validate-state state/dataset@version.json
+audio-data-contract inspect-download archive.tar.gz --expected-bytes 1234
+audio-data-contract transition-state state/dataset@version.json downloaded
 audio-data-contract resolve catalog/datasets.jsonl DATASET VERSION ARTIFACT \
   --roots roots.json
 ```

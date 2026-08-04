@@ -10,6 +10,7 @@ from .catalog import load_catalog, resolve_artifact
 from .legacy import convert_legacy_registry
 from .records import load_records
 from .roots import load_roots
+from .state import DownloadState, inspect_download, load_state, write_state_atomic
 
 
 def _parser() -> argparse.ArgumentParser:
@@ -21,6 +22,18 @@ def _parser() -> argparse.ArgumentParser:
 
     records = commands.add_parser("validate-records")
     records.add_argument("records")
+
+    state = commands.add_parser("validate-state")
+    state.add_argument("state_file")
+
+    inspect = commands.add_parser("inspect-download")
+    inspect.add_argument("path")
+    inspect.add_argument("--expected-bytes", type=int)
+
+    transition = commands.add_parser("transition-state")
+    transition.add_argument("state_file")
+    transition.add_argument("target", choices=[state.value for state in DownloadState])
+    transition.add_argument("--error")
 
     resolve = commands.add_parser("resolve")
     resolve.add_argument("catalog")
@@ -56,6 +69,28 @@ def main(argv: list[str] | None = None) -> int:
     if args.command == "validate-records":
         count = sum(1 for _ in load_records(args.records))
         print(json.dumps({"records": count}, sort_keys=True))
+        return 0
+    if args.command == "validate-state":
+        state = load_state(args.state_file)
+        print(
+            json.dumps(
+                {
+                    "dataset_id": state.dataset_id,
+                    "version": state.version,
+                    "state": state.state.value,
+                },
+                sort_keys=True,
+            )
+        )
+        return 0
+    if args.command == "inspect-download":
+        state = inspect_download(args.path, args.expected_bytes)
+        print(json.dumps({"state": state.value}, sort_keys=True))
+        return 0
+    if args.command == "transition-state":
+        state = load_state(args.state_file).transition(args.target, error=args.error)
+        write_state_atomic(state, args.state_file)
+        print(json.dumps({"state": state.state.value}, sort_keys=True))
         return 0
     if args.command == "resolve":
         catalog = load_catalog(args.catalog)
