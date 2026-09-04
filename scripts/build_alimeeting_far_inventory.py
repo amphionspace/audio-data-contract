@@ -19,6 +19,7 @@ SPLITS = {
 }
 AUDIO_STEM = re.compile(r"^(?P<meeting>R\d+_M\d+)_MS\d+$")
 TEXTGRID_SUFFIXES = {".textgrid"}
+INVENTORY_MEMBER_NAME = "alimeeting_far_openslr-119-local-20260903.jsonl"
 
 
 def sha256_file(path: Path) -> str:
@@ -186,7 +187,9 @@ def write_inventory(path: Path, rows: list[dict[str, object]]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     with (
         path.open("wb") as raw,
-        gzip.GzipFile(fileobj=raw, mode="wb", mtime=0) as compressed,
+        gzip.GzipFile(
+            filename=INVENTORY_MEMBER_NAME, fileobj=raw, mode="wb", mtime=0
+        ) as compressed,
         io.TextIOWrapper(compressed, encoding="utf-8") as stream,
     ):
         for row in rows:

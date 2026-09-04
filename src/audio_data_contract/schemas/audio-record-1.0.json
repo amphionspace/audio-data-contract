@@ -26,7 +26,11 @@
     "target": {"type": "string"},
     "language": {"type": "string"},
     "labels": {"type": "object"},
-    "hotwords": {"type": "array", "items": {"type": "string"}},
+    "hotwords": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {"type": "string", "minLength": 1}
+    },
     "metadata": {"type": "object"}
   },
   "$defs": {

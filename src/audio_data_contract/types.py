@@ -2,9 +2,11 @@
 
 from __future__ import annotations
 
+import math
+from collections.abc import Mapping, Sequence
 from dataclasses import dataclass, field
 from pathlib import PurePosixPath
-from typing import Any, Mapping, Sequence
+from typing import Any
 
 from .errors import ContractError
 
@@ -38,6 +40,26 @@ def _fields(
 def _non_empty(value: Any, where: str) -> str:
     if not isinstance(value, str) or not value.strip():
         raise ContractError(f"{where} must be a non-empty string")
+    return value
+
+
+def _string(value: Any, where: str) -> str:
+    if not isinstance(value, str):
+        raise ContractError(f"{where} must be a string")
+    return value
+
+
+def _integer(value: Any, where: str) -> int:
+    if type(value) is not int:
+        raise ContractError(f"{where} must be an integer")
+    return value
+
+
+def _number(value: Any, where: str) -> int | float:
+    if isinstance(value, bool) or not isinstance(value, (int, float)):
+        raise ContractError(f"{where} must be a number")
+    if isinstance(value, float) and not math.isfinite(value):
+        raise ContractError(f"{where} must be finite")
     return value
 
 
@@ -87,13 +109,18 @@ class ArtifactRef:
             "relative_path",
             _portable_path(self.relative_path, "artifact.relative_path"),
         )
-        if self.expected_bytes is not None and self.expected_bytes < 0:
-            raise ContractError("artifact.expected_bytes must be non-negative")
+        if self.expected_bytes is not None:
+            expected_bytes = _integer(self.expected_bytes, "artifact.expected_bytes")
+            if expected_bytes < 0:
+                raise ContractError("artifact.expected_bytes must be non-negative")
         if self.sha256 is not None:
-            digest = self.sha256.lower()
+            digest = _string(self.sha256, "artifact.sha256").lower()
             if len(digest) != 64 or any(c not in "0123456789abcdef" for c in digest):
                 raise ContractError("artifact.sha256 must be a 64-character hex digest")
             object.__setattr__(self, "sha256", digest)
+        object.__setattr__(
+            self, "metadata", _json_object(self.metadata, "artifact.metadata")
+        )
 
     def to_dict(self) -> dict[str, Any]:
         data: dict[str, Any] = {
@@ -111,7 +138,7 @@ class ArtifactRef:
         return data
 
     @classmethod
-    def from_dict(cls, value: Any) -> "ArtifactRef":
+    def from_dict(cls, value: Any) -> ArtifactRef:
         data = _mapping(value, "artifact")
         _fields(
             data,
@@ -151,6 +178,12 @@ class DatasetSpec:
             )
         object.__setattr__(self, "dataset_id", _non_empty(self.dataset_id, "dataset_id"))
         object.__setattr__(self, "version", _non_empty(self.version, "version"))
+        if self.derived_from is not None:
+            object.__setattr__(
+                self,
+                "derived_from",
+                _non_empty(self.derived_from, "dataset.derived_from"),
+            )
         if not self.languages:
             raise ContractError("languages may not be empty")
         if not self.tasks:
@@ -197,7 +230,7 @@ class DatasetSpec:
         return data
 
     @classmethod
-    def from_dict(cls, value: Any) -> "DatasetSpec":
+    def from_dict(cls, value: Any) -> DatasetSpec:
         data = _mapping(value, "dataset")
         _fields(
             data,
@@ -251,7 +284,7 @@ class DatasetRef:
         return {"dataset_id": self.dataset_id, "version": self.version}
 
     @classmethod
-    def from_dict(cls, value: Any) -> "DatasetRef":
+    def from_dict(cls, value: Any) -> DatasetRef:
         data = _mapping(value, "dataset_ref")
         _fields(
             data,
@@ -297,7 +330,7 @@ class TransformStep:
         return data
 
     @classmethod
-    def from_dict(cls, value: Any) -> "TransformStep":
+    def from_dict(cls, value: Any) -> TransformStep:
         data = _mapping(value, "transform")
         _fields(
             data,
@@ -367,7 +400,7 @@ class DatasetViewSpec:
         }
 
     @classmethod
-    def from_dict(cls, value: Any) -> "DatasetViewSpec":
+    def from_dict(cls, value: Any) -> DatasetViewSpec:
         data = _mapping(value, "view")
         _fields(
             data,
@@ -414,10 +447,22 @@ class AudioRef:
     def __post_init__(self) -> None:
         for name in ("dataset_id", "version", "split", "cut_id"):
             object.__setattr__(self, name, _non_empty(getattr(self, name), name))
-        if self.start is not None and self.start < 0:
-            raise ContractError("audio ref start must be non-negative")
-        if self.duration is not None and self.duration <= 0:
-            raise ContractError("audio ref duration must be positive")
+        if self.channel is not None:
+            if isinstance(self.channel, tuple):
+                for item in self.channel:
+                    _integer(item, "audio_ref.channel[]")
+            else:
+                _integer(self.channel, "audio_ref.channel")
+        if self.start is not None:
+            start = _number(self.start, "audio_ref.start")
+            if start < 0:
+                raise ContractError("audio ref start must be non-negative")
+        if self.duration is not None:
+            duration = _number(self.duration, "audio_ref.duration")
+            if duration <= 0:
+                raise ContractError("audio ref duration must be positive")
+        if self.purpose is not None:
+            _string(self.purpose, "audio_ref.purpose")
 
     def to_dict(self) -> dict[str, Any]:
         data: dict[str, Any] = {
@@ -437,7 +482,7 @@ class AudioRef:
         return data
 
     @classmethod
-    def from_dict(cls, value: Any) -> "AudioRef":
+    def from_dict(cls, value: Any) -> AudioRef:
         data = _mapping(value, "audio_ref")
         _fields(
             data,
@@ -447,7 +492,7 @@ class AudioRef:
         )
         channel = data.get("channel")
         if isinstance(channel, list):
-            channel = tuple(int(item) for item in channel)
+            channel = tuple(channel)
         return cls(
             dataset_id=data["dataset_id"],
             version=data["version"],
@@ -468,6 +513,8 @@ class AudioSlot:
 
     def __post_init__(self) -> None:
         object.__setattr__(self, "name", _non_empty(self.name, "audio_slot.name"))
+        if self.purpose is not None:
+            _string(self.purpose, "audio_slot.purpose")
 
     def to_dict(self) -> dict[str, Any]:
         data: dict[str, Any] = {"name": self.name, "ref": self.ref.to_dict()}
@@ -476,7 +523,7 @@ class AudioSlot:
         return data
 
     @classmethod
-    def from_dict(cls, value: Any) -> "AudioSlot":
+    def from_dict(cls, value: Any) -> AudioSlot:
         data = _mapping(value, "audio_slot")
         _fields(data, required={"name", "ref"}, optional={"purpose"}, where="audio_slot")
         return cls(
@@ -503,6 +550,8 @@ class AudioRecord:
             raise ContractError(f"unsupported record schema_version: {self.schema_version!r}")
         object.__setattr__(self, "id", _non_empty(self.id, "record.id"))
         object.__setattr__(self, "task", _non_empty(self.task, "record.task"))
+        _string(self.target, "record.target")
+        _string(self.language, "record.language")
         if not self.audio_slots:
             raise ContractError("record.audio_slots may not be empty")
         names = [slot.name for slot in self.audio_slots]
@@ -529,7 +578,7 @@ class AudioRecord:
         }
 
     @classmethod
-    def from_dict(cls, value: Any) -> "AudioRecord":
+    def from_dict(cls, value: Any) -> AudioRecord:
         data = _mapping(value, "audio_record")
         _fields(
             data,
@@ -545,8 +594,8 @@ class AudioRecord:
             id=data["id"],
             task=data["task"],
             audio_slots=tuple(AudioSlot.from_dict(item) for item in slots),
-            target=str(data["target"]),
-            language=str(data.get("language", "N/A")),
+            target=data["target"],
+            language=data.get("language", "N/A"),
             labels=_json_object(data.get("labels"), "audio_record.labels"),
             hotwords=_strings(data.get("hotwords", []), "audio_record.hotwords"),
             metadata=_json_object(data.get("metadata"), "audio_record.metadata"),
@@ -558,6 +607,11 @@ class TextContent:
     text: str
     type: str = "text"
 
+    def __post_init__(self) -> None:
+        _string(self.text, "text_content.text")
+        if self.type != "text":
+            raise ContractError("text_content.type must be 'text'")
+
     def to_dict(self) -> dict[str, Any]:
         return {"type": "text", "text": self.text}
 
@@ -568,6 +622,13 @@ class AudioContent:
     slot: str
     purpose: str | None = None
     type: str = "audio"
+
+    def __post_init__(self) -> None:
+        _non_empty(self.slot, "audio_content.slot")
+        if self.purpose is not None:
+            _string(self.purpose, "audio_content.purpose")
+        if self.type != "audio":
+            raise ContractError("audio_content.type must be 'audio'")
 
     def to_dict(self) -> dict[str, Any]:
         data: dict[str, Any] = {
@@ -588,7 +649,7 @@ def content_from_dict(value: Any) -> Content:
     content_type = data.get("type")
     if content_type == "text":
         _fields(data, required={"type", "text"}, optional=set(), where="text content")
-        return TextContent(text=str(data["text"]))
+        return TextContent(text=data["text"])
     if content_type == "audio":
         _fields(
             data,
@@ -616,7 +677,7 @@ class Message:
         return {"role": self.role, "content": [item.to_dict() for item in self.content]}
 
     @classmethod
-    def from_dict(cls, value: Any) -> "Message":
+    def from_dict(cls, value: Any) -> Message:
         data = _mapping(value, "message")
         _fields(data, required={"role", "content"}, optional=set(), where="message")
         content = data["content"]
@@ -653,7 +714,7 @@ class AudioExample:
         }
 
     @classmethod
-    def from_dict(cls, value: Any) -> "AudioExample":
+    def from_dict(cls, value: Any) -> AudioExample:
         data = _mapping(value, "audio_example")
         _fields(
             data,

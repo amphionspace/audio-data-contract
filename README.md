@@ -1,61 +1,74 @@
-# audio-data-contract
+# 通用语音数据协议
 
-`audio-data-contract` 是 icefall recipes 与 open-audio-llm 共用的轻依赖数据边界。
-它将以下五类关注点相互分离：
+本项目定义一套面向语音数据生产、治理、训练与评测的通用数据协议。它将数据身份、物理位置、处理血缘、运行状态和模型输入表示分离，使数据可以跨机器、跨工具和跨团队稳定流转。
 
-1. 带版本的数据集标识和可移植的产物位置；
-2. 本机根目录解析；
-3. 可变的下载和准备状态；
-4. 稳定且有序的音频样本事实（`AudioRecord`）；
-5. 渲染后的多模态模型消息（`AudioExample`）。
+协议以 JSON、JSONL 和 JSON Schema 为边界。Python 包只是轻量参考实现和命令行工具；其他语言可以直接依据 Schema 实现兼容的生产者或消费者，无需引入 Python 运行时。
 
-核心包仅使用 Python 标准库，并要求 Python 3.10 或更高版本。它特意不导入
-Lhotse、PyTorch、ms-swift 或 vLLM。
+## 核心对象
 
-当前纳入版本控制的目录包含 39 个常规 icefall 数据集、20 个派生的流量/SNR
-视图、包含 42 个条目的多语言旧版注册表，以及托管下载队列。icefall 快照使用
-`legacy-20260804` 版本；此处有意不重复记录各 recipe 特有的标点、清洗和过滤策略。
+| 对象 | 作用 |
+|---|---|
+| `DatasetSpec` | 描述带版本的数据集、任务、语言、split、物理产物和来源信息 |
+| `DatasetViewSpec` | 描述源数据经过有序变换后形成的稳定逻辑视图 |
+| `DatasetState` | 记录可变的下载、校验、解包和准备状态 |
+| `AudioRecord` | 保存稳定、有序且与模型无关的音频样本事实 |
+| `AudioExample` | 保存由样本和提示模板渲染出的多模态消息 |
 
-`eval-20260804` 视图还存储了 open-audio-llm 内置的 108 个评测数据集。其产物使用
-根目录别名；vLLM 在本地仅保留标点和后置过滤策略的覆盖配置。
+数据集和 View 使用显式版本；物理产物只保存根目录别名与 POSIX 相对位置。本机根目录映射不进入版本控制，因此协议文件不携带机器路径。
 
-`local_lhotse_derived.jsonl` 登记了 `/ai_sds_wuzz/DATA_ASR` 下经过完整性验证的
-本地基础、清洗和热词派生版本。每个本地产物都记录压缩文件大小、SHA-256 和记录数；
-未完成、缺少配对 manifest 或属于临时实验的数据见 `local_lhotse_scan.json`，不会暴露
-为可消费的数据版本。
+## 当前数据情况
 
-逻辑数据组织采用 Dataset、Layer、View 三层模型，详见
-[`docs/data-organization.md`](docs/data-organization.md)。`views/` 将历史派生文件映射为
-稳定逻辑视图，下游不需要了解 `_clean`、`_hotwords` 或本机目录结构。
+完整的数据规模、任务覆盖、完整性状态、数据集版本索引和逻辑 View 列表见[数据总览](docs/data-overview.md)。该页面由协议声明自动生成，catalog 和 view 文件是唯一事实源。
 
-## 根目录配置
-
-目录条目使用 `root_alias` 和相对路径。本机 JSON 文件负责解析这些别名：
-
-```json
-{
-  "legacy_asr": "/data/asr",
-  "multilingual": "/data/multilingual",
-  "managed_fast": "/data/managed",
-  "managed_bulk": "/bulk/audio"
-}
-```
-
-请将该文件显式传给 API/CLI，或设置 `AUDIO_DATA_ROOTS_FILE`。包内没有硬编码的
-本机路径。
-
-## 命令行界面
+任何数据声明变动都必须同步更新总览：
 
 ```bash
-audio-data-contract validate-catalog catalog/datasets.jsonl
-audio-data-contract validate-records records.jsonl.gz
-audio-data-contract validate-state state/dataset@version.json
-audio-data-contract inspect-download archive.tar.gz --expected-bytes 1234
-audio-data-contract transition-state state/dataset@version.json downloaded
-audio-data-contract resolve catalog/datasets.jsonl DATASET VERSION ARTIFACT \
-  --roots roots.json
-audio-data-contract verify-artifact catalog DATASET VERSION ARTIFACT \
-  --roots roots.json
-audio-data-contract validate-views views catalog
-audio-data-contract resolve-view views catalog VIEW VERSION
+audio-data-contract generate-overview
 ```
+
+CI 会执行以下命令；总览缺失或内容过期时检查失败：
+
+```bash
+audio-data-contract generate-overview --check
+```
+
+## 快速开始
+
+安装参考工具及开发依赖：
+
+```bash
+python -m pip install -e ".[dev]"
+```
+
+常用操作：
+
+```bash
+audio-data-contract validate-catalog <catalog>
+audio-data-contract validate-records <records>
+audio-data-contract validate-state <state-file>
+audio-data-contract validate-views <views> <catalog>
+audio-data-contract resolve <catalog> <dataset> <version> <artifact> --roots <roots-file>
+audio-data-contract verify-artifact <catalog> <dataset> <version> <artifact> --roots <roots-file>
+audio-data-contract resolve-view <views> <catalog> <view> <version>
+```
+
+根目录配置是一个从 `root_alias` 到本机绝对目录的 JSON 对象。通过 `--roots` 显式传入，或使用 `AUDIO_DATA_ROOTS_FILE` 环境变量；不要将本机配置提交到仓库。
+
+## Schema 与兼容性
+
+版本化 Schema 位于 [`src/audio_data_contract/schemas`](src/audio_data_contract/schemas)，并随 Python wheel 一同发布。解析器严格遵循 Schema，不会静默转换不兼容的数据类型。
+
+同一 schema version 内只允许向后兼容的澄清或校验修正。新增必填字段、改变字段语义或删除已有能力时，必须发布新的 schema version，并保留必要的迁移说明。
+
+更完整的 Dataset、Layer、View 组织原则见[数据组织规范](docs/data-organization.md)。
+
+## 协作流程
+
+修改数据或协议时，依次执行：
+
+1. 更新 catalog、view 或 Schema，并保持版本与血缘信息完整；
+2. 运行 `audio-data-contract generate-overview`；
+3. 运行 `ruff check .` 和 `pytest -q`；
+4. 确认生成的总览变化与本次数据变动一致后再提交。
+
+CI 在 Python 3.10 环境中重复执行这些检查。协议消费者不受该实现语言限制，只需满足对应 JSON Schema 和行为约束。

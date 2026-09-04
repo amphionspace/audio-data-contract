@@ -34,7 +34,12 @@ from .types import (
     TextContent,
     TransformStep,
 )
-from .views import DatasetViewCatalog, load_view_catalog, resolve_view, validate_view_catalog
+from .views import (
+    DatasetViewCatalog,
+    load_view_catalog,
+    resolve_view,
+    validate_view_catalog,
+)
 
 __all__ = [
     "ArtifactRef",
@@ -46,9 +51,9 @@ __all__ = [
     "DatasetCatalog",
     "DatasetRef",
     "DatasetSpec",
+    "DatasetState",
     "DatasetViewCatalog",
     "DatasetViewSpec",
-    "DatasetState",
     "DownloadState",
     "Message",
     "PromptAudio",

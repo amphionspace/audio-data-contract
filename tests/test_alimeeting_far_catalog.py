@@ -1,3 +1,7 @@
+import gzip
+import hashlib
+import json
+import runpy
 from pathlib import Path
 
 from audio_data_contract import load_catalog, resolve_artifact, verify_artifact_file
@@ -5,6 +9,9 @@ from audio_data_contract import load_catalog, resolve_artifact, verify_artifact_
 REPO_ROOT = Path(__file__).parents[1]
 CATALOG_DIR = REPO_ROOT / "catalog"
 VERSION = "openslr-119-far-local-20260903"
+write_inventory = runpy.run_path(
+    str(REPO_ROOT / "scripts/build_alimeeting_far_inventory.py")
+)["write_inventory"]
 
 
 def test_alimeeting_far_raw_catalog_is_portable_and_complete():
@@ -61,3 +68,19 @@ def test_alimeeting_far_raw_artifacts_resolve_from_aliases():
     assert resolve_artifact(
         catalog, "alimeeting", VERSION, "source_inventory", roots
     ) == CATALOG_DIR / "inventory/alimeeting_far_openslr-119-local-20260903.jsonl.gz"
+
+
+def test_alimeeting_inventory_is_independent_of_output_filename(tmp_path):
+    published = CATALOG_DIR / "inventory/alimeeting_far_openslr-119-local-20260903.jsonl.gz"
+    with gzip.open(published, "rt", encoding="utf-8") as stream:
+        rows = [json.loads(line) for line in stream]
+    first = tmp_path / "first.jsonl.gz"
+    second = tmp_path / "second.jsonl.gz"
+
+    write_inventory(first, rows)
+    write_inventory(second, rows)
+
+    assert first.read_bytes() == second.read_bytes() == published.read_bytes()
+    assert hashlib.sha256(first.read_bytes()).hexdigest() == (
+        "862fb51c686e16e5ba65b1105f3323dc0e615ce0ecc54917c4f87ca46b418a41"
+    )

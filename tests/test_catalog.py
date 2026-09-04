@@ -4,6 +4,7 @@ import json
 from importlib.resources import files
 
 import pytest
+from jsonschema import Draft202012Validator
 
 from audio_data_contract import (
     ArtifactRef,
@@ -51,6 +52,12 @@ def test_rejects_absolute_and_parent_paths():
         ArtifactRef("x", "cuts", "root", "../escape")
 
 
+@pytest.mark.parametrize("expected_bytes", [True, 1.5, "1"])
+def test_rejects_non_integer_expected_bytes(expected_bytes):
+    with pytest.raises(ContractError, match="expected_bytes must be an integer"):
+        ArtifactRef("x", "cuts", "root", "file", expected_bytes=expected_bytes)
+
+
 def test_unknown_schema_field_and_missing_alias_fail(tmp_path):
     data = _spec().to_dict()
     data["surprise"] = True
@@ -68,6 +75,10 @@ def test_json_schemas_are_packaged():
     assert json.loads(schemas.joinpath("audio-record-1.0.json").read_text())["title"] == "AudioRecord"
     assert json.loads(schemas.joinpath("audio-example-1.0.json").read_text())["title"] == "AudioExample"
     assert json.loads(schemas.joinpath("dataset-view-1.0.json").read_text())["title"] == "DatasetViewSpec"
+    assert json.loads(schemas.joinpath("dataset-state-1.0.json").read_text())["title"] == "DatasetState"
+    for schema in schemas.iterdir():
+        if schema.name.endswith(".json"):
+            Draft202012Validator.check_schema(json.loads(schema.read_text()))
 
 
 def test_catalog_directory_loads_all_jsonl_files(tmp_path):

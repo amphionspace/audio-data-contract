@@ -2,7 +2,6 @@ from pathlib import Path
 
 from audio_data_contract import load_catalog
 
-
 CATALOG_DIR = Path(__file__).parents[1] / "catalog"
 
 

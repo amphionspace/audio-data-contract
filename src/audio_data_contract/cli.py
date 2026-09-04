@@ -8,6 +8,7 @@ from pathlib import Path
 
 from .catalog import load_catalog, resolve_artifact, verify_artifact_file
 from .legacy import convert_legacy_registry
+from .overview import update_data_overview
 from .records import load_records
 from .roots import load_roots
 from .state import DownloadState, inspect_download, load_state, write_state_atomic
@@ -65,6 +66,12 @@ def _parser() -> argparse.ArgumentParser:
     legacy.add_argument("output")
     legacy.add_argument("--version", default="legacy")
     legacy.add_argument("--root", action="append", default=[], metavar="ALIAS=PATH")
+
+    overview = commands.add_parser("generate-overview")
+    overview.add_argument("--catalog", default="catalog")
+    overview.add_argument("--views", default="views")
+    overview.add_argument("--output", default="docs/data-overview.md")
+    overview.add_argument("--check", action="store_true")
     return parser
 
 
@@ -174,6 +181,15 @@ def main(argv: list[str] | None = None) -> int:
                 stream.write(json.dumps(spec.to_dict(), ensure_ascii=False, sort_keys=True))
                 stream.write("\n")
         print(json.dumps({"datasets": len(specs), "output": str(output)}, sort_keys=True))
+        return 0
+    if args.command == "generate-overview":
+        status = update_data_overview(
+            args.output,
+            catalog_path=args.catalog,
+            views_path=args.views,
+            check=args.check,
+        )
+        print(json.dumps({"output": args.output, "status": status}, sort_keys=True))
         return 0
     raise AssertionError(args.command)
 

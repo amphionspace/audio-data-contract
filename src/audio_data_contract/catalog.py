@@ -5,8 +5,8 @@ from __future__ import annotations
 import gzip
 import hashlib
 import json
+from collections.abc import Iterable, Mapping
 from pathlib import Path
-from typing import Iterable, Mapping
 
 from .errors import ContractError, IntegrityError, ResolutionError
 from .types import ArtifactRef, DatasetSpec
@@ -158,12 +158,13 @@ def verify_artifact_file(
         "sha256": actual_sha256,
     }
     expected_records = artifact.metadata.get("record_count")
-    if expected_records is not None:
-        if not isinstance(expected_records, int) or expected_records < 0:
-            raise IntegrityError(
-                f"artifact metadata.record_count must be a non-negative integer: "
-                f"{artifact.name}"
-            )
+    if expected_records is not None and (
+        not isinstance(expected_records, int) or expected_records < 0
+    ):
+        raise IntegrityError(
+            f"artifact metadata.record_count must be a non-negative integer: "
+            f"{artifact.name}"
+        )
     if expected_records is not None or selected.name.endswith(".jsonl.gz"):
         opener = gzip.open if selected.suffix == ".gz" else Path.open
         try:
