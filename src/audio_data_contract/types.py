@@ -11,6 +11,7 @@ from .errors import ContractError
 CATALOG_SCHEMA_VERSION = "dataset-catalog/1.0"
 RECORD_SCHEMA_VERSION = "audio-record/1.0"
 EXAMPLE_SCHEMA_VERSION = "audio-example/1.0"
+VIEW_SCHEMA_VERSION = "dataset-view/1.0"
 
 
 def _mapping(value: Any, where: str) -> Mapping[str, Any]:
@@ -230,6 +231,172 @@ class DatasetSpec:
             recipe_parameters=_json_object(
                 data.get("recipe_parameters"), "dataset.recipe_parameters"
             ),
+        )
+
+
+@dataclass(frozen=True)
+class DatasetRef:
+    dataset_id: str
+    version: str
+
+    def __post_init__(self) -> None:
+        object.__setattr__(self, "dataset_id", _non_empty(self.dataset_id, "dataset_ref.dataset_id"))
+        object.__setattr__(self, "version", _non_empty(self.version, "dataset_ref.version"))
+
+    @property
+    def key(self) -> str:
+        return f"{self.dataset_id}@{self.version}"
+
+    def to_dict(self) -> dict[str, str]:
+        return {"dataset_id": self.dataset_id, "version": self.version}
+
+    @classmethod
+    def from_dict(cls, value: Any) -> "DatasetRef":
+        data = _mapping(value, "dataset_ref")
+        _fields(
+            data,
+            required={"dataset_id", "version"},
+            optional=set(),
+            where="dataset_ref",
+        )
+        return cls(dataset_id=data["dataset_id"], version=data["version"])
+
+
+@dataclass(frozen=True)
+class TransformStep:
+    name: str
+    version: str
+    kind: str
+    writes: tuple[str, ...]
+    overrides: tuple[str, ...] = ()
+    parameters: dict[str, Any] = field(default_factory=dict)
+
+    def __post_init__(self) -> None:
+        object.__setattr__(self, "name", _non_empty(self.name, "transform.name"))
+        object.__setattr__(self, "version", _non_empty(self.version, "transform.version"))
+        object.__setattr__(self, "kind", _non_empty(self.kind, "transform.kind"))
+        if not self.writes:
+            raise ContractError("transform.writes may not be empty")
+        unknown_overrides = set(self.overrides) - set(self.writes)
+        if unknown_overrides:
+            raise ContractError(
+                f"transform.overrides must also appear in writes: {sorted(unknown_overrides)}"
+            )
+
+    def to_dict(self) -> dict[str, Any]:
+        data: dict[str, Any] = {
+            "name": self.name,
+            "version": self.version,
+            "kind": self.kind,
+            "writes": list(self.writes),
+        }
+        if self.parameters:
+            data["parameters"] = self.parameters
+        if self.overrides:
+            data["overrides"] = list(self.overrides)
+        return data
+
+    @classmethod
+    def from_dict(cls, value: Any) -> "TransformStep":
+        data = _mapping(value, "transform")
+        _fields(
+            data,
+            required={"name", "version", "kind", "writes"},
+            optional={"overrides", "parameters"},
+            where="transform",
+        )
+        return cls(
+            name=data["name"],
+            version=data["version"],
+            kind=data["kind"],
+            writes=_strings(data["writes"], "transform.writes"),
+            overrides=_strings(data.get("overrides", []), "transform.overrides"),
+            parameters=_json_object(data.get("parameters"), "transform.parameters"),
+        )
+
+
+@dataclass(frozen=True)
+class DatasetViewSpec:
+    view_id: str
+    version: str
+    source: DatasetRef
+    transforms: tuple[TransformStep, ...]
+    result: DatasetRef
+    materialization: str
+    lineage_status: str
+    provenance: dict[str, Any] = field(default_factory=dict)
+    schema_version: str = VIEW_SCHEMA_VERSION
+
+    def __post_init__(self) -> None:
+        if self.schema_version != VIEW_SCHEMA_VERSION:
+            raise ContractError(f"unsupported view schema_version: {self.schema_version!r}")
+        object.__setattr__(self, "view_id", _non_empty(self.view_id, "view_id"))
+        object.__setattr__(self, "version", _non_empty(self.version, "view.version"))
+        if not self.transforms:
+            raise ContractError("view.transforms may not be empty")
+        if self.materialization not in {"full", "overlay"}:
+            raise ContractError("view.materialization must be 'full' or 'overlay'")
+        if self.lineage_status not in {"exact", "inferred"}:
+            raise ContractError("view.lineage_status must be 'exact' or 'inferred'")
+        writers: dict[str, str] = {}
+        for step in self.transforms:
+            for field_name in step.writes:
+                previous = writers.get(field_name)
+                if previous is not None and field_name not in step.overrides:
+                    raise ContractError(
+                        f"view {self.key} transform {step.name!r} writes {field_name!r} "
+                        f"already written by {previous!r}; declare an override"
+                    )
+                writers[field_name] = step.name
+
+    @property
+    def key(self) -> str:
+        return f"{self.view_id}@{self.version}"
+
+    def to_dict(self) -> dict[str, Any]:
+        return {
+            "schema_version": self.schema_version,
+            "view_id": self.view_id,
+            "version": self.version,
+            "source": self.source.to_dict(),
+            "transforms": [step.to_dict() for step in self.transforms],
+            "result": self.result.to_dict(),
+            "materialization": self.materialization,
+            "lineage_status": self.lineage_status,
+            "provenance": self.provenance,
+        }
+
+    @classmethod
+    def from_dict(cls, value: Any) -> "DatasetViewSpec":
+        data = _mapping(value, "view")
+        _fields(
+            data,
+            required={
+                "schema_version",
+                "view_id",
+                "version",
+                "source",
+                "transforms",
+                "result",
+                "materialization",
+                "lineage_status",
+            },
+            optional={"provenance"},
+            where="view",
+        )
+        transforms = data["transforms"]
+        if not isinstance(transforms, Sequence) or isinstance(transforms, str):
+            raise ContractError("view.transforms must be an array")
+        return cls(
+            schema_version=data["schema_version"],
+            view_id=data["view_id"],
+            version=data["version"],
+            source=DatasetRef.from_dict(data["source"]),
+            transforms=tuple(TransformStep.from_dict(item) for item in transforms),
+            result=DatasetRef.from_dict(data["result"]),
+            materialization=data["materialization"],
+            lineage_status=data["lineage_status"],
+            provenance=_json_object(data.get("provenance"), "view.provenance"),
         )
 
 

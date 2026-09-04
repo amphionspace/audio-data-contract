@@ -1,6 +1,12 @@
 """Portable contracts for shared audio datasets."""
 
-from .catalog import DatasetCatalog, load_catalog, resolve_artifact, validate_catalog
+from .catalog import (
+    DatasetCatalog,
+    load_catalog,
+    resolve_artifact,
+    validate_catalog,
+    verify_artifact_file,
+)
 from .records import load_examples, load_records, write_examples, write_records
 from .render import extract_audio_refs, render_example
 from .roots import load_roots
@@ -18,13 +24,17 @@ from .types import (
     AudioRecord,
     AudioRef,
     AudioSlot,
+    DatasetRef,
     DatasetSpec,
+    DatasetViewSpec,
     Message,
     PromptAudio,
     PromptTemplate,
     PromptText,
     TextContent,
+    TransformStep,
 )
+from .views import DatasetViewCatalog, load_view_catalog, resolve_view, validate_view_catalog
 
 __all__ = [
     "ArtifactRef",
@@ -34,7 +44,10 @@ __all__ = [
     "AudioRef",
     "AudioSlot",
     "DatasetCatalog",
+    "DatasetRef",
     "DatasetSpec",
+    "DatasetViewCatalog",
+    "DatasetViewSpec",
     "DatasetState",
     "DownloadState",
     "Message",
@@ -42,6 +55,7 @@ __all__ = [
     "PromptTemplate",
     "PromptText",
     "TextContent",
+    "TransformStep",
     "extract_audio_refs",
     "inspect_download",
     "load_catalog",
@@ -49,9 +63,13 @@ __all__ = [
     "load_records",
     "load_roots",
     "load_state",
+    "load_view_catalog",
     "render_example",
     "resolve_artifact",
+    "resolve_view",
     "validate_catalog",
+    "validate_view_catalog",
+    "verify_artifact_file",
     "write_examples",
     "write_records",
     "write_state_atomic",

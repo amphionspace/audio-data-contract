@@ -67,6 +67,7 @@ def test_json_schemas_are_packaged():
     assert json.loads(schemas.joinpath("dataset-catalog-1.0.json").read_text())["title"] == "DatasetSpec"
     assert json.loads(schemas.joinpath("audio-record-1.0.json").read_text())["title"] == "AudioRecord"
     assert json.loads(schemas.joinpath("audio-example-1.0.json").read_text())["title"] == "AudioExample"
+    assert json.loads(schemas.joinpath("dataset-view-1.0.json").read_text())["title"] == "DatasetViewSpec"
 
 
 def test_catalog_directory_loads_all_jsonl_files(tmp_path):
