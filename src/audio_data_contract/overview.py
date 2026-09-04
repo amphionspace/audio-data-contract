@@ -5,13 +5,11 @@ from __future__ import annotations
 from collections import Counter
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Any
 
 from .catalog import load_catalog
 from .errors import ContractError
 from .types import DatasetSpec
 from .views import load_view_catalog
-
 
 TASK_NAMES = {
     "asr": "语音识别",
@@ -48,7 +46,7 @@ def _cell(value: object) -> str:
     return text or "—"
 
 
-def _number(value: Any) -> float | None:
+def _number(value: object) -> float | None:
     if isinstance(value, bool) or not isinstance(value, (int, float)):
         return None
     return float(value)
@@ -209,8 +207,7 @@ def render_data_overview(
         f"| 有内容质量记录的版本 | {quality_count} / {len(specs)} 个 |",
         f"| 已登记的逻辑数据视图 | {len(views)} 个 |",
         "",
-        "“已登记时长”来自发布方统计、历史登记值或顶层 split 的时长；“名义时长”是数据声明中的估算值。还有 "
-        f"{len(specs) - covered_count} 个版本没有可汇总的当前时长，因此上面的数字不是仓库全部数据的真实总量。",
+        f"“已登记时长”来自发布方统计、历史登记值或顶层 split 的时长；“名义时长”是数据声明中的估算值。还有 {len(specs) - covered_count} 个版本没有可汇总的当前时长，因此上面的数字不是仓库全部数据的真实总量。",
         "",
         "## 支持哪些任务",
         "",
