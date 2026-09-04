@@ -1,0 +1,122 @@
+{
+  "schema_version": "local-lhotse-scan/1.0",
+  "scan_date": "2026-08-05",
+  "root_alias": "legacy_asr",
+  "scanned_root": "/ai_sds_wuzz/DATA_ASR",
+  "formal_lhotse_directories": [
+    "GigaSpeech/lhotse",
+    "GigaSpeech2/lhotse",
+    "KeSpeech/lhotse",
+    "MAGICDATA/lhotse",
+    "MLS/lhotse",
+    "TALCS_corpus/lhotse",
+    "WenetSpeech/lhotse",
+    "common_voice_en/lhotse",
+    "common_voice_zh/lhotse",
+    "data_aishell/lhotse",
+    "data_aishell2/lhotse",
+    "data_aishell3/lhotse",
+    "data_thchs30/lhotse",
+    "zhvoice/lhotse"
+  ],
+  "excluded_directories": [
+    {
+      "path": "LHOTSE",
+      "reason": "公共汇总目录，已由现有 icefall 和评测 catalog 覆盖"
+    },
+    {
+      "path": "tmp/commonvoice_hotwords_test_20260721/en/lhotse",
+      "reason": "临时实验副本"
+    },
+    {
+      "path": "tmp/commonvoice_hotwords_test_20260721/zh/lhotse",
+      "reason": "临时实验副本"
+    },
+    {
+      "path": "common_voice_zh/lhotse/test_hotwords",
+      "reason": "100 条规模的热词实验集，不作为正式数据版本发布"
+    }
+  ],
+  "published_dataset_keys": [
+    "gigaspeech2_id@local-20260805",
+    "gigaspeech2_id_hotwords@hotwords-v1-20260805",
+    "kespeech_clean@clean-v1-20260805",
+    "kespeech_hotwords@hotwords-v1-20260805",
+    "magicdata_hotwords@hotwords-v1-20260805",
+    "talcs_hotwords@hotwords-v1-20260805",
+    "wenetspeech_clean@clean-v1-20260805",
+    "commonvoice_en_clean@clean-v1-20260805",
+    "commonvoice_en_hotwords@hotwords-v1-20260805",
+    "commonvoice_zh_clean@clean-v1-20260805",
+    "commonvoice_zh_hotwords@hotwords-v1-20260805",
+    "aishell_clean@clean-v1-20260805",
+    "aishell_hotwords@hotwords-v1-20260805",
+    "aishell2_clean@clean-v1-20260805",
+    "aishell2_hotwords@hotwords-v1-20260805",
+    "aishell3_hotwords@hotwords-v1-20260805",
+    "thchs30_hotwords@hotwords-v1-20260805",
+    "aidatatang_hotwords@hotwords-v1-20260805"
+  ],
+  "quarantined_artifacts": [
+    {
+      "path": "GigaSpeech/lhotse/hotwords/gigaspeech_supervisions_XL_punc_hotwords.jsonl.gz",
+      "status": "recovered_prefix",
+      "reason": "已用 AmphionData 重建合法 gzip 前缀，尚未补齐热词",
+      "completed_records": 1654974,
+      "expected_records": 8282988,
+      "remaining_records": 6628014,
+      "backup": "GigaSpeech/lhotse/hotwords/gigaspeech_supervisions_XL_punc_hotwords.jsonl.gz.truncated-20260805.bak"
+    },
+    {
+      "path": "KeSpeech/lhotse/hotwords/kespeech-asr_supervisions_train_phase1_punc_hotwords.jsonl.gz",
+      "status": "recovered_prefix",
+      "reason": "已用 AmphionData 重建合法 gzip 前缀，尚未补齐热词",
+      "completed_records": 192001,
+      "expected_records": 543634,
+      "remaining_records": 351633,
+      "backup": "KeSpeech/lhotse/hotwords/kespeech-asr_supervisions_train_phase1_punc_hotwords.jsonl.gz.truncated-20260805.bak"
+    },
+    {
+      "path": "KeSpeech/lhotse/hotwords/kespeech-asr_supervisions_train_phase2_punc_hotwords.jsonl.gz",
+      "status": "recovered_prefix",
+      "reason": "已用 AmphionData 重建合法 gzip 前缀，尚未补齐热词",
+      "completed_records": 196001,
+      "expected_records": 340387,
+      "remaining_records": 144386,
+      "backup": "KeSpeech/lhotse/hotwords/kespeech-asr_supervisions_train_phase2_punc_hotwords.jsonl.gz.truncated-20260805.bak"
+    },
+    {
+      "path": "MLS/lhotse/hotwords/mls-english_supervisions_train_punc_hotwords.jsonl.gz",
+      "status": "recovered_prefix",
+      "reason": "已用 AmphionData 重建合法 gzip 前缀，尚未补齐热词",
+      "completed_records": 261996,
+      "expected_records": 10808037,
+      "remaining_records": 10546041,
+      "backup": "MLS/lhotse/hotwords/mls-english_supervisions_train_punc_hotwords.jsonl.gz.truncated-20260805.bak"
+    },
+    {
+      "path": "WenetSpeech/lhotse/hotwords/wenetspeech_supervisions_L_punc_hotwords.jsonl.gz",
+      "status": "recovered_prefix",
+      "reason": "已用 AmphionData 重建合法 gzip 前缀，尚未补齐热词",
+      "completed_records": 56501,
+      "expected_records": 14625245,
+      "remaining_records": 14568744,
+      "backup": "WenetSpeech/lhotse/hotwords/wenetspeech_supervisions_L_punc_hotwords.jsonl.gz.truncated-20260805.bak"
+    },
+    {
+      "path": "data_aishell2/lhotse/hotwords/aishell2_supervisions_train_punc_hotwords.jsonl.gz",
+      "status": "recovered_prefix",
+      "reason": "已用 AmphionData 重建合法 gzip 前缀，尚未补齐热词",
+      "completed_records": 958336,
+      "expected_records": 1009223,
+      "remaining_records": 50887,
+      "backup": "data_aishell2/lhotse/hotwords/aishell2_supervisions_train_punc_hotwords.jsonl.gz.truncated-20260805.bak"
+    },
+    {
+      "path": "GigaSpeech2/lhotse/gigaspeech2_th_supervisions_train_hotwords.jsonl.gz",
+      "status": "unpaired",
+      "reason": "缺少对应的 Thai recordings manifest",
+      "completed_records": 202168
+    }
+  ]
+}
