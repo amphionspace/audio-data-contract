@@ -1,3 +1,5 @@
+import gzip
+import hashlib
 import json
 from importlib.resources import files
 
@@ -9,7 +11,8 @@ from audio_data_contract import (
     load_catalog,
     resolve_artifact,
 )
-from audio_data_contract.errors import ContractError, ResolutionError
+from audio_data_contract.catalog import verify_artifact_file
+from audio_data_contract.errors import ContractError, IntegrityError, ResolutionError
 
 
 def _spec() -> DatasetSpec:
@@ -92,3 +95,118 @@ def test_canonical_dataset_id_takes_precedence_over_an_alias(tmp_path):
     )
     catalog = load_catalog(path)
     assert catalog.get("common_voice_en", "legacy").dataset_id == "common_voice_en"
+
+
+def test_verify_artifact_file_checks_size_digest_and_record_count(tmp_path):
+    path = tmp_path / "records.jsonl.gz"
+    with gzip.open(path, "wt", encoding="utf-8") as stream:
+        stream.write('{"id":"one"}\n')
+        stream.write('{"id":"two"}\n')
+    content = path.read_bytes()
+    artifact = ArtifactRef(
+        "records",
+        "lhotse-supervisions",
+        "root",
+        "records.jsonl.gz",
+        expected_bytes=len(content),
+        sha256=hashlib.sha256(content).hexdigest(),
+        metadata={"record_count": 2},
+    )
+
+    assert verify_artifact_file(artifact, path)["records"] == 2
+
+    path.write_bytes(content[:-4])
+    with pytest.raises(IntegrityError, match="byte size mismatch"):
+        verify_artifact_file(artifact, path)
+
+
+def test_verify_artifact_file_rejects_truncated_gzip_without_size_facts(tmp_path):
+    path = tmp_path / "records.jsonl.gz"
+    with gzip.open(path, "wt", encoding="utf-8") as stream:
+        stream.write('{"id":"one"}\n')
+    path.write_bytes(path.read_bytes()[:-4])
+    artifact = ArtifactRef(
+        "records",
+        "lhotse-supervisions",
+        "root",
+        "records.jsonl.gz",
+        metadata={"record_count": 1},
+    )
+
+    with pytest.raises(IntegrityError, match="cannot be read completely"):
+        verify_artifact_file(artifact, path)
+
+
+def test_verify_artifact_file_rejects_invalid_utf8(tmp_path):
+    path = tmp_path / "records.jsonl"
+    path.write_bytes(b"\xff\n")
+    artifact = ArtifactRef(
+        "records",
+        "jsonl-metadata",
+        "root",
+        "records.jsonl",
+        metadata={"record_count": 1},
+    )
+
+    with pytest.raises(IntegrityError, match="cannot be read completely"):
+        verify_artifact_file(artifact, path)
+
+
+def test_verify_artifact_directory_checks_tree_facts(tmp_path):
+    source = tmp_path / "source"
+    source.mkdir()
+    (source / "a.txt").write_text("alpha", encoding="utf-8")
+    nested = source / "nested"
+    nested.mkdir()
+    (nested / "b.txt").write_text("beta", encoding="utf-8")
+
+    tree_digest = hashlib.sha256()
+    for relative_path in ("a.txt", "nested/b.txt"):
+        content = (source / relative_path).read_bytes()
+        tree_digest.update(
+            f"{relative_path}\0{len(content)}\0{hashlib.sha256(content).hexdigest()}\n".encode()
+        )
+    artifact = ArtifactRef(
+        "source",
+        "source-directory",
+        "root",
+        "source",
+        metadata={
+            "file_count": 2,
+            "expected_bytes": 9,
+            "tree_sha256": tree_digest.hexdigest(),
+        },
+    )
+
+    result = verify_artifact_file(artifact, source)
+    assert result == {
+        "bytes": 9,
+        "files": 2,
+        "tree_sha256": tree_digest.hexdigest(),
+    }
+
+    (source / "a.txt").write_text("changed", encoding="utf-8")
+    with pytest.raises(IntegrityError, match="byte size mismatch"):
+        verify_artifact_file(artifact, source)
+
+
+@pytest.mark.parametrize(
+    ("integrity_fact", "value"),
+    [("expected_bytes", 9), ("sha256", "0" * 64)],
+)
+def test_verify_artifact_directory_rejects_file_integrity_fields(
+    tmp_path, integrity_fact, value
+):
+    source = tmp_path / "source"
+    source.mkdir()
+    (source / "a.txt").write_text("alpha", encoding="utf-8")
+    artifact = ArtifactRef(
+        "source",
+        "source-directory",
+        "root",
+        "source",
+        **{integrity_fact: value},
+    )
+
+    with pytest.raises(IntegrityError, match="directory artifact integrity facts"):
+        verify_artifact_file(artifact, source)
