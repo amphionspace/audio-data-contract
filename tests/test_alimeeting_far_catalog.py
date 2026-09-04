@@ -4,6 +4,8 @@ import json
 import runpy
 from pathlib import Path
 
+import pytest
+
 from audio_data_contract import load_catalog, resolve_artifact, verify_artifact_file
 
 REPO_ROOT = Path(__file__).parents[1]
@@ -21,9 +23,9 @@ def test_alimeeting_far_raw_catalog_is_portable_and_complete():
     assert spec.provenance["subset"] == "far-field only"
     assert spec.provenance["integrity"] == "verified"
     assert spec.provenance["quality_status"] == "known_annotation_bounds_issues"
-    assert spec.provenance["quality_findings"][
-        "train_annotation_out_of_bounds_count"
-    ] == 8
+    assert (
+        spec.provenance["quality_findings"]["train_annotation_out_of_bounds_count"] == 8
+    )
 
     expected = {
         "train_source": ("Train_Ali_far", 418, 102648299201),
@@ -65,13 +67,35 @@ def test_alimeeting_far_raw_artifacts_resolve_from_aliases():
     assert resolve_artifact(
         catalog, "alimeeting", VERSION, "train_source", roots
     ) == Path("/data/alimeeting/original/far/Train_Ali_far")
-    assert resolve_artifact(
-        catalog, "alimeeting", VERSION, "source_inventory", roots
-    ) == CATALOG_DIR / "inventory/alimeeting_far_openslr-119-local-20260903.jsonl.gz"
+    assert (
+        resolve_artifact(catalog, "alimeeting", VERSION, "source_inventory", roots)
+        == CATALOG_DIR / "inventory/alimeeting_far_openslr-119-local-20260903.jsonl.gz"
+    )
+
+
+def test_alimeeting_split_hours_match_the_verified_inventory():
+    spec = load_catalog(CATALOG_DIR).get("alimeeting", VERSION)
+    inventory = (
+        CATALOG_DIR / "inventory/alimeeting_far_openslr-119-local-20260903.jsonl.gz"
+    )
+    seconds = {split: 0.0 for split in spec.splits}
+
+    with gzip.open(inventory, "rt", encoding="utf-8") as stream:
+        for line in stream:
+            row = json.loads(line)
+            if row["kind"] == "audio":
+                seconds[row["split"]] += float(row["duration"])
+
+    for split, total_seconds in seconds.items():
+        assert spec.splits[split]["statistics"]["duration_hours"] == pytest.approx(
+            total_seconds / 3600
+        )
 
 
 def test_alimeeting_inventory_is_independent_of_output_filename(tmp_path):
-    published = CATALOG_DIR / "inventory/alimeeting_far_openslr-119-local-20260903.jsonl.gz"
+    published = (
+        CATALOG_DIR / "inventory/alimeeting_far_openslr-119-local-20260903.jsonl.gz"
+    )
     with gzip.open(published, "rt", encoding="utf-8") as stream:
         rows = [json.loads(line) for line in stream]
     first = tmp_path / "first.jsonl.gz"
