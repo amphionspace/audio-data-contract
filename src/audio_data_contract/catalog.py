@@ -2,11 +2,13 @@
 
 from __future__ import annotations
 
+import gzip
+import hashlib
 import json
+from collections.abc import Iterable, Mapping
 from pathlib import Path
-from typing import Iterable, Mapping
 
-from .errors import ContractError, ResolutionError
+from .errors import ContractError, IntegrityError, ResolutionError
 from .types import ArtifactRef, DatasetSpec
 
 
@@ -108,3 +110,143 @@ def resolve_artifact(
     except ValueError as exc:
         raise ResolutionError(f"artifact escaped configured root: {resolved}") from exc
     return resolved
+
+
+def verify_artifact_file(
+    artifact: ArtifactRef, path: str | Path
+) -> dict[str, int | str]:
+    """Verify a resolved file or directory against its published integrity facts."""
+
+    selected = Path(path)
+    if selected.is_dir():
+        if artifact.expected_bytes is not None or artifact.sha256 is not None:
+            raise IntegrityError(
+                "directory artifact integrity facts must use "
+                "metadata.expected_bytes and metadata.tree_sha256: "
+                f"{artifact.name}"
+            )
+        return _verify_artifact_directory(artifact, selected)
+    if not selected.is_file():
+        raise IntegrityError(f"artifact is not a file or directory: {selected}")
+
+    try:
+        actual_bytes = selected.stat().st_size
+    except OSError as exc:
+        raise IntegrityError(f"artifact cannot be read: {selected}: {exc}") from exc
+    if artifact.expected_bytes is not None and actual_bytes != artifact.expected_bytes:
+        raise IntegrityError(
+            f"artifact byte size mismatch for {selected}: "
+            f"expected {artifact.expected_bytes}, got {actual_bytes}"
+        )
+
+    digest = hashlib.sha256()
+    try:
+        with selected.open("rb") as stream:
+            for block in iter(lambda: stream.read(1024 * 1024), b""):
+                digest.update(block)
+    except OSError as exc:
+        raise IntegrityError(f"artifact cannot be read: {selected}: {exc}") from exc
+    actual_sha256 = digest.hexdigest()
+    if artifact.sha256 is not None and actual_sha256 != artifact.sha256:
+        raise IntegrityError(
+            f"artifact sha256 mismatch for {selected}: "
+            f"expected {artifact.sha256}, got {actual_sha256}"
+        )
+
+    result: dict[str, int | str] = {
+        "bytes": actual_bytes,
+        "sha256": actual_sha256,
+    }
+    expected_records = artifact.metadata.get("record_count")
+    if expected_records is not None and (
+        not isinstance(expected_records, int) or expected_records < 0
+    ):
+        raise IntegrityError(
+            f"artifact metadata.record_count must be a non-negative integer: "
+            f"{artifact.name}"
+        )
+    if expected_records is not None or selected.name.endswith(".jsonl.gz"):
+        opener = gzip.open if selected.suffix == ".gz" else Path.open
+        try:
+            with opener(selected, "rt", encoding="utf-8") as stream:
+                actual_records = sum(1 for line in stream if line.strip())
+        except (OSError, EOFError, UnicodeError) as exc:
+            raise IntegrityError(
+                f"artifact cannot be read completely: {selected}: {exc}"
+            ) from exc
+        if expected_records is not None and actual_records != expected_records:
+            raise IntegrityError(
+                f"artifact record count mismatch for {selected}: "
+                f"expected {expected_records}, got {actual_records}"
+            )
+        result["records"] = actual_records
+    return result
+
+
+def _verify_artifact_directory(
+    artifact: ArtifactRef, selected: Path
+) -> dict[str, int | str]:
+    files = sorted(
+        (path for path in selected.rglob("*") if path.is_file()),
+        key=lambda path: path.relative_to(selected).as_posix(),
+    )
+    symlinks = [path for path in selected.rglob("*") if path.is_symlink()]
+    if symlinks:
+        raise IntegrityError(f"artifact directory contains symlinks: {symlinks[0]}")
+
+    tree_digest = hashlib.sha256()
+    actual_bytes = 0
+    for file_path in files:
+        relative_path = file_path.relative_to(selected).as_posix()
+        size = file_path.stat().st_size
+        digest = hashlib.sha256()
+        with file_path.open("rb") as stream:
+            for block in iter(lambda: stream.read(1024 * 1024), b""):
+                digest.update(block)
+        tree_digest.update(
+            f"{relative_path}\0{size}\0{digest.hexdigest()}\n".encode()
+        )
+        actual_bytes += size
+
+    expected_files = artifact.metadata.get("file_count")
+    expected_bytes = artifact.metadata.get("expected_bytes")
+    expected_tree_sha256 = artifact.metadata.get("tree_sha256")
+    for name, value in (("file_count", expected_files), ("expected_bytes", expected_bytes)):
+        if value is not None and (not isinstance(value, int) or value < 0):
+            raise IntegrityError(
+                f"artifact metadata.{name} must be a non-negative integer: "
+                f"{artifact.name}"
+            )
+    if expected_files is not None and len(files) != expected_files:
+        raise IntegrityError(
+            f"artifact file count mismatch for {selected}: "
+            f"expected {expected_files}, got {len(files)}"
+        )
+    if expected_bytes is not None and actual_bytes != expected_bytes:
+        raise IntegrityError(
+            f"artifact byte size mismatch for {selected}: "
+            f"expected {expected_bytes}, got {actual_bytes}"
+        )
+
+    actual_tree_sha256 = tree_digest.hexdigest()
+    if expected_tree_sha256 is not None:
+        if (
+            not isinstance(expected_tree_sha256, str)
+            or len(expected_tree_sha256) != 64
+            or any(c not in "0123456789abcdef" for c in expected_tree_sha256.lower())
+        ):
+            raise IntegrityError(
+                f"artifact metadata.tree_sha256 must be a 64-character hex digest: "
+                f"{artifact.name}"
+            )
+        if actual_tree_sha256 != expected_tree_sha256.lower():
+            raise IntegrityError(
+                f"artifact tree sha256 mismatch for {selected}: "
+                f"expected {expected_tree_sha256}, got {actual_tree_sha256}"
+            )
+
+    return {
+        "bytes": actual_bytes,
+        "files": len(files),
+        "tree_sha256": actual_tree_sha256,
+    }

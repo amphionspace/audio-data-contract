@@ -6,11 +6,13 @@ import argparse
 import json
 from pathlib import Path
 
-from .catalog import load_catalog, resolve_artifact
+from .catalog import load_catalog, resolve_artifact, verify_artifact_file
 from .legacy import convert_legacy_registry
+from .overview import update_data_overview
 from .records import load_records
 from .roots import load_roots
 from .state import DownloadState, inspect_download, load_state, write_state_atomic
+from .views import load_view_catalog, resolve_view
 
 
 def _parser() -> argparse.ArgumentParser:
@@ -42,11 +44,34 @@ def _parser() -> argparse.ArgumentParser:
     resolve.add_argument("artifact")
     resolve.add_argument("--roots")
 
+    verify = commands.add_parser("verify-artifact")
+    verify.add_argument("catalog")
+    verify.add_argument("dataset_id")
+    verify.add_argument("version")
+    verify.add_argument("artifact")
+    verify.add_argument("--roots")
+
+    validate_views = commands.add_parser("validate-views")
+    validate_views.add_argument("views")
+    validate_views.add_argument("catalog")
+
+    resolve_dataset_view = commands.add_parser("resolve-view")
+    resolve_dataset_view.add_argument("views")
+    resolve_dataset_view.add_argument("catalog")
+    resolve_dataset_view.add_argument("view_id")
+    resolve_dataset_view.add_argument("version")
+
     legacy = commands.add_parser("convert-legacy")
     legacy.add_argument("input")
     legacy.add_argument("output")
     legacy.add_argument("--version", default="legacy")
     legacy.add_argument("--root", action="append", default=[], metavar="ALIAS=PATH")
+
+    overview = commands.add_parser("generate-overview")
+    overview.add_argument("--catalog", default="catalog")
+    overview.add_argument("--views", default="views")
+    overview.add_argument("--output", default="docs/data-overview.md")
+    overview.add_argument("--check", action="store_true")
     return parser
 
 
@@ -101,6 +126,49 @@ def main(argv: list[str] | None = None) -> int:
             )
         )
         return 0
+    if args.command == "verify-artifact":
+        catalog = load_catalog(args.catalog)
+        roots = load_roots(args.roots)
+        spec = catalog.get(args.dataset_id, args.version)
+        artifact = spec.artifact(args.artifact)
+        path = resolve_artifact(
+            catalog, args.dataset_id, args.version, args.artifact, roots
+        )
+        result = verify_artifact_file(artifact, path)
+        result.update(
+            {
+                "artifact": artifact.name,
+                "dataset_id": spec.dataset_id,
+                "version": spec.version,
+            }
+        )
+        print(json.dumps(result, sort_keys=True))
+        return 0
+    if args.command == "validate-views":
+        datasets = load_catalog(args.catalog)
+        views = load_view_catalog(args.views, datasets)
+        print(json.dumps({"views": len(views)}, sort_keys=True))
+        return 0
+    if args.command == "resolve-view":
+        datasets = load_catalog(args.catalog)
+        views = load_view_catalog(args.views, datasets)
+        view = views.get(args.view_id, args.version)
+        result = resolve_view(views, datasets, args.view_id, args.version)
+        print(
+            json.dumps(
+                {
+                    "view_id": view.view_id,
+                    "view_version": view.version,
+                    "dataset_id": result.dataset_id,
+                    "dataset_version": result.version,
+                    "materialization": view.materialization,
+                    "transforms": [step.to_dict() for step in view.transforms],
+                },
+                ensure_ascii=False,
+                sort_keys=True,
+            )
+        )
+        return 0
     if args.command == "convert-legacy":
         source = json.loads(Path(args.input).read_text(encoding="utf-8"))
         specs = convert_legacy_registry(
@@ -113,6 +181,15 @@ def main(argv: list[str] | None = None) -> int:
                 stream.write(json.dumps(spec.to_dict(), ensure_ascii=False, sort_keys=True))
                 stream.write("\n")
         print(json.dumps({"datasets": len(specs), "output": str(output)}, sort_keys=True))
+        return 0
+    if args.command == "generate-overview":
+        status = update_data_overview(
+            args.output,
+            catalog_path=args.catalog,
+            views_path=args.views,
+            check=args.check,
+        )
+        print(json.dumps({"output": args.output, "status": status}, sort_keys=True))
         return 0
     raise AssertionError(args.command)
 

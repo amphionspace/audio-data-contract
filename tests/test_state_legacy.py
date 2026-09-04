@@ -1,11 +1,13 @@
 import json
+from importlib.resources import files
 
 import pytest
+from jsonschema import Draft202012Validator, FormatChecker, ValidationError
 
 from audio_data_contract import DatasetState, DownloadState, inspect_download
+from audio_data_contract.errors import ContractError, StateTransitionError
 from audio_data_contract.legacy import convert_legacy_registry
 from audio_data_contract.state import load_state, write_state_atomic
-from audio_data_contract.errors import StateTransitionError
 
 
 def test_download_state_and_atomic_round_trip(tmp_path):
@@ -47,3 +49,61 @@ def test_legacy_registry_conversion_has_no_absolute_paths(tmp_path):
     encoded = json.dumps(specs[0].to_dict())
     assert str(tmp_path) not in encoded
     assert specs[0].artifacts[0].relative_path == "en/demo/data/manifests"
+
+
+def test_state_round_trip_matches_packaged_schema():
+    state = DatasetState("demo", "1.0", DownloadState.PLANNED)
+    schema = json.loads(
+        files("audio_data_contract")
+        .joinpath("schemas", "dataset-state-1.0.json")
+        .read_text()
+    )
+
+    Draft202012Validator(schema, format_checker=FormatChecker()).validate(
+        state.to_dict()
+    )
+    assert DatasetState.from_dict(
+        {
+            "schema_version": "dataset-state/1.0",
+            "dataset_id": "demo",
+            "version": "1.0",
+            "state": "planned",
+        }
+    ).artifacts == {}
+
+
+@pytest.mark.parametrize(
+    ("field", "value"),
+    [
+        ("dataset_id", 1),
+        ("version", 2),
+        ("artifacts", []),
+        ("artifacts", {"archive": []}),
+        ("metadata", []),
+        ("updated_at", "not-a-time"),
+        ("error", 1),
+    ],
+)
+def test_state_rejects_invalid_field_types(field, value):
+    data = {
+        "schema_version": "dataset-state/1.0",
+        "dataset_id": "demo",
+        "version": "1.0",
+        "state": "planned",
+        field: value,
+    }
+
+    schema = json.loads(
+        files("audio_data_contract")
+        .joinpath("schemas", "dataset-state-1.0.json")
+        .read_text()
+    )
+    with pytest.raises(ValidationError):
+        Draft202012Validator(schema, format_checker=FormatChecker()).validate(data)
+    with pytest.raises(ContractError):
+        DatasetState.from_dict(data)
+
+
+def test_state_rejects_non_object_payload():
+    with pytest.raises(ContractError, match="must be an object"):
+        DatasetState.from_dict([])

@@ -39,10 +39,7 @@
                     "type": {"const": "audio"},
                     "slot": {"type": "string", "minLength": 1},
                     "purpose": {"type": "string"},
-                    "ref": {
-                      "type": "object",
-                      "required": ["dataset_id", "version", "split", "cut_id"]
-                    }
+                    "ref": {"$ref": "#/$defs/audio_ref"}
                   }
                 }
               ]
@@ -53,5 +50,27 @@
     },
     "labels": {"type": "object"},
     "metadata": {"type": "object"}
+  },
+  "$defs": {
+    "audio_ref": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["dataset_id", "version", "split", "cut_id"],
+      "properties": {
+        "dataset_id": {"type": "string", "minLength": 1},
+        "version": {"type": "string", "minLength": 1},
+        "split": {"type": "string", "minLength": 1},
+        "cut_id": {"type": "string", "minLength": 1},
+        "channel": {
+          "oneOf": [
+            {"type": "integer"},
+            {"type": "array", "items": {"type": "integer"}}
+          ]
+        },
+        "start": {"type": "number", "minimum": 0},
+        "duration": {"type": "number", "exclusiveMinimum": 0},
+        "purpose": {"type": "string"}
+      }
+    }
   }
 }

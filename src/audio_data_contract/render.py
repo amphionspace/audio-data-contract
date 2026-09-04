@@ -3,7 +3,8 @@
 from __future__ import annotations
 
 import random
-from typing import Any, Mapping
+from collections.abc import Mapping
+from typing import Any
 
 from .errors import ContractError
 from .types import (
