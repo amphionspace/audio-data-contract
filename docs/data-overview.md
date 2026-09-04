@@ -1,413 +1,140 @@
 # 数据总览
 
-> 本文件由 catalog 和 view 声明自动生成，请勿手工编辑。
-> 修改数据声明后，请运行 `audio-data-contract generate-overview`；CI 会用 `--check` 检查同步状态。
+这里回答四个最常见的问题：现在有多少数据、能做什么任务、时长统计覆盖到什么程度，以及已有的质量证据是什么。
 
-## 整体状态
+> 本页由 catalog 和 view 声明自动生成。这里的“总时长”按数据集版本相加，可能包含同一音频的不同版本，不能理解为去重后的物理音频时长。
 
-| 指标 | 数量 |
+## 一眼看懂当前数据
+
+| 你可能关心的问题 | 当前答案 |
 |---|---:|
-| 数据集标识 | 225 |
-| 数据集版本 | 252 |
-| 派生版本 | 40 |
-| 物理产物 | 641 |
-| Split 声明 | 420 |
-| 逻辑 View | 19 |
+| 登记了多少个数据集 | 225 个 |
+| 登记了多少个版本 | 252 个，其中 40 个是派生版本 |
+| 支持多少类任务 | 13 类 |
+| 按版本相加的可汇总时长 | 125,941.7 小时 |
+| 其中：已登记时长 | 125,741.7 小时 |
+| 其中：名义时长 | 200.0 小时 |
+| 有可汇总时长的版本 | 50 / 252 个 |
+| 完成文件完整性校验的版本 | 33 / 252 个 |
+| 有内容质量记录的版本 | 2 / 252 个 |
+| 已登记的逻辑数据视图 | 19 个 |
 
-## 完整性状态
+“已登记时长”来自发布方统计、历史登记值或顶层 split 的时长；“名义时长”是数据声明中的估算值。还有 202 个版本没有可汇总的当前时长，因此上面的数字不是仓库全部数据的真实总量。
 
-| 状态 | 数据集版本 | 占比 |
+## 支持哪些任务
+
+同一个数据版本可以同时服务多个任务。下表会把该版本的全部时长记到每个适用任务中，所以各任务时长不能再次相加。
+
+| 任务 | 标识 | 数据版本 | 已登记时长（小时） | 名义时长（小时） | 时长覆盖 |
+|---|---|---:|---:|---:|---:|
+| 语音识别 | `asr` | 188 | 125,741.7 | 200.0 | 50 / 188 |
+| 热词增强语音识别 | `asr_hotwords` | 40 | — | — | 0 / 40 |
+| 目标说话人语音识别 | `ts_asr` | 12 | — | — | 0 / 12 |
+| 语音情感识别 | `ser` | 7 | — | — | 0 / 7 |
+| 连续语音分离 | `continuous_speech_separation` | 5 | 125.5 | 200.0 | 2 / 5 |
+| 重叠语音检测 | `overlap_speech` | 5 | 125.5 | 200.0 | 2 / 5 |
+| 带说话人标注的语音识别 | `speaker_attributed_asr` | 5 | 125.5 | 200.0 | 2 / 5 |
+| 说话人分段与归属 | `speaker_diarization` | 5 | 125.5 | 200.0 | 2 / 5 |
+| 说话人情感分类 | `sec` | 2 | — | — | 0 / 2 |
+| 情感与说话风格描述 | `sepc` | 2 | — | — | 0 / 2 |
+| 语音翻译 | `ast` | 1 | — | — | 0 / 1 |
+| 语码转换语音识别 | `code_switch_asr` | 1 | — | — | 0 / 1 |
+| 背景声场景描述 | `esc` | 1 | — | — | 0 / 1 |
+
+## 数据质量如何
+
+质量要分成两件事看：
+
+- **文件完整性**：文件大小、哈希或清单是否核验过。它只能说明文件没有悄悄变化。
+- **内容质量**：转写、标签、时间边界等是否准确。文件校验通过，不等于内容正确。
+
+| 检查项 | 数据版本 | 占全部版本 |
 |---|---:|---:|
-| unspecified | 219 | 86.9% |
-| verified | 33 | 13.1% |
+| 文件完整性已核验 | 33 | 13.1% |
+| 文件完整性未标记为已核验 | 219 | 86.9% |
+| 有内容质量记录 | 2 | 0.8% |
+| 暂无内容质量记录 | 250 | 99.2% |
 
-## 任务覆盖
+目前有明确证据可展示的内容质量记录如下。没有出现在表里，不代表质量差，只表示 catalog 里还没有足够信息可判断。
 
-同一数据集版本可支持多个任务，因此下表数量可能重复计算。
+| 数据版本 | 当前结论 | 已记录证据 | 使用时要注意 |
+|---|---|---|---|
+| `alimeeting@openslr-119-far-local-20260903` | 有已知标注问题 | 训练集 8 条标注越过音频边界；开发集 0 条；测试集 0 条 | 最大越界 269.375 秒，使用前应处理异常标注 |
+| `wenetspeech@clean-weak-v1-20260904` | 有自动筛选和人工抽检记录 | 自动筛选通过 3,149,292 条、拒绝 73,468 条，通过率 97.72% | 人工抽检 10 条，其中确认 10 条；样本很小，不能代表整集准确率 |
 
-| Task | 数据集版本 |
-|---|---:|
-| asr | 188 |
-| asr_hotwords | 40 |
-| ts_asr | 12 |
-| ser | 7 |
-| continuous_speech_separation | 5 |
-| overlap_speech | 5 |
-| speaker_attributed_asr | 5 |
-| speaker_diarization | 5 |
-| sec | 2 |
-| sepc | 2 |
-| ast | 1 |
-| code_switch_asr | 1 |
-| esc | 1 |
+## 哪些版本已经登记时长
 
-## Catalog 分布
+下面列出计入总览的 50 个版本。派生版本和不同版本可能复用同一批音频，所以这里只做版本口径统计。
 
-| 声明文件 | 数据集版本 | 数据集标识 | 物理产物 | 已验证版本 |
-|---|---:|---:|---:|---:|
-| `alimeeting_far_raw.jsonl` | 1 | 1 | 4 | 1 |
-| `download_queue.jsonl` | 10 | 10 | 14 | 0 |
-| `icefall_base.jsonl` | 39 | 39 | 222 | 0 |
-| `icefall_traffic_derived.jsonl` | 20 | 20 | 25 | 0 |
-| `legacy_multilingual.jsonl` | 42 | 42 | 42 | 0 |
-| `local_lhotse_derived.jsonl` | 19 | 18 | 49 | 19 |
-| `multilingual_multispeaker.jsonl` | 6 | 5 | 24 | 6 |
-| `open_audio_eval.jsonl` | 108 | 108 | 210 | 0 |
-| `synthetic_asr.jsonl` | 4 | 1 | 40 | 4 |
-| `synthetic_asr_v5_qc.jsonl` | 1 | 1 | 6 | 1 |
-| `wenetspeech_weak.jsonl` | 2 | 1 | 5 | 2 |
+<details><summary>展开 50 个版本的时长明细</summary>
 
-## 数据集版本索引
-
-<details><summary><code>alimeeting_far_raw.jsonl</code> — 1 个版本</summary>
-
-| Dataset | Version | Languages | Tasks | Splits | Artifacts | Integrity | Derived from |
-|---|---|---|---|---|---:|---|---|
-| alimeeting | openslr-119-far-local-20260903 | zh | asr, speaker_diarization, speaker_attributed_asr, overlap_speech, continuous_speech_separation | train, dev, test | 4 | verified | — |
-
-</details>
-
-<details><summary><code>download_queue.jsonl</code> — 10 个版本</summary>
-
-| Dataset | Version | Languages | Tasks | Splits | Artifacts | Integrity | Derived from |
-|---|---|---|---|---|---:|---|---|
-| aishell5 | 1.0 | zh | asr | train, dev, eval1, eval2 | 5 | unspecified | — |
-| common-voice-en | 26.0 | en | asr | all | 1 | unspecified | — |
-| common-voice-yue | 26.0 | yue | asr | all | 1 | unspecified | — |
-| common-voice-zh-cn | 26.0 | zh | asr | all | 1 | unspecified | — |
-| common-voice-zh-hk | 26.0 | yue | asr | all | 1 | unspecified | — |
-| gigaspeech2 | hf-8dc0d0e502b7 | id, th, vi | asr | id, th, vi | 1 | unspecified | — |
-| granary | hf-0fe23a860e35 | multi | asr, ast | all | 1 | unspecified | — |
-| lemas | hf-91f0c1b9a29f | multi | asr | all | 1 | unspecified | — |
-| omnilingual-asr-corpus | hf-8648ba894637 | multi | asr | all | 1 | unspecified | — |
-| reazonspeech | hf-0df78f991f6a | ja | asr | all | 1 | unspecified | — |
-
-</details>
-
-<details><summary><code>icefall_base.jsonl</code> — 39 个版本</summary>
-
-| Dataset | Version | Languages | Tasks | Splits | Artifacts | Integrity | Derived from |
-|---|---|---|---|---|---:|---|---|
-| aidatatang | legacy-20260804 | zh | asr | train | 2 | unspecified | — |
-| aishell | legacy-20260804 | zh | asr | train, dev, test | 6 | unspecified | — |
-| aishell2 | legacy-20260804 | zh | asr | train, test | 4 | unspecified | — |
-| aishell3 | legacy-20260804 | zh | asr | train, test | 4 | unspecified | — |
-| aishell4 | legacy-20260804 | zh | asr | train, test | 4 | unspecified | — |
-| childmandarin | legacy-20260804 | zh | asr | train, dev, test | 3 | unspecified | — |
-| common_voice_en | legacy-20260804 | en | asr | train, dev, test | 6 | unspecified | — |
-| common_voice_yue | legacy-20260804 | yue | asr | train, dev, test | 6 | unspecified | — |
-| common_voice_zh | legacy-20260804 | zh | asr | train, dev, test | 6 | unspecified | — |
-| common_voice_zh_hk | legacy-20260804 | yue | asr | train, dev, test | 6 | unspecified | — |
-| cs_dialogue | legacy-20260804 | zh | asr | train, dev, test | 6 | unspecified | — |
-| cs_dialogue_en | legacy-20260804 | en | asr | train, dev, test | 6 | unspecified | — |
-| cs_dialogue_mix | legacy-20260804 | zh | asr | train, dev, test | 6 | unspecified | — |
-| cumix2017 | legacy-20260804 | yue | asr | train | 2 | unspecified | — |
-| emilia_zh | legacy-20260804 | zh | asr | train | 1 | unspecified | — |
-| fleurs_zh | legacy-20260804 | zh | asr | train, dev, test | 6 | unspecified | — |
-| gigaspeech | legacy-20260804 | en | asr | train, dev, test | 6 | unspecified | — |
-| kespeech | legacy-20260804 | zh | asr | train, dev, test | 10 | unspecified | — |
-| legco_speech | legacy-20260804 | yue | asr | train | 2 | unspecified | — |
-| legco_speech_en | legacy-20260804 | en | asr | train | 2 | unspecified | — |
-| librispeech | legacy-20260804 | en | asr | train, dev, test_clean, test_other | 14 | unspecified | — |
-| magicdata | legacy-20260804 | zh | asr | train, dev, test | 6 | unspecified | — |
-| magicdata_ramc | legacy-20260804 | zh | asr | train, dev, test | 6 | unspecified | — |
-| mdcc | legacy-20260804 | yue | asr | train, dev, test | 6 | unspecified | — |
-| mls | legacy-20260804 | en | asr | train, dev, test | 6 | unspecified | — |
-| primewords | legacy-20260804 | zh | asr | train | 2 | unspecified | — |
-| singapore_english | legacy-20260804 | en | asr | train, dev | 4 | unspecified | — |
-| singaporean | legacy-20260804 | en | asr | train | 2 | unspecified | — |
-| tal100_en | legacy-20260804 | en | asr | train, dev, test | 6 | unspecified | — |
-| tal100_zh | legacy-20260804 | zh | asr | train, dev, test | 6 | unspecified | — |
-| talcs | legacy-20260804 | zh | asr | train, dev, test | 6 | unspecified | — |
-| thchs30 | legacy-20260804 | zh | asr | train, dev, test | 6 | unspecified | — |
-| vitw | legacy-20260804 | en | asr | train, real_distortion, real_dropout, real_echo, real_far_field, real_mixed, real_noise, real_obstructed, real_recording, syn_distortion, syn_dropout, syn_echo, syn_far_field, syn_mixed, syn_noise, syn_obstructed, syn_recording | 34 | unspecified | — |
-| wenetspeech | legacy-20260804 | zh | asr | train, dev, test_net, test_meeting | 8 | unspecified | — |
-| wenetspeech4tts | legacy-20260804 | zh | asr | train | 2 | unspecified | — |
-| wenetspeech_chuan | legacy-20260804 | zh | asr | train | 1 | unspecified | — |
-| wenetspeech_wu | legacy-20260804 | zh | asr | train | 1 | unspecified | — |
-| wenetspeech_yue | legacy-20260804 | yue | asr | train, test_long, test_short | 6 | unspecified | — |
-| wenetspeech_yue_all | legacy-20260804 | yue | asr | train, test_long, test_short | 6 | unspecified | — |
+| 数据版本 | 可用于 | 时长（小时） | 统计口径 |
+|---|---|---:|---|
+| `alimeeting@openslr-119-far-local-20260903` | 语音识别、说话人分段与归属、带说话人标注的语音识别、重叠语音检测、连续语音分离 | 125.5 | 各顶层 split 时长之和 |
+| `banspeech_bn@legacy` | 语音识别 | 6.5 | 发布方或原登记总时长 |
+| `cbtts_bn@legacy` | 语音识别 | 20.1 | 发布方或原登记总时长 |
+| `cml_tts_fr@legacy` | 语音识别 | 316.0 | 发布方或原登记总时长 |
+| `common_voice_ar@legacy` | 语音识别 | 58.2 | 发布方或原登记总时长 |
+| `common_voice_bn@legacy` | 语音识别 | 67.4 | 发布方或原登记总时长 |
+| `common_voice_de@legacy` | 语音识别 | 1,034.8 | 发布方或原登记总时长 |
+| `common_voice_es@legacy` | 语音识别 | 568.5 | 发布方或原登记总时长 |
+| `common_voice_fr@legacy` | 语音识别 | 924.1 | 发布方或原登记总时长 |
+| `common_voice_ja@legacy` | 语音识别 | 48.2 | 发布方或原登记总时长 |
+| `common_voice_ko@legacy` | 语音识别 | 2.6 | 发布方或原登记总时长 |
+| `common_voice_ru@legacy` | 语音识别 | 69.9 | 发布方或原登记总时长 |
+| `emilia_en@legacy` | 语音识别 | 43,624.0 | 发布方或原登记总时长 |
+| `emilia_ja@legacy` | 语音识别 | 1,715.5 | 发布方或原登记总时长 |
+| `emilia_ko@legacy` | 语音识别 | 217.2 | 发布方或原登记总时长 |
+| `emilia_zh@legacy` | 语音识别 | 40,848.4 | 发布方或原登记总时长 |
+| `fleurs_ar@legacy` | 语音识别 | 8.2 | 发布方或原登记总时长 |
+| `fleurs_bn@legacy` | 语音识别 | 15.6 | 发布方或原登记总时长 |
+| `fleurs_de@legacy` | 语音识别 | 13.4 | 发布方或原登记总时长 |
+| `fleurs_en@legacy` | 语音识别 | 10.3 | 发布方或原登记总时长 |
+| `fleurs_es@legacy` | 语音识别 | 13.2 | 发布方或原登记总时长 |
+| `fleurs_fr@legacy` | 语音识别 | 13.1 | 发布方或原登记总时长 |
+| `fleurs_ja@legacy` | 语音识别 | 10.7 | 发布方或原登记总时长 |
+| `fleurs_ko@legacy` | 语音识别 | 10.1 | 发布方或原登记总时长 |
+| `fleurs_ru@legacy` | 语音识别 | 11.6 | 发布方或原登记总时长 |
+| `fleurs_zh@legacy` | 语音识别 | 14.1 | 发布方或原登记总时长 |
+| `koreaspeech@legacy` | 语音识别 | 3,828.3 | 发布方或原登记总时长 |
+| `mgb2@legacy` | 语音识别 | 1,215.5 | 发布方或原登记总时长 |
+| `mls_de@legacy` | 语音识别 | 1,995.1 | 发布方或原登记总时长 |
+| `mls_es@legacy` | 语音识别 | 937.7 | 发布方或原登记总时长 |
+| `mls_fr@legacy` | 语音识别 | 1,096.7 | 发布方或原登记总时长 |
+| `notsofar@hf-ba8fd0f034ce-sim-v1.5-200h` | 语音识别、说话人分段与归属、带说话人标注的语音识别、重叠语音检测、连续语音分离 | 200.0 | 名义时长（估算） |
+| `open_large_bn@legacy` | 语音识别 | 5,045.8 | 发布方或原登记总时长 |
+| `police_synthetic_zh_accent@v1-20260817` | 语音识别 | 46.4 | 各顶层 split 时长之和 |
+| `police_synthetic_zh_accent@v2-20260818` | 语音识别 | 52.6 | 各顶层 split 时长之和 |
+| `police_synthetic_zh_accent@v3-20260820` | 语音识别 | 36.0 | 各顶层 split 时长之和 |
+| `police_synthetic_zh_accent@v5-20260830-qc` | 语音识别 | 41.2 | 各顶层 split 时长之和 |
+| `police_synthetic_zh_accent@v5-20260830-qwen75-cosy25` | 语音识别 | 28.2 | 各顶层 split 时长之和 |
+| `rulibrispeech_ru@legacy` | 语音识别 | 98.2 | 发布方或原登记总时长 |
+| `slr37_bn@legacy` | 语音识别 | 5.0 | 发布方或原登记总时长 |
+| `speechio@legacy` | 语音识别 | 63.8 | 发布方或原登记总时长 |
+| `wenetspeech@weak-source-20260904` | 语音识别 | 2,477.9 | 各顶层 split 时长之和 |
+| `yodas_ar@legacy` | 语音识别 | 289.7 | 发布方或原登记总时长 |
+| `yodas_bn@legacy` | 语音识别 | 27.1 | 发布方或原登记总时长 |
+| `yodas_de@legacy` | 语音识别 | 3,062.9 | 发布方或原登记总时长 |
+| `yodas_es@legacy` | 语音识别 | 3,737.8 | 发布方或原登记总时长 |
+| `yodas_fr@legacy` | 语音识别 | 2,423.7 | 发布方或原登记总时长 |
+| `yodas_ja@legacy` | 语音识别 | 1,094.2 | 发布方或原登记总时长 |
+| `yodas_ko@legacy` | 语音识别 | 2,774.3 | 发布方或原登记总时长 |
+| `yodas_ru@legacy` | 语音识别 | 5,596.0 | 发布方或原登记总时长 |
 
 </details>
 
-<details><summary><code>icefall_traffic_derived.jsonl</code> — 20 个版本</summary>
+以下版本虽然有参考数字，但不能作为当前版本完整时长计入合计：
 
-| Dataset | Version | Languages | Tasks | Splits | Artifacts | Integrity | Derived from |
-|---|---|---|---|---|---:|---|---|
-| librispeech_traffic_snr0 | recipe-1 | en | asr | test_clean, test_other | 2 | unspecified | librispeech |
-| librispeech_traffic_snr10 | recipe-1 | en | asr | test_clean, test_other | 2 | unspecified | librispeech |
-| librispeech_traffic_snr15 | recipe-1 | en | asr | test_clean, test_other | 2 | unspecified | librispeech |
-| librispeech_traffic_snr20 | recipe-1 | en | asr | test_clean, test_other | 2 | unspecified | librispeech |
-| librispeech_traffic_snr5 | recipe-1 | en | asr | test_clean, test_other | 2 | unspecified | librispeech |
-| mdcc_traffic_snr0 | recipe-1 | yue | asr | test | 1 | unspecified | mdcc |
-| mdcc_traffic_snr10 | recipe-1 | yue | asr | test | 1 | unspecified | mdcc |
-| mdcc_traffic_snr15 | recipe-1 | yue | asr | test | 1 | unspecified | mdcc |
-| mdcc_traffic_snr20 | recipe-1 | yue | asr | test | 1 | unspecified | mdcc |
-| mdcc_traffic_snr5 | recipe-1 | yue | asr | test | 1 | unspecified | mdcc |
-| talcs_traffic_snr0 | recipe-1 | zh | asr | test | 1 | unspecified | talcs |
-| talcs_traffic_snr10 | recipe-1 | zh | asr | test | 1 | unspecified | talcs |
-| talcs_traffic_snr15 | recipe-1 | zh | asr | test | 1 | unspecified | talcs |
-| talcs_traffic_snr20 | recipe-1 | zh | asr | test | 1 | unspecified | talcs |
-| talcs_traffic_snr5 | recipe-1 | zh | asr | test | 1 | unspecified | talcs |
-| wenetspeech_traffic_snr0 | recipe-1 | zh | asr | test_net | 1 | unspecified | wenetspeech |
-| wenetspeech_traffic_snr10 | recipe-1 | zh | asr | test_net | 1 | unspecified | wenetspeech |
-| wenetspeech_traffic_snr15 | recipe-1 | zh | asr | test_net | 1 | unspecified | wenetspeech |
-| wenetspeech_traffic_snr20 | recipe-1 | zh | asr | test_net | 1 | unspecified | wenetspeech |
-| wenetspeech_traffic_snr5 | recipe-1 | zh | asr | test_net | 1 | unspecified | wenetspeech |
+| 数据版本 | 参考时长（小时） | 原因 |
+|---|---:|---|
+| `wenetspeech@clean-weak-v1-20260904` | 2,477.9 | 仅有过滤前时长，不代表当前版本 |
 
-</details>
+## 数据变动时必须同步什么
 
-<details><summary><code>legacy_multilingual.jsonl</code> — 42 个版本</summary>
+1. 新增或修改数据版本时，在 catalog 的顶层 split 中登记 `statistics.duration_hours`。历史声明中的 `statistics.hours` 仍可读取。
+2. 细分统计必须通过 `group` 指向所属顶层 split；总览不会重复累加这些子分组。
+3. 过滤后的版本要登记过滤后的实际时长。只有 `hours_before_filter` 时，总览只把它当参考值，不计入当前版本合计。
+4. 文件校验结果写入 `provenance.integrity`；内容抽检、自动筛选和已知问题分别写入 `manual_review`、split 统计和 `quality_findings`，不要把文件完整性当成内容质量。
+5. 修改 catalog 或 view 后运行 `audio-data-contract generate-overview`。CI 会运行 `audio-data-contract generate-overview --check`，总览未同步就不能通过。
 
-| Dataset | Version | Languages | Tasks | Splits | Artifacts | Integrity | Derived from |
-|---|---|---|---|---|---:|---|---|
-| banspeech_bn | legacy | bn | asr | all | 1 | unspecified | — |
-| cbtts_bn | legacy | bn | asr | all | 1 | unspecified | — |
-| cml_tts_fr | legacy | fr | asr | dev, test, train | 1 | unspecified | — |
-| common_voice_ar | legacy | ar | asr | dev, test, train | 1 | unspecified | — |
-| common_voice_bn | legacy | bn | asr | dev, test, train | 1 | unspecified | — |
-| common_voice_de | legacy | de | asr | dev, test, train | 1 | unspecified | — |
-| common_voice_es | legacy | es | asr | dev, test, train | 1 | unspecified | — |
-| common_voice_fr | legacy | fr | asr | dev, test, train | 1 | unspecified | — |
-| common_voice_ja | legacy | ja | asr | dev, test, train | 1 | unspecified | — |
-| common_voice_ko | legacy | ko | asr | dev, test, train | 1 | unspecified | — |
-| common_voice_ru | legacy | ru | asr | dev, test, train | 1 | unspecified | — |
-| emilia_en | legacy | en | asr | all | 1 | unspecified | — |
-| emilia_ja | legacy | ja | asr | all | 1 | unspecified | — |
-| emilia_ko | legacy | ko | asr | all | 1 | unspecified | — |
-| emilia_zh | legacy | zh | asr | all | 1 | unspecified | — |
-| fleurs_ar | legacy | ar | asr | test, train, validation | 1 | unspecified | — |
-| fleurs_bn | legacy | bn | asr | test, train, validation | 1 | unspecified | — |
-| fleurs_de | legacy | de | asr | test, train, validation | 1 | unspecified | — |
-| fleurs_en | legacy | en | asr | test, train, validation | 1 | unspecified | — |
-| fleurs_es | legacy | es | asr | test, train, validation | 1 | unspecified | — |
-| fleurs_fr | legacy | fr | asr | test, train, validation | 1 | unspecified | — |
-| fleurs_ja | legacy | ja | asr | test, train, validation | 1 | unspecified | — |
-| fleurs_ko | legacy | ko | asr | test, train, validation | 1 | unspecified | — |
-| fleurs_ru | legacy | ru | asr | test, train, validation | 1 | unspecified | — |
-| fleurs_zh | legacy | zh | asr | test, train, validation | 1 | unspecified | — |
-| koreaspeech | legacy | ko | asr | train, validation | 1 | unspecified | — |
-| mgb2 | legacy | ar | asr | dev, test, train | 1 | unspecified | — |
-| mls_de | legacy | de | asr | dev, dev_punc, test, test_punc, train, train_punc | 1 | unspecified | — |
-| mls_es | legacy | es | asr | dev, dev_punc, test, test_punc, train, train_punc | 1 | unspecified | — |
-| mls_fr | legacy | fr | asr | dev, dev_punc, test, test_punc, train, train_punc | 1 | unspecified | — |
-| open_large_bn | legacy | bn | asr | all | 1 | unspecified | — |
-| rulibrispeech_ru | legacy | ru | asr | dev, test, train | 1 | unspecified | — |
-| slr37_bn | legacy | bn | asr | all | 1 | unspecified | — |
-| speechio | legacy | zh | asr | test | 1 | unspecified | — |
-| yodas_ar | legacy | ar | asr | all | 1 | unspecified | — |
-| yodas_bn | legacy | bn | asr | all | 1 | unspecified | — |
-| yodas_de | legacy | de | asr | all | 1 | unspecified | — |
-| yodas_es | legacy | es | asr | all | 1 | unspecified | — |
-| yodas_fr | legacy | fr | asr | all | 1 | unspecified | — |
-| yodas_ja | legacy | ja | asr | all | 1 | unspecified | — |
-| yodas_ko | legacy | ko | asr | all | 1 | unspecified | — |
-| yodas_ru | legacy | ru | asr | all | 1 | unspecified | — |
-
-</details>
-
-<details><summary><code>local_lhotse_derived.jsonl</code> — 19 个版本</summary>
-
-| Dataset | Version | Languages | Tasks | Splits | Artifacts | Integrity | Derived from |
-|---|---|---|---|---|---:|---|---|
-| aidatatang_hotwords | hotwords-v1-20260805 | zh | asr_hotwords | train | 2 | verified | aidatatang |
-| aishell2_clean | clean-v1-20260805 | zh | asr | test | 2 | verified | aishell2 |
-| aishell2_hotwords | hotwords-v1-20260805 | zh | asr_hotwords | test | 2 | verified | aishell2 |
-| aishell3_hotwords | hotwords-v1-20260805 | zh | asr_hotwords | train, test | 4 | verified | aishell3 |
-| aishell_clean | clean-v1-20260805 | zh | asr | test | 2 | verified | aishell |
-| aishell_hotwords | hotwords-v1-20260805 | zh | asr_hotwords | train, test | 4 | verified | aishell |
-| commonvoice_en_clean | clean-v1-20260805 | en | asr | train, test | 4 | verified | common_voice_en |
-| commonvoice_en_hotwords | hotwords-v1-20260805 | en | asr_hotwords | train, test | 4 | verified | common_voice_en |
-| commonvoice_zh_clean | clean-v1-20260805 | zh | asr | test | 2 | verified | common_voice_zh |
-| commonvoice_zh_hotwords | hotwords-v1-20260805 | zh | asr_hotwords | train, test | 4 | verified | common_voice_zh |
-| gigaspeech2_id | local-20260805 | id | asr | train | 2 | verified | — |
-| gigaspeech2_id_hotwords | hotwords-v1-20260805 | id | asr_hotwords | train | 2 | verified | gigaspeech2_id |
-| kespeech_clean | clean-v1-20260805 | zh | asr | test | 2 | verified | kespeech |
-| kespeech_hotwords | hotwords-v1-20260805 | zh | asr_hotwords | test | 2 | verified | kespeech |
-| magicdata_hotwords | hotwords-v1-20260805 | zh | asr_hotwords | train | 2 | verified | magicdata |
-| talcs_hotwords | hotwords-v1-20260805 | zh | asr_hotwords | train | 2 | verified | talcs |
-| thchs30_hotwords | hotwords-v1-20260805 | zh | asr_hotwords | train | 2 | verified | thchs30 |
-| wenetspeech_clean | clean-v1-20260805 | zh | asr | train | 2 | verified | wenetspeech |
-| wenetspeech_clean | clean-v3-20260828 | zh | asr | train | 3 | verified | wenetspeech |
-
-</details>
-
-<details><summary><code>multilingual_multispeaker.jsonl</code> — 6 个版本</summary>
-
-| Dataset | Version | Languages | Tasks | Splits | Artifacts | Integrity | Derived from |
-|---|---|---|---|---|---:|---|---|
-| alimeeting | openslr-119-local-20260826 | zh | asr, speaker_diarization, speaker_attributed_asr, overlap_speech, continuous_speech_separation | train, dev, test | 13 | verified | — |
-| indicvoices | hf-c96f9088f138 | as, bn, brx, doi, gu, hi, kn, ks, kok, mai, ml, mni, mr, ne, or, pa, sa, sat, sd, ta, te, ur | asr | all | 1 | verified | — |
-| multi-talker-sd | hf-be2d372003fd | en, zh | asr, code_switch_asr, speaker_diarization, speaker_attributed_asr, overlap_speech, continuous_speech_separation | train, dev, test | 3 | verified | — |
-| notsofar | hf-ba8fd0f034ce-recorded-240825.1 | en | asr, speaker_diarization, speaker_attributed_asr, overlap_speech, continuous_speech_separation | train, dev, eval | 3 | verified | — |
-| notsofar | hf-ba8fd0f034ce-sim-v1.5-200h | en | asr, speaker_diarization, speaker_attributed_asr, overlap_speech, continuous_speech_separation | train, validation | 2 | verified | — |
-| waxal-asr | hf-e91442a8989b | ach, aka, am, dag, dga, ee, ff, kpo, ln, lg, mas, mg, nyn, om, sid, sn, sog, ti, wal | asr | all | 2 | verified | — |
-
-</details>
-
-<details><summary><code>open_audio_eval.jsonl</code> — 108 个版本</summary>
-
-| Dataset | Version | Languages | Tasks | Splits | Artifacts | Integrity | Derived from |
-|---|---|---|---|---|---:|---|---|
-| aishell | eval-20260804 | zh | asr | test | 2 | unspecified | — |
-| aishell2 | eval-20260804 | zh | asr | test | 2 | unspecified | — |
-| aishell2_hotwords | eval-20260804 | zh | asr_hotwords | test | 2 | unspecified | — |
-| aishell3 | eval-20260804 | zh | asr | test | 2 | unspecified | — |
-| aishell3_hotwords | eval-20260804 | zh | asr_hotwords | test | 2 | unspecified | — |
-| aishell_hotwords | eval-20260804 | zh | asr_hotwords | test | 2 | unspecified | — |
-| audioset_esc_test | eval-20260804 | en | esc | test | 1 | unspecified | — |
-| biic_podcast_ser | eval-20260804 | zh | ser | test | 2 | unspecified | — |
-| commonvoice_en | eval-20260804 | en | asr | test | 3 | unspecified | — |
-| commonvoice_en_hotwords | eval-20260804 | en | asr_hotwords | test | 2 | unspecified | — |
-| commonvoice_zh | eval-20260804 | zh | asr | test | 2 | unspecified | — |
-| commonvoice_zh_hotwords | eval-20260804 | zh | asr_hotwords | test | 2 | unspecified | — |
-| cv_en_noise_audioset_esc | eval-20260804 | en | asr | test | 2 | unspecified | — |
-| cv_en_noise_audioset_esc_hotwords | eval-20260804 | en | asr_hotwords | test | 2 | unspecified | — |
-| cv_en_noise_audioset_traffic | eval-20260804 | en | asr | test | 2 | unspecified | — |
-| cv_en_noise_audioset_traffic_hotwords | eval-20260804 | en | asr_hotwords | test | 2 | unspecified | — |
-| cv_en_noise_dns | eval-20260804 | en | asr | test | 2 | unspecified | — |
-| cv_en_noise_dns_hotwords | eval-20260804 | en | asr_hotwords | test | 2 | unspecified | — |
-| cv_en_noise_musan_music | eval-20260804 | en | asr | test | 2 | unspecified | — |
-| cv_en_noise_musan_music_hotwords | eval-20260804 | en | asr_hotwords | test | 2 | unspecified | — |
-| cv_en_noise_musan_noise | eval-20260804 | en | asr | test | 2 | unspecified | — |
-| cv_en_noise_musan_noise_hotwords | eval-20260804 | en | asr_hotwords | test | 2 | unspecified | — |
-| cv_en_noise_musan_speech | eval-20260804 | en | asr | test | 2 | unspecified | — |
-| cv_en_noise_musan_speech_hotwords | eval-20260804 | en | asr_hotwords | test | 2 | unspecified | — |
-| cv_en_noise_wham | eval-20260804 | en | asr | test | 2 | unspecified | — |
-| cv_en_noise_wham_hotwords | eval-20260804 | en | asr_hotwords | test | 2 | unspecified | — |
-| cv_en_rir_rirmega | eval-20260804 | en | asr | test | 2 | unspecified | — |
-| cv_en_rir_rirmega_hotwords | eval-20260804 | en | asr_hotwords | test | 2 | unspecified | — |
-| cv_en_rir_slr26 | eval-20260804 | en | asr | test | 2 | unspecified | — |
-| cv_en_rir_slr26_hotwords | eval-20260804 | en | asr_hotwords | test | 2 | unspecified | — |
-| cv_en_rir_slr28_real | eval-20260804 | en | asr | test | 2 | unspecified | — |
-| cv_en_rir_slr28_real_hotwords | eval-20260804 | en | asr_hotwords | test | 2 | unspecified | — |
-| cv_en_rir_slr28_sim | eval-20260804 | en | asr | test | 2 | unspecified | — |
-| cv_en_rir_slr28_sim_hotwords | eval-20260804 | en | asr_hotwords | test | 2 | unspecified | — |
-| cv_zh_noise_audioset_esc | eval-20260804 | zh | asr | test | 2 | unspecified | — |
-| cv_zh_noise_audioset_esc_hotwords | eval-20260804 | zh | asr_hotwords | test | 2 | unspecified | — |
-| cv_zh_noise_audioset_traffic | eval-20260804 | zh | asr | test | 2 | unspecified | — |
-| cv_zh_noise_audioset_traffic_hotwords | eval-20260804 | zh | asr_hotwords | test | 2 | unspecified | — |
-| cv_zh_noise_dns | eval-20260804 | zh | asr | test | 2 | unspecified | — |
-| cv_zh_noise_dns_hotwords | eval-20260804 | zh | asr_hotwords | test | 2 | unspecified | — |
-| cv_zh_noise_musan_music | eval-20260804 | zh | asr | test | 2 | unspecified | — |
-| cv_zh_noise_musan_music_hotwords | eval-20260804 | zh | asr_hotwords | test | 2 | unspecified | — |
-| cv_zh_noise_musan_noise | eval-20260804 | zh | asr | test | 2 | unspecified | — |
-| cv_zh_noise_musan_noise_hotwords | eval-20260804 | zh | asr_hotwords | test | 2 | unspecified | — |
-| cv_zh_noise_musan_speech | eval-20260804 | zh | asr | test | 2 | unspecified | — |
-| cv_zh_noise_musan_speech_hotwords | eval-20260804 | zh | asr_hotwords | test | 2 | unspecified | — |
-| cv_zh_noise_wham | eval-20260804 | zh | asr | test | 2 | unspecified | — |
-| cv_zh_noise_wham_hotwords | eval-20260804 | zh | asr_hotwords | test | 2 | unspecified | — |
-| cv_zh_rir_rirmega | eval-20260804 | zh | asr | test | 2 | unspecified | — |
-| cv_zh_rir_rirmega_hotwords | eval-20260804 | zh | asr_hotwords | test | 2 | unspecified | — |
-| cv_zh_rir_slr26 | eval-20260804 | zh | asr | test | 2 | unspecified | — |
-| cv_zh_rir_slr26_hotwords | eval-20260804 | zh | asr_hotwords | test | 2 | unspecified | — |
-| cv_zh_rir_slr28_real | eval-20260804 | zh | asr | test | 2 | unspecified | — |
-| cv_zh_rir_slr28_real_hotwords | eval-20260804 | zh | asr_hotwords | test | 2 | unspecified | — |
-| cv_zh_rir_slr28_sim | eval-20260804 | zh | asr | test | 2 | unspecified | — |
-| cv_zh_rir_slr28_sim_hotwords | eval-20260804 | zh | asr_hotwords | test | 2 | unspecified | — |
-| emotion1200_en_sec | eval-20260804 | en | sec | test | 2 | unspecified | — |
-| emotion1200_en_sepc | eval-20260804 | en | sepc | test | 2 | unspecified | — |
-| emotion1200_en_ser | eval-20260804 | en | ser | test | 2 | unspecified | — |
-| emotion1200_zh_sec | eval-20260804 | zh | sec | test | 2 | unspecified | — |
-| emotion1200_zh_sepc | eval-20260804 | zh | sepc | test | 2 | unspecified | — |
-| emotion1200_zh_ser | eval-20260804 | zh | ser | test | 2 | unspecified | — |
-| gigaspeech | eval-20260804 | en | asr | test | 2 | unspecified | — |
-| iemocap_ser | eval-20260804 | en | ser | test | 2 | unspecified | — |
-| kespeech | eval-20260804 | zh | asr | test | 2 | unspecified | — |
-| libri2mix | eval-20260804 | en | ts_asr | test | 1 | unspecified | — |
-| libri2mix_lib | eval-20260804 | en | ts_asr | test | 1 | unspecified | — |
-| libri2mix_snrp10 | eval-20260804 | en | ts_asr | test | 1 | unspecified | — |
-| libri2mix_snrp5 | eval-20260804 | en | ts_asr | test | 1 | unspecified | — |
-| libri2mix_tsstyle | eval-20260804 | en | ts_asr | test | 1 | unspecified | — |
-| libri3mix | eval-20260804 | en | ts_asr | test | 1 | unspecified | — |
-| libri3mix_lib | eval-20260804 | en | ts_asr | test | 1 | unspecified | — |
-| libri3mix_snrp10 | eval-20260804 | en | ts_asr | test | 1 | unspecified | — |
-| libri3mix_snrp5 | eval-20260804 | en | ts_asr | test | 1 | unspecified | — |
-| libri3mix_tsstyle | eval-20260804 | en | ts_asr | test | 1 | unspecified | — |
-| librispeech | eval-20260804 | en | asr | librispeech_test_clean, librispeech_test_other | 4 | unspecified | — |
-| librispeech_test_clean | eval-20260804 | en | asr | test | 2 | unspecified | — |
-| librispeech_test_clean_hotwords | eval-20260804 | en | asr_hotwords | test | 2 | unspecified | — |
-| librispeech_test_other | eval-20260804 | en | asr | test | 2 | unspecified | — |
-| librispeech_test_other_hotwords | eval-20260804 | en | asr_hotwords | test | 2 | unspecified | — |
-| m3ed_ser | eval-20260804 | zh | ser | test | 2 | unspecified | — |
-| magicdata | eval-20260804 | zh | asr | test | 2 | unspecified | — |
-| meld_ser | eval-20260804 | en | ser | test | 2 | unspecified | — |
-| mls | eval-20260804 | en | asr | test | 2 | unspecified | — |
-| msp_podcast_ser | eval-20260804 | en | ser | msp_podcast_test1, msp_podcast_test2 | 4 | unspecified | — |
-| talcs | eval-20260804 | zh | asr | test | 2 | unspecified | — |
-| thchs30 | eval-20260804 | zh | asr | test | 2 | unspecified | — |
-| ts_hw_test | eval-20260804 | en, zh | ts_asr | test | 1 | unspecified | — |
-| ts_hw_test_libristyle | eval-20260804 | en, zh | ts_asr | test | 1 | unspecified | — |
-| vitw_real_distortion | eval-20260804 | en, zh | asr | test | 2 | unspecified | — |
-| vitw_real_dropout | eval-20260804 | en, zh | asr | test | 2 | unspecified | — |
-| vitw_real_echo | eval-20260804 | en, zh | asr | test | 2 | unspecified | — |
-| vitw_real_far_field | eval-20260804 | en, zh | asr | test | 2 | unspecified | — |
-| vitw_real_mixed | eval-20260804 | en, zh | asr | test | 2 | unspecified | — |
-| vitw_real_noise | eval-20260804 | en, zh | asr | test | 2 | unspecified | — |
-| vitw_real_obstructed | eval-20260804 | en, zh | asr | test | 2 | unspecified | — |
-| vitw_real_recording | eval-20260804 | en, zh | asr | test | 2 | unspecified | — |
-| vitw_syn_distortion | eval-20260804 | en, zh | asr | test | 2 | unspecified | — |
-| vitw_syn_dropout | eval-20260804 | en, zh | asr | test | 2 | unspecified | — |
-| vitw_syn_echo | eval-20260804 | en, zh | asr | test | 2 | unspecified | — |
-| vitw_syn_far_field | eval-20260804 | en, zh | asr | test | 2 | unspecified | — |
-| vitw_syn_mixed | eval-20260804 | en, zh | asr | test | 2 | unspecified | — |
-| vitw_syn_noise | eval-20260804 | en, zh | asr | test | 2 | unspecified | — |
-| vitw_syn_obstructed | eval-20260804 | en, zh | asr | test | 2 | unspecified | — |
-| vitw_syn_recording | eval-20260804 | en, zh | asr | test | 2 | unspecified | — |
-| wenetspeech | eval-20260804 | zh | asr | wenetspeech_test_net, wenetspeech_test_meeting | 4 | unspecified | — |
-| wenetspeech_test_meeting | eval-20260804 | zh | asr | test | 2 | unspecified | — |
-| wenetspeech_test_net | eval-20260804 | zh | asr | test | 2 | unspecified | — |
-
-</details>
-
-<details><summary><code>synthetic_asr.jsonl</code> — 4 个版本</summary>
-
-| Dataset | Version | Languages | Tasks | Splits | Artifacts | Integrity | Derived from |
-|---|---|---|---|---|---:|---|---|
-| police_synthetic_zh_accent | v1-20260817 | zh | asr | train, train_cosyvoice3, train_qwen3_tts | 8 | verified | — |
-| police_synthetic_zh_accent | v2-20260818 | zh | asr | train, train_cosyvoice3, train_qwen3_tts, test, test_cosyvoice3, test_qwen3_tts | 15 | verified | — |
-| police_synthetic_zh_accent | v3-20260820 | zh | asr | train, train_cosyvoice3, train_qwen3_tts | 10 | verified | — |
-| police_synthetic_zh_accent | v5-20260830-qwen75-cosy25 | zh | asr | train, train_qwen3_tts, train_cosyvoice3 | 7 | verified | police_synthetic_zh_accent |
-
-</details>
-
-<details><summary><code>synthetic_asr_v5_qc.jsonl</code> — 1 个版本</summary>
-
-| Dataset | Version | Languages | Tasks | Splits | Artifacts | Integrity | Derived from |
-|---|---|---|---|---|---:|---|---|
-| police_synthetic_zh_accent | v5-20260830-qc | zh | asr | train, train_qwen3_tts, train_cosyvoice3 | 6 | verified | — |
-
-</details>
-
-<details><summary><code>wenetspeech_weak.jsonl</code> — 2 个版本</summary>
-
-| Dataset | Version | Languages | Tasks | Splits | Artifacts | Integrity | Derived from |
-|---|---|---|---|---|---:|---|---|
-| wenetspeech | clean-weak-v1-20260904 | zh | asr | train | 3 | verified | wenetspeech |
-| wenetspeech | weak-source-20260904 | zh | asr | train | 2 | verified | — |
-
-</details>
-
-## 逻辑 View
-
-| View | Version | Source | Result | Transforms | Materialization | Lineage |
-|---|---|---|---|---|---|---|
-| aidatatang/hotwords | v1-20260805 | aidatatang@legacy-20260804 | aidatatang_hotwords@hotwords-v1-20260805 | punctuation@legacy → hotwords@v1 | full | inferred |
-| aishell/clean | v1-20260805 | aishell@legacy-20260804 | aishell_clean@clean-v1-20260805 | punctuation@legacy → clean@v1 | full | inferred |
-| aishell/hotwords | v1-20260805 | aishell@legacy-20260804 | aishell_hotwords@hotwords-v1-20260805 | punctuation@legacy → clean@v1 → hotwords@v1 | full | inferred |
-| aishell2/clean | v1-20260805 | aishell2@legacy-20260804 | aishell2_clean@clean-v1-20260805 | clean@v1 | full | inferred |
-| aishell2/hotwords | v1-20260805 | aishell2@legacy-20260804 | aishell2_hotwords@hotwords-v1-20260805 | clean@v1 → hotwords@v1 | full | inferred |
-| aishell3/hotwords | v1-20260805 | aishell3@legacy-20260804 | aishell3_hotwords@hotwords-v1-20260805 | punctuation@legacy → hotwords@v1 | full | inferred |
-| common_voice_en/clean | v1-20260805 | common_voice_en@legacy-20260804 | commonvoice_en_clean@clean-v1-20260805 | select-original-text@legacy → punctuation@legacy → clean@v1 | full | inferred |
-| common_voice_en/hotwords | v1-20260805 | common_voice_en@legacy-20260804 | commonvoice_en_hotwords@hotwords-v1-20260805 | select-original-text@legacy → punctuation@legacy → clean@v1 → hotwords@v1 | full | inferred |
-| common_voice_zh/clean | v1-20260805 | common_voice_zh@legacy-20260804 | commonvoice_zh_clean@clean-v1-20260805 | punctuation@legacy → clean@v1 | full | inferred |
-| common_voice_zh/hotwords | v1-20260805 | common_voice_zh@legacy-20260804 | commonvoice_zh_hotwords@hotwords-v1-20260805 | punctuation@legacy → clean@v1 → hotwords@v1 | full | inferred |
-| gigaspeech2_id/hotwords | v1-20260805 | gigaspeech2_id@local-20260805 | gigaspeech2_id_hotwords@hotwords-v1-20260805 | select-hotword-subset@legacy → hotwords@v1 | full | inferred |
-| kespeech/clean | v1-20260805 | kespeech@legacy-20260804 | kespeech_clean@clean-v1-20260805 | punctuation@legacy → clean@v1 | full | inferred |
-| kespeech/hotwords | v1-20260805 | kespeech@legacy-20260804 | kespeech_hotwords@hotwords-v1-20260805 | punctuation@legacy → clean@v1 → hotwords@v1 | full | inferred |
-| magicdata/hotwords | v1-20260805 | magicdata@legacy-20260804 | magicdata_hotwords@hotwords-v1-20260805 | punctuation@legacy → hotwords@v1 | full | inferred |
-| talcs/hotwords | v1-20260805 | talcs@legacy-20260804 | talcs_hotwords@hotwords-v1-20260805 | punctuation@legacy → hotwords@v1 | full | inferred |
-| thchs30/hotwords | v1-20260805 | thchs30@legacy-20260804 | thchs30_hotwords@hotwords-v1-20260805 | punctuation@legacy → hotwords@v1 | full | inferred |
-| wenetspeech/clean | v1-20260805 | wenetspeech@legacy-20260804 | wenetspeech_clean@clean-v1-20260805 | punctuation@legacy → clean@v1 | full | inferred |
-| wenetspeech/clean | v3-20260828 | wenetspeech@legacy-20260804 | wenetspeech_clean@clean-v3-20260828 | clean@consensus-v6+wenetspeech-faithful-v5 | full | exact |
-| wenetspeech/clean | weak-v1-20260904 | wenetspeech@weak-source-20260904 | wenetspeech@clean-weak-v1-20260904 | clean@consensus-v6+wenetspeech-faithful-v5 | full | exact |
+完整的机器可读声明位于 `catalog/` 和 `views/`；本页只保留协作者做判断时最需要的信息。

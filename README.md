@@ -1,74 +1,97 @@
 # 通用语音数据协议
 
-本项目定义一套面向语音数据生产、治理、训练与评测的通用数据协议。它将数据身份、物理位置、处理血缘、运行状态和模型输入表示分离，使数据可以跨机器、跨工具和跨团队稳定流转。
+这是一个帮助团队把语音数据说明白、管清楚的通用协议。
 
-协议以 JSON、JSONL 和 JSON Schema 为边界。Python 包只是轻量参考实现和命令行工具；其他语言可以直接依据 Schema 实现兼容的生产者或消费者，无需引入 Python 运行时。
+它不保存音频本身，而是回答这些实际问题：
 
-## 核心对象
+- 这批数据是谁、哪个版本，能用于什么任务？
+- 音频和标注放在哪里，换一台机器后怎样找到？
+- 数据经过哪些清洗、筛选或组合，来源还能不能追溯？
+- 文件是否完整，内容质量做过哪些检查，还有哪些已知问题？
+- 训练或评测程序最终应该读取哪一种数据表示？
 
-| 对象 | 作用 |
-|---|---|
-| `DatasetSpec` | 描述带版本的数据集、任务、语言、split、物理产物和来源信息 |
-| `DatasetViewSpec` | 描述源数据经过有序变换后形成的稳定逻辑视图 |
-| `DatasetState` | 记录可变的下载、校验、解包和准备状态 |
-| `AudioRecord` | 保存稳定、有序且与模型无关的音频样本事实 |
-| `AudioExample` | 保存由样本和提示模板渲染出的多模态消息 |
+协议使用 JSON、JSONL 和 JSON Schema。仓库里的 Python 包只是参考工具，不是使用协议的前提；任何语言都可以按 Schema 读写同样的数据。
 
-数据集和 View 使用显式版本；物理产物只保存根目录别名与 POSIX 相对位置。本机根目录映射不进入版本控制，因此协议文件不携带机器路径。
+## 先看当前有哪些数据
 
-## 当前数据情况
+[数据总览](docs/data-overview.md)直接展示协作者最关心的信息：
 
-完整的数据规模、任务覆盖、完整性状态、数据集版本索引和逻辑 View 列表见[数据总览](docs/data-overview.md)。该页面由协议声明自动生成，catalog 和 view 文件是唯一事实源。
+- 当前登记的总时长，以及其中多少是实测或发布方统计、多少只是名义时长；
+- 支持哪些任务，每个任务有多少个数据版本和多少小时；
+- 还有多少版本没有登记时长，避免把不完整的统计当成真实总量；
+- 文件完整性覆盖、内容质量证据和已知问题；
+- 哪些具体版本已经登记时长，以及采用了什么统计口径。
 
-任何数据声明变动都必须同步更新总览：
+总览由 catalog 自动生成，不需要手工维护数字。修改数据声明后运行：
 
 ```bash
 audio-data-contract generate-overview
 ```
 
-CI 会执行以下命令；总览缺失或内容过期时检查失败：
+CI 会执行 `audio-data-contract generate-overview --check`。数据发生变化但总览没有同步时，检查会失败。
 
-```bash
-audio-data-contract generate-overview --check
-```
+## 协议怎样组织数据
 
-## 快速开始
+可以把协议理解成五张互相关联的说明书：
 
-安装参考工具及开发依赖：
+| 说明书 | 它回答的问题 |
+|---|---|
+| 数据集声明 | 这是什么数据、哪个版本、支持什么语言和任务？ |
+| 物理产物 | 音频、标注或清单放在哪个逻辑根目录下，大小和哈希是多少？ |
+| 数据血缘 | 当前版本从哪里来，经过了哪些处理？ |
+| 运行状态 | 数据是否已下载、校验、解包和准备完成？ |
+| 样本表示 | 一条音频事实怎样稳定地变成训练或评测输入？ |
+
+本机绝对路径不会写进协议。catalog 只保存根目录别名和相对路径，每个协作者在自己的根目录配置中把别名映射到实际位置。这样换机器、换存储或换训练框架时，不需要改数据声明。
+
+更完整的版本、分层和逻辑视图规则见[数据组织规范](docs/data-organization.md)。
+
+## 时长和质量怎样登记
+
+为了让总览一直可信，新增或修改数据时遵守下面的口径：
+
+1. 在每个顶层 split 的 `statistics.duration_hours` 中登记实际时长。
+2. 如果一组数据只是某个 split 的细分，使用 `group` 指向所属 split；总览不会把父级和子分组重复相加。
+3. 清洗或过滤后的版本登记处理完成后的实际时长。`hours_before_filter` 只能作为参考，不计入当前版本总量。
+4. 名义或估算时长与实际时长分开登记、分开展示，不能混写成精确数字。
+5. 文件哈希校验只说明文件未发生变化，不代表转写或标签正确。内容抽检、筛选结果和已知问题要分别记录。
+
+完整的同步要求也会显示在[数据总览](docs/data-overview.md)末尾。
+
+## 开始使用
+
+安装参考工具和开发依赖：
 
 ```bash
 python -m pip install -e ".[dev]"
 ```
 
-常用操作：
+先验证数据声明：
 
 ```bash
-audio-data-contract validate-catalog <catalog>
+audio-data-contract validate-catalog catalog
+audio-data-contract validate-views views catalog
+```
+
+需要在本机访问物理文件时，复制 `roots.example.json`，把根目录别名改成自己的绝对路径。通过 `--roots` 传入该文件，或设置 `AUDIO_DATA_ROOTS_FILE`。本机路径配置不要提交到仓库。
+
+常用命令：
+
+```bash
 audio-data-contract validate-records <records>
 audio-data-contract validate-state <state-file>
-audio-data-contract validate-views <views> <catalog>
 audio-data-contract resolve <catalog> <dataset> <version> <artifact> --roots <roots-file>
 audio-data-contract verify-artifact <catalog> <dataset> <version> <artifact> --roots <roots-file>
 audio-data-contract resolve-view <views> <catalog> <view> <version>
 ```
 
-根目录配置是一个从 `root_alias` 到本机绝对目录的 JSON 对象。通过 `--roots` 显式传入，或使用 `AUDIO_DATA_ROOTS_FILE` 环境变量；不要将本机配置提交到仓库。
+## 修改和提交
 
-## Schema 与兼容性
+修改协议或数据声明时：
 
-版本化 Schema 位于 [`src/audio_data_contract/schemas`](src/audio_data_contract/schemas)，并随 Python wheel 一同发布。解析器严格遵循 Schema，不会静默转换不兼容的数据类型。
-
-同一 schema version 内只允许向后兼容的澄清或校验修正。新增必填字段、改变字段语义或删除已有能力时，必须发布新的 schema version，并保留必要的迁移说明。
-
-更完整的 Dataset、Layer、View 组织原则见[数据组织规范](docs/data-organization.md)。
-
-## 协作流程
-
-修改数据或协议时，依次执行：
-
-1. 更新 catalog、view 或 Schema，并保持版本与血缘信息完整；
+1. 更新 catalog、view 或 Schema，写清版本和来源；
 2. 运行 `audio-data-contract generate-overview`；
-3. 运行 `ruff check .` 和 `pytest -q`；
-4. 确认生成的总览变化与本次数据变动一致后再提交。
+3. 检查总览里的时长、任务和质量变化是否符合预期；
+4. 运行 `ruff check .` 和 `pytest -q`。
 
-CI 在 Python 3.10 环境中重复执行这些检查。协议消费者不受该实现语言限制，只需满足对应 JSON Schema 和行为约束。
+版本化 Schema 位于 `src/audio_data_contract/schemas/`。新增必填字段、删除已有能力或改变字段含义时，需要发布新的 schema version；同一 schema version 内只能做向后兼容的澄清或校验修正。
