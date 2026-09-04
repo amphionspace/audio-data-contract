@@ -1,4 +1,6 @@
 {
+  "alimeeting_far_raw": "/data/alimeeting/original/far",
+  "audio_data_contract": "/path/to/audio-data-contract",
   "legacy_asr": "/data/asr",
   "multilingual": "/data/multilingual",
   "managed_fast": "/data/managed",
