@@ -19,6 +19,15 @@ Lhotse、PyTorch、ms-swift 或 vLLM。
 `eval-20260804` 视图还存储了 open-audio-llm 内置的 108 个评测数据集。其产物使用
 根目录别名；vLLM 在本地仅保留标点和后置过滤策略的覆盖配置。
 
+`local_lhotse_derived.jsonl` 登记了 `/ai_sds_wuzz/DATA_ASR` 下经过完整性验证的
+本地基础、清洗和热词派生版本。每个本地产物都记录压缩文件大小、SHA-256 和记录数；
+未完成、缺少配对 manifest 或属于临时实验的数据见 `local_lhotse_scan.json`，不会暴露
+为可消费的数据版本。
+
+逻辑数据组织采用 Dataset、Layer、View 三层模型，详见
+[`docs/data-organization.md`](docs/data-organization.md)。`views/` 将历史派生文件映射为
+稳定逻辑视图，下游不需要了解 `_clean`、`_hotwords` 或本机目录结构。
+
 ## 根目录配置
 
 目录条目使用 `root_alias` 和相对路径。本机 JSON 文件负责解析这些别名：
@@ -45,4 +54,8 @@ audio-data-contract inspect-download archive.tar.gz --expected-bytes 1234
 audio-data-contract transition-state state/dataset@version.json downloaded
 audio-data-contract resolve catalog/datasets.jsonl DATASET VERSION ARTIFACT \
   --roots roots.json
+audio-data-contract verify-artifact catalog DATASET VERSION ARTIFACT \
+  --roots roots.json
+audio-data-contract validate-views views catalog
+audio-data-contract resolve-view views catalog VIEW VERSION
 ```
