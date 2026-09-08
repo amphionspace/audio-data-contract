@@ -17,7 +17,7 @@
 | notsofar_sdm | 可用 | 同一会议的多个设备版本不能算独立会议时长 |
 | vitw_far_field | 可用 | train/bench ID 无交集不代表底层源音频已去重 |
 | real_rir_slr28 | 可用 | 仅作声学增强，没有转写 |
-| realman | 下载中 | ASR 清单是计划产物；须待本机 preparation_status 为 ready |
+| realman | 可用 | train/dev/test 分别为 36816/6698/7633 条，64.03/8.09/11.59 小时 |
 
 RealMAN 原始文件的期望大小和 LFS SHA-256 来自固定的官方 revision；登记这些
 期望值不代表已经完成完整性校验。运行状态位于 `legacy_asr` 下的

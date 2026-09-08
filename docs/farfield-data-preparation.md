@@ -13,6 +13,7 @@
 | `alimeeting_sdm` | 209 | 186,360 | 140.57 h | `AliMeeting/data/manifests` |
 | `ami_sdm` | 134 | 102,690 | 74.80 h | `AMI/data/manifests` |
 | `notsofar_sdm` | 346 | 82,850 | 45.61 h | `NOTSOFAR/data/manifests` |
+| `realman` | 36,816 | 36,816 | 64.03 h | `RealMAN/data/manifests` |
 | `vitw_far_field` | 45,437 | 45,437 | 77.26 h | `Voices-in-the-Wild-2M/data/manifests/by_subset` |
 
 标注时长包含多人重叠；NOTSOFAR 同一会议还包含不同单麦设备的录音，不能把这一列当成独立会议时长，也不能直接按此设训练比例。
@@ -43,6 +44,8 @@ ViTW 原始采样率包含 16/24/48 kHz，现有 loader 会按训练目标重采
 - 下载保留 `.aria2` 分片并使用官方 LFS SHA-256；超时、连接及校验失败自动等待后重试，只提交未完成文件。默认等待 60 秒，可用 `--retry-delay` 调整。
 - 重新启动时复用固定 revision 的下载计划和解包标记；成功后自动解压、验证清单并生成 train/dev/test。文件锁阻止多个进程同时写同一下载目录；本地文件/配置错误会退出等待修复。
 - `realman` 已在 `audio-data-contract` 的 `icefall_runtime.jsonl` 注册，但只能在下面的状态文件显示 `ready` 后纳入训练；仅有压缩包或注册项不代表数据就绪。
+
+2026-09-08 已完成 113 个文件下载、LFS SHA-256 校验、57 个压缩包提取及清单验证，状态为 `ready`。
 
 动态状态：`/ai_sds_wuzz/DATA_ASR/RealMAN/preparation_status.json`。
 
