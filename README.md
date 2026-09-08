@@ -95,3 +95,9 @@ audio-data-contract resolve-view <views> <catalog> <view> <version>
 4. 运行 `ruff check .` 和 `pytest -q`。
 
 版本化 Schema 位于 `src/audio_data_contract/schemas/`。新增必填字段、删除已有能力或改变字段含义时，需要发布新的 schema version；同一 schema version 内只能做向后兼容的澄清或校验修正。
+
+## 下载、清洗与数据准备
+
+Icefall 相关的数据处理实现统一维护在 [scripts/icefall](scripts/icefall/README.md)，
+包括远场语料下载续传、会议清单、police 数据划分、manifest 规整、特征与评测集生成。
+[远场数据状态及复现步骤](docs/farfield-data-preparation.md)记录当前进度和缺口。
