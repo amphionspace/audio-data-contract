@@ -2,8 +2,10 @@
 
 from __future__ import annotations
 
-from collections import Counter
+import json
+from collections import defaultdict
 from dataclasses import dataclass
+from html import escape
 from pathlib import Path
 
 from .catalog import load_catalog
@@ -12,6 +14,7 @@ from .types import DatasetSpec
 from .views import load_view_catalog
 
 TASK_NAMES = {
+    "augmentation": "音频增强",
     "asr": "语音识别",
     "asr_hotwords": "热词增强语音识别",
     "ast": "语音翻译",
@@ -89,19 +92,6 @@ def _duration(spec: DatasetSpec) -> DurationSummary:
     return DurationSummary(None, "missing", "未登记")
 
 
-def _integrity(spec: DatasetSpec) -> str:
-    return str(spec.provenance.get("integrity", "unspecified"))
-
-
-def _has_content_quality_evidence(spec: DatasetSpec) -> bool:
-    if "quality_status" in spec.provenance or "manual_review" in spec.provenance:
-        return True
-    return any(
-        "pass" in split.get("statistics", {}) or "reject" in split.get("statistics", {})
-        for split in spec.splits.values()
-    )
-
-
 def _format_hours(value: float) -> str:
     return f"{value:,.1f}"
 
@@ -152,174 +142,376 @@ def _quality_rows(specs: list[DatasetSpec]) -> list[tuple[str, str, str, str]]:
             rows.append(
                 (
                     spec.key,
-                    "有自动筛选和人工抽检记录",
+                    "有自动筛选和人工抽检记录" if review else "有自动筛选记录",
                     f"自动筛选通过 {passed:,} 条、拒绝 {rejected:,} 条，通过率 {rate:.2%}",
-                    f"人工抽检 {reviewed} 条，其中确认 {confirmed} 条；样本很小，不能代表整集准确率",
+                    (
+                        f"人工抽检 {reviewed} 条，其中确认 {confirmed} 条；样本很小，不能代表整集准确率"
+                        if review
+                        else "未登记人工抽检；筛选通过不等于转写完全正确"
+                    ),
                 )
             )
     return rows
+
+
+def _dataset_families(specs: list[DatasetSpec]) -> dict[str, str]:
+    """Group presentation identities using declared family and lineage only."""
+    parents = {}
+    for spec in specs:
+        parent = spec.provenance.get("dataset_family")
+        if not parent and spec.derived_from:
+            parent = spec.derived_from.split("@", 1)[0]
+        if parent and parent != spec.dataset_id:
+            parents[spec.dataset_id] = parent
+    result = {}
+    for spec in specs:
+        family = spec.dataset_id
+        seen = set()
+        while family in parents:
+            if family in seen:
+                raise ContractError(f"cyclic dataset family: {spec.dataset_id}")
+            seen.add(family)
+            family = parents[family]
+        result[spec.dataset_id] = family
+    return result
+
+
+def _source_links(catalog_path: str | Path) -> dict[str, str]:
+    selected = Path(catalog_path)
+    sources = sorted(selected.glob("*.jsonl")) if selected.is_dir() else [selected]
+    links = {}
+    for source in sources:
+        for number, line in enumerate(
+            source.read_text(encoding="utf-8").splitlines(), 1
+        ):
+            if not line.strip() or line.lstrip().startswith("#"):
+                continue
+            data = json.loads(line)
+            links[f"{data['dataset_id']}@{data['version']}"] = (
+                f"../catalog/{source.name}#L{number}"
+            )
+    return links
+
+
+def _family_hours(specs: list[DatasetSpec], links: dict[str, str]) -> str:
+    entries = []
+    for spec in specs:
+        duration = _duration(spec)
+        if duration.hours is None:
+            continue
+        label = spec.provenance.get("duration_label", spec.version)
+        qualifier = {
+            "reported": "已登记",
+            "nominal": "估算",
+            "partial": "部分划分",
+            "before_filter": "过滤前",
+        }[duration.kind]
+        entries.append(
+            f"{_format_hours(duration.hours)}（{qualifier}；"
+            f"[{_cell(label)}]({links[spec.key]})）"
+        )
+    for spec in specs:
+        reference = spec.provenance.get("reference_duration")
+        if reference:
+            entries.append(
+                f"{_format_hours(reference['hours'])}（"
+                f"[参考表]({reference['url']})；{_cell(spec.version)}）"
+            )
+    return "<br>".join(entries) or "未登记"
+
+
+def _family_notes(specs: list[DatasetSpec]) -> str:
+    notes = []
+    for spec in specs:
+        description = spec.provenance.get("description")
+        if description and description.rstrip("。；") not in notes:
+            notes.append(description.rstrip("。；"))
+    punctuation = {spec.provenance.get("has_punctuation") for spec in specs}
+    if True in punctuation:
+        notes.append("有含标点版本")
+    if False in punctuation:
+        notes.append("有无标点版本")
+    if any(
+        spec.derived_from and "icefall" not in spec.recipe_parameters for spec in specs
+    ):
+        notes.append("含派生版本（与源数据可能重叠）")
+    if all(spec.provenance.get("consumer") for spec in specs):
+        notes.append("当前仅登记评测入口")
+    splits = sorted(
+        {
+            name
+            for spec in specs
+            for name, split in spec.splits.items()
+            if not split.get("group")
+        }
+    )
+    if not notes:
+        notes.append(
+            "已登记划分：" + "、".join(splits) if splits else "尚未登记独立划分"
+        )
+    return _cell("；".join(notes))
+
+
+def _chart_data(specs: list[DatasetSpec]) -> tuple[list[tuple], list[tuple]]:
+    families = _dataset_families(specs)
+    groups = defaultdict(list)
+    for spec in specs:
+        if (
+            spec.provenance.get("inventory_status") == "download_planned"
+            or spec.provenance.get("inventory_category") == "training_mixture"
+        ):
+            continue
+        groups[families[spec.dataset_id]].append(spec)
+    top = []
+    counts = [0, 0, 0]
+    for family, members in sorted(groups.items()):
+        candidates = []
+        has_reported = False
+        has_reference = False
+        for spec in sorted(members, key=lambda item: item.key):
+            duration = _duration(spec)
+            has_reported |= duration.kind == "reported"
+            has_reference |= duration.hours is not None
+            if duration.included:
+                candidates.append((duration.hours, duration.kind, spec.key))
+            reference = spec.provenance.get("reference_duration")
+            if reference:
+                has_reference = True
+                candidates.append((reference["hours"], "reference", spec.key))
+        counts[0 if has_reported else 1 if has_reference else 2] += 1
+        if candidates:
+            hours, kind, key = max(
+                candidates, key=lambda item: (item[0], item[1] == "reported", item[2])
+            )
+            top.append((family, key, hours, kind))
+    top.sort(key=lambda row: (-row[2], row[0]))
+    coverage = [
+        (
+            "至少一个版本有完整时长登记",
+            "不代表整个数据集所有版本均已覆盖",
+            counts[0],
+            "reported",
+        ),
+        (
+            "仅参考、估算或部分时长",
+            "含过滤前时长；没有完整登记版本",
+            counts[1],
+            "reference",
+        ),
+        ("尚未登记时长", "缺少时长的条目仍保留在总览", counts[2], "missing"),
+    ]
+    return top[:20], coverage
+
+
+def _bar_chart(title: str, subtitle: str, rows: list[tuple], unit: str) -> str:
+    """Render deterministic standalone SVG without runtime plotting dependencies."""
+    colors = {
+        "reported": "#2563eb",
+        "reference": "#b45309",
+        "nominal": "#7c3aed",
+        "missing": "#64748b",
+    }
+    labels = {
+        "reported": "已登记",
+        "reference": "参考 / 部分",
+        "nominal": "估算",
+        "missing": "未登记",
+    }
+    height = 150 + 52 * len(rows)
+    parts = [
+        f'<svg xmlns="http://www.w3.org/2000/svg" width="1240" height="{height}" viewBox="0 0 1240 {height}" role="img" aria-labelledby="title desc">',
+        f'<title id="title">{escape(title)}</title>',
+        f'<desc id="desc">{escape(subtitle)}</desc>',
+        '<rect width="100%" height="100%" fill="white"/>',
+        '<g font-family="Arial, Noto Sans CJK SC, Microsoft YaHei, sans-serif" fill="#172033">',
+        f'<text x="24" y="34" font-size="23" font-weight="700">{escape(title)}</text>',
+        f'<text x="24" y="60" font-size="13">{escape(subtitle)}</text>',
+    ]
+    for i, (kind, color) in enumerate(colors.items()):
+        x = 24 + i * 170
+        parts.append(f'<rect x="{x}" y="78" width="12" height="12" fill="{color}"/>')
+        parts.append(f'<text x="{x + 19}" y="89" font-size="12">{labels[kind]}</text>')
+    maximum = max((row[2] for row in rows), default=0) or 1
+    for i, (name, scope, value, kind) in enumerate(rows):
+        y = 122 + i * 52
+        width = value / maximum * 440
+        number = _format_hours(value) if unit == "小时" else str(value)
+        parts.extend(
+            [
+                f'<text x="24" y="{y}" font-size="15" font-weight="600">{escape(name)}</text>',
+                f'<text x="24" y="{y + 18}" font-size="11" fill="#475569">{escape(scope)}</text>',
+                f'<rect x="640" y="{y - 12}" width="440" height="23" rx="3" fill="#f1f5f9"/>',
+                f'<rect x="640" y="{y - 12}" width="{width:.2f}" height="23" rx="3" fill="{colors[kind]}"/>',
+                f'<text x="1094" y="{y + 5}" font-size="14">{number} {unit}</text>',
+            ]
+        )
+    if not rows:
+        parts.append('<text x="24" y="124" font-size="15">暂无可展示的时长</text>')
+    parts.extend(["</g>", "</svg>", ""])
+    return "\n".join(parts)
+
+
+def render_overview_charts(catalog_path: str | Path = "catalog") -> dict[str, str]:
+    top, coverage = _chart_data(list(load_catalog(catalog_path)))
+    return {
+        "data-duration-top20.svg": _bar_chart(
+            "数据集时长 Top 20",
+            "每个数据集取最大单版本或参考值；线性比例，不跨版本相加，非当前完整规模排名。",
+            top,
+            "小时",
+        ),
+        "data-duration-coverage.svg": _bar_chart(
+            "时长登记覆盖情况",
+            f"共 {sum(row[2] for row in coverage)} 个数据集条目；不含下载来源声明及训练混合配方。",
+            coverage,
+            "个",
+        ),
+    }
 
 
 def render_data_overview(
     catalog_path: str | Path = "catalog",
     views_path: str | Path = "views",
 ) -> str:
-    """Render the current catalog and view state as stable Markdown."""
-
+    """Render one row per data family, independently of consumer frameworks."""
     catalog = load_catalog(catalog_path)
-    views = load_view_catalog(views_path, catalog)
+    load_view_catalog(views_path, catalog)
     specs = sorted(catalog, key=lambda spec: (spec.dataset_id, spec.version))
-    durations = {spec.key: _duration(spec) for spec in specs}
-
-    task_counts = Counter(task for spec in specs for task in spec.tasks)
-    integrity_counts = Counter(_integrity(spec) for spec in specs)
-    derived_count = sum(spec.derived_from is not None for spec in specs)
-    quality_rows = _quality_rows(specs)
-    quality_count = sum(_has_content_quality_evidence(spec) for spec in specs)
-
-    reported_hours = sum(
-        item.hours or 0.0 for item in durations.values() if item.kind == "reported"
-    )
-    nominal_hours = sum(
-        item.hours or 0.0 for item in durations.values() if item.kind == "nominal"
-    )
-    covered_count = sum(item.included for item in durations.values())
+    families = _dataset_families(specs)
+    links = _source_links(catalog_path)
+    groups = defaultdict(list)
+    planned = []
+    mixtures = []
+    for spec in specs:
+        if spec.provenance.get("inventory_status") == "download_planned":
+            planned.append(spec)
+        elif spec.provenance.get("inventory_category") == "training_mixture":
+            mixtures.append(spec)
+        else:
+            groups[families[spec.dataset_id]].append(spec)
 
     lines = [
         "# 数据总览",
         "",
-        "这里回答四个最常见的问题：现在有多少数据、能做什么任务、时长统计覆盖到什么程度，以及已有的质量证据是什么。",
+        "按数据集查看语言、支持任务、时长和特性。清洗、热词、加噪、评测入口和训练框架配置归入所属数据集，不另算一套源数据。",
         "",
-        "> 本页由 catalog 和 view 声明自动生成。这里的“总时长”按数据集版本相加，可能包含同一音频的不同版本，不能理解为去重后的物理音频时长。",
+        f"当前登记 **{len(groups)} 个数据集条目**；另有 **{len(planned)} 个下载来源声明**和 **{len(mixtures)} 个训练混合配方**。登记不代表本机文件已齐备。",
         "",
-        "## 一眼看懂当前数据",
+        "时长单位为小时。不同版本、子集和标注片段可能重叠，逐项列出，不相加为总量；没有时长的条目仍保留。参考表数字未核实当前文件与划分覆盖；“过滤前”不能当作清洗后时长。",
         "",
-        "| 你可能关心的问题 | 当前答案 |",
-        "|---|---:|",
-        f"| 登记了多少个数据集 | {len({spec.dataset_id for spec in specs})} 个 |",
-        f"| 登记了多少个版本 | {len(specs)} 个，其中 {derived_count} 个是派生版本 |",
-        f"| 支持多少类任务 | {len(task_counts)} 类 |",
-        f"| 按版本相加的可汇总时长 | {_format_hours(reported_hours + nominal_hours)} 小时 |",
-        f"| 其中：已登记时长 | {_format_hours(reported_hours)} 小时 |",
-        f"| 其中：名义时长 | {_format_hours(nominal_hours)} 小时 |",
-        f"| 有可汇总时长的版本 | {covered_count} / {len(specs)} 个 |",
-        f"| 完成文件完整性校验的版本 | {integrity_counts['verified']} / {len(specs)} 个 |",
-        f"| 有内容质量记录的版本 | {quality_count} / {len(specs)} 个 |",
-        f"| 已登记的逻辑数据视图 | {len(views)} 个 |",
+        "任务是该数据集各已登记版本的能力并集，具体版本和划分以链接内声明为准。标点、热词和文件哈希校验都不能单独证明做过内容清洗。",
         "",
-        f"“已登记时长”来自发布方统计、历史登记值或顶层 split 的时长；“名义时长”是数据声明中的估算值。还有 {len(specs) - covered_count} 个版本没有可汇总的当前时长，因此上面的数字不是仓库全部数据的真实总量。",
-        "",
-        "## 支持哪些任务",
-        "",
-        "同一个数据版本可以同时服务多个任务。下表会把该版本的全部时长记到每个适用任务中，所以各任务时长不能再次相加。",
-        "",
-        "| 任务 | 标识 | 数据版本 | 已登记时长（小时） | 名义时长（小时） | 时长覆盖 |",
-        "|---|---|---:|---:|---:|---:|",
     ]
-
-    for task, count in sorted(
-        task_counts.items(), key=lambda item: (-item[1], item[0])
-    ):
-        task_specs = [spec for spec in specs if task in spec.tasks]
-        reported = sum(
-            durations[spec.key].hours or 0.0
-            for spec in task_specs
-            if durations[spec.key].kind == "reported"
-        )
-        nominal = sum(
-            durations[spec.key].hours or 0.0
-            for spec in task_specs
-            if durations[spec.key].kind == "nominal"
-        )
-        covered = sum(durations[spec.key].included for spec in task_specs)
-        lines.append(
-            f"| {_cell(_task_name(task))} | `{_cell(task)}` | {count} | "
-            f"{_format_hours(reported) if reported else '—'} | "
-            f"{_format_hours(nominal) if nominal else '—'} | {covered} / {count} |"
-        )
-
     lines.extend(
         [
+            "## 数据规模与登记覆盖",
             "",
-            "## 数据质量如何",
+            "![数据集时长 Top 20](assets/data-duration-top20.svg)",
             "",
-            "质量要分成两件事看：",
+            "每个数据集仅取最大的一项完整版本登记、参考或估算时长，并标出对应版本。部分划分和过滤前时长不参与排名；不同颜色区分登记值与参考 / 估算值。排名用于查看量级，不代表最新版本或整个数据集的完整时长。",
             "",
-            "- **文件完整性**：文件大小、哈希或清单是否核验过。它只能说明文件没有悄悄变化。",
-            "- **内容质量**：转写、标签、时间边界等是否准确。文件校验通过，不等于内容正确。",
+            "![时长登记覆盖情况](assets/data-duration-coverage.svg)",
             "",
-            "| 检查项 | 数据版本 | 占全部版本 |",
-            "|---|---:|---:|",
-            f"| 文件完整性已核验 | {integrity_counts['verified']} | {integrity_counts['verified'] / len(specs):.1%} |",
-            f"| 文件完整性未标记为已核验 | {len(specs) - integrity_counts['verified']} | {(len(specs) - integrity_counts['verified']) / len(specs):.1%} |",
-            f"| 有内容质量记录 | {quality_count} | {quality_count / len(specs):.1%} |",
-            f"| 暂无内容质量记录 | {len(specs) - quality_count} | {(len(specs) - quality_count) / len(specs):.1%} |",
+            "覆盖图按数据集互斥分类：优先计入“至少一个版本有完整时长登记”，其次是“仅参考、估算或部分时长”，其余为“尚未登记”。完整登记只针对对应版本，不代表整个数据集所有子集和版本均已覆盖。",
             "",
-            "目前有明确证据可展示的内容质量记录如下。没有出现在表里，不代表质量差，只表示 catalog 里还没有足够信息可判断。",
+        ]
+    )
+    sections = defaultdict(list)
+    for family, members in sorted(groups.items()):
+        languages = {language for spec in members for language in spec.languages}
+        if languages == {"en"}:
+            section = "英文数据"
+        elif languages <= {"zh", "yue"}:
+            section = "中文及粤语数据"
+        elif len(languages) > 1 or "multi" in languages:
+            section = "混合语言及多语数据"
+        else:
+            section = "其他语言数据"
+        sections[section].append((family, members))
+    for section in ["英文数据", "中文及粤语数据", "混合语言及多语数据", "其他语言数据"]:
+        if not sections[section]:
+            continue
+        lines.extend(
+            [
+                f"## {section}",
+                "",
+                "| 数据集 | 语言 | 支持任务 | 时长（小时，注明范围） | 特性 / 备注 |",
+                "|---|---|---|---|---|",
+            ]
+        )
+        for family, members in sections[section]:
+            primary = next(
+                (spec for spec in members if spec.provenance.get("description")),
+                next(
+                    (
+                        spec
+                        for spec in members
+                        if not spec.derived_from and not spec.provenance.get("consumer")
+                    ),
+                    members[0],
+                ),
+            )
+            languages = "、".join(
+                sorted({lang for spec in members for lang in spec.languages})
+            )
+            tasks = tuple(sorted({task for spec in members for task in spec.tasks}))
+            lines.append(
+                f"| [{_cell(family)}]({links[primary.key]}) | {_cell(languages)} | "
+                f"{_cell(_task_list(tasks))} | {_family_hours(members, links)} | {_family_notes(members)} |"
+            )
+        lines.append("")
+    lines.extend(
+        [
+            "## 下载来源声明",
             "",
-            "| 数据版本 | 当前结论 | 已记录证据 | 使用时要注意 |",
+            "以下条目来自下载计划，仅登记来源、版本和预期位置；这里不据此判断已下载或可训练。已有旧版的数据集也可能列有新版本下载计划。",
+            "",
+            "| 数据集 | 版本 | 语言 | 支持任务 |",
             "|---|---|---|---|",
         ]
     )
-    for key, conclusion, evidence, caution in quality_rows:
+    for spec in planned:
         lines.append(
-            f"| `{_cell(key)}` | {_cell(conclusion)} | {_cell(evidence)} | {_cell(caution)} |"
+            f"| [{_cell(families[spec.dataset_id])}]({links[spec.key]}) | {_cell(spec.version)} | {_cell('、'.join(spec.languages))} | {_cell(_task_list(spec.tasks))} |"
         )
-
-    included_specs = [spec for spec in specs if durations[spec.key].included]
-    excluded_with_reference = [
-        spec
-        for spec in specs
-        if durations[spec.key].kind in {"partial", "before_filter"}
-    ]
-    lines.extend(
-        [
-            "",
-            "## 哪些版本已经登记时长",
-            "",
-            f"下面列出计入总览的 {len(included_specs)} 个版本。派生版本和不同版本可能复用同一批音频，所以这里只做版本口径统计。",
-            "",
-            f"<details><summary>展开 {len(included_specs)} 个版本的时长明细</summary>",
-            "",
-            "| 数据版本 | 可用于 | 时长（小时） | 统计口径 |",
-            "|---|---|---:|---|",
-        ]
-    )
-    for spec in included_specs:
-        duration = durations[spec.key]
-        lines.append(
-            f"| `{_cell(spec.key)}` | {_cell(_task_list(spec.tasks))} | "
-            f"{_format_hours(duration.hours or 0.0)} | {_cell(duration.basis)} |"
-        )
-    lines.extend(["", "</details>", ""])
-
-    if excluded_with_reference:
+    if mixtures:
         lines.extend(
             [
-                "以下版本虽然有参考数字，但不能作为当前版本完整时长计入合计：",
                 "",
-                "| 数据版本 | 参考时长（小时） | 原因 |",
-                "|---|---:|---|",
+                "## 训练混合配方",
+                "",
+                "这些配方复用上面的数据，不增加源数据集数量或时长。",
+                "",
             ]
         )
-        for spec in excluded_with_reference:
-            duration = durations[spec.key]
-            lines.append(
-                f"| `{_cell(spec.key)}` | {_format_hours(duration.hours or 0.0)} | {_cell(duration.basis)} |"
-            )
-        lines.append("")
-
+        for spec in mixtures:
+            lines.append(f"- [{_cell(spec.key)}]({links[spec.key]})")
     lines.extend(
         [
-            "## 数据变动时必须同步什么",
             "",
-            "1. 新增或修改数据版本时，在 catalog 的顶层 split 中登记 `statistics.duration_hours`。历史声明中的 `statistics.hours` 仍可读取。",
-            "2. 细分统计必须通过 `group` 指向所属顶层 split；总览不会重复累加这些子分组。",
-            "3. 过滤后的版本要登记过滤后的实际时长。只有 `hours_before_filter` 时，总览只把它当参考值，不计入当前版本合计。",
-            "4. 文件校验结果写入 `provenance.integrity`；内容抽检、自动筛选和已知问题分别写入 `manual_review`、split 统计和 `quality_findings`，不要把文件完整性当成内容质量。",
-            "5. 修改 catalog 或 view 后运行 `audio-data-contract generate-overview`。CI 会运行 `audio-data-contract generate-overview --check`，总览未同步就不能通过。",
+            "## 已记录的质量证据",
             "",
-            "完整的机器可读声明位于 `catalog/` 和 `views/`；本页只保留协作者做判断时最需要的信息。",
+            "文件校验通过，不等于内容正确。以下仅列有明确记录的版本，缺少记录不代表质量差。",
+            "",
+            "| 数据版本 | 当前结论 | 证据 | 注意事项 |",
+            "|---|---|---|---|",
+        ]
+    )
+    for key, conclusion, evidence, caution in _quality_rows(specs):
+        lines.append(
+            f"| [{_cell(key)}]({links[key]}) | {_cell(conclusion)} | {_cell(evidence)} | {_cell(caution)} |"
+        )
+    lines.extend(
+        [
+            "",
+            "CV EN 的 train/test 清单落地差异见 [CV EN 清洗说明](cv-en-cleaning.md)。",
+            "",
+            "## 数据声明与维护",
+            "",
+            "- [目录说明](../catalog/README.md)：解释历史文件名、下载来源声明与框架适配记录。",
+            "- [组织规范](data-organization.md)：数据身份、版本、处理层与视图，与训练框架无关。",
+            "- 新增数据时登记任务、语言、特性和顶层 split 的 `statistics.duration_hours`；未知时长留空，不填 0。",
+            "- 更新 catalog 或 views 后运行 `audio-data-contract generate-overview`；CI 用 `--check` 检查本页同步。",
             "",
         ]
     )
@@ -337,17 +529,28 @@ def update_data_overview(
 
     destination = Path(output)
     rendered = render_data_overview(catalog_path, views_path)
+    artifacts = {destination: rendered}
+    artifacts.update(
+        {
+            destination.parent / "assets" / name: content
+            for name, content in render_overview_charts(catalog_path).items()
+        }
+    )
     if check:
-        try:
-            current = destination.read_text(encoding="utf-8")
-        except OSError as exc:
-            raise ContractError(f"data overview is missing: {destination}") from exc
-        if current != rendered:
-            raise ContractError(
-                "data overview is out of date; run "
-                "`audio-data-contract generate-overview`"
-            )
+        for path, expected in artifacts.items():
+            try:
+                current = path.read_text(encoding="utf-8")
+            except OSError as exc:
+                raise ContractError(
+                    f"data overview artifact is missing: {path}"
+                ) from exc
+            if current != expected:
+                raise ContractError(
+                    f"data overview artifact is out of date: {path}; run "
+                    "`audio-data-contract generate-overview`"
+                )
         return "current"
-    destination.parent.mkdir(parents=True, exist_ok=True)
-    destination.write_text(rendered, encoding="utf-8")
+    for path, content in artifacts.items():
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(content, encoding="utf-8")
     return "written"
