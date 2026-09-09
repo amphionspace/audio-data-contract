@@ -33,6 +33,10 @@ audio-data-contract generate-overview
 
 CI 会执行 `audio-data-contract generate-overview --check`。数据发生变化但总览没有同步时，检查会失败。
 
+## 准备本地原始音频
+
+使用 `extract-audio` 按归档预提取 Chuan/Wu 音频，或用 `localize-audio` 按 manifest 准备本地副本。命令必须显式调用，不修改原始数据或 catalog。参数、重跑规则及验收方式见[音频准备说明](docs/audio-preparation.md)。
+
 ## 协议怎样组织数据
 
 可以把协议理解成五张互相关联的说明书：

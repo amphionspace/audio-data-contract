@@ -19,6 +19,14 @@ def _parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(prog="audio-data-contract")
     commands = parser.add_subparsers(dest="command", required=True)
 
+    for name in ("extract-audio", "localize-audio"):
+        prepare = commands.add_parser(name)
+        prepare.add_argument("--manifest", nargs="+", required=True)
+        prepare.add_argument("--cache-dir", required=True)
+        prepare.add_argument("--output-dir", required=True)
+        prepare.add_argument("--workers", type=int, default=4)
+        prepare.add_argument("--source-root")
+
     validate = commands.add_parser("validate-catalog")
     validate.add_argument("catalog")
 
@@ -97,6 +105,10 @@ def _root_args(values: list[str]) -> dict[str, str]:
 
 def main(argv: list[str] | None = None) -> int:
     args = _parser().parse_args(argv)
+    if args.command in {"extract-audio", "localize-audio"}:
+        from .audio_prepare import run
+
+        return run(args)
     if args.command == "stats-duration":
         from .duration import run
 
