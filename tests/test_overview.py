@@ -55,9 +55,12 @@ def test_overview_lists_datasets_instead_of_consumer_versions():
     assert "| [granary](" not in inventory
     assert "| [icefall_v10_farfield_replay](" not in inventory
     assert "| [mls](" in inventory
-    assert "| [tal100_en](" in inventory  # Missing duration must not hide data.
-    assert "未登记" in next(
+    assert "已登记" in next(
         line for line in inventory.splitlines() if "| [tal100_en](" in line
+    )
+    # Missing duration must still not hide sources awaiting format-specific statistics.
+    assert "未登记" in next(
+        line for line in inventory.splitlines() if "| [multi-talker-sd](" in line
     )
     assert "按版本相加的可汇总时长" not in rendered
     assert "## 下载来源声明" in rendered
@@ -109,13 +112,20 @@ def test_nominal_and_pre_filter_hours_are_clearly_separated():
     catalog = load_catalog(ROOT / "catalog")
 
     nominal = _duration(catalog.get("notsofar", "hf-ba8fd0f034ce-sim-v1.5-200h"))
-    filtered = _duration(catalog.get("wenetspeech", "clean-weak-v1-20260904"))
+    spec = catalog.get("wenetspeech", "clean-weak-v1-20260904")
+    filtered = _duration(replace(
+        spec, splits={"train": {"statistics": {
+            "hours_before_filter": spec.splits["train"]["statistics"]["hours_before_filter"]
+        }}}
+    ))
 
     assert nominal.kind == "nominal"
     assert nominal.hours == 200
     assert filtered.kind == "before_filter"
     assert filtered.hours == pytest.approx(2477.941)
     assert not filtered.included
+    assert _duration(spec).kind == "reported"
+    assert _duration(spec).hours < filtered.hours
 
 
 def test_reported_split_hours_take_priority_over_nominal_hours():

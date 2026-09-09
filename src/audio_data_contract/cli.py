@@ -72,6 +72,16 @@ def _parser() -> argparse.ArgumentParser:
     overview.add_argument("--views", default="views")
     overview.add_argument("--output", default="docs/data-overview.md")
     overview.add_argument("--check", action="store_true")
+
+    duration = commands.add_parser("stats-duration")
+    inputs = duration.add_mutually_exclusive_group(required=True)
+    inputs.add_argument("--catalog")
+    inputs.add_argument("--manifest", nargs="+")
+    inputs.add_argument("--audio-dir", nargs="+")
+    duration.add_argument("--roots")
+    duration.add_argument("--workers", type=int)
+    duration.add_argument("--output")
+    duration.add_argument("--write", action="store_true")
     return parser
 
 
@@ -87,6 +97,10 @@ def _root_args(values: list[str]) -> dict[str, str]:
 
 def main(argv: list[str] | None = None) -> int:
     args = _parser().parse_args(argv)
+    if args.command == "stats-duration":
+        from .duration import run
+
+        return run(args)
     if args.command == "validate-catalog":
         catalog = load_catalog(args.catalog)
         print(json.dumps({"datasets": len(catalog)}, sort_keys=True))
