@@ -5,6 +5,8 @@
 本规范解决同一数据集经过清洗、过滤、标点恢复、热词提取或其他字段增强后，产生多份
 manifest，却无法稳定表达身份、血缘和可用状态的问题。
 
+协议核心不依赖训练框架或音频清单格式。数据身份、任务、时长、特性和处理血缘属于共享事实；Icefall 运行参数、采样配比、特征计算属于消费方配置。当前历史文件的边界见 [catalog 目录说明](../catalog/README.md)。
+
 核心原则是分离三类对象：
 
 1. **Dataset**：不可变的源数据事实和物理产物；
@@ -73,10 +75,10 @@ View 必须声明源 Dataset、顺序变换链、最终物化 Dataset 以及血�
 
 ## 物理目录
 
-新任务采用以下目录；现有目录先通过 catalog 映射，不立即搬迁：
+新任务按以下逻辑分层组织；文件格式可选，下面的 manifest 文件名仅以 Lhotse 物化为例。现有目录通过 catalog 映射，不立即搬迁：
 
 ```text
-<dataset>/lhotse/
+<dataset>/
 ├── source/<source-version>/       # 不可变上游 manifest
 ├── layers/<layer>/<layer-version>/
 │   ├── train.patch.jsonl.gz       # 按 ID 排序的稀疏增量
@@ -124,7 +126,7 @@ building → validating → ready
                  └──→ quarantine
 ```
 
-只有 `ready` 产物可以进入 catalog。发布门槛：
+来源声明可以先登记预期产物，但必须与已准备数据区分；`download_planned` 条目不宣称文件已存在。只有 `ready` 产物可作为已准备版本供下游消费。以下为 Lhotse 物化产物的发布门槛（其他格式采用对应校验）：
 
 1. gzip 能完整读取；
 2. `expected_bytes`、SHA-256 和记录数匹配；

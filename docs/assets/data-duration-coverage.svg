@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1240" height="306" viewBox="0 0 1240 306" role="img" aria-labelledby="title desc">
+<title id="title">时长登记覆盖情况</title>
+<desc id="desc">共 103 个数据集条目；不含下载来源声明及训练混合配方。</desc>
+<rect width="100%" height="100%" fill="white"/>
+<g font-family="Arial, Noto Sans CJK SC, Microsoft YaHei, sans-serif" fill="#172033">
+<text x="24" y="34" font-size="23" font-weight="700">时长登记覆盖情况</text>
+<text x="24" y="60" font-size="13">共 103 个数据集条目；不含下载来源声明及训练混合配方。</text>
+<rect x="24" y="78" width="12" height="12" fill="#2563eb"/>
+<text x="43" y="89" font-size="12">已登记</text>
+<rect x="194" y="78" width="12" height="12" fill="#b45309"/>
+<text x="213" y="89" font-size="12">参考 / 部分</text>
+<rect x="364" y="78" width="12" height="12" fill="#7c3aed"/>
+<text x="383" y="89" font-size="12">估算</text>
+<rect x="534" y="78" width="12" height="12" fill="#64748b"/>
+<text x="553" y="89" font-size="12">未登记</text>
+<text x="24" y="122" font-size="15" font-weight="600">至少一个版本有完整时长登记</text>
+<text x="24" y="140" font-size="11" fill="#475569">不代表整个数据集所有版本均已覆盖</text>
+<rect x="640" y="110" width="440" height="23" rx="3" fill="#f1f5f9"/>
+<rect x="640" y="110" width="440.00" height="23" rx="3" fill="#2563eb"/>
+<text x="1094" y="127" font-size="14">49 个</text>
+<text x="24" y="174" font-size="15" font-weight="600">仅参考、估算或部分时长</text>
+<text x="24" y="192" font-size="11" fill="#475569">含过滤前时长；没有完整登记版本</text>
+<rect x="640" y="162" width="440" height="23" rx="3" fill="#f1f5f9"/>
+<rect x="640" y="162" width="143.67" height="23" rx="3" fill="#b45309"/>
+<text x="1094" y="179" font-size="14">16 个</text>
+<text x="24" y="226" font-size="15" font-weight="600">尚未登记时长</text>
+<text x="24" y="244" font-size="11" fill="#475569">缺少时长的条目仍保留在总览</text>
+<rect x="640" y="214" width="440" height="23" rx="3" fill="#f1f5f9"/>
+<rect x="640" y="214" width="341.22" height="23" rx="3" fill="#64748b"/>
+<text x="1094" y="231" font-size="14">38 个</text>
+</g>
+</svg>
