@@ -61,6 +61,22 @@ CI 会执行 `audio-data-contract generate-overview --check`。数据发生变�
 
 字段与统计规则见 [catalog 目录说明](catalog/README.md)。
 
+### 快速统计缺失时长
+
+安装可选统计依赖后，可并行汇总清单或读取音频元信息：
+
+```bash
+python -m pip install -e ".[duration]"
+audio-data-contract stats-duration --catalog catalog --roots roots.json --output duration-report.json
+audio-data-contract stats-duration --manifest /data/cuts.jsonl.gz --output duration-report.json
+audio-data-contract stats-duration --audio-dir /data/audio --output duration-report.json
+```
+
+默认使用本进程可访问的全部逻辑 CPU；可通过 `--workers 16` 指定并行度。
+catalog 模式加 `--write` 会补齐成功划分的缺失时长并更新总览，保留已有登记。
+失败划分不回填，原因写入报告，命令返回非零状态。
+统计口径、性能报告和 CPU 配额限制见[时长统计说明](docs/duration-statistics.md)。
+
 ## 开始使用
 
 安装参考工具和开发依赖：

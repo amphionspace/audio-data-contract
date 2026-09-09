@@ -14,6 +14,7 @@ dependencies = []
 [project.optional-dependencies]
 dev = ["jsonschema[format]", "pytest", "ruff"]
 preparation = ["requests", "lhotse==1.33.0", "soundfile", "textgrid", "numpy", "scipy"]
+duration = ["orjson>=3.10", "rapidgzip>=0.16", "soundfile>=0.13"]
 
 [project.scripts]
 audio-data-contract = "audio_data_contract.cli:main"

@@ -6,10 +6,11 @@ from audio_data_contract import load_catalog
 CATALOG_DIR = Path(__file__).parents[1] / "catalog"
 
 
-def test_icefall_snapshot_has_39_portable_base_datasets():
+def test_icefall_snapshot_has_38_portable_base_datasets():
     catalog = load_catalog(CATALOG_DIR)
     specs = [spec for spec in catalog if spec.version == "legacy-20260804"]
-    assert len(specs) == 39
+    assert len(specs) == 38
+    assert "common_voice_yue" not in {spec.dataset_id for spec in specs}
     assert all("asr" in spec.tasks for spec in specs)
     assert all(not artifact.relative_path.startswith("/") for spec in specs for artifact in spec.artifacts)
 
@@ -30,7 +31,10 @@ def test_traffic_language_matches_base_dataset():
 def test_open_audio_eval_view_is_complete_and_portable():
     catalog = load_catalog(CATALOG_DIR)
     specs = [spec for spec in catalog if spec.version == "eval-20260804"]
-    assert len(specs) == 108
+    assert len(specs) == 105
+    assert {"ts_hw_test", "libri2mix", "libri3mix"}.isdisjoint(
+        spec.dataset_id for spec in specs
+    )
     assert all(
         spec.provenance.get("consumer") == "open-audio-llm-vllm-eval"
         for spec in specs
