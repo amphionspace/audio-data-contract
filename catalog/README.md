@@ -19,6 +19,7 @@
 | `synthetic_asr*.jsonl` | 合成语音的版本和质检产物 | 同一数据集的不同版本可能复用音频 |
 | `local_lhotse_scan.json` | 历史扫描报告 | 不是 Dataset 声明，不参与 `.jsonl` catalog 加载 |
 | `inventory/` | 文件级校验清单 | 用于追溯完整性，不作为额外数据集 |
+| `librimix.jsonl`、`aishellmix.jsonl` | target-ASR 源快照与通用 AudioRecord 版本 | 包含训练、测试、音频索引及组合关系，见[读取说明](../docs/target-asr.md) |
 
 ## 总览的统计规则
 
