@@ -1,0 +1,14 @@
+﻿path,issue,expected_bytes,actual_bytes,owners
+managed_bulk:granary/hf-0fe23a860e35/downloads,unconfigured_root,,,granary@hf-0fe23a860e35
+managed_bulk:lemas/hf-91f0c1b9a29f/downloads,unconfigured_root,,,lemas@hf-91f0c1b9a29f
+managed_bulk:omnilingual-asr-corpus/hf-8648ba894637/downloads,unconfigured_root,,,omnilingual-asr-corpus@hf-8648ba894637
+managed_bulk:reazonspeech/hf-0df78f991f6a/downloads,unconfigured_root,,,reazonspeech@hf-0df78f991f6a
+managed_fast:common-voice-en/26.0/downloads/common-voice-scripted-speech-26-0-englis-c84784ae.tar.gz,unconfigured_root,,,common-voice-en@26.0
+managed_fast:common-voice-yue/26.0/downloads/common-voice-scripted-speech-26-0-canton-3bc2b1fd.tar.gz,unconfigured_root,,,common-voice-yue@26.0
+managed_fast:common-voice-zh-cn/26.0/downloads/common-voice-scripted-speech-26-0-chines-18e98647.tar.gz,unconfigured_root,,,common-voice-zh-cn@26.0
+managed_fast:common-voice-zh-hk/26.0/downloads/common-voice-scripted-speech-26-0-chines-0240e64b.tar.gz,unconfigured_root,,,common-voice-zh-hk@26.0
+legacy_asr:AISHELL-5/archives/train.tar.gz,expected_size_mismatch,54598541447,47954526208,aishell5@1.0
+legacy_asr:AISHELL-5/archives/Dev.tar.gz,expected_size_mismatch,1916430826,1859125248,aishell5@1.0
+legacy_asr:AISHELL-5/archives/Eval1.tar.gz,expected_size_mismatch,1727013906,1688207360,aishell5@1.0
+legacy_asr:AISHELL-5/archives/Eval2.tar.gz,expected_size_mismatch,1885457834,1833959424,aishell5@1.0
+legacy_asr:AISHELL-5/archives/noise.tar.gz,expected_size_mismatch,13361773095,11860443136,aishell5@1.0

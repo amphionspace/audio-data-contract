@@ -1,0 +1,105 @@
+{
+  "generated_at": "2026-09-10T08:23:59.381276+00:00",
+  "purpose": "COS 同步前版本保留与文件去重审阅；已补正两套警务源 v5 的 13 个 catalog 路径，未执行上传或删除。",
+  "scope": {
+    "catalog_versions": 319,
+    "view_count": 19,
+    "direct_artifact_references": 2878,
+    "distinct_logical_paths": 2527,
+    "path_status_counts": {
+      "directory": 61,
+      "file": 2458,
+      "unconfigured_root": 8
+    },
+    "directory_contents_fully_scanned": 7,
+    "source_manifest_scan": "police_synthetic_zh_accent v1/v2/v3、两套源 v5 和 police_terms_v5 划分版的全部 RecordingSet；其余依赖未全量展开",
+    "excluded_later_catalog_paths": [
+      "catalog/aishellmix.jsonl",
+      "catalog/librimix.jsonl"
+    ],
+    "excluded_later_view_paths": [
+      "views/target_asr.jsonl"
+    ],
+    "snapshot_note": "固定审计快照；随后登记的 target-ASR 8 条数据声明和 4 个 View 尚未纳入本轮审计。"
+  },
+  "decision_counts": {
+    "retain": 210,
+    "reference_only": 100,
+    "hold": 9
+  },
+  "reference_only_by_role": {
+    "运行快照": 1,
+    "清洗或热词视图": 4,
+    "评测入口": 37,
+    "噪声派生配方": 20,
+    "历史基础入口": 38
+  },
+  "direct_files": {
+    "bytes_if_uploaded_per_reference": 349550699602,
+    "distinct_inodes": 2454,
+    "bytes_after_path_inode_dedup": 339081829023,
+    "bytes_avoided_by_path_inode_dedup": 10468870579,
+    "same_size_candidate_files_hashed": 151,
+    "same_size_candidate_bytes_read": 124854367,
+    "verified_content_duplicate_groups": 46,
+    "verified_content_duplicate_bytes": 30358480,
+    "bytes_after_content_dedup": 339051470543,
+    "relocated_artifacts_fully_verified": 13,
+    "relocated_artifact_bytes_verified": 9884867
+  },
+  "verified_distinct_file_duplicates": {
+    "redundant_files": 480,
+    "redundant_logical_bytes": 106554752743,
+    "alimeeting_bytes": 106524394263
+  },
+  "total_unique_audio_bytes": null,
+  "total_local_reclaimable_bytes": null,
+  "limitations": [
+    "只核验了直接产物和列明的专项源文件；61 个目录中的其他目录及全库 manifest 音频、特征依赖尚未全量展开。",
+    "retain 表示保留建议，不表示文件完整性、训练可用性或所有依赖已通过校验。",
+    "reference_only 只合并物理备份；catalog、View、split、来源和配方说明全部保留。",
+    "未发现替代证据的独有历史数据暂保留；没有按版本号或时间自动淘汰。",
+    "已确认重复字节用于估算少上传的量，不等于可立即释放的磁盘空间；未评估外部使用方、链接、快照和删除权限。",
+    "多个版本共享的字节不可直接相加；additional_direct_file_bytes_in_order 依赖报告的规范选择顺序。",
+    "既有隔离条目不能重复计入本次新增节省空间。"
+  ],
+  "input_sha256": {
+    "catalog/alimeeting_far_raw.jsonl": "7de8289cf7e8875f8c8a5f5642cf77c1b87b151a9e534f09bd825a044701bd43",
+    "catalog/download_queue.jsonl": "32cb81080b16b840b124c6fa511fb8d458ea054589818f20b41ef62866abc119",
+    "catalog/icefall_base.jsonl": "2596b170624711dff48c2bae3c77f3c751153734d365c798a799fc74d9e62ed8",
+    "catalog/icefall_runtime.jsonl": "9767d6430541618f6f4396bea617e22877d6c465e991113871d6d467e1bf36a7",
+    "catalog/icefall_traffic_derived.jsonl": "7e2f5e52815370f8ec33631c7037a1e281d435fe3d47dd8f9ab72734f85e0a53",
+    "catalog/icefall_v10_replay.jsonl": "c2f98ec449cfbe5a7e1914d0e162b9889f9b707d9443c7b48fca1547404935db",
+    "catalog/legacy_multilingual.jsonl": "93edcd8e609e8a5e056bb48a8e89d9ca1a881291258ed34a29974c752eea5381",
+    "catalog/local_lhotse_derived.jsonl": "36593f4486ff2a7a01c0c00d91caadee66037a8b18de5b0ee00546066449eb9b",
+    "catalog/multilingual_multispeaker.jsonl": "deef08c0f77b6c666628d14dbf0e79a6f1b80bc700a766768a01af780ee2ddc5",
+    "catalog/open_audio_eval.jsonl": "b64b131cc2270af1dbf495ddf07823c68a1c2676891eaa25a04d81d382f947dd",
+    "catalog/synthetic_asr.jsonl": "a1bb926164738be54ab26cd208c5db844acd2973b2d3993d55fbc207c3143aab",
+    "catalog/synthetic_asr_v5_qc.jsonl": "0ca3f1c01c236d4b00bd04beb77c5719a0864a7d325877dab52a087a9302fe61",
+    "catalog/wenetspeech_weak.jsonl": "633e6b0d6a8d0f0c2e539ebb8fccd38fea0d2b294e6eeeeebf2882e1356a0879",
+    "views/local_lhotse_views.jsonl": "e9e1a62418e8a679d9e3e24e0243de4523777c4f867443a48a2afe60555ffce2",
+    "views/wenetspeech_weak_views.jsonl": "612d6b070df20b4ddd9123c8438226b98a53e4d6e9afde9b3ca5e341f424b6a7",
+    "catalog/local_lhotse_scan.json": "f295e584d6160ab25ece3c526339aa6c3172316475b197175635a8152d517e56"
+  },
+  "classification_order": [
+    "当前运行快照",
+    "当前回放配方",
+    "源数据、独立产物及清洗/热词版本，按 dataset_key 排序",
+    "评测入口",
+    "历史噪声派生配方",
+    "历史基础入口"
+  ],
+  "duplicates_state_fields": "duplicates.csv 保存两侧 size/mtime_ns/device/inode 和 SHA-256 的审计证据；仅限当次快照，上传时仍需计算传输校验值。",
+  "updated_at": "2026-09-10T08:46:51.794585+00:00",
+  "corrections": [
+    {
+      "scope": "police v5",
+      "reason": "原 catalog 漏写 LHOTSE/；撤销两套源 v5 的缺失判断，明确保留正在使用的 police_terms_v5 划分。",
+      "hold_before": 11,
+      "hold_after": 9,
+      "retain_before": 208,
+      "retain_after": 210,
+      "evidence": "police-v5-verification.json"
+    }
+  ]
+}

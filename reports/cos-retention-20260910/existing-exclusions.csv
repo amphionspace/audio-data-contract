@@ -1,0 +1,8 @@
+﻿path,status,bytes,reason,source,already_absent_from_direct_artifacts
+legacy_asr:GigaSpeech/lhotse/hotwords/gigaspeech_supervisions_XL_punc_hotwords.jsonl.gz,recovered_prefix,82764719,已用 AmphionData 重建合法 gzip 前缀，尚未补齐热词,catalog/local_lhotse_scan.json,True
+legacy_asr:KeSpeech/lhotse/hotwords/kespeech-asr_supervisions_train_phase1_punc_hotwords.jsonl.gz,recovered_prefix,9320990,已用 AmphionData 重建合法 gzip 前缀，尚未补齐热词,catalog/local_lhotse_scan.json,True
+legacy_asr:KeSpeech/lhotse/hotwords/kespeech-asr_supervisions_train_phase2_punc_hotwords.jsonl.gz,recovered_prefix,9503183,已用 AmphionData 重建合法 gzip 前缀，尚未补齐热词,catalog/local_lhotse_scan.json,True
+legacy_asr:MLS/lhotse/hotwords/mls-english_supervisions_train_punc_hotwords.jsonl.gz,recovered_prefix,27803934,已用 AmphionData 重建合法 gzip 前缀，尚未补齐热词,catalog/local_lhotse_scan.json,True
+legacy_asr:WenetSpeech/lhotse/hotwords/wenetspeech_supervisions_L_punc_hotwords.jsonl.gz,recovered_prefix,2308792,已用 AmphionData 重建合法 gzip 前缀，尚未补齐热词,catalog/local_lhotse_scan.json,True
+legacy_asr:data_aishell2/lhotse/hotwords/aishell2_supervisions_train_punc_hotwords.jsonl.gz,recovered_prefix,32937134,已用 AmphionData 重建合法 gzip 前缀，尚未补齐热词,catalog/local_lhotse_scan.json,True
+legacy_asr:GigaSpeech2/lhotse/gigaspeech2_th_supervisions_train_hotwords.jsonl.gz,unpaired,8186610,缺少对应的 Thai recordings manifest,catalog/local_lhotse_scan.json,True

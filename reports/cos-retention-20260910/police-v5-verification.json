@@ -1,0 +1,216 @@
+{
+  "verified_at": "2026-09-10T08:46:51.794585+00:00",
+  "correction": "两套源 v5 的 catalog relative_path 遗漏 LHOTSE/；13 个文件在补正位置均存在且完整性匹配原登记。",
+  "catalog_artifacts": [
+    {
+      "version": "v5-20260830-qwen75-cosy25",
+      "name": "train_recordings",
+      "path": "legacy_asr:LHOTSE/synthetic/police_synthetic_zh_accent/v5-20260830-qwen75-cosy25/manifests/police_synthetic_recordings_train.jsonl.gz",
+      "bytes": 219055,
+      "expected_bytes": 219055,
+      "sha256": "1b7b3b58775ea86ee7223651988d515c3f02c497f77b0ad6f919427a99bf5f03",
+      "expected_sha256": "1b7b3b58775ea86ee7223651988d515c3f02c497f77b0ad6f919427a99bf5f03",
+      "record_count": 10851,
+      "expected_record_count": 10851
+    },
+    {
+      "version": "v5-20260830-qwen75-cosy25",
+      "name": "train_supervisions",
+      "path": "legacy_asr:LHOTSE/synthetic/police_synthetic_zh_accent/v5-20260830-qwen75-cosy25/manifests/police_synthetic_supervisions_train.jsonl.gz",
+      "bytes": 2071702,
+      "expected_bytes": 2071702,
+      "sha256": "f96d035a1ee5a1bb23df8d65cb4539a140b21d2a5e4f61329e7956c4de6dac3b",
+      "expected_sha256": "f96d035a1ee5a1bb23df8d65cb4539a140b21d2a5e4f61329e7956c4de6dac3b",
+      "record_count": 10851,
+      "expected_record_count": 10851
+    },
+    {
+      "version": "v5-20260830-qwen75-cosy25",
+      "name": "train_qwen3_tts_recordings",
+      "path": "legacy_asr:LHOTSE/synthetic/police_synthetic_zh_accent/v5-20260830-qwen75-cosy25/manifests/police_synthetic_qwen3_tts_recordings_train.jsonl.gz",
+      "bytes": 174227,
+      "expected_bytes": 174227,
+      "sha256": "7a8679202379159405b483465c64e7c41639b086c0ef815163d3b1eff6ae21db",
+      "expected_sha256": "7a8679202379159405b483465c64e7c41639b086c0ef815163d3b1eff6ae21db",
+      "record_count": 8894,
+      "expected_record_count": 8894
+    },
+    {
+      "version": "v5-20260830-qwen75-cosy25",
+      "name": "train_qwen3_tts_supervisions",
+      "path": "legacy_asr:LHOTSE/synthetic/police_synthetic_zh_accent/v5-20260830-qwen75-cosy25/manifests/police_synthetic_qwen3_tts_supervisions_train.jsonl.gz",
+      "bytes": 1688877,
+      "expected_bytes": 1688877,
+      "sha256": "65fe966a74e754665ed005d1951de96901693d402021d43941e3907ccef10771",
+      "expected_sha256": "65fe966a74e754665ed005d1951de96901693d402021d43941e3907ccef10771",
+      "record_count": 8894,
+      "expected_record_count": 8894
+    },
+    {
+      "version": "v5-20260830-qwen75-cosy25",
+      "name": "train_cosyvoice3_recordings",
+      "path": "legacy_asr:LHOTSE/synthetic/police_synthetic_zh_accent/v5-20260830-qwen75-cosy25/manifests/police_synthetic_cosyvoice3_recordings_train.jsonl.gz",
+      "bytes": 42229,
+      "expected_bytes": 42229,
+      "sha256": "d37799f70d453d324aeefc0269d9a3e000ec57fae32ebda99fba198055d42a37",
+      "expected_sha256": "d37799f70d453d324aeefc0269d9a3e000ec57fae32ebda99fba198055d42a37",
+      "record_count": 1957,
+      "expected_record_count": 1957
+    },
+    {
+      "version": "v5-20260830-qwen75-cosy25",
+      "name": "train_cosyvoice3_supervisions",
+      "path": "legacy_asr:LHOTSE/synthetic/police_synthetic_zh_accent/v5-20260830-qwen75-cosy25/manifests/police_synthetic_cosyvoice3_supervisions_train.jsonl.gz",
+      "bytes": 379043,
+      "expected_bytes": 379043,
+      "sha256": "85fbef7be8c7463c6d8f1f63c8cd768553a1e8c41ce2588d22af2b27724153b4",
+      "expected_sha256": "85fbef7be8c7463c6d8f1f63c8cd768553a1e8c41ce2588d22af2b27724153b4",
+      "record_count": 1957,
+      "expected_record_count": 1957
+    },
+    {
+      "version": "v5-20260830-qwen75-cosy25",
+      "name": "selection_summary",
+      "path": "legacy_asr:LHOTSE/synthetic/police_synthetic_zh_accent/v5-20260830-qwen75-cosy25/metadata/selection_summary.json",
+      "bytes": 1610,
+      "expected_bytes": 1610,
+      "sha256": "131ba9fcf5760aeba5deddf9e21295add82743fb17aa4f766376d7475888bcf9",
+      "expected_sha256": "131ba9fcf5760aeba5deddf9e21295add82743fb17aa4f766376d7475888bcf9",
+      "record_count": null,
+      "expected_record_count": null
+    },
+    {
+      "version": "v5-20260830-qc",
+      "name": "train_recordings",
+      "path": "legacy_asr:LHOTSE/synthetic/police_synthetic_zh_accent/v5-20260830-qc/manifests/police_synthetic_recordings_train.jsonl.gz",
+      "bytes": 302275,
+      "expected_bytes": 302275,
+      "sha256": "9633ceb5efec585a532f918356483bf820ed2e8605adbd7d473e214c7a30d438",
+      "expected_sha256": "9633ceb5efec585a532f918356483bf820ed2e8605adbd7d473e214c7a30d438",
+      "record_count": 14423,
+      "expected_record_count": 14423
+    },
+    {
+      "version": "v5-20260830-qc",
+      "name": "train_supervisions",
+      "path": "legacy_asr:LHOTSE/synthetic/police_synthetic_zh_accent/v5-20260830-qc/manifests/police_synthetic_supervisions_train.jsonl.gz",
+      "bytes": 2349942,
+      "expected_bytes": 2349942,
+      "sha256": "a13cfd30dbcf44c90d402bff4b3a552200b9f35638ac68a7c6cc3177044a081f",
+      "expected_sha256": "a13cfd30dbcf44c90d402bff4b3a552200b9f35638ac68a7c6cc3177044a081f",
+      "record_count": 14423,
+      "expected_record_count": 14423
+    },
+    {
+      "version": "v5-20260830-qc",
+      "name": "train_qwen3_tts_recordings",
+      "path": "legacy_asr:LHOTSE/synthetic/police_synthetic_zh_accent/v5-20260830-qc/manifests/police_synthetic_qwen3_tts_recordings_train.jsonl.gz",
+      "bytes": 180039,
+      "expected_bytes": 180039,
+      "sha256": "44cfe8cfbe49bcaa08c38f1886ebaa912e7a3f33115577899368ae870d2edb69",
+      "expected_sha256": "44cfe8cfbe49bcaa08c38f1886ebaa912e7a3f33115577899368ae870d2edb69",
+      "record_count": 8894,
+      "expected_record_count": 8894
+    },
+    {
+      "version": "v5-20260830-qc",
+      "name": "train_qwen3_tts_supervisions",
+      "path": "legacy_asr:LHOTSE/synthetic/police_synthetic_zh_accent/v5-20260830-qc/manifests/police_synthetic_qwen3_tts_supervisions_train.jsonl.gz",
+      "bytes": 1442437,
+      "expected_bytes": 1442437,
+      "sha256": "d188c12f9cfb3935cd71d018afb44b1f5e1756c303526ad68803dcb893b5d852",
+      "expected_sha256": "d188c12f9cfb3935cd71d018afb44b1f5e1756c303526ad68803dcb893b5d852",
+      "record_count": 8894,
+      "expected_record_count": 8894
+    },
+    {
+      "version": "v5-20260830-qc",
+      "name": "train_cosyvoice3_recordings",
+      "path": "legacy_asr:LHOTSE/synthetic/police_synthetic_zh_accent/v5-20260830-qc/manifests/police_synthetic_cosyvoice3_recordings_train.jsonl.gz",
+      "bytes": 121506,
+      "expected_bytes": 121506,
+      "sha256": "08e258d1f8b05c320dca21d12b809426e2a838e19ba05f9b9d2dee335f887325",
+      "expected_sha256": "08e258d1f8b05c320dca21d12b809426e2a838e19ba05f9b9d2dee335f887325",
+      "record_count": 5529,
+      "expected_record_count": 5529
+    },
+    {
+      "version": "v5-20260830-qc",
+      "name": "train_cosyvoice3_supervisions",
+      "path": "legacy_asr:LHOTSE/synthetic/police_synthetic_zh_accent/v5-20260830-qc/manifests/police_synthetic_cosyvoice3_supervisions_train.jsonl.gz",
+      "bytes": 911925,
+      "expected_bytes": 911925,
+      "sha256": "e278d991713e840e8e0d29648a23cfc0cc12ec40971193ce44d7d8423941d10b",
+      "expected_sha256": "e278d991713e840e8e0d29648a23cfc0cc12ec40971193ce44d7d8423941d10b",
+      "record_count": 5529,
+      "expected_record_count": 5529
+    }
+  ],
+  "source_audio": {
+    "v5-20260830-qc": {
+      "recording_counts": {
+        "police_synthetic_cosyvoice3_recordings_train.jsonl.gz": 5529,
+        "police_synthetic_qwen3_tts_recordings_train.jsonl.gz": 8894,
+        "police_synthetic_recordings_train.jsonl.gz": 14423
+      },
+      "unique_source_paths": 14423,
+      "source_bytes": 4752616834,
+      "missing_files": 0
+    },
+    "v5-20260830-qwen75-cosy25": {
+      "recording_counts": {
+        "police_synthetic_cosyvoice3_recordings_train.jsonl.gz": 1957,
+        "police_synthetic_qwen3_tts_recordings_train.jsonl.gz": 8894,
+        "police_synthetic_recordings_train.jsonl.gz": 10851
+      },
+      "unique_source_paths": 10851,
+      "source_bytes": 3248576298,
+      "missing_files": 0
+    },
+    "v5-20260830-qwen75-cosy25-split80-10-10": {
+      "recording_counts": {
+        "police_terms_v5_recordings_dev.jsonl.gz": 658,
+        "police_terms_v5_recordings_test.jsonl.gz": 585,
+        "police_terms_v5_recordings_train.jsonl.gz": 7878
+      },
+      "unique_source_paths": 9121,
+      "source_bytes": 2722957838,
+      "missing_files": 0
+    }
+  },
+  "source_relationships": {
+    "selected_sources_subset_of_qc": true,
+    "split_sources_subset_of_selected": true,
+    "split_source_paths_pairwise_disjoint": true,
+    "qc_sources_not_in_selected": 3572,
+    "qc_extra_source_bytes": 1504040536,
+    "selected_sources_not_in_split": 1730,
+    "selected_extra_source_bytes": 525618460,
+    "unique_source_files_across_v5_versions": 14423,
+    "source_audio_hashed": false
+  },
+  "consumer": "icefall",
+  "consumer_evidence": [
+    {
+      "relative_path": "egs/amphion/zh_en/ASR/train_police_farfield_v10_20260908.sh",
+      "sha256": "a5565457a766ffe57e31bcda8781d7592d6a25f1519339be21bcfdf9e597ff45"
+    },
+    {
+      "relative_path": "egs/amphion/zh_en/ASR/train_police_single_speaker_v11_20260909.sh",
+      "sha256": "764ff14589243e38b73177869da6b70465ca52dca55654ee34fb955a04e34547"
+    },
+    {
+      "relative_path": "egs/amphion/shared_amphion/test_police_terms_v5_registration.py",
+      "sha256": "9db890730fd0723c3f9989307c1a9f57897b1e009ccf4410d1ca6fbcaaa592de"
+    }
+  ],
+  "split_metadata": {
+    "path": "legacy_asr:LHOTSE/synthetic/police_synthetic_zh_accent/v5-20260830-qwen75-cosy25-split80-10-10/metadata/split_summary.json",
+    "sha256": "e43256f9a851ca6c3beeb596402c7ec548c7ce97d0aaff04b06a77758391f90c"
+  },
+  "limitations": [
+    "源音频完整扫描路径、存在性和大小，未做内容哈希。",
+    "police_terms_v5 使用 v5 划分；police_synthetic_zh_accent 使用 v3 训练和 v2 测试，两者并存。",
+    "未执行任何源文件搬迁、删除或 COS 上传。"
+  ]
+}
