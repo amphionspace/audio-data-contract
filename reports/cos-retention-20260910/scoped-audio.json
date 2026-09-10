@@ -1,0 +1,139 @@
+{
+  "police": [
+    {
+      "dataset_key": "police_synthetic_zh_accent@v1-20260817",
+      "recording_counts": {
+        "train_recordings": 20000,
+        "train_cosyvoice3_recordings": 10225,
+        "train_qwen3_tts_recordings": 9775
+      },
+      "unique_source_paths": 20000,
+      "physical_files": 20000,
+      "source_bytes": 5348149440,
+      "missing_files": 0,
+      "content_hashed": false
+    },
+    {
+      "dataset_key": "police_synthetic_zh_accent@v2-20260818",
+      "recording_counts": {
+        "train_recordings": 20000,
+        "train_cosyvoice3_recordings": 10225,
+        "train_qwen3_tts_recordings": 9775,
+        "test_recordings": 2000,
+        "test_cosyvoice3_recordings": 1023,
+        "test_qwen3_tts_recordings": 977
+      },
+      "unique_source_paths": 22000,
+      "physical_files": 22000,
+      "source_bytes": 6064948000,
+      "missing_files": 0,
+      "content_hashed": false
+    },
+    {
+      "dataset_key": "police_synthetic_zh_accent@v3-20260820",
+      "recording_counts": {
+        "train_recordings": 14093,
+        "train_cosyvoice3_recordings": 5524,
+        "train_qwen3_tts_recordings": 8569
+      },
+      "unique_source_paths": 14093,
+      "physical_files": 14093,
+      "source_bytes": 4143442934,
+      "missing_files": 0,
+      "content_hashed": false
+    }
+  ],
+  "police_path_overlap": {
+    "v1_v2_shared": 20000,
+    "v2_additional_to_v1": 2000,
+    "v1_v3_shared": 0,
+    "v2_v3_shared": 0
+  },
+  "alimeeting": {
+    "directories": [
+      {
+        "path": "alimeeting_far_raw:Train_Ali_far",
+        "files": 418,
+        "bytes": 102648299201
+      },
+      {
+        "path": "alimeeting_far_raw:Eval_Ali_far",
+        "files": 16,
+        "bytes": 3876095062
+      },
+      {
+        "path": "alimeeting_far_raw:Test_2023_Ali_far",
+        "files": 40,
+        "bytes": 9197930853
+      },
+      {
+        "path": "legacy_asr:AliMeeting/Train_Ali_far",
+        "files": 418,
+        "bytes": 102648299201
+      },
+      {
+        "path": "legacy_asr:AliMeeting/Train_Ali_near",
+        "files": 1366,
+        "bytes": 41805608510
+      },
+      {
+        "path": "legacy_asr:AliMeeting/Eval_Ali",
+        "files": 66,
+        "bytes": 5385868607
+      },
+      {
+        "path": "legacy_asr:AliMeeting/Test_Ali",
+        "files": 160,
+        "bytes": 13655186901
+      }
+    ],
+    "matched_pairs": 434,
+    "different_pairs": 0,
+    "verified_duplicate_bytes": 106524394263,
+    "bytes_read_for_hashes": 213048788526,
+    "hash_seconds": 165.7727525520604
+  },
+  "police_v5": {
+    "v5-20260830-qc": {
+      "recording_counts": {
+        "police_synthetic_cosyvoice3_recordings_train.jsonl.gz": 5529,
+        "police_synthetic_qwen3_tts_recordings_train.jsonl.gz": 8894,
+        "police_synthetic_recordings_train.jsonl.gz": 14423
+      },
+      "unique_source_paths": 14423,
+      "source_bytes": 4752616834,
+      "missing_files": 0
+    },
+    "v5-20260830-qwen75-cosy25": {
+      "recording_counts": {
+        "police_synthetic_cosyvoice3_recordings_train.jsonl.gz": 1957,
+        "police_synthetic_qwen3_tts_recordings_train.jsonl.gz": 8894,
+        "police_synthetic_recordings_train.jsonl.gz": 10851
+      },
+      "unique_source_paths": 10851,
+      "source_bytes": 3248576298,
+      "missing_files": 0
+    },
+    "v5-20260830-qwen75-cosy25-split80-10-10": {
+      "recording_counts": {
+        "police_terms_v5_recordings_dev.jsonl.gz": 658,
+        "police_terms_v5_recordings_test.jsonl.gz": 585,
+        "police_terms_v5_recordings_train.jsonl.gz": 7878
+      },
+      "unique_source_paths": 9121,
+      "source_bytes": 2722957838,
+      "missing_files": 0
+    }
+  },
+  "police_v5_source_relationships": {
+    "selected_sources_subset_of_qc": true,
+    "split_sources_subset_of_selected": true,
+    "split_source_paths_pairwise_disjoint": true,
+    "qc_sources_not_in_selected": 3572,
+    "qc_extra_source_bytes": 1504040536,
+    "selected_sources_not_in_split": 1730,
+    "selected_extra_source_bytes": 525618460,
+    "unique_source_files_across_v5_versions": 14423,
+    "source_audio_hashed": false
+  }
+}

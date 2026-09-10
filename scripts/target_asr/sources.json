@@ -1,0 +1,235 @@
+{
+  "jobs": [
+    {
+      "dataset_id": "librimix",
+      "version": "960-current-audio-record-20260910",
+      "source_version": "960-current-source-20260910",
+      "date": "2026-09-10",
+      "language": "en",
+      "description": "LibriMix_960 当前训练与测试（英文小写）",
+      "view_id": "librimix/960-current/target-asr",
+      "sources": [
+        {
+          "name": "train_1spk",
+          "root_alias": "amphion_asr_project",
+          "relative_path": "data/sharegpt/librimix_960/train_1spk.jsonl",
+          "kind": "sharegpt-jsonl",
+          "split": "train_1spk"
+        },
+        {
+          "name": "train_2spk",
+          "root_alias": "amphion_asr_project",
+          "relative_path": "data/sharegpt/librimix_960/train_2spk.jsonl",
+          "kind": "sharegpt-jsonl",
+          "split": "train_2spk"
+        },
+        {
+          "name": "train_3spk",
+          "root_alias": "amphion_asr_project",
+          "relative_path": "data/sharegpt/librimix_960/train_3spk.jsonl",
+          "kind": "sharegpt-jsonl",
+          "split": "train_3spk"
+        },
+        {
+          "name": "train_neg",
+          "root_alias": "amphion_asr_project",
+          "relative_path": "data/sharegpt/librimix_960/train_neg.jsonl",
+          "kind": "sharegpt-jsonl",
+          "split": "train_neg"
+        },
+        {
+          "name": "train_base",
+          "root_alias": "amphion_asr_project",
+          "relative_path": "data/sharegpt/librimix_960/train_base.jsonl",
+          "kind": "sharegpt-jsonl",
+          "equivalent_to": [
+            "train_1spk",
+            "train_2spk",
+            "train_3spk"
+          ]
+        },
+        {
+          "name": "test_1spk",
+          "root_alias": "amphion_asr_project",
+          "relative_path": "data/lhotse/LibriMix_960/test_1spk.jsonl",
+          "kind": "target-asr-jsonl",
+          "split": "test_1spk"
+        },
+        {
+          "name": "test_2mix",
+          "root_alias": "amphion_asr_project",
+          "relative_path": "data/lhotse/LibriMix_960/test_2mix.jsonl",
+          "kind": "target-asr-jsonl",
+          "split": "test_2mix"
+        },
+        {
+          "name": "test_3mix",
+          "root_alias": "amphion_asr_project",
+          "relative_path": "data/lhotse/LibriMix_960/test_3mix.jsonl",
+          "kind": "target-asr-jsonl",
+          "split": "test_3mix"
+        },
+        {
+          "name": "test_2mix_neg",
+          "root_alias": "amphion_asr_project",
+          "relative_path": "data/lhotse/LibriMix_960/test_2mix_neg.jsonl",
+          "kind": "target-asr-jsonl",
+          "split": "test_2mix_neg"
+        },
+        {
+          "name": "test_3mix_neg",
+          "root_alias": "amphion_asr_project",
+          "relative_path": "data/lhotse/LibriMix_960/test_3mix_neg.jsonl",
+          "kind": "target-asr-jsonl",
+          "split": "test_3mix_neg"
+        }
+      ]
+    },
+    {
+      "dataset_id": "aishellmix",
+      "version": "pack3-current-audio-record-20260910",
+      "source_version": "pack3-current-source-20260910",
+      "date": "2026-09-10",
+      "language": "zh",
+      "description": "AISHELLMix pack3 当前与历史等价训练数据",
+      "view_id": "aishellmix/pack3-current/target-asr",
+      "sources": [
+        {
+          "name": "train_1spk",
+          "root_alias": "amphion_asr_project",
+          "relative_path": "data/sharegpt/aishellmix_pack3/train_1spk.jsonl",
+          "kind": "sharegpt-jsonl",
+          "split": "train_1spk"
+        },
+        {
+          "name": "train_2spk",
+          "root_alias": "amphion_asr_project",
+          "relative_path": "data/sharegpt/aishellmix_pack3/train_2spk.jsonl",
+          "kind": "sharegpt-jsonl",
+          "split": "train_2spk"
+        },
+        {
+          "name": "train_3spk",
+          "root_alias": "amphion_asr_project",
+          "relative_path": "data/sharegpt/aishellmix_pack3/train_3spk.jsonl",
+          "kind": "sharegpt-jsonl",
+          "split": "train_3spk"
+        },
+        {
+          "name": "train_neg",
+          "root_alias": "amphion_asr_project",
+          "relative_path": "data/sharegpt/aishellmix_pack3/train_neg.jsonl",
+          "kind": "sharegpt-jsonl",
+          "split": "train_neg"
+        },
+        {
+          "name": "train_base",
+          "root_alias": "amphion_asr_project",
+          "relative_path": "data/sharegpt/aishellmix_pack3/train_base.jsonl",
+          "kind": "sharegpt-jsonl",
+          "equivalent_to": [
+            "train_1spk",
+            "train_2spk",
+            "train_3spk"
+          ]
+        },
+        {
+          "name": "legacy_train_base",
+          "root_alias": "legacy_asr",
+          "relative_path": "AISHELLMix_pack3/sharegpt_qwen3/train_base.jsonl",
+          "kind": "sharegpt-jsonl",
+          "equivalent_to": [
+            "train_1spk",
+            "train_2spk",
+            "train_3spk"
+          ]
+        },
+        {
+          "name": "legacy_train_neg",
+          "root_alias": "legacy_asr",
+          "relative_path": "AISHELLMix_pack3/sharegpt_qwen3/train_neg.jsonl",
+          "kind": "sharegpt-jsonl",
+          "equivalent_to": [
+            "train_neg"
+          ]
+        }
+      ]
+    },
+    {
+      "dataset_id": "librimix",
+      "version": "960-legacy-audio-record-20260910",
+      "source_version": "960-legacy-source-20260910",
+      "date": "2026-09-10",
+      "language": "en",
+      "description": "LibriMix_960 历史训练入口（保留原英文大小写）",
+      "view_id": "librimix/960-legacy/target-asr",
+      "sources": [
+        {
+          "name": "train_base",
+          "root_alias": "legacy_asr",
+          "relative_path": "LibriMix_960/sharegpt_cot_qwen3/train_base.jsonl",
+          "kind": "sharegpt-jsonl"
+        },
+        {
+          "name": "train_neg",
+          "root_alias": "legacy_asr",
+          "relative_path": "LibriMix_960/sharegpt_cot_qwen3/train_neg.jsonl",
+          "kind": "sharegpt-jsonl",
+          "split": "train_neg"
+        }
+      ]
+    },
+    {
+      "dataset_id": "aishellmix",
+      "version": "original-audio-record-20260910",
+      "source_version": "original-source-20260910",
+      "date": "2026-09-10",
+      "language": "zh",
+      "description": "AISHELLMix 原版历史训练（enrollment 至少 2 秒）与项目测试数据",
+      "view_id": "aishellmix/original/target-asr",
+      "sources": [
+        {
+          "name": "train_base",
+          "root_alias": "legacy_asr",
+          "relative_path": "AISHELLMix/sharegpt_qwen3_enrollge2s/train_base.jsonl",
+          "kind": "sharegpt-jsonl"
+        },
+        {
+          "name": "test_1spk",
+          "root_alias": "amphion_asr_project",
+          "relative_path": "data/lhotse/AISHELLMix/test_1spk.jsonl",
+          "kind": "target-asr-jsonl",
+          "split": "test_1spk"
+        },
+        {
+          "name": "test_2mix",
+          "root_alias": "amphion_asr_project",
+          "relative_path": "data/lhotse/AISHELLMix/test_2mix.jsonl",
+          "kind": "target-asr-jsonl",
+          "split": "test_2mix"
+        },
+        {
+          "name": "test_3mix",
+          "root_alias": "amphion_asr_project",
+          "relative_path": "data/lhotse/AISHELLMix/test_3mix.jsonl",
+          "kind": "target-asr-jsonl",
+          "split": "test_3mix"
+        },
+        {
+          "name": "test_2mix_neg",
+          "root_alias": "amphion_asr_project",
+          "relative_path": "data/lhotse/AISHELLMix/test_2mix_neg.jsonl",
+          "kind": "target-asr-jsonl",
+          "split": "test_2mix_neg"
+        },
+        {
+          "name": "test_3mix_neg",
+          "root_alias": "amphion_asr_project",
+          "relative_path": "data/lhotse/AISHELLMix/test_3mix_neg.jsonl",
+          "kind": "target-asr-jsonl",
+          "split": "test_3mix_neg"
+        }
+      ]
+    }
+  ]
+}
