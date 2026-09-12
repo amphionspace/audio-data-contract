@@ -16,6 +16,7 @@ import orjson
 from extract import DATASETS, VERSION, archive_groups, paths, save, sha256, source_spec
 
 from audio_data_contract import AudioRecord
+from audio_data_contract.catalog import verify_artifact_file
 from audio_data_contract.types import DatasetSpec, DatasetViewSpec
 
 
@@ -369,7 +370,15 @@ def file_artifact(work, final, root, name, kind, filename, count=None):
 def prepare_dataset(repo, root, dataset):
     work, final = paths(root, dataset)
     if final.exists():
-        return json.loads((final / "registration.json").read_text())
+        report = json.loads((final / "registration.json").read_text())
+        spec = DatasetSpec.from_dict(report["dataset"])
+        if spec.dataset_id != dataset or spec.version != VERSION:
+            raise ValueError(f"published registration identity mismatch: {final}")
+        for artifact in spec.artifacts:
+            if artifact.kind != "source-directory":
+                verify_artifact_file(artifact, root / artifact.relative_path)
+        audio_items(final, source_spec(repo, dataset))
+        return report
     state = json.loads((work / "state.json").read_text())
     if state["state"] != "extracted":
         raise ValueError(f"extraction is not complete: {dataset}: {state['state']}")

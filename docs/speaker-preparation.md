@@ -2,7 +2,7 @@
 
 CN-Celeb1、CN-Celeb2、3D-Speaker、HI-MIA 和 CHiME-6 按 `audio-record/1.0` 整理。原始压缩包版本保留；处理版本为 `speaker-records-v1-20260912`，只有完整解压、音频头和记录检查通过后才登记。
 
-本批实际状态见[处理进度](/ai_sds_wuzz/DATA_ASR/downloads/speaker-preparation-20260912/progress.md)。全部登记与项目检查完成后，该目录生成 `complete.json`。各 split 的实测时长、记录数和说话人数以 catalog 和[数据总览](data-overview.md)为准。
+本批已完成处理、登记和项目检查，本机执行记录见[处理进度](/ai_sds_wuzz/DATA_ASR/downloads/speaker-preparation-20260912/progress.md)及同目录 `complete.json`。各 split 的实测时长、记录数和说话人数以 catalog 和[数据总览](data-overview.md)为准。
 
 ## 选择数据
 
@@ -70,7 +70,17 @@ CHiME-6 使用此前登记的转写修复包。此版本要求片段落在该会
   registration.json
 ```
 
-处理单套数据：
+在仓库根目录安装依赖，并配置 `roots.json` 中的 `legacy_asr`。本机路径仅用于示例，其他机器应填写各自的数据根目录：
+
+```bash
+python -m pip install -e '.[dev,duration]'
+```
+
+```json
+{"legacy_asr": "/ai_sds_wuzz/DATA_ASR"}
+```
+
+处理单套数据（逐套执行登记）：
 
 ```bash
 python scripts/speaker/extract.py cnceleb1 --roots roots.json
@@ -78,6 +88,8 @@ python scripts/speaker/prepare.py cnceleb1 --roots roots.json --register
 audio-data-contract generate-overview
 ```
 
-解压中断后可重跑：完整归档凭据匹配时复用，未完成归档在工作目录重新处理。已发布目录不可覆盖。本批 `scripts/speaker/run.py` 监控任务日志目录中的解压退出标记，逐套执行转换、登记和总览更新，全部完成后运行 catalog、View、总览、ruff 与 pytest 检查。
+解压中断后可重跑：先核对源文件长度与 SHA-256，完整归档凭据匹配时复用，未完成归档在工作目录重新处理。已发布目录不可覆盖；对已有版本执行 `prepare.py --register` 时，先复核文件产物哈希、记录数及解压文件是否齐全。本批 `scripts/speaker/run.py` 依赖已创建的 tmux 会话、任务日志目录和解压退出标记，仅用于原批次收尾；它逐套执行转换、登记和总览更新，全部完成后运行 catalog、View、总览、ruff 与 pytest 检查。
 
 产物写入工作目录，每条 AudioRecord 校验字段、ID、引用及时间范围；关闭压缩文件后完整读取，检查 gzip CRC 和记录数，再计算 SHA-256 并原子发布。源输入哈希、转换脚本哈希、参数和排除记录随版本保存。
+
+本批已发布产物使用的原始处理脚本保存在 Git 提交 `d9779352d50d742863141335638d2ed4e8acc000`，其文件 SHA-256 与 catalog 中的 recipe 一致。后续审查修复了输入核验和恢复登记检查；保留已发布版本的原始 recipe 与音频、清单，不将新脚本哈希回填到历史产物。

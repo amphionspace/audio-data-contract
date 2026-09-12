@@ -166,11 +166,20 @@ def verify_artifact_file(
             f"{artifact.name}"
         )
     if expected_records is not None or selected.name.endswith(".jsonl.gz"):
-        opener = gzip.open if selected.suffix == ".gz" else Path.open
         try:
-            with opener(selected, "rt", encoding="utf-8") as stream:
-                actual_records = sum(1 for line in stream if line.strip())
-        except (OSError, EOFError, UnicodeError) as exc:
+            if selected.suffix == ".json":
+                with selected.open(encoding="utf-8") as stream:
+                    records = json.load(stream)
+                if not isinstance(records, list):
+                    raise IntegrityError(
+                        f"artifact with record_count must contain a JSON array: {selected}"
+                    )
+                actual_records = len(records)
+            else:
+                opener = gzip.open if selected.suffix == ".gz" else Path.open
+                with opener(selected, "rt", encoding="utf-8") as stream:
+                    actual_records = sum(1 for line in stream if line.strip())
+        except (OSError, EOFError, UnicodeError, json.JSONDecodeError) as exc:
             raise IntegrityError(
                 f"artifact cannot be read completely: {selected}: {exc}"
             ) from exc

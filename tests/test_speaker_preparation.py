@@ -10,6 +10,8 @@ from pathlib import Path
 import pytest
 
 from audio_data_contract import load_catalog, load_records, load_view_catalog
+from audio_data_contract.catalog import verify_artifact_file
+from audio_data_contract.errors import IntegrityError
 
 pytest.importorskip("soundfile")
 pytest.importorskip("orjson")
@@ -77,6 +79,23 @@ def test_cnceleb_official_split_trials_publish_and_portable_read(tmp_path):
     assert [r.labels["same_speaker"] for r in records] == [True, False]
     assert records[0].slot("enrollment").ref.split == "test_enrollment"
     assert len(list(load_records(final / "train.jsonl.gz"))) == 1
+    assert prepare["prepare_dataset"](repo, root, "cnceleb1") == report
+    prepared = catalog.get("cnceleb1", extract["VERSION"])
+    for artifact in prepared.artifacts:
+        if artifact.kind != "source-directory":
+            verify_artifact_file(artifact, root / artifact.relative_path)
+    manifest = final / "train.jsonl.gz"
+    original = manifest.read_bytes()
+    manifest.write_bytes(original[:-1] + bytes([original[-1] ^ 1]))
+    with pytest.raises(IntegrityError, match="sha256 mismatch"):
+        prepare["prepare_dataset"](repo, root, "cnceleb1")
+    manifest.write_bytes(original)
+    extracted_audio = next((final / "extracted").rglob("speech-1.wav"))
+    audio_bytes = extracted_audio.read_bytes()
+    extracted_audio.unlink()
+    with pytest.raises(ValueError, match="missing or incomplete extracted file"):
+        prepare["prepare_dataset"](repo, root, "cnceleb1")
+    extracted_audio.write_bytes(audio_bytes)
     moved = tmp_path / "moved"
     root.rename(moved)
     result = reader["resolve_audio"](records[0], catalog, {"legacy_asr": str(moved)})
@@ -160,3 +179,34 @@ def test_split_cnceleb2_archive_is_streamed_in_order(tmp_path):
     result = extract["extract_archive"](tmp_path, tmp_path / "work", "audio", artifacts)
     assert result["audio_files"] == 1
     assert (tmp_path / "work/extracted/audio/CN-Celeb2_flac/data/id10000/a.wav").read_bytes() == wav()
+
+
+@pytest.mark.parametrize("resume", [False, True])
+def test_same_size_source_change_is_rejected(tmp_path, resume):
+    artifact = archive(tmp_path / "source.tar.gz", {"payload": b"original"})
+    work = tmp_path / "work"
+    if resume:
+        extract["extract_archive"](tmp_path, work, "audio", [artifact])
+    # Change gzip's timestamp; size, decompressed content and CRC stay valid.
+    source = tmp_path / artifact["relative_path"]
+    data = bytearray(source.read_bytes())
+    data[4] ^= 1
+    source.write_bytes(data)
+    with pytest.raises(ValueError, match="source archive sha256 changed"):
+        extract["extract_archive"](tmp_path, work, "audio", [artifact])
+
+
+@pytest.mark.parametrize("link_path", ["extracted/audio", "extracted/audio/folder"])
+def test_existing_directory_symlink_cannot_escape_extraction(tmp_path, link_path):
+    artifact = archive(tmp_path / "source.tar.gz", {"folder/payload": b"overwritten"})
+    outside = tmp_path / "outside"
+    outside.mkdir()
+    (outside / "payload").write_bytes(b"keep")
+    work = tmp_path / "work"
+    link = work / link_path
+    link.parent.mkdir(parents=True)
+    link.symlink_to(outside, target_is_directory=True)
+    with pytest.raises(ValueError, match="escapes"):
+        extract["extract_archive"](tmp_path, work, "audio", [artifact])
+    assert (outside / "payload").read_bytes() == b"keep"
+    assert not (outside / "folder").exists()

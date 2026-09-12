@@ -66,14 +66,19 @@ def extract_archive(root, work, name, artifacts):
     inputs = [{k: a[k] for k in ("relative_path", "expected_bytes", "sha256")}
               for a in artifacts]
     for item in inputs:
-        if (root / item["relative_path"]).stat().st_size != item["expected_bytes"]:
+        source = root / item["relative_path"]
+        if source.stat().st_size != item["expected_bytes"]:
             raise ValueError(f"source archive size changed: {item['relative_path']}")
+        if sha256(source) != item["sha256"]:
+            raise ValueError(f"source archive sha256 changed: {item['relative_path']}")
     if receipt.exists():
         previous = json.loads(receipt.read_text())
         if previous["inputs"] != inputs or sha256(inventory) != previous["inventory_sha256"]:
             raise ValueError(f"completed extraction inventory changed: {name}")
         return previous
     destination = work / "extracted" / name
+    if not destination.resolve().is_relative_to(work.resolve()):
+        raise ValueError(f"extraction destination escapes work directory: {destination}")
     destination.mkdir(parents=True, exist_ok=True)
     inventory.parent.mkdir(parents=True, exist_ok=True)
     files = audio_files = extracted_bytes = 0
@@ -83,10 +88,10 @@ def extract_archive(root, work, name, artifacts):
         if len(inputs) == 1:
             compressed = stack.enter_context((root / inputs[0]["relative_path"]).open("rb"))
         else:
-            process = subprocess.Popen(
+            process = stack.enter_context(subprocess.Popen(
                 ["cat", *[str(root / a["relative_path"]) for a in inputs]],
                 stdout=subprocess.PIPE,
-            )
+            ))
             compressed = stack.enter_context(process.stdout)
         archive = stack.enter_context(tarfile.open(fileobj=compressed, mode="r|gz"))
         output = stack.enter_context(inventory.open("w"))
@@ -95,6 +100,8 @@ def extract_archive(root, work, name, artifacts):
             if relative.is_absolute() or ".." in relative.parts or "\\" in member.name:
                 raise ValueError(f"unsafe archive path: {member.name}")
             path = destination.joinpath(*relative.parts)
+            if not path.resolve().is_relative_to(destination.resolve()):
+                raise ValueError(f"archive path escapes extraction directory: {member.name}")
             if member.isdir():
                 path.mkdir(parents=True, exist_ok=True)
             elif member.isfile():
