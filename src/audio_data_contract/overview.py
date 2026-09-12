@@ -27,6 +27,8 @@ TASK_NAMES = {
     "ser": "语音情感识别",
     "speaker_attributed_asr": "带说话人标注的语音识别",
     "speaker_diarization": "说话人分段与归属",
+    "speaker_identification": "说话人身份识别",
+    "speaker_verification": "声纹验证",
     "ts_asr": "目标说话人语音识别",
 }
 

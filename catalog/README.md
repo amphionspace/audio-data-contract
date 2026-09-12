@@ -20,6 +20,7 @@
 | `local_lhotse_scan.json` | 历史扫描报告 | 不是 Dataset 声明，不参与 `.jsonl` catalog 加载 |
 | `inventory/` | 文件级校验清单 | 用于追溯完整性，不作为额外数据集 |
 | `librimix.jsonl`、`aishellmix.jsonl` | target-ASR 源快照与通用 AudioRecord 版本 | 包含训练、测试、音频索引及组合关系，见[读取说明](../docs/target-asr.md) |
+| `cnceleb1.jsonl`、`cnceleb2.jsonl`、`3dspeaker.jsonl`、`hi_mia.jsonl`、`chime6.jsonl` | 说话人源包声明与处理后的通用 AudioRecord 版本 | 源包校验见[下载说明](../docs/speaker-data-20260911.md)，已准备入口、音频索引和配对规则见[处理说明](../docs/speaker-preparation.md) |
 
 ## 总览的统计规则
 

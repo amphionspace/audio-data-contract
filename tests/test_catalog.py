@@ -132,6 +132,20 @@ def test_verify_artifact_file_checks_size_digest_and_record_count(tmp_path):
         verify_artifact_file(artifact, path)
 
 
+@pytest.mark.parametrize("records", [[], [{"reason": "invalid timestamp"}]])
+def test_verify_json_array_artifact_counts_items(tmp_path, records):
+    path = tmp_path / "excluded-annotations.json"
+    path.write_text(json.dumps(records, indent=2) + "\n")
+    artifact = ArtifactRef(
+        "excluded_annotations", "quality-report", "root", path.name,
+        metadata={"record_count": len(records)},
+    )
+    assert verify_artifact_file(artifact, path)["records"] == len(records)
+    path.write_text(json.dumps([*records, {"reason": "extra"}]))
+    with pytest.raises(IntegrityError, match="record count mismatch"):
+        verify_artifact_file(artifact, path)
+
+
 def test_verify_artifact_file_rejects_truncated_gzip_without_size_facts(tmp_path):
     path = tmp_path / "records.jsonl.gz"
     with gzip.open(path, "wt", encoding="utf-8") as stream:

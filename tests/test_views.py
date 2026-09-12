@@ -130,7 +130,7 @@ def test_registered_local_views_are_valid_and_resolvable(capsys):
     datasets = load_catalog(ROOT / "catalog")
     views = load_view_catalog(ROOT / "views", datasets)
 
-    assert len(views) == 23
+    assert len(views) == 28
     assert all(view.materialization == "full" for view in views)
     assert (
         resolve_view(views, datasets, "wenetspeech/clean", "v1-20260805").dataset_id
@@ -153,5 +153,13 @@ def test_registered_local_views_are_valid_and_resolvable(capsys):
         assert result.key == f"{dataset_id}@{version}"
         assert views.get(view_id, version).lineage_status == "exact"
 
+    for dataset_id in ("cnceleb1", "cnceleb2", "3dspeaker", "hi_mia", "chime6"):
+        view_id = f"{dataset_id}/speaker"
+        version = "speaker-records-v1-20260912"
+        result = resolve_view(views, datasets, view_id, version)
+        assert result.key == f"{dataset_id}@{version}"
+        assert result.provenance["preparation_status"] == "ready"
+        assert views.get(view_id, version).lineage_status == "exact"
+
     assert main(["validate-views", str(ROOT / "views"), str(ROOT / "catalog")]) == 0
-    assert json.loads(capsys.readouterr().out) == {"views": 23}
+    assert json.loads(capsys.readouterr().out) == {"views": 28}
