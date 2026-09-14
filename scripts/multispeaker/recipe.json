@@ -1,0 +1,21 @@
+{
+  "dataset_id": "sot_multispeaker_zh_en",
+  "version": "synthetic-v1-20260914",
+  "seed": 20260914,
+  "sampling_rate": 16000,
+  "max_mix_seconds": 28,
+  "source_seconds": [2, 20],
+  "second_turn_probability": 0.35,
+  "speaker_gain_db": [-6, 6],
+  "speakers": [3, 4, 5],
+  "profiles": ["staggered", "dense"],
+  "split_buckets": {"train": 960, "dev": 20, "test": 20},
+  "sources": [
+    {"dataset_id": "aishell", "version": "icefall-20260908", "split": "train", "language": "zh", "weight": 20, "require_clean_pass": false},
+    {"dataset_id": "aishell2", "version": "icefall-20260908", "split": "train", "language": "zh", "weight": 45, "require_clean_pass": false},
+    {"dataset_id": "kespeech", "version": "icefall-20260908", "split": "train", "language": "zh", "weight": 35, "require_clean_pass": false},
+    {"dataset_id": "commonvoice_en_clean", "version": "clean-v1-20260805", "split": "train", "language": "en", "weight": 60, "require_clean_pass": true},
+    {"dataset_id": "librispeech", "version": "icefall-20260908", "split": "train", "language": "en", "weight": 40, "require_clean_pass": false,
+     "recording_artifacts": ["train_rec_0", "train_rec_1"], "supervision_artifacts": ["train_sup_0", "train_sup_1"]}
+  ]
+}
