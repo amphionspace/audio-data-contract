@@ -2,7 +2,7 @@
 
 按数据集查看语言、支持任务、时长和特性。清洗、热词、加噪、评测入口和训练框架配置归入所属数据集，不另算一套源数据。
 
-当前登记 **113 个数据集条目**；另有 **10 个下载来源声明**和 **1 个训练混合配方**。登记不代表本机文件已齐备。
+当前登记 **114 个数据集条目**；另有 **20 个下载来源声明**和 **1 个训练混合配方**。登记不代表本机文件已齐备。
 
 时长单位为小时。不同版本、子集和标注片段可能重叠，逐项列出，不相加为总量；没有时长的条目仍保留。参考表数字未核实当前文件与划分覆盖；“过滤前”不能当作清洗后时长。
 
@@ -110,6 +110,7 @@
 | [audioset_road_traffic](../catalog/audioset_road_traffic.jsonl#L1) | und | noise | 未登记 | 已登记划分：all |
 | [banspeech_bn](../catalog/legacy_multilingual.jsonl#L5) | bn | 语音识别 | 6.5（已登记；[legacy](../catalog/legacy_multilingual.jsonl#L5)） | 有无标点版本 |
 | [cbtts_bn](../catalog/legacy_multilingual.jsonl#L6) | bn | 语音识别 | 20.1（已登记；[legacy](../catalog/legacy_multilingual.jsonl#L6)） | 有含标点版本 |
+| [ciempiess](../catalog/ciempiess_light.jsonl#L1) | es | 语音识别 | 18.4（已登记；[hf-3d6afb2b3b8d](../catalog/ciempiess_light.jsonl#L1)） | 墨西哥西语 CIEMPIESS LIGHT 官方完整版本 |
 | [cml_tts_fr](../catalog/legacy_multilingual.jsonl#L22) | fr | 语音识别 | 316.0（已登记；[legacy](../catalog/legacy_multilingual.jsonl#L22)） | 有含标点版本 |
 | [common_voice_ar](../catalog/legacy_multilingual.jsonl#L1) | ar | 语音识别 | 58.2（已登记；[legacy](../catalog/legacy_multilingual.jsonl#L1)） | 有含标点版本 |
 | [common_voice_bn](../catalog/legacy_multilingual.jsonl#L7) | bn | 语音识别 | 67.4（已登记；[legacy](../catalog/legacy_multilingual.jsonl#L7)） | 有含标点版本 |
@@ -158,15 +159,25 @@
 | 数据集 | 版本 | 语言 | 支持任务 |
 |---|---|---|---|
 | [aishell5](../catalog/download_queue.jsonl#L1) | 1.0 | zh | 语音识别 |
+| [ciempiess](../catalog/ciempiess_original.jsonl#L1) | official-2014 | es | 语音识别 |
+| [ciempiess](../catalog/ciempiess_test.jsonl#L1) | hf-c134fff8e335 | es | 语音识别 |
 | [common_voice_en](../catalog/download_queue.jsonl#L2) | 26.0 | en | 语音识别 |
+| [common_voice_es](../catalog/common_voice_es.jsonl#L1) | 26.0 | es | 语音识别 |
+| [common_voice_pt](../catalog/common_voice_pt.jsonl#L1) | 26.0 | pt | 语音识别 |
 | [common_voice_yue](../catalog/download_queue.jsonl#L5) | 26.0 | yue | 语音识别 |
 | [common_voice_zh](../catalog/download_queue.jsonl#L3) | 26.0 | zh | 语音识别 |
 | [common_voice_zh_hk](../catalog/download_queue.jsonl#L4) | 26.0 | yue | 语音识别 |
+| [coraa_mupe](../catalog/coraa_mupe.jsonl#L1) | hf-437966f103b3 | pt-BR | 语音识别 |
 | [gigaspeech2](../catalog/download_queue.jsonl#L6) | hf-8dc0d0e502b7 | id、th、vi | 语音识别 |
+| [google_latam](../catalog/google_latam.jsonl#L1) | openslr-20260911 | es | 语音识别 |
 | [granary](../catalog/download_queue.jsonl#L7) | hf-0fe23a860e35 | multi | 语音识别、语音翻译 |
 | [lemas](../catalog/download_queue.jsonl#L9) | hf-91f0c1b9a29f | multi | 语音识别 |
+| [loquacious_set](../catalog/loquacious_set.jsonl#L1) | hf-0e84cdb9e4b8 | en | 语音识别 |
+| [mls_pt](../catalog/mls_pt.jsonl#L1) | openslr-94 | pt | 语音识别 |
 | [omnilingual-asr-corpus](../catalog/download_queue.jsonl#L8) | hf-8648ba894637 | multi | 语音识别 |
+| [peoples_speech](../catalog/peoples_speech.jsonl#L1) | hf-f10597c5d3d3 | en | 语音识别 |
 | [reazonspeech](../catalog/download_queue.jsonl#L10) | hf-0df78f991f6a | ja | 语音识别 |
+| [yodas_granary_es_pt](../catalog/yodas_granary_es_pt.jsonl#L1) | hf-969944574ea3 | es、pt | 语音识别 |
 
 ## 训练混合配方
 
