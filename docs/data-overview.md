@@ -2,7 +2,7 @@
 
 按数据集查看语言、支持任务、时长和特性。清洗、热词、加噪、评测入口和训练框架配置归入所属数据集，不另算一套源数据。
 
-当前登记 **109 个数据集条目**；另有 **10 个下载来源声明**和 **1 个训练混合配方**。登记不代表本机文件已齐备。
+当前登记 **113 个数据集条目**；另有 **10 个下载来源声明**和 **1 个训练混合配方**。登记不代表本机文件已齐备。
 
 时长单位为小时。不同版本、子集和标注片段可能重叠，逐项列出，不相加为总量；没有时长的条目仍保留。参考表数字未核实当前文件与划分覆盖；“过滤前”不能当作清洗后时长。
 
@@ -107,6 +107,7 @@
 
 | 数据集 | 语言 | 支持任务 | 时长（小时，注明范围） | 特性 / 备注 |
 |---|---|---|---|---|
+| [audioset_road_traffic](../catalog/audioset_road_traffic.jsonl#L1) | und | noise | 未登记 | 已登记划分：all |
 | [banspeech_bn](../catalog/legacy_multilingual.jsonl#L5) | bn | 语音识别 | 6.5（已登记；[legacy](../catalog/legacy_multilingual.jsonl#L5)） | 有无标点版本 |
 | [cbtts_bn](../catalog/legacy_multilingual.jsonl#L6) | bn | 语音识别 | 20.1（已登记；[legacy](../catalog/legacy_multilingual.jsonl#L6)） | 有含标点版本 |
 | [cml_tts_fr](../catalog/legacy_multilingual.jsonl#L22) | fr | 语音识别 | 316.0（已登记；[legacy](../catalog/legacy_multilingual.jsonl#L22)） | 有含标点版本 |
@@ -134,9 +135,12 @@
 | [mls_de](../catalog/legacy_multilingual.jsonl#L14) | de | 语音识别 | 1,995.1（已登记；[legacy](../catalog/legacy_multilingual.jsonl#L14)） | 有无标点版本 |
 | [mls_es](../catalog/legacy_multilingual.jsonl#L20) | es | 语音识别 | 937.7（已登记；[legacy](../catalog/legacy_multilingual.jsonl#L20)） | 有无标点版本 |
 | [mls_fr](../catalog/legacy_multilingual.jsonl#L25) | fr | 语音识别 | 1,096.7（已登记；[legacy](../catalog/legacy_multilingual.jsonl#L25)） | 有无标点版本 |
+| [musan](../catalog/musan.jsonl#L1) | und | noise | 未登记 | 已登记划分：music、noise |
 | [open_large_bn](../catalog/legacy_multilingual.jsonl#L9) | bn | 语音识别 | 5,045.8（已登记；[legacy](../catalog/legacy_multilingual.jsonl#L9)） | 有含标点版本 |
-| [real_rir_slr28](../catalog/icefall_runtime.jsonl#L70) | und | 音频增强 | 0.1（已登记；[prepared-20260908](../catalog/icefall_runtime.jsonl#L70)） | Real room impulse responses only; not speech/transcription training examples |
+| [real_rir_slr28](../catalog/icefall_runtime.jsonl#L70) | und | 音频增强、rir | 0.1（已登记；[prepared-20260908](../catalog/icefall_runtime.jsonl#L70)） | Real room impulse responses only; not speech/transcription training examples |
 | [rulibrispeech_ru](../catalog/legacy_multilingual.jsonl#L38) | ru | 语音识别 | 98.2（已登记；[legacy](../catalog/legacy_multilingual.jsonl#L38)） | 有含标点版本 |
+| [sim_rir_slr26](../catalog/sim_rir_slr26.jsonl#L1) | und | rir | 未登记 | 已登记划分：all |
+| [sim_rir_slr28](../catalog/sim_rir_slr28.jsonl#L1) | und | rir | 未登记 | 已登记划分：all |
 | [slr37_bn](../catalog/legacy_multilingual.jsonl#L10) | bn | 语音识别 | 5.0（已登记；[legacy](../catalog/legacy_multilingual.jsonl#L10)） | 有无标点版本 |
 | [yodas_ar](../catalog/legacy_multilingual.jsonl#L4) | ar | 语音识别 | 289.7（已登记；[legacy](../catalog/legacy_multilingual.jsonl#L4)） | 有含标点版本 |
 | [yodas_bn](../catalog/legacy_multilingual.jsonl#L11) | bn | 语音识别 | 27.1（已登记；[legacy](../catalog/legacy_multilingual.jsonl#L11)） | 有含标点版本 |
