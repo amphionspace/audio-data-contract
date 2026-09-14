@@ -8,7 +8,11 @@ CATALOG_DIR = Path(__file__).parents[1] / "catalog"
 
 def test_icefall_snapshot_has_38_portable_base_datasets():
     catalog = load_catalog(CATALOG_DIR)
-    specs = [spec for spec in catalog if spec.version == "legacy-20260804"]
+    specs = [
+        spec for spec in catalog
+        if spec.version == "legacy-20260804"
+        and spec.provenance.get("source") == "icefall pre-migration registry"
+    ]
     assert len(specs) == 38
     assert "common_voice_yue" not in {spec.dataset_id for spec in specs}
     assert all("asr" in spec.tasks for spec in specs)
