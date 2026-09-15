@@ -1,0 +1,126 @@
+{
+  "checked_at": "2026-09-15T03:21:03Z",
+  "method": "isolated-directory restoration from project binding and COS receipts, without uploader inventory or source-file reads",
+  "binding": "catalog/backups/cos-20260914.json",
+  "binding_sha256": "49f1fac8053f481f5e4e579b5d3472592a7f38d3ad386daac252fe77278a8d2d",
+  "bound_versions": 353,
+  "restore": {
+    "archive_staging_bytes": 0,
+    "destination": "/tmp/audio-data-contract-cos-restore-20260915",
+    "files": 7,
+    "full_index_available": false,
+    "known_issues": null,
+    "status": "verified_selected_files"
+  },
+  "checks": [
+    {
+      "original_path": "/ai_sds_wuzz/DATA_ASR/LHOTSE/synthetic/police_synthetic_zh_accent/v5-20260830-qwen75-cosy25-split80-10-10/manifests/police_terms_v5_recordings_train.jsonl.gz",
+      "restored_path": "/tmp/audio-data-contract-cos-restore-20260915/files/ai_sds_wuzz/DATA_ASR/LHOTSE/synthetic/police_synthetic_zh_accent/v5-20260830-qwen75-cosy25-split80-10-10/manifests/police_terms_v5_recordings_train.jsonl.gz",
+      "object_key": "audio-data-contract/v1/batches/police-v5-20260914/0004b893bcc21a7b3976b1ecb1b7ee6d55203026141ae2ffdf4e446d18ed1dc9/shard-00000.tar.zst",
+      "member": "files/2ed9f7b2e892dec215274dba616edae175847ecce72dd3f84737b5251b4c1f7b",
+      "bytes": 157931,
+      "sha256": "2ed9f7b2e892dec215274dba616edae175847ecce72dd3f84737b5251b4c1f7b",
+      "verified": true,
+      "records": 7878
+    },
+    {
+      "original_path": "/222042021/mingdong/workspace/AmphionData/results/police-synthetic-v5-production-20k-260830/audio/qwen3_tts/audio-45d88f51c2f09c29.wav",
+      "restored_path": "/tmp/audio-data-contract-cos-restore-20260915/files/222042021/mingdong/workspace/AmphionData/results/police-synthetic-v5-production-20k-260830/audio/qwen3_tts/audio-45d88f51c2f09c29.wav",
+      "object_key": "audio-data-contract/v1/batches/police-v5-20260914/0004b893bcc21a7b3976b1ecb1b7ee6d55203026141ae2ffdf4e446d18ed1dc9/shard-00001.tar.zst",
+      "member": "files/001be00db4882970b6e329c30ee924d74eb7c3f39b23556a4ffaec75da031540",
+      "bytes": 609358,
+      "sha256": "001be00db4882970b6e329c30ee924d74eb7c3f39b23556a4ffaec75da031540",
+      "verified": true,
+      "audio": {
+        "sample_rate": 16000,
+        "channels": 1,
+        "frames": 304640
+      }
+    },
+    {
+      "original_path": "/222042021/mingdong/workspace/AmphionData/results/police-synthetic-v5-production-20k-260830/audio/cosyvoice3/audio-36e7d0cf2300bba2.wav",
+      "restored_path": "/tmp/audio-data-contract-cos-restore-20260915/files/222042021/mingdong/workspace/AmphionData/results/police-synthetic-v5-production-20k-260830/audio/cosyvoice3/audio-36e7d0cf2300bba2.wav",
+      "object_key": "audio-data-contract/v1/batches/police-v5-20260914/0004b893bcc21a7b3976b1ecb1b7ee6d55203026141ae2ffdf4e446d18ed1dc9/shard-00001.tar.zst",
+      "member": "files/0023f7b257ac08ffb80dda51ff358d6a21c5861e796a33dff7cce2757da608ab",
+      "bytes": 632398,
+      "sha256": "0023f7b257ac08ffb80dda51ff358d6a21c5861e796a33dff7cce2757da608ab",
+      "verified": true,
+      "audio": {
+        "sample_rate": 16000,
+        "channels": 1,
+        "frames": 316160
+      }
+    },
+    {
+      "original_path": "/222042021/mingdong/workspace/AmphionData/results/police-synthetic-v5-production-20k-260830/audio/cosyvoice3/audio-8600144a86c7744e.wav",
+      "restored_path": "/tmp/audio-data-contract-cos-restore-20260915/files/222042021/mingdong/workspace/AmphionData/results/police-synthetic-v5-production-20k-260830/audio/cosyvoice3/audio-8600144a86c7744e.wav",
+      "object_key": "audio-data-contract/v1/batches/police-v5-20260914/0004b893bcc21a7b3976b1ecb1b7ee6d55203026141ae2ffdf4e446d18ed1dc9/shard-00001.tar.zst",
+      "member": "files/002ab23acaece12581c8af19f5df217a3ac49e92043b387178a7c36131d5768a",
+      "bytes": 139598,
+      "sha256": "002ab23acaece12581c8af19f5df217a3ac49e92043b387178a7c36131d5768a",
+      "verified": true,
+      "audio": {
+        "sample_rate": 16000,
+        "channels": 1,
+        "frames": 69760
+      }
+    },
+    {
+      "original_path": "/222042021/mingdong/workspace/AmphionData/results/police-synthetic-v5-production-20k-260830/audio/qwen3_tts/audio-fa5f05ae7412d4fd.wav",
+      "restored_path": "/tmp/audio-data-contract-cos-restore-20260915/files/222042021/mingdong/workspace/AmphionData/results/police-synthetic-v5-production-20k-260830/audio/qwen3_tts/audio-fa5f05ae7412d4fd.wav",
+      "object_key": "audio-data-contract/v1/batches/police-v5-20260914/0004b893bcc21a7b3976b1ecb1b7ee6d55203026141ae2ffdf4e446d18ed1dc9/shard-00002.tar.zst",
+      "member": "files/e788847e6dd43234edf6365d6379ab86b685ce8e6e8cf8e00d9b12bd3dea849b",
+      "bytes": 688718,
+      "sha256": "e788847e6dd43234edf6365d6379ab86b685ce8e6e8cf8e00d9b12bd3dea849b",
+      "verified": true,
+      "audio": {
+        "sample_rate": 16000,
+        "channels": 1,
+        "frames": 344320
+      }
+    },
+    {
+      "original_path": "/222042021/mingdong/workspace/AmphionData/results/police-synthetic-v5-production-20k-260830/audio/qwen3_tts/audio-23e16571779902d8.wav",
+      "restored_path": "/tmp/audio-data-contract-cos-restore-20260915/files/222042021/mingdong/workspace/AmphionData/results/police-synthetic-v5-production-20k-260830/audio/qwen3_tts/audio-23e16571779902d8.wav",
+      "object_key": "audio-data-contract/v1/batches/police-v5-20260914/0004b893bcc21a7b3976b1ecb1b7ee6d55203026141ae2ffdf4e446d18ed1dc9/shard-00002.tar.zst",
+      "member": "files/e78f71cb1ffd65a947634dbdbb6621eba14875383f30410d9369e26b79df36ca",
+      "bytes": 233038,
+      "sha256": "e78f71cb1ffd65a947634dbdbb6621eba14875383f30410d9369e26b79df36ca",
+      "verified": true,
+      "audio": {
+        "sample_rate": 16000,
+        "channels": 1,
+        "frames": 116480
+      }
+    },
+    {
+      "original_path": "/222042021/mingdong/workspace/AmphionData/results/police-synthetic-v5-production-20k-260830/audio/cosyvoice3/audio-0774f083b4f718c3.wav",
+      "restored_path": "/tmp/audio-data-contract-cos-restore-20260915/files/222042021/mingdong/workspace/AmphionData/results/police-synthetic-v5-production-20k-260830/audio/cosyvoice3/audio-0774f083b4f718c3.wav",
+      "object_key": "audio-data-contract/v1/batches/police-v5-20260914/0004b893bcc21a7b3976b1ecb1b7ee6d55203026141ae2ffdf4e446d18ed1dc9/shard-00002.tar.zst",
+      "member": "files/e797586f7db0020b3edab1d8319f466ddac3ddf3e3f3440f6a367bba5bd71948",
+      "bytes": 757838,
+      "sha256": "e797586f7db0020b3edab1d8319f466ddac3ddf3e3f3440f6a367bba5bd71948",
+      "verified": true,
+      "audio": {
+        "sample_rate": 16000,
+        "channels": 1,
+        "frames": 378880
+      }
+    }
+  ],
+  "tests": {
+    "pytest_passed": 166,
+    "ruff": "passed",
+    "catalog_overview": "current"
+  },
+  "limitations": [
+    "Sample recovery on this host, not a separate physical server.",
+    "Full-catalog upload and final recovery index are still incomplete.",
+    "Manifest relocation validated by local tests; this cloud sample does not restore all audio referenced by the train manifest."
+  ],
+  "cleanup": {
+    "temporary_restore_index_removed": true,
+    "bytes_released": 472035328,
+    "restored_samples_retained": true
+  }
+}

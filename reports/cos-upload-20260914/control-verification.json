@@ -1,0 +1,8 @@
+{
+  "bucket": "amphion-audio-backup-1373259071",
+  "key": "audio-data-contract/v1/batches/control-20260914/21d2a2d76ed3ee92b947b1f39dbfb7ac0d1c9471e66f7c8e8615455f37f0314a/shard-00000.tar.zst",
+  "archive_sha256": "fdc1f72d641091de512000df0eeecc7521f809ae60d4576dbe17a7a4f4d03669",
+  "restored_files_verified": 2,
+  "verified_bytes": 16758,
+  "archive_staged_to_disk": false
+}
