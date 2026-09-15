@@ -119,7 +119,8 @@ def test_cloud_only_restore_preserves_bytes_aliases_and_subset(setup):
 
     db.set_authorizer(no_inventory_copy)
     restore.restore(cloud, binding, db, destination, allow_incomplete=True)
-    db.set_authorizer(None)
+    # Python 3.10 requires a callable when replacing an authorizer.
+    db.set_authorizer(lambda *_: sqlite3.SQLITE_OK)
     assert cloud.reads == reads
     # Switching back to a subset must work after a full restore in the same DB.
     restore.restore(cloud, binding, db, destination, ['/old/data/a.wav'], True)
