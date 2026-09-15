@@ -37,6 +37,8 @@ CI 会执行 `audio-data-contract generate-overview --check`。数据发生变�
 
 使用 `extract-audio` 按归档预提取 Chuan/Wu 音频，或用 `localize-audio` 按 manifest 准备本地副本。命令必须显式调用，不修改原始数据或 catalog。参数、重跑规则及验收方式见[音频准备说明](docs/audio-preparation.md)。
 
+已登记数据的 COS 备份位置见[版本绑定](catalog/backups/cos-20260914.json)。在另一台服务器上查询对象、恢复文件及迁移清单路径，见 [COS 恢复说明](docs/cos-restore.md)。绑定覆盖同步范围，实际可恢复状态以云端验收回执为准。
+
 ## 协议怎样组织数据
 
 可以把协议理解成五张互相关联的说明书：

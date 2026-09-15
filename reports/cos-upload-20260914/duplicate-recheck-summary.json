@@ -1,0 +1,11 @@
+{
+  "verified_at": "2026-09-14T03:15:17+00:00",
+  "status": "complete",
+  "verified_duplicate_pairs": 480,
+  "verified_duplicate_bytes": 106554752743,
+  "mismatched_or_failed_pairs": 0,
+  "hashed_files": 960,
+  "hashed_bytes": 213109505486,
+  "failures": [],
+  "deleted_files": 0
+}

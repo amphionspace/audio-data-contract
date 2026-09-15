@@ -1,0 +1,12 @@
+{
+  "sample_files": 371,
+  "sample_bytes": 67162378,
+  "read_seconds": 6.153624165977817,
+  "zstd_threads": 4,
+  "levels": [
+    {"level": 1, "compressed_ratio": 0.8451528175491344, "seconds": 0.03822806401876733},
+    {"level": 3, "compressed_ratio": 0.822213099720799, "seconds": 0.11430149700026959}
+  ],
+  "selected_level": 3,
+  "scope": "First 371 audio paths from police v5 QC train RecordingSet; not a whole-catalog estimate"
+}
