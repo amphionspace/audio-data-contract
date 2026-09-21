@@ -162,6 +162,33 @@ def test_same_size_mtime_preserving_change_fails_content_check(tmp_path):
         backup.write_archive(job, io.BytesIO(), 3)
 
 
+def test_explicit_remount_alias_keeps_other_source_checks(tmp_path, monkeypatch):
+    path = tmp_path / 'audio.wav'
+    original = item(path, b'unchanged content')
+    job = {'format': 'raw', 'files': [original]}
+    before = path.stat()
+    current = SimpleNamespace(st_mode=before.st_mode, st_size=before.st_size,
+                              st_mtime_ns=before.st_mtime_ns,
+                              st_dev=before.st_dev + 1, st_ino=before.st_ino)
+    real_stat = Path.stat
+    monkeypatch.setattr(Path, 'stat', lambda p, **kw: current if p == path else real_stat(p, **kw))
+    with pytest.raises(ValueError, match='source changed'):
+        backup.check_sources(job)
+    monkeypatch.setattr(backup, 'DEVICE_ALIASES', {current.st_dev: before.st_dev})
+    backup.check_sources(job)
+    assert backup.signature(path)['device'] == current.st_dev
+    current_job = {'files': [{'sources': [
+        {'path': str(path), 'signature': backup.signature(path)}
+    ]}]}
+    backup.check_sources(current_job)
+    for field in ('st_size', 'st_mtime_ns', 'st_ino'):
+        saved = getattr(current, field)
+        setattr(current, field, saved + 1)
+        with pytest.raises(ValueError, match='source changed'):
+            backup.check_sources(job)
+        setattr(current, field, saved)
+
+
 def test_unknown_remote_object_is_not_overwritten(transfer):
     client, job, checkpoint, args = transfer
     client.objects["key"] = {"Content-Length": "1"}

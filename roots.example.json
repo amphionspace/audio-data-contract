@@ -1,9 +1,11 @@
 {
   "alimeeting_far_raw": "/data/alimeeting/original/far",
   "audio_data_contract": "/path/to/audio-data-contract",
+  "amphion_data": "/path/to/AmphionData",
   "amphion_asr_project": "/path/to/AmphionASR-1.7B",
   "legacy_asr": "/data/asr",
   "multilingual": "/data/multilingual",
   "managed_fast": "/data/managed",
-  "managed_bulk": "/bulk/audio"
+  "managed_bulk": "/bulk/audio",
+  "multispeaker_synthetic": "/path/to/sot-multispeaker/synthetic-v2-20260915"
 }
