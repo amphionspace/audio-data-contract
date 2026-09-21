@@ -24,6 +24,12 @@ from audio_data_contract import load_catalog
 from audio_data_contract.audio_prepare import _parse, _sources
 from audio_data_contract.roots import load_roots
 
+# Explicitly scoped to a resumed run after verifying the same filesystem was
+# remounted with a different device number. All other signature fields and
+# content checks remain unchanged; do not enable this for a different volume.
+DEVICE_ALIASES = {int(current): int(recorded) for current, recorded in
+                  json.loads(os.environ.get('COS_BACKUP_DEVICE_ALIASES', '{}')).items()}
+
 
 def encoded(value):
     return json.dumps(value, ensure_ascii=False, sort_keys=True,
@@ -273,7 +279,12 @@ class MultipartSink:
 def check_sources(job):
     for item in job["files"]:
         for source in item["sources"]:
-            if signature(source["path"]) != source["signature"]:
+            current = signature(source["path"])
+            if current["device"] != source["signature"]["device"]:
+                current["device"] = DEVICE_ALIASES.get(
+                    current["device"], current["device"]
+                )
+            if current != source["signature"]:
                 raise ValueError(f"source changed since planning: {source['path']}")
 
 
