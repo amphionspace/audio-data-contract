@@ -1,0 +1,19 @@
+  - schema_version: dataset-catalog/1.0
+    dataset_id: sim_rir_slr26
+    version: legacy-20260804
+    languages:
+      - und
+    tasks:
+      - rir
+    aliases: []
+    artifacts:
+      - kind: lhotse-recordings
+        name: recordings
+        relative_path: LHOTSE/noise_rir/data/manifests/sim_rir_slr26_recordings_all.jsonl.gz
+        root_alias: legacy_asr
+    splits:
+      all:
+        recordings_artifact: recordings
+    provenance:
+      snapshot_date: '2026-08-07'
+      source: AmphionASR target-speaker recipe

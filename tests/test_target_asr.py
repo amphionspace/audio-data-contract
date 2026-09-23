@@ -9,6 +9,7 @@ from pathlib import Path
 import pytest
 
 from audio_data_contract import load_catalog, load_records, load_view_catalog
+from audio_data_contract.declarations import write_declarations
 
 pytest.importorskip("orjson")
 REPO = Path(__file__).resolve().parents[1]
@@ -93,11 +94,15 @@ def test_conversion_registration_and_portable_reader(tmp_path):
                            "equivalent_to": ["train_2spk", "train_neg"]})
     convert["convert_job"](job, roots, 1, {})
     out = Path(roots["amphion_asr_project"]) / "data/audio-records/fixture/records-1"
-    report = json.loads((out / "registration.json").read_text())
-    cat = tmp_path / "catalog.jsonl"
-    cat.write_text("".join(json.dumps(d) + "\n" for d in report["datasets"]))
-    view = tmp_path / "views.jsonl"
-    view.write_text(json.dumps(report["view"]) + "\n")
+    cat = tmp_path / "catalog"
+    view = tmp_path / "views"
+    cat.mkdir()
+    view.mkdir()
+    write_declarations(cat / "empty.yaml", [])
+    write_declarations(view / "empty.yaml", [])
+    convert["register"]({"jobs": [job]}, roots, tmp_path)
+    assert (cat / "fixture.yaml").is_file()
+    assert (view / "target_asr.yaml").is_file()
     catalog = load_catalog(cat)
     assert len(load_view_catalog(view, catalog)) == 1
     spec = catalog.get("fixture", "records-1")

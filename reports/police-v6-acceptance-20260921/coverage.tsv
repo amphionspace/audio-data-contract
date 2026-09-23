@@ -1,0 +1,1543 @@
+id	section	source_line	text	base_audio	selected_audio	literal_audio	term_context_audio	paraphrase_audio	status	datasets
+src-ad58dea744a03c0c	20260915新增	3	签收第一条	0	0	0	0	0	缺音频	
+src-b578f4db362739c7	20260915新增	4	签收第二条	0	0	0	0	0	缺音频	
+src-9921cb27ae42f4dc	20260915新增	5	签收第三条	0	0	0	0	0	缺音频	
+src-64c4385abf55fad6	20260915新增	6	签收第四条	0	0	0	0	0	缺音频	
+src-4f6f693b40baa6da	20260915新增	7	签收第五条	0	0	0	0	0	缺音频	
+src-22ccb4dad155f6b5	20260915新增	8	签收第六条	0	0	0	0	0	缺音频	
+src-8556bdec22dc71e2	20260915新增	9	签收第七条	0	0	0	0	0	缺音频	
+src-761608977fd9807e	20260915新增	10	签收第八条	0	0	0	0	0	缺音频	
+src-03b777850fa25bfb	20260915新增	11	签收第九条	0	0	0	0	0	缺音频	
+src-d8ac4db19ba223a4	20260915新增	12	选择第一条	0	0	0	0	0	缺音频	
+src-cd7922dc63d7c8be	20260915新增	13	选择第二条	0	10	0	0	10	仅改写覆盖	police_v6_8h
+src-8210b463d3917df3	20260915新增	14	选择第三条	0	0	0	0	0	缺音频	
+src-fb45d9e6b4f84d73	20260915新增	15	选择第四条	0	10	0	0	10	仅改写覆盖	police_v6_8h
+src-d102dca3aeff2ea0	20260915新增	16	选择第五条	0	0	0	0	0	缺音频	
+src-dd3bc7a3eaec6761	20260915新增	17	选择第六条	0	0	0	0	0	缺音频	
+src-687d798b7f39728f	20260915新增	18	选择第七条	0	0	0	0	0	缺音频	
+src-1ee6840db374a848	20260915新增	19	选择第八条	0	0	0	0	0	缺音频	
+src-99c914bc77686b50	20260915新增	20	选择第九条	0	0	0	0	0	缺音频	
+src-2605fdb150a61695	20260915新增	26	打开记录仪蓝牙	0	0	0	0	0	缺音频	
+src-ff015406e7fb9629	20260915新增	27	开启记录仪蓝牙	0	0	0	0	0	缺音频	
+src-7f62f8409df13bd3	20260915新增	28	关闭记录仪蓝牙	0	0	0	0	0	缺音频	
+src-e1f04ef5da796d38	20260915新增	31	打开记录仪WLAN	0	0	0	0	0	缺音频	
+src-0dc364fa655de281	20260915新增	32	开启记录仪无线局域网	0	0	0	0	0	缺音频	
+src-bd617f059fdebabc	20260915新增	33	关闭记录仪WLAN	0	0	0	0	0	缺音频	
+src-56cafd9a1fbb45d7	20260915新增	34	关闭记录仪无线局域网	0	0	0	0	0	缺音频	
+src-ab64e0f0ea035754	20260915新增	37	打开记录仪NFC	0	0	0	0	0	缺音频	
+src-9ea9f0f5ca33ffa4	20260915新增	38	开启记录仪NFC	0	0	0	0	0	缺音频	
+src-c33f71a493ea0026	20260915新增	39	关闭记录仪NFC	0	0	0	0	0	缺音频	
+src-6a4ca78d8642c4bc	20260915新增	42	打开记录仪飞行模式	0	0	0	0	0	缺音频	
+src-6a20fcd98a053684	20260915新增	43	开启记录仪飞行模式	0	0	0	0	0	缺音频	
+src-5001945d96c0ebca	20260915新增	44	关闭记录仪飞行模式	0	0	0	0	0	缺音频	
+src-85acaedc6e028816	20260915新增	47	打开记录仪个人热点	0	0	0	0	0	缺音频	
+src-61696778d42f5a44	20260915新增	48	开启记录仪热点	0	0	0	0	0	缺音频	
+src-4ffdc4f0f22874e2	20260915新增	49	关闭记录仪个人热点	0	0	0	0	0	缺音频	
+src-d1c475e2a5da6e78	20260915新增	52	打开记录仪手电筒	0	0	0	0	0	缺音频	
+src-fcc23b5667d1783d	20260915新增	53	关闭记录仪手电筒	0	0	0	0	0	缺音频	
+src-c89dc0eb0396b176	20260915新增	56	打开红外	0	0	0	0	0	缺音频	
+src-87ae45b45c4d9392	20260915新增	57	开启红外	0	0	0	0	0	缺音频	
+src-3a05a06657ee6055	20260915新增	58	关闭红外	0	10	0	0	10	仅改写覆盖	police_v6_8h
+src-cfa2d1ff10781f41	20260915新增	61	打开AI模式	0	10	0	0	10	仅改写覆盖	police_v6_8h
+src-c40b5cf275fdb3e6	20260915新增	62	开启AI	0	10	0	0	10	仅改写覆盖	police_v6_8h
+src-937706d3ad01881a	20260915新增	63	关闭AI模式	0	0	0	0	0	缺音频	
+src-3ba786aaa69fee3d	20260915新增	64	关闭AI	0	0	0	0	0	缺音频	
+src-b4513259bfd8899e	20260915新增	67	打开静默模式	0	0	0	0	0	缺音频	
+src-46f17b4bde7cd786	20260915新增	68	开启静音模式	0	0	0	0	0	缺音频	
+src-930bd869ac89cae0	20260915新增	69	关闭静默模式	0	0	0	0	0	缺音频	
+src-a8a1a082266ff894	20260915新增	70	关闭静音模式	0	0	0	0	0	缺音频	
+src-f8b5ac8cb9279791	20260915新增	73	打开记录仪移动网络	0	10	0	0	10	仅改写覆盖	police_v6_8h
+src-5ebf157d5e8066c9	20260915新增	74	开启记录仪移动数据	0	10	0	0	10	仅改写覆盖	police_v6_8h
+src-446eaf8538c10249	20260915新增	75	关闭记录仪移动网络	0	0	0	0	0	缺音频	
+src-11eb5a0d7ffc1f83	20260915新增	76	关闭记录仪移动数据	0	0	0	0	0	缺音频	
+src-39c15c10945e0d58	20260915新增	79	打开记录仪人声播报	0	10	0	0	10	仅改写覆盖	police_v6_8h
+src-32c332264f659df0	20260915新增	80	开启记录仪人声播报	0	10	0	0	10	仅改写覆盖	police_v6_8h
+src-5a35f9840df1bff6	20260915新增	81	关闭记录仪人声播报	0	0	0	0	0	缺音频	
+src-e9b2cdb6e64d60bc	20260915新增	86	把镜头切换到超长待机模式	0	0	0	0	0	缺音频	
+src-68bbde22097c8eab	20260915新增	87	切换到超长待机	0	0	0	0	0	缺音频	
+src-dd8ed8150dc9c253	20260915新增	88	把镜头切换到防抖模式	0	0	0	0	0	缺音频	
+src-aef6c0b6e87d902e	20260915新增	89	切换到防抖	0	0	0	0	0	缺音频	
+src-702f7ca623a253a2	20260915新增	90	把镜头切换到超大广角模式	0	0	0	0	0	缺音频	
+src-cbc84278579e56f4	20260915新增	91	切换到超大广角	0	0	0	0	0	缺音频	
+src-226892834e8b19e7	20260915新增	92	镜头模式有哪些可选	0	0	0	0	0	缺音频	
+src-ed5dfe1dd1def98d	20260915新增	93	当前镜头模式是什么	0	0	0	0	0	缺音频	
+src-82d1fbb7554af704	20260915新增	98	开始录像	1	1	1	0	0	已覆盖	current_police_terms_20260727_190
+src-4a2aa8e04f119e88	20260915新增	99	停止录像	0	0	0	0	0	缺音频	
+src-ce398de45e479561	20260915新增	100	开始录音	1	1	1	0	0	已覆盖	current_police_terms_20260727_190
+src-2061d6edd5d35081	20260915新增	101	停止录音	0	0	0	0	0	缺音频	
+src-1fc4b582ff7a7287	20260915新增	102	拍照	0	0	0	0	0	缺音频	
+src-374cbae6fc376afb	20260915新增	103	拍一张照片	0	0	0	0	0	缺音频	
+src-761769bfce7a5b95	20260915新增	104	打开水印	0	0	0	0	0	缺音频	
+src-072ce6cec146fad0	20260915新增	105	关闭水印	0	0	0	0	0	缺音频	
+src-94961e510097ad85	20260915新增	111	把录像分辨率设置为D1	0	0	0	0	0	缺音频	
+src-f67fc824fc3d7596	20260915新增	112	把录像分辨率设置为720P	0	0	0	0	0	缺音频	
+src-4e4fcd35ad41756a	20260915新增	113	把录像分辨率设置为1080P	0	0	0	0	0	缺音频	
+src-56f045f70a5a326e	20260915新增	114	把录像分辨率设置为2K	0	0	0	0	0	缺音频	
+src-5d31308b28188df4	20260915新增	115	把录像分辨率设置为4K	0	0	0	0	0	缺音频	
+src-5d0d68ec122b1d5a	20260915新增	116	录像分辨率支持哪些	0	10	0	0	10	仅改写覆盖	police_v6_8h
+src-4c67c4f02d6bb9fe	20260915新增	117	当前录像分辨率是多少	0	0	0	0	0	缺音频	
+src-da19ddc33c6aaace	20260915新增	120	把视频帧率设置为25	0	0	0	0	0	缺音频	
+src-920bbcc5291ab293	20260915新增	121	把视频帧率设置为30	0	0	0	0	0	缺音频	
+src-87a4091a85dc6664	20260915新增	122	视频帧率支持哪些	0	10	0	0	10	仅改写覆盖	police_v6_8h
+src-69b6df3a0810dc92	20260915新增	123	当前帧率是多少	0	0	0	0	0	缺音频	
+src-95dd6931c8c54cfb	20260915新增	126	把视频编码格式设置为H.264	0	0	0	0	0	缺音频	
+src-cd17a17914e2f235	20260915新增	127	把视频编码格式设置为H.265	0	0	0	0	0	缺音频	
+src-2577132105f5ee72	20260915新增	128	支持哪些编码格式	0	0	0	0	0	缺音频	
+src-2f9c9d06196de0b7	20260915新增	129	当前编码格式是什么	0	0	0	0	0	缺音频	
+src-bed09fc4049641f0	20260915新增	132	把视频分段时长设置为5分钟	0	10	0	0	10	仅改写覆盖	police_v6_8h
+src-4a1de904abce2dad	20260915新增	133	把视频分段时长设置为10分钟	0	0	0	0	0	缺音频	
+src-60425b247215173e	20260915新增	134	把视频分段时长设置为20分钟	0	0	0	0	0	缺音频	
+src-0dcbcc45e52b0c6a	20260915新增	135	把视频分段时长设置为30分钟	0	0	0	0	0	缺音频	
+src-065c6c1bc7d07f74	20260915新增	136	把视频分段时长设置为60分钟	0	0	0	0	0	缺音频	
+src-54814ce23bbb9ee3	20260915新增	137	分段时长支持哪些	0	0	0	0	0	缺音频	
+src-dde664751a9664b4	20260915新增	138	当前分段时长是多少	0	0	0	0	0	缺音频	
+src-7ebf509efc9bcfef	20260915新增	141	把照片像素设置为8M	0	0	0	0	0	缺音频	
+src-47cf1172d2364dfe	20260915新增	142	把照片像素设置为16M	0	0	0	0	0	缺音频	
+src-894e2dbab101f27a	20260915新增	143	把照片像素设置为24M	0	0	0	0	0	缺音频	
+src-13b2a95dcd26c0b6	20260915新增	144	把照片像素设置为32M	0	0	0	0	0	缺音频	
+src-1b2c25eb099b5897	20260915新增	145	把照片像素设置为64M	0	0	0	0	0	缺音频	
+src-2d80b593bac267c9	20260915新增	146	照片像素支持哪些	0	0	0	0	0	缺音频	
+src-f618adcc21c9128e	20260915新增	147	当前照片像素是多少	0	0	0	0	0	缺音频	
+src-c824fce9a24a09a4	20260915新增	150	把录像设置为4K 25帧 H.265 分段10分钟 照片64M	0	0	0	0	0	缺音频	
+src-2cca6fb262e0d39b	20260915新增	155	打开预录	0	0	0	0	0	缺音频	
+src-6e57125c26889038	20260915新增	156	开启预录	0	0	0	0	0	缺音频	
+src-0440c94f17d673ee	20260915新增	157	关闭预录	0	0	0	0	0	缺音频	
+src-badf4a86ebd2408f	20260915新增	158	打开预录并设置为5秒	0	0	0	0	0	缺音频	
+src-9a68f40379e56577	20260915新增	159	打开预录并设置为10秒	0	0	0	0	0	缺音频	
+src-80137f3e1cb91ef6	20260915新增	160	打开预录并设置为15秒	0	0	0	0	0	缺音频	
+src-d2894464569ff432	20260915新增	161	打开预录并设置为30秒	0	0	0	0	0	缺音频	
+src-627256a1eb75f168	20260915新增	162	打开预录并设置为60秒	0	0	0	0	0	缺音频	
+src-cbe02ea12d89638a	20260915新增	163	打开预录并设置为2分钟	0	0	0	0	0	缺音频	
+src-1e9dcd9550baac23	20260915新增	164	把预录时长设置为5秒	0	0	0	0	0	缺音频	
+src-96cddcb74e5acbc8	20260915新增	165	把预录时长设置为10秒	0	10	0	0	10	仅改写覆盖	police_v6_8h
+src-0ff6e0c07d96173d	20260915新增	166	把预录时长设置为15秒	0	0	0	0	0	缺音频	
+src-c0d063e57da7b9e4	20260915新增	167	把预录时长设置为30秒	0	0	0	0	0	缺音频	
+src-68c80048d3e1b12f	20260915新增	168	把预录时长设置为60秒	0	0	0	0	0	缺音频	
+src-25379f292b6c2ccd	20260915新增	169	把预录时长设置为120秒	0	0	0	0	0	缺音频	
+src-31f551572c236021	20260915新增	170	预录时长支持哪些	0	0	0	0	0	缺音频	
+src-3f40b293ac750617	20260915新增	171	当前预录时长是多少	0	0	0	0	0	缺音频	
+src-c1786951b29d3292	20260915新增	172	预录是否开启	0	0	0	0	0	缺音频	
+src-b843a544faff4816	20260915新增	175	打开延录	0	0	0	0	0	缺音频	
+src-86ef3a865a2ada35	20260915新增	176	开启延录	0	0	0	0	0	缺音频	
+src-3b8540c1b02fd645	20260915新增	177	关闭延录	0	0	0	0	0	缺音频	
+src-4d82aeb56989a948	20260915新增	178	打开延录并设置为60秒	0	0	0	0	0	缺音频	
+src-1e1586375bf23f4e	20260915新增	179	打开延录并设置为5分钟	0	0	0	0	0	缺音频	
+src-40ef5a6cd8a15e5e	20260915新增	180	把延录时长设置为30秒	0	0	0	0	0	缺音频	
+src-5fe086816b46fa4a	20260915新增	181	把延录时长设置为60秒	0	10	0	0	10	仅改写覆盖	police_v6_8h
+src-dd6262250b4ff60b	20260915新增	182	把延录时长设置为120秒	0	0	0	0	0	缺音频	
+src-5ba445ceb86872e7	20260915新增	183	把延录时长设置为300秒	0	10	0	0	10	仅改写覆盖	police_v6_8h
+src-259df304400ca40d	20260915新增	184	记录仪延录时长是多少	0	0	0	0	0	缺音频	
+src-08d98cb9abe65932	20260915新增	185	延录时长范围是多少	0	0	0	0	0	缺音频	
+src-6aae0a7df65318d3	20260915新增	186	当前延录时长是多少	0	0	0	0	0	缺音频	
+src-9be6e804f51ff1ee	20260915新增	187	延录是否开启	0	0	0	0	0	缺音频	
+src-b0d63700781e3824	20260915新增	192	把AI识别距离设置为近距离	0	0	0	0	0	缺音频	
+src-af02309d777d0c0f	20260915新增	193	把AI识别距离设置为远距离	0	0	0	0	0	缺音频	
+src-dd60297a227b3a61	20260915新增	194	把AI识别距离设置为自动	0	10	0	0	10	仅改写覆盖	police_v6_8h
+src-aaf8440c4e96142f	20260915新增	195	AI识别距离有哪些模式	0	0	0	0	0	缺音频	
+src-27dc537040357b7a	20260915新增	199	发起紧急业务	0	0	0	0	0	缺音频	
+src-0fb0808645945beb	20260915新增	200	触发SOS	0	0	0	0	0	缺音频	
+src-af3cd8bf9c901bcb	20260915新增	201	SOS	0	0	0	0	0	缺音频	
+src-d3310ae8de374459	20260915新增	202	帮我发起SOS	0	0	0	0	0	缺音频	
+src-4df395f9691ba123	20260915新增	207	开始标记	0	0	0	0	0	缺音频	
+src-db84cca654832980	20260915新增	208	标记当前录制	0	0	0	0	0	缺音频	
+src-dc0533f00b082ef2	20260915新增	209	给当前文件加标记	0	0	0	0	0	缺音频	
+src-65455eee3a7a6406	20260915新增	210	取消标记	0	0	0	0	0	缺音频	
+src-8984f7937a99adc6	20260915新增	211	取消当前标记	0	0	0	0	0	缺音频	
+src-439dc192a318d201	20260915新增	212	去掉标记	0	0	0	0	0	缺音频	
+src-2ade7e2d6312d2f5	20260915新增	217	打点：车牌川A123456	0	0	0	0	0	缺音频	
+src-19023c071d4efd59	20260915新增	218	打点：持刀嫌疑人，男，约30岁	0	0	0	0	0	缺音频	
+src-cc33ea3a04d9e5d4	20260915新增	219	给当前视频打个点	0	0	0	0	0	缺音频	
+src-21260b7afe0f5f2f	20260915新增	224	查询镜头模式	0	0	0	0	0	缺音频	
+src-38996d7b04b37e2a	20260915新增	225	查询录像分辨率	0	0	0	0	0	缺音频	
+src-a6bb8091118be164	20260915新增	226	查询视频帧率	0	0	0	0	0	缺音频	
+src-d18b2dc0a3cca4ae	20260915新增	227	查询编码格式	0	0	0	0	0	缺音频	
+src-9e5d41a6fb92d6f0	20260915新增	228	查询分段时长	0	0	0	0	0	缺音频	
+src-019504298660bb80	20260915新增	229	查询拍照像素大小	0	0	0	0	0	缺音频	
+src-544f9f2070ff444c	20260915新增	230	查询屏幕休眠时间	0	0	0	0	0	缺音频	
+src-4f3b420e5d47af64	20260915新增	231	查询预录时长	0	0	0	0	0	缺音频	
+src-841e43cc83251527	20260915新增	232	查询延录时长	0	0	0	0	0	缺音频	
+src-3803e2905deaeac0	20260915新增	233	查询记录仪所有可配置项	0	10	0	0	10	仅改写覆盖	police_v6_8h
+src-4cddbff9cdbfc452	20260915新增	234	把记录仪的镜头模式、分辨率、帧率、延录时长都告诉我	0	10	0	0	10	仅改写覆盖	police_v6_8h
+src-a21bf2e901d945b6	20260915新增	241	把记录仪通话音量调到最大	0	0	0	0	0	缺音频	
+src-96e955d6d0848e45	20260915新增	242	把记录仪通话音量调到最小	0	0	0	0	0	缺音频	
+src-780f81482480fa5a	20260915新增	243	把记录仪通话音量调到静音	0	0	0	0	0	缺音频	
+src-e4c7bae5b0bffdb6	20260915新增	244	把记录仪通话音量调大	0	0	0	0	0	缺音频	
+src-107edb559c3077c7	20260915新增	245	把记录仪通话音量调小	0	0	0	0	0	缺音频	
+src-2022aa9a0f3070a9	20260915新增	246	把记录仪媒体音量调到最大	0	0	0	0	0	缺音频	
+src-10cd34d445193fa4	20260915新增	247	把记录仪媒体音量调到最小	0	0	0	0	0	缺音频	
+src-ba7f7b2f9bba567a	20260915新增	248	把记录仪媒体音量调到静音	0	0	0	0	0	缺音频	
+src-2c6e50dffe13813c	20260915新增	249	把记录仪媒体音量调大	0	0	0	0	0	缺音频	
+src-52198cbcf90ad43f	20260915新增	250	把记录仪媒体音量调小	0	0	0	0	0	缺音频	
+src-55f7cdbb3bf1b700	20260915新增	251	把记录仪铃声音量调到最大	0	0	0	0	0	缺音频	
+src-cc4427e811f0dac2	20260915新增	252	把记录仪铃声音量调到最小	0	0	0	0	0	缺音频	
+src-7a1832a749d543fd	20260915新增	253	把记录仪闹钟音量调到最大	0	0	0	0	0	缺音频	
+src-8128959a7a569196	20260915新增	254	把记录仪闹钟音量调到最小	0	0	0	0	0	缺音频	
+src-23af1948357034d8	20260915新增	255	把记录仪通知音量调到最大	0	0	0	0	0	缺音频	
+src-59ba065024689638	20260915新增	256	把记录仪通知音量调到最小	0	0	0	0	0	缺音频	
+src-fa54598e4a4621da	20260915新增	257	记录仪音量调到最大	0	0	0	0	0	缺音频	
+src-6c70b32422778ad1	20260915新增	258	记录仪音量调到最小	0	10	0	0	10	仅改写覆盖	police_v6_8h
+src-c7852a479b48c108	20260915新增	259	记录仪音量静音	0	0	0	0	0	缺音频	
+src-fde3358aa96d468b	20260915新增	263	把记录仪亮度调到0档	0	0	0	0	0	缺音频	
+src-fe9fba0378f0197f	20260915新增	264	把记录仪亮度调到1档	0	0	0	0	0	缺音频	
+src-e35bee06553a0395	20260915新增	265	把记录仪亮度调到2档	0	0	0	0	0	缺音频	
+src-cb860addb897772e	20260915新增	266	把记录仪亮度调到3档	0	0	0	0	0	缺音频	
+src-d0c8b59b6f41a4ca	20260915新增	267	把记录仪亮度调到4档	0	0	0	0	0	缺音频	
+src-6e09514c717c4e43	20260915新增	268	把记录仪亮度调到5档	0	0	0	0	0	缺音频	
+src-536551b09ec50365	20260915新增	269	把记录仪亮度调到6档	0	0	0	0	0	缺音频	
+src-748767f3aa265347	20260915新增	270	把记录仪亮度调到7档	0	0	0	0	0	缺音频	
+src-5cfa9b863d0484fb	20260915新增	271	把记录仪亮度调到8档	0	0	0	0	0	缺音频	
+src-2bbdb0a51b5149c3	20260915新增	272	把记录仪亮度调到9档	0	0	0	0	0	缺音频	
+src-12e34da181aa0b1a	20260915新增	273	把记录仪亮度调到10档	0	0	0	0	0	缺音频	
+src-efd9b8e5088c510e	20260915新增	274	把记录仪亮度调到最亮	0	0	0	0	0	缺音频	
+src-f4b25387ab0f2fa7	20260915新增	275	把记录仪亮度调到最暗	0	10	0	0	10	仅改写覆盖	police_v6_8h
+src-05ed87be6172b942	20260915新增	276	记录仪亮度调高	0	0	0	0	0	缺音频	
+src-8bb040cf0fda0db6	20260915新增	277	记录仪亮度调低	0	0	0	0	0	缺音频	
+src-2509a2440b3d64cb	20260915新增	280	把记录仪关机	0	0	0	0	0	缺音频	
+src-5da4b198499912f7	20260915新增	281	关闭记录仪	0	0	0	0	0	缺音频	
+src-b552d2f7e68ebbca	20260915新增	282	记录仪关机	0	0	0	0	0	缺音频	
+src-942c71e1c9cf31d1	20260915新增	286	把记录仪休眠时间设置为15秒	0	0	0	0	0	缺音频	
+src-419cb060632233b3	20260915新增	287	把记录仪休眠时间设置为30秒	0	0	0	0	0	缺音频	
+src-5ae73f0de0781884	20260915新增	288	把记录仪休眠时间设置为60秒	0	0	0	0	0	缺音频	
+src-d306df1a3bdf9bf7	20260915新增	289	把记录仪休眠时间设置为2分钟	0	0	0	0	0	缺音频	
+src-074cc1178533cf46	20260915新增	290	把记录仪休眠时间设置为5分钟	0	0	0	0	0	缺音频	
+src-fa155df16e5133c2	20260915新增	291	把记录仪休眠时间设置为10分钟	0	0	0	0	0	缺音频	
+src-95fbb90c54ec3c83	20260915新增	292	把记录仪设置为永不休眠	0	0	0	0	0	缺音频	
+src-5053a67cbc654f71	20260915新增	293	把记录仪设置为屏幕常亮	0	0	0	0	0	缺音频	
+src-370f39715fa9b664	20260915新增	294	当前屏幕休眠时间是多少	0	0	0	0	0	缺音频	
+src-0ad813041781cfcd	20260731新增	298	签警单	5	5	0	5	0	已覆盖	targeted_police_terms_multivoice_20260807_10
+src-28712c02e5c4979a	20260731新增	299	签警情	5	5	0	5	0	已覆盖	targeted_police_terms_multivoice_20260807_10
+src-1d77039b947f5a64	20260727新增	301	帮我打开设置	1	1	1	0	0	已覆盖	current_police_terms_20260727_190
+src-eb27457081e3fadf	20260727新增	302	启动设置APP	1	1	1	0	0	已覆盖	current_police_terms_20260727_190
+src-6b67e4e3176c3b06	20260727新增	303	打开通讯录	1	1	1	0	0	已覆盖	current_police_terms_20260727_190
+src-218f3c359251a3b5	20260727新增	304	打开警信	1	1	1	0	0	已覆盖	current_police_terms_20260727_190
+src-b07f4e8ea19935b2	20260727新增	305	帮我打开应用市场	1	1	1	0	0	已覆盖	current_police_terms_20260727_190
+src-826d8fed1cf3c3fd	20260727新增	306	启动录音机	1	1	1	0	0	已覆盖	current_police_terms_20260727_190
+src-3e8d54e62fbd1dbc	20260727新增	307	启动计算器	1	1	1	0	0	已覆盖	current_police_terms_20260727_190
+src-d861354a678d5e5c	20260727新增	308	帮我打开计算器	1	1	1	0	0	已覆盖	current_police_terms_20260727_190
+src-8a3352888656ab22	20260727新增	309	启动我的消息	1	1	1	0	0	已覆盖	current_police_terms_20260727_190
+src-b9bb45ea9d4bc7f1	20260727新增	310	启动短信	1	1	1	0	0	已覆盖	current_police_terms_20260727_190
+src-25303f0e9110a63e	20260727新增	311	启动打电话	1	1	1	0	0	已覆盖	current_police_terms_20260727_190
+src-3e01fec31f102ce0	20260727新增	312	打开统一认证	1	1	1	0	0	已覆盖	current_police_terms_20260727_190
+src-76773900c5e897b4	20260727新增	313	启动相机	1	1	1	0	0	已覆盖	current_police_terms_20260727_190
+src-4e2e74635d42923d	20260727新增	314	帮我打开时钟	1	1	1	0	0	已覆盖	current_police_terms_20260727_190
+src-a278051b8e9e757d	20260727新增	315	帮我启动文件管理	1	1	1	0	0	已覆盖	current_police_terms_20260727_190
+src-0dfbd4fd88d5ad74	20260727新增	316	屏幕上显示的是什么内容	1	1	1	0	0	已覆盖	current_police_terms_20260727_190
+src-2f0cf856dcfad78e	20260727新增	317	识别屏幕里的信息	1	1	1	0	0	已覆盖	current_police_terms_20260727_190
+src-a5f3f3025033e109	20260727新增	318	帮我识别屏幕的内容	1	1	1	0	0	已覆盖	current_police_terms_20260727_190
+src-98db1f2101875723	20260727新增	319	屏幕中的内容是什么	1	1	1	0	0	已覆盖	current_police_terms_20260727_190
+src-b04f8b0d02430e4f	20260727新增	320	看一下屏幕显示的内容	1	1	1	0	0	已覆盖	current_police_terms_20260727_190
+src-b4f1975a87e9b455	20260727新增	321	帮我打开警信	1	1	1	0	0	已覆盖	current_police_terms_20260727_190
+src-65ca71a0fb5d5031	20260727新增	322	打开帮写功能	1	1	1	0	0	已覆盖	current_police_terms_20260727_190
+src-6893e5fbddcedfd5	20260727新增	323	打开帮写	1	1	1	0	0	已覆盖	current_police_terms_20260727_190
+src-11ba254e1196d9a8	20260727新增	324	启动帮写	1	1	1	0	0	已覆盖	current_police_terms_20260727_190
+src-5faa11a7dbfe49a7	20260727新增	325	启动帮写功能	1	1	1	0	0	已覆盖	current_police_terms_20260727_190
+src-b3e31fd2f7020f8f	20260727新增	326	打开帮填功能	1	1	1	0	0	已覆盖	current_police_terms_20260727_190
+src-47b377e8d9ceca5c	20260727新增	327	打开帮填	1	1	1	0	0	已覆盖	current_police_terms_20260727_190
+src-eb34cad23916298a	20260727新增	328	启动帮填	1	1	1	0	0	已覆盖	current_police_terms_20260727_190
+src-d4a48491a5d02475	20260727新增	329	启动帮填功能	1	1	1	0	0	已覆盖	current_police_terms_20260727_190
+src-d63c22203241dbb2	20260727新增	330	打开翻译功能	1	1	1	0	0	已覆盖	current_police_terms_20260727_190
+src-1c8801988f991368	20260727新增	331	打开翻译	1	1	1	0	0	已覆盖	current_police_terms_20260727_190
+src-095bdca202161e37	20260727新增	332	启动翻译	1	1	1	0	0	已覆盖	current_police_terms_20260727_190
+src-8ceb13c587ad990f	20260727新增	333	启动翻译功能	1	1	1	0	0	已覆盖	current_police_terms_20260727_190
+src-a57d06c088fc8b39	20260727新增	334	连接协同设备	1	1	1	0	0	已覆盖	current_police_terms_20260727_190
+src-f50a566048842a79	20260727新增	335	开始协同连接	1	1	1	0	0	已覆盖	current_police_terms_20260727_190
+src-84d5958d96b5a63e	20260727新增	336	协同连接	1	1	1	0	0	已覆盖	current_police_terms_20260727_190
+src-02e9a8d8c76083e4	20260727新增	337	帮我拍张照	1	1	1	0	0	已覆盖	current_police_terms_20260727_190
+src-130e1cdb50a1a3f1	20260727新增	338	拍个照片	1	1	1	0	0	已覆盖	current_police_terms_20260727_190
+src-17233b11bd8f2f05	20260727新增	339	开始拍照	1	1	1	0	0	已覆盖	current_police_terms_20260727_190
+src-53a8076a906a30f5	20260727新增	341	启动录音	1	1	1	0	0	已覆盖	current_police_terms_20260727_190
+src-049ae87f0b0ed3d4	20260727新增	342	帮我开始录音	1	1	1	0	0	已覆盖	current_police_terms_20260727_190
+src-b370f38f20ea959e	20260727新增	344	启动录像	1	1	1	0	0	已覆盖	current_police_terms_20260727_190
+src-5d4e1d875af4e9d0	20260727新增	345	帮我开始录像	1	1	1	0	0	已覆盖	current_police_terms_20260727_190
+src-b6e93987c9464bd0	20260727新增	346	帮我创建一个下午三点的会议，主题为群访群治工作会议	1	1	1	0	0	已覆盖	current_police_terms_20260727_190
+src-897d9226d29f9578	20260727新增	347	创建一个下午的会议	1	1	1	0	0	已覆盖	current_police_terms_20260727_190
+src-c8ad8a80382a8627	20260727新增	348	创建主题为报警的工作会议，下午三点开始	1	1	1	0	0	已覆盖	current_police_terms_20260727_190
+src-64520de697f36b0a	20260727新增	349	帮我创建一个明天上午的会议	1	1	1	0	0	已覆盖	current_police_terms_20260727_190
+src-b0ca461b7fcbb61b	20260727新增	350	我有哪些待办公文	1	1	1	0	0	已覆盖	current_police_terms_20260727_190
+src-9c8488be5a8f7fa8	20260727新增	351	查一下待办公文	1	1	1	0	0	已覆盖	current_police_terms_20260727_190
+src-929ae0cf0b515662	20260727新增	352	帮我查一下有哪些待办公文	1	1	1	0	0	已覆盖	current_police_terms_20260727_190
+src-341578a6dce9c83d	20260727新增	353	看下我有哪些公文需要处理	1	1	1	0	0	已覆盖	current_police_terms_20260727_190
+src-c2be671e2f9e9530	20260727新增	354	看下我有哪些事情需要处理	1	1	1	0	0	已覆盖	current_police_terms_20260727_190
+src-a5489a12ad49e3b0	20260727新增	355	现在事情不多，看看还有什么事情	1	1	1	0	0	已覆盖	current_police_terms_20260727_190
+src-b8c89ba579b3bb26	20260727新增	356	打开警信发消息给刘队长，内容为：今天几点集合？	1	1	1	0	0	已覆盖	current_police_terms_20260727_190
+src-d30028a9d89c7e6d	20260727新增	357	语音呼叫张三	1	1	1	0	0	已覆盖	current_police_terms_20260727_190
+src-83f550b9c1da40ba	20260727新增	358	用WeCom向张伟发起呼叫	1	1	1	0	0	已覆盖	current_police_terms_20260727_190
+src-586e6a50797cf35c	20260727新增	359	呼叫情指中心	1	1	1	0	0	已覆盖	current_police_terms_20260727_190
+src-f2aea79a41917a42	20260727新增	360	我已到岗，帮我打卡	1	1	1	0	0	已覆盖	current_police_terms_20260727_190
+src-7771d2fbba85995a	20260727新增	361	帮我打个卡	1	1	1	0	0	已覆盖	current_police_terms_20260727_190
+src-bb91ed4ddf7e1fd6	20260727新增	362	导航去幸福小区	1	1	1	0	0	已覆盖	current_police_terms_20260727_190
+src-f09a649e7e09e380	20260727新增	363	帮我导航去高新区软件园	1	1	1	0	0	已覆盖	current_police_terms_20260727_190
+src-27537b8f795ffd13	20260727新增	364	签收刚刚收到的警单	1	1	1	0	0	已覆盖	current_police_terms_20260727_190
+src-a08be9e53bed42e5	20260727新增	365	我已到警情现场	1	1	1	0	0	已覆盖	current_police_terms_20260727_190
+src-430750807e432c60	20260727新增	366	我已到场，帮我反馈	1	1	1	0	0	已覆盖	current_police_terms_20260727_190
+src-179bb254785f3f36	20260727新增	367	我已完成警情处置	1	1	1	0	0	已覆盖	current_police_terms_20260727_190
+src-4a51ebb6062768a1	20260727新增	368	警情处理完成，帮我反馈	1	1	1	0	0	已覆盖	current_police_terms_20260727_190
+src-ef9404fb3e5634b3	20260727新增	369	创建一个警单	1	1	1	0	0	已覆盖	current_police_terms_20260727_190
+src-e5dbe50c6d8d3a42	20260727新增	370	创建警单	1	1	1	0	0	已覆盖	current_police_terms_20260727_190
+src-56a93216f1d77de7	20260727新增	371	查看报案现场视频	1	1	1	0	0	已覆盖	current_police_terms_20260727_190
+src-19ea2d72f1fbd48f	20260727新增	372	查看报警现场视频	1	1	1	0	0	已覆盖	current_police_terms_20260727_190
+src-d678588ae5f8e852	20260727新增	373	打开报案现场视频	1	1	1	0	0	已覆盖	current_police_terms_20260727_190
+src-0fa68b2fc10d951d	20260727新增	374	开始盘查	1	1	1	0	0	已覆盖	current_police_terms_20260727_190
+src-81f922f3bf907690	20260727新增	375	开始盘查任务	1	1	1	0	0	已覆盖	current_police_terms_20260727_190
+src-7f3b191bf581e35b	20260727新增	376	执行盘查	1	1	1	0	0	已覆盖	current_police_terms_20260727_190
+src-092eea11ea143e60	20260727新增	377	启动盘查任务	1	1	1	0	0	已覆盖	current_police_terms_20260727_190
+src-ea6946d95716dcdb	20260727新增	378	开启盘查智能体	1	1	1	0	0	已覆盖	current_police_terms_20260727_190
+src-6d533d037ec4a539	20260727新增	379	执行抓捕	1	1	1	0	0	已覆盖	current_police_terms_20260727_190
+src-4f723b7dfe83f5da	20260727新增	380	执行劝返	1	1	1	0	0	已覆盖	current_police_terms_20260727_190
+src-9153bc78fb6390fe	20260727新增	381	执行放行	1	1	1	0	0	已覆盖	current_police_terms_20260727_190
+src-e53e97900fdd2c08	20260727新增	382	结束盘查任务	1	1	1	0	0	已覆盖	current_police_terms_20260727_190
+src-d5758297c7ab0fd8	20260727新增	383	停止盘查	1	1	1	0	0	已覆盖	current_police_terms_20260727_190
+src-9786de83eff34971	20260727新增	384	结束盘查	1	1	1	0	0	已覆盖	current_police_terms_20260727_190
+src-3c6e2f8f7cc339bd	20260727新增	385	结束盘查智能体	1	1	1	0	0	已覆盖	current_police_terms_20260727_190
+src-1d38a967f0906775	20260727新增	386	帮我核查人物身份	1	1	1	0	0	已覆盖	current_police_terms_20260727_190
+src-7991f08cfea30314	20260727新增	387	人脸核查人物身份	1	1	1	0	0	已覆盖	current_police_terms_20260727_190
+src-da8c0581eb1aed9e	20260727新增	388	开始人员身份核查	1	1	1	0	0	已覆盖	current_police_terms_20260727_190
+src-42b3ff8d3f6ede00	20260727新增	389	开始人像核查	1	1	1	0	0	已覆盖	current_police_terms_20260727_190
+src-e9b73a2cb50e9cae	20260727新增	390	帮我核查身份证，号码为：37050319911230983	1	1	1	0	0	已覆盖	current_police_terms_20260727_190
+src-fb497cea44b74f9f	20260727新增	391	核查身份证号：37050319911230983	1	1	1	0	0	已覆盖	current_police_terms_20260727_190
+src-332de14ac758bd45	20260727新增	392	查检身份证号：37050319911230983	1	1	1	0	0	已覆盖	current_police_terms_20260727_190
+src-efa8e1e3ad574d9d	20260727新增	393	帮我核查车牌号：川A F60080	1	1	1	0	0	已覆盖	current_police_terms_20260727_190
+src-c00fa876b08039c6	20260727新增	394	核查车牌号：川A F60080	1	1	1	0	0	已覆盖	current_police_terms_20260727_190
+src-8e97d6e09b95f58e	20260727新增	395	查检车牌号：川A F60080	1	1	1	0	0	已覆盖	current_police_terms_20260727_190
+src-60670a01f8c7e71f	20260714新增	398	情指行	11	11	1	10	0	已覆盖	current_police_terms_20260711_application_names_62;current_police_ui_teacher_385;targeted_dingqiao_failures
+src-d66434cfde94e93a	20260714新增	399	首页	10	10	0	10	0	已覆盖	current_police_ui_20260713_168;current_police_ui_teacher_385
+src-309d3bb026537107	20260714新增	400	岗位勤务	5	5	0	5	0	已覆盖	current_police_ui_teacher_385
+src-9aeec2a49ca29fcc	20260714新增	401	工作台	8	8	0	8	0	已覆盖	current_police_ui_teacher_385
+src-560676dd62ad41ff	20260714新增	402	警务地图	5	5	0	5	0	已覆盖	current_police_ui_teacher_385
+src-4b08a0c7bf702b28	20260714新增	403	警务协同	5	5	0	5	0	已覆盖	current_police_ui_teacher_385
+src-425e6b3c29543ffe	20260714新增	404	一报直报	5	5	0	5	0	已覆盖	current_police_ui_teacher_385
+src-3921d66773e8acc6	20260714新增	405	通知公告	6	6	0	6	0	已覆盖	current_police_ui_teacher_385
+src-91c80844c43c688a	20260714新增	406	意见建议	5	5	0	5	0	已覆盖	current_police_ui_teacher_385
+src-714d59dca3bd15f0	20260714新增	407	一键求助	5	5	0	5	0	已覆盖	current_police_ui_teacher_385
+src-9301410ccdff8e2d	20260714新增	408	今日社会面巡控勤务数据	5	5	0	5	0	已覆盖	current_police_ui_teacher_385
+src-df4434516c84576d	20260714新增	409	警情概况数据	5	5	0	5	0	已覆盖	current_police_ui_teacher_385
+src-20f6082043a42ed2	20260714新增	410	今日单位任务	5	5	0	5	0	已覆盖	current_police_ui_teacher_385
+src-7e2e27043d3022e3	20260714新增	411	全部岗位	5	5	0	5	0	已覆盖	current_police_ui_teacher_385
+src-926832bc5bc2b7df	20260714新增	412	岗位推荐	5	5	0	5	0	已覆盖	current_police_ui_teacher_385
+src-241b4409cbf4ff30	20260714新增	413	岗位收藏	5	5	0	5	0	已覆盖	current_police_ui_teacher_385
+src-b5c1eeaeceae15d3	20260714新增	414	在岗岗位	5	5	0	5	0	已覆盖	current_police_ui_teacher_385
+src-0072031b7ee5735c	20260714新增	415	附近岗位	6	6	0	6	0	已覆盖	current_police_ui_teacher_385
+src-0f396bf86d441a2d	20260714新增	416	历史岗位	5	5	0	5	0	已覆盖	current_police_ui_teacher_385
+src-62e58d8a45849d2c	20260714新增	417	指信	18	20	0	20	0	已覆盖	current_police_terms_20260711_application_names_62;current_police_ui_20260713_168;current_police_ui_teacher_385;police_synthetic_zh_accent
+src-9f8c41b6658c2c0b	20260714新增	418	移动接处警	5	5	0	5	0	已覆盖	current_police_ui_teacher_385
+src-8d02a14262087e00	20260714新增	419	人车预警	5	5	0	5	0	已覆盖	current_police_ui_teacher_385
+src-8a6b28806ab665f5	20260714新增	420	数据统计	10	10	0	10	0	已覆盖	current_police_ui_20260713_168;current_police_ui_teacher_385
+src-e4ca9782dba04fbf	20260714新增	421	我的收藏	5	5	0	5	0	已覆盖	current_police_ui_teacher_385
+src-41dd2941c73f9b3e	20260714新增	422	警情	1276	1284	0	1284	0	已覆盖	current_plate_number_1276;current_police_station_394;current_police_terms_20260711_application_names_62;current_police_terms_20260711_industry_dialogue_189;current_police_terms_20260711_industry_vocab_1671;current_police_terms_20260727_190;current_police_terms_2183;current_police_ui_teacher_385;historical_license_plate_fixed_100;historical_plate_carplates2_zh_2040;historical_plate_carplates3_3750;historical_plate_jjs_20260611_1440;historical_plate_shanghai_210;historical_police_station_archive_200;police_synthetic_zh_accent;targeted_police_terms_multivoice_20260807_10
+src-97a7196e48ff1528	20260714新增	423	待签收	5	5	0	5	0	已覆盖	current_police_ui_teacher_385
+src-382aea88387ccc6b	20260714新增	424	处置中	5	5	0	5	0	已覆盖	current_police_ui_teacher_385
+src-b72e04b06830d58c	20260714新增	425	已完成	54	54	0	54	0	已覆盖	current_police_terms_20260727_190;current_police_terms_2183;current_police_ui_teacher_385
+src-a61f04c7e4a0245c	20260714新增	426	上勤次数	5	5	0	5	0	已覆盖	current_police_ui_teacher_385
+src-9c9d614b6ca5430e	20260714新增	427	出警次数	6	6	0	6	0	已覆盖	current_police_ui_teacher_385
+src-eec46df9d344dcc1	20260714新增	428	指信接收	5	5	0	5	0	已覆盖	current_police_ui_teacher_385
+src-63f5a1fbfba131af	20260714新增	429	预警接收	5	5	0	5	0	已覆盖	current_police_ui_teacher_385
+src-9646f0cbd6151cd4	20260714新增	430	治安案件	7	7	0	7	0	已覆盖	current_police_terms_20260711_industry_vocab_1671;current_police_ui_teacher_385
+src-d250acea70e27f96	20260714新增	431	刑事案件	8	8	0	8	0	已覆盖	current_police_terms_20260711_industry_vocab_1671;current_police_ui_teacher_385
+src-6160548076cc65b1	20260714新增	432	秩序案件	5	5	0	5	0	已覆盖	current_police_ui_teacher_385
+src-1e00a2b8a6a8a476	20260714新增	433	出警率	6	6	0	6	0	已覆盖	current_police_ui_teacher_385
+src-b058c65804106329	20260714新增	434	指令	21	21	0	21	0	已覆盖	current_police_terms_20260711_application_names_62;current_police_terms_20260711_industry_dialogue_189;current_police_terms_20260711_industry_vocab_1671;current_police_terms_20260727_190;current_police_terms_2183;current_police_ui_20260713_168;current_police_ui_teacher_385
+src-eb98d328dfbbcf88	20260714新增	435	追加	5	5	0	5	0	已覆盖	current_police_ui_teacher_385
+src-d1d4b9acba83ce88	20260714新增	436	定位	12	12	0	12	0	已覆盖	current_police_terms_20260711_industry_vocab_1671;current_police_terms_20260711_special_codes_10;current_police_terms_2183;current_police_ui_teacher_385
+src-e79666ebaeb6fc64	20260714新增	437	附件	8	8	0	8	0	已覆盖	current_police_ui_teacher_385;targeted_police_terms_multivoice_20260807_10
+src-85e58529452563c8	20260714新增	438	视频清整	7	7	0	7	0	已覆盖	current_police_terms_20260711_application_names_62;current_police_ui_teacher_385
+src-91fa92a5a54be1e3	20260714新增	439	地图	17	17	0	17	0	已覆盖	current_police_ui_20260713_168;current_police_ui_teacher_385
+src-d681c21234418d7d	20260714新增	440	我的数据	5	5	0	5	0	已覆盖	current_police_ui_teacher_385
+src-4a20349e6376d092	20260714新增	441	添加	5	5	0	5	0	已覆盖	current_police_ui_teacher_385
+src-fb3a82c3f65438a2	20260714新增	442	复核	12	13	0	13	0	已覆盖	current_plate_number_1276;current_police_ui_teacher_385;police_synthetic_zh_accent
+src-3e1ab9983ef287b2	20260714新增	443	搜索	9	9	0	9	0	已覆盖	current_police_terms_20260711_industry_vocab_1671;current_police_ui_teacher_385
+src-54b475594b84b2b1	20260714新增	444	点位状态	5	5	0	5	0	已覆盖	current_police_ui_teacher_385
+src-1144744603f7618b	20260714新增	445	待整改	5	5	0	5	0	已覆盖	current_police_ui_teacher_385
+src-a8b30cddbac85ba9	20260714新增	447	机动侦查	7	7	0	7	0	已覆盖	current_police_terms_20260711_application_names_62;current_police_ui_teacher_385
+src-e8ea1a74edb9d804	20260714新增	448	个人办公	7	7	0	7	0	已覆盖	current_police_ui_teacher_385
+src-7a199d07ae978273	20260714新增	449	情报信息查询	5	5	0	5	0	已覆盖	current_police_ui_teacher_385
+src-da1008d39b8ce8d2	20260714新增	450	案件管理	5	5	0	5	0	已覆盖	current_police_ui_teacher_385
+src-9206152db5654abe	20260714新增	451	案件任务	6	6	0	6	0	已覆盖	current_police_ui_teacher_385
+src-d9a5616aa98f5a48	20260714新增	452	提醒信息	7	7	0	7	0	已覆盖	current_police_ui_20260713_168;current_police_ui_teacher_385
+src-547a2b6c73434a4e	20260714新增	454	信息查询	10	13	0	13	0	已覆盖	current_police_ui_teacher_385;police_synthetic_zh_accent
+src-0f636b7f180ff938	20260714新增	455	合成作战	9	9	0	9	0	已覆盖	current_police_terms_20260711_industry_vocab_1671;current_police_ui_teacher_385
+src-8d971603a820885e	20260714新增	457	支队案件	5	5	0	5	0	已覆盖	current_police_ui_teacher_385
+src-3b48b323ec33e760	20260714新增	458	我的案件	6	6	0	6	0	已覆盖	current_police_ui_teacher_385
+src-05aadc4d709bd403	20260714新增	459	所有案件	5	5	0	5	0	已覆盖	current_police_ui_teacher_385
+src-cc4426be5c917529	20260714新增	460	我参与的	5	5	0	5	0	已覆盖	current_police_ui_teacher_385
+src-66b235dea8eb7bca	20260714新增	461	笔录	25	30	0	30	0	已覆盖	current_police_terms_20260711_industry_vocab_1671;current_police_ui_teacher_385;police_synthetic_zh_accent
+src-ce9464dcaf0d820a	20260714新增	462	侦查需求	6	6	0	6	0	已覆盖	current_police_ui_teacher_385
+src-b424a713ef0de46b	20260714新增	463	所有任务	5	5	0	5	0	已覆盖	current_police_ui_teacher_385
+src-97652bc6630fa65a	20260714新增	464	我的任务	5	5	0	5	0	已覆盖	current_police_ui_teacher_385
+src-6373ec1f79d035f6	20260714新增	466	签收	1114	1114	0	1114	0	已覆盖	current_police_terms_20260727_190;current_police_terms_2183;current_police_ui_20260713_168;current_police_ui_teacher_385
+src-efae5b64f0887f7a	20260714新增	467	审批	19	20	0	20	0	已覆盖	current_police_terms_20260711_industry_vocab_1671;current_police_ui_20260713_168;current_police_ui_teacher_385;police_synthetic_zh_accent
+src-fc9da8b3e5a20f36	20260714新增	468	申请	24	25	0	25	0	已覆盖	current_police_terms_20260711_industry_dialogue_189;current_police_terms_20260711_industry_vocab_1671;current_police_ui_teacher_385;police_synthetic_zh_accent
+src-65651f7f2a120b3d	20260714新增	469	我的申请	6	6	0	6	0	已覆盖	current_police_ui_teacher_385
+src-145837107b59b646	20260714新增	470	创建	17	17	0	17	0	已覆盖	current_police_terms_20260727_190;current_police_ui_teacher_385
+src-5011da052a762917	20260714新增	471	案件列表	6	6	0	6	0	已覆盖	current_police_ui_teacher_385
+src-06c386fd40a9b685	20260714新增	472	上传	24	28	0	28	0	已覆盖	current_police_terms_20260711_application_names_62;current_police_terms_20260711_industry_vocab_1671;current_police_ui_20260713_168;current_police_ui_teacher_385;police_synthetic_zh_accent;targeted_police_terms_multivoice_20260807_10
+src-d36cff2ddf28a1c2	20260714新增	473	我上传的	5	5	0	5	0	已覆盖	current_police_ui_teacher_385
+src-015bb3b7e9a584d7	20260714新增	474	审核	10	10	0	10	0	已覆盖	current_police_terms_20260711_industry_vocab_1671;current_police_ui_teacher_385
+src-124ae3849df6ab19	20260714新增	475	提交	20	30	0	30	0	已覆盖	current_police_terms_20260711_application_names_62;current_police_terms_20260727_190;current_police_ui_teacher_385;police_v6_8h
+src-1d555d7ac87b9929	20260714新增	476	我提交的	5	5	0	5	0	已覆盖	current_police_ui_teacher_385
+src-89d676b41690a91a	20260714新增	477	我签收的	5	5	0	5	0	已覆盖	current_police_ui_teacher_385
+src-412959013e93ea2b	20260714新增	478	我指派的	5	5	0	5	0	已覆盖	current_police_ui_teacher_385
+src-de72b3be552cec5b	20260713新增	480	警力地图	2	2	0	2	0	已覆盖	current_police_ui_20260713_168
+src-7725cdde33adb1e5	20260713新增	482	任务管理	2	2	0	2	0	已覆盖	current_police_ui_20260713_168
+src-be1ec0d3e2144f23	20260713新增	483	要素管控	2	2	0	2	0	已覆盖	current_police_ui_20260713_168
+src-43df7aef441ed34a	20260713新增	484	通用辅助功能	2	2	0	2	0	已覆盖	current_police_ui_20260713_168
+src-3e11ccac213b4b99	20260713新增	485	自主填报	2	2	0	2	0	已覆盖	current_police_ui_20260713_168
+src-494322403b207475	20260713新增	486	消息中心	2	2	0	2	0	已覆盖	current_police_ui_20260713_168
+src-74fbce55e5089c08	20260713新增	487	领导审批	2	2	0	2	0	已覆盖	current_police_ui_20260713_168
+src-3f7008632235e934	20260713新增	488	交流圈	2	2	0	2	0	已覆盖	current_police_ui_20260713_168
+src-94b8cfaa45cd7435	20260713新增	489	访客功能	2	2	0	2	0	已覆盖	current_police_ui_20260713_168
+src-97d41ffe6b7160df	20260713新增	490	人口管理模块	2	2	0	2	0	已覆盖	current_police_ui_20260713_168
+src-727f382e9b6c7d31	20260713新增	492	任务处理信息	2	2	0	2	0	已覆盖	current_police_ui_20260713_168
+src-2731dfa3662fb99b	20260713新增	494	其他模块入口	2	2	0	2	0	已覆盖	current_police_ui_20260713_168
+src-ddadcecf3896ac78	20260713新增	495	任务签收	2	2	0	2	0	已覆盖	current_police_ui_20260713_168
+src-cf443b37d779fee5	20260713新增	496	任务退回	2	2	0	2	0	已覆盖	current_police_ui_20260713_168
+src-7ec8d69b3cbeb071	20260713新增	497	任务处置	2	2	0	2	0	已覆盖	current_police_ui_20260713_168
+src-be8aa75f4d9aa351	20260713新增	498	表单填报	2	2	0	2	0	已覆盖	current_police_ui_20260713_168
+src-012bea5ab2976fbc	20260713新增	499	任务赋能	2	2	0	2	0	已覆盖	current_police_ui_20260713_168
+src-8446bae46db5dc0b	20260713新增	500	任务上图	2	2	0	2	0	已覆盖	current_police_ui_20260713_168
+src-0fcfaecb7f2e0171	20260713新增	501	要素查看	2	2	0	2	0	已覆盖	current_police_ui_20260713_168
+src-d468998a228213db	20260713新增	502	要素修改	2	2	0	2	0	已覆盖	current_police_ui_20260713_168
+src-0e68fc22a7e90a2d	20260713新增	503	要素上图	2	2	0	2	0	已覆盖	current_police_ui_20260713_168
+src-59374beef3a5322c	20260713新增	504	电子签名功能	2	2	0	2	0	已覆盖	current_police_ui_20260713_168
+src-900819b0613b6d92	20260713新增	505	图片、视频上传	2	2	0	2	0	已覆盖	current_police_ui_20260713_168
+src-dd73414237d7d33a	20260713新增	506	语音上传	2	2	0	2	0	已覆盖	current_police_ui_20260713_168
+src-59b111b5673dcc53	20260713新增	507	经纬度采集	2	2	0	2	0	已覆盖	current_police_ui_20260713_168
+src-a57456b63452b99c	20260713新增	508	任务统计	2	2	0	2	0	已覆盖	current_police_ui_20260713_168
+src-e12d0162c2d0bc60	20260713新增	509	要素统计	2	2	0	2	0	已覆盖	current_police_ui_20260713_168
+src-c8f7bc125e039c7b	20260713新增	511	已填报	2	2	0	2	0	已覆盖	current_police_ui_20260713_168
+src-c7a1d3b2827b52e9	20260713新增	515	访客模式	2	2	0	2	0	已覆盖	current_police_ui_20260713_168
+src-f40497f7ba115fa6	20260713新增	516	实有人口采集	2	2	0	2	0	已覆盖	current_police_ui_20260713_168
+src-e0260039d4bc93e7	20260713新增	517	实有人口核实	2	2	0	2	0	已覆盖	current_police_ui_20260713_168
+src-2a62246d834d4bae	20260713新增	518	实有房屋采集	2	2	0	2	0	已覆盖	current_police_ui_20260713_168
+src-e7ce6225766fb359	20260713新增	519	房屋补录	2	2	0	2	0	已覆盖	current_police_ui_20260713_168
+src-053157f7126edf78	20260713新增	520	清查快采	2	2	0	2	0	已覆盖	current_police_ui_20260713_168
+src-d83b30a82c2a5c8f	20260713新增	521	短租房屋查询	2	2	0	2	0	已覆盖	current_police_ui_20260713_168
+src-c73b78532b280579	20260713新增	522	短租房补录	2	2	0	2	0	已覆盖	current_police_ui_20260713_168
+src-a18c245166031435	20260713新增	523	人员全项查询	2	2	0	2	0	已覆盖	current_police_ui_20260713_168
+src-927dc7e4dc8dfac7	20260713新增	524	巡查管理	2	2	0	2	0	已覆盖	current_police_ui_20260713_168
+src-e4a04f58975054d7	20260713新增	525	工作地采集	2	2	0	2	0	已覆盖	current_police_ui_20260713_168
+src-77878902f45aa9db	20260713新增	526	全市地址查询	2	2	0	2	0	已覆盖	current_police_ui_20260713_168
+src-27ee2eda6bf10a96	20260713新增	527	辖区数据统计	2	2	0	2	0	已覆盖	current_police_ui_20260713_168
+src-2a0f98dc8be8f835	20260713新增	528	个人中心	3	3	0	3	0	已覆盖	current_police_ui_20260713_168;current_police_ui_teacher_385
+src-5fdb20dc799c48dd	20260713新增	529	新智能警务	4	4	0	4	0	已覆盖	current_police_terms_20260711_application_names_62;current_police_ui_20260713_168
+src-6878e8a106db65fd	20260713新增	530	人车核查	2	2	0	2	0	已覆盖	current_police_ui_20260713_168
+src-ac57abd8cfe0352f	20260713新增	531	核查设置	2	2	0	2	0	已覆盖	current_police_ui_20260713_168
+src-e401d4404804348f	20260713新增	532	人员核查	6	6	0	6	0	已覆盖	current_police_ui_20260713_168
+src-5de9c9e2c3ef0bfa	20260713新增	533	人员核查详情	2	2	0	2	0	已覆盖	current_police_ui_20260713_168
+src-7651200f3d1834ee	20260713新增	534	人员核查记录	2	2	0	2	0	已覆盖	current_police_ui_20260713_168
+src-34bb7217c5a236a0	20260713新增	535	车辆核查	6	6	0	6	0	已覆盖	current_police_ui_20260713_168
+src-849e93b405aaa9c7	20260713新增	536	车辆核查详情	2	2	0	2	0	已覆盖	current_police_ui_20260713_168
+src-1dc72d39db684e4a	20260713新增	537	车辆核查记录	2	2	0	2	0	已覆盖	current_police_ui_20260713_168
+src-9672da0e5a79ecc8	20260713新增	538	指信中心区APP	2	2	0	2	0	已覆盖	current_police_ui_20260713_168
+src-7f422ca387b7bd9b	20260713新增	539	登录	9	9	0	9	0	已覆盖	current_police_terms_20260711_application_names_62;current_police_terms_20260727_190;current_police_ui_20260713_168;current_police_ui_teacher_385
+src-35a9241352f993d0	20260713新增	540	预警中心	4	4	0	4	0	已覆盖	current_police_terms_20260711_application_names_62;current_police_ui_20260713_168
+src-a188e1cf5b9e7f75	20260713新增	541	消息提醒	4	4	0	4	0	已覆盖	current_police_ui_20260713_168;current_police_ui_teacher_385
+src-158969d50ed2a254	20260713新增	542	勤务打卡	2	2	0	2	0	已覆盖	current_police_ui_20260713_168
+src-deb10d9684dc8196	20260713新增	543	退出	2	2	0	2	0	已覆盖	current_police_ui_20260713_168
+src-9e6c98a6b3062f62	20260713新增	544	预警规则管理	2	2	0	2	0	已覆盖	current_police_ui_20260713_168
+src-be0cac56b61609fc	20260713新增	545	预警查询	2	2	0	2	0	已覆盖	current_police_ui_20260713_168
+src-fe7eeba3439f12a5	20260713新增	546	预警分类	2	2	0	2	0	已覆盖	current_police_ui_20260713_168
+src-87895e3b663419c3	20260713新增	547	预警反馈	2	2	0	2	0	已覆盖	current_police_ui_20260713_168
+src-b9427249cee21471	20260713新增	548	协同作战	2	2	0	2	0	已覆盖	current_police_ui_20260713_168
+src-f2ad23e087d7d82f	20260713新增	549	勤务提醒	2	2	0	2	0	已覆盖	current_police_ui_20260713_168
+src-d0932c64675e865d	20260713新增	550	预警提醒	6	6	0	6	0	已覆盖	current_police_ui_20260713_168
+src-cb348dbad7c56de2	20260713新增	551	指令提醒	2	2	0	2	0	已覆盖	current_police_ui_20260713_168
+src-23681527e815ba96	20260713新增	552	选择岗位打卡	2	2	0	2	0	已覆盖	current_police_ui_20260713_168
+src-f76d70a38328fa98	20260713新增	553	近5次打卡记录	2	2	0	2	0	已覆盖	current_police_ui_20260713_168
+src-377d381c5ae9915c	20260713新增	554	示意图展示	2	2	0	2	0	已覆盖	current_police_ui_20260713_168
+src-d5f199be6b637f38	20260713新增	555	岗位详情	2	2	0	2	0	已覆盖	current_police_ui_20260713_168
+src-6c65226cc2021e96	20260713新增	556	网格详情	2	2	0	2	0	已覆盖	current_police_ui_20260713_168
+src-d3f8e53db4eb3425	20260713新增	557	作战单元详情	2	2	0	2	0	已覆盖	current_police_ui_20260713_168
+src-3edaaf4d029825f8	20260713新增	558	上勤统计	3	3	0	3	0	已覆盖	current_police_ui_20260713_168;current_police_ui_teacher_385
+src-e3a751a3326e9470	20260713新增	559	基本信息	2	2	0	2	0	已覆盖	current_police_ui_20260713_168
+src-93ef736166742cab	20260713新增	560	车辆预警规则	2	2	0	2	0	已覆盖	current_police_ui_20260713_168
+src-ab1677f7870684f7	20260713新增	561	人员预警规则	2	2	0	2	0	已覆盖	current_police_ui_20260713_168
+src-efe857637b642fc8	20260713新增	562	一键协同	2	2	0	2	0	已覆盖	current_police_ui_20260713_168
+src-548141ff25971c85	20260713新增	563	自主协同	2	2	0	2	0	已覆盖	current_police_ui_20260713_168
+src-267578a6ee9e01ea	20260713新增	564	脱岗提醒	2	2	0	2	0	已覆盖	current_police_ui_20260713_168
+src-590e6b6ffb3b3da1	20260713新增	565	强制下岗提醒	2	2	0	2	0	已覆盖	current_police_ui_20260713_168
+src-40c4343b7ffdddfb	20260713新增	566	预警提醒查看	2	2	0	2	0	已覆盖	current_police_ui_20260713_168
+src-3a1b302dc3130e07	20260713新增	567	预警提醒反馈	2	2	0	2	0	已覆盖	current_police_ui_20260713_168
+src-d4b4bb1c2b42d97f	北京应用名称	573	警鉴	2	2	0	2	0	已覆盖	current_police_terms_20260711_application_names_62
+src-8e7ab8dc49323a1d	北京应用名称	574	警力	250	250	0	250	0	已覆盖	current_plate_number_1276;current_police_terms_20260711_application_names_62;current_police_terms_2183;current_police_ui_20260713_168;current_police_ui_teacher_385
+src-4d2bccfc7ce98b1b	北京应用名称	575	警信	57	57	0	57	0	已覆盖	current_police_terms_20260711_application_names_62;current_police_terms_20260727_190;current_police_terms_2183
+src-59b1bf3950deaf16	北京应用名称	576	电诈宣传	2	2	0	2	0	已覆盖	current_police_terms_20260711_application_names_62
+src-28e14e7ba8add4d1	北京应用名称	577	移动警务门户	2	2	0	2	0	已覆盖	current_police_terms_20260711_application_names_62
+src-3cf42c9f1faaa94b	北京应用名称	578	警务市场	2	2	0	2	0	已覆盖	current_police_terms_20260711_application_names_62
+src-a05e1d99ae2ddfb2	北京应用名称	579	全国警信	2	2	0	2	0	已覆盖	current_police_terms_20260711_application_names_62
+src-1df897e8cf3fc3d8	北京应用名称	580	GB28181	2	2	0	2	0	已覆盖	current_police_terms_20260711_application_names_62
+src-081e5799b549762e	北京应用名称	581	大数据速查	2	2	0	2	0	已覆盖	current_police_terms_20260711_application_names_62
+src-2c7d3ed5d31d7c2f	北京应用名称	582	指信-接处警	2	2	0	2	0	已覆盖	current_police_terms_20260711_application_names_62
+src-3f87fa97553d0212	北京应用名称	583	北京交管	2	2	0	2	0	已覆盖	current_police_terms_20260711_application_names_62
+src-cde0cb54517f161b	北京应用名称	584	指信-中心区	0	2	0	2	0	已覆盖	police_synthetic_zh_accent
+src-327507cee45e778c	北京应用名称	585	核查录入	2	2	0	2	0	已覆盖	current_police_terms_20260711_application_names_62
+src-81015f8cca7e5cd8	北京应用名称	586	e警保	2	2	0	2	0	已覆盖	current_police_terms_20260711_application_names_62
+src-40af9cdccbbe7f75	北京应用名称	587	公安交管综合警务	2	2	0	2	0	已覆盖	current_police_terms_20260711_application_names_62
+src-d81e970e79e158d0	北京应用名称	588	智慧办案	2	2	0	2	0	已覆盖	current_police_terms_20260711_application_names_62
+src-8172211835fc1d58	北京应用名称	590	WPS	2	2	0	2	0	已覆盖	current_police_terms_20260711_application_names_62
+src-f111b68e9f219893	北京应用名称	591	智能音视频	2	2	0	2	0	已覆盖	current_police_terms_20260711_application_names_62
+src-eb5e538e1302e36e	北京应用名称	592	基管平台	2	2	0	2	0	已覆盖	current_police_terms_20260711_application_names_62
+src-68fdba3435fb6f49	北京应用名称	593	勤指情平台	2	2	0	2	0	已覆盖	current_police_terms_20260711_application_names_62
+src-20f67d5009e5510d	北京应用名称	596	好民警	2	2	0	2	0	已覆盖	current_police_terms_20260711_application_names_62
+src-09ab238aeab4fcc3	北京应用名称	597	北京交警	2	2	0	2	0	已覆盖	current_police_terms_20260711_application_names_62
+src-698947f7d083f04d	北京应用名称	598	基层基础平台	2	2	0	2	0	已覆盖	current_police_terms_20260711_application_names_62
+src-9ddf5183b3ccca97	北京应用名称	599	情指行平台	2	2	0	2	0	已覆盖	current_police_terms_20260711_application_names_62
+src-f09390b6d18a4b97	北京应用名称	600	治安移动警务（平台版）	2	2	0	2	0	已覆盖	current_police_terms_20260711_application_names_62
+src-679d43a243b28a61	北京应用名称	601	京警智联	2	2	0	2	0	已覆盖	current_police_terms_20260711_application_names_62
+src-c8e0cfd6bdd940ea-1	特殊代码	603	幺	7	7	0	7	0	已覆盖	current_police_terms_20260711_special_codes_10
+src-c8e0cfd6bdd940ea-2	特殊代码	603	两	6	6	0	6	0	已覆盖	current_police_terms_20260711_special_codes_10
+src-c8e0cfd6bdd940ea-3	特殊代码	603	三	3	3	0	3	0	已覆盖	current_police_terms_20260711_special_codes_10
+src-c8e0cfd6bdd940ea-4	特殊代码	603	四	4	4	0	4	0	已覆盖	current_police_terms_20260711_special_codes_10
+src-c8e0cfd6bdd940ea-5	特殊代码	603	五	5	5	0	5	0	已覆盖	current_police_terms_20260711_special_codes_10
+src-c8e0cfd6bdd940ea-6	特殊代码	603	六	6	6	0	6	0	已覆盖	current_police_terms_20260711_special_codes_10
+src-c8e0cfd6bdd940ea-7	特殊代码	603	拐	4	4	0	4	0	已覆盖	current_police_terms_20260711_special_codes_10
+src-c8e0cfd6bdd940ea-8	特殊代码	603	八	5	5	0	5	0	已覆盖	current_police_terms_20260711_special_codes_10
+src-c8e0cfd6bdd940ea-9	特殊代码	603	勾	4	4	0	4	0	已覆盖	current_police_terms_20260711_special_codes_10
+src-c8e0cfd6bdd940ea-0	特殊代码	603	洞	9	9	0	9	0	已覆盖	current_police_terms_20260711_special_codes_10
+src-edf507c482c6cc1c	行业词汇	605	警察	30	33	0	33	0	已覆盖	current_police_terms_20260711_industry_dialogue_189;current_police_terms_20260711_industry_vocab_1671;police_synthetic_zh_accent
+src-f8c7d9e90bc1c564	行业词汇	606	民警	237	249	0	249	0	已覆盖	current_plate_number_1276;current_police_terms_20260711_application_names_62;current_police_terms_20260711_industry_dialogue_189;current_police_terms_20260711_industry_vocab_1671;current_police_terms_2183;current_police_ui_20260713_168;current_police_ui_teacher_385;police_synthetic_zh_accent;targeted_police_terms_multivoice_20260807_10
+src-53bbcf0210b23b21	行业词汇	607	人民警察	12	15	0	15	0	已覆盖	current_police_terms_20260711_industry_dialogue_189;current_police_terms_20260711_industry_vocab_1671;police_synthetic_zh_accent
+src-4cfcb84342b116c1	行业词汇	608	警官	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-ad84124e5a6c4565	行业词汇	609	公安	26	27	0	27	0	已覆盖	current_police_terms_20260711_application_names_62;current_police_terms_20260711_industry_dialogue_189;current_police_terms_20260711_industry_vocab_1671;police_synthetic_zh_accent
+src-e4c9327c4f6445b5	行业词汇	610	警员	10	10	0	10	0	已覆盖	current_police_terms_20260711_industry_dialogue_189;current_police_terms_20260711_industry_vocab_1671;current_police_terms_2183;targeted_police_terms_multivoice_20260807_10
+src-04c0389ede8ff932	行业词汇	611	警务人员	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-cd564d76b2a3d576	行业词汇	612	交警	35	35	0	35	0	已覆盖	current_police_terms_20260711_application_names_62;current_police_terms_20260711_industry_dialogue_189;current_police_terms_20260711_industry_vocab_1671;current_police_terms_2183
+src-ea64f90ce156cd4e	行业词汇	613	交通警察	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-9354a73090b4ddba	行业词汇	614	刑警	5	10	0	10	0	已覆盖	current_police_terms_20260711_industry_vocab_1671;police_synthetic_zh_accent
+src-32fe970ddefe4bb1	行业词汇	615	刑事警察	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-af201e8d3c6ca54f	行业词汇	616	特警	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-dd7f97946bc5551e	行业词汇	617	巡警	27	30	0	30	0	已覆盖	current_police_terms_20260711_industry_vocab_1671;current_police_terms_2183;police_synthetic_zh_accent
+src-d855a12c9349e9d3	行业词汇	618	辅警	4	6	0	6	0	已覆盖	current_police_terms_20260711_industry_vocab_1671;current_police_terms_2183;police_synthetic_zh_accent
+src-1a7f6d085557057d	行业词汇	619	法警	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-adabb85d35f21e12	行业词汇	620	网警	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-4ca2ce1eb7ebacdb	行业词汇	621	网络警察	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-8b818f203373bb54	行业词汇	622	出警	27	33	0	33	0	已覆盖	current_police_terms_20260711_industry_dialogue_189;current_police_terms_20260711_industry_vocab_1671;current_police_terms_20260727_190;current_police_terms_2183;current_police_ui_teacher_385;police_synthetic_zh_accent;police_v6_8h
+src-ce6221cb54eeeb94	行业词汇	623	处警	895	900	0	900	0	已覆盖	current_police_station_394;current_police_terms_20260711_application_names_62;current_police_terms_20260711_industry_vocab_1671;current_police_terms_2183;current_police_ui_teacher_385;historical_police_station_archive_200;police_synthetic_zh_accent;targeted_police_terms_multivoice_20260807_10
+src-44e0b05b3a7dbcc2	行业词汇	624	巡逻	177	187	0	187	0	已覆盖	current_plate_number_1276;current_police_terms_20260711_industry_vocab_1671;current_police_terms_2183;current_police_ui_teacher_385;police_v6_8h
+src-5364c186d8fdff7d	行业词汇	625	执勤	7	9	0	9	0	已覆盖	current_police_terms_20260711_industry_vocab_1671;current_police_ui_teacher_385;police_synthetic_zh_accent
+src-e501d86bc6044dad	行业词汇	626	执法	30	57	0	57	0	已覆盖	current_police_terms_20260711_industry_dialogue_189;current_police_terms_20260711_industry_vocab_1671;police_synthetic_zh_accent;police_v6_8h
+src-acf84a9465072417	行业词汇	627	办案	11	16	0	16	0	已覆盖	current_police_terms_20260711_application_names_62;current_police_terms_20260711_industry_dialogue_189;current_police_terms_20260711_industry_vocab_1671;police_synthetic_zh_accent
+src-3ca2855cd4040828	行业词汇	628	抓捕	4	5	0	5	0	已覆盖	current_police_terms_20260711_industry_vocab_1671;current_police_terms_20260727_190;police_synthetic_zh_accent
+src-b23d7eae15fddfb2	行业词汇	629	拘留	12	12	0	12	0	已覆盖	current_police_terms_20260711_industry_dialogue_189;current_police_terms_20260711_industry_vocab_1671
+src-2c3c33424a76c6bf	行业词汇	630	讯问	5	7	0	7	0	已覆盖	current_police_terms_20260711_industry_dialogue_189;current_police_terms_20260711_industry_vocab_1671;police_synthetic_zh_accent
+src-87d47d6f1fef9229	行业词汇	632	报警	1621	1621	0	1621	0	已覆盖	current_plate_number_1276;current_police_terms_20260711_industry_dialogue_189;current_police_terms_20260711_industry_vocab_1671;current_police_terms_20260727_190;current_police_terms_2183;current_police_ui_teacher_385;historical_license_plate_fixed_100;historical_plate_carplates2_zh_2040;historical_plate_carplates3_3750;historical_plate_jjs_20260611_1440;historical_plate_shanghai_210;targeted_police_terms_multivoice_20260807_10
+src-8250cb8feaef971c	行业词汇	633	报案	12	15	0	15	0	已覆盖	current_police_terms_20260711_industry_dialogue_189;current_police_terms_20260711_industry_vocab_1671;current_police_terms_20260727_190;police_synthetic_zh_accent
+src-25e125fca7461f1b	行业词汇	634	治安	45	45	0	45	0	已覆盖	current_police_terms_20260711_application_names_62;current_police_terms_20260711_industry_dialogue_189;current_police_terms_20260711_industry_vocab_1671;current_police_ui_teacher_385
+src-86ee583ffa54fb83	行业词汇	635	维稳	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-45aef81791f87437	行业词汇	636	警察同志	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-2d7474bfc5aafb5c	行业词汇	637	警察叔叔	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-91c10d6fc63fb1cc	行业词汇	638	警察阿姨	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-55eb75e9ab6ea4f5	行业词汇	639	民警同志	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-497d080a5ec6ec70	行业词汇	640	干警	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-ef69e90bcf590476	行业词汇	641	派出所	690	690	0	690	0	已覆盖	current_police_station_394;current_police_terms_20260711_industry_dialogue_189;current_police_terms_20260711_industry_vocab_1671;current_police_terms_2183;current_police_ui_teacher_385;historical_police_station_archive_200
+src-2df9ca73b6f648a0	行业词汇	642	分局	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-8891be38e6435458	行业词汇	643	市局	2	3	0	3	0	已覆盖	current_police_terms_20260711_industry_vocab_1671;police_synthetic_zh_accent
+src-c2ae9719a1ef89f2	行业词汇	644	省厅	2	4	0	4	0	已覆盖	current_police_terms_20260711_industry_vocab_1671;police_synthetic_zh_accent
+src-0ab98b18afd387d6	行业词汇	645	公安部	4	4	0	4	0	已覆盖	current_police_terms_20260711_industry_dialogue_189;current_police_terms_20260711_industry_vocab_1671
+src-252660e7b81b2282	行业词汇	646	治安警	3	3	0	3	0	已覆盖	current_police_terms_20260711_industry_vocab_1671;current_police_ui_teacher_385
+src-964c5dd294e8a3d8	行业词汇	647	网安	4	4	0	4	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-f94f26e3c71f6d79	行业词汇	648	边检	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-fe2c4191bfe79884	行业词汇	649	义警	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-d7384a9023facba4	行业词汇	650	群防群治	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-8f5d127100559e91	行业词汇	651	接警	851	853	0	853	0	已覆盖	current_police_station_394;current_police_terms_20260711_industry_dialogue_189;current_police_terms_20260711_industry_vocab_1671;current_police_terms_2183;historical_police_station_archive_200;police_synthetic_zh_accent;targeted_police_terms_multivoice_20260807_10
+src-4a0a0662daa739d2	行业词汇	652	处突	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-b66166b9373769bc	行业词汇	653	值班备勤	4	4	0	4	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-e464e076b7341f8f	行业词汇	654	盘查	27	27	0	27	0	已覆盖	current_police_terms_20260711_industry_dialogue_189;current_police_terms_20260711_industry_vocab_1671;current_police_terms_20260727_190
+src-811a6974d408d900	行业词汇	655	检查	33	57	0	57	0	已覆盖	current_police_terms_20260711_industry_dialogue_189;current_police_terms_20260711_industry_vocab_1671;police_synthetic_zh_accent;police_v6_8h;targeted_police_terms_multivoice_20260807_10
+src-d116de08f8698bab	行业词汇	656	传唤	11	12	0	12	0	已覆盖	current_police_terms_20260711_industry_dialogue_189;current_police_terms_20260711_industry_vocab_1671;police_synthetic_zh_accent
+src-a3bac8d1ec9c546c	行业词汇	657	拘传	3	3	0	3	0	已覆盖	current_police_terms_20260711_industry_dialogue_189;current_police_terms_20260711_industry_vocab_1671
+src-0baeec249cfc3814	行业词汇	658	逮捕	2	4	0	4	0	已覆盖	current_police_terms_20260711_industry_vocab_1671;police_synthetic_zh_accent
+src-f6b7df73b7a6e634	行业词汇	659	取保候审	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-65e4997b2dc210a7	行业词汇	660	监视居住	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-f7c741963d0be5f3	行业词汇	661	羁押	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-6d9363e9a832aeca	行业词汇	662	现场管制	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-d634510026dd4962	行业词汇	663	封控	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-14d011602c9c0643	行业词汇	664	警戒	7	7	0	7	0	已覆盖	current_police_terms_20260711_industry_dialogue_189;current_police_terms_20260711_industry_vocab_1671
+src-1c3b786d39465a15	行业词汇	665	疏导	25	25	0	25	0	已覆盖	current_police_terms_20260711_industry_vocab_1671;current_police_terms_2183;current_police_ui_teacher_385
+src-ecc492bc8ac8f764	行业词汇	666	立案	14	14	0	14	0	已覆盖	current_police_terms_20260711_industry_vocab_1671;current_police_ui_teacher_385
+src-9c1ab5114dd29d93	行业词汇	667	撤案	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-1ad6bce69614f3b7	行业词汇	668	破案	5	5	0	5	0	已覆盖	current_police_terms_20260711_industry_vocab_1671;current_police_ui_teacher_385
+src-2e4bb8f1ec8ed068	行业词汇	669	销案	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-89a8d3f392a78abd	行业词汇	670	犯罪嫌疑人	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-59a70b15f423950e	行业词汇	671	被告人	3	3	0	3	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-3737ac84f457b567	行业词汇	672	被害人	3	3	0	3	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-55ea949f36c79297	行业词汇	673	证人	4	4	0	4	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-ec2fc83ee979e94e	行业词汇	674	目击者	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-ff905197a102939a	行业词汇	675	线索	150	151	0	151	0	已覆盖	current_plate_number_1276;current_police_terms_20260711_industry_dialogue_189;current_police_terms_20260711_industry_vocab_1671;current_police_terms_2183;current_police_ui_teacher_385;police_synthetic_zh_accent
+src-0e2d7e1a99d25df0	行业词汇	676	证据	58	59	0	59	0	已覆盖	current_police_terms_20260711_industry_dialogue_189;current_police_terms_20260711_industry_vocab_1671;current_police_terms_2183;current_police_ui_teacher_385;police_synthetic_zh_accent
+src-fbb9a8be607b1e2d	行业词汇	677	物证	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-d04e6e23cd479780	行业词汇	678	书证	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-ffe4f8ee515de536	行业词汇	679	口供	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-2846741c6110dbaa	行业词汇	680	现场勘查	4	4	0	4	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-658acd13b1bedb27	行业词汇	681	痕迹鉴定	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-c1cbae67a199ed41	行业词汇	682	指纹	2	3	0	3	0	已覆盖	current_police_terms_20260711_industry_vocab_1671;police_synthetic_zh_accent
+src-aa25ac9197255c65	行业词汇	683	DNA	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-2cd24f8aff82a9d6	行业词汇	684	法医鉴定	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-023ce7efdc35b1bb	行业词汇	685	询问	7	9	0	9	0	已覆盖	current_police_terms_20260711_industry_dialogue_189;current_police_terms_20260711_industry_vocab_1671;police_synthetic_zh_accent
+src-a86e24d2b94a05fd	行业词汇	686	辨认	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-80a966241193a3ec	行业词汇	687	指认	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-2b28e6ca6346fe23	行业词汇	688	通缉	4	4	0	4	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-33b0775e4ee17a9b	行业词汇	689	追逃	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-00622bed35052ccc	行业词汇	690	悬赏	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-21e5fdf9abe8b15b	行业词汇	691	天网	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-0132e2c84adda295	行业词汇	692	雪亮工程	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-a1981b4f9a4f0af0	行业词汇	694	大数据研判	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-ca85b7d0d0d795de	行业词汇	695	治安处罚	3	3	0	3	0	已覆盖	current_police_terms_20260711_industry_dialogue_189;current_police_terms_20260711_industry_vocab_1671
+src-b34bdb23fd6aa5b0	行业词汇	696	警告	3	5	0	5	0	已覆盖	current_police_terms_20260711_industry_dialogue_189;current_police_terms_20260711_industry_vocab_1671;police_synthetic_zh_accent
+src-6c979d4b799c9b4e	行业词汇	697	罚款	10	10	0	10	0	已覆盖	current_police_terms_20260711_application_names_62;current_police_terms_20260711_industry_dialogue_189;current_police_terms_20260711_industry_vocab_1671
+src-0d9ce42f69b7b3df	行业词汇	698	行政拘留	4	4	0	4	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-f8a82456c381c754	行业词汇	699	收缴	2	3	0	3	0	已覆盖	current_police_terms_20260711_industry_vocab_1671;police_synthetic_zh_accent
+src-4b933fa256226492	行业词汇	700	追缴	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-4018e96f60dcebc4	行业词汇	701	禁赌	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-2367074373fdd545	行业词汇	702	禁毒	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-70d56b6bc91ea4d9	行业词汇	703	禁黄	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-307ac73be26f3433	行业词汇	704	治爆	5	5	0	5	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-38d6db179a99eec7	行业词汇	705	缉枪	4	4	0	4	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-2ff552eb5bf015f4	行业词汇	706	实有人口	8	8	0	8	0	已覆盖	current_police_terms_20260711_industry_vocab_1671;current_police_ui_20260713_168
+src-ce9e93dea9df29be	行业词汇	707	实有房屋	4	4	0	4	0	已覆盖	current_police_terms_20260711_industry_vocab_1671;current_police_ui_20260713_168
+src-c7f8c83b5f9168b3	行业词汇	708	居住证	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-052be8bbf9a8cc16	行业词汇	709	户籍管理	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-0cdd587318b893a7	行业词汇	710	网吧	3	4	0	4	0	已覆盖	current_police_terms_20260711_industry_vocab_1671;police_synthetic_zh_accent
+src-a3909e2cbd116ab8	行业词汇	711	旅馆	5	5	0	5	0	已覆盖	current_police_terms_20260711_industry_dialogue_189;current_police_terms_20260711_industry_vocab_1671
+src-36b977dbd9229fef	行业词汇	712	娱乐场所	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-866831fda3aea955	行业词汇	713	寄递物流	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-95f8d520befdab29	行业词汇	714	矛盾纠纷调解	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-69d263abbae85b9b	行业词汇	715	枫桥经验	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-00bb9f991b069332	行业词汇	716	警民联调	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-9b05927265391d86	行业词汇	717	酒驾	3	4	0	4	0	已覆盖	current_police_terms_20260711_industry_vocab_1671;police_synthetic_zh_accent
+src-20402a319f71f551	行业词汇	718	醉驾	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-efa9b550c67868f3	行业词汇	719	超载	5	5	0	5	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-2d59e4a473e792ef	行业词汇	720	超速	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-18937d59b121ad1f	行业词汇	721	违停	4	4	0	4	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-75bf6eeb0a33ed49	行业词汇	722	闯红灯	2	3	0	3	0	已覆盖	current_police_terms_20260711_industry_vocab_1671;police_synthetic_zh_accent
+src-2a9d0d5fc2384504	行业词汇	723	事故处理	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-e4a1d846e5facc9c	行业词汇	724	责任认定	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-b969f049c97aec3a	行业词汇	725	理赔	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-9a839a6daa716412	行业词汇	726	拖车	5	5	0	5	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-1649aca5f1d0e44e	行业词汇	727	清障	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-b8c367c8b42210c6	行业词汇	728	驾驶证	5	6	0	6	0	已覆盖	current_police_terms_20260711_industry_dialogue_189;current_police_terms_20260711_industry_vocab_1671;police_synthetic_zh_accent
+src-8a4030c9e70029a5	行业词汇	729	行驶证	3	4	0	4	0	已覆盖	current_police_terms_20260711_industry_dialogue_189;current_police_terms_20260711_industry_vocab_1671;police_synthetic_zh_accent
+src-6a1d556c47b0551a	行业词汇	730	年检	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-2fa06507a7cf7462	行业词汇	731	交强险	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-8258f3ae13480568	行业词汇	732	临牌	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-43781102ecb1e58f	行业词汇	733	网络犯罪	4	4	0	4	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-d204f4e603a2eaca	行业词汇	734	电信诈骗	2	4	0	4	0	已覆盖	current_police_terms_20260711_industry_vocab_1671;police_synthetic_zh_accent
+src-b244064099ff52c5	行业词汇	735	黑客	4	4	0	4	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-810881b5a76f0b72	行业词汇	736	钓鱼	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-43e6d944089feca1	行业词汇	737	木马	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-b592fae340bbf0a2	行业词汇	738	爬虫	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-9f89df53bd80dfec	行业词汇	739	网安巡查	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-4d71d10361e4c8ed	行业词汇	740	溯源	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-ea4974332e6932ec	行业词汇	741	取证	11	12	0	12	0	已覆盖	current_police_terms_20260711_industry_vocab_1671;current_police_terms_20260727_190;police_synthetic_zh_accent
+src-eafeb0526695a94c	行业词汇	742	封堵	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-f6fd5ac9d10048e6	行业词汇	743	断网	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-7224c8db81f41789	行业词汇	744	四句话十六字	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-72749e70dea7b86a	行业词汇	745	三个规定	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-2ace1d3fa599b00f	行业词汇	746	首接责任制	2	3	0	3	0	已覆盖	current_police_terms_20260711_industry_vocab_1671;police_synthetic_zh_accent
+src-ab1b283a43a61cb8	行业词汇	747	阳光警务	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-007adf8a704cf241	行业词汇	748	执法记录仪	6	13	0	13	0	已覆盖	current_police_terms_20260711_industry_dialogue_189;current_police_terms_20260711_industry_vocab_1671;police_synthetic_zh_accent
+src-9d23a6e11aef26ac	行业词汇	749	警械	3	16	0	16	0	已覆盖	current_police_terms_20260711_industry_vocab_1671;police_synthetic_zh_accent
+src-ca73ab5c7aa5ca49	行业词汇	750	武器	2	5	0	5	0	已覆盖	current_police_terms_20260711_industry_vocab_1671;police_synthetic_zh_accent
+src-36d3a78326ca3a46	行业词汇	751	手铐	2	12	0	12	0	已覆盖	current_police_terms_20260711_industry_vocab_1671;police_synthetic_zh_accent
+src-0f09453b15f0be77	行业词汇	752	警棍	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-395e21ba4bfd4528	行业词汇	753	催泪喷射器	2	12	0	12	0	已覆盖	current_police_terms_20260711_industry_vocab_1671;police_synthetic_zh_accent
+src-04cb0ff824d665d6	行业词汇	754	防弹背心	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-2e5164302d1eb324	行业词汇	755	求助	84	84	0	84	0	已覆盖	current_police_terms_20260711_industry_dialogue_189;current_police_terms_20260711_industry_vocab_1671;current_police_terms_2183;current_police_ui_teacher_385
+src-764f082ac01143dc	行业词汇	756	投诉	24	25	0	25	0	已覆盖	current_police_terms_20260711_industry_dialogue_189;current_police_terms_20260711_industry_vocab_1671;current_police_terms_2183;police_synthetic_zh_accent
+src-7a89d06765e1a7cd	行业词汇	757	举报	5	5	0	5	0	已覆盖	current_police_terms_20260711_industry_dialogue_189;current_police_terms_20260711_industry_vocab_1671
+src-7ede1d3954dd5bbe	行业词汇	758	自首	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-cefa7057ca13ac40	行业词汇	759	户籍	8	12	0	12	0	已覆盖	current_police_terms_20260711_industry_vocab_1671;police_synthetic_zh_accent
+src-7bf26b7408c3a0ee	行业词汇	760	身份证	27	29	0	29	0	已覆盖	current_police_terms_20260711_industry_dialogue_189;current_police_terms_20260711_industry_vocab_1671;current_police_terms_20260727_190;police_synthetic_zh_accent;targeted_dingqiao_failures
+src-7d16f6fe496732d1	行业词汇	761	无犯罪记录证明	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-763a0cba3942c56c	行业词汇	762	开锁	4	6	0	6	0	已覆盖	current_police_terms_20260711_industry_vocab_1671;police_synthetic_zh_accent
+src-34c922c4a8748637	行业词汇	763	寻人	4	4	0	4	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-372896da22c51e7b	行业词汇	764	寻物	4	4	0	4	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-8d80b0e2fa1826dc	行业词汇	765	救助	10	10	0	10	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-330a5ab6b005f1c2	行业词汇	766	调解	79	84	0	84	0	已覆盖	current_police_terms_20260711_industry_dialogue_189;current_police_terms_20260711_industry_vocab_1671;current_police_terms_2183;police_synthetic_zh_accent;targeted_police_terms_multivoice_20260807_10
+src-6454a2bb9e9400a8	行业词汇	767	这里是刑警最常用	0	5	0	5	0	已覆盖	police_synthetic_zh_accent
+src-fb72a8fa6f8facf8	行业词汇	768	最地道的专业词语	0	10	0	10	0	已覆盖	police_synthetic_zh_accent
+src-81f1a972df17be7d	行业词汇	769	简单好记	0	3	0	3	0	已覆盖	police_synthetic_zh_accent
+src-27ab6d3d76b1072f	行业词汇	770	侦查	28	38	0	38	0	已覆盖	current_police_terms_20260711_application_names_62;current_police_terms_20260711_industry_vocab_1671;current_police_ui_teacher_385;police_synthetic_zh_accent
+src-c9917262e14ea2ad	行业词汇	771	预审	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-310429da0ad44fa3	行业词汇	772	审讯	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-18eada7b570e60cf	行业词汇	773	固证	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-0674d72567c317b2	行业词汇	774	补证	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-9192023e44b41682	行业词汇	775	押解	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-64bd4928c07ec3d3	行业词汇	776	刑事拘留	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-7e7d96fb56ee4967	行业词汇	777	受害人	4	4	0	4	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-c723bd9311f86869	行业词汇	778	事主	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-69ac0d7b836db4df	行业词汇	779	同案犯	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-9545be80ea23c9cd	行业词汇	780	同伙	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-7928224d002baed2	行业词汇	781	逃犯	3	3	0	3	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-c7d7564119fb07ba	行业词汇	782	在逃人员	3	3	0	3	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-88e6ba1899d374a5	行业词汇	783	网逃	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-b23550545ec181e9	行业词汇	784	案发现场	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-00912a4ecbbba6e1	行业词汇	785	第一现场	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-b7d25221e30ba961	行业词汇	786	中心现场	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-1bd83dbd568b649c	行业词汇	787	勘查	9	9	0	9	0	已覆盖	current_police_terms_20260711_industry_dialogue_189;current_police_terms_20260711_industry_vocab_1671
+src-77e03cde1959a6c3	行业词汇	788	勘验	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-33c66d3827c81284	行业词汇	789	痕迹	4	5	0	5	0	已覆盖	current_police_terms_20260711_industry_vocab_1671;police_synthetic_zh_accent
+src-bee7807753729b30	行业词汇	790	足迹	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-65b253d0eeb39aa2	行业词汇	791	监控	177	180	0	180	0	已覆盖	current_police_terms_20260711_industry_vocab_1671;current_police_terms_2183;current_police_ui_teacher_385;police_synthetic_zh_accent
+src-0a15f98fa8c9714f	行业词汇	792	视频研判	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-85637692e6082a86	行业词汇	793	摸排	4	7	0	7	0	已覆盖	current_police_terms_20260711_industry_vocab_1671;police_synthetic_zh_accent
+src-efdb17653ca62e4f	行业词汇	794	走访	7	11	0	11	0	已覆盖	current_police_terms_20260711_application_names_62;current_police_terms_20260711_industry_vocab_1671;police_synthetic_zh_accent
+src-6f29314d4cd56a99	行业词汇	795	布控	2	13	0	13	0	已覆盖	current_police_terms_20260711_industry_vocab_1671;police_synthetic_zh_accent;police_v6_8h
+src-7ef300dcce47f290	行业词汇	796	蹲守	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-e3c0bcecf34ebc51	行业词汇	797	搜查	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-5302b495a132e619	行业词汇	798	扣押	3	3	0	3	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-e28b37b8bbfce3dc	行业词汇	799	串并案	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-f0d9715f049c14bc	行业词汇	800	并案侦查	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-403b5269eb5f56ae	行业词汇	801	技侦	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-dff5acb38784aa0c	行业词汇	802	网侦	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-843a000e3c33ef8b	行业词汇	803	情报研判	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-dabe6512cf26a190	行业词汇	804	询问笔录	2	4	0	4	0	已覆盖	current_police_terms_20260711_industry_vocab_1671;police_synthetic_zh_accent
+src-74be240bb6aeaf61	行业词汇	805	讯问笔录	2	3	0	3	0	已覆盖	current_police_terms_20260711_industry_vocab_1671;police_synthetic_zh_accent
+src-e27fa84ea5d5fe22	行业词汇	806	移送起诉	2	3	0	3	0	已覆盖	current_police_terms_20260711_industry_vocab_1671;police_synthetic_zh_accent
+src-4224bb256b87d609	行业词汇	807	提请批捕	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-4dad0f32bb6ac035	行业词汇	808	案子	7	7	0	7	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-c76dcb9ef8ac3ec9	行业词汇	809	活儿	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-c42423735930ffa1	行业词汇	810	线人	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-46d9c9ef929b77e0	行业词汇	811	撬锁	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-ada6c5ddc4ef02d8	行业词汇	812	扒窃	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-af4ed31e259e40ed	行业词汇	813	持刀	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-1f8e75fc22084adc	行业词汇	814	持械	2	3	0	3	0	已覆盖	current_police_terms_20260711_industry_vocab_1671;police_synthetic_zh_accent
+src-5a833ce9ff9fd296	行业词汇	815	流窜作案	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-fbe6a4ee78e2f0e9	行业词汇	816	团伙作案	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-7317dfc8121a9bfd	行业词汇	817	惯犯	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-ea13e48a10907932	行业词汇	818	收网	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-a721f0582909f9b4	行业词汇	819	抓人	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-5a8d398e66798302	行业词汇	820	拿下	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-f936e47a20cd14f1	行业词汇	821	归案	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-b5b2ccf005d5c97d	行业词汇	822	值班	125	125	0	125	0	已覆盖	current_police_terms_20260711_application_names_62;current_police_terms_20260711_industry_vocab_1671;current_police_terms_2183;current_police_ui_20260713_168;current_police_ui_teacher_385;targeted_police_terms_multivoice_20260807_10
+src-7a86892fe71dea14	行业词汇	823	备勤	6	6	0	6	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-4ee7b84c56953741	行业词汇	824	管控	8	8	0	8	0	已覆盖	current_police_terms_20260711_industry_vocab_1671;current_police_ui_20260713_168
+src-841ccce2bcf4a962	行业词汇	825	现场	973	987	0	987	0	已覆盖	current_plate_number_1276;current_police_terms_20260711_industry_dialogue_189;current_police_terms_20260711_industry_vocab_1671;current_police_terms_20260727_190;current_police_terms_2183;current_police_ui_teacher_385;police_synthetic_zh_accent;police_v6_8h;targeted_police_terms_multivoice_20260807_10
+src-ba9572d3a5e19c31	行业词汇	826	疏散	6	6	0	6	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-533e515f9652a12a	行业词汇	827	救援	8	8	0	8	0	已覆盖	current_police_terms_20260711_industry_dialogue_189;current_police_terms_20260711_industry_vocab_1671
+src-17d698b3e3e9752e	行业词汇	828	处置	201	205	0	205	0	已覆盖	current_plate_number_1276;current_police_terms_20260711_industry_dialogue_189;current_police_terms_20260711_industry_vocab_1671;current_police_terms_20260727_190;current_police_terms_2183;current_police_ui_20260713_168;current_police_ui_teacher_385;historical_license_plate_fixed_100;police_synthetic_zh_accent;targeted_police_terms_multivoice_20260807_10
+src-75776a425e1da8a1	行业词汇	829	嫌疑人	20	27	0	27	0	已覆盖	current_police_terms_20260711_industry_vocab_1671;current_police_terms_20260711_special_codes_10;current_police_ui_teacher_385;police_synthetic_zh_accent
+src-ee9e68faf6159dc8	行业词汇	830	维护秩序	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-bf1b099781879bf5	行业词汇	831	维持治安	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-3ff56550e008edfb	行业词汇	832	打击犯罪	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-fee7a1fde7f08da5	行业词汇	833	防范风险	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-99eeba209e9b7a2a	行业词汇	834	服务群众	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-e9be097fe01d3ff5	行业词汇	835	紧急处置	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-c8aa97deefcf5c37	行业词汇	836	打架斗殴	3	3	0	3	0	已覆盖	current_police_terms_20260711_industry_dialogue_189;current_police_terms_20260711_industry_vocab_1671
+src-bfc30fb4bc5c9449	行业词汇	837	寻衅滋事	4	4	0	4	0	已覆盖	current_police_terms_20260711_industry_dialogue_189;current_police_terms_20260711_industry_vocab_1671
+src-368a3c4d75ccb839	行业词汇	838	酒后滋事	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-7287594a3fefacef	行业词汇	839	赌博	6	6	0	6	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-74d44a7e8aa47124	行业词汇	840	参与赌博	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-91670d79388ca945	行业词汇	841	吸毒	4	4	0	4	0	已覆盖	current_police_terms_20260711_industry_dialogue_189;current_police_terms_20260711_industry_vocab_1671
+src-f98338f0420479ad	行业词汇	842	非法持有毒品	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-3e10b58ce11af346	行业词汇	843	卖淫嫖娼	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-160e7df1fc705c84	行业词汇	844	非法携带管制刀具	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-c4530202604b4009	行业词汇	845	盗窃	7	10	0	10	0	已覆盖	current_police_terms_20260711_industry_vocab_1671;police_synthetic_zh_accent
+src-1428d01a3df10210	行业词汇	846	小偷小摸	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-8a408cd0d2792478	行业词汇	847	诈骗	10	14	0	14	0	已覆盖	current_police_terms_20260711_industry_vocab_1671;police_synthetic_zh_accent
+src-ad503ba99e06955f	行业词汇	848	侮辱	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-3875c89830652e92	行业词汇	849	诽谤他人	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-c6c3294e0db7ff97	行业词汇	850	故意损毁财物	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-718016b22a5623cf	行业词汇	851	无证驾驶	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-44b762f029b37e99	行业词汇	852	扰乱公共秩序	3	3	0	3	0	已覆盖	current_police_terms_20260711_industry_dialogue_189;current_police_terms_20260711_industry_vocab_1671
+src-50ec2ca5206c13f6	行业词汇	853	故意杀人	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-f1e38e7f27ae3fd8	行业词汇	854	故意伤害	3	3	0	3	0	已覆盖	current_police_terms_20260711_industry_dialogue_189;current_police_terms_20260711_industry_vocab_1671
+src-eeacb4ba1e1bace4	行业词汇	855	抢劫	3	4	0	4	0	已覆盖	current_police_terms_20260711_industry_vocab_1671;police_synthetic_zh_accent
+src-3247019e0e1df987	行业词汇	856	抢夺	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-ede0db7d0a1d500c	行业词汇	857	入室盗窃	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-553b514014316e99	行业词汇	858	强奸	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-939a1f10af4d4a25	行业词汇	859	猥亵	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-624b964e2d48ab16	行业词汇	860	绑架	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-1cec9b5f1d161fae	行业词汇	861	非法拘禁	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-e996c109bf636443	行业词汇	862	敲诈勒索	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-9006ca157d84f53c	行业词汇	863	聚众斗殴	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-794c82583c178ce0	行业词汇	864	贩卖毒品	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-6e20e388c897ed58	行业词汇	865	走私	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-016c4f99968b5c3e	行业词汇	866	贩毒	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-b7c9678e333c6604	行业词汇	867	纵火	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-ef48a6603abed16e	行业词汇	868	放火	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-1de350653e71ec6d	行业词汇	869	爆炸	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-2aa2012926bf3ee0	行业词汇	870	交通肇事	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-f011d80c723193cf	行业词汇	871	贪污	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-731eaab58e60781d	行业词汇	872	受贿	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-8da0553a7ff3cccd	行业词汇	873	挪用公款	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-d27d815a5afa6e13	行业词汇	874	网络诈骗	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-7ba82474345ebac0	行业词汇	875	侵犯公民个人信息	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-5fe45d02a228d48a	行业词汇	876	非法集资	3	3	0	3	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-13f55f15252e406e	行业词汇	877	传销	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-edfcf973f1b31a24	行业词汇	878	网络赌博	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-18cbe03c82aaf41e	行业词汇	879	帮信罪	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-8ea5429f01df8828	行业词汇	880	帮助信息网络犯罪活动	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-038427fec845d7d5	行业词汇	881	洗钱	3	3	0	3	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-e43efd6e3731674f	行业词汇	882	简洁实用	0	1	0	1	0	已覆盖	police_synthetic_zh_accent
+src-144b620bd86a42aa	行业词汇	883	临时身份证	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-06391a364a99e973	行业词汇	884	户口簿	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-1eda16f368e0efac	行业词汇	885	户口本	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-f7e833e72061f119	行业词汇	886	居住登记	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-872a85af9cef7363	行业词汇	887	出生医学证明	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-3c90c874c2c899f0	行业词汇	888	落户	7	7	0	7	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-df8327227448c329	行业词汇	889	立户	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-a3cb2b4b976aaf2f	行业词汇	890	分户	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-f22407ae5c8ec218	行业词汇	891	迁入	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-8228c355d32f3b1c	行业词汇	892	迁出	4	4	0	4	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-b021754d32a23cd5	行业词汇	893	户口迁移	3	3	0	3	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-51ff5ab8e54e2503	行业词汇	894	投靠落户	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-ed281c69d3224fee	行业词汇	895	购房落户	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-386500b467b03144	行业词汇	896	变更	17	19	0	19	0	已覆盖	current_police_terms_20260711_industry_vocab_1671;police_synthetic_zh_accent
+src-006085c06e1ac651	行业词汇	897	更正信息	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-b93908e8f7d9b971	行业词汇	898	补录户口	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-b688ea0242f73961	行业词汇	899	恢复户口	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-60dfd31047d9a377	行业词汇	900	注销户口死亡迁出	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-0c99ab0a0fce7f7a	行业词汇	901	挂失	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-e08de691cecf3414	行业词汇	902	补办	4	4	0	4	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-f323975dc6b5eeb2	行业词汇	903	换领	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-32ed2e4953d775e5	行业词汇	906	受理	25	26	0	26	0	已覆盖	current_plate_number_1276;current_police_terms_20260711_industry_dialogue_189;current_police_terms_20260711_industry_vocab_1671;police_synthetic_zh_accent
+src-557fc4c1a53c1d32	行业词汇	907	姓名变更	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-1b30a81d691c6a91	行业词汇	908	性别变更	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-d840c4d9c409a033	行业词汇	909	民族变更	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-9c6ae1ecbf3db3ae	行业词汇	910	出生日期更正	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-0a0d5e1746d10d59	行业词汇	911	籍贯	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-5bfb6e9e5929e7b1	行业词汇	912	住址变更	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-a787193756938bb6	行业词汇	913	婚姻状况变更	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-7af090a3bd790e63	行业词汇	914	文化程度变更	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-815be217e59aafd5	行业词汇	915	服务处所变更	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-5f2537b7cdccfd89	行业词汇	916	户主	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-eed55dcabd46803b	行业词汇	917	家庭成员	4	4	0	4	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-93239c64c344befd	行业词汇	918	直系亲属	4	4	0	4	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-df7b029331232ea7	行业词汇	919	非直系亲属	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-432d0688cb3f9561	行业词汇	920	监护人	4	4	0	4	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-6ee000f72d1692dc	行业词汇	921	被监护人	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-28db619606495e1c	行业词汇	922	常住人口	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-9e3a679d01c66d4b	行业词汇	923	流动人口	4	5	0	5	0	已覆盖	current_police_terms_20260711_industry_vocab_1671;police_synthetic_zh_accent
+src-e2e6c0fd6419b494	行业词汇	924	户籍所在地	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-9bf5a2323ead315e	行业词汇	925	现居住地	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-14db6cce1fbfb39f	行业词汇	926	实有人口管理	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-61d3fb781495212c	行业词汇	927	户籍证明	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-f87d090191761e3e	行业词汇	928	亲属关系证明	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-699573c1b6d2a6b8	行业词汇	929	一站式办理	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-1196295a3ebb2af8	行业词汇	930	当场办结	3	3	0	3	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-19a38557b0b6726a	行业词汇	931	材料齐全	3	3	0	3	0	已覆盖	current_police_terms_20260711_industry_vocab_1671;current_police_ui_teacher_385
+src-1fa95afa2ce27c94	行业词汇	932	一次告知	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-0989d170790cdfc9	行业词汇	933	限时办结	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-59d215d65f547c80	行业词汇	934	延时服务	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-b71f67e34e1589e4	行业词汇	935	社区民警	33	36	0	36	0	已覆盖	current_police_terms_20260711_industry_vocab_1671;current_police_terms_2183;police_synthetic_zh_accent
+src-ce21c96d9230efb7	行业词汇	936	警务室	3	3	0	3	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-70231cfcc552ef92	行业词汇	937	网格员	2	3	0	3	0	已覆盖	current_police_terms_20260711_industry_vocab_1671;police_synthetic_zh_accent
+src-1fcb2e5936983a5c	行业词汇	938	入户走访	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-738c318aee823014	行业词汇	939	巡查	8	18	0	18	0	已覆盖	current_police_terms_20260711_industry_vocab_1671;current_police_ui_20260713_168;police_v6_8h
+src-cb62ae1363924b7b	行业词汇	940	巡逻防控	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-31ee093a9247b7e1	行业词汇	941	矛盾调解	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-5880a3f09f469c15	行业词汇	942	矛调	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-e7f97e42d9fbcd60	行业词汇	943	纠纷化解	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-035585786be0f675	行业词汇	944	邻里纠纷	20	20	0	20	0	已覆盖	current_police_terms_20260711_industry_vocab_1671;current_police_terms_2183
+src-5c343cfa8c1980c3	行业词汇	945	家庭矛盾	33	33	0	33	0	已覆盖	current_police_terms_20260711_industry_dialogue_189;current_police_terms_20260711_industry_vocab_1671;current_police_terms_2183
+src-41edb94f380f722a	行业词汇	946	耐心劝导	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-daf5f0c3790d41a9	行业词汇	947	握手言和	3	3	0	3	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-3bdcccc521113d61	行业词汇	948	安全宣传	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-f9727369cf4f5b7b	行业词汇	949	反诈宣传	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-c2ff1845575747f0	行业词汇	950	防火防盗	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-69cf824b84f58fe7	行业词汇	951	隐患排查	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-cb121ed6612b25d3	行业词汇	952	治安防范	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-98fbd23392463852	行业词汇	953	提醒警示	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-930a4e4af8ccf3a6	行业词汇	954	群防群控	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-efcd2b37d8950729	行业词汇	955	出租房屋	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-a4366b0819aa3a8f	行业词汇	956	暂住登记	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-ef29beedcf9b1af8	行业词汇	957	重点人员	4	5	0	5	0	已覆盖	current_police_terms_20260711_industry_vocab_1671;police_synthetic_zh_accent
+src-1f0598ced6917028	行业词汇	958	便民服务	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-02a77e88b47a5454	行业词汇	959	上门服务	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-e87e7535b5baa98d	行业词汇	960	答疑解惑	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-1d6b353a4c3befe4	行业词汇	961	为民办实事	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-77141eabf1a2a5f7	行业词汇	962	帮扶救助	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-d08281ee5bf4dce6	行业词汇	963	关爱老人	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-ce079e386c6e0a29	行业词汇	964	警民连心	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-6e98c41ac1653d11	行业词汇	965	平安社区	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-7edbeef0f3c92851	行业词汇	966	和谐社区	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-f25a0d22877a60c2	行业词汇	967	基层治理	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-927c0323af7150ad	行业词汇	968	联防联控	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-080533029ba6bbe0	行业词汇	969	共建共治	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-616e6fd13ee1b4db	行业词汇	970	社区治安	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-c67cf7dea96aea08	行业词汇	971	接处警	11	14	0	14	0	已覆盖	current_police_terms_20260711_application_names_62;current_police_terms_20260711_industry_vocab_1671;current_police_ui_teacher_385;police_synthetic_zh_accent
+src-69f463a2853ef6d4	行业词汇	972	信息采集	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-f8b47b97eb60061d	行业词汇	973	台账登记	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-d562392b45f269b5	行业词汇	974	情况上报	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-473129f73fdca3a3	行业词汇	975	治安通报	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-ee5c6e0e314d222c	行业词汇	976	警民沟通	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-1bb4a0c7aeb5baa3	行业词汇	977	噪音扰民	25	25	0	25	0	已覆盖	current_police_terms_20260711_industry_vocab_1671;current_police_terms_2183
+src-a3b37ce2e194126b	行业词汇	978	采光通风	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-fb85e4d90ce54587	行业词汇	979	排水排污	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-51547b8f0104cbd9	行业词汇	980	楼道占用	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-35c45339c57c0a52	行业词汇	981	宠物扰民	8	8	0	8	0	已覆盖	current_police_terms_20260711_industry_vocab_1671;current_police_terms_2183
+src-f0edf66168040f9d	行业词汇	982	边界争执	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-e05498208fc73fae	行业词汇	983	家庭纠纷	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-56d21127cc284bf8	行业词汇	984	婚姻矛盾	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-4bfd9be13b93b825	行业词汇	985	赡养老人	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-8c40ebf4911ed704	行业词汇	986	抚养子女	4	4	0	4	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-4df72b66aa9c32c8	行业词汇	987	财产分割	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-56f2cb9b0b12e2de	行业词汇	988	遗产继承	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-45a8b9cc293fc23c	行业词汇	989	家庭暴力	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-bf93140d68116b4b	行业词汇	990	经济债务纠纷	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-536c141aa9d5cd64	行业词汇	991	借钱不还	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-ce8cafa44115e21c	行业词汇	992	拖欠工资	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-25646fe7a1cb9bf0	行业词汇	993	货款纠纷	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-f773315b893f31f2	行业词汇	994	押金不退	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-fffd9e6ba17dc2fc	行业词汇	995	合伙分红争议	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-be7d9479079eabbb	行业词汇	996	物业与业主纠纷	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-f5581fc7735da21b	行业词汇	997	物业费收取	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-36a3770411b38b2a	行业词汇	998	停车管理	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-a16f4903472512d1	行业词汇	999	小区公共区域使用	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-bd59cb634ca08403	行业词汇	1000	物业服务不到位	4	4	0	4	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-49a630c521a20b5e	行业词汇	1001	房屋租赁	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-279b2e6dc71a1999	行业词汇	1002	买卖纠纷	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-8d414c1ba3ba77da	行业词汇	1003	房租拖欠	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-bec26f09ac6dc053	行业词汇	1004	房屋损坏	4	4	0	4	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-d02f8c5d232161d3	行业词汇	1005	合同违约	4	4	0	4	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-e6475c394a6d9ccf	行业词汇	1006	一房多租	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-cc7f7a85779c20de	行业词汇	1007	劳资纠纷	31	31	0	31	0	已覆盖	current_police_terms_20260711_industry_dialogue_189;current_police_terms_20260711_industry_vocab_1671;current_police_terms_2183
+src-730c366a88f16c04	行业词汇	1008	欠薪	2	3	0	3	0	已覆盖	current_police_terms_20260711_industry_vocab_1671;police_synthetic_zh_accent
+src-8e09d315ed0deca4	行业词汇	1009	工伤赔偿	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-c9c6e6ffec586e84	行业词汇	1010	辞退争议	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-95c950ed51954504	行业词汇	1011	加班补偿	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-b34525af8d6c08c2	行业词汇	1012	未签劳动合同	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-dfbf8398a7806c76	行业词汇	1013	消费纠纷	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-5fdc006ea93abe29	行业词汇	1014	商品质量	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-0c7de2f17abde773	行业词汇	1015	虚假宣传	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-76fe683d65d080eb	行业词汇	1016	退款退货	4	4	0	4	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-a7103bc0b72e8fc8	行业词汇	1017	服务欺诈	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-88bf4d46d08c7919	行业词汇	1018	预付卡跑路	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-01c2558b39579b0e	行业词汇	1019	土地	4	4	0	4	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-3090e9273982786a	行业词汇	1020	宅基地纠纷	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-1d0528fad2ec0a8a	行业词汇	1021	地界不清	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-8ed73283c848c940	行业词汇	1022	占地建房	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-4effab7e7ec33f46	行业词汇	1023	土地流转	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-1c16323bccc0c601	行业词汇	1024	征地补偿争议	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-cf77506993e97161	行业词汇	1025	施工	25	25	0	25	0	已覆盖	current_police_terms_20260711_industry_vocab_1671;current_police_terms_2183
+src-13968bb867515fea	行业词汇	1026	经营扰民纠纷	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-05ad242df531eab4	行业词汇	1027	施工噪音	4	4	0	4	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-d988a4294c46b045	行业词汇	1028	占道经营	4	4	0	4	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-785b5d9d5ad54bb4	行业词汇	1029	油烟污染	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-88bf5b718fee8827	行业词汇	1030	夜市扰民	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-58be99c6d36b004f	行业词汇	1031	其他常见纠纷	0	10	0	10	0	已覆盖	police_synthetic_zh_accent
+src-29564481d4ae9230	行业词汇	1032	交通事故赔偿	4	4	0	4	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-0c5fcbebc10748ec	行业词汇	1033	医疗纠纷	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-afe748d81a579755	行业词汇	1034	网络纠纷	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-6bc0db4b5077f749	行业词汇	1035	口角引发的肢体冲突	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-612bfe33e38e89ca	行业词汇	1036	婚姻纠纷	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-4d1a0529db1e6fd4	行业词汇	1037	赡养纠纷	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-99b56d0d6a575445	行业词汇	1038	抚养纠纷	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-748633964125e42e	行业词汇	1039	债务纠纷	4	4	0	4	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-8ce211b3d8a5e453	行业词汇	1040	物业纠纷	6	6	0	6	0	已覆盖	current_police_terms_20260711_industry_vocab_1671;current_police_terms_2183
+src-4cfd46e71156dc62	行业词汇	1041	地界纠纷	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-506c56ad919d0108	行业词汇	1042	医患纠纷	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-53552462500999bd	行业词汇	1043	交通事故纠纷	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-8bd757ae494c9ea2	行业词汇	1044	口角纠纷	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-3025df5426c21201	行业词汇	1045	琐事纠纷	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-89599fc22f68c0a2	行业词汇	1046	矛盾激化	3	3	0	3	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-9b051495e20a6374	行业词汇	1047	情绪激动	16	16	0	16	0	已覆盖	current_plate_number_1276;current_police_terms_20260711_industry_vocab_1671;current_police_terms_2183
+src-91928b7bd1a9d37c	行业词汇	1048	争执不下	3	3	0	3	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-5ac3ee7af99363f4	行业词汇	1049	互不相让	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-74b396eb5f08e81e	行业词汇	1050	言语冲突	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-475f209e6c20b394	行业词汇	1051	肢体冲突	4	4	0	4	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-2687143ae01421cd	行业词汇	1052	聚众闹事	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-b0cf77b12153521a	行业词汇	1053	邻里不和	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-aafe46b7a3d88976	行业词汇	1054	积怨较深	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-7f234d0bee1fa01d	行业词汇	1055	调解纠纷	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-97a1e25c39526b63	行业词汇	1056	化解矛盾	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-e4bef87453ea5b0a	行业词汇	1057	劝导教育	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-72a2b143ece4aa05	行业词汇	1058	安抚情绪	3	3	0	3	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-cc3895fe2b28e72b	行业词汇	1059	耐心疏导	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-67606591b309b4f1	行业词汇	1060	讲清法理	3	3	0	3	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-026e2a24957b1b7e	行业词汇	1061	讲明情理	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-5ec10b92eba9c973	行业词汇	1062	公平公正	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-9aa708ae176d9cc2	行业词汇	1063	达成协议	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-fe81f33eecdf5694	行业词汇	1064	现场调解	3	3	0	3	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-7bc5e2c4257a1750	行业词汇	1065	现场处置	4	4	0	4	0	已覆盖	current_police_terms_20260711_industry_dialogue_189;current_police_terms_20260711_industry_vocab_1671;current_police_ui_teacher_385
+src-578bb694a07a88f5	行业词汇	1066	息事宁人	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-3993444dedc2f539	行业词汇	1067	定纷止争	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-069fa516f77d7049	行业词汇	1068	达成谅解	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-88fdece0856806c5	行业词汇	1069	互不追究	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-cbee52feb92a7c27	行业词汇	1070	自行和解	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-ea9d8bf2d102d9a3	行业词汇	1071	调解成功	7	7	0	7	0	已覆盖	current_police_terms_20260711_industry_vocab_1671;current_police_terms_2183
+src-9643ab5831aa6f41	行业词汇	1072	调解未果	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-160138e73dcdcfd8	行业词汇	1073	依法处理	8	8	0	8	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-4d898f8ae6e90476	行业词汇	1074	矛盾排查	2	3	0	3	0	已覆盖	current_police_terms_20260711_industry_vocab_1671;police_synthetic_zh_accent
+src-a79db31e5e16eb59	行业词汇	1075	纠纷摸排	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-6a4d7ef8b5eea7a1	行业词汇	1076	滚动排查	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-f53025e36fefc45d	行业词汇	1077	拉网式排查	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-5d77d0f4f1948622	行业词汇	1078	源头排查	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-f85123b9ce3f670b	行业词汇	1079	重点排查	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-e1821b02e13e71a9	行业词汇	1080	全面排查	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-59c6f5fd2337dc02	行业词汇	1081	早发现	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-6a35e326d076d060	行业词汇	1082	早介入	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-5df04e33d6849186	行业词汇	1083	风险预警	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-d4a9953424ff9142	行业词汇	1084	苗头性问题	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-c573a2978e6ab5d5	行业词汇	1085	倾向性问题	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-f4e8516c33a03ac2	行业词汇	1086	矛盾隐患	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-49af44ca4c247d17	行业词汇	1087	不稳定因素	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-f48e4d663a8e809b	行业词汇	1088	预警研判	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-8e9915ab6e0f322c	行业词汇	1089	分级管控	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-20d051a39cf3b490	行业词汇	1090	跟踪关注	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-60c517aae225e0fc	行业词汇	1091	矛盾化解	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-3636cd1d5cefbabf	行业词汇	1092	纠纷调处	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-7499e5333e0acf72	行业词汇	1093	多元化解	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-9eb5306629640bd8	行业词汇	1094	联调联处	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-d20774fb2e9cbcb8	行业词汇	1095	上门调解	3	3	0	3	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-2a49e92d8313c869	行业词汇	1096	情绪安抚	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-9a0fd41e55c5ff4b	行业词汇	1097	释法明理	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-08cc2ad27898ef21	行业词汇	1098	源头治理	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-0704e0bdddf79ac6	行业词汇	1099	靠前处置	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-afe84283df96399d	行业词汇	1100	抓早抓小	3	3	0	3	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-970fad3e5198adce	行业词汇	1101	就地化解	3	3	0	3	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-f378fd0c0595655c	行业词汇	1102	闭环管理	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-1e85582b8a0ca2a4	行业词汇	1103	台账管理	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-de8b0f64519f9d76	行业词汇	1104	回访督办	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-7ea4a809afc3e633	行业词汇	1105	化解率	3	3	0	3	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-748ba5ea1db5d2e0	行业词汇	1106	成功率	3	3	0	3	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-4c81d98990dced17	行业词汇	1107	案结事了	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-63e4609b282ab1ca	行业词汇	1108	息诉罢访	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-4caf7abef00fca6c	行业词汇	1109	邻里和睦	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-ebc4ab06d0f3e12c	行业词汇	1110	家庭和谐	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-85ade0e0a830bd3d	行业词汇	1111	消除隐患	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-b00cdde160b199c2	行业词汇	1112	防止激化	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-dab15b9f3efc97b2	行业词汇	1113	避免民转刑	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-21d03d56d63e44f6	行业词汇	1114	婚姻家庭矛盾	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-4b9860feb5b9b6fe	行业词汇	1115	抚养子女纠纷	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-09260021ee6dab5e	行业词汇	1116	家庭财产纠纷	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-8e8ca6ff63ed8876	行业词汇	1117	家庭成员间口角	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-9dde30167f68ccf4	行业词汇	1118	积怨冲突	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-26cf005fa7910ae1	行业词汇	1119	邻里噪音	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-c01a3f10f9251ff9	行业词汇	1120	采光	4	4	0	4	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-74bb9cd9f8a34b0f	行业词汇	1121	排水	4	4	0	4	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-73b38dc2683399f0	行业词汇	1122	占地纠纷	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-9ba247308c05cce5	行业词汇	1123	楼道堆放杂物纠纷	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-3bfb635ae6919eae	行业词汇	1124	边界	4	5	0	5	0	已覆盖	current_police_terms_20260711_industry_vocab_1671;police_synthetic_zh_accent
+src-a4f7a2af458dedc9	行业词汇	1125	宅基地	4	4	0	4	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-c736d95e61fab161	行业词汇	1126	地界权属纠纷	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-44ec59b02c216a62	行业词汇	1127	邻里口角	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-daced80be7e8663a	行业词汇	1128	积怨	6	7	0	7	0	已覆盖	current_police_terms_20260711_industry_vocab_1671;police_synthetic_zh_accent
+src-a4c489606052ac1a	行业词汇	1129	互殴隐患	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-fa660bfba4a78c04	行业词汇	1130	民间借贷	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-e066680e53f18446	行业词汇	1131	欠钱不还纠纷	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-6f33475d85e14f5a	行业词汇	1132	货款	4	4	0	4	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-f08833bc9cedc6db	行业词汇	1133	押金	5	5	0	5	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-d45b73ffd56dec24	行业词汇	1134	合同违约纠纷	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-012c4d6e3209e159	行业词汇	1135	合伙经营	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-116d6f1e9d11f25e	行业词汇	1136	分红争议	4	4	0	4	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-b63221846f2bceaf	行业词汇	1137	物业费	4	4	0	4	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-4064769b30f4dc60	行业词汇	1138	停车费争议	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-a95618f94f2662f9	行业词汇	1139	占用纠纷	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-5b4c5c9dc171df3d	行业词汇	1140	物业服务不到位引发的冲突	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-ea93906043375e2f	行业词汇	1141	房屋损坏赔偿	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-e2c113677bf5aeae	行业词汇	1142	中介纠纷	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-11842fd357f10e39	行业词汇	1143	多卖	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-7c0e4bdc2c2f637b	行业词汇	1144	装修扰民	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-956396e1dc144082	行业词汇	1145	施工噪音纠纷	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-35f8fa69c02c316b	行业词汇	1146	医患矛盾	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-bcc02b24ea0eeb81	行业词汇	1147	消费欺诈	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-a4c495c15c2384b5	行业词汇	1148	退款退货纠纷	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-49225ddf0ed7075b	行业词汇	1149	预付卡	4	4	0	4	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-0fec4ca4b27cebf3	行业词汇	1150	办卡跑路纠纷	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-5f3e9ebef4dcd3a8	行业词汇	1151	征地补偿	4	4	0	4	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-accf31499b80931a	行业词汇	1152	拆迁安置争议	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-668cb4f783f2ef21	行业词汇	1153	工地施工扰民	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-3e4d4dcfe06bbcbf	行业词汇	1154	扬尘噪音纠纷	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-f0a6eb7b2ae7487b	行业词汇	1155	拖欠工程款	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-44ce8764345c7cdc	行业词汇	1156	农民工讨薪	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-480f4f36588f38c1	行业词汇	1157	易引发民转刑的矛盾纠纷	0	0	0	0	0	缺音频	
+src-6e51f5db8ceb597c	行业词汇	1158	多次报警	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-08e526349beadf7a	行业词汇	1159	反复激化的纠纷	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-ffc4ea992b1082e2	行业词汇	1160	扬言报复	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-1fdbba8c092f8cee	行业词汇	1161	极端情绪人员纠纷	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-7c5a839bafa4f544	行业词汇	1162	涉众型纠纷	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-375a1636fb45f2ed	行业词汇	1163	群体性事件隐患	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-afb558d5f76158d2	行业词汇	1164	校园矛盾	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-06e092fc4665146c	行业词汇	1165	婚恋情感纠纷	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-13c51d6cdbe8a920	行业词汇	1166	交通事故赔偿未达成一致	2	2	1	1	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-83511a522fa44a33	行业词汇	1167	辱骂诽谤引发冲突	2	2	1	1	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-0db6c24e1d30abb3	行业词汇	1168	经营扰民	4	4	0	4	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-483f4f4d0ca528a5	行业词汇	1169	占道经营纠纷	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-09061f7d5b4fddd8	行业词汇	1170	少数民族	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-d342c8093319040a	行业词汇	1171	流动人口引发的纠纷	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-ef026dc446cf0be6	行业词汇	1172	巡警常用词语	0	3	0	3	0	已覆盖	police_synthetic_zh_accent
+src-85b50af17250b50b	行业词汇	1173	步巡	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-5683710e4efb362e	行业词汇	1174	车巡	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-04fcb0e06ef16c4b	行业词汇	1175	定点值守	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-aa91a43826ebea3c	行业词汇	1176	动态巡逻	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-f3413e86d12fa223	行业词汇	1177	武装巡逻	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-832d35410e511a52	行业词汇	1178	夜间巡逻	4	4	0	4	0	已覆盖	current_police_terms_20260711_industry_vocab_1671;current_police_ui_teacher_385
+src-8f0dd638b14d2cd3	行业词汇	1179	联勤联动	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-5a8dc8b06b8a57b1	行业词汇	1180	街面防控	3	3	0	3	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-76e17572ff979656	行业词汇	1181	先期处置	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-5881977fe7b1f340	行业词汇	1182	现场警戒	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-adf0e4d305dea5e7	行业词汇	1183	控制现场	4	4	0	4	0	已覆盖	current_police_terms_20260711_industry_vocab_1671;current_police_terms_2183
+src-023e2f6998996394	行业词汇	1184	疏散群众	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-b6bc30c65b0e16ff	行业词汇	1185	核查身份	7	7	0	7	0	已覆盖	current_police_terms_20260711_industry_vocab_1671;current_police_terms_20260727_190;targeted_dingqiao_failures
+src-758e83f8d41e4d6c	行业词汇	1186	治安防控	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-76fd78b22d7db754	行业词汇	1187	显性用警	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-c10607409a8cb0be	行业词汇	1188	压降发案	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-80da5b1931a7fc11	行业词汇	1189	设卡盘查	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-4127f0e44dd30198	行业词汇	1190	定点盘查	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-55a6ef8b7047510d	行业词汇	1191	街面秩序	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-7fba31ef3962a6ab	行业词汇	1192	清理整治	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-f0b4f08f26ff3df9	行业词汇	1193	可疑人员	8	9	0	9	0	已覆盖	current_police_terms_20260711_industry_vocab_1671;current_police_terms_2183;police_synthetic_zh_accent
+src-28a7e9800be98873	行业词汇	1194	流浪乞讨人员	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-8fbf09bb8c69ffd8	行业词汇	1195	醉酒人员	21	21	0	21	0	已覆盖	current_police_terms_20260711_industry_vocab_1671;current_police_terms_2183
+src-0f5ba492f36d81b3	行业词汇	1196	精神障碍患者	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-1b5ec8cad0eb78a9	行业词汇	1197	滋事人员	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-eabe5d18e3d890f6	行业词汇	1198	劝离	4	4	0	4	0	已覆盖	current_police_terms_20260711_industry_vocab_1671;current_police_terms_2183
+src-edbebe6d8c1e5be8	行业词汇	1199	带离	5	5	0	5	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-9c337242117d0de9	行业词汇	1200	约束	7	7	0	7	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-024d168f575a1d0e	行业词汇	1201	劝阻	9	9	0	9	0	已覆盖	current_police_terms_20260711_industry_dialogue_189;current_police_terms_20260711_industry_vocab_1671
+src-383edbfbdbd59bd4	行业词汇	1202	制止	9	9	0	9	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-80800e30f91c5812	行业词汇	1203	稳控	3	3	0	3	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-d382474300a835fa	行业词汇	1204	紧急救援	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-f0cb98207a9b67a7	行业词汇	1205	应急处置	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-12375f8e54e4d78f	行业词汇	1206	突发警情	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-982782bd4f696159	行业词汇	1207	防火	4	4	0	4	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-c8eb1d803c57cb55	行业词汇	1208	防盗	4	4	0	4	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-1eb501db13c2a17f	行业词汇	1209	防抢	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-f2c9648bcc5c0b46	行业词汇	1210	防骗	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-e380f2b5a0aa774f	行业词汇	1211	防暴	9	9	0	9	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-0c211a13e3b0823f	行业词汇	1212	安全提醒	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-ca179b60b826d9af	行业词汇	1213	交通疏导	4	4	0	4	0	已覆盖	current_police_terms_20260711_industry_vocab_1671;current_police_terms_2183
+src-f80386e6d4076ba3	行业词汇	1214	劝阻违停	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-e761000d2308df5b	行业词汇	1215	快速反应	3	3	0	3	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-d4ba1bc882e5911a	行业词汇	1216	高效处置	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-bee36ad49d41ef74	行业词汇	1217	见警率	3	3	0	3	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-da55bdcc1fe11b40	行业词汇	1218	管事率	3	3	0	3	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-2db6b523c6b52e06	行业词汇	1219	保畅通	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-cb26a74de55639ae	行业词汇	1220	护平安	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-ea180a93beaa779f	行业词汇	1221	街面见警	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-e37ee9af21a79e76	行业词汇	1222	快速响应	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-180ea76649e1b460	行业词汇	1223	派警	101	101	0	101	0	已覆盖	current_police_station_394;current_police_terms_20260711_industry_dialogue_189;current_police_terms_20260711_industry_vocab_1671;current_police_terms_2183;current_police_ui_teacher_385;historical_police_station_archive_200
+src-6f6ac9591c2ce20e	行业词汇	1225	分流	3	3	0	3	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-d0d08b22fec13a9e	行业词汇	1227	骚扰报警	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-22a142aaef156a5b	行业词汇	1228	虚假报警	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-295bc93adc10c883	行业词汇	1229	重复报警	23	23	0	23	0	已覆盖	current_police_terms_20260711_industry_dialogue_189;current_police_terms_20260711_industry_vocab_1671;current_police_terms_2183;targeted_police_terms_multivoice_20260807_10
+src-04caa286d7d59fa9	行业词汇	1230	警情登记	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-cab5b1ae2cd5ba0f	行业词汇	1231	赶赴现场	3	3	0	3	0	已覆盖	current_police_terms_20260711_industry_vocab_1671;current_police_ui_teacher_385
+src-cd8145ad0e40f3ed	行业词汇	1232	控制事态	3	3	0	3	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-edd6c0c4a2c5bb2f	行业词汇	1233	疏散围观	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-f86490c628944de9	行业词汇	1234	现场取证	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-592d7e184f13644b	行业词汇	1235	固定证据	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-6f7cf08d54f1fb0b	行业词汇	1236	制作笔录	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-dad8c24764629c05	行业词汇	1237	口头劝阻	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-6e542866a0019bfb	行业词汇	1238	制止违法行为	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-bcf1c8bfccdaccc9	行业词汇	1239	当场处罚	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-036278e8910413e3	行业词汇	1240	约束醒酒	3	3	0	3	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-5135d5aa3884d405	行业词汇	1241	紧急救助	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-cba254d88091b7e2	行业词汇	1242	送医救治	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-3c5179444cd1a8ce	行业词汇	1243	联动处置	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-5530b1314e0d29da	行业词汇	1244	移交管辖	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-a115461391b621b5	行业词汇	1245	纠纷类警情	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-33bea8955b8125ce	行业词汇	1246	求助类警情	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-f47fc7c04796a2bb	行业词汇	1247	治安类警情	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-7ea05af8db91c2cd	行业词汇	1248	刑事类警情	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-1ba70d1362c6c490	行业词汇	1249	交通类警情	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-d88d447070294b8f	行业词汇	1250	火灾警情	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-7efa5f0aed4824fc	行业词汇	1251	突发险情	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-b0968d3d2be75907	行业词汇	1252	群体性事件	4	4	0	4	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-77438e888e3ad312	行业词汇	1253	极端行为	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-3603d0f08e58cf24	行业词汇	1254	规范着装	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-9256ee2c6d385adb	行业词汇	1255	佩戴执法记录仪	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-6e994ea1d24a5ade	行业词汇	1256	文明用语	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-dc67e1ae37bda37b	行业词汇	1257	耐心解释	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-efe1bd78a7678c83	行业词汇	1258	如实登记	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-15f64747da9316e9	行业词汇	1259	及时反馈	21	21	0	21	0	已覆盖	current_police_terms_20260711_industry_vocab_1671;current_police_terms_2183;current_police_ui_teacher_385
+src-86f83eb95bf5c641	行业词汇	1260	闭环处置	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-ae8679241c6245c5	行业词汇	1261	回访核查	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-8c875f47017a061a	行业词汇	1262	当场调解	3	3	0	3	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-8301aae329d29ece	行业词汇	1263	依法处罚	3	3	0	3	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-97f2dd5dea47c120	行业词汇	1264	立案侦查	3	3	0	3	0	已覆盖	current_police_terms_20260711_industry_vocab_1671;current_police_ui_teacher_385
+src-672ace1a1f19da06	行业词汇	1265	不予立案	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-2cc24aaf5c1ec72d	行业词汇	1266	救助成功	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-33cba087cb32894f	行业词汇	1267	移交相关部门	4	4	0	4	0	已覆盖	current_police_terms_20260711_industry_vocab_1671;current_police_terms_2183
+src-bc1a42ee2459ed43	行业词汇	1268	处警完毕	33	33	0	33	0	已覆盖	current_police_terms_20260711_industry_vocab_1671;current_police_terms_2183
+src-b9ea5c1f2c89686d	行业词汇	1269	反馈结果	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-37605cb0f637d59a	行业词汇	1270	方便查阅	0	10	0	10	0	已覆盖	police_synthetic_zh_accent
+src-c9796eb9c264a4e7	行业词汇	1271	户政	2	4	0	4	0	已覆盖	current_police_terms_20260711_industry_vocab_1671;police_synthetic_zh_accent
+src-87e852133a37d7c0	行业词汇	1272	出入境	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-0f610f124201e808	行业词汇	1273	指挥中心	33	34	0	34	0	已覆盖	current_police_terms_20260711_industry_vocab_1671;current_police_terms_20260727_190;current_police_terms_2183;current_police_ui_teacher_385;police_synthetic_zh_accent
+src-1064ffe5e8d51504	行业词汇	1274	情指中心	4	4	0	4	0	已覆盖	current_police_terms_20260711_industry_vocab_1671;current_police_terms_20260727_190
+src-0aac2c6dfe7eb694	行业词汇	1275	合成作战中心	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-6417907c48329a16	行业词汇	1276	智慧安防	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-08731c1e786eb273	行业词汇	1277	反馈	332	342	0	342	0	已覆盖	current_police_terms_20260711_industry_vocab_1671;current_police_terms_20260727_190;current_police_terms_2183;current_police_ui_20260713_168;current_police_ui_teacher_385;police_v6_8h
+src-26c7317c02234206	行业词汇	1278	归档	8	11	0	11	0	已覆盖	current_police_terms_20260711_industry_vocab_1671;current_police_terms_20260727_190;current_police_ui_teacher_385;police_synthetic_zh_accent
+src-9e73d9074abd97ad	行业词汇	1279	24小时值班备勤	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-5ba612aa4073f8d6	行业词汇	1280	管制	13	13	0	13	0	已覆盖	current_police_terms_20260711_industry_dialogue_189;current_police_terms_20260711_industry_vocab_1671
+src-626d598462d678ee	行业词汇	1281	盘问	8	8	0	8	0	已覆盖	current_plate_number_1276;current_police_terms_20260711_industry_dialogue_189;current_police_terms_20260711_industry_vocab_1671
+src-a0fc55c23b87475a	行业词汇	1282	留置	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-86c5a4d717f325ac	行业词汇	1283	监控录像	3	3	0	3	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-7b046c93a9fa509c	行业词汇	1284	帮信	4	4	0	4	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-ce863f495e315618	行业词汇	1285	两卡	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-0e029bad6febc395	行业词汇	1286	电诈	4	4	0	4	0	已覆盖	current_police_terms_20260711_application_names_62;current_police_terms_20260711_industry_vocab_1671
+src-c8893793b4d4c06c	行业词汇	1287	刷流水	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-fb01421cc3fd0985	行业词汇	1288	屏幕共享	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-aae3138c9f63b611	行业词汇	1289	治安乱点整治	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-2a6f2cd711128724	行业词汇	1290	行业管理	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-f374558fc146e729	行业词汇	1291	逆行	3	3	0	3	0	已覆盖	current_police_terms_20260711_industry_dialogue_189;current_police_terms_20260711_industry_vocab_1671
+src-4d5c7553eea79251	行业词汇	1292	限行	3	3	0	3	0	已覆盖	current_police_terms_20260711_application_names_62;current_police_terms_20260711_industry_vocab_1671
+src-ec546bced2f51373	行业词汇	1293	礼让行人	22	22	0	22	0	已覆盖	current_plate_number_1276;current_police_terms_20260711_industry_vocab_1671
+src-ffdf53ce9eefe294	行业词汇	1294	系安全带	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-d61cf9e33f524510	行业词汇	1295	戴头盔	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-8c305c9a18a690ff	行业词汇	1296	交通管制	7	7	0	7	0	已覆盖	current_police_terms_20260711_industry_dialogue_189;current_police_terms_20260711_industry_vocab_1671
+src-96b027f89532977c	行业词汇	1297	全程录音录像	8	8	0	8	0	已覆盖	current_police_terms_20260711_industry_dialogue_189;current_police_terms_20260711_industry_vocab_1671
+src-c673502ad9bb7d7e	行业词汇	1298	投诉民警	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-b2b21646aea9aeac	行业词汇	1299	反诈劝阻	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-9958f33b26176b3c	行业词汇	1300	96110	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-de5412bab3779417	行业词汇	1301	安全账户	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-893ea2624035e638	行业词汇	1302	刷单	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-3dd1b7038fa7a8ce	行业词汇	1303	境外来电	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-7708bd22603f543c	行业词汇	1304	接处警流程	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-e4f52b300d79459b	行业词汇	1305	执法规范	2	4	0	4	0	已覆盖	current_police_terms_20260711_industry_vocab_1671;police_synthetic_zh_accent
+src-1397e75b02be647f	行业词汇	1306	案件侦查	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-077607640117965c	行业词汇	1307	治安管理	14	14	0	14	0	已覆盖	current_police_terms_20260711_industry_dialogue_189;current_police_terms_20260711_industry_vocab_1671
+src-041c17e6ccc1fd55	行业词汇	1308	交通管理	5	5	0	5	0	已覆盖	current_police_terms_20260711_industry_dialogue_189;current_police_terms_20260711_industry_vocab_1671
+src-2cc6919fc3512432	行业词汇	1309	网络安全	2	3	0	3	0	已覆盖	current_police_terms_20260711_industry_vocab_1671;police_synthetic_zh_accent
+src-83dad4be95af5a12	行业词汇	1310	核心称谓	0	10	0	10	0	已覆盖	police_synthetic_zh_accent
+src-2bc700fcf4a5cc35	行业词汇	1311	协警	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-cc534d47ee47991d	行业词汇	1312	机构层级	0	0	0	0	0	缺音频	
+src-9a61c4a5cf92986c	行业词汇	1313	警务站	28	28	0	28	0	已覆盖	current_police_terms_20260711_industry_vocab_1671;current_police_terms_2183
+src-f92e2ee3922ea12b	行业词汇	1314	主要警种	0	0	0	0	0	缺音频	
+src-e62a57cec3526cd0	行业词汇	1315	经侦	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-77e094f031f90520	行业词汇	1316	接警环节	0	0	0	0	0	缺音频	
+src-f03632d67e25eaa4	行业词汇	1317	报警服务台	3	3	0	3	0	已覆盖	current_police_terms_20260711_industry_dialogue_189;current_police_terms_20260711_industry_vocab_1671
+src-893cda2233d86003	行业词汇	1318	接警登记	48	49	0	49	0	已覆盖	current_police_terms_20260711_industry_vocab_1671;current_police_terms_2183;police_synthetic_zh_accent
+src-6790bcd84d70e3d8	行业词汇	1319	一级处警	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-b079f4add0c1878a	行业词汇	1320	就近处警	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-ec70d65936becbcd	行业词汇	1321	分类处警	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-6982c68c261368ed	行业词汇	1322	处警环节	0	4	0	4	0	已覆盖	police_synthetic_zh_accent
+src-e8e5f4fa07c30fdb	行业词汇	1323	警情分级	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-44ed40fe833ad14d	行业词汇	1324	移交	8	9	0	9	0	已覆盖	current_police_terms_20260711_industry_vocab_1671;current_police_terms_2183;police_synthetic_zh_accent
+src-b64726ec17958d69	行业词汇	1325	反馈与归档	0	0	0	0	0	缺音频	
+src-2144b745a69563fd	行业词汇	1326	处警反馈	46	46	0	46	0	已覆盖	current_police_terms_20260711_industry_vocab_1671;current_police_terms_2183
+src-17da6ebf453b3753	行业词汇	1327	警情录入	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-fb328daceb2d9587	行业词汇	1328	回访	58	58	0	58	0	已覆盖	current_police_terms_20260711_industry_vocab_1671;current_police_terms_2183
+src-988e02d18a2fa11b	行业词汇	1329	执法基础	0	4	0	4	0	已覆盖	police_synthetic_zh_accent
+src-b4f677e0aaf815b5	行业词汇	1330	受立案制度	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-f7d0ff4d7532a100	行业词汇	1331	强制措施	3	4	0	4	0	已覆盖	current_police_terms_20260711_industry_dialogue_189;current_police_terms_20260711_industry_vocab_1671;police_synthetic_zh_accent
+src-95611405c62d1c47	行业词汇	1332	刑事	22	22	0	22	0	已覆盖	current_police_terms_20260711_industry_dialogue_189;current_police_terms_20260711_industry_vocab_1671;current_police_ui_teacher_385
+src-c69cac9784532d7e	行业词汇	1333	行政措施	0	10	0	10	0	已覆盖	police_synthetic_zh_accent
+src-e48f979e04e47b83	行业词汇	1334	强制传唤	4	4	0	4	0	已覆盖	current_police_terms_20260711_industry_dialogue_189;current_police_terms_20260711_industry_vocab_1671
+src-6f1a97d99ee23c19	行业词汇	1335	强制带离	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-f79b74b240760435	行业词汇	1336	盘问检查	3	3	0	3	0	已覆盖	current_police_terms_20260711_industry_dialogue_189;current_police_terms_20260711_industry_vocab_1671
+src-eb43b782cba2a57d	行业词汇	1337	案件分类	0	0	0	0	0	缺音频	
+src-6613f7d9efdc1a70	行业词汇	1340	行政案件	2	3	0	3	0	已覆盖	current_police_terms_20260711_industry_vocab_1671;police_synthetic_zh_accent
+src-01539f1ea841df37	行业词汇	1341	办理流程	0	10	0	10	0	已覆盖	police_synthetic_zh_accent
+src-037c029494bdbc93	行业词汇	1342	控告	3	3	0	3	0	已覆盖	current_police_terms_20260711_industry_dialogue_189;current_police_terms_20260711_industry_vocab_1671
+src-a3f8898805cc58bb	行业词汇	1343	涉案人员	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-0f308f0fe6f613e9	行业词汇	1344	通缉犯	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-87a2eefcc8dc4c51	行业词汇	1345	行业场所管理	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-a33c62ecef0a6f45	行业词汇	1346	危险物品管理	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-0277f77c2f584f46	行业词汇	1347	吊销许可证	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-2a5fee22baaa807f	行业词汇	1348	限期出境	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-e305b307f40bc2b6	行业词汇	1349	驱逐出境	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-0fb7019bc7a83db3	行业词汇	1350	专项整治	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-d6c9894480e2f6a3	行业词汇	1351	治爆缉枪	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-b3e465eaf0e60844	行业词汇	1352	扫黄打非	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-e1efc78c066937a9	行业词汇	1353	百日行动	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-898e4653f0b5ff9b	行业词汇	1354	侦查措施	0	10	0	10	0	已覆盖	police_synthetic_zh_accent
+src-f3d32e04a4cbf5af	行业词汇	1355	刑事技术	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-b38c251b38426b0b	行业词汇	1356	电子数据取证	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-9e189c0c9a31c95f	行业词汇	1357	交通违法	4	4	0	4	0	已覆盖	current_police_terms_20260711_industry_dialogue_189;current_police_terms_20260711_industry_vocab_1671
+src-d636db6e861dec72	行业词汇	1358	超员	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-d407e523d2bb7175	行业词汇	1359	套牌	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-5900787ce3d6186a	行业词汇	1360	假牌	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-ecfced1b8272abec	行业词汇	1361	快处快赔	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-4338d5822c96849b	行业词汇	1362	车辆与驾驶人管理	0	5	0	5	0	已覆盖	police_synthetic_zh_accent
+src-b3c9e7de77450017	行业词汇	1363	年审	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-fbe377225f618846	行业词汇	1364	网络犯罪类型	0	0	0	0	0	缺音频	
+src-7345e52de728b7ca	行业词汇	1365	网络盗窃	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-2c8c415b85bc0c51	行业词汇	1366	网络色情	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-107f6ea0609ca147	行业词汇	1367	黑客攻击	3	3	0	3	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-783c33d16db38c33	行业词汇	1368	数据泄露	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-a932d374a3ef414c	行业词汇	1369	病毒	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-5b5d9dc4470cb401	行业词汇	1370	网络安全措施	0	1	0	1	0	已覆盖	police_synthetic_zh_accent
+src-b380f2c636c81ac9	行业词汇	1371	等级保护	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-1e68bc9e5f9ea2c5	行业词汇	1372	应急预案	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-dd5618a2440e440b	行业词汇	1373	装备与安全	0	4	0	4	0	已覆盖	police_synthetic_zh_accent
+src-253e850ce1b0e9fb	行业词汇	1374	警车	26	27	0	27	0	已覆盖	current_plate_number_1276;current_police_terms_20260711_industry_vocab_1671;current_police_terms_2183;police_synthetic_zh_accent
+src-4c032cb12964e3fc	行业词汇	1375	单警装备	4	4	0	4	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-9276580d11d633f6	行业词汇	1376	队伍建设	1	1	0	1	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-ca555fd6b94f03fb	行业词汇	1377	人民警察证	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-ccc42b98470e1c9b	行业词汇	1378	内务条令	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-18c034c93a67ad7a	行业词汇	1379	执法监督	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-2cdb66cb3970193d	行业词汇	1380	户口登记	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-935a7c300c60c6f4	行业词汇	1381	迁移	4	6	0	6	0	已覆盖	current_police_terms_20260711_industry_vocab_1671;police_synthetic_zh_accent
+src-efb77d5186532fdc	行业词汇	1382	身份证办理	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-7c051bb3ef3b5ea0	行业词汇	1383	报警求助	4	4	0	4	0	已覆盖	current_police_terms_20260711_industry_dialogue_189;current_police_terms_20260711_industry_vocab_1671
+src-b44289149981add5	行业词汇	1384	紧急求助	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-134a9e62c630a735	行业词汇	1385	寻人寻物	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-f0718b4a97698e1f	行业词汇	1386	开锁服务	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-2874320b0905ebb0	行业词汇	1387	纠纷调解	5	5	0	5	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-9df67d04368ba6f3	行业词汇	1388	防护装备	4	4	0	4	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-387ab1983df8b00d	行业词汇	1389	执法侦查装备	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-7be9e8d7fc675f23	行业词汇	1390	交通管理装备	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-5849eedcde1a60b4	行业词汇	1391	覆盖日常执勤	0	1	0	1	0	已覆盖	police_synthetic_zh_accent
+src-b0674bca71e08ec9	行业词汇	1392	执法办案	4	4	0	4	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-fce5ac3df2ee36b0	行业词汇	1393	单警装备包	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-ed971e9659df57b0	行业词汇	1394	对讲机	3	3	0	3	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-f744bf2a17f92c02	行业词汇	1395	警务工作包	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-94bee84852f0e7b1	行业词汇	1396	个人防护装备	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-05122491bb10c7f9	行业词汇	1397	民警自身安全	0	2	0	2	0	已覆盖	police_synthetic_zh_accent
+src-d1fcda3bd17c7c18	行业词汇	1398	防刺服	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-25ac4c0487563d13	行业词汇	1399	警用头盔	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-d42648db7f419ac7	行业词汇	1400	护膝	3	3	0	3	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-670870706ea039ce	行业词汇	1401	护肘	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-041e844b3e6cfff3	行业词汇	1402	反光背心	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-4caa1d62564dfd60	行业词汇	1403	警戒带	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-a3d8dd7c6f9c148e	行业词汇	1404	隔离栏	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-b1b667e59b06e02b	行业词汇	1405	防暴盾牌	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-bea8b2cfea27ef4a	行业词汇	1406	约束带	3	3	0	3	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-f6350a430ecfcfc6	行业词汇	1407	执法办案装备	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-1c029eb326ea6510	行业词汇	1408	现场勘查箱	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-263499bfb5d74715	行业词汇	1409	执法相机	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-edd5500072400698	行业词汇	1410	执法平板	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-2240328df529446e	行业词汇	1411	电子取证设备	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-bf206010b43f2a65	行业词汇	1412	笔录设备	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-4e48b2609773deae	行业词汇	1413	侦查辅助装备	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-9ee05c74b73cc5f7	行业词汇	1414	无人机	3	3	0	3	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-9154c57fe7b5ec69	行业词汇	1415	热成像仪	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-495e53a8421124da	行业词汇	1416	GPS定位器	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-91f8cc4f299e1577	行业词汇	1417	酒精测试仪	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-17392dc8689737de	行业词汇	1418	测速仪	4	4	0	4	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-f52722bc2aac1ac7	行业词汇	1419	雷达测速仪	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-8426bca7f87cd10e	行业词汇	1420	测重仪	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-280f39ca29f8c108	行业词汇	1421	测超载仪	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-143394d5962d721f	行业词汇	1422	交通指挥棒	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-478962eecdae1403	行业词汇	1423	停车牌	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-2ecfda456dfb473d	行业词汇	1424	事故勘查装备	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-7bf29f9418882d36	行业词汇	1425	拖车设备	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-1fd39f4eba175846	行业词汇	1426	防暴枪	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-a225769fe5efa1eb	行业词汇	1427	警绳	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-18edf42d5f79b96a	行业词汇	1428	破拆工具	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-8f854a2462b0a323	行业词汇	1429	排烟机	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-b3a5dee4acb7afb0	行业词汇	1430	水域救援装备	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-47cb5cb99bbe7ead	行业词汇	1431	防暴服	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-bbb1338f3cd1e540	行业词汇	1432	急救包	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-4a36c66f789b70fb	行业词汇	1433	保暖毯	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-c80314e65c7d9a61	行业词汇	1434	应急饮用水	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-47c3b5b9b6c023b2	行业词汇	1435	食品	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-80273554a36522cb	行业词汇	1436	备用电池	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-3b57ef5f41b3e25b	行业词汇	1437	充电器	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-f44b44176cce5a94	行业词汇	1438	执法记录仪全程开启	0	1	0	1	0	已覆盖	police_synthetic_zh_accent
+src-f5436347c6537088	行业词汇	1439	除特殊涉密场景	0	0	0	0	0	缺音频	
+src-f98ba9d33f122e84	行业词汇	1440	作为执法依据与责任凭证	0	1	0	1	0	已覆盖	police_synthetic_zh_accent
+src-0072adafd8becab9	行业词汇	1441	警械手铐催泪喷射器	0	10	0	10	0	已覆盖	police_synthetic_zh_accent
+src-42c336d77f5f8f33	行业词汇	1442	武器严格按人民警察使用警械和武器条例使用	0	3	0	3	0	已覆盖	police_synthetic_zh_accent
+src-e3a28861e9c4db81	行业词汇	1443	禁止违规滥用	0	9	0	9	0	已覆盖	police_synthetic_zh_accent
+src-8c5e3559296b8c78	行业词汇	1444	单警装备需按规定佩戴	0	0	0	0	0	缺音频	
+src-0afdd1c26867cda3	行业词汇	1445	日常执勤不得随意卸下	0	1	0	1	0	已覆盖	police_synthetic_zh_accent
+src-ea43c1c60b50565b	行业词汇	1446	确保装备完好可用	0	1	0	1	0	已覆盖	police_synthetic_zh_accent
+src-0fbb10237489e140	行业词汇	1447	九小场所	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-a14e39763b802597	行业词汇	1448	对讲	5	5	0	5	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-95489e2bc21adbfe	行业词汇	1449	电台	3	3	0	3	0	已覆盖	current_police_terms_20260711_industry_vocab_1671;current_police_terms_2183
+src-c5c13b29f6637fdb	行业词汇	1450	黑飞	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-b4d3d9f84ecf0fcf	行业词汇	1451	手台	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-10c9f3b4ee6ad252	行业词汇	1452	科信	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-59c78e97ecf2eb2d	行业词汇	1453	欺凌	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-bd20074622400684	行业词汇	1454	霸凌	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-efea68ce6a772b0b	行业词汇	1455	涉稳	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-80537c41c37a3a0b	行业词汇	1456	信访	4	4	0	4	0	已覆盖	current_police_terms_20260711_industry_dialogue_189;current_police_terms_20260711_industry_vocab_1671
+src-84ca3f03acbad596	行业词汇	1457	戒毒	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-04b173437ae6ede4	行业词汇	1458	复吸	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-3df399d61eeb0de0	行业词汇	1459	在逃	5	5	0	5	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-f58536aa866a84fe	行业词汇	1460	警综	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-8769c6ab05ba5e41	行业词汇	1461	警务	111	113	0	113	0	已覆盖	current_police_terms_20260711_application_names_62;current_police_terms_20260711_industry_dialogue_189;current_police_terms_20260711_industry_vocab_1671;current_police_terms_2183;current_police_ui_20260713_168;current_police_ui_teacher_385;police_synthetic_zh_accent
+src-ac16783aef141a49	行业词汇	1462	治安管理处罚法	8	8	0	8	0	已覆盖	current_police_terms_20260711_industry_dialogue_189;current_police_terms_20260711_industry_vocab_1671
+src-15968dfe21c0126a	行业词汇	1463	刑法	4	4	0	4	0	已覆盖	current_police_terms_20260711_industry_dialogue_189;current_police_terms_20260711_industry_vocab_1671
+src-df4eebe2c7551e05	行业词汇	1464	民法典	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-e09d91ee57348d9d	行业词汇	1465	进京	3	3	0	3	0	已覆盖	current_police_terms_20260711_industry_dialogue_189;current_police_terms_20260711_industry_vocab_1671
+src-fc978787af3c2a87	行业词汇	1466	登记	1187	1194	0	1194	0	已覆盖	current_plate_number_1276;current_police_terms_20260711_industry_dialogue_189;current_police_terms_20260711_industry_vocab_1671;current_police_terms_20260711_special_codes_10;current_police_terms_20260727_190;current_police_terms_2183;current_police_ui_teacher_385;historical_license_plate_fixed_100;historical_plate_carplates2_zh_2040;historical_plate_carplates3_3750;historical_plate_jjs_20260611_1440;historical_plate_shanghai_210;police_synthetic_zh_accent
+src-6dd21fcaf939cb31	行业词汇	1467	公共安全	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-28949c959d41f615	行业词汇	1468	移动警务	6	6	0	6	0	已覆盖	current_police_terms_20260711_application_names_62;current_police_terms_20260711_industry_vocab_1671
+src-6303ba3e15f428d8	行业词汇	1469	警务通手机	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-ef4152a9cb977ddd	行业词汇	1470	警务平板	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-6cf4a9d73b590f9b	行业词汇	1471	诉讼	6	6	0	6	0	已覆盖	current_police_terms_20260711_industry_dialogue_189;current_police_terms_20260711_industry_vocab_1671
+src-8df66705425e3f0e	行业词汇	1472	上访	3	3	0	3	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-38781a8dfd365d7d	行业词汇	1473	上网	4	5	0	5	0	已覆盖	current_police_terms_20260711_industry_vocab_1671;police_synthetic_zh_accent
+src-fc847eff7bdf34c7	行业词汇	1474	网咖	2	2	0	2	0	已覆盖	current_police_terms_20260711_industry_vocab_1671
+src-e8eb75f1824c2acd	行业对话	1476	您好	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-a32407b117cabcf7	行业对话	1477	请讲	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-9da017c2ef4a24c9	行业对话	1478	不用急	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-b9799ae0a57fdb7c	行业对话	1479	慢慢说	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-723bfb6d2f28e294	行业对话	1480	对不起	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-3aa85e2f70eb1846	行业对话	1481	谢谢	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-ce80631d48dbfb14	行业对话	1482	不客气	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-a60e3e48be1a4c38	行业对话	1483	再见	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-7767c67370968bf5	行业对话	1484	有事再联系	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-5d1a4042db2448a0	行业对话	1485	你好惠州110接警员请问有什么可以帮您	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-75b0cd11918b1e1b	行业对话	1486	您的电话号码拨错了请核实后再拨	2	2	2	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-923b97ac0557725e	行业对话	1487	请问发生在什么地方	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-f0355564f2a8f034	行业对话	1488	请问事发地址具体在什么位置	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-1c2f103510658b75	行业对话	1489	请您提供现场的详细地址	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-2b5db73ff1733d91	行业对话	1490	现场有没有其它明显标志	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-97a3a66646380869	行业对话	1491	请你重复一遍地点我再确认一下您的报警地址	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-468e0ab2dea7ab24	行业对话	1492	请问您是当事人吗	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-0f894582c47b41ae	行业对话	1493	请留下您的姓名电话等联系方式请保持电话畅通	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-7431d185cc1682db	行业对话	1494	对不起由于拨打110报警求助的市民较多线路非常繁忙请谅解	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-2f755abb176c22d2	行业对话	1495	对不起因当前交通堵塞我们会催促出警人员尽快赶到现场请您稍等	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-da84686438a1f440	行业对话	1496	请您提供详细情况以便我们开展工作请您配合	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-68b0fb010e5d3bb7	行业对话	1497	对不起打断您一下请您把发生的地点讲一下	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-453ff56d57bc8ea6	行业对话	1498	您的电话声音很轻我们无法听清楚请您再重复一遍	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-72cfbcc0a2ff7fbf	行业对话	1499	刚才电话信号可能不太好请您再重复一遍	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-bed6508ccdde85d0	行业对话	1500	您所反映的情况我没有听清楚请您再重复一遍	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-d2a1a92330a1c418	行业对话	1501	我听不清楚请讲慢点	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-3f589bd448e8f7ed	行业对话	1502	对不起我听不懂您的方言请您讲普通话好吗	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-1495487928e66564	行业对话	1503	请您慢慢讲不要急	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-9ee5054a61b36853	行业对话	1504	请放心我们马上出警	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-6660fdf7461a7ee8	行业对话	1505	谢谢您为我们提供的线索	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-b8ecd444939c9386	行业对话	1506	感谢您提供的情况我们马上就到	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-633c9e7da79afcbe	行业对话	1507	请稍等我记录一下	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-9eb135a79b5f057a	行业对话	1508	请您留下姓名地址或联系电话我们找到走失人员失物后一定及时通知您	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-236b32cad5a2981d	行业对话	1509	请留下您的姓名电话等联系方式我们可能随时与您联系	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-a07dd6d43596be21	行业对话	1510	请您不要着急注意自身安全我们马上派联系增援民警赶到现场请您稍等	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-583611ae2933c659	行业对话	1511	请稍等我请示一下	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-68f5ee87c3ea7f14	行业对话	1512	请稍等我们已经指令民警很快就会赶到现场	2	2	2	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-44b836b8fe89ffca	行业对话	1513	同一群众重复报警请别急我们已经出警马上就到请别急我们再催一下出警单位	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-5884d0f874ab5c32	行业对话	1514	其他群众重复报警我们已经接到报警了民警正在赶往现场请您稍等	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-1e1d644eb50d265b	行业对话	1515	因报警人自身涉及违法犯罪而刻意隐瞒对不起如果你故意隐瞒我们将不能很好地为你处理警情请你认真考虑	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-afa3810baf6ec979	行业对话	1516	请您相信公安机关我们为您保密既然向我们报警就应该说出您的姓名这不仅是我们的工作程序也是为了更好地帮助您请您配合	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-abe49d4f7ecfce8e	行业对话	1517	我们马上派民警到现场处理也已经告知120出车请您也拨打120急救电话以免耽误救治	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-4221a60e5dab1db1	行业对话	1518	请您立即开启危险报警闪光灯行至应急车道或路肩排除故障或等候救援	2	2	2	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-93af1f98e2f1fc52	行业对话	1519	车上人员迅速下车转移到故障车辆停放位置前行方向100米以外有条件的应站在防护栏外	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-0cb2bab60bde2add	行业对话	1520	如身处高架桥时需注意桥梁缝隙防止坠落	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-9ccbbf3fda01ea10	行业对话	1521	驾驶人应在来车方向50米至100米城市道路普通国省道150米外高速公路处设置警告标志三角警示牌后迅速撤离至安全地带	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-f4459ff81b6a1e06	行业对话	1522	请别挂机我马上转接到属地派出所	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-b96e526d7e692a8f	行业对话	1523	请不要讲粗话注意用语文明您的通话已被录音	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-40d5dc2ae02ad2c8	行业对话	1524	我们这里还有群众正拨打110如没有事情请不要妨碍我们正常工作	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-dd94f3238db025f6	行业对话	1525	您的行为已经干扰了我们的正常工作请不要随意拨打110否则将会依法受到处罚	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-cce5af88d9297449	行业对话	1526	对110工作投诉欢迎您对我们工作的监督如果您对我们的工作有意见请留下电话号码我们会有专人与你联系	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-4787d40402129db1	行业对话	1527	对其他部门的投诉你反映的相关意见和建议我已做好记录我们会向相关部门及时核实处理感谢您对公安工作的关心支持和建言献策	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-9b9f041d21625f7a	行业对话	1528	您反映的情况我表示理解您反映的问题已经超出公安机关管辖的范围请您向单位反映	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-af2053253fd546ec	行业对话	1529	这项工作由我们单位具体负责为了及时高效解答您的咨询请您留下电话号码我们会通知专人与你联系	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-2de37e1467863ef5	行业对话	1530	按照相关法律规定您反映的问题不是由公安机关管辖处理请您在正常上班时间与环境部门联系处理	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-6f387c327c789d2b	行业对话	1531	您反映的问题属于武侯区单位管辖请您拨打85554767电话	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-e6b25415ffda9fa6	行业对话	1532	您反映的问题属于12345管辖的非警务类警情您反映的问题不属于公安机关管辖请您拨打12345服务热线或我们帮您转接热线	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-03a63636ff9612f7	行业对话	1533	请您如实陈述您报警的内容编造警情是要负法律责任的	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-532cbf5d7f6c8afb	行业对话	1534	这里110报警服务台您的孩子已多次拨打110报警电话取乐这种行为已经干扰了我们的正常工作秩序请您对孩子进行教育不要再发生这样的事情谢谢您的支持	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-f1a0ea8f6a7603cd	行业对话	1535	请您不要离开现场保持电话畅通民警将马上赶到	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-a660d401b7cf2a48	行业对话	1536	请协助我们保护好现场不要触摸翻动任何物品保持现场原状民警将马上赶到	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-dc4301368830d892	行业对话	1537	惠州110呼叫警员惠阳县地发生打架斗殴警情请你们马上出警处置收到请回复	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-7680bd8af796a92a	行业对话	1538	有派警的情况下请您在原地等候保持电话畅通我们马上通知民警到现场处置	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-0b026cfec89141d2	行业对话	1539	感谢您的报警再见	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-fab0916ff095fb47	行业对话	1540	很抱歉我在电话中无法核实您的记者身份暂不能接受您的采访建议您与我局宣传部门联系	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-0e08412b48b33341	行业对话	1541	对不起根据宣传纪律我们不能接受您的采访建议您与我局宣传部门联系	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-6adc1a1d0f28a7e9	行业对话	1542	对不起在电话里我们无法确定您的身份请您留下相关联系方式和身份信息待核实后我们会主动与您联系	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-4b1223448968f1d2	行业对话	1543	很抱歉110主要为接报公众报警紧急类求助警情电话你需要了解的问题建议你向具体办案部门了解	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-248e36c28bc5d2b5	行业对话	1544	对于你的意见和建议我们会做好登记及时流转至辖区派出所	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-bd805707ee8bb013	行业对话	1545	感谢您提供线索我们会尽快通知相关部门核实处理	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-4482eb7a78003978	行业对话	1546	您反映的问题不属于公安机关管辖请您拨打12345服务热线或我们帮您转接热线	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-bbce543daf38d22c	行业对话	1547	你的行为已经干扰了我们的正常工作请不要随意拨打110否则将会依法受到处罚	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-d22b1049e9e07d6d	行业对话	1549	您别着急我们已经调派民警请在原地等候我们会再催一下出警单位	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-10c0f7daefcf8486	行业对话	1550	请您提供详细情况以便于我们开展工作	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-5ed9dcc53a126927	行业对话	1551	您所反映的情况我没有听清楚请您再重复一遍好的我们会尽快转辖区派出所处理请放心	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-b35e81b3969ad77a	行业对话	1552	您好请讲	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-2eb252bbcd89862e	行业对话	1553	请问可以听到吗	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-eb4b9739ba1c7e9d	行业对话	1554	抱歉听不到您的声音请您换一部电话再打过来好吗感谢你的来电再见	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-803972e2f2213a49	行业对话	1556	对不起为了能够更快地找到现场请您再详细提供现场的地点或其它明显标志我重复一遍出事地点您看是否正确	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-a317caafe86346ae	行业对话	1557	请别挂机我马上转接到当地派出所	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-383ff33c203bf4bd	行业对话	1558	对不起请说慢一些或者是请周围的人帮忙和我们说一下您有什么事	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-4a80741e28e235d2	行业对话	1560	最后再次感谢您对我们工作的支持和配合再见	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-b56eac9f9b2529e7	行业对话	1561	我是北京市民警现依法对您进行拘留	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-0362c2833f8d3005	行业对话	1562	你的行为已经阻碍我们依法执行职务请立即停止违法行为	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-5ef8895b50c765d0	行业对话	1563	我是北京市的民警因你涉嫌违反治安管理行为根据治安管理处罚法第八十二条第一款的规定对你进行口头传唤请你立即到传唤处所接受询问	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-c463993577f317a4	行业对话	1564	我是北京市的民警因你涉嫌犯罪行为根据刑事诉讼法第一百一十九条第一款的规定对你进行口头传唤请你立即到传唤处所接受讯问	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-f267edbdf280e61b	行业对话	1565	因你无正当理由不接受传唤根据治安管理处罚法第八十二条第二款的规定现在对你进行强制传唤	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-0fa6493ac26af012	行业对话	1566	因你无正当理由不接受传唤根据刑事诉讼法第六十六条的规定现在对你进行拘传	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-eb828c3f8b6c000c	行业对话	1567	我是成都市的民警现在依法执行公务请配合	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-f2b5587c4f5b9aa4	行业对话	1568	你所报案的内容不属于公安机关管辖的职责范围请向其他主管机关举报控告	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-0431824f865fa5b5	行业对话	1569	您好我们是人民警察根据公安部旅馆业治安管理办法第十四条及北京市旅馆业治安管理规定第三十三十七条等相关规定人民警察到旅馆执行公务时旅馆工作人员和旅客应当予以协助	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-64e9eabe9a239fe7	行业对话	1570	同时依据人民警察法第九条及居民身份证法第十五条规定人民警察依法执行职务时经出示证件可以查验居民身份证	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-2ff72ef460d2951e	行业对话	1571	我们查验您的身份证件是为了维护旅馆正常经营秩序和所有旅客的合法权益保护旅客的人身和财产安全请您协助我们的工作	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-84160e20048587c7	行业对话	1572	如果您没带身份证可以把姓名和身份证号码告诉我们请您配合	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-5402705d0c38a1d4	行业对话	1573	您好根据人民警察法第六条公安部旅馆业治安管理办法第十四条及北京市旅馆业治安管理规定第三十三十七条等相关规定我们是依法对旅馆进行治安检查检查旅馆安全制度落实情况	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-4ea2285d7e444448	行业对话	1574	不是针对您个人或针对某一个人每个房间每个旅客都需要检查这也是对包括您在内的所有住宿人员的人身和财产安全的保障不会耽误您太多时间请您配合	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-ef1419f2341781c2	行业对话	1575	依据人民警察法第九条及居民身份证法第十五条规定人民警察依法执行职务时经出示证件可以查验居民身份证请您配合	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-c78e4e8dc64915dc	行业对话	1576	我们是在依法执行职务如果您拒绝出示身份证件无法核实您的身份我们将根据人民警察法第九条规定将您带至公安机关继续进行盘问请您配合我们工作	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-b4eefcdc741ec032	行业对话	1577	您好我是福建省民警现依法对您进行检查请出示您的身份证件	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-94ce6b1b60099934	行业对话	1578	您好现依法对您携带物品进行检查请将包打开	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-04a748e070909cbd	行业对话	1579	您好我是双流区民警现依法对您的车辆进行检查请将车辆熄火	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-e317ae4f91be6cea	行业对话	1580	请将车辆的后备箱打开请您下车	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-c2067e129ddae398	行业对话	1581	谢谢您的合作	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-2402a6d8e5a749da	行业对话	1582	你因吸毒于2026年1月2日曾被公安机关予以治安管理处罚现在我们依法对你进行尿检请配合	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-8d91fb934beed391	行业对话	1583	您好我是青羊区民警现在我们依法对你进行尿检请配合	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-361487d2ef437ae1	行业对话	1584	您好您办什么事	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-743a3a4adcb4e9b9	行业对话	1585	请出示您的材料	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-6aa88e4688cd9b08	行业对话	1586	对不起您还需要补充材料请您补齐后再来办理	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-2337ac1249ea41a2	行业对话	1587	对不起您的要求不符合现有规定不能办理	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-3454ff9c9d814925	行业对话	1588	您好请坐您反映什么问题	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-da861062c4cf9eec	行业对话	1589	请您详细填写来访登记表填完表后接谈人员将与您详谈	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-e2597e7d31f19259	行业对话	1590	您好请坐您申请公开什么信息	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-995e5d72cac46f81	行业对话	1591	请您详细填写政府信息公开申请表	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-45814e17a92b56f0	行业对话	1592	对不起您还需要补充材料请您补齐后再来申请	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-c135409d4722ddcf	行业对话	1593	您好我是高新区民警现依法对你单位进行检查谢谢	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-80c3cfc9cac94560	行业对话	1594	您好例行检查请出示驾驶证行驶证	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-9c7ad7bcd6d47b58	行业对话	1595	耽误您时间了谢谢合作	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-46c0524e85f55d84	行业对话	1596	您好前方正在实行交通管制请您耐心等候	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-c191f1962a23b28c	行业对话	1597	前方正在实行交通管制您可以绕行谢谢您的合作	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-a297db75472ba04d	行业对话	1598	耽误您时间了可以通行了谢谢合作	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-eb68ce0f57493a04	行业对话	1599	您好你们之间发生的这起事故按照规定应当由你们自行协商处理请你们立即撤离现场将车辆移至不妨碍交通的地点再协商解决	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-c82b0d980e2c2dd1	行业对话	1600	您好你们之间发生的这起事故按照规定应当适用简易程序处理我已经固定现场证据请你们立即撤离现场	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-8c76fe9eabdc74fe	行业对话	1601	我们是负责办理此案的办案民警现就事故有关情况依法对您进行询问请您如实回答	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-27dc19aacbf24e04	行业对话	1602	您好请您自觉排好队按顺序接受安全检查	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-30ca08a8446fc312	行业对话	1603	请把包放在传送带上随身金属物品放在托盘里通过安全门接受人身安检	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-2ff8eca3b93ba76b	行业对话	1604	您好请接受安全检查	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-8d8a4346945bf7cb	行业对话	1605	请您张开双臂	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-f216a6041f1a4a22	行业对话	1606	请转身	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-9253c6be1bf58df4	行业对话	1607	谢谢您的合作您可以入场了	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-7f505b0d229db02d	行业对话	1608	您好请将包打开需要进一步检查	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-aa2b4ac8023cdc86	行业对话	1609	你好根据人民警察法居民身份证法相关规定人民警察依法执行职务有权查验居民身份证件当场盘问检查谢谢配合	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-d0ca5c511dfa792a	行业对话	1610	这是我们的工作不会耽误太多时间谢谢你的理解与配合	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-21e14a83e49352ae	行业对话	1611	反映问题是你的权利这里是办公单位没有信访接待部门和窗口你应到正规的信访接待部门或场所反映你的诉求	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-a52260994b9fe06b	行业对话	1612	你好我们是人民警察正在依法执行公务请你配合	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-a5821a23540fac71	行业对话	1613	根据治安管理处罚法刑法相关规定你的行为可能涉嫌阻碍执行职务妨害公务或袭警请注意你的言行本次执法全程录音录像并将作为证据使用如果你执意不配合工作我们将依法对你进行传唤	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-d00265a81532a829	行业对话	1614	你好我们正在执行公务你可以拍照拍摄但如果你在对外发布时扭曲或捏造事实造成不良影响要承担相应的法律责任	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-9e389e23836d4655	行业对话	1615	我们已经协调了救护车马上到现场为你治疗但是产生的费用你得自理	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-fe990f7648558e7a	行业对话	1616	你应依程序逐级反映到相关政府部门的信访接待部门或场所反映你的问题和诉求	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-ec7b5111ac9adc1e	行业对话	1617	根据治安管理处罚法规定殴打他人是违法行为可以被治安处罚所以不论你针对的是谁只要实施了违法行为公安机关有权力进行处置请立即停止你的违法行为	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-9f0e872e1a7e1895	行业对话	1618	民事权利受法律保护合法劳动应该得到报酬根据你所反映的劳资纠纷可以向劳动住建法院等单位依法表达诉求扰乱公共秩序的拉横幅堵门等行为是违法行为公安机关将会依法对你进行处理	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-049b8d299160fcd2	行业对话	1619	根据治安管理处罚法规定制造噪声干扰他人正常生活属于违法行为群众可以报案公安机关应当受理	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-64ada81acd29dfc6	行业对话	1620	根据噪声污染防治法规定使用乐器应当控制音量防止噪声污染请你保持冷静克制先配合我们了解情况	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-cb30b046efe86d7a	行业对话	1621	你所反映的问题我们可以与你的邻居进行沟通如效果不佳你可以联系社区或司法所进行民事调解	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-5c8bebde9f7be2ed	行业对话	1622	我们是派出所民警接110报警来到现场你们都是当事人我们需要向双方了解当时情况不存在问话的先后问题	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-7920601ae298b11f	行业对话	1623	希望你控制好自己的情绪详细叙述现场情况	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-1e80540ece1c9f6d	行业对话	1624	同时我们正在按照法律程序对双方当事人进行询问请你配合工作	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-d2a130214f0b115c	行业对话	1625	当然如果涉及违法犯罪还要请你配合我们工作到派出所详细说明情况以便公安机关开展进一步调查	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-4d87cd23ec03527c	行业对话	1626	停车收费标准有相应提示如果你对收费标准停车时长有疑义可在缴纳停车费后留存好收据及缴费凭证并向相关部门反映但不能将车堵在门口影响他人正常出入	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-680e7664675dcc35	行业对话	1627	请放心您的求助我们一定尽力帮助你你先在家中处理漏水问题尽量把损失降到最低我们去联系物业和楼上的邻居同时建议你保留好相关证据方便日后诉讼时维护自身权益	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-6fd9842444d1e277	行业对话	1628	根据消防法规定任何人不得以任何方式阻塞安全通道楼道是消防安全通道在楼道内堆放杂物若出现火灾等情况造成严重后果要负法律责任为了保障消防通道畅通请你立即清理楼道内堆放的杂物	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-98397169f3fc5339	行业对话	1629	请你冷静控制情绪接到群众报警后出警了解情况解决问题是我们的职责你的家人寻求民警帮助我们是依法进入你家同时我们会全面调查情况请你配合我们工作	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-b00824a749bed218	行业对话	1630	守法是每个公民应尽的义务不存在年龄区分同时根据刑法治安管理处罚法相关规定70岁以上的人如果故意伤害他人同样是要负法律责任的请你配合我们的工作	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-acfb5703b244bed8	行业对话	1631	你可以出示身份证或者告诉我身份证号耽误不了多少时间谢谢理解	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-87062be3a444e48d	行业对话	1632	盘查检查是公安机关日常的一项执法活动目的是为了确保广大人民群众的人身安全和维护公共场所秩序请你理解并配合	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-c668c425efb619eb	行业对话	1633	由于我们的工作给你带来不便请你谅解	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-d375797ce529b1c3	行业对话	1634	根据相关法律规定为了您和他人的安全进入警戒地区需要经过盘查检查我们不是针对谁更不是针对您配合检查是每一名公民应尽的义务同时也是进入本地区的基本要求请你理解并配合	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-286d00a12141c23a	行业对话	1635	本地区人流量较大我们对过往人员开展盘查检查是为了确保你和他人的人身安全谢谢你的理解和配合如果你没带身份证可以告诉我身份证号或者提供身份证照片	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-d07c6a7af33089d5	行业对话	1636	人民警察只有警察证没有执法证如果你对我的身份存有质疑可以记下警号事后拨打110进行核实但是现在你必须先配合我们的执法工作	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-87cc02e96a00625d	行业对话	1637	这是民警的执法记录仪民警执法需要全程录音录像这既是执法的要求也是对民警的监督在不影响我们正常执法活动的情况下你可以对我们的执法过程进行拍摄但不能断章取义歪曲事实否则将要承担法律责任	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-7844aca620f19b81	行业对话	1638	这绝对不会发生民警依法查验身份并有责任保护公民个人信息不被泄露	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-ac6d4b95ff3ac6a9	行业对话	1639	辱骂警察是违法行为请你克制自己的情绪如不听劝阻公安机关将依法追究你的法律责任	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-b45287961409eca7	行业对话	1640	我的执法已全程录音录像你如果不满意可以投诉但如有不实内容也要承担法律责任	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-32389285138f4c05	行业对话	1641	请你主动配合警察的工作去派出所不但有利于你休息而且便于我们进一步了解情况处理问题如果你执意不配合工作我们也有权对你进行口头传唤甚至强制传唤这样做对你没有任何益处	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-236b28a77a6c37b1	行业对话	1642	你的行为已经构成违反治安管理行为我们现在依法对你进行口头传唤请予以配合	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-54e340f06d37476c	行业对话	1643	我们来是因为你的家人报警求助你的个人财物你可以随意处置但是家里的共同财产你无权私自处置否则就构成侵权行为严重的构成违法犯罪需要承担法律责任	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-b25db1077d936e9e	行业对话	1644	你感觉难受想发泄可以理解但不能只顾着自己痛快不考虑别人的感受更不能做出侵权行为而且喝大酒砸东西也不能从根本上解决问题家庭矛盾最好还是试着沟通本着家庭和睦心平气和的解决	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-97ceecf817d16164	行业对话	1645	群众报警警察出警这是我们的工作职责请予以理解配合喝酒高兴难免声音大点但也要考虑一下邻居的感受不能因一时高兴影响了邻里之间的关系	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-52d9abaeec660c42	行业对话	1646	如果你对消费不满意可以向有关部门进行投诉反映但故意不结账就涉嫌寻衅滋事属于违法行为你所说的我们通过执法记录仪已经全程录音录像请谨言慎行	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-5ba17d40b2d823d9	行业对话	1647	饭馆已经打烊希望你们配合店方工作现在你们的行为已经影响到了饭馆的正常经营秩序涉嫌寻衅滋事如果不听劝告我们将依法追究你们的法律责任	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-1d33cb8eacbdbe7d	行业对话	1648	露宿街头对身体不好且有安全隐患建议回家休息如有需要警察可帮你联系家人	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-0a9e5739f2bdf5b6	行业对话	1649	这里有禁止停车标识属于禁止停车区域你在这里停车就是违法了根据道路交通安全法相关规定对你处以罚款200元处罚请你配合我们的工作另外处罚交通违法行为是法律赋予我的职责	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-19f59d41e1617f1c	行业对话	1650	你骑车逆行属于交通违法行为根据道路交通安全法相关规定对你处以罚款20元处罚请你配合我们的工作接受处罚另外请你放心我们不会选择性执法只要发现有交通违法行为我们都会依法处置	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-f741be0c0734c505	行业对话	1651	你好这里是摩托车禁行区域依据道路交通安全法相关规定对你驾驶摩托车违反禁令标志指示的违法行为处以扣1分罚款100元处罚请你配合我们的工作接受处罚	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-137530abb31680b5	行业对话	1652	你的行为违反了道路交通安全法我们要依法进行处罚扣分和罚款都是法律规定的我们无权更改希望你配合	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-6924373b6900c054	行业对话	1653	你好前方正在实行临时交通管制请你耐心等待我们将根据上级通知及时予以放行谢谢你的合作	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-e93015421392ab7c	行业对话	1654	如果你真有急事请你绕行那里没有交通管制	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-b7bc3ed6393a43da	行业对话	1655	你好我们正在依法查处酒后驾车违法行为请你配合工作我们将对你进行酒精呼气测试如你拒绝我们将依法对你进行强制抽血检验	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-035c204286dd2059	行业对话	1656	虽然事故现场已勘查完毕但因收集证据需要我们将依法扣留你的车辆请在强制措施凭证上签名或者盖章	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-ed9338560617beeb	行业对话	1657	我们将把你的车辆扣留至停车场请对车上物品进行检查并带走无法带走的我们将拍照和登记保管车辆扣留期间的停车费用由公安交通管理部门承担	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-eef5da18197493d5	行业对话	1658	针对我们做出的处罚你有权陈述和申辩	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-b2d5a6d5f86c8834	行业对话	1659	本次执法全程录音录像	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-783a19a29f5d7f88	行业对话	1660	依据法律规定你拒绝签名或者拒收法律文书同样生效并视为送达	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-ecf8b691c7a08a36	行业对话	1661	你可通过扫描处罚决定书下方二维码缴纳罚款或持本决定书在15日内到本市指定银行缴纳罚款如果你逾期不缴纳罚款将会产生滞纳金	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-612fe0a448959b6a	行业对话	1662	欢迎你来到北京由于你对道路不熟悉我们先帮助你指清可以通行的道路让你绕道实在是非常抱歉	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-c675bdc7046f56ba	行业对话	1663	北京是全国的首都每天会有很多外地司机驾车进京我们首都交警对每一名交通参与者都是一视同仁不会歧视任何人	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189
+src-d09cace3e83dae9b	行业对话	1664	另外建议你下次来京提前了解北京的交通政策便于你安全顺利出行	1	1	1	0	0	已覆盖	current_police_terms_20260711_industry_dialogue_189

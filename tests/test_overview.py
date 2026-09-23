@@ -16,7 +16,7 @@ ROOT = Path(__file__).parents[1]
 
 
 def test_tracked_overview_matches_registered_data(capsys):
-    overview = ROOT / "docs/data-overview.md"
+    overview = ROOT / "docs/datasets/data-overview.md"
 
     assert overview.read_text(encoding="utf-8") == render_data_overview(
         ROOT / "catalog", ROOT / "views"

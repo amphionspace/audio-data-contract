@@ -1,0 +1,17 @@
+{
+  "source_requirements": "/222042021/mingdong/data/chore/tdtech_police_test_result_260827/警言警语-V6.0.txt",
+  "source_sha256": "9dd763550ba18f9864d1e760ad10b2373aab6be61b3d867c7f8eed4bb58389d5",
+  "source_unique_entries": 1533,
+  "expanded_requirements": 1542,
+  "special_code_expansion": "1 source line expanded to 10 specified spoken digits",
+  "requirements_sha256": "30cb71aa0450cc87bdbee48de948252976afad0f5d22b6ab5d9b90b12fdb4c31",
+  "requirements_parser": "AmphionData amphiondata.synthetic.text.parse_source; V6 spoken_variants; legacy normalize_spoken_text",
+  "archive_uri": "obs://cuhk-anfeiweng-benchmark/asr_testsets/2026-09-14/asr_testsets_handoff_20260914.tar.zst",
+  "archive_sha256": "a63e272bcab9a0b4d63282080bf3c8eb961bf00d62de81b2cabc6558c8f21c15",
+  "archive_sha256_verified": true,
+  "archive_internal_directory": "asr_testsets_handoff_20260821",
+  "selection": "Preserve OBS baseline, supplement uncovered requirements from registered test splits, up to 10 distinct speaker labels per missing requirement. No synthesis.",
+  "explicit_reading_adjustments": {
+    "指信-接处警": "指信接处警（连接符不朗读；基础包含打开指信接处警等真值）"
+  }
+}

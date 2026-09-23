@@ -1,0 +1,32 @@
+  - schema_version: dataset-catalog/1.0
+    dataset_id: yodas_granary_es_pt
+    version: hf-969944574ea3
+    languages:
+      - es
+      - pt
+    tasks:
+      - asr
+    aliases: []
+    artifacts:
+      - name: source
+        kind: hf-dataset-snapshot
+        root_alias: multilingual
+        relative_path: multi/yodas_granary_es_pt/source/hf-969944574ea3
+      - name: download_state
+        kind: dataset-state
+        root_alias: multilingual
+        relative_path: downloads/language-expansion-20260911/yodas_granary_es_pt/state.json
+    splits:
+      all:
+        source_artifact: source
+    provenance:
+      source: Hugging Face
+      url: https://huggingface.co/datasets/espnet/yodas-granary
+      license: cc-by-3.0
+      inventory_status: download_planned
+      description: 仅下载西语和葡语；保留 asr_only 和带翻译分区，地区尚未筛选。
+      download_scope: Spanish and Portuguese asr_only and ast partitions; region not yet classified
+      expected_download_files: 13538
+      expected_download_bytes: 4556037158599
+      source_id: espnet/yodas-granary
+      revision: 969944574ea3f37890beaf67ea651e160cfaf043

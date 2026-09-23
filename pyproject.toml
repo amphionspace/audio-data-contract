@@ -9,7 +9,7 @@ description = "Portable dataset, audio-record, prompt, and download-state contra
 readme = "README.md"
 requires-python = ">=3.10"
 license = {text = "Apache-2.0"}
-dependencies = []
+dependencies = ["ruamel.yaml>=0.18.16,<0.19"]
 
 [project.optional-dependencies]
 dev = ["jsonschema[format]", "pytest", "ruff"]

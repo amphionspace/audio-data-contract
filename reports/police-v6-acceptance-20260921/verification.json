@@ -1,0 +1,13 @@
+{
+  "base_preserved": 14281,
+  "supplement": 330,
+  "combined": 14611,
+  "coverage": {
+    "缺音频": 192,
+    "仅改写覆盖": 20,
+    "已覆盖": 1330
+  },
+  "manifest_and_pairs_consistent": true,
+  "only_test_supplement": true,
+  "unique_audio_sha256": true
+}

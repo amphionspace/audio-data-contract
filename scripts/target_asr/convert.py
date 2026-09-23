@@ -20,6 +20,7 @@ from pathlib import Path
 import orjson
 
 from audio_data_contract import AudioRecord, load_catalog, load_view_catalog
+from audio_data_contract.declarations import write_declarations
 
 LANGUAGES = {"English": "en", "Chinese": "zh"}
 LABEL_KEYS = (
@@ -405,14 +406,14 @@ def register(recipe, roots, repository):
         *load_view_catalog(repository / "views", current),
         *(DatasetViewSpec.from_dict(v) for v in views),
     ], combined)
-    destinations = {repository / "catalog" / (ds + ".jsonl"): rows
+    destinations = {repository / "catalog" / (ds + ".yaml"): rows
                     for ds, rows in by_dataset.items()}
-    destinations[repository / "views/target_asr.jsonl"] = views
+    destinations[repository / "views/target_asr.yaml"] = views
     for path in destinations:
         if path.exists():
             raise FileExistsError(f"refusing to replace existing declarations: {path}")
     for path, rows in destinations.items():
-        path.write_bytes(b"".join(encode(row) + b"\n" for row in rows))
+        write_declarations(path, rows)
 
 
 def main():

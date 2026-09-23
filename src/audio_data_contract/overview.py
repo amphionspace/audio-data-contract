@@ -2,13 +2,13 @@
 
 from __future__ import annotations
 
-import json
 from collections import defaultdict
 from dataclasses import dataclass
 from html import escape
 from pathlib import Path
 
 from .catalog import load_catalog
+from .declarations import declaration_files, read_declarations
 from .errors import ContractError
 from .types import DatasetSpec
 from .views import load_view_catalog
@@ -179,18 +179,11 @@ def _dataset_families(specs: list[DatasetSpec]) -> dict[str, str]:
 
 
 def _source_links(catalog_path: str | Path) -> dict[str, str]:
-    selected = Path(catalog_path)
-    sources = sorted(selected.glob("*.jsonl")) if selected.is_dir() else [selected]
     links = {}
-    for source in sources:
-        for number, line in enumerate(
-            source.read_text(encoding="utf-8").splitlines(), 1
-        ):
-            if not line.strip() or line.lstrip().startswith("#"):
-                continue
-            data = json.loads(line)
+    for source in declaration_files(catalog_path):
+        for number, data in read_declarations(source):
             links[f"{data['dataset_id']}@{data['version']}"] = (
-                f"../catalog/{source.name}#L{number}"
+                f"../../catalog/{source.name}#L{number}"
             )
     return links
 
@@ -510,8 +503,8 @@ def render_data_overview(
             "",
             "## 数据声明与维护",
             "",
-            "- [目录说明](../catalog/README.md)：解释历史文件名、下载来源声明与框架适配记录。",
-            "- [组织规范](data-organization.md)：数据身份、版本、处理层与视图，与训练框架无关。",
+            "- [目录说明](../../catalog/README.md)：声明格式、字段和统计规则。",
+            "- [组织规范](../reference/data-organization.md)：数据身份、版本、处理层与视图。",
             "- 新增数据时登记任务、语言、特性和顶层 split 的 `statistics.duration_hours`；未知时长留空，不填 0。",
             "- 更新 catalog 或 views 后运行 `audio-data-contract generate-overview`；CI 用 `--check` 检查本页同步。",
             "",

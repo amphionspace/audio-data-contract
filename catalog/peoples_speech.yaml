@@ -1,0 +1,37 @@
+  - schema_version: dataset-catalog/1.0
+    dataset_id: peoples_speech
+    version: hf-f10597c5d3d3
+    languages:
+      - en
+    tasks:
+      - asr
+    aliases: []
+    artifacts:
+      - name: source
+        kind: hf-dataset-snapshot
+        root_alias: multilingual
+        relative_path: en/peoples_speech/source/hf-f10597c5d3d3
+      - name: download_state
+        kind: dataset-state
+        root_alias: multilingual
+        relative_path: downloads/language-expansion-20260911/peoples_speech/state.json
+    splits:
+      all:
+        source_artifact: source
+    provenance:
+      source: Hugging Face
+      url: https://huggingface.co/datasets/mlcommons/peoples_speech
+      license:
+        - cc-by-2.0
+        - cc-by-2.5
+        - cc-by-3.0
+        - cc-by-4.0
+        - cc-by-sa-3.0
+        - cc-by-sa-4.0
+      inventory_status: download_planned
+      description: 下载 clean/dirty 与 BY/BY-SA 训练分区；共用验证和测试只保留一套。
+      download_scope: All clean/dirty and BY/BY-SA training partitions; common validation/test once from clean
+      expected_download_files: 4440
+      expected_download_bytes: 2097874342962
+      source_id: mlcommons/peoples_speech
+      revision: f10597c5d3d3a63f8b6827701297c3afdf178272

@@ -370,7 +370,7 @@ def init(args):
     repo = Path(__file__).resolve().parents[1]
     files = subprocess.check_output(['git', 'ls-files', '-z'], cwd=repo).decode().split('\0')
     files += ['scripts/cos_backup.py', 'scripts/cos_sync_catalog.py',
-              'scripts/cos_index_archives.py', 'docs/cos-upload-plan.md',
+              'scripts/cos_index_archives.py', 'docs/history/cos-upload-plan.md',
               'tests/test_cos_backup.py', 'tests/test_cos_sync_catalog.py']
     for name in filter(None, files):
         if (repo / name).is_file():

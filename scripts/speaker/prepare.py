@@ -17,6 +17,7 @@ from extract import DATASETS, VERSION, archive_groups, paths, save, sha256, sour
 
 from audio_data_contract import AudioRecord
 from audio_data_contract.catalog import verify_artifact_file
+from audio_data_contract.declarations import editable_declarations, write_declarations
 from audio_data_contract.types import DatasetSpec, DatasetViewSpec
 
 
@@ -483,20 +484,19 @@ def prepare_dataset(repo, root, dataset):
 def register(repo, report):
     dataset = report["dataset"]["dataset_id"]
     for directory, filename, field, key in [
-        ("catalog", dataset + ".jsonl", "dataset", "dataset_id"),
-        ("views", "speaker.jsonl", "view", "view_id"),
+        ("catalog", dataset + ".yaml", "dataset", "dataset_id"),
+        ("views", "speaker.yaml", "view", "view_id"),
     ]:
         path = repo / directory / filename
-        existing = list(rows(path)) if path.exists() else []
+        existing = editable_declarations(path) if path.exists() else []
         row = report[field]
         matches = [item for item in existing if (item[key], item["version"]) == (row[key], row["version"])]
         if matches:
             if matches != [row]:
                 raise ValueError(f"immutable registration differs: {row[key]}")
             continue
-        temporary = path.with_name(path.name + ".tmp")
-        temporary.write_bytes(b"".join(orjson.dumps(item) + b"\n" for item in [*existing, row]))
-        temporary.replace(path)
+        existing.append(row)
+        write_declarations(path, existing)
 
 
 def main():

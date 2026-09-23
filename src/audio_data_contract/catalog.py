@@ -8,6 +8,7 @@ import json
 from collections.abc import Iterable, Mapping
 from pathlib import Path
 
+from .declarations import declaration_files, read_declarations
 from .errors import ContractError, IntegrityError, ResolutionError
 from .types import ArtifactRef, DatasetSpec
 
@@ -70,23 +71,15 @@ def validate_catalog(specs: Iterable[DatasetSpec]) -> DatasetCatalog:
 
 
 def load_catalog(path: str | Path) -> DatasetCatalog:
-    """Load one JSONL catalog or every ``*.jsonl`` file in a catalog directory."""
+    """Load YAML declarations from a file or directory, including legacy JSONL."""
 
     specs: list[DatasetSpec] = []
-    selected = Path(path)
-    sources = sorted(selected.glob("*.jsonl")) if selected.is_dir() else [selected]
-    if not sources:
-        raise ContractError(f"catalog directory contains no JSONL files: {selected}")
-    for source in sources:
-        with source.open("r", encoding="utf-8") as stream:
-            for line_number, line in enumerate(stream, 1):
-                line = line.strip()
-                if not line or line.startswith("#"):
-                    continue
-                try:
-                    specs.append(DatasetSpec.from_dict(json.loads(line)))
-                except (json.JSONDecodeError, ContractError) as exc:
-                    raise ContractError(f"{source}:{line_number}: {exc}") from exc
+    for source in declaration_files(path):
+        for line_number, row in read_declarations(source):
+            try:
+                specs.append(DatasetSpec.from_dict(row))
+            except ContractError as exc:
+                raise ContractError(f"{source}:{line_number}: {exc}") from exc
     return validate_catalog(specs)
 
 

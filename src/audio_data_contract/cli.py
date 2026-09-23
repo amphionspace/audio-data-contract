@@ -7,6 +7,7 @@ import json
 from pathlib import Path
 
 from .catalog import load_catalog, resolve_artifact, verify_artifact_file
+from .declarations import write_declarations
 from .legacy import convert_legacy_registry
 from .overview import update_data_overview
 from .records import load_records
@@ -78,7 +79,7 @@ def _parser() -> argparse.ArgumentParser:
     overview = commands.add_parser("generate-overview")
     overview.add_argument("--catalog", default="catalog")
     overview.add_argument("--views", default="views")
-    overview.add_argument("--output", default="docs/data-overview.md")
+    overview.add_argument("--output", default="docs/datasets/data-overview.md")
     overview.add_argument("--check", action="store_true")
 
     duration = commands.add_parser("stats-duration")
@@ -202,10 +203,7 @@ def main(argv: list[str] | None = None) -> int:
         )
         output = Path(args.output)
         output.parent.mkdir(parents=True, exist_ok=True)
-        with output.open("w", encoding="utf-8") as stream:
-            for spec in specs:
-                stream.write(json.dumps(spec.to_dict(), ensure_ascii=False, sort_keys=True))
-                stream.write("\n")
+        write_declarations(output, [spec.to_dict() for spec in specs])
         print(json.dumps({"datasets": len(specs), "output": str(output)}, sort_keys=True))
         return 0
     if args.command == "generate-overview":

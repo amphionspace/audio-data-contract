@@ -29,7 +29,7 @@
 
 **本项目去重口径**
 
-本次合入的 catalog 有 360 个版本、258 个原始 dataset_id；[项目总览](../../docs/data-overview.md)进一步把别名、版本和派生入口合并成 117 个数据集条目，另列 20 个下载来源声明和 1 个训练混合配方。这几个数字不是同一层级，不能当成相互独立的数据套数。
+本次合入的 catalog 有 360 个版本、258 个原始 dataset_id；[项目总览](../../docs/datasets/data-overview.md)进一步把别名、版本和派生入口合并成 117 个数据集条目，另列 20 个下载来源声明和 1 个训练混合配方。这几个数字不是同一层级，不能当成相互独立的数据套数。
 
 上次约 13.28 TB 是未完成文件索引的抽样估算加新增目录。其中已知压缩包约 5.45 TB；减去压缩包后的约 7.83 TB 仍只是当时已覆盖范围的非归档文件大小估计。它没有补齐未扫描文件、未完成下载和未配置根目录，**本次没有用 7.83 TB 作为整个现有训练库的精确基数**。
 
@@ -75,7 +75,7 @@
 | [Shrutilipi](https://huggingface.co/datasets/ai4bharat/Shrutilipi) | 6,400 | 未抵扣 | 新增；需同意访问条件 |
 | [WAXAL](https://huggingface.co/datasets/google/WaxalNLP) | 2,242 | 未抵扣 | 已登记但缺时长 |
 | [FLEURS 全语种](https://huggingface.co/datasets/google/fleurs) | 2,000 | 120 | 部分语言已登记 |
-| [本项目 LegCo](../../catalog/icefall_base.jsonl) | 20,477 | 20,477 | 本地登记参考 |
+| [本项目 LegCo](../../catalog/icefall_base.yaml) | 20,477 | 20,477 | 本地登记参考 |
 | [其余中小语料及目录覆盖预留](https://www.openslr.org/resources.php) | 30,000–60,000 | 未抵扣 | 规划预留，非实测合计 |
 | **合计** | **1,670,103–1,715,809** | **约 223,001** | 目录归并后的规划口径 |
 

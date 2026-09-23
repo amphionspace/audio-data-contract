@@ -4,7 +4,13 @@ from importlib.resources import files
 import pytest
 from jsonschema import Draft202012Validator, FormatChecker, ValidationError
 
-from audio_data_contract import DatasetState, DownloadState, inspect_download
+from audio_data_contract import (
+    DatasetState,
+    DownloadState,
+    inspect_download,
+    load_catalog,
+)
+from audio_data_contract.cli import main
 from audio_data_contract.errors import ContractError, StateTransitionError
 from audio_data_contract.legacy import convert_legacy_registry
 from audio_data_contract.state import load_state, write_state_atomic
@@ -49,6 +55,14 @@ def test_legacy_registry_conversion_has_no_absolute_paths(tmp_path):
     encoded = json.dumps(specs[0].to_dict())
     assert str(tmp_path) not in encoded
     assert specs[0].artifacts[0].relative_path == "en/demo/data/manifests"
+    source = tmp_path / "legacy.json"
+    source.write_text(json.dumps(legacy))
+    output = tmp_path / "catalog.yaml"
+    assert main([
+        "convert-legacy", str(source), str(output),
+        "--root", f"multilingual={tmp_path / 'multilingual'}",
+    ]) == 0
+    assert load_catalog(output).get("demo").to_dict() == specs[0].to_dict()
 
 
 def test_state_round_trip_matches_packaged_schema():
