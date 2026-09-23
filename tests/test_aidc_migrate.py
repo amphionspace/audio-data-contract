@@ -1,0 +1,246 @@
+import gzip
+import io
+import json
+import os
+import sys
+import tarfile
+from pathlib import Path
+from types import SimpleNamespace
+
+import pytest
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'scripts'))
+from aidc_migrate import (
+    MigrationInventory,
+    build_batches,
+    database,
+    init,
+    paths_in_item,
+    scan,
+)
+from aidc_transfer import assemble, digest, receive, signature, write_stream
+
+
+def plan_for(tmp_path, data=b'payload', batch='pilot'):
+    source = tmp_path / 'source.bin'
+    source.write_bytes(data)
+    return {'run': 'test', 'batch': batch, 'files': [
+        {'source': str(source), 'target': 'datasets/sample/source/audio.bin',
+         'signature': signature(source), 'length': len(data)}]}
+
+
+def stream_for(plan):
+    stream = io.BytesIO()
+    write_stream(stream, plan)
+    stream.seek(0)
+    return stream
+
+
+def test_stream_hashes_no_clobber_and_resume(tmp_path):
+    root = tmp_path / 'remote'
+    root.mkdir()
+    plan = plan_for(tmp_path)
+    receipt = receive(root, 'test', 'pilot', stream_for(plan))
+    target = root / plan['files'][0]['target']
+    assert target.read_bytes() == b'payload'
+    assert receipt['files'][0]['sha256'] == digest(target)
+    assert receive(root, 'test', 'pilot', stream_for(plan)) == receipt
+    target.write_bytes(b'changed')
+    with pytest.raises(ValueError, match='destination conflict'):
+        receive(root, 'test', 'pilot', stream_for(plan))
+    assert target.read_bytes() == b'changed'
+
+
+def test_interrupted_batch_publishes_nothing_and_can_resume(tmp_path):
+    root = tmp_path / 'remote'
+    root.mkdir()
+    plan = plan_for(tmp_path, os.urandom(1024 * 1024))
+    data = stream_for(plan).getvalue()
+    with pytest.raises((tarfile.ReadError, ValueError)):
+        receive(root, 'test', 'pilot', io.BytesIO(data[:20000]))
+    assert not (root / plan['files'][0]['target']).exists()
+    assert not (root / 'migration/test/receipts/pilot.json').exists()
+    receive(root, 'test', 'pilot', io.BytesIO(data))
+    assert digest(root / plan['files'][0]['target']) == digest(plan['files'][0]['source'])
+
+
+def test_changed_source_and_corrupt_stream_are_rejected(tmp_path):
+    plan = plan_for(tmp_path)
+    stream = stream_for(plan).getvalue()
+    root = tmp_path / 'remote'
+    root.mkdir()
+    with pytest.raises(ValueError, match='checksum'):
+        receive(root, 'test', 'pilot', io.BytesIO(stream.replace(b'payload', b'corrupt')))
+    Path(plan['files'][0]['source']).write_bytes(b'changed source')
+    with pytest.raises(ValueError, match='source changed'):
+        write_stream(io.BytesIO(), plan)
+
+
+def test_chunk_assembly(tmp_path):
+    root = tmp_path / 'remote'
+    root.mkdir()
+    plan = plan_for(tmp_path, b'abcdefghij')
+    parts = []
+    for offset in (0, 5):
+        chunk = {**plan, 'batch': f'part{offset}', 'files': [
+            {**plan['files'][0], 'offset': offset, 'length': 5,
+             'target': f'.incoming/test/chunks/1/{offset}'}]}
+        parts.extend(receive(root, 'test', chunk['batch'], stream_for(chunk))['files'])
+    result = assemble(root, 'test', {'id': 1, 'target': plan['files'][0]['target'],
+                                   'size': 10, 'expected': digest(plan['files'][0]['source']), 'parts': parts})
+    assert (root / result['target']).read_bytes() == b'abcdefghij'
+    assert all(not (root / p['target']).exists() for p in parts)
+
+
+def test_inventory_shared_files_exclusion_and_rewrite(tmp_path):
+    work = tmp_path / 'state'
+    work.mkdir()
+    source = tmp_path / 'audio'
+    source.mkdir()
+    audio = source / 'sample.wav'
+    audio.write_bytes(b'audio')
+    alias = source / 'same.wav'
+    os.link(audio, alias)
+    config = {'roots': {'local': str(source)}, 'datasets': [], 'explicit': {}, 'anchors': []}
+    db = database(work)
+    inv = MigrationInventory(db, config)
+    inv.owner = 'example@v1'
+    assert inv.add(audio)
+    assert inv.add(alias)
+    assert db.execute('SELECT count(*) FROM objects').fetchone()[0] == 1
+    blocked = source / 'WenetSpeech.wav'
+    blocked.write_bytes(b'excluded')
+    assert inv.add(blocked) is None
+    assert db.execute('SELECT reason FROM issues').fetchone()[0] == 'excluded_wenetspeech_dependency'
+    manifest = source / 'recordings.jsonl.gz'
+    row = {'id': 'keep-id', 'text': str(audio), 'sources': [{'type': 'file', 'source': str(audio)}]}
+    with gzip.open(manifest, 'wt') as out:
+        out.write(json.dumps(row) + '\n')
+    inv.add(manifest, 'lhotse-recordings', 'local')
+    task = db.execute('SELECT * FROM tasks').fetchone()
+    assert inv.expand(task) == 1
+    paths_in_item(row, lambda _: '/workspace/data/datasets/example/source/sample.wav', config['roots'], 'lhotse-recordings', manifest)
+    assert row['id'] == 'keep-id' and row['text'] == str(audio)
+    assert row['sources'][0]['source'].startswith('/workspace/data/')
+    db.close()
+
+
+def test_archive_commands_are_parsed_without_execution(tmp_path):
+    row = {'sources': [{'type': 'command', 'source': 'tar -xOf /old/audio.tar member.wav'}]}
+    paths_in_item(row, lambda p: '/workspace/data/datasets/test/source/audio.tar', {}, '', '')
+    assert row['sources'][0]['source'] == 'tar -xOf /workspace/data/datasets/test/source/audio.tar member.wav'
+    malicious = {'sources': [{'type': 'command', 'source': 'touch /tmp/should-not-run'}]}
+    with pytest.raises(ValueError, match='unsupported command'):
+        paths_in_item(malicious, str, {}, '', '')
+
+
+def test_end_to_end_registry_uses_only_destination_audio(tmp_path):
+    import shutil
+    import wave
+
+    from aidc_finalize import finalize
+
+    from audio_data_contract import load_catalog, resolve_artifact, verify_artifact_file
+    from audio_data_contract.declarations import write_declarations
+
+    source = tmp_path / 'source'
+    source.mkdir()
+    audio = source / 'tone.wav'
+    with wave.open(str(audio), 'wb') as out:
+        out.setparams((1, 2, 16000, 0, 'NONE', 'not compressed'))
+        out.writeframes(b'\x00\x00' * 160)
+    row = {'id': 'sample', 'sources': [{'type': 'file', 'source': str(audio), 'channels': [0]}],
+           'sampling_rate': 16000, 'num_samples': 160, 'duration': 0.01, 'channel_ids': [0]}
+    recordings = source / 'recordings.jsonl.gz'
+    with gzip.open(recordings, 'wt') as out:
+        out.write(json.dumps(row) + '\n')
+    audio_index = source / 'index.jsonl'
+    audio_index.write_text(json.dumps({'cut_id': 'keep-original-id', 'root_alias': 'local', 'relative_path': 'tone.wav'}) + '\n')
+    declarations = tmp_path / 'catalog'
+    declarations.mkdir()
+    views = tmp_path / 'views'
+    views.mkdir()
+    write_declarations(views / 'empty.yaml', [])
+    spec = {'schema_version': 'dataset-catalog/1.0', 'dataset_id': 'example', 'version': 'v1',
+            'languages': ['en'], 'tasks': ['asr'], 'artifacts': [
+                {'name': 'recordings', 'kind': 'lhotse-recordings', 'root_alias': 'local', 'relative_path': recordings.name,
+                 'sha256': digest(recordings), 'expected_bytes': recordings.stat().st_size},
+                {'name': 'audio_index', 'kind': 'audio-index', 'root_alias': 'local', 'relative_path': audio_index.name}],
+            'splits': {'test': {'recordings_artifact': 'recordings', 'audio_index_artifact': 'audio_index'}}}
+    write_declarations(declarations / 'example.yaml', [spec])
+    roots_file = tmp_path / 'roots.json'
+    roots_file.write_text(json.dumps({'local': str(source)}))
+    remote = tmp_path / 'remote'
+    remote.mkdir()
+    work = tmp_path / 'local-state'
+    args = SimpleNamespace(work=work, catalog=declarations, views=views, roots=roots_file,
+                           host='unused', destination=str(remote), run='test', dataset=None)
+    init(args)
+    scan(args)
+    config = json.loads((work / 'config.json').read_text())
+    db = database(work)
+    assert db.execute('SELECT count(*) FROM issues').fetchone()[0] == 0
+    build_batches(db, config, 8 * 1024**3, 1024**3)
+    for batch in db.execute('SELECT * FROM batches').fetchall():
+        plan = json.loads(batch['plan'])
+        receipt = receive(remote, 'test', plan['batch'], stream_for(plan))
+        for before, after in zip(plan['files'], receipt['files']):
+            db.execute("UPDATE objects SET status='complete',sha256=? WHERE id=?", (after['sha256'], before['id']))
+    db.commit()
+    db.close()
+    remote_work = remote / 'migration/test'
+    with sqlite_connection(work / 'migration.sqlite') as local, sqlite_connection(remote_work / 'migration.sqlite') as copy:
+        local.backup(copy)
+    shutil.copyfile(work / 'config.json', remote_work / 'config.json')
+    shutil.copytree(work / 'original-registry', remote_work / 'original-registry')
+    original_hash = digest(recordings)
+    finalize(remote_work)
+    migrated = load_catalog(remote / 'registry/catalog')
+    target_roots = {'aidc_data': remote}
+    for artifact in migrated.get('example', 'v1').artifacts:
+        target = resolve_artifact(migrated, 'example', 'v1', artifact.name, target_roots)
+        verify_artifact_file(artifact, target)
+        if artifact.name == 'recordings':
+            with gzip.open(target, 'rt') as stream:
+                localized = json.load(stream)
+            assert localized['id'] == 'sample'
+            assert Path(localized['sources'][0]['source']).is_relative_to(remote)
+            assert Path(localized['sources'][0]['source']).read_bytes() == audio.read_bytes()
+        else:
+            localized = json.loads(target.read_text())
+            assert localized['root_alias'] == 'aidc_data'
+            assert localized['cut_id'] == 'keep-original-id'
+            assert (remote / localized['relative_path']).is_file()
+    assert digest(recordings) == original_hash
+    finalize(remote_work)  # Deterministic rewrites and publication are resumable.
+
+
+def sqlite_connection(path):
+    import sqlite3
+    return sqlite3.connect(path)
+
+
+@pytest.mark.parametrize('invalid', ['missing_tar_member', 'duplicate_tar_member', 'dd_overrun'])
+def test_archive_dependencies_must_resolve_completely(tmp_path, invalid):
+    import sqlite3
+
+    from aidc_finalize import verify_command_references
+
+    db = sqlite3.connect(':memory:')
+    db.row_factory = sqlite3.Row
+    db.execute('CREATE TABLE command_refs(archive TEXT,kind TEXT,selector TEXT)')
+    archive = tmp_path / 'audio.tar'
+    with tarfile.open(archive, 'w') as out:
+        for _ in range(2 if invalid == 'duplicate_tar_member' else 1):
+            info = tarfile.TarInfo('audio.wav')
+            info.size = 3
+            out.addfile(info, io.BytesIO(b'abc'))
+    if invalid == 'dd_overrun':
+        kind, selector = 'dd', [archive.stat().st_size - 1, 2]
+    else:
+        kind = 'tar'
+        selector = 'absent.wav' if invalid == 'missing_tar_member' else 'audio.wav'
+    db.execute('INSERT INTO command_refs VALUES(?,?,?)', (str(archive), kind, json.dumps(selector)))
+    with pytest.raises(ValueError):
+        verify_command_references(db)
+    db.close()
