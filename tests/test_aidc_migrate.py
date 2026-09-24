@@ -134,6 +134,62 @@ def test_archive_commands_are_parsed_without_execution(tmp_path):
         paths_in_item(malicious, str, {}, '', '')
 
 
+def test_scan_releases_writer_lock_and_resumes_committed_rows(tmp_path, monkeypatch):
+    import aidc_migrate
+
+    work = tmp_path / 'state'
+    work.mkdir()
+    source = tmp_path / 'source'
+    source.mkdir()
+    audio = source / 'audio.wav'
+    audio.write_bytes(b'audio')
+    manifest = source / 'recordings.jsonl'
+    rows = [{'id': str(i), 'sources': [{'type': 'file', 'source': str(audio)}]} for i in range(2)]
+    manifest.write_text(''.join(json.dumps(row) + '\n' for row in rows))
+    config = {'roots': {'local': str(source)}, 'datasets': [], 'explicit': {}, 'anchors': []}
+    db = database(work)
+    inventory = MigrationInventory(db, config)
+    inventory.owner = 'example@v1'
+    inventory.add(manifest, 'lhotse-recordings', 'local')
+    inventory.add(audio)
+    # Make the first row reuse a known dependency, bypassing add()'s commit.
+    inventory.reference(str(audio), manifest, 'local')
+    db.commit()
+
+    def interrupted(item, *args):
+        if item['id'] == '1':
+            with sqlite_connection(work / 'migration.sqlite') as writer:
+                writer.execute('PRAGMA busy_timeout=50')
+                writer.execute("INSERT INTO meta VALUES('other_writer','ok')")
+            raise RuntimeError('interrupted scan')
+        result = paths_in_item(item, *args)
+        inventory.last_commit -= 2
+        return result
+
+    monkeypatch.setattr(aidc_migrate, 'paths_in_item', interrupted)
+    with pytest.raises(RuntimeError, match='interrupted scan'):
+        inventory.expand(db.execute('SELECT * FROM tasks').fetchone())
+    db.close()
+    db = database(work)
+    task = db.execute('SELECT * FROM tasks').fetchone()
+    assert task['records'] == 1
+    assert db.execute("SELECT value FROM meta WHERE key='other_writer'").fetchone()[0] == 'ok'
+    parsed = []
+
+    def resumed(item, *args):
+        parsed.append(item['id'])
+        return paths_in_item(item, *args)
+
+    monkeypatch.setattr(aidc_migrate, 'paths_in_item', resumed)
+    inventory = MigrationInventory(db, config)
+    assert inventory.expand(task) == 2
+    assert parsed == ['1']
+    manifest.write_text(manifest.read_text() + json.dumps(rows[0]) + '\n')
+    with pytest.raises(ValueError, match='manifest_changed_since_checkpoint'):
+        inventory.expand(task)
+    db.close()
+
+
 def test_end_to_end_registry_uses_only_destination_audio(tmp_path):
     import shutil
     import wave

@@ -274,11 +274,19 @@ class MigrationInventory(Inventory):
             self.expand_directory(path, task['root_alias'])
             return 0
         before = signature(path)
+        resume = task['records'] if kind in JSONL else 0
+        if resume:
+            original = self.db.execute('''SELECT o.* FROM objects o JOIN paths p
+                                         ON p.object_id=o.id WHERE p.path=?''', (str(path),)).fetchone()
+            if original is None or before != object_signature(original):
+                raise ValueError('manifest_changed_since_checkpoint')
         opener = gzip.open if path.suffix == '.gz' else open
         number = 0
         with opener(path, 'rt', encoding='utf-8') as stream:
             items = enumerate((json.loads(line) for line in stream if line.strip()), 1) if kind in JSONL else [(1, json.load(stream))]
             for number, item in items:
+                if number <= resume:
+                    continue
                 try:
                     if kind == 'audio-records':
                         for slot in item.get('audio_slots', []):
@@ -295,9 +303,12 @@ class MigrationInventory(Inventory):
                                   self.config['roots'], kind, path)
                 except (KeyError, TypeError, ValueError) as error:
                     issue(self.db, path, str(error), f'row {number}')
-                if number % 1000 == 0:
+                # Cached references bypass add()'s periodic commit. Release the
+                # writer lock on time as well as row count so uploads can progress.
+                if number % 1000 == 0 or time.monotonic() - self.last_commit >= 1:
                     self.db.execute('UPDATE tasks SET records=? WHERE path=?', (number, str(path)))
                     self.db.commit()
+                    self.last_commit = time.monotonic()
         if signature(path) != before:
             raise ValueError('manifest_changed_during_scan')
         return number
