@@ -300,3 +300,135 @@ def test_archive_dependencies_must_resolve_completely(tmp_path, invalid):
     with pytest.raises(ValueError):
         verify_command_references(db)
     db.close()
+
+
+@pytest.mark.parametrize('returncode,retry', [(255, True), (1, False)])
+def test_broken_stream_preserves_ssh_failure_class(tmp_path, monkeypatch, returncode, retry):
+    import subprocess
+
+    import aidc_transfer
+    from aidc_migrate import retryable
+
+    plan = plan_for(tmp_path, b'x' * (8 * 1024 * 1024))
+
+    def command(config, action, *extra):
+        code = ('print("null")' if action == 'receipt' else
+                f'import sys; print("receiver error", file=sys.stderr); sys.exit({returncode})')
+        return [sys.executable, '-c', code]
+
+    monkeypatch.setattr(aidc_transfer, 'remote_command', command)
+    with pytest.raises(subprocess.CalledProcessError) as error:
+        aidc_transfer.send({}, plan)
+    assert error.value.returncode == returncode
+    assert b'receiver error' in error.value.stderr
+    assert retryable(error.value) is retry
+
+
+def test_transient_batch_retries_survive_restart_without_requeuing_corruption(tmp_path):
+    import sqlite3
+    import subprocess
+
+    from aidc_migrate import record_batch_failure, retryable
+
+    db = database(tmp_path)
+    db.execute("INSERT INTO batches(id,status) VALUES(1,'running'),(2,'running')")
+    record_batch_failure(db, 1, subprocess.CalledProcessError(255, 'ssh', stderr=b'connection reset'))
+    record_batch_failure(db, 2, ValueError('checksum mismatch'))
+    db.commit()
+    db.close()
+    db = database(tmp_path)
+    assert list(map(tuple, db.execute('SELECT id,status FROM batches ORDER BY id'))) == [(1, 'retry'), (2, 'failed')]
+    first = db.execute('SELECT * FROM batch_retries').fetchone()
+    record_batch_failure(db, 1, BrokenPipeError(32, 'broken pipe'))
+    second = db.execute('SELECT * FROM batch_retries').fetchone()
+    assert second['attempts'] == 2 and second['not_before'] > first['not_before']
+    assert retryable(sqlite3.OperationalError('database is locked'))
+    assert not retryable(sqlite3.OperationalError('database disk image is malformed'))
+    assert not retryable(subprocess.CalledProcessError(255, 'ssh', stderr=b'Permission denied'))
+    db.close()
+
+
+def test_supervisor_restarts_killed_worker_and_preserves_checkpoint(tmp_path, monkeypatch):
+    import signal
+    import subprocess
+    import threading
+    import time
+
+    import aidc_supervise
+
+    work = tmp_path / 'work'
+    work.mkdir()
+    db = database(work)
+    db.execute("INSERT INTO meta VALUES('scan_complete','true')")
+    db.execute("INSERT INTO objects(id,source,target,size,status) VALUES(1,'source','target',1,'pending')")
+    db.commit()
+    db.close()
+    checkpoint = work / 'checkpoint'
+    checkpoint.write_text('completed data stays intact')
+    worker = tmp_path / 'aidc_migrate.py'
+    worker.write_text('import time\nwhile True: time.sleep(1)\n')
+    original_popen = subprocess.Popen
+    children = []
+
+    def launch(command, **kwargs):
+        command[2] = str(worker)
+        child = original_popen(command, **kwargs)
+        children.append(child)
+        return child
+
+    monkeypatch.setattr(aidc_supervise.subprocess, 'Popen', launch)
+    args = SimpleNamespace(work=work, workers=4, tune=False, poll_seconds=.03,
+                           restart_delay=.03, stall_seconds=60)
+    thread = threading.Thread(target=aidc_supervise.supervise, args=(args,), daemon=True)
+    thread.start()
+
+    def wait_for(predicate):
+        end = time.monotonic() + 5
+        while time.monotonic() < end:
+            if predicate():
+                return
+            if not thread.is_alive():
+                raise AssertionError('supervisor exited early')
+            time.sleep(.02)
+        raise AssertionError('supervisor did not progress')
+
+    try:
+        wait_for(lambda: len(children) == 1 and aidc_supervise.process_info(work, 'transfer'))
+        first = children[0]
+        os.kill(first.pid, signal.SIGKILL)
+        wait_for(lambda: len(children) == 2 and aidc_supervise.process_info(work, 'transfer'))
+        assert children[1].pid != first.pid
+        assert checkpoint.read_text() == 'completed data stays intact'
+    finally:
+        with sqlite_connection(work / 'migration.sqlite') as db:
+            db.execute("UPDATE objects SET status='complete'")
+        (work / 'verification.json').write_text('{"status":"complete"}')
+        for child in children:
+            if child.poll() is None:
+                child.terminate()
+        thread.join(timeout=5)
+        for child in children:
+            child.wait(timeout=5)
+    assert not thread.is_alive()
+    assert json.loads((work / 'controller.json').read_text())['status'] == 'complete'
+
+
+def test_supervisor_stops_on_permanent_worker_error(tmp_path):
+    from aidc_supervise import supervise
+
+    db = database(tmp_path)
+    db.execute("INSERT INTO meta VALUES('scan_complete','true')")
+    db.execute("INSERT INTO objects(id,source,target,status) VALUES(1,'source','target','queued')")
+    db.commit()
+    db.close()
+    (tmp_path / 'supervision.json').write_text(json.dumps({'workers': {
+        'transfer': {'pid': 999999999, 'restarts': 1, 'failures': 0}}}))
+    (tmp_path / 'transfer-exit.json').write_text(json.dumps({
+        'pid': 999999999, 'retryable': False, 'error': 'destination conflict'}))
+    args = SimpleNamespace(work=tmp_path, workers=4, tune=False, poll_seconds=.01,
+                           restart_delay=.01, stall_seconds=60)
+    supervise(args)
+    status = json.loads((tmp_path / 'controller.json').read_text())
+    assert status['status'] == 'needs_attention'
+    assert status['blocked']['transfer'] == 'destination conflict'
+    assert status['workers']['transfer']['restarts'] == 1

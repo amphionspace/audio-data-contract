@@ -243,16 +243,25 @@ def send(config, plan, progress=None):
         proc.stdin = None
         out, err = proc.communicate()
         if proc.returncode:
-            raise RuntimeError(err.decode(errors='replace'))
+            raise subprocess.CalledProcessError(proc.returncode, proc.args, out, err)
         receipt = json.loads(out)
         if receipt['plan_sha256'] != plan_sha:
             raise ValueError('receiver acknowledged wrong plan')
         return receipt
-    except BaseException:
+    except BaseException as error:
         if proc.stdin:
-            proc.stdin.close()
-        proc.terminate()
-        proc.communicate()
+            try:
+                proc.stdin.close()
+            except OSError:
+                pass
+            proc.stdin = None
+        try:
+            out, err = proc.communicate(timeout=10)
+        except subprocess.TimeoutExpired:
+            proc.kill()
+            out, err = proc.communicate()
+        if isinstance(error, BrokenPipeError) and proc.returncode and proc.returncode > 0:
+            raise subprocess.CalledProcessError(proc.returncode, proc.args, out, err) from error
         raise
 
 

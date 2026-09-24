@@ -6,6 +6,7 @@ of the COS inventory. Run finalize only after both commands have completed.
 """
 
 import argparse
+import errno
 import fcntl
 import gzip
 import hashlib
@@ -15,7 +16,6 @@ import shlex
 import shutil
 import sqlite3
 import subprocess
-import sys
 import threading
 import time
 from concurrent.futures import FIRST_COMPLETED, ThreadPoolExecutor, wait
@@ -66,6 +66,8 @@ def database(work):
         PRIMARY KEY(spec,name));
       CREATE TABLE IF NOT EXISTS batches(id INTEGER PRIMARY KEY,plan TEXT,status TEXT,
         error TEXT,bytes INTEGER,elapsed REAL);
+      CREATE TABLE IF NOT EXISTS batch_retries(batch INTEGER PRIMARY KEY,
+        attempts INTEGER,not_before REAL,last_error TEXT);
       CREATE TABLE IF NOT EXISTS memberships(manifest TEXT,cut_id TEXT,
         PRIMARY KEY(manifest,cut_id));
       CREATE TABLE IF NOT EXISTS record_refs(manifest TEXT,spec TEXT,split TEXT,cut_id TEXT,
@@ -512,6 +514,41 @@ def transfer_job(config, plan, progress):
     return send(config, plan, progress), time.monotonic() - started
 
 
+def error_details(error):
+    details = str(error)
+    if isinstance(error, subprocess.CalledProcessError) and error.stderr:
+        details += '\n' + error.stderr.decode(errors='replace')
+    return details
+
+
+def retryable(error):
+    if isinstance(error, sqlite3.OperationalError):
+        return 'locked' in str(error).lower() or 'busy' in str(error).lower()
+    if isinstance(error, subprocess.CalledProcessError):
+        message = error_details(error).lower()
+        return error.returncode == 255 and not any(
+            text in message for text in ('permission denied', 'host key verification failed'))
+    return (isinstance(error, subprocess.TimeoutExpired)
+            or isinstance(error, OSError) and error.errno in {
+                errno.EPIPE, errno.ECONNRESET, errno.ECONNREFUSED, errno.ETIMEDOUT,
+                errno.EHOSTUNREACH, errno.ENETUNREACH, errno.EINTR})
+
+
+def record_batch_failure(db, number, error):
+    details = error_details(error)
+    if retryable(error):
+        prior = db.execute('SELECT attempts FROM batch_retries WHERE batch=?', (number,)).fetchone()
+        attempts = prior[0] + 1 if prior else 1
+        due = time.time() + min(300, 10 * 2 ** min(attempts - 1, 5))
+        db.execute('INSERT OR REPLACE INTO batch_retries VALUES(?,?,?,?)',
+                   (number, attempts, due, details))
+        state = 'retry'
+    else:
+        state = 'failed'
+    db.execute('UPDATE batches SET status=?,error=? WHERE id=?', (state, details, number))
+    print(json.dumps({'batch': number, 'status': state, 'error': details}), flush=True)
+
+
 def assemble_ready(db, config, work):
     for row in db.execute("SELECT * FROM objects WHERE status='chunked'").fetchall():
         parts = []
@@ -530,6 +567,7 @@ def assemble_ready(db, config, work):
         if signature(row['source']) != object_signature(row):
             db.execute("UPDATE objects SET status='failed' WHERE id=?", (row['id'],))
             issue(db, row['source'], 'source_changed_before_assembly')
+            db.commit()
             continue
         plan = {'id': row['id'], 'target': transfer_target(row, config),
                 'size': row['size'], 'expected': row['expected'],
@@ -596,6 +634,10 @@ def transfer(args):
                 print(json.dumps({'tuning': measurement, 'next_workers': workers}), flush=True)
                 stage_start, stage_bytes, cpu_start = time.monotonic(), meter['bytes'], cpu
             if not stopping:
+                db.execute("""UPDATE batches SET status='pending' WHERE status='retry'
+                              AND id IN (SELECT batch FROM batch_retries WHERE not_before<=?)""",
+                           (time.time(),))
+                db.commit()
                 if db.execute("SELECT count(*) FROM batches WHERE status='pending'").fetchone()[0] < workers:
                     build_batches(db, config, args.batch_gib * GIB, args.chunk_gib * GIB)
                 slots = max(0, workers - len(futures))
@@ -616,15 +658,15 @@ def transfer(args):
                             if 'offset' not in source:
                                 db.execute("UPDATE objects SET status='complete',sha256=? WHERE id=?", (received['sha256'], source['id']))
                     except (OSError, ValueError, RuntimeError, subprocess.SubprocessError) as error:
-                        db.execute("UPDATE batches SET status='failed',error=? WHERE id=?", (str(error), number))
-                        print(json.dumps({'batch_failed': number, 'error': str(error)}), flush=True)
+                        record_batch_failure(db, number, error)
                     db.commit()
             elif stopping:
                 break
             else:
                 assemble_ready(db, config, args.work)
                 if (db.execute("SELECT 1 FROM meta WHERE key='scan_complete'").fetchone()
-                        and not db.execute("SELECT 1 FROM objects WHERE status='pending' LIMIT 1").fetchone()):
+                        and not db.execute("SELECT 1 FROM objects WHERE status='pending' LIMIT 1").fetchone()
+                        and not db.execute("SELECT 1 FROM batches WHERE status IN ('pending','retry','running') LIMIT 1").fetchone()):
                     break
                 time.sleep(2)
             if time.monotonic() - last_report > 30:
@@ -653,6 +695,11 @@ def install_receiver(args):
 
 def finalize_remote(args):
     config = config_at(args.work)
+    pinned = args.work / 'finalize-plan.json'
+    if pinned.exists():
+        plan = json.loads(pinned.read_text())
+        send(config, plan)
+        return run_remote_finalize(args, config)
     db = database(args.work)
     if not db.execute("SELECT 1 FROM meta WHERE key='scan_complete'").fetchone():
         raise ValueError('scan has not completed')
@@ -667,7 +714,7 @@ def finalize_remote(args):
     for path in (args.work / 'original-registry').rglob('*'):
         if path.is_file():
             sources.append((path, remote + '/' + str(path.relative_to(args.work))))
-    for name in ('aidc_migrate.py', 'aidc_transfer.py', 'aidc_finalize.py', 'cos_sync_catalog.py', 'cos_backup.py'):
+    for name in ('aidc_migrate.py', 'aidc_transfer.py', 'aidc_finalize.py', 'aidc_supervise.py', 'cos_sync_catalog.py', 'cos_backup.py'):
         sources.append((repo / 'scripts' / name, remote + '/runtime/scripts/' + name))
     for path in (repo / 'src/audio_data_contract').rglob('*'):
         if path.is_file() and path.suffix in {'.py', '.json'}:
@@ -679,7 +726,14 @@ def finalize_remote(args):
     members = [{'source': str(path.resolve()), 'target': target, 'signature': signature(path),
                 'length': path.stat().st_size} for path, target in sources]
     key = hashlib.sha256(encoded(members)).hexdigest()[:16]
-    send(config, {'run': config['run'], 'batch': 'finalize-' + key, 'files': members})
+    plan = {'run': config['run'], 'batch': 'finalize-' + key, 'files': members}
+    save(pinned, plan)
+    send(config, plan)
+    run_remote_finalize(args, config)
+
+
+def run_remote_finalize(args, config):
+    remote = f'migration/{config["run"]}'
     absolute = str(Path(config['destination']) / remote)
     command = ['env', 'PYTHONPATH=' + absolute + '/runtime/src:' + absolute + '/runtime/vendor',
                'python3', absolute + '/runtime/scripts/aidc_finalize.py', '--work', absolute]
@@ -689,51 +743,12 @@ def finalize_remote(args):
 
 
 def run_pipeline(args):
-    scan_process = subprocess.Popen([sys.executable, '-u', __file__, 'scan', '--work', str(args.work)])
-    transfer(args)
-    if scan_process.wait():
-        raise RuntimeError('inventory process failed')
-    finalize_remote(args)
+    watch(args)
 
 
 def watch(args):
-    """Finish a run whose scanner and uploader are already detached."""
-    with (args.work / 'watch.lock').open('w') as lock:
-        fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
-        save(args.work / 'controller.json', {'pid': os.getpid(), 'status': 'waiting_for_scan_and_transfer'})
-        while True:
-            running = []
-            for name in ('scan', 'transfer'):
-                pid_file = args.work / (name + '.pid')
-                if not pid_file.exists():
-                    continue
-                process = Path('/proc') / pid_file.read_text().strip()
-                try:
-                    command = (process / 'cmdline').read_bytes().split(b'\0')
-                    live = b'scripts/aidc_migrate.py' in command and name.encode() in command
-                except OSError:
-                    live = False
-                if live:
-                    running.append(name)
-            if not running:
-                break
-            time.sleep(10)
-        snapshot = status(args.work)
-        incomplete = [r for r in snapshot['files'] if r['status'] not in {'complete', 'excluded'}]
-        if not snapshot['scan_complete'] or incomplete:
-            save(args.work / 'controller.json', {'pid': os.getpid(), 'status': 'needs_attention', 'progress': snapshot})
-            raise RuntimeError('scan or transfer stopped before completion; checkpoints retained')
-        save(args.work / 'controller.json', {'pid': os.getpid(), 'status': 'finalizing'})
-        try:
-            finalize_remote(args)
-        except (OSError, ValueError, RuntimeError, subprocess.SubprocessError) as error:
-            details = str(error)
-            if isinstance(error, subprocess.CalledProcessError) and error.stderr:
-                details += '\n' + error.stderr.decode(errors='replace')
-            save(args.work / 'controller.json', {'pid': os.getpid(), 'status': 'needs_attention', 'error': details})
-            raise
-        save(args.work / 'controller.json', {'pid': os.getpid(), 'status': 'complete',
-                                            'verification': json.loads((args.work / 'verification.json').read_text())})
+    from aidc_supervise import supervise
+    supervise(args)
 
 
 def main():
@@ -752,13 +767,27 @@ def main():
     parser.add_argument('--chunk-gib', type=int, default=1)
     parser.add_argument('--seconds', type=int, default=0)
     parser.add_argument('--tune', action='store_true')
+    parser.add_argument('--poll-seconds', type=float, default=10)
+    parser.add_argument('--restart-delay', type=float, default=10)
+    parser.add_argument('--stall-seconds', type=float, default=1800)
     args = parser.parse_args()
     args.work = args.work.resolve()
     if args.command == 'status':
         print(json.dumps(status(args.work), indent=2))
     else:
-        {'init': init, 'scan': scan, 'transfer': transfer, 'install-receiver': install_receiver,
-         'finalize': finalize_remote, 'run': run_pipeline, 'watch': watch}[args.command](args)
+        command = args.command
+        try:
+            {'init': init, 'scan': scan, 'transfer': transfer, 'install-receiver': install_receiver,
+             'finalize': finalize_remote, 'run': run_pipeline, 'watch': watch}[command](args)
+        except Exception as error:
+            if command in {'scan', 'transfer', 'finalize'}:
+                save(args.work / (command + '-exit.json'),
+                     {'pid': os.getpid(), 'at': time.time(), 'success': False,
+                      'retryable': retryable(error), 'error': error_details(error)})
+            raise
+        if command in {'scan', 'transfer', 'finalize'}:
+            save(args.work / (command + '-exit.json'),
+                 {'pid': os.getpid(), 'at': time.time(), 'success': True, 'retryable': True})
 
 
 if __name__ == '__main__':

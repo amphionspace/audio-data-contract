@@ -33,16 +33,28 @@
 
 `run` 并行扫描与传输，然后执行最终校验和注册表发布。`--tune` 从 4 路开始，依次观察 8、16 路各约 60 秒的实际吞吐，记录源端 CPU 和磁盘等待，选择吞吐最高的一档。普通批次上限为 8 GiB 或 50,000 个文件，超大文件默认分为 1 GiB 的块。SSH 不压缩、不限速；源端不生成完整传输归档。
 
-也可分别运行 `scan` 和 `transfer`。同一状态目录不应同时运行多个 scanner 或多个 uploader。2026-09-23 的任务采用独立后台进程，PID 分别记录在 `scan.pid`、`transfer.pid`、`controller.pid`；`watch` 控制进程等待它们退出，再执行最终发布。
+也可分别运行 `scan` 和 `transfer`。同一状态目录不应同时运行多个 scanner 或多个 uploader。`watch` 会接管 PID 文件中的现有进程，监控并自动恢复扫描、传输和最终发布；`run` 使用相同的监控逻辑。
 
 ## 进度与续传
 
 ```bash
 .venv/bin/python scripts/aidc_migrate.py status --work state/aidc-20260923
-tail -f state/aidc-20260923/transfer.log
+tail -F state/aidc-20260923/{transfer,scan,controller}.log
 ```
 
-查看 `throughput-tuning.json` 获取并发测量结果，查看 `controller.json` 获取后台任务状态。扫描中断后重跑 `scan`；传输中断后重跑 `transfer`，保留原来的 `--work`。已完成批次通过目标端回执复用，不重传源文件。被明确标为 `failed` 的批次保留错误，修复具体原因后才能重新入队。
+查看 `throughput-tuning.json` 获取并发测量结果。`controller.json` 每 10 秒更新存活进程、重启计划、错误与重启次数；`controller.log` 每分钟记录状态，发现退出、停滞或重启时立即记录事件。
+
+进程异常退出后自动从检查点重启，重启等待从 10 秒递增，最多 5 分钟。扫描跳过已提交的行；传输优先复用目标端回执，不重传已完成批次。扫描或传输进程连续 30 分钟没有 CPU 或文件读写活动时会被终止并重启。最终发布不使用此空闲超时，避免中断目标端的大规模校验。
+
+SSH 断连、超时和数据库锁冲突自动重试；临时失败批次以 `retry` 状态持久保存重试次数和下次时间。源文件变化、内容校验失败、目标冲突、认证失败等保留为 `failed` 或 `needs_attention`，修复具体原因后再恢复，不会跳过校验或计为成功。最终发布固定本次传输计划，断连后复用相同快照。
+
+2026-09-24 起，正式任务的控制进程由本容器已有的 `supervisord` 独立托管，控制进程本身异常退出也会被拉起。配置和日志全部位于本次状态目录，不修改其他服务。关闭终端不影响运行；此安排不提供宿主机或容器整体重启后的启动入口。
+
+```bash
+/ai_sds_wuzz/MODELS/miniconda3/bin/supervisorctl \
+  -c state/aidc-20260923/supervisord.conf status
+watch -n 10 'python3 -m json.tool state/aidc-20260923/controller.json'
+```
 
 源文件在传输前后检查大小、修改时间和物理身份；发送方与接收方计算 SHA-256。未完成批次写入 `.incoming`，校验后发布。目标端已有不同内容时拒绝覆盖。
 
