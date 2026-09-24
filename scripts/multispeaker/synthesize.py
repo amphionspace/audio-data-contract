@@ -13,6 +13,7 @@ import multiprocessing
 import os
 import random
 import re
+import shutil
 import time
 from collections import Counter, defaultdict
 from concurrent.futures import ProcessPoolExecutor, as_completed
@@ -176,6 +177,16 @@ def prepare(args):
     write_json(recipe_path, recipe)
     pools = output / 'pools'
     pools.mkdir(exist_ok=True)
+    if getattr(args, 'reuse_pools', None):
+        previous = json.loads((args.reuse_pools / 'recipe.json').read_text())
+        for key in ('seed', 'split_buckets', 'source_seconds', 'sources'):
+            if previous[key] != recipe[key]:
+                raise ValueError(f'Source-pool reuse would change {key}')
+        for source in recipe['sources']:
+            for suffix in ('.jsonl.gz', '.jsonl.summary.json'):
+                name = source['dataset_id'] + suffix
+                if not (pools / name).exists():
+                    shutil.copy2(args.reuse_pools / 'pools' / name, pools / name)
     summaries = []
     with ProcessPoolExecutor(max_workers=args.workers) as executor:
         futures = []
@@ -231,7 +242,201 @@ def load_audio(row, roots, rate):
     return waveform
 
 
+def synthesis_cells(recipe):
+    """Return language/count/overlap cells with explicit sampling probabilities."""
+    if 'overlap_profiles' not in recipe:
+        values = list(itertools.product(['zh', 'en'], recipe['speakers'], recipe['profiles']))
+        return [(*cell, 1 / len(values)) for cell in values]
+    profiles = recipe['overlap_profiles']
+    if (not profiles or not recipe['speakers'] or len(set(recipe['speakers'])) != len(recipe['speakers'])
+            or len(recipe['overlap_beta']) != 2 or min(recipe['overlap_beta']) <= 0
+            or not 0 <= recipe['overlap_tolerance'] <= 1
+            or type(recipe['overlap_search_steps']) is not int or recipe['overlap_search_steps'] < 2):
+        raise ValueError('Invalid speaker coverage or overlap distribution/search settings')
+    for name, spec in profiles.items():
+        lower, upper = spec['range']
+        if not 0 <= lower <= upper <= 1 or spec['weight'] <= 0:
+            raise ValueError(f'Invalid overlap profile: {name}')
+        if 'turn_duration_tolerance' in spec and not 0 <= spec['turn_duration_tolerance'] < 1:
+            raise ValueError(f'Invalid turn duration tolerance: {name}')
+    result = []
+    for count in recipe['speakers']:
+        if type(count) is not int or not 1 <= count <= 5:
+            raise ValueError('Speaker counts must be integers from 1 to 5')
+        languages = {key: value for key, value in recipe['language_modes'].items()
+                     if count > 1 or key != 'zh-en'}
+        eligible = {key: value for key, value in profiles.items()
+                    if count > 1 or value['range'] == [0, 0]}
+        if not eligible:
+            raise ValueError('Single-speaker synthesis requires a zero-overlap profile')
+        for language, weight in languages.items():
+            if language not in ('zh', 'en', 'zh-en') or weight <= 0:
+                raise ValueError('Language modes must be zh/en/zh-en with positive weights')
+            for profile, spec in eligible.items():
+                probability = (weight / sum(languages.values()) / len(recipe['speakers'])
+                               * spec['weight'] / sum(item['weight'] for item in eligible.values()))
+                result.append((language, count, profile, probability))
+    return result
+
+
+def cell_quotas(cells, amount):
+    expected = [amount * cell[3] for cell in cells]
+    quotas = [math.floor(value + 1e-8) for value in expected]
+    remainder = amount - sum(quotas)
+    for index in sorted(range(len(cells)), key=lambda i: expected[i] - quotas[i], reverse=True)[:remainder]:
+        quotas[index] += 1
+    return quotas
+
+
+def choose_conversation_tracks(split, language, count, profile, rng):
+    spec = _RECIPE['overlap_profiles'][profile]
+    lower, upper = spec['range']
+    middle = (lower + upper) / 2
+    gap_max = _RECIPE['turn_gap_seconds'][1]
+    budget = (_RECIPE['max_mix_seconds'] - gap_max * (2 * count - 1)) / (count * (1 - middle) + middle)
+    languages = [language] * count
+    if language == 'zh-en':
+        if count < 2:
+            raise ValueError('Mixed-speaker bilingual audio needs at least two speakers')
+        chinese = rng.randrange(1, count)
+        languages = ['zh'] * chinese + ['en'] * (count - chinese)
+        rng.shuffle(languages)
+    selected, used = [], set()
+    for wanted in languages:
+        sources = [source for source in _RECIPE['sources'] if source['language'] == wanted]
+        # Dense mixtures need comparable full turns: offsets cannot overlap a short
+        # reply with an arbitrarily longer monologue at a high global ratio.
+        reference = selected[0]['turns'] if selected and 'turn_duration_tolerance' in spec else None
+        for _ in range(200):
+            source = rng.choices(sources, weights=[item['weight'] for item in sources])[0]
+            available = _POOLS[(split, source['dataset_id'])]
+            speaker = rng.choice(available['speakers'])
+            choices = [row for row in available['utterances'][speaker] if row['duration'] <= budget]
+            if speaker in used or not choices:
+                continue
+            requested = len(reference) if reference else rng.choices([1, 2, 3], weights=_RECIPE['speaker_turn_weights'])[0]
+            chosen, duration, used_ids = [], 0.0, set()
+            for number in range(requested):
+                remaining = [row for row in choices if row['source_id'] not in used_ids
+                             and duration + row['duration'] <= budget]
+                if reference:
+                    target = reference[number]['duration']
+                    tolerance = spec['turn_duration_tolerance']
+                    remaining = [row for row in remaining if abs(row['duration'] / target - 1) <= tolerance]
+                if not remaining:
+                    break
+                row = rng.choice(remaining)
+                chosen.append(row)
+                duration += row['duration'] + gap_max
+                used_ids.add(row['source_id'])
+            if chosen and (not reference or len(chosen) == len(reference)):
+                break
+        else:
+            raise ValueError('Insufficient distinct speakers within the complete-utterance budget')
+        used.add(speaker)
+        turns = []
+        for row in chosen:
+            waveform = load_audio(row, _ROOTS, _RECIPE['sampling_rate'])
+            turns.append({'source': row, 'audio': waveform,
+                          'duration': len(waveform) / _RECIPE['sampling_rate']})
+        selected.append({'speaker': speaker, 'turns': turns})
+    return selected
+
+
+def mix_conversation(tracks, profile, rng, recipe):
+    """Tune turn offsets against measured activity; never crop source utterances."""
+    rate = recipe['sampling_rate']
+    frame = round(rate * FRAME_SECONDS)
+    lower, upper = recipe['overlap_profiles'][profile]['range']
+    target = lower + (upper - lower) * rng.betavariate(*recipe['overlap_beta'])
+    tolerance = recipe['overlap_tolerance']
+    turns = []
+    positions = [0] * len(tracks)
+    previous, cursor = None, 0
+    while any(positions[i] < len(track['turns']) for i, track in enumerate(tracks)):
+        available = [i for i, track in enumerate(tracks) if positions[i] < len(track['turns'])]
+        alternative = [i for i in available if i != previous]
+        speaker = rng.choice(alternative or available)
+        turn = tracks[speaker]['turns'][positions[speaker]]
+        active = activity(turn['audio'], rate)
+        turns.append({**turn, 'speaker_index': speaker, 'active': active, 'sequential_start': cursor})
+        gap = round(rng.uniform(*recipe['turn_gap_seconds']) / FRAME_SECONDS)
+        cursor += len(active) + gap
+        positions[speaker] += 1
+        previous = speaker
+
+    def schedule(compression):
+        ends, offsets = [0] * len(tracks), []
+        for turn in turns:
+            speaker = turn['speaker_index']
+            start = max(round(turn['sequential_start'] * (1 - compression)), ends[speaker])
+            offsets.append(start)
+            ends[speaker] = start + len(turn['active'])
+        concurrency = np.zeros(max(ends), dtype=np.int16)
+        for turn, start in zip(turns, offsets):
+            concurrency[start:start + len(turn['active'])] += turn['active']
+        active_count = np.count_nonzero(concurrency)
+        overlap = float(np.count_nonzero(concurrency >= 2) / active_count)
+        return offsets, concurrency, overlap
+
+    best = None
+    # A bounded grid also handles non-monotonic changes caused by internal pauses.
+    for compression in ([0.0] if upper == 0 else np.linspace(0, 1, recipe['overlap_search_steps'])):
+        offsets, concurrency, overlap = schedule(compression)
+        samples = max(start * frame + len(turn['audio']) for turn, start in zip(turns, offsets))
+        if (samples <= round(recipe['max_mix_seconds'] * rate) and lower <= overlap <= upper
+                and abs(overlap - target) <= tolerance
+                and (not recipe['overlap_profiles'][profile].get('all_speakers_overlap')
+                     or int(concurrency.max()) == len(tracks))):
+            distance = abs(overlap - target)
+            if best is None or distance < best[0]:
+                best = distance, offsets, concurrency, overlap, samples
+    if best is None:
+        return None
+    _, offsets, concurrency, overlap, samples = best
+    mixture = np.zeros(samples, dtype=np.float32)
+    scheduled = []
+    for number, track in enumerate(tracks):
+        selected = [(turn, start) for turn, start in zip(turns, offsets) if turn['speaker_index'] == number]
+        energy, active_samples = 0.0, 0
+        for turn, _ in selected:
+            mask = np.repeat(turn['active'], frame)[:len(turn['audio'])]
+            values = turn['audio'][mask].astype(np.float64)
+            energy += float(np.dot(values, values))
+            active_samples += len(values)
+        rms = math.sqrt(energy / active_samples)
+        gain_db = rng.uniform(*recipe['speaker_gain_db'])
+        gain = 10 ** ((-26 + gain_db) / 20) / max(rms, 1e-8)
+        new_turns = []
+        for turn, start in selected:
+            position = start * frame
+            mixture[position:position + len(turn['audio'])] += turn['audio'] * gain
+            new_turns.append({'source': turn['source'], 'duration': turn['duration'],
+                              'track_start': position / rate})
+        first = min((start + int(np.flatnonzero(turn['active'])[0])) * FRAME_SECONDS
+                    for turn, start in selected)
+        scheduled.append({'speaker': track['speaker'], 'turns': new_turns, 'offset': 0.0,
+                          'first_active': first, 'gain': gain, 'relative_gain_db': gain_db})
+    scale = rng.uniform(0.75, 0.95) / float(np.abs(mixture).max())
+    mixture *= scale
+    scheduled.sort(key=lambda track: track['first_active'])
+    for track in scheduled:
+        track['gain'] *= scale
+    return mixture, scheduled, {
+        'target_energy_overlap_ratio': target, 'energy_overlap_ratio': overlap,
+        'overlap_range': [lower, upper], 'overlap_absolute_error': abs(overlap - target),
+        'max_energy_concurrency': int(concurrency.max()),
+        'energy_silence_ratio': float(np.count_nonzero(concurrency == 0) / len(concurrency)),
+        'energy_activity_seconds_by_concurrency': {
+            str(number): int(np.count_nonzero(concurrency == number)) * FRAME_SECONDS
+            for number in range(len(tracks) + 1)},
+        'output_peak': float(np.abs(mixture).max()),
+    }
+
+
 def mix_tracks(tracks, profile, rng, recipe):
+    if 'overlap_profiles' in recipe:
+        return mix_conversation(tracks, profile, rng, recipe)
     rate = recipe['sampling_rate']
     frame = round(rate * FRAME_SECONDS)
     starts = [0]
@@ -279,6 +484,8 @@ def mix_tracks(tracks, profile, rng, recipe):
 
 
 def choose_tracks(split, language, count, profile, rng):
+    if 'overlap_profiles' in _RECIPE:
+        return choose_conversation_tracks(split, language, count, profile, rng)
     sources = [source for source in _RECIPE['sources'] if source['language'] == language]
     selected, used = [], set()
     # Bound each complete speaker track using the maximum delay in mix_tracks.
@@ -331,13 +538,15 @@ def generate_shard(job):
     rng = random.Random(int(hashlib.sha256(f"{_RECIPE['seed']}:{key}".encode()).hexdigest(), 16))
     summary = {'key': key, 'split': split, 'language': language, 'speakers': count, 'profile': profile,
                'records': size, 'duration_hours': 0.0, 'attempts': 0, 'decode_rejections': 0,
+               'max_sample_attempts': 0,
                'overlap_sum': 0.0, 'sources': Counter(), 'speaker_turns': Counter()}
+    max_attempts = _RECIPE.get('max_candidate_attempts', MAX_CANDIDATE_ATTEMPTS)
     record_path, index_path = directory / 'records.jsonl.gz', directory / 'audio-index.jsonl.gz'
     with (gzip.open(str(record_path) + '.tmp', 'wt', encoding='utf-8') as records,
           gzip.open(str(index_path) + '.tmp', 'wt', encoding='utf-8') as index,
           (directory / 'rejections.jsonl').open('w') as rejected):
         for item in range(size):
-            for attempt in range(MAX_CANDIDATE_ATTEMPTS):
+            for attempt in range(max_attempts):
                 summary['attempts'] += 1
                 try:
                     tracks = choose_tracks(split, language, count, profile, rng)
@@ -349,7 +558,8 @@ def generate_shard(job):
                 if result is not None:
                     break
             else:
-                raise RuntimeError(f'Unable to generate {key}:{item} after {MAX_CANDIDATE_ATTEMPTS} attempts')
+                raise RuntimeError(f'Unable to generate {key}:{item} after {max_attempts} attempts')
+            summary['max_sample_attempts'] = max(summary['max_sample_attempts'], attempt + 1)
             waveform, scheduled, quality = result
             record_id = key.replace('/', '-') + f'-{item:04d}'
             audio_path = directory / f'{item:04d}.flac'
@@ -362,6 +572,7 @@ def generate_shard(job):
                 text = ' '.join(turn['source']['text'] for turn in track['turns'])
                 targets.append(f'[{label}] {text}')
                 speakers.append({'label': label, 'source_speaker': track['speaker'], 'text': text,
+                                 'language': track['turns'][0]['source']['language'],
                                  'first_active': track['first_active'], 'gain': track['gain'],
                                  'relative_gain_db': track['relative_gain_db']})
                 summary['speaker_turns'][str(len(track['turns']))] += 1
@@ -372,6 +583,9 @@ def generate_shard(job):
                                      'source': turn['source']})
                     summary['sources'][turn['source']['dataset_id']] += 1
             quality['all_sources_clean_pass'] = all(segment['source']['upstream_clean_pass'] for segment in segments)
+            language_seconds = Counter()
+            for segment in segments:
+                language_seconds[segment['source']['language']] += segment['duration']
             record = {
                 'schema_version': 'audio-record/1.0', 'id': record_id, 'task': 'speaker_attributed_asr',
                 'audio_slots': [{'name': 'mixture', 'ref': {'dataset_id': _RECIPE['dataset_id'],
@@ -379,6 +593,7 @@ def generate_shard(job):
                 'target': '\n'.join(targets), 'language': language,
                 'labels': {'speaker_count': count, 'profile': profile},
                 'metadata': {'speakers': speakers, 'segments': segments, 'quality': quality,
+                             'primary_language': max(language_seconds, key=language_seconds.get),
                              'recipe_seed': _RECIPE['seed'], 'shard': key},
             }
             records.write(encoded(record) + '\n')
@@ -418,7 +633,7 @@ def publish(output, recipe, completed, requested, status, started):
                 'statistics': {'records': records, 'duration_hours': sum(item['duration_hours'] for item in selected),
                                'duration_basis': 'Rendered mixture duration; source speech counted once per output timeline'}}
     spec = {'schema_version': 'dataset-catalog/1.0', 'dataset_id': recipe['dataset_id'],
-        'version': recipe['version'], 'languages': ['zh', 'en'], 'tasks': ['speaker_attributed_asr'],
+        'version': recipe['version'], 'languages': list(recipe.get('language_modes', ['zh', 'en'])), 'tasks': ['speaker_attributed_asr'],
         'artifacts': artifacts, 'splits': splits, 'recipe_parameters': recipe,
         'provenance': {'synthetic': True, 'status': status, 'source_manifest_audit': 'sources.json',
             'speaker_partition': 'SHA256(seed:dataset_id:speaker_id); no cross-corpus identity verification',
@@ -464,15 +679,14 @@ def generate(args):
     # Ordinary-ASR replay must exclude these identities too when evaluating this holdout.
     write_json(_OUTPUT / 'heldout-speakers.json', heldout)
     requested = {'dev': args.dev, 'test': args.test, 'train': args.train}
-    cells = list(itertools.product(['zh', 'en'], _RECIPE['speakers'], _RECIPE['profiles']))
+    cells = synthesis_cells(_RECIPE)
     jobs = []
     for split, amount in requested.items():
-        if amount % len(cells):
-            raise ValueError('Counts must be divisible by language/speaker/profile cell count')
-        per_cell = amount // len(cells)
-        for offset in range(0, per_cell, args.shard_size):
-            for language, count, profile in cells:
-                jobs.append((split, language, count, profile, offset // args.shard_size, min(args.shard_size, per_cell - offset)))
+        counts = cell_quotas(cells, amount)
+        for offset in range(0, max(counts, default=0), args.shard_size):
+            for (language, count, profile, _), per_cell in zip(cells, counts):
+                if offset < per_cell:
+                    jobs.append((split, language, count, profile, offset // args.shard_size, min(args.shard_size, per_cell - offset)))
     # Persist the job plan: changing counts/shard boundaries cannot silently reuse samples.
     plan = {'counts': requested, 'shard_size': args.shard_size}
     plan_path = _OUTPUT / 'generation-plan.json'
@@ -516,6 +730,8 @@ def main():
     preparing.add_argument('--roots', type=Path, required=True)
     preparing.add_argument('--workers', type=int, default=4)
     preparing.add_argument('--output', type=Path, required=True)
+    preparing.add_argument('--reuse-pools', type=Path,
+                           help='Reuse pools with identical sources and speaker partition')
     generating = commands.add_parser('generate')
     generating.add_argument('--output', type=Path, required=True)
     generating.add_argument('--workers', type=int, default=16)
