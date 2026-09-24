@@ -1,0 +1,19 @@
+  - schema_version: dataset-catalog/1.0
+    dataset_id: audioset_road_traffic
+    version: legacy-20260804
+    languages:
+      - und
+    tasks:
+      - noise
+    aliases: []
+    artifacts:
+      - kind: lhotse-recordings
+        name: recordings
+        relative_path: noise/AudioSet_RoadTraffic/data/manifests/audioset_road_traffic_recordings_noise.jsonl.gz
+        root_alias: multilingual
+    splits:
+      all:
+        recordings_artifact: recordings
+    provenance:
+      snapshot_date: '2026-08-07'
+      source: AmphionASR augmentation registry

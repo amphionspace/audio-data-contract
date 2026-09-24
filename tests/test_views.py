@@ -5,6 +5,7 @@ import pytest
 
 from audio_data_contract import load_catalog, load_view_catalog, resolve_view
 from audio_data_contract.cli import main
+from audio_data_contract.declarations import write_declarations
 from audio_data_contract.errors import ContractError
 
 ROOT = Path(__file__).parents[1]
@@ -26,10 +27,7 @@ def _write_catalog(path):
         "version": "hotwords-1",
         "derived_from": "demo",
     }
-    path.write_text(
-        json.dumps(source) + "\n" + json.dumps(result) + "\n",
-        encoding="utf-8",
-    )
+    write_declarations(path, [source, result])
 
 
 def _view(result_id="demo_hotwords"):
@@ -52,11 +50,12 @@ def _view(result_id="demo_hotwords"):
     }
 
 
-def test_view_catalog_resolves_materialized_dataset(tmp_path):
-    catalog_path = tmp_path / "catalog.jsonl"
-    views_path = tmp_path / "views.jsonl"
+@pytest.mark.parametrize("suffix", [".yaml", ".yml", ".jsonl"])
+def test_view_catalog_resolves_materialized_dataset(tmp_path, suffix):
+    catalog_path = tmp_path / ("catalog" + suffix)
+    views_path = tmp_path / ("views" + suffix)
     _write_catalog(catalog_path)
-    views_path.write_text(json.dumps(_view()) + "\n", encoding="utf-8")
+    write_declarations(views_path, [_view()])
 
     datasets = load_catalog(catalog_path)
     views = load_view_catalog(views_path, datasets)

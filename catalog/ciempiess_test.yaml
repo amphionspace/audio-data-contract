@@ -1,0 +1,34 @@
+  - schema_version: dataset-catalog/1.0
+    dataset_id: ciempiess_test
+    version: hf-c134fff8e335
+    languages:
+      - es
+    tasks:
+      - asr
+    aliases: []
+    artifacts:
+      - name: source
+        kind: hf-dataset-snapshot
+        root_alias: multilingual
+        relative_path: es/ciempiess_test/source/hf-c134fff8e335
+      - name: download_state
+        kind: dataset-state
+        root_alias: multilingual
+        relative_path: downloads/language-expansion-20260911/ciempiess_test/state.json
+    splits:
+      test:
+        source_artifact: source
+    provenance:
+      source: Hugging Face
+      url: https://huggingface.co/datasets/ciempiess/ciempiess_test
+      license:
+        - cc-by-sa-4.0
+      inventory_status: download_planned
+      description: 墨西哥西语独立测试集，不进入训练。
+      download_scope: Complete official CIEMPIESS TEST release; held out from training
+      expected_download_files: 6
+      expected_download_bytes: 569021105
+      source_id: ciempiess/ciempiess_test
+      revision: c134fff8e3358fe542ea22384356d32634fb9b69
+      locale: es-MX
+      dataset_family: ciempiess

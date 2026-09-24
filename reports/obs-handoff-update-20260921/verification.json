@@ -1,0 +1,31 @@
+{
+  "archive": "/222042021/mingdong/workspace/audio-data-contract/state/asr-handoff-v6-205-20260921/asr_testsets_handoff_20260914.tar.zst",
+  "sha256": "f1b4bc4e3589f44e1d7fe20abd2bb8d7a594494e324a264bcd812cd30beb91b9",
+  "bytes": 3098940742,
+  "original_pairs": 14281,
+  "added_pairs": 3773,
+  "total_pairs": 18054,
+  "datasets": 19,
+  "source_commands": 205,
+  "verified_archive_files": 36179,
+  "original_rows_unchanged": true,
+  "remote": {
+    "uri": "obs://cuhk-anfeiweng-benchmark/asr_testsets/2026-09-14/asr_testsets_handoff_20260914.tar.zst",
+    "verified_at": "2026-09-21T10:31:41.622427+00:00",
+    "object_size_matches": true,
+    "sha256_sidecars_match": true,
+    "summary_matches": true,
+    "stat": "路径: /obs-cuhk-anfeiweng-benchmark/asr_testsets/2026-09-14/asr_testsets_handoff_20260914.tar.zst\n大小: 3098940742 B (2.88611 GiB)\n修改时间: Mon, 21 Sep 2026 10:31:46 GMT\nETag: \"196a9d1d971a9a51cbf64fdd0e480a98-370\"\n版本: -\n"
+  },
+  "remote_full_readback": {
+    "verified_at": "2026-09-21T15:16:37.071471+00:00",
+    "bytes": 3098940742,
+    "sha256": "f1b4bc4e3589f44e1d7fe20abd2bb8d7a594494e324a264bcd812cd30beb91b9",
+    "etag": "\"196a9d1d971a9a51cbf64fdd0e480a98-370\"",
+    "sha256_matches": true,
+    "all_remote_summary_files_match": true,
+    "original_14281_rows_preserved": true,
+    "added_3773_rows_verified": true,
+    "status": "passed"
+  }
+}

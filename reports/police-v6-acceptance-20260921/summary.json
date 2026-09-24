@@ -1,0 +1,95 @@
+{
+  "requirements": 1542,
+  "base_audio": 14281,
+  "selected_audio": 14611,
+  "supplement_audio": 330,
+  "duration_hours": 22.369513899444403,
+  "supplement_duration_hours": 0.6107111111111116,
+  "deduplicated_audio": 0,
+  "sections": {
+    "20260915新增": {
+      "requirements": 205,
+      "base_covered": 2,
+      "缺音频": 183,
+      "仅改写覆盖": 20,
+      "已覆盖": 2
+    },
+    "20260731新增": {
+      "requirements": 2,
+      "base_covered": 2,
+      "已覆盖": 2
+    },
+    "20260727新增": {
+      "requirements": 93,
+      "base_covered": 93,
+      "已覆盖": 93
+    },
+    "20260714新增": {
+      "requirements": 77,
+      "base_covered": 77,
+      "已覆盖": 77
+    },
+    "20260713新增": {
+      "requirements": 81,
+      "base_covered": 81,
+      "已覆盖": 81
+    },
+    "北京应用名称": {
+      "requirements": 26,
+      "base_covered": 25,
+      "已覆盖": 26
+    },
+    "特殊代码": {
+      "requirements": 10,
+      "base_covered": 10,
+      "已覆盖": 10
+    },
+    "行业词汇": {
+      "requirements": 862,
+      "base_covered": 828,
+      "已覆盖": 853,
+      "缺音频": 9
+    },
+    "行业对话": {
+      "requirements": 186,
+      "base_covered": 186,
+      "已覆盖": 186
+    }
+  },
+  "candidate_test_sources": [
+    {
+      "dataset_id": "police_synthetic_zh_accent",
+      "version": "icefall-20260908",
+      "supervisions": "/ai_sds_wuzz/DATA_ASR/synthetic/police_synthetic_zh_accent/v2-20260818/manifests/police_synthetic_zh_accent_supervisions_test.jsonl.gz",
+      "rows": 2000
+    },
+    {
+      "dataset_id": "police_terms_v5_test",
+      "version": "icefall-20260908",
+      "supervisions": "/ai_sds_wuzz/DATA_ASR/LHOTSE/synthetic/police_synthetic_zh_accent/v5-20260830-qwen75-cosy25-split80-10-10/manifests/police_terms_v5_supervisions_test.jsonl.gz",
+      "rows": 585
+    },
+    {
+      "dataset_id": "police_synthetic_zh_accent",
+      "version": "legacy-rebalance-100k-20260916",
+      "supervisions": "/222042021/mingdong/workspace/AmphionData/results/police-legacy-rebalance-100k-260916/manifests/police_synthetic_supervisions_test.jsonl.gz",
+      "rows": 10000
+    },
+    {
+      "dataset_id": "police_v6_8h",
+      "version": "v6-8h-20260915",
+      "supervisions": "/222042021/mingdong/workspace/AmphionData/results/police-synthetic-v6-8h-260915/manifests/police_synthetic_supervisions_test.jsonl.gz",
+      "rows": 28648
+    },
+    {
+      "dataset_id": "police_v6_expanded",
+      "version": "v6-expanded-20260915",
+      "supervisions": "/222042021/mingdong/workspace/AmphionData/results/police-synthetic-v6-expanded-260915/manifests/police_synthetic_supervisions_test.jsonl.gz",
+      "rows": 2000
+    }
+  ],
+  "candidate_test_audio": 43233,
+  "selected_audio_sha256_verified": 14611,
+  "human_listening_review": false,
+  "global_training_overlap_verified": false
+}

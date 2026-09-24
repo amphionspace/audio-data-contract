@@ -1,0 +1,21 @@
+{
+  "status": "passed",
+  "dataset": "police_v6_acceptance_205",
+  "versions": [
+    "v6-acceptance-20260921",
+    "icefall-20260908"
+  ],
+  "audio": 3773,
+  "hours": 3.0194666666666565,
+  "audio_bytes": 348136854,
+  "source_commands": 205,
+  "minimum_distinct_speakers_per_command": 10,
+  "speakers": 103,
+  "training_reference_speaker_id_overlap": 0,
+  "catalog_sizes_sha256": "passed",
+  "original_command_and_parameter_preservation": "passed",
+  "wav_pcm16_mono_16khz_full_payload": "passed",
+  "automatic_qc_pass": 3773,
+  "human_listening_review": false,
+  "whole_v6_historical_requirements_included": false
+}

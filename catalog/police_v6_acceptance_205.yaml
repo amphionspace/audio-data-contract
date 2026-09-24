@@ -1,0 +1,128 @@
+  - schema_version: dataset-catalog/1.0
+    dataset_id: police_v6_acceptance_205
+    version: v6-acceptance-20260921
+    languages:
+      - zh
+    tasks:
+      - asr
+    artifacts:
+      - name: test_recordings
+        kind: lhotse-recordings
+        root_alias: amphion_data
+        relative_path: results/police-v6-acceptance-205-20260921/manifests/police_synthetic_recordings_test.jsonl.gz
+        expected_bytes: 65694
+        sha256: b630950363730ab183f204066c148c082ae039e2fe232401dad1cfaf24210bcc
+        metadata:
+          record_count: 3773
+      - name: test_supervisions
+        kind: lhotse-supervisions
+        root_alias: amphion_data
+        relative_path: results/police-v6-acceptance-205-20260921/manifests/police_synthetic_supervisions_test.jsonl.gz
+        expected_bytes: 251385
+        sha256: a2fb18d755e6d0c7e99132803f94c3ed7ff3dee5cb3a1f90a457b7fec18bc28d
+        metadata:
+          record_count: 3773
+      - name: coverage
+        kind: json-metadata
+        root_alias: amphion_data
+        relative_path: results/police-v6-acceptance-205-20260921/coverage.json
+        expected_bytes: 32654
+        sha256: f5bda3103b945992e171ab62fc849bc748dffd26dbf4418e662a3e554c2062e8
+      - name: plan
+        kind: json-metadata
+        root_alias: amphion_data
+        relative_path: results/police-v6-acceptance-205-20260921/plan.json
+        expected_bytes: 740
+        sha256: 4dcdf9837a38cfe63f7d648c57d01a4543451796df8094bc73eab0e28aaecdbf
+    splits:
+      test:
+        recordings_artifact: test_recordings
+        supervisions_artifact: test_supervisions
+        statistics:
+          recordings: 3773
+          supervisions: 3773
+          duration_hours: 3.0194666666666565
+          duration_basis: sum_of_recording_durations
+          source_commands: 205
+          minimum_voices_per_command: 10
+          speakers: 103
+    recipe_parameters:
+      tts_provider: qwen3_tts
+      sample_rate: 16000
+      channels: 1
+    provenance:
+      source: AmphionData synthetic speech pipeline
+      status: ready
+      source_requirements:
+        filename: 警言警语-V6.0.txt
+        sha256: 9dd763550ba18f9864d1e760ad10b2373aab6be61b3d867c7f8eed4bb58389d5
+        section: 20260915新增
+      evaluation_limitations: Test only. Exact/reading-variant commands may overlap training. New synthesis with separate reference pool; no claim of unseen semantic groups or globally unseen speakers. Selection uses independent Qwen3-ASR QC, never v11/v14 predictions. No human review claimed.
+      human_review: false
+  - schema_version: dataset-catalog/1.0
+    dataset_id: police_v6_acceptance_205
+    version: icefall-20260908
+    languages:
+      - zh
+    tasks:
+      - asr
+    artifacts:
+      - name: test_recordings
+        kind: lhotse-recordings
+        root_alias: amphion_data
+        relative_path: results/police-v6-acceptance-205-20260921/manifests/police_synthetic_recordings_test.jsonl.gz
+        expected_bytes: 65694
+        sha256: b630950363730ab183f204066c148c082ae039e2fe232401dad1cfaf24210bcc
+        metadata:
+          record_count: 3773
+      - name: test_supervisions
+        kind: lhotse-supervisions
+        root_alias: amphion_data
+        relative_path: results/police-v6-acceptance-205-20260921/manifests/police_synthetic_supervisions_test.jsonl.gz
+        expected_bytes: 251385
+        sha256: a2fb18d755e6d0c7e99132803f94c3ed7ff3dee5cb3a1f90a457b7fec18bc28d
+        metadata:
+          record_count: 3773
+      - name: coverage
+        kind: json-metadata
+        root_alias: amphion_data
+        relative_path: results/police-v6-acceptance-205-20260921/coverage.json
+        expected_bytes: 32654
+        sha256: f5bda3103b945992e171ab62fc849bc748dffd26dbf4418e662a3e554c2062e8
+      - name: plan
+        kind: json-metadata
+        root_alias: amphion_data
+        relative_path: results/police-v6-acceptance-205-20260921/plan.json
+        expected_bytes: 740
+        sha256: 4dcdf9837a38cfe63f7d648c57d01a4543451796df8094bc73eab0e28aaecdbf
+    splits:
+      test:
+        recordings_artifact: test_recordings
+        supervisions_artifact: test_supervisions
+        statistics:
+          recordings: 3773
+          supervisions: 3773
+          duration_hours: 3.0194666666666565
+          duration_basis: sum_of_recording_durations
+          source_commands: 205
+          minimum_voices_per_command: 10
+          speakers: 103
+        icefall:
+          use_punc: false
+    recipe_parameters:
+      tts_provider: qwen3_tts
+      sample_rate: 16000
+      channels: 1
+      icefall:
+        language: zh
+    provenance:
+      source: AmphionData synthetic speech pipeline
+      status: ready
+      source_requirements:
+        filename: 警言警语-V6.0.txt
+        sha256: 9dd763550ba18f9864d1e760ad10b2373aab6be61b3d867c7f8eed4bb58389d5
+        section: 20260915新增
+      evaluation_limitations: Test only. Exact/reading-variant commands may overlap training. New synthesis with separate reference pool; no claim of unseen semantic groups or globally unseen speakers. Selection uses independent Qwen3-ASR QC, never v11/v14 predictions. No human review claimed.
+      human_review: false
+      source_dataset_id: police_v6_acceptance_205
+      source_version: v6-acceptance-20260921

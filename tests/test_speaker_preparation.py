@@ -11,6 +11,7 @@ import pytest
 
 from audio_data_contract import load_catalog, load_records, load_view_catalog
 from audio_data_contract.catalog import verify_artifact_file
+from audio_data_contract.declarations import write_declarations
 from audio_data_contract.errors import IntegrityError
 
 pytest.importorskip("soundfile")
@@ -63,7 +64,9 @@ def test_cnceleb_official_split_trials_publish_and_portable_read(tmp_path):
     spec = {"schema_version": "dataset-catalog/1.0", "dataset_id": "cnceleb1",
             "version": "source-1", "languages": ["zh"], "tasks": ["speaker_verification"],
             "artifacts": [artifact], "splits": {}, "provenance": {"source": "fixture"}}
-    (repo / "catalog/cnceleb1.jsonl").write_text(json.dumps(spec) + "\n")
+    write_declarations(repo / "catalog/cnceleb1.yaml", [spec])
+    declaration = repo / "catalog/cnceleb1.yaml"
+    declaration.write_text("# official source package\n" + declaration.read_text())
     extract["extract_dataset"](repo, root, "cnceleb1")
     work, final = extract["paths"](root, "cnceleb1")
     # Resuming a completed extraction uses its verified inventory.
@@ -71,6 +74,7 @@ def test_cnceleb_official_split_trials_publish_and_portable_read(tmp_path):
     report = prepare["prepare_dataset"](repo, root, "cnceleb1")
     prepare["register"](repo, report)
     prepare["register"](repo, report)
+    assert "# official source package" in declaration.read_text()
     assert not work.exists()
     assert report["dataset"]["splits"]["train"]["statistics"]["records"] == 1
     catalog = load_catalog(repo / "catalog")

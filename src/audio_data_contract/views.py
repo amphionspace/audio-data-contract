@@ -2,11 +2,11 @@
 
 from __future__ import annotations
 
-import json
 from collections.abc import Iterable
 from pathlib import Path
 
 from .catalog import DatasetCatalog
+from .declarations import declaration_files, read_declarations
 from .errors import ContractError
 from .types import DatasetSpec, DatasetViewSpec
 
@@ -67,21 +67,13 @@ def validate_view_catalog(
 
 
 def load_view_catalog(path: str | Path, datasets: DatasetCatalog) -> DatasetViewCatalog:
-    selected = Path(path)
-    sources = sorted(selected.glob("*.jsonl")) if selected.is_dir() else [selected]
-    if not sources:
-        raise ContractError(f"view directory contains no JSONL files: {selected}")
     views: list[DatasetViewSpec] = []
-    for source in sources:
-        with source.open("r", encoding="utf-8") as stream:
-            for line_number, line in enumerate(stream, 1):
-                line = line.strip()
-                if not line or line.startswith("#"):
-                    continue
-                try:
-                    views.append(DatasetViewSpec.from_dict(json.loads(line)))
-                except (json.JSONDecodeError, ContractError) as exc:
-                    raise ContractError(f"{source}:{line_number}: {exc}") from exc
+    for source in declaration_files(path):
+        for line_number, row in read_declarations(source):
+            try:
+                views.append(DatasetViewSpec.from_dict(row))
+            except ContractError as exc:
+                raise ContractError(f"{source}:{line_number}: {exc}") from exc
     return validate_view_catalog(views, datasets)
 
 

@@ -13,6 +13,7 @@ from audio_data_contract import (
     resolve_artifact,
 )
 from audio_data_contract.catalog import verify_artifact_file
+from audio_data_contract.declarations import write_declarations
 from audio_data_contract.errors import ContractError, IntegrityError, ResolutionError
 
 
@@ -35,11 +36,15 @@ def _spec() -> DatasetSpec:
     )
 
 
-def test_catalog_round_trip_and_alias(tmp_path):
-    path = tmp_path / "catalog.jsonl"
-    path.write_text(json.dumps(_spec().to_dict()) + "\n", encoding="utf-8")
+@pytest.mark.parametrize("suffix", [".yaml", ".yml", ".jsonl"])
+def test_catalog_round_trip_and_alias(tmp_path, suffix):
+    path = tmp_path / ("catalog" + suffix)
+    expected = _spec().to_dict()
+    expected["provenance"] = {"date": "2026-09-22", "code": "001", "description": "中文"}
+    write_declarations(path, [expected])
     catalog = load_catalog(path)
     assert catalog.get("demo_alias", "1.0").dataset_id == "demo"
+    assert catalog.get("demo", "1.0").to_dict() == expected
     assert resolve_artifact(
         catalog, "demo", "1.0", "cuts", {"managed": tmp_path}
     ) == tmp_path / "demo/1.0/manifests/lhotse/cuts.jsonl.gz"
@@ -89,6 +94,37 @@ def test_catalog_directory_loads_all_jsonl_files(tmp_path):
     (tmp_path / "a.jsonl").write_text(json.dumps(first) + "\n", encoding="utf-8")
     (tmp_path / "b.jsonl").write_text(json.dumps(second) + "\n", encoding="utf-8")
     assert len(load_catalog(tmp_path)) == 2
+
+
+def test_catalog_directory_loads_yaml_and_legacy_declarations(tmp_path):
+    for index, suffix in enumerate((".yaml", ".yml", ".jsonl")):
+        row = _spec().to_dict()
+        row.update(dataset_id=f"demo{index}", aliases=[])
+        write_declarations(tmp_path / (str(index) + suffix), [row])
+    assert len(load_catalog(tmp_path)) == 3
+
+
+@pytest.mark.parametrize("content", [
+    "dataset_id: not-a-list\n",
+    "- not-an-object\n",
+    "- dataset_id: demo\n  dataset_id: duplicate\n",
+    "- !!python/object:builtins.object {}\n",
+])
+def test_yaml_rejects_invalid_shapes_duplicate_keys_and_object_tags(tmp_path, content):
+    path = tmp_path / "invalid.yaml"
+    path.write_text(content)
+    with pytest.raises(ContractError, match="invalid.yaml"):
+        load_catalog(path)
+
+
+def test_yaml_schema_error_reports_declaration_line(tmp_path):
+    path = tmp_path / "invalid.yaml"
+    row = _spec().to_dict()
+    row["unexpected"] = True
+    write_declarations(path, [row])
+    path.write_text("# data declaration\n" + path.read_text())
+    with pytest.raises(ContractError, match=r"invalid.yaml:2:.*unknown fields"):
+        load_catalog(path)
 
 
 def test_canonical_dataset_id_takes_precedence_over_an_alias(tmp_path):

@@ -6,6 +6,7 @@ import pytest
 
 from audio_data_contract import ArtifactRef, DatasetSpec
 from audio_data_contract.cli import main
+from audio_data_contract.declarations import read_declarations, write_declarations
 from audio_data_contract.duration import _run_job, catalog_sources, measure
 
 
@@ -134,8 +135,9 @@ def test_audio_cli_counts_stereo_once_and_reports_bad_file(tmp_path):
     assert "bad.wav" in result["errors"][0]
 
 
+@pytest.mark.parametrize("suffix", [".yaml", ".jsonl"])
 def test_catalog_reuses_sources_and_only_writes_complete_missing_splits(
-    tmp_path, monkeypatch
+    tmp_path, monkeypatch, suffix
 ):
     monkeypatch.chdir(tmp_path)
     (tmp_path / "views").mkdir()
@@ -163,8 +165,9 @@ def test_catalog_reuses_sources_and_only_writes_complete_missing_splits(
             "child": {"group": "train", "supervisions_artifact": "sup"},
         },
     )
-    catalog = tmp_path / "catalog.jsonl"
-    catalog.write_text(json.dumps(spec.to_dict()) + "\n")
+    catalog = tmp_path / ("catalog" + suffix)
+    write_declarations(catalog, [spec.to_dict()])
+    catalog.write_text("# keep this note\n" + catalog.read_text())
     roots = tmp_path / "roots.json"
     roots.write_text(json.dumps({"data": str(tmp_path)}))
     sources, targets = catalog_sources(catalog, {"data": tmp_path})
@@ -186,13 +189,14 @@ def test_catalog_reuses_sources_and_only_writes_complete_missing_splits(
     assert main(args) == 1
     assert catalog.read_bytes() == before
     assert main([*args, "--write"]) == 1
-    splits = json.loads(catalog.read_text())["splits"]
+    splits = next(read_declarations(catalog))[1]["splits"]
+    assert "# keep this note" in catalog.read_text()
     assert splits["train"]["statistics"]["duration_hours"] == 1
     assert splits["alias"]["statistics"]["duration_hours"] == 1
     assert splits["known"]["statistics"]["duration_hours"] == 7
     assert "statistics" not in splits["bad"]
     assert "statistics" not in splits["child"]
-    assert (tmp_path / "docs/data-overview.md").is_file()
+    assert (tmp_path / "docs/datasets/data-overview.md").is_file()
 
 
 def test_cli_rejects_zero_workers_and_write_without_catalog(tmp_path):

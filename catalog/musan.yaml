@@ -1,0 +1,25 @@
+  - schema_version: dataset-catalog/1.0
+    dataset_id: musan
+    version: legacy-20260804
+    languages:
+      - und
+    tasks:
+      - noise
+    aliases: []
+    artifacts:
+      - kind: lhotse-recordings
+        name: noise_recordings
+        relative_path: LHOTSE/MUSAN/data/manifests/musan_recordings_noise.jsonl.gz
+        root_alias: legacy_asr
+      - kind: lhotse-recordings
+        name: music_recordings
+        relative_path: LHOTSE/MUSAN/data/manifests/musan_recordings_music.jsonl.gz
+        root_alias: legacy_asr
+    splits:
+      music:
+        recordings_artifact: music_recordings
+      noise:
+        recordings_artifact: noise_recordings
+    provenance:
+      snapshot_date: '2026-08-07'
+      source: AmphionASR augmentation registry

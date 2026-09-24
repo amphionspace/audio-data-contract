@@ -1,0 +1,39 @@
+  - schema_version: dataset-catalog/1.0
+    dataset_id: ciempiess_light
+    version: hf-3d6afb2b3b8d
+    languages:
+      - es
+    tasks:
+      - asr
+    aliases: []
+    artifacts:
+      - name: source
+        kind: hf-dataset-snapshot
+        root_alias: multilingual
+        relative_path: es/ciempiess_light/source/hf-3d6afb2b3b8d
+      - name: download_state
+        kind: dataset-state
+        root_alias: multilingual
+        relative_path: downloads/language-expansion-20260911/ciempiess_light/state.json
+    splits:
+      train:
+        source_artifact: source
+        statistics:
+          count: 16663
+          duration_hours: 18.42401555557218
+          duration_basis: sum of upstream train Parquet duration column in seconds; embedded audio; pinned upstream file hashes verified
+    provenance:
+      source: Hugging Face
+      url: https://huggingface.co/datasets/ciempiess/ciempiess_light
+      license:
+        - cc-by-sa-4.0
+      description: 墨西哥西语 CIEMPIESS LIGHT 官方完整版本。
+      download_scope: Complete official CIEMPIESS LIGHT release
+      expected_download_files: 6
+      expected_download_bytes: 1122409191
+      source_id: ciempiess/ciempiess_light
+      revision: 3d6afb2b3b8dd00ad8f5b1288fe4c18f5882faaa
+      locale: es-MX
+      integrity: verified
+      local_scan_date: '2026-09-11'
+      dataset_family: ciempiess

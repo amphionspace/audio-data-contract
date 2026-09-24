@@ -1,0 +1,28 @@
+  - schema_version: dataset-catalog/1.0
+    dataset_id: common-voice-pt
+    version: '26.0'
+    languages:
+      - pt
+    tasks:
+      - asr
+    aliases: []
+    artifacts:
+      - name: source_archive
+        kind: source-archive
+        root_alias: multilingual
+        relative_path: pt/common_voice_pt/source/26.0/common-voice-scripted-speech-26-0-portug-60f040b8.tar.gz
+      - name: download_state
+        kind: dataset-state
+        root_alias: multilingual
+        relative_path: downloads/language-expansion-20260911/common-voice-pt/state.json
+    splits:
+      all:
+        source_archive_artifact: source_archive
+    provenance:
+      source: Mozilla Data Collective
+      source_id: cmqinmnkf00w8nr07hkbbxgw7
+      url: https://mozilladatacollective.com/datasets/cmqinmnkf00w8nr07hkbbxgw7
+      license: CC0-1.0
+      inventory_status: download_planned
+      dataset_family: common_voice_pt
+      description: 等待 Mozilla Data Collective 授权；下载后按口音/地区与已有版本去重。

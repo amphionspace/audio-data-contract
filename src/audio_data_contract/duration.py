@@ -20,6 +20,11 @@ from pathlib import Path
 from queue import Empty, Full
 
 from .catalog import load_catalog, resolve_artifact
+from .declarations import (
+    declaration_files,
+    editable_declarations,
+    write_declarations,
+)
 from .overview import update_data_overview
 from .roots import load_roots
 
@@ -619,14 +624,21 @@ def catalog_sources(catalog_path, roots):
 
 def fill_catalog(catalog_path, targets):
     updates = {(r["dataset"], r["split"]): r for r in targets if r["status"] == "ok"}
-    selected = Path(catalog_path)
-    for path in sorted(selected.glob("*.jsonl")) if selected.is_dir() else [selected]:
+    for path in declaration_files(catalog_path):
         lines, changed = [], False
-        for line in path.read_text().splitlines(keepends=True):
-            if not line.strip() or line.lstrip().startswith("#"):
+        if path.suffix == ".jsonl":
+            entries = [
+                (line, json.loads(line))
+                if line.strip() and not line.lstrip().startswith("#") else (line, None)
+                for line in path.read_text().splitlines(keepends=True)
+            ]
+        else:
+            rows = editable_declarations(path)
+            entries = [(None, row) for row in rows]
+        for line, row in entries:
+            if row is None:
                 lines.append(line)
                 continue
-            row = json.loads(line)
             dirty = False
             for name, split in row["splits"].items():
                 result = updates.get((f"{row['dataset_id']}@{row['version']}", name))
@@ -638,16 +650,19 @@ def fill_catalog(catalog_path, targets):
                         duration_hours=result["hours"], duration_basis=result["basis"]
                     )
                     dirty = True
-            lines.append(
-                json.dumps(row, ensure_ascii=False, separators=(",", ":")) + "\n"
-                if dirty
-                else line
-            )
+            if line is not None:
+                lines.append(
+                    json.dumps(row, ensure_ascii=False, separators=(",", ":")) + "\n"
+                    if dirty else line
+                )
             changed |= dirty
         if changed:
-            temporary = path.with_suffix(path.suffix + ".duration.tmp")
-            temporary.write_text("".join(lines))
-            temporary.replace(path)
+            if path.suffix == ".jsonl":
+                temporary = path.with_suffix(path.suffix + ".duration.tmp")
+                temporary.write_text("".join(lines))
+                temporary.replace(path)
+            else:
+                write_declarations(path, rows)
 
 
 def run(args) -> int:
@@ -693,7 +708,7 @@ def run(args) -> int:
         report["splits"] = targets
         if args.write:
             fill_catalog(args.catalog, targets)
-            update_data_overview("docs/data-overview.md", catalog_path=args.catalog)
+            update_data_overview("docs/datasets/data-overview.md", catalog_path=args.catalog)
             report["written_splits"] = sum(t["status"] == "ok" for t in targets)
     failed = sum(
         r["status"] == "error"

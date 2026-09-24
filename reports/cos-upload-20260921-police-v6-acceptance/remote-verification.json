@@ -1,0 +1,30 @@
+{
+  "dataset": "police_v6_acceptance_205",
+  "bucket": "amphion-audio-backup-1373259071",
+  "plan_sha256": "820ad088c2f6bfdd92d8fee7787e6c36c99fc92d10d8fd473edfc29eeb98608a",
+  "shards": [
+    {
+      "key": "audio-data-contract/v1/batches/police-v6-acceptance-205-20260921/820ad088c2f6bfdd92d8fee7787e6c36c99fc92d10d8fd473edfc29eeb98608a/shard-00000.tar.zst",
+      "object_bytes": 519100,
+      "object_sha256": "47bb9c68dc88f2cbb5a5aa364eb4e5525f8749c6c9ce81371e02a66bba2f407c",
+      "head_size_crc64_plan": "passed",
+      "full_object_sha256_readback": "passed",
+      "verified_members": 10,
+      "verified_member_bytes": 8837512
+    },
+    {
+      "key": "audio-data-contract/v1/batches/police-v6-acceptance-205-20260921/820ad088c2f6bfdd92d8fee7787e6c36c99fc92d10d8fd473edfc29eeb98608a/shard-00001.tar.zst",
+      "object_bytes": 278495466,
+      "object_sha256": "4cf6b9f4535f309ea6f93031688a50bad211642cc91d48c8f5907d2c61e13205",
+      "head_size_crc64_plan": "passed",
+      "full_object_sha256_readback": "passed",
+      "verified_members": 3773,
+      "verified_member_bytes": 348136854
+    }
+  ],
+  "receipt_cos_uri": "cos://amphion-audio-backup-1373259071/audio-data-contract/v1/batches/police-v6-acceptance-205-20260921/820ad088c2f6bfdd92d8fee7787e6c36c99fc92d10d8fd473edfc29eeb98608a/complete.json",
+  "receipt_sha256": "5d003eb2752140130e143b80315df96540adce397239ea55f1a07603ecfd5aac",
+  "status": "verified",
+  "verified_files": 3783,
+  "object_bytes": 279014566
+}

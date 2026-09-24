@@ -1,0 +1,57 @@
+{
+  "as_of": "2026-09-20",
+  "unit": "decimal TB (1e12 bytes)",
+  "scope": "规划级源语料归并；非音频指纹去重；包含需同意访问条件的公开库；不声称穷尽互联网",
+  "source_hours": {
+    "low": 1670103.04,
+    "high": 1715809.04,
+    "project_family_reference": 223000.836
+  },
+  "parameters": {
+    "sample_rate_hz": 16000,
+    "channels": 1,
+    "bits_per_sample": 16,
+    "tb_per_hour": 0.0001152,
+    "metadata_fraction": 0.05,
+    "derived_multichannel_local_tb": 10,
+    "workspace_tb": 20,
+    "target_max_utilization": 0.8,
+    "flac_size_fraction_of_pcm_assumption": [
+      0.45,
+      0.7
+    ]
+  },
+  "core": {
+    "pcm_audio_tb": [
+      192.395870208,
+      197.66120140799998
+    ],
+    "provisioned_pcm_tb": [
+      290.019579648,
+      296.930326848
+    ],
+    "recommended_pcm_tb": 300,
+    "recommended_flac_tb": 250
+  },
+  "extensions": {
+    "granary_youtube_commons_hours_upper": 122475,
+    "mms_collection_candidate_hours": 44700,
+    "mms_note": "采集候选预留，不确认已有可直接下载的完整ASR音频包",
+    "yodas3": {
+      "revision": "884cd1186d041d3783a7257e0d12e85ed13066d0",
+      "current_file_bytes": 21762740953571,
+      "current_files": 2584,
+      "audio_tars": 2582,
+      "note": "固定revision文件树元数据求和；不是HF usedStorage；README仅许可，未核实tar内转写和可用ASR小时；暂按原格式容量预留"
+    },
+    "recommended_pcm_tb": 400,
+    "recommended_flac_tb": 300
+  },
+  "limitations": [
+    "跨库内容重叠未通过音频指纹验证，不预扣未知重叠",
+    "源语料家族去重需要迁移时用ID/时间区间恢复标注引用；真实改变波形的派生不能仅靠元数据去重",
+    "小语料30-60kh是规划预留，不是已核实小时合计或互联网剩余数据上界",
+    "新增采集和YODAS3全量PCM化可能超过本次预算，应按实际时长重新计算",
+    "已注册同族参考小时不表示当前文件全部可读或与上游一一对应"
+  ]
+}

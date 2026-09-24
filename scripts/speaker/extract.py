@@ -15,6 +15,8 @@ from pathlib import Path, PurePosixPath
 
 import soundfile as sf
 
+from audio_data_contract.declarations import read_declarations
+
 VERSION = "speaker-records-v1-20260912"
 DATASETS = ("cnceleb1", "cnceleb2", "3dspeaker", "hi_mia", "chime6")
 
@@ -40,8 +42,7 @@ def paths(root, dataset):
 
 
 def source_spec(repo, dataset):
-    rows = [json.loads(line) for line in
-            (repo / "catalog" / (dataset + ".jsonl")).read_text().splitlines()]
+    rows = [row for _, row in read_declarations(repo / "catalog" / (dataset + ".yaml"))]
     return next(row for row in rows if row["version"] != VERSION)
 
 

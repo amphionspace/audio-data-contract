@@ -1,0 +1,87 @@
+{
+  "verified_at": "2026-09-14T03:11:35+00:00",
+  "bucket": "amphion-audio-backup-1373259071",
+  "region": "ap-guangzhou",
+  "prefix": "audio-data-contract/v1/batches/police-v5-20260914/0004b893bcc21a7b3976b1ecb1b7ee6d55203026141ae2ffdf4e446d18ed1dc9",
+  "status": "verified",
+  "dataset_keys": [
+    "police_synthetic_zh_accent@v5-20260830-qc",
+    "police_synthetic_zh_accent@v5-20260830-qwen75-cosy25",
+    "police_terms_v5@icefall-20260908",
+    "police_terms_v5_dev@icefall-20260908",
+    "police_terms_v5_test@icefall-20260908"
+  ],
+  "source_audio_files": 14423,
+  "metadata_files": 166,
+  "physical_files": 14589,
+  "unique_contents": 14589,
+  "source_bytes": 4766578991,
+  "uploaded_shard_bytes": 3948879157,
+  "shards": [
+    {
+      "key": "audio-data-contract/v1/batches/police-v5-20260914/0004b893bcc21a7b3976b1ecb1b7ee6d55203026141ae2ffdf4e446d18ed1dc9/shard-00000.tar.zst",
+      "size": 12296921,
+      "sha256": "cc25c04ee93234846061b266c8216046ec4052939121db008500ec83f686d921",
+      "crc64": "3873327292563884536",
+      "part_count": 1,
+      "category": "metadata"
+    },
+    {
+      "key": "audio-data-contract/v1/batches/police-v5-20260914/0004b893bcc21a7b3976b1ecb1b7ee6d55203026141ae2ffdf4e446d18ed1dc9/shard-00001.tar.zst",
+      "size": 3556767368,
+      "sha256": "981b29c45e476a66334e634c7432c3bafb0fc241e3bbd74cd677c7e6225b1946",
+      "crc64": "15034779702530403889",
+      "part_count": 106,
+      "category": "audio"
+    },
+    {
+      "key": "audio-data-contract/v1/batches/police-v5-20260914/0004b893bcc21a7b3976b1ecb1b7ee6d55203026141ae2ffdf4e446d18ed1dc9/shard-00002.tar.zst",
+      "size": 379814868,
+      "sha256": "677bb5dae3c8903f6beb9264b1a5c29a80f7a78655115936ae73d124bdced2f5",
+      "crc64": "15007988100202768603",
+      "part_count": 12,
+      "category": "audio"
+    }
+  ],
+  "performance": {
+    "elapsed_seconds": 348.94646379200276,
+    "max_rss_kib": 371164,
+    "user_seconds": 66.954465,
+    "system_seconds": 8.061487,
+    "exit_code": 0
+  },
+  "readback_checks": [
+    {
+      "key": "audio-data-contract/v1/batches/police-v5-20260914/0004b893bcc21a7b3976b1ecb1b7ee6d55203026141ae2ffdf4e446d18ed1dc9/shard-00000.tar.zst",
+      "readback_bytes": 12296921,
+      "members_verified": 166,
+      "whole_object_sha256_verified": true,
+      "sample_member_sha256": []
+    },
+    {
+      "key": "audio-data-contract/v1/batches/police-v5-20260914/0004b893bcc21a7b3976b1ecb1b7ee6d55203026141ae2ffdf4e446d18ed1dc9/shard-00001.tar.zst",
+      "readback_bytes": 8388608,
+      "members_verified": 3,
+      "whole_object_sha256_verified": false,
+      "sample_member_sha256": [
+        "001be00db4882970b6e329c30ee924d74eb7c3f39b23556a4ffaec75da031540",
+        "0023f7b257ac08ffb80dda51ff358d6a21c5861e796a33dff7cce2757da608ab",
+        "002ab23acaece12581c8af19f5df217a3ac49e92043b387178a7c36131d5768a"
+      ]
+    },
+    {
+      "key": "audio-data-contract/v1/batches/police-v5-20260914/0004b893bcc21a7b3976b1ecb1b7ee6d55203026141ae2ffdf4e446d18ed1dc9/shard-00002.tar.zst",
+      "readback_bytes": 8388608,
+      "members_verified": 3,
+      "whole_object_sha256_verified": false,
+      "sample_member_sha256": [
+        "e788847e6dd43234edf6365d6379ab86b685ce8e6e8cf8e00d9b12bd3dea849b",
+        "e78f71cb1ffd65a947634dbdbb6621eba14875383f30410d9369e26b79df36ca",
+        "e797586f7db0020b3edab1d8319f466ddac3ddf3e3f3440f6a367bba5bd71948"
+      ]
+    }
+  ],
+  "local_archive_bytes": 0,
+  "deleted_source_files": 0,
+  "integrity": "All source files hashed before planning and while streaming; all uploaded parts and final objects checked against COS CRC64 and size. Full metadata and six sampled audio members restored and SHA-256 verified. Whole audio shards were not downloaded again."
+}
