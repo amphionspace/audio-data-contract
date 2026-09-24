@@ -1,0 +1,153 @@
+{
+  "dataset_id": "sot_multispeaker_zh_en",
+  "version": "synthetic-v2-20260915",
+  "seed": 20260914,
+  "sampling_rate": 16000,
+  "max_mix_seconds": 28,
+  "source_seconds": [
+    2,
+    20
+  ],
+  "speaker_gain_db": [
+    -6,
+    6
+  ],
+  "speakers": [
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "split_buckets": {
+    "train": 960,
+    "dev": 20,
+    "test": 20
+  },
+  "sources": [
+    {
+      "dataset_id": "aishell",
+      "version": "icefall-20260908",
+      "split": "train",
+      "language": "zh",
+      "weight": 20,
+      "require_clean_pass": false
+    },
+    {
+      "dataset_id": "aishell2",
+      "version": "icefall-20260908",
+      "split": "train",
+      "language": "zh",
+      "weight": 45,
+      "require_clean_pass": false
+    },
+    {
+      "dataset_id": "kespeech",
+      "version": "icefall-20260908",
+      "split": "train",
+      "language": "zh",
+      "weight": 35,
+      "require_clean_pass": false
+    },
+    {
+      "dataset_id": "commonvoice_en_clean",
+      "version": "clean-v1-20260805",
+      "split": "train",
+      "language": "en",
+      "weight": 60,
+      "require_clean_pass": true
+    },
+    {
+      "dataset_id": "librispeech",
+      "version": "icefall-20260908",
+      "split": "train",
+      "language": "en",
+      "weight": 40,
+      "require_clean_pass": false,
+      "recording_artifacts": [
+        "train_rec_0",
+        "train_rec_1"
+      ],
+      "supervision_artifacts": [
+        "train_sup_0",
+        "train_sup_1"
+      ]
+    }
+  ],
+  "language_modes": {
+    "zh": 40,
+    "en": 40,
+    "zh-en": 20
+  },
+  "speaker_turn_weights": [
+    35,
+    45,
+    20
+  ],
+  "turn_gap_seconds": [
+    0.1,
+    0.6
+  ],
+  "overlap_beta": [
+    2,
+    2
+  ],
+  "overlap_tolerance": 0.05,
+  "overlap_search_steps": 65,
+  "max_candidate_attempts": 200,
+  "overlap_profiles": {
+    "none": {
+      "range": [
+        0,
+        0
+      ],
+      "weight": 10
+    },
+    "low": {
+      "range": [
+        0,
+        0.2
+      ],
+      "weight": 20
+    },
+    "medium": {
+      "range": [
+        0.2,
+        0.4
+      ],
+      "weight": 25
+    },
+    "high": {
+      "range": [
+        0.4,
+        0.65
+      ],
+      "weight": 25
+    },
+    "dense": {
+      "range": [
+        0.65,
+        1.0
+      ],
+      "weight": 20,
+      "turn_duration_tolerance": 0.15,
+      "all_speakers_overlap": true
+    }
+  },
+  "reference": {
+    "paper": "https://arxiv.org/pdf/2601.01554v7",
+    "section": "3.2 Simulated Data",
+    "adopted": [
+      "speaker alternation",
+      "controllable overlap and turn timing"
+    ],
+    "local_adaptation": [
+      "1-5 speakers, at most 28 seconds",
+      "complete utterances because reliable word alignment is unavailable",
+      "no added noise or reverberation",
+      "target overlap uses 20 ms energy-active frames, not overlap divided by shorter segment",
+      "zh-en mixes different speakers with original languages; no fabricated bilingual identity"
+    ],
+    "speaker_partition": "Seed and source pools match v1 so previous training cannot contaminate the new speaker holdout"
+  }
+}
