@@ -40,7 +40,7 @@ def pending_work(work):
     with sqlite3.connect(f'file:{work / "migration.sqlite"}?mode=ro', uri=True, timeout=2) as db:
         done = bool(db.execute("SELECT 1 FROM meta WHERE key='scan_complete'").fetchone())
         objects = bool(db.execute("SELECT 1 FROM objects WHERE status IN ('pending','queued','chunked') LIMIT 1").fetchone())
-        batches = bool(db.execute("SELECT 1 FROM batches WHERE status IN ('pending','running','retry') LIMIT 1").fetchone())
+        batches = bool(db.execute("SELECT 1 FROM batches WHERE status IN ('pending','running','retry','external') LIMIT 1").fetchone())
         failed = bool(db.execute("SELECT 1 FROM batches WHERE status='failed' LIMIT 1").fetchone()
                       or db.execute("SELECT 1 FROM objects WHERE status='failed' LIMIT 1").fetchone())
     return {'scan': not done, 'transfer': not done or objects or batches,
@@ -161,7 +161,8 @@ def supervise(args):
                            name, '--work', str(work)]
                 if name == 'transfer':
                     tuning = read_json(work / 'throughput-tuning.json', {})
-                    command += ['--workers', str(tuning.get('selected_workers', args.workers))]
+                    command += ['--workers', str(args.workers if (work / 'shards/enabled.json').exists()
+                                                else tuning.get('selected_workers', args.workers))]
                     if args.tune and not tuning:
                         command.append('--tune')
                 with (work / (name + '.log')).open('ab') as log:

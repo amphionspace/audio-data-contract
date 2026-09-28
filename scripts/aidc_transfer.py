@@ -7,6 +7,7 @@ never removed or overwritten.
 """
 
 import argparse
+import fcntl
 import hashlib
 import io
 import json
@@ -90,13 +91,19 @@ def tar_bytes(archive, name, data):
     archive.addfile(info, io.BytesIO(data))
 
 
-def write_stream(stream, plan):
+def source_signature(row, portable=False):
+    current = signature(row['source'])
+    if (current[:2] != row['signature'][:2] if portable else current != row['signature']):
+        raise ValueError(f"source changed since inventory: {row['source']}")
+    return current
+
+
+def write_stream(stream, plan, portable=False):
     results = []
     with tarfile.open(fileobj=stream, mode='w|', bufsize=BLOCK) as archive:
         tar_bytes(archive, 'plan.json', encoded(plan))
         for i, row in enumerate(plan['files']):
-            if signature(row['source']) != row['signature']:
-                raise ValueError(f"source changed before transfer: {row['source']}")
+            before = source_signature(row, portable)
             info = tarfile.TarInfo(f'files/{i}')
             info.size = row['length']
             info.mode = 0o644
@@ -104,7 +111,7 @@ def write_stream(stream, plan):
                 source.seek(row.get('offset', 0))
                 reader = HashReader(source)
                 archive.addfile(info, reader)
-            if signature(row['source']) != row['signature']:
+            if signature(row['source']) != before:
                 raise ValueError(f"source changed during transfer: {row['source']}")
             sha = reader.sha.hexdigest()
             if row.get('expected') and sha != row['expected']:
@@ -216,10 +223,9 @@ def remote_command(config, action, *extra):
                                 *extra])
 
 
-def send(config, plan, progress=None):
+def send(config, plan, progress=None, portable=False):
     for row in plan['files']:
-        if signature(row['source']) != row['signature']:
-            raise ValueError(f"source changed since inventory: {row['source']}")
+        source_signature(row, portable)
     previous = subprocess.run(remote_command(config, 'receipt', '--batch', plan['batch']),
                               capture_output=True, check=True)
     receipt = json.loads(previous.stdout)
@@ -238,7 +244,7 @@ def send(config, plan, progress=None):
                 if progress:
                     progress(count)
                 return count
-        write_stream(Sink(), plan)
+        write_stream(Sink(), plan, portable)
         proc.stdin.close()
         proc.stdin = None
         out, err = proc.communicate()
@@ -267,14 +273,27 @@ def send(config, plan, progress=None):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('action', choices=['receive', 'receipt', 'assemble'])
+    parser.add_argument('action', choices=['receive', 'receipt', 'assemble', 'guard'])
     parser.add_argument('--root', type=Path, required=True)
     parser.add_argument('--run', required=True)
     parser.add_argument('--batch')
     args = parser.parse_args()
     root = args.root.resolve()
     if args.action == 'receive':
-        result = receive(root, args.run, args.batch, sys.stdin.buffer)
+        lock_path = safe_path(root, f'migration/{args.run}/locks/{args.batch}.lock')
+        lock_path.parent.mkdir(parents=True, exist_ok=True)
+        with lock_path.open('a') as lock:
+            fcntl.flock(lock, fcntl.LOCK_EX)
+            result = receive(root, args.run, args.batch, sys.stdin.buffer)
+    elif args.action == 'guard':
+        lock_path = safe_path(root, f'migration/{args.run}/worker.lock')
+        lock_path.parent.mkdir(parents=True, exist_ok=True)
+        with lock_path.open('a') as lock:
+            fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
+            print('ready', flush=True)
+            while sys.stdin.buffer.read(1):
+                pass
+        return
     elif args.action == 'receipt':
         path = safe_path(root, f'migration/{args.run}/receipts/{args.batch}.json')
         result = json.loads(path.read_text()) if path.exists() else None

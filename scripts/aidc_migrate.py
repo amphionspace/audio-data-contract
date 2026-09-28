@@ -22,7 +22,7 @@ from concurrent.futures import FIRST_COMPLETED, ThreadPoolExecutor, wait
 from pathlib import Path
 
 from aidc_transfer import encoded, remote_command, save, send, signature, ssh
-from cos_sync_catalog import DIRECTORIES, PRIVATE, Inventory
+from cos_sync_catalog import DIRECTORIES, PRIVATE, BackupConnection, Inventory
 
 from audio_data_contract import load_catalog
 from audio_data_contract.audio_prepare import _parse
@@ -40,7 +40,8 @@ PLAIN = {'metadata', 'license', 'archive', 'source-archive', 'source-archive-par
 
 
 def database(work):
-    db = sqlite3.connect(Path(work) / 'migration.sqlite', timeout=60)
+    db = sqlite3.connect(Path(work) / 'migration.sqlite', timeout=60, factory=BackupConnection)
+    db.acquire_writer()
     db.row_factory = sqlite3.Row
     db.execute('PRAGMA journal_mode=WAL')
     db.execute('PRAGMA busy_timeout=60000')
@@ -66,8 +67,11 @@ def database(work):
         PRIMARY KEY(spec,name));
       CREATE TABLE IF NOT EXISTS batches(id INTEGER PRIMARY KEY,plan TEXT,status TEXT,
         error TEXT,bytes INTEGER,elapsed REAL);
+      CREATE INDEX IF NOT EXISTS batch_status ON batches(status,id,bytes);
       CREATE TABLE IF NOT EXISTS batch_retries(batch INTEGER PRIMARY KEY,
         attempts INTEGER,not_before REAL,last_error TEXT);
+      CREATE TABLE IF NOT EXISTS batch_agents(batch INTEGER PRIMARY KEY,
+        agent TEXT NOT NULL,exported INTEGER NOT NULL DEFAULT 0);
       CREATE TABLE IF NOT EXISTS memberships(manifest TEXT,cut_id TEXT,
         PRIMARY KEY(manifest,cut_id));
       CREATE TABLE IF NOT EXISTS record_refs(manifest TEXT,spec TEXT,split TEXT,cut_id TEXT,
@@ -86,7 +90,12 @@ def object_signature(row):
 
 
 def config_at(work):
-    return json.loads((Path(work) / 'config.json').read_text())
+    config = json.loads((Path(work) / 'config.json').read_text())
+    marker = Path(work) / 'shards/enabled.json'
+    if marker.exists():
+        config['sharding'] = json.loads(marker.read_text())
+        config['receiver'] = config['sharding']['receiver']
+    return config
 
 
 def issue(db, path, reason, context=''):
@@ -477,16 +486,32 @@ def build_batches(db, config, batch_bytes, chunk_bytes):
     pending = db.execute("SELECT * FROM objects WHERE status='pending' ORDER BY id LIMIT 50000").fetchall()
     jobs, members, total = [], [], 0
 
-    def queue(rows):
+    def queue(rows, agent='a'):
         number = db.execute("INSERT INTO batches(status) VALUES('pending')").lastrowid
-        plan = {'run': config['run'], 'batch': f'b{number:08d}', 'files': rows}
-        db.execute('UPDATE batches SET plan=?,bytes=? WHERE id=?',
-                   (json.dumps(plan), sum(r['length'] for r in rows), number))
+        run = config['run'] if agent == 'a' else config['run'] + '-' + agent
+        plan = {'run': run, 'batch': f'b{number:08d}', 'files': rows}
+        db.execute('UPDATE batches SET plan=?,bytes=?,status=? WHERE id=?',
+                   (json.dumps(plan), sum(r['length'] for r in rows),
+                    'pending' if agent == 'a' else 'external', number))
+        db.execute('INSERT INTO batch_agents(batch,agent) VALUES(?,?)', (number, agent))
         jobs.append(number)
 
+    external = {agent: [] for agent in 'bcd'}
+    external_bytes = dict.fromkeys('bcd', 0)
     for row in pending:
         member = {'id': row['id'], 'source': row['source'], 'target': transfer_target(row, config),
                   'signature': object_signature(row), 'length': row['size'], 'expected': row['expected']}
+        structured = row['kind'] in JSONL | JSON or row['source'].endswith(('.json', '.json.gz', '.jsonl', '.jsonl.gz'))
+        if config.get('sharding') and row['size'] <= batch_bytes and not structured:
+            agent = 'abcd'[row['id'] % 4]
+            if agent != 'a':
+                if external[agent] and external_bytes[agent] + row['size'] > batch_bytes:
+                    queue(external[agent], agent)
+                    external[agent], external_bytes[agent] = [], 0
+                external[agent].append(member)
+                external_bytes[agent] += row['size']
+                db.execute("UPDATE objects SET status='queued' WHERE id=?", (row['id'],))
+                continue
         if row['size'] > batch_bytes:
             if members:
                 queue(members)
@@ -505,7 +530,13 @@ def build_batches(db, config, batch_bytes, chunk_bytes):
             db.execute("UPDATE objects SET status='queued' WHERE id=?", (row['id'],))
     if members:
         queue(members)
+    for agent, rows in external.items():
+        if rows:
+            queue(rows, agent)
     db.commit()
+    if config.get('sharding'):
+        from aidc_shards import export_plans
+        export_plans(db, config)
     return jobs
 
 
@@ -619,6 +650,10 @@ def transfer(args):
         while True:
             elapsed = time.monotonic() - started
             stopping = args.seconds and elapsed >= args.seconds
+            if config.get('sharding'):
+                from aidc_shards import export_plans, import_results
+                export_plans(db, config)
+                import_results(db, config, args.work)
             if args.tune and len(stages) < 3 and time.monotonic() - stage_start >= 60:
                 cpu = [int(x) for x in Path('/proc/stat').read_text().splitlines()[0].split()[1:]]
                 delta = [a - b for a, b in zip(cpu, cpu_start)]
@@ -666,7 +701,7 @@ def transfer(args):
                 assemble_ready(db, config, args.work)
                 if (db.execute("SELECT 1 FROM meta WHERE key='scan_complete'").fetchone()
                         and not db.execute("SELECT 1 FROM objects WHERE status='pending' LIMIT 1").fetchone()
-                        and not db.execute("SELECT 1 FROM batches WHERE status IN ('pending','retry','running') LIMIT 1").fetchone()):
+                        and not db.execute("SELECT 1 FROM batches WHERE status IN ('pending','retry','running','external') LIMIT 1").fetchone()):
                     break
                 time.sleep(2)
             if time.monotonic() - last_report > 30:
