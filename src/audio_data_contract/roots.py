@@ -41,3 +41,33 @@ def load_roots(
             raise ContractError(f"root {alias!r} must be an absolute path")
         roots[alias] = root.resolve(strict=False)
     return roots
+
+
+def resolve_root_path(
+    root_alias: str, relative_path: str, roots: Mapping[str, str | Path], where: str
+) -> Path:
+    if root_alias not in roots:
+        raise ResolutionError(
+            f"root alias {root_alias!r} is not configured for {where}"
+        )
+    root = Path(roots[root_alias]).expanduser().resolve(strict=False)
+    resolved = (root / relative_path).resolve(strict=False)
+    try:
+        resolved.relative_to(root)
+    except ValueError as exc:
+        raise ResolutionError(f"artifact escaped configured root: {resolved}") from exc
+    return resolved
+
+
+def portable_path(path: str | Path, roots: Mapping[str, str | Path]) -> dict[str, str]:
+    """Express a local path under its most specific configured root alias."""
+    path = Path(path).resolve(strict=False)
+    matches = []
+    for alias, value in roots.items():
+        root = Path(value).expanduser().resolve(strict=False)
+        if path == root or root in path.parents:
+            matches.append((len(root.parts), alias, root))
+    if not matches:
+        raise ResolutionError(f"path is outside every configured root: {path}")
+    _, alias, root = max(matches)
+    return {"root_alias": alias, "relative_path": path.relative_to(root).as_posix()}

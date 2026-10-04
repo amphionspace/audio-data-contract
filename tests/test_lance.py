@@ -383,3 +383,131 @@ def test_cli_import_verify_export(tmp_path, capsys):
     exported = tmp_path / "selected.jsonl"
     assert main(["export", str(manifest), str(exported), "--clean-pass", "false"]) == 0
     assert [r.id for r in read_artifact(exported)] == ["sample-1", "sample-3"]
+
+
+def test_portable_artifact_survives_moving_roots(tmp_path):
+    from audio_data_contract.lance import rebuild_artifact, verify_equivalence
+
+    old, new = tmp_path / "old", tmp_path / "new"
+    (old / "data").mkdir(parents=True)
+    write_records(records(), old / "data/records.jsonl")
+    roots = {"managed": old / "managed", "source": old / "data"}
+    raw = import_jsonl(
+        old / "data/records.jsonl",
+        old / "managed/raw",
+        source_view="demo/raw@v1",
+        roots=roots,
+    )
+    assert raw.table_path == {
+        "root_alias": "managed",
+        "relative_path": "raw/table.lance",
+    }
+    assert raw.rebuild_metadata["source_jsonl"] == {
+        "root_alias": "source",
+        "relative_path": "records.jsonl",
+    }
+    layer = write_layer(
+        old / "managed/clean-layer", patches(), parent=raw, step=step(), tool="t"
+    )
+    clean = materialize_layer(layer, source_view="demo/clean@v1", roots=roots)
+    assert clean.rebuild_metadata["layers"] == [
+        {"root_alias": "managed", "relative_path": "clean-layer"}
+    ]
+    old.rename(new)
+    moved = {"managed": new / "managed", "source": new / "data"}
+    reread = LanceArtifact.read(new / "managed/clean-layer/artifact.json", moved)
+    assert reread == clean
+    expected = list(
+        replay_layer(
+            read_artifact(new / "data/records.jsonl"), new / "managed/clean-layer"
+        )
+    )
+    assert {r.id: r for r in read_artifact(reread)} == {r.id: r for r in expected}
+    rebuilt = rebuild_artifact(reread, new / "managed/rebuilt")
+    assert rebuilt.table_path["relative_path"] == "rebuilt/table.lance"
+    assert list(read_artifact(rebuilt)) == expected
+    with pytest.raises(ContractError, match="not configured"):
+        list(read_artifact(LanceArtifact.read(new / "managed/raw/artifact.json", {})))
+    write_records(expected, new / "expected.jsonl")
+    assert verify_equivalence(rebuilt, new / "expected.jsonl")["records_equal"]
+
+
+def test_portable_import_rejects_paths_outside_roots(tmp_path):
+    write_records(records(), tmp_path / "records.jsonl")
+    with pytest.raises(ContractError, match="outside every configured root"):
+        import_jsonl(
+            tmp_path / "records.jsonl",
+            tmp_path / "managed/raw",
+            source_view="demo/raw@v1",
+            roots={"managed": tmp_path / "managed"},
+        )
+    assert not (tmp_path / "managed/raw").exists()
+
+
+def test_catalog_lance_table_pins_snapshot(tmp_path):
+    from audio_data_contract import ArtifactRef, DatasetSpec, validate_catalog
+    from audio_data_contract.lance import catalog_ref, open_catalog_artifact
+
+    roots = {"managed": tmp_path}
+    write_records(records(), tmp_path / "records.jsonl")
+    artifact = import_jsonl(
+        tmp_path / "records.jsonl",
+        tmp_path / "raw",
+        source_view="demo/raw@v1",
+        roots=roots,
+    )
+    sidecar = tmp_path / "raw/artifact.json"
+    ref = catalog_ref(artifact, sidecar, name="lance", roots=roots)
+    assert ref.relative_path == "raw/artifact.json"
+    assert ArtifactRef.from_dict(ref.to_dict()) == ref
+
+    def catalog(ref):
+        spec = DatasetSpec.from_dict(
+            {
+                "schema_version": "dataset-catalog/1.0",
+                "dataset_id": "demo",
+                "version": "v1",
+                "languages": ["zh"],
+                "tasks": ["ts_asr"],
+                "splits": {},
+                "artifacts": [ref.to_dict()],
+            }
+        )
+        return validate_catalog([spec])
+
+    opened = open_catalog_artifact(catalog(ref), "demo", "v1", "lance", roots)
+    assert list(read_artifact(opened)) == records()
+    stale = replace(ref, metadata={**ref.metadata, "snapshot_version": 2})
+    with pytest.raises(ContractError, match="snapshot_version differs"):
+        open_catalog_artifact(catalog(stale), "demo", "v1", "lance", roots)
+    with pytest.raises(ContractError, match="snapshot_version"):
+        replace(ref, metadata={"record_count": 5, "schema_hash": "0" * 64})
+
+
+def test_cli_portable_import_and_catalog_ref(tmp_path, capsys):
+    from audio_data_contract.lance_cli import main
+
+    roots_file = tmp_path / "roots.json"
+    roots_file.write_text(json.dumps({"managed": str(tmp_path)}))
+    write_records(records(), tmp_path / "source.jsonl")
+    args = ["--roots", str(roots_file)]
+    assert (
+        main(
+            [
+                *args,
+                "import",
+                str(tmp_path / "source.jsonl"),
+                str(tmp_path / "raw"),
+                "--source-view",
+                "demo/raw@v1",
+            ]
+        )
+        == 0
+    )
+    capsys.readouterr()
+    sidecar = str(tmp_path / "raw/artifact.json")
+    assert main([*args, "catalog-ref", sidecar, "--name", "lance"]) == 0
+    ref = json.loads(capsys.readouterr().out)
+    assert ref["kind"] == "lance-table"
+    assert ref["relative_path"] == "raw/artifact.json"
+    assert ref["metadata"]["record_count"] == 5

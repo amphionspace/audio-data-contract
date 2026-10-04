@@ -7,13 +7,15 @@ import json
 import shutil
 import sqlite3
 import tempfile
-from dataclasses import asdict, dataclass
+from dataclasses import asdict, dataclass, field
+from functools import cache
 from importlib.resources import files
 from pathlib import Path
 
 from .errors import ContractError
 from .records import load_records
-from .types import RECORD_SCHEMA_VERSION, AudioRecord
+from .roots import load_roots, portable_path, resolve_root_path
+from .types import RECORD_SCHEMA_VERSION, AudioRecord, _portable_path
 
 STORAGE_VERSION = "2.0"
 MAPPING_VERSION = "audio-record-lance/1.0"
@@ -60,6 +62,7 @@ def _schema():
     )
 
 
+@cache
 def schema_hash():
     contract = json.loads(
         files("audio_data_contract")
@@ -71,9 +74,43 @@ def schema_hash():
     )
 
 
+def _is_ref(value):
+    return isinstance(value, dict)
+
+
+def _check_location(value, where):
+    """A location is a legacy absolute path or a {root_alias, relative_path} ref."""
+    if isinstance(value, str) and value:
+        return
+    if (
+        _is_ref(value)
+        and set(value) == {"root_alias", "relative_path"}
+        and isinstance(value["root_alias"], str)
+        and value["root_alias"]
+    ):
+        _portable_path(value["relative_path"], where)
+        return
+    raise ContractError(f"{where} must be a path or a root_alias reference")
+
+
+def _location(path, roots):
+    return str(Path(path).resolve()) if roots is None else portable_path(path, roots)
+
+
+def _local(value, roots):
+    if not _is_ref(value):
+        return Path(value)
+    return resolve_root_path(
+        value["root_alias"],
+        value["relative_path"],
+        load_roots() if roots is None else roots,
+        "Lance artifact",
+    )
+
+
 @dataclass(frozen=True)
 class LanceArtifact:
-    table_path: str
+    table_path: str | dict
     snapshot_version: int
     storage_version: str
     audio_record_schema: str
@@ -82,8 +119,11 @@ class LanceArtifact:
     source_view: str
     rebuild_metadata: dict
     kind: str = "lance"
+    # Machine-local root aliases; never serialized. None means AUDIO_DATA_ROOTS_FILE.
+    roots: dict | None = field(default=None, compare=False, repr=False)
 
     def __post_init__(self):
+        _check_location(self.table_path, "table_path")
         if self.kind != "lance" or self.audio_record_schema != RECORD_SCHEMA_VERSION:
             raise ContractError("unsupported Lance artifact or AudioRecord schema")
         if self.storage_version != STORAGE_VERSION:
@@ -102,17 +142,74 @@ class LanceArtifact:
                 "source_view must include a fixed version: view@version"
             )
 
+    @property
+    def portable(self):
+        return _is_ref(self.table_path)
+
+    @property
+    def table_uri(self):
+        return str(_local(self.table_path, self.roots))
+
+    def local(self, value):
+        """Resolve a stored location (table, source JSONL or Layer) on this machine."""
+        return _local(value, self.roots)
+
+    def location_roots(self):
+        """Roots used to store new locations: None keeps legacy absolute paths."""
+        if not self.portable:
+            return None
+        return load_roots() if self.roots is None else self.roots
+
+    def replace(self, **changes):
+        return type(self)(**{**self.to_dict(), "roots": self.roots, **changes})
+
     def to_dict(self):
-        return asdict(self)
+        data = asdict(self)
+        del data["roots"]
+        return data
 
     @classmethod
-    def read(cls, path):
+    def read(cls, path, roots=None):
         try:
-            return cls(**json.loads(Path(path).read_text()))
+            return cls(**json.loads(Path(path).read_text()), roots=roots)
         except (TypeError, ValueError, OSError) as exc:
             raise ContractError(
                 f"invalid Lance artifact manifest {path}: {exc}"
             ) from exc
+
+
+def catalog_ref(artifact, sidecar, *, name, roots):
+    """Catalog ArtifactRef that pins a published sidecar and its snapshot."""
+    from .types import ArtifactRef
+
+    if not artifact.portable:
+        raise ContractError("catalog registration requires a portable Lance artifact")
+    return ArtifactRef(
+        name=name,
+        kind="lance-table",
+        **portable_path(sidecar, roots),
+        metadata={
+            "snapshot_version": artifact.snapshot_version,
+            "record_count": artifact.record_count,
+            "schema_hash": artifact.schema_hash,
+            "source_view": artifact.source_view,
+        },
+    )
+
+
+def open_catalog_artifact(catalog, dataset_id, version, artifact_name, roots):
+    """Open a registered lance-table at exactly the snapshot the catalog pins."""
+    from .catalog import resolve_artifact
+
+    ref = catalog.get(dataset_id, version).artifact(artifact_name)
+    if ref.kind != "lance-table":
+        raise ContractError(f"artifact {artifact_name!r} is not a lance-table")
+    sidecar = resolve_artifact(catalog, dataset_id, version, artifact_name, roots)
+    artifact = LanceArtifact.read(sidecar, roots)
+    for key in ("snapshot_version", "record_count", "schema_hash"):
+        if getattr(artifact, key) != ref.metadata[key]:
+            raise ContractError(f"Lance sidecar {key} differs from catalog: {sidecar}")
+    return artifact
 
 
 @dataclass(frozen=True)
@@ -186,7 +283,7 @@ def _open_artifact(artifact, *, verify_count=False):
             "Lance schema hash mismatch; rebuild with this mapping version"
         )
     try:
-        dataset = lance.dataset(artifact.table_path, version=artifact.snapshot_version)
+        dataset = lance.dataset(artifact.table_uri, version=artifact.snapshot_version)
         if not dataset.schema.equals(_schema(), check_metadata=True):
             raise ContractError("Lance physical schema mismatch")
         if dataset.data_storage_version != artifact.storage_version:
@@ -221,9 +318,18 @@ def read_lance(artifact, query=None, *, batch_size=4096):
 
 
 def import_jsonl(
-    source, destination, *, source_view, batch_size=4096, rebuild_metadata=None
+    source,
+    destination,
+    *,
+    source_view,
+    batch_size=4096,
+    rebuild_metadata=None,
+    roots=None,
 ):
-    """Publish a new local directory only after all batches validate successfully."""
+    """Publish a new local directory only after all batches validate successfully.
+
+    With roots, stored locations become portable root_alias references.
+    """
     lance, pa = _dependencies()
     if batch_size < 1:
         raise ContractError("batch_size must be positive")
@@ -266,7 +372,7 @@ def import_jsonl(
             )
         (work / "ids.sqlite").unlink()
         artifact = LanceArtifact(
-            str(destination / "table.lance"),
+            _location(destination / "table.lance", roots),
             dataset.version,
             STORAGE_VERSION,
             RECORD_SCHEMA_VERSION,
@@ -275,13 +381,14 @@ def import_jsonl(
             source_view,
             rebuild_metadata
             or {
-                "source_jsonl": str(source),
+                "source_jsonl": _location(source, roots),
                 "source_records_sha256": digest.hexdigest(),
                 "mapping": MAPPING_VERSION,
                 "layers": [],
                 "writes": [],
                 "pylance": lance.__version__,
             },
+            roots=roots,
         )
         if dataset.count_rows() != count:
             raise ContractError("Lance import record count mismatch")
@@ -297,7 +404,7 @@ def import_jsonl(
             shutil.rmtree(work)
 
 
-def materialize_layer(layer, *, source_view):
+def materialize_layer(layer, *, source_view, roots=None):
     """One local writer, one merge commit, then publish an immutable artifact manifest.
 
     If this fails, patch.jsonl and manifest.json remain available for JSONL replay.
@@ -310,14 +417,14 @@ def materialize_layer(layer, *, source_view):
     lance, pa = _dependencies()
     layer = Path(layer).resolve()
     manifest, patches, step = read_layer(layer)
-    parent = LanceArtifact(**manifest["parent"])
+    parent = LanceArtifact(**manifest["parent"], roots=roots)
     output = layer / "artifact.json"
     if output.exists():
         raise ContractError(f"Layer already published: {output}")
-    with (Path(parent.table_path).parent / ".writer.lock").open("a") as lock:
+    with (Path(parent.table_uri).parent / ".writer.lock").open("a") as lock:
         fcntl.flock(lock, fcntl.LOCK_EX)
         dataset = _open_artifact(parent)
-        latest = lance.dataset(parent.table_path)
+        latest = lance.dataset(parent.table_uri)
         if latest.version != parent.snapshot_version:
             raise ContractError(
                 "stale Layer parent snapshot; replay or rebuild required"
@@ -337,28 +444,25 @@ def materialize_layer(layer, *, source_view):
         # Validate identity before creating any new table version.
         metadata = {
             **parent.rebuild_metadata,
-            "layers": [*parent.rebuild_metadata["layers"], str(layer)],
+            "layers": [
+                *parent.rebuild_metadata["layers"],
+                _location(layer, parent.location_roots()),
+            ],
             "writes": sorted(set(parent.rebuild_metadata["writes"]) | set(step.writes)),
         }
-        artifact = LanceArtifact(
-            parent.table_path,
-            parent.snapshot_version + 1,
-            parent.storage_version,
-            parent.audio_record_schema,
-            manifest["result_record_count"],
-            parent.schema_hash,
-            source_view,
-            metadata,
+        artifact = parent.replace(
+            snapshot_version=parent.snapshot_version + 1,
+            record_count=manifest["result_record_count"],
+            source_view=source_view,
+            rebuild_metadata=metadata,
         )
         try:
             dataset.merge_insert("id").when_matched_update_all().execute(
                 pa.Table.from_pylist(rows, schema=_schema())
             )
             # Local lock guarantees this adapter is the only writer to this table.
-            committed = lance.dataset(parent.table_path)
-            artifact = LanceArtifact(
-                **{**artifact.to_dict(), "snapshot_version": committed.version}
-            )
+            committed = lance.dataset(parent.table_uri)
+            artifact = artifact.replace(snapshot_version=committed.version)
             _open_artifact(artifact, verify_count=True)
             temporary = layer / ".artifact.json.tmp"
             temporary.write_text(_json(artifact.to_dict()) + "\n")
@@ -411,7 +515,7 @@ def rebuild_artifact(artifact, destination):
 
     def source_records():
         digest = hashlib.sha256()
-        for record in load_records(metadata["source_jsonl"]):
+        for record in load_records(artifact.local(metadata["source_jsonl"])):
             digest.update((_json(record.to_dict()) + "\n").encode())
             yield record
         if digest.hexdigest() != metadata["source_records_sha256"]:
@@ -420,7 +524,7 @@ def rebuild_artifact(artifact, destination):
     records = source_records()
     previous_layers = []
     for layer in metadata["layers"]:
-        manifest, _, _ = read_layer(layer)
+        manifest, _, _ = read_layer(artifact.local(layer))
         parent_metadata = manifest["parent"]["rebuild_metadata"]
         if (
             parent_metadata["source_records_sha256"]
@@ -428,7 +532,7 @@ def rebuild_artifact(artifact, destination):
             or parent_metadata["layers"] != previous_layers
         ):
             raise ContractError("rebuild Layer parent lineage mismatch")
-        records = replay_layer(records, layer)
+        records = replay_layer(records, artifact.local(layer))
         previous_layers.append(layer)
     with tempfile.TemporaryDirectory(prefix="lance-rebuild-") as directory:
         source = Path(directory) / "records.jsonl"
@@ -441,27 +545,28 @@ def rebuild_artifact(artifact, destination):
             destination,
             source_view=artifact.source_view,
             rebuild_metadata=metadata,
+            roots=artifact.location_roots(),
         )
     return rebuilt
 
 
-def rebuild_layer(layer, destination, *, source_view):
+def rebuild_layer(layer, destination, *, source_view, roots=None):
     """Recover a failed query-layer write using only durable processing facts."""
     from .layers import read_layer
 
     manifest, _, step = read_layer(layer)
-    parent = LanceArtifact(**manifest["parent"])
+    parent = LanceArtifact(**manifest["parent"], roots=roots)
     metadata = {
         **parent.rebuild_metadata,
-        "layers": [*parent.rebuild_metadata["layers"], str(Path(layer).resolve())],
+        "layers": [
+            *parent.rebuild_metadata["layers"],
+            _location(layer, parent.location_roots()),
+        ],
         "writes": sorted(set(parent.rebuild_metadata["writes"]) | set(step.writes)),
     }
-    intended = LanceArtifact(
-        **{
-            **parent.to_dict(),
-            "source_view": source_view,
-            "record_count": manifest["result_record_count"],
-            "rebuild_metadata": metadata,
-        }
+    intended = parent.replace(
+        source_view=source_view,
+        record_count=manifest["result_record_count"],
+        rebuild_metadata=metadata,
     )
     return rebuild_artifact(intended, destination)

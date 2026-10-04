@@ -6,6 +6,7 @@ import json
 from .lance import (
     LanceArtifact,
     RecordQuery,
+    catalog_ref,
     import_jsonl,
     materialize_layer,
     rebuild_artifact,
@@ -13,11 +14,17 @@ from .lance import (
 )
 from .lance_export import export_artifact
 from .layers import write_layer
+from .roots import load_roots
 from .types import TransformStep
 
 
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument(
+        "--roots",
+        help="roots file; import stores root_alias references instead of absolute "
+        "paths (reads also honor AUDIO_DATA_ROOTS_FILE)",
+    )
     commands = parser.add_subparsers(dest="command", required=True)
     create = commands.add_parser("import")
     create.add_argument("source")
@@ -44,17 +51,26 @@ def main(argv=None):
         command = commands.add_parser(name)
         command.add_argument("artifact")
         command.add_argument("destination" if name == "rebuild" else "source")
+    register = commands.add_parser("catalog-ref", help="print a catalog ArtifactRef")
+    register.add_argument("artifact")
+    register.add_argument("--name", required=True)
     args = parser.parse_args(argv)
+    roots = load_roots(args.roots) if args.roots else None
     if args.command == "import":
         result = import_jsonl(
             args.source,
             args.destination,
             source_view=args.source_view,
             batch_size=args.batch_size,
+            roots=roots,
         ).to_dict()
     else:
-        artifact = LanceArtifact.read(args.artifact)
-        if args.command == "export":
+        artifact = LanceArtifact.read(args.artifact, roots)
+        if args.command == "catalog-ref":
+            result = catalog_ref(
+                artifact, args.artifact, name=args.name, roots=artifact.location_roots()
+            ).to_dict()
+        elif args.command == "export":
             query = RecordQuery(
                 ids=tuple(args.id) if args.id is not None else None,
                 task=args.task,
@@ -78,7 +94,9 @@ def main(argv=None):
                     tool=args.tool,
                     model=args.model,
                 )
-            result = materialize_layer(layer, source_view=args.source_view).to_dict()
+            result = materialize_layer(
+                layer, source_view=args.source_view, roots=roots
+            ).to_dict()
         elif args.command == "rebuild":
             result = rebuild_artifact(artifact, args.destination).to_dict()
         else:
