@@ -130,11 +130,11 @@ python -m pip install -e '.[duration]'
 | `duration` | `orjson` `rapidgzip` `soundfile` | 统计清单或音频目录，补齐 catalog 缺失时长 |
 | `preparation` | `lhotse` `soundfile` `textgrid` `scipy` | 从归档生成本地清单和音频副本 |
 | `backup` | `cos-python-sdk-v5` `zstandard` | COS 备份、校验与恢复 |
-| `lance` | `pylance` `pyarrow` | 可选 Lance 查询副本，**试验性**，训练仍走 JSONL / Lhotse |
+| `lance` | `pylance` `pyarrow` | Lance 查询 / 清洗后端与训练直读；JSONL + Layer 仍是权威来源 |
 | `dev` | `jsonschema` `pytest` `ruff` | 校验、测试、lint |
 
-[Lance 物化](docs/lance-materialization.md)提供固定 snapshot、选择性读取和规范 Layer 回写。
-当前只有 [CHiME-6 小范围验收报告](reports/lance-pilot-20260929/README.md)，不构成正式采用结论。
+[Lance 物化](docs/lance-materialization.md)提供固定 snapshot、标量索引查询、规范 Layer 回写、版本治理、对象存储只读镜像和分片训练读取。
+合成数据规模验收见[生产化报告](reports/lance-prod-20261004/README.md)；真实全量数据验收通过后再在 catalog 正式登记。
 
 ## 仓库结构
 
