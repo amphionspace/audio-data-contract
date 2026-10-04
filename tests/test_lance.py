@@ -651,3 +651,136 @@ def test_unsorted_patch_file_rejected(imported, tmp_path):
     path.write_text("".join(reversed(path.read_text().splitlines(True))))
     with pytest.raises(ContractError, match="unsorted"):
         materialize_layer(layer, source_view="demo/clean@v1")
+
+
+def _by_id(artifact):
+    return {r.id: r for r in read_artifact(artifact)}
+
+
+def test_rerun_resumes_after_sidecar_publication_failure(
+    imported, tmp_path, monkeypatch
+):
+    from pathlib import Path
+
+    from audio_data_contract.lance import inspect_table
+
+    layer = write_layer(
+        tmp_path / "clean", patches(), parent=imported[1], step=step(), tool="t"
+    )
+    original = Path.write_text
+
+    def fail_publication(path, *args, **kwargs):
+        if path.name == ".artifact.json.tmp":
+            raise OSError("injected manifest publication failure")
+        return original(path, *args, **kwargs)
+
+    monkeypatch.setattr(Path, "write_text", fail_publication)
+    with pytest.raises(ContractError, match="Rerun to resume"):
+        materialize_layer(layer, source_view="demo/clean@v1")
+    monkeypatch.undo()
+    committed = inspect_table(imported[1])
+    assert committed["unpublished"] == []
+    clean = materialize_layer(layer, source_view="demo/clean@v1")
+    assert clean.snapshot_version == committed["latest"]
+    assert inspect_table(clean)["latest"] == committed["latest"]
+    assert clean == LanceArtifact.read(layer / "artifact.json")
+    expected = list(replay_layer(read_artifact(imported[0]), layer))
+    assert _by_id(clean) == {r.id: r for r in expected}
+
+
+def test_untagged_commits_after_parent_are_rolled_back(imported, tmp_path, monkeypatch):
+    from lance.dataset import DatasetOptimizer
+
+    from audio_data_contract.lance import inspect_table
+
+    first = write_layer(
+        tmp_path / "first", patches(), parent=imported[1], step=step(), tool="t"
+    )
+
+    def crash(*args, **kwargs):
+        raise OSError("injected crash after merge commit")
+
+    monkeypatch.setattr(DatasetOptimizer, "optimize_indices", crash)
+    with pytest.raises(ContractError, match="injected crash"):
+        materialize_layer(first, source_view="demo/first@v1")
+    monkeypatch.undo()
+    report = inspect_table(imported[1])
+    assert report["unpublished"] == [report["latest"]]
+    other = [{"id": "sample-3", "changes": {"target": "other"}, "status": "keep"}]
+    second = write_layer(
+        tmp_path / "second", other, parent=imported[1], step=step(), tool="t2"
+    )
+    result = materialize_layer(second, source_view="demo/second@v1")
+    expected = list(replay_layer(read_artifact(imported[0]), second))
+    assert _by_id(result) == {r.id: r for r in expected}
+    assert list(read_artifact(imported[1])) == records()
+    assert inspect_table(result)["unpublished"] == []
+
+
+def test_untagged_legacy_table_stays_strict(imported, tmp_path):
+    lance.dataset(imported[1].table_path).tags.delete("import")
+    first = write_layer(
+        tmp_path / "first", patches(), parent=imported[1], step=step(), tool="t"
+    )
+    materialize_layer(first, source_view="demo/first@v1")
+    second = write_layer(
+        tmp_path / "second", patches(), parent=imported[1], step=step(), tool="t2"
+    )
+    with pytest.raises(ContractError, match="stale"):
+        materialize_layer(second, source_view="demo/second@v1")
+
+
+def test_compact_cleanup_and_protect(imported, tmp_path):
+    from audio_data_contract.lance import (
+        cleanup_artifact,
+        compact_artifact,
+        inspect_table,
+        protect_artifact,
+    )
+
+    layer = write_layer(
+        tmp_path / "clean", patches(), parent=imported[1], step=step(), tool="t"
+    )
+    clean = materialize_layer(layer, source_view="demo/clean@v1")
+    table = lance.dataset(clean.table_path)
+    assert any(f.deletion_file() is not None for f in table.get_fragments())
+    compacted = compact_artifact(clean, tmp_path / "compacted.json")
+    assert compacted == LanceArtifact.read(tmp_path / "compacted.json")
+    assert compacted.snapshot_version > clean.snapshot_version
+    assert _by_id(compacted) == _by_id(clean)
+    table = lance.dataset(clean.table_path, version=compacted.snapshot_version)
+    assert all(f.deletion_file() is None for f in table.get_fragments())
+    with pytest.raises(ContractError, match="newest published"):
+        compact_artifact(clean, tmp_path / "again.json")
+
+    before = inspect_table(compacted)
+    stats = cleanup_artifact(compacted, older_than_days=0)
+    assert stats["old_versions"] > 0
+    remaining = [v["version"] for v in lance.dataset(clean.table_path).versions()]
+    assert sorted(remaining) == before["published"]
+    for artifact in (imported[1], clean, compacted):
+        assert list(read_artifact(artifact))
+
+    lance.dataset(clean.table_path).tags.delete("import")
+    with pytest.raises(ContractError, match="protect"):
+        cleanup_artifact(imported[1], older_than_days=0)
+    assert imported[1].snapshot_version in protect_artifact(imported[1])
+    cleanup_artifact(imported[1], older_than_days=0)
+    assert list(read_artifact(imported[1])) == records()
+
+
+def test_cli_governance_commands(imported, tmp_path, capsys):
+    from audio_data_contract.lance_cli import main
+
+    layer = write_layer(
+        tmp_path / "clean", patches(), parent=imported[1], step=step(), tool="t"
+    )
+    materialize_layer(layer, source_view="demo/clean@v1")
+    sidecar = str(layer / "artifact.json")
+    capsys.readouterr()
+    assert main(["doctor", sidecar]) == 0
+    assert json.loads(capsys.readouterr().out)["unpublished"] == []
+    compacted = str(tmp_path / "compacted.json")
+    assert main(["compact", sidecar, compacted]) == 0
+    assert main(["cleanup", compacted, "--older-than-days", "0"]) == 0
+    assert main(["protect", compacted]) == 0

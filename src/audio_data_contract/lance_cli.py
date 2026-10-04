@@ -7,8 +7,12 @@ from .lance import (
     LanceArtifact,
     RecordQuery,
     catalog_ref,
+    cleanup_artifact,
+    compact_artifact,
     import_jsonl,
+    inspect_table,
     materialize_layer,
+    protect_artifact,
     rebuild_artifact,
     verify_equivalence,
 )
@@ -52,6 +56,17 @@ def main(argv=None):
         command = commands.add_parser(name)
         command.add_argument("artifact")
         command.add_argument("destination" if name == "rebuild" else "source")
+    compact = commands.add_parser("compact", help="publish a compacted sidecar")
+    compact.add_argument("artifact")
+    compact.add_argument("destination", help="new sidecar JSON path")
+    cleanup = commands.add_parser("cleanup", help="delete old untagged versions")
+    cleanup.add_argument("artifact")
+    cleanup.add_argument("--older-than-days", type=int, required=True)
+    for name, text in (
+        ("protect", "tag this sidecar's snapshot"),
+        ("doctor", "report published/unpublished versions"),
+    ):
+        commands.add_parser(name, help=text).add_argument("artifact")
     register = commands.add_parser("catalog-ref", help="print a catalog ArtifactRef")
     register.add_argument("artifact")
     register.add_argument("--name", required=True)
@@ -68,7 +83,15 @@ def main(argv=None):
         ).to_dict()
     else:
         artifact = LanceArtifact.read(args.artifact, roots)
-        if args.command == "catalog-ref":
+        if args.command == "compact":
+            result = compact_artifact(artifact, args.destination).to_dict()
+        elif args.command == "cleanup":
+            result = cleanup_artifact(artifact, older_than_days=args.older_than_days)
+        elif args.command == "protect":
+            result = {"published": protect_artifact(artifact)}
+        elif args.command == "doctor":
+            result = inspect_table(artifact)
+        elif args.command == "catalog-ref":
             result = catalog_ref(
                 artifact, args.artifact, name=args.name, roots=artifact.location_roots()
             ).to_dict()

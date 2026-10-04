@@ -8,6 +8,7 @@ import os
 import shutil
 import sqlite3
 import tempfile
+from contextlib import contextmanager
 from dataclasses import asdict, dataclass, field
 from functools import cache
 from importlib.resources import files
@@ -485,6 +486,7 @@ def import_jsonl(
         )
         if dataset.count_rows() != count:
             raise ContractError("Lance import record count mismatch")
+        dataset.tags.create("import", dataset.version)
         (work / "artifact.json").write_text(_json(artifact.to_dict()) + "\n")
         work.rename(destination)
         return artifact
@@ -511,14 +513,40 @@ def _merge_memory_pool(staged_bytes):
     return MEMORY_POOL_ENV
 
 
+@contextmanager
+def _writer_lock(artifact):
+    """Serialize every writer of one table (local POSIX lock beside the table)."""
+    import fcntl
+
+    with (Path(artifact.table_uri).parent / ".writer.lock").open("a") as lock:
+        fcntl.flock(lock, fcntl.LOCK_EX)
+        yield
+
+
+def _published(dataset):
+    """Tagged versions are the published snapshots; cleanup keeps every one."""
+    return {name: tag["version"] for name, tag in dataset.tags.list().items()}
+
+
+def _publish(dataset, artifact, tag, output):
+    """Tag the committed version first, then publish its sidecar atomically."""
+    if tag not in _published(dataset):
+        dataset.tags.create(tag, artifact.snapshot_version)
+    _open_artifact(artifact, verify_count=True)
+    temporary = output.with_name("." + output.name + ".tmp")
+    temporary.write_text(_json(artifact.to_dict()) + "\n")
+    temporary.rename(output)
+    return artifact
+
+
 def materialize_layer(layer, *, source_view, roots=None):
     """One local writer, one merge commit, then publish an immutable artifact manifest.
 
     If this fails, patch.jsonl and manifest.json remain available for JSONL replay.
+    Rerunning it resumes: a tagged commit only needs its sidecar, and untagged
+    commits left after a tagged parent are rolled back to the parent content.
     All writers to a managed table must use this adapter (local POSIX lock).
     """
-    import fcntl
-
     from .layers import apply_patch, chunks, iter_layer_rows, read_layer_manifest
 
     lance, pa = _dependencies()
@@ -531,11 +559,35 @@ def materialize_layer(layer, *, source_view, roots=None):
     output = layer / "artifact.json"
     if output.exists():
         raise ContractError(f"Layer already published: {output}")
-    with (Path(parent.table_uri).parent / ".writer.lock").open("a") as lock:
-        fcntl.flock(lock, fcntl.LOCK_EX)
+    # Identity of the whole Layer (parent, transform, tool, model and patches).
+    tag = "layer-" + _hash(manifest)[:32]
+    metadata = {
+        **parent.rebuild_metadata,
+        "layers": [
+            *parent.rebuild_metadata["layers"],
+            _location(layer, parent.location_roots()),
+        ],
+        "writes": sorted(set(parent.rebuild_metadata["writes"]) | set(step.writes)),
+    }
+    artifact = parent.replace(
+        snapshot_version=parent.snapshot_version + 1,
+        record_count=manifest["result_record_count"],
+        source_view=source_view,
+        rebuild_metadata=metadata,
+    )
+    with _writer_lock(parent):
         dataset = _open_artifact(parent)
         latest = lance.dataset(parent.table_uri)
-        if latest.version != parent.snapshot_version:
+        published = _published(latest)
+        if tag in published:
+            # Committed and tagged before an interrupted sidecar publication.
+            artifact = artifact.replace(snapshot_version=published[tag])
+            return _publish(latest, artifact, tag, output)
+        restore = latest.version != parent.snapshot_version
+        if restore and (
+            parent.snapshot_version not in published.values()
+            or max(published.values()) > parent.snapshot_version
+        ):
             raise ContractError(
                 "stale Layer parent snapshot; replay or rebuild required"
             )
@@ -559,25 +611,12 @@ def materialize_layer(layer, *, source_view, roots=None):
                         pa.RecordBatch.from_pylist(rows, schema=_schema())
                     )
             staged.flush()
-            # Validate identity before creating any new table version.
-            metadata = {
-                **parent.rebuild_metadata,
-                "layers": [
-                    *parent.rebuild_metadata["layers"],
-                    _location(layer, parent.location_roots()),
-                ],
-                "writes": sorted(
-                    set(parent.rebuild_metadata["writes"]) | set(step.writes)
-                ),
-            }
-            artifact = parent.replace(
-                snapshot_version=parent.snapshot_version + 1,
-                record_count=manifest["result_record_count"],
-                source_view=source_view,
-                rebuild_metadata=metadata,
-            )
             pool = _merge_memory_pool(os.path.getsize(staged.name))
             try:
+                if restore:
+                    # Only unpublished commits follow the parent: roll them back.
+                    dataset.restore()
+                    dataset = lance.dataset(parent.table_uri)
                 with pa.memory_map(staged.name) as source:
                     dataset.merge_insert("id").when_matched_update_all().execute(
                         pa.ipc.open_stream(source)
@@ -591,19 +630,97 @@ def materialize_layer(layer, *, source_view, roots=None):
                     committed.optimize.optimize_indices()
                     committed = lance.dataset(parent.table_uri)
                 artifact = artifact.replace(snapshot_version=committed.version)
-                _open_artifact(artifact, verify_count=True)
-                temporary = layer / ".artifact.json.tmp"
-                temporary.write_text(_json(artifact.to_dict()) + "\n")
-                temporary.rename(output)
+                return _publish(committed, artifact, tag, output)
             except Exception as exc:
                 raise ContractError(
                     f"Lance Layer materialization failed; canonical patch retained at {layer}. "
-                    f"Replay/rebuild from its parent: {exc}"
+                    f"Rerun to resume, or replay/rebuild from its parent: {exc}"
                 ) from exc
             finally:
                 if pool:
                     os.environ.pop(pool, None)
-            return artifact
+
+
+def _content_digest(dataset):
+    """Order-insensitive digest of every visible record."""
+    total = 0
+    for batch in dataset.to_batches(
+        columns=["record_json"], filter="retained = true", use_scalar_index=False
+    ):
+        for value in batch.column(0).to_pylist():
+            total += int.from_bytes(hashlib.sha256(value.encode()).digest(), "big")
+    return total % 2**256
+
+
+def compact_artifact(artifact, destination):
+    """Compact the newest published snapshot into an equivalent, tagged sidecar."""
+    lance, _ = _dependencies()
+    destination = Path(destination).resolve()
+    if destination.exists():
+        raise ContractError(f"destination already exists: {destination}")
+    with _writer_lock(artifact):
+        dataset = _open_artifact(artifact, verify_count=True)
+        latest = lance.dataset(artifact.table_uri)
+        if latest.version != artifact.snapshot_version:
+            raise ContractError("compaction requires the newest published snapshot")
+        before = _content_digest(dataset)
+        latest.optimize.compact_files(materialize_deletions=True)
+        compacted = lance.dataset(artifact.table_uri)
+        if compacted.describe_indices():
+            compacted.optimize.optimize_indices()
+            compacted = lance.dataset(artifact.table_uri)
+        if _content_digest(compacted) != before:
+            raise ContractError("compaction changed visible records; not published")
+        result = artifact.replace(snapshot_version=compacted.version)
+        destination.parent.mkdir(parents=True, exist_ok=True)
+        return _publish(compacted, result, f"compact-{compacted.version}", destination)
+
+
+def protect_artifact(artifact):
+    """Tag a sidecar's snapshot (e.g. one published before tags) against cleanup."""
+    with _writer_lock(artifact):
+        dataset = _open_artifact(artifact)
+        if artifact.snapshot_version not in _published(dataset).values():
+            dataset.tags.create(
+                f"protect-{artifact.snapshot_version}", artifact.snapshot_version
+            )
+    return sorted(set(_published(dataset).values()))
+
+
+def cleanup_artifact(artifact, *, older_than_days):
+    """Delete untagged versions older than the cutoff; tagged ones are kept."""
+    from datetime import timedelta
+
+    lance, _ = _dependencies()
+    if older_than_days < 0:
+        raise ContractError("older_than_days must be non-negative")
+    with _writer_lock(artifact):
+        dataset = lance.dataset(artifact.table_uri)
+        if artifact.snapshot_version not in _published(dataset).values():
+            raise ContractError(
+                "cleanup needs a tagged snapshot; protect every published sidecar first"
+            )
+        stats = dataset.cleanup_old_versions(
+            older_than=timedelta(days=older_than_days),
+            error_if_tagged_old_versions=False,
+        )
+    return {"old_versions": stats.old_versions, "bytes_removed": stats.bytes_removed}
+
+
+def inspect_table(artifact):
+    """Report published (tagged) and unpublished versions of a table."""
+    lance, _ = _dependencies()
+    dataset = lance.dataset(artifact.table_uri)
+    published = sorted(set(_published(dataset).values()))
+    newest = max(published, default=0)
+    return {
+        "latest": dataset.version,
+        "published": published,
+        "unpublished": [
+            v["version"] for v in dataset.versions() if v["version"] > newest
+        ],
+        "tags": _published(dataset),
+    }
 
 
 def _digest(record):
