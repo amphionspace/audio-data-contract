@@ -602,3 +602,52 @@ def test_queries_use_scalar_indexes_after_import_and_layer(imported, tmp_path):
         )
         assert indexed.equals(scanned)
     assert [r.id for r in read_artifact(clean, query)] == ["sample-0"]
+
+
+def test_chunked_layer_matches_replay_and_fails_atomically(
+    imported, tmp_path, monkeypatch
+):
+    from audio_data_contract import layers
+
+    monkeypatch.setattr(layers, "CHUNK_SIZE", 2)
+    many = [
+        {"id": f"sample-{i}", "changes": {"target": f"t{i}"}, "status": "keep"}
+        for i in (4, 0, 3, 2)
+    ] + [{"id": "sample-1", "changes": {}, "status": "delete"}]
+    layer = write_layer(
+        tmp_path / "chunked", many, parent=imported[1], step=step(), tool="t"
+    )
+    ids = [json.loads(line)["id"] for line in (layer / "patch.jsonl").open()]
+    assert ids == sorted(ids)
+    _, rows, _ = layers.read_layer(layer)
+    manifest = json.loads((layer / "manifest.json").read_text())
+    assert layers._hash(rows) == manifest["patch_hash"]
+
+    calls = []
+    original = layers.apply_patch
+
+    def fail_in_second_chunk(record, patch, step):
+        calls.append(patch["id"])
+        if len(calls) == 3:
+            raise ContractError("injected chunk failure")
+        return original(record, patch, step)
+
+    monkeypatch.setattr(layers, "apply_patch", fail_in_second_chunk)
+    with pytest.raises(ContractError, match="injected chunk failure"):
+        materialize_layer(layer, source_view="demo/clean@v1")
+    assert lance.dataset(imported[1].table_path).version == imported[1].snapshot_version
+    assert not list(tmp_path.glob(".layer-rows-*"))
+    monkeypatch.setattr(layers, "apply_patch", original)
+    clean = materialize_layer(layer, source_view="demo/clean@v1")
+    expected = list(replay_layer(read_artifact(imported[0]), layer))
+    assert {r.id: r for r in read_artifact(clean)} == {r.id: r for r in expected}
+
+
+def test_unsorted_patch_file_rejected(imported, tmp_path):
+    layer = write_layer(
+        tmp_path / "clean", patches(), parent=imported[1], step=step(), tool="t"
+    )
+    path = layer / "patch.jsonl"
+    path.write_text("".join(reversed(path.read_text().splitlines(True))))
+    with pytest.raises(ContractError, match="unsorted"):
+        materialize_layer(layer, source_view="demo/clean@v1")

@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import os
 import shutil
 import sqlite3
 import tempfile
@@ -498,6 +499,18 @@ def import_jsonl(
             shutil.rmtree(work)
 
 
+MEMORY_POOL_ENV = "LANCE_MEM_POOL_SIZE"
+
+
+def _merge_memory_pool(staged_bytes):
+    """merge_insert's hash join cannot spill, and Lance's default 150 MiB pool fails
+    near 200k patches; size it to the staged Layer unless the caller set it."""
+    if MEMORY_POOL_ENV in os.environ:
+        return None
+    os.environ[MEMORY_POOL_ENV] = str(max(150 * 2**20, 4 * staged_bytes))
+    return MEMORY_POOL_ENV
+
+
 def materialize_layer(layer, *, source_view, roots=None):
     """One local writer, one merge commit, then publish an immutable artifact manifest.
 
@@ -506,11 +519,14 @@ def materialize_layer(layer, *, source_view, roots=None):
     """
     import fcntl
 
-    from .layers import apply_patch, read_layer
+    from .layers import apply_patch, chunks, iter_layer_rows, read_layer_manifest
 
     lance, pa = _dependencies()
     layer = Path(layer).resolve()
-    manifest, patches, step = read_layer(layer)
+    manifest, step = read_layer_manifest(layer)
+    # Verify the whole canonical batch (hashes, order, counts) before any write.
+    for _ in iter_layer_rows(layer, manifest):
+        pass
     parent = LanceArtifact(**manifest["parent"], roots=roots)
     output = layer / "artifact.json"
     if output.exists():
@@ -523,54 +539,71 @@ def materialize_layer(layer, *, source_view, roots=None):
             raise ContractError(
                 "stale Layer parent snapshot; replay or rebuild required"
             )
-        found = {
-            r.id: r
-            for r in read_lance(
-                parent, RecordQuery(ids=tuple(p["id"] for p in patches))
+        # Stage patched rows chunk by chunk; memory stays bounded by the chunk size.
+        with tempfile.NamedTemporaryFile(
+            prefix=".layer-rows-", suffix=".arrows", dir=layer.parent
+        ) as staged:
+            with pa.ipc.new_stream(staged, _schema()) as writer:
+                for chunk in chunks(iter_layer_rows(layer, manifest)):
+                    ids = tuple(patch["id"] for patch in chunk)
+                    found = {r.id: r for r in read_lance(parent, RecordQuery(ids=ids))}
+                    rows = []
+                    for patch in chunk:
+                        if patch["id"] not in found:
+                            raise ContractError(
+                                f"unknown or deleted patch ID: {patch['id']}"
+                            )
+                        record, retained = apply_patch(found[patch["id"]], patch, step)
+                        rows.append(_row(record, retained))
+                    writer.write_batch(
+                        pa.RecordBatch.from_pylist(rows, schema=_schema())
+                    )
+            staged.flush()
+            # Validate identity before creating any new table version.
+            metadata = {
+                **parent.rebuild_metadata,
+                "layers": [
+                    *parent.rebuild_metadata["layers"],
+                    _location(layer, parent.location_roots()),
+                ],
+                "writes": sorted(
+                    set(parent.rebuild_metadata["writes"]) | set(step.writes)
+                ),
+            }
+            artifact = parent.replace(
+                snapshot_version=parent.snapshot_version + 1,
+                record_count=manifest["result_record_count"],
+                source_view=source_view,
+                rebuild_metadata=metadata,
             )
-        }
-        rows = []
-        for patch in patches:
-            if patch["id"] not in found:
-                raise ContractError(f"unknown or deleted patch ID: {patch['id']}")
-            record, retained = apply_patch(found[patch["id"]], patch, step)
-            rows.append(_row(record, retained))
-        # Validate identity before creating any new table version.
-        metadata = {
-            **parent.rebuild_metadata,
-            "layers": [
-                *parent.rebuild_metadata["layers"],
-                _location(layer, parent.location_roots()),
-            ],
-            "writes": sorted(set(parent.rebuild_metadata["writes"]) | set(step.writes)),
-        }
-        artifact = parent.replace(
-            snapshot_version=parent.snapshot_version + 1,
-            record_count=manifest["result_record_count"],
-            source_view=source_view,
-            rebuild_metadata=metadata,
-        )
-        try:
-            dataset.merge_insert("id").when_matched_update_all().execute(
-                pa.Table.from_pylist(rows, schema=_schema())
-            )
-            # Local lock guarantees this adapter is the only writer to this table.
-            committed = lance.dataset(parent.table_uri)
-            if committed.describe_indices():
-                # Index the rewritten rows; this commits one more table version.
-                committed.optimize.optimize_indices()
+            pool = _merge_memory_pool(os.path.getsize(staged.name))
+            try:
+                with pa.memory_map(staged.name) as source:
+                    dataset.merge_insert("id").when_matched_update_all().execute(
+                        pa.ipc.open_stream(source)
+                    )
+                if pool:
+                    del os.environ[pool]
+                # Local lock guarantees this adapter is the only writer to this table.
                 committed = lance.dataset(parent.table_uri)
-            artifact = artifact.replace(snapshot_version=committed.version)
-            _open_artifact(artifact, verify_count=True)
-            temporary = layer / ".artifact.json.tmp"
-            temporary.write_text(_json(artifact.to_dict()) + "\n")
-            temporary.rename(output)
-        except Exception as exc:
-            raise ContractError(
-                f"Lance Layer materialization failed; canonical patch retained at {layer}. "
-                f"Replay/rebuild from its parent: {exc}"
-            ) from exc
-        return artifact
+                if committed.describe_indices():
+                    # Index the rewritten rows; this commits one more table version.
+                    committed.optimize.optimize_indices()
+                    committed = lance.dataset(parent.table_uri)
+                artifact = artifact.replace(snapshot_version=committed.version)
+                _open_artifact(artifact, verify_count=True)
+                temporary = layer / ".artifact.json.tmp"
+                temporary.write_text(_json(artifact.to_dict()) + "\n")
+                temporary.rename(output)
+            except Exception as exc:
+                raise ContractError(
+                    f"Lance Layer materialization failed; canonical patch retained at {layer}. "
+                    f"Replay/rebuild from its parent: {exc}"
+                ) from exc
+            finally:
+                if pool:
+                    os.environ.pop(pool, None)
+            return artifact
 
 
 def _digest(record):
