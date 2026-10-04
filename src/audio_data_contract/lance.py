@@ -16,7 +16,7 @@ from pathlib import Path
 
 from .errors import ContractError
 from .records import load_records
-from .roots import load_roots, portable_path, resolve_root_path
+from .roots import is_url, load_roots, portable_path, resolve_root_path
 from .types import RECORD_SCHEMA_VERSION, AudioRecord, _portable_path
 
 STORAGE_VERSION = "2.0"
@@ -100,13 +100,15 @@ def _location(path, roots):
 
 
 def _local(value, roots):
+    """Resolve a stored location to a local Path, or a URI on an object-store root."""
     if not _is_ref(value):
         return Path(value)
+    roots = load_roots(allow_urls=True) if roots is None else roots
+    root = roots.get(value["root_alias"])
+    if root is not None and is_url(root):
+        return f"{str(root).rstrip('/')}/{value['relative_path']}"
     return resolve_root_path(
-        value["root_alias"],
-        value["relative_path"],
-        load_roots() if roots is None else roots,
-        "Lance artifact",
+        value["root_alias"], value["relative_path"], roots, "Lance artifact"
     )
 
 
@@ -160,7 +162,7 @@ class LanceArtifact:
         """Roots used to store new locations: None keeps legacy absolute paths."""
         if not self.portable:
             return None
-        return load_roots() if self.roots is None else self.roots
+        return load_roots(allow_urls=True) if self.roots is None else self.roots
 
     def replace(self, **changes):
         return type(self)(**{**self.to_dict(), "roots": self.roots, **changes})
@@ -518,6 +520,10 @@ def _writer_lock(artifact):
     """Serialize every writer of one table (local POSIX lock beside the table)."""
     import fcntl
 
+    if is_url(artifact.table_uri):
+        raise ContractError(
+            "object-store Lance tables are read-only mirrors; write the local table"
+        )
     with (Path(artifact.table_uri).parent / ".writer.lock").open("a") as lock:
         fcntl.flock(lock, fcntl.LOCK_EX)
         yield
@@ -705,6 +711,61 @@ def cleanup_artifact(artifact, *, older_than_days):
             error_if_tagged_old_versions=False,
         )
     return {"old_versions": stats.old_versions, "bytes_removed": stats.bytes_removed}
+
+
+def mirror_artifact(artifact, target_root):
+    """Copy a published local table to another root, e.g. COS/OBS as s3://bucket/x.
+
+    Files keep the sidecar's relative path, so the same sidecar reads the mirror
+    once a roots file maps its alias to target_root. Immutable files go first,
+    version manifests next and tags last; existing immutable files are skipped.
+    Object-store credentials/endpoints come from the standard AWS_* environment.
+    """
+    from pyarrow import fs
+
+    if not artifact.portable:
+        raise ContractError("mirroring requires a portable Lance artifact")
+    alias = artifact.table_path["root_alias"]
+    target = f"{str(target_root).rstrip('/')}/{artifact.table_path['relative_path']}"
+    if is_url(target):
+        remote, base = fs.FileSystem.from_uri(target)
+    else:
+        remote, base = fs.LocalFileSystem(), str(Path(target).resolve())
+    local = fs.LocalFileSystem()
+
+    def order(path):
+        top = path.parts[0]
+        return (top == "_versions") + 2 * (top == "_refs"), str(path)
+
+    copied = skipped = size = 0
+    with _writer_lock(artifact):
+        source = Path(artifact.table_uri)
+        files = sorted(
+            (p.relative_to(source) for p in source.rglob("*") if p.is_file()),
+            key=order,
+        )
+        for relative in files:
+            destination = f"{base}/{relative.as_posix()}"
+            length = (source / relative).stat().st_size
+            info = remote.get_file_info(destination)
+            if (
+                relative.parts[0] != "_refs"
+                and info.type == fs.FileType.File
+                and info.size == length
+            ):
+                skipped += 1
+                continue
+            remote.create_dir(destination.rsplit("/", 1)[0], recursive=True)
+            fs.copy_files(
+                str(source / relative),
+                destination,
+                source_filesystem=local,
+                destination_filesystem=remote,
+            )
+            copied, size = copied + 1, size + length
+    mirrored = artifact.replace(roots={**artifact.location_roots(), alias: target_root})
+    _open_artifact(mirrored, verify_count=True)
+    return {"target": target, "copied": copied, "skipped": skipped, "bytes": size}
 
 
 def inspect_table(artifact):

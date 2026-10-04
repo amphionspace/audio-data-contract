@@ -12,6 +12,7 @@ from .lance import (
     import_jsonl,
     inspect_table,
     materialize_layer,
+    mirror_artifact,
     protect_artifact,
     rebuild_artifact,
     verify_equivalence,
@@ -62,6 +63,9 @@ def main(argv=None):
     cleanup = commands.add_parser("cleanup", help="delete old untagged versions")
     cleanup.add_argument("artifact")
     cleanup.add_argument("--older-than-days", type=int, required=True)
+    mirror = commands.add_parser("mirror", help="copy a table to another root")
+    mirror.add_argument("artifact")
+    mirror.add_argument("target_root", help="e.g. s3://bucket/prefix (AWS_* env)")
     for name, text in (
         ("protect", "tag this sidecar's snapshot"),
         ("doctor", "report published/unpublished versions"),
@@ -71,7 +75,7 @@ def main(argv=None):
     register.add_argument("artifact")
     register.add_argument("--name", required=True)
     args = parser.parse_args(argv)
-    roots = load_roots(args.roots) if args.roots else None
+    roots = load_roots(args.roots, allow_urls=True) if args.roots else None
     if args.command == "import":
         result = import_jsonl(
             args.source,
@@ -87,6 +91,8 @@ def main(argv=None):
             result = compact_artifact(artifact, args.destination).to_dict()
         elif args.command == "cleanup":
             result = cleanup_artifact(artifact, older_than_days=args.older_than_days)
+        elif args.command == "mirror":
+            result = mirror_artifact(artifact, args.target_root)
         elif args.command == "protect":
             result = {"published": protect_artifact(artifact)}
         elif args.command == "doctor":

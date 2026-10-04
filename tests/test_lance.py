@@ -784,3 +784,43 @@ def test_cli_governance_commands(imported, tmp_path, capsys):
     assert main(["compact", sidecar, compacted]) == 0
     assert main(["cleanup", compacted, "--older-than-days", "0"]) == 0
     assert main(["protect", compacted]) == 0
+
+
+def test_mirror_to_url_root_is_incremental_and_read_only(tmp_path):
+    from audio_data_contract.lance import compact_artifact, mirror_artifact
+    from audio_data_contract.roots import load_roots
+
+    local = {"managed": tmp_path / "managed"}
+    write_records(records(), tmp_path / "managed/records.jsonl")
+    raw = import_jsonl(
+        tmp_path / "managed/records.jsonl",
+        tmp_path / "managed/raw",
+        source_view="demo/raw@v1",
+        roots=local,
+    )
+    remote = (tmp_path / "bucket").as_uri()
+    first = mirror_artifact(raw, remote)
+    assert first["copied"] > 0
+    assert first["target"] == remote + "/raw/table.lance"
+
+    roots_file = tmp_path / "roots.json"
+    roots_file.write_text(json.dumps({"managed": remote}))
+    with pytest.raises(ContractError, match="absolute path"):
+        load_roots(roots_file)
+    reader = load_roots(roots_file, allow_urls=True)
+    mirrored = LanceArtifact.read(tmp_path / "managed/raw/artifact.json", reader)
+    assert mirrored.table_uri == remote + "/raw/table.lance"
+    assert list(read_artifact(mirrored)) == records()
+    with pytest.raises(ContractError, match="read-only"):
+        compact_artifact(mirrored, tmp_path / "compacted.json")
+
+    layer = write_layer(
+        tmp_path / "managed/clean", patches(), parent=raw, step=step(), tool="t"
+    )
+    clean = materialize_layer(layer, source_view="demo/clean@v1", roots=local)
+    second = mirror_artifact(clean, remote)
+    # Unchanged immutable files from the first mirror are not copied again.
+    assert second["skipped"] > 0
+    remote_clean = LanceArtifact.read(layer / "artifact.json", reader)
+    assert _by_id(remote_clean) == _by_id(clean)
+    assert list(read_artifact(mirrored)) == records()
