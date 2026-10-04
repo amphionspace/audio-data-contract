@@ -125,6 +125,16 @@ def test_view_rejects_undeclared_field_conflict(tmp_path):
         load_view_catalog(views_path, load_catalog(catalog_path))
 
 
+def test_roots_example_declares_every_catalog_root_alias():
+    """roots.example.json is the documented alias list; a gap breaks resolve on a new host."""
+    catalog = load_catalog(ROOT / "catalog")
+    used = {artifact.root_alias for spec in catalog for artifact in spec.artifacts}
+    declared = set(json.loads((ROOT / "roots.example.json").read_text(encoding="utf-8")))
+
+    missing = used - declared
+    assert not missing, f"roots.example.json is missing: {sorted(missing)}"
+
+
 def test_registered_local_views_are_valid_and_resolvable(capsys):
     datasets = load_catalog(ROOT / "catalog")
     views = load_view_catalog(ROOT / "views", datasets)

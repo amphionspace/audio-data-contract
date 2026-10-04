@@ -13,7 +13,7 @@ dependencies = ["ruamel.yaml>=0.18.16,<0.19"]
 
 [project.optional-dependencies]
 lance = ["pylance==12.0.0", "pyarrow>=16,<26"]
-dev = ["jsonschema[format]", "pytest", "ruff"]
+dev = ["jsonschema[format]", "pytest", "ruff==0.16.10"]
 preparation = ["requests", "lhotse==1.33.0", "soundfile", "textgrid", "numpy", "scipy"]
 duration = ["orjson>=3.10", "rapidgzip>=0.16", "soundfile>=0.13"]
 backup = ["cos-python-sdk-v5==1.9.44", "crcmod>=1.7", "zstandard>=0.23"]
