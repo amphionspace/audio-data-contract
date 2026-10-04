@@ -1,4 +1,5 @@
 {
+  "dns5_noise_rir": "/path/to/dns5",
   "alimeeting_far_raw": "/data/alimeeting/original/far",
   "audio_data_contract": "/path/to/audio-data-contract",
   "amphion_data": "/path/to/AmphionData",

@@ -1,0 +1,91 @@
+"""Opt-in Lance commands, separate from training/catalog entry points."""
+
+import argparse
+import json
+
+from .lance import (
+    LanceArtifact,
+    RecordQuery,
+    import_jsonl,
+    materialize_layer,
+    rebuild_artifact,
+    verify_equivalence,
+)
+from .lance_export import export_artifact
+from .layers import write_layer
+from .types import TransformStep
+
+
+def main(argv=None):
+    parser = argparse.ArgumentParser(description=__doc__)
+    commands = parser.add_subparsers(dest="command", required=True)
+    create = commands.add_parser("import")
+    create.add_argument("source")
+    create.add_argument("destination")
+    create.add_argument("--source-view", required=True)
+    create.add_argument("--batch-size", type=int, default=4096)
+    export = commands.add_parser("export")
+    export.add_argument("artifact")
+    export.add_argument("destination")
+    export.add_argument("--id", action="append")
+    export.add_argument("--task")
+    export.add_argument("--language")
+    export.add_argument("--split")
+    export.add_argument("--clean-pass", choices=["true", "false"])
+    patch = commands.add_parser("patch")
+    patch.add_argument("artifact")
+    patch.add_argument("patches", help="JSONL rows with id, changes, status")
+    patch.add_argument("transform", help="TransformStep JSON file")
+    patch.add_argument("destination", help="new canonical Layer directory")
+    patch.add_argument("--source-view", required=True)
+    patch.add_argument("--tool", required=True)
+    patch.add_argument("--model")
+    for name in ("rebuild", "verify"):
+        command = commands.add_parser(name)
+        command.add_argument("artifact")
+        command.add_argument("destination" if name == "rebuild" else "source")
+    args = parser.parse_args(argv)
+    if args.command == "import":
+        result = import_jsonl(
+            args.source,
+            args.destination,
+            source_view=args.source_view,
+            batch_size=args.batch_size,
+        ).to_dict()
+    else:
+        artifact = LanceArtifact.read(args.artifact)
+        if args.command == "export":
+            query = RecordQuery(
+                ids=tuple(args.id) if args.id is not None else None,
+                task=args.task,
+                language=args.language,
+                split=args.split,
+                clean_pass=None
+                if args.clean_pass is None
+                else args.clean_pass == "true",
+            )
+            export_artifact(artifact, args.destination, query=query)
+            result = {"output": args.destination}
+        elif args.command == "patch":
+            with open(args.transform) as stream:
+                step = TransformStep.from_dict(json.load(stream))
+            with open(args.patches) as stream:
+                layer = write_layer(
+                    args.destination,
+                    (json.loads(line) for line in stream if line.strip()),
+                    parent=artifact,
+                    step=step,
+                    tool=args.tool,
+                    model=args.model,
+                )
+            result = materialize_layer(layer, source_view=args.source_view).to_dict()
+        elif args.command == "rebuild":
+            result = rebuild_artifact(artifact, args.destination).to_dict()
+        else:
+            result = verify_equivalence(artifact, args.source)
+    print(json.dumps(result, ensure_ascii=False, indent=2))
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

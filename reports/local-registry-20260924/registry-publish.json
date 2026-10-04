@@ -1,0 +1,17 @@
+{
+  "catalog_versions": 1,
+  "views": 0,
+  "root": "/workspace/data",
+  "artifacts": 10,
+  "sample_verified": {
+    "impulse_responses_000": {
+      "bytes": 264965552,
+      "sha256": "48ac3ddde25ce410214c94c851d402b8e28f553b010e3d6aa0926460241e9059"
+    },
+    "audioset_000": {
+      "bytes": 5364611964,
+      "sha256": "2c8cd05b1d391fbc9d7177dc2b3dc49d725fdcef458f2f5cb35164f1571d23c5"
+    }
+  },
+  "publication": "candidate_validated_then_atomic_directory_replace"
+}

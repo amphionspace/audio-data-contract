@@ -7,7 +7,13 @@ from .catalog import (
     validate_catalog,
     verify_artifact_file,
 )
-from .records import load_examples, load_records, write_examples, write_records
+from .records import (
+    load_examples,
+    load_records,
+    read_artifact,
+    write_examples,
+    write_records,
+)
 from .render import extract_audio_refs, render_example
 from .roots import load_roots
 from .state import (
@@ -69,6 +75,7 @@ __all__ = [
     "load_roots",
     "load_state",
     "load_view_catalog",
+    "read_artifact",
     "render_example",
     "resolve_artifact",
     "resolve_view",

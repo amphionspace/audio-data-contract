@@ -1,0 +1,19 @@
+{
+  "source": "/tmp/audio-contract-chime6-lance-pilot-20260929/records.jsonl",
+  "source_view": "chime6/lance-pilot@dev-v1",
+  "records": 7437,
+  "python": "3.12.3",
+  "platform": "Linux-4.18.0-425.3.1.el8.x86_64-x86_64-with-glibc2.39",
+  "first_jsonl_scan_s": 0.30841622315347195,
+  "source_bytes": 6073897,
+  "repeats": 7,
+  "notes": [
+    "Warm repeated queries, no OS cache flush; full AudioRecord decoding.",
+    "No scalar/vector indexes. ID queries exhaust matching scans.",
+    "RSS is this process high-water mark, not per-operation delta.",
+    "Patch quality values are benchmark markers, not cleaning results."
+  ],
+  "jsonl_materialize_s": 0.5485465824604034,
+  "jsonl_materialized_bytes": 6073897,
+  "jsonl_duplicate_bytes": 6073897
+}

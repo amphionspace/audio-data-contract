@@ -1,0 +1,30 @@
+{
+  "records": 7437,
+  "audio_refs_resolve_equally": true,
+  "lhotse_exports": [
+    "worn.compat.cuts.jsonl.gz",
+    "far.compat.cuts.jsonl.gz"
+  ],
+  "lhotse_1.33.0": {
+    "worn": {
+      "cuts": 7437,
+      "validated": true,
+      "loaded_audio_shape": [
+        2,
+        51520
+      ],
+      "start": 40.6,
+      "duration": 3.219999999999999
+    },
+    "far": {
+      "cuts": 7437,
+      "validated": true,
+      "loaded_audio_shape": [
+        1,
+        51520
+      ],
+      "start": 40.6,
+      "duration": 3.219999999999999
+    }
+  }
+}
