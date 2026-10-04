@@ -2,7 +2,7 @@
 
 按数据集查看语言、支持任务、时长和特性。清洗、热词、加噪、评测入口和训练框架配置归入所属数据集，不另算一套源数据。
 
-当前登记 **118 个数据集条目**；另有 **20 个下载来源声明**和 **1 个训练混合配方**。登记不代表本机文件已齐备。
+当前登记 **119 个数据集条目**；另有 **20 个下载来源声明**和 **1 个训练混合配方**。登记不代表本机文件已齐备。
 
 时长单位为小时。不同版本、子集和标注片段可能重叠，逐项列出，不相加为总量；没有时长的条目仍保留。参考表数字未核实当前文件与划分覆盖；“过滤前”不能当作清洗后时长。
 
@@ -124,6 +124,7 @@
 | [common_voice_ja](../../catalog/legacy_multilingual.yaml#L1037) | ja | 语音识别 | 48.2（已登记；[legacy](../../catalog/legacy_multilingual.yaml#L1037)） | 有含标点版本 |
 | [common_voice_ko](../../catalog/legacy_multilingual.yaml#L1177) | ko | 语音识别 | 2.6（已登记；[legacy](../../catalog/legacy_multilingual.yaml#L1177)） | 有含标点版本 |
 | [common_voice_ru](../../catalog/legacy_multilingual.yaml#L1352) | ru | 语音识别 | 69.9（已登记；[legacy](../../catalog/legacy_multilingual.yaml#L1352)） | 有含标点版本 |
+| [dns5_noise_rir](../../catalog/dns5_noise_rir.yaml#L1) | und | rir、speech_enhancement | 未登记 | 官方脚本列出的全部 7 个 AudioSet 噪声包、2 个 Freesound 噪声包及 1 个脉冲响应包；不包含干净语音 |
 | [emilia_ja](../../catalog/legacy_multilingual.yaml#L1080) | ja | 语音识别 | 1,715.5（已登记；[legacy](../../catalog/legacy_multilingual.yaml#L1080)） | 有含标点版本 |
 | [emilia_ko](../../catalog/legacy_multilingual.yaml#L1220) | ko | 语音识别 | 217.2（已登记；[legacy](../../catalog/legacy_multilingual.yaml#L1220)） | 有含标点版本 |
 | [fleurs_ar](../../catalog/legacy_multilingual.yaml#L44) | ar | 语音识别 | 8.2（已登记；[legacy](../../catalog/legacy_multilingual.yaml#L44)） | 有含标点版本 |
