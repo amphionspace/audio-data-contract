@@ -116,6 +116,45 @@ def test_duplicate_across_batches_never_published(tmp_path):
     assert not list(tmp_path.glob(".lance-import-*"))
 
 
+def test_parallel_import_matches_single_process(tmp_path):
+    source = tmp_path / "records.jsonl"
+    write_records(records(), source)
+    single = import_jsonl(source, tmp_path / "one", source_view="d/r@v1", batch_size=2)
+    parallel = import_jsonl(
+        source, tmp_path / "many", source_view="d/r@v1", batch_size=2, workers=2
+    )
+    assert parallel.rebuild_metadata == single.rebuild_metadata
+    assert parallel.record_count == 5
+    assert list(read_artifact(parallel)) == list(read_artifact(single)) == records()
+
+
+@pytest.mark.parametrize("workers", [1, 2])
+def test_parallel_import_rejects_duplicates_and_bad_lines(tmp_path, workers):
+    source = tmp_path / "dup.jsonl"
+    write_records([*records(), records()[0]], source)
+    with pytest.raises(ContractError, match="duplicate record ID: sample-0"):
+        import_jsonl(
+            source,
+            tmp_path / "dup",
+            source_view="d/r@v1",
+            batch_size=2,
+            workers=workers,
+        )
+    write_records(records(), source)
+    with source.open("a") as stream:
+        stream.write("{not json\n")
+    with pytest.raises(ContractError, match="dup.jsonl:6"):
+        import_jsonl(
+            source,
+            tmp_path / "bad",
+            source_view="d/r@v1",
+            batch_size=2,
+            workers=workers,
+        )
+    assert not list(tmp_path.glob("dup")) + list(tmp_path.glob("bad"))
+    assert not list(tmp_path.glob(".lance-import-*"))
+
+
 def step():
     return TransformStep(
         "clean",
@@ -511,3 +550,24 @@ def test_cli_portable_import_and_catalog_ref(tmp_path, capsys):
     assert ref["kind"] == "lance-table"
     assert ref["relative_path"] == "raw/artifact.json"
     assert ref["metadata"]["record_count"] == 5
+
+
+def _exit_worker(chunk):
+    import os
+
+    os._exit(1)
+
+
+def test_dead_import_worker_fails_instead_of_hanging():
+    import multiprocessing
+    from concurrent.futures import ProcessPoolExecutor
+    from concurrent.futures.process import BrokenProcessPool
+
+    from audio_data_contract.lance import _ordered
+
+    context = multiprocessing.get_context("spawn")
+    with (
+        ProcessPoolExecutor(1, mp_context=context) as pool,
+        pytest.raises(BrokenProcessPool),
+    ):
+        list(_ordered(pool, _exit_worker, range(3), 2))

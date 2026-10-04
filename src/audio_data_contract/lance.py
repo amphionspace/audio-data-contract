@@ -260,9 +260,10 @@ class RecordQuery:
         return " AND ".join(parts)
 
 
-def _row(record, retained=True):
-    # Revalidate before writing, including objects constructed directly by callers.
-    record = AudioRecord.from_dict(record.to_dict())
+def _row(record, retained=True, *, validate=True):
+    if validate:
+        # Revalidate objects constructed directly by callers.
+        record = AudioRecord.from_dict(record.to_dict())
     clean = record.metadata.get("clean")
     passed = clean.get("pass") if isinstance(clean, dict) else None
     return {
@@ -274,6 +275,71 @@ def _row(record, retained=True):
         "retained": retained,
         "record_json": _json(record.to_dict()),
     }
+
+
+def _encode_lines(chunk):
+    """Validate one chunk of raw JSONL lines into an Arrow batch, in source order.
+
+    Runs in import worker processes; returns the batch, its IDs and the canonical
+    record stream bytes that feed the source digest.
+    """
+    _, pa = _dependencies()
+    source, first_line, lines = chunk
+    rows = []
+    for number, line in enumerate(lines, first_line):
+        line = line.strip()
+        if not line:
+            continue
+        try:
+            record = AudioRecord.from_dict(json.loads(line))
+        except ValueError as exc:
+            raise ContractError(f"{source}:{number}: {exc}") from exc
+        rows.append(_row(record, validate=False))
+    stream = "".join(row["record_json"] + "\n" for row in rows).encode()
+    batch = pa.RecordBatch.from_pylist(rows, schema=_schema())
+    return batch, [row["id"] for row in rows], stream
+
+
+def _line_chunks(source, size):
+    from .records import _open
+
+    with _open(source, "r") as stream:
+        lines, first = [], 1
+        for number, line in enumerate(stream, 1):
+            lines.append(line)
+            if len(lines) == size:
+                yield str(source), first, lines
+                lines, first = [], number + 1
+        if lines:
+            yield str(source), first, lines
+
+
+def _ordered(executor, function, items, window):
+    """Lazy, order-preserving map with at most `window` chunks in flight."""
+    from collections import deque
+
+    pending = deque()
+    for item in items:
+        pending.append(executor.submit(function, item))
+        if len(pending) >= window:
+            yield pending.popleft().result()
+    while pending:
+        yield pending.popleft().result()
+
+
+def _claim_ids(db, ids):
+    """Reserve a batch of IDs in the disk-backed index; reject any duplicate."""
+    try:
+        db.executemany("INSERT INTO ids VALUES (?)", ((i,) for i in ids))
+        db.commit()
+    except sqlite3.IntegrityError:
+        db.rollback()
+        seen = set()
+        for i in ids:
+            if i in seen or db.execute("SELECT 1 FROM ids WHERE id=?", (i,)).fetchone():
+                raise ContractError(f"duplicate record ID: {i}") from None
+            seen.add(i)
+        raise
 
 
 def _open_artifact(artifact, *, verify_count=False):
@@ -325,14 +391,19 @@ def import_jsonl(
     batch_size=4096,
     rebuild_metadata=None,
     roots=None,
+    workers=1,
 ):
     """Publish a new local directory only after all batches validate successfully.
 
-    With roots, stored locations become portable root_alias references.
+    With roots, stored locations become portable root_alias references. Workers > 1
+    validate/encode batches in spawned processes; output order stays source order.
     """
-    lance, pa = _dependencies()
-    if batch_size < 1:
-        raise ContractError("batch_size must be positive")
+    import multiprocessing
+    from concurrent.futures import ProcessPoolExecutor
+
+    lance, _ = _dependencies()
+    if batch_size < 1 or workers < 1:
+        raise ContractError("batch_size and workers must be positive")
     source, destination = Path(source).resolve(), Path(destination).resolve()
     if destination.exists():
         raise ContractError(f"destination already exists: {destination}")
@@ -340,29 +411,31 @@ def import_jsonl(
     work = Path(tempfile.mkdtemp(prefix=".lance-import-", dir=destination.parent))
     count = 0
     digest = hashlib.sha256()
+    pool = None
     try:
+        chunks = _line_chunks(source, batch_size)
+        if workers == 1:
+            encoded = map(_encode_lines, chunks)
+        else:
+            # A dead worker raises BrokenProcessPool instead of hanging the import.
+            pool = ProcessPoolExecutor(
+                workers, mp_context=multiprocessing.get_context("spawn")
+            )
+            encoded = _ordered(pool, _encode_lines, chunks, 2 * workers)
         with sqlite3.connect(work / "ids.sqlite", check_same_thread=False) as ids:
+            ids.execute("PRAGMA journal_mode=MEMORY")
+            ids.execute("PRAGMA synchronous=OFF")
             ids.execute("CREATE TABLE ids (id TEXT PRIMARY KEY)")
 
             def batches():
                 nonlocal count
-                rows = []
-                for record in load_records(source):
-                    try:
-                        ids.execute("INSERT INTO ids VALUES (?)", (record.id,))
-                    except sqlite3.IntegrityError as exc:
-                        raise ContractError(
-                            f"duplicate record ID: {record.id}"
-                        ) from exc
-                    row = _row(record)
-                    digest.update((row["record_json"] + "\n").encode())
-                    count += 1
-                    rows.append(row)
-                    if len(rows) == batch_size:
-                        yield pa.RecordBatch.from_pylist(rows, schema=_schema())
-                        rows = []
-                if rows:
-                    yield pa.RecordBatch.from_pylist(rows, schema=_schema())
+                for batch, batch_ids, stream in encoded:
+                    if not batch_ids:
+                        continue
+                    _claim_ids(ids, batch_ids)
+                    digest.update(stream)
+                    count += len(batch_ids)
+                    yield batch
 
             dataset = lance.write_dataset(
                 batches(),
@@ -400,6 +473,8 @@ def import_jsonl(
             raise
         raise ContractError(f"Lance import failed; nothing published: {exc}") from exc
     finally:
+        if pool is not None:
+            pool.shutdown(cancel_futures=True)
         if work.exists():
             shutil.rmtree(work)
 
@@ -475,6 +550,10 @@ def materialize_layer(layer, *, source_view, roots=None):
         return artifact
 
 
+def _digest(record):
+    return hashlib.sha256(_json(record.to_dict()).encode()).digest()
+
+
 def verify_equivalence(artifact, source):
     """Streaming exact ID/fact comparison with a disk-backed uniqueness index."""
     dataset = _open_artifact(artifact, verify_count=True)
@@ -483,22 +562,23 @@ def verify_equivalence(artifact, source):
         tempfile.TemporaryDirectory(prefix="lance-verify-") as directory,
         sqlite3.connect(Path(directory) / "facts.sqlite") as db,
     ):
-        db.execute("CREATE TABLE facts (id TEXT PRIMARY KEY, payload TEXT)")
+        # Digests instead of payloads keep the full-scale index small.
+        db.execute("CREATE TABLE facts (id TEXT PRIMARY KEY, digest BLOB)")
         count = 0
         for record in load_records(source):
             try:
                 db.execute(
                     "INSERT INTO facts VALUES (?, ?)",
-                    (record.id, _json(record.to_dict())),
+                    (record.id, _digest(record)),
                 )
             except sqlite3.IntegrityError as exc:
                 raise ContractError(f"duplicate JSONL ID: {record.id}") from exc
             count += 1
         for record in read_lance(artifact):
             found = db.execute(
-                "SELECT payload FROM facts WHERE id=?", (record.id,)
+                "SELECT digest FROM facts WHERE id=?", (record.id,)
             ).fetchone()
-            if found is None or found[0] != _json(record.to_dict()):
+            if found is None or found[0] != _digest(record):
                 raise ContractError(f"Lance/JSONL record mismatch: {record.id}")
             db.execute("DELETE FROM facts WHERE id=?", (record.id,))
         if db.execute("SELECT count(*) FROM facts").fetchone()[0]:

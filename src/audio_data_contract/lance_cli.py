@@ -31,6 +31,7 @@ def main(argv=None):
     create.add_argument("destination")
     create.add_argument("--source-view", required=True)
     create.add_argument("--batch-size", type=int, default=4096)
+    create.add_argument("--workers", type=int, default=1)
     export = commands.add_parser("export")
     export.add_argument("artifact")
     export.add_argument("destination")
@@ -63,6 +64,7 @@ def main(argv=None):
             source_view=args.source_view,
             batch_size=args.batch_size,
             roots=roots,
+            workers=args.workers,
         ).to_dict()
     else:
         artifact = LanceArtifact.read(args.artifact, roots)
