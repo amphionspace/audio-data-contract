@@ -70,6 +70,8 @@ audio-data-contract verify-artifact catalog wenetspeech_clean clean-v3-20260828 
 
 协议字段不依赖训练框架。Icefall 适配参数与 Lhotse 文件引用用于现有数据接入；其他使用方可以按 Schema 读取声明和样本。Dataset、Layer、View 的定义见[数据组织规范](docs/reference/data-organization.md)。
 
+可选的 [Lance 物化试验](docs/lance-materialization.md) 提供固定 snapshot、选择性读取和规范 Layer 回写，训练继续使用 JSONL/Lhotse；当前 [CHiME-6 小范围验收报告](reports/lance-pilot-20260929/README.md) 不构成正式采用结论。
+
 ## 开发
 
 ```bash

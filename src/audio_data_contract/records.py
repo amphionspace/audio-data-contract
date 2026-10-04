@@ -55,3 +55,15 @@ def write_records(records: Iterable[AudioRecord], path: str | Path) -> None:
 
 def write_examples(examples: Iterable[AudioExample], path: str | Path) -> None:
     _write((example.to_dict() for example in examples), path)
+
+
+def read_artifact(artifact, query=None) -> Iterator[AudioRecord]:
+    """Read a JSONL path or a fixed LanceArtifact; load_records stays unchanged."""
+    from .lance import LanceArtifact, read_lance
+
+    if isinstance(artifact, LanceArtifact):
+        yield from read_lance(artifact, query)
+    else:
+        for record in load_records(artifact):
+            if query is None or query.matches(record):
+                yield record

@@ -1,0 +1,8 @@
+{
+  "source": "/workspace/data/datasets/chime6/source/speaker-records-v1-20260912/extracted",
+  "records": 7437,
+  "skipped_invalid_bounds": 0,
+  "empty_targets": 0,
+  "audio_files": 14,
+  "note": "Isolated dev pilot, not the registered speaker View or a production cleaning Layer."
+}
