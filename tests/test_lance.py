@@ -824,3 +824,28 @@ def test_mirror_to_url_root_is_incremental_and_read_only(tmp_path):
     remote_clean = LanceArtifact.read(layer / "artifact.json", reader)
     assert _by_id(remote_clean) == _by_id(clean)
     assert list(read_artifact(mirrored)) == records()
+
+
+def test_sharded_stream_covers_snapshot_exactly_once(imported, tmp_path):
+    from audio_data_contract.lance_stream import iter_records, worker_shard
+
+    layer = write_layer(
+        tmp_path / "clean", patches(), parent=imported[1], step=step(), tool="t"
+    )
+    clean = materialize_layer(layer, source_view="demo/clean@v1")
+    assert len(lance.dataset(clean.table_path).get_fragments()) > 1
+    assert worker_shard(rank=1, world_size=2) == (1, 2)
+    for query in (None, RecordQuery(clean_pass=True)):
+        expected = {r.id: r for r in read_artifact(clean, query)}
+        shards = [
+            list(iter_records(clean, query, shard=i, num_shards=3, seed=7, epoch=1))
+            for i in range(3)
+        ]
+        streamed = [r for shard in shards for r in shard]
+        assert len(streamed) == len(expected)
+        assert {r.id: r for r in streamed} == expected
+        assert shards[0] == list(
+            iter_records(clean, query, shard=0, num_shards=3, seed=7, epoch=1)
+        )
+    with pytest.raises(ContractError, match="shard"):
+        list(iter_records(clean, shard=3, num_shards=3))
