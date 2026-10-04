@@ -20,6 +20,8 @@ from .roots import is_url, load_roots, portable_path, resolve_root_path
 from .types import RECORD_SCHEMA_VERSION, AudioRecord, _portable_path
 
 STORAGE_VERSION = "2.0"
+# Fragments are the training shard unit: ~350 at 92M rows keeps 64 shards balanced.
+FRAGMENT_ROWS = 2**18
 MAPPING_VERSION = "audio-record-lance/1.0"
 
 
@@ -463,6 +465,7 @@ def import_jsonl(
                 work / "table.lance",
                 schema=_schema(),
                 data_storage_version=STORAGE_VERSION,
+                max_rows_per_file=FRAGMENT_ROWS,
             )
         (work / "ids.sqlite").unlink()
         if count:
@@ -670,7 +673,9 @@ def compact_artifact(artifact, destination):
         if latest.version != artifact.snapshot_version:
             raise ContractError("compaction requires the newest published snapshot")
         before = _content_digest(dataset)
-        latest.optimize.compact_files(materialize_deletions=True)
+        latest.optimize.compact_files(
+            target_rows_per_fragment=FRAGMENT_ROWS, materialize_deletions=True
+        )
         compacted = lance.dataset(artifact.table_uri)
         if compacted.describe_indices():
             compacted.optimize.optimize_indices()
