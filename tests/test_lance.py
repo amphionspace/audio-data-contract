@@ -223,7 +223,7 @@ def test_invalid_patches_not_published(imported, tmp_path, bad, match):
     with pytest.raises(ContractError, match=match):
         write_layer(tmp_path / "bad", bad, parent=imported[1], step=step(), tool="t")
     assert not (tmp_path / "bad").exists()
-    assert lance.dataset(imported[1].table_path).version == 1
+    assert lance.dataset(imported[1].table_path).version == imported[1].snapshot_version
 
 
 def test_overrides_and_parent_child_conflicts(imported, tmp_path):
@@ -389,7 +389,8 @@ def test_commit_succeeds_publication_fails_then_rebuild(
     with pytest.raises(ContractError, match="canonical patch retained"):
         materialize_layer(layer, source_view="demo/clean@v1")
     assert not (layer / "artifact.json").exists()
-    assert lance.dataset(imported[1].table_path).version == 2
+    # The merge commit and its index update landed but were never published.
+    assert lance.dataset(imported[1].table_path).version > imported[1].snapshot_version
     assert list(read_artifact(imported[1])) == records()
     rebuilt = rebuild_layer(layer, tmp_path / "recovered", source_view="demo/clean@v1")
     expected = list(replay_layer(read_artifact(imported[0]), layer))
@@ -571,3 +572,33 @@ def test_dead_import_worker_fails_instead_of_hanging():
         pytest.raises(BrokenProcessPool),
     ):
         list(_ordered(pool, _exit_worker, range(3), 2))
+
+
+def test_queries_use_scalar_indexes_after_import_and_layer(imported, tmp_path):
+    from audio_data_contract.lance import INDICES, _open_artifact
+
+    layer = write_layer(
+        tmp_path / "clean", patches(), parent=imported[1], step=step(), tool="t"
+    )
+    clean = materialize_layer(layer, source_view="demo/clean@v1")
+    query = RecordQuery(
+        ids=("sample-0", "sample-2"),
+        task="ts_asr",
+        language="zh",
+        split="test",
+        clean_pass=False,
+    )
+    for artifact in (imported[1], clean):
+        dataset = _open_artifact(artifact)
+        for column, _ in INDICES:
+            stats = dataset.stats.index_stats(f"{column}_idx")
+            assert stats["num_unindexed_rows"] == 0
+        plan = dataset.scanner(filter=query.expression()).explain_plan()
+        assert "ScalarIndexQuery" in plan
+        assert all(f"@{column}_idx(" in plan for column, _ in INDICES)
+        indexed = dataset.to_table(filter=query.expression(), columns=["id"])
+        scanned = dataset.to_table(
+            filter=query.expression(), columns=["id"], use_scalar_index=False
+        )
+        assert indexed.equals(scanned)
+    assert [r.id for r in read_artifact(clean, query)] == ["sample-0"]

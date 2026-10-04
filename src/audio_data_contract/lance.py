@@ -277,6 +277,23 @@ def _row(record, retained=True, *, validate=True):
     }
 
 
+# Scalar indexes on every query projection; each build commits a table version.
+INDICES = (
+    ("id", "BTREE"),
+    ("task", "BITMAP"),
+    ("language", "BITMAP"),
+    ("splits", "LABEL_LIST"),
+    ("clean_pass", "BITMAP"),
+    ("retained", "BITMAP"),
+)
+
+
+def _create_indices(dataset):
+    for column, kind in INDICES:
+        dataset.create_scalar_index(column, kind)
+    return dataset
+
+
 def _encode_lines(chunk):
     """Validate one chunk of raw JSONL lines into an Arrow batch, in source order.
 
@@ -444,6 +461,8 @@ def import_jsonl(
                 data_storage_version=STORAGE_VERSION,
             )
         (work / "ids.sqlite").unlink()
+        if count:
+            dataset = _create_indices(dataset)
         artifact = LanceArtifact(
             _location(destination / "table.lance", roots),
             dataset.version,
@@ -537,6 +556,10 @@ def materialize_layer(layer, *, source_view, roots=None):
             )
             # Local lock guarantees this adapter is the only writer to this table.
             committed = lance.dataset(parent.table_uri)
+            if committed.describe_indices():
+                # Index the rewritten rows; this commits one more table version.
+                committed.optimize.optimize_indices()
+                committed = lance.dataset(parent.table_uri)
             artifact = artifact.replace(snapshot_version=committed.version)
             _open_artifact(artifact, verify_count=True)
             temporary = layer / ".artifact.json.tmp"
