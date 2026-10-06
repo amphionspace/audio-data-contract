@@ -15,9 +15,19 @@ from importlib.resources import files
 from pathlib import Path
 
 from .errors import ContractError
-from .records import load_records
+from .layers import (
+    apply_patch,
+    canonical_json,
+    chunks,
+    iter_layer_rows,
+    json_sha256,
+    read_layer,
+    read_layer_manifest,
+    replay_layer,
+)
+from .records import load_records, open_text, write_records
 from .roots import is_url, load_roots, portable_path, resolve_root_path
-from .types import RECORD_SCHEMA_VERSION, AudioRecord, _portable_path
+from .types import RECORD_SCHEMA_VERSION, AudioRecord, relative_posix_path
 
 STORAGE_VERSION = "2.0"
 # Fragments are the training shard unit: ~350 at 92M rows keeps 64 shards balanced.
@@ -34,20 +44,6 @@ def _dependencies():
             "Lance requires: pip install 'audio-data-contract[lance]'"
         ) from exc
     return lance, pa
-
-
-def _json(value):
-    return json.dumps(
-        value,
-        ensure_ascii=False,
-        sort_keys=True,
-        separators=(",", ":"),
-        allow_nan=False,
-    )
-
-
-def _hash(value):
-    return hashlib.sha256(_json(value).encode()).hexdigest()
 
 
 def _schema():
@@ -73,7 +69,7 @@ def schema_hash():
         .joinpath("schemas/audio-record-1.0.json")
         .read_text()
     )
-    return _hash(
+    return json_sha256(
         {"contract": contract, "mapping": MAPPING_VERSION, "arrow": str(_schema())}
     )
 
@@ -92,7 +88,7 @@ def _check_location(value, where):
         and isinstance(value["root_alias"], str)
         and value["root_alias"]
     ):
-        _portable_path(value["relative_path"], where)
+        relative_posix_path(value["relative_path"], where)
         return
     raise ContractError(f"{where} must be a path or a root_alias reference")
 
@@ -279,7 +275,7 @@ def _row(record, retained=True, *, validate=True):
         "splits": sorted({s.ref.split for s in record.audio_slots}),
         "clean_pass": passed if type(passed) is bool else None,
         "retained": retained,
-        "record_json": _json(record.to_dict()),
+        "record_json": canonical_json(record.to_dict()),
     }
 
 
@@ -324,9 +320,8 @@ def _encode_lines(chunk):
 
 
 def _line_chunks(source, size):
-    from .records import _open
 
-    with _open(source, "r") as stream:
+    with open_text(source, "r") as stream:
         lines, first = [], 1
         for number, line in enumerate(stream, 1):
             lines.append(line)
@@ -365,7 +360,7 @@ def _claim_ids(db, ids):
         raise
 
 
-def _open_artifact(artifact, *, verify_count=False):
+def open_artifact(artifact, *, verify_count=False):
     lance, _ = _dependencies()
     if artifact.schema_hash != schema_hash():
         raise ContractError(
@@ -393,7 +388,7 @@ def _open_artifact(artifact, *, verify_count=False):
 
 
 def read_lance(artifact, query=None, *, batch_size=4096):
-    dataset = _open_artifact(artifact)
+    dataset = open_artifact(artifact)
     try:
         for batch in dataset.to_batches(
             columns=["record_json"],
@@ -492,7 +487,7 @@ def import_jsonl(
         if dataset.count_rows() != count:
             raise ContractError("Lance import record count mismatch")
         dataset.tags.create("import", dataset.version)
-        (work / "artifact.json").write_text(_json(artifact.to_dict()) + "\n")
+        (work / "artifact.json").write_text(canonical_json(artifact.to_dict()) + "\n")
         work.rename(destination)
         return artifact
     except Exception as exc:
@@ -541,9 +536,9 @@ def _publish(dataset, artifact, tag, output):
     """Tag the committed version first, then publish its sidecar atomically."""
     if tag not in _published(dataset):
         dataset.tags.create(tag, artifact.snapshot_version)
-    _open_artifact(artifact, verify_count=True)
+    open_artifact(artifact, verify_count=True)
     temporary = output.with_name("." + output.name + ".tmp")
-    temporary.write_text(_json(artifact.to_dict()) + "\n")
+    temporary.write_text(canonical_json(artifact.to_dict()) + "\n")
     temporary.rename(output)
     return artifact
 
@@ -556,7 +551,6 @@ def materialize_layer(layer, *, source_view, roots=None):
     commits left after a tagged parent are rolled back to the parent content.
     All writers to a managed table must use this adapter (local POSIX lock).
     """
-    from .layers import apply_patch, chunks, iter_layer_rows, read_layer_manifest
 
     lance, pa = _dependencies()
     layer = Path(layer).resolve()
@@ -569,7 +563,7 @@ def materialize_layer(layer, *, source_view, roots=None):
     if output.exists():
         raise ContractError(f"Layer already published: {output}")
     # Identity of the whole Layer (parent, transform, tool, model and patches).
-    tag = "layer-" + _hash(manifest)[:32]
+    tag = "layer-" + json_sha256(manifest)[:32]
     metadata = {
         **parent.rebuild_metadata,
         "layers": [
@@ -585,7 +579,7 @@ def materialize_layer(layer, *, source_view, roots=None):
         rebuild_metadata=metadata,
     )
     with _writer_lock(parent):
-        dataset = _open_artifact(parent)
+        dataset = open_artifact(parent)
         latest = lance.dataset(parent.table_uri)
         published = _published(latest)
         if tag in published:
@@ -668,7 +662,7 @@ def compact_artifact(artifact, destination):
     if destination.exists():
         raise ContractError(f"destination already exists: {destination}")
     with _writer_lock(artifact):
-        dataset = _open_artifact(artifact, verify_count=True)
+        dataset = open_artifact(artifact, verify_count=True)
         latest = lance.dataset(artifact.table_uri)
         if latest.version != artifact.snapshot_version:
             raise ContractError("compaction requires the newest published snapshot")
@@ -690,7 +684,7 @@ def compact_artifact(artifact, destination):
 def protect_artifact(artifact):
     """Tag a sidecar's snapshot (e.g. one published before tags) against cleanup."""
     with _writer_lock(artifact):
-        dataset = _open_artifact(artifact)
+        dataset = open_artifact(artifact)
         if artifact.snapshot_version not in _published(dataset).values():
             dataset.tags.create(
                 f"protect-{artifact.snapshot_version}", artifact.snapshot_version
@@ -769,7 +763,7 @@ def mirror_artifact(artifact, target_root):
             )
             copied, size = copied + 1, size + length
     mirrored = artifact.replace(roots={**artifact.location_roots(), alias: target_root})
-    _open_artifact(mirrored, verify_count=True)
+    open_artifact(mirrored, verify_count=True)
     return {"target": target, "copied": copied, "skipped": skipped, "bytes": size}
 
 
@@ -790,12 +784,12 @@ def inspect_table(artifact):
 
 
 def _digest(record):
-    return hashlib.sha256(_json(record.to_dict()).encode()).digest()
+    return hashlib.sha256(canonical_json(record.to_dict()).encode()).digest()
 
 
 def verify_equivalence(artifact, source):
     """Streaming exact ID/fact comparison with a disk-backed uniqueness index."""
-    dataset = _open_artifact(artifact, verify_count=True)
+    dataset = open_artifact(artifact, verify_count=True)
     del dataset
     with (
         tempfile.TemporaryDirectory(prefix="lance-verify-") as directory,
@@ -827,15 +821,13 @@ def verify_equivalence(artifact, source):
 
 def rebuild_artifact(artifact, destination):
     """Rebuild entirely from the original JSONL and canonical Layers, without old table."""
-    from .layers import read_layer, replay_layer
-    from .records import write_records
 
     metadata = artifact.rebuild_metadata
 
     def source_records():
         digest = hashlib.sha256()
         for record in load_records(artifact.local(metadata["source_jsonl"])):
-            digest.update((_json(record.to_dict()) + "\n").encode())
+            digest.update((canonical_json(record.to_dict()) + "\n").encode())
             yield record
         if digest.hexdigest() != metadata["source_records_sha256"]:
             raise ContractError("rebuild source JSONL hash mismatch")
@@ -871,7 +863,6 @@ def rebuild_artifact(artifact, destination):
 
 def rebuild_layer(layer, destination, *, source_view, roots=None):
     """Recover a failed query-layer write using only durable processing facts."""
-    from .layers import read_layer
 
     manifest, _, step = read_layer(layer)
     parent = LanceArtifact(**manifest["parent"], roots=roots)

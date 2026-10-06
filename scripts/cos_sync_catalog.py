@@ -21,7 +21,7 @@ from types import SimpleNamespace
 from cos_backup import digest_file, encoded, save, signature, upload, verify_head
 
 from audio_data_contract import load_catalog
-from audio_data_contract.audio_prepare import _parse
+from audio_data_contract.audio_prepare import parse_audio_source
 from audio_data_contract.roots import load_roots
 
 DIRECTORIES = {"source-directory", "hf-dataset-snapshot", "hf-dataset-directory",
@@ -243,7 +243,7 @@ class Inventory:
                     self.reference(source['source'], manifest, root_alias)
                 else:
                     sentinel = Path('/__cos_relative_source__')
-                    _, path, _ = _parse(source, sentinel, extract=True)
+                    _, path, _ = parse_audio_source(source, sentinel, extract=True)
                     value = str(path.relative_to(sentinel)) if path.is_relative_to(sentinel) else str(path)
                     self.reference(value, manifest, root_alias, 'source-archive')
             except (ValueError, KeyError):

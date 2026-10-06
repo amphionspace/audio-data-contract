@@ -72,7 +72,7 @@ def _strings(value: Any, where: str) -> tuple[str, ...]:
     return result
 
 
-def _portable_path(value: Any, where: str) -> str:
+def relative_posix_path(value: Any, where: str) -> str:
     path = _non_empty(value, where)
     if "\\" in path:
         raise ContractError(f"{where} must use POSIX separators")
@@ -107,7 +107,7 @@ class ArtifactRef:
         object.__setattr__(
             self,
             "relative_path",
-            _portable_path(self.relative_path, "artifact.relative_path"),
+            relative_posix_path(self.relative_path, "artifact.relative_path"),
         )
         if self.expected_bytes is not None:
             expected_bytes = _integer(self.expected_bytes, "artifact.expected_bytes")

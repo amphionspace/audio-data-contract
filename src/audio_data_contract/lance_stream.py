@@ -16,7 +16,7 @@ import json
 import random
 
 from .errors import ContractError
-from .lance import RecordQuery, _open_artifact
+from .lance import RecordQuery, open_artifact
 from .types import AudioRecord
 
 
@@ -45,7 +45,7 @@ def iter_records(
     """Yield this shard's records; fragment order is reshuffled per (seed, epoch)."""
     if not 0 <= shard < num_shards:
         raise ContractError("shard must be in [0, num_shards)")
-    dataset = _open_artifact(artifact)
+    dataset = open_artifact(artifact)
     fragments = sorted(dataset.get_fragments(), key=lambda f: f.fragment_id)
     random.Random(f"{seed}:{epoch}").shuffle(fragments)
     expression = (query or RecordQuery()).expression()

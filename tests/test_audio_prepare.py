@@ -131,7 +131,7 @@ def test_localize_preserves_nested_structure_and_deduplicates(tmp_path, capsys):
         after = read_manifest(tmp_path / "out" / manifest.name)
         for original, localized in zip(before, after):
             for old, new in zip(
-                prepare._sources(original), prepare._sources(localized)
+                prepare.recording_sources(original), prepare.recording_sources(localized)
             ):
                 assert (
                     Path(new["source"]).read_bytes() == Path(old["source"]).read_bytes()

@@ -11,10 +11,23 @@ from itertools import islice
 from pathlib import Path
 
 from .errors import ContractError
-from .lance import _hash, _json
 from .types import AudioRecord, TransformStep
 
 CHUNK_SIZE = 65536
+
+
+def canonical_json(value):
+    return json.dumps(
+        value,
+        ensure_ascii=False,
+        sort_keys=True,
+        separators=(",", ":"),
+        allow_nan=False,
+    )
+
+
+def json_sha256(value):
+    return hashlib.sha256(canonical_json(value).encode()).hexdigest()
 
 
 def chunks(items, size=None):
@@ -25,7 +38,7 @@ def chunks(items, size=None):
 
 
 class _ListHash:
-    """Streaming equivalent of _hash(rows) for a JSON array of rows."""
+    """Streaming equivalent of json_sha256(rows) for a JSON array of rows."""
 
     def __init__(self):
         self._digest = hashlib.sha256(b"[")
@@ -79,7 +92,7 @@ def apply_patch(record, patch, step):
             raise ContractError(f"undeclared Layer field: {field}")
         if any(_overlaps(field, other) for other in fields[i + 1 :]):
             raise ContractError(f"overlapping patch fields: {field}")
-    data = json.loads(_json(record.to_dict()))
+    data = json.loads(canonical_json(record.to_dict()))
     for field, value in changes.items():
         parts = field.split(".")
         if any(not part for part in parts):
@@ -129,7 +142,7 @@ def write_layer(
                 try:
                     db.execute(
                         "INSERT INTO patches VALUES (?, ?)",
-                        (patch["id"], _json({**row, "patch_hash": _hash(row)})),
+                        (patch["id"], canonical_json({**row, "patch_hash": json_sha256(row)})),
                     )
                 except sqlite3.IntegrityError:
                     raise ContractError(f"duplicate patch ID: {patch['id']}") from None
@@ -149,7 +162,7 @@ def write_layer(
                         )
                     for row in chunk:
                         apply_patch(found[row["id"]], row, step)
-                        line = _json(row)
+                        line = canonical_json(row)
                         stream.write(line + "\n")
                         digest.update(line)
                         inputs += 1
@@ -170,7 +183,7 @@ def write_layer(
             "result_record_count": parent.record_count - deletes,
             "patch_hash": digest.hexdigest(),
         }
-        (work / "manifest.json").write_text(_json(manifest) + "\n")
+        (work / "manifest.json").write_text(canonical_json(manifest) + "\n")
         work.rename(destination)
     finally:
         if work.exists():
@@ -194,12 +207,12 @@ def iter_layer_rows(path, manifest):
     with (Path(path) / "patch.jsonl").open() as stream:
         for line in stream:
             row = json.loads(line)
-            digest.update(_json(row))
+            digest.update(canonical_json(row))
             if previous is not None and row["id"] <= previous:
                 raise ContractError(f"duplicate or unsorted patch ID: {row['id']}")
             previous = row["id"]
             payload = {key: value for key, value in row.items() if key != "patch_hash"}
-            if _hash(payload) != row["patch_hash"]:
+            if json_sha256(payload) != row["patch_hash"]:
                 raise ContractError("individual Layer patch hash mismatch")
             if row["parent_version"] != manifest["parent"]["snapshot_version"]:
                 raise ContractError("Layer parent version mismatch")
