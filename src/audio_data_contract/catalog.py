@@ -100,6 +100,22 @@ def resolve_artifact(
     )
 
 
+def resolve_split(
+    catalog: DatasetCatalog,
+    dataset_id: str,
+    version: str,
+    split: str,
+    role: str,
+    roots: Mapping[str, str | Path],
+) -> list[Path]:
+    """Paths of one split role in declared order; [] when the split lacks the role."""
+    spec = catalog.get(dataset_id, version)
+    return [
+        resolve_artifact(catalog, spec.dataset_id, spec.version, name, roots)
+        for name in spec.split(split).artifacts.get(role, ())
+    ]
+
+
 def verify_artifact_file(
     artifact: ArtifactRef, path: str | Path
 ) -> dict[str, int | str]:

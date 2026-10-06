@@ -10,7 +10,7 @@ from typing import Any
 
 from .errors import ContractError
 
-CATALOG_SCHEMA_VERSION = "dataset-catalog/1.0"
+CATALOG_SCHEMA_VERSION = "dataset-catalog/2.0"
 RECORD_SCHEMA_VERSION = "audio-record/1.0"
 EXAMPLE_SCHEMA_VERSION = "audio-example/1.0"
 VIEW_SCHEMA_VERSION = "dataset-view/1.0"
@@ -169,13 +169,68 @@ class ArtifactRef:
 
 
 @dataclass(frozen=True)
+class Split:
+    """One split: artifact names per role (recordings, supervisions, cuts, ...)."""
+
+    artifacts: dict[str, tuple[str, ...]]
+    group: str | None = None
+    task: str | None = None
+    statistics: dict[str, Any] = field(default_factory=dict)
+    provenance: dict[str, Any] = field(default_factory=dict)
+
+    def __post_init__(self) -> None:
+        if not self.artifacts:
+            raise ContractError("split.artifacts may not be empty")
+        for role, names in self.artifacts.items():
+            _non_empty(role, "split.artifacts role")
+            if not names:
+                raise ContractError(f"split.artifacts.{role} may not be empty")
+        for name in ("group", "task"):
+            if getattr(self, name) is not None:
+                _non_empty(getattr(self, name), f"split.{name}")
+
+    def to_dict(self) -> dict[str, Any]:
+        data: dict[str, Any] = {
+            "artifacts": {role: list(names) for role, names in self.artifacts.items()}
+        }
+        for name in ("group", "task"):
+            if getattr(self, name) is not None:
+                data[name] = getattr(self, name)
+        for name in ("statistics", "provenance"):
+            if getattr(self, name):
+                data[name] = getattr(self, name)
+        return data
+
+    @classmethod
+    def from_dict(cls, value: Any, where: str = "split") -> Split:
+        data = _mapping(value, where)
+        _fields(
+            data,
+            required={"artifacts"},
+            optional={"group", "task", "statistics", "provenance"},
+            where=where,
+        )
+        artifacts = _mapping(data["artifacts"], f"{where}.artifacts")
+        return cls(
+            artifacts={
+                role: _strings(names, f"{where}.artifacts.{role}")
+                for role, names in artifacts.items()
+            },
+            group=data.get("group"),
+            task=data.get("task"),
+            statistics=_json_object(data.get("statistics"), f"{where}.statistics"),
+            provenance=_json_object(data.get("provenance"), f"{where}.provenance"),
+        )
+
+
+@dataclass(frozen=True)
 class DatasetSpec:
     dataset_id: str
     version: str
     languages: tuple[str, ...]
     tasks: tuple[str, ...]
     artifacts: tuple[ArtifactRef, ...]
-    splits: dict[str, dict[str, Any]]
+    splits: dict[str, Split]
     aliases: tuple[str, ...] = ()
     provenance: dict[str, Any] = field(default_factory=dict)
     derived_from: str | None = None
@@ -205,12 +260,19 @@ class DatasetSpec:
         known = set(names)
         for split_name, split in self.splits.items():
             _non_empty(split_name, "split name")
-            split_data = _mapping(split, f"split {split_name}")
-            for key, artifact_name in split_data.items():
-                if key.endswith("_artifact") and artifact_name not in known:
-                    raise ContractError(
-                        f"split {split_name} references unknown artifact {artifact_name!r}"
-                    )
+            if not isinstance(split, Split):
+                raise ContractError(f"split {split_name} must be a Split")
+            for role, artifact_names in split.artifacts.items():
+                for artifact_name in artifact_names:
+                    if artifact_name not in known:
+                        raise ContractError(
+                            f"split {split_name} {role} references unknown "
+                            f"artifact {artifact_name!r}"
+                        )
+            if split.task is not None and split.task not in self.tasks:
+                raise ContractError(
+                    f"split {split_name} task {split.task!r} is not a dataset task"
+                )
 
     @property
     def key(self) -> str:
@@ -222,6 +284,12 @@ class DatasetSpec:
                 return artifact
         raise ContractError(f"unknown artifact {name!r} for {self.key}")
 
+    def split(self, name: str) -> Split:
+        try:
+            return self.splits[name]
+        except KeyError:
+            raise ContractError(f"unknown split {name!r} for {self.key}") from None
+
     def to_dict(self) -> dict[str, Any]:
         data: dict[str, Any] = {
             "schema_version": self.schema_version,
@@ -231,7 +299,7 @@ class DatasetSpec:
             "tasks": list(self.tasks),
             "aliases": list(self.aliases),
             "artifacts": [artifact.to_dict() for artifact in self.artifacts],
-            "splits": self.splits,
+            "splits": {name: split.to_dict() for name, split in self.splits.items()},
             "provenance": self.provenance,
         }
         if self.derived_from is not None:
@@ -269,7 +337,10 @@ class DatasetSpec:
             tasks=_strings(data["tasks"], "dataset.tasks"),
             aliases=_strings(data.get("aliases", []), "dataset.aliases"),
             artifacts=tuple(ArtifactRef.from_dict(item) for item in artifacts),
-            splits={name: dict(_mapping(split, f"split {name}")) for name, split in splits.items()},
+            splits={
+                name: Split.from_dict(split, f"split {name}")
+                for name, split in splits.items()
+            },
             provenance=_json_object(data.get("provenance"), "dataset.provenance"),
             derived_from=data.get("derived_from"),
             recipe_parameters=_json_object(

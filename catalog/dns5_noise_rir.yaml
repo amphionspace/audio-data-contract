@@ -1,4 +1,4 @@
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: dns5_noise_rir
     version: official-noise-rir-20260924
     languages:
@@ -99,19 +99,21 @@
           remote_etag: '0x8DAD8A09AE405C9'
     splits:
       noise:
-        source_archive_artifacts:
-          - audioset_000
-          - audioset_001
-          - audioset_002
-          - audioset_003
-          - audioset_004
-          - audioset_005
-          - audioset_006
-          - freesound_000
-          - freesound_001
+        artifacts:
+          source_archive:
+            - audioset_000
+            - audioset_001
+            - audioset_002
+            - audioset_003
+            - audioset_004
+            - audioset_005
+            - audioset_006
+            - freesound_000
+            - freesound_001
       impulse_responses:
-        source_archive_artifacts:
-          - impulse_responses_000
+        artifacts:
+          source_archive:
+            - impulse_responses_000
     provenance:
       source: Microsoft DNS Challenge 5
       url: https://github.com/microsoft/DNS-Challenge/blob/master/download-dns-challenge-5-noise-ir.sh

@@ -6,7 +6,7 @@ import gzip
 import json
 from pathlib import Path
 
-from audio_data_contract import load_catalog, load_records, resolve_artifact
+from audio_data_contract import load_catalog, load_records, resolve_split
 
 
 def resolve_audio(record, catalog, roots):
@@ -15,9 +15,8 @@ def resolve_audio(record, catalog, roots):
     indexes = {}
     for slot in record.audio_slots:
         ref = slot.ref
-        spec = catalog.get(ref.dataset_id, ref.version)
-        name = spec.splits[ref.split]["audio_index_artifact"]
-        path = resolve_artifact(catalog, ref.dataset_id, ref.version, name, roots)
+        path, = resolve_split(catalog, ref.dataset_id, ref.version, ref.split,
+                              "audio_index", roots)
         indexes[path] = None
     found = {}
     for path in indexes:
@@ -29,9 +28,8 @@ def resolve_audio(record, catalog, roots):
     result = {}
     for slot in record.audio_slots:
         ref = slot.ref
-        spec = catalog.get(ref.dataset_id, ref.version)
-        index = resolve_artifact(catalog, ref.dataset_id, ref.version,
-                                 spec.splits[ref.split]["audio_index_artifact"], roots)
+        index, = resolve_split(catalog, ref.dataset_id, ref.version, ref.split,
+                               "audio_index", roots)
         row = found[(index, ref.cut_id)]
         root = Path(roots[row["root_alias"]]).resolve()
         audio = (root / row["relative_path"]).resolve()
@@ -53,11 +51,8 @@ def main():
     args = parser.parse_args()
     roots = json.loads(args.roots.read_text())
     catalog = load_catalog(args.catalog)
-    spec = catalog.get(args.dataset_id, args.version)
-    split = spec.splits[args.split]
-    names = split.get("records_artifacts") or [split["records_artifact"]]
-    for name in names:
-        path = resolve_artifact(catalog, spec.dataset_id, spec.version, name, roots)
+    for path in resolve_split(catalog, args.dataset_id, args.version, args.split,
+                              "records", roots):
         for record in load_records(path):
             if args.id is None or args.id == record.id:
                 print(json.dumps({"record": record.to_dict(),

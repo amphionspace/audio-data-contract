@@ -9,8 +9,10 @@ from jsonschema import Draft202012Validator
 from audio_data_contract import (
     ArtifactRef,
     DatasetSpec,
+    Split,
     load_catalog,
     resolve_artifact,
+    resolve_split,
 )
 from audio_data_contract.catalog import verify_artifact_file
 from audio_data_contract.declarations import write_declarations
@@ -32,7 +34,7 @@ def _spec() -> DatasetSpec:
                 relative_path="demo/1.0/manifests/lhotse/cuts.jsonl.gz",
             ),
         ),
-        splits={"train": {"cuts_artifact": "cuts"}},
+        splits={"train": Split(artifacts={"cuts": ("cuts",)})},
     )
 
 
@@ -48,6 +50,36 @@ def test_catalog_round_trip_and_alias(tmp_path, suffix):
     assert resolve_artifact(
         catalog, "demo", "1.0", "cuts", {"managed": tmp_path}
     ) == tmp_path / "demo/1.0/manifests/lhotse/cuts.jsonl.gz"
+
+
+@pytest.mark.parametrize(
+    ("split", "message"),
+    [
+        ({"artifacts": {"cuts": ["cuts", "missing"]}}, "unknown artifact 'missing'"),
+        ({"artifacts": {"cuts": []}}, "may not be empty"),
+        ({"artifacts": {"cuts": ["cuts"]}, "task": "tts"}, "not a dataset task"),
+        ({"cuts_artifacts": ["cuts"]}, "missing required fields"),
+        ({"artifacts": {"cuts": ["cuts"]}, "icefall": {}}, "unknown fields"),
+    ],
+)
+def test_split_references_and_fields_are_validated(split, message):
+    data = _spec().to_dict()
+    data["splits"] = {"train": split}
+    with pytest.raises(ContractError, match=message):
+        DatasetSpec.from_dict(data)
+
+
+def test_resolve_split_returns_role_paths_in_order(tmp_path):
+    path = tmp_path / "catalog.jsonl"
+    path.write_text(json.dumps(_spec().to_dict()) + "\n", encoding="utf-8")
+    catalog = load_catalog(path)
+    roots = {"managed": tmp_path}
+    assert resolve_split(catalog, "demo", "1.0", "train", "cuts", roots) == [
+        tmp_path / "demo/1.0/manifests/lhotse/cuts.jsonl.gz"
+    ]
+    assert resolve_split(catalog, "demo", "1.0", "train", "recordings", roots) == []
+    with pytest.raises(ContractError, match="unknown split"):
+        resolve_split(catalog, "demo", "1.0", "dev", "cuts", roots)
 
 
 def test_rejects_absolute_and_parent_paths():
@@ -76,7 +108,7 @@ def test_unknown_schema_field_and_missing_alias_fail(tmp_path):
 
 def test_json_schemas_are_packaged():
     schemas = files("audio_data_contract").joinpath("schemas")
-    assert json.loads(schemas.joinpath("dataset-catalog-1.0.json").read_text())["title"] == "DatasetSpec"
+    assert json.loads(schemas.joinpath("dataset-catalog-2.0.json").read_text())["title"] == "DatasetSpec"
     assert json.loads(schemas.joinpath("audio-record-1.0.json").read_text())["title"] == "AudioRecord"
     assert json.loads(schemas.joinpath("audio-example-1.0.json").read_text())["title"] == "AudioExample"
     assert json.loads(schemas.joinpath("dataset-view-1.0.json").read_text())["title"] == "DatasetViewSpec"

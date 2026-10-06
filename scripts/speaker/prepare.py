@@ -397,7 +397,7 @@ def prepare_dataset(repo, root, dataset):
             verification_trials(builder, work, metadata)
     save(work / "excluded-annotations.json", builder.rejects)
     if dataset == "cnceleb1":
-        builder.splits["test_enrollment"] = {"group": "test", "role": "enrollment"}
+        builder.splits["test_enrollment"] = {"group": "test", "provenance": {"role": "enrollment"}}
     # Read every compressed output to EOF before publishing; this checks gzip CRC
     # and on-disk counts in addition to the per-record validation during writing.
     for filename, expected in [(name + ".jsonl.gz", count) for name, count in builder.counts.items()] + [
@@ -419,12 +419,13 @@ def prepare_dataset(repo, root, dataset):
                                               else "sum of measured audio durations; one session per diarization record"))
         if builder.speakers[split]:
             statistics["speakers"] = len(builder.speakers[split])
-        splits[split] = {**builder.splits.get(split, {}), "records_artifact": split,
-                         "audio_index_artifact": "audio_index", "statistics": statistics}
+        splits[split] = {**builder.splits.get(split, {}),
+                         "artifacts": {"records": [split], "audio_index": ["audio_index"]},
+                         "statistics": statistics}
     # Raw held-out copies stay indexed for provenance, outside training records.
     if dataset == "cnceleb1":
-        splits["source_eval"] = {"group": "test", "audio_index_artifact": "audio_index",
-                                 "role": "original_held_out_audio_not_training"}
+        splits["source_eval"] = {"group": "test", "artifacts": {"audio_index": ["audio_index"]},
+                                 "provenance": {"role": "original_held_out_audio_not_training"}}
     artifacts.append(file_artifact(work, final, root, "audio_index", "audio-index",
                                    "audio-index.jsonl.gz", len(audio)))
     artifacts.append(file_artifact(work, final, root, "excluded_annotations", "quality-report",
@@ -447,7 +448,7 @@ def prepare_dataset(repo, root, dataset):
                              "speaker_split_disjointness": "passed" if dataset != "chime6" else "not_applied"},
               "source_artifacts": [{k: a[k] for k in ("name", "sha256", "relative_path")}
                                    for a in source["artifacts"] if a.get("sha256")]}
-    spec = {"schema_version": "dataset-catalog/1.0", "dataset_id": dataset, "version": VERSION,
+    spec = {"schema_version": "dataset-catalog/2.0", "dataset_id": dataset, "version": VERSION,
             "languages": source["languages"], "tasks": (["speaker_diarization", "speaker_attributed_asr"]
                        if dataset == "chime6" else ["speaker_identification", "speaker_verification"]
                        if dataset != "cnceleb2" else ["speaker_identification"]),

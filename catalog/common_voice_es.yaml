@@ -1,4 +1,4 @@
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: common-voice-es
     version: '26.0'
     languages:
@@ -17,7 +17,9 @@
         relative_path: downloads/language-expansion-20260911/common-voice-es/state.json
     splits:
       all:
-        source_archive_artifact: source_archive
+        artifacts:
+          source_archive:
+            - source_archive
     provenance:
       source: Mozilla Data Collective
       source_id: cmqim2spa00synr071fcp7av0

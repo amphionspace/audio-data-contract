@@ -106,8 +106,8 @@ def test_conversion_registration_and_portable_reader(tmp_path):
     catalog = load_catalog(cat)
     assert len(load_view_catalog(view, catalog)) == 1
     spec = catalog.get("fixture", "records-1")
-    assert spec.splits["train"]["statistics"]["records"] == 2
-    stats = spec.splits["train"]["statistics"]
+    assert spec.splits["train"].statistics["records"] == 2
+    stats = spec.splits["train"].statistics
     assert stats["duration_hours"] == pytest.approx(2 / 3600)
     assert stats["unique_mixture_duration_hours"] == pytest.approx(1 / 3600)
     with gzip.open(out / "audio-index.jsonl.gz", "rt") as stream:
@@ -165,4 +165,4 @@ def test_train_and_test_parent_statistics_are_separate(tmp_path):
     spec = json.loads((out / "registration.json").read_text())["datasets"][1]
     assert spec["splits"]["train"]["statistics"]["records"] == 2
     assert spec["splits"]["test"]["statistics"]["records"] == 2
-    assert spec["splits"]["test"]["records_artifacts"] == ["test_2mix"]
+    assert spec["splits"]["test"]["artifacts"]["records"] == ["test_2mix"]

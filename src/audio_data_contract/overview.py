@@ -62,12 +62,12 @@ def _duration(spec: DatasetSpec) -> DurationSummary:
     if legacy_total is not None:
         return DurationSummary(legacy_total, "reported", "发布方或原登记总时长")
 
-    root_splits = [split for split in spec.splits.values() if not split.get("group")]
+    root_splits = [split for split in spec.splits.values() if not split.group]
     reported: list[float] = []
     before_filter: list[float] = []
     missing = 0
     for split in root_splits:
-        statistics = split.get("statistics", {})
+        statistics = split.statistics
         value = _number(statistics.get("duration_hours", statistics.get("hours")))
         if value is not None:
             reported.append(value)
@@ -127,7 +127,7 @@ def _quality_rows(specs: list[DatasetSpec]) -> list[tuple[str, str, str, str]]:
 
         review = spec.provenance.get("manual_review")
         split_statistics = [
-            split.get("statistics", {}) for split in spec.splits.values()
+            split.statistics for split in spec.splits.values()
         ]
         passed = sum(int(item.get("pass", 0)) for item in split_statistics)
         rejected = sum(int(item.get("reject", 0)) for item in split_statistics)
@@ -226,9 +226,7 @@ def _family_notes(specs: list[DatasetSpec]) -> str:
         notes.append("有含标点版本")
     if False in punctuation:
         notes.append("有无标点版本")
-    if any(
-        spec.derived_from and "icefall" not in spec.recipe_parameters for spec in specs
-    ):
+    if any(spec.derived_from for spec in specs):
         notes.append("含派生版本（与源数据可能重叠）")
     if all(spec.provenance.get("consumer") for spec in specs):
         notes.append("当前仅登记评测入口")
@@ -237,7 +235,7 @@ def _family_notes(specs: list[DatasetSpec]) -> str:
             name
             for spec in specs
             for name, split in spec.splits.items()
-            if not split.get("group")
+            if not split.group
         }
     )
     if not notes:

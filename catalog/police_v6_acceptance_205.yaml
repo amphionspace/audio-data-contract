@@ -1,4 +1,4 @@
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: police_v6_acceptance_205
     version: v6-acceptance-20260921
     languages:
@@ -36,8 +36,11 @@
         sha256: 4dcdf9837a38cfe63f7d648c57d01a4543451796df8094bc73eab0e28aaecdbf
     splits:
       test:
-        recordings_artifact: test_recordings
-        supervisions_artifact: test_supervisions
+        artifacts:
+          recordings:
+            - test_recordings
+          supervisions:
+            - test_supervisions
         statistics:
           recordings: 3773
           supervisions: 3773
@@ -59,7 +62,7 @@
         section: 20260915新增
       evaluation_limitations: Test only. Exact/reading-variant commands may overlap training. New synthesis with separate reference pool; no claim of unseen semantic groups or globally unseen speakers. Selection uses independent Qwen3-ASR QC, never v11/v14 predictions. No human review claimed.
       human_review: false
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: police_v6_acceptance_205
     version: icefall-20260908
     languages:
@@ -97,8 +100,11 @@
         sha256: 4dcdf9837a38cfe63f7d648c57d01a4543451796df8094bc73eab0e28aaecdbf
     splits:
       test:
-        recordings_artifact: test_recordings
-        supervisions_artifact: test_supervisions
+        artifacts:
+          recordings:
+            - test_recordings
+          supervisions:
+            - test_supervisions
         statistics:
           recordings: 3773
           supervisions: 3773
@@ -107,14 +113,10 @@
           source_commands: 205
           minimum_voices_per_command: 10
           speakers: 103
-        icefall:
-          use_punc: false
     recipe_parameters:
       tts_provider: qwen3_tts
       sample_rate: 16000
       channels: 1
-      icefall:
-        language: zh
     provenance:
       source: AmphionData synthetic speech pipeline
       status: ready

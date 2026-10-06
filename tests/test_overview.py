@@ -15,6 +15,12 @@ from audio_data_contract.overview import (
 ROOT = Path(__file__).parents[1]
 
 
+def _with_statistics(spec, **statistics):
+    """Keep only the train split, with exactly these statistics."""
+    train = replace(spec.splits["train"], statistics=statistics)
+    return replace(spec, splits={"train": train})
+
+
 def test_tracked_overview_matches_registered_data(capsys):
     overview = ROOT / "docs/datasets/data-overview.md"
 
@@ -84,8 +90,8 @@ def test_cv_cleaning_evidence_distinguishes_report_from_published_manifest():
     catalog = load_catalog(ROOT / "catalog")
     spec = catalog.get("commonvoice_en_clean", "clean-v1-20260805")
     assert spec.recipe_parameters["engines"] == ["Qwen3-ASR-1.7B", "whisper-large-v3"]
-    assert spec.splits["train"]["statistics"]["reject"] == 1127
-    assert "pass" not in spec.splits["test"]["statistics"]
+    assert spec.splits["train"].statistics["reject"] == 1127
+    assert "pass" not in spec.splits["test"].statistics
     evidence = spec.provenance["cleaning_verification"]
     assert evidence["test_report"]["reject"] == 108
     assert evidence["manifest_findings"]["test_filter_applied"] is False
@@ -113,10 +119,8 @@ def test_nominal_and_pre_filter_hours_are_clearly_separated():
 
     nominal = _duration(catalog.get("notsofar", "hf-ba8fd0f034ce-sim-v1.5-200h"))
     spec = catalog.get("wenetspeech", "clean-weak-v1-20260904")
-    filtered = _duration(replace(
-        spec, splits={"train": {"statistics": {
-            "hours_before_filter": spec.splits["train"]["statistics"]["hours_before_filter"]
-        }}}
+    filtered = _duration(_with_statistics(
+        spec, hours_before_filter=spec.splits["train"].statistics["hours_before_filter"]
     ))
 
     assert nominal.kind == "nominal"
@@ -131,9 +135,7 @@ def test_nominal_and_pre_filter_hours_are_clearly_separated():
 def test_reported_split_hours_take_priority_over_nominal_hours():
     catalog = load_catalog(ROOT / "catalog")
     spec = catalog.get("notsofar", "hf-ba8fd0f034ce-sim-v1.5-200h")
-    spec_with_reported_hours = replace(
-        spec, splits={"train": {"statistics": {"duration_hours": 198.5}}}
-    )
+    spec_with_reported_hours = _with_statistics(spec, duration_hours=198.5)
 
     duration = _duration(spec_with_reported_hours)
 
@@ -159,15 +161,12 @@ def test_chart_data_deduplicates_families_and_excludes_plans():
 
     base = load_catalog(ROOT / "catalog").get("librispeech", "legacy-20260804")
     measured = replace(
-        base,
+        _with_statistics(base, duration_hours=50),
         dataset_id="measured",
         version="v1",
         provenance={},
-        splits={"train": {"statistics": {"duration_hours": 50}}},
     )
-    older = replace(
-        measured, version="v0", splits={"train": {"statistics": {"duration_hours": 40}}}
-    )
+    older = replace(_with_statistics(measured, duration_hours=40), version="v0")
     reference = replace(
         base,
         dataset_id="reference",
@@ -186,10 +185,9 @@ def test_chart_data_deduplicates_families_and_excludes_plans():
         provenance={"inventory_category": "training_mixture"},
     )
     partial = replace(
-        base,
+        _with_statistics(base, hours_before_filter=1000),
         dataset_id="partial",
         provenance={},
-        splits={"train": {"statistics": {"hours_before_filter": 1000}}},
     )
     top, coverage = _chart_data(
         [measured, older, reference, missing, planned, mixture, partial]

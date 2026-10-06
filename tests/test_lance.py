@@ -504,7 +504,7 @@ def test_catalog_lance_table_pins_snapshot(tmp_path):
     def catalog(ref):
         spec = DatasetSpec.from_dict(
             {
-                "schema_version": "dataset-catalog/1.0",
+                "schema_version": "dataset-catalog/2.0",
                 "dataset_id": "demo",
                 "version": "v1",
                 "languages": ["zh"],

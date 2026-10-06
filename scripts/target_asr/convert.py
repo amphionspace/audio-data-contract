@@ -290,7 +290,7 @@ def publish_job(job, roots, work, index, counts, seconds, mixture_ids,
         raise FileExistsError(f"published version already exists: {final}")
     by_id = {row["cut_id"]: row for row in index.values()}
     source_splits = {
-        a["name"]: {"source_artifact": a["name"],
+        a["name"]: {"artifacts": {"source": [a["name"]]},
                     "statistics": {"records": a["metadata"]["record_count"]}}
         for a in input_artifacts
     }
@@ -301,8 +301,9 @@ def publish_job(job, roots, work, index, counts, seconds, mixture_ids,
         path = work / (split + ".jsonl.gz")
         artifacts.append(artifact(split, "audio-records", path, roots, count))
         splits[split] = {
-            "group": split.split("_", 1)[0], "records_artifact": split,
-            "audio_index_artifact": "audio_index", "statistics": {
+            "group": split.split("_", 1)[0],
+            "artifacts": {"records": [split], "audio_index": ["audio_index"]},
+            "statistics": {
                 "records": count, "negative_records": negative_counts[split],
                 "duration_hours": seconds[split] / 3600, "duration_basis": basis,
                 "unique_mixture_count": len(mixture_ids[split]),
@@ -315,7 +316,7 @@ def publish_job(job, roots, work, index, counts, seconds, mixture_ids,
         children = [s for s in splits if splits[s].get("group") == group]
         unique = set().union(*(mixture_ids[s] for s in children))
         splits[group] = {
-            "records_artifacts": children, "audio_index_artifact": "audio_index",
+            "artifacts": {"records": children, "audio_index": ["audio_index"]},
             "statistics": {
                 "records": sum(counts[s] for s in children),
                 "duration_hours": sum(seconds[s] for s in children) / 3600,
@@ -333,7 +334,7 @@ def publish_job(job, roots, work, index, counts, seconds, mixture_ids,
             final.relative_to(project) / Path(item["relative_path"]).name
         )
     common = {
-        "schema_version": "dataset-catalog/1.0", "dataset_id": job["dataset_id"],
+        "schema_version": "dataset-catalog/2.0", "dataset_id": job["dataset_id"],
         "languages": [job["language"]], "tasks": ["ts_asr"], "aliases": [],
     }
     source_spec = {

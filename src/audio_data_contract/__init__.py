@@ -4,6 +4,7 @@ from .catalog import (
     DatasetCatalog,
     load_catalog,
     resolve_artifact,
+    resolve_split,
     validate_catalog,
     verify_artifact_file,
 )
@@ -37,6 +38,7 @@ from .types import (
     PromptAudio,
     PromptTemplate,
     PromptText,
+    Split,
     TextContent,
     TransformStep,
 )
@@ -65,6 +67,7 @@ __all__ = [
     "PromptAudio",
     "PromptTemplate",
     "PromptText",
+    "Split",
     "TextContent",
     "TransformStep",
     "extract_audio_refs",
@@ -78,6 +81,7 @@ __all__ = [
     "read_artifact",
     "render_example",
     "resolve_artifact",
+    "resolve_split",
     "resolve_view",
     "validate_catalog",
     "validate_view_catalog",

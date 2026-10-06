@@ -1,4 +1,4 @@
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: librispeech
     version: icefall-20260908
     languages:
@@ -11,136 +11,140 @@
         kind: lhotse-recordings
         root_alias: legacy_asr
         relative_path: LHOTSE/LibriSpeech/data/manifests/librispeech_recordings_train-clean-100.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: train_rec_1
         kind: lhotse-recordings
         root_alias: legacy_asr
         relative_path: LHOTSE/LibriSpeech/data/manifests/librispeech_recordings_train-clean-360.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: train_rec_2
         kind: lhotse-recordings
         root_alias: legacy_asr
         relative_path: LHOTSE/LibriSpeech/data/manifests/librispeech_recordings_train-other-500.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: train_sup_0
         kind: lhotse-supervisions
         root_alias: legacy_asr
         relative_path: LHOTSE/LibriSpeech/data/manifests/librispeech_supervisions_train-clean-100.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: train_sup_1
         kind: lhotse-supervisions
         root_alias: legacy_asr
         relative_path: LHOTSE/LibriSpeech/data/manifests/librispeech_supervisions_train-clean-360.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: train_sup_2
         kind: lhotse-supervisions
         root_alias: legacy_asr
         relative_path: LHOTSE/LibriSpeech/data/manifests/librispeech_supervisions_train-other-500.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: dev_rec_0
         kind: lhotse-recordings
         root_alias: legacy_asr
         relative_path: LHOTSE/LibriSpeech/data/manifests/librispeech_recordings_dev-clean.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: dev_rec_1
         kind: lhotse-recordings
         root_alias: legacy_asr
         relative_path: LHOTSE/LibriSpeech/data/manifests/librispeech_recordings_dev-other.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: dev_sup_0
         kind: lhotse-supervisions
         root_alias: legacy_asr
         relative_path: LHOTSE/LibriSpeech/data/manifests/librispeech_supervisions_dev-clean.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: dev_sup_1
         kind: lhotse-supervisions
         root_alias: legacy_asr
         relative_path: LHOTSE/LibriSpeech/data/manifests/librispeech_supervisions_dev-other.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: test_clean_rec_0
         kind: lhotse-recordings
         root_alias: legacy_asr
         relative_path: LHOTSE/LibriSpeech/data/manifests/librispeech_recordings_test-clean.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: test_clean_sup_0
         kind: lhotse-supervisions
         root_alias: legacy_asr
         relative_path: LHOTSE/LibriSpeech/data/manifests/librispeech_supervisions_test-clean.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: test_other_rec_0
         kind: lhotse-recordings
         root_alias: legacy_asr
         relative_path: LHOTSE/LibriSpeech/data/manifests/librispeech_recordings_test-other.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: test_other_sup_0
         kind: lhotse-supervisions
         root_alias: legacy_asr
         relative_path: LHOTSE/LibriSpeech/data/manifests/librispeech_supervisions_test-other.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
+      - name: train_sup_0_punc
+        kind: lhotse-supervisions
+        root_alias: legacy_asr
+        relative_path: LHOTSE/LibriSpeech/data/manifests/librispeech_supervisions_train-clean-100_punc.jsonl.gz
+      - name: train_sup_1_punc
+        kind: lhotse-supervisions
+        root_alias: legacy_asr
+        relative_path: LHOTSE/LibriSpeech/data/manifests/librispeech_supervisions_train-clean-360_punc.jsonl.gz
+      - name: train_sup_2_punc
+        kind: lhotse-supervisions
+        root_alias: legacy_asr
+        relative_path: LHOTSE/LibriSpeech/data/manifests/librispeech_supervisions_train-other-500_punc.jsonl.gz
+      - name: dev_sup_0_punc
+        kind: lhotse-supervisions
+        root_alias: legacy_asr
+        relative_path: LHOTSE/LibriSpeech/data/manifests/librispeech_supervisions_dev-clean_punc.jsonl.gz
+      - name: dev_sup_1_punc
+        kind: lhotse-supervisions
+        root_alias: legacy_asr
+        relative_path: LHOTSE/LibriSpeech/data/manifests/librispeech_supervisions_dev-other_punc.jsonl.gz
+      - name: test_clean_sup_0_punc
+        kind: lhotse-supervisions
+        root_alias: legacy_asr
+        relative_path: LHOTSE/LibriSpeech/data/manifests/librispeech_supervisions_test-clean_punc.jsonl.gz
+      - name: test_other_sup_0_punc
+        kind: lhotse-supervisions
+        root_alias: legacy_asr
+        relative_path: LHOTSE/LibriSpeech/data/manifests/librispeech_supervisions_test-other_punc.jsonl.gz
     splits:
       train:
-        recordings_artifacts:
-          - train_rec_0
-          - train_rec_1
-          - train_rec_2
-        supervisions_artifacts:
-          - train_sup_0
-          - train_sup_1
-          - train_sup_2
-        icefall:
-          use_punc: true
+        artifacts:
+          recordings:
+            - train_rec_0
+            - train_rec_1
+            - train_rec_2
+          supervisions:
+            - train_sup_0
+            - train_sup_1
+            - train_sup_2
+          punctuated_supervisions:
+            - train_sup_0_punc
+            - train_sup_1_punc
+            - train_sup_2_punc
         statistics:
           duration_hours: 961.0543984027779
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:LHOTSE/LibriSpeech/data/manifests/librispeech_supervisions_train-clean-100.jsonl.gz, legacy_asr:LHOTSE/LibriSpeech/data/manifests/librispeech_supervisions_train-clean-360.jsonl.gz, legacy_asr:LHOTSE/LibriSpeech/data/manifests/librispeech_supervisions_train-other-500.jsonl.gz'
       dev:
-        recordings_artifacts:
-          - dev_rec_0
-          - dev_rec_1
-        supervisions_artifacts:
-          - dev_sup_0
-          - dev_sup_1
-        icefall:
-          use_punc: true
+        artifacts:
+          recordings:
+            - dev_rec_0
+            - dev_rec_1
+          supervisions:
+            - dev_sup_0
+            - dev_sup_1
+          punctuated_supervisions:
+            - dev_sup_0_punc
+            - dev_sup_1_punc
         statistics:
           duration_hours: 10.508996145833333
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:LHOTSE/LibriSpeech/data/manifests/librispeech_supervisions_dev-clean.jsonl.gz, legacy_asr:LHOTSE/LibriSpeech/data/manifests/librispeech_supervisions_dev-other.jsonl.gz'
       test_clean:
+        artifacts:
+          recordings:
+            - test_clean_rec_0
+          supervisions:
+            - test_clean_sup_0
+          punctuated_supervisions:
+            - test_clean_sup_0_punc
         group: test
-        recordings_artifacts:
-          - test_clean_rec_0
-        supervisions_artifacts:
-          - test_clean_sup_0
-        icefall:
-          use_punc: true
       test_other:
+        artifacts:
+          recordings:
+            - test_other_rec_0
+          supervisions:
+            - test_other_sup_0
+          punctuated_supervisions:
+            - test_other_sup_0_punc
         group: test
-        recordings_artifacts:
-          - test_other_rec_0
-        supervisions_artifacts:
-          - test_other_sup_0
-        icefall:
-          use_punc: true
-    recipe_parameters:
-      icefall:
-        language: en
     provenance:
       source: icefall runtime manifest snapshot
       snapshot_date: '2026-09-08'
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: mls
     version: icefall-20260908
     languages:
@@ -153,76 +157,76 @@
         kind: lhotse-recordings
         root_alias: legacy_asr
         relative_path: LHOTSE/MLS/data/manifests/mls-english_recordings_train.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: train_sup_0
         kind: lhotse-supervisions
         root_alias: legacy_asr
         relative_path: LHOTSE/MLS/data/manifests/mls-english_supervisions_train.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: dev_rec_0
         kind: lhotse-recordings
         root_alias: legacy_asr
         relative_path: LHOTSE/MLS/data/manifests/mls-english_recordings_dev.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: dev_sup_0
         kind: lhotse-supervisions
         root_alias: legacy_asr
         relative_path: LHOTSE/MLS/data/manifests/mls-english_supervisions_dev.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: test_rec_0
         kind: lhotse-recordings
         root_alias: legacy_asr
         relative_path: LHOTSE/MLS/data/manifests/mls-english_recordings_test.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: test_sup_0
         kind: lhotse-supervisions
         root_alias: legacy_asr
         relative_path: LHOTSE/MLS/data/manifests/mls-english_supervisions_test.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
+      - name: train_sup_0_punc
+        kind: lhotse-supervisions
+        root_alias: legacy_asr
+        relative_path: LHOTSE/MLS/data/manifests/mls-english_supervisions_train_punc.jsonl.gz
+      - name: dev_sup_0_punc
+        kind: lhotse-supervisions
+        root_alias: legacy_asr
+        relative_path: LHOTSE/MLS/data/manifests/mls-english_supervisions_dev_punc.jsonl.gz
+      - name: test_sup_0_punc
+        kind: lhotse-supervisions
+        root_alias: legacy_asr
+        relative_path: LHOTSE/MLS/data/manifests/mls-english_supervisions_test_punc.jsonl.gz
     splits:
       train:
-        recordings_artifacts:
-          - train_rec_0
-        supervisions_artifacts:
-          - train_sup_0
-        icefall:
-          use_punc: true
+        artifacts:
+          recordings:
+            - train_rec_0
+          supervisions:
+            - train_sup_0
+          punctuated_supervisions:
+            - train_sup_0_punc
         statistics:
           duration_hours: 44659.74253322917
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:LHOTSE/MLS/data/manifests/mls-english_supervisions_train.jsonl.gz'
       dev:
-        recordings_artifacts:
-          - dev_rec_0
-        supervisions_artifacts:
-          - dev_sup_0
-        icefall:
-          use_punc: true
+        artifacts:
+          recordings:
+            - dev_rec_0
+          supervisions:
+            - dev_sup_0
+          punctuated_supervisions:
+            - dev_sup_0_punc
         statistics:
           duration_hours: 15.754560468749998
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:LHOTSE/MLS/data/manifests/mls-english_supervisions_dev.jsonl.gz'
       test:
-        recordings_artifacts:
-          - test_rec_0
-        supervisions_artifacts:
-          - test_sup_0
-        icefall:
-          use_punc: true
+        artifacts:
+          recordings:
+            - test_rec_0
+          supervisions:
+            - test_sup_0
+          punctuated_supervisions:
+            - test_sup_0_punc
         statistics:
           duration_hours: 15.548358420138888
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:LHOTSE/MLS/data/manifests/mls-english_supervisions_test.jsonl.gz'
-    recipe_parameters:
-      icefall:
-        language: en
     provenance:
       source: icefall runtime manifest snapshot
       snapshot_date: '2026-09-08'
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: gigaspeech
     version: icefall-20260908
     languages:
@@ -235,76 +239,76 @@
         kind: lhotse-recordings
         root_alias: legacy_asr
         relative_path: LHOTSE/GigaSpeech/data/manifests/gigaspeech_recordings_XL.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: train_sup_0
         kind: lhotse-supervisions
         root_alias: legacy_asr
         relative_path: LHOTSE/GigaSpeech/data/manifests/gigaspeech_supervisions_XL.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: dev_rec_0
         kind: lhotse-recordings
         root_alias: legacy_asr
         relative_path: LHOTSE/GigaSpeech/data/manifests/gigaspeech_recordings_DEV.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: dev_sup_0
         kind: lhotse-supervisions
         root_alias: legacy_asr
         relative_path: LHOTSE/GigaSpeech/data/manifests/gigaspeech_supervisions_DEV.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: test_rec_0
         kind: lhotse-recordings
         root_alias: legacy_asr
         relative_path: LHOTSE/GigaSpeech/data/manifests/gigaspeech_recordings_TEST.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: test_sup_0
         kind: lhotse-supervisions
         root_alias: legacy_asr
         relative_path: LHOTSE/GigaSpeech/data/manifests/gigaspeech_supervisions_TEST.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
+      - name: train_sup_0_punc
+        kind: lhotse-supervisions
+        root_alias: legacy_asr
+        relative_path: LHOTSE/GigaSpeech/data/manifests/gigaspeech_supervisions_XL_punc.jsonl.gz
+      - name: dev_sup_0_punc
+        kind: lhotse-supervisions
+        root_alias: legacy_asr
+        relative_path: LHOTSE/GigaSpeech/data/manifests/gigaspeech_supervisions_DEV_punc.jsonl.gz
+      - name: test_sup_0_punc
+        kind: lhotse-supervisions
+        root_alias: legacy_asr
+        relative_path: LHOTSE/GigaSpeech/data/manifests/gigaspeech_supervisions_TEST_punc.jsonl.gz
     splits:
       train:
-        recordings_artifacts:
-          - train_rec_0
-        supervisions_artifacts:
-          - train_sup_0
-        icefall:
-          use_punc: true
+        artifacts:
+          recordings:
+            - train_rec_0
+          supervisions:
+            - train_sup_0
+          punctuated_supervisions:
+            - train_sup_0_punc
         statistics:
           duration_hours: 9997.824365833334
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:LHOTSE/GigaSpeech/data/manifests/gigaspeech_supervisions_XL.jsonl.gz'
       dev:
-        recordings_artifacts:
-          - dev_rec_0
-        supervisions_artifacts:
-          - dev_sup_0
-        icefall:
-          use_punc: true
+        artifacts:
+          recordings:
+            - dev_rec_0
+          supervisions:
+            - dev_sup_0
+          punctuated_supervisions:
+            - dev_sup_0_punc
         statistics:
           duration_hours: 12.494937777777777
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:LHOTSE/GigaSpeech/data/manifests/gigaspeech_supervisions_DEV.jsonl.gz'
       test:
-        recordings_artifacts:
-          - test_rec_0
-        supervisions_artifacts:
-          - test_sup_0
-        icefall:
-          use_punc: true
+        artifacts:
+          recordings:
+            - test_rec_0
+          supervisions:
+            - test_sup_0
+          punctuated_supervisions:
+            - test_sup_0_punc
         statistics:
           duration_hours: 40.3317025
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:LHOTSE/GigaSpeech/data/manifests/gigaspeech_supervisions_TEST.jsonl.gz'
-    recipe_parameters:
-      icefall:
-        language: en
     provenance:
       source: icefall runtime manifest snapshot
       snapshot_date: '2026-09-08'
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: common_voice_en
     version: icefall-20260908
     languages:
@@ -317,14 +321,10 @@
         kind: lhotse-recordings
         root_alias: legacy_asr
         relative_path: LHOTSE/common_voice_en/data/manifests/cv-en_recordings_train.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: train_sup_0
         kind: lhotse-supervisions
         root_alias: legacy_asr
         relative_path: LHOTSE/common_voice_en/data/manifests/cv-en_supervisions_train_cleaned.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: train_sup_clean_0
         kind: lhotse-supervisions
         root_alias: legacy_asr
@@ -333,72 +333,64 @@
         kind: lhotse-recordings
         root_alias: legacy_asr
         relative_path: LHOTSE/common_voice_en/data/manifests/cv-en_recordings_dev.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: dev_sup_0
         kind: lhotse-supervisions
         root_alias: legacy_asr
         relative_path: LHOTSE/common_voice_en/data/manifests/cv-en_supervisions_dev_cleaned.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: test_rec_0
         kind: lhotse-recordings
         root_alias: legacy_asr
         relative_path: LHOTSE/common_voice_en/data/manifests/cv-en_recordings_test.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: test_sup_0
         kind: lhotse-supervisions
         root_alias: legacy_asr
         relative_path: LHOTSE/common_voice_en/data/manifests/cv-en_supervisions_test_cleaned.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: test_sup_clean_0
         kind: lhotse-supervisions
         root_alias: legacy_asr
         relative_path: common_voice_en/lhotse/clean/v1/cv-en_supervisions_test_orig_punc.jsonl.gz
+      - name: dev_sup_0_punc
+        kind: lhotse-supervisions
+        root_alias: legacy_asr
+        relative_path: LHOTSE/common_voice_en/data/manifests/cv-en_supervisions_dev_orig_punc.jsonl.gz
     splits:
       train:
-        recordings_artifacts:
-          - train_rec_0
-        supervisions_artifacts:
-          - train_sup_0
-        clean_supervisions_artifacts:
-          - train_sup_clean_0
-        icefall:
-          use_punc: false
+        artifacts:
+          recordings:
+            - train_rec_0
+          supervisions:
+            - train_sup_0
+          clean_supervisions:
+            - train_sup_clean_0
         statistics:
           duration_hours: 1808.1845411229215
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:LHOTSE/common_voice_en/data/manifests/cv-en_supervisions_train_cleaned.jsonl.gz'
       dev:
-        recordings_artifacts:
-          - dev_rec_0
-        supervisions_artifacts:
-          - dev_sup_0
-        icefall:
-          use_punc: false
+        artifacts:
+          recordings:
+            - dev_rec_0
+          supervisions:
+            - dev_sup_0
+          punctuated_supervisions:
+            - dev_sup_0_punc
         statistics:
           duration_hours: 27.339504142239072
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:LHOTSE/common_voice_en/data/manifests/cv-en_supervisions_dev_cleaned.jsonl.gz'
       test:
-        recordings_artifacts:
-          - test_rec_0
-        supervisions_artifacts:
-          - test_sup_0
-        clean_supervisions_artifacts:
-          - test_sup_clean_0
-        icefall:
-          use_punc: false
+        artifacts:
+          recordings:
+            - test_rec_0
+          supervisions:
+            - test_sup_0
+          clean_supervisions:
+            - test_sup_clean_0
         statistics:
           duration_hours: 27.199661217698885
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:LHOTSE/common_voice_en/data/manifests/cv-en_supervisions_test_cleaned.jsonl.gz'
-    recipe_parameters:
-      icefall:
-        language: en
     provenance:
       source: icefall runtime manifest snapshot
       snapshot_date: '2026-09-08'
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: singaporean
     version: icefall-20260908
     languages:
@@ -411,32 +403,30 @@
         kind: lhotse-recordings
         root_alias: legacy_asr
         relative_path: LHOTSE/singaporean/data/manifests/singaporean_recordings_all.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: train_sup_0
         kind: lhotse-supervisions
         root_alias: legacy_asr
         relative_path: LHOTSE/singaporean/data/manifests/singaporean_supervisions_all_cleaned.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
+      - name: train_sup_0_punc
+        kind: lhotse-supervisions
+        root_alias: legacy_asr
+        relative_path: LHOTSE/singaporean/data/manifests/singaporean_supervisions_all_cleaned_punc.jsonl.gz
     splits:
       train:
-        recordings_artifacts:
-          - train_rec_0
-        supervisions_artifacts:
-          - train_sup_0
-        icefall:
-          use_punc: true
+        artifacts:
+          recordings:
+            - train_rec_0
+          supervisions:
+            - train_sup_0
+          punctuated_supervisions:
+            - train_sup_0_punc
         statistics:
           duration_hours: 0.11039805555555555
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:LHOTSE/singaporean/data/manifests/singaporean_supervisions_all_cleaned.jsonl.gz'
-    recipe_parameters:
-      icefall:
-        language: en
     provenance:
       source: icefall runtime manifest snapshot
       snapshot_date: '2026-09-08'
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: singapore_english
     version: icefall-20260908
     languages:
@@ -449,54 +439,53 @@
         kind: lhotse-recordings
         root_alias: legacy_asr
         relative_path: LHOTSE/singapore_english_hf/data/manifests/singapore_recordings_train.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: train_sup_0
         kind: lhotse-supervisions
         root_alias: legacy_asr
         relative_path: LHOTSE/singapore_english_hf/data/manifests/singapore_supervisions_train_cleaned.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: dev_rec_0
         kind: lhotse-recordings
         root_alias: legacy_asr
         relative_path: LHOTSE/singapore_english_hf/data/manifests/singapore_recordings_dev.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: dev_sup_0
         kind: lhotse-supervisions
         root_alias: legacy_asr
         relative_path: LHOTSE/singapore_english_hf/data/manifests/singapore_supervisions_dev_cleaned.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
+      - name: train_sup_0_punc
+        kind: lhotse-supervisions
+        root_alias: legacy_asr
+        relative_path: LHOTSE/singapore_english_hf/data/manifests/singapore_supervisions_train_cleaned_punc.jsonl.gz
+      - name: dev_sup_0_punc
+        kind: lhotse-supervisions
+        root_alias: legacy_asr
+        relative_path: LHOTSE/singapore_english_hf/data/manifests/singapore_supervisions_dev_cleaned_punc.jsonl.gz
     splits:
       train:
-        recordings_artifacts:
-          - train_rec_0
-        supervisions_artifacts:
-          - train_sup_0
-        icefall:
-          use_punc: true
+        artifacts:
+          recordings:
+            - train_rec_0
+          supervisions:
+            - train_sup_0
+          punctuated_supervisions:
+            - train_sup_0_punc
         statistics:
           duration_hours: 3.290086666666667
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:LHOTSE/singapore_english_hf/data/manifests/singapore_supervisions_train_cleaned.jsonl.gz'
       dev:
-        recordings_artifacts:
-          - dev_rec_0
-        supervisions_artifacts:
-          - dev_sup_0
-        icefall:
-          use_punc: true
+        artifacts:
+          recordings:
+            - dev_rec_0
+          supervisions:
+            - dev_sup_0
+          punctuated_supervisions:
+            - dev_sup_0_punc
         statistics:
           duration_hours: 0.5738733333333333
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:LHOTSE/singapore_english_hf/data/manifests/singapore_supervisions_dev_cleaned.jsonl.gz'
-    recipe_parameters:
-      icefall:
-        language: en
     provenance:
       source: icefall runtime manifest snapshot
       snapshot_date: '2026-09-08'
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: tal100_en
     version: icefall-20260908
     languages:
@@ -509,76 +498,76 @@
         kind: lhotse-recordings
         root_alias: legacy_asr
         relative_path: LHOTSE/tal100_en/data/manifests/tal100_en_recordings_train.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: train_sup_0
         kind: lhotse-supervisions
         root_alias: legacy_asr
         relative_path: LHOTSE/tal100_en/data/manifests/tal100_en_supervisions_train.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: dev_rec_0
         kind: lhotse-recordings
         root_alias: legacy_asr
         relative_path: LHOTSE/tal100_en/data/manifests/tal100_en_recordings_dev.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: dev_sup_0
         kind: lhotse-supervisions
         root_alias: legacy_asr
         relative_path: LHOTSE/tal100_en/data/manifests/tal100_en_supervisions_dev.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: test_rec_0
         kind: lhotse-recordings
         root_alias: legacy_asr
         relative_path: LHOTSE/tal100_en/data/manifests/tal100_en_recordings_test.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: test_sup_0
         kind: lhotse-supervisions
         root_alias: legacy_asr
         relative_path: LHOTSE/tal100_en/data/manifests/tal100_en_supervisions_test.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
+      - name: train_sup_0_punc
+        kind: lhotse-supervisions
+        root_alias: legacy_asr
+        relative_path: LHOTSE/tal100_en/data/manifests/tal100_en_supervisions_train_punc.jsonl.gz
+      - name: dev_sup_0_punc
+        kind: lhotse-supervisions
+        root_alias: legacy_asr
+        relative_path: LHOTSE/tal100_en/data/manifests/tal100_en_supervisions_dev_punc.jsonl.gz
+      - name: test_sup_0_punc
+        kind: lhotse-supervisions
+        root_alias: legacy_asr
+        relative_path: LHOTSE/tal100_en/data/manifests/tal100_en_supervisions_test_punc.jsonl.gz
     splits:
       train:
-        recordings_artifacts:
-          - train_rec_0
-        supervisions_artifacts:
-          - train_sup_0
-        icefall:
-          use_punc: true
+        artifacts:
+          recordings:
+            - train_rec_0
+          supervisions:
+            - train_sup_0
+          punctuated_supervisions:
+            - train_sup_0_punc
         statistics:
           duration_hours: 3.88330640625
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:LHOTSE/tal100_en/data/manifests/tal100_en_supervisions_train.jsonl.gz'
       dev:
-        recordings_artifacts:
-          - dev_rec_0
-        supervisions_artifacts:
-          - dev_sup_0
-        icefall:
-          use_punc: true
+        artifacts:
+          recordings:
+            - dev_rec_0
+          supervisions:
+            - dev_sup_0
+          punctuated_supervisions:
+            - dev_sup_0_punc
         statistics:
           duration_hours: 0.48386401041666666
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:LHOTSE/tal100_en/data/manifests/tal100_en_supervisions_dev.jsonl.gz'
       test:
-        recordings_artifacts:
-          - test_rec_0
-        supervisions_artifacts:
-          - test_sup_0
-        icefall:
-          use_punc: true
+        artifacts:
+          recordings:
+            - test_rec_0
+          supervisions:
+            - test_sup_0
+          punctuated_supervisions:
+            - test_sup_0_punc
         statistics:
           duration_hours: 0.46295855902777777
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:LHOTSE/tal100_en/data/manifests/tal100_en_supervisions_test.jsonl.gz'
-    recipe_parameters:
-      icefall:
-        language: en
     provenance:
       source: icefall runtime manifest snapshot
       snapshot_date: '2026-09-08'
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: wenetspeech
     version: icefall-20260908
     languages:
@@ -591,14 +580,10 @@
         kind: lhotse-recordings
         root_alias: legacy_asr
         relative_path: LHOTSE/WenetSpeech/data/manifests/wenetspeech_recordings_L.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: train_sup_0
         kind: lhotse-supervisions
         root_alias: legacy_asr
         relative_path: LHOTSE/WenetSpeech/data/manifests/wenetspeech_supervisions_L.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: train_sup_clean_0
         kind: lhotse-supervisions
         root_alias: legacy_asr
@@ -611,86 +596,85 @@
         kind: lhotse-recordings
         root_alias: legacy_asr
         relative_path: LHOTSE/WenetSpeech/data/manifests/wenetspeech_recordings_DEV.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: dev_sup_0
         kind: lhotse-supervisions
         root_alias: legacy_asr
         relative_path: LHOTSE/WenetSpeech/data/manifests/wenetspeech_supervisions_DEV.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: test_net_rec_0
         kind: lhotse-recordings
         root_alias: legacy_asr
         relative_path: LHOTSE/WenetSpeech/data/manifests/wenetspeech_recordings_TEST_NET.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: test_net_sup_0
         kind: lhotse-supervisions
         root_alias: legacy_asr
         relative_path: LHOTSE/WenetSpeech/data/manifests/wenetspeech_supervisions_TEST_NET.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: test_meeting_rec_0
         kind: lhotse-recordings
         root_alias: legacy_asr
         relative_path: LHOTSE/WenetSpeech/data/manifests/wenetspeech_recordings_TEST_MEETING.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: test_meeting_sup_0
         kind: lhotse-supervisions
         root_alias: legacy_asr
         relative_path: LHOTSE/WenetSpeech/data/manifests/wenetspeech_supervisions_TEST_MEETING.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
+      - name: dev_sup_0_punc
+        kind: lhotse-supervisions
+        root_alias: legacy_asr
+        relative_path: LHOTSE/WenetSpeech/data/manifests/wenetspeech_supervisions_DEV_punc.jsonl.gz
+      - name: test_net_sup_0_punc
+        kind: lhotse-supervisions
+        root_alias: legacy_asr
+        relative_path: LHOTSE/WenetSpeech/data/manifests/wenetspeech_supervisions_TEST_NET_punc.jsonl.gz
+      - name: test_meeting_sup_0_punc
+        kind: lhotse-supervisions
+        root_alias: legacy_asr
+        relative_path: LHOTSE/WenetSpeech/data/manifests/wenetspeech_supervisions_TEST_MEETING_punc.jsonl.gz
     splits:
       train:
-        recordings_artifacts:
-          - train_rec_0
-        supervisions_artifacts:
-          - train_sup_0
-        clean_supervisions_artifacts:
-          - train_sup_clean_0
-        clean_no_punc_supervisions_artifacts:
-          - train_sup_clean_no_punc_0
-        icefall:
-          use_punc: true
+        artifacts:
+          recordings:
+            - train_rec_0
+          supervisions:
+            - train_sup_0
+          clean_supervisions:
+            - train_sup_clean_0
+          clean_no_punc_supervisions:
+            - train_sup_clean_no_punc_0
         statistics:
           duration_hours: 10005.411338888889
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:LHOTSE/WenetSpeech/data/manifests/wenetspeech_supervisions_L.jsonl.gz'
       dev:
-        recordings_artifacts:
-          - dev_rec_0
-        supervisions_artifacts:
-          - dev_sup_0
-        icefall:
-          use_punc: true
+        artifacts:
+          recordings:
+            - dev_rec_0
+          supervisions:
+            - dev_sup_0
+          punctuated_supervisions:
+            - dev_sup_0_punc
         statistics:
           duration_hours: 20.017830555555555
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:LHOTSE/WenetSpeech/data/manifests/wenetspeech_supervisions_DEV.jsonl.gz'
       test_net:
+        artifacts:
+          recordings:
+            - test_net_rec_0
+          supervisions:
+            - test_net_sup_0
+          punctuated_supervisions:
+            - test_net_sup_0_punc
         group: test
-        recordings_artifacts:
-          - test_net_rec_0
-        supervisions_artifacts:
-          - test_net_sup_0
-        icefall:
-          use_punc: true
       test_meeting:
+        artifacts:
+          recordings:
+            - test_meeting_rec_0
+          supervisions:
+            - test_meeting_sup_0
+          punctuated_supervisions:
+            - test_meeting_sup_0_punc
         group: test
-        recordings_artifacts:
-          - test_meeting_rec_0
-        supervisions_artifacts:
-          - test_meeting_sup_0
-        icefall:
-          use_punc: true
-    recipe_parameters:
-      icefall:
-        language: zh
     provenance:
       source: icefall runtime manifest snapshot
       snapshot_date: '2026-09-08'
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: wenetspeech_disfluency
     version: icefall-20260908
     languages:
@@ -702,30 +686,24 @@
         kind: lhotse-recordings
         root_alias: legacy_asr
         relative_path: LHOTSE/WenetSpeech/data/manifests/wenetspeech_recordings_L.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: train_sup_0
         kind: lhotse-supervisions
         root_alias: legacy_asr
         relative_path: WenetSpeech/lhotse/clean/v3-firered/derived/police-v9/wenetspeech_supervisions_restore_disfluency.jsonl.gz
     splits:
       train:
-        recordings_artifacts:
-          - train_rec_0
-        supervisions_artifacts:
-          - train_sup_0
-        icefall:
-          use_punc: false
+        artifacts:
+          recordings:
+            - train_rec_0
+          supervisions:
+            - train_sup_0
         statistics:
           duration_hours: 182.45928888888886
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:WenetSpeech/lhotse/clean/v3-firered/derived/police-v9/wenetspeech_supervisions_restore_disfluency.jsonl.gz'
-    recipe_parameters:
-      icefall:
-        language: zh
     provenance:
       source: icefall runtime manifest snapshot
       snapshot_date: '2026-09-08'
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: wenetspeech4tts
     version: icefall-20260908
     languages:
@@ -738,32 +716,30 @@
         kind: lhotse-recordings
         root_alias: legacy_asr
         relative_path: LHOTSE/WenetSpeech4TTS/data/manifests/wenetspeech4tts_recordings_basic.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: train_sup_0
         kind: lhotse-supervisions
         root_alias: legacy_asr
         relative_path: LHOTSE/WenetSpeech4TTS/data/manifests/wenetspeech4tts_supervisions_basic.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
+      - name: train_sup_0_punc
+        kind: lhotse-supervisions
+        root_alias: legacy_asr
+        relative_path: LHOTSE/WenetSpeech4TTS/data/manifests/wenetspeech4tts_supervisions_basic_punc.jsonl.gz
     splits:
       train:
-        recordings_artifacts:
-          - train_rec_0
-        supervisions_artifacts:
-          - train_sup_0
-        icefall:
-          use_punc: true
+        artifacts:
+          recordings:
+            - train_rec_0
+          supervisions:
+            - train_sup_0
+          punctuated_supervisions:
+            - train_sup_0_punc
         statistics:
           duration_hours: 7232.1564842013895
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:LHOTSE/WenetSpeech4TTS/data/manifests/wenetspeech4tts_supervisions_basic.jsonl.gz'
-    recipe_parameters:
-      icefall:
-        language: zh
     provenance:
       source: icefall runtime manifest snapshot
       snapshot_date: '2026-09-08'
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: police_synthetic_zh_accent
     version: icefall-20260908
     languages:
@@ -806,46 +782,39 @@
         relative_path: synthetic/police_synthetic_zh_accent/v2-20260818/manifests/police_synthetic_zh_accent_cosyvoice3_supervisions_test.jsonl.gz
     splits:
       train:
-        recordings_artifacts:
-          - train_rec_0
-        supervisions_artifacts:
-          - train_sup_0
-        icefall:
-          use_punc: false
+        artifacts:
+          recordings:
+            - train_rec_0
+          supervisions:
+            - train_sup_0
         statistics:
           duration_hours: 35.95784444444445
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:synthetic/police_synthetic_zh_accent/v3-20260820/manifests/police_synthetic_supervisions_train.jsonl.gz'
       test:
+        artifacts:
+          recordings:
+            - test_rec_0
+          supervisions:
+            - test_sup_0
         group: test
-        recordings_artifacts:
-          - test_rec_0
-        supervisions_artifacts:
-          - test_sup_0
-        icefall:
-          use_punc: false
       test_qwen3_tts:
+        artifacts:
+          recordings:
+            - test_qwen3_tts_rec_0
+          supervisions:
+            - test_qwen3_tts_sup_0
         group: test
-        recordings_artifacts:
-          - test_qwen3_tts_rec_0
-        supervisions_artifacts:
-          - test_qwen3_tts_sup_0
-        icefall:
-          use_punc: false
       test_cosyvoice3:
+        artifacts:
+          recordings:
+            - test_cosyvoice3_rec_0
+          supervisions:
+            - test_cosyvoice3_sup_0
         group: test
-        recordings_artifacts:
-          - test_cosyvoice3_rec_0
-        supervisions_artifacts:
-          - test_cosyvoice3_sup_0
-        icefall:
-          use_punc: false
-    recipe_parameters:
-      icefall:
-        language: zh
     provenance:
       source: icefall runtime manifest snapshot
       snapshot_date: '2026-09-08'
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: police_terms_v5
     version: icefall-20260908
     languages:
@@ -871,32 +840,27 @@
         relative_path: LHOTSE/synthetic/police_synthetic_zh_accent/v5-20260830-qwen75-cosy25-split80-10-10/manifests/police_terms_v5_supervisions_dev.jsonl.gz
     splits:
       train:
-        recordings_artifacts:
-          - train_rec_0
-        supervisions_artifacts:
-          - train_sup_0
-        icefall:
-          use_punc: false
+        artifacts:
+          recordings:
+            - train_rec_0
+          supervisions:
+            - train_sup_0
         statistics:
           duration_hours: 20.349644444444444
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:LHOTSE/synthetic/police_synthetic_zh_accent/v5-20260830-qwen75-cosy25-split80-10-10/manifests/police_terms_v5_supervisions_train.jsonl.gz'
       dev:
-        recordings_artifacts:
-          - dev_rec_0
-        supervisions_artifacts:
-          - dev_sup_0
-        icefall:
-          use_punc: false
+        artifacts:
+          recordings:
+            - dev_rec_0
+          supervisions:
+            - dev_sup_0
         statistics:
           duration_hours: 1.7376222222222222
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:LHOTSE/synthetic/police_synthetic_zh_accent/v5-20260830-qwen75-cosy25-split80-10-10/manifests/police_terms_v5_supervisions_dev.jsonl.gz'
-    recipe_parameters:
-      icefall:
-        language: zh
     provenance:
       source: icefall runtime manifest snapshot
       snapshot_date: '2026-09-08'
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: police_terms_v5_dev
     version: icefall-20260908
     languages:
@@ -914,23 +878,19 @@
         relative_path: LHOTSE/synthetic/police_synthetic_zh_accent/v5-20260830-qwen75-cosy25-split80-10-10/manifests/police_terms_v5_supervisions_dev.jsonl.gz
     splits:
       test:
-        recordings_artifacts:
-          - test_rec_0
-        supervisions_artifacts:
-          - test_sup_0
-        icefall:
-          use_punc: false
+        artifacts:
+          recordings:
+            - test_rec_0
+          supervisions:
+            - test_sup_0
         statistics:
           duration_hours: 1.7376222222222222
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:LHOTSE/synthetic/police_synthetic_zh_accent/v5-20260830-qwen75-cosy25-split80-10-10/manifests/police_terms_v5_supervisions_dev.jsonl.gz'
-    recipe_parameters:
-      icefall:
-        language: zh
     provenance:
       source: icefall runtime manifest snapshot
       snapshot_date: '2026-09-08'
       dataset_family: police_terms_v5
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: police_terms_v5_test
     version: icefall-20260908
     languages:
@@ -948,23 +908,19 @@
         relative_path: LHOTSE/synthetic/police_synthetic_zh_accent/v5-20260830-qwen75-cosy25-split80-10-10/manifests/police_terms_v5_supervisions_test.jsonl.gz
     splits:
       test:
-        recordings_artifacts:
-          - test_rec_0
-        supervisions_artifacts:
-          - test_sup_0
-        icefall:
-          use_punc: false
+        artifacts:
+          recordings:
+            - test_rec_0
+          supervisions:
+            - test_sup_0
         statistics:
           duration_hours: 1.5433444444444444
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:LHOTSE/synthetic/police_synthetic_zh_accent/v5-20260830-qwen75-cosy25-split80-10-10/manifests/police_terms_v5_supervisions_test.jsonl.gz'
-    recipe_parameters:
-      icefall:
-        language: zh
     provenance:
       source: icefall runtime manifest snapshot
       snapshot_date: '2026-09-08'
       dataset_family: police_terms_v5
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: wenetspeech_chuan
     version: icefall-20260908
     languages:
@@ -979,20 +935,16 @@
         relative_path: zh/WenetSpeech-Chuan/data/manifests/wenetspeech_chuan_cuts_train.jsonl.gz
     splits:
       train:
-        cuts_artifacts:
-          - train_cuts_0
-        icefall:
-          use_punc: false
+        artifacts:
+          cuts:
+            - train_cuts_0
         statistics:
           duration_hours: 10259.5651865625
           duration_basis: 'sum of cuts durations; overlapping segments may count speech more than once; sources: multilingual:zh/WenetSpeech-Chuan/data/manifests/wenetspeech_chuan_cuts_train.jsonl.gz'
-    recipe_parameters:
-      icefall:
-        language: zh
     provenance:
       source: icefall runtime manifest snapshot
       snapshot_date: '2026-09-08'
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: wenetspeech_wu
     version: icefall-20260908
     languages:
@@ -1007,20 +959,16 @@
         relative_path: zh/WenetSpeech-Wu/data/manifests/wenetspeech_wu_cuts_train.jsonl.gz
     splits:
       train:
-        cuts_artifacts:
-          - train_cuts_0
-        icefall:
-          use_punc: false
+        artifacts:
+          cuts:
+            - train_cuts_0
         statistics:
           duration_hours: 8740.69795
           duration_basis: 'sum of cuts durations; overlapping segments may count speech more than once; sources: multilingual:zh/WenetSpeech-Wu/data/manifests/wenetspeech_wu_cuts_train.jsonl.gz'
-    recipe_parameters:
-      icefall:
-        language: zh
     provenance:
       source: icefall runtime manifest snapshot
       snapshot_date: '2026-09-08'
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: emilia_zh
     version: icefall-20260908
     languages:
@@ -1033,24 +981,24 @@
         kind: lhotse-cuts
         root_alias: legacy_asr
         relative_path: LHOTSE/emilia_zh/data/manifests/emilia_zh_cuts_all_cleaned.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
+      - name: train_cuts_0_punc
+        kind: lhotse-cuts
+        root_alias: legacy_asr
+        relative_path: LHOTSE/emilia_zh/data/manifests/emilia_zh_cuts_all_cleaned_punc.jsonl.gz
     splits:
       train:
-        cuts_artifacts:
-          - train_cuts_0
-        icefall:
-          use_punc: true
+        artifacts:
+          cuts:
+            - train_cuts_0
+          punctuated_cuts:
+            - train_cuts_0_punc
         statistics:
           duration_hours: 23955.96525584345
           duration_basis: 'sum of cuts durations; overlapping segments may count speech more than once; sources: legacy_asr:LHOTSE/emilia_zh/data/manifests/emilia_zh_cuts_all_cleaned.jsonl.gz'
-    recipe_parameters:
-      icefall:
-        language: zh
     provenance:
       source: icefall runtime manifest snapshot
       snapshot_date: '2026-09-08'
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: aishell
     version: icefall-20260908
     languages:
@@ -1063,76 +1011,76 @@
         kind: lhotse-recordings
         root_alias: legacy_asr
         relative_path: LHOTSE/data_aishell/data/manifests/aishell_recordings_train.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: train_sup_0
         kind: lhotse-supervisions
         root_alias: legacy_asr
         relative_path: LHOTSE/data_aishell/data/manifests/aishell_supervisions_train.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: dev_rec_0
         kind: lhotse-recordings
         root_alias: legacy_asr
         relative_path: LHOTSE/data_aishell/data/manifests/aishell_recordings_dev.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: dev_sup_0
         kind: lhotse-supervisions
         root_alias: legacy_asr
         relative_path: LHOTSE/data_aishell/data/manifests/aishell_supervisions_dev.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: test_rec_0
         kind: lhotse-recordings
         root_alias: legacy_asr
         relative_path: LHOTSE/data_aishell/data/manifests/aishell_recordings_test.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: test_sup_0
         kind: lhotse-supervisions
         root_alias: legacy_asr
         relative_path: LHOTSE/data_aishell/data/manifests/aishell_supervisions_test.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
+      - name: train_sup_0_punc
+        kind: lhotse-supervisions
+        root_alias: legacy_asr
+        relative_path: LHOTSE/data_aishell/data/manifests/aishell_supervisions_train_punc.jsonl.gz
+      - name: dev_sup_0_punc
+        kind: lhotse-supervisions
+        root_alias: legacy_asr
+        relative_path: LHOTSE/data_aishell/data/manifests/aishell_supervisions_dev_punc.jsonl.gz
+      - name: test_sup_0_punc
+        kind: lhotse-supervisions
+        root_alias: legacy_asr
+        relative_path: LHOTSE/data_aishell/data/manifests/aishell_supervisions_test_punc.jsonl.gz
     splits:
       train:
-        recordings_artifacts:
-          - train_rec_0
-        supervisions_artifacts:
-          - train_sup_0
-        icefall:
-          use_punc: true
+        artifacts:
+          recordings:
+            - train_rec_0
+          supervisions:
+            - train_sup_0
+          punctuated_supervisions:
+            - train_sup_0_punc
         statistics:
           duration_hours: 150.8520156076389
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:LHOTSE/data_aishell/data/manifests/aishell_supervisions_train.jsonl.gz'
       dev:
-        recordings_artifacts:
-          - dev_rec_0
-        supervisions_artifacts:
-          - dev_sup_0
-        icefall:
-          use_punc: true
+        artifacts:
+          recordings:
+            - dev_rec_0
+          supervisions:
+            - dev_sup_0
+          punctuated_supervisions:
+            - dev_sup_0_punc
         statistics:
           duration_hours: 18.089178784722222
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:LHOTSE/data_aishell/data/manifests/aishell_supervisions_dev.jsonl.gz'
       test:
-        recordings_artifacts:
-          - test_rec_0
-        supervisions_artifacts:
-          - test_sup_0
-        icefall:
-          use_punc: true
+        artifacts:
+          recordings:
+            - test_rec_0
+          supervisions:
+            - test_sup_0
+          punctuated_supervisions:
+            - test_sup_0_punc
         statistics:
           duration_hours: 10.030255260416666
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:LHOTSE/data_aishell/data/manifests/aishell_supervisions_test.jsonl.gz'
-    recipe_parameters:
-      icefall:
-        language: zh
     provenance:
       source: icefall runtime manifest snapshot
       snapshot_date: '2026-09-08'
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: aishell2
     version: icefall-20260908
     languages:
@@ -1145,54 +1093,47 @@
         kind: lhotse-recordings
         root_alias: legacy_asr
         relative_path: LHOTSE/data_aishell2/data/manifests/aishell2_recordings_train.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: train_sup_0
         kind: lhotse-supervisions
         root_alias: legacy_asr
         relative_path: LHOTSE/data_aishell2/data/manifests/aishell2_supervisions_train.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: test_rec_0
         kind: lhotse-recordings
         root_alias: legacy_asr
         relative_path: LHOTSE/data_aishell2/data/manifests/aishell2_recordings_test.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: test_sup_0
         kind: lhotse-supervisions
         root_alias: legacy_asr
         relative_path: LHOTSE/data_aishell2/data/manifests/aishell2_supervisions_test.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
+      - name: train_sup_0_punc
+        kind: lhotse-supervisions
+        root_alias: legacy_asr
+        relative_path: LHOTSE/data_aishell2/data/manifests/aishell2_supervisions_train_punc.jsonl.gz
     splits:
       train:
-        recordings_artifacts:
-          - train_rec_0
-        supervisions_artifacts:
-          - train_sup_0
-        icefall:
-          use_punc: true
+        artifacts:
+          recordings:
+            - train_rec_0
+          supervisions:
+            - train_sup_0
+          punctuated_supervisions:
+            - train_sup_0_punc
         statistics:
           duration_hours: 1000.7625743576389
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:LHOTSE/data_aishell2/data/manifests/aishell2_supervisions_train.jsonl.gz'
       test:
-        recordings_artifacts:
-          - test_rec_0
-        supervisions_artifacts:
-          - test_sup_0
-        icefall:
-          use_punc: false
+        artifacts:
+          recordings:
+            - test_rec_0
+          supervisions:
+            - test_sup_0
         statistics:
           duration_hours: 4.004922013888889
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:LHOTSE/data_aishell2/data/manifests/aishell2_supervisions_test.jsonl.gz'
-    recipe_parameters:
-      icefall:
-        language: zh
     provenance:
       source: icefall runtime manifest snapshot
       snapshot_date: '2026-09-08'
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: aishell3
     version: icefall-20260908
     languages:
@@ -1205,54 +1146,53 @@
         kind: lhotse-recordings
         root_alias: legacy_asr
         relative_path: LHOTSE/data_aishell3/data/manifests/aishell3_recordings_train.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: train_sup_0
         kind: lhotse-supervisions
         root_alias: legacy_asr
         relative_path: LHOTSE/data_aishell3/data/manifests/aishell3_supervisions_train.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: test_rec_0
         kind: lhotse-recordings
         root_alias: legacy_asr
         relative_path: LHOTSE/data_aishell3/data/manifests/aishell3_recordings_test.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: test_sup_0
         kind: lhotse-supervisions
         root_alias: legacy_asr
         relative_path: LHOTSE/data_aishell3/data/manifests/aishell3_supervisions_test.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
+      - name: train_sup_0_punc
+        kind: lhotse-supervisions
+        root_alias: legacy_asr
+        relative_path: LHOTSE/data_aishell3/data/manifests/aishell3_supervisions_train_punc.jsonl.gz
+      - name: test_sup_0_punc
+        kind: lhotse-supervisions
+        root_alias: legacy_asr
+        relative_path: LHOTSE/data_aishell3/data/manifests/aishell3_supervisions_test_punc.jsonl.gz
     splits:
       train:
-        recordings_artifacts:
-          - train_rec_0
-        supervisions_artifacts:
-          - train_sup_0
-        icefall:
-          use_punc: true
+        artifacts:
+          recordings:
+            - train_rec_0
+          supervisions:
+            - train_sup_0
+          punctuated_supervisions:
+            - train_sup_0_punc
         statistics:
           duration_hours: 63.17237733300264
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:LHOTSE/data_aishell3/data/manifests/aishell3_supervisions_train.jsonl.gz'
       test:
-        recordings_artifacts:
-          - test_rec_0
-        supervisions_artifacts:
-          - test_sup_0
-        icefall:
-          use_punc: true
+        artifacts:
+          recordings:
+            - test_rec_0
+          supervisions:
+            - test_sup_0
+          punctuated_supervisions:
+            - test_sup_0_punc
         statistics:
           duration_hours: 22.445452006290942
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:LHOTSE/data_aishell3/data/manifests/aishell3_supervisions_test.jsonl.gz'
-    recipe_parameters:
-      icefall:
-        language: zh
     provenance:
       source: icefall runtime manifest snapshot
       snapshot_date: '2026-09-08'
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: aishell4
     version: icefall-20260908
     languages:
@@ -1265,84 +1205,61 @@
         kind: lhotse-recordings
         root_alias: legacy_asr
         relative_path: LHOTSE/data_aishell4/data/manifests/aishell4_recordings_train_L.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: train_rec_1
         kind: lhotse-recordings
         root_alias: legacy_asr
         relative_path: LHOTSE/data_aishell4/data/manifests/aishell4_recordings_train_M.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: train_rec_2
         kind: lhotse-recordings
         root_alias: legacy_asr
         relative_path: LHOTSE/data_aishell4/data/manifests/aishell4_recordings_train_S.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: train_sup_0
         kind: lhotse-supervisions
         root_alias: legacy_asr
         relative_path: LHOTSE/data_aishell4/data/manifests/aishell4_supervisions_train_L.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: train_sup_1
         kind: lhotse-supervisions
         root_alias: legacy_asr
         relative_path: LHOTSE/data_aishell4/data/manifests/aishell4_supervisions_train_M.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: train_sup_2
         kind: lhotse-supervisions
         root_alias: legacy_asr
         relative_path: LHOTSE/data_aishell4/data/manifests/aishell4_supervisions_train_S.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: test_rec_0
         kind: lhotse-recordings
         root_alias: legacy_asr
         relative_path: LHOTSE/data_aishell4/data/manifests/aishell4_recordings_test.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: test_sup_0
         kind: lhotse-supervisions
         root_alias: legacy_asr
         relative_path: LHOTSE/data_aishell4/data/manifests/aishell4_supervisions_test.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
     splits:
       train:
-        recordings_artifacts:
-          - train_rec_0
-          - train_rec_1
-          - train_rec_2
-        supervisions_artifacts:
-          - train_sup_0
-          - train_sup_1
-          - train_sup_2
-        icefall:
-          use_punc: false
-          channel: 0
+        artifacts:
+          recordings:
+            - train_rec_0
+            - train_rec_1
+            - train_rec_2
+          supervisions:
+            - train_sup_0
+            - train_sup_1
+            - train_sup_2
         statistics:
           duration_hours: 107.40125254861111
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:LHOTSE/data_aishell4/data/manifests/aishell4_supervisions_train_L.jsonl.gz, legacy_asr:LHOTSE/data_aishell4/data/manifests/aishell4_supervisions_train_M.jsonl.gz, legacy_asr:LHOTSE/data_aishell4/data/manifests/aishell4_supervisions_train_S.jsonl.gz'
       test:
-        recordings_artifacts:
-          - test_rec_0
-        supervisions_artifacts:
-          - test_sup_0
-        icefall:
-          use_punc: false
-          channel: 0
+        artifacts:
+          recordings:
+            - test_rec_0
+          supervisions:
+            - test_sup_0
         statistics:
           duration_hours: 12.111290916666666
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:LHOTSE/data_aishell4/data/manifests/aishell4_supervisions_test.jsonl.gz'
-    recipe_parameters:
-      icefall:
-        language: zh
     provenance:
       source: icefall runtime manifest snapshot
       snapshot_date: '2026-09-08'
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: thchs30
     version: icefall-20260908
     languages:
@@ -1355,76 +1272,76 @@
         kind: lhotse-recordings
         root_alias: legacy_asr
         relative_path: LHOTSE/data_thchs30/data/manifests/thchs_30_recordings_train.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: train_sup_0
         kind: lhotse-supervisions
         root_alias: legacy_asr
         relative_path: LHOTSE/data_thchs30/data/manifests/thchs_30_supervisions_train.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: dev_rec_0
         kind: lhotse-recordings
         root_alias: legacy_asr
         relative_path: LHOTSE/data_thchs30/data/manifests/thchs_30_recordings_dev.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: dev_sup_0
         kind: lhotse-supervisions
         root_alias: legacy_asr
         relative_path: LHOTSE/data_thchs30/data/manifests/thchs_30_supervisions_dev.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: test_rec_0
         kind: lhotse-recordings
         root_alias: legacy_asr
         relative_path: LHOTSE/data_thchs30/data/manifests/thchs_30_recordings_test.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: test_sup_0
         kind: lhotse-supervisions
         root_alias: legacy_asr
         relative_path: LHOTSE/data_thchs30/data/manifests/thchs_30_supervisions_test.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
+      - name: train_sup_0_punc
+        kind: lhotse-supervisions
+        root_alias: legacy_asr
+        relative_path: LHOTSE/data_thchs30/data/manifests/thchs_30_supervisions_train_punc.jsonl.gz
+      - name: dev_sup_0_punc
+        kind: lhotse-supervisions
+        root_alias: legacy_asr
+        relative_path: LHOTSE/data_thchs30/data/manifests/thchs_30_supervisions_dev_punc.jsonl.gz
+      - name: test_sup_0_punc
+        kind: lhotse-supervisions
+        root_alias: legacy_asr
+        relative_path: LHOTSE/data_thchs30/data/manifests/thchs_30_supervisions_test_punc.jsonl.gz
     splits:
       train:
-        recordings_artifacts:
-          - train_rec_0
-        supervisions_artifacts:
-          - train_sup_0
-        icefall:
-          use_punc: true
+        artifacts:
+          recordings:
+            - train_rec_0
+          supervisions:
+            - train_sup_0
+          punctuated_supervisions:
+            - train_sup_0_punc
         statistics:
           duration_hours: 25.545066527777777
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:LHOTSE/data_thchs30/data/manifests/thchs_30_supervisions_train.jsonl.gz'
       dev:
-        recordings_artifacts:
-          - dev_rec_0
-        supervisions_artifacts:
-          - dev_sup_0
-        icefall:
-          use_punc: true
+        artifacts:
+          recordings:
+            - dev_rec_0
+          supervisions:
+            - dev_sup_0
+          punctuated_supervisions:
+            - dev_sup_0_punc
         statistics:
           duration_hours: 2.3025705555555556
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:LHOTSE/data_thchs30/data/manifests/thchs_30_supervisions_dev.jsonl.gz'
       test:
-        recordings_artifacts:
-          - test_rec_0
-        supervisions_artifacts:
-          - test_sup_0
-        icefall:
-          use_punc: true
+        artifacts:
+          recordings:
+            - test_rec_0
+          supervisions:
+            - test_sup_0
+          punctuated_supervisions:
+            - test_sup_0_punc
         statistics:
           duration_hours: 6.311416111111112
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:LHOTSE/data_thchs30/data/manifests/thchs_30_supervisions_test.jsonl.gz'
-    recipe_parameters:
-      icefall:
-        language: zh
     provenance:
       source: icefall runtime manifest snapshot
       snapshot_date: '2026-09-08'
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: magicdata
     version: icefall-20260908
     languages:
@@ -1437,76 +1354,76 @@
         kind: lhotse-recordings
         root_alias: legacy_asr
         relative_path: LHOTSE/MAGICDATA/data/manifests/magicdata_recordings_train.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: train_sup_0
         kind: lhotse-supervisions
         root_alias: legacy_asr
         relative_path: LHOTSE/MAGICDATA/data/manifests/magicdata_supervisions_train.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: dev_rec_0
         kind: lhotse-recordings
         root_alias: legacy_asr
         relative_path: LHOTSE/MAGICDATA/data/manifests/magicdata_recordings_dev.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: dev_sup_0
         kind: lhotse-supervisions
         root_alias: legacy_asr
         relative_path: LHOTSE/MAGICDATA/data/manifests/magicdata_supervisions_dev.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: test_rec_0
         kind: lhotse-recordings
         root_alias: legacy_asr
         relative_path: LHOTSE/MAGICDATA/data/manifests/magicdata_recordings_test.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: test_sup_0
         kind: lhotse-supervisions
         root_alias: legacy_asr
         relative_path: LHOTSE/MAGICDATA/data/manifests/magicdata_supervisions_test.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
+      - name: train_sup_0_punc
+        kind: lhotse-supervisions
+        root_alias: legacy_asr
+        relative_path: LHOTSE/MAGICDATA/data/manifests/magicdata_supervisions_train_punc.jsonl.gz
+      - name: dev_sup_0_punc
+        kind: lhotse-supervisions
+        root_alias: legacy_asr
+        relative_path: LHOTSE/MAGICDATA/data/manifests/magicdata_supervisions_dev_punc.jsonl.gz
+      - name: test_sup_0_punc
+        kind: lhotse-supervisions
+        root_alias: legacy_asr
+        relative_path: LHOTSE/MAGICDATA/data/manifests/magicdata_supervisions_test_punc.jsonl.gz
     splits:
       train:
-        recordings_artifacts:
-          - train_rec_0
-        supervisions_artifacts:
-          - train_sup_0
-        icefall:
-          use_punc: true
+        artifacts:
+          recordings:
+            - train_rec_0
+          supervisions:
+            - train_sup_0
+          punctuated_supervisions:
+            - train_sup_0_punc
         statistics:
           duration_hours: 711.9156844791667
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:LHOTSE/MAGICDATA/data/manifests/magicdata_supervisions_train.jsonl.gz'
       dev:
-        recordings_artifacts:
-          - dev_rec_0
-        supervisions_artifacts:
-          - dev_sup_0
-        icefall:
-          use_punc: true
+        artifacts:
+          recordings:
+            - dev_rec_0
+          supervisions:
+            - dev_sup_0
+          punctuated_supervisions:
+            - dev_sup_0_punc
         statistics:
           duration_hours: 14.733415243055555
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:LHOTSE/MAGICDATA/data/manifests/magicdata_supervisions_dev.jsonl.gz'
       test:
-        recordings_artifacts:
-          - test_rec_0
-        supervisions_artifacts:
-          - test_sup_0
-        icefall:
-          use_punc: true
+        artifacts:
+          recordings:
+            - test_rec_0
+          supervisions:
+            - test_sup_0
+          punctuated_supervisions:
+            - test_sup_0_punc
         statistics:
           duration_hours: 28.06071927083333
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:LHOTSE/MAGICDATA/data/manifests/magicdata_supervisions_test.jsonl.gz'
-    recipe_parameters:
-      icefall:
-        language: zh
     provenance:
       source: icefall runtime manifest snapshot
       snapshot_date: '2026-09-08'
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: magicdata_ramc
     version: icefall-20260908
     languages:
@@ -1541,42 +1458,36 @@
         relative_path: zh/magicdata_ramc/data/manifests/magicdata_ramc_supervisions_test.jsonl.gz
     splits:
       train:
-        recordings_artifacts:
-          - train_rec_0
-        supervisions_artifacts:
-          - train_sup_0
-        icefall:
-          use_punc: false
+        artifacts:
+          recordings:
+            - train_rec_0
+          supervisions:
+            - train_sup_0
         statistics:
           duration_hours: 125.48406666666666
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: multilingual:zh/magicdata_ramc/data/manifests/magicdata_ramc_supervisions_train.jsonl.gz'
       dev:
-        recordings_artifacts:
-          - dev_rec_0
-        supervisions_artifacts:
-          - dev_sup_0
-        icefall:
-          use_punc: false
+        artifacts:
+          recordings:
+            - dev_rec_0
+          supervisions:
+            - dev_sup_0
         statistics:
           duration_hours: 8.188653611111112
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: multilingual:zh/magicdata_ramc/data/manifests/magicdata_ramc_supervisions_dev.jsonl.gz'
       test:
-        recordings_artifacts:
-          - test_rec_0
-        supervisions_artifacts:
-          - test_sup_0
-        icefall:
-          use_punc: false
+        artifacts:
+          recordings:
+            - test_rec_0
+          supervisions:
+            - test_sup_0
         statistics:
           duration_hours: 17.05525527777777
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: multilingual:zh/magicdata_ramc/data/manifests/magicdata_ramc_supervisions_test.jsonl.gz'
-    recipe_parameters:
-      icefall:
-        language: zh
     provenance:
       source: icefall runtime manifest snapshot
       snapshot_date: '2026-09-08'
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: kespeech
     version: icefall-20260908
     languages:
@@ -1589,110 +1500,106 @@
         kind: lhotse-recordings
         root_alias: legacy_asr
         relative_path: LHOTSE/KeSpeech/data/manifests/kespeech-asr_recordings_train_phase1.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: train_rec_1
         kind: lhotse-recordings
         root_alias: legacy_asr
         relative_path: LHOTSE/KeSpeech/data/manifests/kespeech-asr_recordings_train_phase2.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: train_sup_0
         kind: lhotse-supervisions
         root_alias: legacy_asr
         relative_path: LHOTSE/KeSpeech/data/manifests/kespeech-asr_supervisions_train_phase1.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: train_sup_1
         kind: lhotse-supervisions
         root_alias: legacy_asr
         relative_path: LHOTSE/KeSpeech/data/manifests/kespeech-asr_supervisions_train_phase2.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: dev_rec_0
         kind: lhotse-recordings
         root_alias: legacy_asr
         relative_path: LHOTSE/KeSpeech/data/manifests/kespeech-asr_recordings_dev_phase1.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: dev_rec_1
         kind: lhotse-recordings
         root_alias: legacy_asr
         relative_path: LHOTSE/KeSpeech/data/manifests/kespeech-asr_recordings_dev_phase2.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: dev_sup_0
         kind: lhotse-supervisions
         root_alias: legacy_asr
         relative_path: LHOTSE/KeSpeech/data/manifests/kespeech-asr_supervisions_dev_phase1.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: dev_sup_1
         kind: lhotse-supervisions
         root_alias: legacy_asr
         relative_path: LHOTSE/KeSpeech/data/manifests/kespeech-asr_supervisions_dev_phase2.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: test_rec_0
         kind: lhotse-recordings
         root_alias: legacy_asr
         relative_path: LHOTSE/KeSpeech/data/manifests/kespeech-asr_recordings_test.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: test_sup_0
         kind: lhotse-supervisions
         root_alias: legacy_asr
         relative_path: LHOTSE/KeSpeech/data/manifests/kespeech-asr_supervisions_test.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: test_sup_clean_0
         kind: lhotse-supervisions
         root_alias: legacy_asr
         relative_path: KeSpeech/lhotse/clean/v1/kespeech-asr_supervisions_test_punc.jsonl.gz
+      - name: train_sup_0_punc
+        kind: lhotse-supervisions
+        root_alias: legacy_asr
+        relative_path: LHOTSE/KeSpeech/data/manifests/kespeech-asr_supervisions_train_phase1_punc.jsonl.gz
+      - name: train_sup_1_punc
+        kind: lhotse-supervisions
+        root_alias: legacy_asr
+        relative_path: LHOTSE/KeSpeech/data/manifests/kespeech-asr_supervisions_train_phase2_punc.jsonl.gz
+      - name: dev_sup_0_punc
+        kind: lhotse-supervisions
+        root_alias: legacy_asr
+        relative_path: LHOTSE/KeSpeech/data/manifests/kespeech-asr_supervisions_dev_phase1_punc.jsonl.gz
+      - name: dev_sup_1_punc
+        kind: lhotse-supervisions
+        root_alias: legacy_asr
+        relative_path: LHOTSE/KeSpeech/data/manifests/kespeech-asr_supervisions_dev_phase2_punc.jsonl.gz
     splits:
       train:
-        recordings_artifacts:
-          - train_rec_0
-          - train_rec_1
-        supervisions_artifacts:
-          - train_sup_0
-          - train_sup_1
-        icefall:
-          use_punc: true
+        artifacts:
+          recordings:
+            - train_rec_0
+            - train_rec_1
+          supervisions:
+            - train_sup_0
+            - train_sup_1
+          punctuated_supervisions:
+            - train_sup_0_punc
+            - train_sup_1_punc
         statistics:
           duration_hours: 1396.9394118229166
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:LHOTSE/KeSpeech/data/manifests/kespeech-asr_supervisions_train_phase1.jsonl.gz, legacy_asr:LHOTSE/KeSpeech/data/manifests/kespeech-asr_supervisions_train_phase2.jsonl.gz'
       dev:
-        recordings_artifacts:
-          - dev_rec_0
-          - dev_rec_1
-        supervisions_artifacts:
-          - dev_sup_0
-          - dev_sup_1
-        icefall:
-          use_punc: true
+        artifacts:
+          recordings:
+            - dev_rec_0
+            - dev_rec_1
+          supervisions:
+            - dev_sup_0
+            - dev_sup_1
+          punctuated_supervisions:
+            - dev_sup_0_punc
+            - dev_sup_1_punc
         statistics:
           duration_hours: 6.829137881944445
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:LHOTSE/KeSpeech/data/manifests/kespeech-asr_supervisions_dev_phase1.jsonl.gz, legacy_asr:LHOTSE/KeSpeech/data/manifests/kespeech-asr_supervisions_dev_phase2.jsonl.gz'
       test:
-        recordings_artifacts:
-          - test_rec_0
-        supervisions_artifacts:
-          - test_sup_0
-        clean_supervisions_artifacts:
-          - test_sup_clean_0
-        icefall:
-          use_punc: true
+        artifacts:
+          recordings:
+            - test_rec_0
+          supervisions:
+            - test_sup_0
+          clean_supervisions:
+            - test_sup_clean_0
         statistics:
           duration_hours: 31.07248918402778
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:LHOTSE/KeSpeech/data/manifests/kespeech-asr_supervisions_test.jsonl.gz'
-    recipe_parameters:
-      icefall:
-        language: zh
     provenance:
       source: icefall runtime manifest snapshot
       snapshot_date: '2026-09-08'
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: aidatatang
     version: icefall-20260908
     languages:
@@ -1705,32 +1612,30 @@
         kind: lhotse-recordings
         root_alias: legacy_asr
         relative_path: LHOTSE/aidatatang/data/manifests/zhaidatatang_recordings_all.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: train_sup_0
         kind: lhotse-supervisions
         root_alias: legacy_asr
         relative_path: LHOTSE/aidatatang/data/manifests/zhaidatatang_supervisions_all_cleaned.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
+      - name: train_sup_0_punc
+        kind: lhotse-supervisions
+        root_alias: legacy_asr
+        relative_path: LHOTSE/aidatatang/data/manifests/zhaidatatang_supervisions_all_cleaned_punc.jsonl.gz
     splits:
       train:
-        recordings_artifacts:
-          - train_rec_0
-        supervisions_artifacts:
-          - train_sup_0
-        icefall:
-          use_punc: true
+        artifacts:
+          recordings:
+            - train_rec_0
+          supervisions:
+            - train_sup_0
+          punctuated_supervisions:
+            - train_sup_0_punc
         statistics:
           duration_hours: 145.47232
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:LHOTSE/aidatatang/data/manifests/zhaidatatang_supervisions_all_cleaned.jsonl.gz'
-    recipe_parameters:
-      icefall:
-        language: zh
     provenance:
       source: icefall runtime manifest snapshot
       snapshot_date: '2026-09-08'
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: primewords
     version: icefall-20260908
     languages:
@@ -1743,32 +1648,30 @@
         kind: lhotse-recordings
         root_alias: legacy_asr
         relative_path: LHOTSE/primewords/data/manifests/primewords_recordings_train.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: train_sup_0
         kind: lhotse-supervisions
         root_alias: legacy_asr
         relative_path: LHOTSE/primewords/data/manifests/primewords_supervisions_train_cleaned.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
+      - name: train_sup_0_punc
+        kind: lhotse-supervisions
+        root_alias: legacy_asr
+        relative_path: LHOTSE/primewords/data/manifests/primewords_supervisions_train_cleaned_punc.jsonl.gz
     splits:
       train:
-        recordings_artifacts:
-          - train_rec_0
-        supervisions_artifacts:
-          - train_sup_0
-        icefall:
-          use_punc: true
+        artifacts:
+          recordings:
+            - train_rec_0
+          supervisions:
+            - train_sup_0
+          punctuated_supervisions:
+            - train_sup_0_punc
         statistics:
           duration_hours: 98.9588111111111
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:LHOTSE/primewords/data/manifests/primewords_supervisions_train_cleaned.jsonl.gz'
-    recipe_parameters:
-      icefall:
-        language: zh
     provenance:
       source: icefall runtime manifest snapshot
       snapshot_date: '2026-09-08'
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: common_voice_zh
     version: icefall-20260908
     languages:
@@ -1781,82 +1684,76 @@
         kind: lhotse-recordings
         root_alias: legacy_asr
         relative_path: LHOTSE/common_voice_zh/data/manifests/cv-zh-CN_recordings_train.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: train_sup_0
         kind: lhotse-supervisions
         root_alias: legacy_asr
         relative_path: LHOTSE/common_voice_zh/data/manifests/cv-zh-CN_supervisions_train.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: dev_rec_0
         kind: lhotse-recordings
         root_alias: legacy_asr
         relative_path: LHOTSE/common_voice_zh/data/manifests/cv-zh-CN_recordings_dev.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: dev_sup_0
         kind: lhotse-supervisions
         root_alias: legacy_asr
         relative_path: LHOTSE/common_voice_zh/data/manifests/cv-zh-CN_supervisions_dev.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: test_rec_0
         kind: lhotse-recordings
         root_alias: legacy_asr
         relative_path: LHOTSE/common_voice_zh/data/manifests/cv-zh-CN_recordings_test.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: test_sup_0
         kind: lhotse-supervisions
         root_alias: legacy_asr
         relative_path: LHOTSE/common_voice_zh/data/manifests/cv-zh-CN_supervisions_test.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: test_sup_clean_0
         kind: lhotse-supervisions
         root_alias: legacy_asr
         relative_path: common_voice_zh/lhotse/cleaned/v1/cv-zh-CN_supervisions_test_punc.jsonl.gz
+      - name: train_sup_0_punc
+        kind: lhotse-supervisions
+        root_alias: legacy_asr
+        relative_path: LHOTSE/common_voice_zh/data/manifests/cv-zh-CN_supervisions_train_punc.jsonl.gz
+      - name: dev_sup_0_punc
+        kind: lhotse-supervisions
+        root_alias: legacy_asr
+        relative_path: LHOTSE/common_voice_zh/data/manifests/cv-zh-CN_supervisions_dev_punc.jsonl.gz
     splits:
       train:
-        recordings_artifacts:
-          - train_rec_0
-        supervisions_artifacts:
-          - train_sup_0
-        icefall:
-          use_punc: true
+        artifacts:
+          recordings:
+            - train_rec_0
+          supervisions:
+            - train_sup_0
+          punctuated_supervisions:
+            - train_sup_0_punc
         statistics:
           duration_hours: 42.59192390079759
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:LHOTSE/common_voice_zh/data/manifests/cv-zh-CN_supervisions_train.jsonl.gz'
       dev:
-        recordings_artifacts:
-          - dev_rec_0
-        supervisions_artifacts:
-          - dev_sup_0
-        icefall:
-          use_punc: true
+        artifacts:
+          recordings:
+            - dev_rec_0
+          supervisions:
+            - dev_sup_0
+          punctuated_supervisions:
+            - dev_sup_0_punc
         statistics:
           duration_hours: 16.010752000070863
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:LHOTSE/common_voice_zh/data/manifests/cv-zh-CN_supervisions_dev.jsonl.gz'
       test:
-        recordings_artifacts:
-          - test_rec_0
-        supervisions_artifacts:
-          - test_sup_0
-        clean_supervisions_artifacts:
-          - test_sup_clean_0
-        icefall:
-          use_punc: true
+        artifacts:
+          recordings:
+            - test_rec_0
+          supervisions:
+            - test_sup_0
+          clean_supervisions:
+            - test_sup_clean_0
         statistics:
           duration_hours: 17.45736208311681
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:LHOTSE/common_voice_zh/data/manifests/cv-zh-CN_supervisions_test.jsonl.gz'
-    recipe_parameters:
-      icefall:
-        language: zh
     provenance:
       source: icefall runtime manifest snapshot
       snapshot_date: '2026-09-08'
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: tal100_zh
     version: icefall-20260908
     languages:
@@ -1869,76 +1766,76 @@
         kind: lhotse-recordings
         root_alias: legacy_asr
         relative_path: LHOTSE/tal100_zh/data/manifests/tal100_zh_recordings_train.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: train_sup_0
         kind: lhotse-supervisions
         root_alias: legacy_asr
         relative_path: LHOTSE/tal100_zh/data/manifests/tal100_zh_supervisions_train.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: dev_rec_0
         kind: lhotse-recordings
         root_alias: legacy_asr
         relative_path: LHOTSE/tal100_zh/data/manifests/tal100_zh_recordings_dev.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: dev_sup_0
         kind: lhotse-supervisions
         root_alias: legacy_asr
         relative_path: LHOTSE/tal100_zh/data/manifests/tal100_zh_supervisions_dev.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: test_rec_0
         kind: lhotse-recordings
         root_alias: legacy_asr
         relative_path: LHOTSE/tal100_zh/data/manifests/tal100_zh_recordings_test.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: test_sup_0
         kind: lhotse-supervisions
         root_alias: legacy_asr
         relative_path: LHOTSE/tal100_zh/data/manifests/tal100_zh_supervisions_test.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
+      - name: train_sup_0_punc
+        kind: lhotse-supervisions
+        root_alias: legacy_asr
+        relative_path: LHOTSE/tal100_zh/data/manifests/tal100_zh_supervisions_train_punc.jsonl.gz
+      - name: dev_sup_0_punc
+        kind: lhotse-supervisions
+        root_alias: legacy_asr
+        relative_path: LHOTSE/tal100_zh/data/manifests/tal100_zh_supervisions_dev_punc.jsonl.gz
+      - name: test_sup_0_punc
+        kind: lhotse-supervisions
+        root_alias: legacy_asr
+        relative_path: LHOTSE/tal100_zh/data/manifests/tal100_zh_supervisions_test_punc.jsonl.gz
     splits:
       train:
-        recordings_artifacts:
-          - train_rec_0
-        supervisions_artifacts:
-          - train_sup_0
-        icefall:
-          use_punc: true
+        artifacts:
+          recordings:
+            - train_rec_0
+          supervisions:
+            - train_sup_0
+          punctuated_supervisions:
+            - train_sup_0_punc
         statistics:
           duration_hours: 4.378826927083334
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:LHOTSE/tal100_zh/data/manifests/tal100_zh_supervisions_train.jsonl.gz'
       dev:
-        recordings_artifacts:
-          - dev_rec_0
-        supervisions_artifacts:
-          - dev_sup_0
-        icefall:
-          use_punc: true
+        artifacts:
+          recordings:
+            - dev_rec_0
+          supervisions:
+            - dev_sup_0
+          punctuated_supervisions:
+            - dev_sup_0_punc
         statistics:
           duration_hours: 0.5566914409722222
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:LHOTSE/tal100_zh/data/manifests/tal100_zh_supervisions_dev.jsonl.gz'
       test:
-        recordings_artifacts:
-          - test_rec_0
-        supervisions_artifacts:
-          - test_sup_0
-        icefall:
-          use_punc: true
+        artifacts:
+          recordings:
+            - test_rec_0
+          supervisions:
+            - test_sup_0
+          punctuated_supervisions:
+            - test_sup_0_punc
         statistics:
           duration_hours: 0.5362885590277778
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:LHOTSE/tal100_zh/data/manifests/tal100_zh_supervisions_test.jsonl.gz'
-    recipe_parameters:
-      icefall:
-        language: zh
     provenance:
       source: icefall runtime manifest snapshot
       snapshot_date: '2026-09-08'
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: childmandarin
     version: icefall-20260908
     languages:
@@ -1951,52 +1848,40 @@
         kind: lhotse-cuts
         root_alias: legacy_asr
         relative_path: LHOTSE/childmandarin/data/manifests/childmandarin_cuts_train.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: dev_cuts_0
         kind: lhotse-cuts
         root_alias: legacy_asr
         relative_path: LHOTSE/childmandarin/data/manifests/childmandarin_cuts_dev.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: test_cuts_0
         kind: lhotse-cuts
         root_alias: legacy_asr
         relative_path: LHOTSE/childmandarin/data/manifests/childmandarin_cuts_test.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
     splits:
       train:
-        cuts_artifacts:
-          - train_cuts_0
-        icefall:
-          use_punc: false
+        artifacts:
+          cuts:
+            - train_cuts_0
         statistics:
           duration_hours: 33.121793975694445
           duration_basis: 'sum of cuts durations; overlapping segments may count speech more than once; sources: legacy_asr:LHOTSE/childmandarin/data/manifests/childmandarin_cuts_train.jsonl.gz'
       dev:
-        cuts_artifacts:
-          - dev_cuts_0
-        icefall:
-          use_punc: false
+        artifacts:
+          cuts:
+            - dev_cuts_0
         statistics:
           duration_hours: 3.7661416145833337
           duration_basis: 'sum of cuts durations; overlapping segments may count speech more than once; sources: legacy_asr:LHOTSE/childmandarin/data/manifests/childmandarin_cuts_dev.jsonl.gz'
       test:
-        cuts_artifacts:
-          - test_cuts_0
-        icefall:
-          use_punc: false
+        artifacts:
+          cuts:
+            - test_cuts_0
         statistics:
           duration_hours: 4.064612309027778
           duration_basis: 'sum of cuts durations; overlapping segments may count speech more than once; sources: legacy_asr:LHOTSE/childmandarin/data/manifests/childmandarin_cuts_test.jsonl.gz'
-    recipe_parameters:
-      icefall:
-        language: zh
     provenance:
       source: icefall runtime manifest snapshot
       snapshot_date: '2026-09-08'
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: fleurs_zh
     version: icefall-20260908
     languages:
@@ -2031,42 +1916,36 @@
         relative_path: zh/fleurs_zh/data/manifests/fleurs_zh_supervisions_test.jsonl.gz
     splits:
       train:
-        recordings_artifacts:
-          - train_rec_0
-        supervisions_artifacts:
-          - train_sup_0
-        icefall:
-          use_punc: false
+        artifacts:
+          recordings:
+            - train_rec_0
+          supervisions:
+            - train_sup_0
         statistics:
           duration_hours: 9.688333333333333
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: multilingual:zh/fleurs_zh/data/manifests/fleurs_zh_supervisions_train.jsonl.gz'
       dev:
-        recordings_artifacts:
-          - dev_rec_0
-        supervisions_artifacts:
-          - dev_sup_0
-        icefall:
-          use_punc: false
+        artifacts:
+          recordings:
+            - dev_rec_0
+          supervisions:
+            - dev_sup_0
         statistics:
           duration_hours: 1.280627777777778
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: multilingual:zh/fleurs_zh/data/manifests/fleurs_zh_supervisions_validation.jsonl.gz'
       test:
-        recordings_artifacts:
-          - test_rec_0
-        supervisions_artifacts:
-          - test_sup_0
-        icefall:
-          use_punc: false
+        artifacts:
+          recordings:
+            - test_rec_0
+          supervisions:
+            - test_sup_0
         statistics:
           duration_hours: 3.1432777777777776
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: multilingual:zh/fleurs_zh/data/manifests/fleurs_zh_supervisions_test.jsonl.gz'
-    recipe_parameters:
-      icefall:
-        language: zh
     provenance:
       source: icefall runtime manifest snapshot
       snapshot_date: '2026-09-08'
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: talcs
     version: icefall-20260908
     languages:
@@ -2080,76 +1959,76 @@
         kind: lhotse-recordings
         root_alias: legacy_asr
         relative_path: LHOTSE/TALCS/data/manifests/talcs_recordings_train.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: train_sup_0
         kind: lhotse-supervisions
         root_alias: legacy_asr
         relative_path: LHOTSE/TALCS/data/manifests/talcs_supervisions_train_cleaned.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: dev_rec_0
         kind: lhotse-recordings
         root_alias: legacy_asr
         relative_path: LHOTSE/TALCS/data/manifests/talcs_recordings_dev.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: dev_sup_0
         kind: lhotse-supervisions
         root_alias: legacy_asr
         relative_path: LHOTSE/TALCS/data/manifests/talcs_supervisions_dev_cleaned.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: test_rec_0
         kind: lhotse-recordings
         root_alias: legacy_asr
         relative_path: LHOTSE/TALCS/data/manifests/talcs_recordings_test.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: test_sup_0
         kind: lhotse-supervisions
         root_alias: legacy_asr
         relative_path: LHOTSE/TALCS/data/manifests/talcs_supervisions_test_cleaned.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
+      - name: train_sup_0_punc
+        kind: lhotse-supervisions
+        root_alias: legacy_asr
+        relative_path: LHOTSE/TALCS/data/manifests/talcs_supervisions_train_cleaned_punc.jsonl.gz
+      - name: dev_sup_0_punc
+        kind: lhotse-supervisions
+        root_alias: legacy_asr
+        relative_path: LHOTSE/TALCS/data/manifests/talcs_supervisions_dev_cleaned_punc.jsonl.gz
+      - name: test_sup_0_punc
+        kind: lhotse-supervisions
+        root_alias: legacy_asr
+        relative_path: LHOTSE/TALCS/data/manifests/talcs_supervisions_test_cleaned_punc.jsonl.gz
     splits:
       train:
-        recordings_artifacts:
-          - train_rec_0
-        supervisions_artifacts:
-          - train_sup_0
-        icefall:
-          use_punc: true
+        artifacts:
+          recordings:
+            - train_rec_0
+          supervisions:
+            - train_sup_0
+          punctuated_supervisions:
+            - train_sup_0_punc
         statistics:
           duration_hours: 555.9272438888889
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:LHOTSE/TALCS/data/manifests/talcs_supervisions_train_cleaned.jsonl.gz'
       dev:
-        recordings_artifacts:
-          - dev_rec_0
-        supervisions_artifacts:
-          - dev_sup_0
-        icefall:
-          use_punc: true
+        artifacts:
+          recordings:
+            - dev_rec_0
+          supervisions:
+            - dev_sup_0
+          punctuated_supervisions:
+            - dev_sup_0_punc
         statistics:
           duration_hours: 8.03073611111111
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:LHOTSE/TALCS/data/manifests/talcs_supervisions_dev_cleaned.jsonl.gz'
       test:
-        recordings_artifacts:
-          - test_rec_0
-        supervisions_artifacts:
-          - test_sup_0
-        icefall:
-          use_punc: true
+        artifacts:
+          recordings:
+            - test_rec_0
+          supervisions:
+            - test_sup_0
+          punctuated_supervisions:
+            - test_sup_0_punc
         statistics:
           duration_hours: 23.62268777777778
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:LHOTSE/TALCS/data/manifests/talcs_supervisions_test_cleaned.jsonl.gz'
-    recipe_parameters:
-      icefall:
-        language: zh
     provenance:
       source: icefall runtime manifest snapshot
       snapshot_date: '2026-09-08'
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: cs_dialogue
     version: icefall-20260908
     languages:
@@ -2184,42 +2063,36 @@
         relative_path: zh/CS-Dialogue/data/manifests/cs_dialogue_supervisions_test.jsonl.gz
     splits:
       train:
-        recordings_artifacts:
-          - train_rec_0
-        supervisions_artifacts:
-          - train_sup_0
-        icefall:
-          use_punc: false
+        artifacts:
+          recordings:
+            - train_rec_0
+          supervisions:
+            - train_sup_0
         statistics:
           duration_hours: 30.046274165833335
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: multilingual:zh/CS-Dialogue/data/manifests/cs_dialogue_supervisions_train.jsonl.gz'
       dev:
-        recordings_artifacts:
-          - dev_rec_0
-        supervisions_artifacts:
-          - dev_sup_0
-        icefall:
-          use_punc: false
+        artifacts:
+          recordings:
+            - dev_rec_0
+          supervisions:
+            - dev_sup_0
         statistics:
           duration_hours: 8.280798662777778
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: multilingual:zh/CS-Dialogue/data/manifests/cs_dialogue_supervisions_dev.jsonl.gz'
       test:
-        recordings_artifacts:
-          - test_rec_0
-        supervisions_artifacts:
-          - test_sup_0
-        icefall:
-          use_punc: false
+        artifacts:
+          recordings:
+            - test_rec_0
+          supervisions:
+            - test_sup_0
         statistics:
           duration_hours: 7.649816909722222
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: multilingual:zh/CS-Dialogue/data/manifests/cs_dialogue_supervisions_test.jsonl.gz'
-    recipe_parameters:
-      icefall:
-        language: zh
     provenance:
       source: icefall runtime manifest snapshot
       snapshot_date: '2026-09-08'
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: cs_dialogue_en
     version: icefall-20260908
     languages:
@@ -2254,42 +2127,36 @@
         relative_path: zh/CS-Dialogue/data/manifests/cs_dialogue_supervisions_test.en.jsonl.gz
     splits:
       train:
-        recordings_artifacts:
-          - train_rec_0
-        supervisions_artifacts:
-          - train_sup_0
-        icefall:
-          use_punc: false
+        artifacts:
+          recordings:
+            - train_rec_0
+          supervisions:
+            - train_sup_0
         statistics:
           duration_hours: 17.693855208333336
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: multilingual:zh/CS-Dialogue/data/manifests/cs_dialogue_supervisions_train.en.jsonl.gz'
       dev:
-        recordings_artifacts:
-          - dev_rec_0
-        supervisions_artifacts:
-          - dev_sup_0
-        icefall:
-          use_punc: false
+        artifacts:
+          recordings:
+            - dev_rec_0
+          supervisions:
+            - dev_sup_0
         statistics:
           duration_hours: 4.536202447777778
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: multilingual:zh/CS-Dialogue/data/manifests/cs_dialogue_supervisions_dev.en.jsonl.gz'
       test:
-        recordings_artifacts:
-          - test_rec_0
-        supervisions_artifacts:
-          - test_sup_0
-        icefall:
-          use_punc: false
+        artifacts:
+          recordings:
+            - test_rec_0
+          supervisions:
+            - test_sup_0
         statistics:
           duration_hours: 4.371686493055555
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: multilingual:zh/CS-Dialogue/data/manifests/cs_dialogue_supervisions_test.en.jsonl.gz'
-    recipe_parameters:
-      icefall:
-        language: en
     provenance:
       source: icefall runtime manifest snapshot
       snapshot_date: '2026-09-08'
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: cs_dialogue_mix
     version: icefall-20260908
     languages:
@@ -2325,42 +2192,36 @@
         relative_path: zh/CS-Dialogue/data/manifests/cs_dialogue_supervisions_test.mix.jsonl.gz
     splits:
       train:
-        recordings_artifacts:
-          - train_rec_0
-        supervisions_artifacts:
-          - train_sup_0
-        icefall:
-          use_punc: false
+        artifacts:
+          recordings:
+            - train_rec_0
+          supervisions:
+            - train_sup_0
         statistics:
           duration_hours: 20.901680573055557
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: multilingual:zh/CS-Dialogue/data/manifests/cs_dialogue_supervisions_train.mix.jsonl.gz'
       dev:
-        recordings_artifacts:
-          - dev_rec_0
-        supervisions_artifacts:
-          - dev_sup_0
-        icefall:
-          use_punc: false
+        artifacts:
+          recordings:
+            - dev_rec_0
+          supervisions:
+            - dev_sup_0
         statistics:
           duration_hours: 5.463998055555556
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: multilingual:zh/CS-Dialogue/data/manifests/cs_dialogue_supervisions_dev.mix.jsonl.gz'
       test:
-        recordings_artifacts:
-          - test_rec_0
-        supervisions_artifacts:
-          - test_sup_0
-        icefall:
-          use_punc: false
+        artifacts:
+          recordings:
+            - test_rec_0
+          supervisions:
+            - test_sup_0
         statistics:
           duration_hours: 4.616328888888889
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: multilingual:zh/CS-Dialogue/data/manifests/cs_dialogue_supervisions_test.mix.jsonl.gz'
-    recipe_parameters:
-      icefall:
-        language: zh
     provenance:
       source: icefall runtime manifest snapshot
       snapshot_date: '2026-09-08'
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: cumix2017
     version: icefall-20260908
     languages:
@@ -2374,32 +2235,24 @@
         kind: lhotse-recordings
         root_alias: legacy_asr
         relative_path: LHOTSE/cumix2017/data/manifests/cumix2017_recordings_all.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: train_sup_0
         kind: lhotse-supervisions
         root_alias: legacy_asr
         relative_path: LHOTSE/cumix2017/data/manifests/cumix2017_supervisions_all_cleaned.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
     splits:
       train:
-        recordings_artifacts:
-          - train_rec_0
-        supervisions_artifacts:
-          - train_sup_0
-        icefall:
-          use_punc: false
+        artifacts:
+          recordings:
+            - train_rec_0
+          supervisions:
+            - train_sup_0
         statistics:
           duration_hours: 10.94399013888889
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:LHOTSE/cumix2017/data/manifests/cumix2017_supervisions_all_cleaned.jsonl.gz'
-    recipe_parameters:
-      icefall:
-        language: yue
     provenance:
       source: icefall runtime manifest snapshot
       snapshot_date: '2026-09-08'
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: legco_speech
     version: icefall-20260908
     languages:
@@ -2418,22 +2271,18 @@
         relative_path: zh/legco-speech/data/manifests/legco_speech_supervisions_train.mix.jsonl.gz
     splits:
       train:
-        recordings_artifacts:
-          - train_rec_0
-        supervisions_artifacts:
-          - train_sup_0
-        icefall:
-          use_punc: false
+        artifacts:
+          recordings:
+            - train_rec_0
+          supervisions:
+            - train_sup_0
         statistics:
           duration_hours: 20227.20894722222
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: multilingual:zh/legco-speech/data/manifests/legco_speech_supervisions_train.mix.jsonl.gz'
-    recipe_parameters:
-      icefall:
-        language: yue
     provenance:
       source: icefall runtime manifest snapshot
       snapshot_date: '2026-09-08'
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: legco_speech_en
     version: icefall-20260908
     languages:
@@ -2452,22 +2301,18 @@
         relative_path: zh/legco-speech/data/manifests/legco_speech_supervisions_train.en.jsonl.gz
     splits:
       train:
-        recordings_artifacts:
-          - train_rec_0
-        supervisions_artifacts:
-          - train_sup_0
-        icefall:
-          use_punc: false
+        artifacts:
+          recordings:
+            - train_rec_0
+          supervisions:
+            - train_sup_0
         statistics:
           duration_hours: 249.59385277777778
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: multilingual:zh/legco-speech/data/manifests/legco_speech_supervisions_train.en.jsonl.gz'
-    recipe_parameters:
-      icefall:
-        language: en
     provenance:
       source: icefall runtime manifest snapshot
       snapshot_date: '2026-09-08'
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: mdcc
     version: icefall-20260908
     languages:
@@ -2502,42 +2347,36 @@
         relative_path: zh/mdcc/data/manifests/mdcc_supervisions_test.jsonl.gz
     splits:
       train:
-        recordings_artifacts:
-          - train_rec_0
-        supervisions_artifacts:
-          - train_sup_0
-        icefall:
-          use_punc: false
+        artifacts:
+          recordings:
+            - train_rec_0
+          supervisions:
+            - train_sup_0
         statistics:
           duration_hours: 57.529168401944446
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: multilingual:zh/mdcc/data/manifests/mdcc_supervisions_train.jsonl.gz'
       dev:
-        recordings_artifacts:
-          - dev_rec_0
-        supervisions_artifacts:
-          - dev_sup_0
-        icefall:
-          use_punc: false
+        artifacts:
+          recordings:
+            - dev_rec_0
+          supervisions:
+            - dev_sup_0
         statistics:
           duration_hours: 5.053178613055556
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: multilingual:zh/mdcc/data/manifests/mdcc_supervisions_validation.jsonl.gz'
       test:
-        recordings_artifacts:
-          - test_rec_0
-        supervisions_artifacts:
-          - test_sup_0
-        icefall:
-          use_punc: false
+        artifacts:
+          recordings:
+            - test_rec_0
+          supervisions:
+            - test_sup_0
         statistics:
           duration_hours: 11.008564703333333
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: multilingual:zh/mdcc/data/manifests/mdcc_supervisions_test.jsonl.gz'
-    recipe_parameters:
-      icefall:
-        language: yue
     provenance:
       source: icefall runtime manifest snapshot
       snapshot_date: '2026-09-08'
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: wenetspeech_yue
     version: icefall-20260908
     languages:
@@ -2572,35 +2411,29 @@
         relative_path: zh/WenetSpeech-Yue/data/manifests/wsyue_asr_eval_short_supervisions.jsonl.gz
     splits:
       train:
-        recordings_artifacts:
-          - train_rec_0
-        supervisions_artifacts:
-          - train_sup_0
-        icefall:
-          use_punc: false
+        artifacts:
+          recordings:
+            - train_rec_0
+          supervisions:
+            - train_sup_0
       test_long:
+        artifacts:
+          recordings:
+            - test_long_rec_0
+          supervisions:
+            - test_long_sup_0
         group: test
-        recordings_artifacts:
-          - test_long_rec_0
-        supervisions_artifacts:
-          - test_long_sup_0
-        icefall:
-          use_punc: false
       test_short:
+        artifacts:
+          recordings:
+            - test_short_rec_0
+          supervisions:
+            - test_short_sup_0
         group: test
-        recordings_artifacts:
-          - test_short_rec_0
-        supervisions_artifacts:
-          - test_short_sup_0
-        icefall:
-          use_punc: false
-    recipe_parameters:
-      icefall:
-        language: yue
     provenance:
       source: icefall runtime manifest snapshot
       snapshot_date: '2026-09-08'
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: wenetspeech_yue_all
     version: icefall-20260908
     languages:
@@ -2635,35 +2468,29 @@
         relative_path: zh/WenetSpeech-Yue/data/manifests/wsyue_asr_eval_short_supervisions.jsonl.gz
     splits:
       train:
-        recordings_artifacts:
-          - train_rec_0
-        supervisions_artifacts:
-          - train_sup_0
-        icefall:
-          use_punc: false
+        artifacts:
+          recordings:
+            - train_rec_0
+          supervisions:
+            - train_sup_0
       test_long:
+        artifacts:
+          recordings:
+            - test_long_rec_0
+          supervisions:
+            - test_long_sup_0
         group: test
-        recordings_artifacts:
-          - test_long_rec_0
-        supervisions_artifacts:
-          - test_long_sup_0
-        icefall:
-          use_punc: false
       test_short:
+        artifacts:
+          recordings:
+            - test_short_rec_0
+          supervisions:
+            - test_short_sup_0
         group: test
-        recordings_artifacts:
-          - test_short_rec_0
-        supervisions_artifacts:
-          - test_short_sup_0
-        icefall:
-          use_punc: false
-    recipe_parameters:
-      icefall:
-        language: yue
     provenance:
       source: icefall runtime manifest snapshot
       snapshot_date: '2026-09-08'
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: common_voice_zh_hk
     version: icefall-20260908
     languages:
@@ -2698,42 +2525,36 @@
         relative_path: zh/common_voice_zh_HK/data/manifests/cv_zh_hk_supervisions_test.jsonl.gz
     splits:
       train:
-        recordings_artifacts:
-          - train_rec_0
-        supervisions_artifacts:
-          - train_sup_0
-        icefall:
-          use_punc: false
+        artifacts:
+          recordings:
+            - train_rec_0
+          supervisions:
+            - train_sup_0
         statistics:
           duration_hours: 9.597024522825334
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: multilingual:zh/common_voice_zh_HK/data/manifests/cv_zh_hk_supervisions_train.jsonl.gz'
       dev:
-        recordings_artifacts:
-          - dev_rec_0
-        supervisions_artifacts:
-          - dev_sup_0
-        icefall:
-          use_punc: false
+        artifacts:
+          recordings:
+            - dev_rec_0
+          supervisions:
+            - dev_sup_0
         statistics:
           duration_hours: 7.546888875484221
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: multilingual:zh/common_voice_zh_HK/data/manifests/cv_zh_hk_supervisions_dev.jsonl.gz'
       test:
-        recordings_artifacts:
-          - test_rec_0
-        supervisions_artifacts:
-          - test_sup_0
-        icefall:
-          use_punc: false
+        artifacts:
+          recordings:
+            - test_rec_0
+          supervisions:
+            - test_sup_0
         statistics:
           duration_hours: 8.198547466281651
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: multilingual:zh/common_voice_zh_HK/data/manifests/cv_zh_hk_supervisions_test.jsonl.gz'
-    recipe_parameters:
-      icefall:
-        language: yue
     provenance:
       source: icefall runtime manifest snapshot
       snapshot_date: '2026-09-08'
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: vitw
     version: icefall-20260908
     languages:
@@ -2747,352 +2568,264 @@
         kind: lhotse-recordings
         root_alias: legacy_asr
         relative_path: LHOTSE/Voices-in-the-Wild-2M/data/manifests/vitw_recordings_all.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: train_sup_0
         kind: lhotse-supervisions
         root_alias: legacy_asr
         relative_path: LHOTSE/Voices-in-the-Wild-2M/data/manifests/vitw_supervisions_all.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: real_distortion_rec_0
         kind: lhotse-recordings
         root_alias: legacy_asr
         relative_path: LHOTSE/Voices-in-the-Wild-Bench/data/manifests/vitw_real_distortion_recordings.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: real_distortion_sup_0
         kind: lhotse-supervisions
         root_alias: legacy_asr
         relative_path: LHOTSE/Voices-in-the-Wild-Bench/data/manifests/vitw_real_distortion_supervisions.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: real_dropout_rec_0
         kind: lhotse-recordings
         root_alias: legacy_asr
         relative_path: LHOTSE/Voices-in-the-Wild-Bench/data/manifests/vitw_real_dropout_recordings.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: real_dropout_sup_0
         kind: lhotse-supervisions
         root_alias: legacy_asr
         relative_path: LHOTSE/Voices-in-the-Wild-Bench/data/manifests/vitw_real_dropout_supervisions.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: real_echo_rec_0
         kind: lhotse-recordings
         root_alias: legacy_asr
         relative_path: LHOTSE/Voices-in-the-Wild-Bench/data/manifests/vitw_real_echo_recordings.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: real_echo_sup_0
         kind: lhotse-supervisions
         root_alias: legacy_asr
         relative_path: LHOTSE/Voices-in-the-Wild-Bench/data/manifests/vitw_real_echo_supervisions.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: real_far_field_rec_0
         kind: lhotse-recordings
         root_alias: legacy_asr
         relative_path: LHOTSE/Voices-in-the-Wild-Bench/data/manifests/vitw_real_far_field_recordings.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: real_far_field_sup_0
         kind: lhotse-supervisions
         root_alias: legacy_asr
         relative_path: LHOTSE/Voices-in-the-Wild-Bench/data/manifests/vitw_real_far_field_supervisions.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: real_mixed_rec_0
         kind: lhotse-recordings
         root_alias: legacy_asr
         relative_path: LHOTSE/Voices-in-the-Wild-Bench/data/manifests/vitw_real_mixed_recordings.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: real_mixed_sup_0
         kind: lhotse-supervisions
         root_alias: legacy_asr
         relative_path: LHOTSE/Voices-in-the-Wild-Bench/data/manifests/vitw_real_mixed_supervisions.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: real_noise_rec_0
         kind: lhotse-recordings
         root_alias: legacy_asr
         relative_path: LHOTSE/Voices-in-the-Wild-Bench/data/manifests/vitw_real_noise_recordings.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: real_noise_sup_0
         kind: lhotse-supervisions
         root_alias: legacy_asr
         relative_path: LHOTSE/Voices-in-the-Wild-Bench/data/manifests/vitw_real_noise_supervisions.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: real_obstructed_rec_0
         kind: lhotse-recordings
         root_alias: legacy_asr
         relative_path: LHOTSE/Voices-in-the-Wild-Bench/data/manifests/vitw_real_obstructed_recordings.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: real_obstructed_sup_0
         kind: lhotse-supervisions
         root_alias: legacy_asr
         relative_path: LHOTSE/Voices-in-the-Wild-Bench/data/manifests/vitw_real_obstructed_supervisions.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: real_recording_rec_0
         kind: lhotse-recordings
         root_alias: legacy_asr
         relative_path: LHOTSE/Voices-in-the-Wild-Bench/data/manifests/vitw_real_recording_recordings.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: real_recording_sup_0
         kind: lhotse-supervisions
         root_alias: legacy_asr
         relative_path: LHOTSE/Voices-in-the-Wild-Bench/data/manifests/vitw_real_recording_supervisions.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: syn_distortion_rec_0
         kind: lhotse-recordings
         root_alias: legacy_asr
         relative_path: LHOTSE/Voices-in-the-Wild-Bench/data/manifests/vitw_syn_distortion_recordings.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: syn_distortion_sup_0
         kind: lhotse-supervisions
         root_alias: legacy_asr
         relative_path: LHOTSE/Voices-in-the-Wild-Bench/data/manifests/vitw_syn_distortion_supervisions.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: syn_dropout_rec_0
         kind: lhotse-recordings
         root_alias: legacy_asr
         relative_path: LHOTSE/Voices-in-the-Wild-Bench/data/manifests/vitw_syn_dropout_recordings.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: syn_dropout_sup_0
         kind: lhotse-supervisions
         root_alias: legacy_asr
         relative_path: LHOTSE/Voices-in-the-Wild-Bench/data/manifests/vitw_syn_dropout_supervisions.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: syn_echo_rec_0
         kind: lhotse-recordings
         root_alias: legacy_asr
         relative_path: LHOTSE/Voices-in-the-Wild-Bench/data/manifests/vitw_syn_echo_recordings.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: syn_echo_sup_0
         kind: lhotse-supervisions
         root_alias: legacy_asr
         relative_path: LHOTSE/Voices-in-the-Wild-Bench/data/manifests/vitw_syn_echo_supervisions.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: syn_far_field_rec_0
         kind: lhotse-recordings
         root_alias: legacy_asr
         relative_path: LHOTSE/Voices-in-the-Wild-Bench/data/manifests/vitw_syn_far_field_recordings.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: syn_far_field_sup_0
         kind: lhotse-supervisions
         root_alias: legacy_asr
         relative_path: LHOTSE/Voices-in-the-Wild-Bench/data/manifests/vitw_syn_far_field_supervisions.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: syn_mixed_rec_0
         kind: lhotse-recordings
         root_alias: legacy_asr
         relative_path: LHOTSE/Voices-in-the-Wild-Bench/data/manifests/vitw_syn_mixed_recordings.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: syn_mixed_sup_0
         kind: lhotse-supervisions
         root_alias: legacy_asr
         relative_path: LHOTSE/Voices-in-the-Wild-Bench/data/manifests/vitw_syn_mixed_supervisions.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: syn_noise_rec_0
         kind: lhotse-recordings
         root_alias: legacy_asr
         relative_path: LHOTSE/Voices-in-the-Wild-Bench/data/manifests/vitw_syn_noise_recordings.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: syn_noise_sup_0
         kind: lhotse-supervisions
         root_alias: legacy_asr
         relative_path: LHOTSE/Voices-in-the-Wild-Bench/data/manifests/vitw_syn_noise_supervisions.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: syn_obstructed_rec_0
         kind: lhotse-recordings
         root_alias: legacy_asr
         relative_path: LHOTSE/Voices-in-the-Wild-Bench/data/manifests/vitw_syn_obstructed_recordings.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: syn_obstructed_sup_0
         kind: lhotse-supervisions
         root_alias: legacy_asr
         relative_path: LHOTSE/Voices-in-the-Wild-Bench/data/manifests/vitw_syn_obstructed_supervisions.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: syn_recording_rec_0
         kind: lhotse-recordings
         root_alias: legacy_asr
         relative_path: LHOTSE/Voices-in-the-Wild-Bench/data/manifests/vitw_syn_recording_recordings.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: syn_recording_sup_0
         kind: lhotse-supervisions
         root_alias: legacy_asr
         relative_path: LHOTSE/Voices-in-the-Wild-Bench/data/manifests/vitw_syn_recording_supervisions.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
     splits:
       train:
-        recordings_artifacts:
-          - train_rec_0
-        supervisions_artifacts:
-          - train_sup_0
-        icefall:
-          use_punc: false
+        artifacts:
+          recordings:
+            - train_rec_0
+          supervisions:
+            - train_sup_0
         statistics:
           duration_hours: 1085.4116595196758
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:LHOTSE/Voices-in-the-Wild-2M/data/manifests/vitw_supervisions_all.jsonl.gz'
       real_distortion:
+        artifacts:
+          recordings:
+            - real_distortion_rec_0
+          supervisions:
+            - real_distortion_sup_0
         group: test
-        recordings_artifacts:
-          - real_distortion_rec_0
-        supervisions_artifacts:
-          - real_distortion_sup_0
-        icefall:
-          use_punc: false
       real_dropout:
+        artifacts:
+          recordings:
+            - real_dropout_rec_0
+          supervisions:
+            - real_dropout_sup_0
         group: test
-        recordings_artifacts:
-          - real_dropout_rec_0
-        supervisions_artifacts:
-          - real_dropout_sup_0
-        icefall:
-          use_punc: false
       real_echo:
+        artifacts:
+          recordings:
+            - real_echo_rec_0
+          supervisions:
+            - real_echo_sup_0
         group: test
-        recordings_artifacts:
-          - real_echo_rec_0
-        supervisions_artifacts:
-          - real_echo_sup_0
-        icefall:
-          use_punc: false
       real_far_field:
+        artifacts:
+          recordings:
+            - real_far_field_rec_0
+          supervisions:
+            - real_far_field_sup_0
         group: test
-        recordings_artifacts:
-          - real_far_field_rec_0
-        supervisions_artifacts:
-          - real_far_field_sup_0
-        icefall:
-          use_punc: false
       real_mixed:
+        artifacts:
+          recordings:
+            - real_mixed_rec_0
+          supervisions:
+            - real_mixed_sup_0
         group: test
-        recordings_artifacts:
-          - real_mixed_rec_0
-        supervisions_artifacts:
-          - real_mixed_sup_0
-        icefall:
-          use_punc: false
       real_noise:
+        artifacts:
+          recordings:
+            - real_noise_rec_0
+          supervisions:
+            - real_noise_sup_0
         group: test
-        recordings_artifacts:
-          - real_noise_rec_0
-        supervisions_artifacts:
-          - real_noise_sup_0
-        icefall:
-          use_punc: false
       real_obstructed:
+        artifacts:
+          recordings:
+            - real_obstructed_rec_0
+          supervisions:
+            - real_obstructed_sup_0
         group: test
-        recordings_artifacts:
-          - real_obstructed_rec_0
-        supervisions_artifacts:
-          - real_obstructed_sup_0
-        icefall:
-          use_punc: false
       real_recording:
+        artifacts:
+          recordings:
+            - real_recording_rec_0
+          supervisions:
+            - real_recording_sup_0
         group: test
-        recordings_artifacts:
-          - real_recording_rec_0
-        supervisions_artifacts:
-          - real_recording_sup_0
-        icefall:
-          use_punc: false
       syn_distortion:
+        artifacts:
+          recordings:
+            - syn_distortion_rec_0
+          supervisions:
+            - syn_distortion_sup_0
         group: test
-        recordings_artifacts:
-          - syn_distortion_rec_0
-        supervisions_artifacts:
-          - syn_distortion_sup_0
-        icefall:
-          use_punc: false
       syn_dropout:
+        artifacts:
+          recordings:
+            - syn_dropout_rec_0
+          supervisions:
+            - syn_dropout_sup_0
         group: test
-        recordings_artifacts:
-          - syn_dropout_rec_0
-        supervisions_artifacts:
-          - syn_dropout_sup_0
-        icefall:
-          use_punc: false
       syn_echo:
+        artifacts:
+          recordings:
+            - syn_echo_rec_0
+          supervisions:
+            - syn_echo_sup_0
         group: test
-        recordings_artifacts:
-          - syn_echo_rec_0
-        supervisions_artifacts:
-          - syn_echo_sup_0
-        icefall:
-          use_punc: false
       syn_far_field:
+        artifacts:
+          recordings:
+            - syn_far_field_rec_0
+          supervisions:
+            - syn_far_field_sup_0
         group: test
-        recordings_artifacts:
-          - syn_far_field_rec_0
-        supervisions_artifacts:
-          - syn_far_field_sup_0
-        icefall:
-          use_punc: false
       syn_mixed:
+        artifacts:
+          recordings:
+            - syn_mixed_rec_0
+          supervisions:
+            - syn_mixed_sup_0
         group: test
-        recordings_artifacts:
-          - syn_mixed_rec_0
-        supervisions_artifacts:
-          - syn_mixed_sup_0
-        icefall:
-          use_punc: false
       syn_noise:
+        artifacts:
+          recordings:
+            - syn_noise_rec_0
+          supervisions:
+            - syn_noise_sup_0
         group: test
-        recordings_artifacts:
-          - syn_noise_rec_0
-        supervisions_artifacts:
-          - syn_noise_sup_0
-        icefall:
-          use_punc: false
       syn_obstructed:
+        artifacts:
+          recordings:
+            - syn_obstructed_rec_0
+          supervisions:
+            - syn_obstructed_sup_0
         group: test
-        recordings_artifacts:
-          - syn_obstructed_rec_0
-        supervisions_artifacts:
-          - syn_obstructed_sup_0
-        icefall:
-          use_punc: false
       syn_recording:
+        artifacts:
+          recordings:
+            - syn_recording_rec_0
+          supervisions:
+            - syn_recording_sup_0
         group: test
-        recordings_artifacts:
-          - syn_recording_rec_0
-        supervisions_artifacts:
-          - syn_recording_sup_0
-        icefall:
-          use_punc: false
-    recipe_parameters:
-      icefall:
-        language: en
     provenance:
       source: icefall runtime manifest snapshot
       snapshot_date: '2026-09-08'
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: alimeeting_sdm
     version: icefall-20260908
     languages:
@@ -3104,81 +2837,60 @@
         kind: lhotse-recordings
         root_alias: legacy_asr
         relative_path: LHOTSE/AliMeeting/data/manifests/alimeeting_sdm_recordings_train.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: train_sup_0
         kind: lhotse-supervisions
         root_alias: legacy_asr
         relative_path: LHOTSE/AliMeeting/data/manifests/alimeeting_sdm_supervisions_train.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: dev_rec_0
         kind: lhotse-recordings
         root_alias: legacy_asr
         relative_path: LHOTSE/AliMeeting/data/manifests/alimeeting_sdm_recordings_dev.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: dev_sup_0
         kind: lhotse-supervisions
         root_alias: legacy_asr
         relative_path: LHOTSE/AliMeeting/data/manifests/alimeeting_sdm_supervisions_dev.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: test_rec_0
         kind: lhotse-recordings
         root_alias: legacy_asr
         relative_path: LHOTSE/AliMeeting/data/manifests/alimeeting_sdm_recordings_test.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: test_sup_0
         kind: lhotse-supervisions
         root_alias: legacy_asr
         relative_path: LHOTSE/AliMeeting/data/manifests/alimeeting_sdm_supervisions_test.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
     splits:
       train:
-        recordings_artifacts:
-          - train_rec_0
-        supervisions_artifacts:
-          - train_sup_0
-        icefall:
-          use_punc: false
-          channel: 0
+        artifacts:
+          recordings:
+            - train_rec_0
+          supervisions:
+            - train_sup_0
         statistics:
           duration_hours: 140.57413291667052
           duration_basis: sum of supervision segments; overlaps and multiple microphones may duplicate speech
           num_recordings: 209
           num_supervisions: 186360
       dev:
-        recordings_artifacts:
-          - dev_rec_0
-        supervisions_artifacts:
-          - dev_sup_0
-        icefall:
-          use_punc: false
-          channel: 0
+        artifacts:
+          recordings:
+            - dev_rec_0
+          supervisions:
+            - dev_sup_0
         statistics:
           duration_hours: 4.897944444444442
           duration_basis: sum of supervision segments; overlaps and multiple microphones may duplicate speech
           num_recordings: 8
           num_supervisions: 6457
       test:
-        recordings_artifacts:
-          - test_rec_0
-        supervisions_artifacts:
-          - test_sup_0
-        icefall:
-          use_punc: false
-          channel: 0
+        artifacts:
+          recordings:
+            - test_rec_0
+          supervisions:
+            - test_sup_0
         statistics:
           duration_hours: 12.455772222222189
           duration_basis: sum of supervision segments; overlaps and multiple microphones may duplicate speech
           num_recordings: 20
           num_supervisions: 16358
-    recipe_parameters:
-      icefall:
-        language: zh
     provenance:
       source: icefall runtime manifest snapshot
       snapshot_date: '2026-09-08'
@@ -3190,7 +2902,7 @@
       dataset_family: alimeeting
       duration_label: 单远场麦克风标注片段
       description: 标注片段时长，重叠语音或多麦克风可能重复计时。
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: ami_sdm
     version: icefall-20260908
     languages:
@@ -3202,81 +2914,60 @@
         kind: lhotse-recordings
         root_alias: legacy_asr
         relative_path: LHOTSE/AMI/data/manifests/ami_sdm_recordings_train.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: train_sup_0
         kind: lhotse-supervisions
         root_alias: legacy_asr
         relative_path: LHOTSE/AMI/data/manifests/ami_sdm_supervisions_train.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: dev_rec_0
         kind: lhotse-recordings
         root_alias: legacy_asr
         relative_path: LHOTSE/AMI/data/manifests/ami_sdm_recordings_dev.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: dev_sup_0
         kind: lhotse-supervisions
         root_alias: legacy_asr
         relative_path: LHOTSE/AMI/data/manifests/ami_sdm_supervisions_dev.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: test_rec_0
         kind: lhotse-recordings
         root_alias: legacy_asr
         relative_path: LHOTSE/AMI/data/manifests/ami_sdm_recordings_test.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: test_sup_0
         kind: lhotse-supervisions
         root_alias: legacy_asr
         relative_path: LHOTSE/AMI/data/manifests/ami_sdm_supervisions_test.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
     splits:
       train:
-        recordings_artifacts:
-          - train_rec_0
-        supervisions_artifacts:
-          - train_sup_0
-        icefall:
-          use_punc: false
-          channel: 0
+        artifacts:
+          recordings:
+            - train_rec_0
+          supervisions:
+            - train_sup_0
         statistics:
           duration_hours: 74.8011747222231
           duration_basis: sum of supervision segments; overlaps and multiple microphones may duplicate speech
           num_recordings: 134
           num_supervisions: 102690
       dev:
-        recordings_artifacts:
-          - dev_rec_0
-        supervisions_artifacts:
-          - dev_sup_0
-        icefall:
-          use_punc: false
-          channel: 0
+        artifacts:
+          recordings:
+            - dev_rec_0
+          supervisions:
+            - dev_sup_0
         statistics:
           duration_hours: 8.76629305555555
           duration_basis: sum of supervision segments; overlaps and multiple microphones may duplicate speech
           num_recordings: 18
           num_supervisions: 12614
       test:
-        recordings_artifacts:
-          - test_rec_0
-        supervisions_artifacts:
-          - test_sup_0
-        icefall:
-          use_punc: false
-          channel: 0
+        artifacts:
+          recordings:
+            - test_rec_0
+          supervisions:
+            - test_sup_0
         statistics:
           duration_hours: 8.531998333333378
           duration_basis: sum of supervision segments; overlaps and multiple microphones may duplicate speech
           num_recordings: 16
           num_supervisions: 12121
-    recipe_parameters:
-      icefall:
-        language: en
     provenance:
       source: icefall runtime manifest snapshot
       snapshot_date: '2026-09-08'
@@ -3290,7 +2981,7 @@
       dataset_family: ami
       duration_label: 单远场麦克风标注片段
       description: 标注片段时长，重叠语音或多麦克风可能重复计时。训练集缺少 2 场会议（134/136）。
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: notsofar_sdm
     version: icefall-20260908
     languages:
@@ -3302,81 +2993,60 @@
         kind: lhotse-recordings
         root_alias: legacy_asr
         relative_path: LHOTSE/NOTSOFAR/data/manifests/notsofar_sdm_recordings_train.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: train_sup_0
         kind: lhotse-supervisions
         root_alias: legacy_asr
         relative_path: LHOTSE/NOTSOFAR/data/manifests/notsofar_sdm_supervisions_train.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: dev_rec_0
         kind: lhotse-recordings
         root_alias: legacy_asr
         relative_path: LHOTSE/NOTSOFAR/data/manifests/notsofar_sdm_recordings_dev.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: dev_sup_0
         kind: lhotse-supervisions
         root_alias: legacy_asr
         relative_path: LHOTSE/NOTSOFAR/data/manifests/notsofar_sdm_supervisions_dev.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: test_rec_0
         kind: lhotse-recordings
         root_alias: legacy_asr
         relative_path: LHOTSE/NOTSOFAR/data/manifests/notsofar_sdm_recordings_test.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: test_sup_0
         kind: lhotse-supervisions
         root_alias: legacy_asr
         relative_path: LHOTSE/NOTSOFAR/data/manifests/notsofar_sdm_supervisions_test.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
     splits:
       train:
-        recordings_artifacts:
-          - train_rec_0
-        supervisions_artifacts:
-          - train_sup_0
-        icefall:
-          use_punc: false
-          channel: 0
+        artifacts:
+          recordings:
+            - train_rec_0
+          supervisions:
+            - train_sup_0
         statistics:
           duration_hours: 45.61048750000102
           duration_basis: sum of supervision segments; overlaps and multiple microphones may duplicate speech
           num_recordings: 346
           num_supervisions: 82850
       dev:
-        recordings_artifacts:
-          - dev_rec_0
-        supervisions_artifacts:
-          - dev_sup_0
-        icefall:
-          use_punc: false
-          channel: 0
+        artifacts:
+          recordings:
+            - dev_rec_0
+          supervisions:
+            - dev_sup_0
         statistics:
           duration_hours: 25.721546944445
           duration_basis: sum of supervision segments; overlaps and multiple microphones may duplicate speech
           num_recordings: 177
           num_supervisions: 47659
       test:
-        recordings_artifacts:
-          - test_rec_0
-        supervisions_artifacts:
-          - test_sup_0
-        icefall:
-          use_punc: false
-          channel: 0
+        artifacts:
+          recordings:
+            - test_rec_0
+          supervisions:
+            - test_sup_0
         statistics:
           duration_hours: 105.56838027777641
           duration_basis: sum of supervision segments; overlaps and multiple microphones may duplicate speech
           num_recordings: 819
           num_supervisions: 174400
-    recipe_parameters:
-      icefall:
-        language: en
     provenance:
       source: icefall runtime manifest snapshot
       snapshot_date: '2026-09-08'
@@ -3390,7 +3060,7 @@
       dataset_family: notsofar
       duration_label: 单远场麦克风标注片段
       description: 标注片段时长，重叠语音或多麦克风可能重复计时。
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: vitw_far_field
     version: icefall-20260908
     languages:
@@ -3403,29 +3073,21 @@
         kind: lhotse-recordings
         root_alias: legacy_asr
         relative_path: LHOTSE/Voices-in-the-Wild-2M/data/manifests/by_subset/vitw_recordings_far_field.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: train_sup_0
         kind: lhotse-supervisions
         root_alias: legacy_asr
         relative_path: LHOTSE/Voices-in-the-Wild-2M/data/manifests/by_subset/vitw_supervisions_far_field.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
     splits:
       train:
-        recordings_artifacts:
-          - train_rec_0
-        supervisions_artifacts:
-          - train_sup_0
-        icefall:
-          use_punc: false
+        artifacts:
+          recordings:
+            - train_rec_0
+          supervisions:
+            - train_sup_0
         statistics:
           duration_hours: 77.26
           num_supervisions: 45437
           duration_basis: manifest supervision duration, rounded
-    recipe_parameters:
-      icefall:
-        language: en
     provenance:
       source: icefall runtime manifest snapshot
       snapshot_date: '2026-09-08'
@@ -3438,7 +3100,7 @@
       dataset_family: vitw
       duration_label: 远场子集
       description: 标注片段时长，重叠语音或多麦克风可能重复计时。
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: realman
     version: icefall-20260908
     languages:
@@ -3450,38 +3112,26 @@
         kind: lhotse-recordings
         root_alias: legacy_asr
         relative_path: LHOTSE/RealMAN/data/manifests/realman_recordings_train.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: train_sup_0
         kind: lhotse-supervisions
         root_alias: legacy_asr
         relative_path: LHOTSE/RealMAN/data/manifests/realman_supervisions_train.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: dev_rec_0
         kind: lhotse-recordings
         root_alias: legacy_asr
         relative_path: LHOTSE/RealMAN/data/manifests/realman_recordings_dev.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: dev_sup_0
         kind: lhotse-supervisions
         root_alias: legacy_asr
         relative_path: LHOTSE/RealMAN/data/manifests/realman_supervisions_dev.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: test_rec_0
         kind: lhotse-recordings
         root_alias: legacy_asr
         relative_path: LHOTSE/RealMAN/data/manifests/realman_recordings_test.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: test_sup_0
         kind: lhotse-supervisions
         root_alias: legacy_asr
         relative_path: LHOTSE/RealMAN/data/manifests/realman_supervisions_test.jsonl.gz
-        metadata:
-          icefall_relative_to_lhotse: true
       - name: raw_000
         kind: metadata
         root_alias: legacy_asr
@@ -4158,47 +3808,38 @@
         relative_path: RealMAN/preparation_status.json
     splits:
       train:
-        recordings_artifacts:
-          - train_rec_0
-        supervisions_artifacts:
-          - train_sup_0
-        icefall:
-          use_punc: false
-          channel: 0
+        artifacts:
+          recordings:
+            - train_rec_0
+          supervisions:
+            - train_sup_0
         statistics:
           duration_hours: 64.02698418402812
           duration_basis: supervision segments
           num_recordings: 36816
           num_supervisions: 36816
       dev:
-        recordings_artifacts:
-          - dev_rec_0
-        supervisions_artifacts:
-          - dev_sup_0
-        icefall:
-          use_punc: false
-          channel: 0
+        artifacts:
+          recordings:
+            - dev_rec_0
+          supervisions:
+            - dev_sup_0
         statistics:
           duration_hours: 8.08887869791671
           duration_basis: supervision segments
           num_recordings: 6698
           num_supervisions: 6698
       test:
-        recordings_artifacts:
-          - test_rec_0
-        supervisions_artifacts:
-          - test_sup_0
-        icefall:
-          use_punc: false
-          channel: 0
+        artifacts:
+          recordings:
+            - test_rec_0
+          supervisions:
+            - test_sup_0
         statistics:
           duration_hours: 11.592304363425903
           duration_basis: supervision segments
           num_recordings: 7633
           num_supervisions: 7633
-    recipe_parameters:
-      icefall:
-        language: zh
     provenance:
       source: https://huggingface.co/datasets/AISHELL/RealMAN
       snapshot_date: '2026-09-08'
@@ -4212,7 +3853,7 @@
         - Lhotse recording/supervision validation; official train/val/test splits
       duration_label: 已准备标注片段
       description: 标注片段时长，重叠语音或多麦克风可能重复计时。
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: librispeech_traffic_snr0
     version: icefall-20260908
     languages:
@@ -4231,24 +3872,19 @@
         relative_path: LHOTSE/eval_traffic/librispeech_test_other_traffic_noisy_snr0db_cuts.jsonl.gz
     splits:
       test_clean:
+        artifacts:
+          cuts:
+            - test_clean_cuts_0
         group: test
-        cuts_artifacts:
-          - test_clean_cuts_0
-        icefall:
-          use_punc: false
       test_other:
+        artifacts:
+          cuts:
+            - test_other_cuts_0
         group: test
-        cuts_artifacts:
-          - test_other_cuts_0
-        icefall:
-          use_punc: false
-    recipe_parameters:
-      icefall:
-        language: en
     provenance:
       source: icefall runtime manifest snapshot
       snapshot_date: '2026-09-08'
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: wenetspeech_traffic_snr0
     version: icefall-20260908
     languages:
@@ -4263,18 +3899,14 @@
         relative_path: LHOTSE/eval_traffic/wenetspeech_test_net_traffic_noisy_snr0db_cuts.jsonl.gz
     splits:
       test_net:
+        artifacts:
+          cuts:
+            - test_net_cuts_0
         group: test
-        cuts_artifacts:
-          - test_net_cuts_0
-        icefall:
-          use_punc: false
-    recipe_parameters:
-      icefall:
-        language: zh
     provenance:
       source: icefall runtime manifest snapshot
       snapshot_date: '2026-09-08'
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: mdcc_traffic_snr0
     version: icefall-20260908
     languages:
@@ -4289,20 +3921,16 @@
         relative_path: LHOTSE/eval_traffic/mdcc_test_traffic_noisy_snr0db_cuts.jsonl.gz
     splits:
       test:
-        cuts_artifacts:
-          - test_cuts_0
-        icefall:
-          use_punc: false
+        artifacts:
+          cuts:
+            - test_cuts_0
         statistics:
           duration_hours: 11.008564704861111
           duration_basis: 'sum of cuts durations; overlapping segments may count speech more than once; sources: legacy_asr:LHOTSE/eval_traffic/mdcc_test_traffic_noisy_snr0db_cuts.jsonl.gz'
-    recipe_parameters:
-      icefall:
-        language: yue
     provenance:
       source: icefall runtime manifest snapshot
       snapshot_date: '2026-09-08'
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: talcs_traffic_snr0
     version: icefall-20260908
     languages:
@@ -4317,20 +3945,16 @@
         relative_path: LHOTSE/eval_traffic/talcs_test_traffic_noisy_snr0db_cuts.jsonl.gz
     splits:
       test:
-        cuts_artifacts:
-          - test_cuts_0
-        icefall:
-          use_punc: false
+        artifacts:
+          cuts:
+            - test_cuts_0
         statistics:
           duration_hours: 23.62268777777778
           duration_basis: 'sum of cuts durations; overlapping segments may count speech more than once; sources: legacy_asr:LHOTSE/eval_traffic/talcs_test_traffic_noisy_snr0db_cuts.jsonl.gz'
-    recipe_parameters:
-      icefall:
-        language: zh
     provenance:
       source: icefall runtime manifest snapshot
       snapshot_date: '2026-09-08'
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: librispeech_traffic_snr5
     version: icefall-20260908
     languages:
@@ -4349,24 +3973,19 @@
         relative_path: LHOTSE/eval_traffic/librispeech_test_other_traffic_noisy_snr5db_cuts.jsonl.gz
     splits:
       test_clean:
+        artifacts:
+          cuts:
+            - test_clean_cuts_0
         group: test
-        cuts_artifacts:
-          - test_clean_cuts_0
-        icefall:
-          use_punc: false
       test_other:
+        artifacts:
+          cuts:
+            - test_other_cuts_0
         group: test
-        cuts_artifacts:
-          - test_other_cuts_0
-        icefall:
-          use_punc: false
-    recipe_parameters:
-      icefall:
-        language: en
     provenance:
       source: icefall runtime manifest snapshot
       snapshot_date: '2026-09-08'
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: wenetspeech_traffic_snr5
     version: icefall-20260908
     languages:
@@ -4381,18 +4000,14 @@
         relative_path: LHOTSE/eval_traffic/wenetspeech_test_net_traffic_noisy_snr5db_cuts.jsonl.gz
     splits:
       test_net:
+        artifacts:
+          cuts:
+            - test_net_cuts_0
         group: test
-        cuts_artifacts:
-          - test_net_cuts_0
-        icefall:
-          use_punc: false
-    recipe_parameters:
-      icefall:
-        language: zh
     provenance:
       source: icefall runtime manifest snapshot
       snapshot_date: '2026-09-08'
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: mdcc_traffic_snr5
     version: icefall-20260908
     languages:
@@ -4407,20 +4022,16 @@
         relative_path: LHOTSE/eval_traffic/mdcc_test_traffic_noisy_snr5db_cuts.jsonl.gz
     splits:
       test:
-        cuts_artifacts:
-          - test_cuts_0
-        icefall:
-          use_punc: false
+        artifacts:
+          cuts:
+            - test_cuts_0
         statistics:
           duration_hours: 11.008564704861111
           duration_basis: 'sum of cuts durations; overlapping segments may count speech more than once; sources: legacy_asr:LHOTSE/eval_traffic/mdcc_test_traffic_noisy_snr5db_cuts.jsonl.gz'
-    recipe_parameters:
-      icefall:
-        language: yue
     provenance:
       source: icefall runtime manifest snapshot
       snapshot_date: '2026-09-08'
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: talcs_traffic_snr5
     version: icefall-20260908
     languages:
@@ -4435,20 +4046,16 @@
         relative_path: LHOTSE/eval_traffic/talcs_test_traffic_noisy_snr5db_cuts.jsonl.gz
     splits:
       test:
-        cuts_artifacts:
-          - test_cuts_0
-        icefall:
-          use_punc: false
+        artifacts:
+          cuts:
+            - test_cuts_0
         statistics:
           duration_hours: 23.62268777777778
           duration_basis: 'sum of cuts durations; overlapping segments may count speech more than once; sources: legacy_asr:LHOTSE/eval_traffic/talcs_test_traffic_noisy_snr5db_cuts.jsonl.gz'
-    recipe_parameters:
-      icefall:
-        language: zh
     provenance:
       source: icefall runtime manifest snapshot
       snapshot_date: '2026-09-08'
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: librispeech_traffic_snr10
     version: icefall-20260908
     languages:
@@ -4467,24 +4074,19 @@
         relative_path: LHOTSE/eval_traffic/librispeech_test_other_traffic_noisy_snr10db_cuts.jsonl.gz
     splits:
       test_clean:
+        artifacts:
+          cuts:
+            - test_clean_cuts_0
         group: test
-        cuts_artifacts:
-          - test_clean_cuts_0
-        icefall:
-          use_punc: false
       test_other:
+        artifacts:
+          cuts:
+            - test_other_cuts_0
         group: test
-        cuts_artifacts:
-          - test_other_cuts_0
-        icefall:
-          use_punc: false
-    recipe_parameters:
-      icefall:
-        language: en
     provenance:
       source: icefall runtime manifest snapshot
       snapshot_date: '2026-09-08'
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: wenetspeech_traffic_snr10
     version: icefall-20260908
     languages:
@@ -4499,18 +4101,14 @@
         relative_path: LHOTSE/eval_traffic/wenetspeech_test_net_traffic_noisy_snr10db_cuts.jsonl.gz
     splits:
       test_net:
+        artifacts:
+          cuts:
+            - test_net_cuts_0
         group: test
-        cuts_artifacts:
-          - test_net_cuts_0
-        icefall:
-          use_punc: false
-    recipe_parameters:
-      icefall:
-        language: zh
     provenance:
       source: icefall runtime manifest snapshot
       snapshot_date: '2026-09-08'
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: mdcc_traffic_snr10
     version: icefall-20260908
     languages:
@@ -4525,20 +4123,16 @@
         relative_path: LHOTSE/eval_traffic/mdcc_test_traffic_noisy_snr10db_cuts.jsonl.gz
     splits:
       test:
-        cuts_artifacts:
-          - test_cuts_0
-        icefall:
-          use_punc: false
+        artifacts:
+          cuts:
+            - test_cuts_0
         statistics:
           duration_hours: 11.008564704861111
           duration_basis: 'sum of cuts durations; overlapping segments may count speech more than once; sources: legacy_asr:LHOTSE/eval_traffic/mdcc_test_traffic_noisy_snr10db_cuts.jsonl.gz'
-    recipe_parameters:
-      icefall:
-        language: yue
     provenance:
       source: icefall runtime manifest snapshot
       snapshot_date: '2026-09-08'
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: talcs_traffic_snr10
     version: icefall-20260908
     languages:
@@ -4553,20 +4147,16 @@
         relative_path: LHOTSE/eval_traffic/talcs_test_traffic_noisy_snr10db_cuts.jsonl.gz
     splits:
       test:
-        cuts_artifacts:
-          - test_cuts_0
-        icefall:
-          use_punc: false
+        artifacts:
+          cuts:
+            - test_cuts_0
         statistics:
           duration_hours: 23.62268777777778
           duration_basis: 'sum of cuts durations; overlapping segments may count speech more than once; sources: legacy_asr:LHOTSE/eval_traffic/talcs_test_traffic_noisy_snr10db_cuts.jsonl.gz'
-    recipe_parameters:
-      icefall:
-        language: zh
     provenance:
       source: icefall runtime manifest snapshot
       snapshot_date: '2026-09-08'
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: librispeech_traffic_snr15
     version: icefall-20260908
     languages:
@@ -4585,24 +4175,19 @@
         relative_path: LHOTSE/eval_traffic/librispeech_test_other_traffic_noisy_snr15db_cuts.jsonl.gz
     splits:
       test_clean:
+        artifacts:
+          cuts:
+            - test_clean_cuts_0
         group: test
-        cuts_artifacts:
-          - test_clean_cuts_0
-        icefall:
-          use_punc: false
       test_other:
+        artifacts:
+          cuts:
+            - test_other_cuts_0
         group: test
-        cuts_artifacts:
-          - test_other_cuts_0
-        icefall:
-          use_punc: false
-    recipe_parameters:
-      icefall:
-        language: en
     provenance:
       source: icefall runtime manifest snapshot
       snapshot_date: '2026-09-08'
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: wenetspeech_traffic_snr15
     version: icefall-20260908
     languages:
@@ -4617,18 +4202,14 @@
         relative_path: LHOTSE/eval_traffic/wenetspeech_test_net_traffic_noisy_snr15db_cuts.jsonl.gz
     splits:
       test_net:
+        artifacts:
+          cuts:
+            - test_net_cuts_0
         group: test
-        cuts_artifacts:
-          - test_net_cuts_0
-        icefall:
-          use_punc: false
-    recipe_parameters:
-      icefall:
-        language: zh
     provenance:
       source: icefall runtime manifest snapshot
       snapshot_date: '2026-09-08'
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: mdcc_traffic_snr15
     version: icefall-20260908
     languages:
@@ -4643,20 +4224,16 @@
         relative_path: LHOTSE/eval_traffic/mdcc_test_traffic_noisy_snr15db_cuts.jsonl.gz
     splits:
       test:
-        cuts_artifacts:
-          - test_cuts_0
-        icefall:
-          use_punc: false
+        artifacts:
+          cuts:
+            - test_cuts_0
         statistics:
           duration_hours: 11.008564704861111
           duration_basis: 'sum of cuts durations; overlapping segments may count speech more than once; sources: legacy_asr:LHOTSE/eval_traffic/mdcc_test_traffic_noisy_snr15db_cuts.jsonl.gz'
-    recipe_parameters:
-      icefall:
-        language: yue
     provenance:
       source: icefall runtime manifest snapshot
       snapshot_date: '2026-09-08'
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: talcs_traffic_snr15
     version: icefall-20260908
     languages:
@@ -4671,20 +4248,16 @@
         relative_path: LHOTSE/eval_traffic/talcs_test_traffic_noisy_snr15db_cuts.jsonl.gz
     splits:
       test:
-        cuts_artifacts:
-          - test_cuts_0
-        icefall:
-          use_punc: false
+        artifacts:
+          cuts:
+            - test_cuts_0
         statistics:
           duration_hours: 23.62268777777778
           duration_basis: 'sum of cuts durations; overlapping segments may count speech more than once; sources: legacy_asr:LHOTSE/eval_traffic/talcs_test_traffic_noisy_snr15db_cuts.jsonl.gz'
-    recipe_parameters:
-      icefall:
-        language: zh
     provenance:
       source: icefall runtime manifest snapshot
       snapshot_date: '2026-09-08'
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: librispeech_traffic_snr20
     version: icefall-20260908
     languages:
@@ -4703,24 +4276,19 @@
         relative_path: LHOTSE/eval_traffic/librispeech_test_other_traffic_noisy_snr20db_cuts.jsonl.gz
     splits:
       test_clean:
+        artifacts:
+          cuts:
+            - test_clean_cuts_0
         group: test
-        cuts_artifacts:
-          - test_clean_cuts_0
-        icefall:
-          use_punc: false
       test_other:
+        artifacts:
+          cuts:
+            - test_other_cuts_0
         group: test
-        cuts_artifacts:
-          - test_other_cuts_0
-        icefall:
-          use_punc: false
-    recipe_parameters:
-      icefall:
-        language: en
     provenance:
       source: icefall runtime manifest snapshot
       snapshot_date: '2026-09-08'
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: wenetspeech_traffic_snr20
     version: icefall-20260908
     languages:
@@ -4735,18 +4303,14 @@
         relative_path: LHOTSE/eval_traffic/wenetspeech_test_net_traffic_noisy_snr20db_cuts.jsonl.gz
     splits:
       test_net:
+        artifacts:
+          cuts:
+            - test_net_cuts_0
         group: test
-        cuts_artifacts:
-          - test_net_cuts_0
-        icefall:
-          use_punc: false
-    recipe_parameters:
-      icefall:
-        language: zh
     provenance:
       source: icefall runtime manifest snapshot
       snapshot_date: '2026-09-08'
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: mdcc_traffic_snr20
     version: icefall-20260908
     languages:
@@ -4761,20 +4325,16 @@
         relative_path: LHOTSE/eval_traffic/mdcc_test_traffic_noisy_snr20db_cuts.jsonl.gz
     splits:
       test:
-        cuts_artifacts:
-          - test_cuts_0
-        icefall:
-          use_punc: false
+        artifacts:
+          cuts:
+            - test_cuts_0
         statistics:
           duration_hours: 11.008564704861111
           duration_basis: 'sum of cuts durations; overlapping segments may count speech more than once; sources: legacy_asr:LHOTSE/eval_traffic/mdcc_test_traffic_noisy_snr20db_cuts.jsonl.gz'
-    recipe_parameters:
-      icefall:
-        language: yue
     provenance:
       source: icefall runtime manifest snapshot
       snapshot_date: '2026-09-08'
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: talcs_traffic_snr20
     version: icefall-20260908
     languages:
@@ -4789,20 +4349,16 @@
         relative_path: LHOTSE/eval_traffic/talcs_test_traffic_noisy_snr20db_cuts.jsonl.gz
     splits:
       test:
-        cuts_artifacts:
-          - test_cuts_0
-        icefall:
-          use_punc: false
+        artifacts:
+          cuts:
+            - test_cuts_0
         statistics:
           duration_hours: 23.62268777777778
           duration_basis: 'sum of cuts durations; overlapping segments may count speech more than once; sources: legacy_asr:LHOTSE/eval_traffic/talcs_test_traffic_noisy_snr20db_cuts.jsonl.gz'
-    recipe_parameters:
-      icefall:
-        language: zh
     provenance:
       source: icefall runtime manifest snapshot
       snapshot_date: '2026-09-08'
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: police_robust_monitor
     version: icefall-20260908
     languages:
@@ -4844,60 +4400,49 @@
         relative_path: LHOTSE/eval_robust_monitor/police_robust_monitor_clipping_cuts.jsonl.gz
     splits:
       clean:
+        artifacts:
+          cuts:
+            - clean_cuts_0
         group: test
-        cuts_artifacts:
-          - clean_cuts_0
-        icefall:
-          use_punc: false
       foreground_snr5:
+        artifacts:
+          cuts:
+            - foreground_snr5_cuts_0
         group: test
-        cuts_artifacts:
-          - foreground_snr5_cuts_0
-        icefall:
-          use_punc: false
       foreground_snr0:
+        artifacts:
+          cuts:
+            - foreground_snr0_cuts_0
         group: test
-        cuts_artifacts:
-          - foreground_snr0_cuts_0
-        icefall:
-          use_punc: false
       local_gain_snr5:
+        artifacts:
+          cuts:
+            - local_gain_snr5_cuts_0
         group: test
-        cuts_artifacts:
-          - local_gain_snr5_cuts_0
-        icefall:
-          use_punc: false
       narrowband:
+        artifacts:
+          cuts:
+            - narrowband_cuts_0
         group: test
-        cuts_artifacts:
-          - narrowband_cuts_0
-        icefall:
-          use_punc: false
       eq_bandpass:
+        artifacts:
+          cuts:
+            - eq_bandpass_cuts_0
         group: test
-        cuts_artifacts:
-          - eq_bandpass_cuts_0
-        icefall:
-          use_punc: false
       rir:
+        artifacts:
+          cuts:
+            - rir_cuts_0
         group: test
-        cuts_artifacts:
-          - rir_cuts_0
-        icefall:
-          use_punc: false
       clipping:
+        artifacts:
+          cuts:
+            - clipping_cuts_0
         group: test
-        cuts_artifacts:
-          - clipping_cuts_0
-        icefall:
-          use_punc: false
-    recipe_parameters:
-      icefall:
-        language: zh
     provenance:
       source: icefall runtime manifest snapshot
       snapshot_date: '2026-09-08'
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: real_rir_slr28
     version: prepared-20260908
     languages:
@@ -4911,7 +4456,9 @@
         relative_path: LHOTSE/noise_rir/data/manifests/real_rir_slr28_recordings_all.jsonl.gz
     splits:
       all:
-        recordings_artifact: recordings
+        artifacts:
+          recordings:
+            - recordings
         statistics:
           num_recordings: 178
           duration_hours: 0.05576779513888889

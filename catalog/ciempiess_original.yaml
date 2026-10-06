@@ -1,4 +1,4 @@
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: ciempiess_original
     version: official-2014
     languages:
@@ -17,7 +17,9 @@
         relative_path: downloads/language-expansion-20260911/ciempiess_original/state.json
     splits:
       all:
-        source_artifact: source
+        artifacts:
+          source:
+            - source
     provenance:
       source: CIEMPIESS-UNAM
       url: https://ciempiess.org/downloads

@@ -52,9 +52,9 @@ def verify(spec, catalog, roots):
     referenced = set()
     groups = {}
     for split_name, split in spec.splits.items():
-        if "records_artifact" not in split:
+        if split.group is None:
             continue
-        name = split["records_artifact"]
+        name, = split.artifacts["records"]
         ids = set()
         unique_mix = set()
         seconds = 0
@@ -82,20 +82,20 @@ def verify(spec, catalog, roots):
             seconds += index[mix]["duration"]
             unique_mix.add(mix)
             negative += not row["labels"]["target_present"]
-        stats = split["statistics"]
+        stats = split.statistics
         if len(ids) != stats["records"] or negative != stats["negative_records"]:
             raise ValueError(f"record count mismatch in {name}")
         if not math.isclose(seconds / 3600, stats["duration_hours"], abs_tol=1e-9):
             raise ValueError(f"duration mismatch in {name}")
         check_unique(stats, unique_mix, index)
-        group = groups.setdefault(split["group"], {"count": 0, "seconds": 0, "mix": set()})
+        group = groups.setdefault(split.group, {"count": 0, "seconds": 0, "mix": set()})
         group["count"] += len(ids)
         group["seconds"] += seconds
         group["mix"].update(unique_mix)
         total += len(ids)
         print(spec.key, name, len(ids), "verified", flush=True)
     for name, group in groups.items():
-        stats = spec.splits[name]["statistics"]
+        stats = spec.splits[name].statistics
         if stats["records"] != group["count"] or not math.isclose(
             stats["duration_hours"], group["seconds"] / 3600, abs_tol=1e-9,
         ):

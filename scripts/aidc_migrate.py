@@ -457,7 +457,7 @@ def scan(args):
             spec = next((s for s in config['datasets'] if s['dataset_id'] + '@' + s['version'] == row['spec']), None)
             split = spec.get('splits', {}).get(row['split'], {}) if spec else {}
             artifact = db.execute('SELECT path FROM artifacts WHERE spec=? AND name=?',
-                                  (row['spec'], split.get('audio_index_artifact', ''))).fetchone()
+                                  (row['spec'], split.get('artifacts', {}).get('audio_index', [''])[0])).fetchone()
             if artifact is None:
                 for ref in db.execute('SELECT DISTINCT manifest FROM record_refs WHERE spec=? AND split=?', tuple(row)):
                     issue(db, ref['manifest'], 'unresolved_audio_record_reference', row['spec'] + ':' + row['split'])

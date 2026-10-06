@@ -1,4 +1,4 @@
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: police_v6_8h
     version: v6-8h-20260915
     languages:
@@ -68,8 +68,11 @@
         sha256: 1e5f93d8cc8240819e5e7ae9b460cf87e904d8d262cbe3facd2802f7e7468399
     splits:
       train:
-        recordings_artifact: train_recordings
-        supervisions_artifact: train_supervisions
+        artifacts:
+          recordings:
+            - train_recordings
+          supervisions:
+            - train_supervisions
         statistics:
           recordings: 231090
           supervisions: 231090
@@ -87,8 +90,11 @@
             AI求助标记打点: 16045
             预录延录: 32228
       dev:
-        recordings_artifact: dev_recordings
-        supervisions_artifact: dev_supervisions
+        artifacts:
+          recordings:
+            - dev_recordings
+          supervisions:
+            - dev_supervisions
         statistics:
           recordings: 23428
           supervisions: 23428
@@ -106,8 +112,11 @@
             AI求助标记打点: 1294
             查询系统工具: 8425
       test:
-        recordings_artifact: test_recordings
-        supervisions_artifact: test_supervisions
+        artifacts:
+          recordings:
+            - test_recordings
+          supervisions:
+            - test_supervisions
         statistics:
           recordings: 28648
           supervisions: 28648
@@ -150,7 +159,7 @@
         cross_split_ids_texts_speakers_semantic_groups: disjoint
         test_audio_existence_nonempty: verified
         waveform_content_human_review: false
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: police_v6_8h
     version: icefall-20260908
     languages:
@@ -220,8 +229,11 @@
         sha256: 1e5f93d8cc8240819e5e7ae9b460cf87e904d8d262cbe3facd2802f7e7468399
     splits:
       train:
-        recordings_artifact: train_recordings
-        supervisions_artifact: train_supervisions
+        artifacts:
+          recordings:
+            - train_recordings
+          supervisions:
+            - train_supervisions
         statistics:
           recordings: 231090
           supervisions: 231090
@@ -238,11 +250,12 @@
             媒体配置: 32904
             AI求助标记打点: 16045
             预录延录: 32228
-        icefall:
-          use_punc: false
       dev:
-        recordings_artifact: dev_recordings
-        supervisions_artifact: dev_supervisions
+        artifacts:
+          recordings:
+            - dev_recordings
+          supervisions:
+            - dev_supervisions
         statistics:
           recordings: 23428
           supervisions: 23428
@@ -259,11 +272,12 @@
             媒体配置: 3672
             AI求助标记打点: 1294
             查询系统工具: 8425
-        icefall:
-          use_punc: false
       test:
-        recordings_artifact: test_recordings
-        supervisions_artifact: test_supervisions
+        artifacts:
+          recordings:
+            - test_recordings
+          supervisions:
+            - test_supervisions
         statistics:
           recordings: 28648
           supervisions: 28648
@@ -280,15 +294,11 @@
             媒体配置: 3776
             AI求助标记打点: 2031
             预录延录: 2883
-        icefall:
-          use_punc: false
     recipe_parameters:
       tts_provider: qwen3_tts
       sample_rate: 16000
       channels: 1
       quality: automatic semantic review and ASR/slot QC; preserve source annotations and QC metadata
-      icefall:
-        language: zh
     provenance:
       source_dataset_id: police_v6_8h
       source_version: v6-8h-20260915

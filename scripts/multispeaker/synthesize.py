@@ -89,7 +89,7 @@ def prepare_source(source, recipe, catalog_path, roots_path, destination):
     def artifacts(kind):
         names = source.get(kind[:-1] + '_artifacts')
         if names is None:
-            names = split.get(kind + '_artifacts') or [split[kind + '_artifact']]
+            names = split.artifacts[kind]
         return [resolve_artifact(catalog, spec.dataset_id, spec.version, name, roots)
                 for name in names]
 
@@ -629,10 +629,10 @@ def publish(output, recipe, completed, requested, status, started):
                 'root_alias': 'multispeaker_synthetic', 'relative_path': str(index_path.relative_to(output)),
                 'metadata': {'record_count': records},
                 **({'sha256': digest_file(index_path)} if status == 'complete' else {})})
-            splits[split] = {'records_artifacts': names, 'audio_index_artifact': index_name,
+            splits[split] = {'artifacts': {'records': names, 'audio_index': [index_name]},
                 'statistics': {'records': records, 'duration_hours': sum(item['duration_hours'] for item in selected),
                                'duration_basis': 'Rendered mixture duration; source speech counted once per output timeline'}}
-    spec = {'schema_version': 'dataset-catalog/1.0', 'dataset_id': recipe['dataset_id'],
+    spec = {'schema_version': 'dataset-catalog/2.0', 'dataset_id': recipe['dataset_id'],
         'version': recipe['version'], 'languages': list(recipe.get('language_modes', ['zh', 'en'])), 'tasks': ['speaker_attributed_asr'],
         'artifacts': artifacts, 'splits': splits, 'recipe_parameters': recipe,
         'provenance': {'synthetic': True, 'status': status, 'source_manifest_audit': 'sources.json',

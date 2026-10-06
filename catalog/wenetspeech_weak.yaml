@@ -1,4 +1,4 @@
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: wenetspeech
     version: weak-source-20260904
     languages:
@@ -25,8 +25,11 @@
           record_count: 3222760
     splits:
       train:
-        recordings_artifact: train_recordings
-        supervisions_artifact: train_supervisions
+        artifacts:
+          recordings:
+            - train_recordings
+          supervisions:
+            - train_supervisions
         statistics:
           recordings: 58511
           supervisions: 3222760
@@ -40,7 +43,7 @@
       confidence_range:
         - 0.6
         - 0.95
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: wenetspeech
     version: clean-weak-v1-20260904
     languages:
@@ -80,9 +83,13 @@
           punctuated: true
     splits:
       train:
-        recordings_artifact: train_recordings
-        supervisions_artifact: train_supervisions
-        punctuated_supervisions_artifact: train_supervisions_punc
+        artifacts:
+          recordings:
+            - train_recordings
+          supervisions:
+            - train_supervisions
+          punctuated_supervisions:
+            - train_supervisions_punc
         statistics:
           recordings: 58511
           supervisions: 3222760

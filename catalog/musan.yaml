@@ -1,4 +1,4 @@
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: musan
     version: legacy-20260804
     languages:
@@ -17,9 +17,13 @@
         root_alias: legacy_asr
     splits:
       music:
-        recordings_artifact: music_recordings
+        artifacts:
+          recordings:
+            - music_recordings
       noise:
-        recordings_artifact: noise_recordings
+        artifacts:
+          recordings:
+            - noise_recordings
     provenance:
       snapshot_date: '2026-08-07'
       source: AmphionASR augmentation registry

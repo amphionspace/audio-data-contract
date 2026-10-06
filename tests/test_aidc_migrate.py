@@ -217,12 +217,12 @@ def test_end_to_end_registry_uses_only_destination_audio(tmp_path):
     views = tmp_path / 'views'
     views.mkdir()
     write_declarations(views / 'empty.yaml', [])
-    spec = {'schema_version': 'dataset-catalog/1.0', 'dataset_id': 'example', 'version': 'v1',
+    spec = {'schema_version': 'dataset-catalog/2.0', 'dataset_id': 'example', 'version': 'v1',
             'languages': ['en'], 'tasks': ['asr'], 'artifacts': [
                 {'name': 'recordings', 'kind': 'lhotse-recordings', 'root_alias': 'local', 'relative_path': recordings.name,
                  'sha256': digest(recordings), 'expected_bytes': recordings.stat().st_size},
                 {'name': 'audio_index', 'kind': 'audio-index', 'root_alias': 'local', 'relative_path': audio_index.name}],
-            'splits': {'test': {'recordings_artifact': 'recordings', 'audio_index_artifact': 'audio_index'}}}
+            'splits': {'test': {'artifacts': {'recordings': ['recordings'], 'audio_index': ['audio_index']}}}}
     write_declarations(declarations / 'example.yaml', [spec])
     roots_file = tmp_path / 'roots.json'
     roots_file.write_text(json.dumps({'local': str(source)}))

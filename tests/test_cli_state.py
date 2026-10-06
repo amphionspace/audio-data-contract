@@ -33,7 +33,7 @@ def test_verify_artifact_cli(tmp_path, capsys):
     catalog_path.write_text(
         json.dumps(
             {
-                "schema_version": "dataset-catalog/1.0",
+                "schema_version": "dataset-catalog/2.0",
                 "dataset_id": "demo",
                 "version": "1",
                 "languages": ["en"],
@@ -49,7 +49,7 @@ def test_verify_artifact_cli(tmp_path, capsys):
                         "metadata": {"record_count": 1},
                     }
                 ],
-                "splits": {"train": {"supervisions_artifact": "records"}},
+                "splits": {"train": {"artifacts": {"supervisions": ["records"]}}},
             }
         )
         + "\n",

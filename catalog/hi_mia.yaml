@@ -1,4 +1,4 @@
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: hi_mia
     version: openslr-85-test-v2
     languages:
@@ -69,12 +69,19 @@
         relative_path: downloads/speaker-expansion-20260911/hi_mia/state.json
     splits:
       train:
-        source_archive_artifact: train_archive
+        artifacts:
+          source_archive:
+            - train_archive
       dev:
-        source_archive_artifact: dev_archive
+        artifacts:
+          source_archive:
+            - dev_archive
       test:
-        source_archive_artifact: test_archive
-        source_split: test_v2
+        artifacts:
+          source_archive:
+            - test_archive
+        provenance:
+          source_split: test_v2
     provenance:
       source: OpenSLR
       url: https://www.openslr.org/85/
@@ -90,7 +97,7 @@
       verification_report:
         root_alias: legacy_asr
         relative_path: downloads/speaker-expansion-20260911/hi_mia/published-inventory.json
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: hi_mia
     version: speaker-records-v1-20260912
     languages:
@@ -200,41 +207,56 @@
         metadata: {}
     splits:
       test:
-        records_artifact: test
-        audio_index_artifact: audio_index
+        artifacts:
+          records:
+            - test
+          audio_index:
+            - audio_index
         statistics:
           records: 165120
           duration_hours: 55.329345638702975
           duration_basis: sum of measured audio durations; one session per diarization record
           speakers: 44
       dev:
-        records_artifact: dev
-        audio_index_artifact: audio_index
+        artifacts:
+          records:
+            - dev
+          audio_index:
+            - audio_index
         statistics:
           records: 164640
           duration_hours: 61.01240538045467
           duration_basis: sum of measured audio durations; one session per diarization record
           speakers: 42
       train:
-        records_artifact: train
-        audio_index_artifact: audio_index
+        artifacts:
+          records:
+            - train
+          audio_index:
+            - audio_index
         statistics:
           records: 993083
           duration_hours: 417.22766799023634
           duration_basis: sum of measured audio durations; one session per diarization record
           speakers: 254
       test_trials_1m:
+        artifacts:
+          records:
+            - test_trials_1m
+          audio_index:
+            - audio_index
         group: test
         task: speaker_verification
-        records_artifact: test_trials_1m
-        audio_index_artifact: audio_index
         statistics:
           records: 225040
       test_trials_mic:
+        artifacts:
+          records:
+            - test_trials_mic
+          audio_index:
+            - audio_index
         group: test
         task: speaker_verification
-        records_artifact: test_trials_mic
-        audio_index_artifact: audio_index
         statistics:
           records: 224976
     recipe_parameters:

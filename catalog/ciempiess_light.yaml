@@ -1,4 +1,4 @@
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: ciempiess_light
     version: hf-3d6afb2b3b8d
     languages:
@@ -17,7 +17,9 @@
         relative_path: downloads/language-expansion-20260911/ciempiess_light/state.json
     splits:
       train:
-        source_artifact: source
+        artifacts:
+          source:
+            - source
         statistics:
           count: 16663
           duration_hours: 18.42401555557218

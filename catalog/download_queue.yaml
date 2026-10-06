@@ -1,4 +1,4 @@
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: aishell5
     version: '1.0'
     languages:
@@ -36,19 +36,27 @@
         expected_bytes: 13361773095
     splits:
       train:
-        source_archive_artifact: train_archive
+        artifacts:
+          source_archive:
+            - train_archive
       dev:
-        source_archive_artifact: dev_archive
+        artifacts:
+          source_archive:
+            - dev_archive
       eval1:
-        source_archive_artifact: eval1_archive
+        artifacts:
+          source_archive:
+            - eval1_archive
       eval2:
-        source_archive_artifact: eval2_archive
+        artifacts:
+          source_archive:
+            - eval2_archive
     provenance:
       source: OpenSLR
       source_id: SLR159
       url: https://www.openslr.org/159/
       inventory_status: download_planned
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: common-voice-en
     version: '26.0'
     languages:
@@ -65,7 +73,9 @@
         relative_path: common-voice-en/26.0/downloads/common-voice-scripted-speech-26-0-englis-c84784ae.tar.gz
     splits:
       all:
-        source_archive_artifact: source_archive
+        artifacts:
+          source_archive:
+            - source_archive
     provenance:
       source: Mozilla Data Collective
       source_id: cmqim2hn800ssnr07gvmpcnwu
@@ -73,7 +83,7 @@
       url: https://mozilladatacollective.com/datasets/cmqim2hn800ssnr07gvmpcnwu
       dataset_family: common_voice_en
       inventory_status: download_planned
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: common-voice-zh-cn
     version: '26.0'
     languages:
@@ -90,7 +100,9 @@
         relative_path: common-voice-zh-cn/26.0/downloads/common-voice-scripted-speech-26-0-chines-18e98647.tar.gz
     splits:
       all:
-        source_archive_artifact: source_archive
+        artifacts:
+          source_archive:
+            - source_archive
     provenance:
       source: Mozilla Data Collective
       source_id: cmqim47x700tunq074za20dq1
@@ -98,7 +110,7 @@
       url: https://mozilladatacollective.com/datasets/cmqim47x700tunq074za20dq1
       dataset_family: common_voice_zh
       inventory_status: download_planned
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: common-voice-zh-hk
     version: '26.0'
     languages:
@@ -114,7 +126,9 @@
         relative_path: common-voice-zh-hk/26.0/downloads/common-voice-scripted-speech-26-0-chines-0240e64b.tar.gz
     splits:
       all:
-        source_archive_artifact: source_archive
+        artifacts:
+          source_archive:
+            - source_archive
     provenance:
       source: Mozilla Data Collective
       source_id: cmqinoe3p00wonr07fumnrmtg
@@ -122,7 +136,7 @@
       url: https://mozilladatacollective.com/datasets/cmqinoe3p00wonr07fumnrmtg
       dataset_family: common_voice_zh_hk
       inventory_status: download_planned
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: common-voice-yue
     version: '26.0'
     languages:
@@ -138,7 +152,9 @@
         relative_path: common-voice-yue/26.0/downloads/common-voice-scripted-speech-26-0-canton-3bc2b1fd.tar.gz
     splits:
       all:
-        source_archive_artifact: source_archive
+        artifacts:
+          source_archive:
+            - source_archive
     provenance:
       source: Mozilla Data Collective
       source_id: cmqinjd7x00vynq07pwzo3lmp
@@ -146,7 +162,7 @@
       url: https://mozilladatacollective.com/datasets/cmqinjd7x00vynq07pwzo3lmp
       dataset_family: common_voice_yue
       inventory_status: download_planned
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: gigaspeech2
     version: hf-8dc0d0e502b7
     languages:
@@ -164,18 +180,24 @@
         relative_path: GigaSpeech2
     splits:
       id:
-        snapshot_artifact: local_snapshot
+        artifacts:
+          snapshot:
+            - local_snapshot
       th:
-        snapshot_artifact: local_snapshot
+        artifacts:
+          snapshot:
+            - local_snapshot
       vi:
-        snapshot_artifact: local_snapshot
+        artifacts:
+          snapshot:
+            - local_snapshot
     provenance:
       source: Hugging Face
       source_id: speechcolab/gigaspeech2
       revision: 8dc0d0e502b7e6d5649a13cd4b677cf10c0b21e3
       url: https://huggingface.co/datasets/speechcolab/gigaspeech2
       inventory_status: download_planned
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: granary
     version: hf-0fe23a860e35
     languages:
@@ -191,14 +213,16 @@
         relative_path: granary/hf-0fe23a860e35/downloads
     splits:
       all:
-        snapshot_artifact: snapshot
+        artifacts:
+          snapshot:
+            - snapshot
     provenance:
       source: Hugging Face
       source_id: nvidia/Granary
       revision: 0fe23a860e3570b111e79a05ebeefc53822161e2
       url: https://huggingface.co/datasets/nvidia/Granary
       inventory_status: download_planned
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: omnilingual-asr-corpus
     version: hf-8648ba894637
     languages:
@@ -214,14 +238,16 @@
         relative_path: omnilingual-asr-corpus/hf-8648ba894637/downloads
     splits:
       all:
-        snapshot_artifact: snapshot
+        artifacts:
+          snapshot:
+            - snapshot
     provenance:
       source: Hugging Face
       source_id: facebook/omnilingual-asr-corpus
       revision: 8648ba8946377697b427ae952076e49fc0e5e44d
       url: https://huggingface.co/datasets/facebook/omnilingual-asr-corpus
       inventory_status: download_planned
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: lemas
     version: hf-91f0c1b9a29f
     languages:
@@ -236,14 +262,16 @@
         relative_path: lemas/hf-91f0c1b9a29f/downloads
     splits:
       all:
-        snapshot_artifact: snapshot
+        artifacts:
+          snapshot:
+            - snapshot
     provenance:
       source: Hugging Face
       source_id: LEMAS-Project/LEMAS-Dataset-train
       revision: 91f0c1b9a29f8d1c5bad18182a43975255512cce
       url: https://huggingface.co/datasets/LEMAS-Project/LEMAS-Dataset-train
       inventory_status: download_planned
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: reazonspeech
     version: hf-0df78f991f6a
     languages:
@@ -259,7 +287,9 @@
         relative_path: reazonspeech/hf-0df78f991f6a/downloads
     splits:
       all:
-        snapshot_artifact: snapshot
+        artifacts:
+          snapshot:
+            - snapshot
     provenance:
       source: Hugging Face
       source_id: reazon-research/reazonspeech

@@ -13,13 +13,13 @@ ROOT = Path(__file__).parents[1]
 
 def _write_catalog(path):
     source = {
-        "schema_version": "dataset-catalog/1.0",
+        "schema_version": "dataset-catalog/2.0",
         "dataset_id": "demo",
         "version": "source-1",
         "languages": ["en"],
         "tasks": ["asr"],
         "artifacts": [],
-        "splits": {"train": {}},
+        "splits": {},
     }
     result = {
         **source,

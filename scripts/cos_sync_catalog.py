@@ -304,7 +304,7 @@ class Inventory:
                             ref = slot['ref']
                             spec = self.datasets.get((ref['dataset_id'], ref['version']))
                             split = spec.get('splits', {}).get(ref['split'], {}) if spec else {}
-                            if not split.get('audio_index_artifact'):
+                            if not split.get('artifacts', {}).get('audio_index'):
                                 issue(self.db, path, 'unresolved_audio_record_reference',
                                       ref['dataset_id'] + '@' + ref['version'] + ':' + ref['split'])
                     elif kind == 'sharegpt-jsonl':

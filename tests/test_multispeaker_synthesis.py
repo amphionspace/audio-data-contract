@@ -42,11 +42,11 @@ def test_prepare_filters_clean_flags_missing_speakers_and_invalid_bounds(tmp_pat
     examples += [{**examples[0], 'id': 'missing-speaker', 'speaker': None},
                  {**examples[0], 'id': 'outside', 'start': 1}]
     (tmp_path / 'supervisions.jsonl').write_text('\n'.join(map(json.dumps, examples)))
-    spec = {'schema_version': 'dataset-catalog/1.0', 'dataset_id': 'test', 'version': '1',
+    spec = {'schema_version': 'dataset-catalog/2.0', 'dataset_id': 'test', 'version': '1',
             'languages': ['zh'], 'tasks': ['asr'],
             'artifacts': [{'name': kind, 'kind': 'lhotse-' + kind, 'root_alias': 'test',
                            'relative_path': kind + '.jsonl'} for kind in ('recordings', 'supervisions')],
-            'splits': {'train': {'recordings_artifact': 'recordings', 'supervisions_artifact': 'supervisions'}}}
+            'splits': {'train': {'artifacts': {'recordings': ['recordings'], 'supervisions': ['supervisions']}}}}
     catalog, roots = tmp_path / 'catalog.jsonl', tmp_path / 'roots.json'
     catalog.write_text(json.dumps(spec) + '\n')
     roots.write_text(json.dumps({'test': str(tmp_path)}))
@@ -131,7 +131,7 @@ def test_render_preserves_every_speaker_turn_and_reconstructs_waveform(tmp_path,
     synthesis.publish(tmp_path, recipe, [summary], {'dev': 3}, 'complete', 0)
     catalog = load_catalog(tmp_path / 'catalog.jsonl')
     split = catalog.get(recipe['dataset_id'], recipe['version']).splits['dev']
-    assert 'audio_index_artifact' in split
+    assert 'audio_index' in split.artifacts
     assert len(list(synthesis.rows(tmp_path / 'indexes' / 'dev.jsonl.gz'))) == 3
 
 

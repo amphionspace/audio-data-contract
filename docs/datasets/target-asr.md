@@ -15,7 +15,7 @@ LibriMix 和 AISHELLMix 已按 `audio-record/1.0` 整理。训练框架只需读
 
 训练子集为 `train_1spk`、`train_2spk`、`train_3spk`，含负样本的版本另有 `train_neg`。测试子集为 `test_1spk`、`test_2mix`、`test_3mix`、`test_2mix_neg`、`test_3mix_neg`。当前训练脚本使用双人、三人及负样本；单人数据用于保留历史数据覆盖。
 
-`train`、`test` 是组合入口，`records_artifacts` 列出其子集。`train_base` 对应单人、双人、三人之和，不再生成一份重复的通用文件。转换会逐条核对组合文件的 ID、两路音频、转写、说话人数和负样本语义，并检查数量相等。
+`train`、`test` 是组合入口，`artifacts.records` 列出其子集。`train_base` 对应单人、双人、三人之和，不再生成一份重复的通用文件。转换会逐条核对组合文件的 ID、两路音频、转写、说话人数和负样本语义，并检查数量相等。
 
 源文件作为对应 `*-source-20260910` 版本的产物保留。历史路径登记的是转换时的现存字节，不能证明与过去实验运行时逐字节一致。上游历史处理链标记为推断；本次源快照到通用表示的转换记录为精确血缘。
 
@@ -32,7 +32,7 @@ LibriMix 和 AISHELLMix 已按 `audio-record/1.0` 整理。训练框架只需读
 
 ## 音频索引和路径
 
-每个通用版本的 catalog 包含 `audio_index` 产物。各 split 的 `audio_index_artifact` 指向它，`records_artifact` 或 `records_artifacts` 指向压缩 AudioRecord JSONL。
+每个通用版本的 catalog 包含 `audio_index` 产物。各 split 的 `artifacts.audio_index` 指向它，`artifacts.records` 指向压缩 AudioRecord JSONL。
 
 索引同样是压缩 JSONL，每行包含：
 

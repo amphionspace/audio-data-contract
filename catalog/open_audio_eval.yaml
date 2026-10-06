@@ -1,4 +1,4 @@
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: aishell
     version: eval-20260804
     languages:
@@ -17,8 +17,11 @@
         relative_path: LHOTSE/data_aishell/data/manifests/aishell_supervisions_test.jsonl.gz
     splits:
       test:
-        recordings_artifact: test_recordings
-        supervisions_artifact: test_supervisions
+        artifacts:
+          recordings:
+            - test_recordings
+          supervisions:
+            - test_supervisions
         statistics:
           duration_hours: 10.030255260416666
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:LHOTSE/data_aishell/data/manifests/aishell_supervisions_test.jsonl.gz'
@@ -26,7 +29,7 @@
       consumer: open-audio-llm-vllm-eval
       snapshot_date: '2026-08-04'
       loader_kind: single
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: aishell2
     version: eval-20260804
     languages:
@@ -45,8 +48,11 @@
         relative_path: LHOTSE/data_aishell2/data/manifests/aishell2_supervisions_test.jsonl.gz
     splits:
       test:
-        recordings_artifact: test_recordings
-        supervisions_artifact: test_supervisions
+        artifacts:
+          recordings:
+            - test_recordings
+          supervisions:
+            - test_supervisions
         statistics:
           duration_hours: 4.004922013888889
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:LHOTSE/data_aishell2/data/manifests/aishell2_supervisions_test.jsonl.gz'
@@ -54,7 +60,7 @@
       consumer: open-audio-llm-vllm-eval
       snapshot_date: '2026-08-04'
       loader_kind: single
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: aishell3
     version: eval-20260804
     languages:
@@ -73,8 +79,11 @@
         relative_path: LHOTSE/data_aishell3/data/manifests/aishell3_supervisions_test.jsonl.gz
     splits:
       test:
-        recordings_artifact: test_recordings
-        supervisions_artifact: test_supervisions
+        artifacts:
+          recordings:
+            - test_recordings
+          supervisions:
+            - test_supervisions
         statistics:
           duration_hours: 22.445452006290942
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:LHOTSE/data_aishell3/data/manifests/aishell3_supervisions_test.jsonl.gz'
@@ -82,7 +91,7 @@
       consumer: open-audio-llm-vllm-eval
       snapshot_date: '2026-08-04'
       loader_kind: single
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: magicdata
     version: eval-20260804
     languages:
@@ -101,8 +110,11 @@
         relative_path: LHOTSE/MAGICDATA/data/manifests/magicdata_supervisions_test.jsonl.gz
     splits:
       test:
-        recordings_artifact: test_recordings
-        supervisions_artifact: test_supervisions
+        artifacts:
+          recordings:
+            - test_recordings
+          supervisions:
+            - test_supervisions
         statistics:
           duration_hours: 28.06071927083333
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:LHOTSE/MAGICDATA/data/manifests/magicdata_supervisions_test.jsonl.gz'
@@ -110,7 +122,7 @@
       consumer: open-audio-llm-vllm-eval
       snapshot_date: '2026-08-04'
       loader_kind: single
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: kespeech
     version: eval-20260804
     languages:
@@ -129,8 +141,11 @@
         relative_path: LHOTSE/KeSpeech/data/manifests/kespeech-asr_supervisions_test.jsonl.gz
     splits:
       test:
-        recordings_artifact: test_recordings
-        supervisions_artifact: test_supervisions
+        artifacts:
+          recordings:
+            - test_recordings
+          supervisions:
+            - test_supervisions
         statistics:
           duration_hours: 31.07248918402778
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:LHOTSE/KeSpeech/data/manifests/kespeech-asr_supervisions_test.jsonl.gz'
@@ -138,7 +153,7 @@
       consumer: open-audio-llm-vllm-eval
       snapshot_date: '2026-08-04'
       loader_kind: single
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: thchs30
     version: eval-20260804
     languages:
@@ -157,8 +172,11 @@
         relative_path: LHOTSE/data_thchs30/data/manifests/thchs_30_supervisions_test.jsonl.gz
     splits:
       test:
-        recordings_artifact: test_recordings
-        supervisions_artifact: test_supervisions
+        artifacts:
+          recordings:
+            - test_recordings
+          supervisions:
+            - test_supervisions
         statistics:
           duration_hours: 6.311416111111112
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:LHOTSE/data_thchs30/data/manifests/thchs_30_supervisions_test.jsonl.gz'
@@ -166,7 +184,7 @@
       consumer: open-audio-llm-vllm-eval
       snapshot_date: '2026-08-04'
       loader_kind: single
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: talcs
     version: eval-20260804
     languages:
@@ -185,8 +203,11 @@
         relative_path: LHOTSE/TALCS/data/manifests/talcs_supervisions_test_cleaned.jsonl.gz
     splits:
       test:
-        recordings_artifact: test_recordings
-        supervisions_artifact: test_supervisions
+        artifacts:
+          recordings:
+            - test_recordings
+          supervisions:
+            - test_supervisions
         statistics:
           duration_hours: 23.62268777777778
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:LHOTSE/TALCS/data/manifests/talcs_supervisions_test_cleaned.jsonl.gz'
@@ -194,7 +215,7 @@
       consumer: open-audio-llm-vllm-eval
       snapshot_date: '2026-08-04'
       loader_kind: single
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: gigaspeech
     version: eval-20260804
     languages:
@@ -213,8 +234,11 @@
         relative_path: LHOTSE/GigaSpeech/data/manifests/gigaspeech_supervisions_TEST.jsonl.gz
     splits:
       test:
-        recordings_artifact: test_recordings
-        supervisions_artifact: test_supervisions
+        artifacts:
+          recordings:
+            - test_recordings
+          supervisions:
+            - test_supervisions
         statistics:
           duration_hours: 40.3317025
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:LHOTSE/GigaSpeech/data/manifests/gigaspeech_supervisions_TEST.jsonl.gz'
@@ -222,7 +246,7 @@
       consumer: open-audio-llm-vllm-eval
       snapshot_date: '2026-08-04'
       loader_kind: single
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: mls
     version: eval-20260804
     languages:
@@ -241,8 +265,11 @@
         relative_path: LHOTSE/MLS/data/manifests/mls-english_supervisions_test.jsonl.gz
     splits:
       test:
-        recordings_artifact: test_recordings
-        supervisions_artifact: test_supervisions
+        artifacts:
+          recordings:
+            - test_recordings
+          supervisions:
+            - test_supervisions
         statistics:
           duration_hours: 15.548358420138888
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:LHOTSE/MLS/data/manifests/mls-english_supervisions_test.jsonl.gz'
@@ -250,7 +277,7 @@
       consumer: open-audio-llm-vllm-eval
       snapshot_date: '2026-08-04'
       loader_kind: single
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: commonvoice_en
     version: eval-20260804
     languages:
@@ -273,9 +300,13 @@
         relative_path: LHOTSE/common_voice_en/data/manifests/cv-en_supervisions_test_orig_punc.jsonl.gz
     splits:
       test:
-        recordings_artifact: test_recordings
-        supervisions_artifact: test_supervisions
-        supervisions_punc_artifact: test_supervisions_punc
+        artifacts:
+          recordings:
+            - test_recordings
+          supervisions:
+            - test_supervisions
+          punctuated_supervisions:
+            - test_supervisions_punc
         statistics:
           duration_hours: 27.199661217698885
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:LHOTSE/common_voice_en/data/manifests/cv-en_supervisions_test_cleaned.jsonl.gz'
@@ -284,7 +315,7 @@
       snapshot_date: '2026-08-04'
       loader_kind: single
       dataset_family: common_voice_en
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: commonvoice_zh
     version: eval-20260804
     languages:
@@ -303,8 +334,11 @@
         relative_path: LHOTSE/common_voice_zh/data/manifests/cv-zh-CN_supervisions_test.jsonl.gz
     splits:
       test:
-        recordings_artifact: test_recordings
-        supervisions_artifact: test_supervisions
+        artifacts:
+          recordings:
+            - test_recordings
+          supervisions:
+            - test_supervisions
         statistics:
           duration_hours: 17.45736208311681
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:LHOTSE/common_voice_zh/data/manifests/cv-zh-CN_supervisions_test.jsonl.gz'
@@ -313,7 +347,7 @@
       snapshot_date: '2026-08-04'
       loader_kind: single
       dataset_family: common_voice_zh
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: commonvoice_en_hotwords
     version: eval-20260804
     languages:
@@ -332,8 +366,11 @@
         relative_path: common_voice_en/lhotse/hotwords/cv-en_supervisions_test_orig_punc_hotwords.jsonl.gz
     splits:
       test:
-        recordings_artifact: test_recordings
-        supervisions_artifact: test_supervisions
+        artifacts:
+          recordings:
+            - test_recordings
+          supervisions:
+            - test_supervisions
         statistics:
           duration_hours: 27.199661217698885
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:common_voice_en/lhotse/hotwords/cv-en_supervisions_test_orig_punc_hotwords.jsonl.gz'
@@ -342,7 +379,7 @@
       snapshot_date: '2026-08-04'
       loader_kind: single
       dataset_family: common_voice_en
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: commonvoice_zh_hotwords
     version: eval-20260804
     languages:
@@ -361,8 +398,11 @@
         relative_path: common_voice_zh/lhotse/hotwords/cv-zh-CN_supervisions_test_punc_hotwords.jsonl.gz
     splits:
       test:
-        recordings_artifact: test_recordings
-        supervisions_artifact: test_supervisions
+        artifacts:
+          recordings:
+            - test_recordings
+          supervisions:
+            - test_supervisions
         statistics:
           duration_hours: 17.45736208311681
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:common_voice_zh/lhotse/hotwords/cv-zh-CN_supervisions_test_punc_hotwords.jsonl.gz'
@@ -371,7 +411,7 @@
       snapshot_date: '2026-08-04'
       loader_kind: single
       dataset_family: common_voice_zh
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: aishell_hotwords
     version: eval-20260804
     languages:
@@ -390,8 +430,11 @@
         relative_path: data_aishell/lhotse/hotwords/aishell_supervisions_test_punc.jsonl.gz
     splits:
       test:
-        recordings_artifact: test_recordings
-        supervisions_artifact: test_supervisions
+        artifacts:
+          recordings:
+            - test_recordings
+          supervisions:
+            - test_supervisions
         statistics:
           duration_hours: 10.030255260416666
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:data_aishell/lhotse/hotwords/aishell_supervisions_test_punc.jsonl.gz'
@@ -400,7 +443,7 @@
       snapshot_date: '2026-08-04'
       loader_kind: single
       dataset_family: aishell
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: aishell2_hotwords
     version: eval-20260804
     languages:
@@ -419,8 +462,11 @@
         relative_path: data_aishell2/lhotse/hotwords/aishell2_supervisions_test_hotwords.jsonl.gz
     splits:
       test:
-        recordings_artifact: test_recordings
-        supervisions_artifact: test_supervisions
+        artifacts:
+          recordings:
+            - test_recordings
+          supervisions:
+            - test_supervisions
         statistics:
           duration_hours: 4.004922013888889
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:data_aishell2/lhotse/hotwords/aishell2_supervisions_test_hotwords.jsonl.gz'
@@ -429,7 +475,7 @@
       snapshot_date: '2026-08-04'
       loader_kind: single
       dataset_family: aishell2
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: aishell3_hotwords
     version: eval-20260804
     languages:
@@ -448,8 +494,11 @@
         relative_path: data_aishell3/lhotse/hotwords/aishell3_supervisions_test_punc_hotwords.jsonl.gz
     splits:
       test:
-        recordings_artifact: test_recordings
-        supervisions_artifact: test_supervisions
+        artifacts:
+          recordings:
+            - test_recordings
+          supervisions:
+            - test_supervisions
         statistics:
           duration_hours: 22.445452006290942
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:data_aishell3/lhotse/hotwords/aishell3_supervisions_test_punc_hotwords.jsonl.gz'
@@ -458,7 +507,7 @@
       snapshot_date: '2026-08-04'
       loader_kind: single
       dataset_family: aishell3
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: librispeech_test_clean_hotwords
     version: eval-20260804
     languages:
@@ -477,8 +526,11 @@
         relative_path: LHOTSE/LibriSpeech/data/manifests/librispeech_supervisions_test-clean_hotwords.jsonl.gz
     splits:
       test:
-        recordings_artifact: test_recordings
-        supervisions_artifact: test_supervisions
+        artifacts:
+          recordings:
+            - test_recordings
+          supervisions:
+            - test_supervisions
         statistics:
           duration_hours: 5.403466840277778
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:LHOTSE/LibriSpeech/data/manifests/librispeech_supervisions_test-clean_hotwords.jsonl.gz'
@@ -487,7 +539,7 @@
       snapshot_date: '2026-08-04'
       loader_kind: single
       dataset_family: librispeech
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: librispeech_test_other_hotwords
     version: eval-20260804
     languages:
@@ -506,8 +558,11 @@
         relative_path: LHOTSE/LibriSpeech/data/manifests/librispeech_supervisions_test-other_hotwords.jsonl.gz
     splits:
       test:
-        recordings_artifact: test_recordings
-        supervisions_artifact: test_supervisions
+        artifacts:
+          recordings:
+            - test_recordings
+          supervisions:
+            - test_supervisions
         statistics:
           duration_hours: 5.341547256944444
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:LHOTSE/LibriSpeech/data/manifests/librispeech_supervisions_test-other_hotwords.jsonl.gz'
@@ -516,7 +571,7 @@
       snapshot_date: '2026-08-04'
       loader_kind: single
       dataset_family: librispeech
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: librispeech
     version: eval-20260804
     languages:
@@ -543,18 +598,24 @@
         relative_path: LHOTSE/LibriSpeech/data/manifests/librispeech_supervisions_test-other.jsonl.gz
     splits:
       librispeech_test_clean:
+        artifacts:
+          recordings:
+            - librispeech_test_clean_recordings
+          supervisions:
+            - librispeech_test_clean_supervisions
         group: test
-        recordings_artifact: librispeech_test_clean_recordings
-        supervisions_artifact: librispeech_test_clean_supervisions
       librispeech_test_other:
+        artifacts:
+          recordings:
+            - librispeech_test_other_recordings
+          supervisions:
+            - librispeech_test_other_supervisions
         group: test
-        recordings_artifact: librispeech_test_other_recordings
-        supervisions_artifact: librispeech_test_other_supervisions
     provenance:
       consumer: open-audio-llm-vllm-eval
       snapshot_date: '2026-08-04'
       loader_kind: multi
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: wenetspeech
     version: eval-20260804
     languages:
@@ -581,18 +642,24 @@
         relative_path: LHOTSE/WenetSpeech/data/manifests/wenetspeech_supervisions_TEST_MEETING.jsonl.gz
     splits:
       wenetspeech_test_net:
+        artifacts:
+          recordings:
+            - wenetspeech_test_net_recordings
+          supervisions:
+            - wenetspeech_test_net_supervisions
         group: test
-        recordings_artifact: wenetspeech_test_net_recordings
-        supervisions_artifact: wenetspeech_test_net_supervisions
       wenetspeech_test_meeting:
+        artifacts:
+          recordings:
+            - wenetspeech_test_meeting_recordings
+          supervisions:
+            - wenetspeech_test_meeting_supervisions
         group: test
-        recordings_artifact: wenetspeech_test_meeting_recordings
-        supervisions_artifact: wenetspeech_test_meeting_supervisions
     provenance:
       consumer: open-audio-llm-vllm-eval
       snapshot_date: '2026-08-04'
       loader_kind: multi
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: librispeech_test_clean
     version: eval-20260804
     languages:
@@ -611,8 +678,11 @@
         relative_path: LHOTSE/LibriSpeech/data/manifests/librispeech_supervisions_test-clean.jsonl.gz
     splits:
       test:
-        recordings_artifact: test_recordings
-        supervisions_artifact: test_supervisions
+        artifacts:
+          recordings:
+            - test_recordings
+          supervisions:
+            - test_supervisions
         statistics:
           duration_hours: 5.403466840277778
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:LHOTSE/LibriSpeech/data/manifests/librispeech_supervisions_test-clean.jsonl.gz'
@@ -621,7 +691,7 @@
       snapshot_date: '2026-08-04'
       loader_kind: single
       dataset_family: librispeech
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: librispeech_test_other
     version: eval-20260804
     languages:
@@ -640,8 +710,11 @@
         relative_path: LHOTSE/LibriSpeech/data/manifests/librispeech_supervisions_test-other.jsonl.gz
     splits:
       test:
-        recordings_artifact: test_recordings
-        supervisions_artifact: test_supervisions
+        artifacts:
+          recordings:
+            - test_recordings
+          supervisions:
+            - test_supervisions
         statistics:
           duration_hours: 5.341547256944444
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:LHOTSE/LibriSpeech/data/manifests/librispeech_supervisions_test-other.jsonl.gz'
@@ -650,7 +723,7 @@
       snapshot_date: '2026-08-04'
       loader_kind: single
       dataset_family: librispeech
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: wenetspeech_test_net
     version: eval-20260804
     languages:
@@ -669,8 +742,11 @@
         relative_path: LHOTSE/WenetSpeech/data/manifests/wenetspeech_supervisions_TEST_NET.jsonl.gz
     splits:
       test:
-        recordings_artifact: test_recordings
-        supervisions_artifact: test_supervisions
+        artifacts:
+          recordings:
+            - test_recordings
+          supervisions:
+            - test_supervisions
         statistics:
           duration_hours: 23.056208333333334
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:LHOTSE/WenetSpeech/data/manifests/wenetspeech_supervisions_TEST_NET.jsonl.gz'
@@ -679,7 +755,7 @@
       snapshot_date: '2026-08-04'
       loader_kind: single
       dataset_family: wenetspeech
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: wenetspeech_test_meeting
     version: eval-20260804
     languages:
@@ -698,8 +774,11 @@
         relative_path: LHOTSE/WenetSpeech/data/manifests/wenetspeech_supervisions_TEST_MEETING.jsonl.gz
     splits:
       test:
-        recordings_artifact: test_recordings
-        supervisions_artifact: test_supervisions
+        artifacts:
+          recordings:
+            - test_recordings
+          supervisions:
+            - test_supervisions
         statistics:
           duration_hours: 15.18201111111111
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:LHOTSE/WenetSpeech/data/manifests/wenetspeech_supervisions_TEST_MEETING.jsonl.gz'
@@ -708,7 +787,7 @@
       snapshot_date: '2026-08-04'
       loader_kind: single
       dataset_family: wenetspeech
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: biic_podcast_ser
     version: eval-20260804
     languages:
@@ -727,8 +806,11 @@
         relative_path: LHOTSE/biic_podcast/data/manifests/biic_podcast_ser_supervisions_test.jsonl.gz
     splits:
       test:
-        recordings_artifact: test_recordings
-        supervisions_artifact: test_supervisions
+        artifacts:
+          recordings:
+            - test_recordings
+          supervisions:
+            - test_supervisions
         statistics:
           duration_hours: 22.580983315972222
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_ser:LHOTSE/biic_podcast/data/manifests/biic_podcast_ser_supervisions_test.jsonl.gz'
@@ -736,7 +818,7 @@
       consumer: open-audio-llm-vllm-eval
       snapshot_date: '2026-08-04'
       loader_kind: single
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: m3ed_ser
     version: eval-20260804
     languages:
@@ -755,8 +837,11 @@
         relative_path: LHOTSE/m3ed/data/manifests/m3ed_ser_supervisions_test.jsonl.gz
     splits:
       test:
-        recordings_artifact: test_recordings
-        supervisions_artifact: test_supervisions
+        artifacts:
+          recordings:
+            - test_recordings
+          supervisions:
+            - test_supervisions
         statistics:
           duration_hours: 1.691794878472222
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_ser:LHOTSE/m3ed/data/manifests/m3ed_ser_supervisions_test.jsonl.gz'
@@ -764,7 +849,7 @@
       consumer: open-audio-llm-vllm-eval
       snapshot_date: '2026-08-04'
       loader_kind: single
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: meld_ser
     version: eval-20260804
     languages:
@@ -783,8 +868,11 @@
         relative_path: LHOTSE/meld/data/manifests/meld_ser_supervisions_test.jsonl.gz
     splits:
       test:
-        recordings_artifact: test_recordings
-        supervisions_artifact: test_supervisions
+        artifacts:
+          recordings:
+            - test_recordings
+          supervisions:
+            - test_supervisions
         statistics:
           duration_hours: 2.3218382653061225
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_ser:LHOTSE/meld/data/manifests/meld_ser_supervisions_test.jsonl.gz'
@@ -792,7 +880,7 @@
       consumer: open-audio-llm-vllm-eval
       snapshot_date: '2026-08-04'
       loader_kind: single
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: iemocap_ser
     version: eval-20260804
     languages:
@@ -811,8 +899,11 @@
         relative_path: LHOTSE/iemocap/data/manifests/iemocap_ser_supervisions_test.jsonl.gz
     splits:
       test:
-        recordings_artifact: test_recordings
-        supervisions_artifact: test_supervisions
+        artifacts:
+          recordings:
+            - test_recordings
+          supervisions:
+            - test_supervisions
         statistics:
           duration_hours: 1.5457552777777779
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_ser:LHOTSE/iemocap/data/manifests/iemocap_ser_supervisions_test.jsonl.gz'
@@ -820,7 +911,7 @@
       consumer: open-audio-llm-vllm-eval
       snapshot_date: '2026-08-04'
       loader_kind: single
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: msp_podcast_ser
     version: eval-20260804
     languages:
@@ -847,18 +938,24 @@
         relative_path: LHOTSE/msp_podcast/data/manifests/msp_podcast_ser_supervisions_test2.jsonl.gz
     splits:
       msp_podcast_test1:
-        recordings_artifact: msp_podcast_test1_recordings
-        supervisions_artifact: msp_podcast_test1_supervisions
+        artifacts:
+          recordings:
+            - msp_podcast_test1_recordings
+          supervisions:
+            - msp_podcast_test1_supervisions
         group: test
       msp_podcast_test2:
-        recordings_artifact: msp_podcast_test2_recordings
-        supervisions_artifact: msp_podcast_test2_supervisions
+        artifacts:
+          recordings:
+            - msp_podcast_test2_recordings
+          supervisions:
+            - msp_podcast_test2_supervisions
         group: test
     provenance:
       consumer: open-audio-llm-vllm-eval
       snapshot_date: '2026-08-04'
       loader_kind: multi
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: emotion1200_en_ser
     version: eval-20260804
     languages:
@@ -877,8 +974,11 @@
         relative_path: LHOTSE/emotion1200_en/data/manifests/emotion1200_en_ser_supervisions_test.jsonl.gz
     splits:
       test:
-        recordings_artifact: test_recordings
-        supervisions_artifact: test_supervisions
+        artifacts:
+          recordings:
+            - test_recordings
+          supervisions:
+            - test_supervisions
         statistics:
           duration_hours: 5.175772291666666
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_ser:LHOTSE/emotion1200_en/data/manifests/emotion1200_en_ser_supervisions_test.jsonl.gz'
@@ -887,7 +987,7 @@
       snapshot_date: '2026-08-04'
       loader_kind: single
       dataset_family: emotion1200_en
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: emotion1200_zh_ser
     version: eval-20260804
     languages:
@@ -906,8 +1006,11 @@
         relative_path: LHOTSE/emotion1200_zh/data/manifests/emotion1200_zh_ser_supervisions_test.jsonl.gz
     splits:
       test:
-        recordings_artifact: test_recordings
-        supervisions_artifact: test_supervisions
+        artifacts:
+          recordings:
+            - test_recordings
+          supervisions:
+            - test_supervisions
         statistics:
           duration_hours: 4.877483333333333
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_ser:LHOTSE/emotion1200_zh/data/manifests/emotion1200_zh_ser_supervisions_test.jsonl.gz'
@@ -916,7 +1019,7 @@
       snapshot_date: '2026-08-04'
       loader_kind: single
       dataset_family: emotion1200_zh
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: emotion1200_en_sec
     version: eval-20260804
     languages:
@@ -935,8 +1038,11 @@
         relative_path: LHOTSE/emotion1200_en_sec/data/manifests/emotion1200_en_sec_supervisions_test.jsonl.gz
     splits:
       test:
-        recordings_artifact: test_recordings
-        supervisions_artifact: test_supervisions
+        artifacts:
+          recordings:
+            - test_recordings
+          supervisions:
+            - test_supervisions
         statistics:
           duration_hours: 5.175772291666666
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_ser:LHOTSE/emotion1200_en_sec/data/manifests/emotion1200_en_sec_supervisions_test.jsonl.gz'
@@ -945,7 +1051,7 @@
       snapshot_date: '2026-08-04'
       loader_kind: single
       dataset_family: emotion1200_en
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: emotion1200_zh_sec
     version: eval-20260804
     languages:
@@ -964,8 +1070,11 @@
         relative_path: LHOTSE/emotion1200_zh_sec/data/manifests/emotion1200_zh_sec_supervisions_test.jsonl.gz
     splits:
       test:
-        recordings_artifact: test_recordings
-        supervisions_artifact: test_supervisions
+        artifacts:
+          recordings:
+            - test_recordings
+          supervisions:
+            - test_supervisions
         statistics:
           duration_hours: 4.877483333333333
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_ser:LHOTSE/emotion1200_zh_sec/data/manifests/emotion1200_zh_sec_supervisions_test.jsonl.gz'
@@ -974,7 +1083,7 @@
       snapshot_date: '2026-08-04'
       loader_kind: single
       dataset_family: emotion1200_zh
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: emotion1200_en_sepc
     version: eval-20260804
     languages:
@@ -993,8 +1102,11 @@
         relative_path: LHOTSE/emotion1200_en_sepc/data/manifests/emotion1200_en_sepc_supervisions_test.jsonl.gz
     splits:
       test:
-        recordings_artifact: test_recordings
-        supervisions_artifact: test_supervisions
+        artifacts:
+          recordings:
+            - test_recordings
+          supervisions:
+            - test_supervisions
         statistics:
           duration_hours: 5.175772291666666
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_ser:LHOTSE/emotion1200_en_sepc/data/manifests/emotion1200_en_sepc_supervisions_test.jsonl.gz'
@@ -1003,7 +1115,7 @@
       snapshot_date: '2026-08-04'
       loader_kind: single
       dataset_family: emotion1200_en
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: emotion1200_zh_sepc
     version: eval-20260804
     languages:
@@ -1022,8 +1134,11 @@
         relative_path: LHOTSE/emotion1200_zh_sepc/data/manifests/emotion1200_zh_sepc_supervisions_test.jsonl.gz
     splits:
       test:
-        recordings_artifact: test_recordings
-        supervisions_artifact: test_supervisions
+        artifacts:
+          recordings:
+            - test_recordings
+          supervisions:
+            - test_supervisions
         statistics:
           duration_hours: 4.877483333333333
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_ser:LHOTSE/emotion1200_zh_sepc/data/manifests/emotion1200_zh_sepc_supervisions_test.jsonl.gz'
@@ -1032,7 +1147,7 @@
       snapshot_date: '2026-08-04'
       loader_kind: single
       dataset_family: emotion1200_zh
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: libri2mix_tsstyle
     version: eval-20260804
     languages:
@@ -1047,7 +1162,9 @@
         relative_path: cuts/libri2mix_tsstyle_cuts.jsonl.gz
     splits:
       test:
-        cuts_artifact: test_cuts
+        artifacts:
+          cuts:
+            - test_cuts
         statistics:
           duration_hours: 11.199567103333335
           duration_basis: 'sum of cuts durations; overlapping segments may count speech more than once; sources: legacy_mix_tsstyle:cuts/libri2mix_tsstyle_cuts.jsonl.gz'
@@ -1056,7 +1173,7 @@
       snapshot_date: '2026-08-04'
       loader_kind: cuts_file
       dataset_family: libri2mix
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: libri3mix_tsstyle
     version: eval-20260804
     languages:
@@ -1071,7 +1188,9 @@
         relative_path: cuts/libri3mix_tsstyle_cuts.jsonl.gz
     splits:
       test:
-        cuts_artifact: test_cuts
+        artifacts:
+          cuts:
+            - test_cuts
         statistics:
           duration_hours: 16.336659259444446
           duration_basis: 'sum of cuts durations; overlapping segments may count speech more than once; sources: legacy_mix_tsstyle:cuts/libri3mix_tsstyle_cuts.jsonl.gz'
@@ -1080,7 +1199,7 @@
       snapshot_date: '2026-08-04'
       loader_kind: cuts_file
       dataset_family: libri3mix
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: ts_hw_test_libristyle
     version: eval-20260804
     languages:
@@ -1096,7 +1215,9 @@
         relative_path: cuts/ts_hw_test_libristyle_cuts.jsonl.gz
     splits:
       test:
-        cuts_artifact: test_cuts
+        artifacts:
+          cuts:
+            - test_cuts
         statistics:
           duration_hours: 7.707681028055555
           duration_basis: 'sum of cuts durations; overlapping segments may count speech more than once; sources: legacy_mix_tsstyle:cuts/ts_hw_test_libristyle_cuts.jsonl.gz'
@@ -1105,7 +1226,7 @@
       snapshot_date: '2026-08-04'
       loader_kind: cuts_file
       dataset_family: ts_hw_test
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: libri2mix_lib
     version: eval-20260804
     languages:
@@ -1120,7 +1241,9 @@
         relative_path: output_librimix_libristyle/libri2mix/libri2mix_lib_cuts.jsonl.gz
     splits:
       test:
-        cuts_artifact: test_cuts
+        artifacts:
+          cuts:
+            - test_cuts
         statistics:
           duration_hours: 8.374322676111111
           duration_basis: 'sum of cuts durations; overlapping segments may count speech more than once; sources: legacy_mix_tsstyle:output_librimix_libristyle/libri2mix/libri2mix_lib_cuts.jsonl.gz'
@@ -1129,7 +1252,7 @@
       snapshot_date: '2026-08-04'
       loader_kind: cuts_file
       dataset_family: libri2mix
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: libri3mix_lib
     version: eval-20260804
     languages:
@@ -1144,7 +1267,9 @@
         relative_path: output_librimix_libristyle/libri3mix/libri3mix_lib_cuts.jsonl.gz
     splits:
       test:
-        cuts_artifact: test_cuts
+        artifacts:
+          cuts:
+            - test_cuts
         statistics:
           duration_hours: 10.889554794166665
           duration_basis: 'sum of cuts durations; overlapping segments may count speech more than once; sources: legacy_mix_tsstyle:output_librimix_libristyle/libri3mix/libri3mix_lib_cuts.jsonl.gz'
@@ -1153,7 +1278,7 @@
       snapshot_date: '2026-08-04'
       loader_kind: cuts_file
       dataset_family: libri3mix
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: libri2mix_snrp5
     version: eval-20260804
     languages:
@@ -1168,7 +1293,9 @@
         relative_path: output_librimix_libristyle/libri2mix_snrp5/libri2mix_lib_snrp5_cuts.jsonl.gz
     splits:
       test:
-        cuts_artifact: test_cuts
+        artifacts:
+          cuts:
+            - test_cuts
         statistics:
           duration_hours: 8.374322676111111
           duration_basis: 'sum of cuts durations; overlapping segments may count speech more than once; sources: legacy_mix_tsstyle:output_librimix_libristyle/libri2mix_snrp5/libri2mix_lib_snrp5_cuts.jsonl.gz'
@@ -1177,7 +1304,7 @@
       snapshot_date: '2026-08-04'
       loader_kind: cuts_file
       dataset_family: libri2mix
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: libri3mix_snrp5
     version: eval-20260804
     languages:
@@ -1192,7 +1319,9 @@
         relative_path: output_librimix_libristyle/libri3mix_snrp5/libri3mix_lib_snrp5_cuts.jsonl.gz
     splits:
       test:
-        cuts_artifact: test_cuts
+        artifacts:
+          cuts:
+            - test_cuts
         statistics:
           duration_hours: 10.889554794166665
           duration_basis: 'sum of cuts durations; overlapping segments may count speech more than once; sources: legacy_mix_tsstyle:output_librimix_libristyle/libri3mix_snrp5/libri3mix_lib_snrp5_cuts.jsonl.gz'
@@ -1201,7 +1330,7 @@
       snapshot_date: '2026-08-04'
       loader_kind: cuts_file
       dataset_family: libri3mix
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: libri2mix_snrp10
     version: eval-20260804
     languages:
@@ -1216,7 +1345,9 @@
         relative_path: output_librimix_libristyle/libri2mix_snrp10/libri2mix_lib_snrp10_cuts.jsonl.gz
     splits:
       test:
-        cuts_artifact: test_cuts
+        artifacts:
+          cuts:
+            - test_cuts
         statistics:
           duration_hours: 8.374322676111111
           duration_basis: 'sum of cuts durations; overlapping segments may count speech more than once; sources: legacy_mix_tsstyle:output_librimix_libristyle/libri2mix_snrp10/libri2mix_lib_snrp10_cuts.jsonl.gz'
@@ -1225,7 +1356,7 @@
       snapshot_date: '2026-08-04'
       loader_kind: cuts_file
       dataset_family: libri2mix
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: libri3mix_snrp10
     version: eval-20260804
     languages:
@@ -1240,7 +1371,9 @@
         relative_path: output_librimix_libristyle/libri3mix_snrp10/libri3mix_lib_snrp10_cuts.jsonl.gz
     splits:
       test:
-        cuts_artifact: test_cuts
+        artifacts:
+          cuts:
+            - test_cuts
         statistics:
           duration_hours: 10.889554794166665
           duration_basis: 'sum of cuts durations; overlapping segments may count speech more than once; sources: legacy_mix_tsstyle:output_librimix_libristyle/libri3mix_snrp10/libri3mix_lib_snrp10_cuts.jsonl.gz'
@@ -1249,7 +1382,7 @@
       snapshot_date: '2026-08-04'
       loader_kind: cuts_file
       dataset_family: libri3mix
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: audioset_esc_test
     version: eval-20260804
     languages:
@@ -1264,7 +1397,9 @@
         relative_path: audioset_esc_test_mixed_cuts.jsonl.gz
     splits:
       test:
-        cuts_artifact: test_cuts
+        artifacts:
+          cuts:
+            - test_cuts
         statistics:
           duration_hours: 6.835043370211111
           duration_basis: 'sum of cuts durations; overlapping segments may count speech more than once; sources: multilingual:sound/AudioSet/manifest_v1_esc/audioset_esc_test_mixed_cuts.jsonl.gz'
@@ -1272,7 +1407,7 @@
       consumer: open-audio-llm-vllm-eval
       snapshot_date: '2026-08-04'
       loader_kind: cuts_file
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: cv_en_rir_slr26
     version: eval-20260804
     languages:
@@ -1291,8 +1426,11 @@
         relative_path: degradation/cv_en_test/rir_slr26/manifests/cv_en_test_rir_slr26_supervisions_degraded.jsonl.gz
     splits:
       test:
-        recordings_artifact: test_recordings
-        supervisions_artifact: test_supervisions
+        artifacts:
+          recordings:
+            - test_recordings
+          supervisions:
+            - test_supervisions
         statistics:
           duration_hours: 27.164229444444445
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:degradation/cv_en_test/rir_slr26/manifests/cv_en_test_rir_slr26_supervisions_degraded.jsonl.gz'
@@ -1301,7 +1439,7 @@
       snapshot_date: '2026-08-04'
       loader_kind: single
       dataset_family: common_voice_en
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: cv_en_rir_slr28_sim
     version: eval-20260804
     languages:
@@ -1320,8 +1458,11 @@
         relative_path: degradation/cv_en_test/rir_slr28_sim/manifests/cv_en_test_rir_slr28_sim_supervisions_degraded.jsonl.gz
     splits:
       test:
-        recordings_artifact: test_recordings
-        supervisions_artifact: test_supervisions
+        artifacts:
+          recordings:
+            - test_recordings
+          supervisions:
+            - test_supervisions
         statistics:
           duration_hours: 27.164229444444445
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:degradation/cv_en_test/rir_slr28_sim/manifests/cv_en_test_rir_slr28_sim_supervisions_degraded.jsonl.gz'
@@ -1330,7 +1471,7 @@
       snapshot_date: '2026-08-04'
       loader_kind: single
       dataset_family: common_voice_en
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: cv_en_rir_slr28_real
     version: eval-20260804
     languages:
@@ -1349,8 +1490,11 @@
         relative_path: degradation/cv_en_test/rir_slr28_real/manifests/cv_en_test_rir_slr28_real_supervisions_degraded.jsonl.gz
     splits:
       test:
-        recordings_artifact: test_recordings
-        supervisions_artifact: test_supervisions
+        artifacts:
+          recordings:
+            - test_recordings
+          supervisions:
+            - test_supervisions
         statistics:
           duration_hours: 27.164229444444445
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:degradation/cv_en_test/rir_slr28_real/manifests/cv_en_test_rir_slr28_real_supervisions_degraded.jsonl.gz'
@@ -1359,7 +1503,7 @@
       snapshot_date: '2026-08-04'
       loader_kind: single
       dataset_family: common_voice_en
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: cv_en_rir_rirmega
     version: eval-20260804
     languages:
@@ -1378,8 +1522,11 @@
         relative_path: degradation/cv_en_test/rir_rirmega/manifests/cv_en_test_rir_rirmega_supervisions_degraded.jsonl.gz
     splits:
       test:
-        recordings_artifact: test_recordings
-        supervisions_artifact: test_supervisions
+        artifacts:
+          recordings:
+            - test_recordings
+          supervisions:
+            - test_supervisions
         statistics:
           duration_hours: 27.164229444444445
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:degradation/cv_en_test/rir_rirmega/manifests/cv_en_test_rir_rirmega_supervisions_degraded.jsonl.gz'
@@ -1388,7 +1535,7 @@
       snapshot_date: '2026-08-04'
       loader_kind: single
       dataset_family: common_voice_en
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: cv_en_noise_musan_noise
     version: eval-20260804
     languages:
@@ -1407,8 +1554,11 @@
         relative_path: degradation/cv_en_test/noise_musan_noise/manifests/cv_en_test_noise_musan_noise_supervisions_degraded.jsonl.gz
     splits:
       test:
-        recordings_artifact: test_recordings
-        supervisions_artifact: test_supervisions
+        artifacts:
+          recordings:
+            - test_recordings
+          supervisions:
+            - test_supervisions
         statistics:
           duration_hours: 27.164229444444445
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:degradation/cv_en_test/noise_musan_noise/manifests/cv_en_test_noise_musan_noise_supervisions_degraded.jsonl.gz'
@@ -1417,7 +1567,7 @@
       snapshot_date: '2026-08-04'
       loader_kind: single
       dataset_family: common_voice_en
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: cv_en_noise_musan_music
     version: eval-20260804
     languages:
@@ -1436,8 +1586,11 @@
         relative_path: degradation/cv_en_test/noise_musan_music/manifests/cv_en_test_noise_musan_music_supervisions_degraded.jsonl.gz
     splits:
       test:
-        recordings_artifact: test_recordings
-        supervisions_artifact: test_supervisions
+        artifacts:
+          recordings:
+            - test_recordings
+          supervisions:
+            - test_supervisions
         statistics:
           duration_hours: 27.164229444444445
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:degradation/cv_en_test/noise_musan_music/manifests/cv_en_test_noise_musan_music_supervisions_degraded.jsonl.gz'
@@ -1446,7 +1599,7 @@
       snapshot_date: '2026-08-04'
       loader_kind: single
       dataset_family: common_voice_en
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: cv_en_noise_musan_speech
     version: eval-20260804
     languages:
@@ -1465,8 +1618,11 @@
         relative_path: degradation/cv_en_test/noise_musan_speech/manifests/cv_en_test_noise_musan_speech_supervisions_degraded.jsonl.gz
     splits:
       test:
-        recordings_artifact: test_recordings
-        supervisions_artifact: test_supervisions
+        artifacts:
+          recordings:
+            - test_recordings
+          supervisions:
+            - test_supervisions
         statistics:
           duration_hours: 27.164229444444445
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:degradation/cv_en_test/noise_musan_speech/manifests/cv_en_test_noise_musan_speech_supervisions_degraded.jsonl.gz'
@@ -1475,7 +1631,7 @@
       snapshot_date: '2026-08-04'
       loader_kind: single
       dataset_family: common_voice_en
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: cv_en_noise_dns
     version: eval-20260804
     languages:
@@ -1494,8 +1650,11 @@
         relative_path: degradation/cv_en_test/noise_dns/manifests/cv_en_test_noise_dns_supervisions_degraded.jsonl.gz
     splits:
       test:
-        recordings_artifact: test_recordings
-        supervisions_artifact: test_supervisions
+        artifacts:
+          recordings:
+            - test_recordings
+          supervisions:
+            - test_supervisions
         statistics:
           duration_hours: 27.164229444444445
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:degradation/cv_en_test/noise_dns/manifests/cv_en_test_noise_dns_supervisions_degraded.jsonl.gz'
@@ -1504,7 +1663,7 @@
       snapshot_date: '2026-08-04'
       loader_kind: single
       dataset_family: common_voice_en
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: cv_en_noise_audioset_traffic
     version: eval-20260804
     languages:
@@ -1523,8 +1682,11 @@
         relative_path: degradation/cv_en_test/noise_audioset_traffic/manifests/cv_en_test_noise_audioset_traffic_supervisions_degraded.jsonl.gz
     splits:
       test:
-        recordings_artifact: test_recordings
-        supervisions_artifact: test_supervisions
+        artifacts:
+          recordings:
+            - test_recordings
+          supervisions:
+            - test_supervisions
         statistics:
           duration_hours: 27.164229444444445
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:degradation/cv_en_test/noise_audioset_traffic/manifests/cv_en_test_noise_audioset_traffic_supervisions_degraded.jsonl.gz'
@@ -1533,7 +1695,7 @@
       snapshot_date: '2026-08-04'
       loader_kind: single
       dataset_family: common_voice_en
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: cv_en_noise_audioset_esc
     version: eval-20260804
     languages:
@@ -1552,8 +1714,11 @@
         relative_path: degradation/cv_en_test/noise_audioset_esc/manifests/cv_en_test_noise_audioset_esc_supervisions_degraded.jsonl.gz
     splits:
       test:
-        recordings_artifact: test_recordings
-        supervisions_artifact: test_supervisions
+        artifacts:
+          recordings:
+            - test_recordings
+          supervisions:
+            - test_supervisions
         statistics:
           duration_hours: 27.164229444444445
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:degradation/cv_en_test/noise_audioset_esc/manifests/cv_en_test_noise_audioset_esc_supervisions_degraded.jsonl.gz'
@@ -1562,7 +1727,7 @@
       snapshot_date: '2026-08-04'
       loader_kind: single
       dataset_family: common_voice_en
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: cv_en_noise_wham
     version: eval-20260804
     languages:
@@ -1581,8 +1746,11 @@
         relative_path: degradation/cv_en_test/noise_wham/manifests/cv_en_test_noise_wham_supervisions_degraded.jsonl.gz
     splits:
       test:
-        recordings_artifact: test_recordings
-        supervisions_artifact: test_supervisions
+        artifacts:
+          recordings:
+            - test_recordings
+          supervisions:
+            - test_supervisions
         statistics:
           duration_hours: 27.164229444444445
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:degradation/cv_en_test/noise_wham/manifests/cv_en_test_noise_wham_supervisions_degraded.jsonl.gz'
@@ -1591,7 +1759,7 @@
       snapshot_date: '2026-08-04'
       loader_kind: single
       dataset_family: common_voice_en
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: cv_zh_rir_slr26
     version: eval-20260804
     languages:
@@ -1610,8 +1778,11 @@
         relative_path: degradation/cv_zh_test/rir_slr26/manifests/cv_zh_test_rir_slr26_supervisions_degraded.jsonl.gz
     splits:
       test:
-        recordings_artifact: test_recordings
-        supervisions_artifact: test_supervisions
+        artifacts:
+          recordings:
+            - test_recordings
+          supervisions:
+            - test_supervisions
         statistics:
           duration_hours: 17.43955572888889
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:degradation/cv_zh_test/rir_slr26/manifests/cv_zh_test_rir_slr26_supervisions_degraded.jsonl.gz'
@@ -1620,7 +1791,7 @@
       snapshot_date: '2026-08-04'
       loader_kind: single
       dataset_family: common_voice_zh
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: cv_zh_rir_slr28_sim
     version: eval-20260804
     languages:
@@ -1639,8 +1810,11 @@
         relative_path: degradation/cv_zh_test/rir_slr28_sim/manifests/cv_zh_test_rir_slr28_sim_supervisions_degraded.jsonl.gz
     splits:
       test:
-        recordings_artifact: test_recordings
-        supervisions_artifact: test_supervisions
+        artifacts:
+          recordings:
+            - test_recordings
+          supervisions:
+            - test_supervisions
         statistics:
           duration_hours: 17.43955572888889
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:degradation/cv_zh_test/rir_slr28_sim/manifests/cv_zh_test_rir_slr28_sim_supervisions_degraded.jsonl.gz'
@@ -1649,7 +1823,7 @@
       snapshot_date: '2026-08-04'
       loader_kind: single
       dataset_family: common_voice_zh
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: cv_zh_rir_slr28_real
     version: eval-20260804
     languages:
@@ -1668,8 +1842,11 @@
         relative_path: degradation/cv_zh_test/rir_slr28_real/manifests/cv_zh_test_rir_slr28_real_supervisions_degraded.jsonl.gz
     splits:
       test:
-        recordings_artifact: test_recordings
-        supervisions_artifact: test_supervisions
+        artifacts:
+          recordings:
+            - test_recordings
+          supervisions:
+            - test_supervisions
         statistics:
           duration_hours: 17.43955572888889
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:degradation/cv_zh_test/rir_slr28_real/manifests/cv_zh_test_rir_slr28_real_supervisions_degraded.jsonl.gz'
@@ -1678,7 +1855,7 @@
       snapshot_date: '2026-08-04'
       loader_kind: single
       dataset_family: common_voice_zh
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: cv_zh_rir_rirmega
     version: eval-20260804
     languages:
@@ -1697,8 +1874,11 @@
         relative_path: degradation/cv_zh_test/rir_rirmega/manifests/cv_zh_test_rir_rirmega_supervisions_degraded.jsonl.gz
     splits:
       test:
-        recordings_artifact: test_recordings
-        supervisions_artifact: test_supervisions
+        artifacts:
+          recordings:
+            - test_recordings
+          supervisions:
+            - test_supervisions
         statistics:
           duration_hours: 17.43955572888889
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:degradation/cv_zh_test/rir_rirmega/manifests/cv_zh_test_rir_rirmega_supervisions_degraded.jsonl.gz'
@@ -1707,7 +1887,7 @@
       snapshot_date: '2026-08-04'
       loader_kind: single
       dataset_family: common_voice_zh
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: cv_zh_noise_musan_noise
     version: eval-20260804
     languages:
@@ -1726,8 +1906,11 @@
         relative_path: degradation/cv_zh_test/noise_musan_noise/manifests/cv_zh_test_noise_musan_noise_supervisions_degraded.jsonl.gz
     splits:
       test:
-        recordings_artifact: test_recordings
-        supervisions_artifact: test_supervisions
+        artifacts:
+          recordings:
+            - test_recordings
+          supervisions:
+            - test_supervisions
         statistics:
           duration_hours: 17.43955572888889
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:degradation/cv_zh_test/noise_musan_noise/manifests/cv_zh_test_noise_musan_noise_supervisions_degraded.jsonl.gz'
@@ -1736,7 +1919,7 @@
       snapshot_date: '2026-08-04'
       loader_kind: single
       dataset_family: common_voice_zh
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: cv_zh_noise_musan_music
     version: eval-20260804
     languages:
@@ -1755,8 +1938,11 @@
         relative_path: degradation/cv_zh_test/noise_musan_music/manifests/cv_zh_test_noise_musan_music_supervisions_degraded.jsonl.gz
     splits:
       test:
-        recordings_artifact: test_recordings
-        supervisions_artifact: test_supervisions
+        artifacts:
+          recordings:
+            - test_recordings
+          supervisions:
+            - test_supervisions
         statistics:
           duration_hours: 17.43955572888889
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:degradation/cv_zh_test/noise_musan_music/manifests/cv_zh_test_noise_musan_music_supervisions_degraded.jsonl.gz'
@@ -1765,7 +1951,7 @@
       snapshot_date: '2026-08-04'
       loader_kind: single
       dataset_family: common_voice_zh
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: cv_zh_noise_musan_speech
     version: eval-20260804
     languages:
@@ -1784,8 +1970,11 @@
         relative_path: degradation/cv_zh_test/noise_musan_speech/manifests/cv_zh_test_noise_musan_speech_supervisions_degraded.jsonl.gz
     splits:
       test:
-        recordings_artifact: test_recordings
-        supervisions_artifact: test_supervisions
+        artifacts:
+          recordings:
+            - test_recordings
+          supervisions:
+            - test_supervisions
         statistics:
           duration_hours: 17.43955572888889
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:degradation/cv_zh_test/noise_musan_speech/manifests/cv_zh_test_noise_musan_speech_supervisions_degraded.jsonl.gz'
@@ -1794,7 +1983,7 @@
       snapshot_date: '2026-08-04'
       loader_kind: single
       dataset_family: common_voice_zh
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: cv_zh_noise_dns
     version: eval-20260804
     languages:
@@ -1813,8 +2002,11 @@
         relative_path: degradation/cv_zh_test/noise_dns/manifests/cv_zh_test_noise_dns_supervisions_degraded.jsonl.gz
     splits:
       test:
-        recordings_artifact: test_recordings
-        supervisions_artifact: test_supervisions
+        artifacts:
+          recordings:
+            - test_recordings
+          supervisions:
+            - test_supervisions
         statistics:
           duration_hours: 17.43955572888889
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:degradation/cv_zh_test/noise_dns/manifests/cv_zh_test_noise_dns_supervisions_degraded.jsonl.gz'
@@ -1823,7 +2015,7 @@
       snapshot_date: '2026-08-04'
       loader_kind: single
       dataset_family: common_voice_zh
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: cv_zh_noise_audioset_traffic
     version: eval-20260804
     languages:
@@ -1842,8 +2034,11 @@
         relative_path: degradation/cv_zh_test/noise_audioset_traffic/manifests/cv_zh_test_noise_audioset_traffic_supervisions_degraded.jsonl.gz
     splits:
       test:
-        recordings_artifact: test_recordings
-        supervisions_artifact: test_supervisions
+        artifacts:
+          recordings:
+            - test_recordings
+          supervisions:
+            - test_supervisions
         statistics:
           duration_hours: 17.43955572888889
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:degradation/cv_zh_test/noise_audioset_traffic/manifests/cv_zh_test_noise_audioset_traffic_supervisions_degraded.jsonl.gz'
@@ -1852,7 +2047,7 @@
       snapshot_date: '2026-08-04'
       loader_kind: single
       dataset_family: common_voice_zh
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: cv_zh_noise_audioset_esc
     version: eval-20260804
     languages:
@@ -1871,8 +2066,11 @@
         relative_path: degradation/cv_zh_test/noise_audioset_esc/manifests/cv_zh_test_noise_audioset_esc_supervisions_degraded.jsonl.gz
     splits:
       test:
-        recordings_artifact: test_recordings
-        supervisions_artifact: test_supervisions
+        artifacts:
+          recordings:
+            - test_recordings
+          supervisions:
+            - test_supervisions
         statistics:
           duration_hours: 17.43955572888889
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:degradation/cv_zh_test/noise_audioset_esc/manifests/cv_zh_test_noise_audioset_esc_supervisions_degraded.jsonl.gz'
@@ -1881,7 +2079,7 @@
       snapshot_date: '2026-08-04'
       loader_kind: single
       dataset_family: common_voice_zh
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: cv_zh_noise_wham
     version: eval-20260804
     languages:
@@ -1900,8 +2098,11 @@
         relative_path: degradation/cv_zh_test/noise_wham/manifests/cv_zh_test_noise_wham_supervisions_degraded.jsonl.gz
     splits:
       test:
-        recordings_artifact: test_recordings
-        supervisions_artifact: test_supervisions
+        artifacts:
+          recordings:
+            - test_recordings
+          supervisions:
+            - test_supervisions
         statistics:
           duration_hours: 17.43955572888889
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:degradation/cv_zh_test/noise_wham/manifests/cv_zh_test_noise_wham_supervisions_degraded.jsonl.gz'
@@ -1910,7 +2111,7 @@
       snapshot_date: '2026-08-04'
       loader_kind: single
       dataset_family: common_voice_zh
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: cv_en_rir_slr26_hotwords
     version: eval-20260804
     languages:
@@ -1929,8 +2130,11 @@
         relative_path: degradation/cv_en_test/rir_slr26/manifests/cv_en_test_rir_slr26_supervisions_hotwords.jsonl.gz
     splits:
       test:
-        recordings_artifact: test_recordings
-        supervisions_artifact: test_supervisions
+        artifacts:
+          recordings:
+            - test_recordings
+          supervisions:
+            - test_supervisions
         statistics:
           duration_hours: 27.164229444444445
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:degradation/cv_en_test/rir_slr26/manifests/cv_en_test_rir_slr26_supervisions_hotwords.jsonl.gz'
@@ -1939,7 +2143,7 @@
       snapshot_date: '2026-08-04'
       loader_kind: single
       dataset_family: common_voice_en
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: cv_en_rir_slr28_sim_hotwords
     version: eval-20260804
     languages:
@@ -1958,8 +2162,11 @@
         relative_path: degradation/cv_en_test/rir_slr28_sim/manifests/cv_en_test_rir_slr28_sim_supervisions_hotwords.jsonl.gz
     splits:
       test:
-        recordings_artifact: test_recordings
-        supervisions_artifact: test_supervisions
+        artifacts:
+          recordings:
+            - test_recordings
+          supervisions:
+            - test_supervisions
         statistics:
           duration_hours: 27.164229444444445
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:degradation/cv_en_test/rir_slr28_sim/manifests/cv_en_test_rir_slr28_sim_supervisions_hotwords.jsonl.gz'
@@ -1968,7 +2175,7 @@
       snapshot_date: '2026-08-04'
       loader_kind: single
       dataset_family: common_voice_en
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: cv_en_rir_slr28_real_hotwords
     version: eval-20260804
     languages:
@@ -1987,8 +2194,11 @@
         relative_path: degradation/cv_en_test/rir_slr28_real/manifests/cv_en_test_rir_slr28_real_supervisions_hotwords.jsonl.gz
     splits:
       test:
-        recordings_artifact: test_recordings
-        supervisions_artifact: test_supervisions
+        artifacts:
+          recordings:
+            - test_recordings
+          supervisions:
+            - test_supervisions
         statistics:
           duration_hours: 27.164229444444445
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:degradation/cv_en_test/rir_slr28_real/manifests/cv_en_test_rir_slr28_real_supervisions_hotwords.jsonl.gz'
@@ -1997,7 +2207,7 @@
       snapshot_date: '2026-08-04'
       loader_kind: single
       dataset_family: common_voice_en
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: cv_en_rir_rirmega_hotwords
     version: eval-20260804
     languages:
@@ -2016,8 +2226,11 @@
         relative_path: degradation/cv_en_test/rir_rirmega/manifests/cv_en_test_rir_rirmega_supervisions_hotwords.jsonl.gz
     splits:
       test:
-        recordings_artifact: test_recordings
-        supervisions_artifact: test_supervisions
+        artifacts:
+          recordings:
+            - test_recordings
+          supervisions:
+            - test_supervisions
         statistics:
           duration_hours: 27.164229444444445
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:degradation/cv_en_test/rir_rirmega/manifests/cv_en_test_rir_rirmega_supervisions_hotwords.jsonl.gz'
@@ -2026,7 +2239,7 @@
       snapshot_date: '2026-08-04'
       loader_kind: single
       dataset_family: common_voice_en
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: cv_en_noise_musan_noise_hotwords
     version: eval-20260804
     languages:
@@ -2045,8 +2258,11 @@
         relative_path: degradation/cv_en_test/noise_musan_noise/manifests/cv_en_test_noise_musan_noise_supervisions_hotwords.jsonl.gz
     splits:
       test:
-        recordings_artifact: test_recordings
-        supervisions_artifact: test_supervisions
+        artifacts:
+          recordings:
+            - test_recordings
+          supervisions:
+            - test_supervisions
         statistics:
           duration_hours: 27.164229444444445
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:degradation/cv_en_test/noise_musan_noise/manifests/cv_en_test_noise_musan_noise_supervisions_hotwords.jsonl.gz'
@@ -2055,7 +2271,7 @@
       snapshot_date: '2026-08-04'
       loader_kind: single
       dataset_family: common_voice_en
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: cv_en_noise_musan_music_hotwords
     version: eval-20260804
     languages:
@@ -2074,8 +2290,11 @@
         relative_path: degradation/cv_en_test/noise_musan_music/manifests/cv_en_test_noise_musan_music_supervisions_hotwords.jsonl.gz
     splits:
       test:
-        recordings_artifact: test_recordings
-        supervisions_artifact: test_supervisions
+        artifacts:
+          recordings:
+            - test_recordings
+          supervisions:
+            - test_supervisions
         statistics:
           duration_hours: 27.164229444444445
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:degradation/cv_en_test/noise_musan_music/manifests/cv_en_test_noise_musan_music_supervisions_hotwords.jsonl.gz'
@@ -2084,7 +2303,7 @@
       snapshot_date: '2026-08-04'
       loader_kind: single
       dataset_family: common_voice_en
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: cv_en_noise_musan_speech_hotwords
     version: eval-20260804
     languages:
@@ -2103,8 +2322,11 @@
         relative_path: degradation/cv_en_test/noise_musan_speech/manifests/cv_en_test_noise_musan_speech_supervisions_hotwords.jsonl.gz
     splits:
       test:
-        recordings_artifact: test_recordings
-        supervisions_artifact: test_supervisions
+        artifacts:
+          recordings:
+            - test_recordings
+          supervisions:
+            - test_supervisions
         statistics:
           duration_hours: 27.164229444444445
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:degradation/cv_en_test/noise_musan_speech/manifests/cv_en_test_noise_musan_speech_supervisions_hotwords.jsonl.gz'
@@ -2113,7 +2335,7 @@
       snapshot_date: '2026-08-04'
       loader_kind: single
       dataset_family: common_voice_en
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: cv_en_noise_dns_hotwords
     version: eval-20260804
     languages:
@@ -2132,8 +2354,11 @@
         relative_path: degradation/cv_en_test/noise_dns/manifests/cv_en_test_noise_dns_supervisions_hotwords.jsonl.gz
     splits:
       test:
-        recordings_artifact: test_recordings
-        supervisions_artifact: test_supervisions
+        artifacts:
+          recordings:
+            - test_recordings
+          supervisions:
+            - test_supervisions
         statistics:
           duration_hours: 27.164229444444445
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:degradation/cv_en_test/noise_dns/manifests/cv_en_test_noise_dns_supervisions_hotwords.jsonl.gz'
@@ -2142,7 +2367,7 @@
       snapshot_date: '2026-08-04'
       loader_kind: single
       dataset_family: common_voice_en
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: cv_en_noise_audioset_traffic_hotwords
     version: eval-20260804
     languages:
@@ -2161,8 +2386,11 @@
         relative_path: degradation/cv_en_test/noise_audioset_traffic/manifests/cv_en_test_noise_audioset_traffic_supervisions_hotwords.jsonl.gz
     splits:
       test:
-        recordings_artifact: test_recordings
-        supervisions_artifact: test_supervisions
+        artifacts:
+          recordings:
+            - test_recordings
+          supervisions:
+            - test_supervisions
         statistics:
           duration_hours: 27.164229444444445
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:degradation/cv_en_test/noise_audioset_traffic/manifests/cv_en_test_noise_audioset_traffic_supervisions_hotwords.jsonl.gz'
@@ -2171,7 +2399,7 @@
       snapshot_date: '2026-08-04'
       loader_kind: single
       dataset_family: common_voice_en
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: cv_en_noise_audioset_esc_hotwords
     version: eval-20260804
     languages:
@@ -2190,8 +2418,11 @@
         relative_path: degradation/cv_en_test/noise_audioset_esc/manifests/cv_en_test_noise_audioset_esc_supervisions_hotwords.jsonl.gz
     splits:
       test:
-        recordings_artifact: test_recordings
-        supervisions_artifact: test_supervisions
+        artifacts:
+          recordings:
+            - test_recordings
+          supervisions:
+            - test_supervisions
         statistics:
           duration_hours: 27.164229444444445
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:degradation/cv_en_test/noise_audioset_esc/manifests/cv_en_test_noise_audioset_esc_supervisions_hotwords.jsonl.gz'
@@ -2200,7 +2431,7 @@
       snapshot_date: '2026-08-04'
       loader_kind: single
       dataset_family: common_voice_en
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: cv_en_noise_wham_hotwords
     version: eval-20260804
     languages:
@@ -2219,8 +2450,11 @@
         relative_path: degradation/cv_en_test/noise_wham/manifests/cv_en_test_noise_wham_supervisions_hotwords.jsonl.gz
     splits:
       test:
-        recordings_artifact: test_recordings
-        supervisions_artifact: test_supervisions
+        artifacts:
+          recordings:
+            - test_recordings
+          supervisions:
+            - test_supervisions
         statistics:
           duration_hours: 27.164229444444445
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:degradation/cv_en_test/noise_wham/manifests/cv_en_test_noise_wham_supervisions_hotwords.jsonl.gz'
@@ -2229,7 +2463,7 @@
       snapshot_date: '2026-08-04'
       loader_kind: single
       dataset_family: common_voice_en
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: cv_zh_rir_slr26_hotwords
     version: eval-20260804
     languages:
@@ -2248,8 +2482,11 @@
         relative_path: degradation/cv_zh_test/rir_slr26/manifests/cv_zh_test_rir_slr26_supervisions_hotwords.jsonl.gz
     splits:
       test:
-        recordings_artifact: test_recordings
-        supervisions_artifact: test_supervisions
+        artifacts:
+          recordings:
+            - test_recordings
+          supervisions:
+            - test_supervisions
         statistics:
           duration_hours: 17.439555729166667
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:degradation/cv_zh_test/rir_slr26/manifests/cv_zh_test_rir_slr26_supervisions_hotwords.jsonl.gz'
@@ -2258,7 +2495,7 @@
       snapshot_date: '2026-08-04'
       loader_kind: single
       dataset_family: common_voice_zh
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: cv_zh_rir_slr28_sim_hotwords
     version: eval-20260804
     languages:
@@ -2277,8 +2514,11 @@
         relative_path: degradation/cv_zh_test/rir_slr28_sim/manifests/cv_zh_test_rir_slr28_sim_supervisions_hotwords.jsonl.gz
     splits:
       test:
-        recordings_artifact: test_recordings
-        supervisions_artifact: test_supervisions
+        artifacts:
+          recordings:
+            - test_recordings
+          supervisions:
+            - test_supervisions
         statistics:
           duration_hours: 17.439555729166667
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:degradation/cv_zh_test/rir_slr28_sim/manifests/cv_zh_test_rir_slr28_sim_supervisions_hotwords.jsonl.gz'
@@ -2287,7 +2527,7 @@
       snapshot_date: '2026-08-04'
       loader_kind: single
       dataset_family: common_voice_zh
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: cv_zh_rir_slr28_real_hotwords
     version: eval-20260804
     languages:
@@ -2306,8 +2546,11 @@
         relative_path: degradation/cv_zh_test/rir_slr28_real/manifests/cv_zh_test_rir_slr28_real_supervisions_hotwords.jsonl.gz
     splits:
       test:
-        recordings_artifact: test_recordings
-        supervisions_artifact: test_supervisions
+        artifacts:
+          recordings:
+            - test_recordings
+          supervisions:
+            - test_supervisions
         statistics:
           duration_hours: 17.439555729166667
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:degradation/cv_zh_test/rir_slr28_real/manifests/cv_zh_test_rir_slr28_real_supervisions_hotwords.jsonl.gz'
@@ -2316,7 +2559,7 @@
       snapshot_date: '2026-08-04'
       loader_kind: single
       dataset_family: common_voice_zh
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: cv_zh_rir_rirmega_hotwords
     version: eval-20260804
     languages:
@@ -2335,8 +2578,11 @@
         relative_path: degradation/cv_zh_test/rir_rirmega/manifests/cv_zh_test_rir_rirmega_supervisions_hotwords.jsonl.gz
     splits:
       test:
-        recordings_artifact: test_recordings
-        supervisions_artifact: test_supervisions
+        artifacts:
+          recordings:
+            - test_recordings
+          supervisions:
+            - test_supervisions
         statistics:
           duration_hours: 17.439555729166667
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:degradation/cv_zh_test/rir_rirmega/manifests/cv_zh_test_rir_rirmega_supervisions_hotwords.jsonl.gz'
@@ -2345,7 +2591,7 @@
       snapshot_date: '2026-08-04'
       loader_kind: single
       dataset_family: common_voice_zh
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: cv_zh_noise_musan_noise_hotwords
     version: eval-20260804
     languages:
@@ -2364,8 +2610,11 @@
         relative_path: degradation/cv_zh_test/noise_musan_noise/manifests/cv_zh_test_noise_musan_noise_supervisions_hotwords.jsonl.gz
     splits:
       test:
-        recordings_artifact: test_recordings
-        supervisions_artifact: test_supervisions
+        artifacts:
+          recordings:
+            - test_recordings
+          supervisions:
+            - test_supervisions
         statistics:
           duration_hours: 17.439555729166667
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:degradation/cv_zh_test/noise_musan_noise/manifests/cv_zh_test_noise_musan_noise_supervisions_hotwords.jsonl.gz'
@@ -2374,7 +2623,7 @@
       snapshot_date: '2026-08-04'
       loader_kind: single
       dataset_family: common_voice_zh
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: cv_zh_noise_musan_music_hotwords
     version: eval-20260804
     languages:
@@ -2393,8 +2642,11 @@
         relative_path: degradation/cv_zh_test/noise_musan_music/manifests/cv_zh_test_noise_musan_music_supervisions_hotwords.jsonl.gz
     splits:
       test:
-        recordings_artifact: test_recordings
-        supervisions_artifact: test_supervisions
+        artifacts:
+          recordings:
+            - test_recordings
+          supervisions:
+            - test_supervisions
         statistics:
           duration_hours: 17.439555729166667
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:degradation/cv_zh_test/noise_musan_music/manifests/cv_zh_test_noise_musan_music_supervisions_hotwords.jsonl.gz'
@@ -2403,7 +2655,7 @@
       snapshot_date: '2026-08-04'
       loader_kind: single
       dataset_family: common_voice_zh
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: cv_zh_noise_musan_speech_hotwords
     version: eval-20260804
     languages:
@@ -2422,8 +2674,11 @@
         relative_path: degradation/cv_zh_test/noise_musan_speech/manifests/cv_zh_test_noise_musan_speech_supervisions_hotwords.jsonl.gz
     splits:
       test:
-        recordings_artifact: test_recordings
-        supervisions_artifact: test_supervisions
+        artifacts:
+          recordings:
+            - test_recordings
+          supervisions:
+            - test_supervisions
         statistics:
           duration_hours: 17.439555729166667
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:degradation/cv_zh_test/noise_musan_speech/manifests/cv_zh_test_noise_musan_speech_supervisions_hotwords.jsonl.gz'
@@ -2432,7 +2687,7 @@
       snapshot_date: '2026-08-04'
       loader_kind: single
       dataset_family: common_voice_zh
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: cv_zh_noise_dns_hotwords
     version: eval-20260804
     languages:
@@ -2451,8 +2706,11 @@
         relative_path: degradation/cv_zh_test/noise_dns/manifests/cv_zh_test_noise_dns_supervisions_hotwords.jsonl.gz
     splits:
       test:
-        recordings_artifact: test_recordings
-        supervisions_artifact: test_supervisions
+        artifacts:
+          recordings:
+            - test_recordings
+          supervisions:
+            - test_supervisions
         statistics:
           duration_hours: 17.439555729166667
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:degradation/cv_zh_test/noise_dns/manifests/cv_zh_test_noise_dns_supervisions_hotwords.jsonl.gz'
@@ -2461,7 +2719,7 @@
       snapshot_date: '2026-08-04'
       loader_kind: single
       dataset_family: common_voice_zh
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: cv_zh_noise_audioset_traffic_hotwords
     version: eval-20260804
     languages:
@@ -2480,8 +2738,11 @@
         relative_path: degradation/cv_zh_test/noise_audioset_traffic/manifests/cv_zh_test_noise_audioset_traffic_supervisions_hotwords.jsonl.gz
     splits:
       test:
-        recordings_artifact: test_recordings
-        supervisions_artifact: test_supervisions
+        artifacts:
+          recordings:
+            - test_recordings
+          supervisions:
+            - test_supervisions
         statistics:
           duration_hours: 17.439555729166667
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:degradation/cv_zh_test/noise_audioset_traffic/manifests/cv_zh_test_noise_audioset_traffic_supervisions_hotwords.jsonl.gz'
@@ -2490,7 +2751,7 @@
       snapshot_date: '2026-08-04'
       loader_kind: single
       dataset_family: common_voice_zh
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: cv_zh_noise_audioset_esc_hotwords
     version: eval-20260804
     languages:
@@ -2509,8 +2770,11 @@
         relative_path: degradation/cv_zh_test/noise_audioset_esc/manifests/cv_zh_test_noise_audioset_esc_supervisions_hotwords.jsonl.gz
     splits:
       test:
-        recordings_artifact: test_recordings
-        supervisions_artifact: test_supervisions
+        artifacts:
+          recordings:
+            - test_recordings
+          supervisions:
+            - test_supervisions
         statistics:
           duration_hours: 17.439555729166667
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:degradation/cv_zh_test/noise_audioset_esc/manifests/cv_zh_test_noise_audioset_esc_supervisions_hotwords.jsonl.gz'
@@ -2519,7 +2783,7 @@
       snapshot_date: '2026-08-04'
       loader_kind: single
       dataset_family: common_voice_zh
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: cv_zh_noise_wham_hotwords
     version: eval-20260804
     languages:
@@ -2538,8 +2802,11 @@
         relative_path: degradation/cv_zh_test/noise_wham/manifests/cv_zh_test_noise_wham_supervisions_hotwords.jsonl.gz
     splits:
       test:
-        recordings_artifact: test_recordings
-        supervisions_artifact: test_supervisions
+        artifacts:
+          recordings:
+            - test_recordings
+          supervisions:
+            - test_supervisions
         statistics:
           duration_hours: 17.439555729166667
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:degradation/cv_zh_test/noise_wham/manifests/cv_zh_test_noise_wham_supervisions_hotwords.jsonl.gz'
@@ -2548,7 +2815,7 @@
       snapshot_date: '2026-08-04'
       loader_kind: single
       dataset_family: common_voice_zh
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: vitw_real_distortion
     version: eval-20260804
     languages:
@@ -2568,8 +2835,11 @@
         relative_path: Voices-in-the-Wild-Bench/manifests/vitw_real_distortion_supervisions.jsonl.gz
     splits:
       test:
-        recordings_artifact: test_recordings
-        supervisions_artifact: test_supervisions
+        artifacts:
+          recordings:
+            - test_recordings
+          supervisions:
+            - test_supervisions
         statistics:
           duration_hours: 0.3204
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:Voices-in-the-Wild-Bench/manifests/vitw_real_distortion_supervisions.jsonl.gz'
@@ -2578,7 +2848,7 @@
       snapshot_date: '2026-08-04'
       loader_kind: single
       dataset_family: vitw
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: vitw_real_dropout
     version: eval-20260804
     languages:
@@ -2598,8 +2868,11 @@
         relative_path: Voices-in-the-Wild-Bench/manifests/vitw_real_dropout_supervisions.jsonl.gz
     splits:
       test:
-        recordings_artifact: test_recordings
-        supervisions_artifact: test_supervisions
+        artifacts:
+          recordings:
+            - test_recordings
+          supervisions:
+            - test_supervisions
         statistics:
           duration_hours: 0.3377777777777778
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:Voices-in-the-Wild-Bench/manifests/vitw_real_dropout_supervisions.jsonl.gz'
@@ -2608,7 +2881,7 @@
       snapshot_date: '2026-08-04'
       loader_kind: single
       dataset_family: vitw
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: vitw_real_echo
     version: eval-20260804
     languages:
@@ -2628,8 +2901,11 @@
         relative_path: Voices-in-the-Wild-Bench/manifests/vitw_real_echo_supervisions.jsonl.gz
     splits:
       test:
-        recordings_artifact: test_recordings
-        supervisions_artifact: test_supervisions
+        artifacts:
+          recordings:
+            - test_recordings
+          supervisions:
+            - test_supervisions
         statistics:
           duration_hours: 0.3220444444444444
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:Voices-in-the-Wild-Bench/manifests/vitw_real_echo_supervisions.jsonl.gz'
@@ -2638,7 +2914,7 @@
       snapshot_date: '2026-08-04'
       loader_kind: single
       dataset_family: vitw
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: vitw_real_far_field
     version: eval-20260804
     languages:
@@ -2658,8 +2934,11 @@
         relative_path: Voices-in-the-Wild-Bench/manifests/vitw_real_far_field_supervisions.jsonl.gz
     splits:
       test:
-        recordings_artifact: test_recordings
-        supervisions_artifact: test_supervisions
+        artifacts:
+          recordings:
+            - test_recordings
+          supervisions:
+            - test_supervisions
         statistics:
           duration_hours: 0.30672222222222223
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:Voices-in-the-Wild-Bench/manifests/vitw_real_far_field_supervisions.jsonl.gz'
@@ -2668,7 +2947,7 @@
       snapshot_date: '2026-08-04'
       loader_kind: single
       dataset_family: vitw
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: vitw_real_mixed
     version: eval-20260804
     languages:
@@ -2688,8 +2967,11 @@
         relative_path: Voices-in-the-Wild-Bench/manifests/vitw_real_mixed_supervisions.jsonl.gz
     splits:
       test:
-        recordings_artifact: test_recordings
-        supervisions_artifact: test_supervisions
+        artifacts:
+          recordings:
+            - test_recordings
+          supervisions:
+            - test_supervisions
         statistics:
           duration_hours: 0.9662666666666666
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:Voices-in-the-Wild-Bench/manifests/vitw_real_mixed_supervisions.jsonl.gz'
@@ -2698,7 +2980,7 @@
       snapshot_date: '2026-08-04'
       loader_kind: single
       dataset_family: vitw
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: vitw_real_noise
     version: eval-20260804
     languages:
@@ -2718,8 +3000,11 @@
         relative_path: Voices-in-the-Wild-Bench/manifests/vitw_real_noise_supervisions.jsonl.gz
     splits:
       test:
-        recordings_artifact: test_recordings
-        supervisions_artifact: test_supervisions
+        artifacts:
+          recordings:
+            - test_recordings
+          supervisions:
+            - test_supervisions
         statistics:
           duration_hours: 0.3347
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:Voices-in-the-Wild-Bench/manifests/vitw_real_noise_supervisions.jsonl.gz'
@@ -2728,7 +3013,7 @@
       snapshot_date: '2026-08-04'
       loader_kind: single
       dataset_family: vitw
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: vitw_real_obstructed
     version: eval-20260804
     languages:
@@ -2748,8 +3033,11 @@
         relative_path: Voices-in-the-Wild-Bench/manifests/vitw_real_obstructed_supervisions.jsonl.gz
     splits:
       test:
-        recordings_artifact: test_recordings
-        supervisions_artifact: test_supervisions
+        artifacts:
+          recordings:
+            - test_recordings
+          supervisions:
+            - test_supervisions
         statistics:
           duration_hours: 0.33740000000000003
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:Voices-in-the-Wild-Bench/manifests/vitw_real_obstructed_supervisions.jsonl.gz'
@@ -2758,7 +3046,7 @@
       snapshot_date: '2026-08-04'
       loader_kind: single
       dataset_family: vitw
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: vitw_real_recording
     version: eval-20260804
     languages:
@@ -2778,8 +3066,11 @@
         relative_path: Voices-in-the-Wild-Bench/manifests/vitw_real_recording_supervisions.jsonl.gz
     splits:
       test:
-        recordings_artifact: test_recordings
-        supervisions_artifact: test_supervisions
+        artifacts:
+          recordings:
+            - test_recordings
+          supervisions:
+            - test_supervisions
         statistics:
           duration_hours: 0.3129444444444444
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:Voices-in-the-Wild-Bench/manifests/vitw_real_recording_supervisions.jsonl.gz'
@@ -2788,7 +3079,7 @@
       snapshot_date: '2026-08-04'
       loader_kind: single
       dataset_family: vitw
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: vitw_syn_distortion
     version: eval-20260804
     languages:
@@ -2808,8 +3099,11 @@
         relative_path: Voices-in-the-Wild-Bench/manifests/vitw_syn_distortion_supervisions.jsonl.gz
     splits:
       test:
-        recordings_artifact: test_recordings
-        supervisions_artifact: test_supervisions
+        artifacts:
+          recordings:
+            - test_recordings
+          supervisions:
+            - test_supervisions
         statistics:
           duration_hours: 0.7919
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:Voices-in-the-Wild-Bench/manifests/vitw_syn_distortion_supervisions.jsonl.gz'
@@ -2818,7 +3112,7 @@
       snapshot_date: '2026-08-04'
       loader_kind: single
       dataset_family: vitw
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: vitw_syn_dropout
     version: eval-20260804
     languages:
@@ -2838,8 +3132,11 @@
         relative_path: Voices-in-the-Wild-Bench/manifests/vitw_syn_dropout_supervisions.jsonl.gz
     splits:
       test:
-        recordings_artifact: test_recordings
-        supervisions_artifact: test_supervisions
+        artifacts:
+          recordings:
+            - test_recordings
+          supervisions:
+            - test_supervisions
         statistics:
           duration_hours: 0.7808
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:Voices-in-the-Wild-Bench/manifests/vitw_syn_dropout_supervisions.jsonl.gz'
@@ -2848,7 +3145,7 @@
       snapshot_date: '2026-08-04'
       loader_kind: single
       dataset_family: vitw
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: vitw_syn_echo
     version: eval-20260804
     languages:
@@ -2868,8 +3165,11 @@
         relative_path: Voices-in-the-Wild-Bench/manifests/vitw_syn_echo_supervisions.jsonl.gz
     splits:
       test:
-        recordings_artifact: test_recordings
-        supervisions_artifact: test_supervisions
+        artifacts:
+          recordings:
+            - test_recordings
+          supervisions:
+            - test_supervisions
         statistics:
           duration_hours: 0.7814666666666668
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:Voices-in-the-Wild-Bench/manifests/vitw_syn_echo_supervisions.jsonl.gz'
@@ -2878,7 +3178,7 @@
       snapshot_date: '2026-08-04'
       loader_kind: single
       dataset_family: vitw
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: vitw_syn_far_field
     version: eval-20260804
     languages:
@@ -2898,8 +3198,11 @@
         relative_path: Voices-in-the-Wild-Bench/manifests/vitw_syn_far_field_supervisions.jsonl.gz
     splits:
       test:
-        recordings_artifact: test_recordings
-        supervisions_artifact: test_supervisions
+        artifacts:
+          recordings:
+            - test_recordings
+          supervisions:
+            - test_supervisions
         statistics:
           duration_hours: 0.7577444444444444
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:Voices-in-the-Wild-Bench/manifests/vitw_syn_far_field_supervisions.jsonl.gz'
@@ -2908,7 +3211,7 @@
       snapshot_date: '2026-08-04'
       loader_kind: single
       dataset_family: vitw
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: vitw_syn_mixed
     version: eval-20260804
     languages:
@@ -2928,8 +3231,11 @@
         relative_path: Voices-in-the-Wild-Bench/manifests/vitw_syn_mixed_supervisions.jsonl.gz
     splits:
       test:
-        recordings_artifact: test_recordings
-        supervisions_artifact: test_supervisions
+        artifacts:
+          recordings:
+            - test_recordings
+          supervisions:
+            - test_supervisions
         statistics:
           duration_hours: 2.3253777777777778
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:Voices-in-the-Wild-Bench/manifests/vitw_syn_mixed_supervisions.jsonl.gz'
@@ -2938,7 +3244,7 @@
       snapshot_date: '2026-08-04'
       loader_kind: single
       dataset_family: vitw
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: vitw_syn_noise
     version: eval-20260804
     languages:
@@ -2958,8 +3264,11 @@
         relative_path: Voices-in-the-Wild-Bench/manifests/vitw_syn_noise_supervisions.jsonl.gz
     splits:
       test:
-        recordings_artifact: test_recordings
-        supervisions_artifact: test_supervisions
+        artifacts:
+          recordings:
+            - test_recordings
+          supervisions:
+            - test_supervisions
         statistics:
           duration_hours: 0.7669444444444444
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:Voices-in-the-Wild-Bench/manifests/vitw_syn_noise_supervisions.jsonl.gz'
@@ -2968,7 +3277,7 @@
       snapshot_date: '2026-08-04'
       loader_kind: single
       dataset_family: vitw
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: vitw_syn_obstructed
     version: eval-20260804
     languages:
@@ -2988,8 +3297,11 @@
         relative_path: Voices-in-the-Wild-Bench/manifests/vitw_syn_obstructed_supervisions.jsonl.gz
     splits:
       test:
-        recordings_artifact: test_recordings
-        supervisions_artifact: test_supervisions
+        artifacts:
+          recordings:
+            - test_recordings
+          supervisions:
+            - test_supervisions
         statistics:
           duration_hours: 0.7642333333333333
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:Voices-in-the-Wild-Bench/manifests/vitw_syn_obstructed_supervisions.jsonl.gz'
@@ -2998,7 +3310,7 @@
       snapshot_date: '2026-08-04'
       loader_kind: single
       dataset_family: vitw
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: vitw_syn_recording
     version: eval-20260804
     languages:
@@ -3018,8 +3330,11 @@
         relative_path: Voices-in-the-Wild-Bench/manifests/vitw_syn_recording_supervisions.jsonl.gz
     splits:
       test:
-        recordings_artifact: test_recordings
-        supervisions_artifact: test_supervisions
+        artifacts:
+          recordings:
+            - test_recordings
+          supervisions:
+            - test_supervisions
         statistics:
           duration_hours: 0.7642444444444445
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:Voices-in-the-Wild-Bench/manifests/vitw_syn_recording_supervisions.jsonl.gz'
