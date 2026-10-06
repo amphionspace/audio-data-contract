@@ -7,7 +7,7 @@ import json
 import sys
 from pathlib import Path
 
-sys.path.insert(0, str(Path(__file__).resolve().parents[2]/'src'))
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]/'src'))
 from audio_data_contract import load_catalog
 from audio_data_contract.catalog import verify_artifact_file
 from audio_data_contract.declarations import write_declarations
@@ -17,7 +17,7 @@ def main():
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument('--amphion-data', type=Path, required=True)
     args = p.parse_args()
-    repo = Path(__file__).resolve().parents[2]
+    repo = Path(__file__).resolve().parents[1]
     root = args.amphion_data.resolve()/'results/police-v6-acceptance-205-20260921'
     coverage = json.loads((root/'coverage.json').read_text())
     plan = json.loads((root/'plan.json').read_text())
