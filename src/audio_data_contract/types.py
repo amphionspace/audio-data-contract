@@ -121,6 +121,17 @@ class ArtifactRef:
         object.__setattr__(
             self, "metadata", _json_object(self.metadata, "artifact.metadata")
         )
+        if self.kind == "lance-table":
+            # A registered Lance materialization must pin one published snapshot.
+            version = self.metadata.get("snapshot_version")
+            count = self.metadata.get("record_count")
+            digest = self.metadata.get("schema_hash")
+            if type(version) is not int or version < 1:
+                raise ContractError("lance-table metadata.snapshot_version must be >= 1")
+            if type(count) is not int or count < 0:
+                raise ContractError("lance-table metadata.record_count must be >= 0")
+            if not isinstance(digest, str) or len(digest) != 64:
+                raise ContractError("lance-table metadata.schema_hash must be sha256")
 
     def to_dict(self) -> dict[str, Any]:
         data: dict[str, Any] = {

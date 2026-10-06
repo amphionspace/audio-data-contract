@@ -9,7 +9,8 @@ from collections.abc import Iterable, Mapping
 from pathlib import Path
 
 from .declarations import declaration_files, read_declarations
-from .errors import ContractError, IntegrityError, ResolutionError
+from .errors import ContractError, IntegrityError
+from .roots import resolve_root_path
 from .types import ArtifactRef, DatasetSpec
 
 
@@ -91,18 +92,12 @@ def resolve_artifact(
     roots: Mapping[str, str | Path],
 ) -> Path:
     artifact: ArtifactRef = catalog.get(dataset_id, version).artifact(artifact_name)
-    if artifact.root_alias not in roots:
-        raise ResolutionError(
-            f"root alias {artifact.root_alias!r} is not configured for "
-            f"{dataset_id}@{version}:{artifact_name}"
-        )
-    root = Path(roots[artifact.root_alias]).expanduser().resolve(strict=False)
-    resolved = (root / artifact.relative_path).resolve(strict=False)
-    try:
-        resolved.relative_to(root)
-    except ValueError as exc:
-        raise ResolutionError(f"artifact escaped configured root: {resolved}") from exc
-    return resolved
+    return resolve_root_path(
+        artifact.root_alias,
+        artifact.relative_path,
+        roots,
+        f"{dataset_id}@{version}:{artifact_name}",
+    )
 
 
 def verify_artifact_file(

@@ -1,0 +1,136 @@
+{
+  "source": "<scratch>/s10m.jsonl.gz",
+  "workers": 8,
+  "import": {
+    "records": 10000000,
+    "table_bytes": 4719752181,
+    "index_bytes": 300173312,
+    "seconds": 65.09819516725838,
+    "peak_rss_mib": 914,
+    "rows_per_s": 153614.08982701832
+  },
+  "queries": {
+    "single_id": {
+      "matches": 1,
+      "cold_s": 0.05708448775112629,
+      "warm_p50_s": 0.0034868158400058746,
+      "warm_max_s": 0.005203494802117348,
+      "seconds": 0.7801215825602412,
+      "peak_rss_mib": 462
+    },
+    "64_ids": {
+      "matches": 64,
+      "cold_s": 0.04279450140893459,
+      "warm_p50_s": 0.017002719454467297,
+      "warm_max_s": 0.017672795802354813,
+      "seconds": 0.2599831195548177,
+      "peak_rss_mib": 462
+    },
+    "65536_ids": {
+      "matches": 65536,
+      "cold_s": 2.091392170637846,
+      "warm_p50_s": 2.0408928664401174,
+      "warm_max_s": 2.0813517309725285,
+      "seconds": 8.314591678790748,
+      "peak_rss_mib": 1121
+    },
+    "language_split": {
+      "matches": 5000000,
+      "cold_s": 98.8061448764056,
+      "warm_p50_s": 98.64906278066337,
+      "warm_max_s": 98.77809484116733,
+      "seconds": 394.946383619681,
+      "peak_rss_mib": 3083
+    },
+    "clean_pass_false": {
+      "matches": 3333334,
+      "cold_s": 66.93157053180039,
+      "warm_p50_s": 66.8355050617829,
+      "warm_max_s": 67.22086489014328,
+      "seconds": 267.9020761968568,
+      "peak_rss_mib": 3067
+    }
+  },
+  "verify_import": {
+    "record_count": 10000000,
+    "ids_equal": true,
+    "records_equal": true,
+    "seconds": 962.7539624972269,
+    "peak_rss_mib": 1118
+  },
+  "layers": [
+    {
+      "patches": 1,
+      "write_layer_s": 0.019298304803669453,
+      "materialize_s": 0.5952405268326402,
+      "artifact": "<output>/layer-1/artifact.json",
+      "snapshot_version": 9,
+      "seconds": 0.7044806806370616,
+      "peak_rss_mib": 462
+    },
+    {
+      "patches": 64,
+      "write_layer_s": 0.03686221316456795,
+      "materialize_s": 0.6136773191392422,
+      "artifact": "<output>/layer-64/artifact.json",
+      "snapshot_version": 11,
+      "seconds": 0.7360509261488914,
+      "peak_rss_mib": 462
+    },
+    {
+      "patches": 100000,
+      "write_layer_s": 10.610856560990214,
+      "materialize_s": 16.013948192819953,
+      "artifact": "<output>/layer-100000/artifact.json",
+      "snapshot_version": 13,
+      "seconds": 26.710573722608387,
+      "peak_rss_mib": 1339
+    },
+    {
+      "patches": 1000000,
+      "write_layer_s": 103.79148347955197,
+      "materialize_s": 143.20675275288522,
+      "artifact": "<output>/layer-1000000/artifact.json",
+      "snapshot_version": 15,
+      "seconds": 247.08285357803106,
+      "peak_rss_mib": 3898
+    }
+  ],
+  "compact": {
+    "snapshot_version": 17,
+    "seconds": 44.648064866662025,
+    "peak_rss_mib": 4077
+  },
+  "cleanup": {
+    "old_versions": 11,
+    "bytes_removed": 89613,
+    "seconds": 0.017780428752303123,
+    "peak_rss_mib": 462
+  },
+  "mirror": {
+    "target": "file://<output>/mirror/raw/table.lance",
+    "copied": 225,
+    "skipped": 0,
+    "bytes": 8991941354,
+    "seconds": 4.47885034698993,
+    "peak_rss_mib": 462
+  },
+  "stream": {
+    "shards": 8,
+    "records": 10000000,
+    "seconds": 46.85661804582924,
+    "records_per_s": 213417.0244685449,
+    "max_shard_records": 2061119,
+    "min_shard_records": 943675,
+    "max_shard_rss_mib": 732
+  },
+  "environment": {
+    "python": "3.12.3",
+    "pylance": "12.0.0",
+    "pyarrow": "25.0.1",
+    "cpus": 128,
+    "memory_gib": 1007,
+    "storage": "local overlay disk"
+  },
+  "data": "synthetic AudioRecord JSONL.gz, 10,000,000 rows (scratchpad gen script): 1 audio slot, zh/en alternating, 10% dev split, clean.pass false for 1/3"
+}
