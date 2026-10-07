@@ -696,10 +696,6 @@
         kind: lhotse-supervisions
         root_alias: multilingual
         relative_path: de/mls_de/data/manifests/mls-german_supervisions_dev.jsonl.gz
-      - name: dev_punc_recordings
-        kind: lhotse-recordings
-        root_alias: multilingual
-        relative_path: de/mls_de/data/manifests/mls-german_recordings_dev_punc.jsonl.gz
       - name: dev_punc_supervisions
         kind: lhotse-supervisions
         root_alias: multilingual
@@ -712,10 +708,6 @@
         kind: lhotse-supervisions
         root_alias: multilingual
         relative_path: de/mls_de/data/manifests/mls-german_supervisions_test.jsonl.gz
-      - name: test_punc_recordings
-        kind: lhotse-recordings
-        root_alias: multilingual
-        relative_path: de/mls_de/data/manifests/mls-german_recordings_test_punc.jsonl.gz
       - name: test_punc_supervisions
         kind: lhotse-supervisions
         root_alias: multilingual
@@ -728,10 +720,6 @@
         kind: lhotse-supervisions
         root_alias: multilingual
         relative_path: de/mls_de/data/manifests/mls-german_supervisions_train.jsonl.gz
-      - name: train_punc_recordings
-        kind: lhotse-recordings
-        root_alias: multilingual
-        relative_path: de/mls_de/data/manifests/mls-german_recordings_train_punc.jsonl.gz
       - name: train_punc_supervisions
         kind: lhotse-supervisions
         root_alias: multilingual
@@ -750,7 +738,7 @@
       dev_punc:
         artifacts:
           recordings:
-            - dev_punc_recordings
+            - dev_recordings
           supervisions:
             - dev_punc_supervisions
         statistics:
@@ -770,7 +758,7 @@
       test_punc:
         artifacts:
           recordings:
-            - test_punc_recordings
+            - test_recordings
           supervisions:
             - test_punc_supervisions
         statistics:
@@ -790,7 +778,7 @@
       train_punc:
         artifacts:
           recordings:
-            - train_punc_recordings
+            - train_recordings
           supervisions:
             - train_punc_supervisions
         statistics:
@@ -1098,10 +1086,6 @@
         kind: lhotse-supervisions
         root_alias: multilingual
         relative_path: es/mls_es/data/manifests/mls-spanish_supervisions_dev.jsonl.gz
-      - name: dev_punc_recordings
-        kind: lhotse-recordings
-        root_alias: multilingual
-        relative_path: es/mls_es/data/manifests/mls-spanish_recordings_dev_punc.jsonl.gz
       - name: dev_punc_supervisions
         kind: lhotse-supervisions
         root_alias: multilingual
@@ -1114,10 +1098,6 @@
         kind: lhotse-supervisions
         root_alias: multilingual
         relative_path: es/mls_es/data/manifests/mls-spanish_supervisions_test.jsonl.gz
-      - name: test_punc_recordings
-        kind: lhotse-recordings
-        root_alias: multilingual
-        relative_path: es/mls_es/data/manifests/mls-spanish_recordings_test_punc.jsonl.gz
       - name: test_punc_supervisions
         kind: lhotse-supervisions
         root_alias: multilingual
@@ -1130,10 +1110,6 @@
         kind: lhotse-supervisions
         root_alias: multilingual
         relative_path: es/mls_es/data/manifests/mls-spanish_supervisions_train.jsonl.gz
-      - name: train_punc_recordings
-        kind: lhotse-recordings
-        root_alias: multilingual
-        relative_path: es/mls_es/data/manifests/mls-spanish_recordings_train_punc.jsonl.gz
       - name: train_punc_supervisions
         kind: lhotse-supervisions
         root_alias: multilingual
@@ -1152,7 +1128,7 @@
       dev_punc:
         artifacts:
           recordings:
-            - dev_punc_recordings
+            - dev_recordings
           supervisions:
             - dev_punc_supervisions
         statistics:
@@ -1172,7 +1148,7 @@
       test_punc:
         artifacts:
           recordings:
-            - test_punc_recordings
+            - test_recordings
           supervisions:
             - test_punc_supervisions
         statistics:
@@ -1192,7 +1168,7 @@
       train_punc:
         artifacts:
           recordings:
-            - train_punc_recordings
+            - train_recordings
           supervisions:
             - train_punc_supervisions
         statistics:
@@ -1461,10 +1437,6 @@
         kind: lhotse-supervisions
         root_alias: multilingual
         relative_path: fr/mls_fr/data/manifests/mls-french_supervisions_dev.jsonl.gz
-      - name: dev_punc_recordings
-        kind: lhotse-recordings
-        root_alias: multilingual
-        relative_path: fr/mls_fr/data/manifests/mls-french_recordings_dev_punc.jsonl.gz
       - name: dev_punc_supervisions
         kind: lhotse-supervisions
         root_alias: multilingual
@@ -1477,10 +1449,6 @@
         kind: lhotse-supervisions
         root_alias: multilingual
         relative_path: fr/mls_fr/data/manifests/mls-french_supervisions_test.jsonl.gz
-      - name: test_punc_recordings
-        kind: lhotse-recordings
-        root_alias: multilingual
-        relative_path: fr/mls_fr/data/manifests/mls-french_recordings_test_punc.jsonl.gz
       - name: test_punc_supervisions
         kind: lhotse-supervisions
         root_alias: multilingual
@@ -1493,10 +1461,6 @@
         kind: lhotse-supervisions
         root_alias: multilingual
         relative_path: fr/mls_fr/data/manifests/mls-french_supervisions_train.jsonl.gz
-      - name: train_punc_recordings
-        kind: lhotse-recordings
-        root_alias: multilingual
-        relative_path: fr/mls_fr/data/manifests/mls-french_recordings_train_punc.jsonl.gz
       - name: train_punc_supervisions
         kind: lhotse-supervisions
         root_alias: multilingual
@@ -1515,7 +1479,7 @@
       dev_punc:
         artifacts:
           recordings:
-            - dev_punc_recordings
+            - dev_recordings
           supervisions:
             - dev_punc_supervisions
         statistics:
@@ -1535,7 +1499,7 @@
       test_punc:
         artifacts:
           recordings:
-            - test_punc_recordings
+            - test_recordings
           supervisions:
             - test_punc_supervisions
         statistics:
@@ -1555,7 +1519,7 @@
       train_punc:
         artifacts:
           recordings:
-            - train_punc_recordings
+            - train_recordings
           supervisions:
             - train_punc_supervisions
         statistics:
