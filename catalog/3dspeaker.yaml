@@ -1,4 +1,4 @@
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: 3dspeaker
     version: official-source-20260911
     languages:
@@ -90,13 +90,17 @@
         relative_path: downloads/speaker-expansion-20260911/3dspeaker/state.json
     splits:
       train:
-        source_archive_artifact: train_archive
+        artifacts:
+          source_archive:
+            - train_archive
       test:
-        source_archive_artifact: test_archive
-        trials_artifacts:
-          - trials_cross_device
-          - trials_cross_distance
-          - trials_cross_dialect
+        artifacts:
+          source_archive:
+            - test_archive
+          trials:
+            - trials_cross_device
+            - trials_cross_distance
+            - trials_cross_dialect
     provenance:
       source: 3D-Speaker
       url: https://3dspeaker.github.io/
@@ -113,7 +117,7 @@
       verification_report:
         root_alias: legacy_asr
         relative_path: downloads/speaker-expansion-20260911/3dspeaker/published-inventory.json
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: 3dspeaker
     version: speaker-records-v1-20260912
     languages:
@@ -223,40 +227,55 @@
         metadata: {}
     splits:
       test:
-        records_artifact: test
-        audio_index_artifact: audio_index
+        artifacts:
+          records:
+            - test
+          audio_index:
+            - audio_index
         statistics:
           records: 18782
           duration_hours: 15.428195954861044
           duration_basis: sum of measured audio durations; one session per diarization record
           speakers: 240
       train:
-        records_artifact: train
-        audio_index_artifact: audio_index
+        artifacts:
+          records:
+            - train
+          audio_index:
+            - audio_index
         statistics:
           records: 643123
           duration_hours: 1259.8434549478636
           duration_basis: sum of measured audio durations; one session per diarization record
           speakers: 10000
       test_cross_device:
+        artifacts:
+          records:
+            - test_cross_device
+          audio_index:
+            - audio_index
         group: test
         task: speaker_verification
-        records_artifact: test_cross_device
-        audio_index_artifact: audio_index
         statistics:
           records: 180000
       test_cross_distance:
+        artifacts:
+          records:
+            - test_cross_distance
+          audio_index:
+            - audio_index
         group: test
         task: speaker_verification
-        records_artifact: test_cross_distance
-        audio_index_artifact: audio_index
         statistics:
           records: 175163
       test_cross_dialect:
+        artifacts:
+          records:
+            - test_cross_dialect
+          audio_index:
+            - audio_index
         group: test
         task: speaker_verification
-        records_artifact: test_cross_dialect
-        audio_index_artifact: audio_index
         statistics:
           records: 180000
     recipe_parameters:

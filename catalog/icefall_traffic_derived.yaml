@@ -1,4 +1,4 @@
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: librispeech_traffic_snr0
     version: recipe-1
     languages:
@@ -18,12 +18,16 @@
         relative_path: LHOTSE/eval_traffic/librispeech_test_other_traffic_noisy_snr0db_cuts.jsonl.gz
     splits:
       test_clean:
-        cuts_artifact: test_clean_cuts
+        artifacts:
+          cuts:
+            - test_clean_cuts
         statistics:
           duration_hours: 5.403466840277778
           duration_basis: 'sum of cuts durations; overlapping segments may count speech more than once; sources: legacy_asr:LHOTSE/eval_traffic/librispeech_test_clean_traffic_noisy_snr0db_cuts.jsonl.gz'
       test_other:
-        cuts_artifact: test_other_cuts
+        artifacts:
+          cuts:
+            - test_other_cuts
         statistics:
           duration_hours: 5.341547256944444
           duration_basis: 'sum of cuts durations; overlapping segments may count speech more than once; sources: legacy_asr:LHOTSE/eval_traffic/librispeech_test_other_traffic_noisy_snr0db_cuts.jsonl.gz'
@@ -33,7 +37,7 @@
     provenance:
       source: icefall
       recipe: build_noisy_test_cuts.py
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: wenetspeech_traffic_snr0
     version: recipe-1
     languages:
@@ -49,7 +53,9 @@
         relative_path: LHOTSE/eval_traffic/wenetspeech_test_net_traffic_noisy_snr0db_cuts.jsonl.gz
     splits:
       test_net:
-        cuts_artifact: test_net_cuts
+        artifacts:
+          cuts:
+            - test_net_cuts
         statistics:
           duration_hours: 23.056208333333334
           duration_basis: 'sum of cuts durations; overlapping segments may count speech more than once; sources: legacy_asr:LHOTSE/eval_traffic/wenetspeech_test_net_traffic_noisy_snr0db_cuts.jsonl.gz'
@@ -59,7 +65,7 @@
     provenance:
       source: icefall
       recipe: build_noisy_test_cuts.py
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: mdcc_traffic_snr0
     version: recipe-1
     languages:
@@ -75,7 +81,9 @@
         relative_path: LHOTSE/eval_traffic/mdcc_test_traffic_noisy_snr0db_cuts.jsonl.gz
     splits:
       test:
-        cuts_artifact: test_cuts
+        artifacts:
+          cuts:
+            - test_cuts
         statistics:
           duration_hours: 11.008564704861111
           duration_basis: 'sum of cuts durations; overlapping segments may count speech more than once; sources: legacy_asr:LHOTSE/eval_traffic/mdcc_test_traffic_noisy_snr0db_cuts.jsonl.gz'
@@ -85,7 +93,7 @@
     provenance:
       source: icefall
       recipe: build_noisy_test_cuts.py
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: talcs_traffic_snr0
     version: recipe-1
     languages:
@@ -101,7 +109,9 @@
         relative_path: LHOTSE/eval_traffic/talcs_test_traffic_noisy_snr0db_cuts.jsonl.gz
     splits:
       test:
-        cuts_artifact: test_cuts
+        artifacts:
+          cuts:
+            - test_cuts
         statistics:
           duration_hours: 23.62268777777778
           duration_basis: 'sum of cuts durations; overlapping segments may count speech more than once; sources: legacy_asr:LHOTSE/eval_traffic/talcs_test_traffic_noisy_snr0db_cuts.jsonl.gz'
@@ -111,7 +121,7 @@
     provenance:
       source: icefall
       recipe: build_noisy_test_cuts.py
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: librispeech_traffic_snr5
     version: recipe-1
     languages:
@@ -131,12 +141,16 @@
         relative_path: LHOTSE/eval_traffic/librispeech_test_other_traffic_noisy_snr5db_cuts.jsonl.gz
     splits:
       test_clean:
-        cuts_artifact: test_clean_cuts
+        artifacts:
+          cuts:
+            - test_clean_cuts
         statistics:
           duration_hours: 5.403466840277778
           duration_basis: 'sum of cuts durations; overlapping segments may count speech more than once; sources: legacy_asr:LHOTSE/eval_traffic/librispeech_test_clean_traffic_noisy_snr5db_cuts.jsonl.gz'
       test_other:
-        cuts_artifact: test_other_cuts
+        artifacts:
+          cuts:
+            - test_other_cuts
         statistics:
           duration_hours: 5.341547256944444
           duration_basis: 'sum of cuts durations; overlapping segments may count speech more than once; sources: legacy_asr:LHOTSE/eval_traffic/librispeech_test_other_traffic_noisy_snr5db_cuts.jsonl.gz'
@@ -146,7 +160,7 @@
     provenance:
       source: icefall
       recipe: build_noisy_test_cuts.py
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: wenetspeech_traffic_snr5
     version: recipe-1
     languages:
@@ -162,7 +176,9 @@
         relative_path: LHOTSE/eval_traffic/wenetspeech_test_net_traffic_noisy_snr5db_cuts.jsonl.gz
     splits:
       test_net:
-        cuts_artifact: test_net_cuts
+        artifacts:
+          cuts:
+            - test_net_cuts
         statistics:
           duration_hours: 23.056208333333334
           duration_basis: 'sum of cuts durations; overlapping segments may count speech more than once; sources: legacy_asr:LHOTSE/eval_traffic/wenetspeech_test_net_traffic_noisy_snr5db_cuts.jsonl.gz'
@@ -172,7 +188,7 @@
     provenance:
       source: icefall
       recipe: build_noisy_test_cuts.py
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: mdcc_traffic_snr5
     version: recipe-1
     languages:
@@ -188,7 +204,9 @@
         relative_path: LHOTSE/eval_traffic/mdcc_test_traffic_noisy_snr5db_cuts.jsonl.gz
     splits:
       test:
-        cuts_artifact: test_cuts
+        artifacts:
+          cuts:
+            - test_cuts
         statistics:
           duration_hours: 11.008564704861111
           duration_basis: 'sum of cuts durations; overlapping segments may count speech more than once; sources: legacy_asr:LHOTSE/eval_traffic/mdcc_test_traffic_noisy_snr5db_cuts.jsonl.gz'
@@ -198,7 +216,7 @@
     provenance:
       source: icefall
       recipe: build_noisy_test_cuts.py
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: talcs_traffic_snr5
     version: recipe-1
     languages:
@@ -214,7 +232,9 @@
         relative_path: LHOTSE/eval_traffic/talcs_test_traffic_noisy_snr5db_cuts.jsonl.gz
     splits:
       test:
-        cuts_artifact: test_cuts
+        artifacts:
+          cuts:
+            - test_cuts
         statistics:
           duration_hours: 23.62268777777778
           duration_basis: 'sum of cuts durations; overlapping segments may count speech more than once; sources: legacy_asr:LHOTSE/eval_traffic/talcs_test_traffic_noisy_snr5db_cuts.jsonl.gz'
@@ -224,7 +244,7 @@
     provenance:
       source: icefall
       recipe: build_noisy_test_cuts.py
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: librispeech_traffic_snr10
     version: recipe-1
     languages:
@@ -244,12 +264,16 @@
         relative_path: LHOTSE/eval_traffic/librispeech_test_other_traffic_noisy_snr10db_cuts.jsonl.gz
     splits:
       test_clean:
-        cuts_artifact: test_clean_cuts
+        artifacts:
+          cuts:
+            - test_clean_cuts
         statistics:
           duration_hours: 5.403466840277778
           duration_basis: 'sum of cuts durations; overlapping segments may count speech more than once; sources: legacy_asr:LHOTSE/eval_traffic/librispeech_test_clean_traffic_noisy_snr10db_cuts.jsonl.gz'
       test_other:
-        cuts_artifact: test_other_cuts
+        artifacts:
+          cuts:
+            - test_other_cuts
         statistics:
           duration_hours: 5.341547256944444
           duration_basis: 'sum of cuts durations; overlapping segments may count speech more than once; sources: legacy_asr:LHOTSE/eval_traffic/librispeech_test_other_traffic_noisy_snr10db_cuts.jsonl.gz'
@@ -259,7 +283,7 @@
     provenance:
       source: icefall
       recipe: build_noisy_test_cuts.py
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: wenetspeech_traffic_snr10
     version: recipe-1
     languages:
@@ -275,7 +299,9 @@
         relative_path: LHOTSE/eval_traffic/wenetspeech_test_net_traffic_noisy_snr10db_cuts.jsonl.gz
     splits:
       test_net:
-        cuts_artifact: test_net_cuts
+        artifacts:
+          cuts:
+            - test_net_cuts
         statistics:
           duration_hours: 23.056208333333334
           duration_basis: 'sum of cuts durations; overlapping segments may count speech more than once; sources: legacy_asr:LHOTSE/eval_traffic/wenetspeech_test_net_traffic_noisy_snr10db_cuts.jsonl.gz'
@@ -285,7 +311,7 @@
     provenance:
       source: icefall
       recipe: build_noisy_test_cuts.py
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: mdcc_traffic_snr10
     version: recipe-1
     languages:
@@ -301,7 +327,9 @@
         relative_path: LHOTSE/eval_traffic/mdcc_test_traffic_noisy_snr10db_cuts.jsonl.gz
     splits:
       test:
-        cuts_artifact: test_cuts
+        artifacts:
+          cuts:
+            - test_cuts
         statistics:
           duration_hours: 11.008564704861111
           duration_basis: 'sum of cuts durations; overlapping segments may count speech more than once; sources: legacy_asr:LHOTSE/eval_traffic/mdcc_test_traffic_noisy_snr10db_cuts.jsonl.gz'
@@ -311,7 +339,7 @@
     provenance:
       source: icefall
       recipe: build_noisy_test_cuts.py
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: talcs_traffic_snr10
     version: recipe-1
     languages:
@@ -327,7 +355,9 @@
         relative_path: LHOTSE/eval_traffic/talcs_test_traffic_noisy_snr10db_cuts.jsonl.gz
     splits:
       test:
-        cuts_artifact: test_cuts
+        artifacts:
+          cuts:
+            - test_cuts
         statistics:
           duration_hours: 23.62268777777778
           duration_basis: 'sum of cuts durations; overlapping segments may count speech more than once; sources: legacy_asr:LHOTSE/eval_traffic/talcs_test_traffic_noisy_snr10db_cuts.jsonl.gz'
@@ -337,7 +367,7 @@
     provenance:
       source: icefall
       recipe: build_noisy_test_cuts.py
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: librispeech_traffic_snr15
     version: recipe-1
     languages:
@@ -357,12 +387,16 @@
         relative_path: LHOTSE/eval_traffic/librispeech_test_other_traffic_noisy_snr15db_cuts.jsonl.gz
     splits:
       test_clean:
-        cuts_artifact: test_clean_cuts
+        artifacts:
+          cuts:
+            - test_clean_cuts
         statistics:
           duration_hours: 5.403466840277778
           duration_basis: 'sum of cuts durations; overlapping segments may count speech more than once; sources: legacy_asr:LHOTSE/eval_traffic/librispeech_test_clean_traffic_noisy_snr15db_cuts.jsonl.gz'
       test_other:
-        cuts_artifact: test_other_cuts
+        artifacts:
+          cuts:
+            - test_other_cuts
         statistics:
           duration_hours: 5.341547256944444
           duration_basis: 'sum of cuts durations; overlapping segments may count speech more than once; sources: legacy_asr:LHOTSE/eval_traffic/librispeech_test_other_traffic_noisy_snr15db_cuts.jsonl.gz'
@@ -372,7 +406,7 @@
     provenance:
       source: icefall
       recipe: build_noisy_test_cuts.py
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: wenetspeech_traffic_snr15
     version: recipe-1
     languages:
@@ -388,7 +422,9 @@
         relative_path: LHOTSE/eval_traffic/wenetspeech_test_net_traffic_noisy_snr15db_cuts.jsonl.gz
     splits:
       test_net:
-        cuts_artifact: test_net_cuts
+        artifacts:
+          cuts:
+            - test_net_cuts
         statistics:
           duration_hours: 23.056208333333334
           duration_basis: 'sum of cuts durations; overlapping segments may count speech more than once; sources: legacy_asr:LHOTSE/eval_traffic/wenetspeech_test_net_traffic_noisy_snr15db_cuts.jsonl.gz'
@@ -398,7 +434,7 @@
     provenance:
       source: icefall
       recipe: build_noisy_test_cuts.py
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: mdcc_traffic_snr15
     version: recipe-1
     languages:
@@ -414,7 +450,9 @@
         relative_path: LHOTSE/eval_traffic/mdcc_test_traffic_noisy_snr15db_cuts.jsonl.gz
     splits:
       test:
-        cuts_artifact: test_cuts
+        artifacts:
+          cuts:
+            - test_cuts
         statistics:
           duration_hours: 11.008564704861111
           duration_basis: 'sum of cuts durations; overlapping segments may count speech more than once; sources: legacy_asr:LHOTSE/eval_traffic/mdcc_test_traffic_noisy_snr15db_cuts.jsonl.gz'
@@ -424,7 +462,7 @@
     provenance:
       source: icefall
       recipe: build_noisy_test_cuts.py
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: talcs_traffic_snr15
     version: recipe-1
     languages:
@@ -440,7 +478,9 @@
         relative_path: LHOTSE/eval_traffic/talcs_test_traffic_noisy_snr15db_cuts.jsonl.gz
     splits:
       test:
-        cuts_artifact: test_cuts
+        artifacts:
+          cuts:
+            - test_cuts
         statistics:
           duration_hours: 23.62268777777778
           duration_basis: 'sum of cuts durations; overlapping segments may count speech more than once; sources: legacy_asr:LHOTSE/eval_traffic/talcs_test_traffic_noisy_snr15db_cuts.jsonl.gz'
@@ -450,7 +490,7 @@
     provenance:
       source: icefall
       recipe: build_noisy_test_cuts.py
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: librispeech_traffic_snr20
     version: recipe-1
     languages:
@@ -470,12 +510,16 @@
         relative_path: LHOTSE/eval_traffic/librispeech_test_other_traffic_noisy_snr20db_cuts.jsonl.gz
     splits:
       test_clean:
-        cuts_artifact: test_clean_cuts
+        artifacts:
+          cuts:
+            - test_clean_cuts
         statistics:
           duration_hours: 5.403466840277778
           duration_basis: 'sum of cuts durations; overlapping segments may count speech more than once; sources: legacy_asr:LHOTSE/eval_traffic/librispeech_test_clean_traffic_noisy_snr20db_cuts.jsonl.gz'
       test_other:
-        cuts_artifact: test_other_cuts
+        artifacts:
+          cuts:
+            - test_other_cuts
         statistics:
           duration_hours: 5.341547256944444
           duration_basis: 'sum of cuts durations; overlapping segments may count speech more than once; sources: legacy_asr:LHOTSE/eval_traffic/librispeech_test_other_traffic_noisy_snr20db_cuts.jsonl.gz'
@@ -485,7 +529,7 @@
     provenance:
       source: icefall
       recipe: build_noisy_test_cuts.py
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: wenetspeech_traffic_snr20
     version: recipe-1
     languages:
@@ -501,7 +545,9 @@
         relative_path: LHOTSE/eval_traffic/wenetspeech_test_net_traffic_noisy_snr20db_cuts.jsonl.gz
     splits:
       test_net:
-        cuts_artifact: test_net_cuts
+        artifacts:
+          cuts:
+            - test_net_cuts
         statistics:
           duration_hours: 23.056208333333334
           duration_basis: 'sum of cuts durations; overlapping segments may count speech more than once; sources: legacy_asr:LHOTSE/eval_traffic/wenetspeech_test_net_traffic_noisy_snr20db_cuts.jsonl.gz'
@@ -511,7 +557,7 @@
     provenance:
       source: icefall
       recipe: build_noisy_test_cuts.py
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: mdcc_traffic_snr20
     version: recipe-1
     languages:
@@ -527,7 +573,9 @@
         relative_path: LHOTSE/eval_traffic/mdcc_test_traffic_noisy_snr20db_cuts.jsonl.gz
     splits:
       test:
-        cuts_artifact: test_cuts
+        artifacts:
+          cuts:
+            - test_cuts
         statistics:
           duration_hours: 11.008564704861111
           duration_basis: 'sum of cuts durations; overlapping segments may count speech more than once; sources: legacy_asr:LHOTSE/eval_traffic/mdcc_test_traffic_noisy_snr20db_cuts.jsonl.gz'
@@ -537,7 +585,7 @@
     provenance:
       source: icefall
       recipe: build_noisy_test_cuts.py
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: talcs_traffic_snr20
     version: recipe-1
     languages:
@@ -553,7 +601,9 @@
         relative_path: LHOTSE/eval_traffic/talcs_test_traffic_noisy_snr20db_cuts.jsonl.gz
     splits:
       test:
-        cuts_artifact: test_cuts
+        artifacts:
+          cuts:
+            - test_cuts
         statistics:
           duration_hours: 23.62268777777778
           duration_basis: 'sum of cuts durations; overlapping segments may count speech more than once; sources: legacy_asr:LHOTSE/eval_traffic/talcs_test_traffic_noisy_snr20db_cuts.jsonl.gz'

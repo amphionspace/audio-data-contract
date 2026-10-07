@@ -48,10 +48,10 @@ def drop_cache(path):
 
 def sample_ids(artifact, count, seed=0):
     """Reservoir-sample IDs from the snapshot (one pass over the id column)."""
-    from audio_data_contract.lance import _open_artifact
+    from audio_data_contract.lance import open_artifact
 
     rng, sample, seen = random.Random(seed), [], 0
-    dataset = _open_artifact(artifact)
+    dataset = open_artifact(artifact)
     for batch in dataset.to_batches(columns=["id"], filter="retained = true"):
         for value in batch.column(0).to_pylist():
             seen += 1

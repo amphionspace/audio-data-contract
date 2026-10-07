@@ -61,7 +61,7 @@ def test_cnceleb_official_split_trials_publish_and_portable_read(tmp_path):
             "id00800-enroll test/id00800-speech-1.wav 1\nid00800-enroll test/id00801-speech-1.wav 0\n",
     }
     artifact = archive(root / "source.tar.gz", entries)
-    spec = {"schema_version": "dataset-catalog/1.0", "dataset_id": "cnceleb1",
+    spec = {"schema_version": "dataset-catalog/2.0", "dataset_id": "cnceleb1",
             "version": "source-1", "languages": ["zh"], "tasks": ["speaker_verification"],
             "artifacts": [artifact], "splits": {}, "provenance": {"source": "fixture"}}
     write_declarations(repo / "catalog/cnceleb1.yaml", [spec])

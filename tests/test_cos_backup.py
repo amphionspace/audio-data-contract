@@ -208,11 +208,11 @@ def test_planner_deduplicates_content_and_inodes_without_losing_paths(tmp_path):
                                                for p in (first, second, linked)]}) + "\n")
     catalog = tmp_path / "catalog.jsonl"
     catalog.write_text(json.dumps({
-        "schema_version": "dataset-catalog/1.0", "dataset_id": "test", "version": "1",
+        "schema_version": "dataset-catalog/2.0", "dataset_id": "test", "version": "1",
         "languages": ["zh"], "tasks": ["asr"], "aliases": [],
         "artifacts": [{"name": "recordings", "kind": "lhotse-recordings",
                        "root_alias": "data", "relative_path": manifest.name}],
-        "splits": {"train": {"recordings_artifact": "recordings"}},
+        "splits": {"train": {"artifacts": {"recordings": ["recordings"]}}},
     }) + "\n")
     roots = tmp_path / "roots.json"
     roots.write_text(json.dumps({"data": str(tmp_path)}))

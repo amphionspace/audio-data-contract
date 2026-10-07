@@ -1,4 +1,4 @@
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: alimeeting
     version: openslr-119-far-local-20260903
     languages:
@@ -65,18 +65,27 @@
           record_count: 474
     splits:
       train:
-        source_artifact: train_source
-        inventory_artifact: source_inventory
+        artifacts:
+          source:
+            - train_source
+          inventory:
+            - source_inventory
         statistics:
           duration_hours: 111.35797559027776
       dev:
-        source_artifact: dev_source
-        inventory_artifact: source_inventory
+        artifacts:
+          source:
+            - dev_source
+          inventory:
+            - source_inventory
         statistics:
           duration_hours: 4.205059722222223
       test:
-        source_artifact: test_source
-        inventory_artifact: source_inventory
+        artifacts:
+          source:
+            - test_source
+          inventory:
+            - source_inventory
         statistics:
           duration_hours: 9.978771145833335
     provenance:

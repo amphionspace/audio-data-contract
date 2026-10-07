@@ -143,7 +143,7 @@ python -m pip install -e '.[duration]'
 | [catalog/](catalog/README.md) | YAML 数据声明：版本、划分、文件引用、时长和来源 |
 | [views/](views/) | YAML View 声明：源版本、处理步骤和结果版本 |
 | [src/audio_data_contract/](src/audio_data_contract/) | 读取、校验、路径解析工具及 [JSON Schema](src/audio_data_contract/schemas/) |
-| [scripts/](scripts/) | 下载、转换、准备和备份脚本；[Icefall 工具](scripts/icefall/README.md)单独说明 |
+| [scripts/](scripts/) | 下载、转换、准备和备份脚本；Icefall 训练专用的数据准备工具由 icefall 仓库维护 |
 | [docs/](docs/README.md) | 使用说明、数据专题、协议规范和历史记录 |
 | [reports/](reports/) | 核查报告、统计结果和验收记录 |
 

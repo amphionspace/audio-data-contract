@@ -1,4 +1,4 @@
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: cnceleb1
     version: openslr-82-v2
     languages:
@@ -28,11 +28,17 @@
         relative_path: downloads/speaker-expansion-20260911/cnceleb1/state.json
     splits:
       train:
-        source_archive_artifact: audio_archive
-        source_split: dev
+        artifacts:
+          source_archive:
+            - audio_archive
+        provenance:
+          source_split: dev
       test:
-        source_archive_artifact: audio_archive
-        source_split: eval
+        artifacts:
+          source_archive:
+            - audio_archive
+        provenance:
+          source_split: eval
     provenance:
       source: OpenSLR
       url: https://www.openslr.org/82/
@@ -49,7 +55,7 @@
       verification_report:
         root_alias: legacy_asr
         relative_path: downloads/speaker-expansion-20260911/cnceleb1/published-inventory.json
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: cnceleb1
     version: speaker-records-v1-20260912
     languages:
@@ -130,42 +136,58 @@
         metadata: {}
     splits:
       test:
-        records_artifact: test
-        audio_index_artifact: audio_index
+        artifacts:
+          records:
+            - test
+          audio_index:
+            - audio_index
         statistics:
           records: 17777
           duration_hours: 42.06040711805531
           duration_basis: sum of measured audio durations; one session per diarization record
           speakers: 200
       test_enrollment:
+        artifacts:
+          records:
+            - test_enrollment
+          audio_index:
+            - audio_index
         group: test
-        role: enrollment
-        records_artifact: test_enrollment
-        audio_index_artifact: audio_index
         statistics:
           records: 196
           duration_hours: 1.6413361284722217
           duration_basis: sum of measured audio durations; one session per diarization record
           speakers: 196
+        provenance:
+          role: enrollment
       train:
-        records_artifact: train
-        audio_index_artifact: audio_index
+        artifacts:
+          records:
+            - train
+          audio_index:
+            - audio_index
         statistics:
           records: 107953
           duration_hours: 228.00655407988083
           duration_basis: sum of measured audio durations; one session per diarization record
           speakers: 797
       test_trials:
+        artifacts:
+          records:
+            - test_trials
+          audio_index:
+            - audio_index
         group: test
         task: speaker_verification
-        records_artifact: test_trials
-        audio_index_artifact: audio_index
         statistics:
           records: 3484292
       source_eval:
+        artifacts:
+          audio_index:
+            - audio_index
         group: test
-        audio_index_artifact: audio_index
-        role: original_held_out_audio_not_training
+        provenance:
+          role: original_held_out_audio_not_training
     recipe_parameters:
       script: scripts/speaker/prepare.py
       script_sha256: 1d28ab668f67ca9986448b17d9b4f6c44debac09d433a5fdf22825bd8669c7a4

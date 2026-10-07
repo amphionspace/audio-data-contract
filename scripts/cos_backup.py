@@ -21,7 +21,7 @@ from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
 from audio_data_contract import load_catalog
-from audio_data_contract.audio_prepare import _parse, _sources
+from audio_data_contract.audio_prepare import parse_audio_source, recording_sources
 from audio_data_contract.roots import load_roots
 
 # Explicitly scoped to a resumed run after verifying the same filesystem was
@@ -107,10 +107,10 @@ def build_plan(args):
         opener = gzip.open if path.name.endswith(".gz") else open
         with opener(path, "rt", encoding="utf-8") as stream:
             for line in stream:
-                for source in _sources(json.loads(line)):
+                for source in recording_sources(json.loads(line)):
                     if not args.source_root and not Path(source["source"]).is_absolute():
                         raise ValueError("relative/command audio requires --source-root")
-                    _, source_path, _ = _parse(
+                    _, source_path, _ = parse_audio_source(
                         source, args.source_root or Path("/"), extract=True
                     )
                     add(source_path, "audio")

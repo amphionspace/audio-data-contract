@@ -87,7 +87,7 @@ def test_alimeeting_split_hours_match_the_verified_inventory():
                 seconds[row["split"]] += float(row["duration"])
 
     for split, total_seconds in seconds.items():
-        assert spec.splits[split]["statistics"]["duration_hours"] == pytest.approx(
+        assert spec.splits[split].statistics["duration_hours"] == pytest.approx(
             total_seconds / 3600
         )
 

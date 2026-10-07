@@ -500,15 +500,6 @@ def measure(sources: dict, workers: int) -> dict:
     }
 
 
-def _references(split, role):
-    return list(
-        dict.fromkeys(
-            ([split[f"{role}_artifact"]] if split.get(f"{role}_artifact") else [])
-            + split.get(f"{role}_artifacts", [])
-        )
-    )
-
-
 def catalog_sources(catalog_path, roots):
     catalog = load_catalog(catalog_path)
     sources, targets = {}, []
@@ -519,8 +510,8 @@ def catalog_sources(catalog_path, roots):
         ):
             continue
         for split_name, split in spec.splits.items():
-            if split.get("group") or any(
-                split.get("statistics", {}).get(k) is not None
+            if split.group or any(
+                split.statistics.get(k) is not None
                 for k in ("duration_hours", "hours")
             ):
                 continue
@@ -533,7 +524,7 @@ def catalog_sources(catalog_path, roots):
                 clean = filtering is not None
                 paths = []
                 for role in ("cuts", "supervisions", "recordings"):
-                    refs = _references(split, role)
+                    refs = split.artifacts.get(role, ())
                     if refs:
                         paths = [
                             resolve_artifact(
@@ -543,49 +534,31 @@ def catalog_sources(catalog_path, roots):
                         ]
                         break
                 else:
-                    if "manifest_dir_artifact" in split:
-                        directory = resolve_artifact(
-                            catalog,
-                            spec.dataset_id,
-                            spec.version,
-                            split["manifest_dir_artifact"],
-                            roots,
-                        )
-                        role = "supervisions"
-                        stem = f"{split['manifest_prefix']}_{role}_{split['source_split']}.jsonl"
-                        paths = [
-                            p
-                            for p in (directory / stem, directory / (stem + ".gz"))
-                            if p.is_file()
-                        ]
-                        if len(paths) != 1:
-                            raise ValueError("cannot identify one supervision manifest")
-                    else:
-                        refs = _references(split, "source")
-                        if (
-                            not refs
-                            or split.get("split_policy")
-                            or clean
-                            or any(
-                                spec.artifact(ref).kind != "source-directory"
-                                for ref in refs
-                            )
-                            or any(
-                                set(refs) & set(_references(other, "source"))
-                                for name, other in spec.splits.items()
-                                if name != split_name
-                            )
-                        ):
-                            raise ValueError(
-                                "no supported manifest or unambiguous split audio directory"
-                            )
-                        role = "audio"
-                        paths = [
-                            resolve_artifact(
-                                catalog, spec.dataset_id, spec.version, ref, roots
-                            )
+                    refs = split.artifacts.get("source", ())
+                    if (
+                        not refs
+                        or split.provenance.get("split_policy")
+                        or clean
+                        or any(
+                            spec.artifact(ref).kind != "source-directory"
                             for ref in refs
-                        ]
+                        )
+                        or any(
+                            set(refs) & set(other.artifacts.get("source", ()))
+                            for name, other in spec.splits.items()
+                            if name != split_name
+                        )
+                    ):
+                        raise ValueError(
+                            "no supported manifest or unambiguous split audio directory"
+                        )
+                    role = "audio"
+                    paths = [
+                        resolve_artifact(
+                            catalog, spec.dataset_id, spec.version, ref, roots
+                        )
+                        for ref in refs
+                    ]
                 if clean and role == "recordings":
                     raise ValueError("clean subset requires segment manifests")
                 target["basis"] = f"sum of {role} durations"

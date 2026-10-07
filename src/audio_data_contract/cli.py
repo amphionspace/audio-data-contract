@@ -4,11 +4,8 @@ from __future__ import annotations
 
 import argparse
 import json
-from pathlib import Path
 
 from .catalog import load_catalog, resolve_artifact, verify_artifact_file
-from .declarations import write_declarations
-from .legacy import convert_legacy_registry
 from .overview import update_data_overview
 from .records import load_records
 from .roots import load_roots
@@ -70,11 +67,6 @@ def _parser() -> argparse.ArgumentParser:
     resolve_dataset_view.add_argument("view_id")
     resolve_dataset_view.add_argument("version")
 
-    legacy = commands.add_parser("convert-legacy")
-    legacy.add_argument("input")
-    legacy.add_argument("output")
-    legacy.add_argument("--version", default="legacy")
-    legacy.add_argument("--root", action="append", default=[], metavar="ALIAS=PATH")
 
     overview = commands.add_parser("generate-overview")
     overview.add_argument("--catalog", default="catalog")
@@ -92,16 +84,6 @@ def _parser() -> argparse.ArgumentParser:
     duration.add_argument("--output")
     duration.add_argument("--write", action="store_true")
     return parser
-
-
-def _root_args(values: list[str]) -> dict[str, str]:
-    roots: dict[str, str] = {}
-    for value in values:
-        alias, separator, path = value.partition("=")
-        if not separator or not alias or not path:
-            raise SystemExit(f"invalid --root {value!r}; expected ALIAS=PATH")
-        roots[alias] = path
-    return roots
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -195,16 +177,6 @@ def main(argv: list[str] | None = None) -> int:
                 sort_keys=True,
             )
         )
-        return 0
-    if args.command == "convert-legacy":
-        source = json.loads(Path(args.input).read_text(encoding="utf-8"))
-        specs = convert_legacy_registry(
-            source, roots=_root_args(args.root), version=args.version
-        )
-        output = Path(args.output)
-        output.parent.mkdir(parents=True, exist_ok=True)
-        write_declarations(output, [spec.to_dict() for spec in specs])
-        print(json.dumps({"datasets": len(specs), "output": str(output)}, sort_keys=True))
         return 0
     if args.command == "generate-overview":
         status = update_data_overview(

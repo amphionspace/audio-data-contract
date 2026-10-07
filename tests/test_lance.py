@@ -504,7 +504,7 @@ def test_catalog_lance_table_pins_snapshot(tmp_path):
     def catalog(ref):
         spec = DatasetSpec.from_dict(
             {
-                "schema_version": "dataset-catalog/1.0",
+                "schema_version": "dataset-catalog/2.0",
                 "dataset_id": "demo",
                 "version": "v1",
                 "languages": ["zh"],
@@ -575,7 +575,7 @@ def test_dead_import_worker_fails_instead_of_hanging():
 
 
 def test_queries_use_scalar_indexes_after_import_and_layer(imported, tmp_path):
-    from audio_data_contract.lance import INDICES, _open_artifact
+    from audio_data_contract.lance import INDICES, open_artifact
 
     layer = write_layer(
         tmp_path / "clean", patches(), parent=imported[1], step=step(), tool="t"
@@ -589,7 +589,7 @@ def test_queries_use_scalar_indexes_after_import_and_layer(imported, tmp_path):
         clean_pass=False,
     )
     for artifact in (imported[1], clean):
-        dataset = _open_artifact(artifact)
+        dataset = open_artifact(artifact)
         for column, _ in INDICES:
             stats = dataset.stats.index_stats(f"{column}_idx")
             assert stats["num_unindexed_rows"] == 0
@@ -607,6 +607,7 @@ def test_queries_use_scalar_indexes_after_import_and_layer(imported, tmp_path):
 def test_chunked_layer_matches_replay_and_fails_atomically(
     imported, tmp_path, monkeypatch
 ):
+    from audio_data_contract import lance as lance_module
     from audio_data_contract import layers
 
     monkeypatch.setattr(layers, "CHUNK_SIZE", 2)
@@ -621,7 +622,7 @@ def test_chunked_layer_matches_replay_and_fails_atomically(
     assert ids == sorted(ids)
     _, rows, _ = layers.read_layer(layer)
     manifest = json.loads((layer / "manifest.json").read_text())
-    assert layers._hash(rows) == manifest["patch_hash"]
+    assert layers.json_sha256(rows) == manifest["patch_hash"]
 
     calls = []
     original = layers.apply_patch
@@ -632,12 +633,12 @@ def test_chunked_layer_matches_replay_and_fails_atomically(
             raise ContractError("injected chunk failure")
         return original(record, patch, step)
 
-    monkeypatch.setattr(layers, "apply_patch", fail_in_second_chunk)
+    monkeypatch.setattr(lance_module, "apply_patch", fail_in_second_chunk)
     with pytest.raises(ContractError, match="injected chunk failure"):
         materialize_layer(layer, source_view="demo/clean@v1")
     assert lance.dataset(imported[1].table_path).version == imported[1].snapshot_version
     assert not list(tmp_path.glob(".layer-rows-*"))
-    monkeypatch.setattr(layers, "apply_patch", original)
+    monkeypatch.setattr(lance_module, "apply_patch", original)
     clean = materialize_layer(layer, source_view="demo/clean@v1")
     expected = list(replay_layer(read_artifact(imported[0]), layer))
     assert {r.id: r for r in read_artifact(clean)} == {r.id: r for r in expected}

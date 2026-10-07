@@ -4,7 +4,7 @@ import wave
 
 import pytest
 
-from audio_data_contract import ArtifactRef, DatasetSpec
+from audio_data_contract import ArtifactRef, DatasetSpec, Split
 from audio_data_contract.cli import main
 from audio_data_contract.declarations import read_declarations, write_declarations
 from audio_data_contract.duration import _run_job, catalog_sources, measure
@@ -155,14 +155,13 @@ def test_catalog_reuses_sources_and_only_writes_complete_missing_splits(
             ArtifactRef("rec", "lhotse-recordings", "data", "long.jsonl"),
         ),
         splits={
-            "train": {
-                "supervisions_artifacts": ["sup", "sup"],
-                "recordings_artifact": "rec",
-            },
-            "alias": {"supervisions_artifact": "sup"},
-            "bad": {"supervisions_artifacts": ["sup", "missing"]},
-            "known": {"statistics": {"duration_hours": 7}},
-            "child": {"group": "train", "supervisions_artifact": "sup"},
+            "train": Split({"supervisions": ("sup",), "recordings": ("rec",)}),
+            "alias": Split({"supervisions": ("sup",)}),
+            "bad": Split({"supervisions": ("sup", "missing")}),
+            "known": Split(
+                {"supervisions": ("sup",)}, statistics={"duration_hours": 7}
+            ),
+            "child": Split({"supervisions": ("sup",)}, group="train"),
         },
     )
     catalog = tmp_path / ("catalog" + suffix)

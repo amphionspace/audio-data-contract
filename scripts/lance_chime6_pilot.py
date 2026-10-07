@@ -87,7 +87,7 @@ def prepare(extracted, output):
             stream.write(json.dumps(row) + "\n")
     # This private catalog is solely for exercising the existing audio-index resolver.
     catalog = {
-        "schema_version": "dataset-catalog/1.0",
+        "schema_version": "dataset-catalog/2.0",
         "dataset_id": "chime6",
         "version": "lance-pilot-dev-v1",
         "languages": ["en"],
@@ -100,7 +100,7 @@ def prepare(extracted, output):
                 "relative_path": "audio-index.jsonl.gz",
             }
         ],
-        "splits": {"dev": {"audio_index_artifact": "audio_index"}},
+        "splits": {"dev": {"artifacts": {"audio_index": ["audio_index"]}}},
     }
     (output / "catalog.jsonl").write_text(json.dumps(catalog) + "\n")
     (output / "roots.json").write_text(

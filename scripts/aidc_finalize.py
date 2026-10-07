@@ -20,7 +20,7 @@ from aidc_migrate import JSON, JSONL, paths_in_item
 from aidc_transfer import digest, publish, safe_path, save
 
 from audio_data_contract import load_catalog
-from audio_data_contract.audio_prepare import _parse
+from audio_data_contract.audio_prepare import parse_audio_source
 from audio_data_contract.declarations import read_declarations, write_declarations
 from audio_data_contract.views import load_view_catalog
 
@@ -67,7 +67,7 @@ def sample_command(item, samples, db):
     for source in item.get('sources', []):
         if source['type'] != 'command':
             continue
-        kind, archive, selector = _parse(source, Path('/'), extract=True)
+        kind, archive, selector = parse_audio_source(source, Path('/'), extract=True)
         db.execute('INSERT OR IGNORE INTO command_refs VALUES(?,?,?)',
                    (str(archive), kind, json.dumps(selector)))
         if kind in samples:

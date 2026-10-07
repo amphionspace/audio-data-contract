@@ -1,4 +1,4 @@
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: real_rir_slr28
     version: legacy-20260804
     languages:
@@ -13,7 +13,9 @@
         root_alias: legacy_asr
     splits:
       all:
-        recordings_artifact: recordings
+        artifacts:
+          recordings:
+            - recordings
     provenance:
       snapshot_date: '2026-08-07'
       source: AmphionASR target-speaker recipe

@@ -1,4 +1,4 @@
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: chime6
     version: openslr-150-source-20260911
     languages:
@@ -103,15 +103,25 @@
           sha256: 6ad482bfe2424b24a0a5f94e8087c6bce8ee9fae3ff28c0927f5694cc3e772cb
     splits:
       train:
-        source_archive_artifact: train_archive
-        annotations_artifact: transcriptions_repaired_archive
+        artifacts:
+          source_archive:
+            - train_archive
+          annotations:
+            - transcriptions_repaired_archive
       dev:
-        source_archive_artifact: dev_archive
-        annotations_artifact: transcriptions_repaired_archive
+        artifacts:
+          source_archive:
+            - dev_archive
+          annotations:
+            - transcriptions_repaired_archive
       test:
-        source_archive_artifact: test_archive
-        source_split: eval
-        annotations_artifact: transcriptions_repaired_archive
+        artifacts:
+          source_archive:
+            - test_archive
+          annotations:
+            - transcriptions_repaired_archive
+        provenance:
+          source_split: eval
     provenance:
       source: OpenSLR
       url: https://www.openslr.org/150/
@@ -136,7 +146,7 @@
         gzip_crc: passed
         relative_path: chime6/layers/transcription-archive-repair/v1-20260912/CHiME6_transcriptions.tar.gz
         sha256: 6ad482bfe2424b24a0a5f94e8087c6bce8ee9fae3ff28c0927f5694cc3e772cb
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: chime6
     version: speaker-records-v1-20260912
     languages:
@@ -261,52 +271,70 @@
         metadata: {}
     splits:
       dev:
-        records_artifact: dev
-        audio_index_artifact: audio_index
+        artifacts:
+          records:
+            - dev
+          audio_index:
+            - audio_index
         statistics:
           records: 7437
           duration_hours: 6.492377777777759
           duration_basis: sum of annotated segment durations; overlaps count separately
           speakers: 8
       dev_diarization:
+        artifacts:
+          records:
+            - dev_diarization
+          audio_index:
+            - audio_index
         group: dev
         task: speaker_diarization
-        records_artifact: dev_diarization
-        audio_index_artifact: audio_index
         statistics:
           records: 2
           duration_hours: 4.462833402777778
           duration_basis: sum of measured audio durations; one session per diarization record
       test:
-        records_artifact: test
-        audio_index_artifact: audio_index
+        artifacts:
+          records:
+            - test
+          audio_index:
+            - audio_index
         statistics:
           records: 11027
           duration_hours: 5.891938888888924
           duration_basis: sum of annotated segment durations; overlaps count separately
           speakers: 8
       test_diarization:
+        artifacts:
+          records:
+            - test_diarization
+          audio_index:
+            - audio_index
         group: test
         task: speaker_diarization
-        records_artifact: test_diarization
-        audio_index_artifact: audio_index
         statistics:
           records: 2
           duration_hours: 5.206800781249999
           duration_basis: sum of measured audio durations; one session per diarization record
       train:
-        records_artifact: train
-        audio_index_artifact: audio_index
+        artifacts:
+          records:
+            - train
+          audio_index:
+            - audio_index
         statistics:
           records: 79931
           duration_hours: 43.92720000000063
           duration_basis: sum of annotated segment durations; overlaps count separately
           speakers: 32
       train_diarization:
+        artifacts:
+          records:
+            - train_diarization
+          audio_index:
+            - audio_index
         group: train
         task: speaker_diarization
-        records_artifact: train_diarization
-        audio_index_artifact: audio_index
         statistics:
           records: 16
           duration_hours: 40.24421005208334

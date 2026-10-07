@@ -1,4 +1,4 @@
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: police_synthetic_zh_accent
     version: v1-20260817
     languages:
@@ -75,23 +75,32 @@
           record_count: 29993
     splits:
       train:
-        recordings_artifact: train_recordings
-        supervisions_artifact: train_supervisions
+        artifacts:
+          recordings:
+            - train_recordings
+          supervisions:
+            - train_supervisions
         statistics:
           recordings: 20000
           supervisions: 20000
           duration_hours: 46.411
       train_cosyvoice3:
+        artifacts:
+          recordings:
+            - train_cosyvoice3_recordings
+          supervisions:
+            - train_cosyvoice3_supervisions
         group: train
-        recordings_artifact: train_cosyvoice3_recordings
-        supervisions_artifact: train_cosyvoice3_supervisions
         statistics:
           recordings: 10225
           supervisions: 10225
       train_qwen3_tts:
+        artifacts:
+          recordings:
+            - train_qwen3_tts_recordings
+          supervisions:
+            - train_qwen3_tts_supervisions
         group: train
-        recordings_artifact: train_qwen3_tts_recordings
-        supervisions_artifact: train_qwen3_tts_supervisions
         statistics:
           recordings: 9775
           supervisions: 9775
@@ -109,7 +118,7 @@
       snapshot_date: '2026-08-17'
       integrity: verified
       content_policy: ASR-assisted review; accent, homophones, noise, and background audio retained when spoken content is valid
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: police_synthetic_zh_accent
     version: v2-20260818
     languages:
@@ -245,45 +254,63 @@
           record_count: 2000
     splits:
       train:
-        recordings_artifact: train_recordings
-        supervisions_artifact: train_supervisions
+        artifacts:
+          recordings:
+            - train_recordings
+          supervisions:
+            - train_supervisions
         statistics:
           recordings: 20000
           supervisions: 20000
           duration_hours: 46.411
       train_cosyvoice3:
+        artifacts:
+          recordings:
+            - train_cosyvoice3_recordings
+          supervisions:
+            - train_cosyvoice3_supervisions
         group: train
-        recordings_artifact: train_cosyvoice3_recordings
-        supervisions_artifact: train_cosyvoice3_supervisions
         statistics:
           recordings: 10225
           supervisions: 10225
       train_qwen3_tts:
+        artifacts:
+          recordings:
+            - train_qwen3_tts_recordings
+          supervisions:
+            - train_qwen3_tts_supervisions
         group: train
-        recordings_artifact: train_qwen3_tts_recordings
-        supervisions_artifact: train_qwen3_tts_supervisions
         statistics:
           recordings: 9775
           supervisions: 9775
       test:
-        recordings_artifact: test_recordings
-        supervisions_artifact: test_supervisions
+        artifacts:
+          recordings:
+            - test_recordings
+          supervisions:
+            - test_supervisions
         statistics:
           recordings: 2000
           supervisions: 2000
           duration_hours: 6.220856
       test_cosyvoice3:
+        artifacts:
+          recordings:
+            - test_cosyvoice3_recordings
+          supervisions:
+            - test_cosyvoice3_supervisions
         group: test
-        recordings_artifact: test_cosyvoice3_recordings
-        supervisions_artifact: test_cosyvoice3_supervisions
         statistics:
           recordings: 1023
           supervisions: 1023
           duration_hours: 3.800144
       test_qwen3_tts:
+        artifacts:
+          recordings:
+            - test_qwen3_tts_recordings
+          supervisions:
+            - test_qwen3_tts_supervisions
         group: test
-        recordings_artifact: test_qwen3_tts_recordings
-        supervisions_artifact: test_qwen3_tts_supervisions
         statistics:
           recordings: 977
           supervisions: 977
@@ -305,7 +332,7 @@
       integrity: verified
       content_policy: ASR-assisted reference review only; accent, homophones, noise, and background audio retained when spoken content is valid
       split_policy: Test canonical texts and speaker identities are disjoint from v1 train.
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: police_synthetic_zh_accent
     version: v3-20260820
     languages:
@@ -398,24 +425,33 @@
         sha256: 4f4b7d642d7caf5c2b935098bac47da055c6570ef8c3506dbb08387b65f5847a
     splits:
       train:
-        recordings_artifact: train_recordings
-        supervisions_artifact: train_supervisions
+        artifacts:
+          recordings:
+            - train_recordings
+          supervisions:
+            - train_supervisions
         statistics:
           recordings: 14093
           supervisions: 14093
           duration_hours: 35.957844
       train_cosyvoice3:
+        artifacts:
+          recordings:
+            - train_cosyvoice3_recordings
+          supervisions:
+            - train_cosyvoice3_supervisions
         group: train
-        recordings_artifact: train_cosyvoice3_recordings
-        supervisions_artifact: train_cosyvoice3_supervisions
         statistics:
           recordings: 5524
           supervisions: 5524
           duration_hours: 16.209244
       train_qwen3_tts:
+        artifacts:
+          recordings:
+            - train_qwen3_tts_recordings
+          supervisions:
+            - train_qwen3_tts_supervisions
         group: train
-        recordings_artifact: train_qwen3_tts_recordings
-        supervisions_artifact: train_qwen3_tts_supervisions
         statistics:
           recordings: 8569
           supervisions: 8569
@@ -451,7 +487,7 @@
       integrity: verified
       content_policy: TTS structural checks followed by Qwen3-ASR target-term and CER review; only QC-passing audio is published
       generation_focus: Numeric identifiers plus police-domain terms 警鉴, e警保, 义警
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: police_synthetic_zh_accent
     version: v5-20260830-qwen75-cosy25
     languages:
@@ -522,24 +558,33 @@
         sha256: 131ba9fcf5760aeba5deddf9e21295add82743fb17aa4f766376d7475888bcf9
     splits:
       train:
-        recordings_artifact: train_recordings
-        supervisions_artifact: train_supervisions
+        artifacts:
+          recordings:
+            - train_recordings
+          supervisions:
+            - train_supervisions
         statistics:
           recordings: 10851
           supervisions: 10851
           duration_hours: 28.1921
       train_qwen3_tts:
+        artifacts:
+          recordings:
+            - train_qwen3_tts_recordings
+          supervisions:
+            - train_qwen3_tts_supervisions
         group: train
-        recordings_artifact: train_qwen3_tts_recordings
-        supervisions_artifact: train_qwen3_tts_supervisions
         statistics:
           recordings: 8894
           supervisions: 8894
           duration_hours: 21.1413
       train_cosyvoice3:
+        artifacts:
+          recordings:
+            - train_cosyvoice3_recordings
+          supervisions:
+            - train_cosyvoice3_supervisions
         group: train
-        recordings_artifact: train_cosyvoice3_recordings
-        supervisions_artifact: train_cosyvoice3_supervisions
         statistics:
           recordings: 1957
           supervisions: 1957

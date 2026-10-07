@@ -4,11 +4,11 @@
 版本固定为 `icefall-20260908`，另登记 178 条真实 RIR。
 历史版本保留供复现；这份快照不是新增的独立语料时长，不应与历史版本累加作为训练量。
 
-`recipe_parameters.icefall.language` 是评分/展示使用的主导语言；`languages`
-仍如实记录混合语言。split 中 `icefall.use_punc/channel` 保留读取策略；
-`clean_supervisions_artifacts` / `clean_no_punc_supervisions_artifacts` 分别指定
-有、无标点的清洗版本。artifact 的 `metadata.icefall_relative_to_lhotse`
-表示该输入继续相对调用者的 LHOTSE 根目录加载，以保持原有命令行行为。
+带标点的标注登记为 `punctuated_supervisions`（emilia_zh 为 `punctuated_cuts`），
+`clean_supervisions` / `clean_no_punc_supervisions` 分别指定有、无标点的清洗版本。
+icefall 用 `--use-punc` 在这些登记的产物之间选择，不再按文件名拼接 `_punc`。
+混合语言数据集的评分语言、多声道数据的选用声道属于 icefall 的读取策略，
+维护在 icefall 仓库中；catalog 只记录 `languages` 等事实。
 
 | 新增入口 | 当前状态 | 限制 |
 |---|---|---|

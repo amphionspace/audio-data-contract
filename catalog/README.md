@@ -7,7 +7,7 @@
 每个文件是一个 YAML 列表，可以包含多个版本。新文件按数据集命名，如 `example.yaml`：
 
 ```yaml
-- schema_version: dataset-catalog/1.0
+- schema_version: dataset-catalog/2.0
   dataset_id: example
   version: '1.0'
   languages: [zh]
@@ -19,12 +19,25 @@
       relative_path: example/manifests/supervisions_train.jsonl.gz
   splits:
     train:
-      supervisions_artifact: train_supervisions
+      artifacts:
+        supervisions: [train_supervisions]
       statistics:
         duration_hours: 12.5
 ```
 
-`root_alias` 在本机 `roots.json` 中配置，`relative_path` 相对于该根目录。版本号、日期和数字样式的 ID 若表示字符串，需要加引号，如 `'1.0'`、`'2026-09-22'`。完整字段定义见 [dataset-catalog Schema](../src/audio_data_contract/schemas/dataset-catalog-1.0.json)。
+每个 split 只有五个字段：
+
+| 字段 | 含义 |
+|---|---|
+| `artifacts` | 必填。按用途列出产物名，如 `recordings`、`supervisions`、`cuts`、`records`、`audio_index`，值总是列表；每个名字都必须在 `artifacts` 中登记 |
+| `group` | 可选。子划分所属的上级划分，如 `test` |
+| `task` | 可选。该划分对应的任务，必须是 `tasks` 之一 |
+| `statistics` | 可选。时长、条数等统计 |
+| `provenance` | 可选。只作说明的附加信息 |
+
+有标点和无标点版本分别登记为 `supervisions` 与 `punctuated_supervisions`（cuts 同理），清洗版本登记为 `clean_supervisions` / `clean_no_punc_supervisions`；读取方按用途选择，不靠文件名推断。代码中用 `resolve_split(catalog, dataset_id, version, split, role, roots)` 取得绝对路径。
+
+`root_alias` 在本机 `roots.json` 中配置，`relative_path` 相对于该根目录。版本号、日期和数字样式的 ID 若表示字符串，需要加引号，如 `'1.0'`、`'2026-09-22'`。完整字段定义见 [dataset-catalog Schema](../src/audio_data_contract/schemas/dataset-catalog-2.0.json)。
 
 `views/` 同样使用 YAML 列表；参见 [View 声明](../views/local_lhotse_views.yaml)和[数据组织规范](../docs/reference/data-organization.md)。样本清单和文件级索引仍使用 JSONL 或 JSONL.gz，Schema 与备份回执保留 JSON。
 
@@ -78,7 +91,7 @@
 | 时长范围标签 | `provenance.duration_label`，例如“单远场麦克风标注片段” |
 | 自动清洗证据 | `recipe_parameters` 中的引擎、规则；split 的通过/拒绝统计；`provenance` 中的报告位置和落地状态 |
 
-这些展示信息使用现有 `provenance` 扩展对象，不新增必填字段。协议核心不依赖 Icefall 或 Lhotse；`recipe_parameters.icefall`、split 内的 `icefall` 和 artifact 的 `icefall_relative_to_lhotse` 是兼容适配信息，其他读取方无需解释。后续独立迁移这些适配信息时应保持既有解析接口兼容。
+这些展示信息使用现有 `provenance` 扩展对象，不新增必填字段。协议不包含任何训练框架专用字段；选用哪个声道、是否建模标点等读取策略由各训练项目自己决定。
 
 修改后运行 `audio-data-contract generate-overview`，同步 `docs/datasets/data-overview.md` 及同目录 `assets/` 下的两张 SVG 图。`--check` 同时校验 Markdown 和图表，缺失或过期都会失败。
 

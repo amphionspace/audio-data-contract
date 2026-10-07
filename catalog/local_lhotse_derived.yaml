@@ -1,4 +1,4 @@
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: gigaspeech2_id
     version: local-20260805
     languages:
@@ -25,8 +25,11 @@
           record_count: 1811202
     splits:
       train:
-        recordings_artifact: train_recordings
-        supervisions_artifact: train_supervisions
+        artifacts:
+          recordings:
+            - train_recordings
+          supervisions:
+            - train_supervisions
         statistics:
           duration_hours: 1980.1218666666666
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:GigaSpeech2/lhotse/gigaspeech2_id_supervisions_train_full.jsonl.gz'
@@ -34,7 +37,7 @@
       source: local DATA_ASR lhotse scan
       snapshot_date: '2026-08-05'
       integrity: verified
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: gigaspeech2_id_hotwords
     version: hotwords-v1-20260805
     languages:
@@ -62,8 +65,11 @@
           record_count: 197287
     splits:
       train:
-        recordings_artifact: train_recordings
-        supervisions_artifact: train_supervisions
+        artifacts:
+          recordings:
+            - train_recordings
+          supervisions:
+            - train_supervisions
         statistics:
           supervisions: 197287
           duration_hours: 214.86739722222222
@@ -76,7 +82,7 @@
       source: local DATA_ASR lhotse scan
       snapshot_date: '2026-08-05'
       integrity: verified
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: kespeech_clean
     version: clean-v1-20260805
     languages:
@@ -100,8 +106,11 @@
           record_count: 19723
     splits:
       test:
-        recordings_artifact: test_recordings
-        supervisions_artifact: test_supervisions
+        artifacts:
+          recordings:
+            - test_recordings
+          supervisions:
+            - test_supervisions
         statistics:
           duration_hours: 31.07248918402778
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:KeSpeech/lhotse/clean/v1/kespeech-asr_supervisions_test_punc.jsonl.gz'
@@ -116,7 +125,7 @@
       source: local DATA_ASR lhotse scan
       snapshot_date: '2026-08-05'
       integrity: verified
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: kespeech_hotwords
     version: hotwords-v1-20260805
     languages:
@@ -144,8 +153,11 @@
           record_count: 19723
     splits:
       test:
-        recordings_artifact: test_recordings
-        supervisions_artifact: test_supervisions
+        artifacts:
+          recordings:
+            - test_recordings
+          supervisions:
+            - test_supervisions
         statistics:
           duration_hours: 31.07248918402778
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:KeSpeech/lhotse/hotwords/kespeech-asr_supervisions_test_punc.jsonl.gz'
@@ -160,7 +172,7 @@
       source: local DATA_ASR lhotse scan
       snapshot_date: '2026-08-05'
       integrity: verified
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: magicdata_hotwords
     version: hotwords-v1-20260805
     languages:
@@ -188,8 +200,11 @@
           record_count: 573478
     splits:
       train:
-        recordings_artifact: train_recordings
-        supervisions_artifact: train_supervisions
+        artifacts:
+          recordings:
+            - train_recordings
+          supervisions:
+            - train_supervisions
         statistics:
           duration_hours: 711.9156844791667
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:MAGICDATA/lhotse/hotwords/magicdata_supervisions_train_punc_hotwords.jsonl.gz'
@@ -203,7 +218,7 @@
       source: local DATA_ASR lhotse scan
       snapshot_date: '2026-08-05'
       integrity: verified
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: talcs_hotwords
     version: hotwords-v1-20260805
     languages:
@@ -227,8 +242,11 @@
           record_count: 350000
     splits:
       train:
-        recordings_artifact: train_recordings
-        supervisions_artifact: train_supervisions
+        artifacts:
+          recordings:
+            - train_recordings
+          supervisions:
+            - train_supervisions
         statistics:
           duration_hours: 555.9272438888889
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:TALCS_corpus/lhotse/hotwords/talcs_supervisions_train_cleaned_punc_hotwords.jsonl.gz'
@@ -243,7 +261,7 @@
       source: local DATA_ASR lhotse scan
       snapshot_date: '2026-08-05'
       integrity: verified
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: wenetspeech_clean
     version: clean-v1-20260805
     languages:
@@ -267,8 +285,11 @@
           record_count: 14625245
     splits:
       train:
-        recordings_artifact: train_recordings
-        supervisions_artifact: train_supervisions
+        artifacts:
+          recordings:
+            - train_recordings
+          supervisions:
+            - train_supervisions
         statistics:
           duration_hours: 10005.411338888889
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:WenetSpeech/lhotse/clean/v1/wenetspeech_supervisions_L_punc.jsonl.gz'
@@ -283,7 +304,7 @@
       source: local DATA_ASR lhotse scan
       snapshot_date: '2026-08-05'
       integrity: verified
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: commonvoice_en_clean
     version: clean-v1-20260805
     languages:
@@ -327,8 +348,11 @@
           record_count: 16402
     splits:
       train:
-        recordings_artifact: train_recordings
-        supervisions_artifact: train_supervisions
+        artifacts:
+          recordings:
+            - train_recordings
+          supervisions:
+            - train_supervisions
         statistics:
           supervisions: 1143276
           pass: 1142149
@@ -336,8 +360,11 @@
           duration_hours: 1808.1845411229215
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:common_voice_en/lhotse/clean/v1/cv-en_supervisions_train_orig_punc.jsonl.gz'
       test:
-        recordings_artifact: test_recordings
-        supervisions_artifact: test_supervisions
+        artifacts:
+          recordings:
+            - test_recordings
+          supervisions:
+            - test_supervisions
         statistics:
           supervisions: 16402
           duration_hours: 27.199661217698885
@@ -379,7 +406,7 @@
           train_rejected_records_retained: 1127
           test_clean_metadata_count: 0
           test_filter_applied: false
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: commonvoice_en_hotwords
     version: hotwords-v1-20260805
     languages:
@@ -423,14 +450,20 @@
           record_count: 16402
     splits:
       train:
-        recordings_artifact: train_recordings
-        supervisions_artifact: train_supervisions
+        artifacts:
+          recordings:
+            - train_recordings
+          supervisions:
+            - train_supervisions
         statistics:
           duration_hours: 1808.1845411229215
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:common_voice_en/lhotse/hotwords/cv-en_supervisions_train_orig_punc_hotwords.jsonl.gz'
       test:
-        recordings_artifact: test_recordings
-        supervisions_artifact: test_supervisions
+        artifacts:
+          recordings:
+            - test_recordings
+          supervisions:
+            - test_supervisions
         statistics:
           duration_hours: 27.199661217698885
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:common_voice_en/lhotse/hotwords/cv-en_supervisions_test_orig_punc_hotwords.jsonl.gz'
@@ -446,7 +479,7 @@
       source: local DATA_ASR lhotse scan
       snapshot_date: '2026-08-05'
       integrity: verified
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: commonvoice_zh_clean
     version: clean-v1-20260805
     languages:
@@ -474,8 +507,11 @@
           record_count: 10647
     splits:
       test:
-        recordings_artifact: test_recordings
-        supervisions_artifact: test_supervisions
+        artifacts:
+          recordings:
+            - test_recordings
+          supervisions:
+            - test_supervisions
         statistics:
           duration_hours: 17.45736208311681
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:common_voice_zh/lhotse/cleaned/v1/cv-zh-CN_supervisions_test_punc.jsonl.gz'
@@ -490,7 +526,7 @@
       source: local DATA_ASR lhotse scan
       snapshot_date: '2026-08-05'
       integrity: verified
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: commonvoice_zh_hotwords
     version: hotwords-v1-20260805
     languages:
@@ -534,14 +570,20 @@
           record_count: 10647
     splits:
       train:
-        recordings_artifact: train_recordings
-        supervisions_artifact: train_supervisions
+        artifacts:
+          recordings:
+            - train_recordings
+          supervisions:
+            - train_supervisions
         statistics:
           duration_hours: 42.59192390079759
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:common_voice_zh/lhotse/hotwords/cv-zh-CN_supervisions_train_punc_hotwords.jsonl.gz'
       test:
-        recordings_artifact: test_recordings
-        supervisions_artifact: test_supervisions
+        artifacts:
+          recordings:
+            - test_recordings
+          supervisions:
+            - test_supervisions
         statistics:
           duration_hours: 17.45736208311681
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:common_voice_zh/lhotse/hotwords/cv-zh-CN_supervisions_test_punc_hotwords.jsonl.gz'
@@ -555,7 +597,7 @@
       source: local DATA_ASR lhotse scan
       snapshot_date: '2026-08-05'
       integrity: verified
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: aishell_clean
     version: clean-v1-20260805
     languages:
@@ -583,8 +625,11 @@
           record_count: 7176
     splits:
       test:
-        recordings_artifact: test_recordings
-        supervisions_artifact: test_supervisions
+        artifacts:
+          recordings:
+            - test_recordings
+          supervisions:
+            - test_supervisions
         statistics:
           duration_hours: 10.030255260416666
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:data_aishell/lhotse/clean/v1/aishell_supervisions_test_punc.jsonl.gz'
@@ -599,7 +644,7 @@
       source: local DATA_ASR lhotse scan
       snapshot_date: '2026-08-05'
       integrity: verified
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: aishell_hotwords
     version: hotwords-v1-20260805
     languages:
@@ -643,14 +688,20 @@
           record_count: 7176
     splits:
       train:
-        recordings_artifact: train_recordings
-        supervisions_artifact: train_supervisions
+        artifacts:
+          recordings:
+            - train_recordings
+          supervisions:
+            - train_supervisions
         statistics:
           duration_hours: 150.8520156076389
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:data_aishell/lhotse/hotwords/aishell_supervisions_train_punc_hotwords.jsonl.gz'
       test:
-        recordings_artifact: test_recordings
-        supervisions_artifact: test_supervisions
+        artifacts:
+          recordings:
+            - test_recordings
+          supervisions:
+            - test_supervisions
         statistics:
           duration_hours: 10.030255260416666
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:data_aishell/lhotse/hotwords/aishell_supervisions_test_punc.jsonl.gz'
@@ -664,7 +715,7 @@
       source: local DATA_ASR lhotse scan
       snapshot_date: '2026-08-05'
       integrity: verified
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: aishell2_clean
     version: clean-v1-20260805
     languages:
@@ -692,8 +743,11 @@
           record_count: 5000
     splits:
       test:
-        recordings_artifact: test_recordings
-        supervisions_artifact: test_supervisions
+        artifacts:
+          recordings:
+            - test_recordings
+          supervisions:
+            - test_supervisions
         statistics:
           duration_hours: 4.004922013888889
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:data_aishell2/lhotse/clean/v1/aishell2_supervisions_test.jsonl.gz'
@@ -707,7 +761,7 @@
       source: local DATA_ASR lhotse scan
       snapshot_date: '2026-08-05'
       integrity: verified
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: aishell2_hotwords
     version: hotwords-v1-20260805
     languages:
@@ -735,8 +789,11 @@
           record_count: 5000
     splits:
       test:
-        recordings_artifact: test_recordings
-        supervisions_artifact: test_supervisions
+        artifacts:
+          recordings:
+            - test_recordings
+          supervisions:
+            - test_supervisions
         statistics:
           duration_hours: 4.004922013888889
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:data_aishell2/lhotse/hotwords/aishell2_supervisions_test_hotwords.jsonl.gz'
@@ -750,7 +807,7 @@
       source: local DATA_ASR lhotse scan
       snapshot_date: '2026-08-05'
       integrity: verified
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: aishell3_hotwords
     version: hotwords-v1-20260805
     languages:
@@ -794,14 +851,20 @@
           record_count: 24773
     splits:
       train:
-        recordings_artifact: train_recordings
-        supervisions_artifact: train_supervisions
+        artifacts:
+          recordings:
+            - train_recordings
+          supervisions:
+            - train_supervisions
         statistics:
           duration_hours: 63.17237733300264
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:data_aishell3/lhotse/hotwords/aishell3_supervisions_train_punc_hotwords.jsonl.gz'
       test:
-        recordings_artifact: test_recordings
-        supervisions_artifact: test_supervisions
+        artifacts:
+          recordings:
+            - test_recordings
+          supervisions:
+            - test_supervisions
         statistics:
           duration_hours: 22.445452006290942
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:data_aishell3/lhotse/hotwords/aishell3_supervisions_test_punc_hotwords.jsonl.gz'
@@ -815,7 +878,7 @@
       source: local DATA_ASR lhotse scan
       snapshot_date: '2026-08-05'
       integrity: verified
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: thchs30_hotwords
     version: hotwords-v1-20260805
     languages:
@@ -843,8 +906,11 @@
           record_count: 10000
     splits:
       train:
-        recordings_artifact: train_recordings
-        supervisions_artifact: train_supervisions
+        artifacts:
+          recordings:
+            - train_recordings
+          supervisions:
+            - train_supervisions
         statistics:
           duration_hours: 25.545066527777777
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:data_thchs30/lhotse/hotwords/thchs_30_supervisions_train_punc_hotwords.jsonl.gz'
@@ -858,7 +924,7 @@
       source: local DATA_ASR lhotse scan
       snapshot_date: '2026-08-05'
       integrity: verified
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: aidatatang_hotwords
     version: hotwords-v1-20260805
     languages:
@@ -887,8 +953,11 @@
           record_count: 237265
     splits:
       train:
-        recordings_artifact: train_recordings
-        supervisions_artifact: train_supervisions
+        artifacts:
+          recordings:
+            - train_recordings
+          supervisions:
+            - train_supervisions
         statistics:
           duration_hours: 145.47232
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:zhvoice/lhotse/hotwords/zhaidatatang_supervisions_all_cleaned_punc_hotwords.jsonl.gz'
@@ -903,7 +972,7 @@
       source: local DATA_ASR lhotse scan
       snapshot_date: '2026-08-05'
       integrity: verified
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: wenetspeech_clean
     version: clean-v3-20260828
     languages:
@@ -939,9 +1008,13 @@
           punctuated: true
     splits:
       train:
-        recordings_artifact: train_recordings
-        supervisions_artifact: train_supervisions
-        punctuated_supervisions_artifact: train_supervisions_punc
+        artifacts:
+          recordings:
+            - train_recordings
+          supervisions:
+            - train_supervisions
+          punctuated_supervisions:
+            - train_supervisions_punc
         statistics:
           duration_hours: 9971.091938888889
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; custom.clean.pass=true only; sources: legacy_asr:WenetSpeech/lhotse/clean/v3-firered/wenetspeech_supervisions_L_clean.jsonl.gz'

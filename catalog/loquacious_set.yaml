@@ -1,4 +1,4 @@
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: loquacious_set
     version: hf-0e84cdb9e4b8
     languages:
@@ -17,7 +17,9 @@
         relative_path: downloads/language-expansion-20260911/loquacious_set/state.json
     splits:
       all:
-        source_artifact: source
+        artifacts:
+          source:
+            - source
     provenance:
       source: Hugging Face
       url: https://huggingface.co/datasets/speechbrain/LoquaciousSet

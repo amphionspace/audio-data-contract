@@ -25,7 +25,7 @@ from aidc_transfer import encoded, remote_command, save, send, signature, ssh
 from cos_sync_catalog import DIRECTORIES, PRIVATE, BackupConnection, Inventory
 
 from audio_data_contract import load_catalog
-from audio_data_contract.audio_prepare import _parse
+from audio_data_contract.audio_prepare import parse_audio_source
 from audio_data_contract.declarations import declaration_files
 from audio_data_contract.roots import load_roots
 
@@ -128,7 +128,7 @@ def paths_in_item(item, resolve, roots, kind, manifest, destination='/workspace/
             source['source'] = resolve(source['source'])
         else:
             sentinel = Path('/__aidc_relative__')
-            _, path, _ = _parse(source, sentinel, extract=True)
+            _, path, _ = parse_audio_source(source, sentinel, extract=True)
             original = str(path.relative_to(sentinel)) if path.is_relative_to(sentinel) else str(path)
             target = resolve(original)
             tokens = shlex.split(source['source'])
@@ -457,7 +457,7 @@ def scan(args):
             spec = next((s for s in config['datasets'] if s['dataset_id'] + '@' + s['version'] == row['spec']), None)
             split = spec.get('splits', {}).get(row['split'], {}) if spec else {}
             artifact = db.execute('SELECT path FROM artifacts WHERE spec=? AND name=?',
-                                  (row['spec'], split.get('audio_index_artifact', ''))).fetchone()
+                                  (row['spec'], split.get('artifacts', {}).get('audio_index', [''])[0])).fetchone()
             if artifact is None:
                 for ref in db.execute('SELECT DISTINCT manifest FROM record_refs WHERE spec=? AND split=?', tuple(row)):
                     issue(db, ref['manifest'], 'unresolved_audio_record_reference', row['spec'] + ':' + row['split'])

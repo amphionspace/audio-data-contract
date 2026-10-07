@@ -6,16 +6,15 @@ import gzip
 import json
 from pathlib import Path
 
-from audio_data_contract import load_catalog, load_records, resolve_artifact
+from audio_data_contract import load_catalog, load_records, resolve_split
 
 
 def resolve_audio(record, catalog, roots):
     wanted = {}
     for slot in record.audio_slots:
         ref = slot.ref
-        spec = catalog.get(ref.dataset_id, ref.version)
-        index = resolve_artifact(catalog, ref.dataset_id, ref.version,
-                                 spec.splits[ref.split]["audio_index_artifact"], roots)
+        index, = resolve_split(catalog, ref.dataset_id, ref.version, ref.split,
+                               "audio_index", roots)
         wanted.setdefault(index, set()).add(ref.cut_id)
     found = {}
     for index, ids in wanted.items():
@@ -53,9 +52,8 @@ def main():
     args = parser.parse_args()
     roots = json.loads(args.roots.read_text())
     catalog = load_catalog(args.catalog)
-    spec = catalog.get(args.dataset, args.version)
-    path = resolve_artifact(catalog, args.dataset, args.version,
-                            spec.splits[args.split]["records_artifact"], roots)
+    path, = resolve_split(catalog, args.dataset, args.version, args.split,
+                          "records", roots)
     for record in load_records(path):
         if args.id is None or record.id == args.id:
             print(json.dumps({"record": record.to_dict(),

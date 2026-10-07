@@ -1,4 +1,4 @@
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: yodas_granary_es_pt
     version: hf-969944574ea3
     languages:
@@ -18,7 +18,9 @@
         relative_path: downloads/language-expansion-20260911/yodas_granary_es_pt/state.json
     splits:
       all:
-        source_artifact: source
+        artifacts:
+          source:
+            - source
     provenance:
       source: Hugging Face
       url: https://huggingface.co/datasets/espnet/yodas-granary

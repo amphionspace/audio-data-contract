@@ -1,4 +1,4 @@
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: police_synthetic_zh_accent
     version: v5-20260830-qc
     languages:
@@ -61,24 +61,33 @@
           record_count: 5529
     splits:
       train:
-        recordings_artifact: train_recordings
-        supervisions_artifact: train_supervisions
+        artifacts:
+          recordings:
+            - train_recordings
+          supervisions:
+            - train_supervisions
         statistics:
           recordings: 14423
           supervisions: 14423
           duration_hours: 41.2413
       train_qwen3_tts:
+        artifacts:
+          recordings:
+            - train_qwen3_tts_recordings
+          supervisions:
+            - train_qwen3_tts_supervisions
         group: train
-        recordings_artifact: train_qwen3_tts_recordings
-        supervisions_artifact: train_qwen3_tts_supervisions
         statistics:
           recordings: 8894
           supervisions: 8894
           duration_hours: 21.1413
       train_cosyvoice3:
+        artifacts:
+          recordings:
+            - train_cosyvoice3_recordings
+          supervisions:
+            - train_cosyvoice3_supervisions
         group: train
-        recordings_artifact: train_cosyvoice3_recordings
-        supervisions_artifact: train_cosyvoice3_supervisions
         statistics:
           recordings: 5529
           supervisions: 5529

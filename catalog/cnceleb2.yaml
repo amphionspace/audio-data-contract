@@ -1,4 +1,4 @@
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: cnceleb2
     version: openslr-82-v2
     languages:
@@ -52,11 +52,13 @@
         relative_path: downloads/speaker-expansion-20260911/cnceleb2/state.json
     splits:
       train:
-        source_archive_artifacts:
-          - audio_part_aa
-          - audio_part_ab
-          - audio_part_ac
-        archive_format: concatenated-tar.gz
+        artifacts:
+          source_archive:
+            - audio_part_aa
+            - audio_part_ab
+            - audio_part_ac
+        provenance:
+          archive_format: concatenated-tar.gz
     provenance:
       source: OpenSLR
       url: https://www.openslr.org/82/
@@ -73,7 +75,7 @@
       verification_report:
         root_alias: legacy_asr
         relative_path: downloads/speaker-expansion-20260911/cnceleb2/published-inventory.json
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: cnceleb2
     version: speaker-records-v1-20260912
     languages:
@@ -129,8 +131,11 @@
         metadata: {}
     splits:
       train:
-        records_artifact: train
-        audio_index_artifact: audio_index
+        artifacts:
+          records:
+            - train
+          audio_index:
+            - audio_index
         statistics:
           records: 524787
           duration_hours: 1084.3387300869088

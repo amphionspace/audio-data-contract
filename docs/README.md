@@ -27,7 +27,6 @@
 - [数据组织规范](reference/data-organization.md)：Dataset、Layer、View 的身份、血缘和发布规则。
 - [JSON Schema](../src/audio_data_contract/schemas/)：数据声明、View、样本与运行状态的字段定义。
 - [Icefall 运行快照](integrations/icefall-runtime.md)：已有消费配置和数据缺口。
-- [Icefall 数据准备工具](../scripts/icefall/README.md)：下载、划分、特征与清单生成。
 
 ## 历史记录
 

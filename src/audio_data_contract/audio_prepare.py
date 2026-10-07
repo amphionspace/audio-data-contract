@@ -39,18 +39,18 @@ def _open(path, mode):
     return open(path, mode, encoding="utf-8")
 
 
-def _sources(item):
+def recording_sources(item):
     """Visit only Lhotse's known audio-bearing structures."""
     kind = item.get("type")
     if kind == "MixedCut":
         for track in item["tracks"]:
-            yield from _sources(track["cut"])
+            yield from recording_sources(track["cut"])
     elif kind == "PaddingCut":
         return
     elif kind in {"MonoCut", "MultiCut"}:
         if "recording" not in item:
             raise ValueError("cut has no raw recording")
-        yield from _sources(item["recording"])
+        yield from recording_sources(item["recording"])
     elif kind is None and "sources" in item and "sampling_rate" in item:
         if not item["sources"]:
             raise ValueError("recording has no audio sources")
@@ -59,7 +59,7 @@ def _sources(item):
             if transform["name"] == "ReverbWithImpulseResponse":
                 rir = transform.get("kwargs", {}).get("rir")
                 if rir is not None:
-                    yield from _sources(rir)
+                    yield from recording_sources(rir)
     else:
         raise ValueError(f"unsupported manifest item: {kind!r}")
 
@@ -71,7 +71,7 @@ def _path(value, root):
     return (path if path.is_absolute() else root / path).resolve()
 
 
-def _parse(source, root, extract):
+def parse_audio_source(source, root, extract):
     if source["type"] == "file":
         return "file", _path(source["source"], root), None
     if source["type"] != "command" or not extract:
@@ -266,10 +266,10 @@ def run(args):
                     context = {"manifest": str(path), "line": line_number}
                     item = json.loads(line)
                     context["record_id"] = item.get("id")
-                    for audio in _sources(item):
+                    for audio in recording_sources(item):
                         context["source"] = audio.get("source")
                         summary["references"] += 1
-                        kind, origin, selector = _parse(audio, root, extract)
+                        kind, origin, selector = parse_audio_source(audio, root, extract)
                         key = (kind, origin, selector)
                         if key not in dependencies:
                             digest = hashlib.sha256(

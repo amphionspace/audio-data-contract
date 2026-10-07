@@ -7,7 +7,7 @@ import tempfile
 from pathlib import Path
 
 from .errors import ContractError
-from .records import _write, read_artifact, write_records
+from .records import read_artifact, write_jsonl, write_records
 
 
 def lhotse_cuts(records, *, slot, resolve_audio):
@@ -103,7 +103,7 @@ def export_artifact(
         else:
             if resolve_audio is None:
                 raise ContractError("Lhotse export requires an audio-index resolver")
-            _write(
+            write_jsonl(
                 lhotse_cuts(records, slot=slot, resolve_audio=resolve_audio), temporary
             )
         temporary.rename(destination)

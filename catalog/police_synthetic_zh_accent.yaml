@@ -1,4 +1,4 @@
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: police_synthetic_zh_accent
     version: legacy-rebalance-100k-20260916
     languages:
@@ -109,8 +109,11 @@
         sha256: 8f9eb21ea6dadd4522fadacd66bd454060987e74b49d6e080b530abdff448630
     splits:
       train:
-        recordings_artifact: train_recordings
-        supervisions_artifact: train_supervisions
+        artifacts:
+          recordings:
+            - train_recordings
+          supervisions:
+            - train_supervisions
         statistics:
           recordings: 80000
           supervisions: 80000
@@ -124,8 +127,11 @@
             数字与号码: 12000
             行业对话: 16000
       dev:
-        recordings_artifact: dev_recordings
-        supervisions_artifact: dev_supervisions
+        artifacts:
+          recordings:
+            - dev_recordings
+          supervisions:
+            - dev_supervisions
         statistics:
           recordings: 10000
           supervisions: 10000
@@ -139,8 +145,11 @@
             数字与号码: 1500
             行业对话: 2000
       test:
-        recordings_artifact: test_recordings
-        supervisions_artifact: test_supervisions
+        artifacts:
+          recordings:
+            - test_recordings
+          supervisions:
+            - test_supervisions
         statistics:
           recordings: 10000
           supervisions: 10000

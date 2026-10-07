@@ -13,7 +13,7 @@ from pathlib import Path
 from cos_backup import digest_file, save
 from cos_restore import DEFAULT_BINDING, database, matching, target_path
 
-from audio_data_contract.audio_prepare import _parse
+from audio_data_contract.audio_prepare import parse_audio_source
 
 KINDS = {'lhotse-recordings', 'lhotse-cuts', 'auto-lhotse', 'sharegpt-jsonl', 'target-asr-jsonl'}
 
@@ -27,7 +27,7 @@ def relocate_item(item, resolve):
             if source['type'] == 'file':
                 source['source'] = resolve(source['source'])
             elif source['type'] == 'command':
-                _parse(source, Path('/'), extract=True)  # validate, never execute
+                parse_audio_source(source, Path('/'), extract=True)  # validate, never execute
                 tokens = shlex.split(source['source'])
                 start = 4 if tokens[0] == 'timeout' else 0
                 if tokens[start] == 'tar':

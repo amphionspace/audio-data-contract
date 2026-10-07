@@ -1,4 +1,4 @@
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: alimeeting
     version: openslr-119-local-20260826
     languages:
@@ -115,30 +115,42 @@
           record_count: 4585
     splits:
       train:
-        source_artifacts:
-          - train_far_source
-          - train_near_source
-        recordings_artifact: train_recordings
-        supervisions_artifact: train_supervisions
-        speaker_attributed_transcript_artifact: train_multi_asr
+        artifacts:
+          source:
+            - train_far_source
+            - train_near_source
+          recordings:
+            - train_recordings
+          supervisions:
+            - train_supervisions
+          speaker_attributed_transcript:
+            - train_multi_asr
         statistics:
           duration_hours: 140.57511347222223
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:SDR/alimeeting/alimeeting-far_supervisions_train.jsonl.gz'
       dev:
-        source_artifacts:
-          - eval_source
-        recordings_artifact: eval_recordings
-        supervisions_artifact: eval_supervisions
-        speaker_attributed_transcript_artifact: eval_multi_asr
+        artifacts:
+          source:
+            - eval_source
+          recordings:
+            - eval_recordings
+          supervisions:
+            - eval_supervisions
+          speaker_attributed_transcript:
+            - eval_multi_asr
         statistics:
           duration_hours: 4.897944444444444
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:SDR/alimeeting/alimeeting-far_supervisions_eval.jsonl.gz'
       test:
-        source_artifacts:
-          - test_source
-        recordings_artifact: test_recordings
-        supervisions_artifact: test_supervisions
-        speaker_attributed_transcript_artifact: test_multi_asr
+        artifacts:
+          source:
+            - test_source
+          recordings:
+            - test_recordings
+          supervisions:
+            - test_supervisions
+          speaker_attributed_transcript:
+            - test_multi_asr
         statistics:
           duration_hours: 12.455772222222222
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:SDR/alimeeting/alimeeting-far_supervisions_test.jsonl.gz'
@@ -149,7 +161,7 @@
       license: CC-BY-SA-4.0
       local_scan_date: '2026-08-26'
       integrity: verified
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: indicvoices
     version: hf-c96f9088f138
     languages:
@@ -191,7 +203,9 @@
           content: transcribed curated snapshot
     splits:
       all:
-        snapshot_artifact: snapshot
+        artifacts:
+          snapshot:
+            - snapshot
     provenance:
       source: Hugging Face
       source_id: ai4bharat/IndicVoices
@@ -202,7 +216,7 @@
       local_scan_date: '2026-08-28'
       integrity: verified
       integrity_method: remote file list and per-file size comparison
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: multi-talker-sd
     version: hf-be2d372003fd
     languages:
@@ -241,11 +255,17 @@
           expected_bytes: 138835531377
     splits:
       train:
-        source_artifact: train
+        artifacts:
+          source:
+            - train
       dev:
-        source_artifact: dev
+        artifacts:
+          source:
+            - dev
       test:
-        source_artifact: test
+        artifacts:
+          source:
+            - test
     provenance:
       source: Hugging Face
       source_id: yihao005/Multi-Talker-SD
@@ -265,7 +285,7 @@
       integrity_method: remote file list and per-file size comparison
       verified_file_count: 11497
       verified_bytes: 1354580281925
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: waxal-asr
     version: hf-e91442a8989b
     languages:
@@ -310,10 +330,12 @@
           expected_bytes: 14992635
     splits:
       all:
-        source_artifacts:
-          - asr_data
-          - asr_v2_metadata
-        split_policy: ASR_v2 speaker-disjoint metadata
+        artifacts:
+          source:
+            - asr_data
+            - asr_v2_metadata
+        provenance:
+          split_policy: ASR_v2 speaker-disjoint metadata
     provenance:
       source: Hugging Face
       source_id: google/WaxalNLP
@@ -330,7 +352,7 @@
       integrity_method: remote file list and per-file size comparison
       verified_file_count: 2295
       verified_bytes: 761152544167
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: notsofar
     version: hf-ba8fd0f034ce-recorded-240825.1
     languages:
@@ -368,11 +390,17 @@
           expected_bytes: 49145932415
     splits:
       train:
-        source_artifact: train
+        artifacts:
+          source:
+            - train
       dev:
-        source_artifact: dev
+        artifacts:
+          source:
+            - dev
       eval:
-        source_artifact: eval
+        artifacts:
+          source:
+            - eval
     provenance:
       source: Hugging Face
       source_id: microsoft/NOTSOFAR
@@ -385,7 +413,7 @@
       integrity_method: remote file list and per-file size comparison
       verified_file_count: 8602
       verified_bytes: 93969456692
-  - schema_version: dataset-catalog/1.0
+  - schema_version: dataset-catalog/2.0
     dataset_id: notsofar
     version: hf-ba8fd0f034ce-sim-v1.5-200h
     languages:
@@ -416,9 +444,13 @@
           expected_bytes: 21015818240
     splits:
       train:
-        source_artifact: train
+        artifacts:
+          source:
+            - train
       validation:
-        source_artifact: validation
+        artifacts:
+          source:
+            - validation
     provenance:
       source: Hugging Face
       source_id: microsoft/NOTSOFAR

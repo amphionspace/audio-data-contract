@@ -21,7 +21,7 @@ Qwen3-ASR 自动质检。每条指令生成 22 个音色，导出要求每条至
 注册入口：
 
 ```bash
-python scripts/icefall/register_police_v6_acceptance.py --amphion-data /path/to/AmphionData
+python scripts/register_police_v6_acceptance.py --amphion-data /path/to/AmphionData
 ```
 
 注册前核验 205 条覆盖、每条音色数、音频存在、16 kHz、manifest ID 对齐；

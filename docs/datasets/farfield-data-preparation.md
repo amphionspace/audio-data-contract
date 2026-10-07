@@ -36,7 +36,7 @@ ViTW 原始采样率包含 16/24/48 kHz，现有 loader 会按训练目标重采
 
 ## RealMAN 自动准备
 
-入口：`scripts/icefall/download_realman_asr.py`。
+入口（icefall 仓库）：`egs/amphion/shared_amphion/local/download_realman_asr.py`。
 
 - 固定官方 `AISHELL/RealMAN` revision：`fea47505cae8041f4b652b0954ba61c77d2b6df1`。
 - ASR 下载范围：train 的 `ma_speech`、val/test 的 `ma_noisy_speech`、转写、场景元数据与位置 CSV；113 个文件，总计 258,795,986,801 bytes。
@@ -56,7 +56,7 @@ ViTW 原始采样率包含 16/24/48 kHz，现有 loader 会按训练目标重采
 此范围用于 ASR。没有下载语音增强任务专用的重复 direct-path 参考、val_raw/test_raw，以及 367.9 GB 的独立训练噪声包。
 
 ```bash
-python scripts/icefall/download_realman_asr.py --aria2 /path/to/aria2c --seven-zip /path/to/7zz
+python egs/amphion/shared_amphion/local/download_realman_asr.py --aria2 /path/to/aria2c --seven-zip /path/to/7zz
 ```
 
 需要 `requests`、`aria2c`、`7zz` 及下方清单准备依赖。当前机器的执行日志位于 `zh_en/ASR/data/farfield_prep/realman_pipeline.log`。
@@ -66,9 +66,9 @@ python scripts/icefall/download_realman_asr.py --aria2 /path/to/aria2c --seven-z
 清单脚本依赖 Lhotse（本次使用 1.33.0）、TextGrid、SoundFile；已有上游清单会复用。
 
 ```bash
-python scripts/icefall/prepare_farfield_manifests.py -d alimeeting_sdm
-python scripts/icefall/prepare_farfield_manifests.py -d ami_sdm
-python scripts/icefall/prepare_farfield_manifests.py -d notsofar_sdm
+python egs/amphion/shared_amphion/local/prepare_farfield_manifests.py -d alimeeting_sdm
+python egs/amphion/shared_amphion/local/prepare_farfield_manifests.py -d ami_sdm
+python egs/amphion/shared_amphion/local/prepare_farfield_manifests.py -d notsofar_sdm
 ```
 
 本次检查包括：全部现有源音频的文件头及首尾各 400 帧、ID 唯一性、标注引用、三个会议集的划分隔离，以及每个训练入口的单声道/16 kHz 加载抽查。未逐帧解码全部长录音。

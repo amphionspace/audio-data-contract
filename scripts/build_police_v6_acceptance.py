@@ -103,13 +103,9 @@ def main():
             if not split:
                 continue
             artifacts = {a['name']: a for a in dataset['artifacts']}
-            sup_names = split.get('supervisions_artifacts') or [
-                split.get('supervisions_artifact')]
-            rec_names = split.get('recordings_artifacts') or [
-                split.get('recordings_artifact')]
+            sup_names = split['artifacts'].get('supervisions', [])
+            rec_names = split['artifacts'].get('recordings', [])
             for sup_name, rec_name in zip(sup_names, rec_names, strict=True):
-                if not sup_name or not rec_name:
-                    continue
                 sup_art, rec_art = artifacts[sup_name], artifacts[rec_name]
                 sup_path = Path(roots[sup_art['root_alias']]) / sup_art['relative_path']
                 rec_path = Path(roots[rec_art['root_alias']]) / rec_art['relative_path']
