@@ -2,7 +2,7 @@
 
 按数据集查看语言、支持任务、时长和特性。清洗、热词、加噪、评测入口和训练框架配置归入所属数据集，不另算一套源数据。
 
-当前登记 **119 个数据集条目**；另有 **20 个下载来源声明**和 **1 个训练混合配方**。登记不代表本机文件已齐备。
+当前登记 **120 个数据集条目**；另有 **20 个下载来源声明**和 **1 个训练混合配方**。登记不代表本机文件已齐备。
 
 时长单位为小时。不同版本、子集和标注片段可能重叠，逐项列出，不相加为总量；没有时长的条目仍保留。参考表数字未核实当前文件与划分覆盖；“过滤前”不能当作清洗后时长。
 
@@ -100,6 +100,7 @@
 | [cs_dialogue_mix](../../catalog/icefall_base.yaml#L1748) | en、zh | 语音识别 | 31.0（已登记；[icefall-20260908](../../catalog/icefall_runtime.yaml#L2159)）<br>31.0（已登记；[legacy-20260804](../../catalog/icefall_base.yaml#L1748)） | 含派生版本（与源数据可能重叠） |
 | [cumix2017](../../catalog/icefall_base.yaml#L1813) | en、yue | 语音识别 | 10.9（已登记；[icefall-20260908](../../catalog/icefall_runtime.yaml#L2224)）<br>10.9（已登记；[legacy-20260804](../../catalog/icefall_base.yaml#L1813)） | 含派生版本（与源数据可能重叠） |
 | [indicvoices](../../catalog/multilingual_multispeaker.yaml#L164) | as、bn、brx、doi、gu、hi、kn、kok、ks、mai、ml、mni、mr、ne、or、pa、sa、sat、sd、ta、te、ur | 语音识别 | 未登记 | 已登记划分：all |
+| [meeting_benchmark](../../catalog/meeting_180s_benchmark.yaml#L1) | en、zh、zh-en | 带说话人标注的语音识别 | 21.2（已登记；[v1-20261008](../../catalog/meeting_180s_benchmark.yaml#L1)） | 部署长度（约 180 秒）会议转写评测集：AISHELL-4 test、AliMeeting Test、AMI SDM test 各会议均匀取 6 个窗口，另有中文 / 英文 / 中英混合 6、8、10 人远场合成会议各 10 段；共 424 段 21.2 小时。仅用于评测 |
 | [multi-talker-sd](../../catalog/multilingual_multispeaker.yaml#L219) | en、zh | 语音识别、语码转换语音识别、连续语音分离、重叠语音检测、带说话人标注的语音识别、说话人分段与归属 | 未登记 | 已登记划分：dev、test、train |
 | [sot_multispeaker_zh_en](../../catalog/sot_multispeaker_zh_en.yaml#L1) | en、zh、zh-en | 带说话人标注的语音识别 | 7,664.4（已登记；[synthetic-v2-20260915](../../catalog/sot_multispeaker_zh_en.yaml#L1)） | 1～5 人中英混音，完整按人转写；200 万 train、1 万 dev、1 万 test。原版没有字词对齐时间戳；时间戳版本已登记、尚在准备：复用 v2 原混音，新增每次发言起止时间。源对齐和质检未全部完成，尚未发布可训练记录；不将计划条数计为已完成数据；含派生版本（与源数据可能重叠） |
 | [talcs](../../catalog/icefall_base.yaml#L1546) | en、zh | 语音识别、热词增强语音识别 | 23.6（已登记；[eval-20260804](../../catalog/open_audio_eval.yaml#L187)）<br>587.6（已登记；[icefall-20260908](../../catalog/icefall_runtime.yaml#L1948)）<br>587.6（已登记；[legacy-20260804](../../catalog/icefall_base.yaml#L1546)）<br>555.9（已登记；[hotwords-v1-20260805](../../catalog/local_lhotse_derived.yaml#L221)）<br>23.6（已登记；[icefall-20260908](../../catalog/icefall_runtime.yaml#L3933)）<br>23.6（已登记；[recipe-1](../../catalog/icefall_traffic_derived.yaml#L96)）<br>23.6（已登记；[icefall-20260908](../../catalog/icefall_runtime.yaml#L4135)）<br>23.6（已登记；[recipe-1](../../catalog/icefall_traffic_derived.yaml#L342)）<br>23.6（已登记；[icefall-20260908](../../catalog/icefall_runtime.yaml#L4236)）<br>23.6（已登记；[recipe-1](../../catalog/icefall_traffic_derived.yaml#L465)）<br>23.6（已登记；[icefall-20260908](../../catalog/icefall_runtime.yaml#L4337)）<br>23.6（已登记；[recipe-1](../../catalog/icefall_traffic_derived.yaml#L588)）<br>23.6（已登记；[icefall-20260908](../../catalog/icefall_runtime.yaml#L4034)）<br>23.6（已登记；[recipe-1](../../catalog/icefall_traffic_derived.yaml#L219)）<br>300.0（[参考表](https://ccnuebbmik1f.feishu.cn/wiki/CEXFwEjPoi2bIukVjk9c5FdOn12?sheet=3d4d23)；legacy-20260804） | 含派生版本（与源数据可能重叠） |
