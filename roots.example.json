@@ -11,5 +11,6 @@
   "multilingual": "/data/multilingual",
   "managed_fast": "/data/managed",
   "managed_bulk": "/bulk/audio",
-  "multispeaker_synthetic": "/path/to/sot-multispeaker/synthetic-v2-20260915"
+  "multispeaker_synthetic": "/path/to/sot-multispeaker/synthetic-v2-20260915",
+  "meeting_180s_benchmark": "/path/to/meeting_180s_benchmark"
 }
