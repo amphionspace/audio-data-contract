@@ -20,6 +20,7 @@
 | [SOT 时间戳](datasets/sot-timestamps.md) | 时间戳来源、版本状态和进度查询 |
 | [警言警语 V6](datasets/police-v6.md) | expanded、8h 两批数据及测试范围 |
 | [V6 指令验收](datasets/police-v6-acceptance.md) | 205 条指令验收集的生成与评测约定 |
+| [警务数据统合版](datasets/police-unified.md) | 全部警务批次合并为 train/dev/test |
 
 ## 协议与框架接入
 
