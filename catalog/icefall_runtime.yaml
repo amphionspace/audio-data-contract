@@ -812,7 +812,7 @@
             - test_cosyvoice3_sup_0
         group: test
     provenance:
-      dataset_family: police_asr_unified
+      superseded_by: police_asr_unified@v1-20261009
       source: icefall runtime manifest snapshot
       snapshot_date: '2026-09-08'
   - schema_version: dataset-catalog/2.0
@@ -859,7 +859,7 @@
           duration_hours: 1.7376222222222222
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:LHOTSE/synthetic/police_synthetic_zh_accent/v5-20260830-qwen75-cosy25-split80-10-10/manifests/police_terms_v5_supervisions_dev.jsonl.gz'
     provenance:
-      dataset_family: police_asr_unified
+      superseded_by: police_asr_unified@v1-20261009
       source: icefall runtime manifest snapshot
       snapshot_date: '2026-09-08'
   - schema_version: dataset-catalog/2.0
@@ -892,6 +892,7 @@
       source: icefall runtime manifest snapshot
       snapshot_date: '2026-09-08'
       dataset_family: police_terms_v5
+      superseded_by: police_asr_unified@v1-20261009
   - schema_version: dataset-catalog/2.0
     dataset_id: police_terms_v5_test
     version: icefall-20260908
@@ -922,6 +923,7 @@
       source: icefall runtime manifest snapshot
       snapshot_date: '2026-09-08'
       dataset_family: police_terms_v5
+      superseded_by: police_asr_unified@v1-20261009
   - schema_version: dataset-catalog/2.0
     dataset_id: wenetspeech_chuan
     version: icefall-20260908
@@ -4442,7 +4444,7 @@
             - clipping_cuts_0
         group: test
     provenance:
-      dataset_family: police_asr_unified
+      superseded_by: police_asr_unified@v1-20261009
       source: icefall runtime manifest snapshot
       snapshot_date: '2026-09-08'
   - schema_version: dataset-catalog/2.0

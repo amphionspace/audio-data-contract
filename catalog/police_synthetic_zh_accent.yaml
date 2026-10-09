@@ -189,7 +189,7 @@
         extra_boundary_speech_rejected: true
         human_reviewed: false
     provenance:
-      dataset_family: police_asr_unified
+      superseded_by: police_asr_unified@v1-20261009
       source: AmphionData synthetic speech pipeline
       snapshot_date: '2026-09-16'
       registered_at: '2026-09-17T07:46:21.585044+00:00'

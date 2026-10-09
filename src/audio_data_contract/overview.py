@@ -156,6 +156,20 @@ def _quality_rows(specs: list[DatasetSpec]) -> list[tuple[str, str, str, str]]:
     return rows
 
 
+def _superseded(specs: list[DatasetSpec]) -> set[str]:
+    """Keys of versions replaced by a registered consolidated version."""
+    keys = {spec.key for spec in specs}
+    result = set()
+    for spec in specs:
+        target = spec.provenance.get("superseded_by")
+        if target is None:
+            continue
+        if target not in keys:
+            raise ContractError(f"{spec.key}: superseded_by names an unknown version: {target}")
+        result.add(spec.key)
+    return result
+
+
 def _dataset_families(specs: list[DatasetSpec]) -> dict[str, str]:
     """Group presentation identities using declared family and lineage only."""
     parents = {}
@@ -247,11 +261,13 @@ def _family_notes(specs: list[DatasetSpec]) -> str:
 
 def _chart_data(specs: list[DatasetSpec]) -> tuple[list[tuple], list[tuple]]:
     families = _dataset_families(specs)
+    superseded = _superseded(specs)
     groups = defaultdict(list)
     for spec in specs:
         if (
             spec.provenance.get("inventory_status") == "download_planned"
             or spec.provenance.get("inventory_category") == "training_mixture"
+            or spec.key in superseded
         ):
             continue
         groups[families[spec.dataset_id]].append(spec)
@@ -372,10 +388,13 @@ def render_data_overview(
     specs = sorted(catalog, key=lambda spec: (spec.dataset_id, spec.version))
     families = _dataset_families(specs)
     links = _source_links(catalog_path)
+    superseded = _superseded(specs)
     groups = defaultdict(list)
     planned = []
     mixtures = []
     for spec in specs:
+        if spec.key in superseded:
+            continue
         if spec.provenance.get("inventory_status") == "download_planned":
             planned.append(spec)
         elif spec.provenance.get("inventory_category") == "training_mixture":
@@ -390,7 +409,7 @@ def render_data_overview(
         "",
         f"当前登记 **{len(groups)} 个数据集条目**；另有 **{len(planned)} 个下载来源声明**和 **{len(mixtures)} 个训练混合配方**。登记不代表本机文件已齐备。",
         "",
-        "时长单位为小时。不同版本、子集和标注片段可能重叠，逐项列出，不相加为总量；没有时长的条目仍保留。参考表数字未核实当前文件与划分覆盖；“过滤前”不能当作清洗后时长。",
+        "时长单位为小时。不同版本、子集和标注片段可能重叠，逐项列出，不相加为总量；没有时长的条目仍保留。参考表数字未核实当前文件与划分覆盖；“过滤前”不能当作清洗后时长。已被合并版本取代（`superseded_by`）的旧版本不再列出，仍可按原 ID 和版本解析。",
         "",
         "任务是该数据集各已登记版本的能力并集，具体版本和划分以链接内声明为准。标点、热词和文件哈希校验都不能单独证明做过内容清洗。",
         "",
