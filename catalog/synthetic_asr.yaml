@@ -114,6 +114,7 @@
       sample_rate: 16000
       channels: 1
     provenance:
+      dataset_family: police_asr_unified
       source: AmphionData synthetic speech pipeline
       snapshot_date: '2026-08-17'
       integrity: verified
@@ -327,6 +328,7 @@
       test_canonical_overlap_with_train: 0
       test_speaker_overlap_with_train: 0
     provenance:
+      dataset_family: police_asr_unified
       source: AmphionData synthetic speech pipeline
       snapshot_date: '2026-08-18'
       integrity: verified
@@ -482,6 +484,7 @@
         e警保: 4
         义警: 52
     provenance:
+      dataset_family: police_asr_unified
       source: AmphionData synthetic speech pipeline
       snapshot_date: '2026-08-20'
       integrity: verified
@@ -607,6 +610,7 @@
       qc_pass: 14423
       selected: 10851
     provenance:
+      dataset_family: police_asr_unified
       source: AmphionData synthetic speech pipeline
       snapshot_date: '2026-08-30'
       integrity: verified
