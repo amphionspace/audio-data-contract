@@ -212,3 +212,13 @@ def test_overview_check_rejects_stale_or_missing_chart(tmp_path, missing):
         chart.write_text("stale\n", encoding="utf-8")
     with pytest.raises(ContractError, match="missing" if missing else "out of date"):
         update_data_overview(output, check=True, **kwargs)
+
+
+def test_superseded_versions_are_not_listed():
+    rendered = render_data_overview(ROOT / "catalog", ROOT / "views")
+    inventory = rendered.split("## 下载来源声明")[0]
+
+    police_rows = [line for line in inventory.splitlines() if line.startswith("| [police")]
+    assert len(police_rows) == 1
+    assert police_rows[0].startswith("| [police_asr_unified](")
+    assert "icefall-20260908" not in police_rows[0]

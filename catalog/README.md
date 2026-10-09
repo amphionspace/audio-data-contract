@@ -70,6 +70,7 @@
 ## 总览的统计规则
 
 - 同一 `dataset_id` 的版本合并展示；派生身份沿 `derived_from` 归入源数据。历史评测别名、单通道版本等没有完整血缘时，用 `provenance.dataset_family` 明确展示归属，不按文件名猜测，也不改变解析 ID。
+- 旧版本已并入合并版本时，在 provenance 写 `superseded_by: <dataset_id>@<version>`。总览不再列出这些旧版本，但仍可按原 ID 和版本解析；引用的版本必须已登记。
 - 不同语言子集保留独立条目，便于选数据。任务列取各已登记版本的并集，不表示每个版本都支持全部任务。
 - `provenance.inventory_status=download_planned` 单列下载来源声明；它表示登记用途，不代替运行状态。下载、校验和准备进度由 `dataset-state` 表达。
 - `provenance.inventory_category=training_mixture` 单列训练混合配方，不计为源数据集。

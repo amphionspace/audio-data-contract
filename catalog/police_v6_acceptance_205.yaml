@@ -54,7 +54,7 @@
       sample_rate: 16000
       channels: 1
     provenance:
-      dataset_family: police_asr_unified
+      superseded_by: police_asr_unified@v1-20261009
       source: AmphionData synthetic speech pipeline
       status: ready
       source_requirements:
@@ -119,7 +119,7 @@
       sample_rate: 16000
       channels: 1
     provenance:
-      dataset_family: police_asr_unified
+      superseded_by: police_asr_unified@v1-20261009
       source: AmphionData synthetic speech pipeline
       status: ready
       source_requirements:
