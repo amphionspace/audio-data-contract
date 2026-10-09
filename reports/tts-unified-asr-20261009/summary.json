@@ -1,0 +1,658 @@
+{
+ "surveyed_at": "2026-10-09",
+ "release": "DATA-TTS-UNIFIED v0.1 (pinned lance_version per manifest)",
+ "method": "full scan of text/text_kind/language/duration_seconds/text_variants; chars_per_sec sampled every 97th row",
+ "datasets": {
+  "aishell3": {
+   "rows": 88035,
+   "hours": 85.6,
+   "null_text": 0,
+   "blank_text": 0,
+   "text_kind": {
+    "source_transcript": 88035
+   },
+   "language": {
+    "zh": 88035
+   },
+   "variant_kinds": {
+    "source_pinyin": 88035
+   },
+   "flag_rate": {
+    "digit": 0.0,
+    "markup": 0.0,
+    "brace_tag": 0.0,
+    "latin": 0.0,
+    "cjk": 1.0,
+    "kana": 0.0,
+    "hangul": 0.0,
+    "punct": 0.0
+   },
+   "duration": {
+    "1-20s": 88013,
+    "<1s": 22
+   },
+   "chars_per_sec_p1_p50_p99": [
+    1.6,
+    3.24,
+    4.58
+   ],
+   "original_split": {
+    "test": 24773,
+    "train": 63262
+   }
+  },
+  "csemotions": {
+   "rows": 4160,
+   "hours": 10.2,
+   "null_text": 0,
+   "blank_text": 0,
+   "text_kind": {
+    "source_transcript": 4160
+   },
+   "language": {
+    "zh": 4160
+   },
+   "variant_kinds": {},
+   "flag_rate": {
+    "digit": 0.0192,
+    "markup": 0.0079,
+    "brace_tag": 0.0,
+    "latin": 0.0175,
+    "cjk": 1.0,
+    "kana": 0.0,
+    "hangul": 0.0,
+    "punct": 0.9995
+   },
+   "duration": {
+    "1-20s": 4014,
+    "20-30s": 131,
+    ">30s": 15
+   },
+   "chars_per_sec_p1_p50_p99": [
+    2.55,
+    4.08,
+    5.4
+   ]
+  },
+  "emilia": {
+   "rows": 40264231,
+   "hours": 101655.6,
+   "null_text": 0,
+   "blank_text": 0,
+   "text_kind": {
+    "source_transcript": 40264231
+   },
+   "language": {
+    "zh": 19969297,
+    "en": 18136271,
+    "ja": 869662,
+    "de": 653109,
+    "fr": 543710,
+    "ko": 92182
+   },
+   "variant_kinds": {},
+   "flag_rate": {
+    "digit": 0.064,
+    "markup": 0.0001,
+    "brace_tag": 0.0,
+    "latin": 0.5712,
+    "cjk": 0.4594,
+    "kana": 0.0214,
+    "hangul": 0.0023,
+    "punct": 0.9874
+   },
+   "duration": {
+    "1-20s": 38687355,
+    "20-30s": 1576446,
+    ">30s": 430
+   },
+   "chars_per_sec_p1_p50_p99": [
+    2.77,
+    10.47,
+    23.82
+   ]
+  },
+  "emilia_yodas": {
+   "rows": 43964905,
+   "hours": 113820.6,
+   "null_text": 0,
+   "blank_text": 0,
+   "text_kind": {
+    "source_transcript": 43964905
+   },
+   "language": {
+    "en": 35966512,
+    "ko": 2809250,
+    "fr": 2611486,
+    "de": 1993036,
+    "ja": 454161,
+    "zh": 130460
+   },
+   "variant_kinds": {},
+   "flag_rate": {
+    "digit": 0.1588,
+    "markup": 0.0001,
+    "brace_tag": 0.0,
+    "latin": 0.9321,
+    "cjk": 0.0136,
+    "kana": 0.0102,
+    "hangul": 0.0635,
+    "punct": 0.9593
+   },
+   "duration": {
+    "1-20s": 42561194,
+    "20-30s": 1403483,
+    ">30s": 228
+   },
+   "chars_per_sec_p1_p50_p99": [
+    4.76,
+    15.57,
+    24.87
+   ]
+  },
+  "galgame": {
+   "rows": 7101489,
+   "hours": 10173.7,
+   "null_text": 0,
+   "blank_text": 0,
+   "text_kind": {
+    "source_transcript": 7101489
+   },
+   "language": {
+    "ja": 7101489
+   },
+   "variant_kinds": {},
+   "flag_rate": {
+    "digit": 0.0128,
+    "markup": 0.0043,
+    "brace_tag": 0.0005,
+    "latin": 0.0144,
+    "cjk": 0.7473,
+    "kana": 0.9727,
+    "hangul": 0.0,
+    "punct": 0.9218
+   },
+   "duration": {
+    "1-20s": 6773199,
+    "<1s": 318427,
+    "20-30s": 9552,
+    ">30s": 311
+   },
+   "chars_per_sec_p1_p50_p99": [
+    1.45,
+    4.61,
+    8.1
+   ]
+  },
+  "genshin_voice": {
+   "rows": 654252,
+   "hours": 1039.7,
+   "null_text": 52693,
+   "blank_text": 0,
+   "text_kind": {
+    "source_transcript": 601559,
+    "null": 52693
+   },
+   "language": {
+    "zh": 163406,
+    "ko": 163286,
+    "en-US": 163274,
+    "ja": 163198,
+    "null": 1088
+   },
+   "variant_kinds": {},
+   "flag_rate": {
+    "digit": 0.0078,
+    "markup": 0.029,
+    "brace_tag": 0.0279,
+    "latin": 0.2492,
+    "cjk": 0.4375,
+    "kana": 0.2253,
+    "hangul": 0.2267,
+    "punct": 0.8964
+   },
+   "duration": {
+    "1-20s": 596847,
+    "<1s": 49040,
+    "20-30s": 4961,
+    ">30s": 3404
+   },
+   "chars_per_sec_p1_p50_p99": [
+    1.81,
+    6.17,
+    20.8
+   ]
+  },
+  "hifitts": {
+   "rows": 323978,
+   "hours": 291.7,
+   "null_text": 0,
+   "blank_text": 0,
+   "text_kind": {
+    "source_transcript": 323978
+   },
+   "language": {
+    "en": 323978
+   },
+   "variant_kinds": {
+    "source_preprocessed": 323978,
+    "source_normalized": 323978
+   },
+   "flag_rate": {
+    "digit": 0.0042,
+    "markup": 0.0,
+    "brace_tag": 0.0,
+    "latin": 1.0,
+    "cjk": 0.0,
+    "kana": 0.0,
+    "hangul": 0.0,
+    "punct": 0.9831
+   },
+   "duration": {
+    "1-20s": 314166,
+    "<1s": 9812
+   },
+   "chars_per_sec_p1_p50_p99": [
+    9.36,
+    15.7,
+    21.38
+   ],
+   "original_split": {
+    "train": 322478,
+    "dev": 500,
+    "test": 1000
+   }
+  },
+  "hifitts2": {
+   "rows": 12809875,
+   "hours": 35932.7,
+   "null_text": 0,
+   "blank_text": 0,
+   "text_kind": {
+    "source_transcript": 12809875
+   },
+   "language": {
+    "en": 12809875
+   },
+   "variant_kinds": {
+    "source_normalized": 12809875
+   },
+   "flag_rate": {
+    "digit": 0.0,
+    "markup": 0.0049,
+    "brace_tag": 0.0031,
+    "latin": 1.0,
+    "cjk": 0.0,
+    "kana": 0.0,
+    "hangul": 0.0,
+    "punct": 0.8902
+   },
+   "duration": {
+    "1-20s": 12807214,
+    "<1s": 2639,
+    "20-30s": 22
+   },
+   "chars_per_sec_p1_p50_p99": [
+    8.26,
+    14.4,
+    19.86
+   ],
+   "original_split": {
+    "train": 12805849,
+    "dev_seen": 978,
+    "test_seen": 985,
+    "test_unseen": 968,
+    "dev_unseen": 1095
+   }
+  },
+  "libriheavy": {
+   "rows": 12441758,
+   "hours": 51044.7,
+   "null_text": 0,
+   "blank_text": 0,
+   "text_kind": {
+    "source_book_text": 12441758
+   },
+   "language": {
+    "en": 12441758
+   },
+   "variant_kinds": {
+    "source_asr": 12441758
+   },
+   "flag_rate": {
+    "digit": 0.0697,
+    "markup": 0.0179,
+    "brace_tag": 0.0109,
+    "latin": 1.0,
+    "cjk": 0.0,
+    "kana": 0.0,
+    "hangul": 0.0,
+    "punct": 0.9997
+   },
+   "duration": {
+    "1-20s": 10506734,
+    "20-30s": 1496351,
+    ">30s": 438673
+   },
+   "chars_per_sec_p1_p50_p99": [
+    8.72,
+    14.47,
+    19.68
+   ],
+   "original_split": {
+    "train": 12441758
+   }
+  },
+  "libritts_r": {
+   "rows": 374999,
+   "hours": 583.1,
+   "null_text": 0,
+   "blank_text": 0,
+   "text_kind": {
+    "source_transcript": 374999
+   },
+   "language": {
+    "en": 374999
+   },
+   "variant_kinds": {
+    "source_normalized": 374999
+   },
+   "flag_rate": {
+    "digit": 0.0124,
+    "markup": 0.0007,
+    "brace_tag": 0.0004,
+    "latin": 0.9972,
+    "cjk": 0.0,
+    "kana": 0.0,
+    "hangul": 0.0,
+    "punct": 0.9864
+   },
+   "duration": {
+    "1-20s": 351840,
+    "<1s": 18276,
+    "20-30s": 4755,
+    ">30s": 128
+   },
+   "chars_per_sec_p1_p50_p99": [
+    8.33,
+    16.8,
+    24.06
+   ],
+   "original_split": {
+    "dev.clean": 5736,
+    "dev.other": 4613,
+    "test.clean": 4837,
+    "test.other": 5120,
+    "train.clean.100": 33232,
+    "train.clean.360": 116426,
+    "train.other.500": 205035
+   }
+  },
+  "ljspeech": {
+   "rows": 13100,
+   "hours": 23.9,
+   "null_text": 0,
+   "blank_text": 0,
+   "text_kind": {
+    "source_transcript": 13100
+   },
+   "language": {
+    "en": 13100
+   },
+   "variant_kinds": {
+    "source_normalized": 13100
+   },
+   "flag_rate": {
+    "digit": 0.1137,
+    "markup": 0.0005,
+    "brace_tag": 0.0005,
+    "latin": 0.9998,
+    "cjk": 0.0,
+    "kana": 0.0,
+    "hangul": 0.0,
+    "punct": 0.9482
+   },
+   "duration": {
+    "1-20s": 13100
+   },
+   "chars_per_sec_p1_p50_p99": [
+    7.88,
+    15.19,
+    18.49
+   ]
+  },
+  "mls_sidon": {
+   "rows": 12288862,
+   "hours": 50834.3,
+   "null_text": 0,
+   "blank_text": 0,
+   "text_kind": {
+    "source_transcript": 12288862
+   },
+   "language": {
+    "en": 10815613,
+    "de": 476805,
+    "nl": 380457,
+    "fr": 263055,
+    "es": 225494,
+    "it": 62133,
+    "pt": 39230,
+    "pl": 26075
+   },
+   "variant_kinds": {},
+   "flag_rate": {
+    "digit": 0.0,
+    "markup": 0.0,
+    "brace_tag": 0.0,
+    "latin": 1.0,
+    "cjk": 0.0,
+    "kana": 0.0,
+    "hangul": 0.0,
+    "punct": 0.2399
+   },
+   "duration": {
+    "1-20s": 12288862
+   },
+   "chars_per_sec_p1_p50_p99": [
+    7.94,
+    13.91,
+    19.02
+   ],
+   "original_split": {
+    "valid": 17781,
+    "test": 17702,
+    "train": 12253379
+   }
+  },
+  "starrail_voice": {
+   "rows": 403437,
+   "hours": 692.6,
+   "null_text": 61375,
+   "blank_text": 0,
+   "text_kind": {
+    "source_transcript": 342062,
+    "null": 61375
+   },
+   "language": {
+    "zh-CN": 101054,
+    "ko": 101011,
+    "ja": 100891,
+    "en": 100481
+   },
+   "variant_kinds": {},
+   "flag_rate": {
+    "digit": 0.029,
+    "markup": 0.0949,
+    "brace_tag": 0.0923,
+    "latin": 0.1214,
+    "cjk": 0.807,
+    "kana": 0.0116,
+    "hangul": 0.0118,
+    "punct": 0.8426
+   },
+   "duration": {
+    "1-20s": 382517,
+    "<1s": 16132,
+    "20-30s": 4428,
+    ">30s": 360
+   },
+   "chars_per_sec_p1_p50_p99": [
+    1.23,
+    4.23,
+    15.4
+   ],
+   "language_vs_script": {
+    "zh-CN": {
+     "zh": 83904,
+     "other": 1639,
+     "latin": 60,
+     "ja": 2
+    },
+    "en": {
+     "zh": 78864,
+     "latin": 4786,
+     "other": 1635,
+     "ja": 2
+    },
+    "ja": {
+     "zh": 79188,
+     "ja": 4690,
+     "other": 1637,
+     "latin": 46
+    },
+    "ko": {
+     "zh": 79139,
+     "ko": 4776,
+     "other": 1640,
+     "latin": 52,
+     "ja": 2
+    }
+   }
+  },
+  "vctk": {
+   "rows": 88328,
+   "hours": 82.7,
+   "null_text": 172,
+   "blank_text": 0,
+   "text_kind": {
+    "source_transcript": 88156,
+    "null": 172
+   },
+   "language": {
+    "en": 88328
+   },
+   "variant_kinds": {},
+   "flag_rate": {
+    "digit": 0.0,
+    "markup": 0.0,
+    "brace_tag": 0.0,
+    "latin": 0.9981,
+    "cjk": 0.0,
+    "kana": 0.0,
+    "hangul": 0.0,
+    "punct": 0.997
+   },
+   "duration": {
+    "1-20s": 88328
+   },
+   "chars_per_sec_p1_p50_p99": [
+    5.47,
+    11.19,
+    18.03
+   ]
+  },
+  "wenetspeech4tts": {
+   "rows": 3932472,
+   "hours": 7232.2,
+   "null_text": 0,
+   "blank_text": 0,
+   "text_kind": {
+    "source_transcript": 3932472
+   },
+   "language": {
+    "zh": 3932472
+   },
+   "variant_kinds": {},
+   "flag_rate": {
+    "digit": 0.0,
+    "markup": 0.0,
+    "brace_tag": 0.0,
+    "latin": 0.0234,
+    "cjk": 1.0,
+    "kana": 0.0,
+    "hangul": 0.0,
+    "punct": 0.9956
+   },
+   "duration": {
+    "1-20s": 3853008,
+    "20-30s": 78331,
+    "<1s": 1133
+   },
+   "chars_per_sec_p1_p50_p99": [
+    2.13,
+    4.23,
+    7.16
+   ]
+  },
+  "wutheringwaves": {
+   "rows": 78777,
+   "hours": 134.8,
+   "null_text": 0,
+   "blank_text": 0,
+   "text_kind": {
+    "source_transcript": 78777
+   },
+   "language": {
+    "ja": 19894,
+    "en": 19683,
+    "ko": 19662,
+    "zh": 19538
+   },
+   "variant_kinds": {},
+   "flag_rate": {
+    "digit": 0.0079,
+    "markup": 0.0088,
+    "brace_tag": 0.008,
+    "latin": 0.2572,
+    "cjk": 0.4981,
+    "kana": 0.2495,
+    "hangul": 0.2485,
+    "punct": 0.9621
+   },
+   "duration": {
+    "1-20s": 74292,
+    "<1s": 3021,
+    "20-30s": 970,
+    ">30s": 494
+   },
+   "chars_per_sec_p1_p50_p99": [
+    1.8,
+    5.85,
+    22.91
+   ],
+   "language_vs_script": {
+    "en": {
+     "latin": 19119,
+     "zh": 488,
+     "other": 76
+    },
+    "ja": {
+     "ja": 19650,
+     "zh": 161,
+     "other": 83
+    },
+    "ko": {
+     "ko": 19579,
+     "other": 77,
+     "zh": 6
+    },
+    "zh": {
+     "zh": 19452,
+     "other": 80,
+     "ja": 4,
+     "latin": 2
+    }
+   }
+  }
+ }
+}
