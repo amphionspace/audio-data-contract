@@ -104,6 +104,7 @@
       tts_pass: 15899
       qc_pass: 14423
     provenance:
+      dataset_family: police_asr_unified
       source: AmphionData synthetic speech pipeline
       snapshot_date: '2026-08-30'
       integrity: verified

@@ -139,6 +139,7 @@
       channels: 1
       quality: automatic semantic review and ASR/slot QC; preserve source annotations and QC metadata
     provenance:
+      dataset_family: police_asr_unified
       source: AmphionData synthetic speech pipeline
       snapshot_date: '2026-09-15'
       registered_at: '2026-09-20T16:48:32.594903+00:00'
@@ -300,6 +301,7 @@
       channels: 1
       quality: automatic semantic review and ASR/slot QC; preserve source annotations and QC metadata
     provenance:
+      dataset_family: police_asr_unified
       source_dataset_id: police_v6_8h
       source_version: v6-8h-20260915
       description: Icefall consumption view of the V6 source release; original train/dev/test splits and text are unchanged.
