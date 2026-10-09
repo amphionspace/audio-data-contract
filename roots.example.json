@@ -13,5 +13,6 @@
   "managed_bulk": "/bulk/audio",
   "multispeaker_synthetic": "/path/to/sot-multispeaker/synthetic-v2-20260915",
   "meeting_180s_benchmark": "/path/to/meeting_180s_benchmark",
-  "meeting_selection_panel": "/path/to/meeting_selection_panel"
+  "meeting_selection_panel": "/path/to/meeting_selection_panel",
+  "aidc_data": "/path/to/aidc-data"
 }
