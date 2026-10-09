@@ -5,9 +5,23 @@ import json
 
 import pytest
 
-from audio_data_contract import ArtifactRef, DatasetCatalog, DatasetSpec, Split
+from audio_data_contract import (
+    ArtifactRef,
+    AudioRecord,
+    AudioRef,
+    AudioSlot,
+    DatasetCatalog,
+    DatasetSpec,
+    Split,
+)
 from audio_data_contract.errors import ContractError
-from audio_data_contract.tts_lance import iter_samples, open_release, read_audio
+from audio_data_contract.tts_lance import (
+    apply_asr_rules,
+    iter_asr_samples,
+    iter_samples,
+    open_release,
+    read_audio,
+)
 
 lance = pytest.importorskip("lance")
 pa = pytest.importorskip("pyarrow")
@@ -28,6 +42,7 @@ def write_release(root, texts):
             "duration_seconds": [1.0] * n,
             "sample_rate": pa.array([16000] * n, pa.int32()),
             "channels": pa.array([1] * n, pa.int16()),
+            "metadata_json": [json.dumps({"original_split": "train"})] * n,
             "audio": [{"bytes": f"wav{i}".encode(), "path": f"{i}.wav"} for i in range(n)],
         }
     )
@@ -80,6 +95,10 @@ def test_streams_records_with_text_and_audio(tmp_path):
         "cut_id": "s0",
     }
     assert record.metadata["text_kind"] == "source_transcript"
+    assert record.metadata["original_split"] == "train"
+    assert [r.metadata["asr_rules"] for r, _ in iter_asr_samples(release)] == [
+        "tts-asr-rules/v1"
+    ] * 3
     assert rows[-1][0].language == "N/A"
     assert [r.id for r, a in iter_samples(release, filter="language = 'zh'", with_audio=False)] == ["s0", "s2"]
     shards = [
@@ -108,3 +127,47 @@ def test_catalog_requires_pins():
         ArtifactRef.from_dict({**base, "metadata": {"lance_version": 1, "rows": 1}})
     with pytest.raises(ContractError, match="lance_version"):
         ArtifactRef.from_dict({**base, "sha256": "0" * 64, "metadata": {"rows": 1}})
+
+
+def asr_record(text, language="zh", **metadata):
+    ref = AudioRef("demo", "tts-unified-v0.1", "train", "s")
+    return AudioRecord(
+        id="s",
+        task="asr",
+        audio_slots=(AudioSlot("audio", ref),),
+        target=text,
+        language=language,
+        metadata={"duration_seconds": 2.0, **metadata},
+    )
+
+
+@pytest.mark.parametrize(
+    ("text", "language", "metadata", "reason"),
+    [
+        ("你好", "zh", {"original_split": "test"}, "eval_split"),
+        ("hello", "en", {"original_split": "dev.clean"}, "eval_split"),
+        ("你好", "zh", {"duration_seconds": 31.0}, "too_long"),
+        ("你别理{F#她}{M#他}", "zh", {}, "markup"),
+        ("[Illustration: LONG PEPPER.]", "en", {}, "markup"),
+        ("……！", "ja", {}, "no_lexical"),
+        ("刚才妈妈的秘书给我发短信", "en", {}, "script_mismatch"),
+        ("刚才妈妈的秘书给我发短信", "ja", {}, "script_mismatch"),
+        ("안녕", "zh-CN", {}, "script_mismatch"),
+    ],
+)
+def test_asr_rules_reject(text, language, metadata, reason):
+    assert apply_asr_rules(asr_record(text, language, **metadata)) == (None, reason)
+
+
+def test_asr_rules_clean_text_and_language():
+    record, reason = apply_asr_rules(
+        asr_record(" #<i><color=#9e5738>欢迎</color></i>\n来到庭院[ ]", "zh-CN",
+                   original_split="train.clean.100")
+    )
+    assert reason is None
+    assert (record.target, record.language) == ("欢迎 来到庭院", "zh")
+    assert record.metadata["source_language"] == "zh-CN"
+    kept, _ = apply_asr_rules(asr_record("了解しました", "ja"))
+    assert kept.target == "了解しました"
+    kept, _ = apply_asr_rules(asr_record("你好", max_duration=None), max_duration=None)
+    assert kept is not None

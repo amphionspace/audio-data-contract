@@ -36,7 +36,7 @@
       source_files: 1
       excluded_source_files: []
       finished_at: '2026-09-28T10:58:54.723592+00:00'
-      description: 音频编码字节存放在 Lance 表内；原始划分在 metadata_json.original_split，统一输出全部为 train。
+      description: 音频编码字节存放在 Lance 表内；原始划分在 metadata_json.original_split，统一输出全部为 train。ASR 用 tts_lance.iter_asr_samples（tts-asr-rules/v1）读取，会排除原始 dev/test 等。
       asr_notes: 人工转写；须排除 original_split=test（与 AISHELL-3 测试集相同）
   - schema_version: dataset-catalog/2.0
     dataset_id: csemotions
@@ -75,7 +75,7 @@
       source_files: 8
       excluded_source_files: []
       finished_at: '2026-09-28T07:58:24.382857+00:00'
-      description: 音频编码字节存放在 Lance 表内；原始划分在 metadata_json.original_split，统一输出全部为 train。
+      description: 音频编码字节存放在 Lance 表内；原始划分在 metadata_json.original_split，统一输出全部为 train。ASR 用 tts_lance.iter_asr_samples（tts-asr-rules/v1）读取，会排除原始 dev/test 等。
   - schema_version: dataset-catalog/2.0
     dataset_id: emilia
     version: tts-unified-v0.1
@@ -119,7 +119,7 @@
       source_files: 2360
       excluded_source_files: []
       finished_at: '2026-09-28T15:17:37.931823+00:00'
-      description: 音频编码字节存放在 Lance 表内；原始划分在 metadata_json.original_split，统一输出全部为 train。
+      description: 音频编码字节存放在 Lance 表内；原始划分在 metadata_json.original_split，统一输出全部为 train。ASR 用 tts_lance.iter_asr_samples（tts-asr-rules/v1）读取，会排除原始 dev/test 等。
       asr_notes: 机器转写，须做质量过滤；文本开头带空格
   - schema_version: dataset-catalog/2.0
     dataset_id: emilia_yodas
@@ -165,7 +165,7 @@
       excluded_source_files:
         - DE/DE-B000049.tar
       finished_at: '2026-09-29T02:30:50.082640+00:00'
-      description: 音频编码字节存放在 Lance 表内；原始划分在 metadata_json.original_split，统一输出全部为 train。
+      description: 音频编码字节存放在 Lance 表内；原始划分在 metadata_json.original_split，统一输出全部为 train。ASR 用 tts_lance.iter_asr_samples（tts-asr-rules/v1）读取，会排除原始 dev/test 等。
       asr_notes: 机器转写，须做质量过滤；文本开头带空格
   - schema_version: dataset-catalog/2.0
     dataset_id: galgame
@@ -204,7 +204,7 @@
       source_files: 1230
       excluded_source_files: []
       finished_at: '2026-09-28T10:43:11.601228+00:00'
-      description: 音频编码字节存放在 Lance 表内；原始划分在 metadata_json.original_split，统一输出全部为 train。
+      description: 音频编码字节存放在 Lance 表内；原始划分在 metadata_json.original_split，统一输出全部为 train。ASR 用 tts_lance.iter_asr_samples（tts-asr-rules/v1）读取，会排除原始 dev/test 等。
   - schema_version: dataset-catalog/2.0
     dataset_id: genshin_voice
     version: tts-unified-v0.1
@@ -245,7 +245,7 @@
       source_files: 75
       excluded_source_files: []
       finished_at: '2026-09-28T11:00:30.075741+00:00'
-      description: 音频编码字节存放在 Lance 表内；原始划分在 metadata_json.original_split，统一输出全部为 train。
+      description: 音频编码字节存放在 Lance 表内；原始划分在 metadata_json.original_split，统一输出全部为 train。ASR 用 tts_lance.iter_asr_samples（tts-asr-rules/v1）读取，会排除原始 dev/test 等。
   - schema_version: dataset-catalog/2.0
     dataset_id: hifitts
     version: tts-unified-v0.1
@@ -284,7 +284,7 @@
       source_files: 1
       excluded_source_files: []
       finished_at: '2026-09-28T16:40:21.885207+00:00'
-      description: 音频编码字节存放在 Lance 表内；原始划分在 metadata_json.original_split，统一输出全部为 train。
+      description: 音频编码字节存放在 Lance 表内；原始划分在 metadata_json.original_split，统一输出全部为 train。ASR 用 tts_lance.iter_asr_samples（tts-asr-rules/v1）读取，会排除原始 dev/test 等。
       asr_notes: 有声书原文；须排除 original_split=dev/test
   - schema_version: dataset-catalog/2.0
     dataset_id: hifitts2
@@ -324,7 +324,7 @@
       source_files: 5284
       excluded_source_files: []
       finished_at: '2026-09-29T03:22:30.978546+00:00'
-      description: 音频编码字节存放在 Lance 表内；原始划分在 metadata_json.original_split，统一输出全部为 train。
+      description: 音频编码字节存放在 Lance 表内；原始划分在 metadata_json.original_split，统一输出全部为 train。ASR 用 tts_lance.iter_asr_samples（tts-asr-rules/v1）读取，会排除原始 dev/test 等。
       asr_notes: 有声书原文；须排除 dev_*/test_* 划分
   - schema_version: dataset-catalog/2.0
     dataset_id: libriheavy
@@ -364,7 +364,7 @@
       source_files: 3292
       excluded_source_files: []
       finished_at: '2026-09-29T02:27:50.658396+00:00'
-      description: 音频编码字节存放在 Lance 表内；原始划分在 metadata_json.original_split，统一输出全部为 train。
+      description: 音频编码字节存放在 Lance 表内；原始划分在 metadata_json.original_split，统一输出全部为 train。ASR 用 tts_lance.iter_asr_samples（tts-asr-rules/v1）读取，会排除原始 dev/test 等。
       asr_notes: 书本原文（带大小写和标点），text_variants 另有 source_asr；超过 30 秒的约 44 万条需切分或过滤
   - schema_version: dataset-catalog/2.0
     dataset_id: libritts_r
@@ -404,7 +404,7 @@
       source_files: 195
       excluded_source_files: []
       finished_at: '2026-09-28T09:39:41.811450+00:00'
-      description: 音频编码字节存放在 Lance 表内；原始划分在 metadata_json.original_split，统一输出全部为 train。
+      description: 音频编码字节存放在 Lance 表内；原始划分在 metadata_json.original_split，统一输出全部为 train。ASR 用 tts_lance.iter_asr_samples（tts-asr-rules/v1）读取，会排除原始 dev/test 等。
       asr_notes: 须排除 dev/test（来自 LibriSpeech dev/test，会污染 LibriSpeech 评测）；音频经修复增强
   - schema_version: dataset-catalog/2.0
     dataset_id: ljspeech
@@ -444,7 +444,7 @@
       source_files: 1
       excluded_source_files: []
       finished_at: '2026-09-28T08:44:55.642445+00:00'
-      description: 音频编码字节存放在 Lance 表内；原始划分在 metadata_json.original_split，统一输出全部为 train。
+      description: 音频编码字节存放在 Lance 表内；原始划分在 metadata_json.original_split，统一输出全部为 train。ASR 用 tts_lance.iter_asr_samples（tts-asr-rules/v1）读取，会排除原始 dev/test 等。
       asr_notes: 单说话人朗读，数字未展开
   - schema_version: dataset-catalog/2.0
     dataset_id: mls_sidon
@@ -492,7 +492,7 @@
       excluded_source_files:
         - english/00128-of-00128/train-00000.tar.gz
       finished_at: '2026-09-28T20:23:14.093954+00:00'
-      description: 音频编码字节存放在 Lance 表内；原始划分在 metadata_json.original_split，统一输出全部为 train。
+      description: 音频编码字节存放在 Lance 表内；原始划分在 metadata_json.original_split，统一输出全部为 train。ASR 用 tts_lance.iter_asr_samples（tts-asr-rules/v1）读取，会排除原始 dev/test 等。
       asr_notes: 须排除 valid/test（与 MLS 评测集相同）；音频经 Sidon 修复
   - schema_version: dataset-catalog/2.0
     dataset_id: starrail_voice
@@ -534,7 +534,9 @@
       source_files: 47
       excluded_source_files: []
       finished_at: '2026-09-28T11:00:02.901925+00:00'
-      description: 音频编码字节存放在 Lance 表内；原始划分在 metadata_json.original_split，统一输出全部为 train。
+      description: 音频编码字节存放在 Lance 表内；原始划分在 metadata_json.original_split，统一输出全部为 train。ASR 用 tts_lance.iter_asr_samples（tts-asr-rules/v1）读取，会排除原始 dev/test 等。
+      known_issues:
+        - en/ja/ko 配音约 94% 配的是中文文本（en 中文 78,864 条、英文 4,786 条），疑为接入时各语言共用了中文台词；待 tts-data-pipeline 修复，本仓库不改，ASR 规则按 script_mismatch 排除
   - schema_version: dataset-catalog/2.0
     dataset_id: vctk
     version: tts-unified-v0.1
@@ -573,7 +575,7 @@
       source_files: 1
       excluded_source_files: []
       finished_at: '2026-09-28T09:46:51.147054+00:00'
-      description: 音频编码字节存放在 Lance 表内；原始划分在 metadata_json.original_split，统一输出全部为 train。
+      description: 音频编码字节存放在 Lance 表内；原始划分在 metadata_json.original_split，统一输出全部为 train。ASR 用 tts_lance.iter_asr_samples（tts-asr-rules/v1）读取，会排除原始 dev/test 等。
       asr_notes: 朗读文本；172 条无文本
   - schema_version: dataset-catalog/2.0
     dataset_id: wenetspeech4tts
@@ -613,7 +615,7 @@
       source_files: 70
       excluded_source_files: []
       finished_at: '2026-09-28T12:10:29.029508+00:00'
-      description: 音频编码字节存放在 Lance 表内；原始划分在 metadata_json.original_split，统一输出全部为 train。
+      description: 音频编码字节存放在 Lance 表内；原始划分在 metadata_json.original_split，统一输出全部为 train。ASR 用 tts_lance.iter_asr_samples（tts-asr-rules/v1）读取，会排除原始 dev/test 等。
       asr_notes: 来自 WenetSpeech 的弱标注，建议做置信度或双模型一致性过滤
   - schema_version: dataset-catalog/2.0
     dataset_id: wutheringwaves
@@ -655,4 +657,4 @@
       source_files: 4
       excluded_source_files: []
       finished_at: '2026-09-28T09:45:23.403082+00:00'
-      description: 音频编码字节存放在 Lance 表内；原始划分在 metadata_json.original_split，统一输出全部为 train。
+      description: 音频编码字节存放在 Lance 表内；原始划分在 metadata_json.original_split，统一输出全部为 train。ASR 用 tts_lance.iter_asr_samples（tts-asr-rules/v1）读取，会排除原始 dev/test 等。

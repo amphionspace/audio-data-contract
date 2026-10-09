@@ -654,5 +654,233 @@
     }
    }
   }
+ },
+ "asr_rules": {
+  "version": "tts-asr-rules/v1",
+  "max_duration": 30.0,
+  "datasets": {
+   "aishell3": {
+    "counts": {
+     "kept": 63262,
+     "eval_split": 24773,
+     "null_text": 0
+    },
+    "hours": {
+     "kept": 63.2,
+     "eval_split": 22.4
+    }
+   },
+   "csemotions": {
+    "counts": {
+     "kept": 4145,
+     "too_long": 15,
+     "null_text": 0
+    },
+    "hours": {
+     "kept": 10.1,
+     "too_long": 0.1
+    }
+   },
+   "emilia": {
+    "counts": {
+     "kept": 40254737,
+     "script_mismatch": 8238,
+     "no_lexical": 33,
+     "too_long": 430,
+     "markup": 793,
+     "null_text": 0
+    },
+    "hours": {
+     "kept": 101627.8,
+     "script_mismatch": 20.9,
+     "no_lexical": 0.1,
+     "too_long": 3.6,
+     "markup": 3.2
+    }
+   },
+   "emilia_yodas": {
+    "counts": {
+     "kept": 43932238,
+     "script_mismatch": 28142,
+     "markup": 4296,
+     "too_long": 228,
+     "no_lexical": 1,
+     "null_text": 0
+    },
+    "hours": {
+     "kept": 113714.0,
+     "script_mismatch": 87.2,
+     "markup": 17.5,
+     "too_long": 1.9,
+     "no_lexical": 0.0
+    }
+   },
+   "galgame": {
+    "counts": {
+     "kept": 6941173,
+     "no_lexical": 147386,
+     "script_mismatch": 1218,
+     "too_long": 311,
+     "markup": 11401,
+     "null_text": 0
+    },
+    "hours": {
+     "kept": 10095.9,
+     "no_lexical": 58.3,
+     "script_mismatch": 1.2,
+     "too_long": 4.5,
+     "markup": 13.7
+    }
+   },
+   "genshin_voice": {
+    "counts": {
+     "kept": 575321,
+     "markup": 16205,
+     "no_lexical": 8044,
+     "too_long": 1938,
+     "script_mismatch": 51,
+     "null_text": 52693
+    },
+    "hours": {
+     "kept": 927.5,
+     "markup": 24.2,
+     "no_lexical": 3.0,
+     "too_long": 20.9,
+     "script_mismatch": 0.1
+    }
+   },
+   "hifitts": {
+    "counts": {
+     "kept": 322477,
+     "eval_split": 1500,
+     "markup": 1,
+     "null_text": 0
+    },
+    "hours": {
+     "kept": 289.9,
+     "eval_split": 1.8,
+     "markup": 0.0
+    }
+   },
+   "hifitts2": {
+    "counts": {
+     "kept": 12772958,
+     "markup": 32891,
+     "eval_split": 4026,
+     "null_text": 0
+    },
+    "hours": {
+     "kept": 35804.8,
+     "markup": 117.5,
+     "eval_split": 10.4
+    }
+   },
+   "libriheavy": {
+    "counts": {
+     "kept": 11802741,
+     "too_long": 438673,
+     "markup": 200283,
+     "no_lexical": 8,
+     "script_mismatch": 53,
+     "null_text": 0
+    },
+    "hours": {
+     "kept": 46360.0,
+     "too_long": 3725.8,
+     "markup": 958.7,
+     "no_lexical": 0.0,
+     "script_mismatch": 0.2
+    }
+   },
+   "libritts_r": {
+    "counts": {
+     "kept": 354361,
+     "markup": 217,
+     "too_long": 115,
+     "eval_split": 20306,
+     "null_text": 0
+    },
+    "hours": {
+     "kept": 551.1,
+     "markup": 0.4,
+     "too_long": 1.0,
+     "eval_split": 30.5
+    }
+   },
+   "ljspeech": {
+    "counts": {
+     "kept": 13093,
+     "markup": 7,
+     "null_text": 0
+    },
+    "hours": {
+     "kept": 23.9,
+     "markup": 0.0
+    }
+   },
+   "mls_sidon": {
+    "counts": {
+     "kept": 12253379,
+     "eval_split": 35483,
+     "null_text": 0
+    },
+    "hours": {
+     "kept": 50686.8,
+     "eval_split": 147.6
+    }
+   },
+   "starrail_voice": {
+    "counts": {
+     "kept": 96132,
+     "markup": 28906,
+     "no_lexical": 6555,
+     "too_long": 288,
+     "script_mismatch": 210181,
+     "null_text": 61375
+    },
+    "hours": {
+     "kept": 157.7,
+     "markup": 54.2,
+     "no_lexical": 3.0,
+     "too_long": 3.0,
+     "script_mismatch": 418.3
+    }
+   },
+   "vctk": {
+    "counts": {
+     "kept": 88156,
+     "null_text": 172
+    },
+    "hours": {
+     "kept": 82.5
+    }
+   },
+   "wenetspeech4tts": {
+    "counts": {
+     "kept": 3932472,
+     "null_text": 0
+    },
+    "hours": {
+     "kept": 7232.2
+    }
+   },
+   "wutheringwaves": {
+    "counts": {
+     "kept": 76827,
+     "too_long": 494,
+     "no_lexical": 316,
+     "markup": 632,
+     "script_mismatch": 508,
+     "null_text": 0
+    },
+    "hours": {
+     "kept": 128.1,
+     "too_long": 5.0,
+     "no_lexical": 0.1,
+     "markup": 0.9,
+     "script_mismatch": 0.7
+    }
+   }
+  }
  }
 }

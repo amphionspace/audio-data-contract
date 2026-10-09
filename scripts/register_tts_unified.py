@@ -51,6 +51,16 @@ ASR = {
     "emilia_yodas": "机器转写，须做质量过滤；文本开头带空格",
 }
 
+# Upstream defects left for tts-data-pipeline to fix; ASR rules only exclude them.
+KNOWN_ISSUES = {
+    "starrail_voice": [
+        (
+            "en/ja/ko 配音约 94% 配的是中文文本（en 中文 78,864 条、英文 4,786 条），疑为接入时各语言共用了中文台词；"
+            "待 tts-data-pipeline 修复，本仓库不改，ASR 规则按 script_mismatch 排除"
+        ),
+    ],
+}
+
 
 def sha256(path):
     digest = hashlib.sha256()
@@ -78,10 +88,12 @@ def entry(data_root, dataset_id):
         "source_files": len(manifest["inputs"]),
         "excluded_source_files": [f["path"] for f in manifest["excluded_source_files"]],
         "finished_at": manifest["finished_at"],
-        "description": "音频编码字节存放在 Lance 表内；原始划分在 metadata_json.original_split，统一输出全部为 train。",
+        "description": "音频编码字节存放在 Lance 表内；原始划分在 metadata_json.original_split，统一输出全部为 train。ASR 用 tts_lance.iter_asr_samples（tts-asr-rules/v1）读取，会排除原始 dev/test 等。",
     }
     if asr:
         provenance["asr_notes"] = asr
+    if dataset_id in KNOWN_ISSUES:
+        provenance["known_issues"] = KNOWN_ISSUES[dataset_id]
     return {
         "schema_version": "dataset-catalog/2.0",
         "dataset_id": dataset_id,

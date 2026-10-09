@@ -15,7 +15,8 @@ from __future__ import annotations
 import hashlib
 import json
 import random
-from dataclasses import dataclass
+import re
+from dataclasses import dataclass, replace
 from pathlib import Path
 from typing import Any
 
@@ -35,6 +36,7 @@ _SCALARS = [
     "duration_seconds",
     "sample_rate",
     "channels",
+    "metadata_json",
 ]
 
 
@@ -99,6 +101,9 @@ def _record(release: TtsRelease, row: dict[str, Any]) -> AudioRecord:
         )
         if row[key] is not None
     }
+    original_split = json.loads(row["metadata_json"]).get("original_split")
+    if original_split is not None:
+        metadata["original_split"] = original_split
     ref = AudioRef(release.dataset_id, release.version, SPLIT, row["sample_id"])
     return AudioRecord(
         id=row["sample_id"],
@@ -157,3 +162,68 @@ def read_audio(release: TtsRelease, sample_ids) -> dict[str, bytes]:
     if missing:
         raise ContractError(f"unknown sample IDs in {release.dataset_id}: {missing[:5]}")
     return found
+
+
+# ASR read rules over the TTS text; nothing is written back to the release.
+ASR_RULES_VERSION = "tts-asr-rules/v1"
+_FORMAT_TAGS = re.compile(r"</?(?:i|b|u)>|<color=[^>]*>|</color>")
+_EMPTY_BRACKETS = re.compile(r"\[\s*\]")
+_MARKUP = re.compile(r"[{}<>\[\]]")
+_LEXICAL = re.compile(r"[^\W_]")
+_KANA = re.compile(r"[぀-ヿ]")
+_HANGUL = re.compile(r"[가-힯]")
+_HAN = re.compile(r"[一-鿿]")
+_CJK = re.compile(r"[぀-ヿ가-힯一-鿿]")
+# Japanese lines this long with no kana are Chinese text under a ja label.
+_JA_MIN_HAN_WITHOUT_KANA = 6
+
+
+def _script_mismatch(language, text):
+    if language == "zh":
+        return bool(_KANA.search(text) or _HANGUL.search(text))
+    if language == "ja":
+        return bool(_HANGUL.search(text)) or (
+            not _KANA.search(text)
+            and len(_HAN.findall(text)) >= _JA_MIN_HAN_WITHOUT_KANA
+        )
+    if language == "ko":
+        return not _HANGUL.search(text) and bool(_CJK.search(text))
+    return language != "N/A" and bool(_CJK.search(text))
+
+
+def apply_asr_rules(record: AudioRecord, *, max_duration: float | None = 30.0):
+    """(cleaned record, None) or (None, reason) under ASR_RULES_VERSION.
+
+    Excludes original dev/test/valid rows, unresolvable markup (game
+    placeholders, ruby, audiobook [Illustration: ...]), text without letters,
+    language/script mismatches and audio longer than max_duration seconds.
+    Language tags keep only the primary subtag (zh-CN -> zh, en-US -> en).
+    """
+    metadata = dict(record.metadata)
+    split = metadata.get("original_split")
+    if split is not None and not str(split).startswith("train"):
+        return None, "eval_split"
+    duration = metadata.get("duration_seconds")
+    if max_duration is not None and duration is not None and duration > max_duration:
+        return None, "too_long"
+    text = _FORMAT_TAGS.sub("", record.target)
+    text = " ".join(_EMPTY_BRACKETS.sub(" ", text).split()).lstrip("#").lstrip()
+    if _MARKUP.search(text):
+        return None, "markup"
+    if not _LEXICAL.search(text):
+        return None, "no_lexical"
+    language = record.language.split("-")[0].lower() if record.language != "N/A" else "N/A"
+    if _script_mismatch(language, text):
+        return None, "script_mismatch"
+    if language != record.language:
+        metadata["source_language"] = record.language
+    metadata["asr_rules"] = ASR_RULES_VERSION
+    return replace(record, target=text, language=language, metadata=metadata), None
+
+
+def iter_asr_samples(release: TtsRelease, *, max_duration: float | None = 30.0, **kwargs):
+    """iter_samples() restricted to rows kept by apply_asr_rules()."""
+    for record, audio in iter_samples(release, **kwargs):
+        cleaned, _ = apply_asr_rules(record, max_duration=max_duration)
+        if cleaned is not None:
+            yield cleaned, audio
