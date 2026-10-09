@@ -6,7 +6,7 @@ emilia2 尚未发布，未纳入。
 
 通用清洗已在本仓库以读取规则 `tts-asr-rules/v1` 实现（见下），只在读取时生效，不改 DATA-TTS-UNIFIED。
 套用规则后剩余：A 类 133,862 小时，B 类 222,574 小时，C 类 11,319 小时。
-B 类的模型质量过滤尚未运行，估算见下。`text_kind` 无法用来区分人工转写和机器转写：除 libriheavy 是 `source_book_text` 外，
+B 类的转写质量过滤由 amphiondata 负责。`text_kind` 无法用来区分人工转写和机器转写：除 libriheavy 是 `source_book_text` 外，
 其余全部是 `source_transcript`，Emilia 的机器转写也是这个值。
 
 ## 结论
@@ -74,18 +74,14 @@ B 类的模型质量过滤尚未运行，估算见下。`text_kind` 无法用来
 - libriheavy 超过 30 秒的 43.9 万条（3,726 小时）如果要用，需要另做切分。
 - emilia 的"语言和文字不一致"多是德语、英语文本里混入了"呃"之类的中文，属于机器转写的幻觉，排除是对的。
 
-## B 类质量过滤（尚未运行）
+## B 类质量过滤（由 amphiondata 负责）
 
-如果沿用 `clean-dual-qwen-moss`（Qwen3-ASR-1.7B 加 MOSS-Transcribe-Diarize 双模型一致性），有三点要先考虑：
+emilia、emilia_yodas、wenetspeech4tts 的转写质量过滤由 amphiondata 负责，本仓库只登记清洗结果。
+需要注意三点，已列入[待办](../../docs/datasets/tts-unified.md#待办)：
 
-- **耗时。** 上次中文清洗实测，每小时能处理 210–430 小时音频（2–4 张卡）。按 300 小时估算：
-  wenetspeech4tts（7,232 小时）约 1 天；emilia 加 emilia_yodas（21.5 万小时）约 30 天。
-  本机现在只有 0–3 号卡空闲。
-- **输入。** amphiondata 的清洗工具只认按路径读音频的输入，要接上 `tts_lance` 读 Lance 表里的音频，需要改 amphiondata。
-- **规则。** 现有规则（consensus-v6 / wenetspeech-faithful-v5）只在中文上验证过。emilia 的 en/de/fr/ja/ko 部分有 1.9 亿条，
-  这些语言的阈值需要先做小规模试跑再定。
-
-过滤结果将按 Layer（`$membership`）保存，放在 `tts_lance` 读出的记录之上，同样不改 DATA-TTS-UNIFIED。
+- 规模：上次中文双模型清洗实测每小时能处理 210–430 小时音频（2–4 张卡）。按这个速度，22.3 万小时大约要 1 个月。
+- 输入：音频在 Lance 表内，清洗工具需要通过 `tts_lance` 读取。
+- 阈值：非中文部分没有现成的阈值。
 
 ## 已知问题（已标记，留给 tts-data-pipeline 处理）
 
