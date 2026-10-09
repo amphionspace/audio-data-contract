@@ -30,6 +30,7 @@ TASK_NAMES = {
     "speaker_identification": "说话人身份识别",
     "speaker_verification": "声纹验证",
     "ts_asr": "目标说话人语音识别",
+    "tts": "语音合成",
 }
 
 
