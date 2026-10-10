@@ -2,7 +2,7 @@
 
 按数据集查看语言、支持任务、时长和特性。清洗、热词、加噪、评测入口和训练框架配置归入所属数据集，不另算一套源数据。
 
-当前登记 **130 个数据集条目**；另有 **20 个下载来源声明**和 **1 个训练混合配方**。登记不代表本机文件已齐备。
+当前登记 **131 个数据集条目**；另有 **20 个下载来源声明**和 **1 个训练混合配方**。登记不代表本机文件已齐备。
 
 时长单位为小时。不同版本、子集和标注片段可能重叠，逐项列出，不相加为总量；没有时长的条目仍保留。参考表数字未核实当前文件与划分覆盖；“过滤前”不能当作清洗后时长。已被合并版本取代（`superseded_by`）的旧版本不再列出，仍可按原 ID 和版本解析。
 
@@ -116,6 +116,7 @@
 | [vitw](../../catalog/icefall_runtime.yaml#L3067) | en、zh | 语音识别 | 1,085.4（已登记；[icefall-20260908](../../catalog/icefall_runtime.yaml#L2561)）<br>1,085.4（已登记；[legacy-20260804](../../catalog/icefall_base.yaml#L2152)）<br>77.3（已登记；[远场子集](../../catalog/icefall_runtime.yaml#L3067)）<br>0.3（已登记；[eval-20260804](../../catalog/open_audio_eval.yaml#L2818)）<br>0.3（已登记；[eval-20260804](../../catalog/open_audio_eval.yaml#L2851)）<br>0.3（已登记；[eval-20260804](../../catalog/open_audio_eval.yaml#L2884)）<br>0.3（已登记；[eval-20260804](../../catalog/open_audio_eval.yaml#L2917)）<br>1.0（已登记；[eval-20260804](../../catalog/open_audio_eval.yaml#L2950)）<br>0.3（已登记；[eval-20260804](../../catalog/open_audio_eval.yaml#L2983)）<br>0.3（已登记；[eval-20260804](../../catalog/open_audio_eval.yaml#L3016)）<br>0.3（已登记；[eval-20260804](../../catalog/open_audio_eval.yaml#L3049)）<br>0.8（已登记；[eval-20260804](../../catalog/open_audio_eval.yaml#L3082)）<br>0.8（已登记；[eval-20260804](../../catalog/open_audio_eval.yaml#L3115)）<br>0.8（已登记；[eval-20260804](../../catalog/open_audio_eval.yaml#L3148)）<br>0.8（已登记；[eval-20260804](../../catalog/open_audio_eval.yaml#L3181)）<br>2.3（已登记；[eval-20260804](../../catalog/open_audio_eval.yaml#L3214)）<br>0.8（已登记；[eval-20260804](../../catalog/open_audio_eval.yaml#L3247)）<br>0.8（已登记；[eval-20260804](../../catalog/open_audio_eval.yaml#L3280)）<br>0.8（已登记；[eval-20260804](../../catalog/open_audio_eval.yaml#L3313)） | 标注片段时长，重叠语音或多麦克风可能重复计时；含派生版本（与源数据可能重叠） |
 | [waxal-asr](../../catalog/multilingual_multispeaker.yaml#L288) | ach、aka、am、dag、dga、ee、ff、kpo、lg、ln、mas、mg、nyn、om、sid、sn、sog、ti、wal | 语音识别 | 未登记 | 已登记划分：all |
 | [wutheringwaves](../../catalog/tts_unified.yaml#L620) | en、ja、ko、zh | 语音合成 | 134.8（已登记；[tts-unified-v0.1](../../catalog/tts_unified.yaml#L620)） | 音频编码字节存放在 Lance 表内；原始划分在 metadata_json.original_split，统一输出全部为 train。ASR 用 tts_lance.iter_asr_samples（tts-asr-rules/v1）读取，会排除原始 dev/test 等 |
+| [zenless_voice](../../catalog/tts_unified.yaml#L661) | en、ja、ko、zh | 语音合成 | 554.4（已登记；[tts-unified-v0.1](../../catalog/tts_unified.yaml#L661)） | 音频编码字节存放在 Lance 表内；原始划分在 metadata_json.original_split，统一输出全部为 train。ASR 用 tts_lance.iter_asr_samples（tts-asr-rules/v1）读取，会排除原始 dev/test 等 |
 
 ## 其他语言数据
 

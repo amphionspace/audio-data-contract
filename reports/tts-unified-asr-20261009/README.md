@@ -1,11 +1,11 @@
 # DATA-TTS-UNIFIED 用于 ASR 的评估
 
-16 个已发布的 v0.1 数据集（共约 37.4 万小时）中，**8 个排除原始 dev/test 后即可用于 ASR（约 13.9 万小时）**，
-**3 个需要先做质量过滤（约 22.3 万小时）**，**5 个游戏/表演类数据不建议现在使用（约 1.2 万小时）**。
+17 个已发布的 v0.1 数据集（共约 37.4 万小时）中，**8 个排除原始 dev/test 后即可用于 ASR（约 13.9 万小时）**，
+**3 个需要先做质量过滤（约 22.3 万小时）**，**6 个游戏/表演类数据不建议现在使用（约 1.3 万小时）**。
 emilia2 尚未发布，未纳入。
 
 通用清洗已在本仓库以读取规则 `tts-asr-rules/v1` 实现（见下），只在读取时生效，不改 DATA-TTS-UNIFIED。
-套用规则后剩余：A 类 133,862 小时，B 类 222,574 小时，C 类 11,319 小时。
+套用规则后剩余：A 类 133,862 小时，B 类 222,574 小时，C 类 11,754 小时。
 B 类的转写质量过滤由 amphiondata 负责。`text_kind` 无法用来区分人工转写和机器转写：除 libriheavy 是 `source_book_text` 外，
 其余全部是 `source_transcript`，Emilia 的机器转写也是这个值。
 
@@ -28,6 +28,7 @@ B 类的转写质量过滤由 amphiondata 负责。`text_kind` 无法用来区�
 | C | genshin_voice | 1,039.7 | zh/en/ja/ko | 52,693 条无文本；2.8% 带 `{NICKNAME}`、`<color>` 等标记 |
 | C | starrail_voice | 692.6 | zh/en/ja/ko | **en/ja/ko 配音约 94% 配的是中文文本**（见下）；61,375 条无文本；9% 带标记 |
 | C | wutheringwaves | 134.8 | zh/en/ja/ko | en 配音中 2.5% 配的是中文文本 |
+| C | zenless_voice | 554.4 | zh/en/ja/ko | 123,429 条无文本（30%）；3.3% 带 `{…}` 等标记；12% 不足 1 秒（2026-10-09 发布后补登记） |
 | C | csemotions | 10.2 | zh | 表演型情感语音，数据量太小 |
 
 ## ASR 读取规则 tts-asr-rules/v1
@@ -68,6 +69,7 @@ B 类的转写质量过滤由 amphiondata 负责。`text_kind` 无法用来区�
 | genshin_voice | 1,039.7 | 927.5 | — | 52,693 | 16,205 | 8,044 | 51 | 1,938 |
 | starrail_voice | 692.6 | 157.7 | — | 61,375 | 28,906 | 6,555 | 210,181 | 288 |
 | wutheringwaves | 134.8 | 128.1 | — | — | 632 | 316 | 508 | 494 |
+| zenless_voice | 554.4 | 434.7 | — | 123,429 | 10,966 | 5,470 | 8 | 56 |
 | csemotions | 10.2 | 10.1 | — | — | — | — | — | 15 |
 
 补充说明：
@@ -113,4 +115,4 @@ for record, audio_bytes in iter_asr_samples(release, shard=shard, num_shards=sha
 [summary.json](summary.json) 对每个数据集做了全量扫描，统计 text、text_kind、language、duration_seconds、text_variants；
 字符速率每 97 行抽 1 行。各数据集按 manifest 固定的 Lance 版本读取。原始划分来自 `metadata_json.original_split`。
 语言和文本不一致的问题，是按文本中的假名、谚文、汉字、拉丁字母判断的。
-`asr_rules` 一节是规则 v1 在全部 16 个数据集上逐条运行的结果。
+`asr_rules` 一节是规则 v1 在全部 17 个数据集上逐条运行的结果。
