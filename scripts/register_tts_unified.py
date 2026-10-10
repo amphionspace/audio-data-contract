@@ -35,6 +35,7 @@ SOURCE_DIRS = {
     "vctk": "VCTK",
     "wenetspeech4tts": "WenetSpeech4TTS",
     "wutheringwaves": "WutheringWaves-2.2",
+    "zenless_voice": "zenless-voice",
 }
 # Datasets usable for ASR after the cleaning listed in the survey report.
 ASR = {
