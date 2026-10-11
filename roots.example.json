@@ -14,5 +14,15 @@
   "multispeaker_synthetic": "/path/to/sot-multispeaker/synthetic-v2-20260915",
   "meeting_180s_benchmark": "/path/to/meeting_180s_benchmark",
   "meeting_selection_panel": "/path/to/meeting_selection_panel",
-  "aidc_data": "/path/to/aidc-data"
+  "aidc_data": "/path/to/aidc-data",
+  "real_meetings_20261010_aishell4": "/path/to/real_meetings_20261010_aishell4",
+  "real_meetings_20261010_alimeeting_sdm": "/path/to/real_meetings_20261010_alimeeting_sdm",
+  "real_meetings_20261010_magicdata_ramc": "/path/to/real_meetings_20261010_magicdata_ramc",
+  "farfield_channel_views": "/path/to/farfield_channel_views",
+  "farfield_simulated": "/path/to/farfield_simulated",
+  "farfield_simulated_ramc_v2": "/path/to/farfield_simulated_ramc_v2",
+  "farfield_replay": "/path/to/farfield_replay",
+  "farfield_replay_3dspeaker_clean": "/path/to/farfield_replay_3dspeaker_clean",
+  "cs_dialogue_meeting_sot": "/path/to/cs_dialogue_meeting_sot",
+  "aishell5_meeting_sot": "/workspace/data/datasets/aishell5_meeting_sot/versions/far-mic-v1-20261010"
 }

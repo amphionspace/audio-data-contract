@@ -1,0 +1,97 @@
+- schema_version: dataset-catalog/2.0
+  dataset_id: wenetspeech
+  version: eval-20261011
+  languages:
+  - zh
+  tasks:
+  - asr
+  aliases: []
+  artifacts:
+  - kind: lhotse-recordings
+    name: test_net_recordings
+    relative_path: datasets/wenetspeech/versions/eval-20261011/test_net_recordings.jsonl.gz
+    root_alias: aidc_data
+    expected_bytes: 3749
+    sha256: 92f238bb9fe81d2b47fee38a9ddaca550b34f162ae91750b58904c6b33b9a45d
+  - kind: lhotse-supervisions
+    name: test_net_supervisions
+    relative_path: datasets/wenetspeech/versions/eval-20261011/test_net_supervisions.jsonl.gz
+    root_alias: aidc_data
+    expected_bytes: 966047
+    sha256: 90addeb945646f4f196fad414a6863d5e66fdec9d0595f30af678c2ae53e8d57
+  - kind: lhotse-recordings
+    name: test_meeting_recordings
+    relative_path: datasets/wenetspeech/versions/eval-20261011/test_meeting_recordings.jsonl.gz
+    root_alias: aidc_data
+    expected_bytes: 102461
+    sha256: a9463a7265f0b6cbe8919cec994f9786a4c1dccdfb05a4dc558ee95ca9d37fc6
+  - kind: lhotse-supervisions
+    name: test_meeting_supervisions
+    relative_path: datasets/wenetspeech/versions/eval-20261011/test_meeting_supervisions.jsonl.gz
+    root_alias: aidc_data
+    expected_bytes: 399903
+    sha256: bebc9463d1bf9adf523a02573273b0d3ac213d2616ed288239578887a0ab8175
+  splits:
+    test_net:
+      artifacts:
+        recordings:
+        - test_net_recordings
+        supervisions:
+        - test_net_supervisions
+      statistics:
+        duration_hours: 23.056208333333334
+        records: 24774
+        duration_basis: sum of supervision durations
+    test_meeting:
+      artifacts:
+        recordings:
+        - test_meeting_recordings
+        supervisions:
+        - test_meeting_supervisions
+      statistics:
+        duration_hours: 15.18201111111111
+        records: 8370
+        duration_basis: sum of supervision durations
+  provenance:
+    source: COS backup audio-data-contract/datasets/wenetspeech/legacy_asr (official
+      WenetSpeech v1 test sets)
+    transcript: official, unpunctuated supervisions (not the *_punc variants)
+    snapshot_date: '2026-10-11'
+- schema_version: dataset-catalog/2.0
+  dataset_id: speechio
+  version: eval-original-20261011
+  languages:
+  - zh
+  tasks:
+  - asr
+  aliases: []
+  artifacts:
+  - kind: lhotse-recordings
+    name: test_recordings
+    relative_path: datasets/speechio/versions/eval-original-20261011/test_recordings.jsonl.gz
+    root_alias: aidc_data
+    expected_bytes: 574345
+    sha256: 42fa89e06d72ce4c2e1663f19f3043a0509eae0008f44a7f414ebe146db290e4
+  - kind: lhotse-supervisions
+    name: test_supervisions
+    relative_path: datasets/speechio/versions/eval-original-20261011/test_supervisions.jsonl.gz
+    root_alias: aidc_data
+    expected_bytes: 3748107
+    sha256: b5482721435941d4d92fc87591dd26955bbead6bfe69b9ce790e098edf75c7b3
+  splits:
+    test:
+      artifacts:
+        recordings:
+        - test_recordings
+        supervisions:
+        - test_supervisions
+      statistics:
+        duration_hours: 63.82761498916667
+        records: 41893
+        duration_basis: sum of supervision durations
+  provenance:
+    source: speechio@legacy manifests
+    snapshot_date: '2026-10-11'
+    transcript: custom.original_text (official leaderboard reference); legacy rewritten
+      text kept in custom.legacy_text
+    subsets: custom.subset_id ZH00000-ZH00026
