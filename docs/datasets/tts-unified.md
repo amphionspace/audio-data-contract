@@ -56,9 +56,5 @@ for record, audio_bytes in iter_asr_samples(release, shard=shard, num_shards=sha
 | 6 | emilia2 还在 `v0.1.incomplete`，未发布 | tts-data-pipeline | 发布后重新运行 `register_tts_unified.py`，同步到 registry |
 | 7 | DATA-TTS 下的 WenetSpeech-Chuan、WenetSpeech-Wu、WenetSpeech-Yue 还没有转入统一版，目前没有登记 | tts-data-pipeline | 转入后登记 |
 | 8 | aishell3、mls_sidon 和已登记的 aishell3、mls_* 是同一批语音，混合训练时不要重复计入 | 训练配置方 | — |
-<<<<<<< HEAD
 | 9 | 游戏和表演类数据（galgame、genshin_voice、starrail_voice、wutheringwaves、zenless_voice、csemotions）是否用于 ASR，还没有定 | 待定 | — |
-=======
-| 9 | 游戏和表演类数据（galgame、genshin_voice、starrail_voice、wutheringwaves、csemotions）是否用于 ASR，还没有定 | 待定 | — |
 | 10 | emilia 精修版 `final` 的完整筛选规则不明（已知 `wer` ≤ 0.25，但 `wer` 为 0 的样本也有被排除的），`emilia_monolang/ZH` 比其他目录少 2 个文件 | tts-data-pipeline | 拿到规则后补进声明 |
->>>>>>> origin/main
