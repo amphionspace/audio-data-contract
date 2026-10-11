@@ -653,6 +653,71 @@
      "latin": 2
     }
    }
+  },
+  "zenless_voice": {
+   "rows": 406720,
+   "hours": 554.4,
+   "null_text": 123429,
+   "blank_text": 0,
+   "text_kind": {
+    "source_transcript": 283291,
+    "null": 123429
+   },
+   "language": {
+    "zh": 102776,
+    "ko": 102339,
+    "en": 101430,
+    "ja": 100175
+   },
+   "variant_kinds": {},
+   "flag_rate": {
+    "digit": 0.0175,
+    "markup": 0.0335,
+    "brace_tag": 0.0329,
+    "latin": 0.2096,
+    "cjk": 0.3317,
+    "kana": 0.1673,
+    "hangul": 0.1724,
+    "punct": 0.6748
+   },
+   "duration": {
+    "1-20s": 354377,
+    "<1s": 50306,
+    "20-30s": 716,
+    ">30s": 1321
+   },
+   "chars_per_sec_p1_p50_p99": [
+    1.43,
+    6.27,
+    38.66
+   ],
+   "original_split": {
+    "train": 406720
+   },
+   "language_vs_script": {
+    "zh": {
+     "zh": 70272,
+     "other": 1396,
+     "latin": 9,
+     "ja": 1
+    },
+    "ko": {
+     "ko": 70123,
+     "other": 1400,
+     "latin": 4
+    },
+    "en": {
+     "latin": 69173,
+     "other": 1366,
+     "ja": 1
+    },
+    "ja": {
+     "ja": 68058,
+     "other": 1319,
+     "zh": 164,
+     "latin": 5
+    }
+   }
   }
  },
  "asr_rules": {
@@ -879,6 +944,23 @@
      "no_lexical": 0.1,
      "markup": 0.9,
      "script_mismatch": 0.7
+    }
+   },
+   "zenless_voice": {
+    "counts": {
+     "kept": 266791,
+     "markup": 10966,
+     "no_lexical": 5470,
+     "too_long": 56,
+     "script_mismatch": 8,
+     "null_text": 123429
+    },
+    "hours": {
+     "kept": 434.7,
+     "markup": 10.5,
+     "no_lexical": 2.0,
+     "too_long": 1.8,
+     "script_mismatch": 0.0
     }
    }
   }
