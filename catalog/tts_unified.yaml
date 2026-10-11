@@ -658,3 +658,44 @@
       excluded_source_files: []
       finished_at: '2026-09-28T09:45:23.403082+00:00'
       description: 音频编码字节存放在 Lance 表内；原始划分在 metadata_json.original_split，统一输出全部为 train。ASR 用 tts_lance.iter_asr_samples（tts-asr-rules/v1）读取，会排除原始 dev/test 等。
+  - schema_version: dataset-catalog/2.0
+    dataset_id: zenless_voice
+    version: tts-unified-v0.1
+    languages:
+      - en
+      - ja
+      - ko
+      - zh
+    tasks:
+      - tts
+    artifacts:
+      - name: samples
+        kind: tts-lance-release
+        root_alias: aidc_data
+        relative_path: DATA-TTS-UNIFIED/datasets/zenless_voice/v0.1/manifest.json
+        expected_bytes: 252648
+        sha256: 6e6317e5caa55d25e7ec809dc2a4c68ba934e5d6cdeb927d293206e2cd83d8b6
+        metadata:
+          lance_version: 2
+          rows: 406720
+          schema_sha256: bf5bc8ca20bd9b2087554249b521534e0324a1d5578dbe77f0f8cbe92cfa54fa
+          storage_version: '2.2'
+    splits:
+      train:
+        artifacts:
+          samples:
+            - samples
+        statistics:
+          rows: 406720
+          duration_hours: 554.4
+    provenance:
+      source: DATA-TTS-UNIFIED
+      contract: DATA-TTS-UNIFIED/CONTRACT.md
+      contract_version: v0.1
+      release_id: v0.1
+      release_digest: b36f4035a5283c4820a72842f6055387dfe9e3987f131495fc4b56b74ce3d923
+      source_directory: DATA-TTS/zenless-voice
+      source_files: 46
+      excluded_source_files: []
+      finished_at: '2026-10-09T10:53:17.008755+00:00'
+      description: 音频编码字节存放在 Lance 表内；原始划分在 metadata_json.original_split，统一输出全部为 train。ASR 用 tts_lance.iter_asr_samples（tts-asr-rules/v1）读取，会排除原始 dev/test 等。
