@@ -23,5 +23,6 @@
   "farfield_simulated_ramc_v2": "/path/to/farfield_simulated_ramc_v2",
   "farfield_replay": "/path/to/farfield_replay",
   "farfield_replay_3dspeaker_clean": "/path/to/farfield_replay_3dspeaker_clean",
-  "cs_dialogue_meeting_sot": "/path/to/cs_dialogue_meeting_sot"
+  "cs_dialogue_meeting_sot": "/path/to/cs_dialogue_meeting_sot",
+  "aishell5_meeting_sot": "/workspace/data/datasets/aishell5_meeting_sot/versions/far-mic-v1-20261010"
 }

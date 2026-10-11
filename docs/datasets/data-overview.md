@@ -2,7 +2,7 @@
 
 按数据集查看语言、支持任务、时长和特性。清洗、热词、加噪、评测入口和训练框架配置归入所属数据集，不另算一套源数据。
 
-当前登记 **139 个数据集条目**；另有 **20 个下载来源声明**和 **1 个训练混合配方**。登记不代表本机文件已齐备。
+当前登记 **141 个数据集条目**；另有 **20 个下载来源声明**和 **1 个训练混合配方**。登记不代表本机文件已齐备。
 
 时长单位为小时。不同版本、子集和标注片段可能重叠，逐项列出，不相加为总量；没有时长的条目仍保留。参考表数字未核实当前文件与划分覆盖；“过滤前”不能当作清洗后时长。已被合并版本取代（`superseded_by`）的旧版本不再列出，仍可按原 ID 和版本解析。
 
@@ -56,12 +56,14 @@
 | 数据集 | 语言 | 支持任务 | 时长（小时，注明范围） | 特性 / 备注 |
 |---|---|---|---|---|
 | [3dspeaker](../../catalog/3dspeaker.yaml#L1) | zh | 说话人身份识别、声纹验证 | 1,275.3（已登记；[speaker-records-v1-20260912](../../catalog/3dspeaker.yaml#L120)） | 跨设备、距离和方言声纹数据；包含三个官方验证配对清单，转写只覆盖普通话；已解包、实测音频头并生成通用说话人记录；保留官方划分和标注 |
+| [OpenSLR 159 AISHELL-5](../../catalog/zh_dialogue.yaml#L350) | zh | 语音识别、带说话人标注的语音识别 | 445.4（已登记；[far-mic-v1-20261010](../../catalog/zh_dialogue.yaml#L350)） | 含派生版本（与源数据可能重叠） |
 | [aidatatang](../../catalog/zh_source_clean.yaml#L327) | zh | 语音识别、热词增强语音识别 | 145.3（已登记；[clean-dual-qwen-moss-v1-20261008](../../catalog/zh_source_clean.yaml#L327)）<br>145.5（已登记；[icefall-20260908](../../catalog/icefall_runtime.yaml#L1606)）<br>145.5（已登记；[legacy-20260804](../../catalog/icefall_base.yaml#L1228)）<br>145.5（已登记；[hotwords-v1-20260805](../../catalog/local_lhotse_derived.yaml#L927)）<br>140.0（[参考表](https://ccnuebbmik1f.feishu.cn/wiki/CEXFwEjPoi2bIukVjk9c5FdOn12?sheet=3d4d23)；legacy-20260804） | aidatatang@icefall-20260908 的全部监督片段（上游称 train，实为含官方 dev/test 说话人的全量，故登记为 all），经 Qwen3-ASR-1.7B 与 MOSS-Transcribe-Diarize 双引擎一致性清洗；逐条写入 custom.clean（pass、reason、action、engine_status），不删除记录，读取时按 require_clean_pass 过滤。音频沿用源版本，不复制。规则 consensus-v6 / wenetspeech-faithful-v5：pass 236834、reject 431。少于 2 个字的 too_short 共 251 条按规则不经引擎直接 pass。用于合成时建议在 pass 之外再要求：两引擎均有效、MOSS 只输出 1 个说话人、action 不是 review_consensus；too_short 另要求两引擎规范化后与原文完全一致。按此筛选保留 220726 条、134.34 小时（too_short 通过 144/251）；含派生版本（与源数据可能重叠） |
 | [aishell](../../catalog/icefall_base.yaml#L697) | zh | 语音识别、热词增强语音识别 | 10.0（已登记；[eval-20260804](../../catalog/open_audio_eval.yaml#L1)）<br>179.0（已登记；[icefall-20260908](../../catalog/icefall_runtime.yaml#L1005)）<br>179.0（已登记；[legacy-20260804](../../catalog/icefall_base.yaml#L697)）<br>10.0（已登记；[clean-v1-20260805](../../catalog/local_lhotse_derived.yaml#L600)）<br>10.0（已登记；[eval-20260804](../../catalog/open_audio_eval.yaml#L414)）<br>160.9（已登记；[hotwords-v1-20260805](../../catalog/local_lhotse_derived.yaml#L647)）<br>155.0（[参考表](https://ccnuebbmik1f.feishu.cn/wiki/CEXFwEjPoi2bIukVjk9c5FdOn12?sheet=3d4d23)；legacy-20260804） | 含派生版本（与源数据可能重叠） |
 | [aishell2](../../catalog/icefall_base.yaml#L769) | zh | 语音识别、热词增强语音识别 | 4.0（已登记；[eval-20260804](../../catalog/open_audio_eval.yaml#L32)）<br>1,004.8（已登记；[icefall-20260908](../../catalog/icefall_runtime.yaml#L1087)）<br>1,004.8（已登记；[legacy-20260804](../../catalog/icefall_base.yaml#L769)）<br>4.0（已登记；[clean-v1-20260805](../../catalog/local_lhotse_derived.yaml#L718)）<br>4.0（已登记；[eval-20260804](../../catalog/open_audio_eval.yaml#L446)）<br>4.0（已登记；[hotwords-v1-20260805](../../catalog/local_lhotse_derived.yaml#L764)）<br>1,036.0（[参考表](https://ccnuebbmik1f.feishu.cn/wiki/CEXFwEjPoi2bIukVjk9c5FdOn12?sheet=3d4d23)；legacy-20260804） | 含派生版本（与源数据可能重叠） |
 | [aishell3](../../catalog/zh_source_clean.yaml#L166) | zh | 语音识别、热词增强语音识别、语音合成 | 63.1（已登记；[clean-dual-qwen-moss-v1-20261008](../../catalog/zh_source_clean.yaml#L166)）<br>22.4（已登记；[eval-20260804](../../catalog/open_audio_eval.yaml#L63)）<br>85.6（已登记；[icefall-20260908](../../catalog/icefall_runtime.yaml#L1140)）<br>85.6（已登记；[legacy-20260804](../../catalog/icefall_base.yaml#L824)）<br>85.6（已登记；[tts-unified-v0.1](../../catalog/tts_unified.yaml#L1)）<br>22.4（已登记；[eval-20260804](../../catalog/open_audio_eval.yaml#L478)）<br>85.6（已登记；[hotwords-v1-20260805](../../catalog/local_lhotse_derived.yaml#L810)）<br>65.0（[参考表](https://ccnuebbmik1f.feishu.cn/wiki/CEXFwEjPoi2bIukVjk9c5FdOn12?sheet=3d4d23)；legacy-20260804） | aishell3@icefall-20260908 的 train 监督片段，经 Qwen3-ASR-1.7B 与 MOSS-Transcribe-Diarize 双引擎一致性清洗；逐条写入 custom.clean（pass、reason、action、engine_status），不删除记录，读取时按 require_clean_pass 过滤。音频沿用源版本，不复制。规则 consensus-v6 / wenetspeech-faithful-v5：pass 63219、reject 43。少于 2 个字的 too_short 共 1982 条按规则不经引擎直接 pass。用于合成时建议在 pass 之外再要求：两引擎均有效、MOSS 只输出 1 个说话人、action 不是 review_consensus；too_short 另要求两引擎规范化后与原文完全一致。按此筛选保留 57965 条、57.77 小时（too_short 通过 1898/1982）；音频编码字节存放在 Lance 表内；原始划分在 metadata_json.original_split，统一输出全部为 train。ASR 用 tts_lance.iter_asr_samples（tts-asr-rules/v1）读取，会排除原始 dev/test 等；含派生版本（与源数据可能重叠） |
 | [aishell4](../../catalog/icefall_base.yaml#L879) | zh | 语音识别 | 119.5（已登记；[icefall-20260908](../../catalog/icefall_runtime.yaml#L1199)）<br>28.4（已登记；[legacy-20260804](../../catalog/icefall_base.yaml#L879)） | 含派生版本（与源数据可能重叠） |
 | [aishell4_meeting_sot](../../catalog/zh_farfield.yaml#L1) | zh | 带说话人标注的语音识别 | 377.5（已登记；[meeting-channel-view-v2-20261010](../../catalog/zh_farfield.yaml#L1)） | 已登记划分：train_120s、train_300s、train_30s、train_600s |
+| [aishell5_meeting_sot](../../catalog/zh_dialogue.yaml#L416) | zh | 带说话人标注的语音识别 | 未登记 | 尚未登记独立划分 |
 | [aishellmix](../../catalog/aishellmix.yaml#L380) | zh | 目标说话人语音识别 | 6,733.1（已登记；[按目标样本累计混合音频，非去重语料时长](../../catalog/aishellmix.yaml#L380)）<br>7,489.2（已登记；[按目标样本累计混合音频，非去重语料时长](../../catalog/aishellmix.yaml#L114)） | AISHELLMix 原版历史训练（enrollment 至少 2 秒）与项目测试数据；纯转写、独立 enrollment/mixture、空转写负样本；AISHELLMix 原版历史训练（enrollment 至少 2 秒）与项目测试数据；转换输入快照，时长见通用版本；AISHELLMix pack3 当前与历史等价训练数据；纯转写、独立 enrollment/mixture、空转写负样本；AISHELLMix pack3 当前与历史等价训练数据；转换输入快照，时长见通用版本 |
 | [alimeeting](../../catalog/alimeeting_far_raw.yaml#L1) | zh | 语音识别、连续语音分离、重叠语音检测、带说话人标注的语音识别、说话人分段与归属 | 125.5（已登记；[openslr-119-far-local-20260903](../../catalog/alimeeting_far_raw.yaml#L1)）<br>157.9（已登记；[openslr-119-local-20260826](../../catalog/multilingual_multispeaker.yaml#L1)）<br>157.9（已登记；[单远场麦克风标注片段](../../catalog/icefall_runtime.yaml#L2832)） | 远场会议、多说话人、重叠语音；训练集 8 条标注越界，使用前需处理；标注片段时长，重叠语音或多麦克风可能重复计时 |
 | [alimeeting_near_farsim_meeting_sot](../../catalog/zh_farfield.yaml#L167) | zh | 带说话人标注的语音识别 | 399.5（已登记；[near-farsim-v1-20261009](../../catalog/zh_farfield.yaml#L167)） | 已登记划分：train_120s、train_300s、train_30s、train_600s |
@@ -183,7 +185,7 @@
 
 | 数据集 | 版本 | 语言 | 支持任务 |
 |---|---|---|---|
-| [aishell5](../../catalog/download_queue.yaml#L1) | 1.0 | zh | 语音识别 |
+| [OpenSLR 159 AISHELL-5](../../catalog/download_queue.yaml#L1) | 1.0 | zh | 语音识别 |
 | [ciempiess](../../catalog/ciempiess_original.yaml#L1) | official-2014 | es | 语音识别 |
 | [ciempiess](../../catalog/ciempiess_test.yaml#L1) | hf-c134fff8e335 | es | 语音识别 |
 | [common_voice_en](../../catalog/download_queue.yaml#L59) | 26.0 | en | 语音识别 |

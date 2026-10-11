@@ -347,3 +347,250 @@
     clean_pass_not_invented: true
     training_exclusions: exclude_records train-empty-target-records.txt (682 empty-target
       train windows) in this version directory
+- schema_version: dataset-catalog/2.0
+  dataset_id: aishell5
+  version: far-mic-v1-20261010
+  derived_from: OpenSLR 159 AISHELL-5
+  languages:
+  - zh
+  tasks:
+  - asr
+  - speaker_attributed_asr
+  artifacts:
+  - name: train_rec
+    kind: lhotse-recordings
+    root_alias: aidc_data
+    relative_path: datasets/aishell5/versions/far-mic-v1-20261010/aishell5_recordings_train.jsonl.gz
+    sha256: ef5f6c44a2735319ae6dc663cf44321a2d3d75dafe92454d5a796d3cd562a1a5
+    expected_bytes: 19635
+  - name: train_sup
+    kind: lhotse-supervisions
+    root_alias: aidc_data
+    relative_path: datasets/aishell5/versions/far-mic-v1-20261010/aishell5_supervisions_train.jsonl.gz
+    sha256: 7149ce546cbaeeb26483cca4bc7452789ecc7713fce70b01fbf7258453b3c9eb
+    expected_bytes: 15507544
+  - name: dev_rec
+    kind: lhotse-recordings
+    root_alias: aidc_data
+    relative_path: datasets/aishell5/versions/far-mic-v1-20261010/aishell5_recordings_dev.jsonl.gz
+    sha256: 319d1985b5e1a852db2b5b604e1c5eaa7302c4859b0aa05d09e374366522e87f
+    expected_bytes: 903
+  - name: dev_sup
+    kind: lhotse-supervisions
+    root_alias: aidc_data
+    relative_path: datasets/aishell5/versions/far-mic-v1-20261010/aishell5_supervisions_dev.jsonl.gz
+    sha256: 2697fbba31346b46585692ef0892d42131464a4af037b008b45d0e6169bc209a
+    expected_bytes: 559552
+  splits:
+    train:
+      artifacts:
+        recordings:
+        - train_rec
+        supervisions:
+        - train_sup
+      statistics:
+        sessions: 568
+        recordings: 2272
+        session_hours: 107.41434520833333
+        duration_hours: 429.6573808333333
+        supervisions: 466068
+    dev:
+      artifacts:
+        recordings:
+        - dev_rec
+        supervisions:
+        - dev_sup
+      statistics:
+        sessions: 18
+        recordings: 72
+        session_hours: 3.9282346006944446
+        duration_hours: 15.712938402777777
+        supervisions: 16620
+  provenance:
+    source: https://www.openslr.org/159/
+    license: CC BY-SA 4.0
+    audio: original far-field cabin microphones DX01C01..DX04C01, one recording each
+    transcript_policy: TextGrid speaker tiers (majority copy across microphones);
+      the * marker removed
+    duration_note: duration_hours counts each session once per microphone
+- schema_version: dataset-catalog/2.0
+  dataset_id: aishell5_meeting_sot
+  version: far-mic-v1-20261010
+  languages:
+  - zh
+  tasks:
+  - speaker_attributed_asr
+  artifacts:
+  - name: train-audio-index
+    kind: jsonl-metadata
+    root_alias: aishell5_meeting_sot
+    relative_path: aishell5-train-audio-index.jsonl.gz
+    sha256: 2c9d1569ff932420f3b2526cf84acc3543e74b945d897fa7161b54daf8d24733
+  - name: train_30s-records
+    kind: audio-records
+    root_alias: aishell5_meeting_sot
+    relative_path: aishell5-train_30s.jsonl.gz
+    sha256: 76bf9a51acdd43262e6b7ea6f80e01a0f6801d8ea94addfc28c7a80f984c8b77
+    metadata:
+      record_count: 58600
+  - name: train_120s-records
+    kind: audio-records
+    root_alias: aishell5_meeting_sot
+    relative_path: aishell5-train_120s.jsonl.gz
+    sha256: cdb28fc8703b40f3ea42ebc6ca4d4d5cf11c82edb8e0b80d4d5b67b30cc9a148
+    metadata:
+      record_count: 14376
+  - name: train_300s-records
+    kind: audio-records
+    root_alias: aishell5_meeting_sot
+    relative_path: aishell5-train_300s.jsonl.gz
+    sha256: 757a5d11a544d51324350da15aaa527abb228f55d50eaa4bd1ebb08bf56fed64
+    metadata:
+      record_count: 6452
+  - name: train_600s-records
+    kind: audio-records
+    root_alias: aishell5_meeting_sot
+    relative_path: aishell5-train_600s.jsonl.gz
+    sha256: c259681be99a5b0d0019cf934087a1e3a6dad7c43e5287ff25cbc48d220adced
+    metadata:
+      record_count: 3976
+  - name: dev-audio-index
+    kind: jsonl-metadata
+    root_alias: aishell5_meeting_sot
+    relative_path: aishell5-dev-audio-index.jsonl.gz
+    sha256: 589d2f847d9bf619752437a7a0dfcd5e488fe93f7150545e8ebc439ca045b1ff
+  - name: dev_30s-records
+    kind: audio-records
+    root_alias: aishell5_meeting_sot
+    relative_path: aishell5-dev_30s.jsonl.gz
+    sha256: 5558972732becf370380f28d76bd7c255425af747f6dc4afd785168a0fb6f68c
+    metadata:
+      record_count: 2104
+  - name: dev_120s-records
+    kind: audio-records
+    root_alias: aishell5_meeting_sot
+    relative_path: aishell5-dev_120s.jsonl.gz
+    sha256: 4e0b49c3f1ffc0cbf3f6aaa06e5ce1adfe80c17f60a7b01be4b681cea5a81ee7
+    metadata:
+      record_count: 516
+  - name: dev_300s-records
+    kind: audio-records
+    root_alias: aishell5_meeting_sot
+    relative_path: aishell5-dev_300s.jsonl.gz
+    sha256: fa801664f2d57ea8efb387dfccf0289460b8041cb45915bbb18d5202526d9011
+    metadata:
+      record_count: 232
+  - name: dev_600s-records
+    kind: audio-records
+    root_alias: aishell5_meeting_sot
+    relative_path: aishell5-dev_600s.jsonl.gz
+    sha256: 2c9fd605b60ceb3f6ed6900f04ad9b7defa30b6bd55be31565bb08c2fba012fc
+    metadata:
+      record_count: 140
+  splits:
+    train_30s:
+      artifacts:
+        records:
+        - train_30s-records
+        audio_index:
+        - train-audio-index
+      group: train
+      statistics:
+        records: 58600
+        duration_hours: 429.65738083327665
+      provenance:
+        training_use: train
+    train_120s:
+      artifacts:
+        records:
+        - train_120s-records
+        audio_index:
+        - train-audio-index
+      group: train
+      statistics:
+        records: 14376
+        duration_hours: 429.65738083335737
+      provenance:
+        training_use: train
+    train_300s:
+      artifacts:
+        records:
+        - train_300s-records
+        audio_index:
+        - train-audio-index
+      group: train
+      statistics:
+        records: 6452
+        duration_hours: 429.65738083333224
+      provenance:
+        training_use: train
+    train_600s:
+      artifacts:
+        records:
+        - train_600s-records
+        audio_index:
+        - train-audio-index
+      group: train
+      statistics:
+        records: 3976
+        duration_hours: 427.67262409722457
+      provenance:
+        training_use: train
+    dev_30s:
+      artifacts:
+        records:
+        - dev_30s-records
+        audio_index:
+        - dev-audio-index
+      group: dev
+      statistics:
+        records: 2104
+        duration_hours: 15.712938402777734
+      provenance:
+        training_use: held_out_not_for_training
+    dev_120s:
+      artifacts:
+        records:
+        - dev_120s-records
+        audio_index:
+        - dev-audio-index
+      group: dev
+      statistics:
+        records: 516
+        duration_hours: 15.712938402777768
+      provenance:
+        training_use: held_out_not_for_training
+    dev_300s:
+      artifacts:
+        records:
+        - dev_300s-records
+        audio_index:
+        - dev-audio-index
+      group: dev
+      statistics:
+        records: 232
+        duration_hours: 15.712938402777795
+      provenance:
+        training_use: held_out_not_for_training
+    dev_600s:
+      artifacts:
+        records:
+        - dev_600s-records
+        audio_index:
+        - dev-audio-index
+      group: dev
+      statistics:
+        records: 140
+        duration_hours: 15.712938402777766
+      provenance:
+        training_use: held_out_not_for_training
+  provenance:
+    source: aishell5
+    source_version: far-mic-v1-20261010
+    annotation: human utterance times and speaker identity
+    channel_policy: one original far-field cabin microphone (DX01C01..DX04C01) per
+      recording; the four microphones of a session are views of one meeting
+    transcript_policy: TextGrid text with * removed, whitespace stripped
+    clean_pass_not_invented: true
+    training_exclusions: exclude_records train-empty-target-records.txt (empty-target
+      train windows) in this version directory
