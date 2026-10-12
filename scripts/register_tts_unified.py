@@ -84,11 +84,21 @@ def entry(data_root, dataset_id):
         "contract": "DATA-TTS-UNIFIED/CONTRACT.md",
         "contract_version": manifest["contract_version"],
         "release_id": manifest["release_id"],
-        "release_digest": manifest["release_digest"],
+        # Older releases carry release_digest/finished_at; emilia2's ingest-profile
+        # manifest identifies itself by ingest_profile_id/input_manifest_sha256.
+        **{
+            key: manifest[key]
+            for key in (
+                "release_digest", "ingest_profile_id", "input_manifest_sha256"
+            )
+            if key in manifest
+        },
         "source_directory": f"DATA-TTS/{SOURCE_DIRS[dataset_id]}",
         "source_files": len(manifest["inputs"]),
-        "excluded_source_files": [f["path"] for f in manifest["excluded_source_files"]],
-        "finished_at": manifest["finished_at"],
+        "excluded_source_files": [
+            f["path"] for f in manifest.get("excluded_source_files", [])
+        ],
+        **{key: manifest[key] for key in ("finished_at",) if key in manifest},
         "description": "音频编码字节存放在 Lance 表内；原始划分在 metadata_json.original_split，统一输出全部为 train。ASR 用 tts_lance.iter_asr_samples（tts-asr-rules/v1）读取，会排除原始 dev/test 等。",
     }
     if asr:

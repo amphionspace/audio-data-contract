@@ -1,6 +1,6 @@
 # DATA-TTS-UNIFIED 数据
 
-`/workspace/data/DATA-TTS-UNIFIED` 下已发布的 17 个 v0.1 数据集已登记为 `<dataset_id>@tts-unified-v0.1`，共约 37.4 万小时。
+`/workspace/data/DATA-TTS-UNIFIED` 下已发布的 18 个 v0.1 数据集已登记为 `<dataset_id>@tts-unified-v0.1`，共约 52.1 万小时。
 数据仍归 tts-data-pipeline 管理，本仓库只登记，不改数据。数据清洗由 amphiondata 负责。
 
 声明文件：[tts_unified.yaml](../../catalog/tts_unified.yaml)，由 [register_tts_unified.py](../../scripts/register_tts_unified.py) 从各数据集的发布 manifest 生成。
@@ -53,7 +53,7 @@ for record, audio_bytes in iter_asr_samples(release, shard=shard, num_shards=sha
 | 3 | emilia 的 en/de/fr/ja/ko 部分没有现成的清洗阈值，现有规则只在中文上验证过；可参考精修版的 `wer` 分数 | amphiondata | — |
 | 4 | libriheavy 有 43.9 万条超过 30 秒（3,726 小时），读取规则直接排除了；要用的话需要切分 | amphiondata | 切分结果登记为新版本 |
 | 5 | starrail_voice 的 en/ja/ko 配音约 94% 配的是中文文本，已写入 `provenance.known_issues` | tts-data-pipeline | 修复后重新运行 `register_tts_unified.py` 登记新版本 |
-| 6 | emilia2 还在 `v0.1.incomplete`，未发布 | tts-data-pipeline | 发布后重新运行 `register_tts_unified.py`，同步到 registry |
+| 6 | emilia2 已于 2026-10-11 发布并登记（9,984 万条，14.6 万小时，41 种语言），只登记为 TTS；是否可用于 ASR 还没有评估 | amphiondata | 评估后补 ASR 说明和读取规则 |
 | 7 | DATA-TTS 下的 WenetSpeech-Chuan、WenetSpeech-Wu、WenetSpeech-Yue 还没有转入统一版，目前没有登记 | tts-data-pipeline | 转入后登记 |
 | 8 | aishell3、mls_sidon 和已登记的 aishell3、mls_* 是同一批语音，混合训练时不要重复计入 | 训练配置方 | — |
 | 9 | 游戏和表演类数据（galgame、genshin_voice、starrail_voice、wutheringwaves、zenless_voice、csemotions）是否用于 ASR，还没有定 | 待定 | — |
