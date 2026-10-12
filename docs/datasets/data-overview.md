@@ -2,7 +2,7 @@
 
 按数据集查看语言、支持任务、时长和特性。清洗、热词、加噪、评测入口和训练框架配置归入所属数据集，不另算一套源数据。
 
-当前登记 **143 个数据集条目**；另有 **20 个下载来源声明**和 **1 个训练混合配方**。登记不代表本机文件已齐备。
+当前登记 **144 个数据集条目**；另有 **20 个下载来源声明**和 **1 个训练混合配方**。登记不代表本机文件已齐备。
 
 时长单位为小时。不同版本、子集和标注片段可能重叠，逐项列出，不相加为总量；没有时长的条目仍保留。参考表数字未核实当前文件与划分覆盖；“过滤前”不能当作清洗后时长。已被合并版本取代（`superseded_by`）的旧版本不再列出，仍可按原 ID 和版本解析。
 
@@ -100,6 +100,7 @@
 | [wenetspeech](../../catalog/zh_asr_eval.yaml#L1) | zh | 语音识别 | 2,409.6（已登记；[clean-weak-v1-20260904](../../catalog/wenetspeech_weak.yaml#L46)）<br>38.2（已登记；[eval-20261011](../../catalog/zh_asr_eval.yaml#L1)）<br>10,025.4（已登记；[icefall-20260908](../../catalog/icefall_runtime.yaml#L570)）<br>10,025.4（已登记；[legacy-20260804](../../catalog/icefall_base.yaml#L492)）<br>2,477.9（已登记；[weak-source-20260904](../../catalog/wenetspeech_weak.yaml#L1)）<br>10,005.4（已登记；[clean-v1-20260805](../../catalog/local_lhotse_derived.yaml#L264)）<br>9,971.1（已登记；[clean-v3-20260828](../../catalog/local_lhotse_derived.yaml#L975)）<br>15.2（已登记；[eval-20260804](../../catalog/open_audio_eval.yaml#L758)）<br>23.1（已登记；[eval-20260804](../../catalog/open_audio_eval.yaml#L726)）<br>23.1（已登记；[recipe-1](../../catalog/icefall_traffic_derived.yaml#L40)）<br>23.1（已登记；[recipe-1](../../catalog/icefall_traffic_derived.yaml#L286)）<br>23.1（已登记；[recipe-1](../../catalog/icefall_traffic_derived.yaml#L409)）<br>23.1（已登记；[recipe-1](../../catalog/icefall_traffic_derived.yaml#L532)）<br>23.1（已登记；[recipe-1](../../catalog/icefall_traffic_derived.yaml#L163)）<br>10,000.0（[参考表](https://ccnuebbmik1f.feishu.cn/wiki/CEXFwEjPoi2bIukVjk9c5FdOn12?sheet=3d4d23)；legacy-20260804） | 含派生版本（与源数据可能重叠） |
 | [wenetspeech4tts](../../catalog/tts_unified.yaml#L580) | zh | 语音识别、语音合成 | 7,232.2（已登记；[icefall-20260908](../../catalog/icefall_runtime.yaml#L706)）<br>7,232.2（已登记；[legacy-20260804](../../catalog/icefall_base.yaml#L577)）<br>7,232.2（已登记；[tts-unified-v0.1](../../catalog/tts_unified.yaml#L580)）<br>7,700.0（[参考表](https://ccnuebbmik1f.feishu.cn/wiki/CEXFwEjPoi2bIukVjk9c5FdOn12?sheet=3d4d23)；legacy-20260804） | 音频编码字节存放在 Lance 表内；原始划分在 metadata_json.original_split，统一输出全部为 train。ASR 用 tts_lance.iter_asr_samples（tts-asr-rules/v1）读取，会排除原始 dev/test 等；含派生版本（与源数据可能重叠） |
 | [wenetspeech_chuan](../../catalog/icefall_base.yaml#L615) | zh | 语音识别 | 10,259.6（已登记；[icefall-20260908](../../catalog/icefall_runtime.yaml#L927)）<br>10,259.6（已登记；[legacy-20260804](../../catalog/icefall_base.yaml#L615)） | 含派生版本（与源数据可能重叠） |
+| [wenetspeech_diarize](../../catalog/wenetspeech_diarize.yaml#L2) | zh | diarization、带说话人标注的语音识别 | 未登记 | WenetSpeech L 训练集原始长音频（≥120 秒，51,358 条 / 22,174 h）的说话人日志伪标签： 沿用 emilia2_zh_dialogue_diarize 的流程，本地 MOSS-Transcribe-Diarize 0.9B 整条打说话人和文本， 粗筛多人录音，在停顿处切 30–120 秒窗口，Qwen3-ASR 整窗核对；门槛先在试跑集上以 MOSS Pro 为参照重新确定。 目前只有进度状态，还没有可用于训练的产物 |
 | [wenetspeech_disfluency](../../catalog/icefall_runtime.yaml#L677) | zh | 语音识别 | 182.5（已登记；[icefall-20260908](../../catalog/icefall_runtime.yaml#L677)） | 已登记划分：train |
 | [wenetspeech_wu](../../catalog/icefall_base.yaml#L640) | zh | 语音识别 | 8,740.7（已登记；[icefall-20260908](../../catalog/icefall_runtime.yaml#L951)）<br>8,740.7（已登记；[legacy-20260804](../../catalog/icefall_base.yaml#L640)） | 含派生版本（与源数据可能重叠） |
 | [wenetspeech_yue](../../catalog/icefall_base.yaml#L1971) | yue | 语音识别 | 未登记 | 含派生版本（与源数据可能重叠） |
