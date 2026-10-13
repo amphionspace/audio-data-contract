@@ -66,7 +66,7 @@ def expand_splits(recipe):
                 bound = dict(zip(names, values))
                 if "cond_params" in spec:  # the condition sets arbitrary parameters, not only the enrollment
                     params = {**base[bound["kind"]], **spec["cond_params"][bound["cond"]],
-                              "pair": f"{group}-{bound['kind']}"}
+                              "pair": spec.get("pair", f"{group}-{{kind}}").format(**bound)}
                 else:
                     params = {**base[bound["kind"]], "enroll": bound["cond"], "pair": f"{group}-{bound['kind']}"}
                 out.append({"name": spec["template"].format(**bound), "group": group, "n": n,
@@ -175,8 +175,36 @@ def build_pools(recipe, catalog, roots):
 
 
 def noise_files(spec, catalog, roots):
+    """Noise clips of a catalog recordings split, a directory glob, or a label-filtered FSD50K split."""
+    if "glob" in spec:
+        return sorted(str(p) for p in Path(roots[spec["alias"]]).glob(spec["glob"]))
+    if "fsd" in spec:
+        return fsd_files(spec, roots)
     (path,) = resolve_split(catalog, spec["dataset"], spec["version"], spec["split"], "recordings", roots)
     return [r["sources"][0]["source"] for r in _rows(path) if r.get("duration", 0) >= 3.0]
+
+
+def fsd_files(spec, roots):
+    """FSD50K clips whose labels include one of ``include`` and none of ``exclude``, long enough."""
+    import csv
+
+    fsd = spec["fsd"]
+    base = Path(roots[spec["alias"]]) / "fsd50k" / "extracted"
+    with (base / "FSD50K.ground_truth" / f"{fsd['split']}.csv").open(newline="") as stream:
+        rows = list(csv.DictReader(stream))
+    keep = []
+    for row in rows:
+        labels = set(row["labels"].split(","))
+        if labels & set(fsd["include"]) and not labels & set(fsd.get("exclude", [])):
+            keep.append(base / f"FSD50K.{fsd['split']}_audio" / f"{row['fname']}.wav")
+    keep.sort(key=lambda p: hashlib.sha256(p.name.encode()).hexdigest())
+    out = []
+    for path in keep:
+        if sf.info(path).duration >= fsd["min_seconds"]:
+            out.append(str(path))
+        if len(out) >= fsd["count"]:
+            break
+    return out
 
 
 def enrollment_files(recipe, roots):

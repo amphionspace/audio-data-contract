@@ -61,6 +61,19 @@ def is_extreme(name):
     return name.startswith(EXTREME)
 
 
+NOISES = {
+    "babble20": ("背景人声 20 dB", "合成背景人声（5–20 位中文说话人同时说话，测试划分的说话人），信噪比 20 dB，背景很远"),
+    "babble10": ("背景人声 10 dB", "同上，信噪比 10 dB，像身边有一群人聊天"),
+    "babble5": ("背景人声 5 dB", "同上，信噪比 5 dB，嘈杂的人群"),
+    "events20": ("环境事件声 20 dB", "FSD50K 评测划分里的家居、车辆、门、水、发动机、警报等声音（不含人声和音乐），信噪比 20 dB"),
+    "events10": ("环境事件声 10 dB", "同上，信噪比 10 dB"),
+    "crowd10": ("人群嘈杂声 10 dB", "FSD50K 的 Crowd 和 Chatter 标注片段，信噪比 10 dB"),
+}
+NOISE_ONLY = {
+    "nonspeech-babble": ("只有背景人声", "只有合成的背景人声（一群人聊天），没有目标，期望输出为空"),
+    "nonspeech-crowd": ("只有人群嘈杂声", "只有 FSD50K 的 Crowd 和 Chatter 片段，期望输出为空"),
+    "nonspeech-events": ("只有环境事件声", "只有 FSD50K 的环境事件声（不含人声和音乐），期望输出为空"),
+}
 KINDS = {
     "pos": ("目标在场", "目标说话人在场，指标为转写字错率与漏识率"),
     "neg": ("目标缺席", "注册人不在场、只有别人说话，期望输出为空，指标为误输出率"),
@@ -121,7 +134,12 @@ NAMED = {
 
 def entry(split, recipe):
     name, params = split["name"], split["params"]
-    if name.startswith(("floor-", "room-", "level-")):
+    if name.split("-")[0] in NOISES:
+        label, description = NOISES[name.split("-")[0]]
+        display = f"{label} · {KINDS[params['kind']][0]}"
+    elif name in NOISE_ONLY:
+        display, description = NOISE_ONLY[name]
+    elif name.startswith(("floor-", "room-", "level-")):
         table = {"floor": FLOORS, "room": ROOMS, "level": LEVELS}[name.split("-")[0]]
         label, description = table[name.split("-")[1]]
         display = f"{label} · {KINDS[params['kind']][0]}"
@@ -144,14 +162,23 @@ def entry(split, recipe):
 
 
 def main():
-    recipe = yaml.safe_load(Path(build.__file__).with_name("recipe.yaml").read_text())
+    recipe = yaml.safe_load(Path(sys.argv[1] if len(sys.argv) > 1 else Path(build.__file__).with_name("recipe.yaml")).read_text())
     splits = build.expand_splits(recipe)
-    names = [s["name"] for s in splits]
 
     def pick(prefix, kinds):
         return [s["name"] for s in splits
                 if s["name"].startswith(prefix) and s["params"]["kind"] in kinds and not is_extreme(s["name"])]
 
+    if recipe["dataset_id"] == "ts_asr_noise":
+        groups = [
+            {"name": "背景噪声（目标在场）", "section": "新登记的噪声集", "labels": ["panel-base-pos", *pick("babble", {"pos"}), *pick("events", {"pos"}), *pick("crowd", {"pos"})],
+             "description": "同一批基础场景，只加背景人声、环境事件声或人群嘈杂声；基线与 v3 的面板基线相同"},
+            {"name": "背景噪声（目标缺席）", "section": "新登记的噪声集", "labels": ["panel-base-neg", *pick("babble", {"neg"}), *pick("events", {"neg"}), *pick("crowd", {"neg"})],
+             "description": "同上，注册人不在场"},
+            {"name": "只有噪声，没有目标", "section": "新登记的噪声集", "labels": pick("nonspeech-", {"nonspeech"}),
+             "description": "背景人声、人群、环境事件声；期望输出为空"},
+        ]
+        return emit(recipe, splits, groups)
     groups = [
         {"name": "目标在场（注册音频劣化）", "section": "注册音频劣化", "labels": pick("enroll-", {"pos"}),
          "description": "同一批基础场景（1–2 个干扰人），只改注册音频；指标为转写字错率与漏识率"},
@@ -183,6 +210,11 @@ def main():
         {"name": "目标缺席（环境与设备）", "section": "环境与设备", "labels": pick("dom-", {"neg"}),
          "description": "同上，注册人不在场"},
     ]
+    return emit(recipe, splits, groups)
+
+
+def emit(recipe, splits, groups):
+    names = [s["name"] for s in splits]
     covered = {label for g in groups for label in g["labels"]}
     missing = sorted(n for n in set(names) - covered if not is_extreme(n))
     if missing:

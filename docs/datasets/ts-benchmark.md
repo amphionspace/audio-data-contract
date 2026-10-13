@@ -25,6 +25,15 @@
 - **现实性原则**：评测条件基于业务现实，不做极端测试。削波、电话编码、窄带、`enroll-contam0`（0 dB 注册污染）和组合压力是诊断条件，在 AmphionEval 的评测集里不进分组，因此不计入平均，也不进 `analyze.py` 的脆弱点排序。
 - `analyze.py` 增加：`--run` 可给多个目录（评测被拆成几份时），脆弱点排序（区间不含 0 的变差，按变化量），`--dataset` 选择数据集。
 
+## 噪声补充集（ts_asr_noise）
+
+`ts_asr_noise@v1-20261013`：2,040 条、17 个场景，用 2026-10-13 新登记的噪声集（`open_noise` 的 FSD50K 与 `babble_noise_synth` 合成背景人声）扩充脆弱性面板。配方 `scripts/ts_benchmark/recipe-noise.yaml`，生成同样用 `build.py --recipe`。
+
+- 基线 `panel-base-pos/neg` 与 v3 的同名场景逐条相同（同样的配对键、参数和底噪），其余条件与基线共用同一批基础场景，所以可以直接与 v3 面板比较。
+- 背景噪声：`babble20/10/5`（合成背景人声，信噪比 20、10、5 dB；5–20 位中文说话人同时说话，用测试划分的 34 位说话人，与训练划分互不重叠）、`events20/10`（FSD50K 评测划分里的家居、车辆、门、水、发动机、警报等环境事件声，不含人声和音乐，取 400 个不短于 5 秒的片段）、`crowd10`（FSD50K 的 Crowd 和 Chatter 标注片段）。
+- 只有噪声没有目标的场景：`nonspeech-babble`、`nonspeech-crowd`、`nonspeech-events`，目标缺席，期望输出为空。
+- v3 里用的 WHAM! 噪声现在已按 `wham_noise` 登记（`tr`、`cv`、`tt`），v3 用的是其中的 `tt` 划分，登记前的原始路径与登记后的内容相同。
+
 ## 一条记录
 
 - `task = "ts_asr"`，`audio_slots` 依次是 `enrollment` 和 `mixture`。
