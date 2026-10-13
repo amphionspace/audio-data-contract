@@ -27,6 +27,40 @@ CONDITIONS = {
     "contam0": ("注册被他人声音污染 0 dB（压力）", "注册音频叠加另一个说话人，信干比 0 dB，标签含糊，只作压力测试"),
     "quiet": ("注册低电平（对照）", "注册音频降低 25 dB；此前的实测表明模型对电平不敏感，作为对照"),
 }
+FLOORS = {
+    "none": ("无底噪（数字静音）", "发言间隙是精确的 0，v1 的做法；其他底噪条件都与它配对比较"),
+    "white50": ("白噪声底 −50 dBFS", "合成白噪声底，说话约 −25 dBFS"),
+    "pink50": ("粉红噪声底 −50 dBFS", "合成粉红噪声底"),
+    "wham60": ("WHAM 真实环境底噪 −60 dBFS", "WHAM! 的咖啡馆、餐厅、街道、公园等真实环境噪声，几乎听不见"),
+    "wham50": ("WHAM 真实环境底噪 −50 dBFS", "同上，信噪比约 25 dB"),
+    "wham40": ("WHAM 真实环境底噪 −40 dBFS", "同上，信噪比约 15 dB"),
+    "wham30": ("WHAM 真实环境底噪 −30 dBFS", "同上，信噪比约 5 dB，明显的环境声"),
+    "dnsas50": ("DNS5 AudioSet 底噪 −50 dBFS", "DNS5 的 AudioSet 噪声（只取电平稳定的片段）"),
+    "dnsfs50": ("DNS5 Freesound 底噪 −50 dBFS", "DNS5 的 Freesound 噪声（只取电平稳定的片段）"),
+}
+ROOMS = {
+    "real": ("真实房间响应", "SLR28 的实测房间脉冲响应（178 个）"),
+    "sim_small": ("模拟小房间", "SLR28 模拟小房间"),
+    "sim_medium": ("模拟中房间", "SLR28 模拟中房间"),
+    "sim_large": ("模拟大房间", "SLR28 模拟大房间"),
+    "dns5_sim": ("DNS5 模拟房间", "DNS5 包里的 SLR26 模拟房间响应"),
+}
+LEVELS = {
+    "q20": ("整体电平降 20 dB", "说话约 −45 dBFS，业务第一批包的实际电平（−41 到 −46 dB）"),
+    "q10": ("整体电平降 10 dB", "说话约 −35 dBFS"),
+    "loud10": ("整体电平升 10 dB", "说话约 −15 dBFS，业务第二批包的实际电平"),
+    "clip": ("过载削波", "升 15 dB 后硬削波，近似麦克风过载"),
+    "nb": ("窄带 3.4 kHz", "混合音频经 3.4 kHz 低通，近似电话带宽"),
+    "mulaw": ("μ 律 8 位压缩", "电话编码的量化失真"),
+}
+# 不贴近业务现实、只用于诊断的极端条件：不进分组汇总（评测表里列在「其他」，不计平均）。
+EXTREME = ("enroll-contam0-", "level-clip-", "level-nb-", "level-mulaw-", "stress-")
+
+
+def is_extreme(name):
+    return name.startswith(EXTREME)
+
+
 KINDS = {
     "pos": ("目标在场", "目标说话人在场，指标为转写字错率与漏识率"),
     "neg": ("目标缺席", "注册人不在场、只有别人说话，期望输出为空，指标为误输出率"),
@@ -64,6 +98,10 @@ NAMED = {
     "realreg2-neg": ("真实注册 2 · 缺席", "测试人员 2026-10-12 批的注册录音，配上 1–2 个没有他的说话人"),
     "realreg1-music": ("真实注册 1 · 纯音乐", "同一段注册录音，片段是纯音乐"),
     "realreg2-music": ("真实注册 2 · 纯音乐", "同一段注册录音，片段是纯音乐"),
+    "stress-outdoor-pos": ("组合压力 · 户外电话 · 目标在场", "窄带 3.4 kHz、整体降 10 dB、道路交通 0–10 dB、WHAM 底噪 −45 到 −35 dBFS、2–4 个干扰人"),
+    "stress-outdoor-neg": ("组合压力 · 户外电话 · 目标缺席", "同上，注册人不在场"),
+    "stress-office-pos": ("组合压力 · 办公室 · 目标在场", "真实房间响应、WHAM 底噪 −45 到 −35 dBFS、注册开头静音、2–4 个干扰人"),
+    "stress-office-neg": ("组合压力 · 办公室 · 目标缺席", "同上，注册人不在场"),
     "dom-clean-pos": ("无背景 · 目标在场（配对对照）", "与下面三种背景完全相同的场景，没有混响和背景声"),
     "dom-clean-neg": ("无背景 · 目标缺席（配对对照）", "同上，注册人不在场"),
     "dom-reverb-noise-pos": ("混响加噪声 · 目标在场", "混合音频经各说话人不同的房间响应并叠加噪声（5–15 dB），注册音频保持干净"),
@@ -83,13 +121,22 @@ NAMED = {
 
 def entry(split, recipe):
     name, params = split["name"], split["params"]
-    if name.startswith("enroll-"):
+    if name.startswith(("floor-", "room-", "level-")):
+        table = {"floor": FLOORS, "room": ROOMS, "level": LEVELS}[name.split("-")[0]]
+        label, description = table[name.split("-")[1]]
+        display = f"{label} · {KINDS[params['kind']][0]}"
+    elif name.startswith("panel-base"):
+        display = f"面板基线 · {KINDS[params['kind']][0]}"
+        description = "面板的共同基线：同一批基础场景，默认底噪（真实与合成混合），干燥房间，正常电平"
+    elif name.startswith("enroll-"):
         cond = params["enroll"]
         label, description = CONDITIONS[cond]
         kind_label, _ = KINDS[params["kind"]]
         display = f"{label} · {kind_label}"
     else:
         display, description = NAMED[name]
+    if is_extreme(name):
+        display, description = f"{display}（极端，诊断用）", f"{description}。不贴近业务现实，不计入分组平均"
     return {
         "dataset_id": recipe["dataset_id"], "version": recipe["version"], "split": name, "task": "ts_asr",
         "label": name, "tags": ["zh", "target-speaker"], "display": display, "description": description,
@@ -102,7 +149,8 @@ def main():
     names = [s["name"] for s in splits]
 
     def pick(prefix, kinds):
-        return [s["name"] for s in splits if s["name"].startswith(prefix) and s["params"]["kind"] in kinds]
+        return [s["name"] for s in splits
+                if s["name"].startswith(prefix) and s["params"]["kind"] in kinds and not is_extreme(s["name"])]
 
     groups = [
         {"name": "目标在场（注册音频劣化）", "section": "注册音频劣化", "labels": pick("enroll-", {"pos"}),
@@ -117,13 +165,26 @@ def main():
          "description": "噪声、音乐、交通、近乎静音；期望输出为空"},
         {"name": "目标在场（环境与设备）", "section": "环境与设备", "labels": pick("dom-", {"pos"}),
          "description": "混响、背景音乐、交通、手机与棚内录音，目标在场"},
+        {"name": "脆弱性面板 · 底噪类型与强度（目标在场）", "section": "脆弱性面板",
+         "labels": ["panel-base-pos", *pick("floor-", {"pos"})],
+         "description": "同一批基础场景，只改底噪的类型和强度；最坏的条件就是模型对底噪的脆弱点"},
+        {"name": "脆弱性面板 · 底噪类型与强度（目标缺席）", "section": "脆弱性面板",
+         "labels": ["panel-base-neg", *pick("floor-", {"neg"})], "description": "同上，注册人不在场"},
+        {"name": "脆弱性面板 · 房间响应（目标在场）", "section": "脆弱性面板", "labels": pick("room-", {"pos"}),
+         "description": "同一批基础场景，只改房间响应（实测与模拟，小中大房间）"},
+        {"name": "脆弱性面板 · 房间响应（目标缺席）", "section": "脆弱性面板", "labels": pick("room-", {"neg"}),
+         "description": "同上，注册人不在场"},
+        {"name": "脆弱性面板 · 电平与录音链路（目标在场）", "section": "脆弱性面板", "labels": pick("level-", {"pos"}),
+         "description": "同一批基础场景，只改整体电平、削波、窄带和电话编码"},
+        {"name": "脆弱性面板 · 电平与录音链路（目标缺席）", "section": "脆弱性面板", "labels": pick("level-", {"neg"}),
+         "description": "同上，注册人不在场"},
         {"name": "真实注册录音（缺席）", "section": "真实注册音频", "labels": pick("realreg", {"neg", "nonspeech"}),
          "description": "业务反馈里测试人员的真实注册录音，目标不在场；误输出率"},
         {"name": "目标缺席（环境与设备）", "section": "环境与设备", "labels": pick("dom-", {"neg"}),
          "description": "同上，注册人不在场"},
     ]
     covered = {label for g in groups for label in g["labels"]}
-    missing = sorted(set(names) - covered)
+    missing = sorted(n for n in set(names) - covered if not is_extreme(n))
     if missing:
         raise SystemExit(f"splits not in any group: {missing}")
     config = {

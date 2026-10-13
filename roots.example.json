@@ -26,5 +26,6 @@
   "cs_dialogue_meeting_sot": "/path/to/cs_dialogue_meeting_sot",
   "aishell5_meeting_sot": "/workspace/data/datasets/aishell5_meeting_sot/versions/far-mic-v1-20261010",
   "business_feedback": "/workspace/data/datasets/business_feedback",
-  "ts_asr_benchmark": "/workspace/data/datasets/ts_asr_benchmark"
+  "ts_asr_benchmark": "/workspace/data/datasets/ts_asr_benchmark",
+  "ts_asr_real": "/workspace/data/datasets/ts_asr_real"
 }

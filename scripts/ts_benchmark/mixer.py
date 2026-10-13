@@ -192,6 +192,7 @@ def plan_scene(rng, params, pools, similarity=None):
     scene = random.Random(rng.getrandbits(64))
     enroll = random.Random(rng.getrandbits(64))
     background = random.Random(rng.getrandbits(64))
+    floors = random.Random(rng.getrandbits(64))  # its own stream: floors do not depend on rooms or noise
     plan = {"kind": kind, "params": params, "tracks": []}
     plan["total"] = round(_uniform(scene, params["duration"]), 3)
     total = plan["total"]
@@ -205,7 +206,7 @@ def plan_scene(rng, params, pools, similarity=None):
         plan["noise"] = {**plan_noise(background, params["noise"]["kind"], pools),
                          "level_dbfs": round(_uniform(background, params["noise"].get("level_dbfs", (-35.0, -20.0))), 2)}
         _plan_enrollment(enroll, params, pools, target_pool, plan, enroll_speaker)
-        _plan_floors(background, params, plan)
+        _plan_floors(floors, params, plan, pools)
         return plan
 
     k = params["k"]
@@ -270,12 +271,14 @@ def plan_scene(rng, params, pools, similarity=None):
         plan["enroll_utt"] = _enroll_utt(enroll, target_pool["speakers"][target], used)
         _plan_enrollment(enroll, params, pools, target_pool, plan, target)
     if params.get("rir"):
+        pool = pools.get("__rir_pools__", {}).get(params["rir"]) if isinstance(params["rir"], str) else None
+        plan["rir_pool"] = params["rir"] if pool else "all"
         for track in plan["tracks"]:
-            track.rir = background.choice(pools["__rirs__"])
+            track.rir = background.choice(pool or pools["__rirs__"])
     if params.get("noise"):
         plan["noise"] = {**plan_noise(background, params["noise"]["kind"], pools),
                          "snr_db": round(_uniform(background, params["noise"]["snr_db"]), 2)}
-    _plan_floors(background, params, plan)
+    _plan_floors(floors, params, plan, pools)
     return plan
 
 
@@ -290,11 +293,14 @@ def _plan_recorded_enrollment(params, pools, plan):
         plan["params"] = {**params, "enroll": "file"}
 
 
-def _plan_floors(rng, params, plan):
+def _plan_floors(rng, params, plan, pools):
     """Drawn last from the background stream, so a floor never changes an existing scene."""
     spec = params.get("noise_floor")
     if spec:
-        plan["floor"] = {"mix": plan_floor(rng, spec), "enroll": plan_floor(rng, spec)}
+        plan["floor"] = {"mix": plan_floor(rng, spec, pools), "enroll": plan_floor(rng, spec, pools)}
+    gain = params.get("mix_gain_db")
+    if gain is not None:
+        plan["mix_gain_db"] = round(_uniform(rng, gain if isinstance(gain, list) else [gain, gain]), 2)
 
 
 def _plan_enrollment(rng, params, pools, target_pool, plan, speaker):
@@ -346,14 +352,33 @@ def add_noise(signal, noise, snr_db, offset):
     return signal + segment * scale
 
 
-def plan_floor(rng, spec):
-    """Noise floor for one waveform: real recordings always have one, digital silence does not."""
+def plan_floor(rng, spec, pools):
+    """Noise floor for one waveform: real recordings always have one, digital silence does not.
+
+    ``spec['kinds']`` maps a kind to a weight (a list means equal weights). ``white`` and ``pink``
+    are synthetic; ``real`` draws one of ``spec['real_pools']``; any other name is a prepared noise
+    pool (``wham``, ``dns5_audioset``, ...). Only steady clips are used as a floor.
+    """
     kinds = spec.get("kinds", ["white", "pink"])
-    return {"kind": rng.choice(kinds), "dbfs": round(_uniform(rng, spec["dbfs"]), 2), "seed": rng.getrandbits(32)}
+    kinds = {k: 1.0 for k in kinds} if isinstance(kinds, list) else dict(kinds)
+    kind = rng.choices(sorted(kinds), weights=[kinds[k] for k in sorted(kinds)])[0]
+    out = {"kind": kind, "dbfs": round(_uniform(rng, spec["dbfs"]), 2), "seed": rng.getrandbits(32)}
+    if kind in ("white", "pink"):
+        return out
+    names = spec.get("real_pools", []) if kind == "real" else [kind]
+    available = [n for n in names if pools["__noise__"].get(n + "_stationary")]
+    if not available:
+        raise ValueError(f"no steady noise clips for floor kind {kind!r}")
+    pool = rng.choice(available)
+    out.update(pool=pool, file=rng.choice(pools["__noise__"][pool + "_stationary"]), offset=round(rng.random(), 4))
+    return out
 
 
-def floor_noise(n, spec):
-    """``n`` samples of white or pink noise at ``spec['dbfs']`` RMS."""
+def floor_noise(n, spec, load_noise=None):
+    """``n`` samples of floor noise at ``spec['dbfs']`` RMS."""
+    if "file" in spec:
+        return normalize_rms(_fit(load_noise(spec["pool"], spec["file"]), n, spec["offset"]).astype(np.float32),
+                             spec["dbfs"])
     g = np.random.default_rng(spec["seed"])
     noise = g.standard_normal(n)
     if spec["kind"] == "pink":
@@ -365,8 +390,32 @@ def floor_noise(n, spec):
     return normalize_rms(noise.astype(np.float32), spec["dbfs"])
 
 
-def apply_floor(w, spec):
-    return w if spec is None else (w + floor_noise(len(w), spec)).astype(np.float32)
+def apply_floor(w, spec, load_noise=None):
+    return w if spec is None else (w + floor_noise(len(w), spec, load_noise)).astype(np.float32)
+
+
+# --- recording-chain effects on the speech mixture (before the noise floor) ---
+
+
+def mulaw(w, mu=255.0):
+    """8-bit mu-law companding, as in telephony."""
+    y = np.sign(w) * np.log1p(mu * np.abs(w)) / np.log1p(mu)
+    q = np.round(y * 127) / 127
+    return (np.sign(q) * ((1 + mu) ** np.abs(q) - 1) / mu).astype(np.float32)
+
+
+def apply_effect(w, effect):
+    if effect is None:
+        return w
+    if effect == "lp3400":
+        from scipy.signal import butter, sosfilt
+
+        return sosfilt(butter(8, 3400, "low", fs=SAMPLE_RATE, output="sos"), w).astype(np.float32)
+    if effect == "mulaw":
+        return mulaw(w)
+    if effect == "clip":  # hard saturation of an over-driven microphone, set by the gain
+        return np.clip(w, -0.9, 0.9).astype(np.float32)
+    raise ValueError(f"unknown mixture effect: {effect}")
 
 
 def plan_noise(rng, kind, pools):
@@ -382,7 +431,7 @@ def render_mixture(plan, load, load_rir, load_noise):
     if plan["kind"] == "nonspeech":
         spec = plan["noise"]
         segment = _fit(load_noise(spec["kind"], spec["file"]), total, spec["offset"])
-        return apply_floor(normalize_rms(segment.astype(np.float32), spec["level_dbfs"]), floor)
+        return apply_floor(normalize_rms(segment.astype(np.float32), spec["level_dbfs"]), floor, load_noise)
     mix = np.zeros(total + int(0.4 * SAMPLE_RATE), dtype=np.float32)
     for track in plan["tracks"]:
         rir = load_rir(track.rir) if track.rir else None
@@ -407,7 +456,8 @@ def render_mixture(plan, load, load_rir, load_noise):
         mix = add_noise(mix, load_noise(spec["kind"], spec["file"]), spec["snr_db"], spec["offset"])
     peak = np.abs(mix).max()
     mix = (mix * (0.5 / peak)).astype(np.float32) if peak > 0 else mix
-    return apply_floor(mix, floor)
+    mix = apply_effect(mix * 10.0 ** (plan.get("mix_gain_db", 0.0) / 20.0), plan["params"].get("mix_effect"))
+    return apply_floor(mix, floor, load_noise)
 
 
 def render_enrollment(plan, load, load_rir, load_noise):
@@ -422,10 +472,10 @@ def render_enrollment(plan, load, load_rir, load_noise):
     n = int(ENROLL_SECONDS * SAMPLE_RATE)
     if cond == "file":  # a recorded registration is used as it is
         w = load(utt).astype(np.float32)
-        return apply_floor(np.pad(w[:n], (0, max(0, n - len(w)))), floor)
+        return apply_floor(np.pad(w[:n], (0, max(0, n - len(w)))), floor, load_noise)
     w = normalize_rms(load(utt))
     if cond == "clean":
-        return apply_floor(w, floor)
+        return apply_floor(w, floor, load_noise)
     voiced = trim_leading_silence(w)
     if cond == "short1":
         seg = voiced[:SAMPLE_RATE]
@@ -450,4 +500,4 @@ def render_enrollment(plan, load, load_rir, load_noise):
     else:
         raise ValueError(f"unknown enrollment condition: {cond}")
     seg = np.asarray(seg, dtype=np.float32)[:n]
-    return apply_floor(np.pad(seg, (0, n - len(seg))), floor)
+    return apply_floor(np.pad(seg, (0, n - len(seg))), floor, load_noise)

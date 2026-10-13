@@ -1,6 +1,6 @@
 # 目标说话人 ASR 评测集（ts_asr_benchmark）的场景配方。
 # 每个 split 是一个场景；split 名是评测表里的行名。数值范围是 [最小, 最大]，每条样本在范围内均匀抽取。
-version: v2-20261013
+version: v3-20261013
 dataset_id: ts_asr_benchmark
 seed: 20261013
 sample_rate: 16000
@@ -39,10 +39,14 @@ rir:
 
 default_n: 120
 
-# v2：每个场景都加噪声底。真实录音总有噪声底，v1 的发言间隙是精确的 0（数字静音），
-# 对比实验表明模型对噪声底很敏感，v1 低估了误输出。噪声底在场景之后抽取，所以 v2 的场景与 v1 逐条相同，
-# 同名场景可以和 v1 做配对比较。电平为 RMS dBFS（说话约 −25 dBFS）。
-noise_floor: {dbfs: [-65, -35], kinds: [white, pink]}
+# v3：噪声底改用真实录音。真实录音总有噪声底，v1 的发言间隙是精确的 0（数字静音），对比实验表明模型对噪声底
+# 很敏感，v1 低估了误输出。底噪池：WHAM! 真实环境噪声（咖啡馆、餐厅、街道等）、DNS5 的 AudioSet 与 Freesound
+# 噪声（只取电平稳定的片段）、白噪声和粉红噪声；底噪在场景之后抽取，所以场景与 v1、v2 逐条相同。
+# 电平为 RMS dBFS（说话约 −25 dBFS）。
+noise_floor:
+  dbfs: [-65, -35]
+  kinds: {white: 0.15, pink: 0.15, real: 0.70}
+  real_pools: [wham, dns5_audioset, dns5_freesound]
 
 # 业务反馈里测试人员的真实注册录音（同一人，两次录音），用作「目标缺席」场景的注册音频。
 enrollment_files:
@@ -115,3 +119,67 @@ splits:
   - {group: realreg, name: realreg2-neg, kind: neg, k: [1, 2], duration: [6, 18], enroll_file: realreg2, n: 200}
   - {group: realreg, name: realreg1-music, kind: nonspeech, duration: [1, 15], enroll_file: realreg1, noise: {kind: musan_music, level_dbfs: [-35, -20]}}
   - {group: realreg, name: realreg2-music, kind: nonspeech, duration: [1, 15], enroll_file: realreg2, noise: {kind: musan_music, level_dbfs: [-35, -20]}}
+
+  # ---- F 脆弱性面板：同一批基础场景（目标 + 1–2 个干扰人），逐个因素改变底噪、房间、录音链路 ----
+  # 基线与所有面板场景共用同一批场景，条件间是配对比较；每个因素的最坏条件就是模型的脆弱点。
+  - {group: panel, name: panel-base-pos, kind: pos, schedule: full, k: [1, 2], duration: [6, 15], sir_db: [-3, 3], pair: panel-pos, n: 120}
+  - {group: panel, name: panel-base-neg, kind: neg, k: [1, 2], duration: [6, 15], pair: panel-neg, n: 120}
+  - group: panel
+    n: 120
+    expand:
+      template: "floor-{cond}-{kind}"
+      over:
+        cond: [none, white50, pink50, wham60, wham50, wham40, wham30, dnsas50, dnsfs50]
+        kind: [pos, neg]
+      cond_params:
+        none: {noise_floor: null}
+        white50: {noise_floor: {dbfs: [-50, -50], kinds: [white]}}
+        pink50: {noise_floor: {dbfs: [-50, -50], kinds: [pink]}}
+        wham60: {noise_floor: {dbfs: [-60, -60], kinds: [wham]}}
+        wham50: {noise_floor: {dbfs: [-50, -50], kinds: [wham]}}
+        wham40: {noise_floor: {dbfs: [-40, -40], kinds: [wham]}}
+        wham30: {noise_floor: {dbfs: [-30, -30], kinds: [wham]}}
+        dnsas50: {noise_floor: {dbfs: [-50, -50], kinds: [dns5_audioset]}}
+        dnsfs50: {noise_floor: {dbfs: [-50, -50], kinds: [dns5_freesound]}}
+    base:
+      pos: {kind: pos, schedule: full, k: [1, 2], duration: [6, 15], sir_db: [-3, 3]}
+      neg: {kind: neg, k: [1, 2], duration: [6, 15]}
+  - group: panel
+    n: 120
+    expand:
+      template: "room-{cond}-{kind}"
+      over:
+        cond: [real, sim_small, sim_medium, sim_large, dns5_sim]
+        kind: [pos, neg]
+      cond_params:
+        real: {rir: real}
+        sim_small: {rir: sim_small}
+        sim_medium: {rir: sim_medium}
+        sim_large: {rir: sim_large}
+        dns5_sim: {rir: dns5_sim}
+    base:
+      pos: {kind: pos, schedule: full, k: [1, 2], duration: [6, 15], sir_db: [-3, 3]}
+      neg: {kind: neg, k: [1, 2], duration: [6, 15]}
+  - group: panel
+    n: 120
+    expand:
+      template: "level-{cond}-{kind}"
+      over:
+        cond: [q20, q10, loud10, clip, nb, mulaw]
+        kind: [pos, neg]
+      cond_params:
+        q20: {mix_gain_db: -20}
+        q10: {mix_gain_db: -10}
+        loud10: {mix_gain_db: 10}
+        clip: {mix_gain_db: 15, mix_effect: clip}
+        nb: {mix_effect: lp3400}
+        mulaw: {mix_effect: mulaw}
+    base:
+      pos: {kind: pos, schedule: full, k: [1, 2], duration: [6, 15], sir_db: [-3, 3]}
+      neg: {kind: neg, k: [1, 2], duration: [6, 15]}
+
+  # ---- G 组合压力：几种不利因素同时出现的真实情形，看模型在最坏情形下还剩多少 ----
+  - {group: stress, name: stress-outdoor-pos, kind: pos, schedule: full, k: [2, 4], duration: [8, 18], mix_effect: lp3400, mix_gain_db: -10, noise: {kind: traffic, snr_db: [0, 10]}, noise_floor: {dbfs: [-45, -35], kinds: [wham]}, n: 120}
+  - {group: stress, name: stress-outdoor-neg, kind: neg, k: [2, 4], duration: [8, 18], mix_effect: lp3400, mix_gain_db: -10, noise: {kind: traffic, snr_db: [0, 10]}, noise_floor: {dbfs: [-45, -35], kinds: [wham]}, n: 120}
+  - {group: stress, name: stress-office-pos, kind: pos, schedule: full, k: [2, 4], duration: [8, 18], rir: real, enroll: lead_silence, noise_floor: {dbfs: [-45, -35], kinds: [wham]}, n: 120}
+  - {group: stress, name: stress-office-neg, kind: neg, k: [2, 4], duration: [8, 18], rir: real, enroll: lead_silence, noise_floor: {dbfs: [-45, -35], kinds: [wham]}, n: 120}

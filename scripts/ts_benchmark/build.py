@@ -64,7 +64,11 @@ def expand_splits(recipe):
             names = list(spec["over"])
             for values in itertools.product(*(spec["over"][k] for k in names)):
                 bound = dict(zip(names, values))
-                params = {**base[bound["kind"]], "enroll": bound["cond"], "pair": f"{group}-{bound['kind']}"}
+                if "cond_params" in spec:  # the condition sets arbitrary parameters, not only the enrollment
+                    params = {**base[bound["kind"]], **spec["cond_params"][bound["cond"]],
+                              "pair": f"{group}-{bound['kind']}"}
+                else:
+                    params = {**base[bound["kind"]], "enroll": bound["cond"], "pair": f"{group}-{bound['kind']}"}
                 out.append({"name": spec["template"].format(**bound), "group": group, "n": n,
                             "params": params})
         else:
@@ -186,6 +190,21 @@ def enrollment_files(recipe, roots):
     return out
 
 
+def prepared_noise(directory):
+    """Pools of the clips ``prepare_noise.py`` wrote: all clips and the steady ones, plus RIR pools."""
+    manifest = json.loads((directory / "manifest.json").read_text())
+    noise, rirs = defaultdict(list), defaultdict(list)
+    for entry in manifest:
+        path = str(directory / entry["path"])
+        if entry["path"].startswith("rir/"):
+            rirs[entry["pool"]].append(path)
+        else:
+            noise[entry["pool"]].append(path)
+            if entry["stationary"]:
+                noise[entry["pool"] + "_stationary"].append(path)
+    return {k: sorted(v) for k, v in noise.items()}, {k: sorted(v) for k, v in rirs.items()}
+
+
 def prepare_rirs(recipe, directory):
     """Stream a deterministic sample of room impulse responses out of the DNS5 archive."""
     directory.mkdir(parents=True, exist_ok=True)
@@ -247,8 +266,17 @@ def describe(plan, split, index):
     if "target_overlap_ratio" in plan:
         labels["target_overlap_ratio"] = plan["target_overlap_ratio"]
     if plan.get("floor"):
-        labels["noise_floor_dbfs"] = plan["floor"]["mix"]["dbfs"]
-        labels["noise_floor_kind"] = plan["floor"]["mix"]["kind"]
+        floor = plan["floor"]["mix"]
+        labels["noise_floor_dbfs"] = floor["dbfs"]
+        labels["noise_floor_kind"] = floor.get("pool", floor["kind"])
+        if "file" in floor:
+            labels["noise_floor_clip"] = Path(floor["file"]).stem
+    if "rir_pool" in plan:
+        labels["rir_pool"] = plan["rir_pool"]
+    if "mix_gain_db" in plan:
+        labels["mix_gain_db"] = plan["mix_gain_db"]
+    if params.get("mix_effect"):
+        labels["mix_effect"] = params["mix_effect"]
     if "enroll_file" in plan:
         labels["enroll_file"] = plan["enroll_file"]["id"]
     if "target_gap" in plan:
@@ -378,6 +406,8 @@ def register(recipe, splits, results, data_root, alias):
             }).to_dict())
         records_by_split[split["name"]] = records
         write_jsonl_gz(data_root / "versions" / version / "records" / f"{split['name']}.jsonl.gz", records)
+    if len({e["cut_id"] for e in index_rows}) != len(index_rows):
+        raise ValueError("duplicate cut ids: two samples would share one audio index entry")
     write_jsonl_gz(data_root / "versions" / version / "audio-index.jsonl.gz",
                    sorted(index_rows, key=lambda e: e["cut_id"]))
 
@@ -425,6 +455,7 @@ def main():
     parser.add_argument("--workers", type=int, default=8)
     parser.add_argument("--limit", type=int, help="samples per split (smoke runs)")
     parser.add_argument("--only", help="regex on split names")
+    parser.add_argument("--noise-cache", type=Path, help="output of prepare_noise.py (real noise and RIR pools)")
     parser.add_argument("--rir-cache", type=Path, help="reuse (or fill) extracted room impulse responses")
     parser.add_argument("--no-register", action="store_true", help="write audio and records but not the catalog")
     args = parser.parse_args()
@@ -451,6 +482,13 @@ def main():
     partial = data_root / "source" / (version + ".partial")
     if partial.exists():
         shutil.rmtree(partial)
+    noise_dir = partial / "noise"
+    if not (args.noise_cache and (args.noise_cache / "manifest.json").is_file()):
+        parser.error("--noise-cache must hold the output of prepare_noise.py")
+    shutil.copytree(args.noise_cache, noise_dir)
+    extra_noise, rir_pools = prepared_noise(noise_dir)
+    pools["__noise__"].update(extra_noise)
+    pools["__rir_pools__"] = rir_pools
     if args.rir_cache and any(args.rir_cache.glob("*.wav")):
         shutil.copytree(args.rir_cache, partial / "rir")
         pools["__rirs__"] = sorted(str(p) for p in (partial / "rir").glob("*.wav"))
@@ -466,6 +504,8 @@ def main():
     elif any(s["params"].get("hard") for s in splits):
         parser.error("the recipe has hard-negative splits; pass --embeddings")
 
+    pools["__rir_pools__"]["dns5_sim"] = list(pools["__rirs__"])
+    pools["__rirs__"] = sorted(p for v in pools["__rir_pools__"].values() for p in v)
     if args.embeddings:
         shutil.copy(args.embeddings, partial / "speaker-embeddings.npz")
     G.update(recipe=recipe, pools=pools)

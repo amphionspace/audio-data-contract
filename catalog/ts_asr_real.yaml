@@ -1,0 +1,344 @@
+- schema_version: dataset-catalog/2.0
+  dataset_id: ts_asr_real
+  version: v1-20261013
+  languages:
+  - zh
+  tasks:
+  - ts_asr
+  artifacts:
+  - name: audio-index
+    kind: audio-index
+    root_alias: ts_asr_real
+    relative_path: versions/v1-20261013/audio-index.jsonl.gz
+    sha256: 851d76a6ee3af47622fbb83974c5d18dcddcf3b730f665f998644812033f6fed
+    metadata:
+      record_count: 1648
+  - name: real-alimeeting-1spk-pos-records
+    kind: audio-records
+    root_alias: ts_asr_real
+    relative_path: versions/v1-20261013/records/real-alimeeting-1spk-pos.jsonl.gz
+    sha256: cdd0e305636f6fdf129b17cfaa9dc2478f1643f274719eb91f75279007647799
+    metadata:
+      record_count: 50
+  - name: real-alimeeting-1spk-neg-records
+    kind: audio-records
+    root_alias: ts_asr_real
+    relative_path: versions/v1-20261013/records/real-alimeeting-1spk-neg.jsonl.gz
+    sha256: 62798147468b24ac1eb7bc0f2446602a5ad033ba7d0084fae397fdd45eab3ba8
+    metadata:
+      record_count: 50
+  - name: real-alimeeting-2spk-pos-records
+    kind: audio-records
+    root_alias: ts_asr_real
+    relative_path: versions/v1-20261013/records/real-alimeeting-2spk-pos.jsonl.gz
+    sha256: 2e5ec14401aa1e11ff3ecc6254954c8bb9fd4287f795212eb4686a552099d346
+    metadata:
+      record_count: 50
+  - name: real-alimeeting-2spk-neg-records
+    kind: audio-records
+    root_alias: ts_asr_real
+    relative_path: versions/v1-20261013/records/real-alimeeting-2spk-neg.jsonl.gz
+    sha256: 4db2eee4d488166083db2378fa007d46af31dd6a41a7ca21da25cf910e1f7915
+    metadata:
+      record_count: 50
+  - name: real-alimeeting-3plus-pos-records
+    kind: audio-records
+    root_alias: ts_asr_real
+    relative_path: versions/v1-20261013/records/real-alimeeting-3plus-pos.jsonl.gz
+    sha256: 3302171bf26955d1de7df1b7988bfd1b53ab68091b0e8d1a6e6feaa072e6b42d
+    metadata:
+      record_count: 56
+  - name: real-alimeeting-3plus-neg-records
+    kind: audio-records
+    root_alias: ts_asr_real
+    relative_path: versions/v1-20261013/records/real-alimeeting-3plus-neg.jsonl.gz
+    sha256: 548f9464cdf15fa9a6250b15e32b105cdfc1b5eb116faf6d61355e397e3d2841
+    metadata:
+      record_count: 56
+  - name: real-aishell4-1spk-pos-records
+    kind: audio-records
+    root_alias: ts_asr_real
+    relative_path: versions/v1-20261013/records/real-aishell4-1spk-pos.jsonl.gz
+    sha256: 658e1d2377aeefc41e3db33d39102210129979b90da25edfb2d61ec81b157e2a
+    metadata:
+      record_count: 50
+  - name: real-aishell4-1spk-neg-records
+    kind: audio-records
+    root_alias: ts_asr_real
+    relative_path: versions/v1-20261013/records/real-aishell4-1spk-neg.jsonl.gz
+    sha256: 2fe54a3e5000b3e50c2f5abe6620e0860848e665804e80e55f2db27695f99cf2
+    metadata:
+      record_count: 50
+  - name: real-aishell4-2spk-pos-records
+    kind: audio-records
+    root_alias: ts_asr_real
+    relative_path: versions/v1-20261013/records/real-aishell4-2spk-pos.jsonl.gz
+    sha256: 896600da894d8aa52ab851a600062a7762b789423b56570e806ff0fdf33da72d
+    metadata:
+      record_count: 50
+  - name: real-aishell4-2spk-neg-records
+    kind: audio-records
+    root_alias: ts_asr_real
+    relative_path: versions/v1-20261013/records/real-aishell4-2spk-neg.jsonl.gz
+    sha256: 51b2ac039eefb17f7584cf3225476471162e2246e7396e7d9963fd6498648328
+    metadata:
+      record_count: 50
+  - name: real-aishell4-3plus-pos-records
+    kind: audio-records
+    root_alias: ts_asr_real
+    relative_path: versions/v1-20261013/records/real-aishell4-3plus-pos.jsonl.gz
+    sha256: cbb147185abf983a1826f0fd13c340a6bd93a035a1964dfaa42c338553ff69b6
+    metadata:
+      record_count: 56
+  - name: real-aishell4-3plus-neg-records
+    kind: audio-records
+    root_alias: ts_asr_real
+    relative_path: versions/v1-20261013/records/real-aishell4-3plus-neg.jsonl.gz
+    sha256: 2605c15171419fbf6569e19b454e0394749e4c444398581cf3da88723adb4424
+    metadata:
+      record_count: 56
+  - name: real-ramc-1spk-pos-records
+    kind: audio-records
+    root_alias: ts_asr_real
+    relative_path: versions/v1-20261013/records/real-ramc-1spk-pos.jsonl.gz
+    sha256: 739018fb98390c51a50d9d962157d61215a78ed6cc079e3b1680322d73437756
+    metadata:
+      record_count: 50
+  - name: real-ramc-1spk-neg-records
+    kind: audio-records
+    root_alias: ts_asr_real
+    relative_path: versions/v1-20261013/records/real-ramc-1spk-neg.jsonl.gz
+    sha256: b0d587a32f2883169630f3a0bddab2ee2286c8a1a6db8130aeb5170504ff850b
+    metadata:
+      record_count: 50
+  - name: real-ramc-2spk-pos-records
+    kind: audio-records
+    root_alias: ts_asr_real
+    relative_path: versions/v1-20261013/records/real-ramc-2spk-pos.jsonl.gz
+    sha256: 98dd1a3291878ec76647f7a08c23a4e63eec76a4b797e31ed69418d7cd1e1878
+    metadata:
+      record_count: 50
+  - name: real-ramc-2spk-neg-records
+    kind: audio-records
+    root_alias: ts_asr_real
+    relative_path: versions/v1-20261013/records/real-ramc-2spk-neg.jsonl.gz
+    sha256: 1259e8988ca1e9c88fb133b4557758431dc7c1471aab8ade545ddbb952e5fa08
+    metadata:
+      record_count: 50
+  splits:
+    real-alimeeting-1spk-pos:
+      artifacts:
+        records:
+        - real-alimeeting-1spk-pos-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 50
+        duration_hours: 0.1966
+        duration_basis: Mixture duration
+      provenance:
+        description: 'real: {"corpus": "alimeeting", "kind": "pos"}'
+    real-alimeeting-1spk-neg:
+      artifacts:
+        records:
+        - real-alimeeting-1spk-neg-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 50
+        duration_hours: 0.1966
+        duration_basis: Mixture duration
+      provenance:
+        description: 'real: {"corpus": "alimeeting", "kind": "neg"}'
+    real-alimeeting-2spk-pos:
+      artifacts:
+        records:
+        - real-alimeeting-2spk-pos-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 50
+        duration_hours: 0.2345
+        duration_basis: Mixture duration
+      provenance:
+        description: 'real: {"corpus": "alimeeting", "kind": "pos"}'
+    real-alimeeting-2spk-neg:
+      artifacts:
+        records:
+        - real-alimeeting-2spk-neg-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 50
+        duration_hours: 0.2345
+        duration_basis: Mixture duration
+      provenance:
+        description: 'real: {"corpus": "alimeeting", "kind": "neg"}'
+    real-alimeeting-3plus-pos:
+      artifacts:
+        records:
+        - real-alimeeting-3plus-pos-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 56
+        duration_hours: 0.2911
+        duration_basis: Mixture duration
+      provenance:
+        description: 'real: {"corpus": "alimeeting", "kind": "pos"}'
+    real-alimeeting-3plus-neg:
+      artifacts:
+        records:
+        - real-alimeeting-3plus-neg-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 56
+        duration_hours: 0.2911
+        duration_basis: Mixture duration
+      provenance:
+        description: 'real: {"corpus": "alimeeting", "kind": "neg"}'
+    real-aishell4-1spk-pos:
+      artifacts:
+        records:
+        - real-aishell4-1spk-pos-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 50
+        duration_hours: 0.2339
+        duration_basis: Mixture duration
+      provenance:
+        description: 'real: {"corpus": "aishell4", "kind": "pos"}'
+    real-aishell4-1spk-neg:
+      artifacts:
+        records:
+        - real-aishell4-1spk-neg-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 50
+        duration_hours: 0.2339
+        duration_basis: Mixture duration
+      provenance:
+        description: 'real: {"corpus": "aishell4", "kind": "neg"}'
+    real-aishell4-2spk-pos:
+      artifacts:
+        records:
+        - real-aishell4-2spk-pos-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 50
+        duration_hours: 0.2454
+        duration_basis: Mixture duration
+      provenance:
+        description: 'real: {"corpus": "aishell4", "kind": "pos"}'
+    real-aishell4-2spk-neg:
+      artifacts:
+        records:
+        - real-aishell4-2spk-neg-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 50
+        duration_hours: 0.2454
+        duration_basis: Mixture duration
+      provenance:
+        description: 'real: {"corpus": "aishell4", "kind": "neg"}'
+    real-aishell4-3plus-pos:
+      artifacts:
+        records:
+        - real-aishell4-3plus-pos-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 56
+        duration_hours: 0.2931
+        duration_basis: Mixture duration
+      provenance:
+        description: 'real: {"corpus": "aishell4", "kind": "pos"}'
+    real-aishell4-3plus-neg:
+      artifacts:
+        records:
+        - real-aishell4-3plus-neg-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 56
+        duration_hours: 0.2931
+        duration_basis: Mixture duration
+      provenance:
+        description: 'real: {"corpus": "aishell4", "kind": "neg"}'
+    real-ramc-1spk-pos:
+      artifacts:
+        records:
+        - real-ramc-1spk-pos-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 50
+        duration_hours: 0.2134
+        duration_basis: Mixture duration
+      provenance:
+        description: 'real: {"corpus": "ramc", "kind": "pos"}'
+    real-ramc-1spk-neg:
+      artifacts:
+        records:
+        - real-ramc-1spk-neg-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 50
+        duration_hours: 0.2134
+        duration_basis: Mixture duration
+      provenance:
+        description: 'real: {"corpus": "ramc", "kind": "neg"}'
+    real-ramc-2spk-pos:
+      artifacts:
+        records:
+        - real-ramc-2spk-pos-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 50
+        duration_hours: 0.2417
+        duration_basis: Mixture duration
+      provenance:
+        description: 'real: {"corpus": "ramc", "kind": "pos"}'
+    real-ramc-2spk-neg:
+      artifacts:
+        records:
+        - real-ramc-2spk-neg-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 50
+        duration_hours: 0.2417
+        duration_basis: Mixture duration
+      provenance:
+        description: 'real: {"corpus": "ramc", "kind": "neg"}'
+  provenance:
+    status: complete
+    synthetic: none
+    description: 真实对话的目标说话人窗口：从 AliMeeting 远场、AISHELL-4 远场、MagicData-RAMC 手机通话的人工标注测试集里按完整语句切出 8–22 秒窗口，不做任何混合；同一窗口配一条目标在场（注册取窗外的另一条语句）和一条目标缺席的样本。只用于评测，不进训练。
+    sources:
+    - alimeeting_sdm@icefall-20260908:test
+    - aishell4@icefall-20260908:test
+    - magicdata_ramc@icefall-20260908:test

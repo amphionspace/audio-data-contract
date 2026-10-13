@@ -58,8 +58,8 @@ def bootstrap_cer(errors, lengths, rng, rounds=500):
     return out[int(0.025 * rounds)], out[int(0.975 * rounds)]
 
 
-def load_records(root, roots, version):
-    base = Path(roots["ts_asr_benchmark"]) / "versions" / version / "records"
+def load_records(dataset, roots, version):
+    base = Path(roots[dataset]) / "versions" / version / "records"
     records = {}
     for path in sorted(base.glob("*.jsonl.gz")):
         with gzip.open(path, "rt", encoding="utf-8") as stream:
@@ -80,8 +80,15 @@ def score(record, hyp):
     """Per-sample facts used by every table."""
     labels, meta = record["labels"], record["metadata"]
     ref, hyp = normalize(record["target"]), normalize(hyp)
-    others = [normalize("".join(u["text"] for u in t["utts"])) for t in meta["interferers"]]
-    other_utts = [normalize(u["text"]) for t in meta["interferers"] for u in t["utts"]]
+    interferers = meta.get("interferers")
+    if interferers is None:  # real windows: every utterance of a speaker other than the target
+        by_speaker = defaultdict(list)
+        for u in meta["window_utts"]:
+            if u["speaker"] != meta["target_speaker"]:
+                by_speaker[u["speaker"]].append(u)
+        interferers = [{"utts": utts} for utts in by_speaker.values()]
+    others = [normalize("".join(u["text"] for u in t["utts"])) for t in interferers]
+    other_utts = [normalize(u["text"]) for t in interferers for u in t["utts"]]
     out = {"present": labels["target_present"], "empty": not hyp, "looped": bool(hyp) and looped(hyp, ref)}
     if labels["target_present"]:
         out["errors"] = Levenshtein.distance(list(ref), list(hyp))
@@ -140,7 +147,8 @@ def slices(records, scored):
 
 
 BASELINES = {"enroll-pos": "enroll-clean-pos", "enroll-neg": "enroll-clean-neg",
-             "dom-pos": "dom-clean-pos", "dom-neg": "dom-clean-neg", "abs2": "abs-k2"}
+             "dom-pos": "dom-clean-pos", "dom-neg": "dom-clean-neg", "abs2": "abs-k2",
+             "panel-pos": "panel-base-pos", "panel-neg": "panel-base-neg"}
 
 
 def _ratio(pairs, idx):
@@ -204,6 +212,35 @@ def paired_table(deltas):
     return "\n".join(lines)
 
 
+EXTREME = ("enroll-contam0-", "level-clip-", "level-nb-", "level-mulaw-", "stress-")
+
+
+def fragility(deltas, top=15):
+    """Conditions ranked by how much worse they make the model than their paired baseline.
+
+    A change counts only when its 95% interval excludes 0. Per factor family (the name before the
+    first dash) the worst condition is the model's weak point for that factor.
+    """
+    worse = [(n, d) for n, d in deltas.items() if d["ci"][0] > 0 and not n.startswith(EXTREME)]
+    ranked = sorted(worse, key=lambda x: -x[1]["delta"])[:top]
+    family = {}
+    for name, d in worse:
+        key = (name.split("-")[0], d["metric"])
+        if key not in family or d["delta"] > family[key][1]["delta"]:
+            family[key] = (name, d)
+    return ranked, family
+
+
+def fragility_table(ranked, family):
+    lines = ["| 排名 | 条件 | 指标 | 变化（百分点） | 95% 区间 |", "| ---: | --- | --- | ---: | --- |"]
+    for i, (name, d) in enumerate(ranked, 1):
+        lines.append(f"| {i} | {name} | {d['metric']} | {100 * d['delta']:+.1f} | [{100 * d['ci'][0]:+.1f}, {100 * d['ci'][1]:+.1f}] |")
+    lines += ["", "| 因素 | 指标 | 最坏条件 | 变化（百分点） |", "| --- | --- | --- | ---: |"]
+    for (fam, metric), (name, d) in sorted(family.items()):
+        lines.append(f"| {fam} | {metric} | {name} | {100 * d['delta']:+.1f} |")
+    return "\n".join(lines)
+
+
 def pct(x):
     return "" if x is None else f"{100 * x:.1f}"
 
@@ -219,20 +256,22 @@ def table(summary):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--run", type=Path, required=True)
+    parser.add_argument("--run", type=Path, nargs="+", required=True, help="ae output dir(s); several when the evaluation was split")
     parser.add_argument("--roots", type=Path, required=True)
-    parser.add_argument("--version", default="v2-20261013")
+    parser.add_argument("--version", default="v3-20261013")
+    parser.add_argument("--dataset", default="ts_asr_benchmark", help="ts_asr_benchmark or ts_asr_real")
     parser.add_argument("--json", type=Path)
-    parser.add_argument("--compare", type=Path, help="baseline run dir: report paired changes against it")
+    parser.add_argument("--compare", type=Path, nargs="+", help="baseline run dir(s): report paired changes against them")
     args = parser.parse_args()
     roots = json.loads(args.roots.read_text())
-    records = load_records(None, roots, args.version)
+    records = load_records(args.dataset, roots, args.version)
     scored = {}
-    with (args.run / "predictions.jsonl").open(encoding="utf-8") as stream:
-        for line in stream:
-            row = json.loads(line)
-            if row["id"] in records:
-                scored[row["id"]] = score(records[row["id"]], prediction_text(row))
+    for run in args.run:
+        with (run / "predictions.jsonl").open(encoding="utf-8") as stream:
+            for line in stream:
+                row = json.loads(line)
+                if row["id"] in records:
+                    scored[row["id"]] = score(records[row["id"]], prediction_text(row))
     missing = len({r["labels"]["scenario"] for r in records.values()}) - len({records[i]["labels"]["scenario"] for i in scored})
     rng = random.Random(0)
     by_split = defaultdict(list)
@@ -249,19 +288,23 @@ def main():
     changes = None
     if args.compare:
         other = {}
-        with (args.compare / "predictions.jsonl").open(encoding="utf-8") as stream:
-            for line in stream:
-                row = json.loads(line)
-                if row["id"] in records:
-                    other[row["id"]] = score(records[row["id"]], prediction_text(row))
+        for run in args.compare:
+            with (run / "predictions.jsonl").open(encoding="utf-8") as stream:
+                for line in stream:
+                    row = json.loads(line)
+                    if row["id"] in records:
+                        other[row["id"]] = score(records[row["id"]], prediction_text(row))
         changes = compare(records, scored, other, rng)
     print("\n## 配对差值（同一批场景，相对干净对照）\n")
     print(paired_table(deltas))
+    ranked, family = fragility(deltas)
+    print("\n## 脆弱点（相对配对基线，区间不含 0 的变差，按变化量排序）\n")
+    print(fragility_table(ranked, family))
     if changes:
         print("\n## 相对基线运行的配对变化（同一批样本，正数表示变差；复读为条数差）\n")
         print(paired_table(changes))
     if args.json:
-        args.json.write_text(json.dumps({"scenarios": summary, "slices": cuts, "paired": deltas, "compare": changes}, ensure_ascii=False, indent=1))
+        args.json.write_text(json.dumps({"scenarios": summary, "slices": cuts, "paired": deltas, "compare": changes, "fragility": {f"{k[0]}:{k[1]}": v[0] for k, v in family.items()}}, ensure_ascii=False, indent=1))
 
 
 if __name__ == "__main__":
