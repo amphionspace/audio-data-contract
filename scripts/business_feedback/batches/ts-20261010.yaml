@@ -1,0 +1,19 @@
+# 业务反馈批次：目标说话人 bad case。标签只写反馈人在群聊里明确说过的事实；
+# 没有确认的内容不补猜测值，放进 pending_labels，不参与打分。
+version: ts-20261010
+source: 2026-10-10_amphionasr-target-speaker
+language: zh
+description: >-
+  测试人员在办公室注册一个人的声纹，同时用 pad 播放干扰声（歌曲、对白）时反馈的 7 个调试包（8 段输入）。
+  每段输入为 3 秒注册音频加一个识别片段；7 个包使用同一段注册音频。
+cases:
+  # 反馈人确认「错误地把 pad 里的声音识别出来」：目标说话人不在场，期望输出为空。
+  case-02: {split: target_speaker, target_present: false, issue: non_target_voice_transcribed}
+  case-05: {split: target_speaker, target_present: false, issue: non_target_voice_transcribed}
+  case-06: {split: target_speaker, target_present: false, issue: non_target_voice_transcribed}
+  case-07: {split: target_speaker, target_present: false, issue: non_target_voice_transcribed}
+  # 现象已知但参考文本未确认：只记录，不打分。
+  case-01: {split: pending_labels, issue: repeated_character_on_short_segment}
+  case-03: {split: pending_labels, issue: generation_loop_to_token_limit}
+  case-04/part-01: {split: pending_labels, issue: target_speaker_speech_unlabeled}
+  case-04/part-02: {split: pending_labels, issue: target_speaker_speech_unlabeled}

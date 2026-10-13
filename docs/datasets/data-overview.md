@@ -2,7 +2,7 @@
 
 按数据集查看语言、支持任务、时长和特性。清洗、热词、加噪、评测入口和训练框架配置归入所属数据集，不另算一套源数据。
 
-当前登记 **144 个数据集条目**；另有 **20 个下载来源声明**和 **1 个训练混合配方**。登记不代表本机文件已齐备。
+当前登记 **145 个数据集条目**；另有 **20 个下载来源声明**和 **1 个训练混合配方**。登记不代表本机文件已齐备。
 
 时长单位为小时。不同版本、子集和标注片段可能重叠，逐项列出，不相加为总量；没有时长的条目仍保留。参考表数字未核实当前文件与划分覆盖；“过滤前”不能当作清洗后时长。已被合并版本取代（`superseded_by`）的旧版本不再列出，仍可按原 ID 和版本解析。
 
@@ -69,6 +69,7 @@
 | [alimeeting_near_farsim_meeting_sot](../../catalog/zh_farfield.yaml#L167) | zh | 带说话人标注的语音识别 | 399.5（已登记；[near-farsim-v1-20261009](../../catalog/zh_farfield.yaml#L167)） | 已登记划分：train_120s、train_300s、train_30s、train_600s |
 | [alimeeting_sdm_meeting_sot](../../catalog/zh_farfield.yaml#L84) | zh | 带说话人标注的语音识别 | 327.3（已登记；[meeting-channel-view-v2-20261010](../../catalog/zh_farfield.yaml#L84)） | 已登记划分：train_120s、train_300s、train_30s、train_600s |
 | [biic_podcast_ser](../../catalog/open_audio_eval.yaml#L790) | zh | 语音情感识别 | 22.6（已登记；[eval-20260804](../../catalog/open_audio_eval.yaml#L790)） | 当前仅登记评测入口 |
+| [business_feedback](../../catalog/business_feedback.yaml#L1) | zh | 目标说话人语音识别 | 0.0（已登记；[ts-20261010](../../catalog/business_feedback.yaml#L1)） | 业务反馈的目标说话人 bad case，每个批次一个版本，只用于评测，不进训练。测试人员在办公室注册一个人的声纹，同时用 pad 播放干扰声（歌曲、对白）时反馈的 7 个调试包（8 段输入）。 每段输入为 3 秒注册音频加一个识别片段；7 个包使用同一段注册音频 |
 | [childmandarin](../../catalog/icefall_base.yaml#L1434) | zh | 语音识别 | 41.0（已登记；[icefall-20260908](../../catalog/icefall_runtime.yaml#L1842)）<br>41.0（已登记；[legacy-20260804](../../catalog/icefall_base.yaml#L1434)） | 含派生版本（与源数据可能重叠） |
 | [cnceleb1](../../catalog/cnceleb1.yaml#L1) | zh | 说话人身份识别、声纹验证 | 270.1（已登记；[speaker-records-v1-20260912](../../catalog/cnceleb1.yaml#L58)） | 中文跨场景声纹数据，修正版 v2；train 对应官方 dev，test 对应官方 eval；已解包、实测音频头并生成通用说话人记录；保留官方划分和标注 |
 | [cnceleb2](../../catalog/cnceleb2.yaml#L1) | zh | 说话人身份识别、声纹验证 | 1,084.3（已登记；[speaker-records-v1-20260912](../../catalog/cnceleb2.yaml#L78)） | 中文跨场景声纹训练数据，修正版 v2；三个分包按 aa、ab、ac 顺序构成同一个 tar.gz；已解包、实测音频头并生成通用说话人记录；保留官方划分和标注 |
