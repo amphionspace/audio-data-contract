@@ -24,5 +24,6 @@
   "farfield_replay": "/path/to/farfield_replay",
   "farfield_replay_3dspeaker_clean": "/path/to/farfield_replay_3dspeaker_clean",
   "cs_dialogue_meeting_sot": "/path/to/cs_dialogue_meeting_sot",
-  "aishell5_meeting_sot": "/workspace/data/datasets/aishell5_meeting_sot/versions/far-mic-v1-20261010"
+  "aishell5_meeting_sot": "/workspace/data/datasets/aishell5_meeting_sot/versions/far-mic-v1-20261010",
+  "business_feedback": "/workspace/data/datasets/business_feedback"
 }
