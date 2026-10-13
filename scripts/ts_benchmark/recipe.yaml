@@ -1,0 +1,101 @@
+# 目标说话人 ASR 评测集（ts_asr_benchmark）的场景配方。
+# 每个 split 是一个场景；split 名是评测表里的行名。数值范围是 [最小, 最大]，每条样本在范围内均匀抽取。
+version: v1-20261013
+dataset_id: ts_asr_benchmark
+seed: 20261013
+sample_rate: 16000
+
+# 说话人来自各语料的官方 test 划分（训练没有见过这些说话人）。
+pools:
+  studio:
+    description: AISHELL-3 test，棚内高质量朗读，214 位说话人，有性别标注
+    sources:
+      - {dataset: aishell3, version: legacy-20260804, split: test}
+  phone:
+    description: KeSpeech test（手机录音，含方言口音，取 250 位）、MagicData test、AISHELL-2 test（手机）
+    sources:
+      - {dataset: kespeech, version: legacy-20260804, split: test, max_speakers: 250}
+      - {dataset: magicdata, version: legacy-20260804, split: test}
+      - {dataset: aishell2, version: legacy-20260804, split: test}
+  read:
+    description: AISHELL-1 test，麦克风朗读，20 位说话人
+    sources:
+      - {dataset: aishell, version: legacy-20260804, split: test}
+  mixed:
+    description: 上面三个池的并集
+    union: [studio, phone, read]
+utterance_seconds: [1.5, 9.0]     # 干扰人与目标人完整语句的长度范围
+short_utterance_seconds: [0.5, 1.6]   # 「目标人只说一两个字」场景使用
+min_utterances_per_speaker: 6
+
+# 背景声音：MUSAN 噪声与音乐、AudioSet 道路交通；quiet 为生成的极低电平高斯噪声。
+noise:
+  musan_noise: {dataset: musan, version: legacy-20260804, split: noise}
+  musan_music: {dataset: musan, version: legacy-20260804, split: music}
+  traffic: {dataset: audioset_road_traffic, version: legacy-20260804, split: all}
+rir:
+  archive: /workspace/data/DATA-TTS/dns5/datasets_fullband.impulse_responses_000.tar.bz2
+  count: 300
+
+default_n: 120
+
+splits:
+  # ---- A 注册音频劣化：同一批基础场景（目标说话 + 1–2 个干扰人），只改注册音频 ----
+  - group: enroll
+    expand:
+      template: "enroll-{cond}-{kind}"
+      over:
+        cond: [clean, short1, lead_silence, lp4k, noise10, reverb, contam10, contam0, quiet]
+        kind: [pos, neg]
+    base:
+      pos: {kind: pos, schedule: full, k: [1, 2], duration: [6, 15], sir_db: [-3, 3]}
+      neg: {kind: neg, k: [1, 2], duration: [6, 15], sir_db: [-3, 3]}
+    n: 150
+
+  # ---- B 进场、离场与目标说话人缺席（干净注册音频）----
+  - {group: dynamics, name: dyn-solo, kind: pos, schedule: full, k: 0, duration: [6, 15]}
+  - {group: dynamics, name: dyn-full-k1, kind: pos, schedule: full, k: 1, duration: [8, 18]}
+  - {group: dynamics, name: dyn-full-k4, kind: pos, schedule: full, k: 4, duration: [8, 18]}
+  - {group: dynamics, name: dyn-burst-k1, kind: pos, schedule: burst, k: 1, duration: [10, 20]}
+  - {group: dynamics, name: dyn-burst-k2, kind: pos, schedule: burst, k: 2, duration: [10, 20]}
+  - {group: dynamics, name: dyn-burst-k4, kind: pos, schedule: burst, k: 4, duration: [10, 20]}
+  - {group: dynamics, name: dyn-enter-k2, kind: pos, schedule: enter, k: 2, duration: [10, 20]}
+  - {group: dynamics, name: dyn-leave-k2, kind: pos, schedule: leave, k: 2, duration: [10, 20]}
+  - {group: dynamics, name: dyn-alternate-k2, kind: pos, schedule: alternate, k: 2, duration: [10, 22]}
+  - {group: dynamics, name: dyn-alternate-k4, kind: pos, schedule: alternate, k: 4, duration: [12, 24]}
+  - {group: dynamics, name: dyn-overlap-k1, kind: pos, schedule: overlap, k: 1, duration: [6, 14]}
+  - {group: dynamics, name: dyn-overlap-k3, kind: pos, schedule: overlap, k: 3, duration: [6, 14]}
+  - {group: dynamics, name: dyn-short-k1, kind: pos, schedule: short, k: 1, duration: [3, 8], interferer_gap: [0.0, 0.3]}
+  - {group: dynamics, name: dyn-short-k3, kind: pos, schedule: short, k: 3, duration: [3, 8], interferer_gap: [0.0, 0.3]}
+  - {group: dynamics, name: dyn-target-quiet, kind: pos, schedule: full, k: 2, duration: [8, 18], sir_db: [-12, -6]}
+  - {group: dynamics, name: dyn-target-loud, kind: pos, schedule: full, k: 2, duration: [8, 18], sir_db: [6, 12]}
+  - {group: absent, name: abs-k1, kind: neg, k: 1, duration: [6, 18]}
+  - {group: absent, name: abs-k2, kind: neg, k: 2, duration: [6, 18], pair: abs2}
+  - {group: absent, name: abs-k4, kind: neg, k: 4, duration: [6, 18]}
+  - {group: absent, name: abs-hard, kind: neg, k: 2, duration: [6, 18], hard: true, pair: abs2}
+  - {group: absent, name: abs-long, kind: neg, k: 2, duration: [22, 26.5]}
+  - {group: absent, name: abs-short, kind: neg, k: 1, duration: [0.4, 1.2], interferer_start: [0.0, 0.1]}
+
+  # ---- C 没有任何说话声：期望输出为空 ----
+  - {group: nonspeech, name: nonspeech-noise, kind: nonspeech, duration: [1, 15], noise: {kind: musan_noise, level_dbfs: [-35, -20]}}
+  - {group: nonspeech, name: nonspeech-music, kind: nonspeech, duration: [1, 15], noise: {kind: musan_music, level_dbfs: [-35, -20]}}
+  - {group: nonspeech, name: nonspeech-traffic, kind: nonspeech, duration: [1, 15], noise: {kind: traffic, level_dbfs: [-35, -20]}}
+  - {group: nonspeech, name: nonspeech-quiet, kind: nonspeech, duration: [1, 15], noise: {kind: quiet, level_dbfs: [-60, -45]}}
+  - {group: nonspeech, name: nonspeech-short, kind: nonspeech, duration: [0.3, 1.0], noise: {kind: musan_noise, level_dbfs: [-35, -20]}}
+  - {group: nonspeech, name: nonspeech-long, kind: nonspeech, duration: [22, 26.5], noise: {kind: musan_noise, level_dbfs: [-35, -20]}}
+
+  # ---- D 环境与设备：混响、背景音乐或交通、手机与棚内录音 ----
+  - {group: domain, name: dom-clean-pos, kind: pos, schedule: full, k: [1, 2], duration: [8, 18], pair: dom-pos}
+  - {group: domain, name: dom-clean-neg, kind: neg, k: [1, 2], duration: [8, 18], pair: dom-neg}
+  - {group: domain, name: dom-reverb-noise-pos, pair: dom-pos, kind: pos, schedule: full, k: [1, 2], duration: [8, 18], rir: true, noise: {kind: musan_noise, snr_db: [5, 15]}}
+  - {group: domain, name: dom-reverb-noise-neg, pair: dom-neg, kind: neg, k: [1, 2], duration: [8, 18], rir: true, noise: {kind: musan_noise, snr_db: [5, 15]}}
+  - {group: domain, name: dom-music-pos, pair: dom-pos, kind: pos, schedule: full, k: [1, 2], duration: [8, 18], noise: {kind: musan_music, snr_db: [3, 10]}}
+  - {group: domain, name: dom-music-neg, pair: dom-neg, kind: neg, k: [1, 2], duration: [8, 18], noise: {kind: musan_music, snr_db: [3, 10]}}
+  - {group: domain, name: dom-traffic-pos, pair: dom-pos, kind: pos, schedule: full, k: [1, 2], duration: [8, 18], noise: {kind: traffic, snr_db: [0, 10]}}
+  - {group: domain, name: dom-traffic-neg, pair: dom-neg, kind: neg, k: [1, 2], duration: [8, 18], noise: {kind: traffic, snr_db: [0, 10]}}
+  - {group: domain, name: dom-solo-music, kind: pos, schedule: full, k: 0, duration: [6, 15], noise: {kind: musan_music, snr_db: [3, 10]}}
+  - {group: domain, name: dom-solo-traffic, kind: pos, schedule: full, k: 0, duration: [6, 15], noise: {kind: traffic, snr_db: [0, 10]}}
+  - {group: domain, name: dom-phone-pos, kind: pos, schedule: full, k: [1, 2], duration: [8, 18], target_pool: phone}
+  - {group: domain, name: dom-phone-neg, kind: neg, k: [1, 2], duration: [8, 18], target_pool: phone}
+  - {group: domain, name: dom-studio-pos, kind: pos, schedule: full, k: [1, 2], duration: [8, 18], target_pool: studio}
+  - {group: domain, name: dom-studio-neg, kind: neg, k: [1, 2], duration: [8, 18], target_pool: studio}
