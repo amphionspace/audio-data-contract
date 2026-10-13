@@ -23,22 +23,31 @@ def write_wav(path, seconds, value=0):
         out.writeframes(int(seconds * 16000) * value.to_bytes(2, "little", signed=True))
 
 
-def make_case(source, name, source_seconds, output, enrollment_value=100):
+def make_case(source, name, source_seconds, output, enrollment_value=100, stream=False):
     directory = source / "cases" / name
     write_wav(directory / "registration-reference.wav", 3, enrollment_value)
     write_wav(directory / "source-audio.wav", source_seconds, 7)
     (directory / "attempt-1").mkdir(parents=True)
     (directory / "manifest.json").write_text(json.dumps({"trace_id": "t", "segment_id": 1, "model": "m"}))
-    reply = {"choices": [{"message": {"content": output}, "finish_reason": "stop"}]}
-    (directory / "attempt-1" / "response.json").write_text(json.dumps(reply))
+    if stream:
+        chunks = [{"choices": [{"delta": {"content": piece}, "finish_reason": None}]} for piece in output]
+        if stream != "cancelled":
+            chunks.append({"choices": [{"delta": {}, "finish_reason": "stop"}]})
+        (directory / "attempt-1" / "response.json").write_text(
+            "".join(f"data: {json.dumps(c, ensure_ascii=False)}\n\n" for c in chunks))
+    else:
+        reply = {"choices": [{"message": {"content": output}, "finish_reason": "stop"}]}
+        (directory / "attempt-1" / "response.json").write_text(json.dumps(reply))
+    request = {"max_tokens": 256, "messages": [], "mm_processor_kwargs": {"target_speaker": True}}
+    (directory / "attempt-1" / "request.json").write_text(json.dumps(request))
 
 
 @pytest.fixture
 def batch(tmp_path):
     source = tmp_path / "feedback"
     make_case(source, "case-01", 2.0, "language Chinese<asr_text>你好。")
-    make_case(source, "case-02", 1.5, "language Chinese<asr_text>谢谢。")
-    make_case(source, "case-03", 0.5, "language Chinese<asr_text>嗯。")
+    make_case(source, "case-02", 1.5, ["language", " None"], stream="cancelled")
+    make_case(source, "case-03", 0.5, ["language", " Chinese", "<asr_text>", "嗯。"], stream=True)
     (source / "packages").mkdir()
     (source / "packages" / "case-01--model-feedback-abc.zip").write_bytes(b"")
     labels = {"version": "ts-test", "language": "zh", "source": "feedback", "description": "测试批次",
@@ -72,3 +81,16 @@ def test_registered_version_is_never_replaced(batch):
     ingest["build"](source, labels, data_root)
     with pytest.raises(FileExistsError):
         ingest["build"](source, labels, data_root)
+
+
+def test_streamed_and_cancelled_responses_are_recorded_as_reported(batch):
+    source, labels, data_root = batch
+    ingest["build"](source, labels, data_root)
+    negatives = {r.id: r for r in load_records(data_root / "versions/ts-test/records/target_speaker.jsonl.gz")}
+    cancelled = negatives["ts-test:case-02"].metadata
+    assert cancelled["reported_output"] == "language None" and cancelled["reported_finish_reason"] is None
+    assert cancelled["reported_streamed"] is True
+    (pending,) = load_records(data_root / "versions/ts-test/records/pending_labels.jsonl.gz")
+    assert pending.metadata["reported_output"] == "language Chinese<asr_text>嗯。"
+    assert pending.metadata["reported_finish_reason"] == "stop"
+    assert pending.metadata["request_params"]["mm_processor_kwargs"] == {"target_speaker": True}

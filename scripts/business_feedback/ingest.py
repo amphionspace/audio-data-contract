@@ -68,6 +68,25 @@ def index_entry(path, relative_path, cut_id):
     }
 
 
+def read_response(path):
+    """(text, finish_reason, streamed) of a recorded response, plain JSON or an SSE stream.
+
+    A cancelled stream may have no finish reason; the text is then whatever arrived.
+    """
+    raw = path.read_text()
+    if raw.lstrip().startswith("data:"):
+        parts, finish = [], None
+        for line in raw.splitlines():
+            if not line.startswith("data: {"):
+                continue
+            for choice in json.loads(line[6:]).get("choices") or []:
+                parts.append((choice.get("delta") or {}).get("content") or "")
+                finish = choice.get("finish_reason") or finish
+        return "".join(parts), finish, True
+    choice = json.loads(raw)["choices"][0]
+    return choice["message"].get("content") or "", choice.get("finish_reason"), False
+
+
 def package_names(source):
     names = {}
     for item in sorted((source / "packages").glob("case-*--*.zip")):
@@ -97,8 +116,8 @@ def build(source, labels, data_root):
     for case, label in labels["cases"].items():
         directory = source / "cases" / case
         manifest = json.loads((directory / "manifest.json").read_text())
-        response = json.loads((directory / "attempt-1" / "response.json").read_text())
-        choice = response["choices"][0]
+        output, finish, streamed = read_response(directory / "attempt-1" / "response.json")
+        request = json.loads((directory / "attempt-1" / "request.json").read_text())
         case_id = case.replace("/", "-")
         enrollment_hash = sha256_file(directory / "registration-reference.wav")[:12]
         enrollment = add_audio(directory / "registration-reference.wav", f"enrollment-{enrollment_hash}.wav")
@@ -133,8 +152,12 @@ def build(source, labels, data_root):
                 "segment_id": manifest.get("segment_id"),
                 "reported_model": manifest.get("model"),
                 "reported_source_revision": manifest.get("source_revision"),
-                "reported_output": (choice["message"].get("content") or ""),
-                "reported_finish_reason": choice.get("finish_reason"),
+                "reported_output": output,
+                "reported_finish_reason": finish,
+                "reported_streamed": streamed,
+                "reported_error": manifest.get("error") or None,
+                "request_params": {k: request[k] for k in ("max_tokens", "stream", "mm_processor_kwargs")
+                                   if k in request},
             },
         }).to_dict()
         by_split.setdefault(split, []).append(record)
