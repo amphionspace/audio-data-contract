@@ -110,7 +110,7 @@ def build(source, labels, data_root):
         else:
             record_labels["label_status"] = "unlabeled"
 
-        def ref(entry):
+        def ref(entry, split=split):
             return {"dataset_id": DATASET_ID, "version": version, "split": split,
                     "cut_id": entry["cut_id"], "duration": entry["duration"]}
 
@@ -147,7 +147,10 @@ def build(source, labels, data_root):
 
 def declaration(labels, by_split, index, data_root):
     version = labels["version"]
-    relative = lambda *parts: "/".join(("versions", version, *parts))  # noqa: E731
+
+    def relative(*parts):
+        return "/".join(("versions", version, *parts))
+
     artifacts = [{
         "name": "audio-index", "kind": "audio-index", "root_alias": ROOT_ALIAS,
         "relative_path": relative("audio-index.jsonl.gz"),
