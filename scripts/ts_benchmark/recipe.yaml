@@ -1,6 +1,6 @@
 # 目标说话人 ASR 评测集（ts_asr_benchmark）的场景配方。
 # 每个 split 是一个场景；split 名是评测表里的行名。数值范围是 [最小, 最大]，每条样本在范围内均匀抽取。
-version: v1-20261013
+version: v2-20261013
 dataset_id: ts_asr_benchmark
 seed: 20261013
 sample_rate: 16000
@@ -38,6 +38,16 @@ rir:
   count: 300
 
 default_n: 120
+
+# v2：每个场景都加噪声底。真实录音总有噪声底，v1 的发言间隙是精确的 0（数字静音），
+# 对比实验表明模型对噪声底很敏感，v1 低估了误输出。噪声底在场景之后抽取，所以 v2 的场景与 v1 逐条相同，
+# 同名场景可以和 v1 做配对比较。电平为 RMS dBFS（说话约 −25 dBFS）。
+noise_floor: {dbfs: [-65, -35], kinds: [white, pink]}
+
+# 业务反馈里测试人员的真实注册录音（同一人，两次录音），用作「目标缺席」场景的注册音频。
+enrollment_files:
+  realreg1: {alias: business_feedback, path: source/ts-20261010/audio/enrollment-87c508018dfe.wav}
+  realreg2: {alias: business_feedback, path: source/ts-20261012/audio/enrollment-9416898a6f00.wav}
 
 splits:
   # ---- A 注册音频劣化：同一批基础场景（目标说话 + 1–2 个干扰人），只改注册音频 ----
@@ -99,3 +109,9 @@ splits:
   - {group: domain, name: dom-phone-neg, kind: neg, k: [1, 2], duration: [8, 18], target_pool: phone}
   - {group: domain, name: dom-studio-pos, kind: pos, schedule: full, k: [1, 2], duration: [8, 18], target_pool: studio}
   - {group: domain, name: dom-studio-neg, kind: neg, k: [1, 2], duration: [8, 18], target_pool: studio}
+
+  # ---- E 真实注册音频：业务反馈里测试人员的两段注册录音，配没有他的说话人 ----
+  - {group: realreg, name: realreg1-neg, kind: neg, k: [1, 2], duration: [6, 18], enroll_file: realreg1, n: 200}
+  - {group: realreg, name: realreg2-neg, kind: neg, k: [1, 2], duration: [6, 18], enroll_file: realreg2, n: 200}
+  - {group: realreg, name: realreg1-music, kind: nonspeech, duration: [1, 15], enroll_file: realreg1, noise: {kind: musan_music, level_dbfs: [-35, -20]}}
+  - {group: realreg, name: realreg2-music, kind: nonspeech, duration: [1, 15], enroll_file: realreg2, noise: {kind: musan_music, level_dbfs: [-35, -20]}}

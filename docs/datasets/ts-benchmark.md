@@ -1,8 +1,17 @@
 # 目标说话人 ASR 评测集（ts_asr_benchmark）
 
-`ts_asr_benchmark@v1-20261013`：7,740 条 `ts_asr` 记录，60 个场景（split），约 25 小时、3.8 GB。只用于评测，不进训练。评测集登记在 AmphionEval：`open-audio-llm/ts-asr-benchmark@20261013`。
+两个版本：**v1-20261013**（60 个场景、7,740 条，发言间隙是数字静音）和 **v2-20261013**（64 个场景、8,380 条，所有场景加噪声底，并新增真实注册录音场景）。新的评测和训练验收用 v2，v1 保留作连续性对照。v2 的前 60 个场景与 v1 逐条相同，同名场景可以做配对比较。
+
+`ts_asr_benchmark`：`ts_asr` 记录，约 25 小时、3.8 GB（每个版本）。只用于评测，不进训练。评测集登记在 AmphionEval：`open-audio-llm/ts-asr-benchmark@20261013`（v1）和 `@v2-20261013`。
 
 目的是让评测能反映业务里观察到的三类问题：转写了别人、目标缺席时误输出、漏转写。场景设计来自对已发布 checkpoint-34479 的分析（见 open-audio-llm `docs/experiments/2026-10-12-ts-badcase/`），每个场景对应一个具体的怀疑点，而不是随机凑数。
+
+
+## v2 与 v1 的区别
+
+- **噪声底**：v1 的发言间隙是精确的 0，而真实录音总有噪声底。对比实验表明模型对噪声底非常敏感（−60 dBFS 的几乎听不见的白噪声就让缺席误输出率翻倍），v1 因此低估了失败。v2 给每个场景的混合音频和注册音频各加一层白噪声或粉红噪声，电平在 −65 到 −35 dBFS 均匀抽取（说话约 −25 dBFS），记录在 `labels.noise_floor_dbfs` 和 `noise_floor_kind`。噪声底在场景之后抽取，所以场景本身与 v1 逐条相同。
+- **真实注册录音**（`realreg` 组，4 个场景）：业务反馈里测试人员的两段真实注册录音（`enrollment_files`，来自 `business_feedback`），配上没有他的说话人（`realreg1-neg`、`realreg2-neg`，各 200 条）和纯音乐（`realreg1-music`、`realreg2-music`，各 120 条），给出对这两段注册录音有统计意义的误输出率。记录的 `labels.enroll_file` 标明用的是哪一段。
+- 注意：v2 里 `enroll-quiet` 不再只是电平对照。注册音频降 25 dB 后，加上噪声底，注册的信噪比可能为负，结果显示它与「注册仅 1 秒语音」同样严重。
 
 ## 一条记录
 
@@ -57,6 +66,10 @@
 
 无背景（配对对照）、混响加噪声、背景音乐、道路交通各分在场与缺席；`dom-solo-music`、`dom-solo-traffic`（目标单独说话加背景）；手机录音与棚内录音各分在场与缺席。
 
+### E 真实注册录音（4 个，仅 v2）
+
+`realreg1-neg`、`realreg2-neg`、`realreg1-music`、`realreg2-music`，见上文「v2 与 v1 的区别」。
+
 ## 评测
 
 ```bash
@@ -64,11 +77,13 @@ ae open-audio-llm ts-asr --model <权重> --data_config <eval-set.yaml> --split_
   --samples_per_source 0 --tsasr-server-url <SEP 服务> --tsasr-served-model <名称> --output_dir <目录>
 ```
 
-需要 TS 服务（`serve/tsasr.yaml`，插入 `[SEP]`）。`data_config` 用 AmphionEval 的评测集 `open-audio-llm/ts-asr-benchmark@20261013`，设置 `AUDIO_DATA_CATALOG` 和 `AUDIO_DATA_ROOTS_FILE`（别名 `ts_asr_benchmark`）。AmphionEval 报告每个场景的 CER、漏识率和误输出率。更细的诊断（转写了干扰人的比例、复读、按重叠程度和干扰人数切片）用 `scripts/ts_benchmark/analyze.py`。
+需要 TS 服务（`serve/tsasr.yaml`，插入 `[SEP]`）。`data_config` 用 AmphionEval 的评测集 `open-audio-llm/ts-asr-benchmark@20261013`，设置 `AUDIO_DATA_CATALOG` 和 `AUDIO_DATA_ROOTS_FILE`（别名 `ts_asr_benchmark`）。AmphionEval 报告每个场景的 CER、漏识率和误输出率。更细的诊断（转写了干扰人的比例、复读、按重叠程度和干扰人数切片、配对差值）用 `scripts/ts_benchmark/analyze.py`；`--compare <另一次运行>` 在同一批样本上给出两次运行（两个模型或两个 checkpoint）的配对差值，是训练前后对比的标准方式。`scripts/ts_benchmark/gate_scores.py` 输出每条记录的说话人验证分数（WeSpeaker ECAPA 余弦），用于评估外部验证门。
 
 ## 它能和不能说明什么
 
 - 能：模型在可控的场景因素上怎么变化，每个因素独立可比；同一模型换训练后能否修复。
 - 不能：真实手机麦克风、户外、真实对话的绝对表现。语音来自朗读语料，没有真实对话的韵律、情绪和抢话；噪声与混响是合成的；说话人数有限。真实数据靠 `business_feedback` 的业务批次和真实会议窗口评测补充。
-- 每个场景只有 120–150 条，单个场景的差异需要看置信区间，不要读到小数点后。
+- 每个场景只有 120–200 条，单个场景的差异需要看置信区间，不要读到小数点后。同一模型两次独立运行的差异：误输出率平均 0.4、最大 1.7 个百分点，CER 平均 0.5、最大 1.9 个百分点，所以小于 2 个百分点的差异按噪声处理。
+- v1 的场景没有噪声底，会低估误输出；v2 的噪声底是合成的白噪声或粉红噪声，不是真实房间噪声。
+- 音乐来自 MUSAN，几乎没有带人声的歌曲；评测里没有带人声的歌。
 - 合成语料里「目标说话人」只是语句的随机组合，没有同一说话人的情绪、语速一致性。

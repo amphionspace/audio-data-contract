@@ -5,7 +5,7 @@ The output is the file ``ae eval-sets publish`` takes: one evaluation source per
 recipe split, with display names, descriptions and report groups.
 
     python scripts/ts_benchmark/eval_set.py > data.yaml
-    ae eval-sets publish data.yaml --project open-audio-llm --name ts-asr-benchmark --version 20261013
+    ae eval-sets publish data.yaml --project open-audio-llm --name ts-asr-benchmark --version <日期>
 """
 
 import sys
@@ -60,6 +60,10 @@ NAMED = {
     "nonspeech-quiet": ("近乎静音", "极低电平的高斯噪声"),
     "nonspeech-short": ("纯噪声 · 极短（0.3–1 秒）", "极短的噪声片段"),
     "nonspeech-long": ("纯噪声 · 长片段（22–26.5 秒）", "长噪声片段，检验复读和循环"),
+    "realreg1-neg": ("真实注册 1 · 缺席", "测试人员 2026-10-10 批的注册录音，配上 1–2 个没有他的说话人"),
+    "realreg2-neg": ("真实注册 2 · 缺席", "测试人员 2026-10-12 批的注册录音，配上 1–2 个没有他的说话人"),
+    "realreg1-music": ("真实注册 1 · 纯音乐", "同一段注册录音，片段是纯音乐"),
+    "realreg2-music": ("真实注册 2 · 纯音乐", "同一段注册录音，片段是纯音乐"),
     "dom-clean-pos": ("无背景 · 目标在场（配对对照）", "与下面三种背景完全相同的场景，没有混响和背景声"),
     "dom-clean-neg": ("无背景 · 目标缺席（配对对照）", "同上，注册人不在场"),
     "dom-reverb-noise-pos": ("混响加噪声 · 目标在场", "混合音频经各说话人不同的房间响应并叠加噪声（5–15 dB），注册音频保持干净"),
@@ -113,6 +117,8 @@ def main():
          "description": "噪声、音乐、交通、近乎静音；期望输出为空"},
         {"name": "目标在场（环境与设备）", "section": "环境与设备", "labels": pick("dom-", {"pos"}),
          "description": "混响、背景音乐、交通、手机与棚内录音，目标在场"},
+        {"name": "真实注册录音（缺席）", "section": "真实注册音频", "labels": pick("realreg", {"neg", "nonspeech"}),
+         "description": "业务反馈里测试人员的真实注册录音，目标不在场；误输出率"},
         {"name": "目标缺席（环境与设备）", "section": "环境与设备", "labels": pick("dom-", {"neg"}),
          "description": "同上，注册人不在场"},
     ]

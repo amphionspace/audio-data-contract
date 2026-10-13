@@ -72,6 +72,9 @@ def expand_splits(recipe):
             out.append({"name": name, "group": group, "n": entry.pop("n", n), "params": entry})
     if len({s["name"] for s in out}) != len(out):
         raise ValueError("duplicate split names in the recipe")
+    if recipe.get("noise_floor"):
+        for split in out:
+            split["params"].setdefault("noise_floor", recipe["noise_floor"])
     return out
 
 
@@ -172,6 +175,17 @@ def noise_files(spec, catalog, roots):
     return [r["sources"][0]["source"] for r in _rows(path) if r.get("duration", 0) >= 3.0]
 
 
+def enrollment_files(recipe, roots):
+    """Recorded registrations (business feedback) usable as the enrollment of an absent target."""
+    out = {}
+    for name, spec in (recipe.get("enrollment_files") or {}).items():
+        path = Path(roots[spec["alias"]]) / spec["path"]
+        if not path.is_file():
+            raise FileNotFoundError(f"enrollment file {name}: {path}")
+        out[name] = str(path)
+    return out
+
+
 def prepare_rirs(recipe, directory):
     """Stream a deterministic sample of room impulse responses out of the DNS5 archive."""
     directory.mkdir(parents=True, exist_ok=True)
@@ -232,6 +246,11 @@ def describe(plan, split, index):
         labels["reverb"] = True
     if "target_overlap_ratio" in plan:
         labels["target_overlap_ratio"] = plan["target_overlap_ratio"]
+    if plan.get("floor"):
+        labels["noise_floor_dbfs"] = plan["floor"]["mix"]["dbfs"]
+        labels["noise_floor_kind"] = plan["floor"]["mix"]["kind"]
+    if "enroll_file" in plan:
+        labels["enroll_file"] = plan["enroll_file"]["id"]
     if "target_gap" in plan:
         labels["target_gap_s"] = plan["target_gap"]
     if "interferer_gap" in plan:
@@ -427,6 +446,7 @@ def main():
 
     catalog = load_catalog(args.catalog)
     pools = build_pools(recipe, catalog, roots)
+    pools["__enroll_files__"] = enrollment_files(recipe, roots)
     pools["__noise__"] = {kind: noise_files(spec, catalog, roots) for kind, spec in recipe["noise"].items()}
     partial = data_root / "source" / (version + ".partial")
     if partial.exists():

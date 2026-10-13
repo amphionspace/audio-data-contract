@@ -176,6 +176,27 @@ def paired(records, scored, rng, rounds=1000):
     return out
 
 
+def compare(records, scored, other, rng, rounds=1000):
+    """Per-scenario change of ``scored`` (candidate) against ``other`` (baseline run), same samples."""
+    by_split = defaultdict(list)
+    for rid in sorted(set(scored) & set(other)):
+        by_split[records[rid]["labels"]["scenario"]].append(rid)
+    out = {}
+    for name, ids in by_split.items():
+        if records[ids[0]]["labels"]["target_present"]:
+            pairs = [(scored[i]["errors"] - other[i]["errors"], other[i]["length"]) for i in ids]
+            metric = "dCER"
+        else:
+            pairs = [(int(not scored[i]["empty"]) - int(not other[i]["empty"]), 1) for i in ids]
+            metric = "dFA"
+        full = list(range(len(ids)))
+        boot = sorted(_ratio(pairs, [rng.randrange(len(ids)) for _ in full]) for _ in range(rounds))
+        loops = sum(scored[i]["looped"] for i in ids) - sum(other[i]["looped"] for i in ids)
+        out[name] = {"baseline": "other run", "metric": metric, "n": len(ids), "delta": _ratio(pairs, full),
+                     "ci": (boot[int(0.025 * rounds)], boot[int(0.975 * rounds)]), "loops": loops}
+    return out
+
+
 def paired_table(deltas):
     lines = ["| 场景 | 相对 | 指标 | n | 变化（百分点） | 95% 区间 |", "| --- | --- | --- | ---: | ---: | --- |"]
     for name, d in sorted(deltas.items()):
@@ -200,8 +221,9 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--run", type=Path, required=True)
     parser.add_argument("--roots", type=Path, required=True)
-    parser.add_argument("--version", default="v1-20261013")
+    parser.add_argument("--version", default="v2-20261013")
     parser.add_argument("--json", type=Path)
+    parser.add_argument("--compare", type=Path, help="baseline run dir: report paired changes against it")
     args = parser.parse_args()
     roots = json.loads(args.roots.read_text())
     records = load_records(None, roots, args.version)
@@ -224,10 +246,22 @@ def main():
     print("\n## 切片（目标在场 pos / 目标缺席 neg）\n")
     print(table(cuts))
     deltas = paired(records, scored, rng)
+    changes = None
+    if args.compare:
+        other = {}
+        with (args.compare / "predictions.jsonl").open(encoding="utf-8") as stream:
+            for line in stream:
+                row = json.loads(line)
+                if row["id"] in records:
+                    other[row["id"]] = score(records[row["id"]], prediction_text(row))
+        changes = compare(records, scored, other, rng)
     print("\n## 配对差值（同一批场景，相对干净对照）\n")
     print(paired_table(deltas))
+    if changes:
+        print("\n## 相对基线运行的配对变化（同一批样本，正数表示变差；复读为条数差）\n")
+        print(paired_table(changes))
     if args.json:
-        args.json.write_text(json.dumps({"scenarios": summary, "slices": cuts, "paired": deltas}, ensure_ascii=False, indent=1))
+        args.json.write_text(json.dumps({"scenarios": summary, "slices": cuts, "paired": deltas, "compare": changes}, ensure_ascii=False, indent=1))
 
 
 if __name__ == "__main__":

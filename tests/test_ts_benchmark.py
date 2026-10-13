@@ -41,7 +41,7 @@ def test_recipe_expands_to_unique_scenarios():
     splits = build["expand_splits"](recipe)
 
     assert len({s["name"] for s in splits}) == len(splits)
-    assert {s["group"] for s in splits} == {"enroll", "dynamics", "absent", "nonspeech", "domain"}
+    assert {s["group"] for s in splits} == {"enroll", "dynamics", "absent", "nonspeech", "domain", "realreg"}
     assert sum(s["name"].startswith("enroll-") for s in splits) == 18
     assert all(s["params"]["kind"] in {"pos", "neg", "nonspeech"} for s in splits)
 
@@ -217,3 +217,54 @@ def test_paired_deltas_compare_the_same_scenes():
             scored[rid] = a["score"](records[rid], hyp)
     delta = a["paired"](records, scored, random.Random(0))["enroll-short1-neg"]
     assert delta["metric"] == "dFA" and delta["delta"] == pytest.approx(0.5)
+
+
+def test_a_noise_floor_never_changes_the_scene_and_is_applied_to_both_waveforms():
+    load, rir, noise = loaders()
+    floor = {"dbfs": [-50, -50], "kinds": ["white"]}
+    for seed in range(8):
+        base = plan({}, seed)
+        floored = plan({"noise_floor": floor}, seed)
+        assert scene_items(base) == scene_items(floored) and "floor" not in base
+        mix = mixer.render_mixture(floored, load, rir, noise)
+        silent = floored["total"] > 0 and mixer.render_mixture(base, load, rir, noise)
+        assert len(mix) == len(silent) and np.abs(mix - silent).mean() > 0
+        assert 20 * np.log10(mixer.rms(mix - silent)) == pytest.approx(-50, abs=0.2)
+        enrollment = mixer.render_enrollment(floored, load, rir, noise)
+        assert len(enrollment) == int(floored["enroll_utt"].duration * SR)
+
+
+def test_pink_floor_is_dominated_by_low_frequencies():
+    spec = {"kind": "pink", "dbfs": -40.0, "seed": 1}
+    noise = mixer.floor_noise(SR * 4, spec)
+    spectrum = np.abs(np.fft.rfft(noise)) ** 2
+    assert spectrum[: len(spectrum) // 8].sum() > spectrum[len(spectrum) // 2:].sum()
+    assert 20 * np.log10(mixer.rms(noise)) == pytest.approx(-40.0, abs=0.01)
+
+
+def test_recorded_registration_is_the_enrollment_of_an_absent_target():
+    _, rir, noise = loaders()
+    base = {"kind": "neg", "k": 2, "enroll_file": "realreg1"}
+    pool = pools()
+    pool["__enroll_files__"] = {"realreg1": "/x/reg.wav"}
+    scene = mixer.plan_scene(random.Random(3), {"duration": [10, 12], **base}, pool)
+    assert scene["enroll_file"]["id"] == "realreg1" and scene["params"]["enroll"] == "file"
+    assert scene["enroll_utt"].text == "" and all(t.role == "interferer" for t in scene["tracks"])
+    recorded = (np.random.default_rng(5).standard_normal(SR * 2) * 0.1).astype(np.float32)
+    w = mixer.render_enrollment(scene, lambda utt: recorded, rir, noise)
+    assert len(w) == 3 * SR and np.array_equal(w[: 2 * SR], recorded) and not w[2 * SR:].any()
+    music = mixer.plan_scene(random.Random(3), {"kind": "nonspeech", "duration": [2, 3], "enroll_file": "realreg1",
+                                                "noise": {"kind": "musan_noise", "level_dbfs": [-30, -30]}}, pool)
+    assert music["enroll_file"]["id"] == "realreg1"
+
+
+def test_runs_are_compared_on_the_same_samples():
+    a = _analyze()
+    records, base, cand = {}, {}, {}
+    for i in range(20):
+        rid = f"s:{i}"
+        records[rid] = record("", "他们", present=False, scenario="s", index=i)
+        base[rid] = a["score"](records[rid], "")
+        cand[rid] = a["score"](records[rid], "有字" if i < 5 else "")
+    change = a["compare"](records, cand, base, random.Random(0))["s"]
+    assert change["metric"] == "dFA" and change["delta"] == pytest.approx(0.25) and change["n"] == 20
