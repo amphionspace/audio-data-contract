@@ -60,3 +60,11 @@ def test_candidate_windows_do_not_overlap_and_stay_within_the_service_limit():
     windows = real["candidate_windows"](e, random.Random(0))
     assert windows and all(w["hi"] - w["lo"] <= real["MAX_WINDOW"] for w in windows)
     assert all(a["hi"] <= b["lo"] for a, b in itertools.pairwise(windows))
+
+
+def test_a_window_cannot_extend_past_the_end_of_the_audio():
+    import random
+
+    e = entry(UTTS)
+    e["duration"] = 12.0
+    assert all(w["hi"] <= 12.0 for w in real["candidate_windows"](e, random.Random(1)))
