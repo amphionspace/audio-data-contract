@@ -1,0 +1,17 @@
+# 业务反馈第二批：同一位测试人员把设备放在固定环境里持续收音，之后挑出的片段。
+# 请求带 mm_processor_kwargs.target_speaker、流式输出，source_revision 为 unknown。
+# 标签只写反馈人明确说过的事实；没有确认的放 pending_labels，不参与打分。
+version: ts-20261012
+source: 2026-10-10_amphionasr-target-speaker
+language: zh
+description: >-
+  测试人员把设备放在一个环境里持续收音，定时查看结果，反馈的 5 个调试包（case-08 到 case-12）。
+  每段输入为 3 秒注册音频加一个识别片段；与第一批使用同一段注册音频。
+cases:
+  # 反馈人说「纯播放音乐」：没有人在说话，期望输出为空。流式请求在 286 ms 处被取消（context canceled）。
+  case-10: {split: target_speaker, target_present: false, issue: music_only_owner_misidentified}
+  # 现象已知但是否有目标说话或参考文本未确认：只记录，不打分。
+  case-08: {split: pending_labels, issue: owner_identification_wrong}
+  case-09: {split: pending_labels, issue: no_feedback}
+  case-11: {split: pending_labels, issue: repeated_character_on_short_segment}
+  case-12: {split: pending_labels, issue: empty_output_no_feedback}
