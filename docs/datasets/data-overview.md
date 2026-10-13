@@ -2,7 +2,7 @@
 
 按数据集查看语言、支持任务、时长和特性。清洗、热词、加噪、评测入口和训练框架配置归入所属数据集，不另算一套源数据。
 
-当前登记 **145 个数据集条目**；另有 **20 个下载来源声明**和 **1 个训练混合配方**。登记不代表本机文件已齐备。
+当前登记 **146 个数据集条目**；另有 **20 个下载来源声明**和 **1 个训练混合配方**。登记不代表本机文件已齐备。
 
 时长单位为小时。不同版本、子集和标注片段可能重叠，逐项列出，不相加为总量；没有时长的条目仍保留。参考表数字未核实当前文件与划分覆盖；“过滤前”不能当作清洗后时长。已被合并版本取代（`superseded_by`）的旧版本不再列出，仍可按原 ID 和版本解析。
 
@@ -115,6 +115,7 @@
 | [cs_dialogue_mix](../../catalog/icefall_base.yaml#L1748) | en、zh | 语音识别 | 31.0（已登记；[icefall-20260908](../../catalog/icefall_runtime.yaml#L2163)）<br>31.0（已登记；[legacy-20260804](../../catalog/icefall_base.yaml#L1748)） | 含派生版本（与源数据可能重叠） |
 | [cumix2017](../../catalog/icefall_base.yaml#L1813) | en、yue | 语音识别 | 10.9（已登记；[icefall-20260908](../../catalog/icefall_runtime.yaml#L2228)）<br>10.9（已登记；[legacy-20260804](../../catalog/icefall_base.yaml#L1813)） | 含派生版本（与源数据可能重叠） |
 | [emilia](../../catalog/emilia_refined.yaml#L1) | de、en、fr、ja、ko、zh | 语音识别、语音合成 | 78,091.0（已登记；[refined-metadata-20261010](../../catalog/emilia_refined.yaml#L1)）<br>101,655.6（已登记；[tts-unified-v0.1](../../catalog/tts_unified.yaml#L79)） | TTS 团队对 Emilia 的文本精修元数据，只含文本、时间戳和质量分数，不含音频；音频按 id 从 emilia@tts-unified-v0.1 读取。统计值取 final（31275879 条、78091.0 小时）；refined_full 覆盖全部 101655.6 小时；音频编码字节存放在 Lance 表内；原始划分在 metadata_json.original_split，统一输出全部为 train。ASR 用 tts_lance.iter_asr_samples（tts-asr-rules/v1）读取，会排除原始 dev/test 等；含派生版本（与源数据可能重叠） |
+| [emilia2](../../catalog/emilia2_extracted.yaml#L2) | en、zh | 语音识别、diarization、语音合成 | 未登记 | Emilia2 原始 tar（WebDataset 风格，m4a + JSON 成对）的英文、中文部分解包为单文件，共 7,211,651 个音频、119,539.1 小时。 每个音频旁边是同名 JSON（字段与原 tar 一致：dialogue/long/short 三种视图及各自的时间偏移）。 一段录音被切成互不重复的三类文件：dialog（≥2 人、≥2 轮、≥30 秒的多人片段，音频来自独立的人声分离）、 long（单人连续 ≥30 秒）、short（单人 <30 秒的零散短句）；dialog 判定规则上游未写明，以上为按数据反推。 m4a-128k 与 m4a-64k 的 recording_id 无重叠，是两批互补数据。 解包后逐录音目录核对文件数与 index 一致（984,128 个目录、14,423,302 个文件）。 音频需用识别 edit list 的解码器（ffmpeg 等）读取，按 JSON 的 frames / 样本偏移切片；基于 extracted-enzh-20261012 的 dialog 和 long（standalone short 已在 emilia2@tts-unified-v0.1 中，不转）：每个 m4a 用与 DATA-TTS-UNIFIED Emilia2 接入相同的 FFmpeg 7.0.2 静态版完整解码（应用 edit list）， soxr 重采样到 16 kHz 单声道，按 round(gain*x*32768) 量化为 FLAC PCM16，峰值超出时整条降增益、不削波，写后逐样本回读核对。 目的：训练读取可随机跳转、不依赖 ffmpeg（原 m4a 读一个 120 秒窗口需 1–5 秒，16 kHz FLAC 约 0.03–0.3 秒）。 这份解包数据不用于 TTS（TTS 用 emilia2@tts-unified-v0.1）。完成后重建 index.jsonl.gz，并在 extracted-enzh-20261012 写 superseded_by。 目前只有进度状态 |
 | [emilia_yodas](../../catalog/tts_unified.yaml#L124) | de、en、fr、ja、ko、zh | 语音识别、语音合成 | 113,820.6（已登记；[tts-unified-v0.1](../../catalog/tts_unified.yaml#L124)） | 音频编码字节存放在 Lance 表内；原始划分在 metadata_json.original_split，统一输出全部为 train。ASR 用 tts_lance.iter_asr_samples（tts-asr-rules/v1）读取，会排除原始 dev/test 等 |
 | [genshin_voice](../../catalog/tts_unified.yaml#L208) | en-US、ja、ko、zh | 语音合成 | 1,039.7（已登记；[tts-unified-v0.1](../../catalog/tts_unified.yaml#L208)） | 音频编码字节存放在 Lance 表内；原始划分在 metadata_json.original_split，统一输出全部为 train。ASR 用 tts_lance.iter_asr_samples（tts-asr-rules/v1）读取，会排除原始 dev/test 等 |
 | [indicvoices](../../catalog/multilingual_multispeaker.yaml#L164) | as、bn、brx、doi、gu、hi、kn、kok、ks、mai、ml、mni、mr、ne、or、pa、sa、sat、sd、ta、te、ur | 语音识别 | 未登记 | 已登记划分：all |
