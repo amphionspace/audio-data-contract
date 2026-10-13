@@ -1,0 +1,39 @@
+# 占位登记：Emilia2 真实对话重排为重叠远场多人窗口，正在试跑与生成，进度以状态文件为准。
+- schema_version: dataset-catalog/2.0
+  dataset_id: emilia2_zh_overlap_farsim
+  version: overlap-farsim-v1-20261013
+  languages:
+    - zh
+  tasks:
+    - speaker_attributed_asr
+  aliases: []
+  artifacts:
+    - name: preparation_state
+      kind: dataset-state
+      root_alias: aidc_data
+      relative_path: datasets/emilia2_zh_overlap_farsim/versions/overlap-farsim-v1-20261013/state.json
+  splits:
+    train_120s:
+      artifacts:
+        preparation_state:
+          - preparation_state
+      statistics:
+        target_hours: 1500
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: >-
+      由 emilia2_zh_dialogue_diarize@moss-transcribe-diarize-0.9B 的 2–3 人 120 秒窗口重排生成的重叠远场多人对话：
+      逐句从原窗口单声道剪出（与他人语句相距 ≥0.3 秒的句子才参与重叠，其余整块保留原位），
+      保持轮次顺序与说话人，把后续句子提前造成重叠（窗口重叠率 15–50%），并把短应答放进对方长句内；
+      每位说话人在同一真实房间（SLR28）的不同位置卷积，加 MUSAN 噪声（沿用 farfield simulate）。
+      文字沿用 MOSS 0.9B 标签。目前只有进度状态，还没有可用于训练的产物。
+    source: emilia2_zh_dialogue_diarize@moss-transcribe-diarize-0.9B
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/emilia2-overlap-farsim-20261013
+  recipe_parameters:
+    clean_margin_seconds: 0.3
+    window_overlap_ratio: [0.15, 0.5]
+    rir: real_rir_slr28
+    noise: musan noise
