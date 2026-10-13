@@ -2,7 +2,7 @@
 
 按数据集查看语言、支持任务、时长和特性。清洗、热词、加噪、评测入口和训练框架配置归入所属数据集，不另算一套源数据。
 
-当前登记 **149 个数据集条目**；另有 **20 个下载来源声明**和 **1 个训练混合配方**。登记不代表本机文件已齐备。
+当前登记 **150 个数据集条目**；另有 **20 个下载来源声明**和 **1 个训练混合配方**。登记不代表本机文件已齐备。
 
 时长单位为小时。不同版本、子集和标注片段可能重叠，逐项列出，不相加为总量；没有时长的条目仍保留。参考表数字未核实当前文件与划分覆盖；“过滤前”不能当作清洗后时长。已被合并版本取代（`superseded_by`）的旧版本不再列出，仍可按原 ID 和版本解析。
 
@@ -113,6 +113,7 @@
 | 数据集 | 语言 | 支持任务 | 时长（小时，注明范围） | 特性 / 备注 |
 |---|---|---|---|---|
 | [BAAI/CS-Dialogue long_wav (ModelScope master)](../../catalog/icefall_base.yaml#L1618) | en、zh、zh-en | 语音识别、带说话人标注的语音识别 | 46.0（已登记；[icefall-20260908](../../catalog/icefall_runtime.yaml#L2035)）<br>46.0（已登记；[legacy-20260804](../../catalog/icefall_base.yaml#L1618)）<br>98.3（已登记；[long-mix-v1-20261010](../../catalog/zh_dialogue.yaml#L1)） | 含派生版本（与源数据可能重叠） |
+| [babble_noise_synth](../../catalog/babble_noise_synth.yaml#L1) | en、zh | noise | 50.0（已登记；[v1-20261013](../../catalog/babble_noise_synth.yaml#L1)） | 合成背景人声（babble）噪声：每条 30 秒，叠加 5–20 个不同说话人，中英文各 3000 条（train 2600、dev 200、test 200）；train/dev/test 的说话人互不重叠。每条的说话人、增益和来源句子见 manifest.jsonl |
 | [cs_dialogue_mix](../../catalog/icefall_base.yaml#L1748) | en、zh | 语音识别 | 31.0（已登记；[icefall-20260908](../../catalog/icefall_runtime.yaml#L2163)）<br>31.0（已登记；[legacy-20260804](../../catalog/icefall_base.yaml#L1748)） | 含派生版本（与源数据可能重叠） |
 | [cumix2017](../../catalog/icefall_base.yaml#L1813) | en、yue | 语音识别 | 10.9（已登记；[icefall-20260908](../../catalog/icefall_runtime.yaml#L2228)）<br>10.9（已登记；[legacy-20260804](../../catalog/icefall_base.yaml#L1813)） | 含派生版本（与源数据可能重叠） |
 | [emilia](../../catalog/emilia_refined.yaml#L1) | de、en、fr、ja、ko、zh | 语音识别、语音合成 | 78,091.0（已登记；[refined-metadata-20261010](../../catalog/emilia_refined.yaml#L1)）<br>101,655.6（已登记；[tts-unified-v0.1](../../catalog/tts_unified.yaml#L79)） | TTS 团队对 Emilia 的文本精修元数据，只含文本、时间戳和质量分数，不含音频；音频按 id 从 emilia@tts-unified-v0.1 读取。统计值取 final（31275879 条、78091.0 小时）；refined_full 覆盖全部 101655.6 小时；音频编码字节存放在 Lance 表内；原始划分在 metadata_json.original_split，统一输出全部为 train。ASR 用 tts_lance.iter_asr_samples（tts-asr-rules/v1）读取，会排除原始 dev/test 等；含派生版本（与源数据可能重叠） |
