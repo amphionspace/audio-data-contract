@@ -29,5 +29,7 @@
   "ts_asr_benchmark": "/workspace/data/datasets/ts_asr_benchmark",
   "ts_asr_real": "/workspace/data/datasets/ts_asr_real",
   "ts_asr_noise": "/workspace/data/datasets/ts_asr_noise",
+  "ts_asr_farfield": "/workspace/data/datasets/ts_asr_farfield",
+  "ts_asr_nearfar": "/workspace/data/datasets/ts_asr_nearfar",
   "open_noise": "/workspace/data/datasets/noise_open"
 }

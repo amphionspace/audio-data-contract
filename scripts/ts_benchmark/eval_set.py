@@ -69,6 +69,18 @@ NOISES = {
     "events10": ("环境事件声 10 dB", "同上，信噪比 10 dB"),
     "crowd10": ("人群嘈杂声 10 dB", "FSD50K 的 Crowd 和 Chatter 标注片段，信噪比 10 dB"),
 }
+# 目标和干扰人的房间响应（RIR）：同一批基础场景，只改谁过 RIR、是不是同一个 RIR（SLR28 实测房间响应）
+ROLES = {
+    "rirtgt": ("只有目标过 RIR", "目标说话人过实测房间响应（远），干扰人是干的（近）；每个场景一个响应"),
+    "rirint": ("只有干扰人过 RIR", "干扰人过实测房间响应（远），目标是干的（近）"),
+    "rirsame": ("目标和干扰人过同一个 RIR", "目标和干扰人都过同一个实测房间响应，像坐在房间里同一个位置"),
+    "rirdiff": ("目标和干扰人各过不同 RIR", "目标和每个干扰人各过一个不同的实测房间响应，混合是远场、注册是近场（干的），也是下面近远场失配的「注册近场、混合远场」"),
+}
+# 注册和混合分别是近场（干）或远场（过实测 RIR）；近场注册 + 远场混合就是 rirdiff
+MISMATCH = {
+    "mmfarfar": ("注册远场、混合远场", "注册音频和混合都过实测房间响应（注册一个、混合里每人各一个）：匹配的远场"),
+    "mmfarnear": ("注册远场、混合近场", "注册音频过实测房间响应，混合是干的：反向失配"),
+}
 NOISE_ONLY = {
     "nonspeech-babble": ("只有背景人声", "只有合成的背景人声（一群人聊天），没有目标，期望输出为空"),
     "nonspeech-crowd": ("只有人群嘈杂声", "只有 FSD50K 的 Crowd 和 Chatter 片段，期望输出为空"),
@@ -143,6 +155,12 @@ def entry(split, recipe):
         table = {"floor": FLOORS, "room": ROOMS, "level": LEVELS}[name.split("-")[0]]
         label, description = table[name.split("-")[1]]
         display = f"{label} · {KINDS[params['kind']][0]}"
+    elif name.split("-")[0] in ROLES:
+        label, description = ROLES[name.split("-")[0]]
+        display = f"{label} · {KINDS[params['kind']][0]}"
+    elif name.split("-")[0] in MISMATCH:
+        label, description = MISMATCH[name.split("-")[0]]
+        display = f"{label} · {KINDS[params['kind']][0]}"
     elif name.startswith("panel-base"):
         display = f"面板基线 · {KINDS[params['kind']][0]}"
         description = "面板的共同基线：同一批基础场景，默认底噪（真实与合成混合），干燥房间，正常电平"
@@ -169,6 +187,16 @@ def main():
         return [s["name"] for s in splits
                 if s["name"].startswith(prefix) and s["params"]["kind"] in kinds and not is_extreme(s["name"])]
 
+    if recipe["dataset_id"] == "ts_asr_farfield":
+        groups = []
+        for title, key, prefixes, text in (
+            ("目标和干扰人各自的房间响应", "pos", ("rirtgt", "rirint", "rirsame", "rirdiff"), "同一批基础场景；只改谁过房间响应、是不是同一个"),
+            ("注册与混合的近远场失配", "pos", ("rirdiff", "mmfarfar", "mmfarnear"), "注册和混合分别是近场（干）或远场（过房间响应）；基线是近场注册、近场混合"),
+        ):
+            for kind, kind_label in (("pos", "目标在场"), ("neg", "目标缺席")):
+                labels = [f"panel-base-{kind}"] + [s["name"] for s in splits if s["name"].split("-")[0] in prefixes and s["params"]["kind"] == kind]
+                groups.append({"name": f"{title}（{kind_label}）", "section": "远场与房间响应", "labels": labels, "description": text})
+        return emit(recipe, splits, groups)
     if recipe["dataset_id"] == "ts_asr_noise":
         groups = [
             {"name": "背景噪声（目标在场）", "section": "新登记的噪声集", "labels": ["panel-base-pos", *pick("babble", {"pos"}), *pick("events", {"pos"}), *pick("crowd", {"pos"})],
