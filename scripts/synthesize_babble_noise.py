@@ -36,9 +36,10 @@ CORPORA = {
 def load_pools(lang, seed):
     cfg = CORPORA[lang]
     by_spk = defaultdict(list)
-    for line in gzip.open(cfg["manifest"], "rt"):
-        r = json.loads(line)
-        by_spk[cfg["speaker"](r["id"])].append((r["id"], r["sources"][0]["source"], r["duration"]))
+    with gzip.open(cfg["manifest"], "rt") as stream:
+        for line in stream:
+            r = json.loads(line)
+            by_spk[cfg["speaker"](r["id"])].append((r["id"], r["sources"][0]["source"], r["duration"]))
     spks = sorted(by_spk)
     random.Random(seed).shuffle(spks)
     n = len(spks)
