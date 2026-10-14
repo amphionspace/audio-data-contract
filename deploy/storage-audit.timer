@@ -1,0 +1,9 @@
+[Unit]
+Description=Run the /workspace storage audit every Saturday night
+
+[Timer]
+OnCalendar=Sat 22:00
+Persistent=true
+
+[Install]
+WantedBy=timers.target

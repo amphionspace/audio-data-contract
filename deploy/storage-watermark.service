@@ -1,0 +1,9 @@
+[Unit]
+Description=Daily /workspace usage watermark check
+
+[Service]
+Type=oneshot
+EnvironmentFile=/etc/storage-audit.env
+Environment=PYTHONPATH=/workspace/data/audio-data-contract/src
+ExecStart=/usr/bin/python3 -m audio_data_contract.cli storage-audit watermark \
+  --zones /workspace/data/registry/storage-zones.yaml --notify
