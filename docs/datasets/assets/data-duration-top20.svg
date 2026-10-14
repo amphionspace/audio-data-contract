@@ -83,35 +83,35 @@
 <rect x="640" y="786" width="440" height="23" rx="3" fill="#f1f5f9"/>
 <rect x="640" y="786" width="33.79" height="23" rx="3" fill="#2563eb"/>
 <text x="1094" y="803" font-size="14">8,740.7 小时</text>
-<text x="24" y="850" font-size="15" font-weight="600">wenetspeech4tts</text>
-<text x="24" y="868" font-size="11" fill="#475569">wenetspeech4tts@legacy-20260804</text>
+<text x="24" y="850" font-size="15" font-weight="600">opendatalab_multilingual</text>
+<text x="24" y="868" font-size="11" fill="#475569">opendatalab_multilingual@computer-2-20261009</text>
 <rect x="640" y="838" width="440" height="23" rx="3" fill="#f1f5f9"/>
-<rect x="640" y="838" width="29.77" height="23" rx="3" fill="#b45309"/>
-<text x="1094" y="855" font-size="14">7,700.0 小时</text>
-<text x="24" y="902" font-size="15" font-weight="600">sot_multispeaker_zh_en</text>
-<text x="24" y="920" font-size="11" fill="#475569">sot_multispeaker_zh_en@synthetic-v2-20260915</text>
+<rect x="640" y="838" width="33.20" height="23" rx="3" fill="#2563eb"/>
+<text x="1094" y="855" font-size="14">8,588.2 小时</text>
+<text x="24" y="902" font-size="15" font-weight="600">wenetspeech4tts</text>
+<text x="24" y="920" font-size="11" fill="#475569">wenetspeech4tts@legacy-20260804</text>
 <rect x="640" y="890" width="440" height="23" rx="3" fill="#f1f5f9"/>
-<rect x="640" y="890" width="29.63" height="23" rx="3" fill="#2563eb"/>
-<text x="1094" y="907" font-size="14">7,664.4 小时</text>
-<text x="24" y="954" font-size="15" font-weight="600">aishellmix</text>
-<text x="24" y="972" font-size="11" fill="#475569">aishellmix@pack3-current-audio-record-20260910</text>
+<rect x="640" y="890" width="29.77" height="23" rx="3" fill="#b45309"/>
+<text x="1094" y="907" font-size="14">7,700.0 小时</text>
+<text x="24" y="954" font-size="15" font-weight="600">sot_multispeaker_zh_en</text>
+<text x="24" y="972" font-size="11" fill="#475569">sot_multispeaker_zh_en@synthetic-v2-20260915</text>
 <rect x="640" y="942" width="440" height="23" rx="3" fill="#f1f5f9"/>
-<rect x="640" y="942" width="28.95" height="23" rx="3" fill="#2563eb"/>
-<text x="1094" y="959" font-size="14">7,489.2 小时</text>
-<text x="24" y="1006" font-size="15" font-weight="600">librimix</text>
-<text x="24" y="1024" font-size="11" fill="#475569">librimix@960-current-audio-record-20260910</text>
+<rect x="640" y="942" width="29.63" height="23" rx="3" fill="#2563eb"/>
+<text x="1094" y="959" font-size="14">7,664.4 小时</text>
+<text x="24" y="1006" font-size="15" font-weight="600">aishellmix</text>
+<text x="24" y="1024" font-size="11" fill="#475569">aishellmix@pack3-current-audio-record-20260910</text>
 <rect x="640" y="994" width="440" height="23" rx="3" fill="#f1f5f9"/>
-<rect x="640" y="994" width="26.76" height="23" rx="3" fill="#2563eb"/>
-<text x="1094" y="1011" font-size="14">6,921.9 小时</text>
-<text x="24" y="1058" font-size="15" font-weight="600">yodas_ru</text>
-<text x="24" y="1076" font-size="11" fill="#475569">yodas_ru@legacy</text>
+<rect x="640" y="994" width="28.95" height="23" rx="3" fill="#2563eb"/>
+<text x="1094" y="1011" font-size="14">7,489.2 小时</text>
+<text x="24" y="1058" font-size="15" font-weight="600">librimix</text>
+<text x="24" y="1076" font-size="11" fill="#475569">librimix@960-current-audio-record-20260910</text>
 <rect x="640" y="1046" width="440" height="23" rx="3" fill="#f1f5f9"/>
-<rect x="640" y="1046" width="21.63" height="23" rx="3" fill="#2563eb"/>
-<text x="1094" y="1063" font-size="14">5,596.0 小时</text>
-<text x="24" y="1110" font-size="15" font-weight="600">open_large_bn</text>
-<text x="24" y="1128" font-size="11" fill="#475569">open_large_bn@legacy</text>
+<rect x="640" y="1046" width="26.76" height="23" rx="3" fill="#2563eb"/>
+<text x="1094" y="1063" font-size="14">6,921.9 小时</text>
+<text x="24" y="1110" font-size="15" font-weight="600">yodas_ru</text>
+<text x="24" y="1128" font-size="11" fill="#475569">yodas_ru@legacy</text>
 <rect x="640" y="1098" width="440" height="23" rx="3" fill="#f1f5f9"/>
-<rect x="640" y="1098" width="19.51" height="23" rx="3" fill="#2563eb"/>
-<text x="1094" y="1115" font-size="14">5,045.8 小时</text>
+<rect x="640" y="1098" width="21.63" height="23" rx="3" fill="#2563eb"/>
+<text x="1094" y="1115" font-size="14">5,596.0 小时</text>
 </g>
 </svg>
