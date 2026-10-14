@@ -163,7 +163,7 @@
 | [fleurs_ja](../../catalog/legacy_multilingual.yaml#L1669) | ja | 语音识别 | 10.7（已登记；[legacy](../../catalog/legacy_multilingual.yaml#L1669)） | 有含标点版本 |
 | [fleurs_ko](../../catalog/legacy_multilingual.yaml#L1873) | ko | 语音识别 | 10.1（已登记；[legacy](../../catalog/legacy_multilingual.yaml#L1873)） | 有含标点版本 |
 | [fleurs_ru](../../catalog/legacy_multilingual.yaml#L2095) | ru | 语音识别 | 11.6（已登记；[legacy](../../catalog/legacy_multilingual.yaml#L2095)） | 有含标点版本 |
-| [fsd50k](../../catalog/open_noise.yaml#L1) | und | noise、sound_event | 未登记 | FSD50K：200 类 AudioSet 本体声音事件，44.1 kHz 单声道 16 bit，共 51197 条（dev 40966、eval 10231）；可按 ground_truth 的 Crowd、Chatter 等标签筛选背景人声 |
+| [fsd50k](../../catalog/open_noise.yaml#L1) | und | noise、sound_event | 108.6（已登记；[zenodo-4060432-20261013](../../catalog/open_noise.yaml#L1)） | FSD50K：200 类 AudioSet 本体声音事件，44.1 kHz 单声道 16 bit，共 51197 条（dev 40966、eval 10231）；可按 ground_truth 的 Crowd、Chatter 等标签筛选背景人声 |
 | [galgame](../../catalog/tts_unified.yaml#L170) | ja | 语音合成 | 10,173.7（已登记；[tts-unified-v0.1](../../catalog/tts_unified.yaml#L170)） | 音频编码字节存放在 Lance 表内；原始划分在 metadata_json.original_split，统一输出全部为 train。ASR 用 tts_lance.iter_asr_samples（tts-asr-rules/v1）读取，会排除原始 dev/test 等 |
 | [gigaspeech2_id](../../catalog/local_lhotse_derived.yaml#L1) | id | 语音识别、热词增强语音识别 | 1,980.1（已登记；[local-20260805](../../catalog/local_lhotse_derived.yaml#L1)）<br>214.9（已登记；[hotwords-v1-20260805](../../catalog/local_lhotse_derived.yaml#L40)） | 含派生版本（与源数据可能重叠） |
 | [koreaspeech](../../catalog/legacy_multilingual.yaml#L1942) | ko | 语音识别 | 3,828.3（已登记；[legacy](../../catalog/legacy_multilingual.yaml#L1942)） | 有含标点版本 |
@@ -178,7 +178,7 @@
 | [sim_rir_slr26](../../catalog/sim_rir_slr26.yaml#L1) | und | rir | 未登记 | 已登记划分：all |
 | [sim_rir_slr28](../../catalog/sim_rir_slr28.yaml#L1) | und | rir | 未登记 | 已登记划分：all |
 | [slr37_bn](../../catalog/legacy_multilingual.yaml#L478) | bn | 语音识别 | 5.0（已登记；[legacy](../../catalog/legacy_multilingual.yaml#L478)） | 有无标点版本 |
-| [wham_noise](../../catalog/open_noise.yaml#L170) | und | noise | 未登记 | WHAM! 噪声：旧金山湾区餐厅、咖啡馆、酒吧和公园的真实环境噪声，双声道 16 kHz float32，共 28000 条（tr 20000、cv 5000、tt 3000）；已切掉听得清的人声，保留含糊的背景人声 |
+| [wham_noise](../../catalog/open_noise.yaml#L176) | und | noise | 81.7（已登记；[official-20261013](../../catalog/open_noise.yaml#L176)） | WHAM! 噪声：旧金山湾区餐厅、咖啡馆、酒吧和公园的真实环境噪声，双声道 16 kHz float32，共 28000 条（tr 20000、cv 5000、tt 3000）；已切掉听得清的人声，保留含糊的背景人声 |
 | [yodas_ar](../../catalog/legacy_multilingual.yaml#L208) | ar | 语音识别 | 289.7（已登记；[legacy](../../catalog/legacy_multilingual.yaml#L208)） | 有含标点版本 |
 | [yodas_bn](../../catalog/legacy_multilingual.yaml#L511) | bn | 语音识别 | 27.1（已登记；[legacy](../../catalog/legacy_multilingual.yaml#L511)） | 有含标点版本 |
 | [yodas_de](../../catalog/legacy_multilingual.yaml#L793) | de | 语音识别 | 3,062.9（已登记；[legacy](../../catalog/legacy_multilingual.yaml#L793)） | 有含标点版本 |
