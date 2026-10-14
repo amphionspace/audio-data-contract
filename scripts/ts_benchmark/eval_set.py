@@ -5,7 +5,7 @@ The output is the file ``ae eval-sets publish`` takes: one evaluation source per
 recipe split, with display names, descriptions and report groups.
 
     python scripts/ts_benchmark/eval_set.py > data.yaml
-    ae eval-sets publish data.yaml --project open-audio-llm --name ts-asr-benchmark --version 20261013
+    ae eval-sets publish data.yaml --project open-audio-llm --name ts-asr-benchmark --version <日期>
 """
 
 import sys
@@ -26,6 +26,53 @@ CONDITIONS = {
     "contam10": ("注册被他人声音污染 10 dB", "注册音频叠加另一个说话人，信干比 10 dB"),
     "contam0": ("注册被他人声音污染 0 dB（压力）", "注册音频叠加另一个说话人，信干比 0 dB，标签含糊，只作压力测试"),
     "quiet": ("注册低电平（对照）", "注册音频降低 25 dB；此前的实测表明模型对电平不敏感，作为对照"),
+}
+FLOORS = {
+    "none": ("无底噪（数字静音）", "发言间隙是精确的 0，v1 的做法；其他底噪条件都与它配对比较"),
+    "white50": ("白噪声底 −50 dBFS", "合成白噪声底，说话约 −25 dBFS"),
+    "pink50": ("粉红噪声底 −50 dBFS", "合成粉红噪声底"),
+    "wham60": ("WHAM 真实环境底噪 −60 dBFS", "WHAM! 的咖啡馆、餐厅、街道、公园等真实环境噪声，几乎听不见"),
+    "wham50": ("WHAM 真实环境底噪 −50 dBFS", "同上，信噪比约 25 dB"),
+    "wham40": ("WHAM 真实环境底噪 −40 dBFS", "同上，信噪比约 15 dB"),
+    "wham30": ("WHAM 真实环境底噪 −30 dBFS", "同上，信噪比约 5 dB，明显的环境声"),
+    "dnsas50": ("DNS5 AudioSet 底噪 −50 dBFS", "DNS5 的 AudioSet 噪声（只取电平稳定的片段）"),
+    "dnsfs50": ("DNS5 Freesound 底噪 −50 dBFS", "DNS5 的 Freesound 噪声（只取电平稳定的片段）"),
+}
+ROOMS = {
+    "real": ("真实房间响应", "SLR28 的实测房间脉冲响应（178 个）"),
+    "sim_small": ("模拟小房间", "SLR28 模拟小房间"),
+    "sim_medium": ("模拟中房间", "SLR28 模拟中房间"),
+    "sim_large": ("模拟大房间", "SLR28 模拟大房间"),
+    "dns5_sim": ("DNS5 模拟房间", "DNS5 包里的 SLR26 模拟房间响应"),
+}
+LEVELS = {
+    "q20": ("整体电平降 20 dB", "说话约 −45 dBFS，业务第一批包的实际电平（−41 到 −46 dB）"),
+    "q10": ("整体电平降 10 dB", "说话约 −35 dBFS"),
+    "loud10": ("整体电平升 10 dB", "说话约 −15 dBFS，业务第二批包的实际电平"),
+    "clip": ("过载削波", "升 15 dB 后硬削波，近似麦克风过载"),
+    "nb": ("窄带 3.4 kHz", "混合音频经 3.4 kHz 低通，近似电话带宽"),
+    "mulaw": ("μ 律 8 位压缩", "电话编码的量化失真"),
+}
+# 不贴近业务现实、只用于诊断的极端条件：不进分组汇总（评测表里列在「其他」，不计平均）。
+EXTREME = ("enroll-contam0-", "level-clip-", "level-nb-", "level-mulaw-", "stress-")
+
+
+def is_extreme(name):
+    return name.startswith(EXTREME)
+
+
+NOISES = {
+    "babble20": ("背景人声 20 dB", "合成背景人声（5–20 位中文说话人同时说话，测试划分的说话人），信噪比 20 dB，背景很远"),
+    "babble10": ("背景人声 10 dB", "同上，信噪比 10 dB，像身边有一群人聊天"),
+    "babble5": ("背景人声 5 dB", "同上，信噪比 5 dB，嘈杂的人群"),
+    "events20": ("环境事件声 20 dB", "FSD50K 评测划分里的家居、车辆、门、水、发动机、警报等声音（不含人声和音乐），信噪比 20 dB"),
+    "events10": ("环境事件声 10 dB", "同上，信噪比 10 dB"),
+    "crowd10": ("人群嘈杂声 10 dB", "FSD50K 的 Crowd 和 Chatter 标注片段，信噪比 10 dB"),
+}
+NOISE_ONLY = {
+    "nonspeech-babble": ("只有背景人声", "只有合成的背景人声（一群人聊天），没有目标，期望输出为空"),
+    "nonspeech-crowd": ("只有人群嘈杂声", "只有 FSD50K 的 Crowd 和 Chatter 片段，期望输出为空"),
+    "nonspeech-events": ("只有环境事件声", "只有 FSD50K 的环境事件声（不含人声和音乐），期望输出为空"),
 }
 KINDS = {
     "pos": ("目标在场", "目标说话人在场，指标为转写字错率与漏识率"),
@@ -60,6 +107,14 @@ NAMED = {
     "nonspeech-quiet": ("近乎静音", "极低电平的高斯噪声"),
     "nonspeech-short": ("纯噪声 · 极短（0.3–1 秒）", "极短的噪声片段"),
     "nonspeech-long": ("纯噪声 · 长片段（22–26.5 秒）", "长噪声片段，检验复读和循环"),
+    "realreg1-neg": ("真实注册 1 · 缺席", "测试人员 2026-10-10 批的注册录音，配上 1–2 个没有他的说话人"),
+    "realreg2-neg": ("真实注册 2 · 缺席", "测试人员 2026-10-12 批的注册录音，配上 1–2 个没有他的说话人"),
+    "realreg1-music": ("真实注册 1 · 纯音乐", "同一段注册录音，片段是纯音乐"),
+    "realreg2-music": ("真实注册 2 · 纯音乐", "同一段注册录音，片段是纯音乐"),
+    "stress-outdoor-pos": ("组合压力 · 户外电话 · 目标在场", "窄带 3.4 kHz、整体降 10 dB、道路交通 0–10 dB、WHAM 底噪 −45 到 −35 dBFS、2–4 个干扰人"),
+    "stress-outdoor-neg": ("组合压力 · 户外电话 · 目标缺席", "同上，注册人不在场"),
+    "stress-office-pos": ("组合压力 · 办公室 · 目标在场", "真实房间响应、WHAM 底噪 −45 到 −35 dBFS、注册开头静音、2–4 个干扰人"),
+    "stress-office-neg": ("组合压力 · 办公室 · 目标缺席", "同上，注册人不在场"),
     "dom-clean-pos": ("无背景 · 目标在场（配对对照）", "与下面三种背景完全相同的场景，没有混响和背景声"),
     "dom-clean-neg": ("无背景 · 目标缺席（配对对照）", "同上，注册人不在场"),
     "dom-reverb-noise-pos": ("混响加噪声 · 目标在场", "混合音频经各说话人不同的房间响应并叠加噪声（5–15 dB），注册音频保持干净"),
@@ -79,13 +134,27 @@ NAMED = {
 
 def entry(split, recipe):
     name, params = split["name"], split["params"]
-    if name.startswith("enroll-"):
+    if name.split("-")[0] in NOISES:
+        label, description = NOISES[name.split("-")[0]]
+        display = f"{label} · {KINDS[params['kind']][0]}"
+    elif name in NOISE_ONLY:
+        display, description = NOISE_ONLY[name]
+    elif name.startswith(("floor-", "room-", "level-")):
+        table = {"floor": FLOORS, "room": ROOMS, "level": LEVELS}[name.split("-")[0]]
+        label, description = table[name.split("-")[1]]
+        display = f"{label} · {KINDS[params['kind']][0]}"
+    elif name.startswith("panel-base"):
+        display = f"面板基线 · {KINDS[params['kind']][0]}"
+        description = "面板的共同基线：同一批基础场景，默认底噪（真实与合成混合），干燥房间，正常电平"
+    elif name.startswith("enroll-"):
         cond = params["enroll"]
         label, description = CONDITIONS[cond]
         kind_label, _ = KINDS[params["kind"]]
         display = f"{label} · {kind_label}"
     else:
         display, description = NAMED[name]
+    if is_extreme(name):
+        display, description = f"{display}（极端，诊断用）", f"{description}。不贴近业务现实，不计入分组平均"
     return {
         "dataset_id": recipe["dataset_id"], "version": recipe["version"], "split": name, "task": "ts_asr",
         "label": name, "tags": ["zh", "target-speaker"], "display": display, "description": description,
@@ -93,13 +162,23 @@ def entry(split, recipe):
 
 
 def main():
-    recipe = yaml.safe_load(Path(build.__file__).with_name("recipe.yaml").read_text())
+    recipe = yaml.safe_load(Path(sys.argv[1] if len(sys.argv) > 1 else Path(build.__file__).with_name("recipe.yaml")).read_text())
     splits = build.expand_splits(recipe)
-    names = [s["name"] for s in splits]
 
     def pick(prefix, kinds):
-        return [s["name"] for s in splits if s["name"].startswith(prefix) and s["params"]["kind"] in kinds]
+        return [s["name"] for s in splits
+                if s["name"].startswith(prefix) and s["params"]["kind"] in kinds and not is_extreme(s["name"])]
 
+    if recipe["dataset_id"] == "ts_asr_noise":
+        groups = [
+            {"name": "背景噪声（目标在场）", "section": "新登记的噪声集", "labels": ["panel-base-pos", *pick("babble", {"pos"}), *pick("events", {"pos"}), *pick("crowd", {"pos"})],
+             "description": "同一批基础场景，只加背景人声、环境事件声或人群嘈杂声；基线与 v3 的面板基线相同"},
+            {"name": "背景噪声（目标缺席）", "section": "新登记的噪声集", "labels": ["panel-base-neg", *pick("babble", {"neg"}), *pick("events", {"neg"}), *pick("crowd", {"neg"})],
+             "description": "同上，注册人不在场"},
+            {"name": "只有噪声，没有目标", "section": "新登记的噪声集", "labels": pick("nonspeech-", {"nonspeech"}),
+             "description": "背景人声、人群、环境事件声；期望输出为空"},
+        ]
+        return emit(recipe, splits, groups)
     groups = [
         {"name": "目标在场（注册音频劣化）", "section": "注册音频劣化", "labels": pick("enroll-", {"pos"}),
          "description": "同一批基础场景（1–2 个干扰人），只改注册音频；指标为转写字错率与漏识率"},
@@ -113,11 +192,31 @@ def main():
          "description": "噪声、音乐、交通、近乎静音；期望输出为空"},
         {"name": "目标在场（环境与设备）", "section": "环境与设备", "labels": pick("dom-", {"pos"}),
          "description": "混响、背景音乐、交通、手机与棚内录音，目标在场"},
+        {"name": "脆弱性面板 · 底噪类型与强度（目标在场）", "section": "脆弱性面板",
+         "labels": ["panel-base-pos", *pick("floor-", {"pos"})],
+         "description": "同一批基础场景，只改底噪的类型和强度；最坏的条件就是模型对底噪的脆弱点"},
+        {"name": "脆弱性面板 · 底噪类型与强度（目标缺席）", "section": "脆弱性面板",
+         "labels": ["panel-base-neg", *pick("floor-", {"neg"})], "description": "同上，注册人不在场"},
+        {"name": "脆弱性面板 · 房间响应（目标在场）", "section": "脆弱性面板", "labels": pick("room-", {"pos"}),
+         "description": "同一批基础场景，只改房间响应（实测与模拟，小中大房间）"},
+        {"name": "脆弱性面板 · 房间响应（目标缺席）", "section": "脆弱性面板", "labels": pick("room-", {"neg"}),
+         "description": "同上，注册人不在场"},
+        {"name": "脆弱性面板 · 电平与录音链路（目标在场）", "section": "脆弱性面板", "labels": pick("level-", {"pos"}),
+         "description": "同一批基础场景，只改整体电平、削波、窄带和电话编码"},
+        {"name": "脆弱性面板 · 电平与录音链路（目标缺席）", "section": "脆弱性面板", "labels": pick("level-", {"neg"}),
+         "description": "同上，注册人不在场"},
+        {"name": "真实注册录音（缺席）", "section": "真实注册音频", "labels": pick("realreg", {"neg", "nonspeech"}),
+         "description": "业务反馈里测试人员的真实注册录音，目标不在场；误输出率"},
         {"name": "目标缺席（环境与设备）", "section": "环境与设备", "labels": pick("dom-", {"neg"}),
          "description": "同上，注册人不在场"},
     ]
+    return emit(recipe, splits, groups)
+
+
+def emit(recipe, splits, groups):
+    names = [s["name"] for s in splits]
     covered = {label for g in groups for label in g["labels"]}
-    missing = sorted(set(names) - covered)
+    missing = sorted(n for n in set(names) - covered if not is_extreme(n))
     if missing:
         raise SystemExit(f"splits not in any group: {missing}")
     config = {

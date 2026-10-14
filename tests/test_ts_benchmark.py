@@ -21,8 +21,9 @@ def pools():
 
     speakers = {f"s{i}": speaker(f"s{i}") for i in range(8)}
     short = {s: [mixer.Utt(f"{s}-short-{i}", s, f"好{i}", 0.8, "/x") for i in range(3)] for s in speakers}
-    return {"mixed": {"speakers": speakers, "short": short}, "__rirs__": ["rir0"],
-            "__noise__": {"musan_noise": ["n0"], "musan_music": ["m0"]}}
+    return {"mixed": {"speakers": speakers, "short": short}, "__rirs__": ["rir0", "rir1"],
+            "__rir_pools__": {"real": ["rir0"], "sim": ["rir1"]},
+            "__noise__": {"musan_noise": ["n0"], "musan_music": ["m0"], "wham": ["w0"], "wham_stationary": ["w0"]}}
 
 
 def plan(params, seed=0, **kwargs):
@@ -41,7 +42,7 @@ def test_recipe_expands_to_unique_scenarios():
     splits = build["expand_splits"](recipe)
 
     assert len({s["name"] for s in splits}) == len(splits)
-    assert {s["group"] for s in splits} == {"enroll", "dynamics", "absent", "nonspeech", "domain"}
+    assert {s["group"] for s in splits} == {"enroll", "dynamics", "absent", "nonspeech", "domain", "realreg", "panel", "stress"}
     assert sum(s["name"].startswith("enroll-") for s in splits) == 18
     assert all(s["params"]["kind"] in {"pos", "neg", "nonspeech"} for s in splits)
 
@@ -217,3 +218,115 @@ def test_paired_deltas_compare_the_same_scenes():
             scored[rid] = a["score"](records[rid], hyp)
     delta = a["paired"](records, scored, random.Random(0))["enroll-short1-neg"]
     assert delta["metric"] == "dFA" and delta["delta"] == pytest.approx(0.5)
+
+
+def test_a_noise_floor_never_changes_the_scene_and_is_applied_to_both_waveforms():
+    load, rir, noise = loaders()
+    floor = {"dbfs": [-50, -50], "kinds": ["white"]}
+    for seed in range(8):
+        base = plan({}, seed)
+        floored = plan({"noise_floor": floor}, seed)
+        assert scene_items(base) == scene_items(floored) and "floor" not in base
+        mix = mixer.render_mixture(floored, load, rir, noise)
+        silent = floored["total"] > 0 and mixer.render_mixture(base, load, rir, noise)
+        assert len(mix) == len(silent) and np.abs(mix - silent).mean() > 0
+        assert 20 * np.log10(mixer.rms(mix - silent)) == pytest.approx(-50, abs=0.2)
+        enrollment = mixer.render_enrollment(floored, load, rir, noise)
+        assert len(enrollment) == int(floored["enroll_utt"].duration * SR)
+
+
+def test_pink_floor_is_dominated_by_low_frequencies():
+    spec = {"kind": "pink", "dbfs": -40.0, "seed": 1}
+    noise = mixer.floor_noise(SR * 4, spec)
+    spectrum = np.abs(np.fft.rfft(noise)) ** 2
+    assert spectrum[: len(spectrum) // 8].sum() > spectrum[len(spectrum) // 2:].sum()
+    assert 20 * np.log10(mixer.rms(noise)) == pytest.approx(-40.0, abs=0.01)
+
+
+def test_recorded_registration_is_the_enrollment_of_an_absent_target():
+    _, rir, noise = loaders()
+    base = {"kind": "neg", "k": 2, "enroll_file": "realreg1"}
+    pool = pools()
+    pool["__enroll_files__"] = {"realreg1": "/x/reg.wav"}
+    scene = mixer.plan_scene(random.Random(3), {"duration": [10, 12], **base}, pool)
+    assert scene["enroll_file"]["id"] == "realreg1" and scene["params"]["enroll"] == "file"
+    assert scene["enroll_utt"].text == "" and all(t.role == "interferer" for t in scene["tracks"])
+    recorded = (np.random.default_rng(5).standard_normal(SR * 2) * 0.1).astype(np.float32)
+    w = mixer.render_enrollment(scene, lambda utt: recorded, rir, noise)
+    assert len(w) == 3 * SR and np.array_equal(w[: 2 * SR], recorded) and not w[2 * SR:].any()
+    music = mixer.plan_scene(random.Random(3), {"kind": "nonspeech", "duration": [2, 3], "enroll_file": "realreg1",
+                                                "noise": {"kind": "musan_noise", "level_dbfs": [-30, -30]}}, pool)
+    assert music["enroll_file"]["id"] == "realreg1"
+
+
+def test_runs_are_compared_on_the_same_samples():
+    a = _analyze()
+    records, base, cand = {}, {}, {}
+    for i in range(20):
+        rid = f"s:{i}"
+        records[rid] = record("", "他们", present=False, scenario="s", index=i)
+        base[rid] = a["score"](records[rid], "")
+        cand[rid] = a["score"](records[rid], "有字" if i < 5 else "")
+    change = a["compare"](records, cand, base, random.Random(0))["s"]
+    assert change["metric"] == "dFA" and change["delta"] == pytest.approx(0.25) and change["n"] == 20
+
+
+def test_a_real_noise_floor_uses_a_steady_clip_at_the_requested_level():
+    spec = {"dbfs": [-45, -45], "kinds": ["wham"]}
+    scene = plan({"noise_floor": spec}, 2)
+    floor = scene["floor"]["mix"]
+    assert floor["pool"] == "wham" and floor["file"] == "w0" and floor["dbfs"] == -45
+    clip = (np.random.default_rng(3).standard_normal(SR * 2) * 0.3).astype(np.float32)
+    noise = mixer.floor_noise(SR * 5, floor, lambda pool, file: clip)
+    assert len(noise) == SR * 5 and 20 * np.log10(mixer.rms(noise)) == pytest.approx(-45, abs=0.01)
+
+
+def test_a_floor_kind_without_steady_clips_is_rejected():
+    with pytest.raises(ValueError, match="steady"):
+        plan({"noise_floor": {"dbfs": [-50, -50], "kinds": ["dns5_audioset"]}}, 1)
+
+
+def test_floors_do_not_depend_on_the_room_or_the_background():
+    spec = {"dbfs": [-65, -35], "kinds": {"white": 0.5, "pink": 0.5}}
+    for seed in range(8):
+        dry = plan({"noise_floor": spec}, seed)
+        wet = plan({"noise_floor": spec, "rir": "real", "noise": {"kind": "musan_music", "snr_db": [5, 5]}}, seed)
+        assert dry["floor"] == wet["floor"] and scene_items(dry) == scene_items(wet)
+
+
+def test_rirs_come_from_the_named_pool():
+    scene = plan({"rir": "real"}, 4)
+    assert scene["rir_pool"] == "real" and {t.rir for t in scene["tracks"]} == {"rir0"}
+    scene = plan({"rir": True}, 4)
+    assert scene["rir_pool"] == "all" and {t.rir for t in scene["tracks"]} <= {"rir0", "rir1"}
+
+
+def test_recording_chain_effects():
+    t = np.arange(SR) / SR
+    high, low = np.sin(2 * np.pi * 6000 * t).astype(np.float32), np.sin(2 * np.pi * 500 * t).astype(np.float32)
+    assert mixer.rms(mixer.apply_effect(high, "lp3400")) < 0.05 * mixer.rms(high)
+    assert mixer.rms(mixer.apply_effect(low, "lp3400")) > 0.9 * mixer.rms(low)
+    loud = np.clip(low * 4, -4, 4)
+    assert np.abs(mixer.apply_effect(loud, "clip")).max() == pytest.approx(0.9)
+    coded = mixer.mulaw(low * 0.5)
+    assert coded.shape == low.shape and 0 < np.abs(coded - low * 0.5).max() < 0.05
+    assert mixer.apply_effect(low, None) is low
+
+
+def test_mixture_gain_sets_the_speech_level_before_the_floor():
+    load, rir, noise = loaders()
+    base = plan({}, 3)
+    quiet = plan({"mix_gain_db": -20}, 3)
+    a, b = mixer.render_mixture(base, load, rir, noise), mixer.render_mixture(quiet, load, rir, noise)
+    assert quiet["mix_gain_db"] == -20 and scene_items(base) == scene_items(quiet)
+    assert 20 * np.log10(mixer.rms(b) / mixer.rms(a)) == pytest.approx(-20, abs=0.01)
+
+
+def test_two_samples_may_not_share_an_audio_index_entry(tmp_path):
+    entry = {"cut_id": "dup", "relative_path": "audio/x.wav", "num_frames": 1, "duration": 0.1, "sha256": "0"}
+    results = [{"split": "a", "index": i, "target": "", "labels": {"target_present": False}, "metadata": {},
+                "entries": [dict(entry), dict(entry, cut_id="dup")]} for i in range(2)]
+    recipe = {"version": "v", "dataset_id": "ts_asr_benchmark", "pools": {}}
+    split = {"name": "a", "group": "g", "params": {}, "n": 2}
+    with pytest.raises(ValueError, match="duplicate cut ids"):
+        build["register"](recipe, [split], results, tmp_path, "ts_asr_benchmark")
