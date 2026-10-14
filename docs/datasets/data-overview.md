@@ -2,7 +2,7 @@
 
 按数据集查看语言、支持任务、时长和特性。清洗、热词、加噪、评测入口和训练框架配置归入所属数据集，不另算一套源数据。
 
-当前登记 **151 个数据集条目**；另有 **20 个下载来源声明**和 **1 个训练混合配方**。登记不代表本机文件已齐备。
+当前登记 **154 个数据集条目**；另有 **20 个下载来源声明**和 **1 个训练混合配方**。登记不代表本机文件已齐备。
 
 时长单位为小时。不同版本、子集和标注片段可能重叠，逐项列出，不相加为总量；没有时长的条目仍保留。参考表数字未核实当前文件与划分覆盖；“过滤前”不能当作清洗后时长。已被合并版本取代（`superseded_by`）的旧版本不再列出，仍可按原 ID 和版本解析。
 
@@ -117,6 +117,7 @@
 | 数据集 | 语言 | 支持任务 | 时长（小时，注明范围） | 特性 / 备注 |
 |---|---|---|---|---|
 | [BAAI/CS-Dialogue long_wav (ModelScope master)](../../catalog/icefall_base.yaml#L1618) | en、zh、zh-en | 语音识别、带说话人标注的语音识别 | 46.0（已登记；[icefall-20260908](../../catalog/icefall_runtime.yaml#L2035)）<br>46.0（已登记；[legacy-20260804](../../catalog/icefall_base.yaml#L1618)）<br>98.3（已登记；[long-mix-v1-20261010](../../catalog/zh_dialogue.yaml#L1)） | 含派生版本（与源数据可能重叠） |
+| [babble_noise_synth](../../catalog/babble_noise_synth.yaml#L1) | en、zh | noise | 50.0（已登记；[v1-20261013](../../catalog/babble_noise_synth.yaml#L1)） | 合成背景人声（babble）噪声：每条 30 秒，叠加 5–20 个不同说话人，中英文各 3000 条（train 2600、dev 200、test 200）；train/dev/test 的说话人互不重叠。每条的说话人、增益和来源句子见 manifest.jsonl |
 | [cs_dialogue_mix](../../catalog/icefall_base.yaml#L1748) | en、zh | 语音识别 | 31.0（已登记；[icefall-20260908](../../catalog/icefall_runtime.yaml#L2163)）<br>31.0（已登记；[legacy-20260804](../../catalog/icefall_base.yaml#L1748)） | 含派生版本（与源数据可能重叠） |
 | [cumix2017](../../catalog/icefall_base.yaml#L1813) | en、yue | 语音识别 | 10.9（已登记；[icefall-20260908](../../catalog/icefall_runtime.yaml#L2228)）<br>10.9（已登记；[legacy-20260804](../../catalog/icefall_base.yaml#L1813)） | 含派生版本（与源数据可能重叠） |
 | [emilia](../../catalog/emilia_refined.yaml#L1) | de、en、fr、ja、ko、zh | 语音识别、语音合成 | 78,091.0（已登记；[refined-metadata-20261010](../../catalog/emilia_refined.yaml#L1)）<br>101,655.6（已登记；[tts-unified-v0.1](../../catalog/tts_unified.yaml#L79)） | TTS 团队对 Emilia 的文本精修元数据，只含文本、时间戳和质量分数，不含音频；音频按 id 从 emilia@tts-unified-v0.1 读取。统计值取 final（31275879 条、78091.0 小时）；refined_full 覆盖全部 101655.6 小时；音频编码字节存放在 Lance 表内；原始划分在 metadata_json.original_split，统一输出全部为 train。ASR 用 tts_lance.iter_asr_samples（tts-asr-rules/v1）读取，会排除原始 dev/test 等；含派生版本（与源数据可能重叠） |
@@ -166,6 +167,7 @@
 | [fleurs_ja](../../catalog/legacy_multilingual.yaml#L1669) | ja | 语音识别 | 10.7（已登记；[legacy](../../catalog/legacy_multilingual.yaml#L1669)） | 有含标点版本 |
 | [fleurs_ko](../../catalog/legacy_multilingual.yaml#L1873) | ko | 语音识别 | 10.1（已登记；[legacy](../../catalog/legacy_multilingual.yaml#L1873)） | 有含标点版本 |
 | [fleurs_ru](../../catalog/legacy_multilingual.yaml#L2095) | ru | 语音识别 | 11.6（已登记；[legacy](../../catalog/legacy_multilingual.yaml#L2095)） | 有含标点版本 |
+| [fsd50k](../../catalog/open_noise.yaml#L1) | und | noise、sound_event | 108.6（已登记；[zenodo-4060432-20261013](../../catalog/open_noise.yaml#L1)） | FSD50K：200 类 AudioSet 本体声音事件，44.1 kHz 单声道 16 bit，共 51197 条（dev 40966、eval 10231）；可按 ground_truth 的 Crowd、Chatter 等标签筛选背景人声 |
 | [galgame](../../catalog/tts_unified.yaml#L170) | ja | 语音合成 | 10,173.7（已登记；[tts-unified-v0.1](../../catalog/tts_unified.yaml#L170)） | 音频编码字节存放在 Lance 表内；原始划分在 metadata_json.original_split，统一输出全部为 train。ASR 用 tts_lance.iter_asr_samples（tts-asr-rules/v1）读取，会排除原始 dev/test 等 |
 | [gigaspeech2_id](../../catalog/local_lhotse_derived.yaml#L1) | id | 语音识别、热词增强语音识别 | 1,980.1（已登记；[local-20260805](../../catalog/local_lhotse_derived.yaml#L1)）<br>214.9（已登记；[hotwords-v1-20260805](../../catalog/local_lhotse_derived.yaml#L40)） | 含派生版本（与源数据可能重叠） |
 | [koreaspeech](../../catalog/legacy_multilingual.yaml#L1942) | ko | 语音识别 | 3,828.3（已登记；[legacy](../../catalog/legacy_multilingual.yaml#L1942)） | 有含标点版本 |
@@ -180,6 +182,7 @@
 | [sim_rir_slr26](../../catalog/sim_rir_slr26.yaml#L1) | und | rir | 未登记 | 已登记划分：all |
 | [sim_rir_slr28](../../catalog/sim_rir_slr28.yaml#L1) | und | rir | 未登记 | 已登记划分：all |
 | [slr37_bn](../../catalog/legacy_multilingual.yaml#L478) | bn | 语音识别 | 5.0（已登记；[legacy](../../catalog/legacy_multilingual.yaml#L478)） | 有无标点版本 |
+| [wham_noise](../../catalog/open_noise.yaml#L176) | und | noise | 81.7（已登记；[official-20261013](../../catalog/open_noise.yaml#L176)） | WHAM! 噪声：旧金山湾区餐厅、咖啡馆、酒吧和公园的真实环境噪声，双声道 16 kHz float32，共 28000 条（tr 20000、cv 5000、tt 3000）；已切掉听得清的人声，保留含糊的背景人声 |
 | [yodas_ar](../../catalog/legacy_multilingual.yaml#L208) | ar | 语音识别 | 289.7（已登记；[legacy](../../catalog/legacy_multilingual.yaml#L208)） | 有含标点版本 |
 | [yodas_bn](../../catalog/legacy_multilingual.yaml#L511) | bn | 语音识别 | 27.1（已登记；[legacy](../../catalog/legacy_multilingual.yaml#L511)） | 有含标点版本 |
 | [yodas_de](../../catalog/legacy_multilingual.yaml#L793) | de | 语音识别 | 3,062.9（已登记；[legacy](../../catalog/legacy_multilingual.yaml#L793)） | 有含标点版本 |
