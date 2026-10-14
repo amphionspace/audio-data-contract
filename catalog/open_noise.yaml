@@ -149,6 +149,9 @@
         - dev_audio_zip
         source_directory:
         - dev_audio_dir
+      statistics:
+        duration_hours: 80.75
+        num_clips: 40966
     eval:
       artifacts:
         source_archive:
@@ -156,6 +159,9 @@
         - eval_audio_zip
         source_directory:
         - eval_audio_dir
+      statistics:
+        duration_hours: 27.85
+        num_clips: 10231
   provenance:
     source: FSD50K (Freesound Datasets, UPF)
     url: https://zenodo.org/records/4060432
@@ -208,18 +214,27 @@
         - noise_dir
       provenance:
         subdir: tr
+      statistics:
+        duration_hours: 58.03
+        num_clips: 20000
     cv:
       artifacts:
         source_directory:
         - noise_dir
       provenance:
         subdir: cv
+      statistics:
+        duration_hours: 14.65
+        num_clips: 5000
     tt:
       artifacts:
         source_directory:
         - noise_dir
       provenance:
         subdir: tt
+      statistics:
+        duration_hours: 9.0
+        num_clips: 3000
   provenance:
     source: WHAM! noise dataset (Whisper / Mitsubishi Electric Research Labs)
     url: http://wham.whisper.ai/
