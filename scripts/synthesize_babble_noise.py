@@ -9,11 +9,11 @@ Speakers are split into train/dev/test pools so splits never share a speaker.
 import argparse
 import gzip
 import json
+import multiprocessing
 import os
 import random
 import re
 from collections import defaultdict
-import multiprocessing
 
 import numpy as np
 import soundfile as sf
@@ -119,8 +119,7 @@ def main():
                              args.min_speakers, args.max_speakers, args.rms_db))
     os.makedirs(args.out, exist_ok=True)
     with multiprocessing.get_context("fork").Pool(args.workers) as p, open(os.path.join(args.out, "manifest.jsonl"), "w") as f:
-        for rec in p.imap(make_clip, jobs, chunksize=8):
-            f.write(json.dumps(rec, ensure_ascii=False) + "\n")
+        f.writelines(json.dumps(rec, ensure_ascii=False) + "\n" for rec in p.imap(make_clip, jobs, chunksize=8))
 
 
 if __name__ == "__main__":
