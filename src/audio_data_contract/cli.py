@@ -83,6 +83,18 @@ def _parser() -> argparse.ArgumentParser:
     duration.add_argument("--workers", type=int)
     duration.add_argument("--output")
     duration.add_argument("--write", action="store_true")
+
+    audit = commands.add_parser("storage-audit")
+    actions = audit.add_subparsers(dest="action", required=True)
+    for name in ("scan", "report", "watermark"):
+        action = actions.add_parser(name)
+        action.add_argument("--zones", required=True)
+        if name != "watermark":
+            action.add_argument("--output-dir", required=True)
+    actions.choices["scan"].add_argument("--workers", type=int, default=32)
+    actions.choices["report"].add_argument("--snapshot")
+    for name in ("report", "watermark"):
+        actions.choices[name].add_argument("--notify", action="store_true")
     return parser
 
 
@@ -94,6 +106,10 @@ def main(argv: list[str] | None = None) -> int:
         return run(args)
     if args.command == "stats-duration":
         from .duration import run
+
+        return run(args)
+    if args.command == "storage-audit":
+        from .storage_audit import run
 
         return run(args)
     if args.command == "validate-catalog":

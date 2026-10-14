@@ -1,0 +1,19 @@
+# 以 root 运行，才能统计 /workspace/workspace 下的私有目录。
+# 飞书 webhook 放在 EnvironmentFile 中（权限 600），不要写进本文件：
+#   STORAGE_AUDIT_FEISHU_WEBHOOK=https://open.feishu.cn/open-apis/bot/v2/hook/...
+#   STORAGE_AUDIT_FEISHU_SECRET=...   # 机器人开启签名校验时填写
+[Unit]
+Description=Weekly /workspace storage audit
+
+[Service]
+Type=oneshot
+EnvironmentFile=/etc/storage-audit.env
+Environment=PYTHONPATH=/workspace/data/audio-data-contract/src
+Nice=10
+IOSchedulingClass=idle
+ExecStart=/usr/bin/python3 -m audio_data_contract.cli storage-audit scan \
+  --zones /workspace/data/registry/storage-zones.yaml \
+  --output-dir /workspace/data/storage-audit
+ExecStart=/usr/bin/python3 -m audio_data_contract.cli storage-audit report \
+  --zones /workspace/data/registry/storage-zones.yaml \
+  --output-dir /workspace/data/storage-audit --notify
