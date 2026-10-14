@@ -126,3 +126,22 @@
     description: 合成背景人声（babble）噪声：每条 30 秒，叠加 5–20 个不同说话人，中英文各 3000 条（train 2600、dev 200、test 200）；train/dev/test 的说话人互不重叠。每条的说话人、增益和来源句子见
       manifest.jsonl。
     license: 继承源语料：LibriSpeech 为 CC BY 4.0，AISHELL-1 为 Apache 2.0
+    usage_guidance:
+      summary: 本数据只提供背景人声素材，音量在训练框架里按信噪比（SNR）控制，并建议按 manifest 的 num_speakers 分档使用。
+      tiers:
+      - num_speakers: 5-8
+        character: 能听出部分背景说话内容（信息掩蔽强）
+        suggested_snr_db: 13-20
+        reason: SNR 过低时背景语音与目标同样响，模型无法判断该转写谁，而标签只有目标说话人
+      - num_speakers: 10-20
+        character: 接近扩散的人群声，内容基本不可辨
+        suggested_snr_db: 0-15
+        reason: 可懂度随人数增多而下降
+      status: 分档和 SNR 数值是建议值，未在本项目的 ASR 任务上做对照实验验证；每人 ±6 dB 的增益差是自行设定，无文献依据。
+      limitations: 源语料为朗读语音，没有真实混响和距离感，训练时建议再叠加 RIR。
+      references:
+      - claim: Kaldi MUSAN babble 配方：3-7 个背景语音，SNR 20/17/15/13 dB
+        url: https://github.com/kaldi-asr/kaldi/blob/master/egs/voxceleb/v2/run.sh
+      - claim: 自然 babble 的可懂度不随人数单调下降，N=6 到 128 之间有宽最低点
+        url: https://laslab.org/journal_paper/consonant-identification-is-n-talker-babble-is-a-nonmonotonic-function-of-n
+      researched_on: '2026-10-13'
