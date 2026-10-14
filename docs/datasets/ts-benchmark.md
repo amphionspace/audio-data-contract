@@ -34,6 +34,14 @@
 - 只有噪声没有目标的场景：`nonspeech-babble`、`nonspeech-crowd`、`nonspeech-events`，目标缺席，期望输出为空。
 - v3 里用的 WHAM! 噪声现在已按 `wham_noise` 登记（`tr`、`cv`、`tt`），v3 用的是其中的 `tt` 划分，登记前的原始路径与登记后的内容相同。
 
+## 远场补充集（ts_asr_farfield）
+
+`ts_asr_farfield@v1-20261014`：1,680 条、14 个场景，配方 `scripts/ts_benchmark/recipe-farfield.yaml`。基线与 v3 的 `panel-base` 逐条相同，其余场景与它配对。房间响应用 SLR28 实测（`real` 池），保持干电平。
+
+- 目标和干扰人各自的房间响应：`rirtgt`（只有目标过 RIR）、`rirint`（只有干扰人）、`rirsame`（同一个 RIR）、`rirdiff`（各不相同）。配方里 `rir: {target: <池>|null, interferer: <池>|null, share: bool}`；不共享时每个过 RIR 的轨道抽不同的响应（不放回）。
+- 注册与混合的近远场失配：`rirdiff`（近场注册、远场混合）、`mmfarfar`（注册和混合都远场）、`mmfarnear`（远场注册、近场混合），注册的房间响应用 `enroll_rir_pool`。
+- 真实对照见 [ts-real.md](ts-real.md) 的 `ts_asr_nearfar`；合成与真实的校准脚本是 `scripts/ts_benchmark/calibrate.py`。
+
 ## 一条记录
 
 - `task = "ts_asr"`，`audio_slots` 依次是 `enrollment` 和 `mixture`。

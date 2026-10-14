@@ -1,0 +1,503 @@
+- schema_version: dataset-catalog/2.0
+  dataset_id: ts_asr_nearfar
+  version: v1-20261014
+  languages:
+  - zh
+  tasks:
+  - ts_asr
+  artifacts:
+  - name: audio-index
+    kind: audio-index
+    root_alias: ts_asr_nearfar
+    relative_path: versions/v1-20261014/audio-index.jsonl.gz
+    sha256: adf91b7f362fc2c2f051e7b484bf6dd206cc1a23d8bf3f8315d58f60625966ff
+    metadata:
+      record_count: 2496
+  - name: nearfar-1spk-ef-mf-neg-records
+    kind: audio-records
+    root_alias: ts_asr_nearfar
+    relative_path: versions/v1-20261014/records/nearfar-1spk-ef-mf-neg.jsonl.gz
+    sha256: d6cde414488a30ae4eece99f513d0e20584b1e56afd0bd1d730ec57dfdade907
+    metadata:
+      record_count: 50
+  - name: nearfar-1spk-ef-mf-pos-records
+    kind: audio-records
+    root_alias: ts_asr_nearfar
+    relative_path: versions/v1-20261014/records/nearfar-1spk-ef-mf-pos.jsonl.gz
+    sha256: 6215944643c7ec94577bbe0d27cafc11b68e6ed203588a7433711ccedfcf068e
+    metadata:
+      record_count: 50
+  - name: nearfar-1spk-ef-mn-neg-records
+    kind: audio-records
+    root_alias: ts_asr_nearfar
+    relative_path: versions/v1-20261014/records/nearfar-1spk-ef-mn-neg.jsonl.gz
+    sha256: 3d143e764a64008c7721d9f7b998b4f4b20bfa093624512c5a14202848ee2563
+    metadata:
+      record_count: 50
+  - name: nearfar-1spk-ef-mn-pos-records
+    kind: audio-records
+    root_alias: ts_asr_nearfar
+    relative_path: versions/v1-20261014/records/nearfar-1spk-ef-mn-pos.jsonl.gz
+    sha256: dd82032e8d1075dd3a2e3045be5042711ad9dba0a36d4be9808d7b51f2aeb6fd
+    metadata:
+      record_count: 50
+  - name: nearfar-1spk-en-mf-neg-records
+    kind: audio-records
+    root_alias: ts_asr_nearfar
+    relative_path: versions/v1-20261014/records/nearfar-1spk-en-mf-neg.jsonl.gz
+    sha256: b4330e2028d6d9d0705b6c3374ee0cb3f3cade75030db9719f09e0c835a7db1c
+    metadata:
+      record_count: 50
+  - name: nearfar-1spk-en-mf-pos-records
+    kind: audio-records
+    root_alias: ts_asr_nearfar
+    relative_path: versions/v1-20261014/records/nearfar-1spk-en-mf-pos.jsonl.gz
+    sha256: f49918534a9c291ef18ab6074025742a4b162831e08c95526556f8fe6a2197e6
+    metadata:
+      record_count: 50
+  - name: nearfar-1spk-en-mn-neg-records
+    kind: audio-records
+    root_alias: ts_asr_nearfar
+    relative_path: versions/v1-20261014/records/nearfar-1spk-en-mn-neg.jsonl.gz
+    sha256: 2723dc7a299a989210e42797b8a8c7919eb12b623b11893909d3c2619b77a0af
+    metadata:
+      record_count: 50
+  - name: nearfar-1spk-en-mn-pos-records
+    kind: audio-records
+    root_alias: ts_asr_nearfar
+    relative_path: versions/v1-20261014/records/nearfar-1spk-en-mn-pos.jsonl.gz
+    sha256: 90876eff1a78fa873ea5ace465f46d29639da0e360b248728ff314f7f1a5af0e
+    metadata:
+      record_count: 50
+  - name: nearfar-2spk-ef-mf-neg-records
+    kind: audio-records
+    root_alias: ts_asr_nearfar
+    relative_path: versions/v1-20261014/records/nearfar-2spk-ef-mf-neg.jsonl.gz
+    sha256: ae7d70f586b7e2d0e8db3bdafd8332b31ff42ee251f47ebac8e363dd4e1aa920
+    metadata:
+      record_count: 50
+  - name: nearfar-2spk-ef-mf-pos-records
+    kind: audio-records
+    root_alias: ts_asr_nearfar
+    relative_path: versions/v1-20261014/records/nearfar-2spk-ef-mf-pos.jsonl.gz
+    sha256: 70414066e7d031122d2ad2cd0779df77a8388fc6d7c550866094656ab6c786bc
+    metadata:
+      record_count: 50
+  - name: nearfar-2spk-ef-mn-neg-records
+    kind: audio-records
+    root_alias: ts_asr_nearfar
+    relative_path: versions/v1-20261014/records/nearfar-2spk-ef-mn-neg.jsonl.gz
+    sha256: 386c4f7a357e52bc72bb53e8a0442d079e4fdfde2a5e7f547b57109607a0511a
+    metadata:
+      record_count: 50
+  - name: nearfar-2spk-ef-mn-pos-records
+    kind: audio-records
+    root_alias: ts_asr_nearfar
+    relative_path: versions/v1-20261014/records/nearfar-2spk-ef-mn-pos.jsonl.gz
+    sha256: 8d7d45fd0ff7658aa95db41921809d25f7d205c7cac50f7436209ea429726c1c
+    metadata:
+      record_count: 50
+  - name: nearfar-2spk-en-mf-neg-records
+    kind: audio-records
+    root_alias: ts_asr_nearfar
+    relative_path: versions/v1-20261014/records/nearfar-2spk-en-mf-neg.jsonl.gz
+    sha256: 9b91ac631fd2710a83880be55fc56a473339baa584e15bd6f303698b80ac84bf
+    metadata:
+      record_count: 50
+  - name: nearfar-2spk-en-mf-pos-records
+    kind: audio-records
+    root_alias: ts_asr_nearfar
+    relative_path: versions/v1-20261014/records/nearfar-2spk-en-mf-pos.jsonl.gz
+    sha256: 1085acb3b67df5ff14d4311b73fb7dd79637b614aad4e1138f40dab6c37c0996
+    metadata:
+      record_count: 50
+  - name: nearfar-2spk-en-mn-neg-records
+    kind: audio-records
+    root_alias: ts_asr_nearfar
+    relative_path: versions/v1-20261014/records/nearfar-2spk-en-mn-neg.jsonl.gz
+    sha256: 31fbca244e66a91d2800ff1106cc8aa7f14041dab5e3735c3e8d5439e75d44cb
+    metadata:
+      record_count: 50
+  - name: nearfar-2spk-en-mn-pos-records
+    kind: audio-records
+    root_alias: ts_asr_nearfar
+    relative_path: versions/v1-20261014/records/nearfar-2spk-en-mn-pos.jsonl.gz
+    sha256: ba2905a269cb878d9b5b3967b019bd0549bc6bf47c3364e75468cfa41978896c
+    metadata:
+      record_count: 50
+  - name: nearfar-3plus-ef-mf-neg-records
+    kind: audio-records
+    root_alias: ts_asr_nearfar
+    relative_path: versions/v1-20261014/records/nearfar-3plus-ef-mf-neg.jsonl.gz
+    sha256: efef81138628945b22729b6fa91f637d8421c5cf43bbac9ebb2b8cd770a87723
+    metadata:
+      record_count: 56
+  - name: nearfar-3plus-ef-mf-pos-records
+    kind: audio-records
+    root_alias: ts_asr_nearfar
+    relative_path: versions/v1-20261014/records/nearfar-3plus-ef-mf-pos.jsonl.gz
+    sha256: aba2c7404c92c2b7ba689b1db6ae1cc41c5ac4833834e4314bedee37bddade03
+    metadata:
+      record_count: 56
+  - name: nearfar-3plus-ef-mn-neg-records
+    kind: audio-records
+    root_alias: ts_asr_nearfar
+    relative_path: versions/v1-20261014/records/nearfar-3plus-ef-mn-neg.jsonl.gz
+    sha256: a271e189859f722015d43a7752b746e62f9de1947f78e6c05751ec9a8bde6d2a
+    metadata:
+      record_count: 56
+  - name: nearfar-3plus-ef-mn-pos-records
+    kind: audio-records
+    root_alias: ts_asr_nearfar
+    relative_path: versions/v1-20261014/records/nearfar-3plus-ef-mn-pos.jsonl.gz
+    sha256: 7eaef5948099941e648105b397423eb284e037bcdc9ea0a08266887dda6b4cd5
+    metadata:
+      record_count: 56
+  - name: nearfar-3plus-en-mf-neg-records
+    kind: audio-records
+    root_alias: ts_asr_nearfar
+    relative_path: versions/v1-20261014/records/nearfar-3plus-en-mf-neg.jsonl.gz
+    sha256: 4e6a2c236a132045baec0492aec3dfa3214409bddb0094a685109f05b5151a1c
+    metadata:
+      record_count: 56
+  - name: nearfar-3plus-en-mf-pos-records
+    kind: audio-records
+    root_alias: ts_asr_nearfar
+    relative_path: versions/v1-20261014/records/nearfar-3plus-en-mf-pos.jsonl.gz
+    sha256: 9ec3f81feb24dcd6cf894944bd52f5a3586442a0e7801c90d150ebbeea5e4fca
+    metadata:
+      record_count: 56
+  - name: nearfar-3plus-en-mn-neg-records
+    kind: audio-records
+    root_alias: ts_asr_nearfar
+    relative_path: versions/v1-20261014/records/nearfar-3plus-en-mn-neg.jsonl.gz
+    sha256: 9a381041a71a13001baa41ac43f653f88e8f065d7fc957f337b397f9dd31c4f7
+    metadata:
+      record_count: 56
+  - name: nearfar-3plus-en-mn-pos-records
+    kind: audio-records
+    root_alias: ts_asr_nearfar
+    relative_path: versions/v1-20261014/records/nearfar-3plus-en-mn-pos.jsonl.gz
+    sha256: 27814d5a9514f2e15386a3f99ef9392d40edc8eef274e1070650d159e5929fd6
+    metadata:
+      record_count: 56
+  splits:
+    nearfar-1spk-ef-mf-neg:
+      artifacts:
+        records:
+        - nearfar-1spk-ef-mf-neg-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 50
+        duration_hours: 0.2148
+        duration_basis: Mixture duration
+      provenance:
+        description: 'nearfar: {"corpus": "alimeeting"}'
+    nearfar-1spk-ef-mf-pos:
+      artifacts:
+        records:
+        - nearfar-1spk-ef-mf-pos-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 50
+        duration_hours: 0.2148
+        duration_basis: Mixture duration
+      provenance:
+        description: 'nearfar: {"corpus": "alimeeting"}'
+    nearfar-1spk-ef-mn-neg:
+      artifacts:
+        records:
+        - nearfar-1spk-ef-mn-neg-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 50
+        duration_hours: 0.2148
+        duration_basis: Mixture duration
+      provenance:
+        description: 'nearfar: {"corpus": "alimeeting"}'
+    nearfar-1spk-ef-mn-pos:
+      artifacts:
+        records:
+        - nearfar-1spk-ef-mn-pos-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 50
+        duration_hours: 0.2148
+        duration_basis: Mixture duration
+      provenance:
+        description: 'nearfar: {"corpus": "alimeeting"}'
+    nearfar-1spk-en-mf-neg:
+      artifacts:
+        records:
+        - nearfar-1spk-en-mf-neg-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 50
+        duration_hours: 0.2148
+        duration_basis: Mixture duration
+      provenance:
+        description: 'nearfar: {"corpus": "alimeeting"}'
+    nearfar-1spk-en-mf-pos:
+      artifacts:
+        records:
+        - nearfar-1spk-en-mf-pos-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 50
+        duration_hours: 0.2148
+        duration_basis: Mixture duration
+      provenance:
+        description: 'nearfar: {"corpus": "alimeeting"}'
+    nearfar-1spk-en-mn-neg:
+      artifacts:
+        records:
+        - nearfar-1spk-en-mn-neg-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 50
+        duration_hours: 0.2148
+        duration_basis: Mixture duration
+      provenance:
+        description: 'nearfar: {"corpus": "alimeeting"}'
+    nearfar-1spk-en-mn-pos:
+      artifacts:
+        records:
+        - nearfar-1spk-en-mn-pos-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 50
+        duration_hours: 0.2148
+        duration_basis: Mixture duration
+      provenance:
+        description: 'nearfar: {"corpus": "alimeeting"}'
+    nearfar-2spk-ef-mf-neg:
+      artifacts:
+        records:
+        - nearfar-2spk-ef-mf-neg-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 50
+        duration_hours: 0.2492
+        duration_basis: Mixture duration
+      provenance:
+        description: 'nearfar: {"corpus": "alimeeting"}'
+    nearfar-2spk-ef-mf-pos:
+      artifacts:
+        records:
+        - nearfar-2spk-ef-mf-pos-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 50
+        duration_hours: 0.2492
+        duration_basis: Mixture duration
+      provenance:
+        description: 'nearfar: {"corpus": "alimeeting"}'
+    nearfar-2spk-ef-mn-neg:
+      artifacts:
+        records:
+        - nearfar-2spk-ef-mn-neg-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 50
+        duration_hours: 0.2492
+        duration_basis: Mixture duration
+      provenance:
+        description: 'nearfar: {"corpus": "alimeeting"}'
+    nearfar-2spk-ef-mn-pos:
+      artifacts:
+        records:
+        - nearfar-2spk-ef-mn-pos-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 50
+        duration_hours: 0.2492
+        duration_basis: Mixture duration
+      provenance:
+        description: 'nearfar: {"corpus": "alimeeting"}'
+    nearfar-2spk-en-mf-neg:
+      artifacts:
+        records:
+        - nearfar-2spk-en-mf-neg-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 50
+        duration_hours: 0.2492
+        duration_basis: Mixture duration
+      provenance:
+        description: 'nearfar: {"corpus": "alimeeting"}'
+    nearfar-2spk-en-mf-pos:
+      artifacts:
+        records:
+        - nearfar-2spk-en-mf-pos-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 50
+        duration_hours: 0.2492
+        duration_basis: Mixture duration
+      provenance:
+        description: 'nearfar: {"corpus": "alimeeting"}'
+    nearfar-2spk-en-mn-neg:
+      artifacts:
+        records:
+        - nearfar-2spk-en-mn-neg-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 50
+        duration_hours: 0.2492
+        duration_basis: Mixture duration
+      provenance:
+        description: 'nearfar: {"corpus": "alimeeting"}'
+    nearfar-2spk-en-mn-pos:
+      artifacts:
+        records:
+        - nearfar-2spk-en-mn-pos-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 50
+        duration_hours: 0.2492
+        duration_basis: Mixture duration
+      provenance:
+        description: 'nearfar: {"corpus": "alimeeting"}'
+    nearfar-3plus-ef-mf-neg:
+      artifacts:
+        records:
+        - nearfar-3plus-ef-mf-neg-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 56
+        duration_hours: 0.2854
+        duration_basis: Mixture duration
+      provenance:
+        description: 'nearfar: {"corpus": "alimeeting"}'
+    nearfar-3plus-ef-mf-pos:
+      artifacts:
+        records:
+        - nearfar-3plus-ef-mf-pos-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 56
+        duration_hours: 0.2854
+        duration_basis: Mixture duration
+      provenance:
+        description: 'nearfar: {"corpus": "alimeeting"}'
+    nearfar-3plus-ef-mn-neg:
+      artifacts:
+        records:
+        - nearfar-3plus-ef-mn-neg-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 56
+        duration_hours: 0.2854
+        duration_basis: Mixture duration
+      provenance:
+        description: 'nearfar: {"corpus": "alimeeting"}'
+    nearfar-3plus-ef-mn-pos:
+      artifacts:
+        records:
+        - nearfar-3plus-ef-mn-pos-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 56
+        duration_hours: 0.2854
+        duration_basis: Mixture duration
+      provenance:
+        description: 'nearfar: {"corpus": "alimeeting"}'
+    nearfar-3plus-en-mf-neg:
+      artifacts:
+        records:
+        - nearfar-3plus-en-mf-neg-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 56
+        duration_hours: 0.2854
+        duration_basis: Mixture duration
+      provenance:
+        description: 'nearfar: {"corpus": "alimeeting"}'
+    nearfar-3plus-en-mf-pos:
+      artifacts:
+        records:
+        - nearfar-3plus-en-mf-pos-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 56
+        duration_hours: 0.2854
+        duration_basis: Mixture duration
+      provenance:
+        description: 'nearfar: {"corpus": "alimeeting"}'
+    nearfar-3plus-en-mn-neg:
+      artifacts:
+        records:
+        - nearfar-3plus-en-mn-neg-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 56
+        duration_hours: 0.2854
+        duration_basis: Mixture duration
+      provenance:
+        description: 'nearfar: {"corpus": "alimeeting"}'
+    nearfar-3plus-en-mn-pos:
+      artifacts:
+        records:
+        - nearfar-3plus-en-mn-pos-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 56
+        duration_hours: 0.2854
+        duration_basis: Mixture duration
+      provenance:
+        description: 'nearfar: {"corpus": "alimeeting"}'
+  provenance:
+    status: complete
+    synthetic: none
+    description: AliMeeting 测试集窗口的近场与远场对照：同一窗口、同一条注册语句，注册取远场或说话人的头戴麦，混合取远场通道 0 或各头戴麦之和（电平对齐远场混合）。基于 ts_asr_real@v2-20261013 的 AliMeeting 窗口。只用于评测，不进训练。
+    sources:
+    - ts_asr_real@v2-20261013
+    - alimeeting:Test_Ali_near

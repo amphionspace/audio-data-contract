@@ -330,3 +330,44 @@ def test_two_samples_may_not_share_an_audio_index_entry(tmp_path):
     split = {"name": "a", "group": "g", "params": {}, "n": 2}
     with pytest.raises(ValueError, match="duplicate cut ids"):
         build["register"](recipe, [split], results, tmp_path, "ts_asr_benchmark")
+
+
+def room_pools():
+    full = pools()
+    full["__rir_pools__"] = {"real": [f"rir{i}" for i in range(10)]}
+    return full
+
+
+def plan_rooms(rir, seed, **params):
+    base = {"kind": "pos", "schedule": "full", "k": 2, "duration": [10, 16], "rir": rir, **params}
+    for attempt in range(40):
+        try:
+            return mixer.plan_scene(random.Random(f"{seed}:{attempt}"), base, room_pools())
+        except mixer.PlanError:
+            continue
+    raise AssertionError("no scene could be planned")
+
+
+@pytest.mark.parametrize("seed", range(10))
+def test_role_rirs_change_only_the_rooms(seed):
+    dry = plan_rooms(None, seed)
+    target_only = plan_rooms({"target": "real"}, seed)
+    diff = plan_rooms({"target": "real", "interferer": "real"}, seed)
+    same = plan_rooms({"target": "real", "interferer": "real", "share": True}, seed)
+
+    assert [t.rir for t in dry["tracks"]] == [None] * len(dry["tracks"])
+    assert [t.rir is not None for t in target_only["tracks"]] == [t.role == "target" for t in target_only["tracks"]]
+    assert len({t.rir for t in diff["tracks"]}) == len(diff["tracks"])
+    assert len({t.rir for t in same["tracks"]}) == 1
+    assert diff["rir_roles"] == {"target": "real", "interferer": "real", "share": False}
+    for scene in (target_only, diff, same):  # the same speakers and placements as the dry scene
+        assert [(t.role, t.speaker, [(u.id, s) for u, s in t.items]) for t in scene["tracks"]] == [
+            (t.role, t.speaker, [(u.id, s) for u, s in t.items]) for t in dry["tracks"]]
+
+
+def test_far_field_recipe_expands_to_unique_scenarios():
+    recipe = yaml.safe_load((SCRIPTS / "recipe-farfield.yaml").read_text())
+    splits = build["expand_splits"](recipe)
+
+    assert len({s["name"] for s in splits}) == len(splits) == 14
+    assert {s["params"].get("pair") for s in splits} == {"panel-pos", "panel-neg"}
