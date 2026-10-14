@@ -291,6 +291,12 @@ def describe(plan, split, index):
             labels["snr_db"] = plan["noise"]["snr_db"]
     if params.get("rir"):
         labels["reverb"] = True
+    if "rir_roles" in plan:
+        labels["rir_target"] = plan["rir_roles"]["target"]
+        labels["rir_interferer"] = plan["rir_roles"]["interferer"]
+        labels["rir_shared"] = plan["rir_roles"]["share"]
+    if params.get("enroll_rir_pool"):
+        labels["enroll_rir_pool"] = params["enroll_rir_pool"]
     if "target_overlap_ratio" in plan:
         labels["target_overlap_ratio"] = plan["target_overlap_ratio"]
     if plan.get("floor"):

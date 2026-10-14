@@ -270,7 +270,9 @@ def plan_scene(rng, params, pools, similarity=None):
         used = {u.id for t in plan["tracks"] for u, _ in t.items}
         plan["enroll_utt"] = _enroll_utt(enroll, target_pool["speakers"][target], used)
         _plan_enrollment(enroll, params, pools, target_pool, plan, target)
-    if params.get("rir"):
+    if isinstance(params.get("rir"), dict):
+        _plan_role_rirs(background, params["rir"], plan, pools)
+    elif params.get("rir"):
         pool = pools.get("__rir_pools__", {}).get(params["rir"]) if isinstance(params["rir"], str) else None
         plan["rir_pool"] = params["rir"] if pool else "all"
         for track in plan["tracks"]:
@@ -280,6 +282,32 @@ def plan_scene(rng, params, pools, similarity=None):
                          "snr_db": round(_uniform(background, params["noise"]["snr_db"]), 2)}
     _plan_floors(floors, params, plan, pools)
     return plan
+
+
+def _plan_role_rirs(rng, spec, plan, pools):
+    """Room responses per role: ``{target: pool|null, interferer: pool|null, share: bool}``.
+
+    A null role stays dry. Without ``share`` every reverberant track gets a different response
+    (drawn without replacement per pool); with ``share`` they all use one response, as if they
+    sat at the same spot in the room.
+    """
+    wet = {}
+    for track in plan["tracks"]:
+        pool_name = spec.get(track.role)
+        if pool_name:
+            wet.setdefault(pool_name, []).append(track)
+    if spec.get("share") and len(wet) > 1:
+        raise PlanError("a shared room response needs one pool")
+    for pool_name, tracks in wet.items():
+        pool = pools["__rir_pools__"][pool_name]
+        if spec.get("share"):
+            chosen = [rng.choice(pool)] * len(tracks)
+        else:
+            chosen = rng.sample(pool, len(tracks)) if len(pool) >= len(tracks) else [rng.choice(pool) for _ in tracks]
+        for track, path in zip(tracks, chosen):
+            track.rir = path
+    plan["rir_roles"] = {"target": spec.get("target") or "dry", "interferer": spec.get("interferer") or "dry",
+                         "share": bool(spec.get("share"))}
 
 
 def _plan_recorded_enrollment(params, pools, plan):
@@ -307,7 +335,8 @@ def _plan_enrollment(rng, params, pools, target_pool, plan, speaker):
     """Resources the enrollment condition needs, drawn at plan time so rendering is deterministic."""
     cond = params.get("enroll", "clean")
     if cond == "reverb":
-        plan["enroll_rir"] = rng.choice(pools["__rirs__"])
+        pool = pools["__rir_pools__"][params["enroll_rir_pool"]] if params.get("enroll_rir_pool") else pools["__rirs__"]
+        plan["enroll_rir"] = rng.choice(pool)
     elif cond == "noise10":
         plan["enroll_noise"] = plan_noise(rng, "musan_noise", pools)
     elif cond in ("contam10", "contam0"):

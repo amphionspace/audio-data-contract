@@ -9,11 +9,11 @@ Speakers are split into train/dev/test pools so splits never share a speaker.
 import argparse
 import gzip
 import json
+import multiprocessing
 import os
 import random
 import re
 from collections import defaultdict
-import multiprocessing
 
 import numpy as np
 import soundfile as sf
@@ -36,9 +36,10 @@ CORPORA = {
 def load_pools(lang, seed):
     cfg = CORPORA[lang]
     by_spk = defaultdict(list)
-    for line in gzip.open(cfg["manifest"], "rt"):
-        r = json.loads(line)
-        by_spk[cfg["speaker"](r["id"])].append((r["id"], r["sources"][0]["source"], r["duration"]))
+    with gzip.open(cfg["manifest"], "rt") as stream:
+        for line in stream:
+            r = json.loads(line)
+            by_spk[cfg["speaker"](r["id"])].append((r["id"], r["sources"][0]["source"], r["duration"]))
     spks = sorted(by_spk)
     random.Random(seed).shuffle(spks)
     n = len(spks)
@@ -119,8 +120,7 @@ def main():
                              args.min_speakers, args.max_speakers, args.rms_db))
     os.makedirs(args.out, exist_ok=True)
     with multiprocessing.get_context("fork").Pool(args.workers) as p, open(os.path.join(args.out, "manifest.jsonl"), "w") as f:
-        for rec in p.imap(make_clip, jobs, chunksize=8):
-            f.write(json.dumps(rec, ensure_ascii=False) + "\n")
+        f.writelines(json.dumps(rec, ensure_ascii=False) + "\n" for rec in p.imap(make_clip, jobs, chunksize=8))
 
 
 if __name__ == "__main__":
