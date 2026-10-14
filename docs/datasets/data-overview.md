@@ -2,7 +2,7 @@
 
 按数据集查看语言、支持任务、时长和特性。清洗、热词、加噪、评测入口和训练框架配置归入所属数据集，不另算一套源数据。
 
-当前登记 **155 个数据集条目**；另有 **20 个下载来源声明**和 **1 个训练混合配方**。登记不代表本机文件已齐备。
+当前登记 **156 个数据集条目**；另有 **20 个下载来源声明**和 **1 个训练混合配方**。登记不代表本机文件已齐备。
 
 时长单位为小时。不同版本、子集和标注片段可能重叠，逐项列出，不相加为总量；没有时长的条目仍保留。参考表数字未核实当前文件与划分覆盖；“过滤前”不能当作清洗后时长。已被合并版本取代（`superseded_by`）的旧版本不再列出，仍可按原 ID 和版本解析。
 
@@ -172,6 +172,7 @@
 | [galgame](../../catalog/tts_unified.yaml#L170) | ja | 语音合成 | 10,173.7（已登记；[tts-unified-v0.1](../../catalog/tts_unified.yaml#L170)） | 音频编码字节存放在 Lance 表内；原始划分在 metadata_json.original_split，统一输出全部为 train。ASR 用 tts_lance.iter_asr_samples（tts-asr-rules/v1）读取，会排除原始 dev/test 等 |
 | [gigaspeech2_id](../../catalog/local_lhotse_derived.yaml#L1) | id | 语音识别、热词增强语音识别 | 1,980.1（已登记；[local-20260805](../../catalog/local_lhotse_derived.yaml#L1)）<br>214.9（已登记；[hotwords-v1-20260805](../../catalog/local_lhotse_derived.yaml#L40)） | 含派生版本（与源数据可能重叠） |
 | [koreaspeech](../../catalog/legacy_multilingual.yaml#L1942) | ko | 语音识别 | 3,828.3（已登记；[legacy](../../catalog/legacy_multilingual.yaml#L1942)） | 有含标点版本 |
+| [meeting_room_noise](../../catalog/meeting_room_noise.yaml#L1) | und | noise | 2.5（已登记；[v2-20261014](../../catalog/meeting_room_noise.yaml#L1)） | 真实会议室底噪：从 AliMeeting 与 AISHELL-4 训练集远场阵列录音里截取无人说话的片段，每场会议取 1 个麦克风拼成 1 条，共 209 条、2.48 小时。先按标注空隙（前后扩 0.5 秒、剔除比该场底噪高 10 dB 的突发声）取候选，再每 4 秒用 Qwen3-ASR 转写，有文字就丢弃，因为部分会议有未标注的说话人。噪声已带录制房间的混响 |
 | [mgb2](../../catalog/legacy_multilingual.yaml#L139) | ar | 语音识别 | 1,215.5（已登记；[legacy](../../catalog/legacy_multilingual.yaml#L139)） | 有无标点版本 |
 | [mls_de](../../catalog/legacy_multilingual.yaml#L682) | de | 语音识别 | 1,995.1（已登记；[legacy](../../catalog/legacy_multilingual.yaml#L682)） | 有无标点版本 |
 | [mls_es](../../catalog/legacy_multilingual.yaml#L1072) | es | 语音识别 | 937.7（已登记；[legacy](../../catalog/legacy_multilingual.yaml#L1072)） | 有无标点版本 |
