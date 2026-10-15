@@ -175,4 +175,4 @@ def test_registered_local_views_are_valid_and_resolvable(capsys):
         assert views.get(view_id, version).lineage_status == "exact"
 
     assert main(["validate-views", str(ROOT / "views"), str(ROOT / "catalog")]) == 0
-    assert json.loads(capsys.readouterr().out) == {"views": 28}
+    assert json.loads(capsys.readouterr().out) == {"views": 33}
