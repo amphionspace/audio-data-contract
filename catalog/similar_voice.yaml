@@ -1,4 +1,4 @@
-# 真实中文会议的“音色相近”子集（similar-voice-v1-20261014）：窗口内最相近两人的声纹相似度前 1/3，标注不改。
+# 中文会议与 Emilia2 对话的“音色相近”子集（similar-voice-v1-20261014）：窗口内最相近两人的声纹相似度前 1/3，标注不改。
 - schema_version: dataset-catalog/2.0
   dataset_id: aishell4_meeting_sot
   version: similar-voice-v1-20261014
@@ -687,4 +687,74 @@
     speaker_model: ERes2NetV2
     window_score: max pairwise cosine
     selection: top 1/3 per split
+    labels: unchanged
+- schema_version: dataset-catalog/2.0
+  dataset_id: emilia2_zh_dialogue_diarize
+  version: similar-voice-v1-20261014
+  languages:
+  - zh
+  tasks:
+  - speaker_attributed_asr
+  aliases: []
+  artifacts:
+  - name: train-audio-index
+    kind: jsonl-metadata
+    root_alias: aidc_data
+    relative_path: datasets/emilia2_zh_dialogue_diarize/versions/moss-transcribe-diarize-0.9B/emilia2_zh_dialogue-train-audio-index-m4a.jsonl.gz
+    expected_bytes: 1468041
+    sha256: bbbfc958311b44deee1e116edad547ce8a3fba9ff4088485d13999355f68cdab
+    metadata:
+      description: 源版本 emilia2_zh_dialogue_diarize@moss-transcribe-diarize-0.9B 的音频索引，原样引用
+  - name: selection
+    kind: json-metadata
+    root_alias: aidc_data
+    relative_path: datasets/emilia2_zh_dialogue_diarize/versions/similar-voice-v1-20261014/selection.json
+    expected_bytes: 3930098
+    sha256: 6cdd00cfb0cc955fe5af1e7d55586508e2f6d202ab45985ea8f2e24aa851de92
+    metadata:
+      description: 门槛、剔除与入选数量、入选记录 id
+  - name: train_120s-records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/emilia2_zh_dialogue_diarize/versions/similar-voice-v1-20261014/train_120s.jsonl.gz
+    expected_bytes: 86344113
+    sha256: 78af99a43063a0537fa6a8fac499121530807b65b738dc6de1266837c9032e43
+    metadata:
+      record_count: 55126
+  splits:
+    train_120s:
+      artifacts:
+        records:
+        - train_120s-records
+        audio_index:
+        - train-audio-index
+      group: train
+      statistics:
+        records: 55126
+        duration_hours: 1454.38
+        source_records: 221492
+        removed_speaker_merge: 10766
+        scored: 165377
+        similarity_threshold: 0.4424
+        speaker_count:
+          '2': 20572
+          '3': 16395
+          '4': 8991
+          5+: 9168
+      provenance:
+        training_use: train
+  provenance:
+    preparation_status: prepared
+    owner: mingdong
+    source: emilia2_zh_dialogue_diarize@moss-transcribe-diarize-0.9B
+    description: Emilia2 中文多人对话说话人日志伪标签的“音色相近”子集：先剔除源版本训练排除名单 train_120s-speaker-merge-excluded-records.txt （10,766 个 MOSS
+      把两人并成一人的窗口），其余窗口按最相近两位说话人的 ERes2NetV2 声纹余弦相似度取前 1/3。每人取不与他人重叠的语音（片段 ≥0.3 秒，合计 ≥1.5 秒，最多 10 秒）；少于两个有声纹说话人的窗口（含单人窗口）不入选。标注不改，记录逐行照抄源版本，音频仍指向源版本（解包
+      m4a，读取需要 ffmpeg）。用途：下一轮训练额外加采相近音色的窗口。
+    known_issues:
+    - 源版本的原始短句只覆盖约 47% 的语音，没有短句覆盖处的并人查不到，子集里仍可能有少量并人窗口
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/similar-voice-views-20261014
+  recipe_parameters:
+    speaker_model: ERes2NetV2
+    window_score: max pairwise cosine
+    selection: top 1/3 after speaker-merge exclusions
     labels: unchanged
