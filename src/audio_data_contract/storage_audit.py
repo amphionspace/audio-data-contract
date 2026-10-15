@@ -606,44 +606,224 @@ def write_report(
     return report
 
 
-def summary_markdown(findings: list[dict], usage: dict, report: Path | None) -> str:
-    counts = " · ".join(
-        f"{label} {sum(row['category'] == key for row in findings)}"
-        for key, label in LABELS.items()
-    )
-    lines = [f"**总水位 {usage['used_percent']}%**，剩余 {format_size(usage['avail_bytes'])}"]
-    if findings:
-        lines.append(counts)
-    top = [row for row in findings if row["category"] == "unregistered"][:10]
-    if top:
-        lines.append("**未注册 Top 10**")
-        lines += [f"- {row['path']}  {format_size(row['bytes'])}" for row in top]
-    budget = [row for row in findings if row["category"] == "over_budget"][:5]
-    if budget:
-        lines.append("**超预算**")
-        lines += [
-            f"- {row['path']}  {format_size(row['bytes'])}（{row['detail']}）"
-            for row in budget
+# Categorical slots (blue, orange, aqua) validated all-pairs; gray marks "the rest".
+SERIES = ["#2a78d6", "#eb6834", "#1baf7a"]
+NEUTRAL = "#c3c2b7"
+TAG_COLORS = {
+    "unregistered": "orange", "over_budget": "red", "growth": "violet",
+    "stale": "neutral", "expired": "yellow", "missing": "red",
+}
+
+
+def _short(path: str, root: str) -> str:
+    return os.path.relpath(path, root) if _is_within(path, root) else path
+
+
+def _slices(rows: list[tuple[str, int]], limit: int = 3) -> list[tuple[str, int]]:
+    """Largest ``limit`` slices; the remainder folds into one "其他" slice."""
+    rows = sorted(rows, key=lambda item: -item[1])
+    rest = sum(size for _, size in rows[limit:])
+    return rows[:limit] + ([("其他", rest)] if rest > 0 else [])
+
+
+def _donut(title: str, rows: list[tuple[str, int]], center: str, colors: list[str]) -> dict:
+    """Donut with each slice labelled by name and size beside it, no legend."""
+    return {
+        "tag": "chart",
+        "aspect_ratio": "4:3",
+        "chart_spec": {
+            "type": "pie",
+            "title": {"text": title},
+            "data": {"values": [
+                {"name": f"{name}  {format_size(size)}", "value": size / (1 << 30)}
+                for name, size in rows
+            ]},
+            "categoryField": "name",
+            "valueField": "value",
+            "outerRadius": 0.6,
+            "innerRadius": 0.42,
+            "padAngle": 1,
+            "color": colors,
+            "pie": {"style": {"cornerRadius": 4}},
+            "label": {
+                "visible": True,
+                "position": "outside",
+                "formatter": "{name}",
+                "line": {"visible": True},
+                "style": {"fill": "#52514e", "fontSize": 11},
+            },
+            "legends": {"visible": False},
+            "indicator": {"visible": True, "title": {"style": {"text": center}}},
+        },
+    }
+
+
+def _tile(label: str, value: str, note: str = "") -> dict:
+    elements = [
+        {"tag": "markdown", "content": f"<font color='grey'>{label}</font>",
+         "text_size": "notation"},
+        {"tag": "markdown", "content": f"**{value}**", "text_size": "heading"},
+    ]
+    if note:
+        elements.append({"tag": "markdown", "text_size": "notation",
+                         "content": f"<font color='grey'>{note}</font>"})
+    return {
+        "tag": "column",
+        "width": "weighted",
+        "weight": 1,
+        "background_style": "grey-100",
+        "padding": "8px",
+        "elements": elements,
+    }
+
+
+def _columns(columns: list[dict]) -> dict:
+    # "stretch" stacks the columns on narrow (mobile) screens.
+    return {"tag": "column_set", "flex_mode": "stretch",
+            "horizontal_spacing": "8px", "columns": columns}
+
+
+def _chart_column(chart: dict) -> dict:
+    return {"tag": "column", "width": "weighted", "weight": 1, "elements": [chart]}
+
+
+def summary_card(
+    findings: list[dict],
+    usage: dict,
+    overview: list[tuple[str, dict]],
+    report: Path | None,
+    zones: Zones,
+) -> dict:
+    """Feishu card 2.0: conclusion, headline tiles, charts, and the findings table."""
+    root = zones.scan_root
+    unregistered = [row for row in findings if row["category"] == "unregistered"]
+    others = [row for row in findings if row["category"] != "unregistered"]
+    stray = sum(row["bytes"] for row in unregistered)
+    full = usage["used_percent"] >= zones.watermark_percent
+    owners: dict[str, int] = {}
+    for row in unregistered:
+        owner = row["owner"] or "未知"
+        owners[owner] = owners.get(owner, 0) + row["bytes"]
+    owner_slices = _slices(list(owners.items()))
+
+    level = "已超过" if full else "低于"
+    lines = [
+        f"磁盘已用 **{usage['used_percent']}%**，{level} {zones.watermark_percent:g}% 告警线，"
+        f"剩余 {format_size(usage['avail_bytes'])}。"
+    ]
+    if unregistered:
+        name, size = owner_slices[0]
+        lines.append(
+            f"有 **{len(unregistered)} 项未注册数据**，共 {format_size(stray)}，"
+            f"其中 {name} 名下占 {100 * size / stray:.0f}%。"
+        )
+    if others:
+        lines.append(f"另有 {len(others)} 项其他异常，见下表。")
+    if not findings:
+        lines.append("未发现异常。")
+    elements: list[dict] = [
+        {"tag": "markdown", "content": "**结论**：" + "".join(lines)},
+        _columns([
+            _tile("磁盘水位",
+                  f"<font color='{'red' if full else 'green'}'>{usage['used_percent']}%</font>",
+                  f"告警线 {zones.watermark_percent:g}%"),
+            _tile("剩余空间", format_size(usage["avail_bytes"])),
+            _tile("未注册数据", format_size(stray), f"{len(unregistered)} 项"),
+            _tile("其他异常", f"{len(others)} 项"),
+        ]),
+        {"tag": "hr"},
+    ]
+
+    top_level = [
+        (os.path.basename(path), node["bytes"]) for path, node in overview
+        if os.path.dirname(path) == root
+    ]
+    used = sorted(top_level, key=lambda item: -item[1])[:3]
+    rest = max(usage["used_bytes"] - sum(size for _, size in used), 0)
+    disk = used + [("其他", rest), ("剩余", usage["avail_bytes"])]
+    donuts = [_donut(
+        "磁盘空间构成", disk, f"{usage['used_percent']}%",
+        SERIES[: len(used)] + ["#8a8984", NEUTRAL],
+    )]
+    if owner_slices:
+        colors = SERIES[: len(owner_slices)]
+        if owner_slices[-1][0] == "其他":
+            colors = SERIES[: len(owner_slices) - 1] + [NEUTRAL]
+        donuts.append(_donut("未注册数据属主", owner_slices, format_size(stray), colors))
+    for entry in zones.entries:
+        if entry.contents != "per-child" or entry.path not in {p for p, _ in overview}:
+            continue
+        children = [
+            (os.path.basename(path), node["bytes"]) for path, node in overview
+            if os.path.dirname(path) == entry.path
         ]
+        total = sum(size for _, size in children)
+        users = _slices(children)
+        colors = SERIES[: len(users)]
+        if users and users[-1][0] == "其他":
+            users[-1] = ("其他用户", users[-1][1])
+            colors = SERIES[: len(users) - 1] + ["#8a8984"]
+        title, center = f"{_short(entry.path, root)} 个人目录", format_size(total)
+        if entry.budget is not None:
+            users.append(("剩余额度", max(entry.budget - total, 0)))
+            colors.append(NEUTRAL)
+            title += f"（上限 {format_size(entry.budget)}）"
+            center = f"{100 * total / entry.budget:.0f}%"
+        donuts.append(_donut(title, users, center, colors))
+    for start in range(0, len(donuts), 2):
+        elements.append(_columns([_chart_column(c) for c in donuts[start:start + 2]]))
+
+    top = unregistered[:10] + others[:10]
+    if top:
+        elements += [{"tag": "hr"}, {
+            "tag": "markdown", "content": "**需要处理的数据**（按大小排序，最多各 10 项）",
+        }, {
+            "tag": "table",
+            "page_size": 10,
+            "row_height": "low",
+            "header_style": {"bold": True, "background_style": "grey"},
+            "columns": [
+                {"name": "category", "display_name": "类型", "data_type": "options",
+                 "width": "auto"},
+                {"name": "path", "display_name": "路径", "data_type": "text"},
+                {"name": "size", "display_name": "大小", "data_type": "text",
+                 "width": "auto", "horizontal_align": "right"},
+                {"name": "owner", "display_name": "负责人", "data_type": "text",
+                 "width": "auto"},
+            ],
+            "rows": [
+                {
+                    "category": [{"text": LABELS[row["category"]],
+                                  "color": TAG_COLORS[row["category"]]}],
+                    "path": _short(row["path"], root),
+                    "size": format_size(row["bytes"]),
+                    "owner": row["owner"] or "-",
+                }
+                for row in top
+            ],
+        }]
+
     if report is not None:
-        lines.append(f"完整报告：{report}")
-    return "\n".join(lines)
+        elements.append({"tag": "markdown", "text_size": "notation",
+                         "content": f"<font color='grey'>完整报告：{report}</font>"})
+    return _card("存储巡检", elements, "orange" if full or findings else "green")
 
 
-def notify_feishu(title: str, markdown: str, environ=None) -> None:
+def _card(title: str, elements: list[dict], template: str = "blue") -> dict:
+    return {
+        "schema": "2.0",
+        "header": {"title": {"tag": "plain_text", "content": title},
+                   "template": template},
+        "body": {"elements": elements},
+    }
+
+
+def notify_feishu(card: dict, environ=None) -> None:
     environment = os.environ if environ is None else environ
     webhook = environment.get(WEBHOOK_ENV)
     if not webhook:
         raise ContractError(f"set {WEBHOOK_ENV} to send Feishu notifications")
-    payload: dict = {
-        "msg_type": "interactive",
-        "card": {
-            "header": {"title": {"tag": "plain_text", "content": title}},
-            "elements": [
-                {"tag": "div", "text": {"tag": "lark_md", "content": markdown}}
-            ],
-        },
-    }
+    payload: dict = {"msg_type": "interactive", "card": card}
     secret = environment.get(SECRET_ENV)
     if secret:
         stamp = str(int(time.time()))
@@ -672,12 +852,12 @@ def run(args) -> int:
         usage = watermark(zones.scan_root)
         alert = usage["used_percent"] >= zones.watermark_percent
         if alert and args.notify:
-            notify_feishu(
-                "存储水位告警",
-                f"`{zones.scan_root}` 已用 **{usage['used_percent']}%**"
+            notify_feishu(_card("存储水位告警", [{
+                "tag": "markdown",
+                "content": f"`{zones.scan_root}` 已用 **{usage['used_percent']}%**"
                 f"（阈值 {zones.watermark_percent}%），"
                 f"剩余 {format_size(usage['avail_bytes'])}",
-            )
+            }], "red"))
         print(json.dumps({**usage, "alert": alert}, sort_keys=True))
         return 0
     if args.action == "scan":
@@ -706,11 +886,10 @@ def run(args) -> int:
         previous = read_snapshot(earlier[-1])[1] if earlier else None
         findings = find_issues(zones, nodes, previous)
         usage = watermark(zones.scan_root)
-        report = write_report(
-            current, meta, findings, usage, usage_rows(zones, nodes)
-        )
+        overview = usage_rows(zones, nodes)
+        report = write_report(current, meta, findings, usage, overview)
         if args.notify:
-            notify_feishu("存储巡检", summary_markdown(findings, usage, report))
+            notify_feishu(summary_card(findings, usage, overview, report, zones))
         counts = {key: sum(r["category"] == key for r in findings) for key in LABELS}
         print(json.dumps({"report": str(report), **counts}, sort_keys=True))
         return 0
