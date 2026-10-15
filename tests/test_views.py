@@ -139,8 +139,12 @@ def test_registered_local_views_are_valid_and_resolvable(capsys):
     datasets = load_catalog(ROOT / "catalog")
     views = load_view_catalog(ROOT / "views", datasets)
 
-    assert len(views) == 28
+    assert len(views) == 33
     assert all(view.materialization == "full" for view in views)
+    similar = resolve_view(
+        views, datasets, "aishell4_meeting_sot/similar-voice", "similar-voice-v1-20261014"
+    )
+    assert similar.key == "aishell4_meeting_sot@similar-voice-v1-20261014"
     assert (
         resolve_view(views, datasets, "wenetspeech/clean", "v1-20260805").dataset_id
         == "wenetspeech_clean"
