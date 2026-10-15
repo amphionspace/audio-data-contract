@@ -30,6 +30,15 @@
       sha256: bd3dd519d45e39d74b277bccf0b58432c6d740294e420922112a07da364a9243
       metadata:
         record_count: 221492
+    - name: train_120s-speaker-merge-excluded-records
+      kind: metadata
+      root_alias: aidc_data
+      relative_path: datasets/emilia2_zh_dialogue_diarize/versions/moss-transcribe-diarize-0.9B/train_120s-speaker-merge-excluded-records.txt
+      expected_bytes: 691963
+      sha256: 2b403cceecd9cd94717f6b52ef0d29b818489f9f386e6690869576914115a7b1
+      metadata:
+        record_count: 10766
+        description: 训练要排除的 train_120s 记录 id（每行一个）：MOSS 把两个 Emilia2 原始说话人标成一人的窗口
   splits:
     train_120s:
       artifacts:
@@ -70,6 +79,12 @@
     source_dataset: emilia2
     annotation: moss-transcribe-diarize-0.9b+qwen3-asr-window-check(cer<=15)+emilia2-utterance-speaker-check(split<=0.2)
     window_rule: windows kept whole by the window text and speaker checks
+    training_exclusions: >-
+      exclude_records train_120s-speaker-merge-excluded-records.txt in this version directory
+      (2026-10-15)：10,766 条 / 295.7 h，MOSS 的一个说话人覆盖了两个及以上 Emilia2 原始说话人
+      （只用整条落在一个 MOSS 说话人上的原始短句判断）。听审 9 题中 7 题确为两人被并成一人，
+      声纹（ERes2NetV2）分不开，故全部排除。排除后 210,726 条 / 5,508.2 h；各说话人数档丢 4.3–7.8%。
+      原始短句只覆盖约 47% 的语音，没有短句覆盖处的并人查不到。
     audit: datasets/emilia2_zh_dialogue_diarize/versions/moss-transcribe-diarize-0.9B/audit.json
     audio_source: emilia2@extracted-enzh-20261012
     known_issues:

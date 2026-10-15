@@ -415,7 +415,8 @@ def find_issues(
 ) -> list[dict]:
     """Findings sorted by category then size; every row has the same keys."""
     now = time.time() if now is None else now
-    today = date.today() if today is None else today
+    # Local calendar date, matching how `expires` is written in the zone file.
+    today = datetime.now().astimezone().date() if today is None else today
     findings: list[dict] = []
 
     def finding(category, path, size, entry, detail, owner=None):
@@ -554,10 +555,14 @@ def render_markdown(
         "# 存储巡检报告",
         "",
         f"- 扫描时间：{meta.get('started_at')}（耗时 {meta.get('seconds')} 秒）",
-        f"- 扫描范围：`{meta.get('scan_root')}`，共 {meta.get('files')} 个文件、"
-        f"{format_size(meta.get('bytes', 0))}，读取失败 {meta.get('errors')} 处",
-        f"- 总水位：{usage['used_percent']}%（已用 {format_size(usage['used_bytes'])}，"
-        f"剩余 {format_size(usage['avail_bytes'])}）",
+        (
+            f"- 扫描范围：`{meta.get('scan_root')}`，共 {meta.get('files')} 个文件、"
+            f"{format_size(meta.get('bytes', 0))}，读取失败 {meta.get('errors')} 处"
+        ),
+        (
+            f"- 总水位：{usage['used_percent']}%（已用 {format_size(usage['used_bytes'])}，"
+            f"剩余 {format_size(usage['avail_bytes'])}）"
+        ),
         "",
     ]
     if overview:
