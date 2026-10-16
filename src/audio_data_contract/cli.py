@@ -64,8 +64,8 @@ def _parser() -> argparse.ArgumentParser:
 
     check = commands.add_parser("check-registration")
     check.add_argument("catalog")
-    check.add_argument("dataset_id", nargs="?")
-    check.add_argument("version", nargs="?")
+    check.add_argument("dataset_id")
+    check.add_argument("version")
     check.add_argument("--roots")
     check.add_argument("--sample", type=int, default=20)
     check.add_argument("--seed", type=int, default=0)
@@ -185,24 +185,16 @@ def main(argv: list[str] | None = None) -> int:
     if args.command == "check-registration":
         catalog = load_catalog(args.catalog)
         roots = load_roots(args.roots)
-        if args.dataset_id is None:
-            specs = list(catalog)
-        else:
-            specs = [catalog.get(args.dataset_id, args.version)]
-        failed = 0
-        for spec in specs:
-            problems = check_registration(
-                spec, roots, sample=args.sample, seed=args.seed
+        spec = catalog.get(args.dataset_id, args.version)
+        problems = check_registration(spec, roots, sample=args.sample, seed=args.seed)
+        print(
+            json.dumps(
+                {"dataset": spec.key, "ok": not problems, "problems": problems},
+                ensure_ascii=False,
+                sort_keys=True,
             )
-            failed += bool(problems)
-            print(
-                json.dumps(
-                    {"dataset": spec.key, "ok": not problems, "problems": problems},
-                    ensure_ascii=False,
-                    sort_keys=True,
-                )
-            )
-        return 1 if failed else 0
+        )
+        return 1 if problems else 0
     if args.command == "validate-views":
         datasets = load_catalog(args.catalog)
         views = load_view_catalog(args.views, datasets)
