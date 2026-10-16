@@ -94,6 +94,8 @@
 
 这些展示信息使用现有 `provenance` 扩展对象，不新增必填字段。协议不包含任何训练框架专用字段；选用哪个声道、是否建模标点等读取策略由各训练项目自己决定。
 
+登记新版本时，在能访问数据的机器上运行 `audio-data-contract check-registration catalog <dataset_id> <version> --roots roots.json`。它检查：`audio-index` 中出现的每个 `root_alias` 都已在 `roots.json` 配置；每个索引按固定种子抽样 `--sample` 条（默认 20），确认文件存在且能读到头部；声明了 `sha256` 或 `metadata.tree_sha256` 的产物校验值一致。有问题时逐条列出并以非零状态退出；省略数据集和版本时检查全部登记版本。
+
 修改后运行 `audio-data-contract generate-overview`，同步 `docs/datasets/data-overview.md` 及同目录 `assets/` 下的两张 SVG 图。`--check` 同时校验 Markdown 和图表，缺失或过期都会失败。
 
 Top 20 每个数据集只取最大的单项完整版本登记、参考或估算时长，不累加版本，不纳入部分划分和过滤前时长；覆盖图按“至少一个版本有完整登记 / 仅参考、估算或部分时长 / 未登记”互斥分类。两图均排除下载来源声明和训练混合配方。

@@ -5,7 +5,12 @@ from __future__ import annotations
 import argparse
 import json
 
-from .catalog import load_catalog, resolve_artifact, verify_artifact_file
+from .catalog import (
+    check_registration,
+    load_catalog,
+    resolve_artifact,
+    verify_artifact_file,
+)
 from .overview import update_data_overview
 from .records import load_records
 from .roots import load_roots
@@ -56,6 +61,14 @@ def _parser() -> argparse.ArgumentParser:
     verify.add_argument("version")
     verify.add_argument("artifact")
     verify.add_argument("--roots")
+
+    check = commands.add_parser("check-registration")
+    check.add_argument("catalog")
+    check.add_argument("dataset_id", nargs="?")
+    check.add_argument("version", nargs="?")
+    check.add_argument("--roots")
+    check.add_argument("--sample", type=int, default=20)
+    check.add_argument("--seed", type=int, default=0)
 
     validate_views = commands.add_parser("validate-views")
     validate_views.add_argument("views")
@@ -169,6 +182,27 @@ def main(argv: list[str] | None = None) -> int:
         )
         print(json.dumps(result, sort_keys=True))
         return 0
+    if args.command == "check-registration":
+        catalog = load_catalog(args.catalog)
+        roots = load_roots(args.roots)
+        if args.dataset_id is None:
+            specs = list(catalog)
+        else:
+            specs = [catalog.get(args.dataset_id, args.version)]
+        failed = 0
+        for spec in specs:
+            problems = check_registration(
+                spec, roots, sample=args.sample, seed=args.seed
+            )
+            failed += bool(problems)
+            print(
+                json.dumps(
+                    {"dataset": spec.key, "ok": not problems, "problems": problems},
+                    ensure_ascii=False,
+                    sort_keys=True,
+                )
+            )
+        return 1 if failed else 0
     if args.command == "validate-views":
         datasets = load_catalog(args.catalog)
         views = load_view_catalog(args.views, datasets)
