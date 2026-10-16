@@ -118,7 +118,14 @@ def test_check_registration_cli(tmp_path, capsys):
     roots_path = tmp_path / "roots.json"
     roots_path.write_text(json.dumps({"managed": str(tmp_path)}), encoding="utf-8")
 
-    argv = ["check-registration", str(catalog_path), "--roots", str(roots_path)]
+    argv = [
+        "check-registration",
+        str(catalog_path),
+        "demo",
+        "1",
+        "--roots",
+        str(roots_path),
+    ]
     assert main(argv) == 1
     problems = json.loads(capsys.readouterr().out)["problems"]
     assert len(problems) == 5
@@ -142,5 +149,5 @@ def test_check_registration_cli(tmp_path, capsys):
         encoding="utf-8",
     )
     (tmp_path / "d.wav").write_bytes(b"x")
-    assert main(argv[:2] + ["demo", "1"] + argv[2:]) == 0
+    assert main(argv) == 0
     assert json.loads(capsys.readouterr().out)["ok"] is True
