@@ -8,7 +8,7 @@ import os
 import pytest
 
 from audio_data_contract import DatasetCatalog, DatasetSpec
-from audio_data_contract.catalog import check_registration
+from audio_data_contract.catalog import check_registration, load_catalog
 from audio_data_contract.errors import ContractError
 from audio_data_contract.record_index import (
     build_index,
@@ -290,3 +290,64 @@ def test_lhotse_recording_without_channel_ids(tmp_path):
     catalog, _ = register(spec, tmp_path, roots)
     index = open_index(catalog, "demo", "l1", "record_index", roots)
     assert to_table(index, columns=["channels"]).column(0).to_pylist() == [1] * 4
+
+
+def cli_setup(tmp_path):
+    from audio_data_contract.declarations import write_declarations
+
+    catalog = tmp_path / "catalog"
+    catalog.mkdir()
+    path = catalog / "demo.yaml"
+    write_declarations(path, [records_spec(tmp_path)])
+    roots = tmp_path / "roots.json"
+    roots.write_text(json.dumps({"data": str(tmp_path)}))
+    return catalog, path, roots
+
+
+def run_cli(capsys, *args):
+    from audio_data_contract.cli import main
+
+    code = main(list(args))
+    return code, json.loads(capsys.readouterr().out)
+
+
+def test_cli_register_writes_catalog_and_check_warns_until_then(tmp_path, capsys):
+    catalog, path, roots = cli_setup(tmp_path)
+    check = ("check-registration", str(catalog), "demo", "v1", "--roots", str(roots))
+    code, result = run_cli(capsys, *check)
+    assert code == 0 and result["warnings"] and not result["problems"]
+    code, result = run_cli(capsys, *check, "--require-record-index")
+    assert code == 1 and "no lance-record-index" in result["problems"][0]
+
+    before = path.read_text()
+    code, ref = run_cli(
+        capsys, "build-record-index", str(catalog), "demo", "v1",
+        str(tmp_path / "demo/v1/record_index"), "--roots", str(roots), "--register",
+    )
+    assert code == 0 and ref["registered_in"] == str(path)
+    after = path.read_text()
+    # Only additions: every original line survives in order.
+    original = iter(after.split("\n"))
+    assert all(line in original for line in before.split("\n"))
+
+    code, result = run_cli(capsys, *check, "--require-record-index")
+    assert code == 0 and result == {**result, "problems": [], "warnings": []}
+    loaded = load_catalog(catalog)
+    index = open_index(loaded, "demo", "v1", "record_index", {"data": tmp_path})
+    assert index.manifest["record_count"] == 10
+
+
+def test_register_refuses_a_file_it_would_reformat(tmp_path, capsys):
+    catalog, path, roots = cli_setup(tmp_path)
+    # A hand-wrapped long value cannot be reproduced by a YAML rewrite.
+    text = path.read_text().replace(
+        "    dataset_id: demo\n",
+        "    dataset_id: demo\n    provenance:\n      note: a long note\n        wrapped by hand\n",
+    )
+    path.write_text(text)
+    with pytest.raises(ContractError, match="reformat"):
+        run_cli(
+            capsys, "build-record-index", str(catalog), "demo", "v1",
+            str(tmp_path / "demo/v1/record_index"), "--roots", str(roots), "--register",
+        )
+    assert path.read_text() == text

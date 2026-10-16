@@ -70,6 +70,11 @@ def _parser() -> argparse.ArgumentParser:
     check.add_argument("--roots")
     check.add_argument("--sample", type=int, default=20)
     check.add_argument("--seed", type=int, default=0)
+    check.add_argument(
+        "--require-record-index",
+        action="store_true",
+        help="fail, instead of warn, when indexable splits have no record index",
+    )
 
     index = commands.add_parser(
         "build-record-index", help="build a Lance record index; print its catalog ref"
@@ -80,6 +85,11 @@ def _parser() -> argparse.ArgumentParser:
     index.add_argument("destination")
     index.add_argument("--name", default="record_index")
     index.add_argument("--roots")
+    index.add_argument(
+        "--register",
+        action="store_true",
+        help="write the artifact and records_lance roles into the catalog YAML",
+    )
 
     validate_views = commands.add_parser("validate-views")
     validate_views.add_argument("views")
@@ -197,25 +207,51 @@ def main(argv: list[str] | None = None) -> int:
         catalog = load_catalog(args.catalog)
         roots = load_roots(args.roots)
         spec = catalog.get(args.dataset_id, args.version)
+        from .record_index import index_gaps
+
         problems = check_registration(spec, roots, sample=args.sample, seed=args.seed)
+        warnings = index_gaps(spec)
+        if args.require_record_index:
+            problems, warnings = problems + warnings, []
         print(
             json.dumps(
-                {"dataset": spec.key, "ok": not problems, "problems": problems},
+                {
+                    "dataset": spec.key,
+                    "ok": not problems,
+                    "problems": problems,
+                    "warnings": warnings,
+                },
                 ensure_ascii=False,
                 sort_keys=True,
             )
         )
         return 1 if problems else 0
     if args.command == "build-record-index":
-        from .record_index import MANIFEST_NAME, build_index, catalog_ref
+        from .record_index import (
+            MANIFEST_NAME,
+            build_index,
+            catalog_ref,
+            register_index,
+        )
 
         catalog = load_catalog(args.catalog)
         roots = load_roots(args.roots)
-        build_index(catalog, args.dataset_id, args.version, args.destination, roots)
-        manifest = Path(args.destination) / MANIFEST_NAME
+        manifest = build_index(
+            catalog, args.dataset_id, args.version, args.destination, roots
+        )
         # Register under the alias the version's own artifacts use.
         alias = catalog.get(args.dataset_id, args.version).artifacts[0].root_alias
-        ref = catalog_ref(manifest, name=args.name, roots=roots, root_alias=alias)
+        ref = catalog_ref(
+            Path(args.destination) / MANIFEST_NAME,
+            name=args.name,
+            roots=roots,
+            root_alias=alias,
+        )
+        if args.register:
+            path = register_index(
+                args.catalog, args.dataset_id, args.version, ref, manifest["split_counts"]
+            )
+            ref = {**ref, "registered_in": str(path)}
         print(json.dumps(ref, sort_keys=True))
         return 0
     if args.command == "validate-views":

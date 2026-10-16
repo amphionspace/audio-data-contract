@@ -307,6 +307,13 @@ def _supervision_row(splits, task, item, locations):
 
 def _plan(spec):
     """Per split: (row kind, source artifact names, location artifact names)."""
+    plan = _buildable(spec)
+    if not plan:
+        raise ContractError(f"{spec.key}: no split has records+audio_index or Lhotse roles")
+    return plan
+
+
+def _buildable(spec):
     plan = {}
     for name, split in spec.splits.items():
         roles = split.artifacts
@@ -314,8 +321,6 @@ def _plan(spec):
             plan[name] = ("records", roles["records"], roles["audio_index"])
         elif "supervisions" in roles and "recordings" in roles:
             plan[name] = ("supervisions", roles["supervisions"], roles["recordings"])
-    if not plan:
-        raise ContractError(f"{spec.key}: no split has records+audio_index or Lhotse roles")
     return plan
 
 
@@ -478,6 +483,48 @@ def catalog_ref(manifest_path, *, name, roots, root_alias=None):
             "schema_hash": manifest["schema_hash"],
         },
     }
+
+
+def register_index(catalog_path, dataset_id, version, ref, splits):
+    """Add the index artifact and each indexed split's records_lance role to the
+    YAML file that declares dataset_id@version; nothing else in it changes.
+    The whole catalog must still load afterwards, or the file is restored."""
+    from .catalog import load_catalog
+    from .declarations import declaration_files, edit_declaration
+
+    def edit(row):
+        if any(artifact["name"] == ref["name"] for artifact in row["artifacts"]):
+            raise ContractError(f"{dataset_id}@{version} already has {ref['name']!r}")
+        for split in splits:
+            roles = row["splits"][split]["artifacts"]
+            if ROLE in roles:
+                raise ContractError(f"{dataset_id}@{version}:{split} already has {ROLE}")
+        row["artifacts"].append(dict(ref))
+        for split in splits:
+            row["splits"][split]["artifacts"][ROLE] = [ref["name"]]
+
+    for path in declaration_files(catalog_path):
+        original = path.read_text(encoding="utf-8")
+        if edit_declaration(path, dataset_id, version, edit):
+            try:
+                load_catalog(catalog_path)
+            except ContractError:
+                path.write_text(original, encoding="utf-8")
+                raise
+            return path
+    raise ContractError(f"{dataset_id}@{version} is not declared in {catalog_path}")
+
+
+def index_gaps(spec):
+    """Splits that could be indexed but have no records_lance role."""
+    missing = [
+        split
+        for split in _buildable(spec)
+        if not spec.splits[split].artifacts.get(ROLE)
+    ]
+    if not missing:
+        return []
+    return [f"{spec.key}: no {ARTIFACT_KIND} for splits {', '.join(missing)}"]
 
 
 @dataclass(frozen=True)
