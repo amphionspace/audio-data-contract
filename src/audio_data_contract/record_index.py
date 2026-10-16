@@ -53,6 +53,8 @@ GENDERS = {
     "female_feminine": "female",
     "f": "female",
     "non-binary": "other",
+    "transgender": "other",
+    "intersex": "other",
     "other": "other",
     "": None,
     "do_not_wish_to_say": None,
