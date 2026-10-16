@@ -83,3 +83,88 @@
     - kespeech:legacy-20260804
     - librispeech:legacy-20260804
     - common_voice_en:legacy-20260804
+- schema_version: dataset-catalog/2.0
+  dataset_id: ts_scene_pool
+  version: hard-20261016
+  languages:
+  - zh
+  - en
+  tasks:
+  - ts_asr
+  aliases: []
+  artifacts:
+  - name: zh-records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/hard-20261016/records_zh.jsonl.gz
+    sha256: f9e8282f83189229a8e942916fe8ad280584d08129ffa3e0c832039fc68c85d5
+    metadata:
+      record_count: 40000
+  - name: zh-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/hard-20261016/audio_index_zh.jsonl.gz
+    sha256: cdd30e9e29cfae30935b14411fe180cb2d638011d7689798e861ffe6d2021a3e
+    metadata:
+      record_count: 299881
+  - name: en-records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/hard-20261016/records_en.jsonl.gz
+    sha256: 20b8137ace73b4bd538a41d3450c2fbf526112fefad37b42cd959da604ffc8a4
+    metadata:
+      record_count: 25000
+  - name: en-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/hard-20261016/audio_index_en.jsonl.gz
+    sha256: c81511a9cd852419c4b66d7ab0d1c7bce472ac3ccef8896ddcf90b67323009c3
+    metadata:
+      record_count: 89560
+  - name: record_index
+    kind: lance-record-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/hard-20261016/record_index/index.json
+    expected_bytes: 1056
+    sha256: cc72ff3b15ceceee68d217374a4491e248fb0516e814cb476b9b41bd7cf1c19d
+    metadata:
+      snapshot_version: 13
+      rows: 65000
+      schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
+  splits:
+    zh:
+      artifacts:
+        records:
+        - zh-records
+        audio_index:
+        - zh-audio-index
+        records_lance:
+        - record_index
+      task: ts_asr
+      statistics:
+        records: 40000
+        duration_hours: 44.77
+        duration_basis: clip duration (segment span, or the whole file)
+    en:
+      artifacts:
+        records:
+        - en-records
+        audio_index:
+        - en-audio-index
+        records_lance:
+        - record_index
+      task: ts_asr
+      statistics:
+        records: 25000
+        duration_hours: 36.95
+        duration_basis: clip duration (segment span, or the whole file)
+  provenance:
+    status: complete
+    synthetic: none
+    snapshot_date: '2026-10-16'
+    description: 相近声音多句场景：目标缺席且相近声音在场（absent，转写为空）或目标与相近声音同时说话（present）。相近说话人取 ERes2NetV2 说话人向量余弦最近邻前 10 名之一（按排名，不设阈值），邻居表在 source/speaker-neighbors-20261016。
+    sources:
+    - aishell2:legacy-20260804
+    - kespeech:legacy-20260804
+    - librispeech:legacy-20260804
+    - common_voice_en:legacy-20260804

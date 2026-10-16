@@ -10,7 +10,15 @@ Speakers come from corpora with real speaker labels, read through the Lance reco
 and from each other. The record's slots are the enrollment (another utterance of the target)
 and the first target utterance; the whole scene is in metadata.scene.
 
+With ``--neighbors neighbors.json`` (from speaker_neighbors.py) it builds the hard version
+instead: one of the other speakers is a close neighbour of the target (a random one of the
+``--hard-rank`` nearest by ERes2NetV2), in two kinds
+  absent   the target is not in the scene: enrollment A, the scene holds a similar voice B
+           and others, the transcript is empty (the benchmark's abs-hard)
+  present  the target speaks and a similar voice B is among the others
+
     python build_ts_scene_pool.py --output-dir DIR [--zh 150000 --en 100000]
+    python build_ts_scene_pool.py --output-dir DIR --version hard-20261016 --neighbors FILE --zh 40000 --en 25000
 """
 
 import argparse
@@ -26,7 +34,8 @@ import yaml
 
 DATA = Path("/workspace/data")
 REGISTRY = DATA / "registry/catalog/datasets.yaml"
-DATASET_ID, VERSION = "ts_scene_pool", "v2-20261016"
+DATASET_ID = "ts_scene_pool"
+VERSION = "v2-20261016"
 SEED = 20261016
 # Corpora per language: (dataset, version, split, weight as other speaker, can be the target)
 CORPORA = {
@@ -82,10 +91,12 @@ class Corpus:
 
 
 class Builder:
-    def __init__(self, language, rng):
+    def __init__(self, language, rng, neighbors=None, hard_rank=10):
         self.language, self.rng = language, rng
         self.corpora = [Corpus(*c, language) for c in CORPORA[language]]
         self.targets = [c for c in self.corpora if c.target]
+        self.neighbors, self.hard_rank = neighbors, hard_rank
+        self.where = {name: (c, i) for c in self.corpora for i, name in enumerate(c.speakers)}
         self.audio, self.pending = {}, {}
 
     def ref(self, corpus, i):
@@ -112,25 +123,29 @@ class Builder:
                 return corpus, speaker, picks
         raise RuntimeError("no other speaker found")
 
-    def scene(self, mode):
+    def scene(self, mode, hard=None):
         """A scene no longer than SCENE_SECONDS[mode]; draws again when one comes out too long."""
         while True:
             self.pending = {}
-            scene, joiner, seconds = self.draw(mode)
+            scene, joiner, seconds = self.draw(mode, hard)
             if seconds <= SCENE_SECONDS[mode]:
                 self.audio.update(self.pending)
                 return scene, joiner
 
-    def draw(self, mode):
+    def draw(self, mode, hard=None):
         rng = self.rng
         corpus = rng.choice(self.targets)
         short_low, short_high = SHORT_TARGET_SECONDS[self.language]
         while True:
             speaker = rng.randrange(len(corpus.speakers))
-            wanted = 1 if mode != "alternate" else (2 if rng.random() < 0.4 else 1)
-            targets = corpus.pick(rng, speaker, wanted, *((short_low, short_high) if mode == "short" else (None, None)))
-            enrollment = targets and corpus.pick(rng, speaker, 1, *ENROLLMENT_SECONDS, exclude=set(targets))
-            if targets and enrollment:
+            if hard:
+                near = [n for n, _ in self.neighbors.get(corpus.speakers[speaker], [])[: self.hard_rank] if n in self.where]
+                if not near:
+                    continue
+            wanted = 0 if hard == "absent" else 1 if mode != "alternate" else (2 if rng.random() < 0.4 else 1)
+            targets = corpus.pick(rng, speaker, wanted, *((short_low, short_high) if mode == "short" else (None, None))) if wanted else []
+            enrollment = corpus.pick(rng, speaker, 1, *ENROLLMENT_SECONDS, exclude=set(targets)) if targets is not None else None
+            if targets is not None and enrollment:
                 break
         used = {corpus.speakers[speaker]}
         if mode == "alternate":
@@ -140,7 +155,18 @@ class Builder:
         else:
             k, per_speaker = rng.choices((1, 2, 3, 4, 5), (0.25, 0.2, 0.2, 0.2, 0.15))[0], lambda: rng.randint(1, 2)
         others, lengths = [], []
-        for _ in range(k):
+        if hard:
+            # The similar voice is the first of the others; its cosine is kept for analysis.
+            name = rng.choice(near)
+            close, who = self.where[name]
+            count = per_speaker()
+            picks = close.pick(rng, who, count) if close.usable(who, count) else close.pick(rng, who, 1)
+            if not picks:
+                raise RuntimeError("similar speaker has no usable utterance")
+            used.add(name)
+            others.append({"speaker": name, "utts": [self.ref(close, i) for i in picks]})
+            lengths.append(sum(close.duration[i] for i in picks) + MEAN_GAP_SECONDS[mode] * (len(picks) - 1))
+        for _ in range(k - len(others)):
             count = per_speaker()
             while True:
                 try:
@@ -150,13 +176,15 @@ class Builder:
                     count = max(1, count - 1)
             others.append({"speaker": other.speakers[who], "utts": [self.ref(other, i) for i in picks]})
             lengths.append(sum(other.duration[i] for i in picks) + MEAN_GAP_SECONDS[mode] * (len(picks) - 1))
-        target_seconds = sum(corpus.duration[i] for i in targets) + MEAN_GAP_SECONDS[mode] * (len(targets) - 1)
+        target_seconds = sum(corpus.duration[i] for i in targets) + MEAN_GAP_SECONDS[mode] * max(len(targets) - 1, 0)
         # alternate puts everything in a row; burst and short last as long as the longest speaker
         seconds = sum(lengths) + target_seconds + MEAN_GAP_SECONDS[mode] * (len(lengths) + 1) if mode == "alternate" \
             else max([target_seconds, *lengths])
         joiner = "" if self.language == "zh" else " "
+        scene = {"hard": {"kind": hard, "neighbor": name,
+                          "cosine": dict(self.neighbors[corpus.speakers[speaker]])[name]}} if hard else {}
         return {
-            "mode": mode, "target_speaker": corpus.speakers[speaker],
+            **scene, "mode": mode, "target_speaker": corpus.speakers[speaker],
             "targets": [{**self.ref(corpus, i), "text": corpus.rows["text"][i].strip()} for i in targets],
             "enrollment": self.ref(corpus, enrollment[0]), "interferers": others}, joiner, seconds
 
@@ -164,35 +192,54 @@ class Builder:
 def record(language, number, scene, joiner):
     base = {"dataset_id": DATASET_ID, "version": VERSION, "split": language}
     target = joiner.join(t["text"] for t in scene["targets"])
+    present = bool(scene["targets"])
+    # With no target, the mixture slot points at the first other speaker's first utterance.
+    mixture = scene["targets"][0] if present else scene["interferers"][0]["utts"][0]
+    kind = f"{scene['hard']['kind']}-" if "hard" in scene else ""
     return {
-        "schema_version": "audio-record/1.0", "id": f"{DATASET_ID}:{language}:{scene['mode']}:{number:07d}",
+        "schema_version": "audio-record/1.0", "id": f"{DATASET_ID}:{language}:{kind}{scene['mode']}:{number:07d}",
         "task": "ts_asr", "target": target, "language": language,
-        "labels": {"target_present": True, "schedule": scene["mode"], "n_interferers": len(scene["interferers"])},
+        "labels": {"target_present": present, "schedule": scene["mode"], "n_interferers": len(scene["interferers"]),
+                   **({"hard_cosine": scene["hard"]["cosine"]} if "hard" in scene else {})},
         "hotwords": [],
         "audio_slots": [
             {"name": "enrollment", "purpose": "enrollment", "ref": {**base, **scene["enrollment"]}},
-            {"name": "mixture", "purpose": "mixture", "ref": {**base, **{k: scene["targets"][0][k] for k in ("cut_id", "start", "duration")}}}],
+            {"name": "mixture", "purpose": "mixture", "ref": {**base, **{k: mixture[k] for k in ("cut_id", "start", "duration")}}}],
         "metadata": {"scene": {**scene, "enrollment": scene["enrollment"]}, "source_group": scene["target_speaker"]}}
 
 
 def main():
+    global VERSION
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--output-dir", type=Path, required=True)
     parser.add_argument("--zh", type=int, default=150000)
     parser.add_argument("--en", type=int, default=100000)
+    parser.add_argument("--version", default=VERSION)
+    parser.add_argument("--neighbors", type=Path, help="neighbors.json: build the hard (similar voice) version")
+    parser.add_argument("--hard-rank", type=int, default=10)
+    parser.add_argument("--absent-share", type=float, default=0.55)
     args = parser.parse_args()
+    VERSION = args.version
     args.output_dir.mkdir(parents=True, exist_ok=True)
+    neighbors = json.loads(args.neighbors.read_text()) if args.neighbors else None
     report = {}
     for language, count in (("zh", args.zh), ("en", args.en)):
-        builder = Builder(language, random.Random(f"{SEED}:{language}"))
+        builder = Builder(language, random.Random(f"{SEED}:{language}:{args.version}"),
+                          neighbors and neighbors[language], args.hard_rank)
         modes, weights = zip(*MODES[language])
         records, tally = [], Counter()
         for number in range(count):
-            mode = builder.rng.choices(modes, weights)[0]
-            scene, joiner = builder.scene(mode)
+            hard = None
+            if neighbors:
+                hard = "absent" if builder.rng.random() < args.absent_share else "present"
+            if hard == "absent":
+                mode = builder.rng.choices(("alternate", "burst"), (0.35, 0.65))[0]  # no target, so no short
+            else:
+                mode = builder.rng.choices(modes, weights)[0]
+            scene, joiner = builder.scene(mode, hard)
             row = record(language, number, scene, joiner)
             records.append(row)
-            tally[mode] += 1
+            tally[f"{hard}-{mode}" if hard else mode] += 1
             if (number + 1) % 25000 == 0:
                 print(language, number + 1, flush=True)
         with gzip.open(args.output_dir / f"records_{language}.jsonl.gz", "wt", encoding="utf-8") as stream:

@@ -6,7 +6,7 @@
 | --- | --- | --- | --- |
 | `ts_interference_pool` | `v2-20261016`（`v1-20261015` 为首版） | 干扰人：单人语音片段，按偏移取自源文件 | zh 32 万条 389 h、en 20 万条 268 h |
 | `ts_nonspeech_pool` | `v1-20261016` | 没有人声的噪声和音乐，转写为空 | 4.8 万条 65.7 h |
-| `ts_scene_pool` | `v2-20261016` | 多句场景：alternate / burst / short | zh 15 万条、en 10 万条 |
+| `ts_scene_pool` | `v2-20261016`；`hard-20261016` | 多句场景：alternate / burst / short；相近声音版 | v2：zh 15 万条、en 10 万条；hard：zh 4 万条、en 2.5 万条 |
 | `dns5_noise_train` | `v1-20261016` | DNS5 的 AudioSet 和 Freesound 噪声，以及模拟房间响应 | 见下 |
 | `audioset_road_traffic` | `legacy-20260804` | 道路交通噪声（早已登记，这里只说明用法） | 10.9 万条 299 h |
 
@@ -53,6 +53,16 @@
 - 场景总长有上限（alternate 30 s、burst 22 s、short 14 s，含间隔），超出的重抽。`metadata.scene` 里是 `mode`、`targets`（含文本）、`enrollment`、`interferers`；`target` 是目标语句按时间顺序拼接的文本，中文直接拼，英文用空格。
 - 实测（训练加载器抽样）：burst、short 的目标重叠率中位 1.0，alternate 中位 0。
 
+### 相近声音版（hard-20261016）
+
+对应评测集的 `abs-hard`（目标缺席但有相近的声音）和目标在场时有相近声音干扰。每条记录里其他说话人的第一位是目标的相近说话人，取自说话人向量余弦最近邻的前 10 名之一（按排名挑，不设阈值：不同语料的最佳阈值差到 0.33–0.60，固定阈值会在各语料里选出不同的东西）。
+
+- `absent`（约 55%）：注册音频是 A，场景里只有相近的 B 和其他人，转写为空，`labels.target_present = false`；几何是 alternate 或 burst。
+- `present`（约 45%）：目标 A 说话，相近的 B 同时在场，几何是 alternate、burst 或 short。
+- 说话人向量用 ERes2NetV2：每个说话人取 4 句 2–8 s 的语句的归一化向量均值。候选包含目标语料外的 KeSpeech（随机 6000 位）和 Common Voice en（随机 6000 位）。最近邻表和向量在 `datasets/ts_scene_pool/source/speaker-neighbors-20261016/`（`neighbors.json`、`embeddings.npz`、`report.json`），生成脚本 `scripts/ts_robust/speaker_neighbors.py`。
+- 最相近一位的余弦中位数：zh 0.69（p10–p90：0.62–0.77），en 0.74（0.67–0.79）。这是 ERes2NetV2 的尺度，评测集的 `hard_cosine`（0.53）用的是 ECAPA，两个数不能直接比。
+- `labels.hard_cosine` 记录该相近说话人与目标的余弦。
+
 ## dns5_noise_train
 
 DNS5 噪声包里的 AudioSet 和 Freesound 噪声（16 kHz 单声道 FLAC，≤30 s，RMS 归一到 −30 dBFS，与评测集的噪声同样处理），以及模拟房间响应。split：
@@ -74,4 +84,4 @@ DNS5 噪声包里的 AudioSet 和 Freesound 噪声（16 kHz 单声道 FLAC，≤
 
 ## 生成脚本
 
-`scripts/ts_robust/`：`build_interference_pool.py`、`build_nonspeech_pool.py`、`build_ts_scene_pool.py`、`prepare_training_noise.py`、`register_records_pool.py`（把 `records` + `audio_index` 版本写成声明）。登记后用 `build-record-index --register` 建索引。
+`scripts/ts_robust/`：`build_interference_pool.py`、`build_nonspeech_pool.py`、`build_ts_scene_pool.py`、`speaker_neighbors.py`、`prepare_training_noise.py`、`register_training_noise.py`、`register_records_pool.py`（把 `records` + `audio_index` 版本写成声明）。登记后用 `build-record-index --register` 建索引。
