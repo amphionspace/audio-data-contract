@@ -1,0 +1,85 @@
+- schema_version: dataset-catalog/2.0
+  dataset_id: ts_scene_pool
+  version: v2-20261016
+  languages:
+  - zh
+  - en
+  tasks:
+  - ts_asr
+  aliases: []
+  artifacts:
+  - name: zh-records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/v2-20261016/records_zh.jsonl.gz
+    sha256: 919ee94b1a9eb2e0f5648cdd6a3f4ecb806f5103509f4a497a9760cc481b5258
+    metadata:
+      record_count: 150000
+  - name: zh-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/v2-20261016/audio_index_zh.jsonl.gz
+    sha256: c243f6e44e5852bbda410deb53a6b55d2290976678463dbb984513c71b7b951a
+    metadata:
+      record_count: 843803
+  - name: en-records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/v2-20261016/records_en.jsonl.gz
+    sha256: 25a8deb26b37af591ac4739ecb1a05b845f1bb5264b4ef0d6fc0c05d6ad2a8b8
+    metadata:
+      record_count: 100000
+  - name: en-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/v2-20261016/audio_index_en.jsonl.gz
+    sha256: c865d9b04bc2bd1e818a3b93c263e9e16b4572c7454e3c38beca8984b6fbdc43
+    metadata:
+      record_count: 205782
+  - name: record_index
+    kind: lance-record-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/v2-20261016/record_index/index.json
+    expected_bytes: 1057
+    sha256: af7b2d11b4015604fd877c23f10542046c8576a8cfbdcf829ac76c4a3b11bd5d
+    metadata:
+      snapshot_version: 13
+      rows: 250000
+      schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
+  splits:
+    zh:
+      artifacts:
+        records:
+        - zh-records
+        audio_index:
+        - zh-audio-index
+        records_lance:
+        - record_index
+      task: ts_asr
+      statistics:
+        records: 150000
+        duration_hours: 167.7
+        duration_basis: clip duration (segment span, or the whole file)
+    en:
+      artifacts:
+        records:
+        - en-records
+        audio_index:
+        - en-audio-index
+        records_lance:
+        - record_index
+      task: ts_asr
+      statistics:
+        records: 100000
+        duration_hours: 148.06
+        duration_basis: clip duration (segment span, or the whole file)
+  provenance:
+    status: complete
+    synthetic: none
+    snapshot_date: '2026-10-16'
+    description: Target-speaker scenes (alternate / burst / short, up to 6 other speakers, several utterances per speaker) named from AISHELL-2, KeSpeech, LibriSpeech and Common Voice by speaker label
+    sources:
+    - aishell2:legacy-20260804
+    - kespeech:legacy-20260804
+    - librispeech:legacy-20260804
+    - common_voice_en:legacy-20260804
