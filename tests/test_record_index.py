@@ -223,3 +223,70 @@ def test_build_rejects_record_without_audio_and_publishes_nothing(tmp_path):
         build_index(catalog, "demo", "v1", destination, {"data": tmp_path})
     assert not destination.exists()
     assert not list(tmp_path.glob(".record-index-*"))
+
+
+def test_ts_slots_and_ids_repeated_across_source_files(tmp_path):
+    base = "demo/ts"
+    audio = tmp_path / base / "mix.wav"
+    audio.parent.mkdir(parents=True, exist_ok=True)
+    audio.write_bytes(b"\0" * 128)
+
+    def ts(split, i):
+        ref = {"dataset_id": "demo", "version": "ts", "split": split, "cut_id": "mix"}
+        return {
+            "schema_version": "audio-record/1.0",
+            "id": f"r{i}",
+            "task": "ts_asr",
+            "audio_slots": [
+                {"name": "enrollment", "purpose": "enrollment",
+                 "ref": {**ref, "start": 1.0, "duration": 2.0}},
+                {"name": "mixture", "purpose": "mixture",
+                 "ref": {**ref, "start": 10.0 * i, "duration": 5.0}},
+            ],
+            "target": f"t{i}",
+            "language": "en",
+        }
+
+    # "subset" repeats the IDs of "all" from another file, like hw_sft train_hotwords.
+    refs = [
+        artifact(name, "audio-records", f"{base}/{name}.jsonl.gz",
+                 write_jsonl(tmp_path / base / f"{name}.jsonl.gz", [ts(name, i) for i in rows]))
+        for name, rows in (("all", range(3)), ("subset", range(2)))
+    ]
+    index = [{"cut_id": "mix", "root_alias": "data", "relative_path": f"{base}/mix.wav",
+              "sample_rate": 16000, "num_frames": 16000 * 60, "duration": 60.0}]
+    refs.append(artifact("audio_index", "audio-index", f"{base}/index.jsonl.gz",
+                         write_jsonl(tmp_path / base / "index.jsonl.gz", index)))
+    spec = {
+        "schema_version": "dataset-catalog/2.0", "dataset_id": "demo", "version": "ts",
+        "languages": ["en"], "tasks": ["ts_asr"], "artifacts": refs,
+        "splits": {
+            name: {"artifacts": {"records": [name], "audio_index": ["audio_index"]}}
+            for name in ("all", "subset")
+        },
+    }
+    roots = {"data": tmp_path}
+    catalog, _ = register(spec, tmp_path, roots)
+    index = open_index(catalog, "demo", "ts", "record_index", roots)
+    assert index.manifest["record_count"] == 5
+    row = to_table(index, split="subset", filter="id = 'r1'").to_pylist()[0]
+    assert (row["start_frame"], row["num_frames"], row["duration"]) == (160000, 80000, 5.0)
+    enrollment, mixture = row["slots"]
+    assert (enrollment["name"], enrollment["start_frame"], enrollment["num_frames"]) == (
+        "enrollment", 16000, 32000
+    )
+    assert mixture["start_frame"] == row["start_frame"]
+    assert check_registration(catalog.get("demo", "ts"), roots) == []
+
+
+def test_lhotse_recording_without_channel_ids(tmp_path):
+    spec = lhotse_spec(tmp_path)
+    path = tmp_path / "demo/l1/rec.jsonl.gz"
+    with gzip.open(path, "rt") as stream:
+        recordings = [json.loads(line) for line in stream]
+    del recordings[0]["channel_ids"]
+    spec["artifacts"][0].update(write_jsonl(path, recordings))
+    roots = {"data": tmp_path}
+    catalog, _ = register(spec, tmp_path, roots)
+    index = open_index(catalog, "demo", "l1", "record_index", roots)
+    assert to_table(index, columns=["channels"]).column(0).to_pylist() == [1] * 4

@@ -57,8 +57,18 @@ DEFAULT_COLUMNS = (
     "sample_rate",
     "channels",
     "channel",
+    "slots",
 )
-COMPARED = ("splits", "duration", "cut_id", "root_alias", "relative_path", "start_frame", "num_frames")
+COMPARED = (
+    "splits",
+    "duration",
+    "cut_id",
+    "root_alias",
+    "relative_path",
+    "start_frame",
+    "num_frames",
+    "slots",
+)
 INDICES = (
     ("id", "BTREE"),
     ("splits", "LABEL_LIST"),
@@ -66,6 +76,41 @@ INDICES = (
     ("language", "BITMAP"),
     ("duration", "BTREE"),
 )
+
+
+_SLOT_FIELDS = (
+    "name",
+    "purpose",
+    "cut_id",
+    "duration",
+    "root_alias",
+    "relative_path",
+    "start_frame",
+    "num_frames",
+    "sample_rate",
+    "channels",
+    "channel",
+)
+
+
+def _slot_type():
+    """Every audio slot of a record (e.g. TS mixture and enrollment) with its location."""
+    _, pa = _dependencies()
+    return pa.struct(
+        [
+            pa.field("name", pa.string(), nullable=False),
+            pa.field("purpose", pa.string()),
+            pa.field("cut_id", pa.string(), nullable=False),
+            pa.field("duration", pa.float64(), nullable=False),
+            pa.field("root_alias", pa.string(), nullable=False),
+            pa.field("relative_path", pa.string(), nullable=False),
+            pa.field("start_frame", pa.int64(), nullable=False),
+            pa.field("num_frames", pa.int64(), nullable=False),
+            pa.field("sample_rate", pa.int32(), nullable=False),
+            pa.field("channels", pa.int16()),
+            pa.field("channel", pa.int16()),
+        ]
+    )
 
 
 def _schema():
@@ -87,6 +132,7 @@ def _schema():
             pa.field("sample_rate", pa.int32(), nullable=False),
             pa.field("channels", pa.int16()),
             pa.field("channel", pa.int16()),
+            pa.field("slots", pa.list_(_slot_type()), nullable=False),
             pa.field("record_json", pa.large_string()),
         ],
         metadata={b"mapping": MAPPING_VERSION.encode()},
@@ -154,7 +200,7 @@ def _recording_locations(path, roots, prefer, wanted=None):
             location["root_alias"],
             location["relative_path"],
             row["sampling_rate"],
-            len(row["channel_ids"]),
+            len(row.get("channel_ids") or sources[0]["channels"]),
             row["num_samples"],
             row["duration"],
         )
@@ -195,20 +241,34 @@ def _locate(location, start, duration):
 
 
 def _primary(record: AudioRecord):
+    """The slot the target describes: the only slot, else `primary`, else a TS `mixture`."""
     if len(record.audio_slots) == 1:
         return record.audio_slots[0]
-    found = [s for s in record.audio_slots if "primary" in (s.purpose, s.name)]
-    if len(found) != 1:
-        raise ContractError(f"record {record.id}: cannot choose one primary audio slot")
-    return found[0]
+    for main in ("primary", "mixture"):
+        found = [s for s in record.audio_slots if main in (s.purpose, s.name)]
+        if len(found) == 1:
+            return found[0]
+    raise ContractError(f"record {record.id}: cannot choose one main audio slot")
+
+
+def _slot(record, slot, locations):
+    ref = slot.ref
+    location = locations.get(ref.cut_id)
+    if location is None:
+        raise ContractError(f"record {record.id}: cut {ref.cut_id} not in audio_index")
+    return {
+        "name": slot.name,
+        "purpose": slot.purpose,
+        "cut_id": ref.cut_id,
+        "channel": _channel(ref.channel, record.id),
+        **_locate(location, ref.start, ref.duration),
+    }
 
 
 def _record_row(splits, item, locations):
     record = AudioRecord.from_dict(item)
-    ref = _primary(record).ref
-    location = locations.get(ref.cut_id)
-    if location is None:
-        raise ContractError(f"record {record.id}: cut {ref.cut_id} not in audio_index")
+    slots = [_slot(record, slot, locations) for slot in record.audio_slots]
+    main = slots[record.audio_slots.index(_primary(record))]
     speaker = record.metadata.get("speaker")
     return {
         "id": record.id,
@@ -217,10 +277,9 @@ def _record_row(splits, item, locations):
         "language": record.language,
         "text": record.target,
         "speaker": speaker if isinstance(speaker, str) else None,
-        "cut_id": ref.cut_id,
-        "channel": _channel(ref.channel, record.id),
+        "slots": slots,
         "record_json": json.dumps(record.to_dict(), ensure_ascii=False, sort_keys=True),
-        **_locate(location, ref.start, ref.duration),
+        **{key: main[key] for key in _SLOT_FIELDS if key not in ("name", "purpose")},
     }
 
 
@@ -228,6 +287,11 @@ def _supervision_row(splits, task, item, locations):
     location = locations.get(item["recording_id"])
     if location is None:
         raise ContractError(f"supervision {item['id']}: unknown recording")
+    main = {
+        "cut_id": item["id"],
+        "channel": _channel(item.get("channel"), item["id"]),
+        **_locate(location, item["start"], item["duration"]),
+    }
     return {
         "id": item["id"],
         "splits": splits,
@@ -235,10 +299,9 @@ def _supervision_row(splits, task, item, locations):
         "language": item.get("language") or "N/A",
         "text": item.get("text") or "",
         "speaker": item.get("speaker"),
-        "cut_id": item["id"],
-        "channel": _channel(item.get("channel"), item["id"]),
+        "slots": [{"name": "primary", "purpose": "primary", **main}],
         "record_json": None,
-        **_locate(location, item["start"], item["duration"]),
+        **main,
     }
 
 
@@ -329,10 +392,13 @@ def build_index(catalog, dataset_id, version, destination, roots, *, batch_size=
     counts = dict.fromkeys(_plan(spec), 0)
     try:
         cache_key, locations = None, {}
-        seen = set()
+        # IDs are unique within a split; two source files (e.g. train and its
+        # train_hotwords subset) may repeat an ID as separate rows.
+        seen = {split: set() for split in counts}
+        total = 0
 
         def batches():
-            nonlocal cache_key, locations
+            nonlocal cache_key, locations, total
             rows = []
             for name, (kind, location_names, splits) in plan.items():
                 if cache_key != (kind, location_names):
@@ -341,12 +407,13 @@ def build_index(catalog, dataset_id, version, destination, roots, *, batch_size=
                 _, path = _source_path(spec, name, roots)
                 for item in _lines(path):
                     row = _rows(spec, splits, kind, item, locations)
-                    if row["id"] in seen:
-                        raise ContractError(f"duplicate record ID: {row['id']}")
-                    seen.add(row["id"])
-                    rows.append(row)
                     for split in splits:
+                        if row["id"] in seen[split]:
+                            raise ContractError(f"duplicate record ID in {split}: {row['id']}")
+                        seen[split].add(row["id"])
                         counts[split] += 1
+                    rows.append(row)
+                    total += 1
                     if len(rows) == batch_size:
                         yield pa.RecordBatch.from_pylist(rows, schema=_schema())
                         rows = []
@@ -362,7 +429,6 @@ def build_index(catalog, dataset_id, version, destination, roots, *, batch_size=
         )
         for column, index_type in INDICES:
             dataset.create_scalar_index(column, index_type)
-        total = len(seen)
         if dataset.count_rows() != total:
             raise ContractError("record index row count mismatch")
         manifest = {
@@ -527,7 +593,11 @@ def check_index(spec, ref, path, roots, *, sample=20, seed=0) -> list[str]:
         if stored != seen:
             problems.append(f"{label}:{split}: index has {stored} rows, sources have {seen}")
         if kind == "records":
-            wanted = {_primary(AudioRecord.from_dict(i)).ref.cut_id for _, i in chosen}
+            wanted = {
+                slot.ref.cut_id
+                for _, i in chosen
+                for slot in AudioRecord.from_dict(i).audio_slots
+            }
         else:
             wanted = {i["recording_id"] for _, i in chosen}
         locations = _locations(spec, kind, location_names, roots, wanted)
@@ -545,7 +615,8 @@ def check_index(spec, ref, path, roots, *, sample=20, seed=0) -> list[str]:
         found = {
             row["id"]: row
             for row in index.dataset.to_table(
-                columns=["id", *COMPARED], filter=f"id IN ({quoted})"
+                columns=["id", *COMPARED],
+                filter=_expression(split, f"id IN ({quoted})"),
             ).to_pylist()
         }
         for record_id, row in expected.items():

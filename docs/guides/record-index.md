@@ -56,17 +56,19 @@ for batch in iter_batches(index, split="train_zh", shard=shard, num_shards=shard
 | `task`、`language` | 有 BITMAP 索引；Lhotse 的 `language` 保留原值（如 `Chinese`） |
 | `duration` | 秒，有 BTREE 索引 |
 | `text`、`speaker` | 目标文本；说话人取 `metadata.speaker` 或 supervision 的 `speaker` |
-| `cut_id` | 主音频槽位的 `AudioRef.cut_id`；Lhotse 输入同 `id` |
+| `cut_id` | 主音频槽位的 `AudioRef.cut_id`；Lhotse 输入同 `id`。主槽位：只有一个槽位时取它，否则取 `primary`，再否则取 TS 的 `mixture` |
 | `root_alias`、`relative_path` | 音频文件位置，用 roots 文件解析 |
 | `start_frame`、`num_frames`、`sample_rate` | 从文件第几帧开始读多少帧；整文件记录 `start_frame` 为 0 |
 | `channels`、`channel` | 文件声道数；选定的声道（未指定为空） |
-| `record_json` | 完整 AudioRecord（含 TS 的注册音频等其他槽位），默认不读；Lhotse 输入为空 |
+| `slots` | 记录的全部音频槽位（如 TS 的 `enrollment` 和 `mixture`），每个都带 `name`、`purpose`、`cut_id`、时长和上面这些位置字段 |
+| `record_json` | 完整 AudioRecord（含 `labels`、`hotwords`、`metadata`），默认不读；Lhotse 输入为空 |
 
 每个 fragment 最多 65,536 行。映射版本 `record-index-lance/1.0`。
 
 ## 限制
 
 - 只处理单文件音频源；Lhotse 多文件或多声道选择会直接报错。
-- 多槽位记录只为主槽位（`purpose` 或 `name` 为 `primary`）生成位置列，其他槽位在 `record_json` 里。
+- 每个槽位引用的 cut 都必须在本版本的 audio_index 里，指向其他数据集的槽位会报错。
+- 记录 ID 在每个 split 内唯一。两个源文件可以用同一批 ID（如 `hw_sft` 的 `train_hotwords` 是 `train` 的子集），各存一行，按 split 读取不会重复；不带 `split` 读全表时会看到重复 ID。
 - 生成时在内存中保存全部 ID 和音频位置，千万条规模需要数 GB 内存。
 - 音频位置的 `root_alias` 优先用源产物自己的别名；多个别名指向同一目录时不会随别名名字变化。
