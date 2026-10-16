@@ -7,6 +7,7 @@
 - [本地音频准备](guides/audio-preparation.md)：提取归档中的音频，按清单生成本地副本。
 - [时长统计](guides/duration-statistics.md)：统计清单或音频目录，补齐 catalog 中的缺失时长。
 - [COS 恢复](guides/cos-restore.md)：查询备份位置、恢复文件、迁移清单路径。
+- [Lance 记录索引](guides/record-index.md)：把记录元数据和音频位置做成 Lance 表，训练启动直接读取。
 
 ## 数据集
 

@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import argparse
 import json
+from pathlib import Path
 
 from .catalog import (
     check_registration,
@@ -69,6 +70,16 @@ def _parser() -> argparse.ArgumentParser:
     check.add_argument("--roots")
     check.add_argument("--sample", type=int, default=20)
     check.add_argument("--seed", type=int, default=0)
+
+    index = commands.add_parser(
+        "build-record-index", help="build a Lance record index; print its catalog ref"
+    )
+    index.add_argument("catalog")
+    index.add_argument("dataset_id")
+    index.add_argument("version")
+    index.add_argument("destination")
+    index.add_argument("--name", default="record_index")
+    index.add_argument("--roots")
 
     validate_views = commands.add_parser("validate-views")
     validate_views.add_argument("views")
@@ -195,6 +206,18 @@ def main(argv: list[str] | None = None) -> int:
             )
         )
         return 1 if problems else 0
+    if args.command == "build-record-index":
+        from .record_index import MANIFEST_NAME, build_index, catalog_ref
+
+        catalog = load_catalog(args.catalog)
+        roots = load_roots(args.roots)
+        build_index(catalog, args.dataset_id, args.version, args.destination, roots)
+        manifest = Path(args.destination) / MANIFEST_NAME
+        # Register under the alias the version's own artifacts use.
+        alias = catalog.get(args.dataset_id, args.version).artifacts[0].root_alias
+        ref = catalog_ref(manifest, name=args.name, roots=roots, root_alias=alias)
+        print(json.dumps(ref, sort_keys=True))
+        return 0
     if args.command == "validate-views":
         datasets = load_catalog(args.catalog)
         views = load_view_catalog(args.views, datasets)
