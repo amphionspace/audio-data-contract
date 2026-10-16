@@ -54,7 +54,15 @@ def record(split, i, duration):
         ],
         "target": f"text {i}",
         "language": "zh" if split == "train_zh" else "en",
-        "metadata": {"speaker": f"spk{i % 2}"},
+        "metadata": {
+            "speaker": f"demo:spk{i % 2}",
+            # Quality facts only on even records; odd ones stay null.
+            **(
+                {"loudness_dbfs": -20.5 - i, "clip_ratio": 0, "voiced_ratio": 0.75,
+                 "source_group": f"group{i % 3}"}
+                if i % 2 == 0 else {}
+            ),
+        },
     }
 
 
@@ -174,7 +182,13 @@ def test_records_index_reads_metadata_and_locations(tmp_path):
     row = next(r for r in rows if r["id"] == "train_zh:r2")
     assert row["relative_path"] == "demo/v1/audio/train_zh-2.m4a"
     assert (row["start_frame"], row["num_frames"], row["sample_rate"]) == (0, 48000, 16000)
-    assert (row["language"], row["speaker"], row["text"]) == ("zh", "spk0", "text 2")
+    assert (row["language"], row["speaker"], row["text"]) == ("zh", "demo:spk0", "text 2")
+    assert (row["loudness_dbfs"], row["clip_ratio"], row["voiced_ratio"]) == (-22.5, 0.0, 0.75)
+    assert row["source_group"] == "group2"
+    quiet = to_table(index, split="train_zh", filter="loudness_dbfs < -22 AND voiced_ratio > 0.5")
+    assert sorted(quiet.column("id").to_pylist()) == ["train_zh:r2", "train_zh:r4"]
+    assert to_table(index, split="train_zh", filter="loudness_dbfs IS NULL").num_rows == 2
+    assert to_table(index, filter="speaker = 'demo:spk1'").num_rows == 4
     assert row["splits"] == ["train_zh", "train"]
     assert "record_json" not in rows[0]
 
@@ -351,3 +365,34 @@ def test_register_refuses_a_file_it_would_reformat(tmp_path, capsys):
             str(tmp_path / "demo/v1/record_index"), "--roots", str(roots), "--register",
         )
     assert path.read_text() == text
+
+
+def test_quality_must_be_numeric(tmp_path):
+    spec = records_spec(tmp_path)
+    path = tmp_path / "demo/v1/train_zh.jsonl.gz"
+    rows = [record("train_zh", i, 1.0 + i) for i in range(5)]
+    rows[1]["metadata"]["clip_ratio"] = "high"
+    spec["artifacts"][0].update(write_jsonl(path, rows))
+    catalog = DatasetCatalog([DatasetSpec.from_dict(spec)])
+    with pytest.raises(ContractError, match="clip_ratio must be a number"):
+        build_index(catalog, "demo", "v1", tmp_path / "out", {"data": tmp_path})
+
+
+def test_register_replaces_a_rebuilt_index_in_place(tmp_path, capsys):
+    catalog, path, roots = cli_setup(tmp_path)
+    build = (
+        "build-record-index", str(catalog), "demo", "v1",
+        str(tmp_path / "demo/v1/record_index"), "--roots", str(roots), "--register",
+    )
+    run_cli(capsys, *build)
+    first = path.read_text()
+    # Rebuild at the same location, as after a mapping upgrade.
+    (tmp_path / "demo/v1/record_index").rename(tmp_path / "old_index")
+    code, ref = run_cli(capsys, *build)
+    assert code == 0
+    second = path.read_text()
+    assert second.count("lance-record-index") == 1
+    assert second.count("records_lance") == first.count("records_lance")
+    assert ref["sha256"] in second
+    index = open_index(load_catalog(catalog), "demo", "v1", "record_index", {"data": tmp_path})
+    assert index.manifest["record_count"] == 10
