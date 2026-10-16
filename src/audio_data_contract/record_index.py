@@ -33,13 +33,17 @@ from .tts_lance import _sha256
 from .types import AudioRecord
 
 ARTIFACT_KIND = "lance-record-index"
-MAPPING_VERSION = "record-index-lance/1.0"
+MAPPING_VERSION = "record-index-lance/1.1"
 TABLE_PATH = "table.lance"
 MANIFEST_NAME = "index.json"
 # Split role that names the index; check_index only checks splits that carry it.
 ROLE = "records_lance"
 # Fragments are the shard unit; 64Ki rows gives ~60 fragments per 4M records.
 FRAGMENT_ROWS = 2**16
+# Optional per-record quality facts copied from AudioRecord.metadata (null if absent):
+# RMS loudness in dBFS, fraction of samples with |x| >= 0.999, and fraction of 25 ms
+# frames above -50 dBFS (an energy gate, not voice activity detection).
+QUALITY = ("loudness_dbfs", "clip_ratio", "voiced_ratio")
 # record_json carries every AudioRecord field (e.g. extra TS slots); read on demand.
 DEFAULT_COLUMNS = (
     "id",
@@ -58,6 +62,8 @@ DEFAULT_COLUMNS = (
     "channels",
     "channel",
     "slots",
+    "source_group",
+    *QUALITY,
 )
 COMPARED = (
     "splits",
@@ -68,6 +74,9 @@ COMPARED = (
     "start_frame",
     "num_frames",
     "slots",
+    "speaker",
+    "source_group",
+    *QUALITY,
 )
 INDICES = (
     ("id", "BTREE"),
@@ -75,6 +84,8 @@ INDICES = (
     ("task", "BITMAP"),
     ("language", "BITMAP"),
     ("duration", "BTREE"),
+    ("speaker", "BTREE"),
+    ("source_group", "BTREE"),
 )
 
 
@@ -133,6 +144,8 @@ def _schema():
             pa.field("channels", pa.int16()),
             pa.field("channel", pa.int16()),
             pa.field("slots", pa.list_(_slot_type()), nullable=False),
+            pa.field("source_group", pa.string()),
+            *(pa.field(name, pa.float64()) for name in QUALITY),
             pa.field("record_json", pa.large_string()),
         ],
         metadata={b"mapping": MAPPING_VERSION.encode()},
@@ -265,11 +278,22 @@ def _slot(record, slot, locations):
     }
 
 
+def _quality(record):
+    values = {}
+    for name in QUALITY:
+        value = record.metadata.get(name)
+        if value is not None and (type(value) is bool or not isinstance(value, (int, float))):
+            raise ContractError(f"record {record.id}: metadata.{name} must be a number")
+        values[name] = None if value is None else float(value)
+    return values
+
+
 def _record_row(splits, item, locations):
     record = AudioRecord.from_dict(item)
     slots = [_slot(record, slot, locations) for slot in record.audio_slots]
     main = slots[record.audio_slots.index(_primary(record))]
     speaker = record.metadata.get("speaker")
+    group = record.metadata.get("source_group")
     return {
         "id": record.id,
         "splits": splits,
@@ -277,6 +301,8 @@ def _record_row(splits, item, locations):
         "language": record.language,
         "text": record.target,
         "speaker": speaker if isinstance(speaker, str) else None,
+        "source_group": group if isinstance(group, str) else None,
+        **_quality(record),
         "slots": slots,
         "record_json": json.dumps(record.to_dict(), ensure_ascii=False, sort_keys=True),
         **{key: main[key] for key in _SLOT_FIELDS if key not in ("name", "purpose")},
@@ -299,6 +325,8 @@ def _supervision_row(splits, task, item, locations):
         "language": item.get("language") or "N/A",
         "text": item.get("text") or "",
         "speaker": item.get("speaker"),
+        "source_group": None,
+        **dict.fromkeys(QUALITY),
         "slots": [{"name": "primary", "purpose": "primary", **main}],
         "record_json": None,
         **main,
@@ -488,20 +516,26 @@ def catalog_ref(manifest_path, *, name, roots, root_alias=None):
 def register_index(catalog_path, dataset_id, version, ref, splits):
     """Add the index artifact and each indexed split's records_lance role to the
     YAML file that declares dataset_id@version; nothing else in it changes.
+    A rebuilt index at the same location replaces the old artifact's pins in place.
     The whole catalog must still load afterwards, or the file is restored."""
     from .catalog import load_catalog
     from .declarations import declaration_files, edit_declaration
 
     def edit(row):
-        if any(artifact["name"] == ref["name"] for artifact in row["artifacts"]):
+        old = [a for a in row["artifacts"] if a["name"] == ref["name"]]
+        location = (ref["kind"], ref["root_alias"], ref["relative_path"])
+        if old and (old[0]["kind"], old[0]["root_alias"], old[0]["relative_path"]) != location:
             raise ContractError(f"{dataset_id}@{version} already has {ref['name']!r}")
         for split in splits:
             roles = row["splits"][split]["artifacts"]
-            if ROLE in roles:
+            if roles.get(ROLE, [ref["name"]]) != [ref["name"]]:
                 raise ContractError(f"{dataset_id}@{version}:{split} already has {ROLE}")
-        row["artifacts"].append(dict(ref))
+        if old:
+            old[0].update(ref)
+        else:
+            row["artifacts"].append(dict(ref))
         for split in splits:
-            row["splits"][split]["artifacts"][ROLE] = [ref["name"]]
+            row["splits"][split]["artifacts"].setdefault(ROLE, [ref["name"]])
 
     for path in declaration_files(catalog_path):
         original = path.read_text(encoding="utf-8")

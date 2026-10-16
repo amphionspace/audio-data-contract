@@ -32,7 +32,7 @@ audio-data-contract build-record-index <catalog> <dataset_id> <version> <输出�
 
 旧的 `records` / `audio_index` 原样保留，训练侧按需选择用途。
 
-加 `--register` 时，命令建完直接把上面的产物声明和各 split 的 `records_lance` 写回声明该版本的 YAML 文件，不用手工改。写回只追加这两处，文件其余内容逐字不变；如果某个文件的排版（例如手工折行）无法原样写回，命令会报错并保持文件不动，这时按打印的声明手工添加。写回后整个 catalog 必须仍能加载，否则恢复原文件。
+加 `--register` 时，命令建完直接把上面的产物声明和各 split 的 `records_lance` 写回声明该版本的 YAML 文件，不用手工改。同一位置重建的索引会就地更新原产物的 sha256 和固定版本。写回只追加这两处，文件其余内容逐字不变；如果某个文件的排版（例如手工折行）无法原样写回，命令会报错并保持文件不动，这时按打印的声明手工添加。写回后整个 catalog 必须仍能加载，否则恢复原文件。
 
 **登记流程要求**：带 `records` + `audio_index` 或 `recordings` + `supervisions` 的版本，登记时应同时建好索引。`check-registration` 对缺索引的 split 输出 `warnings`；加 `--require-record-index` 则当作错误。
 
@@ -59,7 +59,9 @@ for batch in iter_batches(index, split="train_zh", shard=shard, num_shards=shard
 | `splits` | 列出该记录所属的全部 split，有 LABEL_LIST 索引。同一份源文件被多个 split 引用时（如 `train` = `train_zh` + `train_en`），记录只存一次 |
 | `task`、`language` | 有 BITMAP 索引；Lhotse 的 `language` 保留原值（如 `Chinese`） |
 | `duration` | 秒，有 BTREE 索引 |
-| `text`、`speaker` | 目标文本；说话人取 `metadata.speaker` 或 supervision 的 `speaker` |
+| `text`、`speaker` | 目标文本；说话人取 `metadata.speaker` 或 supervision 的 `speaker`，有 BTREE 索引。值只在本数据集内唯一，跨数据集请拼成 `dataset_id:speaker`；派生数据集请直接写带前缀的值。gigaspeech 全部是 `N/A`，emilia2_short 是单条录音内的说话人编号 |
+| `source_group` | 没有可靠说话人时的来源分组，取 `metadata.source_group`，有 BTREE 索引 |
+| `loudness_dbfs`、`clip_ratio`、`voiced_ratio` | 质量列，取 `metadata` 同名字段，缺失为空：整段 RMS 响度（dBFS，16 kHz 单声道下混后计算）；\|x\| ≥ 0.999 的采样点占比；25 ms 帧中能量高于 −50 dBFS 的帧占比（能量门限，不是语音检测）。可直接在 `filter` 里使用 |
 | `cut_id` | 主音频槽位的 `AudioRef.cut_id`；Lhotse 输入同 `id`。主槽位：只有一个槽位时取它，否则取 `primary`，再否则取 TS 的 `mixture` |
 | `root_alias`、`relative_path` | 音频文件位置，用 roots 文件解析 |
 | `start_frame`、`num_frames`、`sample_rate` | 从文件第几帧开始读多少帧；整文件记录 `start_frame` 为 0 |
@@ -67,7 +69,7 @@ for batch in iter_batches(index, split="train_zh", shard=shard, num_shards=shard
 | `slots` | 记录的全部音频槽位（如 TS 的 `enrollment` 和 `mixture`），每个都带 `name`、`purpose`、`cut_id`、时长和上面这些位置字段 |
 | `record_json` | 完整 AudioRecord（含 `labels`、`hotwords`、`metadata`），默认不读；Lhotse 输入为空 |
 
-每个 fragment 最多 65,536 行。映射版本 `record-index-lance/1.0`。
+每个 fragment 最多 65,536 行。映射版本 `record-index-lance/1.1`（1.0 加上质量列、`source_group` 和说话人索引；1.0 的表需重建）。Lhotse 输入不读取 `custom` 字段，质量列和 `source_group` 为空。
 
 ## 限制
 
