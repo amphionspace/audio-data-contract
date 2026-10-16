@@ -5,6 +5,8 @@ from __future__ import annotations
 import gzip
 import hashlib
 import json
+import random
+import zlib
 from collections.abc import Iterable, Mapping
 from pathlib import Path
 
@@ -194,6 +196,97 @@ def verify_artifact_file(
             )
         result["records"] = actual_records
     return result
+
+
+def check_registration(
+    spec: DatasetSpec,
+    roots: Mapping[str, str | Path],
+    *,
+    sample: int = 20,
+    seed: int = 0,
+) -> list[str]:
+    """Full registration check of one dataset version; returns problems found.
+
+    Every root_alias in an audio-index must be configured, a seeded sample of
+    its rows must resolve to readable files, and declared digests must match.
+    """
+
+    problems: list[str] = []
+    where = spec.key
+    for artifact in spec.artifacts:
+        label = f"{where}:{artifact.name}"
+        try:
+            path = resolve_root_path(
+                artifact.root_alias, artifact.relative_path, roots, label
+            )
+        except ContractError as exc:
+            problems.append(str(exc))
+            continue
+        if not path.exists():
+            problems.append(f"{label}: artifact is missing: {path}")
+            continue
+        if artifact.sha256 is not None or "tree_sha256" in artifact.metadata:
+            try:
+                verify_artifact_file(artifact, path)
+            except (ContractError, OSError) as exc:
+                problems.append(f"{label}: {exc}")
+        if artifact.kind == "audio-index":
+            problems.extend(_check_audio_index(label, path, roots, sample, seed))
+    return problems
+
+
+def _check_audio_index(
+    label: str,
+    path: Path,
+    roots: Mapping[str, str | Path],
+    sample: int,
+    seed: int,
+) -> list[str]:
+    from .records import open_text
+
+    problems: list[str] = []
+    missing_aliases: set[str] = set()
+    chosen: list[tuple[int, str, str]] = []
+    rng = random.Random(seed)
+    seen = 0
+    try:
+        with open_text(path, "r") as stream:
+            for line_number, line in enumerate(stream, 1):
+                if not line.strip():
+                    continue
+                try:
+                    row = json.loads(line)
+                    alias = row["root_alias"]
+                    relative = row["relative_path"]
+                    if not isinstance(alias, str) or not isinstance(relative, str):
+                        raise TypeError("root_alias and relative_path must be strings")
+                except (json.JSONDecodeError, KeyError, TypeError) as exc:
+                    problems.append(f"{label}:{line_number}: bad index row: {exc}")
+                    continue
+                if alias not in roots:
+                    missing_aliases.add(alias)
+                    continue
+                # Reservoir sampling keeps a fixed-size, seeded sample in one pass.
+                seen += 1
+                if len(chosen) < sample:
+                    chosen.append((line_number, alias, relative))
+                else:
+                    slot = rng.randrange(seen)
+                    if slot < sample:
+                        chosen[slot] = (line_number, alias, relative)
+    except (OSError, EOFError, UnicodeError, zlib.error) as exc:
+        return [f"{label}: index cannot be read: {path}: {exc}"]
+    for alias in sorted(missing_aliases):
+        problems.append(f"{label}: root alias {alias!r} is not configured")
+    for line_number, alias, relative in sorted(chosen):
+        try:
+            audio = resolve_root_path(alias, relative, roots, f"{label}:{line_number}")
+            with audio.open("rb") as stream:
+                if not stream.read(64):
+                    problems.append(f"{label}:{line_number}: empty file: {audio}")
+        except (ContractError, OSError) as exc:
+            problems.append(f"{label}:{line_number}: {exc}")
+    return problems
 
 
 def _verify_artifact_directory(
