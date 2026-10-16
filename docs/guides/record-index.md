@@ -32,6 +32,10 @@ audio-data-contract build-record-index <catalog> <dataset_id> <version> <输出�
 
 旧的 `records` / `audio_index` 原样保留，训练侧按需选择用途。
 
+加 `--register` 时，命令建完直接把上面的产物声明和各 split 的 `records_lance` 写回声明该版本的 YAML 文件，不用手工改。写回只追加这两处，文件其余内容逐字不变；如果某个文件的排版（例如手工折行）无法原样写回，命令会报错并保持文件不动，这时按打印的声明手工添加。写回后整个 catalog 必须仍能加载，否则恢复原文件。
+
+**登记流程要求**：带 `records` + `audio_index` 或 `recordings` + `supervisions` 的版本，登记时应同时建好索引。`check-registration` 对缺索引的 split 输出 `warnings`；加 `--require-record-index` 则当作错误。
+
 `check-registration` 会检查 `lance-record-index`：每个 split 的行数等于源 JSONL 条数；抽样源记录，逐项比对时长、`cut_id`、音频位置、起始帧和帧数，并确认音频文件可读。
 
 ## 读取
@@ -70,5 +74,6 @@ for batch in iter_batches(index, split="train_zh", shard=shard, num_shards=shard
 - 只处理单文件音频源；Lhotse 多文件或多声道选择会直接报错。
 - 每个槽位引用的 cut 都必须在本版本的 audio_index 里，指向其他数据集的槽位会报错。
 - 记录 ID 在每个 split 内唯一。两个源文件可以用同一批 ID（如 `hw_sft` 的 `train_hotwords` 是 `train` 的子集），各存一行，按 split 读取不会重复；不带 `split` 读全表时会看到重复 ID。
-- 生成时在内存中保存全部 ID 和音频位置，千万条规模需要数 GB 内存。
+- 生成时在内存中保存全部 ID 和音频位置。实测 emilia2_mix 921 万条峰值约 5 GB 内存，24 分钟。
+- Lhotse 输入每条录音都要解析一次路径；一条录音一个文件的数据集（如 vitw 56 万条，18 分钟）比长录音切段的数据集慢得多。
 - 音频位置的 `root_alias` 优先用源产物自己的别名；多个别名指向同一目录时不会随别名名字变化。
