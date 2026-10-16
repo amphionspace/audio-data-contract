@@ -708,8 +708,10 @@ def summary_card(
 
     level = "已超过" if full else "低于"
     lines = [
-        f"磁盘已用 **{usage['used_percent']}%**，{level} {zones.watermark_percent:g}% 告警线，"
-        f"剩余 {format_size(usage['avail_bytes'])}。"
+        (
+            f"磁盘已用 **{usage['used_percent']}%**，{level} {zones.watermark_percent:g}% 告警线，"
+            f"剩余 {format_size(usage['avail_bytes'])}。"
+        )
     ]
     if unregistered:
         name, size = owner_slices[0]
