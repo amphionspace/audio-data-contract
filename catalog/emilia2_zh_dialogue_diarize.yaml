@@ -180,3 +180,37 @@
     text_check_model: Qwen3-ASR
     text_check_unit: window
     window_seconds: [30, 120]
+# 占位登记：Emilia2 m4a-64k 中文对话的热词标注，提取中（2026-10-16 起），详见状态文件。
+- schema_version: dataset-catalog/2.0
+  dataset_id: emilia2_zh_dialogue_diarize
+  version: hotwords-qwen3.8-flash-m4a64k-v1
+  languages:
+    - zh
+  tasks:
+    - asr
+  aliases: []
+  artifacts:
+    - name: preparation_state
+      kind: dataset-state
+      root_alias: aidc_data
+      relative_path: datasets/emilia2_zh_dialogue_diarize/versions/hotwords-qwen3.8-flash-m4a64k-v1/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+          - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: >-
+      对 emilia2_zh_dialogue_diarize@moss-transcribe-diarize-0.9B-m4a64k 窗口合并后的每句转写，
+      用通用大模型抽取热词（人名、地名、机构、专有名词），每次 20 句、按录音内相邻句分组，
+      结果逐句写回；经规则过滤（单字、纯英文碎片、常见国名）。
+    source: emilia2_zh_dialogue_diarize@moss-transcribe-diarize-0.9B-m4a64k
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/emilia2-64k-hotwords-20261016
+  recipe_parameters:
+    hotword_model: qwen3.8-flash
+    prompt: extract_hotword + conversational rules v3 + batch mode
+    utterances_per_call: 20
