@@ -1,5 +1,6 @@
 """Lance record index: build from JSONL sources, pinned open, filtered reads, checks."""
 
+import copy
 import gzip
 import hashlib
 import json
@@ -259,6 +260,9 @@ def test_ts_slots_and_ids_repeated_across_source_files(tmp_path):
             ],
             "target": f"t{i}",
             "language": "en",
+            "labels": {"n_spk": 2, "target_present": i != 0, "target_spk": f"P{i}",
+                       **({"sample_type": "negative_distractor"} if i == 0 else {})},
+            "metadata": {"recording_id": "S02"},
         }
 
     # "subset" repeats the IDs of "all" from another file, like hw_sft train_hotwords.
@@ -290,6 +294,11 @@ def test_ts_slots_and_ids_repeated_across_source_files(tmp_path):
         "enrollment", 16000, 32000
     )
     assert mixture["start_frame"] == row["start_frame"]
+    assert (row["n_spk"], row["target_present"], row["target_speaker"]) == (2, True, "P1")
+    assert (row["recording_id"], row["sample_type"], row["gender"]) == ("S02", None, None)
+    negative = to_table(index, split="all", filter="sample_type = 'negative_distractor'")
+    assert negative.column("id").to_pylist() == ["r0"]
+    assert negative.column("target_present").to_pylist() == [False]
     assert check_registration(catalog.get("demo", "ts"), roots) == []
 
 
@@ -304,6 +313,32 @@ def test_lhotse_recording_without_channel_ids(tmp_path):
     catalog, _ = register(spec, tmp_path, roots)
     index = open_index(catalog, "demo", "l1", "record_index", roots)
     assert to_table(index, columns=["channels"]).column(0).to_pylist() == [1] * 4
+
+
+def test_lhotse_gender_spellings_are_normalized(tmp_path):
+    spec = lhotse_spec(tmp_path)
+    path = tmp_path / "demo/l1/sup.jsonl.gz"
+    with gzip.open(path, "rt") as stream:
+        supervisions = [json.loads(line) for line in stream]
+    supervisions[0]["gender"] = "male_masculine"  # Common Voice
+    supervisions[1]["custom"] = {"gender": "Female"}  # police custom field
+    supervisions[2]["gender"] = ""
+    spec["artifacts"][1].update(write_jsonl(path, supervisions))
+    roots = {"data": tmp_path}
+    catalog, _ = register(copy.deepcopy(spec), tmp_path, roots)
+    index = open_index(catalog, "demo", "l1", "record_index", roots)
+    table = to_table(index, columns=["id", "gender", "recording_id"]).to_pylist()
+    assert {r["id"]: r["gender"] for r in table} == {
+        "rec_S0": "male", "rec_S1": "female", "rec_S2": None, "rec_S3": None
+    }
+    assert {r["recording_id"] for r in table} == {"rec"}
+    assert to_table(index, filter="gender = 'female'").num_rows == 1
+
+    supervisions[3]["gender"] = "unspecified"
+    spec["artifacts"][1].update(write_jsonl(path, supervisions))
+    with pytest.raises(ContractError, match="unknown gender"):
+        build_index(DatasetCatalog([DatasetSpec.from_dict(spec)]), "demo", "l1",
+                    tmp_path / "other", roots)
 
 
 def cli_setup(tmp_path):
