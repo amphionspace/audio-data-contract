@@ -232,6 +232,12 @@ def check_registration(
                 problems.append(f"{label}: {exc}")
         if artifact.kind == "audio-index":
             problems.extend(_check_audio_index(label, path, roots, sample, seed))
+        if artifact.kind == "lance-record-index":
+            from .record_index import check_index
+
+            problems.extend(
+                check_index(spec, artifact, path, roots, sample=sample, seed=seed)
+            )
     return problems
 
 

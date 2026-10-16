@@ -132,6 +132,21 @@ class ArtifactRef:
                 raise ContractError("lance-table metadata.record_count must be >= 0")
             if not isinstance(digest, str) or len(digest) != 64:
                 raise ContractError("lance-table metadata.schema_hash must be sha256")
+        if self.kind == "lance-record-index":
+            # index.json is immutable; pin it and the snapshot it names.
+            if self.sha256 is None:
+                raise ContractError("lance-record-index requires the index.json sha256")
+            version = self.metadata.get("snapshot_version")
+            rows = self.metadata.get("rows")
+            digest = self.metadata.get("schema_hash")
+            if type(version) is not int or version < 1:
+                raise ContractError(
+                    "lance-record-index metadata.snapshot_version must be >= 1"
+                )
+            if type(rows) is not int or rows < 0:
+                raise ContractError("lance-record-index metadata.rows must be >= 0")
+            if not isinstance(digest, str) or len(digest) != 64:
+                raise ContractError("lance-record-index metadata.schema_hash must be sha256")
         if self.kind == "tts-lance-release":
             # The release manifest is immutable; pin it and the snapshot it names.
             if self.sha256 is None:
