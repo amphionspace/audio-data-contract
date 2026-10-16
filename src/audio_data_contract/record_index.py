@@ -33,7 +33,7 @@ from .tts_lance import _sha256
 from .types import AudioRecord
 
 ARTIFACT_KIND = "lance-record-index"
-MAPPING_VERSION = "record-index-lance/1.1"
+MAPPING_VERSION = "record-index-lance/1.2"
 TABLE_PATH = "table.lance"
 MANIFEST_NAME = "index.json"
 # Split role that names the index; check_index only checks splits that carry it.
@@ -44,6 +44,24 @@ FRAGMENT_ROWS = 2**16
 # RMS loudness in dBFS, fraction of samples with |x| >= 0.999, and fraction of 25 ms
 # frames above -50 dBFS (an energy gate, not voice activity detection).
 QUALITY = ("loudness_dbfs", "clip_ratio", "voiced_ratio")
+# Source spellings mapped to one gender vocabulary; unknown spellings fail the build.
+GENDERS = {
+    "male": "male",
+    "male_masculine": "male",
+    "m": "male",
+    "female": "female",
+    "female_feminine": "female",
+    "f": "female",
+    "non-binary": "other",
+    "transgender": "other",
+    "intersex": "other",
+    "other": "other",
+    "": None,
+    "do_not_wish_to_say": None,
+    "unknown": None,
+}
+# Columns read from TS labels (n_spk, target_present, sample_type, target_spk).
+LABELS = ("n_spk", "target_present", "sample_type", "target_speaker")
 # record_json carries every AudioRecord field (e.g. extra TS slots); read on demand.
 DEFAULT_COLUMNS = (
     "id",
@@ -64,6 +82,9 @@ DEFAULT_COLUMNS = (
     "slots",
     "source_group",
     *QUALITY,
+    "recording_id",
+    "gender",
+    *LABELS,
 )
 COMPARED = (
     "splits",
@@ -77,6 +98,9 @@ COMPARED = (
     "speaker",
     "source_group",
     *QUALITY,
+    "recording_id",
+    "gender",
+    *LABELS,
 )
 INDICES = (
     ("id", "BTREE"),
@@ -86,6 +110,11 @@ INDICES = (
     ("duration", "BTREE"),
     ("speaker", "BTREE"),
     ("source_group", "BTREE"),
+    ("recording_id", "BTREE"),
+    ("target_speaker", "BTREE"),
+    ("gender", "BITMAP"),
+    ("n_spk", "BITMAP"),
+    ("sample_type", "BITMAP"),
 )
 
 
@@ -146,6 +175,12 @@ def _schema():
             pa.field("slots", pa.list_(_slot_type()), nullable=False),
             pa.field("source_group", pa.string()),
             *(pa.field(name, pa.float64()) for name in QUALITY),
+            pa.field("recording_id", pa.string()),
+            pa.field("gender", pa.string()),
+            pa.field("n_spk", pa.int16()),
+            pa.field("target_present", pa.bool_()),
+            pa.field("sample_type", pa.string()),
+            pa.field("target_speaker", pa.string()),
             pa.field("record_json", pa.large_string()),
         ],
         metadata={b"mapping": MAPPING_VERSION.encode()},
@@ -288,6 +323,36 @@ def _quality(record):
     return values
 
 
+def _gender(value, where):
+    if value is None:
+        return None
+    key = str(value).strip().lower()
+    if key not in GENDERS:
+        raise ContractError(f"{where}: unknown gender {value!r}")
+    return GENDERS[key]
+
+
+def _string(value):
+    return value if isinstance(value, str) and value else None
+
+
+def _labels(record):
+    """TS facts from labels only; metadata.sample_type (hw_sft) means something else."""
+    labels = record.labels
+    n_spk = labels.get("n_spk")
+    present = labels.get("target_present")
+    if n_spk is not None and type(n_spk) is not int:
+        raise ContractError(f"record {record.id}: labels.n_spk must be an integer")
+    if present is not None and type(present) is not bool:
+        raise ContractError(f"record {record.id}: labels.target_present must be boolean")
+    return {
+        "n_spk": n_spk,
+        "target_present": present,
+        "sample_type": _string(labels.get("sample_type")),
+        "target_speaker": _string(labels.get("target_spk")),
+    }
+
+
 def _record_row(splits, item, locations):
     record = AudioRecord.from_dict(item)
     slots = [_slot(record, slot, locations) for slot in record.audio_slots]
@@ -303,6 +368,9 @@ def _record_row(splits, item, locations):
         "speaker": speaker if isinstance(speaker, str) else None,
         "source_group": group if isinstance(group, str) else None,
         **_quality(record),
+        "recording_id": _string(record.metadata.get("recording_id")),
+        "gender": _gender(record.metadata.get("gender"), f"record {record.id}"),
+        **_labels(record),
         "slots": slots,
         "record_json": json.dumps(record.to_dict(), ensure_ascii=False, sort_keys=True),
         **{key: main[key] for key in _SLOT_FIELDS if key not in ("name", "purpose")},
@@ -327,6 +395,12 @@ def _supervision_row(splits, task, item, locations):
         "speaker": item.get("speaker"),
         "source_group": None,
         **dict.fromkeys(QUALITY),
+        "recording_id": item["recording_id"],
+        "gender": _gender(
+            item.get("gender", (item.get("custom") or {}).get("gender")),
+            f"supervision {item['id']}",
+        ),
+        **dict.fromkeys(LABELS),
         "slots": [{"name": "primary", "purpose": "primary", **main}],
         "record_json": None,
         **main,

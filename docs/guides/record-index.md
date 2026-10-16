@@ -66,10 +66,13 @@ for batch in iter_batches(index, split="train_zh", shard=shard, num_shards=shard
 | `root_alias`、`relative_path` | 音频文件位置，用 roots 文件解析 |
 | `start_frame`、`num_frames`、`sample_rate` | 从文件第几帧开始读多少帧；整文件记录 `start_frame` 为 0 |
 | `channels`、`channel` | 文件声道数；选定的声道（未指定为空） |
+| `recording_id` | 所属录音，取 `metadata.recording_id` 或 supervision 的 `recording_id`，有 BTREE 索引 |
+| `gender` | 统一为 `male` / `female` / `other`，未知或空为空值；取 `metadata.gender`、supervision 的 `gender` 或 `custom.gender`。Common Voice 的 `male_masculine`、police 的 `Male` 等写法都会归一；遇到映射表外的写法建表直接报错 |
+| `n_spk`、`target_present`、`sample_type`、`target_speaker` | 只取自 TS 记录的 `labels`（`n_spk`、`target_present`、`sample_type`、`target_spk`），非 TS 数据为空。hw_sft 的 `metadata.sample_type` 含义不同，不进这一列。`target_speaker` 和 `speaker` 一样只在本数据集内唯一，跨数据集拼成 `dataset_id:target_speaker`；aishellmix、librimix 源数据没有该标签，为空 |
 | `slots` | 记录的全部音频槽位（如 TS 的 `enrollment` 和 `mixture`），每个都带 `name`、`purpose`、`cut_id`、时长和上面这些位置字段 |
 | `record_json` | 完整 AudioRecord（含 `labels`、`hotwords`、`metadata`），默认不读；Lhotse 输入为空 |
 
-每个 fragment 最多 65,536 行。映射版本 `record-index-lance/1.1`（1.0 加上质量列、`source_group` 和说话人索引；1.0 的表需重建）。Lhotse 输入不读取 `custom` 字段，质量列和 `source_group` 为空。
+每个 fragment 最多 65,536 行。映射版本 `record-index-lance/1.2`（1.1 加上质量列、`source_group` 和说话人索引；1.2 加上 `recording_id`、`gender` 和 TS 标签列；旧版本的表需重建）。Lhotse 输入不读取 `custom` 字段，质量列和 `source_group` 为空。
 
 ## 限制
 
