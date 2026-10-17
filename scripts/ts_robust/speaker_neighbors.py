@@ -67,7 +67,7 @@ def read_clip(rows, i):
     path = DATA / rows["relative_path"][i] if rows["root_alias"][i] == "aidc_data" else None
     if path is None:
         raise ValueError(f"unexpected root alias {rows['root_alias'][i]}")
-    rate, start, frames = rows["sample_rate"][i], rows["start_frame"][i], rows["num_frames"][i]
+    start, frames = rows["start_frame"][i], rows["num_frames"][i]
     audio, file_rate = sf.read(path, start=start, frames=frames, dtype="float32", always_2d=True)
     audio = audio.mean(axis=1)
     if file_rate != SR:
@@ -90,7 +90,7 @@ def embed_corpus(model, rows, chosen, workers):
         for i in chosen[speaker]:
             try:
                 out.append(read_clip(rows, i))
-            except Exception:
+            except Exception:  # noqa: BLE001, S112  an unreadable clip is skipped; the speaker keeps the others
                 continue
         return out
 

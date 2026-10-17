@@ -60,7 +60,7 @@ def measure_file(job):
     for index, start, span in spans:
         try:
             clip = recording.load_audio(offset=start, duration=span).mean(axis=0)
-        except Exception as error:
+        except Exception as error:  # noqa: BLE001  a damaged span costs only its own clip
             out.append((index, f"decode_failed: {repr(error)[:60]}"))
             continue
         out.append((index, None if float(np.sqrt(np.mean(clip**2))) >= MIN_RMS else "silent"))

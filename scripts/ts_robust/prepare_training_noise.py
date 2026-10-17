@@ -32,9 +32,17 @@ import soundfile as sf
 from lhotse import AudioSource, Recording, RecordingSet
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "ts_benchmark"))
-from prepare_noise import (  # noqa: E402  (reused so both sides cut clips the same way)
-    CLIP_SECONDS, DNS5, DNS5_AUDIOSET, DNS5_FREESOUND, NOISE_DBFS, SR,
-    STATIONARY_PEAK_DB, STATIONARY_STD_DB, stationarity, to_16k_mono,
+from prepare_noise import (
+    CLIP_SECONDS,
+    DNS5,
+    DNS5_AUDIOSET,
+    DNS5_FREESOUND,
+    NOISE_DBFS,
+    SR,
+    STATIONARY_PEAK_DB,
+    STATIONARY_STD_DB,
+    stationarity,
+    to_16k_mono,
 )
 
 BENCHMARK = Path("/workspace/data/datasets/ts_asr_benchmark/source/v3-20261013")

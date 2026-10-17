@@ -64,13 +64,13 @@ OVERDRAW = 1.2
 #          the slowest to decode (44.1 kHz stereo m4a), so its quality columns stay empty.
 # cap = most utterances kept per group (speaker, video or recording).
 SOURCES = [
-    dict(language="zh", kind="audio_index", dataset="emilia2_short", version="short-20261014", split="train_zh", count=150000, cap=15, speaker=False, measure=False),
-    dict(language="zh", kind="recordings", dataset="kespeech", version="legacy-20260804", split="train", count=90000, cap=40, speaker=True, measure=True),
-    dict(language="zh", kind="segments", dataset="wenetspeech_youtube", version="l-20261014", split="train", count=40000, cap=10, speaker=False, measure=True),
-    dict(language="zh", kind="segments", dataset="wenetspeech_podcast", version="l-20261014", split="train", count=40000, cap=10, speaker=False, measure=True),
-    dict(language="en", kind="audio_index", dataset="emilia2_short", version="short-20261014", split="train_en", count=100000, cap=15, speaker=False, measure=False),
-    dict(language="en", kind="recordings", dataset="common_voice_en", version="legacy-20260804", split="train", count=50000, cap=20, speaker=True, measure=True),
-    dict(language="en", kind="segments", dataset="gigaspeech", version="legacy-20260804", split="train", count=50000, cap=10, speaker=False, measure=True),
+    {"language": "zh", "kind": "audio_index", "dataset": "emilia2_short", "version": "short-20261014", "split": "train_zh", "count": 150000, "cap": 15, "speaker": False, "measure": False},
+    {"language": "zh", "kind": "recordings", "dataset": "kespeech", "version": "legacy-20260804", "split": "train", "count": 90000, "cap": 40, "speaker": True, "measure": True},
+    {"language": "zh", "kind": "segments", "dataset": "wenetspeech_youtube", "version": "l-20261014", "split": "train", "count": 40000, "cap": 10, "speaker": False, "measure": True},
+    {"language": "zh", "kind": "segments", "dataset": "wenetspeech_podcast", "version": "l-20261014", "split": "train", "count": 40000, "cap": 10, "speaker": False, "measure": True},
+    {"language": "en", "kind": "audio_index", "dataset": "emilia2_short", "version": "short-20261014", "split": "train_en", "count": 100000, "cap": 15, "speaker": False, "measure": False},
+    {"language": "en", "kind": "recordings", "dataset": "common_voice_en", "version": "legacy-20260804", "split": "train", "count": 50000, "cap": 20, "speaker": True, "measure": True},
+    {"language": "en", "kind": "segments", "dataset": "gigaspeech", "version": "legacy-20260804", "split": "train", "count": 50000, "cap": 10, "speaker": False, "measure": True},
 ]
 
 
@@ -182,7 +182,7 @@ def measure_file(job):
     for index, start, span in clips:
         try:
             audio = recording.load_audio() if span is None else recording.load_audio(offset=start, duration=span)
-        except Exception as error:  # a damaged file or span costs only its own clip
+        except Exception as error:  # noqa: BLE001  a damaged file or span costs only its own clip
             out.append((index, None, f"decode_failed: {repr(error)[:80]}"))
             continue
         clip = audio.mean(axis=0).astype(np.float32)
