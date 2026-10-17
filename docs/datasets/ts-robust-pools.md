@@ -6,7 +6,7 @@
 | --- | --- | --- | --- |
 | `ts_interference_pool` | `v2-20261016`（`v1-20261015` 为首版） | 干扰人：单人语音片段，按偏移取自源文件 | zh 32 万条 389 h、en 20 万条 268 h |
 | `ts_nonspeech_pool` | `v1-20261016` | 没有人声的噪声和音乐，转写为空 | 4.8 万条 65.7 h |
-| `ts_scene_pool` | `v2-20261016`；`hard-20261016` | 多句场景：alternate / burst / short；相近声音版 | v2：zh 15 万条、en 10 万条；hard：zh 4 万条、en 2.5 万条 |
+| `ts_scene_pool` | `v2-20261016`；`hard-20261016`；`multi-20261017` | 多句场景：alternate / burst / short；相近声音版；目标说多句的并行版（full，含缺席孪生） | v2：zh 15 万条、en 10 万条；hard：zh 4 万条、en 2.5 万条；multi：zh 12 万条、en 4 万条 |
 | `dns5_noise_train` | `v1-20261016` | DNS5 的 AudioSet 和 Freesound 噪声，以及模拟房间响应 | 见下 |
 | `audioset_road_traffic` | `legacy-20260804` | 道路交通噪声（早已登记，这里只说明用法） | 10.9 万条 299 h |
 
@@ -62,6 +62,25 @@
 - 说话人向量用 ERes2NetV2：每个说话人取 4 句 2–8 s 的语句的归一化向量均值。候选包含目标语料外的 KeSpeech（随机 6000 位）和 Common Voice en（随机 6000 位）。最近邻表和向量在 `datasets/ts_scene_pool/source/speaker-neighbors-20261016/`（`neighbors.json`、`embeddings.npz`、`report.json`），生成脚本 `scripts/ts_robust/speaker_neighbors.py`。
 - 最相近一位的余弦中位数：zh 0.69（p10–p90：0.62–0.77），en 0.74（0.67–0.79）。这是 ERes2NetV2 的尺度，评测集的 `hard_cosine`（0.53）用的是 ECAPA，两个数不能直接比。
 - `labels.hard_cosine` 记录该相近说话人与目标的余弦。
+
+### 多句目标版（multi-20261017）
+
+对应评测集 ts_asr_benchmark 的基础场景：目标说 2–5 句，其他说话人（1–4 个）各自按自己的节奏说话，目标的几句被别人的话打断或盖住。checkpoint-7000 在这类评测样本上删除率从约 10% 涨到 26%–34%，而训练的场景池里目标说两句的样本只占约 1.3%（见 open-audio-llm 的 `docs/experiments/2026-10-17-ts-v7-data/plan.md`）。
+
+| 项 | 做法 |
+| --- | --- |
+| 模式 | `full`：并行轨道，目标和每个其他说话人各一条，起点在加载时随机错开；记录里写 `target_gap` 和 `interferers[].gap`（说话人自己两句之间的停顿范围，秒） |
+| 目标句数 | 2 / 3 / 4 / 5 句，概率 0.4 / 0.3 / 0.2 / 0.1；每句 1.5–9 秒；参考文本是各句按时间顺序拼接 |
+| 其他说话人 | 1 / 2 / 3 / 4 个，概率 0.3 / 0.3 / 0.25 / 0.15；每人的轨道长度约为目标轨道的 0.7–1.3 倍，最多 6 句 |
+| 停顿 | 四档：0.2–1 s（两档权重）、1–3 s、2.5–6 s，和评测集的发言间隙一致；每个说话人各抽一档 |
+| 场景长度 | 以最大停顿计不超过 32 s；实际窗口 p50 约 15 s，p90 约 24 s |
+| 缺席孪生 | 约 26% 的记录是孪生：同一批语句和停顿，目标的语句变成另一个干扰人的，注册人换成场景外的另一位（一半取目标的近邻声音，一半随机），转写为空；孪生对共用 `labels.pair`，`labels.twin_enrollment` 为 `near` 或 `random` |
+| 说话人与语料 | 同 v2：zh 目标取 AISHELL-2，其他说话人取 AISHELL-2 与 KeSpeech；en 目标取 LibriSpeech，其他取 LibriSpeech 与 Common Voice；均为 train 划分 |
+| 规模 | zh 12 万条（含孪生 3.1 万）、en 4 万条（含孪生 1.0 万） |
+
+加载需要训练端支持 `full` 模式（open-audio-llm PR #60）：`build_scene` 按记录里的停顿范围拼接，`scene_seconds` 用同样的上界给采样器估长度。生成命令：
+
+    python build_ts_scene_pool.py --output-dir DIR --version multi-20261017 --multi --neighbors FILE --zh 120000 --en 40000
 
 ## dns5_noise_train
 

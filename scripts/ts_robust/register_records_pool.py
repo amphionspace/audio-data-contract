@@ -8,6 +8,7 @@ The new entry is appended as text, so earlier versions in the file keep their ex
 """
 
 import argparse
+import datetime
 import gzip
 import hashlib
 import json
@@ -57,6 +58,7 @@ def main():
     parser.add_argument("--languages", nargs="+", required=True)
     parser.add_argument("--description", required=True)
     parser.add_argument("--sources", nargs="*", default=[])
+    parser.add_argument("--snapshot-date", default=datetime.datetime.now(tz=datetime.UTC).date().isoformat())
     args = parser.parse_args()
     directory = DATA_ROOT / "datasets" / args.dataset_id / "versions" / args.version
     relative = directory.relative_to(DATA_ROOT).as_posix()
@@ -73,7 +75,7 @@ def main():
                                         "duration_basis": "clip duration (segment span, or the whole file)"}}
     entry = {"schema_version": "dataset-catalog/2.0", "dataset_id": args.dataset_id, "version": args.version,
              "languages": args.languages, "tasks": [args.task], "aliases": [], "artifacts": artifacts, "splits": splits,
-             "provenance": {"status": "complete", "synthetic": "none", "snapshot_date": "2026-10-16",
+             "provenance": {"status": "complete", "synthetic": "none", "snapshot_date": args.snapshot_date,
                             "description": args.description, "sources": args.sources}}
     target = args.catalog / args.yaml
     existing = yaml.safe_load(target.read_text()) if target.exists() else []
