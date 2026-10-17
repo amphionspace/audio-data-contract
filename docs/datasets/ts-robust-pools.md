@@ -7,6 +7,8 @@
 | `ts_interference_pool` | `v2-20261016`（`v1-20261015` 为首版） | 干扰人：单人语音片段，按偏移取自源文件 | zh 32 万条 389 h、en 20 万条 268 h |
 | `ts_nonspeech_pool` | `v1-20261016` | 没有人声的噪声和音乐，转写为空 | 4.8 万条 65.7 h |
 | `ts_scene_pool` | `v2-20261016`；`hard-20261016`；`multi-20261017` | 多句场景：alternate / burst / short；相近声音版；目标说多句的并行版（full，含缺席孪生） | v2：zh 15 万条、en 10 万条；hard：zh 4 万条、en 2.5 万条；multi：zh 12 万条、en 4 万条 |
+| `ts_real_train` | `v1-20261017` | 真实会议窗口（训练划分），1 / 2 / 3+ 人，在场与缺席成对 | 9.1 万条（alimeeting 2.5 万、aishell4 3.0 万、ramc 3.7 万） |
+| `babble_noise_train` | `v1-20261017` | 合成背景人声（babble）训练划分，可作噪声或空目标 | zh、en 各 2,600 条，30 秒 |
 | `dns5_noise_train` | `v1-20261016` | DNS5 的 AudioSet 和 Freesound 噪声，以及模拟房间响应 | 见下 |
 | `audioset_road_traffic` | `legacy-20260804` | 道路交通噪声（早已登记，这里只说明用法） | 10.9 万条 299 h |
 
@@ -94,6 +96,20 @@ DNS5 噪声包里的 AudioSet 和 Freesound 噪声（16 kHz 单声道 FLAC，≤
 
 录音的 `custom` 记录 `stationary`、`level_std_db`、`peak_over_median_db`。提取脚本 `scripts/ts_robust/prepare_training_noise.py`，按流式读取，不解压整个压缩包。
 
+## ts_real_train
+
+评测集 ts_asr_real 的真实对话窗口用官方测试划分；这里用同样的方法在 **train 划分**上切窗口：AliMeeting 远场（`alimeeting_sdm@icefall-20260908`）、AISHELL-4（`aishell4@icefall-20260908`）、MagicData-RAMC 手机通话（`magicdata_ramc@icefall-20260908`）。8–22 秒、由完整语句组成，窗口之间不重叠，说话人数分 `1spk`、`2spk`、`3plus` 三档，每个语料每档最多 1 万个窗口（`labels.bucket`）。
+
+- 每个窗口一对样本，音频相同：目标在场（窗口里说话不少于 1 秒的一位，注册取窗口外同一录音的另一句，3–6 秒）和目标缺席（同一录音里没在窗口说话的另一人；没有则取其他录音，`labels.absent_source` 记录是哪一种）。同一对共用 `labels.pair`。
+- 为什么另做：现有的会议 `train_neg`（`turn-taking-20261014`）窗口里总有 2–3 个说话人，没有「窗口里只有另一个人在说话」的样本，而评测的真实缺席误输出最高的正是 1 人窗口（AISHELL-4：checkpoint-7000 为 26%）；它们还把 8 路麦克风取平均，评测读第 0 声道。
+- 声道：每个槽位的引用写 `channel: 0`，加载器只读第 0 声道，与评测一致；音频索引里的 `channels` 是文件真实声道数。
+- 记录是长录音上的片段，不复制音频；规模：alimeeting 2.5 万条（含 1 人窗口 1,395 个）、aishell4 3.0 万条（2,618 个）、ramc 3.7 万条（8,324 个）。ramc 是两人通话，2 人窗口里没有缺席的人，缺席样本取其他通话的说话人。
+- 与评测互不重叠：评测用官方测试划分的录音，这里用 train 划分。生成脚本 `scripts/ts_robust/build_ts_real_train.py`。
+
+## babble_noise_train
+
+`babble_noise_synth` 的 zh、en 训练划分（每种语言 2,600 条，每条 30 秒，5–20 位说话人同时说话）。原数据集只登记了源目录和 manifest，训练加载器读不了，这里写成 Lhotse 录音清单，可以放进 `noise_sources`（叠加在目标说话人场景上）或 `nonspeech_sources`（空目标）。评测的 babble 来自 dev / test 说话人，与训练说话人互不重叠。脚本 `scripts/ts_robust/register_babble_noise.py`。
+
 ## 与评测集互不重叠
 
 - **说话人**：评测集的说话人只来自各语料的官方 test 划分（AISHELL-1/3 test、KeSpeech test、MagicData test、AISHELL-2 test）；这里的目标说话人和其他说话人取 train 划分。
@@ -103,4 +119,4 @@ DNS5 噪声包里的 AudioSet 和 Freesound 噪声（16 kHz 单声道 FLAC，≤
 
 ## 生成脚本
 
-`scripts/ts_robust/`：`build_interference_pool.py`、`build_nonspeech_pool.py`、`build_ts_scene_pool.py`、`speaker_neighbors.py`、`prepare_training_noise.py`、`register_training_noise.py`、`register_records_pool.py`（把 `records` + `audio_index` 版本写成声明）。登记后用 `build-record-index --register` 建索引。
+`scripts/ts_robust/`：`build_interference_pool.py`、`build_nonspeech_pool.py`、`build_ts_scene_pool.py`、`speaker_neighbors.py`、`prepare_training_noise.py`、`register_training_noise.py`、`register_records_pool.py`（把 `records` + `audio_index` 版本写成声明）、`build_ts_real_train.py`、`register_babble_noise.py`。登记后用 `build-record-index --register` 建索引。
