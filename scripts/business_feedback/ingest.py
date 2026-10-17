@@ -33,6 +33,7 @@ ROOT_ALIAS = DATASET_ID
 SAMPLE_RATE = 16000
 SPLIT_DESCRIPTIONS = {
     "target_speaker": "目标说话人未在场、期望输出为空的反馈（已由反馈人确认）。",
+    "target_present": "目标说话人在场、参考文本已由复核人听音确认的反馈。",
     "pending_labels": "现象已记录但参考文本未确认，不参与打分。",
 }
 
@@ -89,7 +90,7 @@ def read_response(path):
 
 def package_names(source):
     names = {}
-    for item in sorted((source / "packages").glob("case-*--*.zip")):
+    for item in sorted((source / "packages").glob("*--*.zip")):
         names[item.name.split("--", 1)[0]] = item.name.split("--", 1)[1]
     return names
 
