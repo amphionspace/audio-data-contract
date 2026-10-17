@@ -76,6 +76,21 @@ def test_batch_becomes_negative_and_pending_records(batch):
     assert len(index) == 4
 
 
+def test_confirmed_target_speech_and_row_named_packages(batch):
+    source, labels, data_root = batch
+    make_case(source, "row-04", 3.0, "language Chinese<asr_text>是啊。")
+    (source / "packages" / "row-04--model-feedback-def.zip").write_bytes(b"")
+    labels["cases"]["row-04"] = {"split": "target_present", "target_present": True, "target": "嗯，是啊",
+                                 "issue": "loop"}
+    by_split, index = ingest["build"](source, labels, data_root)
+    spec = DatasetSpec.from_dict(ingest["declaration"](labels, by_split, index, data_root))
+
+    assert "target_present" in spec.splits
+    (present,) = load_records(data_root / "versions/ts-test/records/target_present.jsonl.gz")
+    assert present.target == "嗯，是啊" and present.labels["target_present"] is True
+    assert present.metadata["package"] == "model-feedback-def.zip"
+
+
 def test_registered_version_is_never_replaced(batch):
     source, labels, data_root = batch
     ingest["build"](source, labels, data_root)
