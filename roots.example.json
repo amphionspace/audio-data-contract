@@ -33,5 +33,7 @@
   "ts_asr_farfield": "/workspace/data/datasets/ts_asr_farfield",
   "ts_asr_nearfar": "/workspace/data/datasets/ts_asr_nearfar",
   "ts_asr_shortseg": "/workspace/data/datasets/ts_asr_shortseg",
+  "ts_asr_singing": "/workspace/data/datasets/ts_asr_singing",
+  "mir1k": "/workspace/data/datasets/mir1k",
   "open_noise": "/workspace/data/datasets/noise_open"
 }

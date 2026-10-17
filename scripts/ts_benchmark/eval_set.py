@@ -149,6 +149,9 @@ NAMED = {
     "realreg2-mid1-neg": ("真实注册 2 · 缺席 · 1.2–3 秒片段", "测试人员 2026-10-12 批的注册录音，配上 1–2 个没有他的说话人的短片段"),
     "realreg2-mid2-neg": ("真实注册 2 · 缺席 · 3–6 秒片段", "同上，3–6 秒"),
     "solo-mid": ("目标单独说一句短话（2–6 秒）", "只有目标说话人的短片段（对照）：压低误输出时不能漏掉注册人的短句"),
+    # ts_asr_singing：业务第三批里只有歌声的片段
+    "nonspeech-song": ("只有歌声（带伴奏的中文流行歌）", "MIR-1K 卡拉 OK 片段（人声 + 伴奏），1.5–8 秒，近似旁边外放的歌；期望输出为空"),
+    "realreg2-song": ("真实注册 2 · 只有歌声", "测试人员 2026-10-12 批的注册录音，配上只有歌声的片段；期望输出为空"),
 }
 
 
@@ -223,6 +226,12 @@ def main():
              "description": "业务反馈里测试人员的真实注册录音，短片段，目标不在场；误输出率"},
             {"name": "目标单独短句（对照）", "section": "进场、离场与缺席", "labels": ["solo-mid"],
              "description": "只有注册人说一句 2–6 秒的话；字错率与漏识率不得因压低误输出而变差"},
+        ]
+        return emit(recipe, splits, groups)
+    if recipe["dataset_id"] == "ts_asr_singing":
+        groups = [
+            {"name": "只有歌声（带人声的歌曲）", "section": "纯噪声", "labels": pick("", {"nonspeech"}),
+             "description": "带伴奏的中文流行歌，没有人说话；随机注册与业务真实注册；期望输出为空"},
         ]
         return emit(recipe, splits, groups)
     groups = [
