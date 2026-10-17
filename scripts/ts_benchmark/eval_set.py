@@ -141,6 +141,14 @@ NAMED = {
     "dom-phone-neg": ("手机录音 · 目标缺席", "同上，注册人不在场"),
     "dom-studio-pos": ("棚内录音 · 目标在场", "AISHELL-3 棚内高质量录音说话人"),
     "dom-studio-neg": ("棚内录音 · 目标缺席", "同上，注册人不在场"),
+    # ts_asr_shortseg：业务第三批里 VAD 切出的 1.2–6 秒片段
+    "abs-mid1-k1": ("缺席 · 1.2–3 秒片段 · 1 个干扰人", "VAD 切出的短片段，只有别人在说话；期望输出为空"),
+    "abs-mid1-k2": ("缺席 · 1.2–3 秒片段 · 2 个干扰人", "同上，2 个别人"),
+    "abs-mid2-k1": ("缺席 · 3–6 秒片段 · 1 个干扰人", "VAD 切出的短片段，只有别人在说话；期望输出为空"),
+    "abs-mid2-k2": ("缺席 · 3–6 秒片段 · 2 个干扰人", "同上，2 个别人"),
+    "realreg2-mid1-neg": ("真实注册 2 · 缺席 · 1.2–3 秒片段", "测试人员 2026-10-12 批的注册录音，配上 1–2 个没有他的说话人的短片段"),
+    "realreg2-mid2-neg": ("真实注册 2 · 缺席 · 3–6 秒片段", "同上，3–6 秒"),
+    "solo-mid": ("目标单独说一句短话（2–6 秒）", "只有目标说话人的短片段（对照）：压低误输出时不能漏掉注册人的短句"),
 }
 
 
@@ -205,6 +213,16 @@ def main():
              "description": "同上，注册人不在场"},
             {"name": "只有噪声，没有目标", "section": "新登记的噪声集", "labels": pick("nonspeech-", {"nonspeech"}),
              "description": "背景人声、人群、环境事件声；期望输出为空"},
+        ]
+        return emit(recipe, splits, groups)
+    if recipe["dataset_id"] == "ts_asr_shortseg":
+        groups = [
+            {"name": "目标缺席 · 1.2–6 秒短片段（别人在说话）", "section": "进场、离场与缺席", "labels": pick("abs-mid", {"neg"}),
+             "description": "持续收音时 VAD 切出的短片段，注册人不在场；补 abs-short（0.4–1.2 秒）与 6–18 秒之间的长度"},
+            {"name": "真实注册录音 · 1.2–6 秒短片段（缺席）", "section": "真实注册音频", "labels": pick("realreg2-mid", {"neg"}),
+             "description": "业务反馈里测试人员的真实注册录音，短片段，目标不在场；误输出率"},
+            {"name": "目标单独短句（对照）", "section": "进场、离场与缺席", "labels": ["solo-mid"],
+             "description": "只有注册人说一句 2–6 秒的话；字错率与漏识率不得因压低误输出而变差"},
         ]
         return emit(recipe, splits, groups)
     groups = [

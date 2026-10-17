@@ -42,6 +42,15 @@
 - 注册与混合的近远场失配：`rirdiff`（近场注册、远场混合）、`mmfarfar`（注册和混合都远场）、`mmfarnear`（远场注册、近场混合），注册的房间响应用 `enroll_rir_pool`。
 - 真实对照见 [ts-real.md](ts-real.md) 的 `ts_asr_nearfar`；合成与真实的校准脚本是 `scripts/ts_benchmark/calibrate.py`。
 
+## 短片段补充集（ts_asr_shortseg）
+
+`ts_asr_shortseg@v1-20261017`：840 条、7 个场景，配方 `scripts/ts_benchmark/recipe-shortseg.yaml`。来源是业务第三批反馈（`business_feedback@ts-20261016`）：28 条错误里 17 条是持续收音时 VAD 切出的 1.2–6 秒片段，注册人没说话、别人在说话，而 v3 的缺席场景只有 0.4–1.2 秒（`abs-short`）和 6–18 秒两档。
+
+- `abs-mid1-k1/k2`（1.2–3 秒）、`abs-mid2-k1/k2`（3–6 秒）：注册人缺席，1 或 2 个干扰人，干扰人从片段开头 0–0.3 秒内开始说话，片段结尾截断语句（与 VAD 切分一致）；期望输出为空。
+- `realreg2-mid1-neg`、`realreg2-mid2-neg`：同样的长度，注册音频换成业务第二、三批测试人员的真实注册录音（`realreg2`）。
+- `solo-mid`：对照，只有注册人说一句 2–6 秒的话；压低误输出时这一项的字错率和漏识率不能变差。
+- 底噪、说话人池与 v3 相同（`--noise-cache`、`--rir-cache` 取 v3 的 `source/v3-20261013/noise`、`rir`）。业务里另有 3 条只有歌声的片段，评测集还没有带人声的歌曲，未覆盖。
+
 ## 一条记录
 
 - `task = "ts_asr"`，`audio_slots` 依次是 `enrollment` 和 `mixture`。
