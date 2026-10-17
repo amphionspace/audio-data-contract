@@ -168,3 +168,89 @@
     - kespeech:legacy-20260804
     - librispeech:legacy-20260804
     - common_voice_en:legacy-20260804
+- schema_version: dataset-catalog/2.0
+  dataset_id: ts_scene_pool
+  version: multi-20261017
+  languages:
+  - zh
+  - en
+  tasks:
+  - ts_asr
+  aliases: []
+  artifacts:
+  - name: zh-records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/multi-20261017/records_zh.jsonl.gz
+    sha256: 2d16fbd65ba1da2770f2ba89a8a7b0267ebdd5e5ee62e8317322c89dba39d9a2
+    metadata:
+      record_count: 120000
+  - name: zh-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/multi-20261017/audio_index_zh.jsonl.gz
+    sha256: e8272bd67db06c1d5bdb5258f2cdc01296e56236fdca1fae1efb099cc734dee0
+    metadata:
+      record_count: 697327
+  - name: en-records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/multi-20261017/records_en.jsonl.gz
+    sha256: 97084645fd79b5ba8d8497f56577e3ca1a7c4e18fbecb3a2860aa023f302c0a0
+    metadata:
+      record_count: 40000
+  - name: en-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/multi-20261017/audio_index_en.jsonl.gz
+    sha256: 9ceee171b51664406b03633f593216e0e54f4d981be49562100f5773923b304c
+    metadata:
+      record_count: 115458
+  - name: record_index
+    kind: lance-record-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/multi-20261017/record_index/index.json
+    expected_bytes: 1059
+    sha256: 0c59f6f28570ccbcb649d59295ff4705bd686c32b96eca8f809b044dc8391ada
+    metadata:
+      snapshot_version: 13
+      rows: 160000
+      schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
+  splits:
+    zh:
+      artifacts:
+        records:
+        - zh-records
+        audio_index:
+        - zh-audio-index
+        records_lance:
+        - record_index
+      task: ts_asr
+      statistics:
+        records: 120000
+        duration_hours: 134.22
+        duration_basis: clip duration (segment span, or the whole file)
+    en:
+      artifacts:
+        records:
+        - en-records
+        audio_index:
+        - en-audio-index
+        records_lance:
+        - record_index
+      task: ts_asr
+      statistics:
+        records: 40000
+        duration_hours: 59.2
+        duration_basis: clip duration (segment span, or the whole file)
+  provenance:
+    status: complete
+    synthetic: none
+    snapshot_date: '2026-10-17'
+    description: 多句目标场景（full）：目标说 2–5 句，与 1–4 个其他说话人各自按自己的间隔并行说话（间隔范围写在记录里）；约 26% 的记录是缺席孪生——同一批语句和时间线，注册人换成场景外的另一个人（一半是目标的近邻声音），目标为空，同一对共用
+      labels.pair。对应 ts_asr_benchmark 的基础场景（目标几句被别人打断或盖住）。
+    sources:
+    - aishell2:legacy-20260804
+    - kespeech:legacy-20260804
+    - librispeech:legacy-20260804
+    - common_voice_en:legacy-20260804
