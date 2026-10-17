@@ -180,7 +180,7 @@
     text_check_model: Qwen3-ASR
     text_check_unit: window
     window_seconds: [30, 120]
-# 占位登记：Emilia2 m4a-64k 中文对话的热词标注，提取中（2026-10-16 起），详见状态文件。
+# Emilia2 m4a-64k 中文对话的句级热词标注（2026-10-16 起，已完成 21 批）。
 - schema_version: dataset-catalog/2.0
   dataset_id: emilia2_zh_dialogue_diarize
   version: hotwords-qwen3.8-flash-m4a64k-v1
@@ -194,20 +194,39 @@
       kind: dataset-state
       root_alias: aidc_data
       relative_path: datasets/emilia2_zh_dialogue_diarize/versions/hotwords-qwen3.8-flash-m4a64k-v1/state.json
+    - name: hotwords
+      kind: metadata
+      root_alias: aidc_data
+      relative_path: datasets/emilia2_zh_dialogue_diarize/versions/hotwords-qwen3.8-flash-m4a64k-v1/hotwords.jsonl.gz
+      expected_bytes: 7415868
+      sha256: fe272b80f389fb2c4ed68ed2a29721a48e22fb96f8317ce4491dc3d7d9600183
+      metadata:
+        record_count: 1710174
   splits:
     train:
       artifacts:
         preparation_state:
           - preparation_state
+        hotwords:
+          - hotwords
+      statistics:
+        utterances: 1710408
+        duration_hours: 1434.7
+        labeled_utterances: 1710174
+        utterances_with_hotwords: 356963
+        hours_with_hotwords: 479.2
+        hotword_mentions: 455916
       provenance:
-        preparation_status: building
+        preparation_status: complete
   provenance:
-    preparation_status: building
+    preparation_status: complete
     owner: mingdong
     description: >-
       对 emilia2_zh_dialogue_diarize@moss-transcribe-diarize-0.9B-m4a64k 窗口合并后的每句转写，
       用通用大模型抽取热词（人名、地名、机构、专有名词），每次 20 句、按录音内相邻句分组，
-      结果逐句写回；经规则过滤（单字、纯英文碎片、常见国名）。
+      结果逐句写回；经规则过滤（单字、纯英文碎片、常见国名、长于 12 字）。
+      hotwords.jsonl.gz 每行 {id, hotwords}，id 对应窗口合并 supervisions 的句 id；234 句因内容审核拒绝而未标（hotwords 缺失）。
+      句级旁路文件，按窗口使用时需同时排除 speaker_merge 窗口。
     source: emilia2_zh_dialogue_diarize@moss-transcribe-diarize-0.9B-m4a64k
     run_dir: /workspace/workspace/mingdong/data/amphiondata/emilia2-64k-hotwords-20261016
   recipe_parameters:
