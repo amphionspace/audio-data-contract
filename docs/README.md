@@ -17,6 +17,7 @@
 | [Common Voice EN](datasets/cv-en-cleaning.md) | 清洗结果、train/test 清单差异 |
 | [远场与会议数据](datasets/farfield-data-preparation.md) | AliMeeting、AMI、NOTSOFAR、RealMAN、ViTW 的准备与使用 |
 | [Target-ASR](datasets/target-asr.md) | LibriMix、AISHELLMix 的版本、记录格式和音频读取 |
+| [目标说话人训练素材池](datasets/ts-robust-pools.md) | 干扰人、非人声、多句场景、DNS5 训练噪声与房间响应，与评测集的隔离 |
 | [说话人数据](datasets/speaker-preparation.md) | CN-Celeb、3D-Speaker、HI-MIA、CHiME-6 的训练和评测入口 |
 | [SOT 时间戳](datasets/sot-timestamps.md) | 时间戳来源、版本状态和进度查询 |
 | [警言警语 V6](datasets/police-v6.md) | expanded、8h 两批数据及测试范围 |
