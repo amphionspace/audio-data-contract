@@ -1,0 +1,52 @@
+# 业务反馈第三批：飞书表格「鼎桥云端 ASR 调试」的机主识别错误，与第二批同一位测试人员、同一段注册音频，
+# 2026-10-13 持续收音时挑出的片段。表格只有「机主识别错误」等分类，没有逐条说明；
+# 目标说话人是否在场与参考文本由复核人在 2026-10-17 逐条听音确认（amphiondata 听审页，answers.json 存于 badcase 目录 review/）。
+# 表格另有 4 个包与第二批 case-08~11 相同，不在本批；表格第 9 行不是调试包。
+version: ts-20261016
+source: 2026-10-16_amphionasr-owner-misrecognition
+language: zh
+description: >-
+  测试人员持续收音时反馈的 31 个调试包（表格第 2–37 行，去掉与第二批重复的包），与第二批使用同一段注册音频。
+  每段输入为 3 秒注册音频加一个识别片段；目标是否在场与参考文本经复核人逐条听音确认。
+cases:
+  # 机主没说话，别人在说话：模型转写了别人的话。第 29 行表格写「机主识别正确、明显丢字」，复核为机主没说话。
+  row-02: {split: target_speaker, target_present: false, issue: non_target_voice_transcribed}
+  row-16: {split: target_speaker, target_present: false, issue: non_target_voice_transcribed}
+  row-17: {split: target_speaker, target_present: false, issue: non_target_voice_transcribed}
+  row-18: {split: target_speaker, target_present: false, issue: non_target_voice_transcribed}
+  row-29: {split: target_speaker, target_present: false, issue: non_target_voice_transcribed}
+  row-30: {split: target_speaker, target_present: false, issue: non_target_voice_transcribed}
+  row-34: {split: target_speaker, target_present: false, issue: non_target_voice_transcribed}
+  # 机主没说话，别人在说话：模型输出与片段内容无关的短词、叠词或数字。
+  row-03: {split: target_speaker, target_present: false, issue: hallucination_on_non_target_voice}
+  row-10: {split: target_speaker, target_present: false, issue: hallucination_on_non_target_voice}
+  row-11: {split: target_speaker, target_present: false, issue: hallucination_on_non_target_voice}
+  row-12: {split: target_speaker, target_present: false, issue: hallucination_on_non_target_voice}
+  row-14: {split: target_speaker, target_present: false, issue: hallucination_on_non_target_voice}
+  row-15: {split: target_speaker, target_present: false, issue: hallucination_on_non_target_voice}
+  row-31: {split: target_speaker, target_present: false, issue: hallucination_on_non_target_voice}
+  row-33: {split: target_speaker, target_present: false, issue: hallucination_on_non_target_voice}
+  row-35: {split: target_speaker, target_present: false, issue: hallucination_on_non_target_voice}
+  # 机主没说话，别人在说话：复读，被引擎按 finish_reason=repetition 截断。
+  row-13: {split: target_speaker, target_present: false, issue: generation_loop_on_non_target_voice}
+  row-32: {split: target_speaker, target_present: false, issue: generation_loop_on_non_target_voice}
+  row-36: {split: target_speaker, target_present: false, issue: generation_loop_on_non_target_voice}
+  row-37: {split: target_speaker, target_present: false, issue: generation_loop_on_non_target_voice}
+  # 机主没说话，只有歌声。
+  row-08: {split: target_speaker, target_present: false, issue: singing_voice_transcribed}
+  row-20: {split: target_speaker, target_present: false, issue: singing_voice_transcribed}
+  row-22: {split: target_speaker, target_present: false, issue: singing_voice_transcribed}
+  # 没有人声。
+  row-19: {split: target_speaker, target_present: false, issue: hallucination_on_nonspeech}
+  row-27: {split: target_speaker, target_present: false, issue: hallucination_on_nonspeech}
+  row-28: {split: target_speaker, target_present: false, issue: hallucination_on_nonspeech}
+  # 机主没说话，模型输出为空（正确）；表格标为机主识别错误，作为通过的回归项。
+  row-06: {split: target_speaker, target_present: false, issue: correct_empty_output}
+  row-07: {split: target_speaker, target_present: false, issue: correct_empty_output}
+  # 机主在场，参考文本经复核确认。
+  # 第 4 行：机主与别人都说了，机主只说「嗯，是啊」；模型说对后复读，流在引擎侧被取消（context canceled）。
+  row-04: {split: target_present, target_present: true, target: 嗯，是啊, issue: generation_loop_after_target_speech}
+  # 第 24 行：只有机主说话，模型输出正确；表格标为机主识别错误。
+  row-24: {split: target_present, target_present: true, target: 这回会不会好一点？, issue: correct_output}
+  # 机主和别人都说了，机主说的疑似「次数多了」，复核人听不清：只记录，不打分。模型输出为空（漏识）。
+  row-05: {split: pending_labels, issue: target_speech_missed_text_uncertain}
