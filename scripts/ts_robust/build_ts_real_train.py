@@ -15,7 +15,13 @@ that one microphone, exactly like the benchmark does.
 
 One split per corpus (alimeeting, aishell4, ramc) so the training recipe can weigh them separately.
 
-    python build_ts_real_train.py --output-dir DIR [--per-bucket 10000]
+``--recipe v2`` (v2-20261018) cuts target-anchored windows instead (``ts_real/build.py``
+``target_windows``: the target's utterances whole, everyone else's clipped to the window), sampled per
+overlap bucket - the share of the target's speech that others talk over - so overlapped stretches are not
+dropped, and writes each window's utterances (``metadata.window_utts``, as in ts_asr_real) for frame-level
+labels. Recordings with a speaker of the corpus's dev or test splits are left out.
+
+    python build_ts_real_train.py --output-dir DIR [--recipe v1 --per-bucket 10000 | --recipe v2]
 """
 
 import argparse
@@ -38,8 +44,15 @@ _spec.loader.exec_module(real)
 DATA = Path("/workspace/data")
 ROOT_ALIAS = "aidc_data"
 DATASET_ID = "ts_real_train"
-VERSION = "v1-20261017"
-SEED = 20261017
+RECIPES = {
+    "v1": {"version": "v1-20261017", "seed": 20261017},
+    # Windows per corpus and overlap bucket (ts_real/build.py OVERLAP_BUCKETS); RAMC transcripts never overlap.
+    "v2": {"version": "v2-20261018", "seed": 20261018, "windows": {
+        "alimeeting": {"o0": 3000, "o20": 4000, "o50": 6000, "o100": 8000},
+        "aishell4": {"o0": 4000, "o20": 4000, "o50": 4000, "o100": 4000},
+        "ramc": {"o0": 6000},
+    }},
+}
 CORPORA = {
     "alimeeting": ("alimeeting_sdm", "icefall-20260908"),
     "aishell4": ("aishell4", "icefall-20260908"),
@@ -48,16 +61,16 @@ CORPORA = {
 BUCKETS = {"1spk": (1, 1), "2spk": (2, 2), "3plus": (3, 99)}
 
 
-def load_corpus(dataset, version, catalog, roots):
-    """{recording_id: entry} like ts_real/build.py, over every file of the train split."""
+def load_corpus(dataset, version, catalog, roots, split="train"):
+    """{recording_id: entry} like ts_real/build.py, over every file of the split."""
     recordings = {}
-    for path in resolve_split(catalog, dataset, version, "train", "recordings", roots):
+    for path in resolve_split(catalog, dataset, version, split, "recordings", roots):
         with gzip.open(path, "rt", encoding="utf-8") as stream:
             for line in stream:
                 row = json.loads(line)
                 recordings[row["id"]] = row
     out = {}
-    for path in resolve_split(catalog, dataset, version, "train", "supervisions", roots):
+    for path in resolve_split(catalog, dataset, version, split, "supervisions", roots):
         with gzip.open(path, "rt", encoding="utf-8") as stream:
             for line in stream:
                 row = json.loads(line)
@@ -74,6 +87,13 @@ def load_corpus(dataset, version, catalog, roots):
     for entry in out.values():
         real.finish_entry(entry)
     return out
+
+
+def held_out_speakers(dataset, version, catalog, roots):
+    """Speakers of the corpus's splits other than train (dev, test)."""
+    entry = next(d for d in catalog if d.dataset_id == dataset and d.version == version)
+    return {u[2] for split in entry.splits if split != "train"
+            for rec in load_corpus(dataset, version, catalog, roots, split).values() for u in rec["sups"]}
 
 
 def plan(recordings, rng, per_bucket):
@@ -121,9 +141,9 @@ def index_row(recordings, rid):
             "channels": entry["channels"], "num_frames": entry["num_samples"], "duration": round(entry["num_samples"] / entry["sample_rate"], 3)}
 
 
-def make_records(split, name, plans, recordings, rng, audio):
+def make_records(split, name, plans, recordings, rng, audio, version, window_utts=False):
     records = []
-    base = {"dataset_id": DATASET_ID, "version": VERSION, "split": split}
+    base = {"dataset_id": DATASET_ID, "version": version, "split": split}
 
     def ref(rid, start, end):
         row = audio.setdefault(rid, index_row(recordings, rid))
@@ -151,6 +171,8 @@ def make_records(split, name, plans, recordings, rng, audio):
                 present = kind == "pos"
                 labels = {**common, "target_present": present,
                           "n_interferers": window["speakers"] - (1 if present else 0)}
+                if window_utts:
+                    labels["overlap_bucket"] = bucket
                 if present:
                     labels["target_overlap_ratio"] = round(real.overlap_ratio(target_utts, window["utts"]), 3)
                     labels["target_seconds"] = round(sum(e - s for s, e, _, _ in target_utts), 2)
@@ -163,26 +185,48 @@ def make_records(split, name, plans, recordings, rng, audio):
                     "audio_slots": [{"name": "enrollment", "purpose": "enrollment", "ref": enroll},
                                     {"name": "mixture", "purpose": "mixture", "ref": span}],
                     "metadata": {"source_group": f"{name}:{window['recording']}:{who}",
-                                 "target_speaker": f"{name}:{who}", "window_start_s": round(window["lo"], 3)}})
+                                 "target_speaker": f"{name}:{who}", "window_start_s": round(window["lo"], 3),
+                                 **({"window_utts": utterances(name, window)} if window_utts else {})}})
             number += 1
     return records
+
+
+def utterances(name, window):
+    """The window's utterances relative to its start, as ts_real/build.py writes them."""
+    return [{"speaker": f"{name}:{spk}", "start": round(s - window["lo"], 3), "duration": round(e - s, 3),
+             "text": text, **({"clipped": True} if (s, e, spk, text) in window.get("clipped", ()) else {})}
+            for s, e, spk, text in sorted(window["utts"])]
 
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--output-dir", type=Path, required=True)
-    parser.add_argument("--per-bucket", type=int, default=10000, help="windows per speaker-count bucket and corpus")
+    parser.add_argument("--recipe", choices=sorted(RECIPES), default="v1")
+    parser.add_argument("--per-bucket", type=int, default=10000,
+                        help="v1: windows per speaker-count bucket and corpus")
     args = parser.parse_args()
+    recipe = RECIPES[args.recipe]
     args.output_dir.mkdir(parents=True, exist_ok=True)
     roots = {k: Path(v) for k, v in json.loads(Path("/workspace/data/registry/roots.json").read_text()).items()}
     catalog = load_catalog("/workspace/data/registry/catalog")
     report = {}
     for split, (dataset, version) in CORPORA.items():
-        rng = random.Random(f"{SEED}:{split}")
+        rng = random.Random(f"{recipe['seed']}:{split}")
         recordings = load_corpus(dataset, version, catalog, roots)
-        plans = plan(recordings, rng, args.per_bucket)
+        dropped = []
+        if "windows" in recipe:
+            held = held_out_speakers(dataset, version, catalog, roots)
+            dropped = sorted(r for r, e in recordings.items() if {u[2] for u in e["sups"]} & held)
+            for rid in dropped:
+                del recordings[rid]
+            quotas = {"windows": recipe["windows"][split]}
+            plans = {key.rsplit("-", 1)[1]: items
+                     for key, items in real.plan_overlap_samples(split, quotas, recordings, rng, "train").items()}
+        else:
+            plans = plan(recordings, rng, args.per_bucket)
         audio = {}
-        records = make_records(split, split, plans, recordings, rng, audio)
+        records = make_records(split, split, plans, recordings, rng, audio, recipe["version"],
+                               window_utts="windows" in recipe)
         with gzip.open(args.output_dir / f"records_{split}.jsonl.gz", "wt", encoding="utf-8") as stream:
             for row in records:
                 stream.write(json.dumps(row, ensure_ascii=False) + "\n")
@@ -190,6 +234,7 @@ def main():
             for row in sorted(audio.values(), key=lambda r: r["cut_id"]):
                 stream.write(json.dumps(row, ensure_ascii=False) + "\n")
         report[split] = {"records": len(records), "windows": {b: len(v) for b, v in plans.items()},
+                         "dropped_recordings": dropped,
                          "recordings": len(audio), "same_recording_negatives": Counter(
                              r["labels"].get("absent_source") for r in records if not r["labels"]["target_present"])}
         print(split, report[split], flush=True)
