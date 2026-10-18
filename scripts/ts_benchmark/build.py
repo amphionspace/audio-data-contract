@@ -122,15 +122,11 @@ def _rows(path):
 
 def load_source(source, catalog, roots, rng):
     """{speaker: [Utt]} of one registered single-speaker split."""
-    paths = {}
-    for role in ("recordings", "supervisions"):
-        found = resolve_split(catalog, source["dataset"], source["version"], source["split"], role, roots)
-        if len(found) != 1:
-            raise ValueError(f"{source['dataset']}: expected one {role} file")
-        paths[role] = found[0]
-    audio = {r["id"]: r["sources"][0]["source"] for r in _rows(paths["recordings"])}
+    paths = {role: resolve_split(catalog, source["dataset"], source["version"], source["split"], role, roots)
+             for role in ("recordings", "supervisions")}
+    audio = {r["id"]: r["sources"][0]["source"] for path in paths["recordings"] for r in _rows(path)}
     by_speaker = defaultdict(list)
-    for row in _rows(paths["supervisions"]):
+    for row in (row for path in paths["supervisions"] for row in _rows(path)):
         text = re.sub(r"\s+", "", row.get("text") or "")
         if not text or row.get("start", 0) != 0 or row["recording_id"] not in audio:
             continue

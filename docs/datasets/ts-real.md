@@ -1,6 +1,6 @@
 # 真实对话的目标说话人评测集（ts_asr_real）
 
-两个版本：`v1-20261013`（824 条、16 个场景，三个人工标注语料）和 `v2-20261013`（1,134 条、22 个场景，增加 Emilia2 网络爬取的对话，MOSS 伪标签；v2 包含 v1 的全部场景）。只用于评测，不进训练。评测集登记在 AmphionEval：`open-audio-llm/ts-asr-real@v1-20261013` 和 `@v2-20261013`。生成脚本 `scripts/ts_real/build.py`。
+评测版本：`v1-20261013`（824 条、16 个场景，三个人工标注语料）和 `v2-20261013`（1,134 条、22 个场景，增加 Emilia2 网络爬取的对话，MOSS 伪标签；v2 包含 v1 的全部场景）；另有以目标为锚的重叠窗口 `overlap-v1-20261017` 和开发集 `dev-v1-20261017`（见下文）。只用于评测，不进训练。评测集登记在 AmphionEval：`open-audio-llm/ts-asr-real@v1-20261013` 和 `@v2-20261013`。生成脚本 `scripts/ts_real/build.py`。
 
 与合成评测集 [ts_asr_benchmark](ts-benchmark.md) 互补：那边可以一次只改一个因素，这里是真实的对话、重叠、房间和设备，**不做任何混合**。
 
@@ -12,6 +12,16 @@
 - 参考文本是目标说话人在窗口内所有语句按时间顺序拼接；目标缺席时为空。
 - 场景名 `real-<语料>-<窗口内说话人数>-<pos|neg>`，人数分 `1spk`、`2spk`、`3plus`（电话通话只有两人，没有 `3plus`）。
 - `labels`：`corpus`、`recording`、`duration_s`、`speakers_in_window`、`n_interferers`、`target_overlap_ratio`（目标语句时间内有别人说话的比例）、`target_seconds`、`mixture_rms_dbfs`、`absent_source`、`annotation: human`；`metadata.window_utts` 保存窗口内全部语句（说话人、相对起点、时长、文本），用于判断输出是不是转写了别人。
+
+## 目标重叠窗口（overlap-v1，个性化 VAD 用）与开发集（dev-v1）
+
+v1/v2 的窗口要求“与窗口重叠的语句都完整”，重叠多的地方窗口很快超过 26 秒被丢弃，结果 AliMeeting 测试集有 4.56 小时重叠语音，进入 v2 窗口的只有约 0.06 小时。这两个版本改为**以目标说话人为锚**切窗口（`build.py --recipe overlap|dev`）：
+
+- 窗口从目标的一条语句前 0–4 秒开始（不早于目标上一条语句的结束，所以目标不总是第一个开口），向后 8–22 秒，再延伸到期间开始的目标语句结束；目标的语句完整，别人的语句截到窗口边界（`metadata.window_utts` 里标 `clipped: true`）。
+- 按目标语音被别人重叠的比例分档：`o0`（< 5%）、`o20`（5–20%）、`o50`（20–50%）、`o100`（> 50%）；与已选窗口重合超过一半的窗口跳过，同一段录音不重复计分。`labels.overlap_bucket` 记档位。
+- 去掉含有 train 划分说话人的录音（RAMC dev 去掉 5 条，其余没有）。注册、配对的目标缺席样本与 v2 相同。
+- `overlap-v1-20261017`：AliMeeting、AISHELL-4 测试集，场景 `real-<语料>-<o20|o50|o100>-<pos|neg>`。只用于评测，是 `amphion-tse/pvad-benchmark@v2-20261017` 的真实重叠部分。
+- `dev-v1-20261017`：AliMeeting dev（`o0`–`o100`）、MagicData-RAMC dev（标注没有重叠，只有 `o0`），场景 `dev-<语料>-<档位>-<pos|neg>`。只用于选模型和阈值（`amphion-tse/pvad-dev@v1-20261017`），不进训练，也不作最终评测。
 
 ## Emilia2 网络爬取的对话（v2，MOSS 伪标签）
 
