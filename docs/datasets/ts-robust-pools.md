@@ -4,7 +4,7 @@
 
 | 数据 | 版本 | 内容 | 规模 |
 | --- | --- | --- | --- |
-| `ts_interference_pool` | `v2-20261016`（`v1-20261015` 为首版） | 干扰人：单人语音片段，按偏移取自源文件 | zh 32 万条 389 h、en 20 万条 268 h |
+| `ts_interference_pool` | `v3-20261018`（`v2-20261016` 同内容读 m4a；`v1-20261015` 为首版） | 干扰人：单人语音片段，按偏移取自源文件；Emilia2 片段读 Lance | zh 32 万条 389 h、en 20 万条 268 h |
 | `ts_nonspeech_pool` | `v1-20261016` | 没有人声的噪声和音乐，转写为空 | 4.8 万条 65.7 h |
 | `ts_scene_pool` | `v2-20261016`；`hard-20261016`；`multi-20261017` | 多句场景：alternate / burst / short；相近声音版；目标说多句的并行版（full，含缺席孪生） | v2：zh 15 万条、en 10 万条；hard：zh 4 万条、en 2.5 万条；multi：zh 12 万条、en 4 万条 |
 | `ts_real_train` | `v1-20261017`；`v2-20261018` | 真实会议窗口（训练划分），在场与缺席成对。v1 按 1 / 2 / 3+ 人分档；v2 以目标为锚开窗、按重叠比例分档，带窗口内每句的时间戳 | v1：9.1 万条（alimeeting 2.5 万、aishell4 3.0 万、ramc 3.7 万）；v2：8.4 万条（alimeeting 4.2 万、aishell4 3.0 万、ramc 1.2 万） |
@@ -33,6 +33,8 @@
 - 排除 AISHELL-2 和 LibriSpeech：AISHELLMix、LibriMix 的目标说话人来自这两个语料，干扰人再取它们会让目标和干扰人出现在同一说话人里。
 - 质量门槛只留 `voiced_ratio ≥ 0.5` 和响度 ≥ −50 dBFS（Emilia2 不测）；`loudness_dbfs`、`clip_ratio`、`voiced_ratio` 写在记录 `metadata`，进了 Lance 索引的质量列。
 - `speaker` 只有 KeSpeech 和 Common Voice 有真实标签；其余来源用 `source_group`（源视频或来源分组）近似同一人。
+
+`v3-20261018` 与 v2 是同一批记录、同样的记录 ID，只改 Emilia2 short 片段的读法：v2 指向 `emilia2/m4a-128k/.../<short ID>_spk<N>.m4a`，每次都要起 ffmpeg 解码；v3 指向 `emilia2@tts-unified-v0.1`（Lance）里同一条 standalone short（按上游 short ID，即 Lance `source_key`，并核对文件名），记录的 `ref` 是 `emilia2 / tts-unified-v0.1 / train / <sample_id>`，`metadata` 加 `duration` 和原 `source_cut_id`。Lance 表里存的是同一个 FFmpeg 7.0.2 的完整解码（FLAC PCM16、原采样率），抽查 40 条与 m4a 解码的 SNR ≥ 66.7 dB。Lance 中缺失 1 条 zh 片段，已去掉（`report.json`）。v3 只有 `records` + `audio_index`（其余来源的源文件），没有建 Lance 记录索引；训练端按记录读池，不用它。读取需要 open-audio-llm 的干扰人池支持指向 Lance 发布的记录。另外，v2 的 `audio_index` 把这批单声道 m4a 记成 2 声道（取自文件头），训练按均值下混，不影响结果。
 
 ## ts_nonspeech_pool
 
@@ -127,4 +129,4 @@ DNS5 噪声包里的 AudioSet 和 Freesound 噪声（16 kHz 单声道 FLAC，≤
 
 ## 生成脚本
 
-`scripts/ts_robust/`：`build_interference_pool.py`、`build_nonspeech_pool.py`、`build_ts_scene_pool.py`、`speaker_neighbors.py`、`prepare_training_noise.py`、`register_training_noise.py`、`register_records_pool.py`（把 `records` + `audio_index` 版本写成声明）、`build_ts_real_train.py`、`register_babble_noise.py`。登记后用 `build-record-index --register` 建索引。
+`scripts/ts_robust/`：`build_interference_pool.py`、`build_interference_pool_v3.py`、`build_nonspeech_pool.py`、`build_ts_scene_pool.py`、`speaker_neighbors.py`、`prepare_training_noise.py`、`register_training_noise.py`、`register_records_pool.py`（把 `records` + `audio_index` 版本写成声明）、`build_ts_real_train.py`、`register_babble_noise.py`。登记后用 `build-record-index --register` 建索引。
