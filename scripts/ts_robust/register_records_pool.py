@@ -37,8 +37,10 @@ def hours(path, indexes):
     total = 0.0
     with gzip.open(path, "rt", encoding="utf-8") as stream:
         for line in stream:
-            ref = json.loads(line)["audio_slots"][0]["ref"]
-            total += ref.get("duration") or indexes[ref["cut_id"]]
+            record = json.loads(line)
+            ref = record["audio_slots"][0]["ref"]
+            # A clip read from a Lance release is not in the pool's audio index.
+            total += ref.get("duration") or indexes.get(ref["cut_id"]) or record["metadata"]["duration"]
     return total / 3600
 
 

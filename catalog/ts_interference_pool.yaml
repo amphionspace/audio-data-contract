@@ -122,3 +122,80 @@
     - wenetspeech_podcast@l-20261014:train
     - common_voice_en@legacy-20260804:train
     - gigaspeech@legacy-20260804:train
+- schema_version: dataset-catalog/2.0
+  dataset_id: ts_interference_pool
+  version: v3-20261018
+  languages:
+  - zh
+  - en
+  tasks:
+  - ts_asr_interference
+  aliases: []
+  artifacts:
+  - name: zh-records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/ts_interference_pool/versions/v3-20261018/records_zh.jsonl.gz
+    sha256: 665eee026178d091b16e127a3abbeeef5fda424f2473f5fee462a603651f2093
+    metadata:
+      record_count: 319999
+  - name: zh-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_interference_pool/versions/v3-20261018/audio_index_zh.jsonl.gz
+    sha256: d9c9c4f055fbbd2d2274ad642911e691904be2c4076b8bec0f5aa39bc74cd4c7
+    metadata:
+      record_count: 135038
+  - name: en-records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/ts_interference_pool/versions/v3-20261018/records_en.jsonl.gz
+    sha256: e9dbe2ae8383696cd8c77a3a4f2609b355e96475c5e743b00b4b5bfeafc7d3ad
+    metadata:
+      record_count: 200000
+  - name: en-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_interference_pool/versions/v3-20261018/audio_index_en.jsonl.gz
+    sha256: a466cfcf26972d5bdcc82e337a0f1ecc0a6a97a92d09aea7763acc07efcb9d86
+    metadata:
+      record_count: 77632
+  splits:
+    zh:
+      artifacts:
+        records:
+        - zh-records
+        audio_index:
+        - zh-audio-index
+      task: ts_asr_interference
+      statistics:
+        records: 319999
+        duration_hours: 388.59
+        duration_basis: clip duration (segment span, or the whole file)
+    en:
+      artifacts:
+        records:
+        - en-records
+        audio_index:
+        - en-audio-index
+      task: ts_asr_interference
+      statistics:
+        records: 200000
+        duration_hours: 268.0
+        duration_basis: clip duration (segment span, or the whole file)
+  provenance:
+    status: complete
+    synthetic: none
+    snapshot_date: '2026-10-18'
+    description: 干扰人素材池 v3：与 v2-20261016 相同的记录与记录 ID，其中 Emilia2 short 片段（zh 149,999、en 100,000）改为读 emilia2@tts-unified-v0.1
+      Lance 表内同一条 m4a-128k standalone short（按上游 short ID 与文件名对应，同一 FFmpeg 完整解码存为 FLAC，抽查 40 条与 m4a 解码 SNR ≥ 66.7 dB），训练不再为干扰人启动
+      ffmpeg；其余来源沿用 v2 的音频索引。Lance 中缺失的 1 条 zh 片段已去掉。生成脚本 scripts/ts_robust/build_interference_pool_v3.py；读取 Lance 片段需要 open-audio-llm
+      的干扰人池支持指向 Lance 发布的记录（feat/lance-interference-clips）。
+    sources:
+    - ts_interference_pool@v2-20261016:zh,en
+    - emilia2@tts-unified-v0.1:train
+    - kespeech@legacy-20260804:train
+    - wenetspeech_youtube@l-20261014:train
+    - wenetspeech_podcast@l-20261014:train
+    - common_voice_en@legacy-20260804:train
+    - gigaspeech@legacy-20260804:train
