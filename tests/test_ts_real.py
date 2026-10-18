@@ -68,3 +68,28 @@ def test_a_window_cannot_extend_past_the_end_of_the_audio():
     e = entry(UTTS)
     e["duration"] = 12.0
     assert all(w["hi"] <= 12.0 for w in real["candidate_windows"](e, random.Random(1)))
+
+
+def test_target_windows_keep_the_target_whole_and_clip_everyone_else():
+    import random
+
+    e = entry(UTTS)
+    whole = {u[:3] for u in UTTS}
+    for seed in range(20):
+        for w in real["target_windows"](e, random.Random(seed)):
+            assert w["hi"] - w["lo"] <= real["MAX_WINDOW"]
+            for u in w["utts"]:
+                assert w["lo"] <= u[0] < u[1] <= w["hi"]
+                if u[2] == w["target"]:
+                    assert u[:3] in whole and u not in w["clipped"]
+                else:
+                    assert (u[:3] not in whole) == (u in w["clipped"])
+            # The target's first utterance in the window is preceded by at most 4 s.
+            first = min(u[0] for u in w["utts"] if u[2] == w["target"])
+            assert 0.0 <= first - w["lo"] <= 4.0
+
+
+def test_overlap_buckets_split_at_5_20_and_50_percent():
+    bucket = real["overlap_bucket"]
+    assert [bucket(r) for r in (0.0, 0.05, 0.06, 0.2, 0.21, 0.5, 0.51, 1.0)] == [
+        "o0", "o0", "o20", "o20", "o50", "o50", "o100", "o100"]

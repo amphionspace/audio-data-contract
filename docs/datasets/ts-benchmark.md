@@ -58,6 +58,14 @@
 - 素材是新登记的 `mir1k@modelscope-20261017`：1000 段中文流行歌卡拉 OK 片段，左声道伴奏、右声道人声，读入时两声道取平均，即带伴奏的歌。许可为研究用途，只用于评测。
 - `nonspeech-song`（随机注册）、`realreg2-song`（业务真实注册）：1.5–8 秒，只有歌声，电平 −30 到 −15 dBFS（业务这 3 条片段约 −27 到 −15 dBFS），加 v3 的底噪；期望输出为空。生成后用底座 Qwen3-ASR 抽查，混合音频里能转写出歌词。
 
+## 开发集（ts_asr_dev）
+
+`ts_asr_dev@v1-20261017`：3,240 条、54 个场景，配方 `scripts/ts_benchmark/recipe-pvad-dev.yaml`。用与 v3 相同的场景定义，换成各语料 dev 划分的说话人（KeSpeech、MagicData、AISHELL-1 dev，共 159 位，与 train、test 都不重叠）和新种子，用来选模型和阈值（`amphion-tse/pvad-dev@v1-20261017` 的合成部分），**不进训练，也不作最终评测**。
+
+- 只保留个性化 VAD 评测集用到的场景组：注册音频劣化（不含 contam0）、进场离场与缺席、纯噪声、环境与设备；每个场景 60 条。
+- 没有 AISHELL-3（它的 test 与 train 共用说话人），所以没有 `dom-studio`；dev 划分里几乎没有 0.5–1.6 秒的短语句，所以没有 `dyn-short`；也没有业务真实注册（`realreg`）。
+- 噪声、底噪与房间响应沿用 v3 的素材（`--noise-cache` / `--rir-cache` 指向 v3 的 `source` 目录），噪声片段与评测集有重合，只影响选模；训练照常排除这些片段。`abs-hard` 的相近说话人向量在 `source/v1-20261017/speaker-embeddings.npz`。
+
 ## 一条记录
 
 - `task = "ts_asr"`，`audio_slots` 依次是 `enrollment` 和 `mixture`。
