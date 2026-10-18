@@ -110,3 +110,117 @@
     - alimeeting_sdm:icefall-20260908
     - aishell4:icefall-20260908
     - magicdata_ramc:icefall-20260908
+- schema_version: dataset-catalog/2.0
+  dataset_id: ts_real_train
+  version: v2-20261018
+  languages:
+  - zh
+  tasks:
+  - ts_asr
+  aliases: []
+  artifacts:
+  - name: alimeeting-records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/ts_real_train/versions/v2-20261018/records_alimeeting.jsonl.gz
+    sha256: 426249c453da07d6883a3fd4579779ed15ebd2824819e7a500aef262c8e1f799
+    metadata:
+      record_count: 42000
+  - name: alimeeting-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_real_train/versions/v2-20261018/audio_index_alimeeting.jsonl.gz
+    sha256: 032894b7d750f928a4d02452fdb2fd4b3228490166fb748ce20ff4dfb0be5fcc
+    metadata:
+      record_count: 209
+  - name: aishell4-records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/ts_real_train/versions/v2-20261018/records_aishell4.jsonl.gz
+    sha256: 345477049cd8ed02bc387cf6a5ab822e7fe241d689c420c91ca7c669a2d7f2fd
+    metadata:
+      record_count: 29918
+  - name: aishell4-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_real_train/versions/v2-20261018/audio_index_aishell4.jsonl.gz
+    sha256: 2a8776718293092411402b1df915917b8e3d59c63178c14453700234efd16836
+    metadata:
+      record_count: 189
+  - name: ramc-records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/ts_real_train/versions/v2-20261018/records_ramc.jsonl.gz
+    sha256: a1bb09678eb10deb2aca1da2d7660223e6452f59996d2339f33fb4c127e0805c
+    metadata:
+      record_count: 12000
+  - name: ramc-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_real_train/versions/v2-20261018/audio_index_ramc.jsonl.gz
+    sha256: f1d19c3f85de360a6bc8bbebbe75e8de8b03f67aba9ebd43f3c0279e330aa21e
+    metadata:
+      record_count: 275
+  - name: record_index
+    kind: lance-record-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_real_train/versions/v2-20261018/record_index/index.json
+    expected_bytes: 1431
+    sha256: 5b04a294f0fdf3b07a53932ff72df65d1624346b37889dd26208276a87f30696
+    metadata:
+      snapshot_version: 13
+      rows: 83918
+      schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
+  splits:
+    alimeeting:
+      artifacts:
+        records:
+        - alimeeting-records
+        audio_index:
+        - alimeeting-audio-index
+        records_lance:
+        - record_index
+      task: ts_asr
+      statistics:
+        records: 42000
+        duration_hours: 58.19
+        duration_basis: clip duration (segment span, or the whole file)
+    aishell4:
+      artifacts:
+        records:
+        - aishell4-records
+        audio_index:
+        - aishell4-audio-index
+        records_lance:
+        - record_index
+      task: ts_asr
+      statistics:
+        records: 29918
+        duration_hours: 42.93
+        duration_basis: clip duration (segment span, or the whole file)
+    ramc:
+      artifacts:
+        records:
+        - ramc-records
+        audio_index:
+        - ramc-audio-index
+        records_lance:
+        - record_index
+      task: ts_asr
+      statistics:
+        records: 12000
+        duration_hours: 15.44
+        duration_basis: clip duration (segment span, or the whole file)
+  provenance:
+    status: complete
+    synthetic: none
+    snapshot_date: '2026-10-18'
+    description: '真实会议的目标说话人重叠窗口（训练划分）：AliMeeting 远场、AISHELL-4、MagicData-RAMC 的 train 划分，按 ts_asr_real overlap 版的方法以目标说话人为锚切
+      8–26 秒窗口（目标的语句完整，别人的语句截到窗口边界，记录 metadata.window_utts 给出窗口内每句的起止和说话人，截断的标 clipped），按目标语音被别人重叠的比例分 o0（≤5%）/ o20（5–20%）/
+      o50（20–50%）/ o100（>50%）四档（RAMC 标注没有重叠，只有 o0）；每个窗口一对样本，同一段音频：目标在场（注册取窗口外同一录音的另一句）和目标缺席（同一录音里没在窗口说话的另一人，没有则取其他录音）。去掉含
+      dev / test 说话人的录音（RAMC 14 段）。音频是原始长录音的片段，记录里写 channel: 0，读第 0 声道，与评测一致。脚本 scripts/ts_robust/build_ts_real_train.py --recipe
+      v2。'
+    sources:
+    - alimeeting_sdm:icefall-20260908
+    - aishell4:icefall-20260908
+    - magicdata_ramc:icefall-20260908

@@ -7,7 +7,7 @@
 | `ts_interference_pool` | `v2-20261016`（`v1-20261015` 为首版） | 干扰人：单人语音片段，按偏移取自源文件 | zh 32 万条 389 h、en 20 万条 268 h |
 | `ts_nonspeech_pool` | `v1-20261016` | 没有人声的噪声和音乐，转写为空 | 4.8 万条 65.7 h |
 | `ts_scene_pool` | `v2-20261016`；`hard-20261016`；`multi-20261017` | 多句场景：alternate / burst / short；相近声音版；目标说多句的并行版（full，含缺席孪生） | v2：zh 15 万条、en 10 万条；hard：zh 4 万条、en 2.5 万条；multi：zh 12 万条、en 4 万条 |
-| `ts_real_train` | `v1-20261017` | 真实会议窗口（训练划分），1 / 2 / 3+ 人，在场与缺席成对 | 9.1 万条（alimeeting 2.5 万、aishell4 3.0 万、ramc 3.7 万） |
+| `ts_real_train` | `v1-20261017`；`v2-20261018` | 真实会议窗口（训练划分），在场与缺席成对。v1 按 1 / 2 / 3+ 人分档；v2 以目标为锚开窗、按重叠比例分档，带窗口内每句的时间戳 | v1：9.1 万条（alimeeting 2.5 万、aishell4 3.0 万、ramc 3.7 万）；v2：8.4 万条（alimeeting 4.2 万、aishell4 3.0 万、ramc 1.2 万） |
 | `babble_noise_train` | `v1-20261017` | 合成背景人声（babble）训练划分，可作噪声或空目标 | zh、en 各 2,600 条，30 秒 |
 | `dns5_noise_train` | `v1-20261016` | DNS5 的 AudioSet 和 Freesound 噪声，以及模拟房间响应 | 见下 |
 | `audioset_road_traffic` | `legacy-20260804` | 道路交通噪声（早已登记，这里只说明用法） | 10.9 万条 299 h |
@@ -105,6 +105,14 @@ DNS5 噪声包里的 AudioSet 和 Freesound 噪声（16 kHz 单声道 FLAC，≤
 - 声道：每个槽位的引用写 `channel: 0`，加载器只读第 0 声道，与评测一致；音频索引里的 `channels` 是文件真实声道数。
 - 记录是长录音上的片段，不复制音频；规模：alimeeting 2.5 万条（含 1 人窗口 1,395 个）、aishell4 3.0 万条（2,618 个）、ramc 3.7 万条（8,324 个）。ramc 是两人通话，2 人窗口里没有缺席的人，缺席样本取其他通话的说话人。
 - 与评测互不重叠：评测用官方测试划分的录音，这里用 train 划分。生成脚本 `scripts/ts_robust/build_ts_real_train.py`。
+
+**`v2-20261018`（`--recipe v2`）：重叠窗口。** v1 的窗口要求所有人的语句完整，重叠多的段落几乎都切不进来；v2 改用 ts_asr_real `overlap-v1-20261017` 的开窗方法，用于训练个人 VAD 这类需要逐帧标签、要见到重叠的模型。
+
+- 以目标为锚：窗口从目标某句前 0–4 秒开到其后 8–22 秒（不超过 26 秒），目标的语句完整，别人的语句截到窗口边界（`window_utts` 里标 `clipped`）。
+- 按目标语音被别人盖住的比例分档（`labels.overlap_bucket`）：`o0` ≤5%、`o20` 5–20%、`o50` 20–50%、`o100` >50%。每档配额：alimeeting 3,000 / 4,000 / 6,000 / 8,000，aishell4 各 4,000（`o100` 只凑到 2,959，与已选窗口重叠过半的窗口被跳过），ramc 只有 `o0` 6,000（标注没有重叠）。
+- `metadata.window_utts`：窗口内每句的说话人、相对窗口起点的起止和文本，格式同 ts_asr_real，可直接生成逐帧的目标 / 他人活动标签。
+- 去掉含 dev / test 说话人的录音（ramc 14 段，alimeeting、aishell4 没有），评测和选模的说话人不进训练。
+- 其余同 v1：成对样本、注册取同一录音窗口外的另一句、`channel: 0`、不复制音频。
 
 ## babble_noise_train
 
