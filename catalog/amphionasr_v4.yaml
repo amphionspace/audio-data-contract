@@ -1794,9 +1794,9 @@
   - name: audio_index
     kind: audio-index
     root_alias: aidc_data
-    relative_path: datasets/emilia2_dialog/versions/dialog-turn-taking-20261013-enroll/audio_index/audio-index.jsonl.gz
-    expected_bytes: 14083112
-    sha256: fa47405dc941c7faa28a3b701ace51a98cb914450c3fbb3981d5c4d423761acd
+    relative_path: datasets/emilia2_dialog/versions/dialog-turn-taking-20261013-enroll/audio_index/audio-index-flac.jsonl.gz
+    expected_bytes: 12437398
+    sha256: 33ae301b04e413c1b45cf2b769084c1bfa9e89805404b0a16f1acf4fff6ba499
     metadata:
       record_count: 189150
   - name: duration_distribution
