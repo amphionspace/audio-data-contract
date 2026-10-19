@@ -1,0 +1,40 @@
+# 热词评测集 v2：沿用 v1 的记录、音频、正确词和其余条件，只把中文切片的 k50 / k50_no_gold
+# 换成从热词池检索出的 pool50 / pool50_no_gold（脚本 pool.py）。
+#
+# v1 的 k50 除易混词外用同 split 的随机词补满，模型一听就能排除；部署时列表是检索器从约 1 万词的
+# 词库里取出的 Top-50，每个词都和说的话有几分像。v2 按这个链路造列表：每个租户一个热词池
+# （现网万词库 + 租户自己的词），用参考文本检索，取得分最高的 50 个。
+version: v2-20261019
+dataset_id: hotword_bench
+base_version: v1-20261018
+seed: 20261019
+sample_rate: 16000
+# 与部署 RAG Top-50 一致
+list_size: 50
+# 每个正确词进池的复核易混词上限，与 v1 列表相同
+confusables_per_word: 3
+# 每个租户的句子数，与 real_zh 每个子集 200 条正例同量级；同组句子按 sha256(id) 轮流分到各租户
+tenant_size: 200
+# 先按这些字段分组再切租户（同一节目 / 同一领域语料共用一个池）；未列出的切片整个 split 为一组
+tenant_group:
+  real_zh: subset
+  contextasr_speech_zh: seed_corpus
+
+library:
+  # 现网中文万词库（发布包 data/hotword/zh/zh-10k.txt，生产去重后 10,087 词）本机和 OBS 都没有找到。
+  # 用 audiollm-go 2026-09-13 召回复测中现网与候选 RAG 在 500 条上返回过的全部 Top-50 和目标词还原，
+  # 共 8,841 词（约 88%），都是真实词库成员
+  repo: /workspace/workspace/mingdong/repo/audiollm-go
+  commit: 75ea79e5
+  dir: docs/archive/evaluations/amphion-20260913/rag-recall
+  results: [baseline-results.jsonl, candidate-results.jsonl, candidate-local-results.jsonl, candidate-go-local-results.jsonl]
+  targets: [targets.jsonl, go-local-targets.jsonl]
+
+retriever:
+  # 打分公式与 open-audio-llm 两阶段评测的中文规则召回相同（子串 2.0 + 拼音滑窗 1.5 + 字重合 0.5 +
+  # 字 bigram Jaccard 0.3），去掉 score > 1.0 的截断：现网 RAG 对非空词库总返回 50 个
+  repo: amphionspace/open-audio-llm
+  path: src/open_audio_llm/integrations/vllm/retrieve_hotwords.py
+  commit: e9bcfa1
+  # 查询用参考文本，列表与被测模型无关；检索漏召回是检索器的问题，由 pool50_no_gold 覆盖"词不在列表里"
+  query: reference

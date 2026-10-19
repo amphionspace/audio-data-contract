@@ -52,3 +52,20 @@ def test_librispeech_keeps_official_lists_and_adds_a_no_gold_list():
     )
     assert lists["n100"] == upstream["n100"] and lists["gold"] == ["fir"]
     assert len(lists["n100_no_gold"]) == 100 and "fir" not in lists["n100_no_gold"]
+
+
+def test_pool_lists_rank_sound_alikes_and_keep_reference_words_out():
+    pytest.importorskip("pypinyin")
+    pool_mod = runpy.run_path(str(REPO / "scripts/hotword_bench/pool.py"))
+    recipe = {"seed": 1, "list_size": 4, "confusables_per_word": 2}
+    record = {"id": "u1", "target": "我叫刘燕住在上海", "hotwords": ["刘燕"],
+              "metadata": {"bias_lists": {"gold": ["刘燕"], "k50": [], "k50_no_gold": []}}}
+    library = ["上海", "留言", "柳树", "北京", "广州", "深圳"]
+    pool, own = pool_mod["tenant_pool"]([record], library, {"刘燕": ["柳岩", "刘艳"]}, 2)
+    lists, kinds = pool_mod["tenant_lists"]((recipe, [record], pool, own, {"刘燕": ["柳岩", "刘艳"]}))["u1"]
+    assert set(lists) == {"gold", "pool50", "pool50_no_gold"}
+    assert len(lists["pool50"]) == len(lists["pool50_no_gold"]) == 4
+    assert "刘燕" in lists["pool50"] and "刘燕" not in lists["pool50_no_gold"]
+    assert {"柳岩", "刘艳", "留言"} <= set(lists["pool50_no_gold"])  # same pinyin as the gold word
+    assert "上海" not in lists["pool50"] + lists["pool50_no_gold"]  # spoken in the reference
+    assert kinds["柳岩"] == "confusable" and kinds["留言"] == "base"
