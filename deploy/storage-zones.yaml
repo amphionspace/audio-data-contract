@@ -65,12 +65,6 @@ entries:
   - path: /workspace/data/DATA-TTS/WenetSpeech-Wu
     owner: mingdong
     note: wenetspeech_dialects 的 cuts 用 dd 按偏移读 audios/ 下的 tar
-  - path: /workspace/data/DATA-TTS/Emilia2/Emilia2_TTS_m4a
-    owner: mingdong
-    note: tts_unified emilia2 v0.1 的 manifest 引用 data/*.tar；emilia2_extracted 的来源
-  - path: /workspace/data/DATA-TTS/Emilia2/Emilia2_TTS_m4a_64kbps
-    owner: mingdong
-    note: tts_unified emilia2 v0.1 的 manifest 引用 data/*.tar；emilia2_extracted 的来源
   - path: /workspace/data/datasets/farfield_speech_noise
     owner: lx
     note: farfield_speech_noise_{1,2,3}spk@20261014 的 records 直接引用 {1,2,3}spk/ 下的 wav

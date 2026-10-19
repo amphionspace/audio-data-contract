@@ -51,24 +51,6 @@
         audio_files: 106043
         source: DATA-TTS/Emilia2/Emilia2_TTS_m4a/ASMR（13 个 tar）
         codec: AAC-LC 128 kbps, 44.1 kHz, mono
-    - name: segment_info_dialog
-      kind: source-directory
-      root_alias: aidc_data
-      relative_path: DATA-TTS/Emilia2/segment_info/dialog
-      metadata:
-        file_count: 8059
-        record_count: 836356
-        layout: emilia2-NNNNN.tar，内含 <stem>.json，与 Emilia2_TTS_m4a/data 同号 tar 一一对应
-        description: 对话的逐轮信息（members：tag、speaker、start/end、seg_indices、text、text_status 等）和 is_valid；全语种；只覆盖 128k，m4a-64k 没有
-    - name: segment_info_long
-      kind: source-directory
-      root_alias: aidc_data
-      relative_path: DATA-TTS/Emilia2/segment_info/long
-      metadata:
-        file_count: 8059
-        record_count: 1681934
-        layout: emilia2-NNNNN.tar，内含 <stem>.json，与 Emilia2_TTS_m4a/data 同号 tar 一一对应
-        description: 长音频的分句信息（members：start/end/text）和 is_valid；全语种；只覆盖 128k，m4a-64k 没有
   splits:
     m4a_128k:
       artifacts:
@@ -76,9 +58,6 @@
           - index
         files:
           - m4a_128k_files
-        segment_info:
-          - segment_info_dialog
-          - segment_info_long
       group: train
       statistics:
         records: 5469197
@@ -129,6 +108,11 @@
     preparation_status: prepared
     owner: mingdong
     source: /workspace/data/DATA-TTS/Emilia2
+    source_archived: >-
+      2026-10-19 起 aidc 上的 DATA-TTS/Emilia2 已删除（用户同意）。原始 tar 和 segment_info 完整备份在 SenseCore 桶
+      amphion-tts-data:Emilia2/：Emilia2_TTS_m4a/data 8059 个 tar、Emilia2_TTS_m4a/ASMR 13 个、Emilia2_TTS_m4a_64kbps/data 1266 个、
+      segment_info/dialog 与 segment_info/long 各 8059 个（2026-10-19 核对个数与大小）。segment_info 是对话逐轮（members：speaker、start/end、text）
+      和长音频逐句（start/end/text）的时间信息，全语种、只覆盖 128k，本地解包的 JSON 里没有这些时间戳；需要时用 AmphionBucket 拉回。
     extracted_at: 2026-10-12
     selection: JSON 的 languages 恰好为 ["en"] 或 ["zh"] 的条目；混合语种和其他语种不解包
     description: >-
