@@ -72,9 +72,8 @@ entries:
     owner: mingdong
     note: tts_unified emilia2 v0.1 的 manifest 引用 data/*.tar；emilia2_extracted 的来源
   - path: /workspace/model
-    contents: listed
     owner: 待填写
-    note: 子目录需逐个登记
+    note: 开源模型权重，整体算已登记，不逐个巡检
   - path: /workspace/LM-TTS-Training-Runs
     contents: listed
     owner: 待填写
