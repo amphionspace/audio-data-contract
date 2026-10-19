@@ -101,11 +101,55 @@
           rows: 40264231
           schema_sha256: bf5bc8ca20bd9b2087554249b521534e0324a1d5578dbe77f0f8cbe92cfa54fa
           storage_version: '2.2'
+      - name: tts-ann-transcription-20261012T092945bjt-01
+        kind: tts-lance-annotation
+        root_alias: aidc_data
+        relative_path: DATA-TTS-UNIFIED/annotations/transcription/tts-ann-transcription-20261012T092945bjt-01/manifest.json
+        expected_bytes: 937423
+        sha256: b29ab6cf67ea7eff4f05ad03b574c532c55962431e437b311ead3b58c72d3f82
+        metadata:
+          task: transcription
+          schema_version: qwen-asr-transcription-v2
+          profile: qwen3-asr-1.7b-emilia-metadata-v1
+          table_path: DATA-TTS-UNIFIED/datasets/emilia/v0.1/annotations/transcription/tts-ann-transcription-20261012T092945bjt-01/results.lance
+          lance_version: 2
+          rows: 40264231
+          coverage:
+            total_targets: 40264231
+            missing: 0
+            ok: 40264231
+            failed: 0
+            unsupported: 0
+            skipped: 0
+      - name: tts-ann-upstream_quality-20261013T143341bjt-01
+        kind: tts-lance-annotation
+        root_alias: aidc_data
+        relative_path: DATA-TTS-UNIFIED/annotations/upstream_quality/tts-ann-upstream_quality-20261013T143341bjt-01/manifest.json
+        expected_bytes: 11963
+        sha256: be2058a65959dddbab1b8ef68b922ce2e796c014bf9e75983f864058ad45cde0
+        metadata:
+          task: upstream_quality
+          schema_version: upstream-quality-dnsmos-v1
+          profile: upstream-dnsmos-p835-ovrl-v1
+          table_path: DATA-TTS-UNIFIED/datasets/emilia/v0.1/annotations/upstream_quality/tts-ann-upstream_quality-20261013T143341bjt-01/results.lance
+          lance_version: 2
+          rows: 40264231
+          coverage:
+            total_targets: 40264231
+            missing: 0
+            ok: 40264231
+            failed: 0
+            unsupported: 0
+            skipped: 0
     splits:
       train:
         artifacts:
           samples:
             - samples
+          transcription:
+            - tts-ann-transcription-20261012T092945bjt-01
+          upstream_quality:
+            - tts-ann-upstream_quality-20261013T143341bjt-01
         statistics:
           rows: 40264231
           duration_hours: 101655.6
@@ -180,11 +224,33 @@
           rows: 99840397
           schema_sha256: bf5bc8ca20bd9b2087554249b521534e0324a1d5578dbe77f0f8cbe92cfa54fa
           storage_version: '2.2'
+      - name: tts-ann-upstream_quality-20261013T143341bjt-01
+        kind: tts-lance-annotation
+        root_alias: aidc_data
+        relative_path: DATA-TTS-UNIFIED/annotations/upstream_quality/tts-ann-upstream_quality-20261013T143341bjt-01/manifest.json
+        expected_bytes: 11963
+        sha256: be2058a65959dddbab1b8ef68b922ce2e796c014bf9e75983f864058ad45cde0
+        metadata:
+          task: upstream_quality
+          schema_version: upstream-quality-dnsmos-v1
+          profile: upstream-dnsmos-p835-ovrl-v1
+          table_path: DATA-TTS-UNIFIED/datasets/emilia2/v0.1/annotations/upstream_quality/tts-ann-upstream_quality-20261013T143341bjt-01/results.lance
+          lance_version: 2
+          rows: 99840397
+          coverage:
+            total_targets: 99840397
+            missing: 0
+            ok: 99840397
+            failed: 0
+            unsupported: 0
+            skipped: 0
     splits:
       train:
         artifacts:
           samples:
             - samples
+          upstream_quality:
+            - tts-ann-upstream_quality-20261013T143341bjt-01
         statistics:
           rows: 99840397
           duration_hours: 146325.0
@@ -195,11 +261,25 @@
       release_id: v0.1
       ingest_profile_id: 0d7249d78eecf2f2d621e5e52c8507a1c3a14bdd5551e4fb1982f39a24a25c0e
       input_manifest_sha256: 7211149209bb4d6f8cb5014ce65573e14cb4e07998a944bb9477394c03731804
-      manifest_correction: 2026-10-12 发布方修正 manifest，只补 spec-10 字段（finished_at、code_sha256、speakers 等），Lance 表与快照版本 3 不变；原 manifest sha256 24779fb04467d1926d5ed7e90b310cffd1101059de6406c9eb6fbe424a1102c7（7,290,534 字节）记录在 manifest 的 manifest_correction 字段。登记于 2026-10-18 改为修正后的 sha256，此前按旧值无法打开本版本。
       source_directory: DATA-TTS/Emilia2
       source_files: 9325
-      excluded_source_files: []
+      excluded_source_files:
+        - Emilia2_TTS_m4a/ASMR/asmr-00000.tar
+        - Emilia2_TTS_m4a/ASMR/asmr-00001.tar
+        - Emilia2_TTS_m4a/ASMR/asmr-00002.tar
+        - Emilia2_TTS_m4a/ASMR/asmr-00003.tar
+        - Emilia2_TTS_m4a/ASMR/asmr-00004.tar
+        - Emilia2_TTS_m4a/ASMR/asmr-00005.tar
+        - Emilia2_TTS_m4a/ASMR/asmr-00006.tar
+        - Emilia2_TTS_m4a/ASMR/asmr-00007.tar
+        - Emilia2_TTS_m4a/ASMR/asmr-00008.tar
+        - Emilia2_TTS_m4a/ASMR/asmr-00009.tar
+        - Emilia2_TTS_m4a/ASMR/asmr-00010.tar
+        - Emilia2_TTS_m4a/ASMR/asmr-00011.tar
+        - Emilia2_TTS_m4a/ASMR/asmr-00012.tar
+      finished_at: '2026-10-12T03:10:16.232568+08:00'
       description: 音频编码字节存放在 Lance 表内；原始划分在 metadata_json.original_split，统一输出全部为 train。ASR 用 tts_lance.iter_asr_samples（tts-asr-rules/v1）读取，会排除原始 dev/test 等。
+      manifest_correction: 2026-10-12 发布方修正 manifest，只补 spec-10 字段（finished_at、code_sha256、speakers 等），Lance 表与快照版本 3 不变；原 manifest sha256 24779fb04467d1926d5ed7e90b310cffd1101059de6406c9eb6fbe424a1102c7（7,290,534 字节）记录在 manifest 的 manifest_correction 字段。登记于 2026-10-18 改为修正后的 sha256，此前按旧值无法打开本版本。
   - schema_version: dataset-catalog/2.0
     dataset_id: emilia_yodas
     version: tts-unified-v0.1
@@ -225,11 +305,33 @@
           rows: 43964905
           schema_sha256: bf5bc8ca20bd9b2087554249b521534e0324a1d5578dbe77f0f8cbe92cfa54fa
           storage_version: '2.2'
+      - name: tts-ann-upstream_quality-20261013T143341bjt-01
+        kind: tts-lance-annotation
+        root_alias: aidc_data
+        relative_path: DATA-TTS-UNIFIED/annotations/upstream_quality/tts-ann-upstream_quality-20261013T143341bjt-01/manifest.json
+        expected_bytes: 11963
+        sha256: be2058a65959dddbab1b8ef68b922ce2e796c014bf9e75983f864058ad45cde0
+        metadata:
+          task: upstream_quality
+          schema_version: upstream-quality-dnsmos-v1
+          profile: upstream-dnsmos-p835-ovrl-v1
+          table_path: DATA-TTS-UNIFIED/datasets/emilia_yodas/v0.1/annotations/upstream_quality/tts-ann-upstream_quality-20261013T143341bjt-01/results.lance
+          lance_version: 2
+          rows: 43964905
+          coverage:
+            total_targets: 43964905
+            missing: 0
+            ok: 43964905
+            failed: 0
+            unsupported: 0
+            skipped: 0
     splits:
       train:
         artifacts:
           samples:
             - samples
+          upstream_quality:
+            - tts-ann-upstream_quality-20261013T143341bjt-01
         statistics:
           rows: 43964905
           duration_hours: 113820.6
@@ -306,11 +408,33 @@
           rows: 654252
           schema_sha256: bf5bc8ca20bd9b2087554249b521534e0324a1d5578dbe77f0f8cbe92cfa54fa
           storage_version: '2.2'
+      - name: tts-ann-transcription-20261010T111659bjt-01
+        kind: tts-lance-annotation
+        root_alias: aidc_data
+        relative_path: DATA-TTS-UNIFIED/annotations/transcription/tts-ann-transcription-20261010T111659bjt-01/manifest.json
+        expected_bytes: 24808
+        sha256: 49d5406b7343de2008196d2e9152855f286871e8229bf8c518dda24897fb94af
+        metadata:
+          task: transcription
+          schema_version: qwen-asr-transcription-v2
+          profile: qwen3-asr-1.7b-game-v1
+          table_path: DATA-TTS-UNIFIED/datasets/genshin_voice/v0.1/annotations/transcription/tts-ann-transcription-20261010T111659bjt-01/results.lance
+          lance_version: 2
+          rows: 654252
+          coverage:
+            total_targets: 654252
+            missing: 0
+            ok: 654132
+            failed: 120
+            unsupported: 0
+            skipped: 0
     splits:
       train:
         artifacts:
           samples:
             - samples
+          transcription:
+            - tts-ann-transcription-20261010T111659bjt-01
         statistics:
           rows: 654252
           duration_hours: 1039.7
@@ -595,11 +719,33 @@
           rows: 403437
           schema_sha256: bf5bc8ca20bd9b2087554249b521534e0324a1d5578dbe77f0f8cbe92cfa54fa
           storage_version: '2.2'
+      - name: tts-ann-transcription-20261010T111659bjt-01
+        kind: tts-lance-annotation
+        root_alias: aidc_data
+        relative_path: DATA-TTS-UNIFIED/annotations/transcription/tts-ann-transcription-20261010T111659bjt-01/manifest.json
+        expected_bytes: 24808
+        sha256: 49d5406b7343de2008196d2e9152855f286871e8229bf8c518dda24897fb94af
+        metadata:
+          task: transcription
+          schema_version: qwen-asr-transcription-v2
+          profile: qwen3-asr-1.7b-game-v1
+          table_path: DATA-TTS-UNIFIED/datasets/starrail_voice/v0.1/annotations/transcription/tts-ann-transcription-20261010T111659bjt-01/results.lance
+          lance_version: 2
+          rows: 403437
+          coverage:
+            total_targets: 403437
+            missing: 0
+            ok: 403218
+            failed: 219
+            unsupported: 0
+            skipped: 0
     splits:
       train:
         artifacts:
           samples:
             - samples
+          transcription:
+            - tts-ann-transcription-20261010T111659bjt-01
         statistics:
           rows: 403437
           duration_hours: 692.6
@@ -718,11 +864,33 @@
           rows: 78777
           schema_sha256: bf5bc8ca20bd9b2087554249b521534e0324a1d5578dbe77f0f8cbe92cfa54fa
           storage_version: '2.2'
+      - name: tts-ann-transcription-20261010T111659bjt-01
+        kind: tts-lance-annotation
+        root_alias: aidc_data
+        relative_path: DATA-TTS-UNIFIED/annotations/transcription/tts-ann-transcription-20261010T111659bjt-01/manifest.json
+        expected_bytes: 24808
+        sha256: 49d5406b7343de2008196d2e9152855f286871e8229bf8c518dda24897fb94af
+        metadata:
+          task: transcription
+          schema_version: qwen-asr-transcription-v2
+          profile: qwen3-asr-1.7b-game-v1
+          table_path: DATA-TTS-UNIFIED/datasets/wutheringwaves/v0.1/annotations/transcription/tts-ann-transcription-20261010T111659bjt-01/results.lance
+          lance_version: 2
+          rows: 78777
+          coverage:
+            total_targets: 78777
+            missing: 0
+            ok: 78533
+            failed: 244
+            unsupported: 0
+            skipped: 0
     splits:
       train:
         artifacts:
           samples:
             - samples
+          transcription:
+            - tts-ann-transcription-20261010T111659bjt-01
         statistics:
           rows: 78777
           duration_hours: 134.8
@@ -759,11 +927,33 @@
           rows: 406720
           schema_sha256: bf5bc8ca20bd9b2087554249b521534e0324a1d5578dbe77f0f8cbe92cfa54fa
           storage_version: '2.2'
+      - name: tts-ann-transcription-20261010T111659bjt-01
+        kind: tts-lance-annotation
+        root_alias: aidc_data
+        relative_path: DATA-TTS-UNIFIED/annotations/transcription/tts-ann-transcription-20261010T111659bjt-01/manifest.json
+        expected_bytes: 24808
+        sha256: 49d5406b7343de2008196d2e9152855f286871e8229bf8c518dda24897fb94af
+        metadata:
+          task: transcription
+          schema_version: qwen-asr-transcription-v2
+          profile: qwen3-asr-1.7b-game-v1
+          table_path: DATA-TTS-UNIFIED/datasets/zenless_voice/v0.1/annotations/transcription/tts-ann-transcription-20261010T111659bjt-01/results.lance
+          lance_version: 2
+          rows: 406720
+          coverage:
+            total_targets: 406720
+            missing: 0
+            ok: 405421
+            failed: 1299
+            unsupported: 0
+            skipped: 0
     splits:
       train:
         artifacts:
           samples:
             - samples
+          transcription:
+            - tts-ann-transcription-20261010T111659bjt-01
         statistics:
           rows: 406720
           duration_hours: 554.4

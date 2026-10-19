@@ -700,9 +700,9 @@
   - name: train-audio-index
     kind: jsonl-metadata
     root_alias: aidc_data
-    relative_path: datasets/emilia2_zh_dialogue_diarize/versions/moss-transcribe-diarize-0.9B/emilia2_zh_dialogue-train-audio-index-m4a.jsonl.gz
-    expected_bytes: 1468041
-    sha256: bbbfc958311b44deee1e116edad547ce8a3fba9ff4088485d13999355f68cdab
+    relative_path: datasets/emilia2_zh_dialogue_diarize/versions/moss-transcribe-diarize-0.9B/emilia2_zh_dialogue-train-audio-index-flac.jsonl.gz
+    expected_bytes: 1302821
+    sha256: 8fb1d9e77ef3a72f22e4e0ef15466a5a2f10637e9f53b2b13637e3aaf07e0dd1
     metadata:
       description: 源版本 emilia2_zh_dialogue_diarize@moss-transcribe-diarize-0.9B 的音频索引，原样引用
   - name: selection
