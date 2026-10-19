@@ -16,12 +16,12 @@
     - name: train-audio-index
       kind: jsonl-metadata
       root_alias: aidc_data
-      relative_path: datasets/emilia2_zh_dialogue_diarize/versions/moss-transcribe-diarize-0.9B/emilia2_zh_dialogue-train-audio-index-m4a.jsonl.gz
-      expected_bytes: 1468041
-      sha256: bbbfc958311b44deee1e116edad547ce8a3fba9ff4088485d13999355f68cdab
+      relative_path: datasets/emilia2_zh_dialogue_diarize/versions/moss-transcribe-diarize-0.9B/emilia2_zh_dialogue-train-audio-index-flac.jsonl.gz
+      expected_bytes: 1302821
+      sha256: 8fb1d9e77ef3a72f22e4e0ef15466a5a2f10637e9f53b2b13637e3aaf07e0dd1
       metadata:
         record_count: 53965
-        description: cut_id → emilia2@extracted-enzh-20261012 解包的 m4a（m4a-128k/zh/dialog，44.1 kHz 单声道）
+        description: cut_id → emilia2@extracted-enzh-20261012 解包后转成的 16 kHz 单声道 FLAC（m4a-128k/zh/dialog；m4a 已删除，只用 flac）
     - name: train_120s-records
       kind: audio-records
       root_alias: aidc_data
