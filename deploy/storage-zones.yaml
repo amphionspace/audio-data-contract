@@ -71,6 +71,22 @@ entries:
   - path: /workspace/data/DATA-TTS/Emilia2/Emilia2_TTS_m4a_64kbps
     owner: mingdong
     note: tts_unified emilia2 v0.1 的 manifest 引用 data/*.tar；emilia2_extracted 的来源
+  - path: /workspace/data/datasets/farfield_speech_noise
+    owner: lx
+    note: farfield_speech_noise_{1,2,3}spk@20261014 的 records 直接引用 {1,2,3}spk/ 下的 wav
+  # 不是数据集版本、但有明确用途的目录。
+  - path: /workspace/data/DATA-TTS-UNIFIED
+    owner: yanglin
+    note: TTS 组自管的数据仓（CONTRACT.md、PUBLICATIONS.md），selections、annotations、specs 等配套目录一并登记；各 release 另在 catalog 登记
+  - path: /workspace/data/ae-runs
+    owner: mingdong
+    note: amphion-eval 评测运行目录，每次评测带一份 checkpoint 和推理输出
+  - path: /workspace/data/ae-state
+    owner: mingdong
+    note: amphion-eval 的评测集与结果状态，同步到 COS amphion-eval
+  - path: /workspace/data/badcase
+    owner: mingdong
+    note: 业务 badcase 归档
   - path: /workspace/model
     contents: listed
     owner: 待填写
