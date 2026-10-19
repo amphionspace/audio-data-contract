@@ -147,16 +147,17 @@ class ArtifactRef:
                 raise ContractError("lance-record-index metadata.rows must be >= 0")
             if not isinstance(digest, str) or len(digest) != 64:
                 raise ContractError("lance-record-index metadata.schema_hash must be sha256")
-        if self.kind == "tts-lance-release":
-            # The release manifest is immutable; pin it and the snapshot it names.
+        if self.kind in ("tts-lance-release", "tts-lance-annotation"):
+            # The release or annotation manifest is immutable; pin it and the
+            # snapshot it names.
             if self.sha256 is None:
-                raise ContractError("tts-lance-release requires the manifest sha256")
+                raise ContractError(f"{self.kind} requires the manifest sha256")
             version = self.metadata.get("lance_version")
             rows = self.metadata.get("rows")
             if type(version) is not int or version < 1:
-                raise ContractError("tts-lance-release metadata.lance_version must be >= 1")
+                raise ContractError(f"{self.kind} metadata.lance_version must be >= 1")
             if type(rows) is not int or rows < 0:
-                raise ContractError("tts-lance-release metadata.rows must be >= 0")
+                raise ContractError(f"{self.kind} metadata.rows must be >= 0")
 
     def to_dict(self) -> dict[str, Any]:
         data: dict[str, Any] = {
