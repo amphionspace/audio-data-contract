@@ -180,7 +180,7 @@
     text_check_model: Qwen3-ASR
     text_check_unit: window
     window_seconds: [30, 120]
-# Emilia2 m4a-64k 中文对话的句级热词标注（2026-10-16 起，已完成 21 批）。
+# Emilia2 m4a-64k 中文对话的句级热词标注（2026-10-16 起，47 批全部完成于 2026-10-19；b000–b020 用 qwen3.8-flash，b021–b046 用 doubao-seed-2-1-turbo）。
 - schema_version: dataset-catalog/2.0
   dataset_id: emilia2_zh_dialogue_diarize
   version: hotwords-qwen3.8-flash-m4a64k-v1
@@ -198,10 +198,10 @@
       kind: metadata
       root_alias: aidc_data
       relative_path: datasets/emilia2_zh_dialogue_diarize/versions/hotwords-qwen3.8-flash-m4a64k-v1/hotwords.jsonl.gz
-      expected_bytes: 7415868
-      sha256: fe272b80f389fb2c4ed68ed2a29721a48e22fb96f8317ce4491dc3d7d9600183
+      expected_bytes: 15959729
+      sha256: 088195b4d974913f5fba74625705f60f91df0805f547c940ea3b737847695cd6
       metadata:
-        record_count: 1710174
+        record_count: 3794060
   splits:
     train:
       artifacts:
@@ -210,12 +210,12 @@
         hotwords:
           - hotwords
       statistics:
-        utterances: 1710408
-        duration_hours: 1434.7
-        labeled_utterances: 1710174
-        utterances_with_hotwords: 356963
-        hours_with_hotwords: 479.2
-        hotword_mentions: 455916
+        utterances: 3794902
+        duration_hours: 3167.4
+        labeled_utterances: 3794060
+        utterances_with_hotwords: 733944
+        hours_with_hotwords: 983.3
+        hotword_mentions: 921092
       provenance:
         preparation_status: complete
   provenance:
@@ -225,11 +225,16 @@
       对 emilia2_zh_dialogue_diarize@moss-transcribe-diarize-0.9B-m4a64k 窗口合并后的每句转写，
       用通用大模型抽取热词（人名、地名、机构、专有名词），每次 20 句、按录音内相邻句分组，
       结果逐句写回；经规则过滤（单字、纯英文碎片、常见国名、长于 12 字）。
-      hotwords.jsonl.gz 每行 {id, hotwords}，id 对应窗口合并 supervisions 的句 id；234 句因内容审核拒绝而未标（hotwords 缺失）。
+      前后两段用了不同模型：b000–b020（1,710,408 句）用阿里 qwen3.8-flash；阿里账号欠费后，
+      b021–b046（2,084,494 句）改用火山 doubao-seed-2-1-turbo-260628，提示词相同。
+      在 300 句开发集上 doubao 精确率 0.79、召回 0.70，qwen3.8-flash 为 0.87、0.74（参照由 qwen 输出生成，偏向 qwen）；
+      有热词的句子占比 qwen 段 20.9%、doubao 段 18.1%。文件里不区分行来自哪个模型，按批次号区分。
+      hotwords.jsonl.gz 每行 {id, hotwords}，id 对应窗口合并 supervisions 的句 id；842 句未标（hotwords 缺失），
+      其中 234 句是 qwen 段内容审核拒绝，608 句是 doubao 段重试后仍失败。
       句级旁路文件，按窗口使用时需同时排除 speaker_merge 窗口。
     source: emilia2_zh_dialogue_diarize@moss-transcribe-diarize-0.9B-m4a64k
     run_dir: /workspace/workspace/mingdong/data/amphiondata/emilia2-64k-hotwords-20261016
   recipe_parameters:
-    hotword_model: qwen3.8-flash
+    hotword_model: qwen3.8-flash (b000-b020) + doubao-seed-2-1-turbo-260628 (b021-b046)
     prompt: extract_hotword + conversational rules v3 + batch mode
     utterances_per_call: 20
