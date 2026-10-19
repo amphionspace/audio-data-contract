@@ -82,9 +82,8 @@ entries:
     owner: mingdong
     note: 业务 badcase 归档
   - path: /workspace/model
-    contents: listed
     owner: 待填写
-    note: 子目录需逐个登记
+    note: 开源模型权重，整体算已登记，不逐个巡检
   - path: /workspace/LM-TTS-Training-Runs
     contents: listed
     owner: 待填写

@@ -2,6 +2,7 @@
 
 import hashlib
 import json
+from dataclasses import replace
 
 import pytest
 
@@ -19,7 +20,9 @@ from audio_data_contract.tts_lance import (
     apply_asr_rules,
     iter_asr_samples,
     iter_samples,
+    open_annotation,
     open_release,
+    read_annotations,
     read_audio,
 )
 
@@ -119,6 +122,83 @@ def test_rejects_changed_manifest_or_snapshot(tmp_path):
     wrong = catalog_for(path, manifest, metadata={"lance_version": 1, "rows": 3})
     with pytest.raises(ContractError, match="rows differs"):
         open_release(wrong, "demo", "tts-unified-v0.1", "samples", roots)
+
+
+RUN = "tts-ann-transcription-1"
+
+
+def write_transcription(root, results):
+    """results: sample_id -> (text, language) for ok rows, or None for failed rows."""
+    struct = pa.struct([("text", pa.string()), ("language", pa.string())])
+    table = pa.table(
+        {
+            "sample_id": list(results),
+            "input_fingerprint": ["f"] * len(results),
+            "status": ["failed" if r is None else "ok" for r in results.values()],
+            "error_code": ["asr_failed" if r is None else None for r in results.values()],
+            "result": pa.array(
+                [None if r is None else {"text": r[0], "language": r[1]} for r in results.values()],
+                struct,
+            ),
+        }
+    )
+    table_path = f"demo/v0.1/annotations/transcription/{RUN}/results.lance"
+    dataset = lance.write_dataset(table, str(root / table_path))
+    path = root / "annotations/transcription" / RUN / "manifest.json"
+    path.parent.mkdir(parents=True)
+    output = {"table_path": table_path, "branch": None, "lance_version": dataset.version}
+    path.write_text(
+        json.dumps(
+            {
+                "status": "complete",
+                "run_id": RUN,
+                "task": "transcription",
+                "outputs": [{"dataset_id": "demo", "table": {**output, "rows": len(results)}}],
+            }
+        )
+    )
+    return {
+        "name": RUN,
+        "kind": "tts-lance-annotation",
+        "root_alias": "tts",
+        "relative_path": f"annotations/transcription/{RUN}/manifest.json",
+        "sha256": hashlib.sha256(path.read_bytes()).hexdigest(),
+        "metadata": {"lance_version": dataset.version, "rows": len(results)},
+    }
+
+
+def test_reads_text_from_a_transcription_run(tmp_path):
+    path, manifest = write_release(tmp_path, ["你好", None, "世界", "再见"])
+    artifact = write_transcription(
+        tmp_path, {"s0": ("早上好", "zh"), "s1": ("hello there", "en"), "s2": None}
+    )
+    spec = next(iter(catalog_for(path, manifest)))
+    catalog = DatasetCatalog(
+        [replace(spec, artifacts=(*spec.artifacts, ArtifactRef.from_dict(artifact)))]
+    )
+    roots = {"tts": tmp_path}
+    release = open_release(catalog, "demo", "tts-unified-v0.1", "samples", roots)
+    asr = open_annotation(catalog, "demo", "tts-unified-v0.1", RUN, roots)
+
+    # s1 has no base text but a transcription; s2 failed and s3 is outside the run.
+    rows = [r for r, _ in iter_samples(release, text_from=asr, with_audio=False)]
+    assert [(r.id, r.target, r.language) for r in rows] == [
+        ("s0", "早上好", "zh"),
+        ("s1", "hello there", "en"),
+    ]
+    assert rows[0].metadata["text_source"] == RUN
+    assert "text_kind" not in rows[0].metadata
+    assert [r.id for r, _ in iter_asr_samples(release, text_from=asr)] == ["s0", "s1"]
+    found = read_annotations(asr, ["s2", "s3"])
+    assert list(found) == ["s2"] and found["s2"]["error_code"] == "asr_failed"
+    with pytest.raises(ContractError, match="not a transcription"):
+        list(iter_samples(release, text_from=replace(asr, task="upstream_quality")))
+
+    stale = DatasetCatalog(
+        [replace(spec, artifacts=(*spec.artifacts, ArtifactRef.from_dict({**artifact, "sha256": "0" * 64})))]
+    )
+    with pytest.raises(ContractError, match="sha256 differs"):
+        open_annotation(stale, "demo", "tts-unified-v0.1", RUN, roots)
 
 
 def test_catalog_requires_pins():
