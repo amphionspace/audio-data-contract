@@ -91,6 +91,20 @@ def _parser() -> argparse.ArgumentParser:
         help="write the artifact and records_lance roles into the catalog YAML",
     )
 
+    sync = commands.add_parser(
+        "sync-tts-unified",
+        help="regenerate tts_unified.yaml from DATA-TTS-UNIFIED/PUBLICATIONS.md",
+    )
+    sync.add_argument("data_root", help="directory holding DATA-TTS-UNIFIED")
+    sync.add_argument("--catalog-dir", default="catalog")
+    sync.add_argument("--views")
+    sync.add_argument("--roots")
+    sync.add_argument("--dry-run", action="store_true")
+    sync.add_argument(
+        "--notify", action="store_true", help="send Feishu cards on failure and recovery"
+    )
+    sync.add_argument("--state", help="file remembering the last failure notified")
+
     validate_views = commands.add_parser("validate-views")
     validate_views.add_argument("views")
     validate_views.add_argument("catalog")
@@ -144,6 +158,10 @@ def main(argv: list[str] | None = None) -> int:
         return run(args)
     if args.command == "storage-audit":
         from .storage_audit import run
+
+        return run(args)
+    if args.command == "sync-tts-unified":
+        from .tts_unified_sync import run
 
         return run(args)
     if args.command == "validate-catalog":
