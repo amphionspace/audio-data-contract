@@ -69,3 +69,18 @@ def test_pool_lists_rank_sound_alikes_and_keep_reference_words_out():
     assert {"柳岩", "刘艳", "留言"} <= set(lists["pool50_no_gold"])  # same pinyin as the gold word
     assert "上海" not in lists["pool50"] + lists["pool50_no_gold"]  # spoken in the reference
     assert kinds["柳岩"] == "confusable" and kinds["留言"] == "base"
+
+
+def test_annotation_context_and_reviewer_wins():
+    annotate = runpy.run_path(str(REPO / "scripts/hotword_bench/annotate.py"))
+    assert annotate["context"]("今天我们去郑州看刘燕", "刘燕", 3) == "…郑州看刘燕"
+    assert annotate["context"]("I met Joe today", "joe", 20) == "I met Joe today"
+    labels = [{"k": "a", "type": "person"}, {"k": "b", "type": "place"},
+              {"k": "c", "type": None}, {"k": "d", "type": "work"}, {"k": "e", "type": None}]
+    reviews = [{"k": "a", "type": "person"}, {"k": "b", "type": "organization"},
+               {"k": "c", "type": "term"}, {"k": "d", "type": None}, {"k": "e", "type": None}]
+    types, stats = annotate["final"](labels, reviews, lambda r: r["k"], "type")
+    assert types == {"a": "person", "b": "organization", "c": "term", "d": "work"}
+    assert stats == {"agreed": 1, "changed": 1, "reviewer_only": 1, "unreviewed": 1, "unlabeled": 1}
+    with pytest.raises(ValueError):
+        annotate["final"](labels, reviews[:2], lambda r: r["k"], "type")
