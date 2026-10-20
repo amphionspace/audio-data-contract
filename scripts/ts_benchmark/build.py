@@ -278,9 +278,11 @@ def describe(plan, split, index):
         "target_present": kind == "pos", "enroll_condition": params.get("enroll", "clean"),
         "duration_s": plan["total"], "n_interferers": len(interferers),
     }
-    for key in ("schedule", "hard", "pair"):
+    for key in ("schedule", "hard", "pair", "handover"):
         if key in params:
             labels[key] = params[key]
+    if "handover" in plan:
+        labels["handover_pause_s"] = plan["handover"]["pause_s"]
     if plan.get("noise"):
         labels["noise"] = plan["noise"]["kind"]
         if "snr_db" in plan["noise"]:

@@ -2,7 +2,7 @@
 
 按数据集查看语言、支持任务、时长和特性。清洗、热词、加噪、评测入口和训练框架配置归入所属数据集，不另算一套源数据。
 
-当前登记 **167 个数据集条目**；另有 **20 个下载来源声明**和 **1 个训练混合配方**。登记不代表本机文件已齐备。
+当前登记 **168 个数据集条目**；另有 **20 个下载来源声明**和 **1 个训练混合配方**。登记不代表本机文件已齐备。
 
 时长单位为小时。不同版本、子集和标注片段可能重叠，逐项列出，不相加为总量；没有时长的条目仍保留。参考表数字未核实当前文件与划分覆盖；“过滤前”不能当作清洗后时长。已被合并版本取代（`superseded_by`）的旧版本不再列出，仍可按原 ID 和版本解析。
 
@@ -101,6 +101,7 @@
 | [ts_asr_benchmark](../../catalog/ts_asr_benchmark.yaml#L1) | zh | 目标说话人语音识别 | 25.0（已登记；[v1-20261013](../../catalog/ts_asr_benchmark.yaml#L1)）<br>26.9（已登记；[v2-20261013](../../catalog/ts_asr_benchmark.yaml#L1227)）<br>43.9（已登记；[v3-20261013](../../catalog/ts_asr_benchmark.yaml#L2533)） | 目标说话人 ASR 评测集：由 AISHELL-3、KeSpeech、MagicData、AISHELL-2、AISHELL-1 的官方 test 划分合成，覆盖注册音频劣化、目标说话人进场离场与缺席、纯噪声、环境与设备。只用于评测，不进训练。场景见 scripts/ts_benchmark/recipe.yaml |
 | [ts_asr_dev](../../catalog/ts_asr_dev.yaml#L1) | zh | 目标说话人语音识别 | 10.7（已登记；[v1-20261017](../../catalog/ts_asr_dev.yaml#L1)） | 目标说话人 ASR 评测集：由 AISHELL-3、KeSpeech、MagicData、AISHELL-2、AISHELL-1 的官方 test 划分合成，覆盖注册音频劣化、目标说话人进场离场与缺席、纯噪声、环境与设备。只用于评测，不进训练。场景见 scripts/ts_benchmark/recipe.yaml |
 | [ts_asr_farfield](../../catalog/ts_asr_farfield.yaml#L1) | zh | 目标说话人语音识别 | 5.1（已登记；[v1-20261014](../../catalog/ts_asr_farfield.yaml#L1)） | 目标说话人 ASR 评测集：由 AISHELL-3、KeSpeech、MagicData、AISHELL-2、AISHELL-1 的官方 test 划分合成，覆盖注册音频劣化、目标说话人进场离场与缺席、纯噪声、环境与设备。只用于评测，不进训练。场景见 scripts/ts_benchmark/recipe.yaml |
+| [ts_asr_handover](../../catalog/ts_asr_handover.yaml#L1) | zh | 目标说话人语音识别 | 3.8（已登记；[v1-20261020](../../catalog/ts_asr_handover.yaml#L1)） | 目标说话人 ASR 评测集：由 AISHELL-3、KeSpeech、MagicData、AISHELL-2、AISHELL-1 的官方 test 划分合成，覆盖注册音频劣化、目标说话人进场离场与缺席、纯噪声、环境与设备。只用于评测，不进训练。场景见 scripts/ts_benchmark/recipe.yaml |
 | [ts_asr_nearfar](../../catalog/ts_asr_nearfar.yaml#L1) | zh | 目标说话人语音识别 | 6.0（已登记；[v1-20261014](../../catalog/ts_asr_nearfar.yaml#L1)） | AliMeeting 测试集窗口的近场与远场对照：同一窗口、同一条注册语句，注册取远场或说话人的头戴麦，混合取远场通道 0 或各头戴麦之和（电平对齐远场混合）。基于 ts_asr_real@v2-20261013 的 AliMeeting 窗口。只用于评测，不进训练 |
 | [ts_asr_noise](../../catalog/ts_asr_noise.yaml#L1) | zh | 目标说话人语音识别 | 5.9（已登记；[v1-20261013](../../catalog/ts_asr_noise.yaml#L1)） | 目标说话人 ASR 评测集：由 AISHELL-3、KeSpeech、MagicData、AISHELL-2、AISHELL-1 的官方 test 划分合成，覆盖注册音频劣化、目标说话人进场离场与缺席、纯噪声、环境与设备。只用于评测，不进训练。场景见 scripts/ts_benchmark/recipe.yaml |
 | [ts_asr_real](../../catalog/ts_asr_real.yaml#L1073) | zh | 目标说话人语音识别 | 6.2（已登记；[dev-v1-20261017](../../catalog/ts_asr_real.yaml#L1073)）<br>12.0（已登记；[overlap-v1-20261017](../../catalog/ts_asr_real.yaml#L810)）<br>3.9（已登记；[v1-20261013](../../catalog/ts_asr_real.yaml#L1)）<br>5.4（已登记；[v2-20261013](../../catalog/ts_asr_real.yaml#L345)） | 真实对话的目标说话人开发集（选模型和阈值用）：从 AliMeeting 远场、MagicData-RAMC 手机通话的人工标注 dev 划分里 以目标说话人为锚切窗口，按目标被重叠的比例分档（RAMC 标注没有重叠，只有 o0），去掉在 train 划分出现过的说话人所在的录音； 同一窗口配一条目标在场和一条目标缺席的样本。不进训练，也不作最终评测；真实会议的目标重叠窗口：从 AliMeeting 远场、AISHELL-4 远场的人工标注测试集里以目标说话人为锚切 8–26 秒窗口 （目标的语句完整，别人的语句截到窗口边界），按目标语音被别人重叠的比例分 5–20%、20–50%、50% 以上三档， 不做任何混合；同一窗口配一条目标在场和一条目标缺席的样本。只用于评测，不进训练；真实对话的目标说话人窗口：从 AliMeeting 远场、AISHELL-4 远场、MagicData-RAMC 手机通话的人工标注测试集里按完整语句切出 8–22 秒窗口，不做任何混合；同一窗口配一条目标在场（注册取窗外的另一条语句）和一条目标缺席的样本。只用于评测，不进训练；真实对话的目标说话人窗口：从 AliMeeting 远场、AISHELL-4 远场、MagicData-RAMC 手机通话的人工标注测试集，以及 Emilia2 网络爬取的对话（MOSS 说话人日志伪标签）里按完整语句切出 8–22 秒窗口，不做任何混合；同一窗口配一条目标在场（注册取窗外的另一条语句）和一条目标缺席的样本。只用于评测，不进训练；所用 Emilia2 录音列在 source/<版本>/excluded-recordings.txt，训练必须排除 |

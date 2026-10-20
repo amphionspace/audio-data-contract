@@ -58,6 +58,20 @@
 - 素材是新登记的 `mir1k@modelscope-20261017`：1000 段中文流行歌卡拉 OK 片段，左声道伴奏、右声道人声，读入时两声道取平均，即带伴奏的歌。许可为研究用途，只用于评测。
 - `nonspeech-song`（随机注册）、`realreg2-song`（业务真实注册）：1.5–8 秒，只有歌声，电平 −30 到 −15 dBFS（业务这 3 条片段约 −27 到 −15 dBFS），加 v3 的底噪；期望输出为空。生成后用底座 Qwen3-ASR 抽查，混合音频里能转写出歌词。
 
+## 接话与缺席补充集（ts_asr_handover）
+
+`ts_asr_handover@v1-20261020`：1,600 条、10 个场景，配方 `scripts/ts_benchmark/recipe-handover.yaml`。来源是业务第四批反馈（`business_feedback@ts-20261019`，飞书表格第 38、39 行）和这批换的新注册录音（`realreg3`）。每组新场景都带对照列：同一批音频、同一套时间安排，只改一个因素。
+
+- `abs-rand-k1`、`abs-hard-k1`（第 38 行：全程只有另一个人在说，注册人没说话）：1 个干扰人，6–18 秒，两列同一个 `pair`，混合音频逐条相同，只换注册人。`abs-rand-k1` 的注册人是随机的另一个人，`abs-hard-k1` 是干扰人 ECAPA 余弦前 5 的近邻（同 v3 的 `abs-hard`），`labels.hard_cosine` 记录余弦。
+- `realreg3-neg`、`realreg3-music`、`realreg3-mid1-neg`、`realreg3-mid2-neg`：同 `realreg2` 的各场景，注册音频换成 `realreg3`，各 200 条。
+- `realreg3-hard-neg`：干扰人取自与 `realreg3` 的 ECAPA 余弦最高的 10 位 test 说话人（余弦 0.22–0.37；第 38 行那位说话人是 0.10–0.27，同一人两半注册音频之间是 0.54），1 或 2 人；与 `realreg3-neg` 同一个 `pair`，片段长度和人数逐条相同。`labels.hard_cosine` 是最相近的那个干扰人的余弦。
+- `handover-*`（第 39 行：机主先说一句，停顿后干扰人接一句开头几乎相同的话，模型输出了干扰人那句）：目标说一句 1.5–4 秒的完整语句，从 0–0.5 秒开始，停 0.5–2 秒，干扰人再说一句 1.5–4 秒的完整语句，两句不重叠，片段在第二句后 0.3–1 秒结束；参考文本是目标那句，干扰人那句在 `metadata.interferers`。三列同一个 `pair`，目标语句、干扰人、停顿和音量逐条相同：
+  - `handover-same-open`：干扰人那句的前 4 个字含目标那句的前 2 个字（去标点后），覆盖「现在我」/「我现在」。
+  - `handover-rand`：同一个干扰人换一句前 4 个字与目标前 4 个字没有共同字的话，取时长最接近的一句（对照）。
+  - `handover-rev-same-open`：与 `same-open` 同样的两句话，先干扰人后目标（第 39 行「先干扰人后机主就正确」的对照）。
+  - 两句话还要求能区分：把干扰人那句当成输出时，字错率至少 50%。按这些条件，test 池里 1.5–4 秒的句子有 35,687 句，跨说话人的开头相同句对 424 万对，去掉文本几乎相同的 20 万对和干扰人没有对照句的 949 对，可用 404 万对，涵盖 28,674 句目标语句、231 位目标说话人；目标以「现在」开头的有 171 句。
+- 说话人池与 v3、`ts_asr_shortseg` 相同（各语料官方 test 划分）；种子不同，KeSpeech 抽到的 250 人与 v3 不完全相同，所以说话人嵌入按本配方重算（`speaker_embeddings.py` 同时为 `enrollment_files` 里的注册录音写入 `file:<名字>`），随数据保存在 `source/v1-20261020/speaker-embeddings.npz`。底噪、房间响应缓存取 v3 的 `source/v3-20261013/noise`、`rir`。
+
 ## 开发集（ts_asr_dev）
 
 `ts_asr_dev@v1-20261017`：3,240 条、54 个场景，配方 `scripts/ts_benchmark/recipe-pvad-dev.yaml`。用与 v3 相同的场景定义，换成各语料 dev 划分的说话人（KeSpeech、MagicData、AISHELL-1 dev，共 159 位，与 train、test 都不重叠）和新种子，用来选模型和阈值（`amphion-tse/pvad-dev@v1-20261017` 的合成部分），**不进训练，也不作最终评测**。
