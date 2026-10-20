@@ -224,3 +224,117 @@
     - alimeeting_sdm:icefall-20260908
     - aishell4:icefall-20260908
     - magicdata_ramc:icefall-20260908
+- schema_version: dataset-catalog/2.0
+  dataset_id: ts_real_train
+  version: v3-20261020
+  languages:
+  - zh
+  tasks:
+  - ts_asr
+  aliases: []
+  artifacts:
+  - name: emilia2_1spk-records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/ts_real_train/versions/v3-20261020/records_emilia2_1spk.jsonl.gz
+    sha256: 4accc1f937d5e65db60b55b276f543d1f2234ac81ca83d6dc6030e844a5d3c22
+    metadata:
+      record_count: 29550
+  - name: emilia2_1spk-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_real_train/versions/v3-20261020/audio_index_emilia2_1spk.jsonl.gz
+    sha256: 0c5f2d309ef3bf8f79fa99fd297c90211777204d514247fafdb6acc6e329f71b
+    metadata:
+      record_count: 11149
+  - name: alimeeting_en_mn-records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/ts_real_train/versions/v3-20261020/records_alimeeting_en_mn.jsonl.gz
+    sha256: 6d3aac9cd065771fa60517022d8aaeaa090e6b8141ae9ae1f2623635bf52bc25
+    metadata:
+      record_count: 24762
+  - name: alimeeting_en_mn-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_real_train/versions/v3-20261020/audio_index_alimeeting_en_mn.jsonl.gz
+    sha256: 39b64c33171e882c69cdc2a5346c9fa3fc181094fe7bfd509a0c29cca9772a96
+    metadata:
+      record_count: 639
+  - name: alimeeting_en_mf-records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/ts_real_train/versions/v3-20261020/records_alimeeting_en_mf.jsonl.gz
+    sha256: b49542536499890906f2981bf626fa6d0d1fd113c843be8723b85bea069b2e0a
+    metadata:
+      record_count: 24840
+  - name: alimeeting_en_mf-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_real_train/versions/v3-20261020/audio_index_alimeeting_en_mf.jsonl.gz
+    sha256: 8d4560f14c9dee9ce61e91b40682b1287f14e5a00d817d05749e36be07c02fef
+    metadata:
+      record_count: 848
+  - name: record_index
+    kind: lance-record-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_real_train/versions/v3-20261020/record_index/index.json
+    expected_bytes: 1497
+    sha256: afa3e93040546846385bd5656200daa2610eaaf374be59c8833e0d458264be31
+    metadata:
+      snapshot_version: 13
+      rows: 79152
+      schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
+  splits:
+    emilia2_1spk:
+      artifacts:
+        records:
+        - emilia2_1spk-records
+        audio_index:
+        - emilia2_1spk-audio-index
+        records_lance:
+        - record_index
+      task: ts_asr
+      statistics:
+        records: 29550
+        duration_hours: 38.77
+        duration_basis: clip duration (segment span, or the whole file)
+    alimeeting_en_mn:
+      artifacts:
+        records:
+        - alimeeting_en_mn-records
+        audio_index:
+        - alimeeting_en_mn-audio-index
+        records_lance:
+        - record_index
+      task: ts_asr
+      statistics:
+        records: 24762
+        duration_hours: 33.06
+        duration_basis: clip duration (segment span, or the whole file)
+    alimeeting_en_mf:
+      artifacts:
+        records:
+        - alimeeting_en_mf-records
+        audio_index:
+        - alimeeting_en_mf-audio-index
+        records_lance:
+        - record_index
+      task: ts_asr
+      statistics:
+        records: 24840
+        duration_hours: 33.19
+        duration_basis: clip duration (segment span, or the whole file)
+  provenance:
+    status: complete
+    synthetic: none
+    snapshot_date: '2026-10-20'
+    description: 真实录音的目标说话人训练窗口第三版，补 v1 / v2 没有的两类（只生成记录，引用原始录音片段，不复制、不混音）：emilia2_1spk——Emilia2 中文网络对话（emilia2_zh_dialogue_diarize
+      的 MOSS 伪标签，窗口文本已过 Qwen3-ASR 核对）里只有一个人说话的 8–22 秒整句窗口，每个窗口一对：目标在场（注册取此人窗外另一句）与目标缺席（注册取同一诊断窗口里的另一位说话人），对应评测 real-emilia2-1spk-neg；排除评测留出视频（ts_asr_real
+      v2 的 excluded-recordings）与说话人合并错误窗口；每对用 ERes2NetV2 声纹核对，按对内分布取阈值（同人下限 0.746、异人上限 0.493）剔除 225 对。alimeeting_en_mn / alimeeting_en_mf——AliMeeting
+      train 窗口（窗口切法同 v1，远场人工标注），注册一律取注册人的近场头戴麦，混合取窗口内某位说话人的头戴麦（en_mn，设备离说话人近）或远场第 0 声道（en_mf），在场 / 缺席成对，补评测 nearfar-*-en-mn-neg（近场注册
+      + 近场混合）的缺席。生成脚本 scripts/ts_robust/build_ts_real_train_v3.py、qc_ts_real_train_v3.py。
+    sources:
+    - emilia2_zh_dialogue_diarize@moss-transcribe-diarize-0.9B train_120s
+    - alimeeting_sdm@icefall-20260908 train
+    - alimeeting@openslr-119-local-20260826 Train_Ali_near
