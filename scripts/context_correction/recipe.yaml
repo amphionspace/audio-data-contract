@@ -1,0 +1,77 @@
+# 上下文纠偏评测集（context_correction_zh）：说话人在同一段话里用说明或语境确定了某个同音词的写法，
+# 识别结果应按上下文写。题目和标准答案由 LLM 生成，另一家族的 LLM 独立复核；代码只做两项机械校验
+# （被测词两种写法带调拼音相同、朗读音频的拼音错误率）。复核不一致或校验不过的样本进 quarantine，不删除。
+# 每对题目含一条 correct（上下文指向少见写法）和一条 confirm（同一读音，上下文指向常用写法）。
+version: v1-20261018
+dataset_id: context_correction_zh
+seed: 20261018
+sample_rate: 16000
+
+llm:
+  base_url: https://dashscope.aliyuncs.com/compatible-mode/v1
+  api_key_env: ALI_API_KEY          # amphionkeys aliyun-llm
+  generator: {model: qwen3.6-plus, extra_body: {enable_thinking: true}, temperature: 0.9}
+  # 不同模型家族，避免出题模型自己给自己判卷
+  reviewer: {model: deepseek-v4-pro, temperature: 0.0}
+  workers: 16
+
+# 朗读文本的汉字数。试跑实测 Qwen3-TTS 约 4.5 字/秒，140 字会超过 30 秒，超长题按实测时长进隔离区。
+han_chars: [30, 140]
+# Qwen3-ASR 单次请求上限 30 秒；TS 面板另取不超过 ts_max_seconds 的题（34479 的 TS 混合上限 27 秒）
+max_seconds: 29.5
+ts_max_seconds: 26.5
+pairs_per_call: 5
+# 生成量按目标的倍数准备。v1 首轮用 2.0：显式类约 45-68% 通过复核，隐式类只有 29%（复核常判前半句并不歧义），
+# 加上音频质检约淘汰两到三成对，补生成到下面的倍数。build.py 按生成顺序取每层前 target 对质检通过的，不看任何被测模型的输出
+overprovision: 3.0
+
+scenarios: [警务笔录, 报警电话, 派出所户籍窗口, 快递或外卖客服, 会议自我介绍, 医院挂号, 银行开户, 物业登记, 租房看房, 学校报名]
+entity_types: {人名: 0.7, 地名或路名: 0.15, 单位或店名: 0.15}
+positions: {after: 0.8, before: 0.2}
+distances: {adjacent: 0.4, near: 0.35, far: 0.25}
+
+categories:
+  explicit:
+    description: 显式说字：说话人用组词、拆字、偏旁结构或否定对比说明某个字怎么写
+    subtypes: {组词: 100, 拆字: 100, 偏旁结构: 100, 否定对比: 100}   # 每个子类的目标对数
+    protected_rate: 0.3       # 约三成题目另含一个必须保持的同音常用词（[[P:...]]）
+  consistency:
+    description: 同名一致性：同一个名字出现两次以上，只有一处带说明，每处都要写对
+    subtypes: {同名一致性: 100}
+    protected_rate: 0.3
+  implicit:
+    description: 隐式语义：没有显式说明，同音词的写法由后文语义唯一确定
+    subtypes: {隐式语义: 300}
+    protected_rate: 0.0
+    overprovision: 5.0
+
+# 参考音色：已注册语料测试划分里的说话人（训练未见过），每人取两条不同语句：一条做零样本克隆的提示，
+# 一条做 TS 面板的注册音频。以后用同一生成器造训练数据时不得使用这些说话人。
+voices:
+  prompt_seconds: [4.0, 10.0]
+  prompt_min_chars: 12
+  sources:
+    - {dataset: aishell3, version: legacy-20260804, split: test, n: 30}    # 棚内朗读
+    - {dataset: kespeech, version: legacy-20260804, split: test, n: 30}    # 手机录音、各地口音
+tts:
+  model: /workspace/model/Qwen3-TTS-12Hz-1.7B-Base
+  language: Chinese
+qc:
+  model: /workspace/model/SenseVoiceSmall     # 不参与评测的质检 ASR
+  max_pinyin_error: 0.10                       # 整段无调拼音错误率上限
+
+# 真实录音挖掘：同一录音的相邻分段合成不超过 window_seconds 的窗口，本地 LLM 逐批扫描（不做正则预筛），
+# 命中的窗口由出题和复核两个 LLM 各自写出按上下文修正的转写，一致且只改写法（读音不变）才收录。
+mining:
+  window_seconds: 25.0
+  max_gap_seconds: 2.0
+  pad_seconds: 0.3
+  scan_batch: 20
+  scan_model: /workspace/model/Qwen3.6-27B
+  corpora:
+    wenetspeech_podcast:   # 不在 34479 的训练清单里；replay_v3 可能含同源录音，报告里标注
+      recordings: /workspace/data/datasets/wenetspeech_podcast/versions/l-20261014/recordings/train.jsonl.gz
+      supervisions: /workspace/data/datasets/wenetspeech_podcast/versions/l-20261014/supervisions/train.jsonl.gz
+    wenetspeech_youtube:   # 同上；比有声书为主的播客更口语
+      recordings: /workspace/data/datasets/wenetspeech_youtube/versions/l-20261014/recordings/train.jsonl.gz
+      supervisions: /workspace/data/datasets/wenetspeech_youtube/versions/l-20261014/supervisions/train.jsonl.gz
