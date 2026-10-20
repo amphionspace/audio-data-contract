@@ -1,0 +1,23 @@
+# 业务反馈第四批：飞书表格「鼎桥云端 ASR 调试」的增量（revision 229→240），新增第 38、39 行，
+# 同一位测试人员，下游用的是 2026-10-19 的 avg3 交付包。换了一段新的注册音频。
+# 表格「识别错误类型」一列写明了目标人是否在场；第 39 行的参考文本没有人工听审，由自动复核确定：
+# 说话人相似度（WeSpeaker ECAPA-TDNN512-LM）定位机主的句子，34479 普通 ASR 与 TS 单段转写一致（见 badcase 目录 README）。
+version: ts-20261019
+source: 2026-10-19_amphionasr-owner-misrecognition
+language: zh
+description: >-
+  测试人员持续收音时反馈的 2 个调试包（表格第 38、39 行），换了一段新的注册音频。
+  每段输入为 3 秒注册音频加一个识别片段；目标是否在场取自表格的错误类型，在场那条的参考文本由自动复核确定，未经人工听审。
+split_descriptions:
+  target_present: 目标说话人在场（反馈人在表格中确认）、参考文本由自动复核确定（说话人相似度定位、两套转写一致），未经人工听审。
+cases:
+  # 机主没说话，全程是另一个人在说：模型转写了别人的话（表格：目标人不在场，仍然识别出结果）。
+  row-38: {split: target_speaker, target_present: false, issue: non_target_voice_transcribed}
+  # 机主先说（0–2.6 秒），干扰人后说「我现在是在旁边干扰的人」，开头与机主几乎相同；模型输出了干扰人那句
+  # （表格：目标人在场，识别为其他人）。
+  row-39:
+    split: target_present
+    target_present: true
+    target: 现在我开始说话，可以吗？搞得定吗？
+    issue: interferer_transcribed_instead_of_target
+    label_source: auto_review

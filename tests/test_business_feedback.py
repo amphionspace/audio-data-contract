@@ -91,6 +91,21 @@ def test_confirmed_target_speech_and_row_named_packages(batch):
     assert present.metadata["package"] == "model-feedback-def.zip"
 
 
+def test_auto_reviewed_labels_are_marked(batch):
+    source, labels, data_root = batch
+    make_case(source, "row-39", 3.0, "language Chinese<asr_text>别人的话。")
+    labels["cases"]["row-39"] = {"split": "target_present", "target_present": True, "target": "我的话",
+                                 "issue": "interferer", "label_source": "auto_review"}
+    labels["split_descriptions"] = {"target_present": "参考文本由自动复核确定，未经人工听审。"}
+    by_split, index = ingest["build"](source, labels, data_root)
+    spec = DatasetSpec.from_dict(ingest["declaration"](labels, by_split, index, data_root))
+
+    (present,) = load_records(data_root / "versions/ts-test/records/target_present.jsonl.gz")
+    assert present.labels["label_source"] == "auto_review"
+    assert spec.splits["target_present"].provenance["description"] == "参考文本由自动复核确定，未经人工听审。"
+    assert spec.splits["target_speaker"].provenance["description"] == ingest["SPLIT_DESCRIPTIONS"]["target_speaker"]
+
+
 def test_registered_version_is_never_replaced(batch):
     source, labels, data_root = batch
     ingest["build"](source, labels, data_root)

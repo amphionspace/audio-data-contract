@@ -204,3 +204,65 @@
     description: 业务反馈的目标说话人 bad case，每个批次一个版本，只用于评测，不进训练。测试人员持续收音时反馈的 31 个调试包（表格第 2–37 行，去掉与第二批重复的包），与第二批使用同一段注册音频。 每段输入为 3 秒注册音频加一个识别片段；目标是否在场与参考文本经复核人逐条听音确认。
     sources:
     - 'business feedback debug packages: 2026-10-16_amphionasr-owner-misrecognition'
+- schema_version: dataset-catalog/2.0
+  dataset_id: business_feedback
+  version: ts-20261019
+  languages:
+  - zh
+  tasks:
+  - ts_asr
+  artifacts:
+  - name: audio-index
+    kind: audio-index
+    root_alias: business_feedback
+    relative_path: versions/ts-20261019/audio-index.jsonl.gz
+    sha256: 2bac18ba264ad3b0b55ff904302b296842a6ace3368568c8ac258586eae3188a
+    metadata:
+      record_count: 3
+  - name: target_present-records
+    kind: audio-records
+    root_alias: business_feedback
+    relative_path: versions/ts-20261019/records/target_present.jsonl.gz
+    sha256: c035b1535a5d93e7b33a55dc561681091dbc30b8508d3d56d90169a30341c3ba
+    metadata:
+      record_count: 1
+  - name: target_speaker-records
+    kind: audio-records
+    root_alias: business_feedback
+    relative_path: versions/ts-20261019/records/target_speaker.jsonl.gz
+    sha256: 07f228226ebd52dc8ff33e17c1399f6c66fd586706290158236fb35111c85afe
+    metadata:
+      record_count: 1
+  splits:
+    target_present:
+      artifacts:
+        records:
+        - target_present-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 1
+        duration_hours: 0.0019
+        duration_basis: Mixture (recognition segment) duration
+      provenance:
+        description: 目标说话人在场（反馈人在表格中确认）、参考文本由自动复核确定（说话人相似度定位、两套转写一致），未经人工听审。
+    target_speaker:
+      artifacts:
+        records:
+        - target_speaker-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 1
+        duration_hours: 0.004
+        duration_basis: Mixture (recognition segment) duration
+      provenance:
+        description: 目标说话人未在场、期望输出为空的反馈（已由反馈人确认）。
+  provenance:
+    status: complete
+    synthetic: none
+    description: 业务反馈的目标说话人 bad case，每个批次一个版本，只用于评测，不进训练。测试人员持续收音时反馈的 2 个调试包（表格第 38、39 行），换了一段新的注册音频。 每段输入为 3 秒注册音频加一个识别片段；目标是否在场取自表格的错误类型，在场那条的参考文本由自动复核确定，未经人工听审。
+    sources:
+    - 'business feedback debug packages: 2026-10-19_amphionasr-owner-misrecognition'
