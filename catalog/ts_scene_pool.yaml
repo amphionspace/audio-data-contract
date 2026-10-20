@@ -254,3 +254,175 @@
     - kespeech:legacy-20260804
     - librispeech:legacy-20260804
     - common_voice_en:legacy-20260804
+- schema_version: dataset-catalog/2.0
+  dataset_id: ts_scene_pool
+  version: multi-20261018
+  languages:
+  - zh
+  - en
+  tasks:
+  - ts_asr
+  aliases: []
+  artifacts:
+  - name: zh-records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/multi-20261018/records_zh.jsonl.gz
+    sha256: 4cb3a23e099976ee3eac866c17dc13e64f646c83b77b36e982537034fc995a8c
+    metadata:
+      record_count: 240000
+  - name: zh-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/multi-20261018/audio_index_zh.jsonl.gz
+    sha256: 56880aa17af198c1f0e034364f5354deecdcfff7270cd0fe6cff4ddc2e39e2c8
+    metadata:
+      record_count: 1089327
+  - name: en-records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/multi-20261018/records_en.jsonl.gz
+    sha256: 05ef8d7bf64f942ebb9ef926563f336cd1379f7280a5c82edacfac3aee377570
+    metadata:
+      record_count: 80000
+  - name: en-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/multi-20261018/audio_index_en.jsonl.gz
+    sha256: 209b4c36352b31f6e70afa93065a86e037ea4e842dcf010d1e3a51b31b0ce4db
+    metadata:
+      record_count: 167478
+  - name: record_index
+    kind: lance-record-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/multi-20261018/record_index/index.json
+    sha256: 69bcb0a774ebb59f53baab1d1bdd92bde66b0faa03928e48850cca67b118255d
+    expected_bytes: 1059
+    metadata:
+      snapshot_version: 13
+      rows: 320000
+      schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
+  splits:
+    zh:
+      artifacts:
+        records:
+        - zh-records
+        audio_index:
+        - zh-audio-index
+        records_lance:
+        - record_index
+      task: ts_asr
+      statistics:
+        records: 240000
+        duration_hours: 268.11
+        duration_basis: clip duration (segment span, or the whole file)
+    en:
+      artifacts:
+        records:
+        - en-records
+        audio_index:
+        - en-audio-index
+        records_lance:
+        - record_index
+      task: ts_asr
+      statistics:
+        records: 80000
+        duration_hours: 118.07
+        duration_basis: clip duration (segment span, or the whole file)
+  provenance:
+    status: complete
+    synthetic: none
+    snapshot_date: '2026-10-17'
+    description: 多句目标场景（full）放大版：与 multi-20261017 同一生成方式，规模翻倍（zh 24 万、en 8 万）；目标说 2–5 句，与 1–4 个其他说话人各自按自己的间隔并行说话；约 26% 的记录是缺席孪生——同一批语句和时间线，注册人换成场景外的另一个人（一半是目标的近邻声音），目标为空，同一对共用
+      labels.pair。用于降低训练里同一批场景的重复次数。
+    sources:
+    - aishell2:legacy-20260804
+    - kespeech:legacy-20260804
+    - librispeech:legacy-20260804
+    - common_voice_en:legacy-20260804
+- schema_version: dataset-catalog/2.0
+  dataset_id: ts_scene_pool
+  version: solo-20261019
+  languages:
+  - zh
+  - en
+  tasks:
+  - ts_asr
+  aliases: []
+  artifacts:
+  - name: zh-records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/solo-20261019/records_zh.jsonl.gz
+    sha256: 00d9c0efa7f9ca2f7f0ce51f78ae491c57fa32365c2000b7aa6922e04b22a80e
+    metadata:
+      record_count: 60000
+  - name: zh-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/solo-20261019/audio_index_zh.jsonl.gz
+    sha256: 97b42ef1f4abc8a6be8d1d5f8b3e9b688992123a1c27e419b070cda7fc6738f1
+    metadata:
+      record_count: 95868
+  - name: en-records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/solo-20261019/records_en.jsonl.gz
+    sha256: 0485bab230982ea3f5833690e63152f8ef98b6b7d5f7e18d505d629d9788612e
+    metadata:
+      record_count: 20000
+  - name: en-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/solo-20261019/audio_index_en.jsonl.gz
+    sha256: d56e1da2e04b832d7ada1bd61613db6fc639913556387c05b41e50592baebd04
+    metadata:
+      record_count: 19841
+  - name: record_index
+    kind: lance-record-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/solo-20261019/record_index/index.json
+    sha256: 5cec5d8b91454a5f70ff763ac60e7697d50a230ce87212ecc03a61f303d50007
+    expected_bytes: 1056
+    metadata:
+      snapshot_version: 13
+      rows: 80000
+      schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
+  splits:
+    zh:
+      artifacts:
+        records:
+        - zh-records
+        audio_index:
+        - zh-audio-index
+        records_lance:
+        - record_index
+      task: ts_asr
+      statistics:
+        records: 60000
+        duration_hours: 67.38
+        duration_basis: clip duration (segment span, or the whole file)
+    en:
+      artifacts:
+        records:
+        - en-records
+        audio_index:
+        - en-audio-index
+        records_lance:
+        - record_index
+      task: ts_asr
+      statistics:
+        records: 20000
+        duration_hours: 29.78
+        duration_basis: clip duration (segment span, or the whole file)
+  provenance:
+    status: complete
+    synthetic: none
+    snapshot_date: '2026-10-19'
+    description: 目标单独说一句短话（1–3.5 秒）的场景：没有其他说话人，约 30% 是缺席孪生——同一句话，注册人换成另一个人，转写为空。用来补 aishellmix / librimix 的 train_1spk 里几乎没有的
+      3 秒以内的短目标在场监督（v7 评测的 solo-mid 在场输出为空 11% 以上）。
+    sources:
+    - aishell2:legacy-20260804
+    - kespeech:legacy-20260804
+    - librispeech:legacy-20260804
+    - common_voice_en:legacy-20260804
