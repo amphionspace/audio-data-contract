@@ -790,91 +790,91 @@
     kind: audio-records
     root_alias: aidc_data
     relative_path: datasets/hotword_bench/versions/v3-20261020/records/aishell1_ne_dev.jsonl.gz
-    sha256: 5e860997f0622253f3077b924c0f711a34e3c98e8fb71ca64ba217b2fa6c4170
+    sha256: a063d9bf62241a4128668f2ea9b730f5ab0cf1b9b5fbc01ae30e234287aa1749
     metadata:
       record_count: 1334
   - name: aishell1_ne_test-records
     kind: audio-records
     root_alias: aidc_data
     relative_path: datasets/hotword_bench/versions/v3-20261020/records/aishell1_ne_test.jsonl.gz
-    sha256: 2109f3b990395566bd4ab7bbae2bafbc41c2a92f661ec89ada1c54c191e842df
+    sha256: 8ac91e745fc6944a09b7e168b6436d7e3af76b70c75c0d0b22150ba7b4b01c3c
     metadata:
       record_count: 808
   - name: aishell2-records
     kind: audio-records
     root_alias: aidc_data
     relative_path: datasets/hotword_bench/versions/v3-20261020/records/aishell2.jsonl.gz
-    sha256: 0b4b10c500fdf6d3c43b7d1a5bcd91abaa22407cdeb45a16e5376b98baf03d11
+    sha256: d6c8336a63590b32c7f81da4d62f8bee7c5741c96c203aa64899f30aaf69d167
     metadata:
       record_count: 1169
   - name: aishell3-records
     kind: audio-records
     root_alias: aidc_data
     relative_path: datasets/hotword_bench/versions/v3-20261020/records/aishell3.jsonl.gz
-    sha256: cbe41ecbbfbb637f1f59fbddc1410d40651a0f92edd1b4655ca9bce2611debb4
+    sha256: 77c9b7c97dffb5ffd77e1f6450f22082de6e8bbbe6f957d5432735e11613a3f1
     metadata:
       record_count: 2000
   - name: contextasr_speech_zh-records
     kind: audio-records
     root_alias: aidc_data
     relative_path: datasets/hotword_bench/versions/v3-20261020/records/contextasr_speech_zh.jsonl.gz
-    sha256: d3dcf62bb175e0a34e6ba5227922998510a63f97ad5911e8f341fbc2f9974a13
+    sha256: 5fc418411e5092b13f6c93791ee47505ed5f371845f13356b5595ff25a83b8f3
     metadata:
       record_count: 15498
   - name: cv_en-records
     kind: audio-records
     root_alias: aidc_data
     relative_path: datasets/hotword_bench/versions/v3-20261020/records/cv_en.jsonl.gz
-    sha256: bbf9a8ae3aa866f9f362f25138cb045c20fa96cbe017edae9d00546a14cd04c3
+    sha256: 2572ab34d8b803fce727b5d3918e0c665d08804b7412a56fe5d06071e444d5e8
     metadata:
       record_count: 2000
   - name: cv_zh-records
     kind: audio-records
     root_alias: aidc_data
     relative_path: datasets/hotword_bench/versions/v3-20261020/records/cv_zh.jsonl.gz
-    sha256: 9e8200e3a77a52cad4b4ea688700a788b2acbe9c2b3ee60cceb378c8d2e2eaca
+    sha256: bea9bd112734a6de935ef72852ce9f23ae6c79ea9988a4918787e32f37e000fc
     metadata:
       record_count: 2000
   - name: gigaspeech_test-records
     kind: audio-records
     root_alias: aidc_data
     relative_path: datasets/hotword_bench/versions/v3-20261020/records/gigaspeech_test.jsonl.gz
-    sha256: 776537dba2f7376c80e0428901ddf1e2ea1064b81c0fa0fc6e0a8cc07e5f7fd9
+    sha256: 2a1d7499f79299f3386d21ae52f6d9a973956349a216b844e4c4b26ccd8977bd
     metadata:
       record_count: 25373
   - name: kespeech-records
     kind: audio-records
     root_alias: aidc_data
     relative_path: datasets/hotword_bench/versions/v3-20261020/records/kespeech.jsonl.gz
-    sha256: 77d918b3fbfa5d2cafbb0eb7cf895aaa32e6b6b1a321d53f4c84a1002f7d0050
+    sha256: 835d8e4250503451c51df483cfcc43a14cf7c875995cbe9d27cfda665fd1a253
     metadata:
       record_count: 2000
   - name: librispeech_test_clean-records
     kind: audio-records
     root_alias: aidc_data
     relative_path: datasets/hotword_bench/versions/v3-20261020/records/librispeech_test_clean.jsonl.gz
-    sha256: 722d0e1c9d5758ffec5db3e1c3aa250f5a75bdcfda4b06e3614b234b5276a4d3
+    sha256: 1b6f1ca49895ff92d3a0d77b339ad7dc04151593e7f71bdc39b8e900c1719395
     metadata:
       record_count: 2620
   - name: librispeech_test_other-records
     kind: audio-records
     root_alias: aidc_data
     relative_path: datasets/hotword_bench/versions/v3-20261020/records/librispeech_test_other.jsonl.gz
-    sha256: dad237138da0ae9486b7b2ad1ecc7e9fcc9777e724ce8a62fc74fd3e5c63300a
+    sha256: 02552d23adffa80bf5d6dca5fb89c125d86a4e3f430183eab6eec9eb66d1821b
     metadata:
       record_count: 2939
   - name: quarantine-records
     kind: audio-records
     root_alias: aidc_data
     relative_path: datasets/hotword_bench/versions/v3-20261020/records/quarantine.jsonl.gz
-    sha256: 73bba5105fc4282853e4f83128d83db7be1481404d93faccf9c1071dcd022cd2
+    sha256: 18fdb30bf55eb249b7370e9ab1c84ad95bc0097d515cb390b822fea418d91b5d
     metadata:
       record_count: 1185
   - name: real_zh-records
     kind: audio-records
     root_alias: aidc_data
     relative_path: datasets/hotword_bench/versions/v3-20261020/records/real_zh.jsonl.gz
-    sha256: 35819994f8837799c471b8849388ce1ff14a25d6a6d3b89b7a23117e13932211
+    sha256: 941f6cd9a56e1a71e17c89aa3d44baf194c29880e38ed7dcfc8aec53600c2ec5
     metadata:
       record_count: 5487
   - name: hotword-pools
@@ -1275,7 +1275,8 @@
     status: complete
     synthetic: partial
     usage: evaluation_only
-    description: 热词评测集 v3，只用于评测，不进训练。记录、音频、正确词和全部列表与 v2-20261019 相同（请求逐条一致，总指标可与 v2-20261019 直接比较），另加两种标签： metadata.hotword_types 为每个正确词按所在句子的意思标的类型（person / place / organization / product / work / term / other / common），contextasr_speech_zh 的 labels.domain_group 把 ContextASR 自带的自由文本领域归到 13 个大类。doubao-seed-2-0-lite-260215 标注，deepseek-v4-pro-ga-260813 看着标注复核并以复核为准（类型复核后不变的占 98.5%）。生成脚本 scripts/hotword_bench/annotate.py，类型定义见 prompts.py。
+    description: 热词评测集 v3，只用于评测，不进训练。记录、音频、正确词和全部列表与 v2-20261019 相同（请求逐条一致，总指标可与 v2-20261019 直接比较），另加两种标签： metadata.hotword_types 为每个正确词按所在句子的意思标的类型（person / place / organization / product / work / term / other / common），contextasr_speech_zh 的 labels.domain_group 把 ContextASR 自带的自由文本领域归到 13 个大类，自由文本领域本身从 labels.domain 移到 metadata.domain （评测器按每个字符串标签分项，3,957 种取值会让 summary 超过 W&B 的 10 MB 上限）。doubao-seed-2-0-lite-260215 标注，deepseek-v4-pro-ga-260813 看着标注复核并以复核为准（类型复核后不变的占 98.5%）。生成脚本 scripts/hotword_bench/annotate.py，类型定义见
+      prompts.py。
     sources:
     - hotword_bench@v2-20261019
     limitations: contextasr_speech_zh 为 TTS 合成音频；GigaSpeech 列表按 SALMONN-2 的描述重建，与其原表不完全相同；打分口径（规范化、B/U 归属）与各论文不完全一致，与公开数字只能近似对照；本地热词集与 real_zh 的 正确词来自 LLM 抽取。AISHELL-1/AISHELL-3 测试文本大量出现在 AISHELL-2 训练转写中，labels.train_text_overlap 标出与训练文本相同的条目，用过这些训练集的模型应看 none 子集。检索器是文本规则召回、以参考文本为查询，不是现网的音频双塔 RAG，正确词总能被召回，召回失败由 pool50_no_gold 单独衡量；基础词库为还原的约 88% 现网词库。类型和领域大类是 LLM 标签，未经人工核对；一个正确词只有一个类型，作品名里含人名等嵌套情况按整体归类。

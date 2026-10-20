@@ -1,7 +1,8 @@
 # 热词评测集 v3：记录、音频、正确词和全部列表与 v2 相同（请求逐条一致，两版总指标可直接比较），
 # 只加两种 LLM 标签（脚本 annotate.py，类型定义在 prompts.py）：
 # - metadata.hotword_types：每个正确词按所在句子的意思标类型（人名、地名、机构品牌、产品、作品、术语、其他专名、普通词）；
-# - contextasr_speech_zh 的 labels.domain_group：把 ContextASR 自带的自由文本领域（labels.domain，3,957 种）归到 13 个大类。
+# - contextasr_speech_zh 的 labels.domain_group：把 ContextASR 自带的自由文本领域（3,957 种）归到 13 个大类；
+#   自由文本领域从 labels.domain 移到 metadata.domain，评测器按每个字符串标签分项，3,957 种取值会让 summary 超过 W&B 的 10 MB 上限。
 # 不同类型的词难度差别大（Qwen-Audio-3.0-ASR 报告里人名不给列表时召回最低），总召回会把它们混在一起。
 version: v3-20261020
 dataset_id: hotword_bench

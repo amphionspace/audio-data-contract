@@ -7,9 +7,11 @@ same and v2 and v3 metrics compare directly. It adds two LLM labels:
 - ``metadata.hotword_types``: gold word -> one of ``prompts.TYPES``, judged by
   what the word means in its own sentence (the same string can differ between
   utterances);
-- ``labels.domain_group`` on contextasr_speech_zh: the free-form
-  ``labels.domain`` ContextASR ships with mapped to one of
-  ``prompts.DOMAIN_GROUPS``.
+- ``labels.domain_group`` on contextasr_speech_zh: the free-form domain
+  ContextASR ships with mapped to one of ``prompts.DOMAIN_GROUPS``. The
+  free-form value moves from ``labels.domain`` to ``metadata.domain``: the
+  scorer breaks results down by every string label, and its 3,957 values
+  pushed a run's summary past W&B's 10 MB limit.
 
 The labeler assigns, the reviewer (another model family) sees that label and
 writes the type it judges right; the reviewer's answer is final. An item the
@@ -225,7 +227,8 @@ def build(recipe, source, out_dir=None):
                     w: types[(row["id"], w)] for w in dict.fromkeys(row["hotwords"]) if (row["id"], w) in types}
                 counts[split].update(record["metadata"]["hotword_types"].values())
             if split == DOMAIN_SPLIT:
-                record["labels"]["domain_group"] = groups[row["labels"]["domain"]]
+                record["metadata"]["domain"] = record["labels"].pop("domain")
+                record["labels"]["domain_group"] = groups[record["metadata"]["domain"]]
                 counts[f"{split}:domain_group"][record["labels"]["domain_group"]] += 1
             AudioRecord.from_dict(record)
             out_split[split].append(record)
@@ -263,7 +266,8 @@ def v3_declaration(recipe, version_dir, by_split, counts, type_stats):
         {base_version} 相同（请求逐条一致，总指标可与 {base_version} 直接比较），另加两种标签：
         metadata.hotword_types 为每个正确词按所在句子的意思标的类型（{' / '.join(prompts.TYPES)}），
         contextasr_speech_zh 的 labels.domain_group 把 ContextASR 自带的自由文本领域归到
-        {len(prompts.DOMAIN_GROUPS)} 个大类。{llm['labeler']['model']} 标注，{llm['reviewer']['model']}
+        {len(prompts.DOMAIN_GROUPS)} 个大类，自由文本领域本身从 labels.domain 移到 metadata.domain
+        （评测器按每个字符串标签分项，3,957 种取值会让 summary 超过 W&B 的 10 MB 上限）。{llm['labeler']['model']} 标注，{llm['reviewer']['model']}
         看着标注复核并以复核为准（类型复核后不变的占 {type_stats['agreed'] / reviewed:.1%}）。
         生成脚本 scripts/hotword_bench/annotate.py，类型定义见 prompts.py。""")
     provenance["sources"] = [f"hotword_bench@{base_version}"]
