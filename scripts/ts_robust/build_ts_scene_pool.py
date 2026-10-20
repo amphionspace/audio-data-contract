@@ -28,6 +28,13 @@ instead: one of the other speakers is a close neighbour of the target (a random 
     python build_ts_scene_pool.py --output-dir DIR [--zh 150000 --en 100000]
     python build_ts_scene_pool.py --output-dir DIR --version hard-20261016 --neighbors FILE --zh 40000 --en 25000
     python build_ts_scene_pool.py --output-dir DIR --version multi-20261017 --multi --neighbors FILE --zh 120000 --en 40000
+
+With ``--solo`` it builds the short solo version: the target says one short utterance and nobody else speaks. The
+multi-turn and one-target mixes hold almost no target utterance under 3 s (aishellmix / librimix ``train_1spk`` have
+none under 3 s for aishellmix), so a model trained on them learns to stay silent on a bare short phrase. A share of the
+records are twins: the same utterance, but the enrollment is another speaker, so the transcript is empty.
+
+    python build_ts_scene_pool.py --output-dir DIR --version solo-20261019 --solo --zh 60000 --en 20000
 """
 
 import argparse
@@ -64,6 +71,8 @@ MEAN_GAP_SECONDS = {"alternate": 0.6, "burst": 0.25, "short": 0.15}
 GAP_PROFILES = ((0.2, 1.0), (0.2, 1.0), (1.0, 3.0), (2.5, 6.0))
 FULL_UTTERANCE_SECONDS = (1.5, 9.0)
 FULL_TARGET_TURNS = ((2, 3, 4, 5), (0.4, 0.3, 0.2, 0.1))
+# --solo: one short target utterance, nobody else. The benchmark's solo-mid clips are 2-6 s with a median of 6 characters.
+SOLO_UTTERANCE_SECONDS = (1.0, 3.5)
 FULL_INTERFERERS = ((1, 2, 3, 4), (0.3, 0.3, 0.25, 0.15))
 MAX_UTTERANCES_PER_TRACK = 6
 COLUMNS = ["id", "speaker", "text", "duration", "cut_id", "root_alias", "relative_path",
@@ -252,6 +261,25 @@ class Builder:
             "targets": [{**self.ref(corpus, i), "text": corpus.rows["text"][i].strip()} for i in targets],
             "enrollment": self.ref(corpus, enrollment[0]), "interferers": others}, seconds
 
+    def solo_pair(self, twin):
+        """One short target utterance and, when ``twin``, the scene with another speaker enrolled (transcript empty)."""
+        rng = self.rng
+        self.pending = {}
+        corpus = rng.choice(self.targets)
+        while True:
+            speaker = rng.randrange(len(corpus.speakers))
+            targets = corpus.pick(rng, speaker, 1, *SOLO_UTTERANCE_SECONDS)
+            enrollment = corpus.pick(rng, speaker, 1, *ENROLLMENT_SECONDS, exclude=set(targets)) if targets else None
+            if enrollment:
+                break
+        gap = rng.choice(GAP_PROFILES)
+        scene = {"mode": "full", "target_speaker": corpus.speakers[speaker], "target_gap": list(gap),
+                 "targets": [{**self.ref(corpus, targets[0]), "text": corpus.rows["text"][targets[0]].strip()}],
+                 "enrollment": self.ref(corpus, enrollment[0]), "interferers": []}
+        paired = self.draw_twin(scene) if twin else None
+        self.audio.update(self.pending)
+        return scene, paired
+
     def draw_twin(self, scene):
         """The scene with another speaker enrolled; half of the time one close to the real target."""
         rng = self.rng
@@ -321,8 +349,9 @@ def main():
     parser.add_argument("--absent-share", type=float, default=0.55)
     parser.add_argument("--multi", action="store_true", help="build the multi-turn (full) version with twins")
     parser.add_argument("--twin-share", type=float, default=0.26, help="share of the records that are twins")
+    parser.add_argument("--solo", action="store_true", help="build the short solo version (one short target utterance, nobody else) with twins")
     args = parser.parse_args()
-    if args.multi and not 0 <= args.twin_share < 1:
+    if (args.multi or args.solo) and not 0 <= args.twin_share < 1:
         parser.error("--twin-share must be in [0, 1)")
     VERSION = args.version
     args.output_dir.mkdir(parents=True, exist_ok=True)
@@ -333,14 +362,14 @@ def main():
                           neighbors and neighbors[language], args.hard_rank)
         modes, weights = zip(*MODES[language])
         records, tally = [], Counter()
-        if args.multi:
+        if args.multi or args.solo:
             twin_chance = args.twin_share / (1 - args.twin_share)  # twins per base scene
             number = 0
             while number < count:
-                scene, paired = builder.full_pair(builder.rng.random() < twin_chance)
+                scene, paired = (builder.solo_pair if args.solo else builder.full_pair)(builder.rng.random() < twin_chance)
                 joiner = "" if language == "zh" else " "
                 records.append(record(language, number, scene, joiner, pair=number if paired else None))
-                tally[f"full-{len(scene['targets'])}turns"] += 1
+                tally["solo" if args.solo else f"full-{len(scene['targets'])}turns"] += 1
                 number += 1
                 if paired and number < count:
                     records.append(record(language, number, paired, joiner, pair=number - 1))
