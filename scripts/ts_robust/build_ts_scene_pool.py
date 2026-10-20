@@ -32,9 +32,12 @@ instead: one of the other speakers is a close neighbour of the target (a random 
 With ``--solo`` it builds the short solo version: the target says one short utterance and nobody else speaks. The
 multi-turn and one-target mixes hold almost no target utterance under 3 s (aishellmix / librimix ``train_1spk`` have
 none under 3 s for aishellmix), so a model trained on them learns to stay silent on a bare short phrase. A share of the
-records are twins: the same utterance, but the enrollment is another speaker, so the transcript is empty.
+records are twins: the same utterance, but the enrollment is another speaker, so the transcript is empty. With
+``--neighbors`` half of the twins enroll a close neighbour of the target, as in the multi-turn version.
 
-    python build_ts_scene_pool.py --output-dir DIR --version solo-20261019 --solo --zh 60000 --en 20000
+    python build_ts_scene_pool.py --output-dir DIR --version solo-20261019 --solo --twin-share 0.3 --zh 60000 --en 20000
+    python build_ts_scene_pool.py --output-dir DIR --version solo-20261020 --solo --neighbors FILE --twin-share 0.3 \\
+        --zh 60000 --en 20000
 """
 
 import argparse

@@ -426,3 +426,89 @@
     - kespeech:legacy-20260804
     - librispeech:legacy-20260804
     - common_voice_en:legacy-20260804
+- schema_version: dataset-catalog/2.0
+  dataset_id: ts_scene_pool
+  version: solo-20261020
+  languages:
+  - zh
+  - en
+  tasks:
+  - ts_asr
+  aliases: []
+  artifacts:
+  - name: zh-records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/solo-20261020/records_zh.jsonl.gz
+    sha256: edd3de0d9f4b0f2464e0de6ca7c7297f272531596134652a4f914a4feb33cc71
+    metadata:
+      record_count: 60000
+  - name: zh-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/solo-20261020/audio_index_zh.jsonl.gz
+    sha256: c1ab4010e3ac25e3f087a1813be915ca5f58a1ee7ce86e5c2d58852e981b4308
+    metadata:
+      record_count: 95932
+  - name: en-records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/solo-20261020/records_en.jsonl.gz
+    sha256: bfaad947bb58d846d46e9ea74417abec15cf77e323cb8b902974e7d2e849aed5
+    metadata:
+      record_count: 20000
+  - name: en-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/solo-20261020/audio_index_en.jsonl.gz
+    sha256: bda2a26891c5660ea51462ff91dcce75dc9cfc3c82cd4d4a4a104396db92dbf6
+    metadata:
+      record_count: 20160
+  - name: record_index
+    kind: lance-record-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/solo-20261020/record_index/index.json
+    sha256: a4aa63030133b7062831bc23a03388af59f8e34b8ca67ce26cb440169f3347c6
+    expected_bytes: 1056
+    metadata:
+      snapshot_version: 13
+      rows: 80000
+      schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
+  splits:
+    zh:
+      artifacts:
+        records:
+        - zh-records
+        audio_index:
+        - zh-audio-index
+        records_lance:
+        - record_index
+      task: ts_asr
+      statistics:
+        records: 60000
+        duration_hours: 67.34
+        duration_basis: clip duration (segment span, or the whole file)
+    en:
+      artifacts:
+        records:
+        - en-records
+        audio_index:
+        - en-audio-index
+        records_lance:
+        - record_index
+      task: ts_asr
+      statistics:
+        records: 20000
+        duration_hours: 29.86
+        duration_basis: clip duration (segment span, or the whole file)
+  provenance:
+    status: complete
+    synthetic: none
+    snapshot_date: '2026-10-20'
+    description: 短目标单独说话场景的难负例版：与 solo-20261019 同样的生成方式（目标单独说一句 1–3.5 秒的话，没有其他说话人，注册取同一说话人另一句 2.5–8 秒，约 30% 是缺席孪生——同一句话，注册人换成另一个人，转写为空），但孪生的注册人一半取目标的近邻声音（speaker-neighbors-20261016，ERes2NetV2
+      前 10 名，labels.twin_enrollment=near 并记 hard_cosine），一半随机，与 multi 池一致。用来补 solo-20261019 孪生全是随机注册人、负例太容易分的缺口。
+    sources:
+    - aishell2:legacy-20260804
+    - kespeech:legacy-20260804
+    - librispeech:legacy-20260804
+    - common_voice_en:legacy-20260804
