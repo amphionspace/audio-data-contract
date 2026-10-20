@@ -28,6 +28,9 @@ import numpy as np
 SAMPLE_RATE = 16000
 UTT_DBFS = -25.0
 ENROLL_SECONDS = 3.0
+# Long enrollment (ts_asr_enroll_len): further utterances of the enrolled speaker follow the first with
+# short pauses, up to enroll_long_seconds, so an evaluation can send the first L seconds for any L.
+ENROLL_LONG_GAP = (0.3, 0.6)
 MAX_MIXTURE_SECONDS = 27.0
 FADE_SECONDS = 0.03
 # Interferer pauses between utterances: dense (near-continuous), medium and sparse talk, so the
@@ -456,6 +459,20 @@ def _plan_enrollment(rng, params, pools, target_pool, plan, speaker):
         others = [s for s in sorted(target_pool["speakers"]) if s != speaker]
         voiced = [u for u in target_pool["speakers"][rng.choice(others)] if u.duration >= ENROLL_SECONDS]
         plan["enroll_other"] = rng.choice(voiced)
+    elif cond == "long":  # never an utterance of the mixture, so the enrollment cannot give the answer away
+        used = {u.id for t in plan["tracks"] for u, _ in t.items} | {plan["enroll_utt"].id}
+        rest = [u for u in target_pool["speakers"][speaker] if u.id not in used]
+        rng.shuffle(rest)
+        need, extra = params["enroll_long_seconds"] - plan["enroll_utt"].duration, []
+        for utt in rest:
+            if need <= 0:
+                break
+            gap = round(rng.uniform(*ENROLL_LONG_GAP), 3)
+            extra.append((utt, gap))
+            need -= gap + utt.duration
+        if need > 0:
+            raise PlanError("not enough speech for a long enrollment")
+        plan["enroll_extra"] = extra
 
 
 class PlanError(ValueError):
@@ -618,6 +635,12 @@ def render_enrollment(plan, load, load_rir, load_noise):
     w = normalize_rms(load(utt))
     if cond == "clean":
         return apply_floor(w, floor, load_noise)
+    if cond == "long":
+        pieces = [trim_leading_silence(w)]
+        for extra, gap in plan["enroll_extra"]:
+            pieces += [np.zeros(int(gap * SAMPLE_RATE), np.float32), normalize_rms(load(extra))]
+        seg = np.concatenate(pieces)[: int(plan["params"]["enroll_long_seconds"] * SAMPLE_RATE)]
+        return apply_floor(seg, floor, load_noise)
     voiced = trim_leading_silence(w)
     if cond == "short1":
         seg = voiced[:SAMPLE_RATE]

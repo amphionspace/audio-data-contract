@@ -2,7 +2,7 @@
 
 按数据集查看语言、支持任务、时长和特性。清洗、热词、加噪、评测入口和训练框架配置归入所属数据集，不另算一套源数据。
 
-当前登记 **168 个数据集条目**；另有 **20 个下载来源声明**和 **1 个训练混合配方**。登记不代表本机文件已齐备。
+当前登记 **169 个数据集条目**；另有 **20 个下载来源声明**和 **1 个训练混合配方**。登记不代表本机文件已齐备。
 
 时长单位为小时。不同版本、子集和标注片段可能重叠，逐项列出，不相加为总量；没有时长的条目仍保留。参考表数字未核实当前文件与划分覆盖；“过滤前”不能当作清洗后时长。已被合并版本取代（`superseded_by`）的旧版本不再列出，仍可按原 ID 和版本解析。
 
@@ -100,6 +100,7 @@
 | [threed_speaker_zh_far_asr](../../catalog/zh_farfield.yaml#L497) | zh | 语音识别 | 71.2（已登记；[zh-far-replay-clean-v1-20261010](../../catalog/zh_farfield.yaml#L497)）<br>75.5（已登记；[zh-far-replay-v1-20261009](../../catalog/zh_farfield.yaml#L459)） | 已登记划分：train |
 | [ts_asr_benchmark](../../catalog/ts_asr_benchmark.yaml#L1) | zh | 目标说话人语音识别 | 25.0（已登记；[v1-20261013](../../catalog/ts_asr_benchmark.yaml#L1)）<br>26.9（已登记；[v2-20261013](../../catalog/ts_asr_benchmark.yaml#L1227)）<br>43.9（已登记；[v3-20261013](../../catalog/ts_asr_benchmark.yaml#L2533)） | 目标说话人 ASR 评测集：由 AISHELL-3、KeSpeech、MagicData、AISHELL-2、AISHELL-1 的官方 test 划分合成，覆盖注册音频劣化、目标说话人进场离场与缺席、纯噪声、环境与设备。只用于评测，不进训练。场景见 scripts/ts_benchmark/recipe.yaml |
 | [ts_asr_dev](../../catalog/ts_asr_dev.yaml#L1) | zh | 目标说话人语音识别 | 10.7（已登记；[v1-20261017](../../catalog/ts_asr_dev.yaml#L1)） | 目标说话人 ASR 评测集：由 AISHELL-3、KeSpeech、MagicData、AISHELL-2、AISHELL-1 的官方 test 划分合成，覆盖注册音频劣化、目标说话人进场离场与缺席、纯噪声、环境与设备。只用于评测，不进训练。场景见 scripts/ts_benchmark/recipe.yaml |
+| [ts_asr_enroll_len](../../catalog/ts_asr_enroll_len.yaml#L1) | zh | 目标说话人语音识别 | 1.5（已登记；[v1-20261020](../../catalog/ts_asr_enroll_len.yaml#L1)） | 目标说话人 ASR 评测集：由 AISHELL-3、KeSpeech、MagicData、AISHELL-2、AISHELL-1 的官方 test 划分合成，覆盖注册音频劣化、目标说话人进场离场与缺席、纯噪声、环境与设备。只用于评测，不进训练。场景见 scripts/ts_benchmark/recipe.yaml |
 | [ts_asr_farfield](../../catalog/ts_asr_farfield.yaml#L1) | zh | 目标说话人语音识别 | 5.1（已登记；[v1-20261014](../../catalog/ts_asr_farfield.yaml#L1)） | 目标说话人 ASR 评测集：由 AISHELL-3、KeSpeech、MagicData、AISHELL-2、AISHELL-1 的官方 test 划分合成，覆盖注册音频劣化、目标说话人进场离场与缺席、纯噪声、环境与设备。只用于评测，不进训练。场景见 scripts/ts_benchmark/recipe.yaml |
 | [ts_asr_handover](../../catalog/ts_asr_handover.yaml#L1) | zh | 目标说话人语音识别 | 3.8（已登记；[v1-20261020](../../catalog/ts_asr_handover.yaml#L1)） | 目标说话人 ASR 评测集：由 AISHELL-3、KeSpeech、MagicData、AISHELL-2、AISHELL-1 的官方 test 划分合成，覆盖注册音频劣化、目标说话人进场离场与缺席、纯噪声、环境与设备。只用于评测，不进训练。场景见 scripts/ts_benchmark/recipe.yaml |
 | [ts_asr_nearfar](../../catalog/ts_asr_nearfar.yaml#L1) | zh | 目标说话人语音识别 | 6.0（已登记；[v1-20261014](../../catalog/ts_asr_nearfar.yaml#L1)） | AliMeeting 测试集窗口的近场与远场对照：同一窗口、同一条注册语句，注册取远场或说话人的头戴麦，混合取远场通道 0 或各头戴麦之和（电平对齐远场混合）。基于 ts_asr_real@v2-20261013 的 AliMeeting 窗口。只用于评测，不进训练 |

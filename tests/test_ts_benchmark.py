@@ -143,6 +143,17 @@ def test_short_enrollment_has_one_second_of_speech_and_silence_padding():
     assert np.abs(w[SR:]).max() == 0 and np.abs(w[:SR]).max() > 0
 
 
+@pytest.mark.parametrize("kind", ["pos", "neg"])
+def test_long_enrollment_chains_other_utterances_of_the_enrolled_speaker(kind):
+    load, rir, noise = loaders()
+    scene = plan({"kind": kind, "enroll": "long", "enroll_long_seconds": 20}, 3)
+    used = {u.id for t in scene["tracks"] for u, _ in t.items}
+    speaker = scene["enroll_utt"].speaker
+    assert all(u.speaker == speaker and u.id not in used for u, _ in scene["enroll_extra"])
+    w = mixer.render_enrollment(scene, load, rir, noise)
+    assert len(w) == 20 * SR and np.abs(w[:SR]).max() > 0
+
+
 def test_nonspeech_has_no_speakers_and_is_quiet_when_asked():
     load, rir, noise = loaders()
     scene = plan({"kind": "nonspeech", "duration": [2, 3], "noise": {"kind": "musan_noise", "level_dbfs": [-50, -50]}}, 1)
@@ -371,6 +382,15 @@ def test_far_field_recipe_expands_to_unique_scenarios():
 
     assert len({s["name"] for s in splits}) == len(splits) == 14
     assert {s["params"].get("pair") for s in splits} == {"panel-pos", "panel-neg"}
+
+
+def test_enrollment_length_recipe_keeps_twenty_seconds_and_short_mixtures():
+    recipe = yaml.safe_load((SCRIPTS / "recipe-enroll-len.yaml").read_text())
+    splits = build["expand_splits"](recipe)
+    assert len({s["name"] for s in splits}) == len(splits) == 4
+    for s in splits:
+        assert s["params"]["enroll"] == "long" and s["params"]["enroll_long_seconds"] == 20
+        assert s["params"]["enroll_long_seconds"] + s["params"]["duration"][1] <= 30
 
 
 def test_handover_recipe_expands_to_unique_scenarios():
