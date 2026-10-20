@@ -35,6 +35,7 @@
   "ts_asr_dev": "/workspace/data/datasets/ts_asr_dev",
   "ts_asr_shortseg": "/workspace/data/datasets/ts_asr_shortseg",
   "ts_asr_singing": "/workspace/data/datasets/ts_asr_singing",
+  "ts_asr_handover": "/workspace/data/datasets/ts_asr_handover",
   "mir1k": "/workspace/data/datasets/mir1k",
   "open_noise": "/workspace/data/datasets/noise_open"
 }

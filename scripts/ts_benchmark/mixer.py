@@ -19,6 +19,8 @@ from __future__ import annotations
 
 import math
 import random
+import re
+from collections import defaultdict
 from dataclasses import dataclass, field
 
 import numpy as np
@@ -32,6 +34,19 @@ FADE_SECONDS = 0.03
 # overlap with the target varies within a scenario; the realized overlap is recorded per sample.
 GAP_PROFILES = [(0.2, 1.0), (0.2, 1.0), (1.0, 3.0), (2.5, 6.0)]
 CONTINUOUS_SCHEDULES = ("burst", "enter", "leave", "short")
+# A recorded registration has no speaker in the pool, so its hard negatives are interferers drawn from
+# the test speakers whose embeddings are closest to the recording.
+HARD_FILE_NEIGHBOURS = 10
+# Handover (business batch 4, row 39): the owner says one sentence, pauses, then someone else says one,
+# without overlap. Both sentences last 1.5-4 s, around the 2.6 s and 2.7 s of that case.
+HANDOVER_SECONDS = (1.5, 4.0)
+HANDOVER_START = (0.0, 0.5)
+HANDOVER_PAUSE = (0.5, 2.0)
+HANDOVER_TAIL = (0.3, 1.0)
+HANDOVER_VARIANTS = ("same_open", "rand", "rev_same_open")
+# Outputting the interferer's sentence must cost at least this character error rate, so the two
+# sentences stay distinguishable beyond their shared opening.
+HANDOVER_MIN_DISTANCE = 0.5
 
 
 @dataclass(frozen=True)
@@ -161,6 +176,90 @@ def _alternate(rng, target_utts, interferer_utts, total):
     return target, others
 
 
+def _plain(text):
+    return re.sub(r"\W", "", text)
+
+
+def same_opening(target, other):
+    """The other sentence has the target's first two characters among its own first four."""
+    target, other = _plain(target), _plain(other)
+    return len(target) >= 2 and target[:2] in other[:4]
+
+
+def shares_no_opening(target, other):
+    return not set(_plain(target)[:4]) & set(_plain(other)[:4])
+
+
+def _edit_distance(a, b):
+    previous = list(range(len(b) + 1))
+    for i, ca in enumerate(a, 1):
+        current = [i]
+        for j, cb in enumerate(b, 1):
+            current.append(min(previous[j] + 1, current[j - 1] + 1, previous[j - 1] + (ca != cb)))
+        previous = current
+    return previous[-1]
+
+
+def _distinguishable(target, other):
+    target, other = _plain(target), _plain(other)
+    return _edit_distance(target, other) >= HANDOVER_MIN_DISTANCE * len(target)
+
+
+def handover_index(speakers, seconds=HANDOVER_SECONDS):
+    """Sentences of the right length, indexed by every two-character string in their first four characters."""
+    fits = {s: [u for u in utts if seconds[0] <= u.duration <= seconds[1] and len(_plain(u.text)) >= 4]
+            for s, utts in speakers.items()}
+    by_opening = defaultdict(list)
+    for speaker in sorted(fits):
+        for utt in fits[speaker]:
+            text = _plain(utt.text)
+            for key in sorted({text[i:i + 2] for i in range(3)}):
+                by_opening[key].append(utt)
+    targets = [u for s in sorted(fits) for u in fits[s]
+               if any(o.speaker != u.speaker for o in by_opening[_plain(u.text)[:2]])]
+    return {"fits": fits, "by_opening": dict(by_opening), "targets": targets}
+
+
+def _plan_handover(rng, params, target_pool, plan):
+    """One target sentence and one interferer sentence in turn, never overlapping.
+
+    The draw does not depend on the variant, so the three variants of a pair share the target sentence,
+    the interferer, the timing and the gain; only the interferer's sentence or the order changes.
+    """
+    variant = params["handover"]
+    if variant not in HANDOVER_VARIANTS:
+        raise ValueError(f"unknown handover variant: {variant}")
+    seconds = tuple(params.get("handover_seconds", HANDOVER_SECONDS))
+    index = target_pool.setdefault("_handover", {}).get(seconds)
+    if index is None:
+        index = target_pool["_handover"][seconds] = handover_index(target_pool["speakers"], seconds)
+    if not index["targets"]:
+        raise ValueError("no sentence pair opens the same way in this pool")
+    target = rng.choice(index["targets"])
+    partner = rng.choice(index["by_opening"][_plain(target.text)[:2]])
+    if partner.speaker == target.speaker or not _distinguishable(target.text, partner.text):
+        raise PlanError("no same-opening sentence from another speaker")
+    controls = [u for u in index["fits"][partner.speaker]
+                if shares_no_opening(target.text, u.text) and _distinguishable(target.text, u.text)]
+    if not controls:
+        raise PlanError("the interferer has no sentence with a different opening")
+    control = min(controls, key=lambda u: (abs(u.duration - partner.duration), u.id))
+    start, pause = _uniform(rng, HANDOVER_START), _uniform(rng, HANDOVER_PAUSE)
+    gain = -_uniform(rng, params.get("sir_db", (-3.0, 3.0))) + rng.uniform(-2.0, 2.0)
+    tail = _uniform(rng, HANDOVER_TAIL)
+
+    other = control if variant == "rand" else partner
+    first, second = (other, target) if variant == "rev_same_open" else (target, other)
+    second_start = start + first.duration + pause
+    placed = {first.id: start, second.id: second_start}
+    plan["total"] = round(second_start + second.duration + tail, 3)
+    plan["target_speaker"] = target.speaker
+    plan["tracks"] = [Track("target", target.speaker, [(target, placed[target.id])], 0.0),
+                      Track("interferer", other.speaker, [(other, placed[other.id])], gain_db=gain)]
+    plan["target_overlap_ratio"] = 0.0
+    plan["handover"] = {"variant": variant, "pause_s": round(pause, 3), "same_opening": other is partner}
+
+
 def overlap_ratio(target_items, other_tracks):
     """Fraction of target-utterance time during which any interferer utterance is active."""
     covered = total = 0.0
@@ -194,9 +293,16 @@ def plan_scene(rng, params, pools, similarity=None):
     background = random.Random(rng.getrandbits(64))
     floors = random.Random(rng.getrandbits(64))  # its own stream: floors do not depend on rooms or noise
     plan = {"kind": kind, "params": params, "tracks": []}
+    target_pool = pools[params.get("target_pool", "mixed")]
+    if params.get("schedule") == "handover":  # the segment ends after the second sentence
+        _plan_handover(scene, params, target_pool, plan)
+        used = {u.id for t in plan["tracks"] for u, _ in t.items}
+        plan["enroll_utt"] = _enroll_utt(enroll, target_pool["speakers"][plan["target_speaker"]], used)
+        _plan_enrollment(enroll, params, pools, target_pool, plan, plan["target_speaker"])
+        _plan_floors(floors, params, plan, pools)
+        return plan
     plan["total"] = round(_uniform(scene, params["duration"]), 3)
     total = plan["total"]
-    target_pool = pools[params.get("target_pool", "mixed")]
     interferer_pool = pools[params.get("interferer_pool", params.get("target_pool", "mixed"))]
     if kind == "nonspeech":
         enroll_speaker = enroll.choice(sorted(target_pool["speakers"]))
@@ -215,9 +321,16 @@ def plan_scene(rng, params, pools, similarity=None):
     target = scene.choice(sorted(speaker_utts)) if kind == "pos" else None
     taken = {target} if target else set()
     candidates = [s for s in sorted(interferer_pool["speakers"]) if s not in taken]
+    file_key = f"file:{params['enroll_file']}" if params.get("enroll_file") else None
+    if kind == "neg" and params.get("hard") and file_key:
+        if similarity is None:
+            raise ValueError("hard negatives need speaker embeddings")
+        candidates = sorted(candidates, key=lambda s: -similarity(file_key, s))[:HARD_FILE_NEIGHBOURS]
     interferers = scene.sample(candidates, k)
     if kind == "neg":  # the enrollment speaker is absent from the mixture
-        if params.get("hard"):
+        if params.get("hard") and file_key:  # cosine of the closest interferer to the recording
+            plan["hard_cosine"] = round(max(float(similarity(file_key, s)) for s in interferers), 4)
+        elif params.get("hard"):
             if similarity is None:
                 raise ValueError("hard negatives need speaker embeddings")
             anchor = enroll.choice(interferers)
