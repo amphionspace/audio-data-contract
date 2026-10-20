@@ -329,6 +329,8 @@ def describe(plan, split, index):
     }
     if plan.get("hard_anchor"):
         metadata["hard_anchor"] = plan["hard_anchor"]
+    if "enroll_extra" in plan:
+        metadata["enrollment_extra_utts"] = [{**_utt_json(u, 0.0), "gap_before_s": g} for u, g in plan["enroll_extra"]]
     return labels, metadata
 
 

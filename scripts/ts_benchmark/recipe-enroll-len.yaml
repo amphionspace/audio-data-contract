@@ -1,0 +1,55 @@
+# 注册音频长度评测集（ts_asr_enroll_len）：下游可以接受更长的注册音频，需要实测多长合适。
+# 每条样本的注册都是同一位注册人的多句话按 0.3–0.6 秒停顿拼成的 20 秒（不含混合里出现的句子），
+# 评测时客户端只发前 L 秒（AmphionEval parameters.enroll_seconds，服务端 AMPHION_TSASR_ENROLL_SEC 同为 L），
+# 所以 1–20 秒的各个长度用的是同一批混合音频、同一位注册人，差值可以逐条配对比较。
+# 混合 6–10 秒，保证 20 秒注册加混合不超过 30 秒。底噪与 v3 相同，注册和混合各加一层。
+version: v1-20261020
+dataset_id: ts_asr_enroll_len
+seed: 20261021
+sample_rate: 16000
+
+pools:
+  studio:
+    description: AISHELL-3 test，棚内高质量朗读，214 位说话人，有性别标注
+    sources:
+      - {dataset: aishell3, version: legacy-20260804, split: test}
+  phone:
+    description: KeSpeech test（手机录音，含方言口音，取 250 位）、MagicData test、AISHELL-2 test（手机）
+    sources:
+      - {dataset: kespeech, version: legacy-20260804, split: test, max_speakers: 250}
+      - {dataset: magicdata, version: legacy-20260804, split: test}
+      - {dataset: aishell2, version: legacy-20260804, split: test}
+  read:
+    description: AISHELL-1 test，麦克风朗读，20 位说话人
+    sources:
+      - {dataset: aishell, version: legacy-20260804, split: test}
+  mixed:
+    description: 上面三个池的并集
+    union: [studio, phone, read]
+utterance_seconds: [1.5, 9.0]
+short_utterance_seconds: [0.5, 1.6]
+# 注册要拼到 20 秒、混合里还要放目标的话，每人至少 12 句。
+min_utterances_per_speaker: 12
+
+noise:
+  musan_noise: {dataset: musan, version: legacy-20260804, split: noise}
+  musan_music: {dataset: musan, version: legacy-20260804, split: music}
+rir:
+  archive: /workspace/data/DATA-TTS/dns5/datasets_fullband.impulse_responses_000.tar.bz2
+  count: 300
+
+default_n: 120
+
+noise_floor:
+  dbfs: [-65, -35]
+  kinds: {white: 0.15, pink: 0.15, real: 0.70}
+  real_pools: [wham, dns5_audioset, dns5_freesound]
+
+splits:
+  # 目标在场：目标说几句，1–2 个干扰人重叠（同 enroll-*-pos 的基础场景，混合更短）。
+  - {group: enroll_len, name: enrolllen-pos, kind: pos, schedule: full, k: [1, 2], duration: [6, 10], sir_db: [-3, 3], enroll: long, enroll_long_seconds: 20, n: 200}
+  # 目标单独说一句 2–6 秒的短话（solo-mid 的情形）。
+  - {group: enroll_len, name: enrolllen-solo-pos, kind: pos, schedule: full, k: 0, duration: [2, 6], enroll: long, enroll_long_seconds: 20, n: 150}
+  # 目标缺席：两列共用同一批混合音频，注册人一列随机、一列取干扰人声音最近的 5 人之一（同 abs-hard）。
+  - {group: enroll_len, name: enrolllen-neg, kind: neg, k: [1, 2], duration: [6, 10], enroll: long, enroll_long_seconds: 20, pair: elneg, n: 200}
+  - {group: enroll_len, name: enrolllen-hard-neg, kind: neg, k: [1, 2], duration: [6, 10], hard: true, enroll: long, enroll_long_seconds: 20, pair: elneg, n: 200}
