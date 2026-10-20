@@ -129,6 +129,8 @@ def build(source, labels, data_root):
             record_labels["target_present"] = label["target_present"]
         else:
             record_labels["label_status"] = "unlabeled"
+        if "label_source" in label:
+            record_labels["label_source"] = label["label_source"]
 
         def ref(entry, split=split):
             return {"dataset_id": DATASET_ID, "version": version, "split": split,
@@ -195,7 +197,8 @@ def declaration(labels, by_split, index, data_root):
             "task": "ts_asr",
             "statistics": {"records": len(rows), "duration_hours": round(seconds / 3600, 4),
                            "duration_basis": "Mixture (recognition segment) duration"},
-            "provenance": {"description": SPLIT_DESCRIPTIONS[split]},
+            # A batch whose labels came another way (e.g. automatic review) says so for that split.
+            "provenance": {"description": labels.get("split_descriptions", {}).get(split, SPLIT_DESCRIPTIONS[split])},
         }
     return {
         "schema_version": "dataset-catalog/2.0",
