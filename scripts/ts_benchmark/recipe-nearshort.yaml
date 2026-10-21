@@ -1,0 +1,61 @@
+# 目标说话人评测集的「另一个人说一句极短的话」补充（ts_asr_nearshort）：业务第五批反馈（business_feedback@ts-20261021，
+# 飞书表格第 40、41 行，换了一段新的注册录音 realreg4）。两条都是注册人没说话、另一个人说了一句约 1 秒的话
+# （「哎，又来了」0.7 秒、「现在就没了」1.1 秒），VAD 切出的片段 1.5 / 2.8 秒，模型输出了这句话。
+# 已有场景覆盖不到：abs-short 把干扰人的句子截成 0.4–1.2 秒的半句；abs-mid1 是 1.2–3 秒内连续说话；abs-hard/abs-hard-k1
+# 声音相近但是 6–18 秒长片段。这里每个片段只有一句完整的短话（0.5–1.6 秒的整句），声音相近与随机两列配对。
+# 探针（2026-10-21，AISHELL-3，ERes2NetV2 最近 3 人）：10.21 版本在相近声音短句上误输出 24%，随机声音短句 0%，相近声音长句 8%。
+version: v1-20261021
+dataset_id: ts_asr_nearshort
+seed: 20261021
+sample_rate: 16000
+
+pools:
+  studio:
+    description: AISHELL-3 test，棚内高质量朗读，214 位说话人，有性别标注
+    sources:
+      - {dataset: aishell3, version: legacy-20260804, split: test}
+  phone:
+    description: KeSpeech test（手机录音，含方言口音，取 250 位）、MagicData test、AISHELL-2 test（手机）
+    sources:
+      - {dataset: kespeech, version: legacy-20260804, split: test, max_speakers: 250}
+      - {dataset: magicdata, version: legacy-20260804, split: test}
+      - {dataset: aishell2, version: legacy-20260804, split: test}
+  read:
+    description: AISHELL-1 test，麦克风朗读，20 位说话人
+    sources:
+      - {dataset: aishell, version: legacy-20260804, split: test}
+  mixed:
+    description: 上面三个池的并集
+    union: [studio, phone, read]
+utterance_seconds: [1.5, 9.0]
+short_utterance_seconds: [0.5, 1.6]
+min_utterances_per_speaker: 6
+
+noise:
+  musan_noise: {dataset: musan, version: legacy-20260804, split: noise}
+rir:
+  archive: /workspace/data/DATA-TTS/dns5/datasets_fullband.impulse_responses_000.tar.bz2
+  count: 300
+
+default_n: 300
+
+noise_floor:
+  dbfs: [-65, -35]
+  kinds: {white: 0.15, pink: 0.15, real: 0.70}
+  real_pools: [wham, dns5_audioset, dns5_freesound]
+
+# 第五批测试人员的注册录音（与第 40、41 行同一段，3 秒）。
+enrollment_files:
+  realreg4: {alias: business_feedback, path: source/ts-20261021/audio/enrollment-9889c9e4df08.wav}
+
+splits:
+  # ---- 注册人缺席、片段里只有另一个人说一句完整的短话（1.5–3 秒片段，从 0.1–0.6 秒开始） ----
+  # 两列共用同一批混合音频，只换注册人：short-rand-neg 是随机的另一个人，short-hard-neg 是与干扰人声音最近的 5 个人之一（同 abs-hard）。
+  - {group: nearshort, name: short-rand-neg, kind: neg, k: 1, duration: [1.5, 3.0], interferer_utts: single_short, interferer_start: [0.1, 0.6], pair: short1}
+  - {group: nearshort, name: short-hard-neg, kind: neg, k: 1, duration: [1.5, 3.0], interferer_utts: single_short, interferer_start: [0.1, 0.6], hard: true, pair: short1}
+  # ---- 第五批的真实注册录音（realreg4），同样的片段 ----
+  - {group: realreg, name: realreg4-short-neg, kind: neg, k: 1, duration: [1.5, 3.0], interferer_utts: single_short, interferer_start: [0.1, 0.6], enroll_file: realreg4, pair: realreg4}
+  # 干扰人从 test 说话人里与这段注册录音余弦最高的 10 人中取。
+  - {group: realreg, name: realreg4-hard-short-neg, kind: neg, k: 1, duration: [1.5, 3.0], interferer_utts: single_short, interferer_start: [0.1, 0.6], enroll_file: realreg4, hard: true, pair: realreg4}
+  # ---- 对照：注册人自己说一句短话（同样的片段长度），检查压低误输出时没有漏掉注册人的短句 ----
+  - {group: nearshort, name: solo-short-pos, kind: pos, schedule: short, k: 0, duration: [1.5, 3.0]}

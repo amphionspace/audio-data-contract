@@ -37,6 +37,7 @@
   "ts_asr_singing": "/workspace/data/datasets/ts_asr_singing",
   "ts_asr_enroll_len": "/workspace/data/datasets/ts_asr_enroll_len",
   "ts_asr_handover": "/workspace/data/datasets/ts_asr_handover",
+  "ts_asr_nearshort": "/workspace/data/datasets/ts_asr_nearshort",
   "mir1k": "/workspace/data/datasets/mir1k",
   "open_noise": "/workspace/data/datasets/noise_open"
 }

@@ -118,6 +118,15 @@ def fill_stream(rng, speaker_utts, total, gap, start_range=(0.0, 1.5)):
     return items
 
 
+def single_utterance(rng, utts, total, start_range):
+    """One whole utterance that ends inside the segment: a VAD-cut segment holding a single short phrase."""
+    start = _uniform(rng, start_range)
+    fits = [u for u in utts if start + u.duration <= total]
+    if not fits:
+        raise PlanError("no interferer utterance fits the segment")
+    return [(rng.choice(fits), start)]
+
+
 def _place_target(rng, schedule, utts, total, others, gap=(0.2, 1.0)):
     """Target utterance placements for a schedule; always whole utterances."""
 
@@ -324,6 +333,9 @@ def plan_scene(rng, params, pools, similarity=None):
     target = scene.choice(sorted(speaker_utts)) if kind == "pos" else None
     taken = {target} if target else set()
     candidates = [s for s in sorted(interferer_pool["speakers"]) if s not in taken]
+    single_short = params.get("interferer_utts") == "single_short"  # each interferer says one short phrase
+    if single_short:
+        candidates = [s for s in candidates if s in interferer_pool["short"]]
     file_key = f"file:{params['enroll_file']}" if params.get("enroll_file") else None
     if kind == "neg" and params.get("hard") and file_key:
         if similarity is None:
@@ -356,11 +368,11 @@ def plan_scene(rng, params, pools, similarity=None):
     plan["interferer_gap"] = list(gap)
     sir = params.get("sir_db", (-3.0, 3.0))
     for speaker in interferers:
-        interferer_tracks.append(Track(
-            "interferer", speaker,
-            fill_stream(scene, interferer_pool["speakers"][speaker], total, gap,
-                        params.get("interferer_start", (0.0, 1.5))),
-            gain_db=-_uniform(scene, sir) + scene.uniform(-2.0, 2.0)))
+        start = params.get("interferer_start", (0.0, 1.5))
+        items = (single_utterance(scene, interferer_pool["short"][speaker], total, start) if single_short
+                 else fill_stream(scene, interferer_pool["speakers"][speaker], total, gap, start))
+        interferer_tracks.append(Track("interferer", speaker, items,
+                                       gain_db=-_uniform(scene, sir) + scene.uniform(-2.0, 2.0)))
     target_track = Track("target", target, [], 0.0)
     if kind == "pos":
         schedule = params.get("schedule", "full")

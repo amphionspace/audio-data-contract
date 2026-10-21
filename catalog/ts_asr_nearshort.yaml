@@ -1,0 +1,126 @@
+- schema_version: dataset-catalog/2.0
+  dataset_id: ts_asr_nearshort
+  version: v1-20261021
+  languages:
+  - zh
+  tasks:
+  - ts_asr
+  artifacts:
+  - name: audio-index
+    kind: audio-index
+    root_alias: ts_asr_nearshort
+    relative_path: versions/v1-20261021/audio-index.jsonl.gz
+    sha256: db5f337eb2e80de72ce8cb3a03bac44cc2660fb2a33dac5bdb3c0fe127133898
+    metadata:
+      record_count: 3000
+  - name: short-rand-neg-records
+    kind: audio-records
+    root_alias: ts_asr_nearshort
+    relative_path: versions/v1-20261021/records/short-rand-neg.jsonl.gz
+    sha256: 5f7aaec548e96db3d850335cf8af95073a3a90ff04b23c68ddfabac96c771205
+    metadata:
+      record_count: 300
+  - name: short-hard-neg-records
+    kind: audio-records
+    root_alias: ts_asr_nearshort
+    relative_path: versions/v1-20261021/records/short-hard-neg.jsonl.gz
+    sha256: ca1212e351e358572c0fec6e88477f4741e5bfaa89c249538a9a286eac5c4b6e
+    metadata:
+      record_count: 300
+  - name: realreg4-short-neg-records
+    kind: audio-records
+    root_alias: ts_asr_nearshort
+    relative_path: versions/v1-20261021/records/realreg4-short-neg.jsonl.gz
+    sha256: ef0792ecc6641063ff5826b6c278e4e73417280ef52306a521718a84ae9da7ba
+    metadata:
+      record_count: 300
+  - name: realreg4-hard-short-neg-records
+    kind: audio-records
+    root_alias: ts_asr_nearshort
+    relative_path: versions/v1-20261021/records/realreg4-hard-short-neg.jsonl.gz
+    sha256: 56b85f2a929fcdb11a51b513e0e67fb4a2f76e9cfc628f3c044c23ee4e0192c9
+    metadata:
+      record_count: 300
+  - name: solo-short-pos-records
+    kind: audio-records
+    root_alias: ts_asr_nearshort
+    relative_path: versions/v1-20261021/records/solo-short-pos.jsonl.gz
+    sha256: 414a320e101603feb21a0f347687ee1ee6f818829ffaceec07209216f2f3da32
+    metadata:
+      record_count: 300
+  splits:
+    short-rand-neg:
+      artifacts:
+        records:
+        - short-rand-neg-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 300
+        duration_hours: 0.1933
+        duration_basis: Mixture duration
+      provenance:
+        description: 'nearshort: {"kind": "neg", "k": 1, "duration": [1.5, 3.0], "interferer_utts": "single_short", "interferer_start": [0.1, 0.6], "pair": "short1", "noise_floor": {"dbfs": [-65, -35], "kinds": {"white": 0.15, "pink": 0.15, "real": 0.7}, "real_pools": ["wham", "dns5_audioset", "dns5_freesound"]}}'
+    short-hard-neg:
+      artifacts:
+        records:
+        - short-hard-neg-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 300
+        duration_hours: 0.1933
+        duration_basis: Mixture duration
+      provenance:
+        description: 'nearshort: {"kind": "neg", "k": 1, "duration": [1.5, 3.0], "interferer_utts": "single_short", "interferer_start": [0.1, 0.6], "hard": true, "pair": "short1", "noise_floor": {"dbfs": [-65, -35], "kinds": {"white": 0.15, "pink": 0.15, "real": 0.7}, "real_pools": ["wham", "dns5_audioset", "dns5_freesound"]}}'
+    realreg4-short-neg:
+      artifacts:
+        records:
+        - realreg4-short-neg-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 300
+        duration_hours: 0.1936
+        duration_basis: Mixture duration
+      provenance:
+        description: 'realreg: {"kind": "neg", "k": 1, "duration": [1.5, 3.0], "interferer_utts": "single_short", "interferer_start": [0.1, 0.6], "enroll_file": "realreg4", "pair": "realreg4", "noise_floor": {"dbfs": [-65, -35], "kinds": {"white": 0.15, "pink": 0.15, "real": 0.7}, "real_pools": ["wham", "dns5_audioset", "dns5_freesound"]}}'
+    realreg4-hard-short-neg:
+      artifacts:
+        records:
+        - realreg4-hard-short-neg-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 300
+        duration_hours: 0.1942
+        duration_basis: Mixture duration
+      provenance:
+        description: 'realreg: {"kind": "neg", "k": 1, "duration": [1.5, 3.0], "interferer_utts": "single_short", "interferer_start": [0.1, 0.6], "enroll_file": "realreg4", "hard": true, "pair": "realreg4", "noise_floor": {"dbfs": [-65, -35], "kinds": {"white": 0.15, "pink": 0.15, "real": 0.7}, "real_pools": ["wham", "dns5_audioset", "dns5_freesound"]}}'
+    solo-short-pos:
+      artifacts:
+        records:
+        - solo-short-pos-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 300
+        duration_hours: 0.2143
+        duration_basis: Mixture duration
+      provenance:
+        description: 'nearshort: {"kind": "pos", "schedule": "short", "k": 0, "duration": [1.5, 3.0], "noise_floor": {"dbfs": [-65, -35], "kinds": {"white": 0.15, "pink": 0.15, "real": 0.7}, "real_pools": ["wham", "dns5_audioset", "dns5_freesound"]}}'
+  provenance:
+    status: complete
+    synthetic: full
+    description: 目标说话人 ASR 评测集：由 AISHELL-3、KeSpeech、MagicData、AISHELL-2、AISHELL-1 的官方 test 划分合成，覆盖注册音频劣化、目标说话人进场离场与缺席、纯噪声、环境与设备。只用于评测，不进训练。场景见 scripts/ts_benchmark/recipe.yaml。
+    sources:
+    - aishell3@legacy-20260804:test
+    - kespeech@legacy-20260804:test
+    - magicdata@legacy-20260804:test
+    - aishell2@legacy-20260804:test
+    - aishell@legacy-20260804:test
