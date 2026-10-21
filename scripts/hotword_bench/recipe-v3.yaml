@@ -1,0 +1,23 @@
+# 热词评测集 v3：记录、音频、正确词和全部列表与 v2 相同（请求逐条一致，两版总指标可直接比较），
+# 只加两种 LLM 标签（脚本 annotate.py，类型定义在 prompts.py）：
+# - metadata.hotword_types：每个正确词按所在句子的意思标类型（人名、地名、机构品牌、产品、作品、术语、其他专名、普通词）；
+# - contextasr_speech_zh 的 labels.domain_group：把 ContextASR 自带的自由文本领域（3,957 种）归到 13 个大类；
+#   自由文本领域从 labels.domain 移到 metadata.domain，评测器按每个字符串标签分项，3,957 种取值会让 summary 超过 W&B 的 10 MB 上限。
+# 不同类型的词难度差别大（Qwen-Audio-3.0-ASR 报告里人名不给列表时召回最低），总召回会把它们混在一起。
+version: v3-20261020
+dataset_id: hotword_bench
+base_version: v2-20261019
+sample_rate: 16000
+# 标注时给模型看的上下文：正确词前后各取这么多个字符
+context_chars: {zh: 40, en: 120}
+
+llm:
+  base_url: https://ark.cn-beijing.volces.com/api/v3
+  api_key_env: ARK_API_KEY
+  # 标注：与 v1 热词抽取同一模型
+  labeler: {model: doubao-seed-2-0-lite-260215, extra_body: {thinking: {type: disabled}}, temperature: 0.0}
+  # 复核：另一个模型家族看着标注重新给出类型，以复核结果为准
+  reviewer: {model: deepseek-v4-pro-ga-260813, extra_body: {thinking: {type: disabled}}, temperature: 0.0}
+  workers: 32
+  type_batch: 40
+  domain_batch: 100

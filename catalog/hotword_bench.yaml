@@ -770,3 +770,513 @@
     - hotword_bench@v1-20261018
     - audiollm-go 75ea79e5 docs/archive/evaluations/amphion-20260913/rag-recall（现网中文词库还原）
     limitations: contextasr_speech_zh 为 TTS 合成音频；GigaSpeech 列表按 SALMONN-2 的描述重建，与其原表不完全相同；打分口径（规范化、B/U 归属）与各论文不完全一致，与公开数字只能近似对照；本地热词集与 real_zh 的 正确词来自 LLM 抽取。AISHELL-1/AISHELL-3 测试文本大量出现在 AISHELL-2 训练转写中，labels.train_text_overlap 标出与训练文本相同的条目，用过这些训练集的模型应看 none 子集。检索器是文本规则召回、以参考文本为查询，不是现网的音频双塔 RAG，正确词总能被召回，召回失败由 pool50_no_gold 单独衡量；基础词库为还原的约 88% 现网词库。
+- schema_version: dataset-catalog/2.0
+  dataset_id: hotword_bench
+  version: v3-20261020
+  languages:
+  - en
+  - zh
+  tasks:
+  - asr_hotwords
+  artifacts:
+  - name: audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/hotword_bench/versions/v3-20261020/audio-index.jsonl.gz
+    sha256: 75a5f9ae696577d9fde19f3ea0a925f56603eb6c4e6ca5452d835179b0cfd85c
+    metadata:
+      record_count: 64413
+  - name: aishell1_ne_dev-records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/hotword_bench/versions/v3-20261020/records/aishell1_ne_dev.jsonl.gz
+    sha256: a063d9bf62241a4128668f2ea9b730f5ab0cf1b9b5fbc01ae30e234287aa1749
+    metadata:
+      record_count: 1334
+  - name: aishell1_ne_test-records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/hotword_bench/versions/v3-20261020/records/aishell1_ne_test.jsonl.gz
+    sha256: 8ac91e745fc6944a09b7e168b6436d7e3af76b70c75c0d0b22150ba7b4b01c3c
+    metadata:
+      record_count: 808
+  - name: aishell2-records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/hotword_bench/versions/v3-20261020/records/aishell2.jsonl.gz
+    sha256: d6c8336a63590b32c7f81da4d62f8bee7c5741c96c203aa64899f30aaf69d167
+    metadata:
+      record_count: 1169
+  - name: aishell3-records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/hotword_bench/versions/v3-20261020/records/aishell3.jsonl.gz
+    sha256: 77c9b7c97dffb5ffd77e1f6450f22082de6e8bbbe6f957d5432735e11613a3f1
+    metadata:
+      record_count: 2000
+  - name: contextasr_speech_zh-records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/hotword_bench/versions/v3-20261020/records/contextasr_speech_zh.jsonl.gz
+    sha256: 5fc418411e5092b13f6c93791ee47505ed5f371845f13356b5595ff25a83b8f3
+    metadata:
+      record_count: 15498
+  - name: cv_en-records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/hotword_bench/versions/v3-20261020/records/cv_en.jsonl.gz
+    sha256: 2572ab34d8b803fce727b5d3918e0c665d08804b7412a56fe5d06071e444d5e8
+    metadata:
+      record_count: 2000
+  - name: cv_zh-records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/hotword_bench/versions/v3-20261020/records/cv_zh.jsonl.gz
+    sha256: bea9bd112734a6de935ef72852ce9f23ae6c79ea9988a4918787e32f37e000fc
+    metadata:
+      record_count: 2000
+  - name: gigaspeech_test-records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/hotword_bench/versions/v3-20261020/records/gigaspeech_test.jsonl.gz
+    sha256: 2a1d7499f79299f3386d21ae52f6d9a973956349a216b844e4c4b26ccd8977bd
+    metadata:
+      record_count: 25373
+  - name: kespeech-records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/hotword_bench/versions/v3-20261020/records/kespeech.jsonl.gz
+    sha256: 835d8e4250503451c51df483cfcc43a14cf7c875995cbe9d27cfda665fd1a253
+    metadata:
+      record_count: 2000
+  - name: librispeech_test_clean-records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/hotword_bench/versions/v3-20261020/records/librispeech_test_clean.jsonl.gz
+    sha256: 1b6f1ca49895ff92d3a0d77b339ad7dc04151593e7f71bdc39b8e900c1719395
+    metadata:
+      record_count: 2620
+  - name: librispeech_test_other-records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/hotword_bench/versions/v3-20261020/records/librispeech_test_other.jsonl.gz
+    sha256: 02552d23adffa80bf5d6dca5fb89c125d86a4e3f430183eab6eec9eb66d1821b
+    metadata:
+      record_count: 2939
+  - name: quarantine-records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/hotword_bench/versions/v3-20261020/records/quarantine.jsonl.gz
+    sha256: 18fdb30bf55eb249b7370e9ab1c84ad95bc0097d515cb390b822fea418d91b5d
+    metadata:
+      record_count: 1185
+  - name: real_zh-records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/hotword_bench/versions/v3-20261020/records/real_zh.jsonl.gz
+    sha256: 941f6cd9a56e1a71e17c89aa3d44baf194c29880e38ed7dcfc8aec53600c2ec5
+    metadata:
+      record_count: 5487
+  - name: hotword-pools
+    kind: jsonl-metadata
+    root_alias: aidc_data
+    relative_path: datasets/hotword_bench/versions/v3-20261020/hotword-pools.jsonl.gz
+    sha256: c9df7f8903f892a518256412f92ac061c175af480191ba420da8f39966545732
+    metadata:
+      record_count: 160
+      library_words: 8841
+  splits:
+    aishell1_ne_dev:
+      artifacts:
+        records:
+        - aishell1_ne_dev-records
+        audio_index:
+        - audio-index
+      group: test
+      task: asr_hotwords
+      statistics:
+        records: 1334
+        duration_hours: 1.8868
+        duration_basis: recognized clip
+        records_with_hotwords: 1334
+        gold_words: 1447
+        conditions:
+          gold: 1334
+          official: 1334
+          pool50: 1334
+          pool50_no_gold: 1334
+        hotword_types:
+          common: 30
+          organization: 227
+          other: 7
+          person: 777
+          place: 384
+          product: 7
+          term: 11
+          work: 3
+      provenance:
+        description: SeACo-Paraformer 的 Dev-AISHELL1-NE：AISHELL-1 开发集 1,334 句，全局热词表 600 词（R1 子集 371 词），用于挑选
+    aishell1_ne_test:
+      artifacts:
+        records:
+        - aishell1_ne_test-records
+        audio_index:
+        - audio-index
+      group: test
+      task: asr_hotwords
+      statistics:
+        records: 808
+        duration_hours: 1.264
+        duration_basis: recognized clip
+        records_with_hotwords: 808
+        gold_words: 898
+        conditions:
+          gold: 808
+          official: 808
+          pool50: 808
+          pool50_no_gold: 808
+        hotword_types:
+          common: 26
+          organization: 300
+          other: 16
+          person: 394
+          place: 149
+          product: 2
+          term: 8
+          work: 3
+      provenance:
+        description: SeACo-Paraformer 的 Test-AISHELL1-NE：AISHELL-1 测试集中含命名实体热词的 808 句，全局热词表 400 词（R1 子集 226 词）
+    aishell2:
+      artifacts:
+        records:
+        - aishell2-records
+        audio_index:
+        - audio-index
+      group: test
+      task: asr_hotwords
+      statistics:
+        records: 1169
+        duration_hours: 1.0498
+        duration_basis: recognized clip
+        records_with_hotwords: 1169
+        gold_words: 1285
+        conditions:
+          gold: 1169
+          pool50: 1169
+          pool50_no_gold: 1169
+        hotword_types:
+          common: 15
+          organization: 122
+          other: 19
+          person: 894
+          place: 179
+          product: 12
+          term: 26
+          work: 18
+      provenance:
+        description: AISHELL-2 测试集，沿用已有热词标注，全部正例
+    aishell3:
+      artifacts:
+        records:
+        - aishell3-records
+        audio_index:
+        - audio-index
+      group: test
+      task: asr_hotwords
+      statistics:
+        records: 2000
+        duration_hours: 1.8428
+        duration_basis: recognized clip
+        records_with_hotwords: 2000
+        gold_words: 2389
+        conditions:
+          gold: 2000
+          pool50: 2000
+          pool50_no_gold: 2000
+        hotword_types:
+          common: 14
+          organization: 642
+          other: 73
+          person: 815
+          place: 541
+          product: 18
+          term: 46
+          work: 240
+      provenance:
+        description: AISHELL-3 测试集，沿用已有热词标注，按 sha256(id) 取前 N 条正例
+    contextasr_speech_zh:
+      artifacts:
+        records:
+        - contextasr_speech_zh-records
+        audio_index:
+        - audio-index
+      group: test
+      task: asr_hotwords
+      statistics:
+        records: 15498
+        duration_hours: 197.6403
+        duration_basis: recognized clip
+        records_with_hotwords: 15498
+        gold_words: 97673
+        conditions:
+          gold: 15498
+          pool50: 15498
+          pool50_no_gold: 15498
+        hotword_types:
+          common: 8534
+          organization: 5836
+          other: 4312
+          person: 6072
+          place: 6453
+          product: 12356
+          term: 50294
+          work: 3812
+        domain_groups:
+          business_finance: 395
+          culture_history: 2838
+          education: 286
+          entertainment: 606
+          industry_energy: 546
+          law_politics: 597
+          medical: 5833
+          military: 738
+          nature_environment: 1397
+          other: 58
+          science_tech: 461
+          sports: 889
+          travel_life: 854
+      provenance:
+        description: ContextASR-Bench Speech-Mandarin 全量：DeepSeek-R1 生成的多领域实体文本、零样本 TTS 合成；正确词为上游 entity_list 中出现在转写里的实体
+    cv_en:
+      artifacts:
+        records:
+        - cv_en-records
+        audio_index:
+        - audio-index
+      group: test
+      task: asr_hotwords
+      statistics:
+        records: 2000
+        duration_hours: 3.599
+        duration_basis: recognized clip
+        records_with_hotwords: 2000
+        gold_words: 2946
+        conditions:
+          gold: 2000
+          k50: 2000
+          k50_no_gold: 2000
+        hotword_types:
+          common: 42
+          organization: 474
+          other: 123
+          person: 1151
+          place: 850
+          product: 63
+          term: 119
+          work: 124
+      provenance:
+        description: Common Voice en 测试集，沿用已有热词标注，按 sha256(id) 取前 N 条正例；干扰词只取随机词
+    cv_zh:
+      artifacts:
+        records:
+        - cv_zh-records
+        audio_index:
+        - audio-index
+      group: test
+      task: asr_hotwords
+      statistics:
+        records: 2000
+        duration_hours: 3.3652
+        duration_basis: recognized clip
+        records_with_hotwords: 2000
+        gold_words: 3426
+        conditions:
+          gold: 2000
+          pool50: 2000
+          pool50_no_gold: 2000
+        hotword_types:
+          common: 25
+          organization: 384
+          other: 232
+          person: 625
+          place: 1502
+          product: 14
+          term: 624
+          work: 20
+      provenance:
+        description: Common Voice zh-CN 测试集，沿用已有热词标注（AmphionData amphion-data hotwords），按 sha256(id) 取前 N 条正例
+    gigaspeech_test:
+      artifacts:
+        records:
+        - gigaspeech_test-records
+        audio_index:
+        - audio-index
+      group: test
+      task: asr_hotwords
+      statistics:
+        records: 25373
+        duration_hours: 40.1038
+        duration_basis: recognized clip
+        records_with_hotwords: 6807
+        gold_words: 10072
+        conditions:
+          gold: 6807
+          l100: 25373
+          l20: 25373
+          l50: 25373
+          l50_no_gold: 6807
+        hotword_types:
+          common: 4315
+          organization: 735
+          other: 153
+          person: 2794
+          place: 288
+          product: 350
+          term: 1262
+          work: 175
+      provenance:
+        description: GigaSpeech 测试集全量，按 SALMONN-2 的协议重建稀有词列表（L=20/50/100）
+    kespeech:
+      artifacts:
+        records:
+        - kespeech-records
+        audio_index:
+        - audio-index
+      group: test
+      task: asr_hotwords
+      statistics:
+        records: 2000
+        duration_hours: 3.2754
+        duration_basis: recognized clip
+        records_with_hotwords: 2000
+        gold_words: 2561
+        conditions:
+          gold: 2000
+          pool50: 2000
+          pool50_no_gold: 2000
+        hotword_types:
+          common: 42
+          organization: 859
+          other: 118
+          person: 728
+          place: 651
+          product: 79
+          term: 61
+          work: 23
+      provenance:
+        description: KeSpeech 测试集（各地方言口音普通话），沿用已有热词标注，按 sha256(id) 取前 N 条正例
+    librispeech_test_clean:
+      artifacts:
+        records:
+        - librispeech_test_clean-records
+        audio_index:
+        - audio-index
+      group: test
+      task: asr_hotwords
+      statistics:
+        records: 2620
+        duration_hours: 5.4035
+        duration_basis: recognized clip
+        records_with_hotwords: 1980
+        gold_words: 5692
+        conditions:
+          gold: 1980
+          n100: 2620
+          n1000: 2620
+          n100_no_gold: 1980
+        hotword_types:
+          common: 4254
+          organization: 51
+          other: 59
+          person: 728
+          place: 164
+          product: 8
+          term: 401
+          work: 27
+      provenance:
+        description: LibriSpeech test-clean，Le et al. 2021 官方稀有词列表（N=100/1000）
+    librispeech_test_other:
+      artifacts:
+        records:
+        - librispeech_test_other-records
+        audio_index:
+        - audio-index
+      group: test
+      task: asr_hotwords
+      statistics:
+        records: 2939
+        duration_hours: 5.3415
+        duration_basis: recognized clip
+        records_with_hotwords: 2141
+        gold_words: 5248
+        conditions:
+          gold: 2141
+          n100: 2939
+          n1000: 2939
+          n100_no_gold: 2141
+        hotword_types:
+          common: 3775
+          organization: 53
+          other: 58
+          person: 877
+          place: 197
+          product: 7
+          term: 275
+          work: 6
+      provenance:
+        description: LibriSpeech test-other，Le et al. 2021 官方稀有词列表（N=100/1000）
+    quarantine:
+      artifacts:
+        records:
+        - quarantine-records
+        audio_index:
+        - audio-index
+      group: test
+      task: asr_hotwords
+      statistics:
+        records: 1185
+        duration_hours: 1.8816
+        duration_basis: recognized clip
+        records_with_hotwords: 36
+        gold_words: 68
+        conditions: {}
+      provenance:
+        description: 不参与打分：上游质检未通过、无可用热词、两个 LLM 意见不一致或时长越界的条目，保留原因
+    real_zh:
+      artifacts:
+        records:
+        - real_zh-records
+        audio_index:
+        - audio-index
+      group: test
+      task: asr_hotwords
+      statistics:
+        records: 5487
+        duration_hours: 9.4177
+        duration_basis: recognized clip
+        records_with_hotwords: 5487
+        gold_words: 7264
+        conditions:
+          gold: 5487
+          pool50: 5487
+          pool50_no_gold: 5487
+        hotword_types:
+          common: 72
+          organization: 1326
+          other: 277
+          person: 3021
+          place: 819
+          product: 572
+          term: 944
+          work: 233
+      provenance:
+        description: 真实口语：SpeechIO 27 个子集与 WenetSpeech test_net / test_meeting；热词按 AmphionData EXTRACT_HOTWORD 由 LLM 抽取、另一模型家族复核，每子集按 sha256(id) 取前 N 条正例
+  provenance:
+    status: complete
+    synthetic: partial
+    usage: evaluation_only
+    description: 热词评测集 v3，只用于评测，不进训练。记录、音频、正确词和全部列表与 v2-20261019 相同（请求逐条一致，总指标可与 v2-20261019 直接比较），另加两种标签： metadata.hotword_types 为每个正确词按所在句子的意思标的类型（person / place / organization / product / work / term / other / common），contextasr_speech_zh 的 labels.domain_group 把 ContextASR 自带的自由文本领域归到 13 个大类，自由文本领域本身从 labels.domain 移到 metadata.domain （评测器按每个字符串标签分项，3,957 种取值会让 summary 超过 W&B 的 10 MB 上限）。doubao-seed-2-0-lite-260215 标注，deepseek-v4-pro-ga-260813 看着标注复核并以复核为准（类型复核后不变的占 98.5%）。生成脚本 scripts/hotword_bench/annotate.py，类型定义见
+      prompts.py。
+    sources:
+    - hotword_bench@v2-20261019
+    limitations: contextasr_speech_zh 为 TTS 合成音频；GigaSpeech 列表按 SALMONN-2 的描述重建，与其原表不完全相同；打分口径（规范化、B/U 归属）与各论文不完全一致，与公开数字只能近似对照；本地热词集与 real_zh 的 正确词来自 LLM 抽取。AISHELL-1/AISHELL-3 测试文本大量出现在 AISHELL-2 训练转写中，labels.train_text_overlap 标出与训练文本相同的条目，用过这些训练集的模型应看 none 子集。检索器是文本规则召回、以参考文本为查询，不是现网的音频双塔 RAG，正确词总能被召回，召回失败由 pool50_no_gold 单独衡量；基础词库为还原的约 88% 现网词库。类型和领域大类是 LLM 标签，未经人工核对；一个正确词只有一个类型，作品名里含人名等嵌套情况按整体归类。

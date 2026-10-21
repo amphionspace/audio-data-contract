@@ -1,4 +1,5 @@
 import runpy
+import sys
 from pathlib import Path
 
 import pytest
@@ -9,6 +10,21 @@ REPO = Path(__file__).resolve().parents[1]
 build = runpy.run_path(str(REPO / "scripts/hotword_bench/build.py"))
 common = runpy.run_path(str(REPO / "scripts/hotword_bench/common.py"))
 RECIPE = {"seed": 1, "list_size": 6, "confusables_per_word": 2}
+
+
+def run_script(name):
+    """Run a hotword_bench script that imports its sibling build.py by name.
+
+    ts_benchmark and ts_real also have a build.py; whichever one an earlier test
+    left in sys.modules would be imported instead.
+    """
+    previous = sys.modules.pop("build", None)
+    try:
+        return runpy.run_path(str(REPO / "scripts/hotword_bench" / name))
+    finally:
+        sys.modules.pop("build", None)
+        if previous is not None:
+            sys.modules["build"] = previous
 
 
 def item(text, gold, split="cv_zh", language="zh", **extra):
@@ -56,7 +72,7 @@ def test_librispeech_keeps_official_lists_and_adds_a_no_gold_list():
 
 def test_pool_lists_rank_sound_alikes_and_keep_reference_words_out():
     pytest.importorskip("pypinyin")
-    pool_mod = runpy.run_path(str(REPO / "scripts/hotword_bench/pool.py"))
+    pool_mod = run_script("pool.py")
     recipe = {"seed": 1, "list_size": 4, "confusables_per_word": 2}
     record = {"id": "u1", "target": "我叫刘燕住在上海", "hotwords": ["刘燕"],
               "metadata": {"bias_lists": {"gold": ["刘燕"], "k50": [], "k50_no_gold": []}}}
@@ -69,3 +85,18 @@ def test_pool_lists_rank_sound_alikes_and_keep_reference_words_out():
     assert {"柳岩", "刘艳", "留言"} <= set(lists["pool50_no_gold"])  # same pinyin as the gold word
     assert "上海" not in lists["pool50"] + lists["pool50_no_gold"]  # spoken in the reference
     assert kinds["柳岩"] == "confusable" and kinds["留言"] == "base"
+
+
+def test_annotation_context_and_reviewer_wins():
+    annotate = run_script("annotate.py")
+    assert annotate["context"]("今天我们去郑州看刘燕", "刘燕", 3) == "…郑州看刘燕"
+    assert annotate["context"]("I met Joe today", "joe", 20) == "I met Joe today"
+    labels = [{"k": "a", "type": "person"}, {"k": "b", "type": "place"},
+              {"k": "c", "type": None}, {"k": "d", "type": "work"}, {"k": "e", "type": None}]
+    reviews = [{"k": "a", "type": "person"}, {"k": "b", "type": "organization"},
+               {"k": "c", "type": "term"}, {"k": "d", "type": None}, {"k": "e", "type": None}]
+    types, stats = annotate["final"](labels, reviews, lambda r: r["k"], "type")
+    assert types == {"a": "person", "b": "organization", "c": "term", "d": "work"}
+    assert stats == {"agreed": 1, "changed": 1, "reviewer_only": 1, "unreviewed": 1, "unlabeled": 1}
+    with pytest.raises(ValueError):
+        annotate["final"](labels, reviews[:2], lambda r: r["k"], "type")
