@@ -1,4 +1,5 @@
 {
+  "diarization_benchmark": "/path/to/diarization-benchmark-v1-20261021",
   "dns5_noise_rir": "/path/to/dns5",
   "open_noise": "/path/to/noise_open",
   "alimeeting_far_raw": "/data/alimeeting/original/far",
