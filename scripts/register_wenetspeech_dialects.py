@@ -10,7 +10,8 @@ registered in place.
 
 No audio is copied or unpacked. WenetSpeech-Yue training audio stays in
 part_XX.tar; its file sources become the fixed dd byte-range template read
-from each tar's member offsets. Chuan/Wu keep their tar -xOf commands.
+from each tar's member offsets. Chuan/Wu tar -xOf members become the same
+template, because tar -xOf scans every header of a ~24 GB tar per read.
 
     python scripts/register_wenetspeech_dialects.py --root /workspace/data \
         --output /workspace/data/registry/catalog/wenetspeech_dialects.yaml \
@@ -64,19 +65,37 @@ def check_original(path):
 
 def tar_members(archive):
     with tarfile.open(archive, "r:") as stream:
-        return archive, {m.name: (m.offset_data, m.size) for m in stream if m.isfile()}
+        members = [m for m in stream if m.isfile()]
+    index = {m.name: (m.offset_data, m.size) for m in members}
+    if len(index) != len(members):
+        # tar -xOf prints every copy of a repeated name; one dd range cannot.
+        raise SystemExit(f"duplicate member names in {archive}")
+    return archive, index
 
 
 def to_dd(item, index):
-    """Turn a Yue audio/part_XX/NAME.wav file source into a dd range of part_XX.tar."""
+    """Turn Yue audio/part_XX/NAME.wav files and Chuan/Wu tar -xOf members into dd ranges."""
+    if isinstance(item, list):
+        for child in item:
+            to_dd(child, index)
+    if not isinstance(item, dict):
+        return item
     for source in item.get("sources", []):
         if source["type"] == "file" and source["source"].startswith(YUE_AUDIO):
             part, name = source["source"][len(YUE_AUDIO):].split("/")
-            offset, size = index[part][name]
-            source["type"] = "command"
-            source["source"] = shlex.join([
-                "dd", f"if={OLD}WenetSpeech-Yue/{part}.tar", "iflag=skip_bytes,count_bytes",
-                f"skip={offset}", f"count={size}", "status=none"])
+            archive = f"{OLD}WenetSpeech-Yue/{part}.tar"
+        elif source["type"] == "command" and source["source"].startswith("tar -xOf "):
+            _, _, archive, name = shlex.split(source["source"])
+        else:
+            continue
+        offset, size = index[archive][name]
+        source["type"] = "command"
+        source["source"] = shlex.join([
+            "dd", f"if={archive}", "iflag=skip_bytes,count_bytes",
+            f"skip={offset}", f"count={size}", "status=none"])
+    for value in item.values():
+        if isinstance(value, (dict, list)):
+            to_dd(value, index)
     return item
 
 
@@ -149,10 +168,13 @@ def main():
 
     with ThreadPoolExecutor(args.workers) as pool:
         list(pool.map(check_original, [root / LOCAL / r for r in relatives]))
-        tars = sorted((root / LOCAL / "WenetSpeech-Yue").glob("part_*.tar"))
-        index = {archive.stem: members for archive, members in pool.map(tar_members, tars)}
-    print(json.dumps({"checked_manifests": len(relatives), "yue_tars": len(index),
-                      "yue_members": sum(map(len, index.values()))}), flush=True)
+        tars = [archive for pattern in ("WenetSpeech-Yue/part_*.tar", "WenetSpeech-Chuan/audios*/*.tar",
+                                        "WenetSpeech-Wu/audios/*.tar")
+                for archive in sorted((root / LOCAL).glob(pattern))]
+        index = {OLD + str(archive.relative_to(root / LOCAL)): members
+                 for archive, members in pool.map(tar_members, tars)}
+    print(json.dumps({"checked_manifests": len(relatives), "tars": len(index),
+                      "members": sum(map(len, index.values()))}), flush=True)
 
     facts, files, members, ranges = {}, set(), set(), set()
     for relative in rewritten:
