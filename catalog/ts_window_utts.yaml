@@ -464,6 +464,16 @@
     sha256: 919d303cea3cfec079588097c962bc9777c7205178ce13a6f966f5e52149dc15
     metadata:
       record_count: 2810451
+  - name: record_index
+    kind: lance-record-index
+    root_alias: aidc_data
+    relative_path: datasets/emilia2_mix/versions/mix-20261013-utts/record_index/index.json
+    expected_bytes: 1112
+    sha256: 25cfba1aeb725a2e1d0b9544c39ac7c1222e54fdbdb3e3d2099b1a23b83d23d5
+    metadata:
+      snapshot_version: 13
+      rows: 4413229
+      schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
   splits:
     train_2spk:
       artifacts:
@@ -471,6 +481,8 @@
         - train_2spk-records
         audio_index:
         - train_2spk-audio-index
+        records_lance:
+        - record_index
       task: ts_asr
       statistics:
         records: 2208856
@@ -482,6 +494,8 @@
         - train_3spk-records
         audio_index:
         - train_3spk-audio-index
+        records_lance:
+        - record_index
       task: ts_asr
       statistics:
         records: 2204373
