@@ -1293,3 +1293,809 @@
     sources:
     - alimeeting_sdm@icefall-20260908:dev
     - magicdata_ramc@icefall-20260908:dev
+- schema_version: dataset-catalog/2.0
+  dataset_id: ts_asr_real
+  version: v3-20261022
+  languages:
+  - zh
+  tasks:
+  - ts_asr
+  artifacts:
+  - name: audio-index
+    kind: audio-index
+    root_alias: ts_asr_real
+    relative_path: versions/v3-20261022/audio-index.jsonl.gz
+    sha256: e985f03771a71ecc56226ff0fc3eaa738dd69d545b6307267adb1fc79bbb37be
+    metadata:
+      record_count: 2266
+  - name: real-aishell4-1spk-neg-records
+    kind: audio-records
+    root_alias: ts_asr_real
+    relative_path: versions/v3-20261022/records/real-aishell4-1spk-neg.jsonl.gz
+    sha256: b604f6b0bff2d82c8e0ff89ba9aa865930e79866987061c8aa5c653fb0eed681
+    metadata:
+      record_count: 45
+  - name: real-aishell4-1spk-neg-enrollmix-records
+    kind: audio-records
+    root_alias: ts_asr_real
+    relative_path: versions/v3-20261022/records/real-aishell4-1spk-neg-enrollmix.jsonl.gz
+    sha256: 8b9e6741d517ac52883d8c2ab3f0b6877ddb37461e3469fe96a36a468b6bf5b8
+    metadata:
+      record_count: 5
+  - name: real-aishell4-1spk-pos-records
+    kind: audio-records
+    root_alias: ts_asr_real
+    relative_path: versions/v3-20261022/records/real-aishell4-1spk-pos.jsonl.gz
+    sha256: 5e77168db07232714cc5b20a85ec745d200f38037cb99fc836c49f0dd37c3b83
+    metadata:
+      record_count: 49
+  - name: real-aishell4-1spk-pos-enrollmix-records
+    kind: audio-records
+    root_alias: ts_asr_real
+    relative_path: versions/v3-20261022/records/real-aishell4-1spk-pos-enrollmix.jsonl.gz
+    sha256: 0f48ff7be890d5d475f3dc206a4281ff69e3c6bb012bb673f22d3b20ec8f2cfe
+    metadata:
+      record_count: 1
+  - name: real-aishell4-2spk-neg-records
+    kind: audio-records
+    root_alias: ts_asr_real
+    relative_path: versions/v3-20261022/records/real-aishell4-2spk-neg.jsonl.gz
+    sha256: 13f390a78cd6150444eadf5ab1eb9baae9e7b2759ea8b816632c36d3ddedd9a2
+    metadata:
+      record_count: 45
+  - name: real-aishell4-2spk-neg-enrollmix-records
+    kind: audio-records
+    root_alias: ts_asr_real
+    relative_path: versions/v3-20261022/records/real-aishell4-2spk-neg-enrollmix.jsonl.gz
+    sha256: 39621ee96474c737f79a859460971715ae77e9f3fd8e047e26899f0abe534c5e
+    metadata:
+      record_count: 5
+  - name: real-aishell4-2spk-pos-records
+    kind: audio-records
+    root_alias: ts_asr_real
+    relative_path: versions/v3-20261022/records/real-aishell4-2spk-pos.jsonl.gz
+    sha256: 3cf0d2f436d268379b4e155f513e80ffe6780ddb77afce890d1bc99b92a00587
+    metadata:
+      record_count: 45
+  - name: real-aishell4-2spk-pos-enrollmix-records
+    kind: audio-records
+    root_alias: ts_asr_real
+    relative_path: versions/v3-20261022/records/real-aishell4-2spk-pos-enrollmix.jsonl.gz
+    sha256: cb70632a614b42e9c5bf0b07b61aa406c10f7fc02593412add017cc0ee78c249
+    metadata:
+      record_count: 5
+  - name: real-aishell4-3plus-neg-records
+    kind: audio-records
+    root_alias: ts_asr_real
+    relative_path: versions/v3-20261022/records/real-aishell4-3plus-neg.jsonl.gz
+    sha256: 613e3862191a8d0a6f7f9e2e57b0525e7cc1ad8cce2a0207d19449e4a0206e81
+    metadata:
+      record_count: 53
+  - name: real-aishell4-3plus-neg-enrollmix-records
+    kind: audio-records
+    root_alias: ts_asr_real
+    relative_path: versions/v3-20261022/records/real-aishell4-3plus-neg-enrollmix.jsonl.gz
+    sha256: 9185ada43be7e971c31838709d38b61d91b5c41e9b5504d00a77983a37c1ab65
+    metadata:
+      record_count: 3
+  - name: real-aishell4-3plus-pos-records
+    kind: audio-records
+    root_alias: ts_asr_real
+    relative_path: versions/v3-20261022/records/real-aishell4-3plus-pos.jsonl.gz
+    sha256: bd50de8451bfef6e4488e2bbe48a06baac7d2af874a55b659ee570e7c20f2f9e
+    metadata:
+      record_count: 52
+  - name: real-aishell4-3plus-pos-enrollmix-records
+    kind: audio-records
+    root_alias: ts_asr_real
+    relative_path: versions/v3-20261022/records/real-aishell4-3plus-pos-enrollmix.jsonl.gz
+    sha256: e92d5604835bfe8ef338bd7abebe2f36276a1ca9cc9234d63d14f8439a5eb250
+    metadata:
+      record_count: 3
+  - name: real-alimeeting-1spk-neg-records
+    kind: audio-records
+    root_alias: ts_asr_real
+    relative_path: versions/v3-20261022/records/real-alimeeting-1spk-neg.jsonl.gz
+    sha256: 4dc6ae23984167a4e62d25349cf58b10012e50bbe7159117ec7670048ee431d4
+    metadata:
+      record_count: 42
+  - name: real-alimeeting-1spk-neg-enrollmix-records
+    kind: audio-records
+    root_alias: ts_asr_real
+    relative_path: versions/v3-20261022/records/real-alimeeting-1spk-neg-enrollmix.jsonl.gz
+    sha256: 3b09ccaba49fc76c048d68e5a6af05330f732f0c84843b0af017760a5a7ca870
+    metadata:
+      record_count: 8
+  - name: real-alimeeting-1spk-pos-records
+    kind: audio-records
+    root_alias: ts_asr_real
+    relative_path: versions/v3-20261022/records/real-alimeeting-1spk-pos.jsonl.gz
+    sha256: 974c7935c97a6e7798e6ee224e8eced5f7d61fceef4b96bbc67f996f1df1be48
+    metadata:
+      record_count: 46
+  - name: real-alimeeting-1spk-pos-enrollmix-records
+    kind: audio-records
+    root_alias: ts_asr_real
+    relative_path: versions/v3-20261022/records/real-alimeeting-1spk-pos-enrollmix.jsonl.gz
+    sha256: 8f6447c51b6a2dc232d1bca8e57ebcd0fe584c368c4ea86684d1d72d97cffd16
+    metadata:
+      record_count: 4
+  - name: real-alimeeting-2spk-neg-records
+    kind: audio-records
+    root_alias: ts_asr_real
+    relative_path: versions/v3-20261022/records/real-alimeeting-2spk-neg.jsonl.gz
+    sha256: be4f5abc5f93ec6b8b5e513d5291510221d67c0581f1ed5e2bfbc1640b9e564f
+    metadata:
+      record_count: 37
+  - name: real-alimeeting-2spk-neg-enrollmix-records
+    kind: audio-records
+    root_alias: ts_asr_real
+    relative_path: versions/v3-20261022/records/real-alimeeting-2spk-neg-enrollmix.jsonl.gz
+    sha256: dcdb76371ef2d2bb947b4f8df056a76dbc60277877d0df9de687bd145ed9cdd2
+    metadata:
+      record_count: 13
+  - name: real-alimeeting-2spk-pos-records
+    kind: audio-records
+    root_alias: ts_asr_real
+    relative_path: versions/v3-20261022/records/real-alimeeting-2spk-pos.jsonl.gz
+    sha256: 1234db9ae793d933e5ad8dd95945db5b5b9f9633d604806f5a990f297c2f8965
+    metadata:
+      record_count: 45
+  - name: real-alimeeting-2spk-pos-enrollmix-records
+    kind: audio-records
+    root_alias: ts_asr_real
+    relative_path: versions/v3-20261022/records/real-alimeeting-2spk-pos-enrollmix.jsonl.gz
+    sha256: 675375a9235a43004132f108b6d17583c9e0553c822072f2d6c61ddd9982e912
+    metadata:
+      record_count: 5
+  - name: real-alimeeting-3plus-neg-records
+    kind: audio-records
+    root_alias: ts_asr_real
+    relative_path: versions/v3-20261022/records/real-alimeeting-3plus-neg.jsonl.gz
+    sha256: ee9fea8834177b4f6601d20a8d02c8b175686961706fa7536fb57d91d371953d
+    metadata:
+      record_count: 38
+  - name: real-alimeeting-3plus-neg-enrollmix-records
+    kind: audio-records
+    root_alias: ts_asr_real
+    relative_path: versions/v3-20261022/records/real-alimeeting-3plus-neg-enrollmix.jsonl.gz
+    sha256: a2871565326bddcbabd02efa9a04d1e68be052b048d694d143a5d9e24873dd5e
+    metadata:
+      record_count: 18
+  - name: real-alimeeting-3plus-pos-records
+    kind: audio-records
+    root_alias: ts_asr_real
+    relative_path: versions/v3-20261022/records/real-alimeeting-3plus-pos.jsonl.gz
+    sha256: d74d584b15791c25b54e40ece39a3ba0915610cc7c5ea6ce31145d33cf636f6a
+    metadata:
+      record_count: 37
+  - name: real-alimeeting-3plus-pos-enrollmix-records
+    kind: audio-records
+    root_alias: ts_asr_real
+    relative_path: versions/v3-20261022/records/real-alimeeting-3plus-pos-enrollmix.jsonl.gz
+    sha256: 5e984736ae5e4645ef02c1b8953f7e01acdd938749db018f3a3f835d114c7a06
+    metadata:
+      record_count: 19
+  - name: real-emilia2-1spk-neg-records
+    kind: audio-records
+    root_alias: ts_asr_real
+    relative_path: versions/v3-20261022/records/real-emilia2-1spk-neg.jsonl.gz
+    sha256: 3daf06166516487ef8b92f4a7340cc2ad5d773b904cda8d0c34573b949655f5e
+    metadata:
+      record_count: 47
+  - name: real-emilia2-1spk-neg-enrollmix-records
+    kind: audio-records
+    root_alias: ts_asr_real
+    relative_path: versions/v3-20261022/records/real-emilia2-1spk-neg-enrollmix.jsonl.gz
+    sha256: 4bc2a4635da311d917e8d789b189724232a383136d390fdb087eb5cb4c6cca02
+    metadata:
+      record_count: 3
+  - name: real-emilia2-1spk-pos-records
+    kind: audio-records
+    root_alias: ts_asr_real
+    relative_path: versions/v3-20261022/records/real-emilia2-1spk-pos.jsonl.gz
+    sha256: 5d84d609e0301adf34e82b94d95d34f1364d88a805651dc81f7674d96b81ff2a
+    metadata:
+      record_count: 50
+  - name: real-emilia2-2spk-neg-records
+    kind: audio-records
+    root_alias: ts_asr_real
+    relative_path: versions/v3-20261022/records/real-emilia2-2spk-neg.jsonl.gz
+    sha256: 07dbb82a83a3887dfdc2d3a94b209a91d7340a1e767557729dcd2c96e9777500
+    metadata:
+      record_count: 49
+  - name: real-emilia2-2spk-neg-enrollmix-records
+    kind: audio-records
+    root_alias: ts_asr_real
+    relative_path: versions/v3-20261022/records/real-emilia2-2spk-neg-enrollmix.jsonl.gz
+    sha256: e06312b0714d788f3fa0ca196178f18407adb630177ec1d1b1b2f210d66e7d8c
+    metadata:
+      record_count: 1
+  - name: real-emilia2-2spk-pos-records
+    kind: audio-records
+    root_alias: ts_asr_real
+    relative_path: versions/v3-20261022/records/real-emilia2-2spk-pos.jsonl.gz
+    sha256: ed20dfd7ae8bc4eb52e8d0c32e98f501427b0a0bfb8b679677995e3ee2c5f976
+    metadata:
+      record_count: 49
+  - name: real-emilia2-2spk-pos-enrollmix-records
+    kind: audio-records
+    root_alias: ts_asr_real
+    relative_path: versions/v3-20261022/records/real-emilia2-2spk-pos-enrollmix.jsonl.gz
+    sha256: cd8ef9726874f2c7891e79b3f5d5dfe4045814bdd044773b5e067a7f8e689f28
+    metadata:
+      record_count: 1
+  - name: real-emilia2-3plus-neg-records
+    kind: audio-records
+    root_alias: ts_asr_real
+    relative_path: versions/v3-20261022/records/real-emilia2-3plus-neg.jsonl.gz
+    sha256: 56382f5efa4d89aae79e4989897005aa112d5d7b6909445334cf2400389c21a1
+    metadata:
+      record_count: 54
+  - name: real-emilia2-3plus-neg-enrollmix-records
+    kind: audio-records
+    root_alias: ts_asr_real
+    relative_path: versions/v3-20261022/records/real-emilia2-3plus-neg-enrollmix.jsonl.gz
+    sha256: d3c31b0c0c37d3c0f202533e1cdbac46b090120c3e5824a61c47ce726a30f60a
+    metadata:
+      record_count: 1
+  - name: real-emilia2-3plus-pos-records
+    kind: audio-records
+    root_alias: ts_asr_real
+    relative_path: versions/v3-20261022/records/real-emilia2-3plus-pos.jsonl.gz
+    sha256: 23b8ab05fd1aabb358e642efed2bf7d46466ca850675b483df2f0075b9213ad4
+    metadata:
+      record_count: 53
+  - name: real-emilia2-3plus-pos-enrollmix-records
+    kind: audio-records
+    root_alias: ts_asr_real
+    relative_path: versions/v3-20261022/records/real-emilia2-3plus-pos-enrollmix.jsonl.gz
+    sha256: c4139a3573eaef0e4ef2e97be4314f34425272d9565e744a9e9704c372e033a3
+    metadata:
+      record_count: 2
+  - name: real-ramc-1spk-neg-records
+    kind: audio-records
+    root_alias: ts_asr_real
+    relative_path: versions/v3-20261022/records/real-ramc-1spk-neg.jsonl.gz
+    sha256: 130c3d9f03d9231b83edcb695b7c0d3fbafa614e936d42accbce717b80d23bc5
+    metadata:
+      record_count: 50
+  - name: real-ramc-1spk-pos-records
+    kind: audio-records
+    root_alias: ts_asr_real
+    relative_path: versions/v3-20261022/records/real-ramc-1spk-pos.jsonl.gz
+    sha256: 3a64301a5f572766e9d88d65e5a6ef1899468eb84c7fe974e7b530ba67694cdb
+    metadata:
+      record_count: 50
+  - name: real-ramc-2spk-neg-records
+    kind: audio-records
+    root_alias: ts_asr_real
+    relative_path: versions/v3-20261022/records/real-ramc-2spk-neg.jsonl.gz
+    sha256: f2a8e5bf849b0fce2a49b313d844d9a8a013899071791f2010574cb5fd46b037
+    metadata:
+      record_count: 50
+  - name: real-ramc-2spk-pos-records
+    kind: audio-records
+    root_alias: ts_asr_real
+    relative_path: versions/v3-20261022/records/real-ramc-2spk-pos.jsonl.gz
+    sha256: d830d16aafb18fdfb51c38a3c7fa677cff37ccf5e13aa4d068babe20c06340aa
+    metadata:
+      record_count: 50
+  splits:
+    real-aishell4-1spk-neg:
+      artifacts:
+        records:
+        - real-aishell4-1spk-neg-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 45
+        duration_hours: 0.2002
+        duration_basis: Mixture duration
+      provenance:
+        description: 'real: {"corpus": "aishell4", "kind": "neg"}'
+    real-aishell4-1spk-neg-enrollmix:
+      artifacts:
+        records:
+        - real-aishell4-1spk-neg-enrollmix-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 5
+        duration_hours: 0.0208
+        duration_basis: Mixture duration
+      provenance:
+        description: 'real: {"corpus": "aishell4", "kind": "neg"}；注册前 3 秒里他人说话不少于 0.3 秒（labels.enroll_condition = others_speech）'
+    real-aishell4-1spk-pos:
+      artifacts:
+        records:
+        - real-aishell4-1spk-pos-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 49
+        duration_hours: 0.2172
+        duration_basis: Mixture duration
+      provenance:
+        description: 'real: {"corpus": "aishell4", "kind": "pos"}'
+    real-aishell4-1spk-pos-enrollmix:
+      artifacts:
+        records:
+        - real-aishell4-1spk-pos-enrollmix-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 1
+        duration_hours: 0.0038
+        duration_basis: Mixture duration
+      provenance:
+        description: 'real: {"corpus": "aishell4", "kind": "pos"}；注册前 3 秒里他人说话不少于 0.3 秒（labels.enroll_condition = others_speech）'
+    real-aishell4-2spk-neg:
+      artifacts:
+        records:
+        - real-aishell4-2spk-neg-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 45
+        duration_hours: 0.2162
+        duration_basis: Mixture duration
+      provenance:
+        description: 'real: {"corpus": "aishell4", "kind": "neg"}'
+    real-aishell4-2spk-neg-enrollmix:
+      artifacts:
+        records:
+        - real-aishell4-2spk-neg-enrollmix-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 5
+        duration_hours: 0.0292
+        duration_basis: Mixture duration
+      provenance:
+        description: 'real: {"corpus": "aishell4", "kind": "neg"}；注册前 3 秒里他人说话不少于 0.3 秒（labels.enroll_condition = others_speech）'
+    real-aishell4-2spk-pos:
+      artifacts:
+        records:
+        - real-aishell4-2spk-pos-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 45
+        duration_hours: 0.2208
+        duration_basis: Mixture duration
+      provenance:
+        description: 'real: {"corpus": "aishell4", "kind": "pos"}'
+    real-aishell4-2spk-pos-enrollmix:
+      artifacts:
+        records:
+        - real-aishell4-2spk-pos-enrollmix-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 5
+        duration_hours: 0.0246
+        duration_basis: Mixture duration
+      provenance:
+        description: 'real: {"corpus": "aishell4", "kind": "pos"}；注册前 3 秒里他人说话不少于 0.3 秒（labels.enroll_condition = others_speech）'
+    real-aishell4-3plus-neg:
+      artifacts:
+        records:
+        - real-aishell4-3plus-neg-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 53
+        duration_hours: 0.2894
+        duration_basis: Mixture duration
+      provenance:
+        description: 'real: {"corpus": "aishell4", "kind": "neg"}'
+    real-aishell4-3plus-neg-enrollmix:
+      artifacts:
+        records:
+        - real-aishell4-3plus-neg-enrollmix-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 3
+        duration_hours: 0.0188
+        duration_basis: Mixture duration
+      provenance:
+        description: 'real: {"corpus": "aishell4", "kind": "neg"}；注册前 3 秒里他人说话不少于 0.3 秒（labels.enroll_condition = others_speech）'
+    real-aishell4-3plus-pos:
+      artifacts:
+        records:
+        - real-aishell4-3plus-pos-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 52
+        duration_hours: 0.2849
+        duration_basis: Mixture duration
+      provenance:
+        description: 'real: {"corpus": "aishell4", "kind": "pos"}'
+    real-aishell4-3plus-pos-enrollmix:
+      artifacts:
+        records:
+        - real-aishell4-3plus-pos-enrollmix-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 3
+        duration_hours: 0.0173
+        duration_basis: Mixture duration
+      provenance:
+        description: 'real: {"corpus": "aishell4", "kind": "pos"}；注册前 3 秒里他人说话不少于 0.3 秒（labels.enroll_condition = others_speech）'
+    real-alimeeting-1spk-neg:
+      artifacts:
+        records:
+        - real-alimeeting-1spk-neg-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 42
+        duration_hours: 0.1792
+        duration_basis: Mixture duration
+      provenance:
+        description: 'real: {"corpus": "alimeeting", "kind": "neg"}'
+    real-alimeeting-1spk-neg-enrollmix:
+      artifacts:
+        records:
+        - real-alimeeting-1spk-neg-enrollmix-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 8
+        duration_hours: 0.0356
+        duration_basis: Mixture duration
+      provenance:
+        description: 'real: {"corpus": "alimeeting", "kind": "neg"}；注册前 3 秒里他人说话不少于 0.3 秒（labels.enroll_condition = others_speech）'
+    real-alimeeting-1spk-pos:
+      artifacts:
+        records:
+        - real-alimeeting-1spk-pos-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 46
+        duration_hours: 0.1995
+        duration_basis: Mixture duration
+      provenance:
+        description: 'real: {"corpus": "alimeeting", "kind": "pos"}'
+    real-alimeeting-1spk-pos-enrollmix:
+      artifacts:
+        records:
+        - real-alimeeting-1spk-pos-enrollmix-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 4
+        duration_hours: 0.0153
+        duration_basis: Mixture duration
+      provenance:
+        description: 'real: {"corpus": "alimeeting", "kind": "pos"}；注册前 3 秒里他人说话不少于 0.3 秒（labels.enroll_condition = others_speech）'
+    real-alimeeting-2spk-neg:
+      artifacts:
+        records:
+        - real-alimeeting-2spk-neg-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 37
+        duration_hours: 0.18
+        duration_basis: Mixture duration
+      provenance:
+        description: 'real: {"corpus": "alimeeting", "kind": "neg"}'
+    real-alimeeting-2spk-neg-enrollmix:
+      artifacts:
+        records:
+        - real-alimeeting-2spk-neg-enrollmix-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 13
+        duration_hours: 0.0692
+        duration_basis: Mixture duration
+      provenance:
+        description: 'real: {"corpus": "alimeeting", "kind": "neg"}；注册前 3 秒里他人说话不少于 0.3 秒（labels.enroll_condition = others_speech）'
+    real-alimeeting-2spk-pos:
+      artifacts:
+        records:
+        - real-alimeeting-2spk-pos-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 45
+        duration_hours: 0.2242
+        duration_basis: Mixture duration
+      provenance:
+        description: 'real: {"corpus": "alimeeting", "kind": "pos"}'
+    real-alimeeting-2spk-pos-enrollmix:
+      artifacts:
+        records:
+        - real-alimeeting-2spk-pos-enrollmix-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 5
+        duration_hours: 0.025
+        duration_basis: Mixture duration
+      provenance:
+        description: 'real: {"corpus": "alimeeting", "kind": "pos"}；注册前 3 秒里他人说话不少于 0.3 秒（labels.enroll_condition = others_speech）'
+    real-alimeeting-3plus-neg:
+      artifacts:
+        records:
+        - real-alimeeting-3plus-neg-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 38
+        duration_hours: 0.1982
+        duration_basis: Mixture duration
+      provenance:
+        description: 'real: {"corpus": "alimeeting", "kind": "neg"}'
+    real-alimeeting-3plus-neg-enrollmix:
+      artifacts:
+        records:
+        - real-alimeeting-3plus-neg-enrollmix-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 18
+        duration_hours: 0.0872
+        duration_basis: Mixture duration
+      provenance:
+        description: 'real: {"corpus": "alimeeting", "kind": "neg"}；注册前 3 秒里他人说话不少于 0.3 秒（labels.enroll_condition = others_speech）'
+    real-alimeeting-3plus-pos:
+      artifacts:
+        records:
+        - real-alimeeting-3plus-pos-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 37
+        duration_hours: 0.1892
+        duration_basis: Mixture duration
+      provenance:
+        description: 'real: {"corpus": "alimeeting", "kind": "pos"}'
+    real-alimeeting-3plus-pos-enrollmix:
+      artifacts:
+        records:
+        - real-alimeeting-3plus-pos-enrollmix-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 19
+        duration_hours: 0.0962
+        duration_basis: Mixture duration
+      provenance:
+        description: 'real: {"corpus": "alimeeting", "kind": "pos"}；注册前 3 秒里他人说话不少于 0.3 秒（labels.enroll_condition = others_speech）'
+    real-emilia2-1spk-neg:
+      artifacts:
+        records:
+        - real-emilia2-1spk-neg-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 47
+        duration_hours: 0.208
+        duration_basis: Mixture duration
+      provenance:
+        description: 'real: {"corpus": "emilia2", "kind": "neg"}'
+    real-emilia2-1spk-neg-enrollmix:
+      artifacts:
+        records:
+        - real-emilia2-1spk-neg-enrollmix-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 3
+        duration_hours: 0.0129
+        duration_basis: Mixture duration
+      provenance:
+        description: 'real: {"corpus": "emilia2", "kind": "neg"}；注册前 3 秒里他人说话不少于 0.3 秒（labels.enroll_condition = others_speech）'
+    real-emilia2-1spk-pos:
+      artifacts:
+        records:
+        - real-emilia2-1spk-pos-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 50
+        duration_hours: 0.2209
+        duration_basis: Mixture duration
+      provenance:
+        description: 'real: {"corpus": "emilia2", "kind": "pos"}'
+    real-emilia2-2spk-neg:
+      artifacts:
+        records:
+        - real-emilia2-2spk-neg-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 49
+        duration_hours: 0.2376
+        duration_basis: Mixture duration
+      provenance:
+        description: 'real: {"corpus": "emilia2", "kind": "neg"}'
+    real-emilia2-2spk-neg-enrollmix:
+      artifacts:
+        records:
+        - real-emilia2-2spk-neg-enrollmix-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 1
+        duration_hours: 0.0058
+        duration_basis: Mixture duration
+      provenance:
+        description: 'real: {"corpus": "emilia2", "kind": "neg"}；注册前 3 秒里他人说话不少于 0.3 秒（labels.enroll_condition = others_speech）'
+    real-emilia2-2spk-pos:
+      artifacts:
+        records:
+        - real-emilia2-2spk-pos-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 49
+        duration_hours: 0.2378
+        duration_basis: Mixture duration
+      provenance:
+        description: 'real: {"corpus": "emilia2", "kind": "pos"}'
+    real-emilia2-2spk-pos-enrollmix:
+      artifacts:
+        records:
+        - real-emilia2-2spk-pos-enrollmix-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 1
+        duration_hours: 0.0057
+        duration_basis: Mixture duration
+      provenance:
+        description: 'real: {"corpus": "emilia2", "kind": "pos"}；注册前 3 秒里他人说话不少于 0.3 秒（labels.enroll_condition = others_speech）'
+    real-emilia2-3plus-neg:
+      artifacts:
+        records:
+        - real-emilia2-3plus-neg-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 54
+        duration_hours: 0.2499
+        duration_basis: Mixture duration
+      provenance:
+        description: 'real: {"corpus": "emilia2", "kind": "neg"}'
+    real-emilia2-3plus-neg-enrollmix:
+      artifacts:
+        records:
+        - real-emilia2-3plus-neg-enrollmix-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 1
+        duration_hours: 0.0031
+        duration_basis: Mixture duration
+      provenance:
+        description: 'real: {"corpus": "emilia2", "kind": "neg"}；注册前 3 秒里他人说话不少于 0.3 秒（labels.enroll_condition = others_speech）'
+    real-emilia2-3plus-pos:
+      artifacts:
+        records:
+        - real-emilia2-3plus-pos-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 53
+        duration_hours: 0.2443
+        duration_basis: Mixture duration
+      provenance:
+        description: 'real: {"corpus": "emilia2", "kind": "pos"}'
+    real-emilia2-3plus-pos-enrollmix:
+      artifacts:
+        records:
+        - real-emilia2-3plus-pos-enrollmix-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 2
+        duration_hours: 0.0088
+        duration_basis: Mixture duration
+      provenance:
+        description: 'real: {"corpus": "emilia2", "kind": "pos"}；注册前 3 秒里他人说话不少于 0.3 秒（labels.enroll_condition = others_speech）'
+    real-ramc-1spk-neg:
+      artifacts:
+        records:
+        - real-ramc-1spk-neg-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 50
+        duration_hours: 0.2226
+        duration_basis: Mixture duration
+      provenance:
+        description: 'real: {"corpus": "ramc", "kind": "neg"}'
+    real-ramc-1spk-pos:
+      artifacts:
+        records:
+        - real-ramc-1spk-pos-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 50
+        duration_hours: 0.2226
+        duration_basis: Mixture duration
+      provenance:
+        description: 'real: {"corpus": "ramc", "kind": "pos"}'
+    real-ramc-2spk-neg:
+      artifacts:
+        records:
+        - real-ramc-2spk-neg-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 50
+        duration_hours: 0.2235
+        duration_basis: Mixture duration
+      provenance:
+        description: 'real: {"corpus": "ramc", "kind": "neg"}'
+    real-ramc-2spk-pos:
+      artifacts:
+        records:
+        - real-ramc-2spk-pos-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 50
+        duration_hours: 0.2235
+        duration_basis: Mixture duration
+      provenance:
+        description: 'real: {"corpus": "ramc", "kind": "pos"}'
+  provenance:
+    status: complete
+    synthetic: none
+    description: ts_asr_real@v2-20261013 的修正版，窗口和混合音频不变：每条记录加注册前 3 秒里他人说话的秒数（labels.enroll_others_s），不少于 0.3 秒的记为注册含他人声（enroll_condition = others_speech）并移入同名加 -enrollmix 的划分；AISHELL-4 有 3 条目标在场样本的注册其实是同场另一个人，改取目标的另一条语句，1 条无法确认目标而删除。生成脚本 scripts/ts_real/enroll_overlap.py。
+    sources:
+    - alimeeting_sdm@icefall-20260908:test
+    - aishell4@icefall-20260908:test
+    - magicdata_ramc@icefall-20260908:test
+    - emilia2_zh_dialogue_diarize@moss-transcribe-diarize-0.9B:train_120s
+    - ts_asr_real@v2-20261013

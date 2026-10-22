@@ -72,6 +72,18 @@
   - 两句话还要求能区分：把干扰人那句当成输出时，字错率至少 50%。按这些条件，test 池里 1.5–4 秒的句子有 35,687 句，跨说话人的开头相同句对 424 万对，去掉文本几乎相同的 20 万对和干扰人没有对照句的 949 对，可用 404 万对，涵盖 28,674 句目标语句、231 位目标说话人；目标以「现在」开头的有 171 句。
 - 说话人池与 v3、`ts_asr_shortseg` 相同（各语料官方 test 划分）；种子不同，KeSpeech 抽到的 250 人与 v3 不完全相同，所以说话人嵌入按本配方重算（`speaker_embeddings.py` 同时为 `enrollment_files` 里的注册录音写入 `file:<名字>`），随数据保存在 `source/v1-20261020/speaker-embeddings.npz`。底噪、房间响应缓存取 v3 的 `source/v3-20261013/noise`、`rir`。
 
+## 另一个人说一句短话补充集（ts_asr_nearshort）
+
+`ts_asr_nearshort@v1-20261021`：1,500 条、5 个场景（`v2-20261022` 见本节末），配方 `scripts/ts_benchmark/recipe-nearshort.yaml`。来源是业务第五批反馈（`business_feedback@ts-20261021`，飞书表格第 40、41 行）和这批换的新注册录音（`realreg4`）：注册人没说话，另一个人说了一句约 1 秒的话（0.7 秒、1.1 秒），VAD 切出的片段 1.5 / 2.8 秒，模型输出了这句话。已有场景都覆盖不到：`abs-short` 把干扰人的句子截成 0.4–1.2 秒的半句，`abs-mid1-*` 在 1.2–3 秒里连续说话，`abs-hard`/`abs-hard-k1` 声音相近但片段 6–18 秒。
+
+- 每个缺席片段 1.5–3 秒，只有一个干扰人说一句完整的短句（`short_utterance_seconds` 0.5–1.6 秒的整句，从 0.1–0.6 秒开始，整句在片段内结束；配方参数 `interferer_utts: single_short`）。
+- `short-rand-neg`、`short-hard-neg`：同一个 `pair`，混合音频逐条相同，只换注册人；随机注册人与干扰人的 ECAPA 余弦平均 0.24，相近注册人（干扰人余弦前 5 的近邻，同 `abs-hard`）平均 0.55（p10 0.44）。
+- `realreg4-short-neg`、`realreg4-hard-short-neg`：注册音频是 `realreg4`；后者的干扰人取自与它余弦最高的 10 位有短句的 test 说话人（0.17–0.21；第 40、41 行那位说话人是 0.14 / 0.27）。
+- `solo-short-pos`：对照，注册人自己在同样长度的片段里说一句短句，检查压低误输出时没有漏掉注册人的短句。
+- 0.5–1.6 秒的整句只有 AISHELL-3 和 AISHELL-2 的 test 里有（各 84 位说话人有至少 2 句），所以干扰人和 `solo-short-pos` 的说话人来自这两个语料；注册人仍取全部 test 池。
+- 说话人嵌入按本配方重算，随数据保存在 `source/v1-20261021/speaker-embeddings.npz`；底噪、房间响应缓存取 v3 的 `source/v3-20261013/noise`、`rir`。
+- `v2-20261022`：3,600 条、12 个场景，v1 的 5 列逐条不变（音频逐字节相同，记录只有版本号不同），加 7 列在场对照，用来量出「短片段更倾向不出字」的漏识代价（v1 的在场对照只有干净的单人短句）：与 `solo-short-pos` 同一个 `pair`、同一批短句和时间安排，只改一个因素——`solo-short-q20-pos`（混合整体 -20 dB）、`solo-short-wham40-pos` / `solo-short-wham30-pos`（WHAM 实录底噪 -40 / -30 dBFS）、`solo-short-babble10-pos`（合成背景人声，信噪比 10 dB，同 `ts_asr_noise`）、`solo-short-far-pos`（混合过 SLR28 实测房间响应、注册近场）、`solo-short-farfar-pos`（注册也远场）；以及 `short-k1-pos`（注册人和一个随机的人在同一个 1.5–3 秒片段里各说一句短话）。v1 的配方见提交 b187e80；v2 沿用 v1 的说话人嵌入（同一种子、同一说话人池）。
+
 ## 开发集（ts_asr_dev）
 
 `ts_asr_dev@v1-20261017`：3,240 条、54 个场景，配方 `scripts/ts_benchmark/recipe-pvad-dev.yaml`。用与 v3 相同的场景定义，换成各语料 dev 划分的说话人（KeSpeech、MagicData、AISHELL-1 dev，共 159 位，与 train、test 都不重叠）和新种子，用来选模型和阈值（`amphion-tse/pvad-dev@v1-20261017` 的合成部分），**不进训练，也不作最终评测**。

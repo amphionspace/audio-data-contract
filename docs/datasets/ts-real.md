@@ -1,6 +1,6 @@
 # 真实对话的目标说话人评测集（ts_asr_real）
 
-评测版本：`v1-20261013`（824 条、16 个场景，三个人工标注语料）和 `v2-20261013`（1,134 条、22 个场景，增加 Emilia2 网络爬取的对话，MOSS 伪标签；v2 包含 v1 的全部场景）；另有以目标为锚的重叠窗口 `overlap-v1-20261017` 和开发集 `dev-v1-20261017`（见下文）。只用于评测，不进训练。评测集登记在 AmphionEval：`open-audio-llm/ts-asr-real@v1-20261013` 和 `@v2-20261013`。生成脚本 `scripts/ts_real/build.py`。
+评测版本：`v1-20261013`（824 条、16 个场景，三个人工标注语料）、`v2-20261013`（1,134 条、22 个场景，增加 Emilia2 网络爬取的对话，MOSS 伪标签；v2 包含 v1 的全部场景）和 `v3-20261022`（v2 的修正版，见“注册段里的他人语音”）；另有以目标为锚的重叠窗口 `overlap-v1-20261017` 和开发集 `dev-v1-20261017`（见下文）。只用于评测，不进训练。评测集登记在 AmphionEval：`open-audio-llm/ts-asr-real@v1-20261013` 和 `@v2-20261013`。生成脚本 `scripts/ts_real/build.py`。
 
 与合成评测集 [ts_asr_benchmark](ts-benchmark.md) 互补：那边可以一次只改一个因素，这里是真实的对话、重叠、房间和设备，**不做任何混合**。
 
@@ -12,6 +12,19 @@
 - 参考文本是目标说话人在窗口内所有语句按时间顺序拼接；目标缺席时为空。
 - 场景名 `real-<语料>-<窗口内说话人数>-<pos|neg>`，人数分 `1spk`、`2spk`、`3plus`（电话通话只有两人，没有 `3plus`）。
 - `labels`：`corpus`、`recording`、`duration_s`、`speakers_in_window`、`n_interferers`、`target_overlap_ratio`（目标语句时间内有别人说话的比例）、`target_seconds`、`mixture_rms_dbfs`、`absent_source`、`annotation: human`；`metadata.window_utts` 保存窗口内全部语句（说话人、相对起点、时长、文本），用于判断输出是不是转写了别人。
+
+## 注册段里的他人语音（v3-20261022）
+
+TS 客户端只发送注册语句的前 3 秒。v1/v2 选注册时只要求整条语句（3–6 秒）被他人重叠不超过 20%，重叠可能都落在前 3 秒里：v2 有 97 条记录的注册前 3 秒里，标注显示他人说话不少于 0.3 秒（AliMeeting 67、AISHELL-4 22、Emilia2 8、RAMC 0）。这样的注册是一种真实的退化，但被当作干净注册计分；混进来的人在窗口里说话时，模型会转写他，被记为误输出（2026-10-22 核对：混入不少于 0.5 秒、且此人在窗口里说话的目标缺席样本，10.21 版本误输出 21%，干净注册时 3.6%）。
+
+`v3-20261022` 由 v2 派生（`scripts/ts_real/enroll_overlap.py`），窗口和混合音频不变：
+
+- 每条记录加 `labels.enroll_others_s`（注册前 3 秒里他人说话的秒数，按语料标注；Emilia2 按 MOSS 伪标签）和 `labels.enroll_condition`：少于 0.3 秒为 `clean`，否则为 `others_speech`；`metadata.enroll_others` 列出是谁。
+- `others_speech` 的记录移入同名加 `-enrollmix` 的划分（如 `real-alimeeting-3plus-neg-enrollmix`），原划分只剩干净注册。评测集把它们单列，不计入干净注册的分数。
+- AISHELL-4 有 3 条目标在场样本的注册其实是同场另一个人（ERes2NetV2 声纹：注册更像那个人，而不像窗口里目标本人的语音），改取目标的另一条合格语句（声纹核对通过、前 3 秒无他人），旧注册记在 `metadata.enrollment_replaced`；`real-aishell4-3plus-pos:0024` 窗口里目标只有 2.1 秒且都被重叠，目标的所有语句也都更像另一个人，无法确认目标，删除（v3 共 1,133 条）。
+- 记录 ID 与 v2 相同，可以逐条对照。
+
+`build.py` 同时改为：注册候选的前 3 秒里他人说话须少于 0.3 秒（`ENROLL_CROP_OTHERS_MAX`），每条记录写入 `enroll_others_s` 和 `enroll_condition`，以后新建的版本不再混入这类注册。
 
 ## 目标重叠窗口（overlap-v1，个性化 VAD 用）与开发集（dev-v1）
 
@@ -41,4 +54,4 @@ v1/v2 的窗口要求“与窗口重叠的语句都完整”，重叠多的地�
 
 ## 近场与远场对照（ts_asr_nearfar）
 
-`ts_asr_nearfar@v1-20261014`：1,248 条、24 个场景。用 `ts_asr_real@v2-20261013` 的 AliMeeting 窗口（三档说话人数各 50 个），同一窗口、同一条注册语句，注册取远场（`ef`）或说话人的头戴麦（`en`），混合取远场通道 0（`mf`）或该录音所有头戴麦之和（`mn`，电平对齐远场混合，只剩声学差异）。场景名 `nearfar-<人数档>-<注册>-<混合>-<pos|neg>`，`ef-mf` 就是原来的样本。近场与远场录音的时间偏差不超过 0.12 秒。生成脚本 `scripts/ts_real/near_far.py`；AISHELL-4 没有近场录音，所以不含。用来校准合成的远场失配场景，只用于评测。
+`ts_asr_nearfar@v1-20261014`：1,248 条、24 个场景。用 `ts_asr_real@v2-20261013` 的 AliMeeting 窗口（三档说话人数各 50 个），同一窗口、同一条注册语句，注册取远场（`ef`）或说话人的头戴麦（`en`），混合取远场通道 0（`mf`）或该录音所有头戴麦之和（`mn`，电平对齐远场混合，只剩声学差异）。场景名 `nearfar-<人数档>-<注册>-<混合>-<pos|neg>`，`ef-mf` 就是原来的样本。近场与远场录音的时间偏差不超过 0.12 秒。生成脚本 `scripts/ts_real/near_far.py`；AISHELL-4 没有近场录音，所以不含。用来校准合成的远场失配场景，只用于评测。`ts_asr_nearfar@v2-20261022` 是同样的修正版：注册与 v2 窗口相同，所以同一批 67 个注册（×4 种组合，268 条）标为 `others_speech`，移入 `-enrollmix` 划分。
