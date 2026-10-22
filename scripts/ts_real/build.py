@@ -53,6 +53,10 @@ MAX_WINDOW = 26.0  # the TS service accepts at most 27 s of mixture; keep the ed
 ENROLL_MIN = 3.0
 ENROLL_MAX = 6.0
 ENROLL_MAX_OVERLAP = 0.2  # share of the enrollment utterance that another speaker may overlap
+ENROLL_CROP = 3.0  # seconds of the enrollment the TS client sends (the rest of the utterance is never heard)
+# Annotated speech of anyone else inside that crop. From this much on the enrollment is "others_speech", a
+# degradation reported apart from clean enrollments (ts_asr_real v2: false alarms rise from 0.3-0.5 s on).
+ENROLL_CROP_OTHERS_MAX = 0.3
 MIN_TARGET_SECONDS = 1.0
 ATTEMPTS = 60
 
@@ -141,8 +145,20 @@ def finish_entry(entry):
     for s, e, spk, text in entry["sups"]:
         if e - s >= ENROLL_MIN:
             others = sum(max(0.0, min(e, oe) - max(s, os_)) for os_, oe, ospk, _ in overlapping(entry, s, e) if ospk != spk)
-            if others <= ENROLL_MAX_OVERLAP * (e - s):
+            if others <= ENROLL_MAX_OVERLAP * (e - s) and crop_others(entry, spk, s)[0] < ENROLL_CROP_OTHERS_MAX:
                 entry["eligible"][spk].append((s, e, text))
+
+
+def crop_others(entry, speaker, start):
+    """(seconds, speakers) of annotated speech by anyone but ``speaker`` in the enrollment crop at ``start``."""
+    end = start + ENROLL_CROP
+    spans = sorted((max(start, s), min(end, e), spk) for s, e, spk, _ in overlapping(entry, start, end) if spk != speaker)
+    seconds, reach = 0.0, start
+    for s, e, _ in spans:
+        s = max(s, reach)
+        if e > s:
+            seconds, reach = seconds + e - s, e
+    return round(seconds, 3), sorted({spk for *_, spk in spans})
 
 
 def load_emilia2(spec, catalog, roots, rng):
@@ -459,6 +475,9 @@ def render(plan, name, corpus, recordings, rng, out_dir, split, index):
         else:
             labels["absent_source"] = absent_source
         speaker = target if present else absent_speaker
+        enroll_rec, enroll_start = (window["recording"], enroll_s) if present else (absent_recording, absent_s)
+        labels["enroll_others_s"] = crop_others(recordings[enroll_rec], speaker, enroll_start)[0]
+        labels["enroll_condition"] = "clean" if labels["enroll_others_s"] < ENROLL_CROP_OTHERS_MAX else "others_speech"
         metadata = {
             "split": sample, "index": index, "target_speaker": f"{name}:{speaker}",
             "enrollment": {"recording": window["recording"] if present else absent_recording,
