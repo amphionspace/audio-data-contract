@@ -19,7 +19,7 @@
     - metadata
     parameters:
       script: scripts/diarization/register_benchmark.py
-      script_sha256: 05d8aca31fd39d969ea489c5952a9691d5cf634212d1c35b7780541a16b326ac
+      script_sha256: 30d018ede537cb71f2b9e26cb23b7f606c9221bf36fdb1ebbed8d034d658dff9
       audio_and_rttm_policy: byte-preserving copy
 - schema_version: dataset-view/1.0
   view_id: alimeeting/diarization-benchmark
@@ -42,7 +42,7 @@
     - metadata
     parameters:
       script: scripts/diarization/register_benchmark.py
-      script_sha256: 05d8aca31fd39d969ea489c5952a9691d5cf634212d1c35b7780541a16b326ac
+      script_sha256: 30d018ede537cb71f2b9e26cb23b7f606c9221bf36fdb1ebbed8d034d658dff9
       audio_and_rttm_policy: byte-preserving copy
 - schema_version: dataset-view/1.0
   view_id: alimeeting_2023test/diarization-benchmark
@@ -65,7 +65,7 @@
     - metadata
     parameters:
       script: scripts/diarization/register_benchmark.py
-      script_sha256: 05d8aca31fd39d969ea489c5952a9691d5cf634212d1c35b7780541a16b326ac
+      script_sha256: 30d018ede537cb71f2b9e26cb23b7f606c9221bf36fdb1ebbed8d034d658dff9
       audio_and_rttm_policy: byte-preserving copy
 - schema_version: dataset-view/1.0
   view_id: ami_near/diarization-benchmark
@@ -88,7 +88,7 @@
     - metadata
     parameters:
       script: scripts/diarization/register_benchmark.py
-      script_sha256: 05d8aca31fd39d969ea489c5952a9691d5cf634212d1c35b7780541a16b326ac
+      script_sha256: 30d018ede537cb71f2b9e26cb23b7f606c9221bf36fdb1ebbed8d034d658dff9
       audio_and_rttm_policy: byte-preserving copy
 - schema_version: dataset-view/1.0
   view_id: ramc/diarization-benchmark
@@ -111,7 +111,7 @@
     - metadata
     parameters:
       script: scripts/diarization/register_benchmark.py
-      script_sha256: 05d8aca31fd39d969ea489c5952a9691d5cf634212d1c35b7780541a16b326ac
+      script_sha256: 30d018ede537cb71f2b9e26cb23b7f606c9221bf36fdb1ebbed8d034d658dff9
       audio_and_rttm_policy: byte-preserving copy
 - schema_version: dataset-view/1.0
   view_id: voxconverse/diarization-benchmark
@@ -134,5 +134,5 @@
     - metadata
     parameters:
       script: scripts/diarization/register_benchmark.py
-      script_sha256: 05d8aca31fd39d969ea489c5952a9691d5cf634212d1c35b7780541a16b326ac
+      script_sha256: 30d018ede537cb71f2b9e26cb23b7f606c9221bf36fdb1ebbed8d034d658dff9
       audio_and_rttm_policy: byte-preserving copy

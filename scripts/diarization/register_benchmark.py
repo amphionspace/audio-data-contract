@@ -27,12 +27,42 @@ DATASETS = {
 
 
 def digest(path):
+    checksum = hashlib.sha256()
     with path.open("rb") as stream:
-        return hashlib.file_digest(stream, "sha256").hexdigest()
+        for block in iter(lambda: stream.read(1024 * 1024), b""):
+            checksum.update(block)
+    return checksum.hexdigest()
 
 
 def jsonl(path, rows):
     path.write_text("".join(json.dumps(r, ensure_ascii=False) + "\n" for r in rows))
+
+
+
+def merged_roots(path, output):
+    """Preserve other datasets and reject alias conflicts before copying data."""
+    roots = json.loads(path.read_text()) if path.exists() else {}
+    if not isinstance(roots, dict) or any(
+        not isinstance(value, str) for value in roots.values()
+    ):
+        raise ValueError(f"invalid roots mapping: {path}")
+    if ALIAS in roots and roots[ALIAS] != str(output):
+        raise ValueError(f"root alias {ALIAS!r} already points to {roots[ALIAS]!r}")
+    return {**roots, ALIAS: str(output)}
+
+
+def write_roots(path, roots):
+    """Publish a complete configuration without truncating the existing file."""
+    temporary = None
+    try:
+        with tempfile.NamedTemporaryFile(mode="w", dir=path.parent, delete=False) as f:
+            temporary = Path(f.name)
+            f.write(json.dumps(roots, indent=2) + "\n")
+        temporary.chmod(path.stat().st_mode & 0o777 if path.exists() else 0o600)
+        os.replace(temporary, path)
+    finally:
+        if temporary is not None:
+            temporary.unlink(missing_ok=True)
 
 
 def main():
@@ -42,6 +72,8 @@ def main():
     parser.add_argument("--repo", type=Path, required=True)
     args = parser.parse_args()
     source, output, repo = (p.resolve() for p in (args.source, args.output, args.repo))
+    roots_path = repo / "roots.json"
+    roots = merged_roots(roots_path, output)
     if output.exists():
         raise ValueError(f"refusing to overwrite snapshot: {output}")
     output.parent.mkdir(parents=True, exist_ok=True)
@@ -191,7 +223,9 @@ def main():
         yaml.dump(specs, stream)
     with (repo / "views/diarization_benchmark.yaml").open("w") as stream:
         yaml.dump(views, stream)
-    (repo / "roots.json").write_text(json.dumps({ALIAS: str(output)}, indent=2) + "\n")
+    if merged_roots(roots_path, output) != roots:
+        raise ValueError("roots.json changed during preparation; refusing to overwrite")
+    write_roots(roots_path, roots)
     print(json.dumps(report), flush=True)
 
 

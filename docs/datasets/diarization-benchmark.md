@@ -80,7 +80,9 @@ is supplied, and the reported SIGABRT is not resolved by this data registration.
 
 Use `scripts/diarization/register_benchmark.py --source DATA_ROOT --output NEW_SNAPSHOT
 --repo CONTRACT_CHECKOUT` with soundfile and the contract package installed. The
-script refuses to overwrite an existing snapshot. It checks all audio headers,
+script refuses to overwrite an existing snapshot. It preserves existing roots.json
+entries, rejects a conflicting diarization_benchmark alias before copying audio,
+and writes the merged configuration atomically. It checks all audio headers,
 RTTM syntax and speaker counts, and reports any out-of-bounds segments without
 silently changing the reference. This snapshot had zero bounds warnings.
 
