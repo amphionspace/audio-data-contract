@@ -53,7 +53,9 @@ MAX_WINDOW = 26.0  # the TS service accepts at most 27 s of mixture; keep the ed
 ENROLL_MIN = 3.0
 ENROLL_MAX = 6.0
 ENROLL_MAX_OVERLAP = 0.2  # share of the enrollment utterance that another speaker may overlap
-ENROLL_CROP = 3.0  # seconds of the enrollment the TS client sends (the rest of the utterance is never heard)
+ENROLL_CROP = 5.0  # seconds of the enrollment the TS client sends (5 s in production since 2026-10-22, 3 s before)
+ENROLL_STORE = 10.0  # seconds of the enrolled speaker kept per enrollment, so one dataset serves clients up to 10 s
+ENROLL_PIECE_MIN = 1.0  # shortest further utterance appended to an enrollment
 # Annotated speech of anyone else inside that crop. From this much on the enrollment is "others_speech", a
 # degradation reported apart from clean enrollments (ts_asr_real v2: false alarms rise from 0.3-0.5 s on).
 ENROLL_CROP_OTHERS_MAX = 0.3
@@ -145,13 +147,14 @@ def finish_entry(entry):
     for s, e, spk, text in entry["sups"]:
         if e - s >= ENROLL_MIN:
             others = sum(max(0.0, min(e, oe) - max(s, os_)) for os_, oe, ospk, _ in overlapping(entry, s, e) if ospk != spk)
-            if others <= ENROLL_MAX_OVERLAP * (e - s) and crop_others(entry, spk, s)[0] < ENROLL_CROP_OTHERS_MAX:
+            if (others <= ENROLL_MAX_OVERLAP * (e - s)
+                    and crop_others(entry, spk, s, min(e, s + ENROLL_CROP))[0] < ENROLL_CROP_OTHERS_MAX):
                 entry["eligible"][spk].append((s, e, text))
 
 
-def crop_others(entry, speaker, start):
-    """(seconds, speakers) of annotated speech by anyone but ``speaker`` in the enrollment crop at ``start``."""
-    end = start + ENROLL_CROP
+def crop_others(entry, speaker, start, end=None):
+    """(seconds, speakers) of annotated speech by anyone but ``speaker`` in [start, end) (default: the client crop)."""
+    end = start + ENROLL_CROP if end is None else end
     spans = sorted((max(start, s), min(end, e), spk) for s, e, spk, _ in overlapping(entry, start, end) if spk != speaker)
     seconds, reach = 0.0, start
     for s, e, _ in spans:
@@ -159,6 +162,40 @@ def crop_others(entry, speaker, start):
         if e > s:
             seconds, reach = seconds + e - s, e
     return round(seconds, 3), sorted({spk for *_, spk in spans})
+
+
+def enrollment_pieces(entry, speaker, first, lo, hi, rng):
+    """[(start, end)] of an enrollment: ``first``, then other utterances of ``speaker`` in random order up to
+    ENROLL_STORE seconds. Appended utterances lie outside the window [lo, hi] (1 s margin) and nobody else is
+    annotated in them, so only the first utterance can carry someone else's voice (``labels.enroll_others_s``)."""
+    pieces, have = [first], first[1] - first[0]
+    candidates = [(s, e) for s, e, spk, _ in entry["sups"]
+                  if spk == speaker and e - s >= ENROLL_PIECE_MIN and not (e > lo - 1.0 and s < hi + 1.0)
+                  and not (e > first[0] and s < first[1])
+                  and not any(o[2] != speaker for o in overlapping(entry, s, e))]
+    rng.shuffle(candidates)
+    for piece in candidates:
+        if have >= ENROLL_STORE:
+            break
+        pieces.append(piece)
+        have += piece[1] - piece[0]
+    return pieces
+
+
+def pieces_others(entry, speaker, pieces):
+    """crop_others over the first ENROLL_CROP seconds of the concatenated pieces."""
+    seconds, speakers, left = 0.0, set(), ENROLL_CROP
+    for s, e in pieces:
+        if left <= 0:
+            break
+        part = crop_others(entry, speaker, s, min(e, s + left))
+        seconds, left = seconds + part[0], left - (e - s)
+        speakers.update(part[1])
+    return round(seconds, 3), sorted(speakers)
+
+
+def cut_pieces(recordings, recording, pieces):
+    return np.concatenate([cut(recordings, recording, s, e) for s, e in pieces])[: int(ENROLL_STORE * SR)]
 
 
 def load_emilia2(spec, catalog, roots, rng):
@@ -441,12 +478,16 @@ def render(plan, name, corpus, recordings, rng, out_dir, split, index):
     absent_s, absent_e, _ = rng.choice(eligible_enrollments(absent_rec, absent_speaker, -1e9, -1e9)
                                        if absent_source == "other_recording" else
                                        eligible_enrollments(absent_rec, absent_speaker, window["lo"], window["hi"]))
-    files = {}
-    for kind, (recording, start, end) in {
-        "pos": (window["recording"], enroll_s, min(enroll_e, enroll_s + ENROLL_MAX)),
-        "neg": (absent_recording, absent_s, min(absent_e, absent_s + ENROLL_MAX)),
+    files, pieces = {}, {}
+    for kind, (recording, start, end, speaker) in {
+        "pos": (window["recording"], enroll_s, min(enroll_e, enroll_s + ENROLL_MAX), target),
+        "neg": (absent_recording, absent_s, min(absent_e, absent_s + ENROLL_MAX), absent_speaker),
     }.items():
-        files[kind] = cut(recordings, recording, start, end)
+        lo, hi = (window["lo"], window["hi"]) if recording == window["recording"] else (-1e9, -1e9)
+        # Own stream per record: the windows and first utterances do not depend on the appended ones.
+        own = random.Random(f"{split}-{kind}:{index:04d}:enroll-pieces")
+        pieces[kind] = enrollment_pieces(recordings[recording], speaker, (start, end), lo, hi, own)
+        files[kind] = cut_pieces(recordings, recording, pieces[kind])
     base = f"{split}-{index:04d}"
     results = []
     for kind in ("pos", "neg"):
@@ -475,14 +516,16 @@ def render(plan, name, corpus, recordings, rng, out_dir, split, index):
         else:
             labels["absent_source"] = absent_source
         speaker = target if present else absent_speaker
-        enroll_rec, enroll_start = (window["recording"], enroll_s) if present else (absent_recording, absent_s)
-        labels["enroll_others_s"] = crop_others(recordings[enroll_rec], speaker, enroll_start)[0]
+        enroll_rec = window["recording"] if present else absent_recording
+        labels["enroll_seconds"] = round(len(files[kind]) / SR, 3)
+        labels["enroll_others_s"] = pieces_others(recordings[enroll_rec], speaker, pieces[kind])[0]
         labels["enroll_condition"] = "clean" if labels["enroll_others_s"] < ENROLL_CROP_OTHERS_MAX else "others_speech"
         metadata = {
             "split": sample, "index": index, "target_speaker": f"{name}:{speaker}",
             "enrollment": {"recording": window["recording"] if present else absent_recording,
                            "start": round(enroll_s if present else absent_s, 3),
                            "end": round(min(enroll_e, enroll_s + ENROLL_MAX) if present else min(absent_e, absent_s + ENROLL_MAX), 3)},
+            "enrollment_pieces": [[round(s, 3), round(e, 3)] for s, e in pieces[kind]],
             "window_utts": [{"speaker": f"{name}:{spk}", "start": round(s - window["lo"], 3),
                              "duration": round(e - s, 3), "text": text,
                              **({"clipped": True} if (s, e, spk, text) in window.get("clipped", ()) else {})}

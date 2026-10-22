@@ -308,3 +308,45 @@
     description: 业务反馈的目标说话人 bad case，每个批次一个版本，只用于评测，不进训练。测试人员持续收音时反馈的 2 个调试包（表格第 40、41 行），换了一段新的注册音频。 每段输入为 3 秒注册音频加一个识别片段；两条都是机主未说话、另一个人说了一句约 1 秒的短话，模型输出了这句话。
     sources:
     - 'business feedback debug packages: 2026-10-21_amphionasr-owner-misrecognition'
+- schema_version: dataset-catalog/2.0
+  dataset_id: business_feedback
+  version: ts-20261022
+  languages:
+  - zh
+  tasks:
+  - ts_asr
+  artifacts:
+  - name: audio-index
+    kind: audio-index
+    root_alias: business_feedback
+    relative_path: versions/ts-20261022/audio-index.jsonl.gz
+    sha256: c230351c3e1e206a12675de9ced04e02ca98de633a081c38ccb2fa892a5b630a
+    metadata:
+      record_count: 11
+  - name: target_speaker-records
+    kind: audio-records
+    root_alias: business_feedback
+    relative_path: versions/ts-20261022/records/target_speaker.jsonl.gz
+    sha256: ac591fbbc9bd3b6afdc31d34464844d251ca6f376cd0b15b02f4c56b6fb754c1
+    metadata:
+      record_count: 10
+  splits:
+    target_speaker:
+      artifacts:
+        records:
+        - target_speaker-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 10
+        duration_hours: 0.0617
+        duration_basis: Mixture (recognition segment) duration
+      provenance:
+        description: 目标说话人未在场、期望输出为空的反馈（已由反馈人确认）。
+  provenance:
+    status: complete
+    synthetic: none
+    description: 业务反馈的目标说话人 bad case，每个批次一个版本，只用于评测，不进训练。用户直接提供的两段长录音（没有调试包），机主全程未说话，旁边外放电视剧对白，期望输出为空； 按 25 秒连续分窗，每窗一条，共 10 条；注册录音 8.28 秒整段保存，客户端取前 5 秒。
+    sources:
+    - 'business feedback recordings: 2026-10-22_amphionasr-tv-drama-absent'

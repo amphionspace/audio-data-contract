@@ -115,7 +115,9 @@ def derive(dataset, version, catalog, roots, corpora, args):
                         record["metadata"]["enrollment"] = enroll
                         new_audio = real.cut(corpora[corpus], enroll["recording"], enroll["start"], enroll["end"])
                         report[split]["repicked"] += 1
-                    seconds, others = real.crop_others(corpora[corpus][enroll["recording"]], speaker_of(record), enroll["start"])
+                    # v3 measured the 3 s crop the client sent then (build.ENROLL_CROP is now 5 s).
+                    seconds, others = real.crop_others(corpora[corpus][enroll["recording"]], speaker_of(record),
+                                                       enroll["start"], enroll["start"] + 3.0)
                     condition = "clean" if seconds < real.ENROLL_CROP_OTHERS_MAX else "others_speech"
                     record["labels"].update(enroll_others_s=seconds, enroll_condition=condition)
                     record["metadata"]["enroll_others"] = others

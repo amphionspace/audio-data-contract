@@ -1,6 +1,11 @@
 # 目标说话人 ASR 评测集（ts_asr_benchmark）的场景配方。
 # 每个 split 是一个场景；split 名是评测表里的行名。数值范围是 [最小, 最大]，每条样本在范围内均匀抽取。
-version: v3-20261013
+version: v4-20261022
+# v4-20261022：线上注册改为 5 秒（客户端发注册音频的前 5 秒，不足补零）。每条注册音频存 10 秒同一说话人的语音
+# （第一句不变，后面接此人不在混合音频里的其他语句，句间停顿 0.3–0.6 秒；语音不够的说话人有多少存多少），
+# 劣化条件作用于整段，评测按客户端长度 L 取前 L 秒，同一份数据可按 3 / 5 / 8 秒评测。新抽取都在注册随机流
+# 的最后，混合音频与上一版逐条相同。业务真实注册录音（enroll_file）只有 3 秒，原样保留。
+enroll_store_seconds: 10
 dataset_id: ts_asr_benchmark
 seed: 20261013
 sample_rate: 16000
@@ -59,7 +64,8 @@ splits:
     expand:
       template: "enroll-{cond}-{kind}"
       over:
-        cond: [clean, short1, lead_silence, lp4k, noise10, reverb, contam10, contam0, quiet]
+        # v4：len2 / len3 / len4 是只录了 2 / 3 / 4 秒的注册（短于客户端长度时由客户端补零），与 clean 同一批场景
+        cond: [clean, short1, lead_silence, lp4k, noise10, reverb, contam10, contam0, quiet, len2, len3, len4]
         kind: [pos, neg]
     base:
       pos: {kind: pos, schedule: full, k: [1, 2], duration: [6, 15], sir_db: [-3, 3]}
