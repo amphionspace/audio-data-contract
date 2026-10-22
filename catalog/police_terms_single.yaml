@@ -1,4 +1,4 @@
-# 占位登记：警务术语单说测试集（每条录音只说一个术语），正在合成，进度以状态文件为准。
+# 警务术语单说测试集：每条录音只说一个术语（2026-10-22 生成完成），只用于评测。
 - schema_version: dataset-catalog/2.0
   dataset_id: police_terms_single
   version: v1-20261022
@@ -8,33 +8,72 @@
     - asr
   aliases: []
   artifacts:
-    - name: preparation_state
-      kind: dataset-state
+    - name: test_recordings
+      kind: lhotse-recordings
       root_alias: aidc_data
-      relative_path: datasets/police_terms_single/versions/v1-20261022/state.json
+      relative_path: datasets/police_terms_single/versions/v1-20261022/manifests/police_terms_single_recordings_test.jsonl.gz
+      expected_bytes: 56265
+      sha256: 399d46ab7dbb3d397a26eb194ab75f11c7d328b289e2f6c2a52d4e8da29c710a
+      metadata:
+        record_count: 3262
+    - name: test_supervisions
+      kind: lhotse-supervisions
+      root_alias: aidc_data
+      relative_path: datasets/police_terms_single/versions/v1-20261022/manifests/police_terms_single_supervisions_test.jsonl.gz
+      expected_bytes: 154554
+      sha256: 34d5cf1c5e95b1a9a2bb53170d094ba134ad4a80bde6a09951805e6f55f01bc5
+      metadata:
+        record_count: 3262
+    - name: report
+      kind: json-metadata
+      root_alias: aidc_data
+      relative_path: datasets/police_terms_single/versions/v1-20261022/report.json
+      expected_bytes: 499
+      sha256: a9b257ee17741a4bab7f44fa9b4c0fcd164a35cba0c3d3a840bdba7b6514e64f
   splits:
     test:
       artifacts:
-        preparation_state:
-          - preparation_state
+        recordings:
+          - test_recordings
+        supervisions:
+          - test_supervisions
       statistics:
-        target_terms: 1088
-      provenance:
-        preparation_status: building
+        records: 3262
+        duration_hours: 1.6207
+        duration_basis: sum_of_recording_durations
+        terms: 1088
+        utterances_per_term: {"3": 1086, "2": 2}
+        speakers: 42
+        speaker_dataset: {KeSpeech: 2056, WenetSpeech-Yue: 522, WenetSpeech-Chuan: 387, WenetSpeech-Wu: 297}
+        term_split: {train: 2615, dev: 324, test: 323}
   provenance:
-    preparation_status: building
+    preparation_status: prepared
     owner: mingdong
     description: >-
-      警务术语单说测试集，只用于评测，不进训练。每条录音只说一个警务术语（不带句子），
-      术语取自警言警语 V6.0 术语表（police_synthetic_zh_accent@legacy-rebalance-100k-20260916
-      的 source_entries 中 term/app 两类，共 1,088 个）。用 Qwen3-TTS 1.7B Base 克隆
-      已有警务测试集的 48 个 test 口音说话人，每个术语合成多个说话人。
-      起因：实测单说术语时命中率很低，而现有警务测试集几乎都是整句（统合版 test 47,006 条里只有 9 条是单说术语）。
-      目前只有进度状态，还没有可评测的产物。
+      警务术语单说测试集，只用于评测，不进训练。每条录音只说一个警务术语，不带句子；参考文本就是术语，
+      supervision 的 custom.target_terms 为该术语（评测器据此报术语命中率）。术语取自警言警语 V6.0 术语表
+      （police_synthetic_zh_accent@legacy-rebalance-100k-20260916 source_entries 中 term/app 两类，共 1,088 个）。
+      Qwen3-TTS-12Hz-1.7B-Base 克隆原警务测试集的 test 口音说话人（参考音频为本机找回的原片段，参考文本用
+      Qwen3-ASR 重新转写），每个术语 3 个说话人。起因：实测单说术语时命中率很低，而现有警务测试集几乎都是整句
+      （police_asr_unified@v1-20261009 test 47,006 条里只有 9 条是单说术语）。
     source: police_synthetic_zh_accent@legacy-rebalance-100k-20260916 source_entries
     run_dir: /workspace/workspace/mingdong/data/amphiondata/police-terms-single-20261022
+    code: amphiondata feat/police-terms-single, scripts/synthetic/run_police_terms_single.py
+    qc: >-
+      共享 Qwen3-ASR-1.7B 转写，与术语按不带声调的拼音对齐：多出或缺少音节、生成到 5 秒上限的录音丢弃
+      （合成 4,794 条，通过 4,292 条；抽查多出音节和生成到上限各 25 条均为真实合成失败，缺少音节 16 条中约 3–4 条可能是识别漏字）；
+      只有替换（口音、同音）的保留，不以 ASR 是否认出术语为门槛。全量通过率只有 1%–49% 的 6 个参考
+      （吴语 2、四川话 3、KeSpeech 1，其余均 ≥ 80%）整人排除，余下 42 人。
+    evaluation_limitations: >-
+      全部为合成语音，未经人工听审。术语与训练集共用 V6.0 术语表（term_split 标出术语在旧数据中的 train/dev/test 划分），
+      说话人是原警务测试集的 test 说话人，可能已在历史训练中出现。kespeech:1010467 的参考底噪高（约 −17 dB），
+      克隆录音带同样底噪。
+    human_review: false
   recipe_parameters:
     tts_provider: qwen3_tts
+    tts_model: Qwen3-TTS-12Hz-1.7B-Base
+    max_new_tokens: 64
+    takes_per_term: 3
     speaker_split: test (nationwide_v2_480 384/48/48)
     sample_rate: 16000
     channels: 1
