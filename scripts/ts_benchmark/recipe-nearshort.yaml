@@ -4,7 +4,9 @@
 # 已有场景覆盖不到：abs-short 把干扰人的句子截成 0.4–1.2 秒的半句；abs-mid1 是 1.2–3 秒内连续说话；abs-hard/abs-hard-k1
 # 声音相近但是 6–18 秒长片段。这里每个片段只有一句完整的短话（0.5–1.6 秒的整句），声音相近与随机两列配对。
 # 探针（2026-10-21，AISHELL-3，ERes2NetV2 最近 3 人）：10.21 版本在相近声音短句上误输出 24%，随机声音短句 0%，相近声音长句 8%。
-version: v1-20261021
+# v2-20261022：v1 的 5 列逐条不变，加注册人说一句短话时目标声音弱、远场、有噪声和有人同时说短话的在场列（与 solo-short-pos 同一批场景），
+# 用来量出「短片段更倾向不出字」的漏识代价——v1 的在场对照只有干净的单人短句。
+version: v2-20261022
 dataset_id: ts_asr_nearshort
 seed: 20261021
 sample_rate: 16000
@@ -33,6 +35,7 @@ min_utterances_per_speaker: 6
 
 noise:
   musan_noise: {dataset: musan, version: legacy-20260804, split: noise}
+  babble_zh: {alias: open_noise, glob: "babble_synth/zh/test/*.flac"}  # 同 ts_asr_noise
 rir:
   archive: /workspace/data/DATA-TTS/dns5/datasets_fullband.impulse_responses_000.tar.bz2
   count: 300
@@ -59,3 +62,13 @@ splits:
   - {group: realreg, name: realreg4-hard-short-neg, kind: neg, k: 1, duration: [1.5, 3.0], interferer_utts: single_short, interferer_start: [0.1, 0.6], enroll_file: realreg4, hard: true, pair: realreg4}
   # ---- 对照：注册人自己说一句短话（同样的片段长度），检查压低误输出时没有漏掉注册人的短句 ----
   - {group: nearshort, name: solo-short-pos, kind: pos, schedule: short, k: 0, duration: [1.5, 3.0]}
+  # ---- v2：注册人说一句短话，目标声音弱、远场、有噪声（与 solo-short-pos 同一个 pair：同一批短句、同样的时间安排，只改一个因素） ----
+  - {group: nearshort, name: solo-short-q20-pos, kind: pos, schedule: short, k: 0, duration: [1.5, 3.0], mix_gain_db: -20, pair: solo-short-pos}
+  - {group: nearshort, name: solo-short-wham40-pos, kind: pos, schedule: short, k: 0, duration: [1.5, 3.0], noise_floor: {dbfs: [-40, -40], kinds: [wham]}, pair: solo-short-pos}
+  - {group: nearshort, name: solo-short-wham30-pos, kind: pos, schedule: short, k: 0, duration: [1.5, 3.0], noise_floor: {dbfs: [-30, -30], kinds: [wham]}, pair: solo-short-pos}
+  - {group: nearshort, name: solo-short-babble10-pos, kind: pos, schedule: short, k: 0, duration: [1.5, 3.0], noise: {kind: babble_zh, snr_db: [10, 10]}, pair: solo-short-pos}
+  # 远场：混合过 SLR28 实测房间响应、注册是近场（far）；注册和混合都远场（farfar）。
+  - {group: nearshort, name: solo-short-far-pos, kind: pos, schedule: short, k: 0, duration: [1.5, 3.0], rir: {target: real}, pair: solo-short-pos}
+  - {group: nearshort, name: solo-short-farfar-pos, kind: pos, schedule: short, k: 0, duration: [1.5, 3.0], rir: {target: real}, enroll: reverb, enroll_rir_pool: real, pair: solo-short-pos}
+  # 注册人说一句短话，另一个随机的人也说一句短话（同一个 1.5–3 秒片段）。
+  - {group: nearshort, name: short-k1-pos, kind: pos, schedule: short, k: 1, duration: [1.5, 3.0], interferer_utts: single_short, interferer_start: [0.1, 0.6]}
