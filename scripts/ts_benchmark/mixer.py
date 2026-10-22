@@ -31,6 +31,13 @@ ENROLL_SECONDS = 3.0
 # Long enrollment (ts_asr_enroll_len): further utterances of the enrolled speaker follow the first with
 # short pauses, up to enroll_long_seconds, so an evaluation can send the first L seconds for any L.
 ENROLL_LONG_GAP = (0.3, 0.6)
+# Stored enrollment (recipe key enroll_store_seconds, from ts_asr_benchmark v4): every condition keeps that many
+# seconds of the enrolled speaker, the first utterance followed by others the same way as "long", so one dataset
+# serves any client length L (the deployed client sends 5 s, older ones 3 s). The extra draws come after all other
+# draws of the enrollment stream, so scenes, mixtures and the first utterance stay as without them; a speaker
+# short of speech keeps what there is instead of failing the scene.
+# Registrations shorter than the client length: the recording is only this long and the client zero-pads it.
+SHORT_REGISTRATION = {"len2": 2.0, "len3": 3.0, "len4": 4.0}
 MAX_MIXTURE_SECONDS = 27.0
 FADE_SECONDS = 0.03
 # Interferer pauses between utterances: dense (near-continuous), medium and sparse talk, so the
@@ -485,6 +492,33 @@ def _plan_enrollment(rng, params, pools, target_pool, plan, speaker):
         if need > 0:
             raise PlanError("not enough speech for a long enrollment")
         plan["enroll_extra"] = extra
+    if params.get("enroll_store_seconds") and cond != "long" and "enroll_file" not in plan:
+        _plan_stored_enrollment(rng, params["enroll_store_seconds"], target_pool, plan, speaker)
+
+
+def _more_speech(rng, utts, have, seconds):
+    """Utterances (with the pause before each) that bring ``have`` seconds of speech up to ``seconds``."""
+    utts = list(utts)
+    rng.shuffle(utts)
+    extra, need = [], seconds - have
+    for utt in utts:
+        if need <= 0:
+            break
+        gap = round(rng.uniform(*ENROLL_LONG_GAP), 3)
+        extra.append((utt, gap))
+        need -= gap + utt.duration
+    return extra
+
+
+def _plan_stored_enrollment(rng, seconds, target_pool, plan, speaker):
+    used = {u.id for t in plan["tracks"] for u, _ in t.items} | {plan["enroll_utt"].id}
+    rest = [u for u in target_pool["speakers"][speaker] if u.id not in used]
+    plan["enroll_store_seconds"] = seconds
+    plan["enroll_extra"] = _more_speech(rng, rest, plan["enroll_utt"].duration, seconds)
+    if "enroll_other" in plan:  # the contaminating voice covers the whole stored enrollment too
+        other = plan["enroll_other"]
+        rest = [u for u in target_pool["speakers"][other.speaker] if u.id != other.id]
+        plan["enroll_other_extra"] = _more_speech(rng, rest, other.duration, seconds)
 
 
 class PlanError(ValueError):
@@ -499,6 +533,46 @@ def _enroll_utt(rng, utts, used):
 
 
 # --- rendering ------------------------------------------------------------
+
+
+def _speech_run(first, extra, load, limit):
+    pieces = [first]
+    for utt, gap in extra:
+        pieces += [np.zeros(int(gap * SAMPLE_RATE), np.float32), normalize_rms(load(utt))]
+    return np.concatenate(pieces)[:limit]
+
+
+def _stored_enrollment(plan, cond, w, load, load_rir, load_noise):
+    """The planned condition applied to the whole stored enrollment (before the floor)."""
+    limit = int(plan["enroll_store_seconds"] * SAMPLE_RATE)
+    base = _speech_run(w, plan["enroll_extra"], load, limit)
+    m = len(base)
+    if cond == "clean":
+        return base
+    if cond in SHORT_REGISTRATION:
+        return base[: int(SHORT_REGISTRATION[cond] * SAMPLE_RATE)]
+    if cond == "short1":  # one second of speech in a recording as long as the others
+        voiced = trim_leading_silence(w)[:SAMPLE_RATE]
+        return np.pad(voiced, (0, m - len(voiced)))
+    if cond == "lead_silence":
+        speech = _speech_run(trim_leading_silence(w), plan["enroll_extra"], load, limit)
+        return np.concatenate([np.zeros(int(1.5 * SAMPLE_RATE), np.float32), speech])[:m]
+    if cond == "lp4k":
+        from scipy.signal import butter, sosfilt
+
+        return sosfilt(butter(8, 4000, "low", fs=SAMPLE_RATE, output="sos"), base).astype(np.float32)
+    if cond == "noise10":
+        spec = plan["enroll_noise"]
+        return add_noise(base, load_noise(spec["kind"], spec["file"]), 10.0, spec["offset"]).astype(np.float32)
+    if cond == "reverb":
+        return apply_rir(base, load_rir(plan["enroll_rir"]))[:m]
+    if cond in ("contam10", "contam0"):
+        other = _speech_run(normalize_rms(load(plan["enroll_other"])), plan["enroll_other_extra"], load, m)
+        sir = 10.0 if cond == "contam10" else 0.0
+        return (base + np.pad(other, (0, m - len(other))) * 10.0 ** (-sir / 20.0)).astype(np.float32)
+    if cond == "quiet":
+        return (base * 10.0 ** (-25.0 / 20.0)).astype(np.float32)
+    raise ValueError(f"unknown enrollment condition: {cond}")
 
 
 def apply_rir(w, rir, tail=0.4):
@@ -636,6 +710,8 @@ def render_enrollment(plan, load, load_rir, load_noise):
 
     The ``clean`` condition keeps the whole utterance, as a deployed client would
     send it; every degraded condition is exactly 3 s, the length the model consumes.
+    With ``enroll_store_seconds`` every condition keeps the stored length instead
+    (``_stored_enrollment``), and the short registrations keep their own length.
     """
     cond = plan["params"].get("enroll", "clean")
     floor = (plan.get("floor") or {}).get("enroll")
@@ -645,6 +721,8 @@ def render_enrollment(plan, load, load_rir, load_noise):
         w = load(utt).astype(np.float32)
         return apply_floor(np.pad(w[:n], (0, max(0, n - len(w)))), floor, load_noise)
     w = normalize_rms(load(utt))
+    if plan.get("enroll_store_seconds"):
+        return apply_floor(_stored_enrollment(plan, cond, w, load, load_rir, load_noise), floor, load_noise)
     if cond == "clean":
         return apply_floor(w, floor, load_noise)
     if cond == "long":

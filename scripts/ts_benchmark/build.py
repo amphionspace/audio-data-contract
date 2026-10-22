@@ -79,6 +79,9 @@ def expand_splits(recipe):
     if recipe.get("noise_floor"):
         for split in out:
             split["params"].setdefault("noise_floor", recipe["noise_floor"])
+    if recipe.get("enroll_store_seconds"):
+        for split in out:
+            split["params"].setdefault("enroll_store_seconds", recipe["enroll_store_seconds"])
     return out
 
 
@@ -331,6 +334,9 @@ def describe(plan, split, index):
         metadata["hard_anchor"] = plan["hard_anchor"]
     if "enroll_extra" in plan:
         metadata["enrollment_extra_utts"] = [{**_utt_json(u, 0.0), "gap_before_s": g} for u, g in plan["enroll_extra"]]
+    if "enroll_other" in plan:
+        metadata["enrollment_other_utts"] = [_utt_json(plan["enroll_other"], 0.0)] + [
+            {**_utt_json(u, 0.0), "gap_before_s": g} for u, g in plan.get("enroll_other_extra", [])]
     return labels, metadata
 
 
@@ -386,6 +392,8 @@ def render_job(job):
                         "num_frames": len(w), "duration": round(len(w) / SR, 4),
                         "sha256": sha256_file(path)})
     labels, metadata = describe(plan, split, index)
+    if plan.get("enroll_store_seconds"):  # what the stored enrollment holds; a client sends its first L seconds
+        labels["enroll_seconds"] = entries[1]["duration"]
     target = next((t for t in plan["tracks"] if t.role == "target"), None)
     text = _label_text(target.items) if target else ""
     return {"split": name, "index": index, "target": text, "labels": labels,
