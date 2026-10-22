@@ -1,0 +1,40 @@
+# 占位登记：警务术语单说测试集（每条录音只说一个术语），正在合成，进度以状态文件为准。
+- schema_version: dataset-catalog/2.0
+  dataset_id: police_terms_single
+  version: v1-20261022
+  languages:
+    - zh
+  tasks:
+    - asr
+  aliases: []
+  artifacts:
+    - name: preparation_state
+      kind: dataset-state
+      root_alias: aidc_data
+      relative_path: datasets/police_terms_single/versions/v1-20261022/state.json
+  splits:
+    test:
+      artifacts:
+        preparation_state:
+          - preparation_state
+      statistics:
+        target_terms: 1088
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: >-
+      警务术语单说测试集，只用于评测，不进训练。每条录音只说一个警务术语（不带句子），
+      术语取自警言警语 V6.0 术语表（police_synthetic_zh_accent@legacy-rebalance-100k-20260916
+      的 source_entries 中 term/app 两类，共 1,088 个）。用 Qwen3-TTS 1.7B Base 克隆
+      已有警务测试集的 48 个 test 口音说话人，每个术语合成多个说话人。
+      起因：实测单说术语时命中率很低，而现有警务测试集几乎都是整句（统合版 test 47,006 条里只有 9 条是单说术语）。
+      目前只有进度状态，还没有可评测的产物。
+    source: police_synthetic_zh_accent@legacy-rebalance-100k-20260916 source_entries
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/police-terms-single-20261022
+  recipe_parameters:
+    tts_provider: qwen3_tts
+    speaker_split: test (nationwide_v2_480 384/48/48)
+    sample_rate: 16000
+    channels: 1
