@@ -1,3 +1,4 @@
+import itertools
 import random
 import runpy
 from pathlib import Path
@@ -508,3 +509,25 @@ def test_hard_negatives_of_a_recorded_registration_are_its_nearest_speakers():
         assert set(chosen) <= nearest and hard["total"] == easy["total"] and len(chosen) == len(easy["tracks"])
         assert hard["hard_cosine"] == max(similarity("file:realreg3", s) for s in chosen)
         assert hard["target_speaker"] == "file:realreg3" and hard["enroll_file"]["id"] == "realreg3"
+
+
+def test_dialogue_interferers_take_turns_without_the_target():
+    for seed in range(10):
+        scene = plan({"kind": "neg", "k": 3, "interferer_schedule": "dialogue"}, seed)
+        turns = sorted((s, s + u.duration, t.speaker) for t in scene["tracks"] for u, s in t.items)
+        assert all(t.role == "interferer" for t in scene["tracks"]) and len(turns) >= 2
+        # One speaker at a time, the next turn by someone else (at most 0.2 s of overlap).
+        assert all(b[0] >= a[1] - 0.2 - 1e-6 and b[2] != a[2] for a, b in itertools.pairwise(turns))
+        assert turns[-1][1] <= scene["total"] + 1e-6
+
+
+def test_a_long_recorded_registration_keeps_the_stored_length():
+    _, rir, noise = loaders()
+    pool = pools()
+    pool["__enroll_files__"] = {"realreg5": "/x/reg.wav"}
+    scene = mixer.plan_scene(random.Random(3), {"kind": "neg", "k": 2, "duration": [10, 12], "enroll_file": "realreg5",
+                                                "enroll_store_seconds": 10}, pool)
+    for seconds, stored in ((8.3, 8.3), (12.0, 10.0), (3.0, 3.0)):
+        recorded = (np.random.default_rng(5).standard_normal(int(SR * seconds)) * 0.1).astype(np.float32)
+        w = mixer.render_enrollment(scene, lambda utt, recorded=recorded: recorded, rir, noise)
+        assert len(w) == int(SR * stored) and np.array_equal(w, recorded[: len(w)])

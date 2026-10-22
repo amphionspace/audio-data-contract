@@ -100,6 +100,18 @@
 - 说话人嵌入按本配方重算，随数据保存在 `source/v1-20261021/speaker-embeddings.npz`；底噪、房间响应缓存取 v3 的 `source/v3-20261013/noise`、`rir`。
 - `v2-20261022`：3,600 条、12 个场景，v1 的 5 列逐条不变（音频逐字节相同，记录只有版本号不同），加 7 列在场对照，用来量出「短片段更倾向不出字」的漏识代价（v1 的在场对照只有干净的单人短句）：与 `solo-short-pos` 同一个 `pair`、同一批短句和时间安排，只改一个因素——`solo-short-q20-pos`（混合整体 -20 dB）、`solo-short-wham40-pos` / `solo-short-wham30-pos`（WHAM 实录底噪 -40 / -30 dBFS）、`solo-short-babble10-pos`（合成背景人声，信噪比 10 dB，同 `ts_asr_noise`）、`solo-short-far-pos`（混合过 SLR28 实测房间响应、注册近场）、`solo-short-farfar-pos`（注册也远场）；以及 `short-k1-pos`（注册人和一个随机的人在同一个 1.5–3 秒片段里各说一句短话）。v1 的配方见提交 b187e80；v2 沿用 v1 的说话人嵌入（同一种子、同一说话人池）。
 
+## 外放影视对白补充集（ts_asr_playback）
+
+`ts_asr_playback@v1-20261022`：800 条、4 个场景，配方 `scripts/ts_benchmark/recipe-playback.yaml`。来源是业务第六批（`business_feedback@ts-20261022`）：用户直接提供两段长录音（55 秒、167 秒）和一段 8.28 秒的注册录音（`realreg5`），机主全程没说话，旁边外放电视剧对白，按 25 秒分窗后 10.21 版本 2/10 窗、10.22 版本 3/10 窗把台词转写了出来。已有的「别人在说话」是朗读语料或真实会议、电话，业务回归里的 pad 外放只有几条短片段，覆盖不到「几个角色轮流说台词、常带配乐和音效」的外放影视。
+
+- 台词来自 CN-Celeb1（test、train）和 CN-Celeb2 的 `drama`、`movie` 片段（体裁取自文件名）：真实影视音频，没有转写，只作干扰人（`build.py` 的 `load_speaker_records`，配方里的来源写 `genres`）；1.5–9 秒的片段 11,161 条、317 位演员。TS 训练的干扰人素材池不含 CN-Celeb。
+- 每条 6–25 秒（客户端 5 秒注册时一个完整窗口），2–3 个角色轮流说话（配方参数 `interferer_schedule: dialogue`，句间 -0.2–0.7 秒，偶有抢话）。
+- 电平和底噪按第六批两段录音实测：台词响度（20 ms 帧电平的 95% 分位）−34.0 / −36.5 dBFS，合成的中位数 −35.0；底噪（10% 分位）约 −50 / −55 dBFS，合成的中位数 −52.6。
+- `playback-neg`、`playback-room-neg`、`playback-realreg5-neg`：同一个 `pair`，场景逐条相同，只改一个因素——台词直接混入；台词过 SLR28 实测房间响应（像在房间另一头外放，喇叭频响没有模拟）；注册换成 `realreg5`（混合音频与 `playback-neg` 逐字节相同）。
+- `playback-room-pos`：机主在设备旁说话（干），房间另一头在放影视剧（过房间响应），机主比台词响 2–10 dB（第六批注册录音的 95% 分位 −29.1 dBFS，比外放台词响 5–7 dB），机主语音的 95% 分位中位数 −29.5 dBFS；量漏识和把台词混进转写的代价。
+- 外放链路是模拟的，作诊断用；真实外放录音要靠测试同事补录。录得到的业务录音按批次进 `business_feedback`。
+- `realreg5` 的注册录音 8.28 秒，整段保存（`enroll_store_seconds` 下录制的注册按录音长度、最多存满 10 秒；此前的业务注册录音都是 3 秒，结果不变）。底噪、房间响应缓存取 `ts_asr_handover` 的 `source/v2-20261022/noise`、`rir`。
+
 ## 开发集（ts_asr_dev）
 
 `ts_asr_dev@v1-20261017`：3,240 条、54 个场景，配方 `scripts/ts_benchmark/recipe-pvad-dev.yaml`。用与 v3 相同的场景定义，换成各语料 dev 划分的说话人（KeSpeech、MagicData、AISHELL-1 dev，共 159 位，与 train、test 都不重叠）和新种子，用来选模型和阈值（`amphion-tse/pvad-dev@v1-20261017` 的合成部分），**不进训练，也不作最终评测**。

@@ -123,8 +123,32 @@ def _rows(path):
                 yield json.loads(line)
 
 
+def load_speaker_records(source, catalog, roots):
+    """{speaker: [Utt]} of a speaker-record split without transcripts, kept to ``source['genres']``.
+
+    Only usable as interferers (an interferer's words are never scored). The genre is the first part of a
+    CN-Celeb file name (``drama-01-003.flac``).
+    """
+    index = {row["cut_id"]: row for path in resolve_split(
+        catalog, source["dataset"], source["version"], source["split"], "audio_index", roots) for row in _rows(path)}
+    by_speaker = defaultdict(list)
+    for path in resolve_split(catalog, source["dataset"], source["version"], source["split"], "records", roots):
+        for row in _rows(path):
+            genre = re.search(r"([a-z_]+)-\d+-\d+\.\w+$", row["metadata"]["archive_member"])
+            if not genre or genre.group(1) not in source["genres"]:
+                continue
+            entry = index[row["audio_slots"][0]["ref"]["cut_id"]]
+            speaker = f"{source['dataset']}:{row['labels']['source_speaker_id']}"
+            by_speaker[speaker].append(mixer.Utt(
+                id=f"{source['dataset']}:{row['id']}", speaker=speaker, text="", duration=float(entry["duration"]),
+                path=str(Path(roots[entry["root_alias"]]) / entry["relative_path"]), corpus=source["dataset"]))
+    return dict(by_speaker)
+
+
 def load_source(source, catalog, roots, rng):
     """{speaker: [Utt]} of one registered single-speaker split."""
+    if "genres" in source:
+        return load_speaker_records(source, catalog, roots)
     paths = {role: resolve_split(catalog, source["dataset"], source["version"], source["split"], role, roots)
              for role in ("recordings", "supervisions")}
     audio = {r["id"]: r["sources"][0]["source"] for path in paths["recordings"] for r in _rows(path)}
@@ -281,7 +305,7 @@ def describe(plan, split, index):
         "target_present": kind == "pos", "enroll_condition": params.get("enroll", "clean"),
         "duration_s": plan["total"], "n_interferers": len(interferers),
     }
-    for key in ("schedule", "hard", "pair", "handover"):
+    for key in ("schedule", "interferer_schedule", "hard", "pair", "handover"):
         if key in params:
             labels[key] = params[key]
     if "handover" in plan:

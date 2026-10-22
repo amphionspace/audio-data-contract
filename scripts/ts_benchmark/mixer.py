@@ -174,8 +174,11 @@ def _place_target(rng, schedule, utts, total, others, gap=(0.2, 1.0)):
 
 
 def _alternate(rng, target_utts, interferer_utts, total):
-    """Dialog-like turns, mostly non-overlapping; returns target track and others."""
-    speakers = ["target", *interferer_utts]
+    """Dialog-like turns, mostly non-overlapping; returns target track and others.
+
+    Without ``target_utts`` only the interferers talk to each other (a dialogue played back nearby).
+    """
+    speakers = (["target"] if target_utts is not None else []) + list(interferer_utts)
     turns, now, last = [], _uniform(rng, (0.0, 0.5)), None
     while now < total - 1.0:
         order = [s for s in speakers if s != last]
@@ -374,10 +377,16 @@ def plan_scene(rng, params, pools, similarity=None):
         gap = (0.0, 0.5) if params.get("schedule") in CONTINUOUS_SCHEDULES else scene.choice(GAP_PROFILES)
     plan["interferer_gap"] = list(gap)
     sir = params.get("sir_db", (-3.0, 3.0))
+    if params.get("interferer_schedule") == "dialogue":  # the interferers take turns, like the cast of a film
+        _, turns = _alternate(scene, None, {s: interferer_pool["speakers"][s] for s in interferers}, total)
     for speaker in interferers:
         start = params.get("interferer_start", (0.0, 1.5))
-        items = (single_utterance(scene, interferer_pool["short"][speaker], total, start) if single_short
-                 else fill_stream(scene, interferer_pool["speakers"][speaker], total, gap, start))
+        if params.get("interferer_schedule") == "dialogue":
+            items = turns[speaker]
+        elif single_short:
+            items = single_utterance(scene, interferer_pool["short"][speaker], total, start)
+        else:
+            items = fill_stream(scene, interferer_pool["speakers"][speaker], total, gap, start)
         interferer_tracks.append(Track("interferer", speaker, items,
                                        gain_db=-_uniform(scene, sir) + scene.uniform(-2.0, 2.0)))
     target_track = Track("target", target, [], 0.0)
@@ -719,6 +728,9 @@ def render_enrollment(plan, load, load_rir, load_noise):
     n = int(ENROLL_SECONDS * SAMPLE_RATE)
     if cond == "file":  # a recorded registration is used as it is
         w = load(utt).astype(np.float32)
+        store = plan["params"].get("enroll_store_seconds")
+        if store:  # as long as the recording, up to the stored length (the earlier ones are exactly 3 s)
+            return apply_floor(w[: int(store * SAMPLE_RATE)], floor, load_noise)
         return apply_floor(np.pad(w[:n], (0, max(0, n - len(w)))), floor, load_noise)
     w = normalize_rms(load(utt))
     if plan.get("enroll_store_seconds"):

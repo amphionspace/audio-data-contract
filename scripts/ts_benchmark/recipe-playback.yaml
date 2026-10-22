@@ -1,0 +1,66 @@
+# 目标说话人评测集的外放影视对白补充（ts_asr_playback）：业务第六批（business_feedback@ts-20261022，用户 2026-10-22 直接
+# 提供的两段长录音）机主全程没说话，旁边外放电视剧对白，10.21 / 10.22 版本把整段对白转写了出来。现有的「别人在说话」
+# 是朗读语料或会议、电话，业务回归里的 pad 外放只有几条短片段；这里补「几个角色轮流说台词（常带配乐、音效）」。
+# 台词取 CN-Celeb 的电视剧、电影片段（真实影视音频，没有转写，只作干扰人；TS 训练的干扰人素材池不含 CN-Celeb）。
+# 外放链路（喇叭、房间）是模拟的：对照列 playback-room-* 让台词过 SLR28 实测房间响应，喇叭频响没有模拟。
+# 电平按第六批两段录音实测：台词响度（20 ms 帧电平的 95% 分位）−34.0 / −36.5 dBFS，底噪（10% 分位）约 −50 / −55 dBFS；
+# 混合峰值归一到 0.5 后再衰减 14–18 dB，合成台词的 95% 分位落在约 −33 到 −37 dBFS。机主在场时，注册录音比外放台词
+# 响约 5–7 dB（95% 分位 −29.1 对 −34.0 / −36.5），所以在场列整体只衰减 7–11 dB，机主语音约 −29 dBFS（95% 分位）。
+version: v1-20261022
+enroll_store_seconds: 10
+dataset_id: ts_asr_playback
+seed: 20261022
+sample_rate: 16000
+
+pools:
+  studio:
+    description: AISHELL-3 test，棚内高质量朗读，214 位说话人，有性别标注
+    sources:
+      - {dataset: aishell3, version: legacy-20260804, split: test}
+  phone:
+    description: KeSpeech test（手机录音，含方言口音，取 250 位）、MagicData test、AISHELL-2 test（手机）
+    sources:
+      - {dataset: kespeech, version: legacy-20260804, split: test, max_speakers: 250}
+      - {dataset: magicdata, version: legacy-20260804, split: test}
+      - {dataset: aishell2, version: legacy-20260804, split: test}
+  read:
+    description: AISHELL-1 test，麦克风朗读，20 位说话人
+    sources:
+      - {dataset: aishell, version: legacy-20260804, split: test}
+  mixed:
+    description: 上面三个池的并集（注册人和在场的目标都从这里取）
+    union: [studio, phone, read]
+  drama:
+    description: CN-Celeb1（test、train）与 CN-Celeb2 的电视剧、电影片段（drama / movie），演员说台词，常带配乐和音效；没有转写，只作干扰人
+    sources:
+      - {dataset: cnceleb1, version: speaker-records-v1-20260912, split: test, genres: [drama, movie]}
+      - {dataset: cnceleb1, version: speaker-records-v1-20260912, split: train, genres: [drama, movie]}
+      - {dataset: cnceleb2, version: speaker-records-v1-20260912, split: train, genres: [drama, movie]}
+utterance_seconds: [1.5, 9.0]
+short_utterance_seconds: [0.5, 1.6]
+min_utterances_per_speaker: 6
+
+noise: {}
+rir:
+  archive: /workspace/data/DATA-TTS/dns5/datasets_fullband.impulse_responses_000.tar.bz2
+  count: 300
+
+default_n: 200
+
+noise_floor:
+  dbfs: [-58, -48]
+  kinds: {white: 0.15, pink: 0.15, real: 0.70}
+  real_pools: [wham, dns5_audioset, dns5_freesound]
+
+# 第六批测试人员的注册录音（8.28 秒，整段使用，客户端取前 5 秒）。
+enrollment_files:
+  realreg5: {alias: business_feedback, path: source/ts-20261022/audio/enrollment-9da9c1b35668.wav}
+
+splits:
+  # ---- 机主不在场，2–3 个角色轮流说台词（句间 -0.2–0.7 秒，偶有抢话），6–25 秒（客户端 5 秒注册时的整窗长度）----
+  # 三列共用同一批场景（同一 pair），只改一个因素：台词直接混入 / 过房间响应 / 注册换成第六批的真实注册录音。
+  - {group: playback, name: playback-neg, kind: neg, k: [2, 3], interferer_pool: drama, interferer_schedule: dialogue, duration: [6, 25], mix_gain_db: [-18, -14], pair: playback-neg}
+  - {group: playback, name: playback-room-neg, kind: neg, k: [2, 3], interferer_pool: drama, interferer_schedule: dialogue, duration: [6, 25], mix_gain_db: [-18, -14], rir: {interferer: real}, pair: playback-neg}
+  - {group: playback, name: playback-realreg5-neg, kind: neg, k: [2, 3], interferer_pool: drama, interferer_schedule: dialogue, duration: [6, 25], mix_gain_db: [-18, -14], enroll_file: realreg5, pair: playback-neg}
+  # ---- 机主在设备旁说话，房间另一头在放影视剧（台词过房间响应，机主比台词响 2–10 dB）：量漏识和把台词混进转写的代价 ----
+  - {group: playback, name: playback-room-pos, kind: pos, schedule: full, k: [2, 3], interferer_pool: drama, interferer_schedule: dialogue, sir_db: [2, 10], duration: [6, 25], mix_gain_db: [-11, -7], rir: {interferer: real}, pair: playback-pos}
