@@ -1,0 +1,408 @@
+- schema_version: dataset-catalog/2.0
+  dataset_id: aishell4
+  version: diarization-benchmark-v1-20261021
+  languages:
+  - zh
+  tasks:
+  - speaker_diarization
+  artifacts:
+  - name: test
+    kind: audio-records
+    root_alias: diarization_benchmark
+    relative_path: aishell4/records.jsonl
+    expected_bytes: 738462
+    sha256: a553278d7afddfbca0760c94f9f48aaca2c10963a86466097cef6a5a288f4cea
+    metadata:
+      record_count: 20
+  - name: audio_index
+    kind: audio-index
+    root_alias: diarization_benchmark
+    relative_path: aishell4/audio-index.jsonl
+    expected_bytes: 4737
+    sha256: 35f301991081089a745ae013a7f16a94eda3d253933f309f5ff47282dda7c945
+    metadata:
+      record_count: 20
+  - name: file_inventory
+    kind: file-inventory
+    root_alias: diarization_benchmark
+    relative_path: aishell4/files.jsonl
+    expected_bytes: 8300
+    sha256: a55bbdf804f4ba149eb68ccc7e659b21835905b1360e25c4526ff592a505c80e
+    metadata:
+      record_count: 40
+  - name: legacy_manifest
+    kind: jsonl-manifest
+    root_alias: diarization_benchmark
+    relative_path: aishell4/test.jsonl
+    expected_bytes: 22097
+    sha256: 74b4662dc4de746af9e22b5d7b4bd5ba21b4f2eef686bffeca51151211016b74
+    metadata:
+      record_count: 20
+  splits:
+    test:
+      task: speaker_diarization
+      artifacts:
+        records:
+        - test
+        audio_index:
+        - audio_index
+        file_inventory:
+        - file_inventory
+      statistics:
+        recordings: 20
+        duration_hours: 12.725303611111112
+        duration_basis: sum of measured whole-recording durations
+  provenance:
+    status: ready
+    benchmark_slice: aishell4
+    source_benchmark: amphion-diarization/diarization-benchmark@20261019
+    source_manifest_sha256: 316ae1920dacb55f038da7204ec97351279e6121e8cac1323bfe189e7b810590
+    lineage_status: inferred
+    description: Frozen local evaluation slice; audio and RTTM bytes copied unchanged. Not a claim of official release equivalence or training disjointness.
+    rttm_origin: lhotse_supervisions
+    source_channel: 0
+    audio_preparation: extract_channel_0
+    official_release_and_split_equivalence: unconfirmed
+    scoring_protocol: Historical collar=0 reported by request; scorer version, no-UEM extent and overlap policy unconfirmed.
+    reference_policy: Preserve all RTTM segments, including any reported bounds issues.
+    limitations_document: docs/datasets/diarization-benchmark.md
+- schema_version: dataset-catalog/2.0
+  dataset_id: alimeeting
+  version: diarization-benchmark-v1-20261021
+  languages:
+  - zh
+  tasks:
+  - speaker_diarization
+  artifacts:
+  - name: test
+    kind: audio-records
+    root_alias: diarization_benchmark
+    relative_path: alimeeting/records.jsonl
+    expected_bytes: 835748
+    sha256: b9247291ba30bdfadbf1de9402672fb99381127c557c570bd2721879b6db6bf8
+    metadata:
+      record_count: 20
+  - name: audio_index
+    kind: audio-index
+    root_alias: diarization_benchmark
+    relative_path: alimeeting/audio-index.jsonl
+    expected_bytes: 4781
+    sha256: 1e088927d2d50915d9eb205df80dc135a7ec5e0903ea275bdaf83e9af34a4621
+    metadata:
+      record_count: 20
+  - name: file_inventory
+    kind: file-inventory
+    root_alias: diarization_benchmark
+    relative_path: alimeeting/files.jsonl
+    expected_bytes: 8380
+    sha256: 2fd5234917a40aae908345870b837d1ca9df2bb8392dc0aabfa86bfea3a85332
+    metadata:
+      record_count: 40
+  - name: legacy_manifest
+    kind: jsonl-manifest
+    root_alias: diarization_benchmark
+    relative_path: alimeeting/test.jsonl
+    expected_bytes: 23389
+    sha256: 6b2b21abbc8daa66a626cae1ead535aa63fa00a05e999c0cb879f7514b16a39a
+    metadata:
+      record_count: 20
+  splits:
+    test:
+      task: speaker_diarization
+      artifacts:
+        records:
+        - test
+        audio_index:
+        - audio_index
+        file_inventory:
+        - file_inventory
+      statistics:
+        recordings: 20
+        duration_hours: 10.776520086805556
+        duration_basis: sum of measured whole-recording durations
+  provenance:
+    status: ready
+    benchmark_slice: alimeeting
+    source_benchmark: amphion-diarization/diarization-benchmark@20261019
+    source_manifest_sha256: 316ae1920dacb55f038da7204ec97351279e6121e8cac1323bfe189e7b810590
+    lineage_status: inferred
+    description: Frozen local evaluation slice; audio and RTTM bytes copied unchanged. Not a claim of official release equivalence or training disjointness.
+    rttm_origin: lhotse_supervisions
+    source_channel: 0
+    audio_preparation: extract_channel_0
+    official_release_and_split_equivalence: unconfirmed
+    scoring_protocol: Historical collar=0 reported by request; scorer version, no-UEM extent and overlap policy unconfirmed.
+    reference_policy: Preserve all RTTM segments, including any reported bounds issues.
+    limitations_document: docs/datasets/diarization-benchmark.md
+- schema_version: dataset-catalog/2.0
+  dataset_id: alimeeting
+  version: diarization-benchmark-v1-20261021-2023test
+  languages:
+  - zh
+  tasks:
+  - speaker_diarization
+  artifacts:
+  - name: test
+    kind: audio-records
+    root_alias: diarization_benchmark
+    relative_path: alimeeting_2023test/records.jsonl
+    expected_bytes: 932574
+    sha256: 3189a793d07e2b0f46fe4165fb45afe77498791161f67fd36e877c4e3019f30c
+    metadata:
+      record_count: 20
+  - name: audio_index
+    kind: audio-index
+    root_alias: diarization_benchmark
+    relative_path: alimeeting_2023test/audio-index.jsonl
+    expected_bytes: 5216
+    sha256: 6e3ae767a5ea781d5543b3b1a1ac3f5f1140c29ecd2e8a2b0b203a17495ab910
+    metadata:
+      record_count: 20
+  - name: file_inventory
+    kind: file-inventory
+    root_alias: diarization_benchmark
+    relative_path: alimeeting_2023test/files.jsonl
+    expected_bytes: 9360
+    sha256: 871137dac6ae00e224b2b09f5823bc8ec80b1eaacec46aa9b4f5f2bf22874f18
+    metadata:
+      record_count: 40
+  - name: legacy_manifest
+    kind: jsonl-manifest
+    root_alias: diarization_benchmark
+    relative_path: alimeeting_2023test/test.jsonl
+    expected_bytes: 12196
+    sha256: 695f0ac0d0e83af995890a6e8035038db43a0360419c2a3e1034baad4e02a879
+    metadata:
+      record_count: 20
+  splits:
+    test:
+      task: speaker_diarization
+      artifacts:
+        records:
+        - test
+        audio_index:
+        - audio_index
+        file_inventory:
+        - file_inventory
+      statistics:
+        recordings: 20
+        duration_hours: 9.978771145833333
+        duration_basis: sum of measured whole-recording durations
+  provenance:
+    status: ready
+    benchmark_slice: alimeeting_2023test
+    source_benchmark: amphion-diarization/diarization-benchmark@20261019
+    source_manifest_sha256: 316ae1920dacb55f038da7204ec97351279e6121e8cac1323bfe189e7b810590
+    lineage_status: inferred
+    description: Frozen local evaluation slice; audio and RTTM bytes copied unchanged. Not a claim of official release equivalence or training disjointness.
+    rttm_origin: unconfirmed
+    source_channel: unconfirmed
+    audio_preparation: unconfirmed
+    official_release_and_split_equivalence: unconfirmed
+    scoring_protocol: Historical collar=0 reported by request; scorer version, no-UEM extent and overlap policy unconfirmed.
+    reference_policy: Preserve all RTTM segments, including any reported bounds issues.
+    limitations_document: docs/datasets/diarization-benchmark.md
+- schema_version: dataset-catalog/2.0
+  dataset_id: ami
+  version: diarization-benchmark-v1-20261021
+  languages:
+  - en
+  tasks:
+  - speaker_diarization
+  artifacts:
+  - name: test
+    kind: audio-records
+    root_alias: diarization_benchmark
+    relative_path: ami_near/records.jsonl
+    expected_bytes: 603523
+    sha256: 9305e17f0ee0643748bc51dd9793b59230da3d4f7fe27c81ca353089180625ac
+    metadata:
+      record_count: 20
+  - name: audio_index
+    kind: audio-index
+    root_alias: diarization_benchmark
+    relative_path: ami_near/audio-index.jsonl
+    expected_bytes: 4566
+    sha256: 8aca3336f3d1ada2c6b7562e309daa82e95870fede4ccc82e93f74f55df51cb7
+    metadata:
+      record_count: 20
+  - name: file_inventory
+    kind: file-inventory
+    root_alias: diarization_benchmark
+    relative_path: ami_near/files.jsonl
+    expected_bytes: 8241
+    sha256: c8fda9ae0bab6f5dc871a9709879dc6364748f9b3499f962554bfa7864ef1424
+    metadata:
+      record_count: 40
+  - name: legacy_manifest
+    kind: jsonl-manifest
+    root_alias: diarization_benchmark
+    relative_path: ami_near/test.jsonl
+    expected_bytes: 10905
+    sha256: 567dd21a88e7cdb21dc9c201041c800bc88aa32813aab062d99c2a4d7657c355
+    metadata:
+      record_count: 20
+  splits:
+    test:
+      task: speaker_diarization
+      artifacts:
+        records:
+        - test
+        audio_index:
+        - audio_index
+        file_inventory:
+        - file_inventory
+      statistics:
+        recordings: 20
+        duration_hours: 11.770612222222221
+        duration_basis: sum of measured whole-recording durations
+  provenance:
+    status: ready
+    benchmark_slice: ami_near
+    source_benchmark: amphion-diarization/diarization-benchmark@20261019
+    source_manifest_sha256: 316ae1920dacb55f038da7204ec97351279e6121e8cac1323bfe189e7b810590
+    lineage_status: inferred
+    description: Frozen local evaluation slice; audio and RTTM bytes copied unchanged. Not a claim of official release equivalence or training disjointness.
+    rttm_origin: unconfirmed
+    source_channel: unconfirmed
+    audio_preparation: unconfirmed
+    official_release_and_split_equivalence: unconfirmed
+    scoring_protocol: Historical collar=0 reported by request; scorer version, no-UEM extent and overlap policy unconfirmed.
+    reference_policy: Preserve all RTTM segments, including any reported bounds issues.
+    limitations_document: docs/datasets/diarization-benchmark.md
+- schema_version: dataset-catalog/2.0
+  dataset_id: magicdata_ramc
+  version: diarization-benchmark-v1-20261021
+  languages:
+  - zh
+  tasks:
+  - speaker_diarization
+  artifacts:
+  - name: test
+    kind: audio-records
+    root_alias: diarization_benchmark
+    relative_path: ramc/records.jsonl
+    expected_bytes: 1574698
+    sha256: f92894ae5ecfdf61113ef4040747211a7b84d356ab21ed52772beb9c971386e3
+    metadata:
+      record_count: 43
+  - name: audio_index
+    kind: audio-index
+    root_alias: diarization_benchmark
+    relative_path: ramc/audio-index.jsonl
+    expected_bytes: 12345
+    sha256: 6fe272df55ca9985176401534c7342729ac1e155da487c8f92a83c3f43ce3cc0
+    metadata:
+      record_count: 43
+  - name: file_inventory
+    kind: file-inventory
+    root_alias: diarization_benchmark
+    relative_path: ramc/files.jsonl
+    expected_bytes: 21873
+    sha256: 44173398a8080f5834b88156e3dca501aeb6ebed209facf50901150edc49fb56
+    metadata:
+      record_count: 86
+  - name: legacy_manifest
+    kind: jsonl-manifest
+    root_alias: diarization_benchmark
+    relative_path: ramc/test.jsonl
+    expected_bytes: 52844
+    sha256: 52f11979520b9625a9e3a77f67fb6ff348db07893888c9174a5aca2f58239ea2
+    metadata:
+      record_count: 43
+  splits:
+    test:
+      task: speaker_diarization
+      artifacts:
+        records:
+        - test
+        audio_index:
+        - audio_index
+        file_inventory:
+        - file_inventory
+      statistics:
+        recordings: 43
+        duration_hours: 20.643985347222223
+        duration_basis: sum of measured whole-recording durations
+  provenance:
+    status: ready
+    benchmark_slice: ramc
+    source_benchmark: amphion-diarization/diarization-benchmark@20261019
+    source_manifest_sha256: 316ae1920dacb55f038da7204ec97351279e6121e8cac1323bfe189e7b810590
+    lineage_status: inferred
+    description: Frozen local evaluation slice; audio and RTTM bytes copied unchanged. Not a claim of official release equivalence or training disjointness.
+    rttm_origin: lhotse_supervisions
+    source_channel: 0
+    audio_preparation: reuse_existing_mono
+    official_release_and_split_equivalence: unconfirmed
+    scoring_protocol: Historical collar=0 reported by request; scorer version, no-UEM extent and overlap policy unconfirmed.
+    reference_policy: Preserve all RTTM segments, including any reported bounds issues.
+    limitations_document: docs/datasets/diarization-benchmark.md
+- schema_version: dataset-catalog/2.0
+  dataset_id: voxconverse
+  version: diarization-benchmark-v1-20261021
+  languages:
+  - und
+  tasks:
+  - speaker_diarization
+  artifacts:
+  - name: test
+    kind: audio-records
+    root_alias: diarization_benchmark
+    relative_path: voxconverse/records.jsonl
+    expected_bytes: 1402173
+    sha256: ed4763ea7213e86dee25d5d1b409f24f65465cdf1bbe33456dfabfbcb84bebb8
+    metadata:
+      record_count: 232
+  - name: audio_index
+    kind: audio-index
+    root_alias: diarization_benchmark
+    relative_path: voxconverse/audio-index.jsonl
+    expected_bytes: 52032
+    sha256: c96c511d29cc628b52f95fc8e20b481bb6ea371d93ed6dc985081fe36ef2e18f
+    metadata:
+      record_count: 232
+  - name: file_inventory
+    kind: file-inventory
+    root_alias: diarization_benchmark
+    relative_path: voxconverse/files.jsonl
+    expected_bytes: 99911
+    sha256: bbcbf6ac4f166b7d6028909a2e818eda4a633c5fcd5b317494a15fac92ef711b
+    metadata:
+      record_count: 464
+  - name: legacy_manifest
+    kind: jsonl-manifest
+    root_alias: diarization_benchmark
+    relative_path: voxconverse/test.jsonl
+    expected_bytes: 126750
+    sha256: 0ddcd6d37373afa1d4272df2f38fcf1ed7cffaa981ac87f83480fbe95f869231
+    metadata:
+      record_count: 232
+  splits:
+    test:
+      task: speaker_diarization
+      artifacts:
+        records:
+        - test
+        audio_index:
+        - audio_index
+        file_inventory:
+        - file_inventory
+      statistics:
+        recordings: 232
+        duration_hours: 43.53614222222222
+        duration_basis: sum of measured whole-recording durations
+  provenance:
+    status: ready
+    benchmark_slice: voxconverse
+    source_benchmark: amphion-diarization/diarization-benchmark@20261019
+    source_manifest_sha256: 316ae1920dacb55f038da7204ec97351279e6121e8cac1323bfe189e7b810590
+    lineage_status: inferred
+    description: Frozen local evaluation slice; audio and RTTM bytes copied unchanged. Not a claim of official release equivalence or training disjointness.
+    rttm_origin: unconfirmed
+    source_channel: unconfirmed
+    audio_preparation: unconfirmed
+    official_release_and_split_equivalence: unconfirmed
+    scoring_protocol: Historical collar=0 reported by request; scorer version, no-UEM extent and overlap policy unconfirmed.
+    reference_policy: Preserve all RTTM segments, including any reported bounds issues.
+    limitations_document: docs/datasets/diarization-benchmark.md
