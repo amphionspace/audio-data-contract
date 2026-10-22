@@ -32,7 +32,6 @@ import gzip
 import importlib.util
 import json
 import random
-import sys
 from collections import defaultdict
 from pathlib import Path
 
@@ -43,9 +42,9 @@ _spec = importlib.util.spec_from_file_location("ts_real_build", Path(__file__).w
 real = importlib.util.module_from_spec(_spec)
 _spec.loader.exec_module(real)
 
-from audio_data_contract import load_catalog, resolve_split  # noqa: E402
-from audio_data_contract.catalog import validate_catalog  # noqa: E402
-from audio_data_contract.types import DatasetSpec  # noqa: E402
+from audio_data_contract import load_catalog, resolve_split
+from audio_data_contract.catalog import validate_catalog
+from audio_data_contract.types import DatasetSpec
 
 synth = real.synth
 REPO = Path(__file__).resolve().parents[2]
