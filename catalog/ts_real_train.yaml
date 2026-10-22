@@ -568,3 +568,115 @@
     - ts_real_train@v3-20261020
     - alimeeting_sdm@icefall-20260908
     - emilia2_zh_dialogue_diarize@moss-transcribe-diarize-0.9B
+- schema_version: dataset-catalog/2.0
+  dataset_id: ts_real_train
+  version: v2-20261018-utts
+  derived_from: ts_real_train@v2-20261018
+  languages:
+  - zh
+  tasks:
+  - ts_asr
+  aliases: []
+  artifacts:
+  - name: alimeeting-records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/ts_real_train/versions/v2-20261018-utts/records_alimeeting.jsonl.gz
+    sha256: 33fd70f3946d309b573a8caec16c2abe5381e12393d1b93a19f91da9672a9fba
+    metadata:
+      record_count: 42000
+  - name: alimeeting-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_real_train/versions/v2-20261018-utts/audio_index_alimeeting.jsonl.gz
+    sha256: 4c0cd59413a466db35c577a65acd3d2488328454ab7c8fb3bbc6e50088abd2e8
+    metadata:
+      record_count: 209
+  - name: aishell4-records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/ts_real_train/versions/v2-20261018-utts/records_aishell4.jsonl.gz
+    sha256: 86bbefc177f57d57fe7da0d57bc36d306f3f3bfc3fdd9eb515dae94e2eb019ef
+    metadata:
+      record_count: 29918
+  - name: aishell4-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_real_train/versions/v2-20261018-utts/audio_index_aishell4.jsonl.gz
+    sha256: bf72248e8bb698d6563237617d3f0b4344e5c48a302f315a3f1ab366bd9bdb74
+    metadata:
+      record_count: 189
+  - name: ramc-records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/ts_real_train/versions/v2-20261018-utts/records_ramc.jsonl.gz
+    sha256: a16db538c7ebe409cc6f774a7a37323251a89e1832d6a78f87931734a867a975
+    metadata:
+      record_count: 12000
+  - name: ramc-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_real_train/versions/v2-20261018-utts/audio_index_ramc.jsonl.gz
+    sha256: c13e1d7459b0ca40b1d403d5f78adf8c7bfccbc8e6c8cbf8b06f68b69c3e106c
+    metadata:
+      record_count: 275
+  - name: record_index
+    kind: lance-record-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_real_train/versions/v2-20261018-utts/record_index/index.json
+    expected_bytes: 1436
+    sha256: 45b2bc643ad32afb731c5249549d82e9beb45c51834e2a5632bb28425b2d754f
+    metadata:
+      snapshot_version: 13
+      rows: 83918
+      schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
+  splits:
+    alimeeting:
+      artifacts:
+        records:
+        - alimeeting-records
+        audio_index:
+        - alimeeting-audio-index
+        records_lance:
+        - record_index
+      task: ts_asr
+      statistics:
+        records: 42000
+        duration_hours: 58.19
+        duration_basis: clip duration (segment span, or the whole file)
+    aishell4:
+      artifacts:
+        records:
+        - aishell4-records
+        audio_index:
+        - aishell4-audio-index
+        records_lance:
+        - record_index
+      task: ts_asr
+      statistics:
+        records: 29918
+        duration_hours: 42.93
+        duration_basis: clip duration (segment span, or the whole file)
+    ramc:
+      artifacts:
+        records:
+        - ramc-records
+        audio_index:
+        - ramc-audio-index
+        records_lance:
+        - record_index
+      task: ts_asr
+      statistics:
+        records: 12000
+        duration_hours: 15.44
+        duration_basis: clip duration (segment span, or the whole file)
+  provenance:
+    status: complete
+    synthetic: none
+    snapshot_date: '2026-10-22'
+    description: ts_real_train@v2-20261018 的同一批记录，v2 自带的 metadata.window_utts / target_speaker 按与其他 -utts 版本相同的规则复核：正样本的目标语句与转写逐字一致（忽略空白和标点；窗口边缘截断的句子允许只转写一部分）才保留时间线，负样本只有注册人确实不在窗口里说话才保留；不满足的记录去掉
+      window_utts（保留 target_speaker），不出帧级标签。正样本全部通过；45 条负样本（alimeeting 43、ramc 2，都是 other_recording）的注册人与窗口里的说话人是同一人（同一说话人出现在多场录音里），转写为空属于错标，ID
+      列在 excluded-records-<split>.txt，训练配方用 exclude_records 排除。其余字段不变，音频引用改指本版本，音频索引与原版逐行相同。生成脚本 audio-data-contract scripts/ts_robust/add_window_utts.py（keep），逐划分统计见
+      report.json。
+    sources:
+    - ts_real_train@v2-20261018

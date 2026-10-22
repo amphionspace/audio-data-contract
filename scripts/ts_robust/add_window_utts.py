@@ -15,6 +15,8 @@ at the derived version, whose audio index rows are the original's.
 * ``moss`` - ts_real_train v3 emilia2_1spk, from the MOSS diarization window each record names.
 * ``dialog`` - emilia2_dialog turn-taking windows, from the Emilia2 dialogue JSON (``short`` segments).
 * ``mix`` - emilia2_mix, from its mixing protocol (``supervision/protocol-*.jsonl.gz``).
+* ``keep`` - ts_real_train v2, whose builder wrote the timeline itself: only the check below is applied. Speakers
+  recur across AliMeeting and RAMC sessions, so a few ``other_recording`` negatives enrolled the window's own speaker.
 
 An utterance overlapping the mixture is kept, clipped to it (marked ``clipped``). A positive keeps its timeline
 only when its target utterances spell the record's transcript (whitespace and punctuation ignored; an utterance
@@ -57,6 +59,7 @@ SOURCES = {
     "magicdata_ramc@turn-taking-20261014": dict.fromkeys(("train_2spk", "train_neg"), "span"),
     "emilia2_dialog@dialog-turn-taking-20261013-enroll": dict.fromkeys(TURN_TAKING, "dialog"),
     "emilia2_mix@mix-20261013": dict.fromkeys(("train_2spk", "train_3spk"), "mix"),
+    "ts_real_train@v2-20261018": dict.fromkeys(("alimeeting", "aishell4", "ramc"), "keep"),
 }
 # Utterances touching the mixture edge by less than this are not in it.
 EDGE_SECONDS = 0.01
@@ -207,6 +210,11 @@ def mix_rows(records, catalog, roots):
         yield r, window, f"emilia2_mix:{speaker}"
 
 
+def keep_rows(records):
+    for r in records:
+        yield r, r["metadata"]["window_utts"], r["metadata"]["target_speaker"]
+
+
 def check(record, window, target):
     """Why a timeline cannot label this record, or None when it can."""
     if window is None:
@@ -250,7 +258,8 @@ def main():
         rows = {"span": lambda: span_rows(dataset, split, records, catalog, roots),
                 "moss": lambda: moss_rows(records, catalog, roots),
                 "dialog": lambda: dialog_rows(records),
-                "mix": lambda: mix_rows(records, catalog, roots)}[family]()
+                "mix": lambda: mix_rows(records, catalog, roots),
+                "keep": lambda: keep_rows(records)}[family]()
         counts, examples, out, cuts, excluded = Counter(), defaultdict(list), [], set(), []
         for record, window, target in rows:
             problem = check(record, window, target)
@@ -267,6 +276,9 @@ def main():
                 cuts.add(slot["ref"]["cut_id"])
             if problem is None:
                 record["metadata"] = {**record["metadata"], "target_speaker": target, "window_utts": window}
+            else:
+                # target_speaker stays: without it the trainer would take the window for one clean target utterance.
+                record["metadata"].pop("window_utts", None)
             out.append(record)
         report[split] = {"family": family, "records": len(out), **counts, "examples": examples}
         print(split, json.dumps({k: v for k, v in report[split].items() if k != "examples"}), flush=True)
