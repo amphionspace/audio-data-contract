@@ -2,7 +2,7 @@
 
 按数据集查看语言、支持任务、时长和特性。清洗、热词、加噪、评测入口和训练框架配置归入所属数据集，不另算一套源数据。
 
-当前登记 **173 个数据集条目**；另有 **20 个下载来源声明**和 **1 个训练混合配方**。登记不代表本机文件已齐备。
+当前登记 **174 个数据集条目**；另有 **20 个下载来源声明**和 **1 个训练混合配方**。登记不代表本机文件已齐备。
 
 时长单位为小时。不同版本、子集和标注片段可能重叠，逐项列出，不相加为总量；没有时长的条目仍保留。参考表数字未核实当前文件与划分覆盖；“过滤前”不能当作清洗后时长。已被合并版本取代（`superseded_by`）的旧版本不再列出，仍可按原 ID 和版本解析。
 
@@ -127,6 +127,7 @@
 | 数据集 | 语言 | 支持任务 | 时长（小时，注明范围） | 特性 / 备注 |
 |---|---|---|---|---|
 | [BAAI/CS-Dialogue long_wav (ModelScope master)](../../catalog/icefall_base.yaml#L1618) | en、zh、zh-en | 语音识别、带说话人标注的语音识别 | 46.0（已登记；[icefall-20260908](../../catalog/icefall_runtime.yaml#L2035)）<br>46.0（已登记；[legacy-20260804](../../catalog/icefall_base.yaml#L1618)）<br>98.3（已登记；[long-mix-v1-20261010](../../catalog/zh_dialogue.yaml#L1)） | 含派生版本（与源数据可能重叠） |
+| [asr_babble_bench](../../catalog/asr_babble_bench.yaml#L1) | en、zh | 语音识别 | 10.1（已登记；[v1-20261023](../../catalog/asr_babble_bench.yaml#L1)）<br>8.8（已登记；[v2-20261023](../../catalog/asr_babble_bench.yaml#L398)） | 普通 ASR 背景人声评测集：只有背景人声的片段（合成的中文、英文背景人声和真实录音的人群声，期望输出为空），以及一句话前后和说话时都有背景人声的片段（与无背景人声的对照逐条配对）。合成背景人声由不进训练、也不与目标语音重叠的 test/dev 说话人混成。只用于评测，不进训练。配方 scripts/asr_babble_bench/recipe.yaml；普通 ASR 背景人声评测集：只有背景人声的片段（合成的中文、英文背景人声和真实录音的人群声，期望输出为空），以及一句话前后和说话时都有背景人声的片段（与无背景人声的对照逐条配对）。合成背景人声由不进训练、也不与目标语音重叠的 test/dev 说话人在模拟房间里混成。只用于评测，不进训练。配方 scripts/asr_babble_bench/recipe.yaml |
 | [babble_noise_synth](../../catalog/babble_noise_synth.yaml#L1) | en、zh | noise | 50.0（已登记；[v1-20261013](../../catalog/babble_noise_synth.yaml#L1)） | 合成背景人声（babble）噪声：每条 30 秒，叠加 5–20 个不同说话人，中英文各 3000 条（train 2600、dev 200、test 200）；train/dev/test 的说话人互不重叠。每条的说话人、增益和来源句子见 manifest.jsonl |
 | [babble_noise_train](../../catalog/babble_noise_train.yaml#L1) | en、zh | noise | 43.3（已登记；[v1-20261017](../../catalog/babble_noise_train.yaml#L1)） | 训练用合成背景人声（babble）：babble_noise_synth 的 zh、en 训练划分（每种语言 2,600 条，30 秒，5–20 位说话人同时说，16 kHz 单声道 FLAC），按 Lhotse 录音清单登记，可作为 noise_sources 或空目标的 nonspeech_sources。评测的 babble 用 dev/test 说话人，与训练说话人互不重叠。脚本 scripts/ts_robust/register_babble_noise.py |
 | [cs_dialogue_meeting_sot](../../catalog/similar_voice.yaml#L539) | zh、zh-en | 带说话人标注的语音识别 | 未登记 | cs_dialogue_meeting_sot@meeting-v1-20261010 的“音色相近”子集：每个训练窗口里最相近两位说话人的声纹余弦相似度，各划分（窗口长度）取前 1/3。声纹模型 ERes2NetV2（iic/speech_eres2netv2_sv_zh-cn_16k-common），每人取不与他人重叠的语音（片段 ≥0.3 秒，合计 ≥1.5 秒，最多 10 秒）；30/300/600 秒窗口用对应 120 秒窗口里同一说话人的声纹均值。少于两个有声纹说话人的窗口不入选。标注不改，记录逐行照抄源版本，音频仍指向源版本。源版本训练排除名单里的记录（选模留出集、目标为空窗口）已剔除。用途：下一轮训练额外加采相近音色的窗口 |
