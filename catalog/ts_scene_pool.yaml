@@ -715,3 +715,118 @@
     sources:
     - aishell2:legacy-20260804
     - magicdata:legacy-20260804
+- schema_version: dataset-catalog/2.0
+  dataset_id: ts_scene_pool
+  version: xsession-near-20261023
+  languages:
+  - zh
+  tasks:
+  - ts_asr
+  aliases: []
+  artifacts:
+  - name: zh-records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/xsession-near-20261023/records_zh.jsonl.gz
+    sha256: 92540b2df3eabf2e6bd6ee0c2ec09d38981a5681cdf3292225bc9d214f891ad9
+    metadata:
+      record_count: 80000
+  - name: zh-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/xsession-near-20261023/audio_index_zh.jsonl.gz
+    sha256: 3ec485e5568321320b09bc9ca9b8ee09ae7ee705b41a6e6f667d2778021cb1af
+    metadata:
+      record_count: 499837
+  - name: record_index
+    kind: lance-record-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/xsession-near-20261023/record_index/index.json
+    sha256: 21962d843db8dca7995d586156e8720f35fc644169e5e0197f3638acd4957333
+    expected_bytes: 736
+    metadata:
+      snapshot_version: 13
+      rows: 80000
+      schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
+  splits:
+    zh:
+      artifacts:
+        records:
+        - zh-records
+        audio_index:
+        - zh-audio-index
+        records_lance:
+        - record_index
+      task: ts_asr
+      statistics:
+        records: 80000
+        duration_hours: 115.99
+        duration_basis: clip duration (segment span, or the whole file)
+  provenance:
+    status: complete
+    synthetic: none
+    snapshot_date: '2026-10-23'
+    description: xsession-20261023 的相近声音版：同样的 KeSpeech 跨场次多句场景（目标人取自 KeSpeech train 中同时有普通话与方言录音的 15457 人，注册一半取另一场次 labels.cross_session，他人一半
+      KeSpeech、一半 AISHELL-2），约 30% 缺席孪生中一半的注册人取目标的相近声音（speaker-neighbors-20261023，ERes2NetV2 余弦最近邻前 10 名之一，候选限于 KeSpeech 与
+      AISHELL-2；labels.twin_enrollment=near），另一半随机。原版的孪生全是随机说话人，与目标差得很远（余弦中位数 0.09），040 在 ts-asr-benchmark@v12 上对 KeSpeech、MagicData
+      目标越来越多地把紧接着说话的另一个人也转写进来。
+    sources:
+    - aishell2:legacy-20260804
+    - kespeech:legacy-20260804
+- schema_version: dataset-catalog/2.0
+  dataset_id: ts_scene_pool
+  version: magicdata-near-20261023
+  languages:
+  - zh
+  tasks:
+  - ts_asr
+  aliases: []
+  artifacts:
+  - name: zh-records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/magicdata-near-20261023/records_zh.jsonl.gz
+    sha256: 2430891d96524dda12d86751264b8bc79b69c2ba30d5467f0decec7093db4cc0
+    metadata:
+      record_count: 80000
+  - name: zh-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/magicdata-near-20261023/audio_index_zh.jsonl.gz
+    sha256: 7f8354f34cd9286a1693eaa430c128dd474188b0cf231e611162f5071d66307a
+    metadata:
+      record_count: 483030
+  - name: record_index
+    kind: lance-record-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/magicdata-near-20261023/record_index/index.json
+    sha256: c505a53720a3f1c334469b33397d521b66eff1ad69d8d6ec2a9590bbc285ca36
+    expected_bytes: 737
+    metadata:
+      snapshot_version: 13
+      rows: 80000
+      schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
+  splits:
+    zh:
+      artifacts:
+        records:
+        - zh-records
+        audio_index:
+        - zh-audio-index
+        records_lance:
+        - record_index
+      task: ts_asr
+      statistics:
+        records: 80000
+        duration_hours: 96.02
+        duration_basis: clip duration (segment span, or the whole file)
+  provenance:
+    status: complete
+    synthetic: none
+    snapshot_date: '2026-10-23'
+    description: magicdata-20261023 的相近声音版：同样的 MagicData 多句场景（目标人取自 MagicData train 1017 人，他人一半 MagicData、一半 AISHELL-2，剔除与测试集同文本的句子），约
+      30% 缺席孪生中一半的注册人取目标的相近声音（speaker-neighbors-20261023，ERes2NetV2 余弦最近邻前 10 名之一，候选限于 MagicData 与 AISHELL-2；labels.twin_enrollment=near），另一半随机。原版的孪生全是随机说话人（余弦中位数
+      0.12），040 在 ts-asr-benchmark@v12 上对 MagicData 目标碰上 MagicData 插话人时连带转写的比例从 1.2% 升到 16.9%。
+    sources:
+    - aishell2:legacy-20260804
+    - magicdata:legacy-20260804

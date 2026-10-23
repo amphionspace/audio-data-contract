@@ -68,6 +68,17 @@ utterances whose text is in the test split are dropped (HELD_OUT_TEXT).
 
     python build_ts_scene_pool.py --output-dir DIR --version magicdata-20261023 --multi --magicdata --twin-share 0.3 \\
         --zh 80000 --en 0
+
+Both pools need ``--neighbors`` from ``speaker_neighbors.py --kespeech-magicdata``: without it every twin enrolls a
+random speaker, far from the target (ERes2NetV2 cosine median 0.09 / 0.12 against 0.25 in the AISHELL-2 pools), and
+040 (v7set13) learned to transcribe other speakers after a KeSpeech or MagicData target's utterance (MagicData target
+with a MagicData other speaker: 1.2% -> 16.9% of the v12 samples). With it half of the twins enroll a close neighbour,
+as in every other pool.
+
+    python build_ts_scene_pool.py --output-dir DIR --version xsession-near-20261023 --multi --xsession \\
+        --neighbors FILE --twin-share 0.3 --zh 80000 --en 0
+    python build_ts_scene_pool.py --output-dir DIR --version magicdata-near-20261023 --multi --magicdata \\
+        --neighbors FILE --twin-share 0.3 --zh 80000 --en 0
 """
 
 import argparse

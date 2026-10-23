@@ -10,11 +10,17 @@ For each speaker of a target corpus the ``--top`` closest speakers of the same l
 Neighbours are chosen by rank, not by a threshold: the best threshold differs between
 corpora (0.33-0.60 in our check), so a fixed cosine would select different things in each.
 
+With ``--kespeech-magicdata`` the targets are the KeSpeech and MagicData speakers of the cross-session and MagicData
+scene pools (build_ts_scene_pool.py --xsession / --magicdata), and a target's candidates are limited to the corpora its
+pool draws other speakers from (AISHELL-2 and its own corpus): the builder keeps only neighbours it can draw, after
+taking the top ``--hard-rank``, so neighbours from another corpus would leave it without any.
+
 Output: neighbors.json  {language: {speaker: [[neighbor, cosine], ...]}}
         embeddings.npz  speaker names and vectors
         report.json     distribution of the closest-neighbor cosines
 
     python speaker_neighbors.py --output-dir DIR [--device cuda:2]
+    python speaker_neighbors.py --output-dir DIR --kespeech-magicdata
 """
 
 import argparse
@@ -39,6 +45,13 @@ CORPORA = {
     "zh": [("aishell2", "legacy-20260804", "train", True, None), ("kespeech", "legacy-20260804", "train", False, 6000)],
     "en": [("librispeech", "legacy-20260804", "train", True, None), ("common_voice_en", "legacy-20260804", "train", False, 6000)],
 }
+# --kespeech-magicdata: every speaker of both corpora is embedded (MagicData has 1017 train speakers, KeSpeech 25137).
+KESPEECH_MAGICDATA_CORPORA = {
+    "zh": [("aishell2", "legacy-20260804", "train", False, None), ("kespeech", "legacy-20260804", "train", True, None),
+           ("magicdata", "legacy-20260804", "train", True, None)],
+}
+# The corpora a target corpus's scene pool draws other speakers from (XSESSION_CORPORA / MAGICDATA_CORPORA there).
+POOL_PEERS = {"kespeech": {"aishell2", "kespeech"}, "magicdata": {"aishell2", "magicdata"}}
 COLUMNS = ["speaker", "duration", "root_alias", "relative_path", "start_frame", "num_frames", "sample_rate"]
 
 
@@ -115,13 +128,15 @@ def main():
     parser.add_argument("--top", type=int, default=20)
     parser.add_argument("--workers", type=int, default=8)
     parser.add_argument("--smoke", action="store_true", help="50 speakers per corpus, to check the setup")
+    parser.add_argument("--kespeech-magicdata", action="store_true",
+                        help="neighbours of KeSpeech and MagicData speakers within their scene pools' corpora")
     args = parser.parse_args()
     args.output_dir.mkdir(parents=True, exist_ok=True)
     from modelscope.pipelines import pipeline
 
     model = pipeline(task="speaker-verification", model=MODEL, device=args.device)
     neighbors, report, store = {}, {}, {}
-    for language, corpora in CORPORA.items():
+    for language, corpora in (KESPEECH_MAGICDATA_CORPORA if args.kespeech_magicdata else CORPORA).items():
         names, vectors, targets = [], [], []
         for dataset, version, split, can_target, wanted in corpora:
             print(language, dataset, flush=True)
@@ -132,11 +147,14 @@ def main():
             vectors.append(embeddings)
             targets += [can_target] * len(speakers)
         vectors, targets = np.concatenate(vectors), np.array(targets)
+        corpus_of = np.array([n.split(":", 1)[0] for n in names])
         store[language] = (names, vectors)
         result, best = {}, []
         for i in np.nonzero(targets)[0]:
             scores = vectors @ vectors[i]
             scores[i] = -1
+            if args.kespeech_magicdata:
+                scores[~np.isin(corpus_of, sorted(POOL_PEERS[corpus_of[i]]))] = -1
             order = np.argsort(-scores)[: args.top]
             result[names[i]] = [[names[j], round(float(scores[j]), 4)] for j in order]
             best.append(scores[order[0]])
