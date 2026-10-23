@@ -657,3 +657,61 @@
     sources:
     - aishell2:legacy-20260804
     - kespeech:legacy-20260804
+- schema_version: dataset-catalog/2.0
+  dataset_id: ts_scene_pool
+  version: magicdata-20261023
+  languages:
+  - zh
+  tasks:
+  - ts_asr
+  aliases: []
+  artifacts:
+  - name: zh-records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/magicdata-20261023/records_zh.jsonl.gz
+    sha256: 11da10c11f110d5b7975ce7178e92ce4432f4dd3c267f5831194f97c1a55dc00
+    metadata:
+      record_count: 80000
+  - name: zh-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/magicdata-20261023/audio_index_zh.jsonl.gz
+    sha256: 2f4ff4d4c5c35e35c0c7dfd95dd2970d81cbb7889dcdcd6bd844612f269fbb76
+    metadata:
+      record_count: 480734
+  - name: record_index
+    kind: lance-record-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/magicdata-20261023/record_index/index.json
+    sha256: 0410cb890297ffb44b6d6349b53501e5fefb091b9d9868e2e8fdcca35fa89793
+    expected_bytes: 732
+    metadata:
+      snapshot_version: 13
+      rows: 80000
+      schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
+  splits:
+    zh:
+      artifacts:
+        records:
+        - zh-records
+        audio_index:
+        - zh-audio-index
+        records_lance:
+        - record_index
+      task: ts_asr
+      statistics:
+        records: 80000
+        duration_hours: 96.25
+        duration_basis: clip duration (segment span, or the whole file)
+  provenance:
+    status: complete
+    synthetic: none
+    snapshot_date: '2026-10-23'
+    description: MagicData 多句场景（multi 同款 full 模式，目标说 2–5 句、1–4 个他人各有自己的轨道）：目标人取自 MagicData train（手机录制的朗读，1017 人，实际用到 1013
+      人），注册取同一人另一句 2.5–8 秒；他人一半 MagicData、一半 AISHELL-2。约 30% 是缺席孪生：同一场景，注册换成另一位 MagicData 说话人，目标的话成为干扰、转写为空，同一对共用 labels.pair。MagicData
+      测试集 73% 的句子在训练集里出现过，训练集中与测试集同文本的 49191 句已剔除。用来补训练里没有的 MagicData 目标人：ts-asr-benchmark@v12 上只留目标一人说话时，10.21 版本对 MagicData
+      目标的 TS 字错率 14.5%（同句普通识别 1.7%），AISHELL-1/2/3 目标与普通识别持平。
+    sources:
+    - aishell2:legacy-20260804
+    - magicdata:legacy-20260804
