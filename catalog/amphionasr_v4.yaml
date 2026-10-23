@@ -3875,3 +3875,72 @@
     snapshot_date: '2026-10-13'
     source: checkpoint-34479 sharegpt vitw.jsonl
     registered_from: lx 私有登记 /workspace/workspace/lx/data/amphionasr（AmphionASR v4 配方，open-audio-llm feat/amphionasr-v4）；清单原样复制到 aidc_data，root_alias amphionasr→aidc_data；生成脚本快照 /workspace/data/migration/register-amphionasr-v4-20261015/scripts/ (2026-10-15 公共登记)
+- schema_version: dataset-catalog/2.0
+  dataset_id: emilia2_short
+  version: short-lance-20261023
+  languages:
+  - zh
+  - en
+  tasks:
+  - asr
+  aliases: []
+  artifacts:
+  - name: train_en
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/emilia2_short/versions/short-lance-20261023/records/train_en.jsonl.gz
+    expected_bytes: 317752190
+    sha256: bdccdd35877a8d3bd01c648cc0bba83489097240099693e105d3e8e0932a6551
+    metadata:
+      record_count: 2081289
+  - name: train_zh
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/emilia2_short/versions/short-lance-20261023/records/train_zh.jsonl.gz
+    expected_bytes: 298467312
+    sha256: e8d80dc27b627b727323df054be2eb8972d759c49b54bd08669025440ca9e9e6
+    metadata:
+      record_count: 1913605
+  splits:
+    train_en:
+      group: train
+      artifacts:
+        records:
+        - train_en
+      statistics:
+        records: 2081289
+        duration_hours: 2740.149
+        duration_basis: sum of Lance sample duration; each sample is one ASR example
+        languages:
+          en: 2081289
+    train_zh:
+      group: train
+      artifacts:
+        records:
+        - train_zh
+      statistics:
+        records: 1913605
+        duration_hours: 2362.729
+        duration_basis: sum of Lance sample duration; each sample is one ASR example
+        languages:
+          zh: 1913605
+    train:
+      artifacts:
+        records:
+        - train_en
+        - train_zh
+      statistics:
+        records: 3994894
+        duration_hours: 5102.878
+        duration_basis: sum of Lance sample duration; each sample is one ASR example
+        languages:
+          zh: 1913605
+          en: 2081289
+  provenance:
+    description: 与 short-20261014 相同的记录与记录 ID，音频改读 emilia2@tts-unified-v0.1 Lance 发布里的同一条 m4a-128k standalone short（按上游 short ID 与 m4a 文件名对应；发布里存的是同一份完整解码的 FLAC），训练不再为这些片段启动 ffmpeg。音频引用写入 Lance 样本时长。Lance 中没有对应样本的 20 条（zh 11、en 9）已去掉。全部片段都在 Lance 里，没有音频索引，因此也没有 Lance 记录索引，训练端走 JSONL 记录缓存；读取需要 open-audio-llm 支持指向其他数据集 Lance 发布的音频引用（code-v14 起）。生成脚本 scripts/build_emilia2_short_lance.py。
+    snapshot_date: '2026-10-23'
+    source: emilia2_short@short-20261014 + emilia2@tts-unified-v0.1
+    quality_status: source_annotations_preserved_not_reaudited
+    sources:
+    - emilia2_short:short-20261014
+    - emilia2:tts-unified-v0.1
