@@ -48,6 +48,17 @@ speaker (half of the time a neighbour of the target), so both utterances are int
 
     python build_ts_scene_pool.py --output-dir DIR --version handover-20261021 --handover --neighbors FILE \\
         --twin-share 0.3 --zh 40000 --en 12000
+
+With ``--multi --xsession`` the targets are KeSpeech speakers who recorded both a Mandarin (phase1) and a dialect
+(phase2) session. A scene's target utterances come from one session; with XSESSION_CROSS_PROB the enrollment comes
+from the other session (``labels.cross_session``), otherwise from the same one. The other pools take their targets from
+AISHELL-2 / AISHELL-1, one session per speaker, so the model never has to accept a voice across sessions and can lean on
+the channel; on ts-asr-benchmark@v12 a Mandarin/dialect mismatch between enrollment and target leaves 34% of KeSpeech
+targets untranscribed (5.7% within one variety). AISHELL-2 stays among the other speakers, and twins enroll another
+KeSpeech speaker, so neither the channel nor the corpus tells present from absent.
+
+    python build_ts_scene_pool.py --output-dir DIR --version xsession-20261023 --multi --xsession --twin-share 0.3 \\
+        --zh 80000 --en 0
 """
 
 import argparse
@@ -76,6 +87,10 @@ MODES = {"zh": (("alternate", 0.35), ("burst", 0.35), ("short", 0.30)),
 UTTERANCE_SECONDS = {"zh": (1.0, 12.0), "en": (1.0, 8.0)}
 SHORT_TARGET_SECONDS = {"zh": (0.8, 2.5), "en": (1.0, 3.5)}
 ENROLLMENT_SECONDS = (2.5, 8.0)
+# --xsession: targets are KeSpeech speakers with both sessions (phase1 Mandarin, phase2 dialect, the directory names).
+XSESSION_CORPORA = [("aishell2", "legacy-20260804", "train", 0.5, False), ("kespeech", "legacy-20260804", "train", 0.5, True)]
+SESSIONS = ("phase1", "phase2")
+XSESSION_CROSS_PROB = 0.5
 # Longest scene per mode, gaps included. The benchmark's scenes run 5-18 s; the training
 # batch holds about a dozen windows, so a 70 s scene would not fit.
 SCENE_SECONDS = {"alternate": 30.0, "burst": 22.0, "short": 14.0, "full": 32.0}
@@ -95,7 +110,7 @@ COLUMNS = ["id", "speaker", "text", "duration", "cut_id", "root_alias", "relativ
 
 
 class Corpus:
-    def __init__(self, dataset, version, split, weight, target, language):
+    def __init__(self, dataset, version, split, weight, target, language, sessions=False):
         self.name, self.weight, self.target = dataset, weight, target
         entry = next(e for e in yaml.safe_load(REGISTRY.read_text())
                      if e["dataset_id"] == dataset and e["version"] == version)
@@ -110,7 +125,15 @@ class Corpus:
         speaker = table["speaker"].to_pylist()
         keep = np.array([bool(t and len(t.strip()) >= 2) and bool(s) for t, s in zip(text, speaker)]
                         ) & (duration >= UTTERANCE_SECONDS[language][0]) & (duration <= UTTERANCE_SECONDS[language][1])
+        session = None
+        if sessions:
+            # Keep only speakers with an utterance in every session, so any scene can enroll across sessions.
+            session = np.array([path.rsplit("/", 2)[-2] for path in table["relative_path"].to_pylist()])
+            names = np.array(speaker)
+            both = set.intersection(*(set(names[keep & (session == s)]) for s in SESSIONS))
+            keep &= np.isin(names, sorted(both))
         self.rows = table.filter(keep).to_pydict()
+        self.session = session[keep] if sessions else None
         self.duration = duration[keep]
         names, inverse = np.unique(np.array(self.rows["speaker"]), return_inverse=True)
         order = np.argsort(inverse, kind="stable")
@@ -119,10 +142,11 @@ class Corpus:
         self.by_speaker = [order[bounds[i]:bounds[i + 1]] for i in range(len(names))]
         print(dataset, "utterances", int(keep.sum()), "speakers", len(names), flush=True)
 
-    def pick(self, rng, speaker, count, low=None, high=None, exclude=()):
-        """``count`` distinct utterances of one speaker, optionally within a duration range."""
+    def pick(self, rng, speaker, count, low=None, high=None, exclude=(), session=None):
+        """``count`` distinct utterances of one speaker, optionally within a duration range and one session."""
         rows = [i for i in self.by_speaker[speaker] if i not in exclude
-                and (low is None or low <= self.duration[i] <= high)]
+                and (low is None or low <= self.duration[i] <= high)
+                and (session is None or self.session[i] == session)]
         return rng.sample(rows, count) if len(rows) >= count else None
 
     def usable(self, speaker, count):
@@ -130,9 +154,10 @@ class Corpus:
 
 
 class Builder:
-    def __init__(self, language, rng, neighbors=None, hard_rank=10):
-        self.language, self.rng = language, rng
-        self.corpora = [Corpus(*c, language) for c in CORPORA[language]]
+    def __init__(self, language, rng, neighbors=None, hard_rank=10, xsession=False):
+        self.language, self.rng, self.xsession = language, rng, xsession
+        self.corpora = [Corpus(*c, language, sessions=xsession and c[4])
+                        for c in (XSESSION_CORPORA if xsession else CORPORA[language])]
         self.targets = [c for c in self.corpora if c.target]
         self.neighbors, self.hard_rank = neighbors, hard_rank
         self.where = {name: (c, i) for c in self.corpora for i, name in enumerate(c.speakers)}
@@ -249,8 +274,12 @@ class Builder:
         low, high = FULL_UTTERANCE_SECONDS
         while True:
             speaker = rng.randrange(len(corpus.speakers))
-            targets = corpus.pick(rng, speaker, turns, low, high)
-            enrollment = corpus.pick(rng, speaker, 1, *ENROLLMENT_SECONDS, exclude=set(targets)) if targets else None
+            own = enrolled = None
+            if self.xsession:
+                own = rng.choice(SESSIONS)
+                enrolled = next(s for s in SESSIONS if s != own) if rng.random() < XSESSION_CROSS_PROB else own
+            targets = corpus.pick(rng, speaker, turns, low, high, session=own)
+            enrollment = corpus.pick(rng, speaker, 1, *ENROLLMENT_SECONDS, exclude=set(targets), session=enrolled) if targets else None
             if enrollment:
                 break
         used = {corpus.speakers[speaker]}
@@ -272,6 +301,7 @@ class Builder:
             others.append({"speaker": other.speakers[who], "gap": list(gap), "utts": [self.ref(other, i) for i in picks]})
             seconds = max(seconds, sum(other.duration[i] for i in picks) + gap[1] * (len(picks) - 1))
         return {
+            **({"session": {"targets": own, "enrollment": enrolled}} if self.xsession else {}),
             "mode": "full", "target_speaker": corpus.speakers[speaker], "target_gap": list(target_gap),
             "targets": [{**self.ref(corpus, i), "text": corpus.rows["text"][i].strip()} for i in targets],
             "enrollment": self.ref(corpus, enrollment[0]), "interferers": others}, seconds
@@ -374,6 +404,8 @@ def record(language, number, scene, joiner, pair=None):
         labels["hard_cosine"] = scene["hard"]["cosine"]
     if pair is not None:
         labels["pair"] = pair
+    if "session" in scene:
+        labels["cross_session"] = scene["session"]["targets"] != scene["session"]["enrollment"]
     if "twin" in scene:
         labels["twin_enrollment"] = scene["twin"]["kind"]
         if "cosine" in scene["twin"]:
@@ -402,9 +434,12 @@ def main():
     parser.add_argument("--twin-share", type=float, default=0.26, help="share of the records that are twins")
     parser.add_argument("--solo", action="store_true", help="build the short solo version (one short target utterance, nobody else) with twins")
     parser.add_argument("--handover", action="store_true", help="build the handover version (target and one other speaker, one utterance each, in a row) with twins")
+    parser.add_argument("--xsession", action="store_true", help="with --multi: KeSpeech targets enrolled from the same or the other session (zh only)")
     args = parser.parse_args()
     if sum((args.multi, args.solo, args.handover)) > 1:
         parser.error("--multi, --solo and --handover build different pools; pick one")
+    if args.xsession and (not args.multi or args.en):
+        parser.error("--xsession builds the zh multi-turn pool: pass --multi and --en 0")
     if (args.multi or args.solo or args.handover) and not 0 <= args.twin_share < 1:
         parser.error("--twin-share must be in [0, 1)")
     VERSION = args.version
@@ -412,8 +447,10 @@ def main():
     neighbors = json.loads(args.neighbors.read_text()) if args.neighbors else None
     report = {}
     for language, count in (("zh", args.zh), ("en", args.en)):
+        if args.xsession and not count:
+            continue
         builder = Builder(language, random.Random(f"{SEED}:{language}:{args.version}"),
-                          neighbors and neighbors[language], args.hard_rank)
+                          neighbors and neighbors[language], args.hard_rank, args.xsession)
         modes, weights = zip(*MODES[language])
         records, tally = [], Counter()
         if args.multi or args.solo or args.handover:
