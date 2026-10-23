@@ -395,3 +395,361 @@
     - librispeech@legacy-20260804:test_other
     - wham_noise@official-20261013:tt
     - fsd50k@zenodo-4060432-20261013:eval
+- schema_version: dataset-catalog/2.0
+  dataset_id: asr_babble_bench
+  version: v2-20261023
+  languages:
+  - en
+  - zh
+  tasks:
+  - asr
+  artifacts:
+  - name: audio-index
+    kind: audio-index
+    root_alias: asr_babble_bench
+    relative_path: versions/v2-20261023/audio-index.jsonl.gz
+    sha256: b5945a68a74da6b07bc8c5367955f348b94e40ab5d39b5f8ee1d23948b21db96
+    metadata:
+      record_count: 3200
+  - name: babble-manifest
+    kind: jsonl-metadata
+    root_alias: asr_babble_bench
+    relative_path: source/v2-20261023/babble/manifest.jsonl
+    sha256: b90990a91967cc2e595c70040dadac57b0bb24aafd811fff4cc0fc3b31409abf
+    metadata:
+      record_count: 600
+  - name: zh-babble-far-records
+    kind: audio-records
+    root_alias: asr_babble_bench
+    relative_path: versions/v2-20261023/records/zh-babble-far.jsonl.gz
+    sha256: d956cbfa11c8ca8a0dc13a6cc649b750d19bade1680d2cd4d6b413984b06c951
+    metadata:
+      record_count: 200
+  - name: zh-babble-mid-records
+    kind: audio-records
+    root_alias: asr_babble_bench
+    relative_path: versions/v2-20261023/records/zh-babble-mid.jsonl.gz
+    sha256: 19b719ca20df191d9d8b607328029ba9842f59472e326b8e34ae0afaefdf1db6
+    metadata:
+      record_count: 200
+  - name: en-babble-far-records
+    kind: audio-records
+    root_alias: asr_babble_bench
+    relative_path: versions/v2-20261023/records/en-babble-far.jsonl.gz
+    sha256: 96b8aad95562b1a87fe6c33b1e6a87b9fdd18709a6c10f3cadeb1482eb35b4c1
+    metadata:
+      record_count: 200
+  - name: en-babble-mid-records
+    kind: audio-records
+    root_alias: asr_babble_bench
+    relative_path: versions/v2-20261023/records/en-babble-mid.jsonl.gz
+    sha256: 7f0d6dff58c4ae93d131eba2562a78072166f47d9defb5e2951ae16b09796d02
+    metadata:
+      record_count: 200
+  - name: crowd-wham-records
+    kind: audio-records
+    root_alias: asr_babble_bench
+    relative_path: versions/v2-20261023/records/crowd-wham.jsonl.gz
+    sha256: 46d994de813aca8e41f19d207802812b5f3a0d0a0d43e7f5676970554170647b
+    metadata:
+      record_count: 200
+  - name: crowd-fsd-records
+    kind: audio-records
+    root_alias: asr_babble_bench
+    relative_path: versions/v2-20261023/records/crowd-fsd.jsonl.gz
+    sha256: 328f5193b575f0007ce6d8a9db50d6ccdead93b5e0f0579fbe56b1b4d5560e54
+    metadata:
+      record_count: 200
+  - name: zh-clean-records
+    kind: audio-records
+    root_alias: asr_babble_bench
+    relative_path: versions/v2-20261023/records/zh-clean.jsonl.gz
+    sha256: d164ca696f226edd85ae21638e440c0d33527b9dbb05097d194970ffe4e984ec
+    metadata:
+      record_count: 200
+  - name: zh-babble20-records
+    kind: audio-records
+    root_alias: asr_babble_bench
+    relative_path: versions/v2-20261023/records/zh-babble20.jsonl.gz
+    sha256: aab4959a619bc111351d13eaf7a797a6ab1f91e50e326af3f059cade0ca5d022
+    metadata:
+      record_count: 200
+  - name: zh-babble10-records
+    kind: audio-records
+    root_alias: asr_babble_bench
+    relative_path: versions/v2-20261023/records/zh-babble10.jsonl.gz
+    sha256: a135281ceebb646f6549b2299003e00aed118921ec8385fb6a33c0ccc74a1057
+    metadata:
+      record_count: 200
+  - name: zh-babble5-records
+    kind: audio-records
+    root_alias: asr_babble_bench
+    relative_path: versions/v2-20261023/records/zh-babble5.jsonl.gz
+    sha256: e715b0ab1160001097275989ad63557c89099855fca6f0527b2438aa236475ad
+    metadata:
+      record_count: 200
+  - name: zh-babble10-tight-records
+    kind: audio-records
+    root_alias: asr_babble_bench
+    relative_path: versions/v2-20261023/records/zh-babble10-tight.jsonl.gz
+    sha256: 64171c4a7e94303671d063c842684909cfe8a5101956cf4a6651a64c25bb92cb
+    metadata:
+      record_count: 200
+  - name: en-clean-records
+    kind: audio-records
+    root_alias: asr_babble_bench
+    relative_path: versions/v2-20261023/records/en-clean.jsonl.gz
+    sha256: 833edaa0c59123720f7537e46b2575c4bbdf038dd0ce07a3ac629fa84b0debe5
+    metadata:
+      record_count: 200
+  - name: en-babble20-records
+    kind: audio-records
+    root_alias: asr_babble_bench
+    relative_path: versions/v2-20261023/records/en-babble20.jsonl.gz
+    sha256: ec73b2fd5576d757bbbc07004590475dad3eacbf5e1627988524f269378f2c48
+    metadata:
+      record_count: 200
+  - name: en-babble10-records
+    kind: audio-records
+    root_alias: asr_babble_bench
+    relative_path: versions/v2-20261023/records/en-babble10.jsonl.gz
+    sha256: c3de893199adf74a70b364780c1ad4e58d2a573c9d1feb9ff6ccd9a0d834cc02
+    metadata:
+      record_count: 200
+  - name: en-babble5-records
+    kind: audio-records
+    root_alias: asr_babble_bench
+    relative_path: versions/v2-20261023/records/en-babble5.jsonl.gz
+    sha256: 684c599c14f2bdf312ea11e9aa3fef2e8971d26afd9559578eaec11f1e607f7b
+    metadata:
+      record_count: 200
+  - name: en-babble10-tight-records
+    kind: audio-records
+    root_alias: asr_babble_bench
+    relative_path: versions/v2-20261023/records/en-babble10-tight.jsonl.gz
+    sha256: ad80648ea18a4ea2869216dc736f3fab92657b46d63b6feddbd1b55221ed7f57
+    metadata:
+      record_count: 200
+  splits:
+    zh-babble-far:
+      artifacts:
+        records:
+        - zh-babble-far-records
+        audio_index:
+        - audio-index
+      task: asr
+      statistics:
+        records: 200
+        duration_hours: 0.6118
+        duration_basis: clip duration
+      provenance:
+        description: '只有中文背景人声 · 远：16–24 人在房间里同时说话的中文背景人声，电平 −45 到 −38 dBFS（正常说话约 −25 dBFS），2–20 秒；期望输出为空。参数 {"kind": "noise", "pair": "zh-babble-only", "noise": "babble_zh", "level_dbfs": [-45, -38], "duration": [2, 20]}'
+    zh-babble-mid:
+      artifacts:
+        records:
+        - zh-babble-mid-records
+        audio_index:
+        - audio-index
+      task: asr
+      statistics:
+        records: 200
+        duration_hours: 0.6118
+        duration_basis: clip duration
+      provenance:
+        description: '只有中文背景人声 · 中：同一批片段，电平 −38 到 −31 dBFS；期望输出为空。参数 {"kind": "noise", "pair": "zh-babble-only", "noise": "babble_zh", "level_dbfs": [-38, -31], "duration": [2, 20]}'
+    en-babble-far:
+      artifacts:
+        records:
+        - en-babble-far-records
+        audio_index:
+        - audio-index
+      task: asr
+      statistics:
+        records: 200
+        duration_hours: 0.621
+        duration_basis: clip duration
+      provenance:
+        description: '只有英文背景人声 · 远：16–24 人在房间里同时说话的英文背景人声，电平 −45 到 −38 dBFS，2–20 秒；期望输出为空。参数 {"kind": "noise", "pair": "en-babble-only", "noise": "babble_en", "level_dbfs": [-45, -38], "duration": [2, 20]}'
+    en-babble-mid:
+      artifacts:
+        records:
+        - en-babble-mid-records
+        audio_index:
+        - audio-index
+      task: asr
+      statistics:
+        records: 200
+        duration_hours: 0.621
+        duration_basis: clip duration
+      provenance:
+        description: '只有英文背景人声 · 中：同一批片段，电平 −38 到 −31 dBFS；期望输出为空。参数 {"kind": "noise", "pair": "en-babble-only", "noise": "babble_en", "level_dbfs": [-38, -31], "duration": [2, 20]}'
+    crowd-wham:
+      artifacts:
+        records:
+        - crowd-wham-records
+        audio_index:
+        - audio-index
+      task: asr
+      statistics:
+        records: 200
+        duration_hours: 0.4753
+        duration_basis: clip duration
+      provenance:
+        description: '只有真实环境人声 · WHAM!：WHAM! 测试划分的真实录音（咖啡馆、餐厅、酒吧等，以英文人声为主），电平 −45 到 −31 dBFS；期望输出为空。参数 {"kind": "noise", "noise": "wham", "level_dbfs": [-45, -31], "duration": [2, 20]}'
+    crowd-fsd:
+      artifacts:
+        records:
+        - crowd-fsd-records
+        audio_index:
+        - audio-index
+      task: asr
+      statistics:
+        records: 200
+        duration_hours: 0.5236
+        duration_basis: clip duration
+      provenance:
+        description: '只有真实人群嘈杂声 · FSD50K：FSD50K 评测划分里标为 Crowd 或 Chatter 的真实录音（不含音乐和掌声），电平 −45 到 −31 dBFS；期望输出为空。参数 {"kind": "noise", "noise": "fsd_crowd", "level_dbfs": [-45, -31], "duration": [2, 20]}'
+    zh-clean:
+      artifacts:
+        records:
+        - zh-clean-records
+        audio_index:
+        - audio-index
+      task: asr
+      statistics:
+        records: 200
+        duration_hours: 0.5767
+        duration_basis: clip duration
+      provenance:
+        description: '中文 · 无背景人声（对照）：AISHELL-1、MagicData 测试集的一句话，前后各 1–5 秒只有很低的噪声底；下面几列与它逐条配对。参数 {"kind": "speech", "pair": "zh-speech", "language": "zh"}'
+    zh-babble20:
+      artifacts:
+        records:
+        - zh-babble20-records
+        audio_index:
+        - audio-index
+      task: asr
+      statistics:
+        records: 200
+        duration_hours: 0.5767
+        duration_basis: clip duration
+      provenance:
+        description: '中文 · 背景人声 20 dB：同一句话、同样的前后时长，整段叠加中文背景人声，信噪比 20 dB（背景很远）；前后 1–5 秒只有背景人声。参数 {"kind": "speech", "pair": "zh-speech", "language": "zh", "noise": "babble_zh", "snr_db": 20}'
+    zh-babble10:
+      artifacts:
+        records:
+        - zh-babble10-records
+        audio_index:
+        - audio-index
+      task: asr
+      statistics:
+        records: 200
+        duration_hours: 0.5767
+        duration_basis: clip duration
+      provenance:
+        description: '中文 · 背景人声 10 dB：同上，信噪比 10 dB（身边有一群人在聊天）。参数 {"kind": "speech", "pair": "zh-speech", "language": "zh", "noise": "babble_zh", "snr_db": 10}'
+    zh-babble5:
+      artifacts:
+        records:
+        - zh-babble5-records
+        audio_index:
+        - audio-index
+      task: asr
+      statistics:
+        records: 200
+        duration_hours: 0.5767
+        duration_basis: clip duration
+      provenance:
+        description: '中文 · 背景人声 5 dB：同上，信噪比 5 dB（嘈杂的人群）。参数 {"kind": "speech", "pair": "zh-speech", "language": "zh", "noise": "babble_zh", "snr_db": 5}'
+    zh-babble10-tight:
+      artifacts:
+        records:
+        - zh-babble10-tight-records
+        audio_index:
+        - audio-index
+      task: asr
+      statistics:
+        records: 200
+        duration_hours: 0.2326
+        duration_basis: clip duration
+      provenance:
+        description: '中文 · 背景人声 10 dB · 无前后空白：与 zh-babble10 同一句话、同一段背景，只是没有前后 1–5 秒；两列之差就是只有背景人声的那几秒带来的错误。参数 {"kind": "speech", "pair": "zh-speech", "language": "zh", "tight": true, "noise": "babble_zh", "snr_db": 10}'
+    en-clean:
+      artifacts:
+        records:
+        - en-clean-records
+        audio_index:
+        - audio-index
+      task: asr
+      statistics:
+        records: 200
+        duration_hours: 0.6334
+        duration_basis: clip duration
+      provenance:
+        description: '英文 · 无背景人声（对照）：LibriSpeech test-clean 的一句话，前后各 1–5 秒只有很低的噪声底；下面几列与它逐条配对。参数 {"kind": "speech", "pair": "en-speech", "language": "en"}'
+    en-babble20:
+      artifacts:
+        records:
+        - en-babble20-records
+        audio_index:
+        - audio-index
+      task: asr
+      statistics:
+        records: 200
+        duration_hours: 0.6334
+        duration_basis: clip duration
+      provenance:
+        description: '英文 · 背景人声 20 dB：同一句话、同样的前后时长，整段叠加英文背景人声，信噪比 20 dB；前后 1–5 秒只有背景人声。参数 {"kind": "speech", "pair": "en-speech", "language": "en", "noise": "babble_en", "snr_db": 20}'
+    en-babble10:
+      artifacts:
+        records:
+        - en-babble10-records
+        audio_index:
+        - audio-index
+      task: asr
+      statistics:
+        records: 200
+        duration_hours: 0.6334
+        duration_basis: clip duration
+      provenance:
+        description: '英文 · 背景人声 10 dB：同上，信噪比 10 dB。参数 {"kind": "speech", "pair": "en-speech", "language": "en", "noise": "babble_en", "snr_db": 10}'
+    en-babble5:
+      artifacts:
+        records:
+        - en-babble5-records
+        audio_index:
+        - audio-index
+      task: asr
+      statistics:
+        records: 200
+        duration_hours: 0.6334
+        duration_basis: clip duration
+      provenance:
+        description: '英文 · 背景人声 5 dB：同上，信噪比 5 dB。参数 {"kind": "speech", "pair": "en-speech", "language": "en", "noise": "babble_en", "snr_db": 5}'
+    en-babble10-tight:
+      artifacts:
+        records:
+        - en-babble10-tight-records
+        audio_index:
+        - audio-index
+      task: asr
+      statistics:
+        records: 200
+        duration_hours: 0.309
+        duration_basis: clip duration
+      provenance:
+        description: '英文 · 背景人声 10 dB · 无前后空白：与 en-babble10 同一句话、同一段背景，只是没有前后 1–5 秒。参数 {"kind": "speech", "pair": "en-speech", "language": "en", "tight": true, "noise": "babble_en", "snr_db": 10}'
+  provenance:
+    status: complete
+    synthetic: full
+    description: 普通 ASR 背景人声评测集：只有背景人声的片段（合成的中文、英文背景人声和真实录音的人群声，期望输出为空），以及一句话前后和说话时都有背景人声的片段（与无背景人声的对照逐条配对）。合成背景人声由不进训练、也不与目标语音重叠的 test/dev 说话人在模拟房间里混成。只用于评测，不进训练。配方 scripts/asr_babble_bench/recipe.yaml。
+    sources:
+    - aishell@legacy-20260804:test
+    - magicdata@legacy-20260804:test
+    - librispeech@legacy-20260804:test_clean
+    - kespeech@legacy-20260804:test
+    - librispeech@legacy-20260804:dev
+    - librispeech@legacy-20260804:test_other
+    - sim_rir_slr28@legacy-20260804:all
+    - wham_noise@official-20261013:tt
+    - fsd50k@zenodo-4060432-20261013:eval

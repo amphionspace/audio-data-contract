@@ -2,7 +2,7 @@
 """Write the AmphionEval eval-set data config for the plain-ASR babble benchmark.
 
     python scripts/asr_babble_bench/eval_set.py > data.yaml
-    ae eval-sets publish data.yaml --project open-audio-llm --name asr-babble-bench --version v2-20261023
+    ae eval-sets publish data.yaml --project open-audio-llm --name asr-babble-bench --version v3-20261023
 
 The native evaluator scores ``noise`` splits (empty references) by
 ``false_alarm_rate`` and ``speech`` splits by CER/WER, insertions included.

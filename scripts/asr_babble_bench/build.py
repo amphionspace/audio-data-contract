@@ -13,8 +13,9 @@ single ``primary`` slot, following ``recipe.yaml``:
   seconds cost.
 
 Synthetic babble is mixed from test/dev speakers that are in no training set and
-not among the target speakers (``source/<version>/babble``, with a manifest of
-every talker's utterances and times). Splits that share a ``pair`` draw the same
+not among the target speakers, each reverberated at its own position in one
+simulated room (``source/<version>/babble``, with a manifest of every talker's
+utterances, times and room response). Splits that share a ``pair`` draw the same
 utterance, padding and babble window, so their results compare record by record.
 
     python scripts/asr_babble_bench/build.py --roots /workspace/data/registry/roots.json --workers 16
@@ -54,7 +55,7 @@ from audio_data_contract.catalog import validate_catalog
 from audio_data_contract.types import DatasetSpec
 
 SR = mixer.SAMPLE_RATE
-GENERATOR_VERSION = "1"
+GENERATOR_VERSION = "2"
 TEXT = {"zh": re.compile(r"^[一-鿿]+$"), "en": re.compile(r"^[a-z']+( [a-z']+)*$")}
 G = {}  # worker-global state, set before the pool forks
 FORK = multiprocessing.get_context("fork")  # Python 3.14 defaults to forkserver, which would not see G
@@ -99,6 +100,18 @@ def build_sources(recipe, catalog, roots):
     return targets, talkers
 
 
+def babble_rooms(recipe, catalog, roots):
+    """{room: [room response path]}; each simulated room has one receiver and a response per talker position."""
+    spec = recipe["babble_rir"]
+    rooms = defaultdict(list)
+    for path in resolve_split(catalog, spec["dataset"], spec["version"], spec["split"], "recordings", roots):
+        for row in ts_build._rows(path):
+            source = Path(row["sources"][0]["source"])
+            if source.parts[-3] in spec["rooms"]:
+                rooms[f"{source.parts[-3]}/{source.parts[-2]}"].append(str(source))
+    return {room: sorted(paths) for room, paths in sorted(rooms.items())}
+
+
 def real_noise_files(recipe, roots):
     out = {}
     for name, spec in recipe["real_noise"].items():
@@ -112,15 +125,17 @@ def real_noise_files(recipe, roots):
 
 
 def render_babble(job):
-    """One babble clip: ``n`` talkers, each a continuous stream of their utterances, cropped at random."""
+    """One babble clip: ``n`` talkers in one room, each a continuous stream of their utterances, cropped at random."""
     language, index, out = job
     recipe, pool = G["recipe"], G["talkers"][language]
     rng = random.Random(f"{recipe['seed']}:babble:{language}:{index}")
     length = int(recipe["babble_clip_seconds"] * SR)
     speakers = rng.sample(sorted(pool), rng.randint(*recipe["babble_talkers"]))
+    room = rng.choice(sorted(G["rooms"]))
+    rirs = rng.sample(G["rooms"][room], len(speakers))  # one receiver, every talker at another position
     mix = np.zeros(length, dtype=np.float64)
     talkers = []
-    for speaker in speakers:
+    for speaker, rir in zip(speakers, rirs):
         chunks, placed, total = [], [], 0
         while total < length + SR:
             utt = rng.choice(pool[speaker])
@@ -130,11 +145,12 @@ def render_babble(job):
             chunks += [np.zeros(gap, dtype=np.float32), w]
             total += gap + len(w)
         track = np.concatenate(chunks)
+        track = mixer.apply_rir(track, ts_build.read_audio(rir))[:len(track)]
         start = rng.randint(0, len(track) - length)
         track = track[start:start + length]
         gain_db = rng.uniform(*recipe["babble_gain_db"])
         mix += track / mixer.rms(track) * 10.0 ** (gain_db / 20.0)
-        talkers.append({"speaker": speaker, "gain_db": round(gain_db, 2), "utts": [
+        talkers.append({"speaker": speaker, "gain_db": round(gain_db, 2), "rir": Path(rir).stem, "utts": [
             {"id": u.id, "start": round((begin - start) / SR, 3), "duration": round(n / SR, 3), "text": u.text}
             for u, begin, n in placed if begin + n > start and begin < start + length]})
     mix = mixer.normalize_rms(mix.astype(np.float32), recipe["speech_dbfs"])
@@ -143,7 +159,7 @@ def render_babble(job):
     (out / relative).parent.mkdir(parents=True, exist_ok=True)
     sf.write(out / relative, np.clip(mix, -1.0, 1.0), SR, format="FLAC", subtype="PCM_16")
     return {"id": clip_id, "path": relative, "language": language, "duration": recipe["babble_clip_seconds"],
-            "num_talkers": len(talkers), "rms_dbfs": recipe["speech_dbfs"], "talkers": talkers}
+            "num_talkers": len(talkers), "rms_dbfs": recipe["speech_dbfs"], "room": room, "talkers": talkers}
 
 
 # --- planning ----------------------------------------------------------------------
@@ -312,6 +328,7 @@ def register(recipe, splits, results, data_root, alias):
         }
     sources = [f"{s['dataset']}@{s['version']}:{s['split']}" for part in ("targets", "babble")
                for spec in recipe[part].values() for s in spec["sources"]]
+    rir = recipe["babble_rir"]
     return {
         "schema_version": "dataset-catalog/2.0", "dataset_id": dataset_id, "version": version,
         "languages": sorted(recipe["targets"]), "tasks": ["asr"], "artifacts": artifacts, "splits": split_decl,
@@ -319,8 +336,9 @@ def register(recipe, splits, results, data_root, alias):
             "status": "complete", "synthetic": "full",
             "description": "普通 ASR 背景人声评测集：只有背景人声的片段（合成的中文、英文背景人声和真实录音的人群声，期望输出为空），"
                            "以及一句话前后和说话时都有背景人声的片段（与无背景人声的对照逐条配对）。合成背景人声由不进训练、"
-                           "也不与目标语音重叠的 test/dev 说话人混成。只用于评测，不进训练。配方 scripts/asr_babble_bench/recipe.yaml。",
-            "sources": [*sources, "wham_noise@official-20261013:tt", "fsd50k@zenodo-4060432-20261013:eval"],
+                           "也不与目标语音重叠的 test/dev 说话人在模拟房间里混成。只用于评测，不进训练。配方 scripts/asr_babble_bench/recipe.yaml。",
+            "sources": [*sources, f"{rir['dataset']}@{rir['version']}:{rir['split']}",
+                        "wham_noise@official-20261013:tt", "fsd50k@zenodo-4060432-20261013:eval"],
         },
     }
 
@@ -351,14 +369,15 @@ def main():
 
     catalog = load_catalog(args.catalog)
     targets, talkers = build_sources(recipe, catalog, roots)
+    rooms = babble_rooms(recipe, catalog, roots)
     real = real_noise_files(recipe, roots)
     print({k: len(v) for k, v in targets.items()}, {k: len(v) for k, v in talkers.items()},
-          {k: len(v) for k, v in real.items()}, flush=True)
+          {k: len(v) for k, v in real.items()}, f"{len(rooms)} rooms", flush=True)
     partial = data_root / "source" / (version + ".partial")
     if partial.exists():
         shutil.rmtree(partial)
     partial.mkdir(parents=True)
-    G.update(recipe=recipe, talkers=talkers, roots=roots, bank_dir=partial)
+    G.update(recipe=recipe, talkers=talkers, rooms=rooms, roots=roots, bank_dir=partial)
     jobs = [(language, i, partial) for language, spec in recipe["babble"].items() for i in range(spec["clips"])]
     with ProcessPoolExecutor(args.workers, mp_context=FORK) as pool:
         manifest = list(pool.map(render_babble, jobs, chunksize=4))
