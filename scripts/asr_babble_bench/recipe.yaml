@@ -1,0 +1,91 @@
+# 普通 ASR 背景人声评测集（asr_babble_bench）：AmphionASR 10.21 版本在只有背景人声（babble）的片段上会输出与内容无关的文字。
+# 两类场景：只有背景人声（期望输出为空，看误输出率）；一句话前后和说话时都有背景人声（看字错率里多出来的插入）。
+version: v1-20261023
+dataset_id: asr_babble_bench
+seed: 20261023
+sample_rate: 16000
+speech_dbfs: -25.0  # 每句话按 RMS 归一到这个电平；信噪比 = 语音电平 − 说话期间的背景电平
+padding_seconds: [1.0, 5.0]  # speech 场景一句话前、后各留的时长（tight 场景不留，其余抽取相同）
+
+# 被转写的语音：test 划分，一条记录一句完整的话
+targets:
+  zh:
+    sources:
+      - {dataset: aishell, version: legacy-20260804, split: test}
+      - {dataset: magicdata, version: legacy-20260804, split: test}
+    seconds: [2.0, 12.0]
+  en:
+    sources:
+      - {dataset: librispeech, version: legacy-20260804, split: test_clean}
+    seconds: [2.0, 12.0]
+
+# 合成背景人声：每段 30 秒，8–20 人同时连续说话、每人增益 ±3 dB，人多到听不清某一个人说的内容。
+# 说话人取自没有进训练、也不与上面目标语音重叠的划分。已登记的 babble_noise_synth 取自 AISHELL-1 和
+# LibriSpeech 的训练划分（模型训练时见过这些句子），所以不用。
+babble:
+  zh:
+    sources:
+      - {dataset: kespeech, version: legacy-20260804, split: test}
+    clips: 300
+  en:
+    sources:
+      - {dataset: librispeech, version: legacy-20260804, split: dev}
+      - {dataset: librispeech, version: legacy-20260804, split: test_other}
+    clips: 300
+babble_clip_seconds: 30.0
+babble_talkers: [8, 20]
+babble_gain_db: [-3.0, 3.0]
+babble_gap_seconds: [0.1, 0.8]
+babble_min_utterances: 3
+
+# 真实录音的人群嘈杂声（只用于「只有背景人声」）
+real_noise:
+  wham: {alias: open_noise, glob: "wham_noise/extracted/wham_noise/tt/*.wav"}
+  fsd_crowd:
+    alias: open_noise
+    fsd: {split: eval, min_seconds: 3, count: 400, include: [Crowd, Chatter], exclude: [Music, Singing, Applause, Cheering]}
+
+# 所有音频都加一层很低的白或粉红噪声底（真实录音没有数字静音）
+noise_floor: {dbfs: [-65, -55], kinds: [white, pink]}
+
+default_n: 200
+
+# kind: noise（只有背景声，参考为空）或 speech（一句话）。同一个 pair 的场景共用同一批抽取（句子、前后时长、
+# 背景片段和起点），只改名字里的那一个因素，所以可以逐条配对比较。
+splits:
+  - {name: zh-babble-far, kind: noise, pair: zh-babble-only, noise: babble_zh, level_dbfs: [-45, -38], duration: [2, 20],
+     display: 只有中文背景人声 · 远, description: "8–20 人同时说话的中文背景人声，电平 −45 到 −38 dBFS（正常说话约 −25 dBFS），2–20 秒；期望输出为空"}
+  - {name: zh-babble-mid, kind: noise, pair: zh-babble-only, noise: babble_zh, level_dbfs: [-38, -31], duration: [2, 20],
+     display: 只有中文背景人声 · 中, description: "同一批片段，电平 −38 到 −31 dBFS；期望输出为空"}
+  - {name: zh-babble-near, kind: noise, pair: zh-babble-only, noise: babble_zh, level_dbfs: [-31, -24], duration: [2, 20],
+     display: 只有中文背景人声 · 近, description: "同一批片段，电平 −31 到 −24 dBFS，与正常说话差不多响；期望输出为空"}
+  - {name: en-babble-far, kind: noise, pair: en-babble-only, noise: babble_en, level_dbfs: [-45, -38], duration: [2, 20],
+     display: 只有英文背景人声 · 远, description: "8–20 人同时说话的英文背景人声，电平 −45 到 −38 dBFS，2–20 秒；期望输出为空"}
+  - {name: en-babble-mid, kind: noise, pair: en-babble-only, noise: babble_en, level_dbfs: [-38, -31], duration: [2, 20],
+     display: 只有英文背景人声 · 中, description: "同一批片段，电平 −38 到 −31 dBFS；期望输出为空"}
+  - {name: en-babble-near, kind: noise, pair: en-babble-only, noise: babble_en, level_dbfs: [-31, -24], duration: [2, 20],
+     display: 只有英文背景人声 · 近, description: "同一批片段，电平 −31 到 −24 dBFS；期望输出为空"}
+  - {name: crowd-wham, kind: noise, noise: wham, level_dbfs: [-45, -24], duration: [2, 20],
+     display: 只有真实环境人声 · WHAM!, description: "WHAM! 测试划分的真实录音（咖啡馆、餐厅、酒吧等，以英文人声为主），电平 −45 到 −24 dBFS；期望输出为空"}
+  - {name: crowd-fsd, kind: noise, noise: fsd_crowd, level_dbfs: [-45, -24], duration: [2, 20],
+     display: 只有真实人群嘈杂声 · FSD50K, description: "FSD50K 评测划分里标为 Crowd 或 Chatter 的真实录音（不含音乐和掌声），电平 −45 到 −24 dBFS；期望输出为空"}
+  - {name: zh-clean, kind: speech, pair: zh-speech, language: zh,
+     display: 中文 · 无背景人声（对照）, description: "AISHELL-1、MagicData 测试集的一句话，前后各 1–5 秒只有很低的噪声底；下面几列与它逐条配对"}
+  - {name: zh-babble20, kind: speech, pair: zh-speech, language: zh, noise: babble_zh, snr_db: 20,
+     display: 中文 · 背景人声 20 dB, description: "同一句话、同样的前后时长，整段叠加中文背景人声，信噪比 20 dB（背景很远）；前后 1–5 秒只有背景人声"}
+  - {name: zh-babble10, kind: speech, pair: zh-speech, language: zh, noise: babble_zh, snr_db: 10,
+     display: 中文 · 背景人声 10 dB, description: "同上，信噪比 10 dB（身边有一群人在聊天）"}
+  - {name: zh-babble5, kind: speech, pair: zh-speech, language: zh, noise: babble_zh, snr_db: 5,
+     display: 中文 · 背景人声 5 dB, description: "同上，信噪比 5 dB（嘈杂的人群）"}
+  - {name: zh-babble10-tight, kind: speech, pair: zh-speech, language: zh, tight: true, noise: babble_zh, snr_db: 10,
+     display: 中文 · 背景人声 10 dB · 无前后空白, description: "与 zh-babble10 同一句话、同一段背景，只是没有前后 1–5 秒；两列之差就是只有背景人声的那几秒带来的错误"}
+  - {name: en-clean, kind: speech, pair: en-speech, language: en,
+     display: 英文 · 无背景人声（对照）, description: "LibriSpeech test-clean 的一句话，前后各 1–5 秒只有很低的噪声底；下面几列与它逐条配对"}
+  - {name: en-babble20, kind: speech, pair: en-speech, language: en, noise: babble_en, snr_db: 20,
+     display: 英文 · 背景人声 20 dB, description: "同一句话、同样的前后时长，整段叠加英文背景人声，信噪比 20 dB；前后 1–5 秒只有背景人声"}
+  - {name: en-babble10, kind: speech, pair: en-speech, language: en, noise: babble_en, snr_db: 10,
+     display: 英文 · 背景人声 10 dB, description: "同上，信噪比 10 dB"}
+  - {name: en-babble5, kind: speech, pair: en-speech, language: en, noise: babble_en, snr_db: 5,
+     display: 英文 · 背景人声 5 dB, description: "同上，信噪比 5 dB"}
+  - {name: en-babble10-tight, kind: speech, pair: en-speech, language: en, tight: true, noise: babble_en, snr_db: 10,
+     display: 英文 · 背景人声 10 dB · 无前后空白, description: "与 en-babble10 同一句话、同一段背景，只是没有前后 1–5 秒"}
