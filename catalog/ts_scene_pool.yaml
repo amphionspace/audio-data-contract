@@ -1059,3 +1059,118 @@
     sources:
     - aishell2:legacy-20260804
     - magicdata:legacy-20260804
+- schema_version: dataset-catalog/2.0
+  dataset_id: ts_scene_pool
+  version: xsession-hard-20261023
+  languages:
+  - zh
+  tasks:
+  - ts_asr
+  aliases: []
+  artifacts:
+  - name: zh-records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/xsession-hard-20261023/records_zh.jsonl.gz
+    sha256: 77cdcf4c3bf5b3704e8e4f7af113930a0a5757d84e942d13acdb0d73c49ddb0b
+    metadata:
+      record_count: 40000
+  - name: zh-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/xsession-hard-20261023/audio_index_zh.jsonl.gz
+    sha256: a3e47b2c93707e83d61496a507b929d96db77af6cafa281c070ea9781b6910b9
+    metadata:
+      record_count: 281244
+  - name: record_index
+    kind: lance-record-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/xsession-hard-20261023/record_index/index.json
+    sha256: 76a85d2d3c970d56bd25fee984ddb941a3e4ad9635bfe33b5a5256eca52d8bd4
+    expected_bytes: 736
+    metadata:
+      snapshot_version: 13
+      rows: 40000
+      schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
+  splits:
+    zh:
+      artifacts:
+        records:
+        - zh-records
+        audio_index:
+        - zh-audio-index
+        records_lance:
+        - record_index
+      task: ts_asr
+      statistics:
+        records: 40000
+        duration_hours: 57.43
+        duration_basis: clip duration (segment span, or the whole file)
+  provenance:
+    status: complete
+    synthetic: none
+    snapshot_date: '2026-10-23'
+    description: hard-20261016 的 KeSpeech 跨场次版：alternate/burst/short 场景，他人之一是目标的相近声音（speaker-neighbors-20261023，ERes2NetV2
+      最近邻前 10 名之一），55% 目标缺席（注册目标、场景里只有相近声音和他人，转写为空），在场时场次规则同 xsession-alt-20261023。042 加上 *-alt-20261023（全部在场）后，ts-asr-benchmark@v12
+      上注册 KeSpeech、MagicData 说话人的缺席样本误输出从 5.2% / 2.4%（041@10000）升到 13.0% / 7.6%（042@5000），多为转写了同语料库的他人；AISHELL-2 目标的轮流场景另有
+      hard-20261016（55% 缺席、近似声音在场）平衡，这两个语料库没有。
+    sources:
+    - aishell2:legacy-20260804
+    - kespeech:legacy-20260804
+- schema_version: dataset-catalog/2.0
+  dataset_id: ts_scene_pool
+  version: magicdata-hard-20261023
+  languages:
+  - zh
+  tasks:
+  - ts_asr
+  aliases: []
+  artifacts:
+  - name: zh-records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/magicdata-hard-20261023/records_zh.jsonl.gz
+    sha256: dc20c8ae2be671b06f1ca7ceba13a9701c2f7ed6c231d57d42da95bfcddbf950
+    metadata:
+      record_count: 40000
+  - name: zh-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/magicdata-hard-20261023/audio_index_zh.jsonl.gz
+    sha256: a545b51e84e9fd2bb817f2c1bebb57960a8a3bfa7441762cfdc855971fc9890c
+    metadata:
+      record_count: 296126
+  - name: record_index
+    kind: lance-record-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/magicdata-hard-20261023/record_index/index.json
+    sha256: 261f515838ecf6dacd8fcc8b475153d00d33353fd68c26f3226846421405d7cb
+    expected_bytes: 737
+    metadata:
+      snapshot_version: 13
+      rows: 40000
+      schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
+  splits:
+    zh:
+      artifacts:
+        records:
+        - zh-records
+        audio_index:
+        - zh-audio-index
+        records_lance:
+        - record_index
+      task: ts_asr
+      statistics:
+        records: 40000
+        duration_hours: 47.79
+        duration_basis: clip duration (segment span, or the whole file)
+  provenance:
+    status: complete
+    synthetic: none
+    snapshot_date: '2026-10-23'
+    description: hard-20261016 的 MagicData 版：alternate/burst/short 场景，他人之一是目标的相近声音（speaker-neighbors-20261023，ERes2NetV2 最近邻前
+      10 名之一），55% 目标缺席（转写为空），剔除与测试集同文本的句子。042 加上 *-alt-20261023（全部在场）后，ts-asr-benchmark@v12 上注册 KeSpeech、MagicData 说话人的缺席样本误输出从
+      5.2% / 2.4%（041@10000）升到 13.0% / 7.6%（042@5000），多为转写了同语料库的他人；AISHELL-2 目标的轮流场景另有 hard-20261016（55% 缺席、近似声音在场）平衡，这两个语料库没有。
+    sources:
+    - aishell2:legacy-20260804
+    - magicdata:legacy-20260804

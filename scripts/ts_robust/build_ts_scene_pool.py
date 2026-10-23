@@ -93,6 +93,16 @@ the handover version, with the same target corpora, other speakers and (for --xs
     python build_ts_scene_pool.py --output-dir DIR --version magicdata-alt-20261023 --magicdata --zh 60000 --en 0
     python build_ts_scene_pool.py --output-dir DIR --version magicdata-handover-20261023 --handover --magicdata \\
         --neighbors FILE --twin-share 0.3 --zh 40000 --en 0
+
+The alternate/burst/short version has every target present; AISHELL-2 targets balance it with the hard version
+(hard-20261016, 55% absent with a similar voice in the scene). Without that, 042 (alt + handover, no hard) stopped
+transcribing the other speakers but answered absent KeSpeech / MagicData enrollments with another speaker's words
+(v12 absent false alarms 5.2% -> 13.0% / 2.4% -> 7.6%; AISHELL enrollments unchanged), so they get the hard version too:
+
+    python build_ts_scene_pool.py --output-dir DIR --version xsession-hard-20261023 --xsession --neighbors FILE \\
+        --zh 40000 --en 0
+    python build_ts_scene_pool.py --output-dir DIR --version magicdata-hard-20261023 --magicdata --neighbors FILE \\
+        --zh 40000 --en 0
 """
 
 import argparse
