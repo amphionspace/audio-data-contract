@@ -2,7 +2,7 @@
 """Write the AmphionEval eval-set data config for the plain-ASR babble benchmark.
 
     python scripts/asr_babble_bench/eval_set.py > data.yaml
-    ae eval-sets publish data.yaml --project open-audio-llm --name asr-babble-bench --version <version>
+    ae eval-sets publish data.yaml --project open-audio-llm --name asr-babble-bench --version v2-20261023
 
 The native evaluator scores ``noise`` splits (empty references) by
 ``false_alarm_rate`` and ``speech`` splits by CER/WER, insertions included.
@@ -26,17 +26,18 @@ def main():
         return [s["name"] for s in splits if s["kind"] == kind and s["name"].startswith(prefix)]
 
     def tags(split):
-        """Language and ``synthetic`` where they apply; the recorded crowds (WHAM!, FSD50K) get neither."""
+        """Language and ``synthetic`` where they apply (not on the recorded crowds); ``noise`` unless a clean control."""
+        noise = ["noise"] if split.get("noise") else []
         if split.get("language"):
-            return [split["language"], "synthetic"]
+            return [split["language"], "synthetic", *noise]
         if split["noise"].startswith("babble_"):
-            return [split["noise"].split("_")[1], "synthetic"]
-        return []
+            return [split["noise"].split("_")[1], "synthetic", *noise]
+        return noise
 
     config = {
         "task": "asr",
         "sampling_rate": recipe["sample_rate"],
-        "tags": ["zh", "en", "synthetic"],
+        "tags": ["zh", "en", "synthetic", "noise"],
         "groups": [
             {"name": "只有背景人声", "section": "背景人声", "labels": names("noise"),
              "description": "没有人对着设备说话，只有背景人声或人群嘈杂声；期望输出为空，指标为误输出率"},

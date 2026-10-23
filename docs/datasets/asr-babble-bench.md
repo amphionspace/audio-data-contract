@@ -1,6 +1,6 @@
 # 普通 ASR 背景人声评测集（asr_babble_bench）
 
-`asr_babble_bench@v1-20261023`：3,600 条、18 列，约 10.1 小时、1.5 GB，`asr` 记录。只用于评测，不进训练。评测集登记在 AmphionEval：`open-audio-llm/asr-babble-bench@v1-20261023`。配方 `scripts/asr_babble_bench/recipe.yaml`，生成 `scripts/asr_babble_bench/build.py`，AmphionEval 数据配置 `scripts/asr_babble_bench/eval_set.py`。
+`asr_babble_bench@v1-20261023`：3,600 条、18 列，约 10.1 小时、1.5 GB，`asr` 记录。只用于评测，不进训练。评测集登记在 AmphionEval：`open-audio-llm/asr-babble-bench@v2-20261023`（`@v1-20261023` 是同一批数据和分组，只是还没有 `noise` 标签）。配方 `scripts/asr_babble_bench/recipe.yaml`，生成 `scripts/asr_babble_bench/build.py`，AmphionEval 数据配置 `scripts/asr_babble_bench/eval_set.py`。
 
 来源：AmphionASR 10.21 版本（`amphionasr-1.7b-v4-enroll10-ckpt48000`）的普通 ASR 抗噪差，一段背景人声（babble）会输出一段无关的文字。此前的普通 ASR 评测（ASR-full 16 个测试集）都是干净语音；`open_audio_eval` 的 `cv_*_noise_*` 是整段语音加噪，没有「只有背景人声」的片段；`ts_asr_noise` 有纯背景人声，但走的是目标说话人任务（带注册音频），量不到普通 ASR。
 
