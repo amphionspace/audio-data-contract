@@ -25,9 +25,18 @@ def main():
     def names(kind, prefix=""):
         return [s["name"] for s in splits if s["kind"] == kind and s["name"].startswith(prefix)]
 
+    def tags(split):
+        """Language and ``synthetic`` where they apply; the recorded crowds (WHAM!, FSD50K) get neither."""
+        if split.get("language"):
+            return [split["language"], "synthetic"]
+        if split["noise"].startswith("babble_"):
+            return [split["noise"].split("_")[1], "synthetic"]
+        return []
+
     config = {
+        "task": "asr",
         "sampling_rate": recipe["sample_rate"],
-        "tags": ["asr", "noise"],
+        "tags": ["zh", "en", "synthetic"],
         "groups": [
             {"name": "只有背景人声", "section": "背景人声", "labels": names("noise"),
              "description": "没有人对着设备说话，只有背景人声或人群嘈杂声；期望输出为空，指标为误输出率"},
@@ -38,7 +47,7 @@ def main():
         ],
         "evaluation": [
             {"dataset_id": recipe["dataset_id"], "version": recipe["version"], "split": s["name"], "task": "asr",
-             "label": s["name"], "tags": [s.get("language") or ("zh" if s["name"].startswith("zh-") else "en"), "noise"],
+             "label": s["name"], "tags": tags(s),
              "display": s["display"], "description": s["description"]}
             for s in splits
         ],
