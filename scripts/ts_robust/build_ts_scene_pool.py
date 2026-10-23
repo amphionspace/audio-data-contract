@@ -79,6 +79,20 @@ as in every other pool.
         --neighbors FILE --twin-share 0.3 --zh 80000 --en 0
     python build_ts_scene_pool.py --output-dir DIR --version magicdata-near-20261023 --multi --magicdata \\
         --neighbors FILE --twin-share 0.3 --zh 80000 --en 0
+
+The near twins did not stop it (041@5000 matches 040@5000): the transcribed other speakers are in turn-taking scenes,
+where the target and the others do not overlap (KeSpeech/MagicData targets on v12 handover-* 15-28%, dyn-alternate
+18%, dyn-enter/leave 9-14%; overlapped scenes 1-3%; AISHELL targets 0-3% everywhere). AISHELL-2 targets also train on
+the turn-taking pools (v2-20261016 alternate/burst/short, hard-20261016, handover-20261021); KeSpeech and MagicData
+targets only had full scenes. ``--xsession`` and ``--magicdata`` therefore also build the alternate/burst/short and
+the handover version, with the same target corpora, other speakers and (for --xsession) sessions:
+
+    python build_ts_scene_pool.py --output-dir DIR --version xsession-alt-20261023 --xsession --zh 60000 --en 0
+    python build_ts_scene_pool.py --output-dir DIR --version xsession-handover-20261023 --handover --xsession \\
+        --neighbors FILE --twin-share 0.3 --zh 40000 --en 0
+    python build_ts_scene_pool.py --output-dir DIR --version magicdata-alt-20261023 --magicdata --zh 60000 --en 0
+    python build_ts_scene_pool.py --output-dir DIR --version magicdata-handover-20261023 --handover --magicdata \\
+        --neighbors FILE --twin-share 0.3 --zh 40000 --en 0
 """
 
 import argparse
@@ -209,6 +223,13 @@ class Builder:
             "num_frames": start + frames, "duration": round((start + frames) / rate, 3)})
         return {"cut_id": cut, "start": round(start / rate, 3), "duration": round(frames / rate, 3)}
 
+    def sessions(self):
+        """(target session, enrollment session) of a --xsession scene: the other session with XSESSION_CROSS_PROB."""
+        if not self.xsession:
+            return None, None
+        own = self.rng.choice(SESSIONS)
+        return own, next(s for s in SESSIONS if s != own) if self.rng.random() < XSESSION_CROSS_PROB else own
+
     def other_speaker(self, used, count):
         """A (corpus, speaker, utterances) for one other speaker, never one already in the scene."""
         rng = self.rng
@@ -243,8 +264,11 @@ class Builder:
                 if not near:
                     continue
             wanted = 0 if hard == "absent" else 1 if mode != "alternate" else (2 if rng.random() < 0.4 else 1)
-            targets = corpus.pick(rng, speaker, wanted, *((short_low, short_high) if mode == "short" else (None, None))) if wanted else []
-            enrollment = corpus.pick(rng, speaker, 1, *ENROLLMENT_SECONDS, exclude=set(targets)) if targets is not None else None
+            own, enrolled = self.sessions()
+            targets = corpus.pick(rng, speaker, wanted, *((short_low, short_high) if mode == "short" else (None, None)),
+                                  session=own) if wanted else []
+            enrollment = corpus.pick(rng, speaker, 1, *ENROLLMENT_SECONDS, exclude=set(targets),
+                                     session=enrolled) if targets is not None else None
             if targets is not None and enrollment:
                 break
         used = {corpus.speakers[speaker]}
@@ -283,6 +307,8 @@ class Builder:
         joiner = "" if self.language == "zh" else " "
         scene = {"hard": {"kind": hard, "neighbor": name,
                           "cosine": dict(self.neighbors[corpus.speakers[speaker]])[name]}} if hard else {}
+        if self.xsession and targets:
+            scene["session"] = {"targets": own, "enrollment": enrolled}
         return {
             **scene, "mode": mode, "target_speaker": corpus.speakers[speaker],
             "targets": [{**self.ref(corpus, i), "text": corpus.rows["text"][i].strip()} for i in targets],
@@ -310,10 +336,7 @@ class Builder:
         low, high = FULL_UTTERANCE_SECONDS
         while True:
             speaker = rng.randrange(len(corpus.speakers))
-            own = enrolled = None
-            if self.xsession:
-                own = rng.choice(SESSIONS)
-                enrolled = next(s for s in SESSIONS if s != own) if rng.random() < XSESSION_CROSS_PROB else own
+            own, enrolled = self.sessions()
             targets = corpus.pick(rng, speaker, turns, low, high, session=own)
             enrollment = corpus.pick(rng, speaker, 1, *ENROLLMENT_SECONDS, exclude=set(targets), session=enrolled) if targets else None
             if enrollment:
@@ -369,8 +392,9 @@ class Builder:
         low, high = HANDOVER_UTTERANCE_SECONDS
         while True:
             speaker = rng.randrange(len(corpus.speakers))
-            targets = corpus.pick(rng, speaker, 1, low, high)
-            enrollment = corpus.pick(rng, speaker, 1, *ENROLLMENT_SECONDS, exclude=set(targets)) if targets else None
+            own, enrolled = self.sessions()
+            targets = corpus.pick(rng, speaker, 1, low, high, session=own)
+            enrollment = corpus.pick(rng, speaker, 1, *ENROLLMENT_SECONDS, exclude=set(targets), session=enrolled) if targets else None
             if enrollment:
                 break
         name = corpus.speakers[speaker]
@@ -387,7 +411,9 @@ class Builder:
             picks = close.pick(rng, who, 1, low, high)
             other = (close, who, picks) if picks else None
         close, who, picks = other
-        scene = {**({"hard": hard} if hard else {}), "mode": "alternate", "target_speaker": name,
+        scene = {**({"hard": hard} if hard else {}),
+                 **({"session": {"targets": own, "enrollment": enrolled}} if self.xsession else {}),
+                 "mode": "alternate", "target_speaker": name,
                  "targets": [{**self.ref(corpus, targets[0]), "text": corpus.rows["text"][targets[0]].strip()}],
                  "enrollment": self.ref(corpus, enrollment[0]),
                  "interferers": [{"speaker": close.speakers[who], "utts": [self.ref(close, picks[0])]}]}
@@ -470,15 +496,15 @@ def main():
     parser.add_argument("--twin-share", type=float, default=0.26, help="share of the records that are twins")
     parser.add_argument("--solo", action="store_true", help="build the short solo version (one short target utterance, nobody else) with twins")
     parser.add_argument("--handover", action="store_true", help="build the handover version (target and one other speaker, one utterance each, in a row) with twins")
-    parser.add_argument("--xsession", action="store_true", help="with --multi: KeSpeech targets enrolled from the same or the other session (zh only)")
-    parser.add_argument("--magicdata", action="store_true", help="with --multi: MagicData targets (zh only)")
+    parser.add_argument("--xsession", action="store_true", help="KeSpeech targets enrolled from the same or the other session (zh only)")
+    parser.add_argument("--magicdata", action="store_true", help="MagicData targets (zh only)")
     args = parser.parse_args()
     if sum((args.multi, args.solo, args.handover)) > 1:
         parser.error("--multi, --solo and --handover build different pools; pick one")
-    if args.xsession and (not args.multi or args.en):
-        parser.error("--xsession builds the zh multi-turn pool: pass --multi and --en 0")
-    if args.magicdata and (not args.multi or args.en or args.xsession):
-        parser.error("--magicdata builds the zh multi-turn pool: pass --multi and --en 0, without --xsession")
+    if (args.xsession or args.magicdata) and (args.en or args.solo):
+        parser.error("--xsession and --magicdata build zh pools: pass --en 0, without --solo")
+    if args.xsession and args.magicdata:
+        parser.error("--xsession and --magicdata take their targets from different corpora; pick one")
     if (args.multi or args.solo or args.handover) and not 0 <= args.twin_share < 1:
         parser.error("--twin-share must be in [0, 1)")
     VERSION = args.version
