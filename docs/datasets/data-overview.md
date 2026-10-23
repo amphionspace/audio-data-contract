@@ -2,7 +2,7 @@
 
 按数据集查看语言、支持任务、时长和特性。清洗、热词、加噪、评测入口和训练框架配置归入所属数据集，不另算一套源数据。
 
-当前登记 **173 个数据集条目**；另有 **20 个下载来源声明**和 **1 个训练混合配方**。登记不代表本机文件已齐备。
+当前登记 **174 个数据集条目**；另有 **20 个下载来源声明**和 **1 个训练混合配方**。登记不代表本机文件已齐备。
 
 时长单位为小时。不同版本、子集和标注片段可能重叠，逐项列出，不相加为总量；没有时长的条目仍保留。参考表数字未核实当前文件与划分覆盖；“过滤前”不能当作清洗后时长。已被合并版本取代（`superseded_by`）的旧版本不再列出，仍可按原 ID 和版本解析。
 
@@ -92,6 +92,7 @@
 | [mir1k](../../catalog/mir1k.yaml#L1) | zh | noise | 2.2（已登记；[modelscope-20261017](../../catalog/mir1k.yaml#L1)） | MIR-1K：1000 段中文流行歌卡拉 OK 片段（3–12 秒，共 2.22 小时），16 kHz 双声道 16 bit，左声道伴奏、右声道人声；`Wavfile/` 是切好的片段，`Lyrics/` 是 Big5 编码的歌词。两个声道相加即带伴奏的歌（近似外放的歌曲），只用于评测里「只有歌声、没有人说话」的场景 |
 | [police_asr_unified](../../catalog/police_asr_unified.yaml#L1) | zh | 语音识别 | 805.6（已登记；[v1-20261009](../../catalog/police_asr_unified.yaml#L1)） | 警务合成语音统合版：V1-V6 全部批次合并为 train/dev/test 三个集合，不复制音频 |
 | [police_terms_single](../../catalog/police_terms_single.yaml#L2) | zh | 语音识别 | 1.7（已登记；[v1-20261022](../../catalog/police_terms_single.yaml#L2)） | 警务术语单说测试集，只用于评测，不进训练。每条录音只说一个警务术语，不带句子；参考文本就是术语， supervision 的 custom.target_terms 为该术语（评测器据此报术语命中率）。术语取自警言警语 V6.0 术语表 （police_synthetic_zh_accent@legacy-rebalance-100k-20260916 source_entries 中 term/app 两类，共 1,088 个）， 每个术语 3 个说话人。Qwen3-TTS-12Hz-1.7B-Base 克隆原警务测试集的 test 口音说话人（参考音频为本机找回的原片段， 参考文本用 Qwen3-ASR 重新转写），全部是带口音的普通话。起因：实测单说术语时命中率很低，而现有警务测试集几乎都是整句 （police_asr_unified@v1-20261009 test 47,006 条里只有 9 条是单说术语） |
+| [police_terms_single_train](../../catalog/police_terms_single_train.yaml#L2) | zh | 语音识别 | 未登记 | 警务术语单说训练集：每条录音只说一个警务术语（不带句子），术语取自警言警语 V6.0 术语表 （police_synthetic_zh_accent@legacy-rebalance-100k-20260916 的 source_entries 中 term/app 两类，共 1,088 个）， 每个术语 20 个说话人。用 Qwen3-TTS 1.7B Base 克隆原警务数据的 train 口音说话人（不含粤语，不用 test 说话人）， 检查规则与测试集 police_terms_single@v1-20261022 相同。起因：实测单说术语时命中率很低， police_asr_unified@v1-20261009 train 里单说术语只有 2,065 条、1.11 h。 目前只有进度状态，还没有可训练的产物 |
 | [primewords](../../catalog/zh_source_clean.yaml#L1) | zh | 语音识别 | 98.4（已登记；[clean-dual-qwen-moss-v1-20261008](../../catalog/zh_source_clean.yaml#L1)）<br>99.0（已登记；[icefall-20260908](../../catalog/icefall_runtime.yaml#L1642)）<br>99.0（已登记；[legacy-20260804](../../catalog/icefall_base.yaml#L1266)） | primewords@icefall-20260908 的 train 监督片段，经 Qwen3-ASR-1.7B 与 MOSS-Transcribe-Diarize 双引擎一致性清洗；逐条写入 custom.clean（pass、reason、action、engine_status），不删除记录，读取时按 require_clean_pass 过滤。音频沿用源版本，不复制。规则 consensus-v6 / wenetspeech-faithful-v5：pass 50119、reject 265。少于 2 个字的 too_short 共 12 条按规则不经引擎直接 pass。用于合成时建议在 pass 之外再要求：两引擎均有效、MOSS 只输出 1 个说话人、action 不是 review_consensus；too_short 另要求两引擎规范化后与原文完全一致。按此筛选保留 41860 条、82.06 小时（too_short 通过 4/12）；含派生版本（与源数据可能重叠） |
 | [realman](../../catalog/icefall_runtime.yaml#L3107) | zh | 语音识别 | 83.7（已登记；[已准备标注片段](../../catalog/icefall_runtime.yaml#L3107)） | 标注片段时长，重叠语音或多麦克风可能重复计时 |
 | [realman_zh_far_asr](../../catalog/zh_farfield.yaml#L335) | zh | 语音识别 | 64.0（已登记；[zh-far-replay-v1-20261009](../../catalog/zh_farfield.yaml#L335)） | 已登记划分：train |

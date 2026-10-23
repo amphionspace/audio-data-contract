@@ -1,0 +1,40 @@
+# 占位登记：警务术语单说训练集（每条录音只说一个术语），正在合成，进度以状态文件为准。
+- schema_version: dataset-catalog/2.0
+  dataset_id: police_terms_single_train
+  version: v1-20261023
+  languages:
+    - zh
+  tasks:
+    - asr
+  aliases: []
+  artifacts:
+    - name: preparation_state
+      kind: dataset-state
+      root_alias: aidc_data
+      relative_path: datasets/police_terms_single_train/versions/v1-20261023/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+          - preparation_state
+      statistics:
+        target_terms: 1088
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: >-
+      警务术语单说训练集：每条录音只说一个警务术语（不带句子），术语取自警言警语 V6.0 术语表
+      （police_synthetic_zh_accent@legacy-rebalance-100k-20260916 的 source_entries 中 term/app 两类，共 1,088 个），
+      每个术语 20 个说话人。用 Qwen3-TTS 1.7B Base 克隆原警务数据的 train 口音说话人（不含粤语，不用 test 说话人），
+      检查规则与测试集 police_terms_single@v1-20261022 相同。起因：实测单说术语时命中率很低，
+      police_asr_unified@v1-20261009 train 里单说术语只有 2,065 条、1.11 h。
+      目前只有进度状态，还没有可训练的产物。
+    source: police_synthetic_zh_accent@legacy-rebalance-100k-20260916 source_entries
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/police-terms-single-train-20261023
+  recipe_parameters:
+    tts_provider: qwen3_tts
+    speaker_split: train (nationwide_v2_480 384/48/48)，不含粤语
+    sample_rate: 16000
+    channels: 1
