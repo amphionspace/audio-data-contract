@@ -1,0 +1,59 @@
+- schema_version: dataset-catalog/2.0
+  dataset_id: demand
+  version: hf-voice-biomarkers-20261023
+  languages:
+  - und
+  tasks:
+  - noise
+  aliases:
+  - demand-noise
+  artifacts:
+  - name: parquet_dir
+    kind: hf-dataset-directory
+    root_alias: demand
+    relative_path: source/hf-voice-biomarkers-20261023/data
+    metadata:
+      file_count: 22
+      expected_bytes: 10446419041
+      tree_sha256: 41eb2d73d0fbbcf4a6f84cbc7d5de52d0c735533f74abe6062c3972ad6de1a14
+      rows: 560
+      source_url: https://huggingface.co/datasets/voice-biomarkers/DEMAND-acoustic-noise
+      upstream_commit: 608fdd578ee7c485761ea75157122b924bd0de73
+  splits:
+    16k:
+      artifacts:
+        records:
+        - parquet_dir
+      statistics:
+        num_clips: 272
+        recordings: 17
+        duration_hours: 22.6667
+        duration_basis: sum of single-channel file lengths (16 channels x 5 min per recording)
+      provenance:
+        format: 16 kHz mono 16-bit WAV bytes in the audio column
+    48k:
+      artifacts:
+        records:
+        - parquet_dir
+      statistics:
+        num_clips: 288
+        recordings: 18
+        duration_hours: 24.0
+        duration_basis: sum of single-channel file lengths (16 channels x 5 min per recording)
+      provenance:
+        format: 48 kHz mono 16-bit WAV bytes in the audio column
+  provenance:
+    source: DEMAND (Thiemann, Ito, Vincent; IRISA, Inria), Kaggle copy chrisfilo/demand repackaged as parquet in the Hugging Face mirror
+      voice-biomarkers/DEMAND-acoustic-noise
+    url: https://zenodo.org/records/1227121
+    snapshot_date: '2026-10-23'
+    license: The Zenodo record metadata says CC BY 4.0 while its description text says CC BY-SA 3.0 Unported; treat it as CC BY-SA
+      3.0 (share-alike) unless the authors confirm otherwise.
+    description: DEMAND 多通道环境噪声：16 麦阵列在 18 种真实环境录的 5 分钟噪声（厨房、客厅、洗衣房、田野、公园、河边、走廊、会议室、办公室、食堂、餐馆、车站、广场、街道、咖啡馆、公交、轿车、地铁），每个通道一个单声道
+      WAV。这份 parquet 有 16 kHz（17 个环境，没有咖啡馆 SCAFE）和 48 kHz（18 个环境）两种采样率，共 560 个单通道文件、46.7 小时。可当加噪素材用，16 个通道彼此高度相关，混入时按录音取一个通道即可。
+    acquisition: Downloaded the pinned Hugging Face snapshot from hf-mirror.com; each parquet's sha256 equals its LFS oid.
+    known_issues:
+    - The mirror drops the environment names; file_name holds only ch01-ch16. Rows come in 35 consecutive 16-row blocks, one per
+      recording and sample rate, so a block is one environment, but which one is unknown. Use demand@zenodo-1227121-16k-20261023
+      when the environment matters.
+    integrity: local_sha256_recorded

@@ -1,0 +1,163 @@
+- schema_version: dataset-catalog/2.0
+  dataset_id: dipco
+  version: modelscope-benjamin-paine-20261023
+  languages:
+  - en
+  tasks:
+  - asr
+  - speaker_attributed_asr
+  aliases:
+  - dinner-party-corpus
+  - dipco-utterances
+  artifacts:
+  - name: split_channel_dir
+    kind: hf-dataset-directory
+    root_alias: dipco
+    relative_path: source/modelscope-benjamin-paine-20261023/split-channel
+    metadata:
+      file_count: 55
+      expected_bytes: 23859943038
+      tree_sha256: 3010f65bb64a055b9e74784e1e55fd3ddcd9ef58b4c34664bf0e98adf3cd5d48
+      rows: 254808
+      layout: one row per utterance and channel (close-talk channel 0, far-field device U01-U05 channels 1-7)
+  - name: mixed_channel_dir
+    kind: hf-dataset-directory
+    root_alias: dipco
+    relative_path: source/modelscope-benjamin-paine-20261023/mixed-channel
+    metadata:
+      file_count: 10
+      expected_bytes: 3840697632
+      tree_sha256: 21d9bf101002bf49e760147d5809bb136e74f8fc86be046c0751ad98150c3051
+      rows: 42468
+      layout: one row per utterance and device; far-field rows are the mean of the device's 7 channels
+  - name: convert_script
+    kind: metadata
+    root_alias: dipco
+    relative_path: source/modelscope-benjamin-paine-20261023/convert.py
+    expected_bytes: 17106
+    sha256: 0b3b0db71a955afdbbf0d8e5db1b040a984291950e9b51be3d1735267fe7d48e
+  splits:
+    dev:
+      artifacts:
+        records:
+        - split_channel_dir
+        - mixed_channel_dir
+      statistics:
+        sessions: 5
+        utterances: 3673
+        speakers: 16
+        duration_hours: 3.336
+        duration_basis: sum of utterance lengths counted once; split-channel stores each utterance 36 times and mixed-channel 6 times;
+          overlapping speech counts once per speaker
+      provenance:
+        source_split: dev (S02, S04, S05, S09, S10)
+        parquet_split: train
+    eval:
+      artifacts:
+        records:
+        - split_channel_dir
+        - mixed_channel_dir
+      statistics:
+        sessions: 5
+        utterances: 3405
+        speakers: 16
+        duration_hours: 3.174
+        duration_basis: sum of utterance lengths counted once; split-channel stores each utterance 36 times and mixed-channel 6 times;
+          overlapping speech counts once per speaker
+      provenance:
+        source_split: eval (S01, S03, S06, S07, S08)
+        parquet_split: test
+  provenance:
+    source: DiPCo (Amazon, JHU CLSP), utterance-cut conversion of the full Zenodo release by Benjamin Paine, ModelScope mirror benjamin-paine/dinner-party-corpus
+    url: https://zenodo.org/records/8122551
+    snapshot_date: '2026-10-23'
+    license: CDLA-Permissive-1.0 (commercial use allowed)
+    description: DiPCo 晚宴语料：每场 4 人在家庭餐桌边自然聊天，英文 16 kHz。每人一个近讲麦克风，另有 5 台 7 麦阵列设备（U01–U05）放在房间不同位置。dev、eval 各 5 场、16
+      个说话人，共 7078 句、6.5 小时语音。这一版按句切好：split-channel 每句存近讲 + 35 个远场通道（25.5 万行），mixed-channel 把每台设备 7 个通道取平均（4.2 万行）；每行带
+      会话、说话人、设备、通道、离设备距离、性别、母语和转写。parquet 的 train/test 就是官方 dev/eval，没有训练集。有重叠语音，远场通道互相之间也有重复，统计时长时只算一遍。
+    acquisition: Downloaded all files of the ModelScope repo at master on 2026-10-23 (revisions 1fe7fcd1, 39844310, cbb81d06); each
+      parquet's sha256 equals the ModelScope LFS sha256 (modelscope-snapshot.json).
+    integrity: local_sha256_recorded
+- schema_version: dataset-catalog/2.0
+  dataset_id: dipco
+  version: hf-huckiyang-20261023
+  languages:
+  - en
+  tasks:
+  - asr
+  - speaker_diarization
+  - speaker_attributed_asr
+  aliases:
+  - dipco-sessions
+  artifacts:
+  - name: audio_dir
+    kind: source-directory
+    root_alias: dipco
+    relative_path: source/hf-huckiyang-20261023/audio
+    metadata:
+      file_count: 203
+      expected_bytes: 12538392934
+      tree_sha256: 5a1dc9f5c1c749de1f02d51ce9bfac0dd7c0800f3c5c90f8a73c419c3e945f36
+  - name: transcriptions_dir
+    kind: source-directory
+    root_alias: dipco
+    relative_path: source/hf-huckiyang-20261023/transcriptions
+    metadata:
+      file_count: 10
+      expected_bytes: 3588593
+      tree_sha256: 1afe30a9e8dc30c5e364096745e727b3f6a18e24f3c46a82af5d01a27b8a2a22
+  - name: license
+    kind: license
+    root_alias: dipco
+    relative_path: source/hf-huckiyang-20261023/LICENSE.txt
+    expected_bytes: 10461
+    sha256: 2d6f51b40d9b47e2b01e1503e8e16230b5745bc927ae9024f734e36fcee8e7f5
+  splits:
+    dev:
+      artifacts:
+        source_directory:
+        - audio_dir
+        transcriptions:
+        - transcriptions_dir
+      statistics:
+        sessions: 5
+        utterances: 3673
+        speakers: 16
+        duration_hours: 2.732
+        duration_basis: session length, each session counted once
+        audio_files: 103
+      provenance:
+        source_split: dev (S02, S04, S05, S09, S10)
+        layout: audio/dev/<session>_<P<id>|U0<n>.CH<c>>.wav; transcriptions/dev/<session>.json
+    eval:
+      artifacts:
+        source_directory:
+        - audio_dir
+        transcriptions:
+        - transcriptions_dir
+      statistics:
+        sessions: 5
+        utterances: 3405
+        speakers: 16
+        duration_hours: 2.603
+        duration_basis: session length, each session counted once
+        audio_files: 100
+      provenance:
+        source_split: eval (S01, S03, S06, S07, S08)
+        layout: audio/eval/<session>_<P<id>|U0<n>.CH<c>>.wav; transcriptions/eval/<session>.json
+  provenance:
+    source: DiPCo (Amazon, JHU CLSP), partial Hugging Face mirror huckiyang/DiPCo of the session-level release
+    url: https://zenodo.org/records/8122551
+    snapshot_date: '2026-10-23'
+    license: CDLA-Permissive-1.0 (commercial use allowed)
+    description: DiPCo 晚宴语料：每场 4 人在家庭餐桌边自然聊天，英文 16 kHz，每人一个近讲麦克风，另有 5 台 7 麦阵列设备；dev、eval 各 5 场，共 7078 句。按句评测用完整的
+      `dipco@modelscope-benjamin-paine-20261023`（已切句，6.5 小时语音）。这一版是整场会话长音频（每个文件是一个近讲麦克风或一台设备的一个通道）加官方 JSON 转写，留给需要长音频的说话人日志实验；但镜像不全，原版
+      10 场 × 39 个文件共 390 个，这里只有 203 个，每场都缺部分近讲或远场通道。
+    acquisition: Downloaded the pinned Hugging Face snapshot (commit e2b29d3d) from hf-mirror.com; each wav's sha256 equals its LFS
+      oid. .DS_Store files were skipped.
+    known_issues:
+    - Only 203 of the 390 session wav files exist in the mirror. Available per session (devices listed without a channel have all
+      7) - S02 P05-P08 U01-U03; S04 P13-P16 U01-U03 U05.CH6; S05 P17 U04 U05; S09 P30-P32 U02.CH6 U03.CH3 U04 U05; S10 P29-P32 U04
+      U05; S01 P04 U01-U03 U04.CH6 U05.CH3; S03 P09 U01.CH2 U04 U05; S06 U01.CH7 U04 U05; S07 U01-U03; S08 P25-P27 U01-U03. The
+      full set is on Zenodo record 8122551 (DipCo.tgz, 13.4 GB), which downloads at about 250 KB/s from this host.
+    integrity: local_sha256_recorded
