@@ -41,5 +41,6 @@
   "ts_asr_nearshort": "/workspace/data/datasets/ts_asr_nearshort",
   "ts_asr_playback": "/workspace/data/datasets/ts_asr_playback",
   "mir1k": "/workspace/data/datasets/mir1k",
+  "chime4": "/workspace/data/datasets/chime4",
   "open_noise": "/workspace/data/datasets/noise_open"
 }
