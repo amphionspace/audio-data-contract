@@ -42,5 +42,11 @@
   "ts_asr_playback": "/workspace/data/datasets/ts_asr_playback",
   "mir1k": "/workspace/data/datasets/mir1k",
   "chime4": "/workspace/data/datasets/chime4",
+  "dipco": "/workspace/data/datasets/dipco",
+  "libricss": "/workspace/data/datasets/libricss",
+  "voices": "/workspace/data/datasets/voices",
+  "ami_ihm": "/workspace/data/datasets/ami_ihm",
+  "demand": "/workspace/data/datasets/demand",
+  "voicebank_demand": "/workspace/data/datasets/voicebank_demand",
   "open_noise": "/workspace/data/datasets/noise_open"
 }
