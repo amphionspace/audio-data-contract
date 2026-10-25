@@ -119,7 +119,7 @@
 | [wenetspeech_diarize](../../catalog/wenetspeech_diarize.yaml#L2) | zh | diarization、带说话人标注的语音识别 | 未登记 | WenetSpeech L 训练集原始长音频（≥120 秒，51,358 条 / 22,174 h）的说话人日志伪标签： 沿用 emilia2_zh_dialogue_diarize 的流程，本地 MOSS-Transcribe-Diarize 0.9B 整条打说话人和文本， 粗筛多人录音，在停顿处切 30–120 秒窗口，Qwen3-ASR 整窗核对；门槛先在试跑集上以 MOSS Pro 为参照重新确定。 2026-10-14 停止全量打标：保留 b000–b040 共 41 批（共 52 批）的整条打标与粗筛结果， Qwen3-ASR 整窗核对只做到 30 批。不转正、不进训练，不发布为可用训练版本； 是否改为定向打标（声纹筛选音色相近的多人录音）看音色相近数据的效果再定 |
 | [wenetspeech_disfluency](../../catalog/icefall_runtime.yaml#L677) | zh | 语音识别 | 182.5（已登记；[icefall-20260908](../../catalog/icefall_runtime.yaml#L677)） | 已登记划分：train |
 | [wenetspeech_wu](../../catalog/icefall_base.yaml#L640) | zh | 语音识别 | 8,740.7（已登记；[icefall-20260908](../../catalog/icefall_runtime.yaml#L951)）<br>8,740.7（已登记；[legacy-20260804](../../catalog/icefall_base.yaml#L640)） | 含派生版本（与源数据可能重叠） |
-| [wenetspeech_yue](../../catalog/icefall_base.yaml#L1971) | yue | 语音识别 | 未登记 | 含派生版本（与源数据可能重叠） |
+| [wenetspeech_yue](../../catalog/wenetspeech_yue_clean.yaml#L2) | yue | 语音识别 | 未登记 | WenetSpeech-Yue 训练集（clean 部分，1,244,949 条 / 4,333.1 h）是发布方多系统融合（ROVER）的机器标注，每条置信度都 ≥ 0.9。 用共享的 Qwen3-ASR-1.7B 逐条转写，按粤语版 SpeechIO TextNorm（保留语气词、繁转简）算与原标注的字错误率； Qwen 在公开粤语测试集 WSYue-ASR-eval short 上的错误率是 6.2。 目前只记录转写和错误率，不删数据；保留规则在看过被拒样本后再定；含派生版本（与源数据可能重叠） |
 | [wenetspeech_yue_all](../../catalog/icefall_base.yaml#L2029) | yue | 语音识别 | 未登记 | 含派生版本（与源数据可能重叠） |
 
 ## 混合语言及多语数据
