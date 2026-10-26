@@ -1379,3 +1379,204 @@
     sources:
     - aishell2:legacy-20260804
     - magicdata:legacy-20260804
+- schema_version: dataset-catalog/2.0
+  dataset_id: ts_scene_pool
+  version: xsession-hard-twins-20261026
+  languages:
+  - zh
+  tasks:
+  - ts_asr
+  aliases: []
+  artifacts:
+  - name: zh-records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/xsession-hard-twins-20261026/records_zh.jsonl.gz
+    sha256: f47d6559877a427c24f33d183d94312b7eb02fe097f0c890bbe7a23d5238b639
+    metadata:
+      record_count: 40000
+  - name: zh-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/xsession-hard-twins-20261026/audio_index_zh.jsonl.gz
+    sha256: a3e9279e4628f7ced3b3fc977bd2632912e77dfc2b701462b05328912223a5b8
+    metadata:
+      record_count: 154916
+  - expected_bytes: 742
+    kind: lance-record-index
+    metadata:
+      rows: 40000
+      schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
+      snapshot_version: 13
+    name: record_index
+    relative_path: datasets/ts_scene_pool/versions/xsession-hard-twins-20261026/record_index/index.json
+    root_alias: aidc_data
+    sha256: 50a128a9f708335bea67425891ce25ec00b0f24fb8d453d37dff1dfa283bc194
+  splits:
+    zh:
+      artifacts:
+        records:
+        - zh-records
+        audio_index:
+        - zh-audio-index
+        records_lance:
+        - record_index
+      task: ts_asr
+      statistics:
+        records: 40000
+        duration_hours: 57.22
+        duration_basis: clip duration (segment span, or the whole file)
+  provenance:
+    status: complete
+    synthetic: none
+    snapshot_date: '2026-10-26'
+    description: xsession-hard-20261023 的带孪生版：KeSpeech 目标的 alternate/burst/short 在场场景，他人之一是目标的相近声音（speaker-neighbors-20261023，ERes2NetV2
+      最近邻前 10 名之一），每个在场场景后跟一条孪生样本（同一场景换成另一个 KeSpeech 人注册，一半是目标的另一个相近声音，目标为空），缺席 50%；注册音频不选与目标同一句的话。起因：原 hard 池的缺席场景是单独的场景、没有短句，也不是某个在场场景的孪生，是最后一类没有孪生的场景；048
+      avg3 在带孪生的场景类别上都好于 10.21 版本，难缺席划分的误输出仍持平或偏高。
+    sources:
+    - aishell2:legacy-20260804
+    - kespeech:legacy-20260804
+- schema_version: dataset-catalog/2.0
+  dataset_id: ts_scene_pool
+  version: magicdata-hard-twins-20261026
+  languages:
+  - zh
+  tasks:
+  - ts_asr
+  aliases: []
+  artifacts:
+  - name: zh-records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/magicdata-hard-twins-20261026/records_zh.jsonl.gz
+    sha256: acc7edaed8f28e12adbc4299de513c5041ac91c1655f2a17ad34060acde713e1
+    metadata:
+      record_count: 40000
+  - name: zh-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/magicdata-hard-twins-20261026/audio_index_zh.jsonl.gz
+    sha256: aa8ea29ec80b06531d8ff07328128d1319c7040a4f07c69cb15c8dc389311ca0
+    metadata:
+      record_count: 166051
+  - expected_bytes: 743
+    kind: lance-record-index
+    metadata:
+      rows: 40000
+      schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
+      snapshot_version: 13
+    name: record_index
+    relative_path: datasets/ts_scene_pool/versions/magicdata-hard-twins-20261026/record_index/index.json
+    root_alias: aidc_data
+    sha256: e8798d20315a40db76f2734043776d47c9c32b83e9b64ab20aec45e755e2f28c
+  splits:
+    zh:
+      artifacts:
+        records:
+        - zh-records
+        audio_index:
+        - zh-audio-index
+        records_lance:
+        - record_index
+      task: ts_asr
+      statistics:
+        records: 40000
+        duration_hours: 47.88
+        duration_basis: clip duration (segment span, or the whole file)
+  provenance:
+    status: complete
+    synthetic: none
+    snapshot_date: '2026-10-26'
+    description: magicdata-hard-20261023 的带孪生版：MagicData 目标的 alternate/burst/short 在场场景，他人之一是目标的相近声音（speaker-neighbors-20261023，ERes2NetV2
+      最近邻前 10 名之一），每个在场场景后跟一条孪生样本（同一场景换成另一个 MagicData 人注册，一半是目标的另一个相近声音，目标为空），缺席 50%；剔除与测试集同文本的句子。起因同 xsession-hard-twins-20261026：原
+      hard 池的缺席场景不是在场场景的孪生、没有短句，是最后一类没有孪生的场景。
+    sources:
+    - aishell2:legacy-20260804
+    - magicdata:legacy-20260804
+- schema_version: dataset-catalog/2.0
+  dataset_id: ts_scene_pool
+  version: hard-twins-20261026
+  languages:
+  - zh
+  - en
+  tasks:
+  - ts_asr
+  aliases: []
+  artifacts:
+  - name: zh-records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/hard-twins-20261026/records_zh.jsonl.gz
+    sha256: e590283a932ffca9904824d051b809f95e0fd071b4323e35488634238ccecec9
+    metadata:
+      record_count: 40000
+  - name: zh-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/hard-twins-20261026/audio_index_zh.jsonl.gz
+    sha256: 360a04065144026ed92b1dc3371495c1d14c3e0945529ba5709870c59172faaf
+    metadata:
+      record_count: 167738
+  - name: en-records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/hard-twins-20261026/records_en.jsonl.gz
+    sha256: 83126c385279c9560f516493777010b791dbdf65f431da7eba8c810983400510
+    metadata:
+      record_count: 25000
+  - name: en-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/hard-twins-20261026/audio_index_en.jsonl.gz
+    sha256: ccfc88cd8ece41a69a13a2566ba6310fb85e48a53b4f1cdda5764bee66118a1b
+    metadata:
+      record_count: 57716
+  - expected_bytes: 1062
+    kind: lance-record-index
+    metadata:
+      rows: 65000
+      schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
+      snapshot_version: 13
+    name: record_index
+    relative_path: datasets/ts_scene_pool/versions/hard-twins-20261026/record_index/index.json
+    root_alias: aidc_data
+    sha256: dcab9a50d337930419c9861ce3d5e213330f970f410295df23b003ccbddcaef8
+  splits:
+    zh:
+      artifacts:
+        records:
+        - zh-records
+        audio_index:
+        - zh-audio-index
+        records_lance:
+        - record_index
+      task: ts_asr
+      statistics:
+        records: 40000
+        duration_hours: 44.84
+        duration_basis: clip duration (segment span, or the whole file)
+    en:
+      artifacts:
+        records:
+        - en-records
+        audio_index:
+        - en-audio-index
+        records_lance:
+        - record_index
+      task: ts_asr
+      statistics:
+        records: 25000
+        duration_hours: 37.07
+        duration_basis: clip duration (segment span, or the whole file)
+  provenance:
+    status: complete
+    synthetic: none
+    snapshot_date: '2026-10-26'
+    description: hard-20261016 的带孪生版：AISHELL-2 / LibriSpeech 目标的 alternate/burst/short 在场场景，他人之一是目标的相近声音（speaker-neighbors-20261016，ERes2NetV2
+      最近邻前 10 名之一），每个在场场景后跟一条孪生样本（同一场景换成另一个人注册，一半是目标的另一个相近声音，目标为空），缺席 50%；注册音频不选与目标同一句的话。起因：原 hard 池的缺席场景是单独的场景、没有短句，也不是某个在场场景的孪生，是最后一类没有孪生的场景；048
+      avg3 在带孪生的场景类别上都好于 10.21 版本，难缺席划分的误输出仍持平或偏高（abs 3.4 对 3.0、realreg 1.6 对 0.8、短片段 11.1 对 10.5）。
+    sources:
+    - aishell2:legacy-20260804
+    - kespeech:legacy-20260804
+    - librispeech:legacy-20260804
+    - common_voice_en:legacy-20260804
