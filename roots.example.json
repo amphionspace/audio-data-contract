@@ -42,5 +42,6 @@
   "ts_asr_playback": "/workspace/data/datasets/ts_asr_playback",
   "asr_babble_bench": "/workspace/data/datasets/asr_babble_bench",
   "mir1k": "/workspace/data/datasets/mir1k",
+  "chime4": "/workspace/data/datasets/chime4",
   "open_noise": "/workspace/data/datasets/noise_open"
 }
