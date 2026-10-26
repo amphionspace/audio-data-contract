@@ -35,8 +35,8 @@ bench = importlib.util.module_from_spec(_spec)
 sys.modules["babble_bench"] = bench  # the worker pool pickles render_babble by its module name
 _spec.loader.exec_module(bench)
 
-from audio_data_contract import load_catalog  # noqa: E402
-from audio_data_contract.roots import load_roots  # noqa: E402
+from audio_data_contract import load_catalog
+from audio_data_contract.roots import load_roots
 
 DATA = Path("/workspace/data")
 ROOT_ALIAS = "aidc_data"
