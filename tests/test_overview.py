@@ -218,7 +218,12 @@ def test_superseded_versions_are_not_listed():
     rendered = render_data_overview(ROOT / "catalog", ROOT / "views")
     inventory = rendered.split("## 下载来源声明")[0]
 
-    police_rows = [line for line in inventory.splitlines() if line.startswith("| [police")]
+    # police_terms_single is a separate eval set, not a superseded batch.
+    police_rows = [
+        line
+        for line in inventory.splitlines()
+        if line.startswith("| [police") and not line.startswith("| [police_terms_single]")
+    ]
     assert len(police_rows) == 1
     assert police_rows[0].startswith("| [police_asr_unified](")
     assert "icefall-20260908" not in police_rows[0]

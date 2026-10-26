@@ -1,3 +1,4 @@
+import itertools
 import random
 import runpy
 from pathlib import Path
@@ -43,7 +44,7 @@ def test_recipe_expands_to_unique_scenarios():
 
     assert len({s["name"] for s in splits}) == len(splits)
     assert {s["group"] for s in splits} == {"enroll", "dynamics", "absent", "nonspeech", "domain", "realreg", "panel", "stress"}
-    assert sum(s["name"].startswith("enroll-") for s in splits) == 18
+    assert sum(s["name"].startswith("enroll-") for s in splits) == 24  # 12 conditions incl. len2/3/4 (v4)
     assert all(s["params"]["kind"] in {"pos", "neg", "nonspeech"} for s in splits)
 
 
@@ -152,6 +153,50 @@ def test_long_enrollment_chains_other_utterances_of_the_enrolled_speaker(kind):
     assert all(u.speaker == speaker and u.id not in used for u, _ in scene["enroll_extra"])
     w = mixer.render_enrollment(scene, load, rir, noise)
     assert len(w) == 20 * SR and np.abs(w[:SR]).max() > 0
+
+
+STORE = {"enroll_store_seconds": 10}
+
+
+@pytest.mark.parametrize("cond", ["clean", "short1", "lead_silence", "lp4k", "noise10", "reverb", "contam10", "quiet"])
+@pytest.mark.parametrize("kind", ["pos", "neg"])
+def test_stored_enrollment_keeps_the_scene_and_the_first_utterance(cond, kind):
+    for seed in range(5):
+        plain, stored = plan({"kind": kind, "enroll": cond}, seed), plan({"kind": kind, "enroll": cond, **STORE}, seed)
+        assert scene_items(plain) == scene_items(stored)
+        assert plain["enroll_utt"] == stored["enroll_utt"]
+        assert plain.get("enroll_other") == stored.get("enroll_other")
+        used = {u.id for t in stored["tracks"] for u, _ in t.items} | {stored["enroll_utt"].id}
+        speaker = stored["enroll_utt"].speaker
+        assert all(u.speaker == speaker and u.id not in used for u, _ in stored["enroll_extra"])
+
+
+@pytest.mark.parametrize("cond", ["clean", "short1", "lead_silence", "lp4k", "noise10", "reverb", "contam10", "contam0", "quiet"])
+def test_stored_enrollment_has_the_stored_length(cond):
+    load, rir, noise = loaders()
+    w = mixer.render_enrollment(plan({"enroll": cond, **STORE}, 5), load, rir, noise)
+    assert len(w) == 10 * SR and np.isfinite(w).all()
+
+
+@pytest.mark.parametrize("cond, seconds", [("len2", 2), ("len3", 3), ("len4", 4)])
+def test_short_registration_is_only_that_long_and_starts_like_the_stored_one(cond, seconds):
+    load, rir, noise = loaders()
+    short = mixer.render_enrollment(plan({"enroll": cond, **STORE}, 5), load, rir, noise)
+    full = mixer.render_enrollment(plan({"enroll": "clean", **STORE}, 5), load, rir, noise)
+    assert len(short) == seconds * SR
+    np.testing.assert_array_equal(short, full[: seconds * SR])
+
+
+def test_stored_short1_has_one_second_of_speech_in_a_full_length_recording():
+    load, rir, noise = loaders()
+    w = mixer.render_enrollment(plan({"enroll": "short1", **STORE}, 5), load, rir, noise)
+    assert len(w) == 10 * SR and np.abs(w[SR:]).max() == 0 and np.abs(w[:SR]).max() > 0
+
+
+def test_a_speaker_short_of_speech_keeps_what_there_is():
+    scene = plan({"enroll": "clean", "enroll_store_seconds": 1000}, 2)
+    assert scene["enroll_extra"]  # no PlanError, so the scene was not redrawn
+    assert scene_items(scene) == scene_items(plan({"enroll": "clean"}, 2))
 
 
 def test_nonspeech_has_no_speakers_and_is_quiet_when_asked():
@@ -464,3 +509,25 @@ def test_hard_negatives_of_a_recorded_registration_are_its_nearest_speakers():
         assert set(chosen) <= nearest and hard["total"] == easy["total"] and len(chosen) == len(easy["tracks"])
         assert hard["hard_cosine"] == max(similarity("file:realreg3", s) for s in chosen)
         assert hard["target_speaker"] == "file:realreg3" and hard["enroll_file"]["id"] == "realreg3"
+
+
+def test_dialogue_interferers_take_turns_without_the_target():
+    for seed in range(10):
+        scene = plan({"kind": "neg", "k": 3, "interferer_schedule": "dialogue"}, seed)
+        turns = sorted((s, s + u.duration, t.speaker) for t in scene["tracks"] for u, s in t.items)
+        assert all(t.role == "interferer" for t in scene["tracks"]) and len(turns) >= 2
+        # One speaker at a time, the next turn by someone else (at most 0.2 s of overlap).
+        assert all(b[0] >= a[1] - 0.2 - 1e-6 and b[2] != a[2] for a, b in itertools.pairwise(turns))
+        assert turns[-1][1] <= scene["total"] + 1e-6
+
+
+def test_a_long_recorded_registration_keeps_the_stored_length():
+    _, rir, noise = loaders()
+    pool = pools()
+    pool["__enroll_files__"] = {"realreg5": "/x/reg.wav"}
+    scene = mixer.plan_scene(random.Random(3), {"kind": "neg", "k": 2, "duration": [10, 12], "enroll_file": "realreg5",
+                                                "enroll_store_seconds": 10}, pool)
+    for seconds, stored in ((8.3, 8.3), (12.0, 10.0), (3.0, 3.0)):
+        recorded = (np.random.default_rng(5).standard_normal(int(SR * seconds)) * 0.1).astype(np.float32)
+        w = mixer.render_enrollment(scene, lambda utt, recorded=recorded: recorded, rir, noise)
+        assert len(w) == int(SR * stored) and np.array_equal(w, recorded[: len(w)])

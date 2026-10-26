@@ -1,0 +1,138 @@
+- schema_version: dataset-view/1.0
+  view_id: aishell4/diarization-benchmark
+  version: diarization-benchmark-v1-20261021
+  source:
+    dataset_id: aishell4
+    version: diarization-benchmark-v1-20261021
+  result:
+    dataset_id: aishell4
+    version: diarization-benchmark-v1-20261021
+  materialization: full
+  lineage_status: inferred
+  transforms:
+  - name: freeze-local-rttm
+    version: diarization-benchmark-v1-20261021
+    kind: representation-conversion
+    writes:
+    - audio_slots
+    - labels
+    - metadata
+    parameters:
+      script: scripts/diarization/register_benchmark.py
+      script_sha256: 30d018ede537cb71f2b9e26cb23b7f606c9221bf36fdb1ebbed8d034d658dff9
+      audio_and_rttm_policy: byte-preserving copy
+- schema_version: dataset-view/1.0
+  view_id: alimeeting/diarization-benchmark
+  version: diarization-benchmark-v1-20261021
+  source:
+    dataset_id: alimeeting
+    version: diarization-benchmark-v1-20261021
+  result:
+    dataset_id: alimeeting
+    version: diarization-benchmark-v1-20261021
+  materialization: full
+  lineage_status: inferred
+  transforms:
+  - name: freeze-local-rttm
+    version: diarization-benchmark-v1-20261021
+    kind: representation-conversion
+    writes:
+    - audio_slots
+    - labels
+    - metadata
+    parameters:
+      script: scripts/diarization/register_benchmark.py
+      script_sha256: 30d018ede537cb71f2b9e26cb23b7f606c9221bf36fdb1ebbed8d034d658dff9
+      audio_and_rttm_policy: byte-preserving copy
+- schema_version: dataset-view/1.0
+  view_id: alimeeting_2023test/diarization-benchmark
+  version: diarization-benchmark-v1-20261021
+  source:
+    dataset_id: alimeeting
+    version: diarization-benchmark-v1-20261021-2023test
+  result:
+    dataset_id: alimeeting
+    version: diarization-benchmark-v1-20261021-2023test
+  materialization: full
+  lineage_status: inferred
+  transforms:
+  - name: freeze-local-rttm
+    version: diarization-benchmark-v1-20261021
+    kind: representation-conversion
+    writes:
+    - audio_slots
+    - labels
+    - metadata
+    parameters:
+      script: scripts/diarization/register_benchmark.py
+      script_sha256: 30d018ede537cb71f2b9e26cb23b7f606c9221bf36fdb1ebbed8d034d658dff9
+      audio_and_rttm_policy: byte-preserving copy
+- schema_version: dataset-view/1.0
+  view_id: ami_near/diarization-benchmark
+  version: diarization-benchmark-v1-20261021
+  source:
+    dataset_id: ami
+    version: diarization-benchmark-v1-20261021
+  result:
+    dataset_id: ami
+    version: diarization-benchmark-v1-20261021
+  materialization: full
+  lineage_status: inferred
+  transforms:
+  - name: freeze-local-rttm
+    version: diarization-benchmark-v1-20261021
+    kind: representation-conversion
+    writes:
+    - audio_slots
+    - labels
+    - metadata
+    parameters:
+      script: scripts/diarization/register_benchmark.py
+      script_sha256: 30d018ede537cb71f2b9e26cb23b7f606c9221bf36fdb1ebbed8d034d658dff9
+      audio_and_rttm_policy: byte-preserving copy
+- schema_version: dataset-view/1.0
+  view_id: ramc/diarization-benchmark
+  version: diarization-benchmark-v1-20261021
+  source:
+    dataset_id: magicdata_ramc
+    version: diarization-benchmark-v1-20261021
+  result:
+    dataset_id: magicdata_ramc
+    version: diarization-benchmark-v1-20261021
+  materialization: full
+  lineage_status: inferred
+  transforms:
+  - name: freeze-local-rttm
+    version: diarization-benchmark-v1-20261021
+    kind: representation-conversion
+    writes:
+    - audio_slots
+    - labels
+    - metadata
+    parameters:
+      script: scripts/diarization/register_benchmark.py
+      script_sha256: 30d018ede537cb71f2b9e26cb23b7f606c9221bf36fdb1ebbed8d034d658dff9
+      audio_and_rttm_policy: byte-preserving copy
+- schema_version: dataset-view/1.0
+  view_id: voxconverse/diarization-benchmark
+  version: diarization-benchmark-v1-20261021
+  source:
+    dataset_id: voxconverse
+    version: diarization-benchmark-v1-20261021
+  result:
+    dataset_id: voxconverse
+    version: diarization-benchmark-v1-20261021
+  materialization: full
+  lineage_status: inferred
+  transforms:
+  - name: freeze-local-rttm
+    version: diarization-benchmark-v1-20261021
+    kind: representation-conversion
+    writes:
+    - audio_slots
+    - labels
+    - metadata
+    parameters:
+      script: scripts/diarization/register_benchmark.py
+      script_sha256: 30d018ede537cb71f2b9e26cb23b7f606c9221bf36fdb1ebbed8d034d658dff9
+      audio_and_rttm_policy: byte-preserving copy
