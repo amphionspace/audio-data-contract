@@ -25,6 +25,22 @@
 - **现实性原则**：评测条件基于业务现实，不做极端测试。削波、电话编码、窄带、`enroll-contam0`（0 dB 注册污染）和组合压力是诊断条件，在 AmphionEval 的评测集里不进分组，因此不计入平均，也不进 `analyze.py` 的脆弱点排序。
 - `analyze.py` 增加：`--run` 可给多个目录（评测被拆成几份时），脆弱点排序（区间不含 0 的变差，按变化量），`--dataset` 选择数据集。
 
+## 5 秒注册：存 10 秒注册音频（v4-20261022 及各补充集的 20261022 版）
+
+2026-10-22 线上注册改为 5 秒：客户端发注册音频的前 5 秒，不足的补零（服务端 `AMPHION_TSASR_ENROLL_SEC=5`）。v3 及补充集的注册音频大多不到 5 秒（干净注册是一整句，中位数约 4.7 秒；各劣化条件只存 3 秒），按 5 秒评测会在后面补 2 秒左右的零，和线上不一致。下列版本用同一配方重建，只改注册音频：
+
+| 数据集 | 新版本 | 上一版 |
+|---|---|---|
+| `ts_asr_benchmark` | `v4-20261022`（14,800 条，新增 6 个场景） | `v3-20261013` |
+| `ts_asr_noise` / `ts_asr_farfield` / `ts_asr_shortseg` / `ts_asr_singing` / `ts_asr_handover` | `v2-20261022` | `v1-*` |
+| `ts_asr_nearshort` | `v3-20261022` | `v2-20261022` |
+
+- 配方键 `enroll_store_seconds: 10`：每条注册存 10 秒同一说话人的语音，第一句与上一版相同，后面接此人不在混合音频里的其他语句，句间停顿 0.3–0.6 秒（与 `ts_asr_enroll_len` 的 `long` 相同）。评测按客户端长度 L 取前 L 秒，同一份数据可按 3 / 5 / 8 秒评测；`labels.enroll_seconds` 是实际存的长度，语音不够的说话人有多少存多少（v4 有 36 条在 5–10 秒之间，没有不足 5 秒的）。
+- 劣化条件作用于整段 10 秒（低通、噪声、混响、混入他人声音、降电平；混入的他人声音也接成 10 秒）。`short1` 是 10 秒录音里只有 1 秒语音、其余只有底噪；`lead_silence` 是 1.5 秒静音后接语音。
+- 新场景 `enroll-len2/len3/len4-{pos,neg}`：注册录音只有 2 / 3 / 4 秒（短于客户端长度时由客户端补零），与 `enroll-clean` 同一批场景，用来看用户注册说得不够长的代价。
+- 业务真实注册录音（`enroll_condition = file`，realreg1–4）原本只有 3 秒，原样保留。
+- 新抽取都排在每个场景注册随机流的最后，场景、混合音频和第一句不变：重建后全部混合音频与上一版的 sha256 逐条相同，参考文本和在场标签逐条相同。注册音频的前 3 秒只在噪声底上与上一版不同（噪声底按整段长度生成）。
+
 ## 噪声补充集（ts_asr_noise）
 
 `ts_asr_noise@v1-20261013`：2,040 条、17 个场景，用 2026-10-13 新登记的噪声集（`open_noise` 的 FSD50K 与 `babble_noise_synth` 合成背景人声）扩充脆弱性面板。配方 `scripts/ts_benchmark/recipe-noise.yaml`，生成同样用 `build.py --recipe`。
@@ -41,6 +57,68 @@
 - 目标和干扰人各自的房间响应：`rirtgt`（只有目标过 RIR）、`rirint`（只有干扰人）、`rirsame`（同一个 RIR）、`rirdiff`（各不相同）。配方里 `rir: {target: <池>|null, interferer: <池>|null, share: bool}`；不共享时每个过 RIR 的轨道抽不同的响应（不放回）。
 - 注册与混合的近远场失配：`rirdiff`（近场注册、远场混合）、`mmfarfar`（注册和混合都远场）、`mmfarnear`（远场注册、近场混合），注册的房间响应用 `enroll_rir_pool`。
 - 真实对照见 [ts-real.md](ts-real.md) 的 `ts_asr_nearfar`；合成与真实的校准脚本是 `scripts/ts_benchmark/calibrate.py`。
+
+## 短片段补充集（ts_asr_shortseg）
+
+`ts_asr_shortseg@v1-20261017`：840 条、7 个场景，配方 `scripts/ts_benchmark/recipe-shortseg.yaml`。来源是业务第三批反馈（`business_feedback@ts-20261016`）：28 条错误里 17 条是持续收音时 VAD 切出的 1.2–6 秒片段，注册人没说话、别人在说话，而 v3 的缺席场景只有 0.4–1.2 秒（`abs-short`）和 6–18 秒两档。
+
+- `abs-mid1-k1/k2`（1.2–3 秒）、`abs-mid2-k1/k2`（3–6 秒）：注册人缺席，1 或 2 个干扰人，干扰人从片段开头 0–0.3 秒内开始说话，片段结尾截断语句（与 VAD 切分一致）；期望输出为空。
+- `realreg2-mid1-neg`、`realreg2-mid2-neg`：同样的长度，注册音频换成业务第二、三批测试人员的真实注册录音（`realreg2`）。
+- `solo-mid`：对照，只有注册人说一句 2–6 秒的话；压低误输出时这一项的字错率和漏识率不能变差。
+- 底噪、说话人池与 v3 相同（`--noise-cache`、`--rir-cache` 取 v3 的 `source/v3-20261013/noise`、`rir`）。业务里另有 3 条只有歌声的片段，见下面的歌声补充集。
+
+## 歌声补充集（ts_asr_singing）
+
+`ts_asr_singing@v1-20261017`：240 条、2 个场景，配方 `scripts/ts_benchmark/recipe-singing.yaml`。业务第三批有 3 条片段只有 pad 外放的歌（2.6–6.6 秒），注册人没说话，模型复读或输出歌词；v3 的音乐来自 MUSAN，基本没有人声歌曲。
+
+- 素材是新登记的 `mir1k@modelscope-20261017`：1000 段中文流行歌卡拉 OK 片段，左声道伴奏、右声道人声，读入时两声道取平均，即带伴奏的歌。许可为研究用途，只用于评测。
+- `nonspeech-song`（随机注册）、`realreg2-song`（业务真实注册）：1.5–8 秒，只有歌声，电平 −30 到 −15 dBFS（业务这 3 条片段约 −27 到 −15 dBFS），加 v3 的底噪；期望输出为空。生成后用底座 Qwen3-ASR 抽查，混合音频里能转写出歌词。
+
+## 接话与缺席补充集（ts_asr_handover）
+
+`ts_asr_handover@v1-20261020`：1,600 条、10 个场景，配方 `scripts/ts_benchmark/recipe-handover.yaml`。来源是业务第四批反馈（`business_feedback@ts-20261019`，飞书表格第 38、39 行）和这批换的新注册录音（`realreg3`）。每组新场景都带对照列：同一批音频、同一套时间安排，只改一个因素。
+
+- `abs-rand-k1`、`abs-hard-k1`（第 38 行：全程只有另一个人在说，注册人没说话）：1 个干扰人，6–18 秒，两列同一个 `pair`，混合音频逐条相同，只换注册人。`abs-rand-k1` 的注册人是随机的另一个人，`abs-hard-k1` 是干扰人 ECAPA 余弦前 5 的近邻（同 v3 的 `abs-hard`），`labels.hard_cosine` 记录余弦。
+- `realreg3-neg`、`realreg3-music`、`realreg3-mid1-neg`、`realreg3-mid2-neg`：同 `realreg2` 的各场景，注册音频换成 `realreg3`，各 200 条。
+- `realreg3-hard-neg`：干扰人取自与 `realreg3` 的 ECAPA 余弦最高的 10 位 test 说话人（余弦 0.22–0.37；第 38 行那位说话人是 0.10–0.27，同一人两半注册音频之间是 0.54），1 或 2 人；与 `realreg3-neg` 同一个 `pair`，片段长度和人数逐条相同。`labels.hard_cosine` 是最相近的那个干扰人的余弦。
+- `handover-*`（第 39 行：机主先说一句，停顿后干扰人接一句开头几乎相同的话，模型输出了干扰人那句）：目标说一句 1.5–4 秒的完整语句，从 0–0.5 秒开始，停 0.5–2 秒，干扰人再说一句 1.5–4 秒的完整语句，两句不重叠，片段在第二句后 0.3–1 秒结束；参考文本是目标那句，干扰人那句在 `metadata.interferers`。三列同一个 `pair`，目标语句、干扰人、停顿和音量逐条相同：
+  - `handover-same-open`：干扰人那句的前 4 个字含目标那句的前 2 个字（去标点后），覆盖「现在我」/「我现在」。
+  - `handover-rand`：同一个干扰人换一句前 4 个字与目标前 4 个字没有共同字的话，取时长最接近的一句（对照）。
+  - `handover-rev-same-open`：与 `same-open` 同样的两句话，先干扰人后目标（第 39 行「先干扰人后机主就正确」的对照）。
+  - 两句话还要求能区分：把干扰人那句当成输出时，字错率至少 50%。按这些条件，test 池里 1.5–4 秒的句子有 35,687 句，跨说话人的开头相同句对 424 万对，去掉文本几乎相同的 20 万对和干扰人没有对照句的 949 对，可用 404 万对，涵盖 28,674 句目标语句、231 位目标说话人；目标以「现在」开头的有 171 句。
+- 说话人池与 v3、`ts_asr_shortseg` 相同（各语料官方 test 划分）；种子不同，KeSpeech 抽到的 250 人与 v3 不完全相同，所以说话人嵌入按本配方重算（`speaker_embeddings.py` 同时为 `enrollment_files` 里的注册录音写入 `file:<名字>`），随数据保存在 `source/v1-20261020/speaker-embeddings.npz`。底噪、房间响应缓存取 v3 的 `source/v3-20261013/noise`、`rir`。
+
+## 另一个人说一句短话补充集（ts_asr_nearshort）
+
+`ts_asr_nearshort@v1-20261021`：1,500 条、5 个场景（`v2-20261022` 见本节末），配方 `scripts/ts_benchmark/recipe-nearshort.yaml`。来源是业务第五批反馈（`business_feedback@ts-20261021`，飞书表格第 40、41 行）和这批换的新注册录音（`realreg4`）：注册人没说话，另一个人说了一句约 1 秒的话（0.7 秒、1.1 秒），VAD 切出的片段 1.5 / 2.8 秒，模型输出了这句话。已有场景都覆盖不到：`abs-short` 把干扰人的句子截成 0.4–1.2 秒的半句，`abs-mid1-*` 在 1.2–3 秒里连续说话，`abs-hard`/`abs-hard-k1` 声音相近但片段 6–18 秒。
+
+- 每个缺席片段 1.5–3 秒，只有一个干扰人说一句完整的短句（`short_utterance_seconds` 0.5–1.6 秒的整句，从 0.1–0.6 秒开始，整句在片段内结束；配方参数 `interferer_utts: single_short`）。
+- `short-rand-neg`、`short-hard-neg`：同一个 `pair`，混合音频逐条相同，只换注册人；随机注册人与干扰人的 ECAPA 余弦平均 0.24，相近注册人（干扰人余弦前 5 的近邻，同 `abs-hard`）平均 0.55（p10 0.44）。
+- `realreg4-short-neg`、`realreg4-hard-short-neg`：注册音频是 `realreg4`；后者的干扰人取自与它余弦最高的 10 位有短句的 test 说话人（0.17–0.21；第 40、41 行那位说话人是 0.14 / 0.27）。
+- `solo-short-pos`：对照，注册人自己在同样长度的片段里说一句短句，检查压低误输出时没有漏掉注册人的短句。
+- 0.5–1.6 秒的整句只有 AISHELL-3 和 AISHELL-2 的 test 里有（各 84 位说话人有至少 2 句），所以干扰人和 `solo-short-pos` 的说话人来自这两个语料；注册人仍取全部 test 池。
+- 说话人嵌入按本配方重算，随数据保存在 `source/v1-20261021/speaker-embeddings.npz`；底噪、房间响应缓存取 v3 的 `source/v3-20261013/noise`、`rir`。
+- `v2-20261022`：3,600 条、12 个场景，v1 的 5 列逐条不变（音频逐字节相同，记录只有版本号不同），加 7 列在场对照，用来量出「短片段更倾向不出字」的漏识代价（v1 的在场对照只有干净的单人短句）：与 `solo-short-pos` 同一个 `pair`、同一批短句和时间安排，只改一个因素——`solo-short-q20-pos`（混合整体 -20 dB）、`solo-short-wham40-pos` / `solo-short-wham30-pos`（WHAM 实录底噪 -40 / -30 dBFS）、`solo-short-babble10-pos`（合成背景人声，信噪比 10 dB，同 `ts_asr_noise`）、`solo-short-far-pos`（混合过 SLR28 实测房间响应、注册近场）、`solo-short-farfar-pos`（注册也远场）；以及 `short-k1-pos`（注册人和一个随机的人在同一个 1.5–3 秒片段里各说一句短话）。v1 的配方见提交 b187e80；v2 沿用 v1 的说话人嵌入（同一种子、同一说话人池）。
+
+## 外放影视对白补充集（ts_asr_playback）
+
+`ts_asr_playback@v1-20261022`：800 条、4 个场景，配方 `scripts/ts_benchmark/recipe-playback.yaml`。来源是业务第六批（`business_feedback@ts-20261022`）：用户直接提供两段长录音（55 秒、167 秒）和一段 8.28 秒的注册录音（`realreg5`），机主全程没说话，旁边外放电视剧对白，按 25 秒分窗后 10.21 版本 2/10 窗、10.22 版本 3/10 窗把台词转写了出来。已有的「别人在说话」是朗读语料或真实会议、电话，业务回归里的 pad 外放只有几条短片段，覆盖不到「几个角色轮流说台词、常带配乐和音效」的外放影视。
+
+- 台词来自 CN-Celeb1（test、train）和 CN-Celeb2 的 `drama`、`movie` 片段（体裁取自文件名）：真实影视音频，没有转写，只作干扰人（`build.py` 的 `load_speaker_records`，配方里的来源写 `genres`）；1.5–9 秒的片段 11,161 条、317 位演员。TS 训练的干扰人素材池不含 CN-Celeb。
+- 每条 6–25 秒（客户端 5 秒注册时一个完整窗口），2–3 个角色轮流说话（配方参数 `interferer_schedule: dialogue`，句间 -0.2–0.7 秒，偶有抢话）。
+- 电平和底噪按第六批两段录音实测：台词响度（20 ms 帧电平的 95% 分位）−34.0 / −36.5 dBFS，合成的中位数 −35.0；底噪（10% 分位）约 −50 / −55 dBFS，合成的中位数 −52.6。
+- `playback-neg`、`playback-room-neg`、`playback-realreg5-neg`：同一个 `pair`，场景逐条相同，只改一个因素——台词直接混入；台词过 SLR28 实测房间响应（像在房间另一头外放，喇叭频响没有模拟）；注册换成 `realreg5`（混合音频与 `playback-neg` 逐字节相同）。
+- `playback-room-pos`：机主在设备旁说话（干），房间另一头在放影视剧（过房间响应），机主比台词响 2–10 dB（第六批注册录音的 95% 分位 −29.1 dBFS，比外放台词响 5–7 dB），机主语音的 95% 分位中位数 −29.5 dBFS；量漏识和把台词混进转写的代价。
+- **测不出业务上的问题，没有收入 `ts-asr-benchmark`**：v12 评测里机主缺席三列的误输出 9.26 / 10.19 / 10.21 / 10.22 版本为 26.8 / 0.3 / 0.2 / 1.3%，注册换成第六批真实录音的那列也只有 42.0 / 1.0 / 0.0 / 2.0%；第六批真实录音的 10 窗是 80 / 70 / 10 / 30%。用 10.19 版本定位：这 10 窗配公开测试集 20 位随机说话人的注册，200 次一次都不出字；配业务侧另一个人（第四、五批）的注册录音，仍有 6/10、5/10 出字。误输出跟着「注册和录音都来自业务设备」走，而不是录音内容或某个人的声音；合成数据里注册和台词不经过同一条录音链路，测不出来。这类问题要靠业务设备上的真实录音（同一设备先注册、再在机主不说话时外放或有人说话），按批次进 `business_feedback`。
+- `realreg5` 的注册录音 8.28 秒，整段保存（`enroll_store_seconds` 下录制的注册按录音长度、最多存满 10 秒；此前的业务注册录音都是 3 秒，结果不变）。底噪、房间响应缓存取 `ts_asr_handover` 的 `source/v2-20261022/noise`、`rir`。
+
+## 开发集（ts_asr_dev）
+
+`ts_asr_dev@v1-20261017`：3,240 条、54 个场景，配方 `scripts/ts_benchmark/recipe-pvad-dev.yaml`。用与 v3 相同的场景定义，换成各语料 dev 划分的说话人（KeSpeech、MagicData、AISHELL-1 dev，共 159 位，与 train、test 都不重叠）和新种子，用来选模型和阈值（`amphion-tse/pvad-dev@v1-20261017` 的合成部分），**不进训练，也不作最终评测**。
+
+- 只保留个性化 VAD 评测集用到的场景组：注册音频劣化（不含 contam0）、进场离场与缺席、纯噪声、环境与设备；每个场景 60 条。
+- 没有 AISHELL-3（它的 test 与 train 共用说话人），所以没有 `dom-studio`；dev 划分里几乎没有 0.5–1.6 秒的短语句，所以没有 `dyn-short`；也没有业务真实注册（`realreg`）。
+- 噪声、底噪与房间响应沿用 v3 的素材（`--noise-cache` / `--rir-cache` 指向 v3 的 `source` 目录），噪声片段与评测集有重合，只影响选模；训练照常排除这些片段。`abs-hard` 的相近说话人向量在 `source/v1-20261017/speaker-embeddings.npz`。
 
 ## 一条记录
 

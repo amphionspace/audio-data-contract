@@ -73,3 +73,81 @@ def test_verify_artifact_cli(tmp_path, capsys):
         == 0
     )
     assert json.loads(capsys.readouterr().out)["records"] == 1
+
+
+def test_check_registration_cli(tmp_path, capsys):
+    (tmp_path / "a.wav").write_bytes(b"RIFF....WAVE")
+    (tmp_path / "empty.wav").write_bytes(b"")
+    index_path = tmp_path / "audio-index.jsonl.gz"
+    rows = [
+        {"cut_id": "a", "root_alias": "managed", "relative_path": "a.wav"},
+        {"cut_id": "b", "root_alias": "managed", "relative_path": "missing.wav"},
+        {"cut_id": "c", "root_alias": "managed", "relative_path": "empty.wav"},
+        {"cut_id": "d", "root_alias": "elsewhere", "relative_path": "d.wav"},
+        {"cut_id": "e", "root_alias": ["managed"], "relative_path": "a.wav"},
+    ]
+    with gzip.open(index_path, "wt", encoding="utf-8") as stream:
+        stream.writelines(json.dumps(row) + "\n" for row in rows)
+    content = index_path.read_bytes()
+    spec = {
+        "schema_version": "dataset-catalog/2.0",
+        "dataset_id": "demo",
+        "version": "1",
+        "languages": ["en"],
+        "tasks": ["asr"],
+        "artifacts": [
+            {
+                "name": "audio_index",
+                "kind": "audio-index",
+                "root_alias": "managed",
+                "relative_path": index_path.name,
+                "sha256": hashlib.sha256(content).hexdigest(),
+            },
+            {
+                "name": "notes",
+                "kind": "metadata",
+                "root_alias": "managed",
+                "relative_path": "a.wav",
+                "sha256": "0" * 64,
+            },
+        ],
+        "splits": {"train": {"artifacts": {"audio_index": ["audio_index"]}}},
+    }
+    catalog_path = tmp_path / "catalog.jsonl"
+    catalog_path.write_text(json.dumps(spec) + "\n", encoding="utf-8")
+    roots_path = tmp_path / "roots.json"
+    roots_path.write_text(json.dumps({"managed": str(tmp_path)}), encoding="utf-8")
+
+    argv = [
+        "check-registration",
+        str(catalog_path),
+        "demo",
+        "1",
+        "--roots",
+        str(roots_path),
+    ]
+    assert main(argv) == 1
+    problems = json.loads(capsys.readouterr().out)["problems"]
+    assert len(problems) == 5
+    assert any("bad index row" in item for item in problems)
+    assert any("sha256 mismatch" in item for item in problems)
+    assert any("'elsewhere' is not configured" in item for item in problems)
+    assert any("missing.wav" in item for item in problems)
+    assert any("empty file" in item for item in problems)
+
+    spec["artifacts"].pop()
+    with gzip.open(index_path, "wt", encoding="utf-8") as stream:
+        stream.writelines(json.dumps(row) + "\n" for row in rows[:-1])
+    spec["artifacts"][0]["sha256"] = hashlib.sha256(
+        index_path.read_bytes()
+    ).hexdigest()
+    catalog_path.write_text(json.dumps(spec) + "\n", encoding="utf-8")
+    (tmp_path / "empty.wav").write_bytes(b"x")
+    (tmp_path / "missing.wav").write_bytes(b"x")
+    roots_path.write_text(
+        json.dumps({"managed": str(tmp_path), "elsewhere": str(tmp_path)}),
+        encoding="utf-8",
+    )
+    (tmp_path / "d.wav").write_bytes(b"x")
+    assert main(argv) == 0
+    assert json.loads(capsys.readouterr().out)["ok"] is True

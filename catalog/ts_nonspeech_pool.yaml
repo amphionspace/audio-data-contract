@@ -1,0 +1,56 @@
+- schema_version: dataset-catalog/2.0
+  dataset_id: ts_nonspeech_pool
+  version: v1-20261016
+  languages:
+  - zh
+  - en
+  tasks:
+  - asr
+  aliases: []
+  artifacts:
+  - name: all-records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/ts_nonspeech_pool/versions/v1-20261016/records_all.jsonl.gz
+    sha256: 3953951401db00c27d9c2f3f603914cdaa5f06de05739446c7d0ba8616ea4b20
+    metadata:
+      record_count: 48000
+  - name: all-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_nonspeech_pool/versions/v1-20261016/audio_index_all.jsonl.gz
+    sha256: 784c2841c75ac8e83f7ef4668073d75382e802e82e4b02a767b087ac810d9a58
+    metadata:
+      record_count: 1578
+  - name: record_index
+    kind: lance-record-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_nonspeech_pool/versions/v1-20261016/record_index/index.json
+    expected_bytes: 732
+    sha256: dae199acb86bf3fe31e16e3cc632f84b4aec24d08edb3e10e9b5ab052352f924
+    metadata:
+      snapshot_version: 13
+      rows: 48000
+      schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
+  splits:
+    all:
+      artifacts:
+        records:
+        - all-records
+        audio_index:
+        - all-audio-index
+        records_lance:
+        - record_index
+      task: asr
+      statistics:
+        records: 48000
+        duration_hours: 65.74
+        duration_basis: clip duration (segment span, or the whole file)
+  provenance:
+    status: complete
+    synthetic: none
+    snapshot_date: '2026-10-16'
+    description: 普通 ASR 的非人声空输出训练数据：MUSAN 噪声与音乐的片段（0.3–26 s，对数均匀），目标为空。电平在训练时按数据源配置随机。不含 WHAM（咖啡馆底噪里可能有可懂的人声）。
+    sources:
+    - musan@legacy-20260804:noise
+    - musan@legacy-20260804:music

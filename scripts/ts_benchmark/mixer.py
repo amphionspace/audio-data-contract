@@ -19,6 +19,8 @@ from __future__ import annotations
 
 import math
 import random
+import re
+from collections import defaultdict
 from dataclasses import dataclass, field
 
 import numpy as np
@@ -26,12 +28,35 @@ import numpy as np
 SAMPLE_RATE = 16000
 UTT_DBFS = -25.0
 ENROLL_SECONDS = 3.0
+# Long enrollment (ts_asr_enroll_len): further utterances of the enrolled speaker follow the first with
+# short pauses, up to enroll_long_seconds, so an evaluation can send the first L seconds for any L.
+ENROLL_LONG_GAP = (0.3, 0.6)
+# Stored enrollment (recipe key enroll_store_seconds, from ts_asr_benchmark v4): every condition keeps that many
+# seconds of the enrolled speaker, the first utterance followed by others the same way as "long", so one dataset
+# serves any client length L (the deployed client sends 5 s, older ones 3 s). The extra draws come after all other
+# draws of the enrollment stream, so scenes, mixtures and the first utterance stay as without them; a speaker
+# short of speech keeps what there is instead of failing the scene.
+# Registrations shorter than the client length: the recording is only this long and the client zero-pads it.
+SHORT_REGISTRATION = {"len2": 2.0, "len3": 3.0, "len4": 4.0}
 MAX_MIXTURE_SECONDS = 27.0
 FADE_SECONDS = 0.03
 # Interferer pauses between utterances: dense (near-continuous), medium and sparse talk, so the
 # overlap with the target varies within a scenario; the realized overlap is recorded per sample.
 GAP_PROFILES = [(0.2, 1.0), (0.2, 1.0), (1.0, 3.0), (2.5, 6.0)]
 CONTINUOUS_SCHEDULES = ("burst", "enter", "leave", "short")
+# A recorded registration has no speaker in the pool, so its hard negatives are interferers drawn from
+# the test speakers whose embeddings are closest to the recording.
+HARD_FILE_NEIGHBOURS = 10
+# Handover (business batch 4, row 39): the owner says one sentence, pauses, then someone else says one,
+# without overlap. Both sentences last 1.5-4 s, around the 2.6 s and 2.7 s of that case.
+HANDOVER_SECONDS = (1.5, 4.0)
+HANDOVER_START = (0.0, 0.5)
+HANDOVER_PAUSE = (0.5, 2.0)
+HANDOVER_TAIL = (0.3, 1.0)
+HANDOVER_VARIANTS = ("same_open", "rand", "rev_same_open")
+# Outputting the interferer's sentence must cost at least this character error rate, so the two
+# sentences stay distinguishable beyond their shared opening.
+HANDOVER_MIN_DISTANCE = 0.5
 
 
 @dataclass(frozen=True)
@@ -100,6 +125,15 @@ def fill_stream(rng, speaker_utts, total, gap, start_range=(0.0, 1.5)):
     return items
 
 
+def single_utterance(rng, utts, total, start_range):
+    """One whole utterance that ends inside the segment: a VAD-cut segment holding a single short phrase."""
+    start = _uniform(rng, start_range)
+    fits = [u for u in utts if start + u.duration <= total]
+    if not fits:
+        raise PlanError("no interferer utterance fits the segment")
+    return [(rng.choice(fits), start)]
+
+
 def _place_target(rng, schedule, utts, total, others, gap=(0.2, 1.0)):
     """Target utterance placements for a schedule; always whole utterances."""
 
@@ -140,8 +174,11 @@ def _place_target(rng, schedule, utts, total, others, gap=(0.2, 1.0)):
 
 
 def _alternate(rng, target_utts, interferer_utts, total):
-    """Dialog-like turns, mostly non-overlapping; returns target track and others."""
-    speakers = ["target", *interferer_utts]
+    """Dialog-like turns, mostly non-overlapping; returns target track and others.
+
+    Without ``target_utts`` only the interferers talk to each other (a dialogue played back nearby).
+    """
+    speakers = (["target"] if target_utts is not None else []) + list(interferer_utts)
     turns, now, last = [], _uniform(rng, (0.0, 0.5)), None
     while now < total - 1.0:
         order = [s for s in speakers if s != last]
@@ -159,6 +196,90 @@ def _alternate(rng, target_utts, interferer_utts, total):
         if who != "target":
             others[who].append((u, s))
     return target, others
+
+
+def _plain(text):
+    return re.sub(r"\W", "", text)
+
+
+def same_opening(target, other):
+    """The other sentence has the target's first two characters among its own first four."""
+    target, other = _plain(target), _plain(other)
+    return len(target) >= 2 and target[:2] in other[:4]
+
+
+def shares_no_opening(target, other):
+    return not set(_plain(target)[:4]) & set(_plain(other)[:4])
+
+
+def _edit_distance(a, b):
+    previous = list(range(len(b) + 1))
+    for i, ca in enumerate(a, 1):
+        current = [i]
+        for j, cb in enumerate(b, 1):
+            current.append(min(previous[j] + 1, current[j - 1] + 1, previous[j - 1] + (ca != cb)))
+        previous = current
+    return previous[-1]
+
+
+def _distinguishable(target, other):
+    target, other = _plain(target), _plain(other)
+    return _edit_distance(target, other) >= HANDOVER_MIN_DISTANCE * len(target)
+
+
+def handover_index(speakers, seconds=HANDOVER_SECONDS):
+    """Sentences of the right length, indexed by every two-character string in their first four characters."""
+    fits = {s: [u for u in utts if seconds[0] <= u.duration <= seconds[1] and len(_plain(u.text)) >= 4]
+            for s, utts in speakers.items()}
+    by_opening = defaultdict(list)
+    for speaker in sorted(fits):
+        for utt in fits[speaker]:
+            text = _plain(utt.text)
+            for key in sorted({text[i:i + 2] for i in range(3)}):
+                by_opening[key].append(utt)
+    targets = [u for s in sorted(fits) for u in fits[s]
+               if any(o.speaker != u.speaker for o in by_opening[_plain(u.text)[:2]])]
+    return {"fits": fits, "by_opening": dict(by_opening), "targets": targets}
+
+
+def _plan_handover(rng, params, target_pool, plan):
+    """One target sentence and one interferer sentence in turn, never overlapping.
+
+    The draw does not depend on the variant, so the three variants of a pair share the target sentence,
+    the interferer, the timing and the gain; only the interferer's sentence or the order changes.
+    """
+    variant = params["handover"]
+    if variant not in HANDOVER_VARIANTS:
+        raise ValueError(f"unknown handover variant: {variant}")
+    seconds = tuple(params.get("handover_seconds", HANDOVER_SECONDS))
+    index = target_pool.setdefault("_handover", {}).get(seconds)
+    if index is None:
+        index = target_pool["_handover"][seconds] = handover_index(target_pool["speakers"], seconds)
+    if not index["targets"]:
+        raise ValueError("no sentence pair opens the same way in this pool")
+    target = rng.choice(index["targets"])
+    partner = rng.choice(index["by_opening"][_plain(target.text)[:2]])
+    if partner.speaker == target.speaker or not _distinguishable(target.text, partner.text):
+        raise PlanError("no same-opening sentence from another speaker")
+    controls = [u for u in index["fits"][partner.speaker]
+                if shares_no_opening(target.text, u.text) and _distinguishable(target.text, u.text)]
+    if not controls:
+        raise PlanError("the interferer has no sentence with a different opening")
+    control = min(controls, key=lambda u: (abs(u.duration - partner.duration), u.id))
+    start, pause = _uniform(rng, HANDOVER_START), _uniform(rng, HANDOVER_PAUSE)
+    gain = -_uniform(rng, params.get("sir_db", (-3.0, 3.0))) + rng.uniform(-2.0, 2.0)
+    tail = _uniform(rng, HANDOVER_TAIL)
+
+    other = control if variant == "rand" else partner
+    first, second = (other, target) if variant == "rev_same_open" else (target, other)
+    second_start = start + first.duration + pause
+    placed = {first.id: start, second.id: second_start}
+    plan["total"] = round(second_start + second.duration + tail, 3)
+    plan["target_speaker"] = target.speaker
+    plan["tracks"] = [Track("target", target.speaker, [(target, placed[target.id])], 0.0),
+                      Track("interferer", other.speaker, [(other, placed[other.id])], gain_db=gain)]
+    plan["target_overlap_ratio"] = 0.0
+    plan["handover"] = {"variant": variant, "pause_s": round(pause, 3), "same_opening": other is partner}
 
 
 def overlap_ratio(target_items, other_tracks):
@@ -194,9 +315,16 @@ def plan_scene(rng, params, pools, similarity=None):
     background = random.Random(rng.getrandbits(64))
     floors = random.Random(rng.getrandbits(64))  # its own stream: floors do not depend on rooms or noise
     plan = {"kind": kind, "params": params, "tracks": []}
+    target_pool = pools[params.get("target_pool", "mixed")]
+    if params.get("schedule") == "handover":  # the segment ends after the second sentence
+        _plan_handover(scene, params, target_pool, plan)
+        used = {u.id for t in plan["tracks"] for u, _ in t.items}
+        plan["enroll_utt"] = _enroll_utt(enroll, target_pool["speakers"][plan["target_speaker"]], used)
+        _plan_enrollment(enroll, params, pools, target_pool, plan, plan["target_speaker"])
+        _plan_floors(floors, params, plan, pools)
+        return plan
     plan["total"] = round(_uniform(scene, params["duration"]), 3)
     total = plan["total"]
-    target_pool = pools[params.get("target_pool", "mixed")]
     interferer_pool = pools[params.get("interferer_pool", params.get("target_pool", "mixed"))]
     if kind == "nonspeech":
         enroll_speaker = enroll.choice(sorted(target_pool["speakers"]))
@@ -215,9 +343,19 @@ def plan_scene(rng, params, pools, similarity=None):
     target = scene.choice(sorted(speaker_utts)) if kind == "pos" else None
     taken = {target} if target else set()
     candidates = [s for s in sorted(interferer_pool["speakers"]) if s not in taken]
+    single_short = params.get("interferer_utts") == "single_short"  # each interferer says one short phrase
+    if single_short:
+        candidates = [s for s in candidates if s in interferer_pool["short"]]
+    file_key = f"file:{params['enroll_file']}" if params.get("enroll_file") else None
+    if kind == "neg" and params.get("hard") and file_key:
+        if similarity is None:
+            raise ValueError("hard negatives need speaker embeddings")
+        candidates = sorted(candidates, key=lambda s: -similarity(file_key, s))[:HARD_FILE_NEIGHBOURS]
     interferers = scene.sample(candidates, k)
     if kind == "neg":  # the enrollment speaker is absent from the mixture
-        if params.get("hard"):
+        if params.get("hard") and file_key:  # cosine of the closest interferer to the recording
+            plan["hard_cosine"] = round(max(float(similarity(file_key, s)) for s in interferers), 4)
+        elif params.get("hard"):
             if similarity is None:
                 raise ValueError("hard negatives need speaker embeddings")
             anchor = enroll.choice(interferers)
@@ -239,12 +377,18 @@ def plan_scene(rng, params, pools, similarity=None):
         gap = (0.0, 0.5) if params.get("schedule") in CONTINUOUS_SCHEDULES else scene.choice(GAP_PROFILES)
     plan["interferer_gap"] = list(gap)
     sir = params.get("sir_db", (-3.0, 3.0))
+    if params.get("interferer_schedule") == "dialogue":  # the interferers take turns, like the cast of a film
+        _, turns = _alternate(scene, None, {s: interferer_pool["speakers"][s] for s in interferers}, total)
     for speaker in interferers:
-        interferer_tracks.append(Track(
-            "interferer", speaker,
-            fill_stream(scene, interferer_pool["speakers"][speaker], total, gap,
-                        params.get("interferer_start", (0.0, 1.5))),
-            gain_db=-_uniform(scene, sir) + scene.uniform(-2.0, 2.0)))
+        start = params.get("interferer_start", (0.0, 1.5))
+        if params.get("interferer_schedule") == "dialogue":
+            items = turns[speaker]
+        elif single_short:
+            items = single_utterance(scene, interferer_pool["short"][speaker], total, start)
+        else:
+            items = fill_stream(scene, interferer_pool["speakers"][speaker], total, gap, start)
+        interferer_tracks.append(Track("interferer", speaker, items,
+                                       gain_db=-_uniform(scene, sir) + scene.uniform(-2.0, 2.0)))
     target_track = Track("target", target, [], 0.0)
     if kind == "pos":
         schedule = params.get("schedule", "full")
@@ -343,6 +487,47 @@ def _plan_enrollment(rng, params, pools, target_pool, plan, speaker):
         others = [s for s in sorted(target_pool["speakers"]) if s != speaker]
         voiced = [u for u in target_pool["speakers"][rng.choice(others)] if u.duration >= ENROLL_SECONDS]
         plan["enroll_other"] = rng.choice(voiced)
+    elif cond == "long":  # never an utterance of the mixture, so the enrollment cannot give the answer away
+        used = {u.id for t in plan["tracks"] for u, _ in t.items} | {plan["enroll_utt"].id}
+        rest = [u for u in target_pool["speakers"][speaker] if u.id not in used]
+        rng.shuffle(rest)
+        need, extra = params["enroll_long_seconds"] - plan["enroll_utt"].duration, []
+        for utt in rest:
+            if need <= 0:
+                break
+            gap = round(rng.uniform(*ENROLL_LONG_GAP), 3)
+            extra.append((utt, gap))
+            need -= gap + utt.duration
+        if need > 0:
+            raise PlanError("not enough speech for a long enrollment")
+        plan["enroll_extra"] = extra
+    if params.get("enroll_store_seconds") and cond != "long" and "enroll_file" not in plan:
+        _plan_stored_enrollment(rng, params["enroll_store_seconds"], target_pool, plan, speaker)
+
+
+def _more_speech(rng, utts, have, seconds):
+    """Utterances (with the pause before each) that bring ``have`` seconds of speech up to ``seconds``."""
+    utts = list(utts)
+    rng.shuffle(utts)
+    extra, need = [], seconds - have
+    for utt in utts:
+        if need <= 0:
+            break
+        gap = round(rng.uniform(*ENROLL_LONG_GAP), 3)
+        extra.append((utt, gap))
+        need -= gap + utt.duration
+    return extra
+
+
+def _plan_stored_enrollment(rng, seconds, target_pool, plan, speaker):
+    used = {u.id for t in plan["tracks"] for u, _ in t.items} | {plan["enroll_utt"].id}
+    rest = [u for u in target_pool["speakers"][speaker] if u.id not in used]
+    plan["enroll_store_seconds"] = seconds
+    plan["enroll_extra"] = _more_speech(rng, rest, plan["enroll_utt"].duration, seconds)
+    if "enroll_other" in plan:  # the contaminating voice covers the whole stored enrollment too
+        other = plan["enroll_other"]
+        rest = [u for u in target_pool["speakers"][other.speaker] if u.id != other.id]
+        plan["enroll_other_extra"] = _more_speech(rng, rest, other.duration, seconds)
 
 
 class PlanError(ValueError):
@@ -357,6 +542,46 @@ def _enroll_utt(rng, utts, used):
 
 
 # --- rendering ------------------------------------------------------------
+
+
+def _speech_run(first, extra, load, limit):
+    pieces = [first]
+    for utt, gap in extra:
+        pieces += [np.zeros(int(gap * SAMPLE_RATE), np.float32), normalize_rms(load(utt))]
+    return np.concatenate(pieces)[:limit]
+
+
+def _stored_enrollment(plan, cond, w, load, load_rir, load_noise):
+    """The planned condition applied to the whole stored enrollment (before the floor)."""
+    limit = int(plan["enroll_store_seconds"] * SAMPLE_RATE)
+    base = _speech_run(w, plan["enroll_extra"], load, limit)
+    m = len(base)
+    if cond == "clean":
+        return base
+    if cond in SHORT_REGISTRATION:
+        return base[: int(SHORT_REGISTRATION[cond] * SAMPLE_RATE)]
+    if cond == "short1":  # one second of speech in a recording as long as the others
+        voiced = trim_leading_silence(w)[:SAMPLE_RATE]
+        return np.pad(voiced, (0, m - len(voiced)))
+    if cond == "lead_silence":
+        speech = _speech_run(trim_leading_silence(w), plan["enroll_extra"], load, limit)
+        return np.concatenate([np.zeros(int(1.5 * SAMPLE_RATE), np.float32), speech])[:m]
+    if cond == "lp4k":
+        from scipy.signal import butter, sosfilt
+
+        return sosfilt(butter(8, 4000, "low", fs=SAMPLE_RATE, output="sos"), base).astype(np.float32)
+    if cond == "noise10":
+        spec = plan["enroll_noise"]
+        return add_noise(base, load_noise(spec["kind"], spec["file"]), 10.0, spec["offset"]).astype(np.float32)
+    if cond == "reverb":
+        return apply_rir(base, load_rir(plan["enroll_rir"]))[:m]
+    if cond in ("contam10", "contam0"):
+        other = _speech_run(normalize_rms(load(plan["enroll_other"])), plan["enroll_other_extra"], load, m)
+        sir = 10.0 if cond == "contam10" else 0.0
+        return (base + np.pad(other, (0, m - len(other))) * 10.0 ** (-sir / 20.0)).astype(np.float32)
+    if cond == "quiet":
+        return (base * 10.0 ** (-25.0 / 20.0)).astype(np.float32)
+    raise ValueError(f"unknown enrollment condition: {cond}")
 
 
 def apply_rir(w, rir, tail=0.4):
@@ -494,6 +719,8 @@ def render_enrollment(plan, load, load_rir, load_noise):
 
     The ``clean`` condition keeps the whole utterance, as a deployed client would
     send it; every degraded condition is exactly 3 s, the length the model consumes.
+    With ``enroll_store_seconds`` every condition keeps the stored length instead
+    (``_stored_enrollment``), and the short registrations keep their own length.
     """
     cond = plan["params"].get("enroll", "clean")
     floor = (plan.get("floor") or {}).get("enroll")
@@ -501,10 +728,21 @@ def render_enrollment(plan, load, load_rir, load_noise):
     n = int(ENROLL_SECONDS * SAMPLE_RATE)
     if cond == "file":  # a recorded registration is used as it is
         w = load(utt).astype(np.float32)
+        store = plan["params"].get("enroll_store_seconds")
+        if store:  # as long as the recording, up to the stored length (the earlier ones are exactly 3 s)
+            return apply_floor(w[: int(store * SAMPLE_RATE)], floor, load_noise)
         return apply_floor(np.pad(w[:n], (0, max(0, n - len(w)))), floor, load_noise)
     w = normalize_rms(load(utt))
+    if plan.get("enroll_store_seconds"):
+        return apply_floor(_stored_enrollment(plan, cond, w, load, load_rir, load_noise), floor, load_noise)
     if cond == "clean":
         return apply_floor(w, floor, load_noise)
+    if cond == "long":
+        pieces = [trim_leading_silence(w)]
+        for extra, gap in plan["enroll_extra"]:
+            pieces += [np.zeros(int(gap * SAMPLE_RATE), np.float32), normalize_rms(load(extra))]
+        seg = np.concatenate(pieces)[: int(plan["params"]["enroll_long_seconds"] * SAMPLE_RATE)]
+        return apply_floor(seg, floor, load_noise)
     voiced = trim_leading_silence(w)
     if cond == "short1":
         seg = voiced[:SAMPLE_RATE]
