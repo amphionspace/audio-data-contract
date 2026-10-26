@@ -8,10 +8,15 @@ clips occur as in the benchmark's nonspeech sets. The level is drawn at training
 and bars and its babble can hold intelligible words, which a plain-ASR model must not be
 taught to ignore.
 
+With ``--source babble`` the clips are cut from babble_noise_train@v2-20261024 instead: room babble of 16-24
+talkers rendered like asr_babble_bench@v2-20261023's, in which no talker can be followed, so "nothing" is the
+right transcript (unlike WHAM's or babble_noise_train@v1's few, dry talkers). A clip's language is its babble's.
+
 Output (a registrable dataset version, records + audio_index like the interference pool):
   records_all.jsonl.gz, audio_index_all.jsonl.gz, report.json
 
     python build_nonspeech_pool.py --output-dir DIR [--workers 16]
+    python build_nonspeech_pool.py --output-dir DIR --source babble --version babble-20261024
 """
 
 import argparse
@@ -37,11 +42,14 @@ SEED = 20261016
 MIN_SECONDS, MAX_SECONDS = 0.3, 26.0
 # After the level is reset at training time, only a clip with no signal at all is useless.
 MIN_RMS = 1e-4
-SOURCES = [
+SOURCES = {
     # (dataset, version, split, clips, most clips per file)
-    ("musan", "legacy-20260804", "noise", 24000, 60),
-    ("musan", "legacy-20260804", "music", 24000, 60),
-]
+    "musan": [("musan", "legacy-20260804", "noise", 24000, 60),
+              ("musan", "legacy-20260804", "music", 24000, 60)],
+    # 3,000 30-s clips per language
+    "babble": [("babble_noise_train", "v2-20261024", "zh", 12000, 40),
+               ("babble_noise_train", "v2-20261024", "en", 12000, 40)],
+}
 
 
 def lines(path):
@@ -71,12 +79,14 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--output-dir", type=Path, required=True)
     parser.add_argument("--workers", type=int, default=16)
+    parser.add_argument("--source", choices=sorted(SOURCES), default="musan")
+    parser.add_argument("--version", default=VERSION)
     args = parser.parse_args()
     catalog, roots = load_catalog(CATALOG), load_roots(ROOTS)
     root = Path(roots[ROOT_ALIAS])
     args.output_dir.mkdir(parents=True, exist_ok=True)
     records, index_rows, report = [], {}, {}
-    for dataset, version, split, count, per_file in SOURCES:
+    for dataset, version, split, count, per_file in SOURCES[args.source]:
         rng = random.Random(f"{SEED}:{dataset}:{split}")
         files = [r for path in resolve_split(catalog, dataset, version, split, "recordings", roots)
                  for r in lines(path) if r["duration"] >= MIN_SECONDS]
@@ -105,13 +115,13 @@ def main():
             raise ValueError(f"{dataset}:{split}: wanted {count}, only {len(kept)} usable")
         for number, (rec, start, span) in kept:
             file_id = f"{dataset}:{split}:{rec['id']}"
-            language = rng.choice(("zh", "en"))
+            language = split if args.source == "babble" else rng.choice(("zh", "en"))
             records.append({
                 "schema_version": "audio-record/1.0", "id": f"{DATASET_ID}:{dataset}-{split}:{number:06d}",
                 "task": TASK, "target": "", "language": language, "labels": {"target_present": False},
                 "hotwords": [],
                 "audio_slots": [{"name": "primary", "ref": {
-                    "dataset_id": DATASET_ID, "version": VERSION, "split": SPLIT, "cut_id": file_id,
+                    "dataset_id": DATASET_ID, "version": args.version, "split": SPLIT, "cut_id": file_id,
                     "start": round(start, 3), "duration": round(span, 3)}}],
                 "metadata": {"source_dataset": f"{dataset}:{split}", "source_group": file_id}})
             source_path = Path(rec["sources"][0]["source"])
