@@ -255,11 +255,16 @@ def main():
                     records.append(json.loads(line))
                     if args.limit and len(records) >= args.limit:
                         break
-        rows = {"span": lambda: span_rows(dataset, split, records, catalog, roots),
-                "moss": lambda: moss_rows(records, catalog, roots),
-                "dialog": lambda: dialog_rows(records),
-                "mix": lambda: mix_rows(records, catalog, roots),
-                "keep": lambda: keep_rows(records)}[family]()
+        if family == "span":
+            rows = span_rows(dataset, split, records, catalog, roots)
+        elif family == "moss":
+            rows = moss_rows(records, catalog, roots)
+        elif family == "dialog":
+            rows = dialog_rows(records)
+        elif family == "mix":
+            rows = mix_rows(records, catalog, roots)
+        else:
+            rows = keep_rows(records)
         counts, examples, out, cuts, excluded = Counter(), defaultdict(list), [], set(), []
         for record, window, target in rows:
             problem = check(record, window, target)
