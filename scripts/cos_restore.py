@@ -43,6 +43,7 @@ def get_json(client, binding, key, sha256=None):
 def bind(args):
     config = json.loads((args.work / 'config.json').read_text())
     prefix = config['prefix'].rstrip('/')
+    selected = set(config.get('selected') or [s['dataset_id'] + '@' + s['version'] for s in config['datasets']])
     receipts = []
     for path in args.reuse:
         receipt = json.loads(path.read_text())
@@ -60,7 +61,7 @@ def bind(args):
                 'cos_uri': 'cos://' + config['bucket'] + '/' + prefix + '/',
                 'artifacts': {a['name']: a['root_alias'] + ':' + a['relative_path']
                               for a in s['artifacts']},
-            } for s in config['datasets']
+            } for s in config['datasets'] if s['dataset_id'] + '@' + s['version'] in selected
         },
     }
     content = encoded(binding)
