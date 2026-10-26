@@ -74,6 +74,7 @@
         duration_hours: 53.65
         duration_basis: clip duration (segment span, or the whole file)
   provenance:
+    summary: 带房间背景人声的中英 ASR 训练句
     status: complete
     synthetic: full
     snapshot_date: '2026-10-24'

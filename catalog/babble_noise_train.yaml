@@ -42,6 +42,7 @@
         records: 2600
         duration_hours: 21.67
   provenance:
+    summary: 训练用合成背景人声噪声（中英）
     status: complete
     synthetic: none
     snapshot_date: '20261017'

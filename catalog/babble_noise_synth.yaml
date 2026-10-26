@@ -121,6 +121,7 @@
       en: librispeech@legacy-20260804 train-clean-100
       zh: aishell@legacy-20260804 train
   provenance:
+    summary: 合成中英背景人声噪声（5–20 人叠加）
     snapshot_date: '2026-10-13'
     source: synthesized from LibriSpeech train-clean-100 and AISHELL train
     description: 合成背景人声（babble）噪声：每条 30 秒，叠加 5–20 个不同说话人，中英文各 3000 条（train 2600、dev 200、test 200）；train/dev/test 的说话人互不重叠。每条的说话人、增益和来源句子见

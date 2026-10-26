@@ -45,6 +45,7 @@
       provenance:
         preparation_status: prepared
   provenance:
+    summary: 川渝方言网络语音（WenetSpeech-Chuan）
     preparation_status: prepared
     owner: mingdong
     description: >-

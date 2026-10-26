@@ -365,6 +365,7 @@
         max: 29.6601
         mean: 3.9469435438688953
   provenance:
+    summary: 中文多人会议（AISHELL-4）；含轮流说话混合版
     description: 会议普通转写。每条 supervision 一条，时长 0.5～30 秒，文本非空。多通道只取第 0 路。
     snapshot_date: '2026-10-14'
     source: aishell4 train_L/test legacy-20260804 and train_M/train_S icefall-20260908
@@ -2067,6 +2068,7 @@
         max: 30.0
         mean: 10.924115093890562
   provenance:
+    summary: Emilia2 中英对话的轮流说话目标说话人数据
     description: Emilia2 对话 turn-taking。turn 时间戳来自 dialog tar，音频用 m4a-128k。只保留纯中文或纯英文。混合窗 1～30 秒。注册是同一说话人的连续整句，1～30 秒，按 5 秒分档抽取，正负样本分开保留。
     snapshot_date: '2026-10-13'
     source: /workspace/workspace/lx/data/emilia2/dialog
@@ -2433,6 +2435,7 @@
         max: 30.0
         mean: 20.133382819857815
   provenance:
+    summary: Emilia2 长音频合成的 2/3 人目标说话人混合
     description: Emilia2 long 合成的 2/3 人混合。目标可以晚开口、按 1～15 秒间隔断续，或在中间短插入。干扰人也可以断续。注册是同一录音上没用过的 1～30 秒片段。
     snapshot_date: '2026-10-13'
     source: /workspace/workspace/lx/data/emilia2/long
@@ -2567,6 +2570,7 @@
         max: 30.0
         mean: 4.598483770316901
   provenance:
+    summary: Emilia2 中英短音频普通转写
     description: Emilia2 已抽出的 m4a-128k short。每条短音频是一条普通转写，只保留语言标签为纯中文或纯英文、时长 0.5～30 秒的片段。不使用 m4a-64k 和 asmr。
     snapshot_date: '2026-10-14'
     source: /workspace/data/datasets/emilia2
@@ -2682,6 +2686,7 @@
         records: 462
         hours: 1.217365208333333
   provenance:
+    summary: 热词难例 SFT 数据（ShareGPT 格式）
     description: 热词难例 ShareGPT。每条系统提示都带 Hotwords。音频指向已注册源文件。
     snapshot_date: '2026-10-14'
     source: /workspace/workspace/lx/data/ckpt34479_recipe/AmphionASR-1.7B-v3/data/sharegpt/hw_sft/hard_hw_sft.jsonl
@@ -2846,6 +2851,7 @@
         records: 10000
         hours: 25.54506652777778
   provenance:
+    summary: 热词 SFT 数据（ShareGPT 格式），含普通转写
     description: 阶段 3 热词 ShareGPT。带 Hotwords 的行是热词转写，系统提示为空的行是普通转写。音频指向已注册源文件。
     snapshot_date: '2026-10-14'
     source: /workspace/workspace/lx/data/ckpt34479_recipe/AmphionASR-1.7B-v3/data/sharegpt/hw_sft/hw_sft.jsonl
@@ -3263,6 +3269,7 @@
         max: 14.912
         mean: 2.8939241078655304
   provenance:
+    summary: 中文手机通话自然对话（MagicData-RAMC）
     description: 会议普通转写。每条 supervision 一条，时长 0.5～30 秒，文本非空。多通道只取第 0 路。
     snapshot_date: '2026-10-14'
     source: magicdata_ramc@legacy-20260804; dev is eval
@@ -3396,6 +3403,7 @@
         max: 12.596
         mean: 9.18129658125
   provenance:
+    summary: 1–3 人远场人声噪声（Emilia 干声加混响）
     description: 单人远场人声噪声。Emilia 中文或英文干声卷上一条远场房间冲激响应，16 kHz 单声道。
     snapshot_date: '2026-10-14'
     source: /workspace/data/datasets/farfield_speech_noise/1spk
@@ -3685,6 +3693,7 @@
       statistics:
         records: 20000
   provenance:
+    summary: WHAM! 噪声训练划分
     description: WHAM training noise. Paths point at noise_open/wham_noise/extracted/wham_noise/tr.
     snapshot_date: '2026-10-14'
     source: /workspace/workspace/lx/data/amphionasr/datasets/wham/versions/tr-20261014/recordings/wham_tr_recordings.jsonl.gz
@@ -3734,6 +3743,7 @@
     sample_policy: full L subset, not the replay-3000h sample
     audio_policy: recording paths are rewritten onto the local WenetSpeech tree; no audio is copied
   provenance:
+    summary: WenetSpeech L 中的播客部分
     description: WenetSpeech L 集按录音路径分成 YouTube 或 podcast。这是全集，不是 replay 的 3000 小时抽样。
     snapshot_date: '2026-10-14'
     source: /workspace/data/datasets/wenetspeech/source/cos-backup-20261011/legacy_asr/LHOTSE/WenetSpeech/data/manifests
@@ -3813,6 +3823,7 @@
     sample_policy: full L subset, not the replay-3000h sample
     audio_policy: recording paths are rewritten onto the local WenetSpeech tree; no audio is copied
   provenance:
+    summary: WenetSpeech L 中的 YouTube 部分
     description: WenetSpeech L 集按录音路径分成 YouTube 或 podcast。这是全集，不是 replay 的 3000 小时抽样。
     snapshot_date: '2026-10-14'
     source: /workspace/data/datasets/wenetspeech/source/cos-backup-20261011/legacy_asr/LHOTSE/WenetSpeech/data/manifests
@@ -3871,6 +3882,7 @@
       48000: 135808
     channels: 1
   provenance:
+    summary: 真实场景中英语音（VITW）；含回声、远场等评测
     description: Voices-in-the-Wild 2M 配方全量转写。音频仍在 2M 源目录，按原 jsonl 顺序登记；不是 Bench 的 legacy-20260804。
     snapshot_date: '2026-10-13'
     source: checkpoint-34479 sharegpt vitw.jsonl

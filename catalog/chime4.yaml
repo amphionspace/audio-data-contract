@@ -141,6 +141,7 @@
         audio_2ch: isolated_2ch_track/et05_{bus,caf,ped,str}_simu/<utt>_<ENV>.CH<n>.wav
         transcript_file: transcriptions/et05_simu.trn_all
   provenance:
+    summary: 四种噪声环境的英文朗读评测集（CHiME-4）
     source: CHiME-4 challenge package (University of Sheffield, Inria, MERL), community mirror Prummn/chime4 on Hugging Face
     url: https://www.chimechallenge.org/challenges/chime4/download
     snapshot_date: '2026-10-23'

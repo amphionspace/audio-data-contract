@@ -103,6 +103,7 @@
             - test_other_sup_0
         group: test
     provenance:
+      summary: 英文有声书朗读（LibriSpeech）；含热词和加噪版
       source: icefall pre-migration registry
       snapshot_date: '2026-08-04'
       upstream_version: unknown
@@ -175,6 +176,7 @@
           duration_hours: 15.548358420138888
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:LHOTSE/MLS/data/manifests/mls-english_supervisions_test.jsonl.gz'
     provenance:
+      summary: 英文有声书朗读（MLS 英语）
       source: icefall pre-migration registry
       snapshot_date: '2026-08-04'
       upstream_version: unknown
@@ -247,6 +249,7 @@
           duration_hours: 40.3317025
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:LHOTSE/GigaSpeech/data/manifests/gigaspeech_supervisions_TEST.jsonl.gz'
     provenance:
+      summary: 有声书、播客和 YouTube 英语（GigaSpeech）
       source: icefall pre-migration registry
       snapshot_date: '2026-08-04'
       upstream_version: unknown
@@ -357,6 +360,7 @@
           duration_hours: 0.11039805555555555
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:LHOTSE/singaporean/data/manifests/singaporean_supervisions_all_cleaned.jsonl.gz'
     provenance:
+      summary: 新加坡口音英语小样本
       source: icefall pre-migration registry
       snapshot_date: '2026-08-04'
       upstream_version: unknown
@@ -413,6 +417,7 @@
           duration_hours: 0.5738733333333333
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:LHOTSE/singapore_english_hf/data/manifests/singapore_supervisions_dev_cleaned.jsonl.gz'
     provenance:
+      summary: 新加坡口音英语（Hugging Face 来源）
       source: icefall pre-migration registry
       snapshot_date: '2026-08-04'
       upstream_version: unknown
@@ -486,6 +491,7 @@
           duration_hours: 0.46295855902777777
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:LHOTSE/tal100_en/data/manifests/tal100_en_supervisions_test.jsonl.gz'
     provenance:
+      summary: TAL 英语语音识别数据
       source: icefall pre-migration registry
       snapshot_date: '2026-08-04'
       upstream_version: unknown
@@ -602,6 +608,7 @@
           duration_hours: 7232.1564842013895
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:LHOTSE/WenetSpeech4TTS/data/manifests/wenetspeech4tts_supervisions_basic.jsonl.gz'
     provenance:
+      summary: WenetSpeech 筛出的中文 TTS 语音
       source: icefall pre-migration registry
       snapshot_date: '2026-08-04'
       upstream_version: unknown
@@ -659,6 +666,7 @@
           duration_hours: 8740.69795
           duration_basis: 'sum of cuts durations; overlapping segments may count speech more than once; sources: multilingual:zh/WenetSpeech-Wu/data/manifests/wenetspeech_wu_cuts_train.jsonl.gz'
     provenance:
+      summary: 吴语网络语音（WenetSpeech-Wu）
       source: icefall pre-migration registry
       snapshot_date: '2026-08-04'
       upstream_version: unknown
@@ -756,6 +764,7 @@
           duration_hours: 10.030255260416666
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:LHOTSE/data_aishell/data/manifests/aishell_supervisions_test.jsonl.gz'
     provenance:
+      summary: 中文朗读（AISHELL-1）；含清洗和热词版
       source: icefall pre-migration registry
       snapshot_date: '2026-08-04'
       upstream_version: unknown
@@ -811,6 +820,7 @@
           duration_hours: 4.004922013888889
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:LHOTSE/data_aishell2/data/manifests/aishell2_supervisions_test.jsonl.gz'
     provenance:
+      summary: 中文朗读（AISHELL-2）；含清洗和热词版
       source: icefall pre-migration registry
       snapshot_date: '2026-08-04'
       upstream_version: unknown
@@ -986,6 +996,7 @@
           duration_hours: 6.311416111111112
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:LHOTSE/data_thchs30/data/manifests/thchs_30_supervisions_test.jsonl.gz'
     provenance:
+      summary: 清华中文朗读（THCHS-30）；含热词版
       source: icefall pre-migration registry
       snapshot_date: '2026-08-04'
       upstream_version: unknown
@@ -1356,6 +1367,7 @@
           duration_hours: 17.45736208311681
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:LHOTSE/common_voice_zh/data/manifests/cv-zh-CN_supervisions_test.jsonl.gz'
     provenance:
+      summary: Common Voice 中文众包朗读；含清洗、热词、加噪版
       source: icefall pre-migration registry
       snapshot_date: '2026-08-04'
       upstream_version: unknown
@@ -1428,6 +1440,7 @@
           duration_hours: 0.5362885590277778
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:LHOTSE/tal100_zh/data/manifests/tal100_zh_supervisions_test.jsonl.gz'
     provenance:
+      summary: TAL 中文语音识别数据
       source: icefall pre-migration registry
       snapshot_date: '2026-08-04'
       upstream_version: unknown
@@ -1475,6 +1488,7 @@
           duration_hours: 4.064612309027778
           duration_basis: 'sum of cuts durations; overlapping segments may count speech more than once; sources: legacy_asr:LHOTSE/childmandarin/data/manifests/childmandarin_cuts_test.jsonl.gz'
     provenance:
+      summary: 3–5 岁儿童普通话语音（ChildMandarin）
       source: icefall pre-migration registry
       snapshot_date: '2026-08-04'
       upstream_version: unknown
@@ -1605,6 +1619,7 @@
           duration_hours: 23.62268777777778
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:LHOTSE/TALCS/data/manifests/talcs_supervisions_test_cleaned.jsonl.gz'
     provenance:
+      summary: 中英语码转换课堂语音（TALCS）；含热词和加噪版
       source: icefall pre-migration registry
       snapshot_date: '2026-08-04'
       upstream_version: unknown
@@ -1677,6 +1692,7 @@
           duration_hours: 7.649816909722222
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: multilingual:zh/CS-Dialogue/data/manifests/cs_dialogue_supervisions_test.jsonl.gz'
     provenance:
+      summary: 中英语码转换双人对话（CS-Dialogue）
       source: icefall pre-migration registry
       snapshot_date: '2026-08-04'
       upstream_version: unknown
@@ -1742,6 +1758,7 @@
           duration_hours: 4.371686493055555
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: multilingual:zh/CS-Dialogue/data/manifests/cs_dialogue_supervisions_test.en.jsonl.gz'
     provenance:
+      summary: CS-Dialogue 对话中的纯英文语句
       source: icefall pre-migration registry
       snapshot_date: '2026-08-04'
       upstream_version: unknown
@@ -1807,6 +1824,7 @@
           duration_hours: 4.616328888888889
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: multilingual:zh/CS-Dialogue/data/manifests/cs_dialogue_supervisions_test.mix.jsonl.gz'
     provenance:
+      summary: CS-Dialogue 对话中的中英混说语句
       source: icefall pre-migration registry
       snapshot_date: '2026-08-04'
       upstream_version: unknown
@@ -1838,6 +1856,7 @@
           duration_hours: 10.94399013888889
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:LHOTSE/cumix2017/data/manifests/cumix2017_supervisions_all_cleaned.jsonl.gz'
     provenance:
+      summary: 粤英语码转换语音（CUMIX2017）
       source: icefall pre-migration registry
       snapshot_date: '2026-08-04'
       upstream_version: unknown
@@ -1869,6 +1888,7 @@
           duration_hours: 20227.20894722222
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: multilingual:zh/legco-speech/data/manifests/legco_speech_supervisions_train.mix.jsonl.gz'
     provenance:
+      summary: 香港立法会会议粤语
       source: icefall pre-migration registry
       snapshot_date: '2026-08-04'
       upstream_version: unknown
@@ -1900,6 +1920,7 @@
           duration_hours: 249.59385277777778
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: multilingual:zh/legco-speech/data/manifests/legco_speech_supervisions_train.en.jsonl.gz'
     provenance:
+      summary: 香港立法会会议英语
       source: icefall pre-migration registry
       snapshot_date: '2026-08-04'
       upstream_version: unknown
@@ -1965,6 +1986,7 @@
           duration_hours: 11.008564703333333
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: multilingual:zh/mdcc/data/manifests/mdcc_supervisions_test.jsonl.gz'
     provenance:
+      summary: 香港粤语有声书朗读（MDCC）；含加噪版
       source: icefall pre-migration registry
       snapshot_date: '2026-08-04'
       upstream_version: unknown
@@ -2081,6 +2103,7 @@
             - test_short_sup_0
         group: test
     provenance:
+      summary: WenetSpeech-Yue 全量，含非 clean 部分
       source: icefall pre-migration registry
       snapshot_date: '2026-08-04'
       upstream_version: unknown
@@ -2146,6 +2169,7 @@
           duration_hours: 8.198547466281651
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: multilingual:zh/common_voice_zh_HK/data/manifests/cv_zh_hk_supervisions_test.jsonl.gz'
     provenance:
+      summary: 众包朗读粤语（Common Voice 香港）
       source: icefall pre-migration registry
       snapshot_date: '2026-08-04'
       upstream_version: unknown

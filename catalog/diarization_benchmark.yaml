@@ -121,6 +121,7 @@
         duration_hours: 10.776520086805556
         duration_basis: sum of measured whole-recording durations
   provenance:
+    summary: 中文远场会议，多人重叠语音（AliMeeting）
     status: ready
     benchmark_slice: alimeeting
     source_benchmark: amphion-diarization/diarization-benchmark@20261019
@@ -257,6 +258,7 @@
         duration_hours: 11.770612222222221
         duration_basis: sum of measured whole-recording durations
   provenance:
+    summary: 英文会议远场版（AMI SDM）；含轮流说话混合版
     status: ready
     benchmark_slice: ami_near
     source_benchmark: amphion-diarization/diarization-benchmark@20261019
@@ -393,6 +395,7 @@
         duration_hours: 43.53614222222222
         duration_basis: sum of measured whole-recording durations
   provenance:
+    summary: YouTube 视频说话人日志评测（VoxConverse）
     status: ready
     benchmark_slice: voxconverse
     source_benchmark: amphion-diarization/diarization-benchmark@20261019

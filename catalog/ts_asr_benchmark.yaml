@@ -1215,6 +1215,7 @@
       provenance:
         description: 'domain: {"kind": "neg", "k": [1, 2], "duration": [8, 18], "target_pool": "studio"}'
   provenance:
+    summary: 合成的中文目标说话人 ASR 评测集
     status: complete
     synthetic: full
     description: 目标说话人 ASR 评测集：由 AISHELL-3、KeSpeech、MagicData、AISHELL-2、AISHELL-1 的官方 test 划分合成，覆盖注册音频劣化、目标说话人进场离场与缺席、纯噪声、环境与设备。只用于评测，不进训练。场景见 scripts/ts_benchmark/recipe.yaml。

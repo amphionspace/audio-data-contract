@@ -102,6 +102,7 @@
             - trials_cross_distance
             - trials_cross_dialect
     provenance:
+      summary: 跨设备、距离和方言的中文声纹数据（3D-Speaker）
       source: 3D-Speaker
       url: https://3dspeaker.github.io/
       snapshot_date: '2026-09-11'

@@ -60,6 +60,7 @@
         provenance:
           archive_format: concatenated-tar.gz
     provenance:
+      summary: 中文跨场景声纹训练数据（CN-Celeb2）
       source: OpenSLR
       url: https://www.openslr.org/82/
       snapshot_date: '2026-09-11'

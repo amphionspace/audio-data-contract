@@ -76,6 +76,7 @@
       excluded_source_files: []
       finished_at: '2026-09-28T07:58:24.382857+00:00'
       description: 音频编码字节存放在 Lance 表内；原始划分在 metadata_json.original_split，统一输出全部为 train。ASR 用 tts_lance.iter_asr_samples（tts-asr-rules/v1）读取，会排除原始 dev/test 等。
+      summary: 中文情感语音（CSEMOTIONS），TTS 用
   - schema_version: dataset-catalog/2.0
     dataset_id: emilia
     version: tts-unified-v0.1
@@ -347,6 +348,7 @@
         - DE/DE-B000049.tar
       finished_at: '2026-09-29T02:30:50.082640+00:00'
       description: 音频编码字节存放在 Lance 表内；原始划分在 metadata_json.original_split，统一输出全部为 train。ASR 用 tts_lance.iter_asr_samples（tts-asr-rules/v1）读取，会排除原始 dev/test 等。
+      summary: Emilia-YODAS 多语种 YouTube 语音
       asr_notes: 机器转写，须做质量过滤；文本开头带空格
   - schema_version: dataset-catalog/2.0
     dataset_id: galgame
@@ -386,6 +388,7 @@
       excluded_source_files: []
       finished_at: '2026-09-28T10:43:11.601228+00:00'
       description: 音频编码字节存放在 Lance 表内；原始划分在 metadata_json.original_split，统一输出全部为 train。ASR 用 tts_lance.iter_asr_samples（tts-asr-rules/v1）读取，会排除原始 dev/test 等。
+      summary: 日语视觉小说配音，TTS 用
   - schema_version: dataset-catalog/2.0
     dataset_id: genshin_voice
     version: tts-unified-v0.1
@@ -449,6 +452,7 @@
       excluded_source_files: []
       finished_at: '2026-09-28T11:00:30.075741+00:00'
       description: 音频编码字节存放在 Lance 表内；原始划分在 metadata_json.original_split，统一输出全部为 train。ASR 用 tts_lance.iter_asr_samples（tts-asr-rules/v1）读取，会排除原始 dev/test 等。
+      summary: 《原神》多语配音，TTS 用
   - schema_version: dataset-catalog/2.0
     dataset_id: hifitts
     version: tts-unified-v0.1
@@ -488,6 +492,7 @@
       excluded_source_files: []
       finished_at: '2026-09-28T16:40:21.885207+00:00'
       description: 音频编码字节存放在 Lance 表内；原始划分在 metadata_json.original_split，统一输出全部为 train。ASR 用 tts_lance.iter_asr_samples（tts-asr-rules/v1）读取，会排除原始 dev/test 等。
+      summary: 英文有声书高保真朗读（Hi-Fi TTS）
       asr_notes: 有声书原文；须排除 original_split=dev/test
   - schema_version: dataset-catalog/2.0
     dataset_id: hifitts2
@@ -528,6 +533,7 @@
       excluded_source_files: []
       finished_at: '2026-09-29T03:22:30.978546+00:00'
       description: 音频编码字节存放在 Lance 表内；原始划分在 metadata_json.original_split，统一输出全部为 train。ASR 用 tts_lance.iter_asr_samples（tts-asr-rules/v1）读取，会排除原始 dev/test 等。
+      summary: 英文有声书高保真朗读（Hi-Fi TTS 2）
       asr_notes: 有声书原文；须排除 dev_*/test_* 划分
   - schema_version: dataset-catalog/2.0
     dataset_id: libriheavy
@@ -568,6 +574,7 @@
       excluded_source_files: []
       finished_at: '2026-09-29T02:27:50.658396+00:00'
       description: 音频编码字节存放在 Lance 表内；原始划分在 metadata_json.original_split，统一输出全部为 train。ASR 用 tts_lance.iter_asr_samples（tts-asr-rules/v1）读取，会排除原始 dev/test 等。
+      summary: 英文有声书，带标点和大小写（Libriheavy）
       asr_notes: 书本原文（带大小写和标点），text_variants 另有 source_asr；超过 30 秒的约 44 万条需切分或过滤
   - schema_version: dataset-catalog/2.0
     dataset_id: libritts_r
@@ -608,6 +615,7 @@
       excluded_source_files: []
       finished_at: '2026-09-28T09:39:41.811450+00:00'
       description: 音频编码字节存放在 Lance 表内；原始划分在 metadata_json.original_split，统一输出全部为 train。ASR 用 tts_lance.iter_asr_samples（tts-asr-rules/v1）读取，会排除原始 dev/test 等。
+      summary: 英文有声书 TTS 语料，音频经修复（LibriTTS-R）
       asr_notes: 须排除 dev/test（来自 LibriSpeech dev/test，会污染 LibriSpeech 评测）；音频经修复增强
   - schema_version: dataset-catalog/2.0
     dataset_id: ljspeech
@@ -648,6 +656,7 @@
       excluded_source_files: []
       finished_at: '2026-09-28T08:44:55.642445+00:00'
       description: 音频编码字节存放在 Lance 表内；原始划分在 metadata_json.original_split，统一输出全部为 train。ASR 用 tts_lance.iter_asr_samples（tts-asr-rules/v1）读取，会排除原始 dev/test 等。
+      summary: 单人英文朗读（LJSpeech）
       asr_notes: 单说话人朗读，数字未展开
   - schema_version: dataset-catalog/2.0
     dataset_id: mls_sidon
@@ -696,6 +705,7 @@
         - english/00128-of-00128/train-00000.tar.gz
       finished_at: '2026-09-28T20:23:14.093954+00:00'
       description: 音频编码字节存放在 Lance 表内；原始划分在 metadata_json.original_split，统一输出全部为 train。ASR 用 tts_lance.iter_asr_samples（tts-asr-rules/v1）读取，会排除原始 dev/test 等。
+      summary: 8 种语言有声书，音频经 Sidon 修复（MLS）
       asr_notes: 须排除 valid/test（与 MLS 评测集相同）；音频经 Sidon 修复
   - schema_version: dataset-catalog/2.0
     dataset_id: starrail_voice
@@ -760,6 +770,7 @@
       excluded_source_files: []
       finished_at: '2026-09-28T11:00:02.901925+00:00'
       description: 音频编码字节存放在 Lance 表内；原始划分在 metadata_json.original_split，统一输出全部为 train。ASR 用 tts_lance.iter_asr_samples（tts-asr-rules/v1）读取，会排除原始 dev/test 等。
+      summary: 《崩坏：星穹铁道》多语配音，TTS 用
       known_issues:
         - en/ja/ko 配音约 94% 配的是中文文本（en 中文 78,864 条、英文 4,786 条），疑为接入时各语言共用了中文台词；待 tts-data-pipeline 修复，本仓库不改，ASR 规则按 script_mismatch 排除
   - schema_version: dataset-catalog/2.0
@@ -801,6 +812,7 @@
       excluded_source_files: []
       finished_at: '2026-09-28T09:46:51.147054+00:00'
       description: 音频编码字节存放在 Lance 表内；原始划分在 metadata_json.original_split，统一输出全部为 train。ASR 用 tts_lance.iter_asr_samples（tts-asr-rules/v1）读取，会排除原始 dev/test 等。
+      summary: 多口音英语朗读（VCTK）
       asr_notes: 朗读文本；172 条无文本
   - schema_version: dataset-catalog/2.0
     dataset_id: wenetspeech4tts
@@ -905,6 +917,7 @@
       excluded_source_files: []
       finished_at: '2026-09-28T09:45:23.403082+00:00'
       description: 音频编码字节存放在 Lance 表内；原始划分在 metadata_json.original_split，统一输出全部为 train。ASR 用 tts_lance.iter_asr_samples（tts-asr-rules/v1）读取，会排除原始 dev/test 等。
+      summary: 《鸣潮》多语配音，TTS 用
   - schema_version: dataset-catalog/2.0
     dataset_id: zenless_voice
     version: tts-unified-v0.1
@@ -968,3 +981,4 @@
       excluded_source_files: []
       finished_at: '2026-10-09T10:53:17.008755+00:00'
       description: 音频编码字节存放在 Lance 表内；原始划分在 metadata_json.original_split，统一输出全部为 train。ASR 用 tts_lance.iter_asr_samples（tts-asr-rules/v1）读取，会排除原始 dev/test 等。
+      summary: 《绝区零》多语配音，TTS 用

@@ -1250,6 +1250,7 @@
         duration_hours: 148.3
         duration_basis: clip duration (segment span, or the whole file)
   provenance:
+    summary: 目标说话人难例场景素材（相近声音、交接）
     status: complete
     synthetic: none
     snapshot_date: '2026-10-24'

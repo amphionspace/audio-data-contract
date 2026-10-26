@@ -701,6 +701,7 @@
           duration_hours: 182.45928888888886
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:WenetSpeech/lhotse/clean/v3-firered/derived/police-v9/wenetspeech_supervisions_restore_disfluency.jsonl.gz'
     provenance:
+      summary: WenetSpeech L 保留口语不流利词的转写
       source: icefall runtime manifest snapshot
       snapshot_date: '2026-09-08'
   - schema_version: dataset-catalog/2.0
@@ -3052,6 +3053,7 @@
           num_recordings: 819
           num_supervisions: 174400
     provenance:
+      summary: 微软英文远场会议，真实录制与模拟（NOTSOFAR）
       source: icefall runtime manifest snapshot
       snapshot_date: '2026-09-08'
       preparation_status: ready
@@ -3845,6 +3847,7 @@
           num_recordings: 7633
           num_supervisions: 7633
     provenance:
+      summary: 真实录制的中文多通道阵列语音（RealMAN）
       source: https://huggingface.co/datasets/AISHELL/RealMAN
       snapshot_date: '2026-09-08'
       upstream_revision: fea47505cae8041f4b652b0954ba61c77d2b6df1
@@ -4469,6 +4472,7 @@
           duration_hours: 0.05576779513888889
           duration_basis: 'sum of recordings durations; sources: legacy_asr:LHOTSE/noise_rir/data/manifests/real_rir_slr28_recordings_all.jsonl.gz'
     provenance:
+      summary: 真实房间冲激响应（OpenSLR 28）
       source: https://www.openslr.org/28/
       preparation_status: ready
       description: Real room impulse responses only; not speech/transcription training examples

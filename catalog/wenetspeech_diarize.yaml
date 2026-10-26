@@ -24,6 +24,7 @@
       provenance:
         preparation_status: stopped
   provenance:
+    summary: WenetSpeech 长音频的说话人日志伪标签
     preparation_status: stopped
     owner: mingdong
     description: >-

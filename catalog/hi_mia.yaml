@@ -83,6 +83,7 @@
         provenance:
           source_split: test_v2
     provenance:
+      summary: 固定中文唤醒词的远场声纹验证（HI-MIA）
       source: OpenSLR
       url: https://www.openslr.org/85/
       snapshot_date: '2026-09-11'

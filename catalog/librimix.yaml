@@ -426,6 +426,7 @@
         silence_seconds: 3
       source_version: 960-current-source-20260910
     provenance:
+      summary: LibriSpeech 混合的目标说话人数据
       description: LibriMix_960 当前训练与测试（英文小写）；纯转写、独立 enrollment/mixture、空转写负样本。
       duration_label: 按目标样本累计混合音频，非去重语料时长
       integrity: verified

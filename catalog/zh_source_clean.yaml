@@ -138,6 +138,7 @@
     - custom.clean
     filters: custom.clean.pass=false
   provenance:
+    summary: 中文手机朗读（Primewords）；含清洗版
     source: AmphionData dual-engine cleaning (amphion-data clean, HTTP backend)
     registered_at: '2026-10-08'
     integrity: verified
@@ -300,6 +301,7 @@
     - custom.clean
     filters: custom.clean.pass=false
   provenance:
+    summary: 中文多人朗读（AISHELL-3）；含清洗、热词、TTS 版
     source: AmphionData dual-engine cleaning (amphion-data clean, HTTP backend)
     registered_at: '2026-10-08'
     integrity: verified
@@ -465,6 +467,7 @@
     - custom.clean
     filters: custom.clean.pass=false
   provenance:
+    summary: 中文手机朗读（aidatatang）；含清洗和热词版
     source: AmphionData dual-engine cleaning (amphion-data clean, HTTP backend)
     registered_at: '2026-10-08'
     integrity: verified
@@ -631,6 +634,7 @@
     - custom.clean
     filters: custom.clean.pass=false
   provenance:
+    summary: 中文手机朗读（MAGICDATA）；含清洗和热词版
     source: AmphionData dual-engine cleaning (amphion-data clean, HTTP backend)
     registered_at: '2026-10-08'
     integrity: verified

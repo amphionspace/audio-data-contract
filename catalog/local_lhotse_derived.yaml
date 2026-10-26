@@ -34,6 +34,7 @@
           duration_hours: 1980.1218666666666
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:GigaSpeech2/lhotse/gigaspeech2_id_supervisions_train_full.jsonl.gz'
     provenance:
+      summary: 印尼语网络语音（GigaSpeech 2）；含热词版
       source: local DATA_ASR lhotse scan
       snapshot_date: '2026-08-05'
       integrity: verified
@@ -382,6 +383,7 @@
         - whisper-large-v3
       rules: v1
     provenance:
+      summary: Common Voice 英语众包朗读；含清洗、热词、加噪版
       source: local DATA_ASR lhotse scan
       snapshot_date: '2026-08-05'
       integrity: verified

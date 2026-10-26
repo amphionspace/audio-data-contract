@@ -243,6 +243,7 @@
         records: 625
         duration_hours: 81.75381553819446
   provenance:
+    summary: AliMeeting 近讲加混响噪声模拟远场的会议窗口
     source: alimeeting_sdm_meeting_sot
     source_version: meeting-long-v1-20260920
     annotation: unchanged human annotation of the source windows
@@ -327,6 +328,7 @@
         records: 9199
         duration_hours: 141.65496637152842
   provenance:
+    summary: RAMC 对话加混响噪声模拟远场的窗口
     source: magicdata_ramc_meeting_sot
     source_version: real-meetings-v2-20261010
     annotation: unchanged human annotation of the source windows
@@ -366,6 +368,7 @@
         records: 36816
         duration_basis: supervision durations
   provenance:
+    summary: RealMAN 远场中文转写训练数据
     source: realman
     source_version: icefall-20260908
     source_split: train
@@ -452,6 +455,7 @@
         records: 15253
         duration_basis: supervision durations
   provenance:
+    summary: VITW 中文远场转写训练数据
     source: vitw
     source_version: icefall-20260908
     source_split: train
@@ -527,6 +531,7 @@
         records: 34600
         duration_hours: 71.15363126157408
   provenance:
+    summary: 3D-Speaker 远场普通话转写训练数据
     source: 3dspeaker
     source_version: speaker-records-v1-20260912
     selection: train, distance >= 1 m, Standard Mandarin

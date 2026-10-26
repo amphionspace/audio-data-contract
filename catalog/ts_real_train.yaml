@@ -100,6 +100,7 @@
         duration_hours: 47.57
         duration_basis: clip duration (segment span, or the whole file)
   provenance:
+    summary: 真实会议切出的目标说话人训练窗口
     status: complete
     synthetic: none
     snapshot_date: '2026-10-17'

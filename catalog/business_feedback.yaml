@@ -55,6 +55,7 @@
       provenance:
         description: 目标说话人未在场、期望输出为空的反馈（已由反馈人确认）。
   provenance:
+    summary: 业务反馈的目标说话人 bad case，仅评测
     status: complete
     synthetic: none
     description: 业务反馈的目标说话人 bad case，每个批次一个版本，只用于评测，不进训练。测试人员在办公室注册一个人的声纹，同时用 pad 播放干扰声（歌曲、对白）时反馈的 7 个调试包（8 段输入）。 每段输入为 3 秒注册音频加一个识别片段；7 个包使用同一段注册音频。

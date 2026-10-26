@@ -103,6 +103,7 @@
         condition: 40% overlap
         session_dirs: OV40/overlap_ratio_40.0_sil0.1_1.0_session<k>_actual<ratio>
   provenance:
+    summary: LibriSpeech 外放录制的模拟会议
     source: LibriCSS (Microsoft), community mirror uglyducking/libri_css on Hugging Face of the original for_release.zip
     url: https://github.com/chenzhuo1011/libri_css
     snapshot_date: '2026-10-23'
