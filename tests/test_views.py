@@ -139,7 +139,7 @@ def test_registered_local_views_are_valid_and_resolvable(capsys):
     datasets = load_catalog(ROOT / "catalog")
     views = load_view_catalog(ROOT / "views", datasets)
 
-    assert len(views) == 34
+    assert len(views) == 40
     assert all(view.materialization == "full" for view in views)
     similar = resolve_view(
         views, datasets, "aishell4_meeting_sot/similar-voice", "similar-voice-v1-20261014"
@@ -175,4 +175,4 @@ def test_registered_local_views_are_valid_and_resolvable(capsys):
         assert views.get(view_id, version).lineage_status == "exact"
 
     assert main(["validate-views", str(ROOT / "views"), str(ROOT / "catalog")]) == 0
-    assert json.loads(capsys.readouterr().out) == {"views": 34}
+    assert json.loads(capsys.readouterr().out) == {"views": 40}
