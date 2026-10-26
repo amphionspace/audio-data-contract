@@ -60,6 +60,7 @@ def main():
     parser.add_argument("--languages", nargs="+", required=True)
     parser.add_argument("--description", required=True)
     parser.add_argument("--sources", nargs="*", default=[])
+    parser.add_argument("--derived-from", help="dataset_id@version this version derives from")
     parser.add_argument("--snapshot-date", default=datetime.datetime.now(tz=datetime.UTC).date().isoformat())
     args = parser.parse_args()
     directory = DATA_ROOT / "datasets" / args.dataset_id / "versions" / args.version
@@ -76,12 +77,13 @@ def main():
                          "statistics": {"records": count(records), "duration_hours": round(hours(records, durations(index)), 2),
                                         "duration_basis": "clip duration (segment span, or the whole file)"}}
     entry = {"schema_version": "dataset-catalog/2.0", "dataset_id": args.dataset_id, "version": args.version,
+             **({"derived_from": args.derived_from} if args.derived_from else {}),
              "languages": args.languages, "tasks": [args.task], "aliases": [], "artifacts": artifacts, "splits": splits,
              "provenance": {"status": "complete", "synthetic": "none", "snapshot_date": args.snapshot_date,
                             "description": args.description, "sources": args.sources}}
     target = args.catalog / args.yaml
     existing = yaml.safe_load(target.read_text()) if target.exists() else []
-    if any(row["version"] == args.version for row in existing or []):
+    if any((row["dataset_id"], row["version"]) == (args.dataset_id, args.version) for row in existing or []):
         raise SystemExit(f"{args.dataset_id}@{args.version} is already in {target}")
     text = yaml.safe_dump([entry], sort_keys=False, allow_unicode=True, width=120)
     with open(target, "a", encoding="utf-8") as stream:
