@@ -1,0 +1,39 @@
+# 占位登记：WenetSpeech-Chuan 川渝方言训练集用 Qwen3-ASR 全量转写核对，进行中，进度见状态文件。
+- schema_version: dataset-catalog/2.0
+  dataset_id: wenetspeech_chuan
+  version: clean-qwen3-asr-v1-20261023
+  languages:
+    - zh
+  tasks:
+    - asr
+  aliases: []
+  artifacts:
+    - name: preparation_state
+      kind: dataset-state
+      root_alias: aidc_data
+      relative_path: datasets/wenetspeech_chuan/versions/clean-qwen3-asr-v1-20261023/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+          - preparation_state
+      statistics:
+        source_records: 4938701
+        source_hours: 10259.6
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: >-
+      WenetSpeech-Chuan 训练集（4,938,701 条 / 10,259.6 h）是机器标注，不带置信度。
+      用共享的 Qwen3-ASR-1.7B 逐条转写，按 SpeechIO TextNorm 算与原标注的字错误率；
+      Qwen 在公开川渝测试集 WSC-Eval 上的错误率是 12.1（Easy）/ 21.1（Hard）。
+      目前只记录转写和错误率，不删数据；保留规则在看过被拒样本后再定。
+      2,000 条试跑整体错误率 21.0%，完全一致 18.4%，≥100% 的 10.7%（原标注漏掉大段语音、Qwen 空输出等）。
+    source: wenetspeech_chuan@icefall-20260908
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/wenetspeech-chuan-qwen-20261023
+  recipe_parameters:
+    check_model: Qwen3-ASR-1.7B
+    check_unit: utterance
+    text_normalization: speechio-textnorm-zh
