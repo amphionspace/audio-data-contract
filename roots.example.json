@@ -40,6 +40,7 @@
   "ts_asr_handover": "/workspace/data/datasets/ts_asr_handover",
   "ts_asr_nearshort": "/workspace/data/datasets/ts_asr_nearshort",
   "ts_asr_playback": "/workspace/data/datasets/ts_asr_playback",
+  "asr_babble_bench": "/workspace/data/datasets/asr_babble_bench",
   "mir1k": "/workspace/data/datasets/mir1k",
   "chime4": "/workspace/data/datasets/chime4",
   "dipco": "/workspace/data/datasets/dipco",
