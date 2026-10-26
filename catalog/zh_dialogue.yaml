@@ -407,6 +407,7 @@
         duration_hours: 15.712938402777777
         supervisions: 16620
   provenance:
+    summary: 车内多人中文对话，远场麦克风（AISHELL-5）
     source: https://www.openslr.org/159/
     license: CC BY-SA 4.0
     audio: original far-field cabin microphones DX01C01..DX04C01, one recording each

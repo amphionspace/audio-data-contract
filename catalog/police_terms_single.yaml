@@ -48,6 +48,7 @@
         speaker_dataset: {KeSpeech: 2679, WenetSpeech-Chuan: 294, WenetSpeech-Wu: 291}
         term_split: {train: 2616, dev: 324, test: 324}
   provenance:
+    summary: 警务术语单说测试集，仅评测
     preparation_status: prepared
     owner: mingdong
     description: >-

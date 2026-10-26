@@ -13,7 +13,8 @@
 
 | 文档 | 内容 |
 |---|---|
-| [数据总览](datasets/data-overview.md) | 从 catalog 生成的数据集、语言、任务和时长列表 |
+| [数据总览](datasets/data-overview.md) | 从 catalog 生成的数据集、语言、任务、时长和一句话简介 |
+| [数据版本明细](datasets/data-versions.md) | 每个数据集各版本的时长、口径、说明和质量证据 |
 | [Common Voice EN](datasets/cv-en-cleaning.md) | 清洗结果、train/test 清单差异 |
 | [远场与会议数据](datasets/farfield-data-preparation.md) | AliMeeting、AMI、NOTSOFAR、RealMAN、ViTW 的准备与使用 |
 | [Target-ASR](datasets/target-asr.md) | LibriMix、AISHELLMix 的版本、记录格式和音频读取 |

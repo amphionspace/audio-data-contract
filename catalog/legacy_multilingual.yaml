@@ -63,6 +63,7 @@
           recordings: 28870
           supervisions: 28870
     provenance:
+      summary: 众包朗读阿拉伯语（Common Voice）
       has_punctuation: true
       has_true_casing:
       legacy_total_hours: 58.25
@@ -132,6 +133,7 @@
           recordings: 295
           supervisions: 295
     provenance:
+      summary: 多语朗读阿拉伯语部分（FLEURS）
       has_punctuation: true
       has_true_casing: true
       legacy_total_hours: 8.22
@@ -201,6 +203,7 @@
           recordings: 2214
           supervisions: 375103
     provenance:
+      summary: 半岛电视台阿拉伯语广播（MGB-2）
       has_punctuation: false
       has_true_casing:
       legacy_total_hours: 1215.53
@@ -234,6 +237,7 @@
           recordings: 279969
           supervisions: 279969
     provenance:
+      summary: YouTube 多语语音阿拉伯语部分（YODAS）
       has_punctuation: true
       has_true_casing: true
       legacy_total_hours: 289.71
@@ -267,6 +271,7 @@
           recordings: 8085
           supervisions: 8085
     provenance:
+      summary: 孟加拉语语音识别数据（BanSpeech）
       has_punctuation: false
       has_true_casing:
       legacy_total_hours: 6.53
@@ -300,6 +305,7 @@
           recordings: 12852
           supervisions: 12852
     provenance:
+      summary: 孟加拉语语音识别数据（CBTTS）
       has_punctuation: true
       has_true_casing:
       legacy_total_hours: 20.09
@@ -369,6 +375,7 @@
           recordings: 21575
           supervisions: 21575
     provenance:
+      summary: 众包朗读孟加拉语（Common Voice）
       has_punctuation: true
       has_true_casing:
       legacy_total_hours: 67.43
@@ -438,6 +445,7 @@
           recordings: 402
           supervisions: 402
     provenance:
+      summary: 多语朗读孟加拉语部分（FLEURS）
       has_punctuation: true
       has_true_casing: true
       legacy_total_hours: 15.55
@@ -471,6 +479,7 @@
           recordings: 3732323
           supervisions: 3732323
     provenance:
+      summary: 孟加拉语大规模语音识别数据
       has_punctuation: true
       has_true_casing:
       legacy_total_hours: 5045.81
@@ -504,6 +513,7 @@
           recordings: 3257
           supervisions: 3257
     provenance:
+      summary: 孟加拉语高质量 TTS 朗读（OpenSLR 37）
       has_punctuation: false
       has_true_casing: false
       legacy_total_hours: 4.96
@@ -537,6 +547,7 @@
           recordings: 26864
           supervisions: 26864
     provenance:
+      summary: YouTube 多语语音孟加拉语部分（YODAS）
       has_punctuation: true
       has_true_casing: true
       legacy_total_hours: 27.06
@@ -606,6 +617,7 @@
           recordings: 616461
           supervisions: 616461
     provenance:
+      summary: 众包朗读德语（Common Voice）
       has_punctuation: true
       has_true_casing: true
       legacy_total_hours: 1034.84
@@ -675,6 +687,7 @@
           recordings: 363
           supervisions: 363
     provenance:
+      summary: 多语朗读德语部分（FLEURS）
       has_punctuation: true
       has_true_casing: true
       legacy_total_hours: 13.45
@@ -786,6 +799,7 @@
           duration_hours: 1966.5085397395833
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: multilingual:de/mls_de/data/manifests/mls-german_supervisions_train_punc.jsonl.gz'
     provenance:
+      summary: 德语有声书朗读（MLS）
       has_punctuation: false
       has_true_casing: false
       legacy_total_hours: 1995.08
@@ -819,6 +833,7 @@
           recordings: 2683763
           supervisions: 2683763
     provenance:
+      summary: YouTube 多语语音德语部分（YODAS）
       has_punctuation: true
       has_true_casing: true
       legacy_total_hours: 3062.88
@@ -888,6 +903,7 @@
           recordings: 394
           supervisions: 394
     provenance:
+      summary: 多语朗读英语部分（FLEURS）
       has_punctuation: true
       has_true_casing: true
       legacy_total_hours: 10.35
@@ -921,6 +937,7 @@
           recordings: 16685180
           supervisions: 16685180
     provenance:
+      summary: Emilia 英语野外语音（已清洗）
       has_punctuation: true
       has_true_casing: true
       legacy_total_hours: 43624.02
@@ -996,6 +1013,7 @@
           recordings: 357397
           supervisions: 357397
     provenance:
+      summary: 众包朗读西班牙语（Common Voice）
       has_punctuation: true
       has_true_casing: true
       legacy_total_hours: 568.47
@@ -1065,6 +1083,7 @@
           recordings: 408
           supervisions: 408
     provenance:
+      summary: 多语朗读西班牙语部分（FLEURS）
       has_punctuation: true
       has_true_casing: true
       legacy_total_hours: 13.25
@@ -1176,6 +1195,7 @@
           duration_hours: 917.6841761111111
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: multilingual:es/mls_es/data/manifests/mls-spanish_supervisions_train_punc.jsonl.gz'
     provenance:
+      summary: 西班牙语有声书朗读（MLS）
       has_punctuation: false
       has_true_casing: false
       legacy_total_hours: 937.67
@@ -1209,6 +1229,7 @@
           recordings: 2802786
           supervisions: 2802786
     provenance:
+      summary: YouTube 多语语音西班牙语部分（YODAS）
       has_punctuation: true
       has_true_casing: true
       legacy_total_hours: 3737.85
@@ -1278,6 +1299,7 @@
           recordings: 107598
           supervisions: 107598
     provenance:
+      summary: 法语有声书朗读（CML-TTS）
       has_punctuation: true
       has_true_casing: true
       legacy_total_hours: 315.98
@@ -1347,6 +1369,7 @@
           recordings: 605822
           supervisions: 605822
     provenance:
+      summary: 众包朗读法语（Common Voice）
       has_punctuation: true
       has_true_casing: true
       legacy_total_hours: 924.15
@@ -1416,6 +1439,7 @@
           recordings: 289
           supervisions: 289
     provenance:
+      summary: 多语朗读法语部分（FLEURS）
       has_punctuation: true
       has_true_casing: true
       legacy_total_hours: 13.05
@@ -1527,6 +1551,7 @@
           duration_hours: 1076.5805241493056
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: multilingual:fr/mls_fr/data/manifests/mls-french_supervisions_train_punc.jsonl.gz'
     provenance:
+      summary: 法语有声书朗读（MLS）
       has_punctuation: false
       has_true_casing: false
       legacy_total_hours: 1096.72
@@ -1560,6 +1585,7 @@
           recordings: 2115480
           supervisions: 2115480
     provenance:
+      summary: YouTube 多语语音法语部分（YODAS）
       has_punctuation: true
       has_true_casing: true
       legacy_total_hours: 2423.7
@@ -1629,6 +1655,7 @@
           recordings: 19694
           supervisions: 19694
     provenance:
+      summary: 众包朗读日语（Common Voice）
       has_punctuation: true
       has_true_casing:
       legacy_total_hours: 48.17
@@ -1662,6 +1689,7 @@
           recordings: 869662
           supervisions: 869662
     provenance:
+      summary: Emilia 日语野外语音
       has_punctuation: true
       has_true_casing: true
       legacy_total_hours: 1715.46
@@ -1731,6 +1759,7 @@
           recordings: 266
           supervisions: 266
     provenance:
+      summary: 多语朗读日语部分（FLEURS）
       has_punctuation: true
       has_true_casing: true
       legacy_total_hours: 10.74
@@ -1764,6 +1793,7 @@
           recordings: 920125
           supervisions: 920125
     provenance:
+      summary: YouTube 多语语音日语部分（YODAS）
       has_punctuation: true
       has_true_casing: true
       legacy_total_hours: 1094.18
@@ -1833,6 +1863,7 @@
           recordings: 658
           supervisions: 658
     provenance:
+      summary: 众包朗读韩语（Common Voice）
       has_punctuation: true
       has_true_casing:
       legacy_total_hours: 2.59
@@ -1866,6 +1897,7 @@
           recordings: 92182
           supervisions: 92182
     provenance:
+      summary: Emilia 韩语野外语音
       has_punctuation: true
       has_true_casing: true
       legacy_total_hours: 217.17
@@ -1935,6 +1967,7 @@
           recordings: 226
           supervisions: 226
     provenance:
+      summary: 多语朗读韩语部分（FLEURS）
       has_punctuation: true
       has_true_casing: true
       legacy_total_hours: 10.07
@@ -1986,6 +2019,7 @@
           recordings: 142683
           supervisions: 142683
     provenance:
+      summary: 韩语语音识别数据（KoreaSpeech）
       has_punctuation: true
       has_true_casing:
       legacy_total_hours: 3828.33
@@ -2019,6 +2053,7 @@
           recordings: 2521932
           supervisions: 2521932
     provenance:
+      summary: YouTube 多语语音韩语部分（YODAS）
       has_punctuation: true
       has_true_casing: true
       legacy_total_hours: 2774.28
@@ -2088,6 +2123,7 @@
           recordings: 26772
           supervisions: 26772
     provenance:
+      summary: 众包朗读俄语（Common Voice）
       has_punctuation: true
       has_true_casing:
       legacy_total_hours: 69.93
@@ -2157,6 +2193,7 @@
           recordings: 356
           supervisions: 356
     provenance:
+      summary: 多语朗读俄语部分（FLEURS）
       has_punctuation: true
       has_true_casing: true
       legacy_total_hours: 11.63
@@ -2226,6 +2263,7 @@
           recordings: 54472
           supervisions: 54472
     provenance:
+      summary: 俄语有声书朗读（Russian LibriSpeech）
       has_punctuation: true
       has_true_casing:
       legacy_total_hours: 98.25
@@ -2259,6 +2297,7 @@
           recordings: 4099688
           supervisions: 4099688
     provenance:
+      summary: YouTube 多语语音俄语部分（YODAS）
       has_punctuation: true
       has_true_casing: true
       legacy_total_hours: 5596.03
@@ -2328,6 +2367,7 @@
           recordings: 409
           supervisions: 409
     provenance:
+      summary: 多语朗读中文部分（FLEURS）
       has_punctuation: true
       has_true_casing: true
       legacy_total_hours: 14.11
@@ -2361,6 +2401,7 @@
           recordings: 16387449
           supervisions: 16387449
     provenance:
+      summary: Emilia 中文野外语音（已清洗）
       has_punctuation: true
       has_true_casing: true
       legacy_total_hours: 40848.44

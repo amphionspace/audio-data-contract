@@ -53,6 +53,7 @@
         records: 8370
         duration_basis: sum of supervision durations
   provenance:
+    summary: 中文网络语音万余小时（WenetSpeech）；含清洗版
     source: COS backup audio-data-contract/datasets/wenetspeech/legacy_asr (official
       WenetSpeech v1 test sets)
     transcript: official, unpunctuated supervisions (not the *_punc variants)
@@ -90,6 +91,7 @@
         records: 41893
         duration_basis: sum of supervision durations
   provenance:
+    summary: SpeechIO 中文 ASR 排行榜评测集
     source: speechio@legacy manifests
     snapshot_date: '2026-10-11'
     transcript: custom.original_text (official leaderboard reference); legacy rewritten
@@ -190,6 +192,7 @@
         records: 2693
         duration_basis: sum of supervision durations
   provenance:
+    summary: 普通话与 8 种次方言（KeSpeech）；含清洗和热词版
     source: kespeech@legacy-20260804 test, supervisions with language == Southwestern
     transcript: official unpunctuated KeSpeech text (Mandarin characters of dialect-accented
       reading)

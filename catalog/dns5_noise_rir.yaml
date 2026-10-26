@@ -115,6 +115,7 @@
           source_archive:
             - impulse_responses_000
     provenance:
+      summary: DNS Challenge 5 官方噪声与冲激响应包
       source: Microsoft DNS Challenge 5
       url: https://github.com/microsoft/DNS-Challenge/blob/master/download-dns-challenge-5-noise-ir.sh
       snapshot_date: '2026-09-24'

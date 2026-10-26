@@ -383,6 +383,7 @@
       provenance:
         description: '英文 · 背景人声 10 dB · 无前后空白：与 en-babble10 同一句话、同一段背景，只是没有前后 1–5 秒。参数 {"kind": "speech", "pair": "en-speech", "language": "en", "tight": true, "noise": "babble_en", "snr_db": 10}'
   provenance:
+    summary: 普通 ASR 背景人声评测集（中英），仅评测
     status: complete
     synthetic: full
     description: 普通 ASR 背景人声评测集：只有背景人声的片段（合成的中文、英文背景人声和真实录音的人群声，期望输出为空），以及一句话前后和说话时都有背景人声的片段（与无背景人声的对照逐条配对）。合成背景人声由不进训练、也不与目标语音重叠的 test/dev 说话人混成。只用于评测，不进训练。配方 scripts/asr_babble_bench/recipe.yaml。

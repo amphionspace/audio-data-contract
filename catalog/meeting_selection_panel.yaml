@@ -67,6 +67,7 @@
         duration_hours: 4.4636
         duration_basis: Clip audio duration
   provenance:
+    summary: 会议模型选模面板（中英真实会议）
     status: complete
     synthetic: none
     description: 独立会议选模面板：AliMeeting 官方 Eval 8 场全部 120 秒窗口（中文）、NOTSOFAR 官方 dev 36

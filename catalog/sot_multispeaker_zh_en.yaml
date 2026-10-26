@@ -33199,6 +33199,7 @@
         - 0.6
       version: synthetic-v2-20260915
     provenance:
+      summary: 1–5 人中英合成混音，按人完整转写
       activity_estimator:
         frame_seconds: 0.02
         relative_db: -35

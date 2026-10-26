@@ -79,6 +79,7 @@
         source_split: all 75 ICSI meetings (the mirror calls the split test)
         audio: official headset mix (<meeting>.interaction.wav), one channel per meeting
   provenance:
+    summary: 伯克利 ICSI 英文工作会议（近讲混合音轨）
     source: ICSI Meeting Corpus (International Computer Science Institute, Berkeley), distributed by the University of Edinburgh. Audio
       and speaker segments from the argmaxinc/icsi-meetings mirror on ModelScope; transcripts and NXT annotations from Edinburgh.
     url: https://groups.inf.ed.ac.uk/ami/icsi/

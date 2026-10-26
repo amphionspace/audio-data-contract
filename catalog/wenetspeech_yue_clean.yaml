@@ -23,6 +23,7 @@
       provenance:
         preparation_status: building
   provenance:
+    summary: 粤语网络语音（WenetSpeech-Yue）；含清洗版
     preparation_status: building
     owner: mingdong
     description: >-

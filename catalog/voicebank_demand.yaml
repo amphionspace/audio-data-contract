@@ -47,6 +47,7 @@
         duration_hours: 0.576
         duration_basis: sum of noisy clip lengths (each clip also has a clean twin of the same length)
   provenance:
+    summary: 语音增强标准集（VoiceBank-DEMAND）
     source: Noisy speech database for training speech enhancement algorithms and TTS models (Valentini-Botinhao, University of
       Edinburgh), 28-speaker version, resampled to 16 kHz in the Hugging Face mirror JacobLinCool/VoiceBank-DEMAND-16k
     url: https://datashare.ed.ac.uk/handle/10283/2791

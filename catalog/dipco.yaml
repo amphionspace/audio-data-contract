@@ -68,6 +68,7 @@
         source_split: eval (S01, S03, S06, S07, S08)
         parquet_split: test
   provenance:
+    summary: 家庭晚宴英文对话，近讲与远场阵列（DiPCo）
     source: DiPCo (Amazon, JHU CLSP), utterance-cut conversion of the full Zenodo release by Benjamin Paine, ModelScope mirror benjamin-paine/dinner-party-corpus
     url: https://zenodo.org/records/8122551
     snapshot_date: '2026-10-23'

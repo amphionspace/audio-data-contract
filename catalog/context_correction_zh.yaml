@@ -96,6 +96,7 @@
       provenance:
         description: 同一批合成题目中不超过 TS 时长上限的部分，配被克隆说话人的另一条真实语句作注册音频
   provenance:
+    summary: 中文上下文纠偏评测集，同音词按语境写
     status: complete
     synthetic: partial
     description: 上下文纠偏评测集，只用于评测，不进训练。说话人在同一段话里用说明或语境确定了某个同音词的写法 (显式说字、同名一致性、隐式语义)，识别结果应按上下文写。题目由 qwen3.6-plus 生成、 deepseek-v4-pro 独立复核，Qwen3-TTS 用测试划分说话人的声音合成，SenseVoiceSmall 拼音级质检； 另有从 WenetSpeech 播客挖掘的真实录音。生成脚本 scripts/context_correction/。

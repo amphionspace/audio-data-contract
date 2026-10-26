@@ -86,6 +86,7 @@
         duration_hours: 0.0483
         duration_basis: sum of impulse response lengths
   provenance:
+    summary: MIT 日常环境实测冲激响应（270 条）
     source: mit_ir_survey@modelscope-benjamin-paine-20261025
     derived_from: mit_ir_survey@modelscope-benjamin-paine-20261025
     snapshot_date: '2026-10-26'

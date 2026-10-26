@@ -55,6 +55,7 @@
       provenance:
         training_use: augmentation
   provenance:
+    summary: 真实会议室底噪（AliMeeting、AISHELL-4）
     snapshot_date: '2026-10-14'
     source: AliMeeting Train far (openslr-119-local-20260826) and AISHELL-4 train_L/M/S far array recordings; evaluation recordings never read
     description: 真实会议室底噪：从 AliMeeting 与 AISHELL-4 训练集远场阵列录音里截取无人说话的片段，每场会议取 1 个麦克风拼成 1 条，共 209 条、2.48 小时。先按标注空隙（前后扩 0.5 秒、剔除比该场底噪高 10 dB 的突发声）取候选，再每 4 秒用 Qwen3-ASR 转写，有文字就丢弃，因为部分会议有未标注的说话人。噪声已带录制房间的混响。

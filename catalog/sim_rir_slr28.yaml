@@ -17,5 +17,6 @@
           recordings:
             - recordings
     provenance:
+      summary: 模拟房间冲激响应（OpenSLR 28）
       snapshot_date: '2026-08-07'
       source: AmphionASR target-speaker recipe

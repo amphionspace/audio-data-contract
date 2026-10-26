@@ -1287,6 +1287,7 @@
       provenance:
         description: 'real: {"corpus": "ramc", "kind": "neg"}'
   provenance:
+    summary: 真实会议对话的目标说话人评测集
     status: complete
     synthetic: none
     description: 真实对话的目标说话人开发集（选模型和阈值用）：从 AliMeeting 远场、MagicData-RAMC 手机通话的人工标注 dev 划分里 以目标说话人为锚切窗口，按目标被重叠的比例分档（RAMC 标注没有重叠，只有 o0），去掉在 train 划分出现过的说话人所在的录音； 同一窗口配一条目标在场和一条目标缺席的样本。不进训练，也不作最终评测。

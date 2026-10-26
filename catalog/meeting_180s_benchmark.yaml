@@ -119,6 +119,7 @@
         duration_hours: 1.4961
         duration_basis: Clip audio duration
   provenance:
+    summary: 约 180 秒长度的中英会议转写评测集
     status: complete
     synthetic: partial
     description: 部署长度（约 180 秒）会议转写评测集：AISHELL-4 test、AliMeeting Test、AMI SDM test 各会议均匀取 6 个窗口，另有中文 / 英文 / 中英混合 6、8、10 人远场合成会议各 10 段；共 424 段 21.2 小时。仅用于评测。

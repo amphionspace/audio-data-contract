@@ -43,6 +43,7 @@
       provenance:
         format: 48 kHz mono 16-bit WAV bytes in the audio column
   provenance:
+    summary: 16 麦阵列录制的多环境噪声（DEMAND）
     source: DEMAND (Thiemann, Ito, Vincent; IRISA, Inria), Kaggle copy chrisfilo/demand repackaged as parquet in the Hugging Face mirror
       voice-biomarkers/DEMAND-acoustic-noise
     url: https://zenodo.org/records/1227121

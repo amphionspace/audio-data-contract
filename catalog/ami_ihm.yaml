@@ -54,6 +54,7 @@
         duration_hours: 8.6815
         duration_basis: sum of end_time - begin_time of the Kaldi segments
   provenance:
+    summary: AMI 英文会议的近讲耳麦版
     source: AMI Meeting Corpus (University of Edinburgh), individual headset microphones segmented by the Kaldi AMI s5 recipe, Hugging
       Face dataset edinburghcstr/ami config ihm
     url: https://groups.inf.ed.ac.uk/ami/corpus/

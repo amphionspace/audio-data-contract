@@ -125,6 +125,7 @@
       channels: 1
       text_normalization_for_overlap: remove punctuation, symbols and whitespace
     provenance:
+      summary: 警务合成语音统合版（V1–V6 合并）
       source: Merged from registered police synthetic releases on aidc-dev
       status: ready
       description: 警务合成语音统合版：V1-V6 全部批次合并为 train/dev/test 三个集合，不复制音频。

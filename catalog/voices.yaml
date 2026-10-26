@@ -52,6 +52,7 @@
         layout: data/<rm1-4>/<babb|musi|none|tele>/<speaker>/Lab41-SRI-VOiCES-<room>-<distractor>-<speaker>-<chapter>-<segment>-<mic>-dg<angle>.wav
         balance: 4 rooms x 4 distractors (babble, music, TV, none) x 2 microphones (mc01 studio close, mc05 studio far) x 200 recordings
   provenance:
+    summary: 真实房间外放的英文远场评测（VOiCES）
     source: VOiCES (Lab41 / SRI International), test subset of VOiCES_devkit distant-16k speech prepared by the uploader of the
       Hugging Face mirror Prummn/VOICES_devkit_test
     url: https://iqtlabs.github.io/voices/
@@ -189,6 +190,7 @@
         layout: distractors_far_15s/<rm1-4>/<babb|musi|none|tele>/Lab41-SRI-VOiCES-<room>-<distractor>-<mic>_seg<k>.wav
         microphones: far microphones (mc05, mc06)
   provenance:
+    summary: VOiCES 真实房间噪声与背景人声
     source: VOiCES (Lab41 / SRI International) distractor-only recordings, cut into 15 s clips by the uploader of the Hugging Face
       mirrors Prummn/VOICES_babble, VOICES_none, VOICES_distractors and VOICES_distractors_far
     url: https://iqtlabs.github.io/voices/

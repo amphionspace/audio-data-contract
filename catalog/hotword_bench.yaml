@@ -370,6 +370,7 @@
       provenance:
         description: 真实口语：SpeechIO 27 个子集与 WenetSpeech test_net / test_meeting；热词按 AmphionData EXTRACT_HOTWORD 由 LLM 抽取、另一模型家族复核，每子集按 sha256(id) 取前 N 条正例
   provenance:
+    summary: 中英热词评测集，仅评测
     status: complete
     synthetic: partial
     usage: evaluation_only
