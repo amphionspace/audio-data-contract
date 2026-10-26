@@ -124,3 +124,24 @@ def test_streamed_and_cancelled_responses_are_recorded_as_reported(batch):
     assert pending.metadata["reported_output"] == "language Chinese<asr_text>嗯。"
     assert pending.metadata["reported_finish_reason"] == "stop"
     assert pending.metadata["request_params"]["mm_processor_kwargs"] == {"target_speaker": True}
+
+
+def test_plain_recordings_are_cut_into_windows(tmp_path):
+    source = tmp_path / "feedback"
+    write_wav(source / "recordings" / "registration.wav", 8, 100)
+    write_wav(source / "recordings" / "long.wav", 55, 7)
+    labels = {"version": "ts-test", "language": "zh", "source": "feedback", "description": "整段录音",
+              "registration": "recordings/registration.wav", "window_seconds": 25,
+              "recordings": {"long": {"file": "recordings/long.wav", "split": "target_speaker",
+                                      "target_present": False, "issue": "tv_dialogue"}}}
+    data_root = tmp_path / "data"
+    by_split, index = ingest["build"](source, labels, data_root)
+    spec = DatasetSpec.from_dict(ingest["declaration"](labels, by_split, index, data_root))
+
+    records = list(load_records(data_root / "versions/ts-test/records/target_speaker.jsonl.gz"))
+    assert [r.id for r in records] == ["ts-test:long-w00", "ts-test:long-w01", "ts-test:long-w02"]
+    assert [r.audio_slots[1].ref.duration for r in records] == [25.0, 25.0, 5.0]
+    assert [r.metadata["window_start_s"] for r in records] == [0.0, 25.0, 50.0]
+    # The whole registration is kept; a client sends its first seconds.
+    assert {r.audio_slots[0].ref.duration for r in records} == {8.0}
+    assert spec.provenance["sources"] == ["business feedback recordings: feedback"]
