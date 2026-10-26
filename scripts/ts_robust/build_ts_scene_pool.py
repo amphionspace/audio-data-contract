@@ -59,12 +59,22 @@ KeSpeech speaker, so neither the channel nor the corpus tells present from absen
 
     python build_ts_scene_pool.py --output-dir DIR --version xsession-20261023 --multi --xsession --twin-share 0.3 \\
         --zh 80000 --en 0
+
+With ``--multi --magicdata`` the targets are MagicData speakers (read speech recorded on phones). On
+ts-asr-benchmark@v12 a MagicData target speaking alone is transcribed at 14.5% CER through TS against 1.7% for plain
+ASR (mostly untranscribed targets), while AISHELL-1/2/3 targets alone match plain ASR; no pool has had a MagicData
+target. Twins enroll another MagicData speaker. 73% of MagicData test utterances repeat a train sentence, so train
+utterances whose text is in the test split are dropped (HELD_OUT_TEXT).
+
+    python build_ts_scene_pool.py --output-dir DIR --version magicdata-20261023 --multi --magicdata --twin-share 0.3 \\
+        --zh 80000 --en 0
 """
 
 import argparse
 import gzip
 import json
 import random
+import unicodedata
 from collections import Counter
 from pathlib import Path
 
@@ -91,6 +101,10 @@ ENROLLMENT_SECONDS = (2.5, 8.0)
 XSESSION_CORPORA = [("aishell2", "legacy-20260804", "train", 0.5, False), ("kespeech", "legacy-20260804", "train", 0.5, True)]
 SESSIONS = ("phase1", "phase2")
 XSESSION_CROSS_PROB = 0.5
+# --magicdata: targets are MagicData speakers; the other speakers are half AISHELL-2, half MagicData.
+MAGICDATA_CORPORA = [("aishell2", "legacy-20260804", "train", 0.5, False), ("magicdata", "legacy-20260804", "train", 0.5, True)]
+# Splits whose sentences a corpus must not train on (73% of MagicData test utterances repeat a train sentence).
+HELD_OUT_TEXT = {"magicdata": "test"}
 # Longest scene per mode, gaps included. The benchmark's scenes run 5-18 s; the training
 # batch holds about a dozen windows, so a 70 s scene would not fit.
 SCENE_SECONDS = {"alternate": 30.0, "burst": 22.0, "short": 14.0, "full": 32.0}
@@ -109,6 +123,11 @@ COLUMNS = ["id", "speaker", "text", "duration", "cut_id", "root_alias", "relativ
            "start_frame", "num_frames", "sample_rate", "channels"]
 
 
+def _plain(text):
+    """Text compared for held-out sentences: NFKC, lower case, no punctuation, symbols or spaces."""
+    return "".join(c for c in unicodedata.normalize("NFKC", text or "").lower() if unicodedata.category(c)[0] not in "PSZ")
+
+
 class Corpus:
     def __init__(self, dataset, version, split, weight, target, language, sessions=False):
         self.name, self.weight, self.target = dataset, weight, target
@@ -125,6 +144,12 @@ class Corpus:
         speaker = table["speaker"].to_pylist()
         keep = np.array([bool(t and len(t.strip()) >= 2) and bool(s) for t, s in zip(text, speaker)]
                         ) & (duration >= UTTERANCE_SECONDS[language][0]) & (duration <= UTTERANCE_SECONDS[language][1])
+        if dataset in HELD_OUT_TEXT:
+            held = {_plain(t) for t in lance.dataset(str(directory / manifest["table_path"])).to_table(
+                columns=["text"], filter=f"array_has(splits, '{HELD_OUT_TEXT[dataset]}')")["text"].to_pylist()}
+            same = np.array([_plain(t) in held for t in text])
+            print(dataset, "dropped", int((keep & same).sum()), "utterances with a", HELD_OUT_TEXT[dataset], "sentence", flush=True)
+            keep &= ~same
         session = None
         if sessions:
             # Keep only speakers with an utterance in every session, so any scene can enroll across sessions.
@@ -154,10 +179,10 @@ class Corpus:
 
 
 class Builder:
-    def __init__(self, language, rng, neighbors=None, hard_rank=10, xsession=False):
+    def __init__(self, language, rng, neighbors=None, hard_rank=10, xsession=False, magicdata=False):
         self.language, self.rng, self.xsession = language, rng, xsession
-        self.corpora = [Corpus(*c, language, sessions=xsession and c[4])
-                        for c in (XSESSION_CORPORA if xsession else CORPORA[language])]
+        corpora = XSESSION_CORPORA if xsession else MAGICDATA_CORPORA if magicdata else CORPORA[language]
+        self.corpora = [Corpus(*c, language, sessions=xsession and c[4]) for c in corpora]
         self.targets = [c for c in self.corpora if c.target]
         self.neighbors, self.hard_rank = neighbors, hard_rank
         self.where = {name: (c, i) for c in self.corpora for i, name in enumerate(c.speakers)}
@@ -435,11 +460,14 @@ def main():
     parser.add_argument("--solo", action="store_true", help="build the short solo version (one short target utterance, nobody else) with twins")
     parser.add_argument("--handover", action="store_true", help="build the handover version (target and one other speaker, one utterance each, in a row) with twins")
     parser.add_argument("--xsession", action="store_true", help="with --multi: KeSpeech targets enrolled from the same or the other session (zh only)")
+    parser.add_argument("--magicdata", action="store_true", help="with --multi: MagicData targets (zh only)")
     args = parser.parse_args()
     if sum((args.multi, args.solo, args.handover)) > 1:
         parser.error("--multi, --solo and --handover build different pools; pick one")
     if args.xsession and (not args.multi or args.en):
         parser.error("--xsession builds the zh multi-turn pool: pass --multi and --en 0")
+    if args.magicdata and (not args.multi or args.en or args.xsession):
+        parser.error("--magicdata builds the zh multi-turn pool: pass --multi and --en 0, without --xsession")
     if (args.multi or args.solo or args.handover) and not 0 <= args.twin_share < 1:
         parser.error("--twin-share must be in [0, 1)")
     VERSION = args.version
@@ -447,10 +475,10 @@ def main():
     neighbors = json.loads(args.neighbors.read_text()) if args.neighbors else None
     report = {}
     for language, count in (("zh", args.zh), ("en", args.en)):
-        if args.xsession and not count:
+        if (args.xsession or args.magicdata) and not count:
             continue
         builder = Builder(language, random.Random(f"{SEED}:{language}:{args.version}"),
-                          neighbors and neighbors[language], args.hard_rank, args.xsession)
+                          neighbors and neighbors[language], args.hard_rank, args.xsession, args.magicdata)
         modes, weights = zip(*MODES[language])
         records, tally = [], Counter()
         if args.multi or args.solo or args.handover:
