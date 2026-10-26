@@ -156,3 +156,78 @@
     known_issues:
     - annotations/ has the 1ch/2ch track channel lists only for dt05; the et05 lists are not in this package.
     integrity: local_sha256_recorded
+- schema_version: dataset-catalog/2.0
+  dataset_id: chime4
+  version: isolated-1ch-20261026
+  languages:
+  - en
+  tasks:
+  - asr
+  aliases: []
+  artifacts:
+  - name: dt05_real_recordings
+    kind: lhotse-recordings
+    root_alias: chime4
+    relative_path: versions/isolated-1ch-20261026/manifests/chime4_recordings_dt05_real.jsonl.gz
+    expected_bytes: 26541
+    sha256: a55b5271e24356a2002f5f7bb196b378e044010a11d595ae9cb7516ac16f1092
+    metadata:
+      record_count: 1640
+  - name: dt05_real_supervisions
+    kind: lhotse-supervisions
+    root_alias: chime4
+    relative_path: versions/isolated-1ch-20261026/manifests/chime4_supervisions_dt05_real.jsonl.gz
+    expected_bytes: 84356
+    sha256: ef7b611f61e0377bfd4882a43ba413bcfb5fe864e3fc7ccca0e674e7d1222e7f
+    metadata:
+      record_count: 1640
+  - name: et05_real_recordings
+    kind: lhotse-recordings
+    root_alias: chime4
+    relative_path: versions/isolated-1ch-20261026/manifests/chime4_recordings_et05_real.jsonl.gz
+    expected_bytes: 21016
+    sha256: 83b38ce581292c02f0bf811787205b6f94dbfe6bd627d9dd32d2f427d06acfb7
+    metadata:
+      record_count: 1320
+  - name: et05_real_supervisions
+    kind: lhotse-supervisions
+    root_alias: chime4
+    relative_path: versions/isolated-1ch-20261026/manifests/chime4_supervisions_et05_real.jsonl.gz
+    expected_bytes: 60879
+    sha256: b9b8aaae5fe085ed1ed10c28cfcf8c981068e5913bf0c3631ecb8dd051bf312c
+    metadata:
+      record_count: 1320
+  splits:
+    dt05_real:
+      artifacts:
+        recordings:
+        - dt05_real_recordings
+        supervisions:
+        - dt05_real_supervisions
+      task: asr
+      statistics:
+        utterances: 1640
+        speakers: 4
+        duration_hours: 2.7468
+        duration_basis: sum of utterance audio lengths
+    et05_real:
+      artifacts:
+        recordings:
+        - et05_real_recordings
+        supervisions:
+        - et05_real_supervisions
+      task: asr
+      statistics:
+        utterances: 1320
+        speakers: 4
+        duration_hours: 2.1741
+        duration_basis: sum of utterance audio lengths
+  provenance:
+    source: chime4@hf-prummn-20261023 (CHiME-4 challenge package, community mirror Prummn/chime4)
+    snapshot_date: '2026-10-26'
+    license: Real CHiME data CC BY-NC-SA 2.0 UK (non-commercial); WSJ0 prompts LDC93S6A.
+    description: CHiME-4 真实录音 1 通道 track 的评测清单：dev（dt05_real，1,640 条）和 eval（et05_real，1,320 条），公交 / 咖啡馆 / 步行街 / 街道四种环境，每组
+      4 个说话人，英文 16 kHz。音频是 hf-prummn-20261023 解包目录里的 isolated_1ch_track 原文件（不复制），参考文本取每条的 .trn（挑战赛官方规范化文本：大写，缩写拼成 N. E. C.）。只能评测：训练音频
+      tr05 属于完整 CHiME-3（LDC），公开渠道没有；常用 et05_real 报单通道 WER。
+    derived_from: chime4@hf-prummn-20261023
+    integrity: local_sha256_recorded
