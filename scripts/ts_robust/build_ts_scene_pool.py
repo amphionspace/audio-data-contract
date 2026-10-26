@@ -121,6 +121,21 @@ checkpoints answer absent KeSpeech-enrolled samples with another speaker's words
     python build_ts_scene_pool.py --output-dir DIR --version magicdata-alt-twins-20261024 --alt-twins --magicdata \\
         --neighbors FILE --twin-share 0.3 --zh 60000 --en 0
 
+With ``--hard-twins`` it builds the hard version with twins: every base scene is a present one with a close neighbour of
+the target among the others (alternate / burst / short), and a share of the records (``--twin-share``) are the scene
+again with another speaker enrolled, half of the time another close neighbour of the target. The hard version's absent
+scenes are separate scenes, never short and never the twin of a present one, the last scene family without twins.
+048 avg3 still answers the hard absent splits of ts-asr-benchmark@v12 more often than 10.21 (abs-hard, realreg, short),
+while every twinned family improved. ``--twin-share 0.5`` twins every base scene (half the records absent, as the
+hard version's 55%):
+
+    python build_ts_scene_pool.py --output-dir DIR --version hard-twins-20261026 --hard-twins --neighbors FILE \\
+        --twin-share 0.5 --zh 40000 --en 25000
+    python build_ts_scene_pool.py --output-dir DIR --version xsession-hard-twins-20261026 --hard-twins --xsession \\
+        --neighbors FILE --twin-share 0.5 --zh 40000 --en 0
+    python build_ts_scene_pool.py --output-dir DIR --version magicdata-hard-twins-20261026 --hard-twins --magicdata \\
+        --neighbors FILE --twin-share 0.5 --zh 40000 --en 0
+
 A KeSpeech speaker reads the same prompts in both sessions, so a cross-session enrollment can say the target's own
 sentence (3.9% of xsession-near-20261023's present records); the transcript can then be read off the enrollment, and
 v12 nonspeech samples with a KeSpeech enrollment come back as the enrollment's words. Enrollments never say a sentence
@@ -468,6 +483,15 @@ class Builder:
         self.audio.update(self.pending)
         return scene, paired
 
+    def hard_pair(self, twin):
+        """A present scene with a close neighbour of the target among the others and, when ``twin``, the scene with another speaker enrolled."""
+        modes, weights = zip(*MODES[self.language])
+        scene, _ = self.scene(self.rng.choices(modes, weights)[0], "present")
+        self.pending = {}
+        paired = self.draw_twin(scene) if twin else None
+        self.audio.update(self.pending)
+        return scene, paired
+
     def draw_twin(self, scene):
         """The scene with another speaker enrolled; half of the time one close to the real target."""
         rng = self.rng
@@ -544,16 +568,19 @@ def main():
     parser.add_argument("--solo", action="store_true", help="build the short solo version (one short target utterance, nobody else) with twins")
     parser.add_argument("--handover", action="store_true", help="build the handover version (target and one other speaker, one utterance each, in a row) with twins")
     parser.add_argument("--alt-twins", action="store_true", help="build the turn-taking version (alternate / burst / short) with twins")
+    parser.add_argument("--hard-twins", action="store_true", help="build the hard (similar voice) version with twins")
     parser.add_argument("--xsession", action="store_true", help="KeSpeech targets enrolled from the same or the other session (zh only)")
     parser.add_argument("--magicdata", action="store_true", help="MagicData targets (zh only)")
     args = parser.parse_args()
-    if sum((args.multi, args.solo, args.handover, args.alt_twins)) > 1:
-        parser.error("--multi, --solo, --handover and --alt-twins build different pools; pick one")
+    if sum((args.multi, args.solo, args.handover, args.alt_twins, args.hard_twins)) > 1:
+        parser.error("--multi, --solo, --handover, --alt-twins and --hard-twins build different pools; pick one")
+    if args.hard_twins and not args.neighbors:
+        parser.error("--hard-twins needs --neighbors")
     if (args.xsession or args.magicdata) and (args.en or args.solo):
         parser.error("--xsession and --magicdata build zh pools: pass --en 0, without --solo")
     if args.xsession and args.magicdata:
         parser.error("--xsession and --magicdata take their targets from different corpora; pick one")
-    twinned = args.multi or args.solo or args.handover or args.alt_twins
+    twinned = args.multi or args.solo or args.handover or args.alt_twins or args.hard_twins
     if twinned and not 0 <= args.twin_share < 1:
         parser.error("--twin-share must be in [0, 1)")
     VERSION = args.version
@@ -572,12 +599,13 @@ def main():
             number = 0
             while number < count:
                 draw = builder.solo_pair if args.solo else builder.handover_pair if args.handover \
-                    else builder.alt_pair if args.alt_twins else builder.full_pair
+                    else builder.alt_pair if args.alt_twins else builder.hard_pair if args.hard_twins else builder.full_pair
                 scene, paired = draw(builder.rng.random() < twin_chance)
                 joiner = "" if language == "zh" else " "
                 records.append(record(language, number, scene, joiner, pair=number if paired else None))
                 tally["solo" if args.solo else f"handover-{'near' if 'hard' in scene else 'random'}" if args.handover
-                      else scene["mode"] if args.alt_twins else f"full-{len(scene['targets'])}turns"] += 1
+                      else scene["mode"] if args.alt_twins else f"present-{scene['mode']}" if args.hard_twins
+                      else f"full-{len(scene['targets'])}turns"] += 1
                 number += 1
                 if paired and number < count:
                     records.append(record(language, number, paired, joiner, pair=number - 1))
