@@ -38,6 +38,16 @@ records are twins: the same utterance, but the enrollment is another speaker, so
     python build_ts_scene_pool.py --output-dir DIR --version solo-20261019 --solo --twin-share 0.3 --zh 60000 --en 20000
     python build_ts_scene_pool.py --output-dir DIR --version solo-20261020 --solo --neighbors FILE --twin-share 0.3 \\
         --zh 60000 --en 20000
+
+With ``--handover`` it builds the handover version: the target says one utterance and one other speaker says one
+utterance, one after the other without overlap, in either order (alternate mode). The other pools never hold this:
+alternate scenes have at least two other speakers and the solo scenes have none, and the benchmark's handover scenes
+(ts_asr_handover) showed the model staying silent on them. With ``--neighbors`` half of the other speakers are a close
+neighbour of the target. A share of the records are twins: the same two utterances, but the enrollment is another
+speaker (half of the time a neighbour of the target), so both utterances are interferers and the transcript is empty.
+
+    python build_ts_scene_pool.py --output-dir DIR --version handover-20261021 --handover --neighbors FILE \\
+        --twin-share 0.3 --zh 40000 --en 12000
 """
 
 import argparse
@@ -76,6 +86,8 @@ FULL_UTTERANCE_SECONDS = (1.5, 9.0)
 FULL_TARGET_TURNS = ((2, 3, 4, 5), (0.4, 0.3, 0.2, 0.1))
 # --solo: one short target utterance, nobody else. The benchmark's solo-mid clips are 2-6 s with a median of 6 characters.
 SOLO_UTTERANCE_SECONDS = (1.0, 3.5)
+# --handover: one target utterance and one other utterance in a row. The benchmark's handover utterances are 1.5-5 s.
+HANDOVER_UTTERANCE_SECONDS = (1.0, 6.0)
 FULL_INTERFERERS = ((1, 2, 3, 4), (0.3, 0.3, 0.25, 0.15))
 MAX_UTTERANCES_PER_TRACK = 6
 COLUMNS = ["id", "speaker", "text", "duration", "cut_id", "root_alias", "relative_path",
@@ -283,6 +295,40 @@ class Builder:
         self.audio.update(self.pending)
         return scene, paired
 
+    def handover_pair(self, twin):
+        """One target utterance and one other speaker's utterance in a row; when ``twin``, the same with another speaker enrolled."""
+        rng = self.rng
+        self.pending = {}
+        corpus = rng.choice(self.targets)
+        low, high = HANDOVER_UTTERANCE_SECONDS
+        while True:
+            speaker = rng.randrange(len(corpus.speakers))
+            targets = corpus.pick(rng, speaker, 1, low, high)
+            enrollment = corpus.pick(rng, speaker, 1, *ENROLLMENT_SECONDS, exclude=set(targets)) if targets else None
+            if enrollment:
+                break
+        name = corpus.speakers[speaker]
+        hard, other = None, None
+        near = [(n, c) for n, c in (self.neighbors or {}).get(name, [])[: self.hard_rank] if n in self.where]
+        if near and rng.random() < 0.5:
+            neighbor, cosine = rng.choice(near)
+            close, who = self.where[neighbor]
+            picks = close.pick(rng, who, 1, low, high)
+            if picks:
+                hard, other = {"kind": "handover", "neighbor": neighbor, "cosine": cosine}, (close, who, picks)
+        while other is None:
+            close, who, _ = self.other_speaker({name}, 1)
+            picks = close.pick(rng, who, 1, low, high)
+            other = (close, who, picks) if picks else None
+        close, who, picks = other
+        scene = {**({"hard": hard} if hard else {}), "mode": "alternate", "target_speaker": name,
+                 "targets": [{**self.ref(corpus, targets[0]), "text": corpus.rows["text"][targets[0]].strip()}],
+                 "enrollment": self.ref(corpus, enrollment[0]),
+                 "interferers": [{"speaker": close.speakers[who], "utts": [self.ref(close, picks[0])]}]}
+        paired = self.draw_twin(scene) if twin else None
+        self.audio.update(self.pending)
+        return scene, paired
+
     def draw_twin(self, scene):
         """The scene with another speaker enrolled; half of the time one close to the real target."""
         rng = self.rng
@@ -303,11 +349,13 @@ class Builder:
             picks = corpus.pick(rng, who, 1, *ENROLLMENT_SECONDS) if corpus.speakers[who] not in present else None
             enrollment = (corpus, who, picks[0]) if picks else None
         corpus, who, utterance = enrollment
-        former = {"speaker": scene["target_speaker"], "gap": scene["target_gap"],
+        timed = scene["mode"] == "full"  # alternate scenes take their gaps from the loader
+        former = {"speaker": scene["target_speaker"], **({"gap": scene["target_gap"]} if timed else {}),
                   "utts": [{k: t[k] for k in ("cut_id", "start", "duration")} for t in scene["targets"]]}
         interferers = [*scene["interferers"], former]
         rng.shuffle(interferers)
-        return {"mode": "full", "target_speaker": corpus.speakers[who], "target_gap": scene["target_gap"],
+        return {"mode": scene["mode"], "target_speaker": corpus.speakers[who],
+                **({"target_gap": scene["target_gap"]} if timed else {}),
                 "targets": [], "enrollment": self.ref(corpus, utterance), "interferers": interferers,
                 "twin": {"kind": kind, **({"cosine": cosine} if cosine is not None else {})}}
 
@@ -353,8 +401,11 @@ def main():
     parser.add_argument("--multi", action="store_true", help="build the multi-turn (full) version with twins")
     parser.add_argument("--twin-share", type=float, default=0.26, help="share of the records that are twins")
     parser.add_argument("--solo", action="store_true", help="build the short solo version (one short target utterance, nobody else) with twins")
+    parser.add_argument("--handover", action="store_true", help="build the handover version (target and one other speaker, one utterance each, in a row) with twins")
     args = parser.parse_args()
-    if (args.multi or args.solo) and not 0 <= args.twin_share < 1:
+    if sum((args.multi, args.solo, args.handover)) > 1:
+        parser.error("--multi, --solo and --handover build different pools; pick one")
+    if (args.multi or args.solo or args.handover) and not 0 <= args.twin_share < 1:
         parser.error("--twin-share must be in [0, 1)")
     VERSION = args.version
     args.output_dir.mkdir(parents=True, exist_ok=True)
@@ -365,14 +416,16 @@ def main():
                           neighbors and neighbors[language], args.hard_rank)
         modes, weights = zip(*MODES[language])
         records, tally = [], Counter()
-        if args.multi or args.solo:
+        if args.multi or args.solo or args.handover:
             twin_chance = args.twin_share / (1 - args.twin_share)  # twins per base scene
             number = 0
             while number < count:
-                scene, paired = (builder.solo_pair if args.solo else builder.full_pair)(builder.rng.random() < twin_chance)
+                draw = builder.solo_pair if args.solo else builder.handover_pair if args.handover else builder.full_pair
+                scene, paired = draw(builder.rng.random() < twin_chance)
                 joiner = "" if language == "zh" else " "
                 records.append(record(language, number, scene, joiner, pair=number if paired else None))
-                tally["solo" if args.solo else f"full-{len(scene['targets'])}turns"] += 1
+                tally["solo" if args.solo else f"handover-{'near' if 'hard' in scene else 'random'}" if args.handover
+                      else f"full-{len(scene['targets'])}turns"] += 1
                 number += 1
                 if paired and number < count:
                     records.append(record(language, number, paired, joiner, pair=number - 1))
