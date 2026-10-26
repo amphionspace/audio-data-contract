@@ -1,0 +1,90 @@
+# 存储巡检区域登记。部署副本：/workspace/data/registry/storage-zones.yaml
+# contents:
+#   whole      整个目录视为已登记
+#   listed     只有下面单独登记的子目录（和数据目录 catalog）算已登记，其余子目录会被报告
+#   per-child  每个直接子目录自动算已登记（个人区），可用 child_budget 给每个子目录设上限
+# strict: true  该区域下未登记的目录不论大小都报，直接放在目录里的散落文件也报
+# 大小写法：50G、10T（按 1024 进位）。
+schema_version: storage-zones/1.0
+scan_root: /workspace
+base_depth: 2
+
+catalog:
+  path: /workspace/data/registry/catalog
+  roots: /workspace/data/registry/roots.json
+  # catalog 里登记的文件会认领它所在的整个“数据集/版本”目录，避免把同版本的兄弟目录误报。
+  unit_patterns:
+    - /workspace/data/datasets/*/*/*
+    - /workspace/data/DATA-TTS-UNIFIED/datasets/*/*
+  # 数据集只要有一个已注册版本，同目录下的这些共享目录（版本 records 引用的原始音频）也算已注册。
+  shared_patterns:
+    - /workspace/data/datasets/*/source
+
+thresholds:
+  min_bytes: 50G          # 未注册（strict 区域除外）、长期未修改：小于此值不报
+  growth_min_bytes: 1T    # 两次巡检之间单目录增长超过此值即报
+  watermark_percent: 90   # /workspace 总水位告警线
+
+entries:
+  - path: /workspace
+    contents: listed
+  - path: /workspace/workspace
+    contents: per-child
+    owner: 各用户本人
+    budget: 10T
+    child_budget: 2T
+    stale_days: 180
+  - path: /workspace/data
+    contents: listed
+    strict: true          # 数据区只认已登记内容
+    owner: mingdong
+  - path: /workspace/data/registry
+    owner: mingdong
+  - path: /workspace/data/audio-data-contract
+    owner: mingdong
+  - path: /workspace/data/.incoming
+    owner: mingdong
+  - path: /workspace/data/storage-audit
+    owner: mingdong
+    note: 巡检快照与报告
+  - path: /workspace/data/packages
+    owner: mingdong
+    stale_days: 30
+    note: 传输包，接收完成后应清理
+  - path: /workspace/data/migration
+    owner: mingdong
+    stale_days: 30
+    note: 迁移过程记录
+  # 下面这些原始音频不在 catalog 的 relative_path 里，而是被已登记版本的 manifest 直接引用，删掉会使这些版本失效。
+  - path: /workspace/data/DATA-TTS/WenetSpeech-Yue
+    owner: mingdong
+    note: wenetspeech_dialects 的 recordings 用 dd 按偏移读 part_*.tar
+  - path: /workspace/data/DATA-TTS/WenetSpeech-Chuan
+    owner: mingdong
+    note: wenetspeech_dialects 的 cuts 用 dd 按偏移读 audios*/ 下的 tar
+  - path: /workspace/data/DATA-TTS/WenetSpeech-Wu
+    owner: mingdong
+    note: wenetspeech_dialects 的 cuts 用 dd 按偏移读 audios/ 下的 tar
+  - path: /workspace/data/datasets/farfield_speech_noise
+    owner: lx
+    note: farfield_speech_noise_{1,2,3}spk@20261014 的 records 直接引用 {1,2,3}spk/ 下的 wav
+  # 不是数据集版本、但有明确用途的目录。
+  - path: /workspace/data/DATA-TTS-UNIFIED
+    owner: yanglin
+    note: TTS 组自管的数据仓（CONTRACT.md、PUBLICATIONS.md），selections、annotations、specs 等配套目录一并登记；各 release 另在 catalog 登记
+  - path: /workspace/data/ae-runs
+    owner: mingdong
+    note: amphion-eval 评测运行目录，每次评测带一份 checkpoint 和推理输出
+  - path: /workspace/data/ae-state
+    owner: mingdong
+    note: amphion-eval 的评测集与结果状态，同步到 COS amphion-eval
+  - path: /workspace/data/badcase
+    owner: mingdong
+    note: 业务 badcase 归档
+  - path: /workspace/model
+    owner: 待填写
+    note: 开源模型权重，整体算已登记，不逐个巡检
+  - path: /workspace/LM-TTS-Training-Runs
+    contents: listed
+    owner: 待填写
+    note: 子目录需逐个登记

@@ -4,8 +4,14 @@ from __future__ import annotations
 
 import argparse
 import json
+from pathlib import Path
 
-from .catalog import load_catalog, resolve_artifact, verify_artifact_file
+from .catalog import (
+    check_registration,
+    load_catalog,
+    resolve_artifact,
+    verify_artifact_file,
+)
 from .overview import update_data_overview
 from .records import load_records
 from .roots import load_roots
@@ -57,6 +63,48 @@ def _parser() -> argparse.ArgumentParser:
     verify.add_argument("artifact")
     verify.add_argument("--roots")
 
+    check = commands.add_parser("check-registration")
+    check.add_argument("catalog")
+    check.add_argument("dataset_id")
+    check.add_argument("version")
+    check.add_argument("--roots")
+    check.add_argument("--sample", type=int, default=20)
+    check.add_argument("--seed", type=int, default=0)
+    check.add_argument(
+        "--require-record-index",
+        action="store_true",
+        help="fail, instead of warn, when indexable splits have no record index",
+    )
+
+    index = commands.add_parser(
+        "build-record-index", help="build a Lance record index; print its catalog ref"
+    )
+    index.add_argument("catalog")
+    index.add_argument("dataset_id")
+    index.add_argument("version")
+    index.add_argument("destination")
+    index.add_argument("--name", default="record_index")
+    index.add_argument("--roots")
+    index.add_argument(
+        "--register",
+        action="store_true",
+        help="write the artifact and records_lance roles into the catalog YAML",
+    )
+
+    sync = commands.add_parser(
+        "sync-tts-unified",
+        help="regenerate tts_unified.yaml from DATA-TTS-UNIFIED/PUBLICATIONS.md",
+    )
+    sync.add_argument("data_root", help="directory holding DATA-TTS-UNIFIED")
+    sync.add_argument("--catalog-dir", default="catalog")
+    sync.add_argument("--views")
+    sync.add_argument("--roots")
+    sync.add_argument("--dry-run", action="store_true")
+    sync.add_argument(
+        "--notify", action="store_true", help="send Feishu cards on failure and recovery"
+    )
+    sync.add_argument("--state", help="file remembering the last failure notified")
+
     validate_views = commands.add_parser("validate-views")
     validate_views.add_argument("views")
     validate_views.add_argument("catalog")
@@ -83,6 +131,18 @@ def _parser() -> argparse.ArgumentParser:
     duration.add_argument("--workers", type=int)
     duration.add_argument("--output")
     duration.add_argument("--write", action="store_true")
+
+    audit = commands.add_parser("storage-audit")
+    actions = audit.add_subparsers(dest="action", required=True)
+    for name in ("scan", "report", "watermark"):
+        action = actions.add_parser(name)
+        action.add_argument("--zones", required=True)
+        if name != "watermark":
+            action.add_argument("--output-dir", required=True)
+    actions.choices["scan"].add_argument("--workers", type=int, default=32)
+    actions.choices["report"].add_argument("--snapshot")
+    for name in ("report", "watermark"):
+        actions.choices[name].add_argument("--notify", action="store_true")
     return parser
 
 
@@ -94,6 +154,14 @@ def main(argv: list[str] | None = None) -> int:
         return run(args)
     if args.command == "stats-duration":
         from .duration import run
+
+        return run(args)
+    if args.command == "storage-audit":
+        from .storage_audit import run
+
+        return run(args)
+    if args.command == "sync-tts-unified":
+        from .tts_unified_sync import run
 
         return run(args)
     if args.command == "validate-catalog":
@@ -152,6 +220,57 @@ def main(argv: list[str] | None = None) -> int:
             }
         )
         print(json.dumps(result, sort_keys=True))
+        return 0
+    if args.command == "check-registration":
+        catalog = load_catalog(args.catalog)
+        roots = load_roots(args.roots)
+        spec = catalog.get(args.dataset_id, args.version)
+        from .record_index import index_gaps
+
+        problems = check_registration(spec, roots, sample=args.sample, seed=args.seed)
+        warnings = index_gaps(spec)
+        if args.require_record_index:
+            problems, warnings = problems + warnings, []
+        print(
+            json.dumps(
+                {
+                    "dataset": spec.key,
+                    "ok": not problems,
+                    "problems": problems,
+                    "warnings": warnings,
+                },
+                ensure_ascii=False,
+                sort_keys=True,
+            )
+        )
+        return 1 if problems else 0
+    if args.command == "build-record-index":
+        from .record_index import (
+            MANIFEST_NAME,
+            build_index,
+            catalog_ref,
+            register_index,
+        )
+
+        catalog = load_catalog(args.catalog)
+        roots = load_roots(args.roots)
+        manifest = build_index(
+            catalog, args.dataset_id, args.version, args.destination, roots
+        )
+        # Register under the alias the version's own artifacts use.
+        alias = catalog.get(args.dataset_id, args.version).artifacts[0].root_alias
+        ref = catalog_ref(
+            Path(args.destination) / MANIFEST_NAME,
+            name=args.name,
+            roots=roots,
+            root_alias=alias,
+        )
+        if args.register:
+            path = register_index(
+                args.catalog, args.dataset_id, args.version, ref, manifest["split_counts"]
+            )
+            ref = {**ref, "registered_in": str(path)}
+        print(json.dumps(ref, sort_keys=True))
         return 0
     if args.command == "validate-views":
         datasets = load_catalog(args.catalog)

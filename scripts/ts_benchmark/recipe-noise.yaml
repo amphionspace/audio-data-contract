@@ -1,0 +1,89 @@
+# 目标说话人评测集的噪声补充（ts_asr_noise）：用新登记的噪声集（合成背景人声 babble、FSD50K）扩充脆弱性面板。
+# 基线场景与 ts_asr_benchmark v3 的 panel-base 逐条相同（同样的配对键和参数），所以可以直接与 v3 的面板结果比较。
+version: v2-20261022
+# v2-20261022：线上注册改为 5 秒（客户端发注册音频的前 5 秒，不足补零）。每条注册音频存 10 秒同一说话人的语音
+# （第一句不变，后面接此人不在混合音频里的其他语句，句间停顿 0.3–0.6 秒；语音不够的说话人有多少存多少），
+# 劣化条件作用于整段，评测按客户端长度 L 取前 L 秒，同一份数据可按 3 / 5 / 8 秒评测。新抽取都在注册随机流
+# 的最后，混合音频与上一版逐条相同。业务真实注册录音（enroll_file）只有 3 秒，原样保留。
+enroll_store_seconds: 10
+dataset_id: ts_asr_noise
+seed: 20261013
+sample_rate: 16000
+
+pools:
+  studio:
+    description: AISHELL-3 test，棚内高质量朗读，214 位说话人，有性别标注
+    sources:
+      - {dataset: aishell3, version: legacy-20260804, split: test}
+  phone:
+    description: KeSpeech test（手机录音，含方言口音，取 250 位）、MagicData test、AISHELL-2 test（手机）
+    sources:
+      - {dataset: kespeech, version: legacy-20260804, split: test, max_speakers: 250}
+      - {dataset: magicdata, version: legacy-20260804, split: test}
+      - {dataset: aishell2, version: legacy-20260804, split: test}
+  read:
+    description: AISHELL-1 test，麦克风朗读，20 位说话人
+    sources:
+      - {dataset: aishell, version: legacy-20260804, split: test}
+  mixed:
+    description: 上面三个池的并集
+    union: [studio, phone, read]
+utterance_seconds: [1.5, 9.0]
+short_utterance_seconds: [0.5, 1.6]
+min_utterances_per_speaker: 6
+
+noise:
+  musan_noise: {dataset: musan, version: legacy-20260804, split: noise}
+  musan_music: {dataset: musan, version: legacy-20260804, split: music}
+  traffic: {dataset: audioset_road_traffic, version: legacy-20260804, split: all}
+  # 新登记的噪声集（noise_open）：合成背景人声（中文测试划分，34 位说话人，每条叠加 5–20 人）和 FSD50K 评测划分。
+  babble_zh: {alias: open_noise, glob: "babble_synth/zh/test/*.flac"}
+  fsd_events:
+    alias: open_noise
+    fsd: {split: eval, min_seconds: 5, count: 400,
+          include: [Domestic_sounds_and_home_sounds, Motor_vehicle_(road), Door, Water, Engine, Mechanisms, Alarm, Wind, Rain],
+          exclude: [Human_voice, Music, Musical_instrument, Speech, Singing, Crowd, Chatter]}
+  fsd_crowd:
+    alias: open_noise
+    fsd: {split: eval, min_seconds: 3, count: 400, include: [Crowd, Chatter], exclude: [Music, Singing, Applause, Cheering]}
+rir:
+  archive: /workspace/data/DATA-TTS/dns5/datasets_fullband.impulse_responses_000.tar.bz2
+  count: 300
+
+default_n: 120
+
+noise_floor:
+  dbfs: [-65, -35]
+  kinds: {white: 0.15, pink: 0.15, real: 0.70}
+  real_pools: [wham, dns5_audioset, dns5_freesound]
+
+enrollment_files:
+  realreg1: {alias: business_feedback, path: source/ts-20261010/audio/enrollment-87c508018dfe.wav}
+  realreg2: {alias: business_feedback, path: source/ts-20261012/audio/enrollment-9416898a6f00.wav}
+
+splits:
+  # 与 v3 面板共用的基线（同一批场景）
+  - {group: noise, name: panel-base-pos, kind: pos, schedule: full, k: [1, 2], duration: [6, 15], sir_db: [-3, 3], pair: panel-pos, n: 120}
+  - {group: noise, name: panel-base-neg, kind: neg, k: [1, 2], duration: [6, 15], pair: panel-neg, n: 120}
+  - group: noise
+    n: 120
+    expand:
+      pair: "panel-{kind}"   # 与基线（以及 v3 的面板）共用同一批场景
+      template: "{cond}-{kind}"
+      over:
+        cond: [babble20, babble10, babble5, events20, events10, crowd10]
+        kind: [pos, neg]
+      cond_params:
+        babble20: {noise: {kind: babble_zh, snr_db: [20, 20]}}
+        babble10: {noise: {kind: babble_zh, snr_db: [10, 10]}}
+        babble5: {noise: {kind: babble_zh, snr_db: [5, 5]}}
+        events20: {noise: {kind: fsd_events, snr_db: [20, 20]}}
+        events10: {noise: {kind: fsd_events, snr_db: [10, 10]}}
+        crowd10: {noise: {kind: fsd_crowd, snr_db: [10, 10]}}
+    base:
+      pos: {kind: pos, schedule: full, k: [1, 2], duration: [6, 15], sir_db: [-3, 3]}
+      neg: {kind: neg, k: [1, 2], duration: [6, 15]}
+  # 没有目标、也没有人说话的背景
+  - {group: noise, name: nonspeech-babble, kind: nonspeech, duration: [1, 15], noise: {kind: babble_zh, level_dbfs: [-40, -25]}}
+  - {group: noise, name: nonspeech-crowd, kind: nonspeech, duration: [1, 15], noise: {kind: fsd_crowd, level_dbfs: [-40, -25]}}
+  - {group: noise, name: nonspeech-events, kind: nonspeech, duration: [1, 15], noise: {kind: fsd_events, level_dbfs: [-40, -25]}}

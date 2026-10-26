@@ -1,0 +1,79 @@
+# 目标说话人评测集的接话与缺席补充（ts_asr_handover）：业务第四批反馈（business_feedback@ts-20261019，
+# 飞书表格第 38、39 行，换了一段新的注册录音 realreg3）。
+# - 第 38 行：注册人没说话，全程只有另一个人在说（14 秒），模型误输出。ts_asr_benchmark 的 abs-k1 是随机的人，
+#   abs-hard 有两个干扰人；这里补「只有一个声音相近的人在说」，并与随机的人配对比较。
+# - 第 39 行：机主先说一句，停顿后干扰人接着说一句，不重叠，两句开头几乎相同（「现在我…」/「我现在…」），
+#   模型输出了干扰人那句；先干扰人后机主、或两句开头不同则正确。dyn-leave 里别人全程重叠在说，覆盖不到。
+# 每组新场景都带对照列：用同一批音频、同一套时间安排，只改一个因素。底噪与 v3 相同。
+version: v2-20261022
+# v2-20261022：线上注册改为 5 秒（客户端发注册音频的前 5 秒，不足补零）。每条注册音频存 10 秒同一说话人的语音
+# （第一句不变，后面接此人不在混合音频里的其他语句，句间停顿 0.3–0.6 秒；语音不够的说话人有多少存多少），
+# 劣化条件作用于整段，评测按客户端长度 L 取前 L 秒，同一份数据可按 3 / 5 / 8 秒评测。新抽取都在注册随机流
+# 的最后，混合音频与上一版逐条相同。业务真实注册录音（enroll_file）只有 3 秒，原样保留。
+enroll_store_seconds: 10
+dataset_id: ts_asr_handover
+seed: 20261020
+sample_rate: 16000
+
+pools:
+  studio:
+    description: AISHELL-3 test，棚内高质量朗读，214 位说话人，有性别标注
+    sources:
+      - {dataset: aishell3, version: legacy-20260804, split: test}
+  phone:
+    description: KeSpeech test（手机录音，含方言口音，取 250 位）、MagicData test、AISHELL-2 test（手机）
+    sources:
+      - {dataset: kespeech, version: legacy-20260804, split: test, max_speakers: 250}
+      - {dataset: magicdata, version: legacy-20260804, split: test}
+      - {dataset: aishell2, version: legacy-20260804, split: test}
+  read:
+    description: AISHELL-1 test，麦克风朗读，20 位说话人
+    sources:
+      - {dataset: aishell, version: legacy-20260804, split: test}
+  mixed:
+    description: 上面三个池的并集
+    union: [studio, phone, read]
+utterance_seconds: [1.5, 9.0]
+short_utterance_seconds: [0.5, 1.6]
+min_utterances_per_speaker: 6
+
+noise:
+  musan_noise: {dataset: musan, version: legacy-20260804, split: noise}
+  musan_music: {dataset: musan, version: legacy-20260804, split: music}
+rir:
+  archive: /workspace/data/DATA-TTS/dns5/datasets_fullband.impulse_responses_000.tar.bz2
+  count: 300
+
+default_n: 120
+
+noise_floor:
+  dbfs: [-65, -35]
+  kinds: {white: 0.15, pink: 0.15, real: 0.70}
+  real_pools: [wham, dns5_audioset, dns5_freesound]
+
+# 第四批测试人员的注册录音（与第 38、39 行同一段）。
+enrollment_files:
+  realreg3: {alias: business_feedback, path: source/ts-20261019/audio/enrollment-1ab6a3aa7b53.wav}
+
+splits:
+  # ---- 注册人缺席、只有一个人在说（第 38 行）：两列共用同一批混合音频，只换注册人 ----
+  # abs-rand-k1：注册人是随机的另一个人；abs-hard-k1：注册人是干扰人声音最近的 5 个人之一（同 abs-hard）。
+  - {group: absent, name: abs-rand-k1, kind: neg, k: 1, duration: [6, 18], pair: abs1}
+  - {group: absent, name: abs-hard-k1, kind: neg, k: 1, duration: [6, 18], hard: true, pair: abs1}
+
+  # ---- 第四批的真实注册录音（realreg3），场景同 realreg2 ----
+  - {group: realreg, name: realreg3-neg, kind: neg, k: [1, 2], duration: [6, 18], enroll_file: realreg3, pair: realreg3, n: 200}
+  # 干扰人从 test 说话人里与这段注册录音余弦最高的 10 人中取；与 realreg3-neg 同一 pair，片段长度和人数逐条相同。
+  - {group: realreg, name: realreg3-hard-neg, kind: neg, k: [1, 2], duration: [6, 18], enroll_file: realreg3, hard: true, pair: realreg3, n: 200}
+  - {group: realreg, name: realreg3-music, kind: nonspeech, duration: [1, 15], enroll_file: realreg3, noise: {kind: musan_music, level_dbfs: [-35, -20]}, n: 200}
+  - {group: shortseg, name: realreg3-mid1-neg, kind: neg, k: [1, 2], duration: [1.2, 3.0], interferer_start: [0.0, 0.3], enroll_file: realreg3, n: 200}
+  - {group: shortseg, name: realreg3-mid2-neg, kind: neg, k: [1, 2], duration: [3.0, 6.0], interferer_start: [0.0, 0.3], enroll_file: realreg3, n: 200}
+
+  # ---- 目标说完、别人接着说、不重叠（第 39 行）：三列共用同一 pair，同一句目标话、同一个干扰人、同一套时间安排 ----
+  # 目标说一句完整的话（1.5–4 秒），从 0–0.5 秒开始；停 0.5–2 秒；干扰人再说一句完整的话（1.5–4 秒）。
+  # same_open：干扰人那句去标点后，前 4 个字里包含目标那句的前 2 个字（覆盖「现在我」/「我现在」）。
+  # rand：同一个干扰人换一句前 4 个字与目标前 4 个字没有共同字的话（对照）。
+  # rev_same_open：先干扰人后目标，文本同 same_open（第 39 行「先干扰人后机主就正确」的对照）。
+  - {group: handover, name: handover-same-open, kind: pos, schedule: handover, handover: same_open, pair: handover}
+  - {group: handover, name: handover-rand, kind: pos, schedule: handover, handover: rand, pair: handover}
+  - {group: handover, name: handover-rev-same-open, kind: pos, schedule: handover, handover: rev_same_open, pair: handover}

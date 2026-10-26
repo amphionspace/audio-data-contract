@@ -1,0 +1,56 @@
+# 目标说话人评测集的歌声补充（ts_asr_singing）：业务第三批反馈（business_feedback@ts-20261016）里有 3 条片段
+# 只有歌声（pad 外放带伴奏的歌，2.6–6.6 秒，片段 RMS 约 −27 到 −15 dBFS），注册人没说话，模型复读或输出歌词；
+# ts_asr_benchmark 的音乐来自 MUSAN，基本没有人声歌曲。这里用 MIR-1K 的中文流行歌（人声 + 伴奏）补上。
+version: v2-20261022
+# v2-20261022：线上注册改为 5 秒（客户端发注册音频的前 5 秒，不足补零）。每条注册音频存 10 秒同一说话人的语音
+# （第一句不变，后面接此人不在混合音频里的其他语句，句间停顿 0.3–0.6 秒；语音不够的说话人有多少存多少），
+# 劣化条件作用于整段，评测按客户端长度 L 取前 L 秒，同一份数据可按 3 / 5 / 8 秒评测。新抽取都在注册随机流
+# 的最后，混合音频与上一版逐条相同。业务真实注册录音（enroll_file）只有 3 秒，原样保留。
+enroll_store_seconds: 10
+dataset_id: ts_asr_singing
+seed: 20261017
+sample_rate: 16000
+
+pools:
+  studio:
+    description: AISHELL-3 test，棚内高质量朗读，214 位说话人，有性别标注
+    sources:
+      - {dataset: aishell3, version: legacy-20260804, split: test}
+  phone:
+    description: KeSpeech test（手机录音，含方言口音，取 250 位）、MagicData test、AISHELL-2 test（手机）
+    sources:
+      - {dataset: kespeech, version: legacy-20260804, split: test, max_speakers: 250}
+      - {dataset: magicdata, version: legacy-20260804, split: test}
+      - {dataset: aishell2, version: legacy-20260804, split: test}
+  read:
+    description: AISHELL-1 test，麦克风朗读，20 位说话人
+    sources:
+      - {dataset: aishell, version: legacy-20260804, split: test}
+  mixed:
+    description: 上面三个池的并集
+    union: [studio, phone, read]
+utterance_seconds: [1.5, 9.0]
+short_utterance_seconds: [0.5, 1.6]
+min_utterances_per_speaker: 6
+
+noise:
+  # MIR-1K 卡拉 OK 片段：读入时左（伴奏）右（人声）声道取平均，即带伴奏的歌
+  mir1k_song: {alias: mir1k, glob: "source/modelscope-20261017/MIR-1K/Wavfile/*.wav"}
+rir:
+  archive: /workspace/data/DATA-TTS/dns5/datasets_fullband.impulse_responses_000.tar.bz2
+  count: 300
+
+default_n: 120
+
+noise_floor:
+  dbfs: [-65, -35]
+  kinds: {white: 0.15, pink: 0.15, real: 0.70}
+  real_pools: [wham, dns5_audioset, dns5_freesound]
+
+enrollment_files:
+  realreg2: {alias: business_feedback, path: source/ts-20261012/audio/enrollment-9416898a6f00.wav}
+
+splits:
+  # 只有歌声，注册人不在场；期望输出为空。
+  - {group: singing, name: nonspeech-song, kind: nonspeech, duration: [1.5, 8.0], noise: {kind: mir1k_song, level_dbfs: [-30, -15]}}
+  - {group: singing, name: realreg2-song, kind: nonspeech, duration: [1.5, 8.0], enroll_file: realreg2, noise: {kind: mir1k_song, level_dbfs: [-30, -15]}}

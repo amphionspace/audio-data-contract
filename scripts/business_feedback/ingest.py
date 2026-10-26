@@ -3,9 +3,12 @@
 
 Input is a directory of debug packages unpacked as ``cases/<case>/`` (each with
 ``registration-reference.wav``, ``source-audio.wav``, ``manifest.json`` and
-``attempt-1/response.json``) plus a labels file under ``batches/``. Every batch
-becomes a new immutable ``business_feedback@<version>``; later batches are new
-versions of the same dataset, never edits of an existing one.
+``attempt-1/response.json``) plus a labels file under ``batches/``. A batch that
+came as plain recordings instead (``recordings:`` and ``registration:`` in the
+labels file) has no record of how production cut it, so each recording is cut
+into consecutive windows of ``window_seconds``. Every batch becomes a new
+immutable ``business_feedback@<version>``; later batches are new versions of the
+same dataset, never edits of an existing one.
 
     python scripts/business_feedback/ingest.py --source <badcase dir> \
         --labels scripts/business_feedback/batches/ts-20261010.yaml \
@@ -33,6 +36,7 @@ ROOT_ALIAS = DATASET_ID
 SAMPLE_RATE = 16000
 SPLIT_DESCRIPTIONS = {
     "target_speaker": "目标说话人未在场、期望输出为空的反馈（已由反馈人确认）。",
+    "target_present": "目标说话人在场、参考文本已由复核人听音确认的反馈。",
     "pending_labels": "现象已记录但参考文本未确认，不参与打分。",
 }
 
@@ -68,9 +72,28 @@ def index_entry(path, relative_path, cut_id):
     }
 
 
+def read_response(path):
+    """(text, finish_reason, streamed) of a recorded response, plain JSON or an SSE stream.
+
+    A cancelled stream may have no finish reason; the text is then whatever arrived.
+    """
+    raw = path.read_text()
+    if raw.lstrip().startswith("data:"):
+        parts, finish = [], None
+        for line in raw.splitlines():
+            if not line.startswith("data: {"):
+                continue
+            for choice in json.loads(line[6:]).get("choices") or []:
+                parts.append((choice.get("delta") or {}).get("content") or "")
+                finish = choice.get("finish_reason") or finish
+        return "".join(parts), finish, True
+    choice = json.loads(raw)["choices"][0]
+    return choice["message"].get("content") or "", choice.get("finish_reason"), False
+
+
 def package_names(source):
     names = {}
-    for item in sorted((source / "packages").glob("case-*--*.zip")):
+    for item in sorted((source / "packages").glob("*--*.zip")):
         names[item.name.split("--", 1)[0]] = item.name.split("--", 1)[1]
     return names
 
@@ -94,23 +117,17 @@ def build(source, labels, data_root):
         index.setdefault(cut_id, index_entry(destination, relative, cut_id))
         return index[cut_id]
 
-    for case, label in labels["cases"].items():
-        directory = source / "cases" / case
-        manifest = json.loads((directory / "manifest.json").read_text())
-        response = json.loads((directory / "attempt-1" / "response.json").read_text())
-        choice = response["choices"][0]
-        case_id = case.replace("/", "-")
-        enrollment_hash = sha256_file(directory / "registration-reference.wav")[:12]
-        enrollment = add_audio(directory / "registration-reference.wav", f"enrollment-{enrollment_hash}.wav")
-        mixture = add_audio(directory / "source-audio.wav", f"{case_id}-mixture.wav")
+    def add_record(case_id, enrollment, mixture, label, metadata):
         split = label["split"]
         record_labels = {"issue": label["issue"]}
         if "target_present" in label:
             record_labels["target_present"] = label["target_present"]
         else:
             record_labels["label_status"] = "unlabeled"
+        if "label_source" in label:
+            record_labels["label_source"] = label["label_source"]
 
-        def ref(entry, split=split):
+        def ref(entry):
             return {"dataset_id": DATASET_ID, "version": version, "split": split,
                     "cut_id": entry["cut_id"], "duration": entry["duration"]}
 
@@ -125,19 +142,55 @@ def build(source, labels, data_root):
             "target": label.get("target", ""),
             "language": labels["language"],
             "labels": record_labels,
-            "metadata": {
-                "batch": version,
-                "case": case,
-                "package": packages.get(case.split("/")[0]),
-                "trace_id": manifest.get("trace_id"),
-                "segment_id": manifest.get("segment_id"),
-                "reported_model": manifest.get("model"),
-                "reported_source_revision": manifest.get("source_revision"),
-                "reported_output": (choice["message"].get("content") or ""),
-                "reported_finish_reason": choice.get("finish_reason"),
-            },
+            "metadata": {"batch": version, **metadata},
         }).to_dict()
         by_split.setdefault(split, []).append(record)
+
+    for case, label in labels.get("cases", {}).items():
+        directory = source / "cases" / case
+        manifest = json.loads((directory / "manifest.json").read_text())
+        output, finish, streamed = read_response(directory / "attempt-1" / "response.json")
+        request = json.loads((directory / "attempt-1" / "request.json").read_text())
+        case_id = case.replace("/", "-")
+        enrollment_hash = sha256_file(directory / "registration-reference.wav")[:12]
+        enrollment = add_audio(directory / "registration-reference.wav", f"enrollment-{enrollment_hash}.wav")
+        mixture = add_audio(directory / "source-audio.wav", f"{case_id}-mixture.wav")
+        add_record(case_id, enrollment, mixture, label, {
+            "case": case,
+            "package": packages.get(case.split("/")[0]),
+            "trace_id": manifest.get("trace_id"),
+            "segment_id": manifest.get("segment_id"),
+            "reported_model": manifest.get("model"),
+            "reported_source_revision": manifest.get("source_revision"),
+            "reported_output": output,
+            "reported_finish_reason": finish,
+            "reported_streamed": streamed,
+            "reported_error": manifest.get("error") or None,
+            "request_params": {k: request[k] for k in ("max_tokens", "stream", "mm_processor_kwargs")
+                               if k in request},
+        })
+
+    for name, label in labels.get("recordings", {}).items():
+        registration = source / labels["registration"]
+        enrollment = add_audio(registration, f"enrollment-{sha256_file(registration)[:12]}.wav")
+        audio, rate = sf.read(source / label["file"], dtype="int16")
+        if rate != SAMPLE_RATE or audio.ndim != 1:
+            raise ValueError(f"{label['file']}: expected 16 kHz mono")
+        step = round(labels["window_seconds"] * SAMPLE_RATE)
+        for window, begin in enumerate(range(0, len(audio), step)):
+            case_id = f"{name}-w{window:02d}"
+            destination = audio_dir / f"{case_id}-mixture.wav"
+            audio_dir.mkdir(parents=True, exist_ok=True)
+            sf.write(destination, audio[begin:begin + step], SAMPLE_RATE, subtype="PCM_16")
+            mixture = index.setdefault(case_id + "-mixture", index_entry(
+                destination, f"source/{version}/audio/{destination.name}", case_id + "-mixture"))
+            add_record(case_id, enrollment, mixture, label, {
+                "case": name,
+                "recording": label["file"],
+                "window": window,
+                "window_start_s": round(begin / SAMPLE_RATE, 4),
+                "window_end_s": round(min(begin + step, len(audio)) / SAMPLE_RATE, 4),
+            })
 
     for split, rows in by_split.items():
         write_jsonl_gz(version_dir / "records" / f"{split}.jsonl.gz", rows)
@@ -171,7 +224,8 @@ def declaration(labels, by_split, index, data_root):
             "task": "ts_asr",
             "statistics": {"records": len(rows), "duration_hours": round(seconds / 3600, 4),
                            "duration_basis": "Mixture (recognition segment) duration"},
-            "provenance": {"description": SPLIT_DESCRIPTIONS[split]},
+            # A batch whose labels came another way (e.g. automatic review) says so for that split.
+            "provenance": {"description": labels.get("split_descriptions", {}).get(split, SPLIT_DESCRIPTIONS[split])},
         }
     return {
         "schema_version": "dataset-catalog/2.0",
@@ -186,7 +240,7 @@ def declaration(labels, by_split, index, data_root):
             "synthetic": "none",
             "description": "业务反馈的目标说话人 bad case，每个批次一个版本，只用于评测，不进训练。"
                            + " ".join(labels["description"].split()),
-            "sources": [f"business feedback debug packages: {labels['source']}"],
+            "sources": [f"business feedback {'recordings' if 'recordings' in labels else 'debug packages'}: {labels['source']}"],
         },
     }
 

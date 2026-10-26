@@ -1,0 +1,178 @@
+# 中文会议与 Emilia2 对话的“音色相近”子集（similar-voice-v1-20261014）：窗口内最相近两人的声纹相似度前 1/3，标注不改。
+- schema_version: dataset-view/1.0
+  view_id: aishell4_meeting_sot/similar-voice
+  version: similar-voice-v1-20261014
+  source:
+    dataset_id: aishell4_meeting_sot
+    version: real-meetings-v2-20261010
+  result:
+    dataset_id: aishell4_meeting_sot
+    version: similar-voice-v1-20261014
+  materialization: full
+  lineage_status: exact
+  transforms:
+  - name: select-similar-voice-windows
+    version: similar-voice-v1-20261014
+    kind: filter
+    writes:
+    - $membership
+    parameters:
+      speaker_model: iic/speech_eres2netv2_sv_zh-cn_16k-common
+      window_score: max pairwise cosine of speaker embeddings
+      selection: top 1/3 of scored windows per split
+      exclusions: source training exclusions removed
+      subset_sha256: 6c290acb00f95d75816f414caa30291e43efc34ec6fd2ca3f981c0eda6910c61
+      embed_inputs_sha256: fa30bb7a54677c13c510605d2e66076e37dbf59aeb118efced12e59709aa661c
+      embed_worker_sha256: 472c6ef35f242cdf98f3285d93a60d2fb2ff423e05db43fe559ab1078e1a31db
+      window_similarity_sha256: 7e4a9cd23a864197d73ec5f3f9fcf8fdb68829b2a4d328f8bfb946e7f654e62a
+      materialize_sha256: 2c68274b2c4d0932f1716cc0b2da2f3b6917979501a20f212d0bc174d0b916e4
+  provenance:
+    registered_at: '2026-10-15'
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/similar-voice-views-20261014
+- schema_version: dataset-view/1.0
+  view_id: alimeeting_sdm_meeting_sot/similar-voice
+  version: similar-voice-v1-20261014
+  source:
+    dataset_id: alimeeting_sdm_meeting_sot
+    version: real-meetings-v2-20261010
+  result:
+    dataset_id: alimeeting_sdm_meeting_sot
+    version: similar-voice-v1-20261014
+  materialization: full
+  lineage_status: exact
+  transforms:
+  - name: select-similar-voice-windows
+    version: similar-voice-v1-20261014
+    kind: filter
+    writes:
+    - $membership
+    parameters:
+      speaker_model: iic/speech_eres2netv2_sv_zh-cn_16k-common
+      window_score: max pairwise cosine of speaker embeddings
+      selection: top 1/3 of scored windows per split
+      exclusions: source training exclusions removed
+      subset_sha256: 6c290acb00f95d75816f414caa30291e43efc34ec6fd2ca3f981c0eda6910c61
+      embed_inputs_sha256: fa30bb7a54677c13c510605d2e66076e37dbf59aeb118efced12e59709aa661c
+      embed_worker_sha256: 472c6ef35f242cdf98f3285d93a60d2fb2ff423e05db43fe559ab1078e1a31db
+      window_similarity_sha256: 7e4a9cd23a864197d73ec5f3f9fcf8fdb68829b2a4d328f8bfb946e7f654e62a
+      materialize_sha256: 2c68274b2c4d0932f1716cc0b2da2f3b6917979501a20f212d0bc174d0b916e4
+  provenance:
+    registered_at: '2026-10-15'
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/similar-voice-views-20261014
+- schema_version: dataset-view/1.0
+  view_id: magicdata_ramc_meeting_sot/similar-voice
+  version: similar-voice-v1-20261014
+  source:
+    dataset_id: magicdata_ramc_meeting_sot
+    version: real-meetings-v2-20261010
+  result:
+    dataset_id: magicdata_ramc_meeting_sot
+    version: similar-voice-v1-20261014
+  materialization: full
+  lineage_status: exact
+  transforms:
+  - name: select-similar-voice-windows
+    version: similar-voice-v1-20261014
+    kind: filter
+    writes:
+    - $membership
+    parameters:
+      speaker_model: iic/speech_eres2netv2_sv_zh-cn_16k-common
+      window_score: max pairwise cosine of speaker embeddings
+      selection: top 1/3 of scored windows per split
+      exclusions: source training exclusions removed
+      subset_sha256: 6c290acb00f95d75816f414caa30291e43efc34ec6fd2ca3f981c0eda6910c61
+      embed_inputs_sha256: fa30bb7a54677c13c510605d2e66076e37dbf59aeb118efced12e59709aa661c
+      embed_worker_sha256: 472c6ef35f242cdf98f3285d93a60d2fb2ff423e05db43fe559ab1078e1a31db
+      window_similarity_sha256: 7e4a9cd23a864197d73ec5f3f9fcf8fdb68829b2a4d328f8bfb946e7f654e62a
+      materialize_sha256: 2c68274b2c4d0932f1716cc0b2da2f3b6917979501a20f212d0bc174d0b916e4
+  provenance:
+    registered_at: '2026-10-15'
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/similar-voice-views-20261014
+- schema_version: dataset-view/1.0
+  view_id: aishell5_meeting_sot/similar-voice
+  version: similar-voice-v1-20261014
+  source:
+    dataset_id: aishell5_meeting_sot
+    version: far-mic-v1-20261010
+  result:
+    dataset_id: aishell5_meeting_sot
+    version: similar-voice-v1-20261014
+  materialization: full
+  lineage_status: exact
+  transforms:
+  - name: select-similar-voice-windows
+    version: similar-voice-v1-20261014
+    kind: filter
+    writes:
+    - $membership
+    parameters:
+      speaker_model: iic/speech_eres2netv2_sv_zh-cn_16k-common
+      window_score: max pairwise cosine of speaker embeddings
+      selection: top 1/3 of scored windows per split
+      exclusions: source training exclusions removed
+      subset_sha256: 6c290acb00f95d75816f414caa30291e43efc34ec6fd2ca3f981c0eda6910c61
+      embed_inputs_sha256: fa30bb7a54677c13c510605d2e66076e37dbf59aeb118efced12e59709aa661c
+      embed_worker_sha256: 472c6ef35f242cdf98f3285d93a60d2fb2ff423e05db43fe559ab1078e1a31db
+      window_similarity_sha256: 7e4a9cd23a864197d73ec5f3f9fcf8fdb68829b2a4d328f8bfb946e7f654e62a
+      materialize_sha256: 2c68274b2c4d0932f1716cc0b2da2f3b6917979501a20f212d0bc174d0b916e4
+  provenance:
+    registered_at: '2026-10-15'
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/similar-voice-views-20261014
+- schema_version: dataset-view/1.0
+  view_id: cs_dialogue_meeting_sot/similar-voice
+  version: similar-voice-v1-20261014
+  source:
+    dataset_id: cs_dialogue_meeting_sot
+    version: meeting-v1-20261010
+  result:
+    dataset_id: cs_dialogue_meeting_sot
+    version: similar-voice-v1-20261014
+  materialization: full
+  lineage_status: exact
+  transforms:
+  - name: select-similar-voice-windows
+    version: similar-voice-v1-20261014
+    kind: filter
+    writes:
+    - $membership
+    parameters:
+      speaker_model: iic/speech_eres2netv2_sv_zh-cn_16k-common
+      window_score: max pairwise cosine of speaker embeddings
+      selection: top 1/3 of scored windows per split
+      exclusions: source training exclusions removed
+      subset_sha256: 6c290acb00f95d75816f414caa30291e43efc34ec6fd2ca3f981c0eda6910c61
+      embed_inputs_sha256: fa30bb7a54677c13c510605d2e66076e37dbf59aeb118efced12e59709aa661c
+      embed_worker_sha256: 472c6ef35f242cdf98f3285d93a60d2fb2ff423e05db43fe559ab1078e1a31db
+      window_similarity_sha256: 7e4a9cd23a864197d73ec5f3f9fcf8fdb68829b2a4d328f8bfb946e7f654e62a
+      materialize_sha256: 2c68274b2c4d0932f1716cc0b2da2f3b6917979501a20f212d0bc174d0b916e4
+  provenance:
+    registered_at: '2026-10-15'
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/similar-voice-views-20261014
+- schema_version: dataset-view/1.0
+  view_id: emilia2_zh_dialogue_diarize/similar-voice
+  version: similar-voice-v1-20261014
+  source:
+    dataset_id: emilia2_zh_dialogue_diarize
+    version: moss-transcribe-diarize-0.9B
+  result:
+    dataset_id: emilia2_zh_dialogue_diarize
+    version: similar-voice-v1-20261014
+  materialization: full
+  lineage_status: exact
+  transforms:
+  - name: select-similar-voice-windows
+    version: similar-voice-v1-20261014
+    kind: filter
+    writes:
+    - $membership
+    parameters:
+      speaker_model: iic/speech_eres2netv2_sv_zh-cn_16k-common
+      window_score: max pairwise cosine of speaker embeddings
+      selection: top 1/3 of scored windows after removing train_120s-speaker-merge-excluded-records.txt
+      emilia2_view_sha256: c5478fce0dc4b82ed6967dbb686c960b50930f827dcd568c7b5f42896933ff91
+      embed_inputs_sha256: fa30bb7a54677c13c510605d2e66076e37dbf59aeb118efced12e59709aa661c
+      embed_worker_sha256: 472c6ef35f242cdf98f3285d93a60d2fb2ff423e05db43fe559ab1078e1a31db
+  provenance:
+    registered_at: '2026-10-15'
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/similar-voice-views-20261014

@@ -13,105 +13,105 @@
 <text x="383" y="89" font-size="12">估算</text>
 <rect x="534" y="78" width="12" height="12" fill="#64748b"/>
 <text x="553" y="89" font-size="12">未登记</text>
-<text x="24" y="122" font-size="15" font-weight="600">emilia_yodas</text>
-<text x="24" y="140" font-size="11" fill="#475569">emilia_yodas@tts-unified-v0.1</text>
+<text x="24" y="122" font-size="15" font-weight="600">emilia2</text>
+<text x="24" y="140" font-size="11" fill="#475569">emilia2@tts-unified-v0.1</text>
 <rect x="640" y="110" width="440" height="23" rx="3" fill="#f1f5f9"/>
 <rect x="640" y="110" width="440.00" height="23" rx="3" fill="#2563eb"/>
-<text x="1094" y="127" font-size="14">113,820.6 小时</text>
-<text x="24" y="174" font-size="15" font-weight="600">emilia</text>
-<text x="24" y="192" font-size="11" fill="#475569">emilia@tts-unified-v0.1</text>
+<text x="1094" y="127" font-size="14">146,325.0 小时</text>
+<text x="24" y="174" font-size="15" font-weight="600">emilia_yodas</text>
+<text x="24" y="192" font-size="11" fill="#475569">emilia_yodas@tts-unified-v0.1</text>
 <rect x="640" y="162" width="440" height="23" rx="3" fill="#f1f5f9"/>
-<rect x="640" y="162" width="392.97" height="23" rx="3" fill="#2563eb"/>
-<text x="1094" y="179" font-size="14">101,655.6 小时</text>
-<text x="24" y="226" font-size="15" font-weight="600">libriheavy</text>
-<text x="24" y="244" font-size="11" fill="#475569">libriheavy@tts-unified-v0.1</text>
+<rect x="640" y="162" width="342.26" height="23" rx="3" fill="#2563eb"/>
+<text x="1094" y="179" font-size="14">113,820.6 小时</text>
+<text x="24" y="226" font-size="15" font-weight="600">emilia</text>
+<text x="24" y="244" font-size="11" fill="#475569">emilia@tts-unified-v0.1</text>
 <rect x="640" y="214" width="440" height="23" rx="3" fill="#f1f5f9"/>
-<rect x="640" y="214" width="197.33" height="23" rx="3" fill="#2563eb"/>
-<text x="1094" y="231" font-size="14">51,044.7 小时</text>
-<text x="24" y="278" font-size="15" font-weight="600">mls_sidon</text>
-<text x="24" y="296" font-size="11" fill="#475569">mls_sidon@tts-unified-v0.1</text>
+<rect x="640" y="214" width="305.68" height="23" rx="3" fill="#2563eb"/>
+<text x="1094" y="231" font-size="14">101,655.6 小时</text>
+<text x="24" y="278" font-size="15" font-weight="600">libriheavy</text>
+<text x="24" y="296" font-size="11" fill="#475569">libriheavy@tts-unified-v0.1</text>
 <rect x="640" y="266" width="440" height="23" rx="3" fill="#f1f5f9"/>
-<rect x="640" y="266" width="196.51" height="23" rx="3" fill="#2563eb"/>
-<text x="1094" y="283" font-size="14">50,834.3 小时</text>
-<text x="24" y="330" font-size="15" font-weight="600">mls</text>
-<text x="24" y="348" font-size="11" fill="#475569">mls@legacy-20260804</text>
+<rect x="640" y="266" width="153.49" height="23" rx="3" fill="#2563eb"/>
+<text x="1094" y="283" font-size="14">51,044.7 小时</text>
+<text x="24" y="330" font-size="15" font-weight="600">mls_sidon</text>
+<text x="24" y="348" font-size="11" fill="#475569">mls_sidon@tts-unified-v0.1</text>
 <rect x="640" y="318" width="440" height="23" rx="3" fill="#f1f5f9"/>
-<rect x="640" y="318" width="172.76" height="23" rx="3" fill="#2563eb"/>
-<text x="1094" y="335" font-size="14">44,691.0 小时</text>
-<text x="24" y="382" font-size="15" font-weight="600">emilia_en</text>
-<text x="24" y="400" font-size="11" fill="#475569">emilia_en@legacy</text>
+<rect x="640" y="318" width="152.86" height="23" rx="3" fill="#2563eb"/>
+<text x="1094" y="335" font-size="14">50,834.3 小时</text>
+<text x="24" y="382" font-size="15" font-weight="600">mls</text>
+<text x="24" y="400" font-size="11" fill="#475569">mls@legacy-20260804</text>
 <rect x="640" y="370" width="440" height="23" rx="3" fill="#f1f5f9"/>
-<rect x="640" y="370" width="168.64" height="23" rx="3" fill="#2563eb"/>
-<text x="1094" y="387" font-size="14">43,624.0 小时</text>
-<text x="24" y="434" font-size="15" font-weight="600">emilia_zh</text>
-<text x="24" y="452" font-size="11" fill="#475569">emilia_zh@legacy</text>
+<rect x="640" y="370" width="134.39" height="23" rx="3" fill="#2563eb"/>
+<text x="1094" y="387" font-size="14">44,691.0 小时</text>
+<text x="24" y="434" font-size="15" font-weight="600">emilia_en</text>
+<text x="24" y="452" font-size="11" fill="#475569">emilia_en@legacy</text>
 <rect x="640" y="422" width="440" height="23" rx="3" fill="#f1f5f9"/>
-<rect x="640" y="422" width="157.91" height="23" rx="3" fill="#2563eb"/>
-<text x="1094" y="439" font-size="14">40,848.4 小时</text>
-<text x="24" y="486" font-size="15" font-weight="600">hifitts2</text>
-<text x="24" y="504" font-size="11" fill="#475569">hifitts2@tts-unified-v0.1</text>
+<rect x="640" y="422" width="131.18" height="23" rx="3" fill="#2563eb"/>
+<text x="1094" y="439" font-size="14">43,624.0 小时</text>
+<text x="24" y="486" font-size="15" font-weight="600">emilia_zh</text>
+<text x="24" y="504" font-size="11" fill="#475569">emilia_zh@legacy</text>
 <rect x="640" y="474" width="440" height="23" rx="3" fill="#f1f5f9"/>
-<rect x="640" y="474" width="138.91" height="23" rx="3" fill="#2563eb"/>
-<text x="1094" y="491" font-size="14">35,932.7 小时</text>
-<text x="24" y="538" font-size="15" font-weight="600">legco_speech</text>
-<text x="24" y="556" font-size="11" fill="#475569">legco_speech@legacy-20260804</text>
+<rect x="640" y="474" width="122.83" height="23" rx="3" fill="#2563eb"/>
+<text x="1094" y="491" font-size="14">40,848.4 小时</text>
+<text x="24" y="538" font-size="15" font-weight="600">hifitts2</text>
+<text x="24" y="556" font-size="11" fill="#475569">hifitts2@tts-unified-v0.1</text>
 <rect x="640" y="526" width="440" height="23" rx="3" fill="#f1f5f9"/>
-<rect x="640" y="526" width="78.19" height="23" rx="3" fill="#2563eb"/>
-<text x="1094" y="543" font-size="14">20,227.2 小时</text>
-<text x="24" y="590" font-size="15" font-weight="600">wenetspeech_chuan</text>
-<text x="24" y="608" font-size="11" fill="#475569">wenetspeech_chuan@legacy-20260804</text>
+<rect x="640" y="526" width="108.05" height="23" rx="3" fill="#2563eb"/>
+<text x="1094" y="543" font-size="14">35,932.7 小时</text>
+<text x="24" y="590" font-size="15" font-weight="600">emilia2_mix</text>
+<text x="24" y="608" font-size="11" fill="#475569">emilia2_mix@mix-20261013</text>
 <rect x="640" y="578" width="440" height="23" rx="3" fill="#f1f5f9"/>
-<rect x="640" y="578" width="39.66" height="23" rx="3" fill="#2563eb"/>
-<text x="1094" y="595" font-size="14">10,259.6 小时</text>
-<text x="24" y="642" font-size="15" font-weight="600">galgame</text>
-<text x="24" y="660" font-size="11" fill="#475569">galgame@tts-unified-v0.1</text>
+<rect x="640" y="578" width="107.48" height="23" rx="3" fill="#2563eb"/>
+<text x="1094" y="595" font-size="14">35,744.6 小时</text>
+<text x="24" y="642" font-size="15" font-weight="600">legco_speech</text>
+<text x="24" y="660" font-size="11" fill="#475569">legco_speech@legacy-20260804</text>
 <rect x="640" y="630" width="440" height="23" rx="3" fill="#f1f5f9"/>
-<rect x="640" y="630" width="39.33" height="23" rx="3" fill="#2563eb"/>
-<text x="1094" y="647" font-size="14">10,173.7 小时</text>
-<text x="24" y="694" font-size="15" font-weight="600">gigaspeech</text>
-<text x="24" y="712" font-size="11" fill="#475569">gigaspeech@legacy-20260804</text>
+<rect x="640" y="630" width="60.82" height="23" rx="3" fill="#2563eb"/>
+<text x="1094" y="647" font-size="14">20,227.2 小时</text>
+<text x="24" y="694" font-size="15" font-weight="600">emilia2_dialog</text>
+<text x="24" y="712" font-size="11" fill="#475569">emilia2_dialog@dialog-turn-taking-20261013-enroll</text>
 <rect x="640" y="682" width="440" height="23" rx="3" fill="#f1f5f9"/>
-<rect x="640" y="682" width="38.85" height="23" rx="3" fill="#2563eb"/>
-<text x="1094" y="699" font-size="14">10,050.7 小时</text>
-<text x="24" y="746" font-size="15" font-weight="600">wenetspeech</text>
-<text x="24" y="764" font-size="11" fill="#475569">wenetspeech@legacy-20260804</text>
+<rect x="640" y="682" width="45.62" height="23" rx="3" fill="#2563eb"/>
+<text x="1094" y="699" font-size="14">15,172.8 小时</text>
+<text x="24" y="746" font-size="15" font-weight="600">wenetspeech_chuan</text>
+<text x="24" y="764" font-size="11" fill="#475569">wenetspeech_chuan@legacy-20260804</text>
 <rect x="640" y="734" width="440" height="23" rx="3" fill="#f1f5f9"/>
-<rect x="640" y="734" width="38.76" height="23" rx="3" fill="#2563eb"/>
-<text x="1094" y="751" font-size="14">10,025.4 小时</text>
-<text x="24" y="798" font-size="15" font-weight="600">wenetspeech_wu</text>
-<text x="24" y="816" font-size="11" fill="#475569">wenetspeech_wu@legacy-20260804</text>
+<rect x="640" y="734" width="30.85" height="23" rx="3" fill="#2563eb"/>
+<text x="1094" y="751" font-size="14">10,259.6 小时</text>
+<text x="24" y="798" font-size="15" font-weight="600">galgame</text>
+<text x="24" y="816" font-size="11" fill="#475569">galgame@tts-unified-v0.1</text>
 <rect x="640" y="786" width="440" height="23" rx="3" fill="#f1f5f9"/>
-<rect x="640" y="786" width="33.79" height="23" rx="3" fill="#2563eb"/>
-<text x="1094" y="803" font-size="14">8,740.7 小时</text>
-<text x="24" y="850" font-size="15" font-weight="600">wenetspeech4tts</text>
-<text x="24" y="868" font-size="11" fill="#475569">wenetspeech4tts@legacy-20260804</text>
+<rect x="640" y="786" width="30.59" height="23" rx="3" fill="#2563eb"/>
+<text x="1094" y="803" font-size="14">10,173.7 小时</text>
+<text x="24" y="850" font-size="15" font-weight="600">gigaspeech</text>
+<text x="24" y="868" font-size="11" fill="#475569">gigaspeech@legacy-20260804</text>
 <rect x="640" y="838" width="440" height="23" rx="3" fill="#f1f5f9"/>
-<rect x="640" y="838" width="29.77" height="23" rx="3" fill="#b45309"/>
-<text x="1094" y="855" font-size="14">7,700.0 小时</text>
-<text x="24" y="902" font-size="15" font-weight="600">sot_multispeaker_zh_en</text>
-<text x="24" y="920" font-size="11" fill="#475569">sot_multispeaker_zh_en@synthetic-v2-20260915</text>
+<rect x="640" y="838" width="30.22" height="23" rx="3" fill="#2563eb"/>
+<text x="1094" y="855" font-size="14">10,050.7 小时</text>
+<text x="24" y="902" font-size="15" font-weight="600">wenetspeech</text>
+<text x="24" y="920" font-size="11" fill="#475569">wenetspeech@legacy-20260804</text>
 <rect x="640" y="890" width="440" height="23" rx="3" fill="#f1f5f9"/>
-<rect x="640" y="890" width="29.63" height="23" rx="3" fill="#2563eb"/>
-<text x="1094" y="907" font-size="14">7,664.4 小时</text>
-<text x="24" y="954" font-size="15" font-weight="600">aishellmix</text>
-<text x="24" y="972" font-size="11" fill="#475569">aishellmix@pack3-current-audio-record-20260910</text>
+<rect x="640" y="890" width="30.15" height="23" rx="3" fill="#2563eb"/>
+<text x="1094" y="907" font-size="14">10,025.4 小时</text>
+<text x="24" y="954" font-size="15" font-weight="600">wenetspeech_wu</text>
+<text x="24" y="972" font-size="11" fill="#475569">wenetspeech_wu@legacy-20260804</text>
 <rect x="640" y="942" width="440" height="23" rx="3" fill="#f1f5f9"/>
-<rect x="640" y="942" width="28.95" height="23" rx="3" fill="#2563eb"/>
-<text x="1094" y="959" font-size="14">7,489.2 小时</text>
-<text x="24" y="1006" font-size="15" font-weight="600">librimix</text>
-<text x="24" y="1024" font-size="11" fill="#475569">librimix@960-current-audio-record-20260910</text>
+<rect x="640" y="942" width="26.28" height="23" rx="3" fill="#2563eb"/>
+<text x="1094" y="959" font-size="14">8,740.7 小时</text>
+<text x="24" y="1006" font-size="15" font-weight="600">opendatalab_multilingual</text>
+<text x="24" y="1024" font-size="11" fill="#475569">opendatalab_multilingual@computer-2-20261009</text>
 <rect x="640" y="994" width="440" height="23" rx="3" fill="#f1f5f9"/>
-<rect x="640" y="994" width="26.76" height="23" rx="3" fill="#2563eb"/>
-<text x="1094" y="1011" font-size="14">6,921.9 小时</text>
-<text x="24" y="1058" font-size="15" font-weight="600">yodas_ru</text>
-<text x="24" y="1076" font-size="11" fill="#475569">yodas_ru@legacy</text>
+<rect x="640" y="994" width="25.82" height="23" rx="3" fill="#2563eb"/>
+<text x="1094" y="1011" font-size="14">8,588.2 小时</text>
+<text x="24" y="1058" font-size="15" font-weight="600">wenetspeech4tts</text>
+<text x="24" y="1076" font-size="11" fill="#475569">wenetspeech4tts@legacy-20260804</text>
 <rect x="640" y="1046" width="440" height="23" rx="3" fill="#f1f5f9"/>
-<rect x="640" y="1046" width="21.63" height="23" rx="3" fill="#2563eb"/>
-<text x="1094" y="1063" font-size="14">5,596.0 小时</text>
-<text x="24" y="1110" font-size="15" font-weight="600">open_large_bn</text>
-<text x="24" y="1128" font-size="11" fill="#475569">open_large_bn@legacy</text>
+<rect x="640" y="1046" width="23.15" height="23" rx="3" fill="#b45309"/>
+<text x="1094" y="1063" font-size="14">7,700.0 小时</text>
+<text x="24" y="1110" font-size="15" font-weight="600">sot_multispeaker_zh_en</text>
+<text x="24" y="1128" font-size="11" fill="#475569">sot_multispeaker_zh_en@synthetic-v2-20260915</text>
 <rect x="640" y="1098" width="440" height="23" rx="3" fill="#f1f5f9"/>
-<rect x="640" y="1098" width="19.51" height="23" rx="3" fill="#2563eb"/>
-<text x="1094" y="1115" font-size="14">5,045.8 小时</text>
+<rect x="640" y="1098" width="23.05" height="23" rx="3" fill="#2563eb"/>
+<text x="1094" y="1115" font-size="14">7,664.4 小时</text>
 </g>
 </svg>

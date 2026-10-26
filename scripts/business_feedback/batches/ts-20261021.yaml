@@ -1,0 +1,15 @@
+# 业务反馈第五批：飞书表格「鼎桥云端 ASR 调试」的增量（revision 240→249），新增第 40、41 行，
+# 同一位测试人员，下游用的是 2026-10-21 的交付包（10.21 版本），换了一段新的注册音频。
+# 表格「识别错误类型」一列写明两条都是“目标人不在场，仍然识别出结果”；自动复核（WeSpeaker ECAPA-TDNN512-LM）
+# 片段与注册音频余弦 0.14 / 0.27，与机主上次的句子 0.13 / 0.25（同一人参照约 0.55），与表格一致（见 badcase 目录 README）。
+version: ts-20261021
+source: 2026-10-21_amphionasr-owner-misrecognition
+language: zh
+description: >-
+  测试人员持续收音时反馈的 2 个调试包（表格第 40、41 行），换了一段新的注册音频。
+  每段输入为 3 秒注册音频加一个识别片段；两条都是机主未说话、另一个人说了一句约 1 秒的短话，模型输出了这句话。
+cases:
+  # 1.54 秒片段，约 0.7 秒语音“哎，又来了”，不是机主（表格：目标人不在场，仍然识别出结果）。
+  row-40: {split: target_speaker, target_present: false, issue: non_target_voice_transcribed}
+  # 2.75 秒片段，约 1.1 秒语音“现在就没了”，不是机主（表格：目标人不在场，仍然识别出结果）。
+  row-41: {split: target_speaker, target_present: false, issue: non_target_voice_transcribed}
