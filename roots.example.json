@@ -49,5 +49,7 @@
   "ami_ihm": "/workspace/data/datasets/ami_ihm",
   "demand": "/workspace/data/datasets/demand",
   "voicebank_demand": "/workspace/data/datasets/voicebank_demand",
+  "icsi": "/workspace/data/datasets/icsi",
+  "mit_ir_survey": "/workspace/data/datasets/mit_ir_survey",
   "open_noise": "/workspace/data/datasets/noise_open"
 }

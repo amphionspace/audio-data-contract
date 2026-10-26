@@ -2,7 +2,7 @@
 
 按数据集查看语言、支持任务、时长和特性。清洗、热词、加噪、评测入口和训练框架配置归入所属数据集，不另算一套源数据。
 
-当前登记 **195 个数据集条目**；另有 **20 个下载来源声明**和 **1 个训练混合配方**。登记不代表本机文件已齐备。
+当前登记 **197 个数据集条目**；另有 **20 个下载来源声明**和 **1 个训练混合配方**。登记不代表本机文件已齐备。
 
 时长单位为小时。不同版本、子集和标注片段可能重叠，逐项列出，不相加为总量；没有时长的条目仍保留。参考表数字未核实当前文件与划分覆盖；“过滤前”不能当作清洗后时长。已被合并版本取代（`superseded_by`）的旧版本不再列出，仍可按原 ID 和版本解析。
 
@@ -35,6 +35,7 @@
 | [gigaspeech](../../catalog/icefall_base.yaml#L188) | en | 语音识别 | 40.3（已登记；[eval-20260804](../../catalog/open_audio_eval.yaml#L218)）<br>10,050.7（已登记；[icefall-20260908](../../catalog/icefall_runtime.yaml#L229)）<br>10,050.7（已登记；[legacy-20260804](../../catalog/icefall_base.yaml#L188)）<br>10,000.0（[参考表](https://ccnuebbmik1f.feishu.cn/wiki/CEXFwEjPoi2bIukVjk9c5FdOn12?sheet=3d4d23)；legacy-20260804） | 含派生版本（与源数据可能重叠） |
 | [hifitts](../../catalog/tts_unified.yaml#L452) | en | 语音识别、语音合成 | 291.7（已登记；[tts-unified-v0.1](../../catalog/tts_unified.yaml#L452)） | 音频编码字节存放在 Lance 表内；原始划分在 metadata_json.original_split，统一输出全部为 train。ASR 用 tts_lance.iter_asr_samples（tts-asr-rules/v1）读取，会排除原始 dev/test 等 |
 | [hifitts2](../../catalog/tts_unified.yaml#L492) | en | 语音识别、语音合成 | 35,932.7（已登记；[tts-unified-v0.1](../../catalog/tts_unified.yaml#L492)） | 音频编码字节存放在 Lance 表内；原始划分在 metadata_json.original_split，统一输出全部为 train。ASR 用 tts_lance.iter_asr_samples（tts-asr-rules/v1）读取，会排除原始 dev/test 等 |
+| [icsi](../../catalog/icsi.yaml#L1) | en | 语音识别、说话人分段与归属 | 71.7（已登记；[modelscope-argmaxinc-20261025](../../catalog/icsi.yaml#L1)） | ICSI 会议语料：伯克利 ICSI 研究所 2000–2002 年录的 75 场真实英文工作会议（每场 3–10 人，共 53 位登记说话人），71.7 小时。这一版的音频是官方的近讲混合音轨（把所有人的头戴麦叠成一路，16 kHz 单声道），每场带说话人分段（12.9 万段），适合做说话人日志评测；另附官方 MRT 原始转写（含时间、说话人）和 NXT 标注（词、分段、对话行为），可做多人会议 ASR。不含远场桌面麦通道 |
 | [iemocap_ser](../../catalog/open_audio_eval.yaml#L883) | en | 语音情感识别 | 1.5（已登记；[eval-20260804](../../catalog/open_audio_eval.yaml#L883)） | 当前仅登记评测入口 |
 | [legco_speech_en](../../catalog/icefall_base.yaml#L1875) | en | 语音识别 | 249.6（已登记；[icefall-20260908](../../catalog/icefall_runtime.yaml#L2289)）<br>249.6（已登记；[legacy-20260804](../../catalog/icefall_base.yaml#L1875)） | 含派生版本（与源数据可能重叠） |
 | [libri2mix](../../catalog/open_audio_eval.yaml#L1229) | en | 目标说话人语音识别 | 8.4（已登记；[eval-20260804](../../catalog/open_audio_eval.yaml#L1229)）<br>8.4（已登记；[eval-20260804](../../catalog/open_audio_eval.yaml#L1333)）<br>8.4（已登记；[eval-20260804](../../catalog/open_audio_eval.yaml#L1281)）<br>11.2（已登记；[eval-20260804](../../catalog/open_audio_eval.yaml#L1150)） | 当前仅登记评测入口 |
@@ -210,6 +211,7 @@
 | [koreaspeech](../../catalog/legacy_multilingual.yaml#L1942) | ko | 语音识别 | 3,828.3（已登记；[legacy](../../catalog/legacy_multilingual.yaml#L1942)） | 有含标点版本 |
 | [meeting_room_noise](../../catalog/meeting_room_noise.yaml#L1) | und | noise | 2.5（已登记；[v2-20261014](../../catalog/meeting_room_noise.yaml#L1)） | 真实会议室底噪：从 AliMeeting 与 AISHELL-4 训练集远场阵列录音里截取无人说话的片段，每场会议取 1 个麦克风拼成 1 条，共 209 条、2.48 小时。先按标注空隙（前后扩 0.5 秒、剔除比该场底噪高 10 dB 的突发声）取候选，再每 4 秒用 Qwen3-ASR 转写，有文字就丢弃，因为部分会议有未标注的说话人。噪声已带录制房间的混响 |
 | [mgb2](../../catalog/legacy_multilingual.yaml#L139) | ar | 语音识别 | 1,215.5（已登记；[legacy](../../catalog/legacy_multilingual.yaml#L139)） | 有无标点版本 |
+| [mit_ir_survey](../../catalog/mit_ir_survey.yaml#L1) | und | rir | 0.0（已登记；[modelscope-benjamin-paine-20261025](../../catalog/mit_ir_survey.yaml#L1)） | MIT 真实环境冲激响应（RIR）：志愿者两周日常生活里到过的地方（办公室、教室、餐厅、商场、地铁站、浴室、车里、户外等 68 类）实测的 RIR，声源和麦克风相距 1.5 米。共 270 条，32 kHz 单声道。可给干净语音加真实混响，补充模拟 RIR 和 `real_rir_slr28` |
 | [mls_de](../../catalog/legacy_multilingual.yaml#L682) | de | 语音识别 | 1,995.1（已登记；[legacy](../../catalog/legacy_multilingual.yaml#L682)） | 有无标点版本 |
 | [mls_es](../../catalog/legacy_multilingual.yaml#L1072) | es | 语音识别 | 937.7（已登记；[legacy](../../catalog/legacy_multilingual.yaml#L1072)） | 有无标点版本 |
 | [mls_fr](../../catalog/legacy_multilingual.yaml#L1423) | fr | 语音识别 | 1,096.7（已登记；[legacy](../../catalog/legacy_multilingual.yaml#L1423)） | 有无标点版本 |
