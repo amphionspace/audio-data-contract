@@ -2,7 +2,9 @@
 """Speaker embeddings for choosing hard negatives (WeSpeaker ECAPA-TDNN512-LM, ONNX).
 
 Writes an ``.npz`` with ``keys`` (speaker ids as used by the recipe pools) and
-``vectors`` (unit-norm, mean of up to three utterances). Needs ``onnxruntime`` and
+``vectors`` (unit-norm, mean of up to three utterances). The recipe's recorded
+registrations (``enrollment_files``) are added as ``file:<name>``, one vector per
+recording. Needs ``onnxruntime`` and
 ``torchaudio``, which are not dependencies of this repository.
 
     python scripts/ts_benchmark/speaker_embeddings.py --roots roots.json --output embeddings.npz
@@ -38,7 +40,8 @@ def main():
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args()
     recipe = yaml.safe_load(args.recipe.read_text())
-    pools = build.build_pools(recipe, load_catalog(args.catalog), json.loads(args.roots.read_text()))
+    roots = json.loads(args.roots.read_text())
+    pools = build.build_pools(recipe, load_catalog(args.catalog), roots)
     session = ort.InferenceSession(MODEL, providers=["CPUExecutionProvider"])
     name = session.get_inputs()[0].name
 
@@ -57,6 +60,9 @@ def main():
         mean = np.mean([embed(build.read_audio(u.path)) for u in chosen], axis=0)
         keys.append(speaker)
         vectors.append(mean / np.linalg.norm(mean))
+    for recording, path in sorted(build.enrollment_files(recipe, roots).items()):
+        keys.append(f"file:{recording}")
+        vectors.append(embed(build.read_audio(path)))
     np.savez(args.output, keys=np.array(keys), vectors=np.stack(vectors).astype(np.float32))
     print(f"{len(keys)} speakers -> {args.output}")
 

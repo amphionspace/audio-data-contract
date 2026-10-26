@@ -1,0 +1,110 @@
+# 热词评测集（hotword_bench）：同一套固定热词列表、多个列表条件，评测模型在给定热词列表时
+# 能否写对说出的热词（召回）、会不会把列表里没说的词写进去（误触发）。只用于评测，不进训练。
+#
+# 每条记录的 metadata.bias_lists 按条件存好固定的列表（顺序已打乱），评测时不再采样；
+# `none`（不给列表）由评测器另跑。中文列表 = 正确词 + LLM 生成并复核的易混词 + 同 split 热词池随机词，
+# 补到 list_size；`*_no_gold` 是同一批干扰词去掉正确词再补满，测"说的词不在列表里"时的误触发。
+version: v1-20261018
+dataset_id: hotword_bench
+seed: 20261018
+sample_rate: 16000
+# 与部署 RAG Top-50、训练列表长度（10–53）一致
+list_size: 50
+confusables_per_word: 3
+# 本地已有热词标注的测试集（AmphionData `amphion-data hotwords` 抽取），每个来源按 sha256(id) 取前 N 条正例
+local_positive_cap: 2000
+min_seconds: 0.1
+# 单次请求上限；超过的条目进 quarantine（ContextASR 平均 46 s，最长约 90 s，在 120 s 训练窗口内，不截断）
+max_seconds: 120.0
+
+llm:
+  # 阿里百炼账号欠费停用（2026-10-18），改用火山方舟（amphionkeys volcengine-ark）。
+  # 选型依据见 source/v1-20261018/model-comparison/（40 词易混词生成 + 200 句热词抽取的对比）。
+  base_url: https://ark.cn-beijing.volces.com/api/v3
+  api_key_env: ARK_API_KEY
+  # real_zh 的热词抽取：与本地热词集标注同一模型（AmphionData 默认 doubao-seed-2-0-lite）、同一 EXTRACT_HOTWORD prompt
+  extractor: {model: doubao-seed-2-0-lite-260215, extra_body: {thinking: {type: disabled}}, temperature: 0.0}
+  # 易混词：对比中合格易混词最多（每词 2.05 个，40 词中 37 个至少一个）
+  generator: {model: doubao-seed-2-1-pro-260915, extra_body: {thinking: {type: disabled}}, temperature: 0.7}
+  # 复核用另一个模型家族独立判断
+  reviewer: {model: deepseek-v4-pro-ga-260813, extra_body: {thinking: {type: disabled}}, temperature: 0.0}
+  workers: 32
+  extract_batch: 20
+  review_batch: 20
+  confusable_batch: 40
+
+amphiondata:
+  repo: /workspace/workspace/mingdong/repo/amphiondata
+  commit: 4d2dca2      # src/amphiondata/llm/prompts.py EXTRACT_HOTWORD
+
+sources:
+  aishell1_ne:
+    # SeACo-Paraformer (arXiv 2308.03266) 的 Test/Dev-AISHELL1-NE：全局热词表 + R1（基线召回 < 40%）子集
+    upstream: https://github.com/R1ckShi/SeACo-Paraformer
+    commit: 855b0fb7cadd57f111e192dcd08682ebf391693b
+    audio: {dataset: aishell, version: legacy-20260804}
+    splits: {aishell1_ne_test: test, aishell1_ne_dev: dev}
+  contextasr:
+    # ContextASR-Bench (arXiv 2507.05727) Speech-Mandarin；entity_list 即论文的 fine-grained context
+    upstream: https://huggingface.co/datasets/MrSupW/ContextASR-Bench
+    revision: 7906fd98d1d093bf244df80e726e07fc8afed6a6
+    license: MIT
+  local:
+    # 飞书「ASR 数据统计汇总」中热词状态为"完全/测试集"的语料；AISHELL-1 用上面的 AISHELL1-NE，不重复收录
+    cv_zh: {supervisions: commonvoice_zh_hotwords/versions/hotwords-v1-20260805/test_supervisions, recordings: common_voice_zh/versions/legacy-20260804/test_rec_0, language: zh}
+    aishell2: {supervisions: aishell2_hotwords/versions/hotwords-v1-20260805/test_supervisions, recordings: aishell2/versions/legacy-20260804/test_rec_0, language: zh}
+    aishell3: {supervisions: aishell3_hotwords/versions/hotwords-v1-20260805/test_supervisions, recordings: aishell3_hotwords/versions/hotwords-v1-20260805/test_recordings, language: zh}
+    kespeech: {supervisions: kespeech_hotwords/versions/hotwords-v1-20260805/test_supervisions, recordings: kespeech_hotwords/versions/hotwords-v1-20260805/test_recordings, language: zh}
+    cv_en: {supervisions: commonvoice_en_hotwords/versions/hotwords-v1-20260805/test_supervisions, recordings: common_voice_en/versions/legacy-20260804/test_rec_0, language: en}
+  real_zh:
+    # 真实口语：SpeechIO 27 个子集 + WenetSpeech test_net / test_meeting；正确词由 LLM 抽取、另一 LLM 复核
+    positives_per_subset: 200
+    scan_step: 600       # 每轮按 sha256(id) 顺序多扫这么多条，直到正例够数或扫完
+    extract_margin: 1.5  # 只起抽取模型时，先抽到目标的 1.5 倍（未复核），给复核否决留余量
+    corpora:
+      speechio:
+        recordings: speechio/versions/eval-original-20261011/test_recordings.jsonl.gz
+        supervisions: speechio/versions/eval-original-20261011/test_supervisions.jsonl.gz
+        subset_field: subset_id
+      wenetspeech_test_net:
+        recordings: wenetspeech/versions/eval-20261011/test_net_recordings.jsonl.gz
+        supervisions: wenetspeech/versions/eval-20261011/test_net_supervisions.jsonl.gz
+      wenetspeech_test_meeting:
+        recordings: wenetspeech/versions/eval-20261011/test_meeting_recordings.jsonl.gz
+        supervisions: wenetspeech/versions/eval-20261011/test_meeting_supervisions.jsonl.gz
+  gigaspeech:
+    # 按 SALMONN-2 (arXiv 2607.17079) 的 GigaSpeech 协议（沿用 LibriSpeech 稀有词协议）重建；该文列表未公开。
+    # 稀有词 = XL 训练文本词频前 K 之外的词；K 取与该文测试集统计（37% 句子含偏置词、平均 1.5 个）更接近的一个
+    recordings: gigaspeech/versions/legacy-20260804/test_rec_0/gigaspeech_recordings_TEST.jsonl.gz
+    supervisions: gigaspeech/versions/legacy-20260804/test_sup_0/gigaspeech_supervisions_TEST.jsonl.gz
+    train_supervisions: gigaspeech/versions/legacy-20260804/train_sup_0/gigaspeech_supervisions_XL.jsonl.gz
+    common_k_candidates: [5000, 20000]
+    target_positive_fraction: 0.37
+    target_words_per_positive: 1.5
+    list_sizes: [20, 50, 100]
+  librispeech:
+    # fbai-speech is21_deep_bias（Le et al., arXiv 2104.02194）官方列表
+    upstream: https://github.com/facebookresearch/fbai-speech/tree/main/is21_deep_bias
+    commit: 43cdb3ca9644a755d5c6cc55cbcc91132f85ed44
+    audio: {dataset: librispeech, version: legacy-20260804}
+    splits: {librispeech_test_clean: test-clean, librispeech_test_other: test-other}
+    list_sizes: [100, 1000]
+
+# 训练重叠检查：规范化文本与这些训练文本完全相同的条目在 labels.train_text_overlap 标出来源（不隔离：
+# AISHELL-1/3 测试文本大多也是 AISHELL-2 训练转写，隔离会清空官方集；评测按该标签分出无重合子集）。
+# 路径相对 /workspace/data/datasets，目录或 glob 下所有 *.jsonl.gz 都读
+overlap:
+  records:
+    - hw_sft/versions/hw-20261014/records/train.jsonl.gz
+    - hw_sft/versions/hw-20261014/records/train_hotwords.jsonl.gz
+    - hard_hw_sft/versions/hard-20261014/records/train.jsonl.gz
+  supervisions:
+    aishell1_ne: [aishell/versions/legacy-20260804/train_sup_0]
+    cv_zh: [commonvoice_zh_hotwords/versions/hotwords-v1-20260805/train_supervisions]
+    aishell2: [aishell2/versions/legacy-20260804/train_sup_0]
+    aishell3: [aishell3_hotwords/versions/hotwords-v1-20260805/train_supervisions]
+    kespeech: [kespeech/versions/legacy-20260804/train_sup_*]
+    cv_en: [commonvoice_en_hotwords/versions/hotwords-v1-20260805/train_supervisions]
+    real_zh: [wenetspeech_podcast/versions/l-20261014/supervisions/train.jsonl.gz, wenetspeech_youtube/versions/l-20261014/supervisions/train.jsonl.gz]
+    gigaspeech: [gigaspeech/versions/legacy-20260804/train_sup_0]
+    librispeech: [librispeech/versions/legacy-20260804/train_sup_*]
