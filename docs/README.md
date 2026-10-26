@@ -7,6 +7,7 @@
 - [本地音频准备](guides/audio-preparation.md)：提取归档中的音频，按清单生成本地副本。
 - [时长统计](guides/duration-statistics.md)：统计清单或音频目录，补齐 catalog 中的缺失时长。
 - [COS 恢复](guides/cos-restore.md)：查询备份位置、恢复文件、迁移清单路径。
+- [Lance 记录索引](guides/record-index.md)：把记录元数据和音频位置做成 Lance 表，训练启动直接读取。
 
 ## 数据集
 
@@ -16,12 +17,15 @@
 | [Common Voice EN](datasets/cv-en-cleaning.md) | 清洗结果、train/test 清单差异 |
 | [远场与会议数据](datasets/farfield-data-preparation.md) | AliMeeting、AMI、NOTSOFAR、RealMAN、ViTW 的准备与使用 |
 | [Target-ASR](datasets/target-asr.md) | LibriMix、AISHELLMix 的版本、记录格式和音频读取 |
+| [普通 ASR 背景人声评测集](datasets/asr-babble-bench.md) | 只有背景人声时的误输出率，以及一句话前后有背景人声时的字错率 |
+| [目标说话人训练素材池](datasets/ts-robust-pools.md) | 干扰人、非人声、多句场景、DNS5 训练噪声与房间响应，与评测集的隔离 |
 | [说话人数据](datasets/speaker-preparation.md) | CN-Celeb、3D-Speaker、HI-MIA、CHiME-6 的训练和评测入口 |
+| [Diarization 评测切片](datasets/diarization-benchmark.md) | 六组冻结的本地说话人分段评测切片的身份映射、格式和来源限制 |
 | [SOT 时间戳](datasets/sot-timestamps.md) | 时间戳来源、版本状态和进度查询 |
 | [警言警语 V6](datasets/police-v6.md) | expanded、8h 两批数据及测试范围 |
 | [V6 指令验收](datasets/police-v6-acceptance.md) | 205 条指令验收集的生成与评测约定 |
 | [警务数据统合版](datasets/police-unified.md) | 全部警务批次合并为 train/dev/test |
-| [DATA-TTS-UNIFIED](datasets/tts-unified.md) | 17 个 TTS 数据集的登记、读取方式和待办 |
+| [DATA-TTS-UNIFIED](datasets/tts-unified.md) | 18 个 TTS 数据集及其标注的登记、自动同步、读取方式和待办 |
 
 ## 协议与框架接入
 

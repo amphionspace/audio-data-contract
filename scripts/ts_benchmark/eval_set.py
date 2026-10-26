@@ -141,6 +141,28 @@ NAMED = {
     "dom-phone-neg": ("手机录音 · 目标缺席", "同上，注册人不在场"),
     "dom-studio-pos": ("棚内录音 · 目标在场", "AISHELL-3 棚内高质量录音说话人"),
     "dom-studio-neg": ("棚内录音 · 目标缺席", "同上，注册人不在场"),
+    # ts_asr_shortseg：业务第三批里 VAD 切出的 1.2–6 秒片段
+    "abs-mid1-k1": ("缺席 · 1.2–3 秒片段 · 1 个干扰人", "VAD 切出的短片段，只有别人在说话；期望输出为空"),
+    "abs-mid1-k2": ("缺席 · 1.2–3 秒片段 · 2 个干扰人", "同上，2 个别人"),
+    "abs-mid2-k1": ("缺席 · 3–6 秒片段 · 1 个干扰人", "VAD 切出的短片段，只有别人在说话；期望输出为空"),
+    "abs-mid2-k2": ("缺席 · 3–6 秒片段 · 2 个干扰人", "同上，2 个别人"),
+    "realreg2-mid1-neg": ("真实注册 2 · 缺席 · 1.2–3 秒片段", "测试人员 2026-10-12 批的注册录音，配上 1–2 个没有他的说话人的短片段"),
+    "realreg2-mid2-neg": ("真实注册 2 · 缺席 · 3–6 秒片段", "同上，3–6 秒"),
+    "solo-mid": ("目标单独说一句短话（2–6 秒）", "只有目标说话人的短片段（对照）：压低误输出时不能漏掉注册人的短句"),
+    # ts_asr_singing：业务第三批里只有歌声的片段
+    "nonspeech-song": ("只有歌声（带伴奏的中文流行歌）", "MIR-1K 卡拉 OK 片段（人声 + 伴奏），1.5–8 秒，近似旁边外放的歌；期望输出为空"),
+    "realreg2-song": ("真实注册 2 · 只有歌声", "测试人员 2026-10-12 批的注册录音，配上只有歌声的片段；期望输出为空"),
+    # ts_asr_handover：业务第四批（第 38、39 行）与它的注册录音 realreg3
+    "abs-rand-k1": ("缺席 · 1 个人单独说话 · 随机注册人（对照）", "只有 1 个别人说话，注册人是随机的另一位说话人；与 abs-hard-k1 是同一批混合音频"),
+    "abs-hard-k1": ("缺席 · 1 个声音相近的人单独说话", "只有 1 个别人说话，注册人是与这个人声音最相近的说话人之一（ECAPA 余弦前 5）；与 abs-rand-k1 同一批混合音频，只换注册人"),
+    "realreg3-neg": ("真实注册 3 · 缺席", "测试人员 2026-10-19 批的注册录音，配上 1–2 个其他说话人，注册人不在场"),
+    "realreg3-hard-neg": ("真实注册 3 · 缺席 · 声音相近的干扰人", "同一段注册录音，干扰人取自与它 ECAPA 余弦最高的 10 位 test 说话人；片段长度和人数与 realreg3-neg 逐条相同"),
+    "realreg3-music": ("真实注册 3 · 纯音乐", "同一段注册录音，片段是纯音乐"),
+    "realreg3-mid1-neg": ("真实注册 3 · 缺席 · 1.2–3 秒片段", "测试人员 2026-10-19 批的注册录音，配上 1–2 个其他说话人的短片段"),
+    "realreg3-mid2-neg": ("真实注册 3 · 缺席 · 3–6 秒片段", "同上，3–6 秒"),
+    "handover-same-open": ("目标说完、别人接话 · 开头相同", "目标先说一句（1.5–4 秒），停 0.5–2 秒，另一人接着说一句开头相同的话（那句的前 4 个字含目标那句的前 2 个字），不重叠"),
+    "handover-rand": ("目标说完、别人接话 · 开头不同（对照）", "同一句目标话、同一个干扰人、同一套时间安排，干扰人换一句前 4 个字与目标没有共同字的话"),
+    "handover-rev-same-open": ("别人先说、目标接话 · 开头相同（对照）", "与 handover-same-open 同样的两句话和停顿，先干扰人后目标"),
 }
 
 
@@ -205,6 +227,34 @@ def main():
              "description": "同上，注册人不在场"},
             {"name": "只有噪声，没有目标", "section": "新登记的噪声集", "labels": pick("nonspeech-", {"nonspeech"}),
              "description": "背景人声、人群、环境事件声；期望输出为空"},
+        ]
+        return emit(recipe, splits, groups)
+    if recipe["dataset_id"] == "ts_asr_shortseg":
+        groups = [
+            {"name": "目标缺席 · 1.2–6 秒短片段（别人在说话）", "section": "进场、离场与缺席", "labels": pick("abs-mid", {"neg"}),
+             "description": "持续收音时 VAD 切出的短片段，注册人不在场；补 abs-short（0.4–1.2 秒）与 6–18 秒之间的长度"},
+            {"name": "真实注册录音 · 1.2–6 秒短片段（缺席）", "section": "真实注册音频", "labels": pick("realreg2-mid", {"neg"}),
+             "description": "业务反馈里测试人员的真实注册录音，短片段，目标不在场；误输出率"},
+            {"name": "目标单独短句（对照）", "section": "进场、离场与缺席", "labels": ["solo-mid"],
+             "description": "只有注册人说一句 2–6 秒的话；字错率与漏识率不得因压低误输出而变差"},
+        ]
+        return emit(recipe, splits, groups)
+    if recipe["dataset_id"] == "ts_asr_handover":
+        groups = [
+            {"name": "目标缺席 · 只有一个人在说（声音相近与随机）", "section": "进场、离场与缺席", "labels": ["abs-rand-k1", "abs-hard-k1"],
+             "description": "同一批混合音频，只换注册人：随机的人或与说话人声音最相近的人；误输出率"},
+            {"name": "目标说完、别人接话（不重叠）", "section": "进场、离场与缺席", "labels": pick("handover-", {"pos"}),
+             "description": "同一句目标话、同一个干扰人、同一套时间安排；只改干扰人那句的开头或先后顺序；字错率与漏识率"},
+            {"name": "真实注册录音（缺席）", "section": "真实注册音频", "labels": ["realreg3-neg", "realreg3-hard-neg", "realreg3-music"],
+             "description": "业务第四批测试人员的真实注册录音，目标不在场；误输出率"},
+            {"name": "真实注册录音 · 1.2–6 秒短片段（缺席）", "section": "真实注册音频", "labels": pick("realreg3-mid", {"neg"}),
+             "description": "业务第四批测试人员的真实注册录音，短片段，目标不在场；误输出率"},
+        ]
+        return emit(recipe, splits, groups)
+    if recipe["dataset_id"] == "ts_asr_singing":
+        groups = [
+            {"name": "只有歌声（带人声的歌曲）", "section": "纯噪声", "labels": pick("", {"nonspeech"}),
+             "description": "带伴奏的中文流行歌，没有人说话；随机注册与业务真实注册；期望输出为空"},
         ]
         return emit(recipe, splits, groups)
     groups = [

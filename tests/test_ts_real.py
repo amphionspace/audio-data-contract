@@ -68,3 +68,43 @@ def test_a_window_cannot_extend_past_the_end_of_the_audio():
     e = entry(UTTS)
     e["duration"] = 12.0
     assert all(w["hi"] <= 12.0 for w in real["candidate_windows"](e, random.Random(1)))
+
+
+def test_target_windows_keep_the_target_whole_and_clip_everyone_else():
+    import random
+
+    e = entry(UTTS)
+    whole = {u[:3] for u in UTTS}
+    for seed in range(20):
+        for w in real["target_windows"](e, random.Random(seed)):
+            assert w["hi"] - w["lo"] <= real["MAX_WINDOW"]
+            for u in w["utts"]:
+                assert w["lo"] <= u[0] < u[1] <= w["hi"]
+                if u[2] == w["target"]:
+                    assert u[:3] in whole and u not in w["clipped"]
+                else:
+                    assert (u[:3] not in whole) == (u in w["clipped"])
+            # The target's first utterance in the window is preceded by at most 4 s.
+            first = min(u[0] for u in w["utts"] if u[2] == w["target"])
+            assert 0.0 <= first - w["lo"] <= 4.0
+
+
+def test_overlap_buckets_split_at_5_20_and_50_percent():
+    bucket = real["overlap_bucket"]
+    assert [bucket(r) for r in (0.0, 0.05, 0.06, 0.2, 0.21, 0.5, 0.51, 1.0)] == [
+        "o0", "o0", "o20", "o20", "o50", "o50", "o100", "o100"]
+
+
+def test_stored_enrollment_appends_clean_utterances_outside_the_window():
+    import random
+
+    # A: 0-5 (B talks over 4-5), 30-36, 40-43 (C talks over 41-42), 60-64, 70-72; window 28-38.
+    e = entry(UTTS + [(40.0, 43.0, "A", "甲三"), (41.0, 42.0, "C", "丙二"), (60.0, 64.0, "A", "甲四"),
+                      (70.0, 72.0, "A", "甲五")])
+    pieces = real["enrollment_pieces"](e, "A", (0.0, 5.0), 28.0, 38.0, random.Random(0))
+    assert pieces[0] == (0.0, 5.0)
+    # Never the window's utterance, never one someone else talks in; up to ENROLL_STORE (10 s).
+    assert set(pieces[1:]) <= {(60.0, 64.0), (70.0, 72.0)} and len(pieces) == 3
+    # Others are counted over the first ENROLL_CROP (5 s) of the joined pieces: B's 1 s inside A's first utterance.
+    assert real["pieces_others"](e, "A", pieces) == (1.0, ["B"])
+    assert real["pieces_others"](e, "A", [(60.0, 64.0), (0.0, 5.0)]) == (0.0, [])

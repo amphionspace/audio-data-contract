@@ -76,6 +76,36 @@ def test_batch_becomes_negative_and_pending_records(batch):
     assert len(index) == 4
 
 
+def test_confirmed_target_speech_and_row_named_packages(batch):
+    source, labels, data_root = batch
+    make_case(source, "row-04", 3.0, "language Chinese<asr_text>是啊。")
+    (source / "packages" / "row-04--model-feedback-def.zip").write_bytes(b"")
+    labels["cases"]["row-04"] = {"split": "target_present", "target_present": True, "target": "嗯，是啊",
+                                 "issue": "loop"}
+    by_split, index = ingest["build"](source, labels, data_root)
+    spec = DatasetSpec.from_dict(ingest["declaration"](labels, by_split, index, data_root))
+
+    assert "target_present" in spec.splits
+    (present,) = load_records(data_root / "versions/ts-test/records/target_present.jsonl.gz")
+    assert present.target == "嗯，是啊" and present.labels["target_present"] is True
+    assert present.metadata["package"] == "model-feedback-def.zip"
+
+
+def test_auto_reviewed_labels_are_marked(batch):
+    source, labels, data_root = batch
+    make_case(source, "row-39", 3.0, "language Chinese<asr_text>别人的话。")
+    labels["cases"]["row-39"] = {"split": "target_present", "target_present": True, "target": "我的话",
+                                 "issue": "interferer", "label_source": "auto_review"}
+    labels["split_descriptions"] = {"target_present": "参考文本由自动复核确定，未经人工听审。"}
+    by_split, index = ingest["build"](source, labels, data_root)
+    spec = DatasetSpec.from_dict(ingest["declaration"](labels, by_split, index, data_root))
+
+    (present,) = load_records(data_root / "versions/ts-test/records/target_present.jsonl.gz")
+    assert present.labels["label_source"] == "auto_review"
+    assert spec.splits["target_present"].provenance["description"] == "参考文本由自动复核确定，未经人工听审。"
+    assert spec.splits["target_speaker"].provenance["description"] == ingest["SPLIT_DESCRIPTIONS"]["target_speaker"]
+
+
 def test_registered_version_is_never_replaced(batch):
     source, labels, data_root = batch
     ingest["build"](source, labels, data_root)
@@ -94,3 +124,24 @@ def test_streamed_and_cancelled_responses_are_recorded_as_reported(batch):
     assert pending.metadata["reported_output"] == "language Chinese<asr_text>嗯。"
     assert pending.metadata["reported_finish_reason"] == "stop"
     assert pending.metadata["request_params"]["mm_processor_kwargs"] == {"target_speaker": True}
+
+
+def test_plain_recordings_are_cut_into_windows(tmp_path):
+    source = tmp_path / "feedback"
+    write_wav(source / "recordings" / "registration.wav", 8, 100)
+    write_wav(source / "recordings" / "long.wav", 55, 7)
+    labels = {"version": "ts-test", "language": "zh", "source": "feedback", "description": "整段录音",
+              "registration": "recordings/registration.wav", "window_seconds": 25,
+              "recordings": {"long": {"file": "recordings/long.wav", "split": "target_speaker",
+                                      "target_present": False, "issue": "tv_dialogue"}}}
+    data_root = tmp_path / "data"
+    by_split, index = ingest["build"](source, labels, data_root)
+    spec = DatasetSpec.from_dict(ingest["declaration"](labels, by_split, index, data_root))
+
+    records = list(load_records(data_root / "versions/ts-test/records/target_speaker.jsonl.gz"))
+    assert [r.id for r in records] == ["ts-test:long-w00", "ts-test:long-w01", "ts-test:long-w02"]
+    assert [r.audio_slots[1].ref.duration for r in records] == [25.0, 25.0, 5.0]
+    assert [r.metadata["window_start_s"] for r in records] == [0.0, 25.0, 50.0]
+    # The whole registration is kept; a client sends its first seconds.
+    assert {r.audio_slots[0].ref.duration for r in records} == {8.0}
+    assert spec.provenance["sources"] == ["business feedback recordings: feedback"]

@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import shutil
 from collections.abc import Iterator
 from pathlib import Path
 
@@ -92,3 +93,69 @@ def write_declarations(path: str | Path, rows: list) -> None:
             parser.indent(mapping=2, sequence=4, offset=2)
             parser.dump(rows, stream)
     temporary.replace(destination)
+
+
+def _faithful_yaml(text: str) -> YAML | None:
+    """A round-trip parser whose dump reproduces `text` exactly, or None."""
+    import io
+
+    first = next(
+        (line for line in text.split("\n") if line.strip() and not line.lstrip().startswith("#")),
+        "",
+    )
+    for width in (4096, 80, 120, 512):
+        parser = YAML()
+        parser.preserve_quotes = True
+        parser.allow_unicode = True
+        parser.width = width
+        if first.startswith("- "):
+            parser.indent(mapping=2, sequence=2, offset=0)
+        else:
+            parser.indent(mapping=2, sequence=4, offset=2)
+        output = io.StringIO()
+        parser.dump(parser.load(text), output)
+        if output.getvalue() == text:
+            return parser
+    return None
+
+
+def edit_declaration(path: str | Path, dataset_id: str, version: str, edit) -> bool:
+    """Apply `edit(row)` to one declaration in a YAML file, changing nothing else.
+
+    Returns False when the file does not declare dataset_id@version. Refuses files
+    whose formatting a rewrite would not reproduce, instead of reformatting them.
+    """
+    import io
+
+    source = Path(path)
+    if source.suffix not in {".yaml", ".yml"}:
+        return False
+    text = source.read_text(encoding="utf-8")
+    try:
+        parser = YAML()
+        rows = parser.load(text)
+    except YAMLError as exc:
+        raise ContractError(f"{source}: {exc}") from exc
+    if not isinstance(rows, list):
+        return False
+    matches = [
+        index
+        for index, row in enumerate(rows)
+        if isinstance(row, dict)
+        and row.get("dataset_id") == dataset_id
+        and str(row.get("version")) == version
+    ]
+    if not matches:
+        return False
+    parser = _faithful_yaml(text)
+    if parser is None:
+        raise ContractError(f"{source}: rewriting would reformat this file; edit it by hand")
+    rows = parser.load(text)
+    edit(rows[matches[0]])
+    output = io.StringIO()
+    parser.dump(rows, output)
+    temporary = source.with_name(source.name + ".tmp")
+    temporary.write_text(output.getvalue(), encoding="utf-8")
+    shutil.copymode(source, temporary)
+    temporary.replace(source)
+    return True
