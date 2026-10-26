@@ -1159,12 +1159,14 @@ MagicData-RAMC 对话切窗的按人转写数据
 
 真实录制的中文多通道阵列语音（RealMAN）
 
-语言：zh · 任务：语音识别
+语言：zh · 任务：语音识别、noise、sound_source_localization、speech_enhancement
 
 | 版本 | 时长（小时） | 口径 |
 |---|---:|---|
+| [realman@hf-aishell-20261025](../../catalog/realman.yaml#L1) | 83.7 | 已登记 |
 | [realman@icefall-20260908](../../catalog/icefall_runtime.yaml#L3109) | 83.7 | 已登记：已准备标注片段 |
 
+- `realman@hf-aishell-20261025`：RealMAN 真实录制的 32 麦阵列中文数据（NeurIPS 2024）：扬声器在 32 个真实场景（教室、办公室、食堂、球场、地铁、公交、轿车、街边等）外放普通话，阵列录下 32 路 48 kHz 音频，含静止和移动声源，每句带直达声干净参考（dp_speech）、声源方位和距离、转写。语音共 51147 句、83.7 小时（train 64.0、val 8.1、test 11.6），来自 55 个说话人的 19629 条不同句子，三个划分之间句子和说话人都不重叠；另有 31 个场景的纯噪声录音 144.5 小时。用于多通道/单通道降噪、远场 ASR 和声源定位；单通道用时取任意一个 CH。val/test 的 ma_noisy_speech 是官方带噪混合，*_raw 里是对应的干净阵列语音和噪声。这是完整版（32 通道全部解压）；只要 ASR 的 CH0 可用 `realman@icefall-20260908`
 - `realman@icefall-20260908`：标注片段时长，重叠语音或多麦克风可能重复计时
 
 ### realman_zh_far_asr

@@ -96,7 +96,7 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [police_terms_single](data-versions.md#police_terms_single) | zh | 语音识别 | 1.7 | 警务术语单说测试集，仅评测 |
 | [police_terms_single_train](data-versions.md#police_terms_single_train) | zh | 语音识别 | 11.7 | 警务术语单说训练集 |
 | [primewords](data-versions.md#primewords) | zh | 语音识别 | 99.0 | 中文手机朗读（Primewords）；含清洗版 |
-| [realman](data-versions.md#realman) | zh | 语音识别 | 83.7 | 真实录制的中文多通道阵列语音（RealMAN） |
+| [realman](data-versions.md#realman) | zh | 语音识别、noise、sound_source_localization、speech_enhancement | 83.7 | 真实录制的中文多通道阵列语音（RealMAN） |
 | [realman_zh_far_asr](data-versions.md#realman_zh_far_asr) | zh | 语音识别 | 64.0 | RealMAN 远场中文转写训练数据 |
 | [speechio](data-versions.md#speechio) | zh | 语音识别 | 63.8 | SpeechIO 中文 ASR 排行榜评测集 |
 | [tal100_zh](data-versions.md#tal100_zh) | zh | 语音识别 | 5.5 | TAL 中文语音识别数据 |
