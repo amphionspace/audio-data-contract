@@ -51,3 +51,45 @@
     - The authors list 271 IRs; the repack has 270 rows. The uploader also fixed typos in some file names, so names may differ from
       the original zip.
     integrity: local_sha256_recorded
+- schema_version: dataset-catalog/2.0
+  dataset_id: mit_ir_survey
+  version: flac16k-20261026
+  languages:
+  - und
+  tasks:
+  - rir
+  aliases: []
+  artifacts:
+  - name: recordings
+    kind: lhotse-recordings
+    root_alias: mit_ir_survey
+    relative_path: versions/flac16k-20261026/manifests/mit_ir_survey_recordings_all.jsonl.gz
+    expected_bytes: 4013
+    sha256: 484aa5ce37d2939f6647286fdc512b7b1498ef92f87760a075570202e5fe2bb8
+    metadata:
+      record_count: 270
+  - name: places
+    kind: json-metadata
+    root_alias: mit_ir_survey
+    relative_path: versions/flac16k-20261026/manifests/mit_ir_survey_places.json
+    expected_bytes: 32285
+    sha256: d70ba9c7fd5c9093e5b2547a734e58a3867eacd0c6539f653cd066cb2fb14c6d
+    metadata:
+      record_count: 270
+  splits:
+    all:
+      artifacts:
+        recordings:
+        - recordings
+      statistics:
+        num_rirs: 270
+        duration_hours: 0.0483
+        duration_basis: sum of impulse response lengths
+  provenance:
+    source: mit_ir_survey@modelscope-benjamin-paine-20261025
+    derived_from: mit_ir_survey@modelscope-benjamin-paine-20261025
+    snapshot_date: '2026-10-26'
+    license: CC BY 4.0
+    description: MIT 真实环境冲激响应的 16 kHz 训练版：270 条 RIR 从 32 kHz 按 2:1 多相滤波降采样到 16 kHz，存成 24 位单声道 FLAC，带 lhotse 录音清单，可直接放进训练的
+      rir_sources。文件按调查编号命名（mit-ir-NNN），场所类别、说明与原文件名在 places 元数据文件里。
+    integrity: local_sha256_recorded
