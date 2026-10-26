@@ -46,7 +46,7 @@ def main():
         raise SystemExit(f"mit_ir_survey@{VERSION} is already in {target}")
     (OUT / "audio").mkdir(parents=True, exist_ok=True)
     (OUT / "manifests").mkdir(exist_ok=True)
-    recordings, seconds = [], 0.0
+    recordings, places, seconds = [], [], 0.0
     for row in sorted(pq.read_table(SOURCE).to_pylist(), key=lambda r: r["id"]):
         audio, rate = sf.read(io.BytesIO(row["audio"]["bytes"]), dtype="float64", always_2d=True)
         assert rate == 32000 and audio.shape[1] == 1, (row["id"], rate, audio.shape)
@@ -57,24 +57,30 @@ def main():
         frames = sf.info(path).frames
         seconds += frames / RATE
         recordings.append({"id": f"mit-ir-{row['id']:03d}", "sources": [{"type": "file", "channels": [0], "source": str(path)}],
-                           "sampling_rate": RATE, "num_samples": frames, "duration": frames / RATE, "channel_ids": [0],
-                           "custom": {"location": row["location"], "detail": row["detail"], "source_file": row["audio"]["path"]}})
+                           "sampling_rate": RATE, "num_samples": frames, "duration": frames / RATE, "channel_ids": [0]})
+        # lhotse Recording takes no custom field, so place metadata lives in a sidecar keyed by recording id.
+        places.append({"id": f"mit-ir-{row['id']:03d}", "location": row["location"], "detail": row["detail"], "source_file": row["audio"]["path"]})
     manifest = OUT / "manifests/mit_ir_survey_recordings_all.jsonl.gz"
     with gzip.open(manifest, "wt", encoding="utf-8") as stream:
         for row in recordings:
             stream.write(json.dumps(row, ensure_ascii=False) + "\n")
+    sidecar = OUT / "manifests/mit_ir_survey_places.json"
+    sidecar.write_text(json.dumps(places, ensure_ascii=False, indent=1) + "\n")
     entry = {"schema_version": "dataset-catalog/2.0", "dataset_id": "mit_ir_survey", "version": VERSION, "languages": ["und"],
              "tasks": ["rir"], "aliases": [],
              "artifacts": [{"name": "recordings", "kind": "lhotse-recordings", "root_alias": "mit_ir_survey",
                             "relative_path": manifest.relative_to(ROOT).as_posix(), "expected_bytes": manifest.stat().st_size,
-                            "sha256": sha256(manifest), "metadata": {"record_count": len(recordings)}}],
+                            "sha256": sha256(manifest), "metadata": {"record_count": len(recordings)}},
+                           {"name": "places", "kind": "json-metadata", "root_alias": "mit_ir_survey",
+                            "relative_path": sidecar.relative_to(ROOT).as_posix(), "expected_bytes": sidecar.stat().st_size,
+                            "sha256": sha256(sidecar), "metadata": {"record_count": len(places)}}],
              "splits": {"all": {"artifacts": {"recordings": ["recordings"]},
                                 "statistics": {"num_rirs": len(recordings), "duration_hours": round(seconds / 3600, 4),
                                                "duration_basis": "sum of impulse response lengths"}}},
              "provenance": {"source": "mit_ir_survey@modelscope-benjamin-paine-20261025", "derived_from": "mit_ir_survey@modelscope-benjamin-paine-20261025",
                             "snapshot_date": "2026-10-26", "license": "CC BY 4.0",
                             "description": "MIT 真实环境冲激响应的 16 kHz 训练版：270 条 RIR 从 32 kHz 按 2:1 多相滤波降采样到 16 kHz，存成 24 位单声道 FLAC，"
-                                           "带 lhotse 录音清单，可直接放进训练的 rir_sources。文件按调查编号命名（mit-ir-NNN），custom 里保留场所类别、说明与原文件名。",
+                                           "带 lhotse 录音清单，可直接放进训练的 rir_sources。文件按调查编号命名（mit-ir-NNN），场所类别、说明与原文件名在 places 元数据文件里。",
                             "integrity": "local_sha256_recorded"}}
     with open(target, "a", encoding="utf-8") as stream:
         if not target.read_text().endswith("\n"):
