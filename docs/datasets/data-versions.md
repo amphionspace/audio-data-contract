@@ -1491,10 +1491,12 @@ WenetSpeech 筛出的中文 TTS 语音
 |---|---:|---|
 | [wenetspeech_chuan@clean-qwen3-asr-v1-20261023](../../catalog/wenetspeech_chuan_clean.yaml#L2) | 7,075.7 | 已登记 |
 | [wenetspeech_chuan@eval-20261012](../../catalog/zh_asr_eval.yaml#L100) | 9.7 | 已登记 |
+| [wenetspeech_chuan@extracted-20261021](../../catalog/wenetspeech_chuan_extracted.yaml#L2) | 10,259.6 | 已登记 |
 | [wenetspeech_chuan@icefall-20260908](../../catalog/icefall_runtime.yaml#L928) | 10,259.6 | 已登记 |
 | [wenetspeech_chuan@legacy-20260804](../../catalog/icefall_base.yaml#L622) | 10,259.6 | 已登记 |
 
 - `wenetspeech_chuan@clean-qwen3-asr-v1-20261023`：WenetSpeech-Chuan 训练集（4,938,701 条 / 10,259.6 h）是机器标注，不带置信度。 用共享的 Qwen3-ASR-1.7B 逐条转写，按 SpeechIO TextNorm 算与原标注的字错误率（Qwen 在 WSC-Eval 上自身 12.1 / 21.1）， 保留错误率 < 30% 的 3,277,696 条 / 7,075.7 h（69.3%），原标注不改，不拿 Qwen 的文字替换。 规则经 6 轮听审（60 条 1–10 秒片段，每类 20 条）确定：Qwen 空输出的 20 条中 17 条没有人声； Qwen 输出 ≥ 原标注 2 倍的 20 条原标注全不可用（多人只标一人、漏标语音、音乐、人声太轻太远）； 错误率 30–100% 的 20 条中原标注对的只有 3 条。 错误率 ≥ 100% 的其余条目（333.8 h）和原标注规范化后为空的（103.7 h）未听审，按用户决定一并不用；超过约 157 秒、服务拒收的 795 条 / 50.0 h 未核对，也不在本版本内。 问题集中在 cut id 前缀 01316 的子来源（5,383 h，保留 55.3%）；cq*、sc* 等其余来源保留 79–88%
+- `wenetspeech_chuan@extracted-20261021`：WenetSpeech-Chuan 训练集的 4,938,701 个音频从 DATA-TTS 的大 tar 中按字节范围取出，存为单个 wav，共 1.18 TB。 8 卡训练按 tar 偏移读音频时数据加载跟不上（约 1.7 秒/步），改读单文件后约 0.69 秒/步。 随机抽 550 条与 dd 读取结果逐字节相同
 - 含派生版本（与源数据可能重叠）
 
 ### wenetspeech_diarize
