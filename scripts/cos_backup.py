@@ -33,7 +33,7 @@ DEVICE_ALIASES = {int(current): int(recorded) for current, recorded in
 
 def encoded(value):
     return json.dumps(value, ensure_ascii=False, sort_keys=True,
-                      separators=(",", ":")).encode()
+                      separators=(",", ":"), default=str).encode()
 
 
 def save(path, value):
