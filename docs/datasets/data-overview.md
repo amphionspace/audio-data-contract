@@ -1,12 +1,13 @@
 # 数据总览
 
-当前登记 **266 个数据集**；另有 **35 个下载来源声明**和 **1 个训练混合配方**。登记不代表本机文件已齐备。
+当前登记 **267 个数据集**；另有 **35 个下载来源声明**和 **1 个训练混合配方**。登记不代表本机文件已齐备。
 
 时长取单个版本的最大值，不跨版本相加；≈ 为参考表或估算值，— 为暂无完整时长。各版本的时长、说明、COS 地址和质量证据见[版本明细](data-versions.md)。
 
 COS 列：
 
 - 快照 20260914：`cos://amphion-audio-backup-1373259071/audio-data-contract/v1/full-catalog-20260914/`
+- 快照 20260918：`cos://amphion-audio-backup-1373259071/audio-data-contract/v1/batches/dingqiao-meeting-20260918/`
 - 快照 20260921：`cos://amphion-audio-backup-1373259071/audio-data-contract/v1/batches/police-v6-acceptance-205-20260921/`
 - 快照内的文件按内容去重分批存放，要用 [cos_restore.py](../guides/cos-restore.md) 按版本取回；快照只表示该版本纳入了这次同步，文件是否已上传以 `locate` 结果为准。
 - 其他地址是桶内目录，可直接 `ab pull`（备份桶 = `amphion-audio-backup-1373259071`、TTS 桶 = `amphion-tts-data-1373259071`）。标“原始数据”的是登记版本所依据的原始文件，取回后还要按来源说明处理。
@@ -103,6 +104,7 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [context_correction_synth_zh](data-versions.md#context_correction_synth_zh) | zh | 语音识别、目标说话人语音识别 | 29.8 | 说字写法合成训练数据（带 think） | 没有 |
 | [context_correction_zh](data-versions.md#context_correction_zh) | zh | 语音识别、目标说话人语音识别 | 17.6 | 中文上下文纠偏评测集，同音词按语境写 | 没有 |
 | [csemotions](data-versions.md#csemotions) | zh | 语音合成 | 10.2 | 中文情感语音（CSEMOTIONS），TTS 用 | `TTS 桶:CSEMOTIONS/`（原始数据） |
+| [dingqiao_meeting](data-versions.md#dingqiao_meeting) | zh | 说话人分段与归属 | 0.3 | — | 快照 20260918 |
 | [emilia2_zh_dialogue_diarize](data-versions.md#emilia2_zh_dialogue_diarize) | zh | 语音识别、diarization、带说话人标注的语音识别 | 3,167.4 | Emilia2 中文对话的说话人日志伪标签 | 部分版本：`备份桶:audio-data-contract/datasets/emilia2_zh_dialogue_diarize/` |
 | [emilia2_zh_overlap_farsim](data-versions.md#emilia2_zh_overlap_farsim) | zh | 带说话人标注的语音识别 | — | Emilia2 中文对话重排的重叠远场多人数据 | 没有 |
 | [emilia_zh](data-versions.md#emilia_zh) | zh | 语音识别 | 40,848.4 | Emilia 中文野外语音（已清洗） | 部分版本：快照 20260914 |
