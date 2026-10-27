@@ -12,16 +12,6 @@
   - RealMAN
   - real-man
   artifacts:
-  - name: train_dp_speech_rar
-    kind: source-directory
-    root_alias: realman
-    relative_path: source/hf-aishell-20261025/train/dp_speech
-    metadata:
-      file_count: 26
-      expected_bytes: 11924547347
-      tree_sha256: c9735304ddca6e220c32af53826a96a4f15e20d396787985eef70a7ff05bb027
-      layout: <Scene>.rar, one RAR5 archive per scene
-      source_url: https://huggingface.co/datasets/AISHELL/RealMAN
   - name: train_dp_speech
     kind: source-directory
     root_alias: realman
@@ -31,16 +21,6 @@
       expected_bytes: 11926053783
       tree_sha256: d9b8da648dc38030e701721b4bbbeb3a41fc5ff7901a8d7be495ac1d109c211a
       layout: <Scene>/<static|moving>/<speaker>/<UTT>.flac, 48 kHz 24-bit direct-path reference (channel 0)
-  - name: train_ma_speech_rar
-    kind: source-directory
-    root_alias: realman
-    relative_path: source/hf-aishell-20261025/train/ma_speech
-    metadata:
-      file_count: 26
-      expected_bytes: 190466589250
-      tree_sha256: 1b1a2707477aabc5a598c2247e12e61e288f1ac9db26ed104b102b0ca75ffd00
-      layout: <Scene>.rar, one RAR5 archive per scene
-      source_url: https://huggingface.co/datasets/AISHELL/RealMAN
   - name: train_ma_speech
     kind: source-directory
     root_alias: realman
@@ -50,16 +30,6 @@
       expected_bytes: 191685331789
       tree_sha256: 613f93ce68cd14ee2d317661e1505497dee48af1e22eedd6d9dcbf2ee78da04e
       layout: <Scene>/<static|moving>/<speaker>/<UTT>_CH<0-31>.flac, 48 kHz 16-bit, one file per array channel
-  - name: train_ma_noise_rar
-    kind: source-directory
-    root_alias: realman
-    relative_path: source/hf-aishell-20261025/train/ma_noise
-    metadata:
-      file_count: 26
-      expected_bytes: 367883910197
-      tree_sha256: dddfbe807e8975af7adc4673da0735da59d072a5fa45a54ef1ac45757d7fa86a
-      layout: <Scene>.rar, one RAR5 archive per scene
-      source_url: https://huggingface.co/datasets/AISHELL/RealMAN
   - name: train_ma_noise
     kind: source-directory
     root_alias: realman
@@ -69,16 +39,6 @@
       expected_bytes: 370176163101
       tree_sha256: 8fc87a0ef19f90f25cdf3455f47c19304827f2eab533514f4216ee93309912d5
       layout: <Scene>/<recording>_CH<0-31>.flac, background noise only, 48 kHz 16-bit
-  - name: val_dp_speech_rar
-    kind: source-directory
-    root_alias: realman
-    relative_path: source/hf-aishell-20261025/val/dp_speech
-    metadata:
-      file_count: 14
-      expected_bytes: 1467858464
-      tree_sha256: 72851bee68b449730b65d9e772283add3177eebbcf0c41644c0fa13c3525467c
-      layout: <Scene>.rar, one RAR5 archive per scene
-      source_url: https://huggingface.co/datasets/AISHELL/RealMAN
   - name: val_dp_speech
     kind: source-directory
     root_alias: realman
@@ -88,16 +48,6 @@
       expected_bytes: 1469923106
       tree_sha256: 66abfb690c485eaaf6cc18fb3187d05ecef28768ca131789d0e7589eefba1067
       layout: <Scene>/<static|moving>/<speaker>/<UTT>.flac, 48 kHz 24-bit direct-path reference (channel 0)
-  - name: val_ma_noisy_speech_rar
-    kind: source-directory
-    root_alias: realman
-    relative_path: source/hf-aishell-20261025/val/ma_noisy_speech
-    metadata:
-      file_count: 14
-      expected_bytes: 28049190902
-      tree_sha256: 5829ed5c44899e82a96ffcf6aac412c6107b6bd83ccd4e4f090519a17481e8a1
-      layout: <Scene>.rar, one RAR5 archive per scene
-      source_url: https://huggingface.co/datasets/AISHELL/RealMAN
   - name: val_ma_noisy_speech
     kind: source-directory
     root_alias: realman
@@ -107,16 +57,6 @@
       expected_bytes: 28046731050
       tree_sha256: 1fdeb4d1b3a9261c1be4f30402f60b4d86992da1ef1cc80795302a7af198d70a
       layout: <Scene>/<static|moving>/<speaker>/<UTT>_CH<0-31>.flac, speech mixed with recorded scene noise, 48 kHz 16-bit
-  - name: val_raw_ma_speech_rar
-    kind: source-directory
-    root_alias: realman
-    relative_path: source/hf-aishell-20261025/val_raw/ma_speech
-    metadata:
-      file_count: 14
-      expected_bytes: 24272943872
-      tree_sha256: 74486f6e30e1050679165bcef2227b1efad1e16fa00bf6b0db4e5c2359eca60d
-      layout: <Scene>.rar, one RAR5 archive per scene
-      source_url: https://huggingface.co/datasets/AISHELL/RealMAN
   - name: val_raw_ma_speech
     kind: source-directory
     root_alias: realman
@@ -126,16 +66,6 @@
       expected_bytes: 24391836551
       tree_sha256: 50e80f2b96f732709a905156fc08cd508f4bcf86f442b42f49337670c00f6e2e
       layout: <Scene>/<static|moving>/<speaker>/<UTT>_CH<0-31>.flac, 48 kHz 16-bit, one file per array channel
-  - name: val_raw_ma_noise_rar
-    kind: source-directory
-    root_alias: realman
-    relative_path: source/hf-aishell-20261025/val_raw/ma_noise
-    metadata:
-      file_count: 12
-      expected_bytes: 47051172838
-      tree_sha256: 4be54fc7e4ce80461ba5fbfa44afed47abbee6298ddd065e674c17833257bea2
-      layout: <Scene>.rar, one RAR5 archive per scene
-      source_url: https://huggingface.co/datasets/AISHELL/RealMAN
   - name: val_raw_ma_noise
     kind: source-directory
     root_alias: realman
@@ -145,16 +75,6 @@
       expected_bytes: 47579752582
       tree_sha256: 159c3a485126dba78e1e9b922dae32088c54e7da16f02ae8633fff4f3362fdbb
       layout: <Scene>/<recording>_CH<0-31>.flac, background noise only, 48 kHz 16-bit
-  - name: test_dp_speech_rar
-    kind: source-directory
-    root_alias: realman
-    relative_path: source/hf-aishell-20261025/test/dp_speech
-    metadata:
-      file_count: 17
-      expected_bytes: 2098299324
-      tree_sha256: 43bade11b9de18f47f82294d58f10d5547eac7036c482643c644bb8638bef07c
-      layout: <Scene>.rar, one RAR5 archive per scene
-      source_url: https://huggingface.co/datasets/AISHELL/RealMAN
   - name: test_dp_speech
     kind: source-directory
     root_alias: realman
@@ -164,16 +84,6 @@
       expected_bytes: 2100447881
       tree_sha256: c84099cfd571bb9f542e381e5e2a7fb84931162cf8f6de0a794d35e39ff955b6
       layout: <Scene>/<static|moving>/<speaker>/<UTT>.flac, 48 kHz 24-bit direct-path reference (channel 0)
-  - name: test_ma_noisy_speech_rar
-    kind: source-directory
-    root_alias: realman
-    relative_path: source/hf-aishell-20261025/test/ma_noisy_speech
-    metadata:
-      file_count: 17
-      expected_bytes: 40108583676
-      tree_sha256: 4ffd09c3b55fe2178eed85df66595264777059057d64d34aa9f4f248a279a30d
-      layout: <Scene>.rar, one RAR5 archive per scene
-      source_url: https://huggingface.co/datasets/AISHELL/RealMAN
   - name: test_ma_noisy_speech
     kind: source-directory
     root_alias: realman
@@ -183,16 +93,6 @@
       expected_bytes: 40116382277
       tree_sha256: f9ec639698ac2359916879a9cc305071c7f268e364e4947d42aeac7195cd48eb
       layout: <Scene>/<static|moving>/<speaker>/<UTT>_CH<0-31>.flac, speech mixed with recorded scene noise, 48 kHz 16-bit
-  - name: test_raw_ma_speech_rar
-    kind: source-directory
-    root_alias: realman
-    relative_path: source/hf-aishell-20261025/test_raw/ma_speech
-    metadata:
-      file_count: 17
-      expected_bytes: 34690892099
-      tree_sha256: f0969a231b545a4d43353de27fb93ef6d21341e10a344bd51660cd317a8e73b2
-      layout: <Scene>.rar, one RAR5 archive per scene
-      source_url: https://huggingface.co/datasets/AISHELL/RealMAN
   - name: test_raw_ma_speech
     kind: source-directory
     root_alias: realman
@@ -202,16 +102,6 @@
       expected_bytes: 34879197247
       tree_sha256: 271b6203b54371c3cd8ec693f4f7c5176b3ca26245056456c25728063c0992ac
       layout: <Scene>/<static|moving>/<speaker>/<UTT>_CH<0-31>.flac, 48 kHz 16-bit, one file per array channel
-  - name: test_raw_ma_noise_rar
-    kind: source-directory
-    root_alias: realman
-    relative_path: source/hf-aishell-20261025/test_raw/ma_noise
-    metadata:
-      file_count: 13
-      expected_bytes: 63658864862
-      tree_sha256: 025a2cde1bce78a29a7a2ccba5fc01256a956cda3279563d94f261205653fa9d
-      layout: <Scene>.rar, one RAR5 archive per scene
-      source_url: https://huggingface.co/datasets/AISHELL/RealMAN
   - name: test_raw_ma_noise
     kind: source-directory
     root_alias: realman
@@ -281,10 +171,6 @@
         - train_dp_speech
         - train_ma_speech
         - train_ma_noise
-        source_archive:
-        - train_dp_speech_rar
-        - train_ma_speech_rar
-        - train_ma_noise_rar
         transcriptions:
         - transcriptions
         metadata:
@@ -311,11 +197,6 @@
         - val_ma_noisy_speech
         - val_raw_ma_speech
         - val_raw_ma_noise
-        source_archive:
-        - val_dp_speech_rar
-        - val_ma_noisy_speech_rar
-        - val_raw_ma_speech_rar
-        - val_raw_ma_noise_rar
         transcriptions:
         - transcriptions
         metadata:
@@ -344,11 +225,6 @@
         - test_ma_noisy_speech
         - test_raw_ma_speech
         - test_raw_ma_noise
-        source_archive:
-        - test_dp_speech_rar
-        - test_ma_noisy_speech_rar
-        - test_raw_ma_speech_rar
-        - test_raw_ma_noise_rar
         transcriptions:
         - transcriptions
         metadata:
@@ -380,11 +256,10 @@
     acquisition: Downloaded all 253 files of the pinned Hugging Face snapshot (commit fea47505) from hf-mirror.com; each file's sha256
       equals its LFS oid (hf-snapshot.json). The 196 RAR5 archives were extracted with bsdtar 3.8.8 into extracted/<split>/<subset>/
       after checking that every member is a regular file or directory under the archive's scene directory, and the extracted file count
-      of each archive matches its listing.
+      of each archive matches its listing. After every extracted directory and the full version passed check-registration on 2026-10-26,
+      the 196 archives (about 812 GB) were deleted to save space; their sizes and sha256 remain in hf-snapshot.json.
     known_issues:
-    - The archives and the extracted files are both kept (about 812 GB each); the archives can be removed if only the extracted audio
-      is needed.
     - transcriptions.trn holds 474 sentence IDs that no released utterance uses.
-    - realman@icefall-20260908 (same Hugging Face revision) keeps its own copy of 57 archives under source/icefall-20260908; they are
-      byte-identical to train/ma_speech, val/ma_noisy_speech and test/ma_noisy_speech here, so about 259 GB is stored twice.
+    - The source RAR archives are not kept here. To re-extract, download them again from the pinned revision; 57 of them (train/ma_speech,
+      val/ma_noisy_speech, test/ma_noisy_speech) are still in realman@icefall-20260908's source/icefall-20260908.
     integrity: local_sha256_recorded
