@@ -674,6 +674,9 @@
     provenance:
       source: icefall runtime manifest snapshot
       snapshot_date: '2026-09-08'
+      cos_locations:
+        - uri: cos://amphion-audio-backup-1373259071/audio-data-contract/datasets/wenetspeech/
+          content: files
   - schema_version: dataset-catalog/2.0
     dataset_id: wenetspeech_disfluency
     version: icefall-20260908
@@ -704,6 +707,9 @@
       summary: WenetSpeech L 保留口语不流利词的转写
       source: icefall runtime manifest snapshot
       snapshot_date: '2026-09-08'
+      cos_locations:
+        - uri: cos://amphion-audio-backup-1373259071/audio-data-contract/datasets/wenetspeech/
+          content: files
   - schema_version: dataset-catalog/2.0
     dataset_id: wenetspeech4tts
     version: icefall-20260908
@@ -3913,6 +3919,9 @@
     provenance:
       source: icefall runtime manifest snapshot
       snapshot_date: '2026-09-08'
+      cos_locations:
+        - uri: cos://amphion-audio-backup-1373259071/audio-data-contract/datasets/wenetspeech/
+          content: files
   - schema_version: dataset-catalog/2.0
     dataset_id: mdcc_traffic_snr0
     version: icefall-20260908
@@ -4014,6 +4023,9 @@
     provenance:
       source: icefall runtime manifest snapshot
       snapshot_date: '2026-09-08'
+      cos_locations:
+        - uri: cos://amphion-audio-backup-1373259071/audio-data-contract/datasets/wenetspeech/
+          content: files
   - schema_version: dataset-catalog/2.0
     dataset_id: mdcc_traffic_snr5
     version: icefall-20260908
@@ -4115,6 +4127,9 @@
     provenance:
       source: icefall runtime manifest snapshot
       snapshot_date: '2026-09-08'
+      cos_locations:
+        - uri: cos://amphion-audio-backup-1373259071/audio-data-contract/datasets/wenetspeech/
+          content: files
   - schema_version: dataset-catalog/2.0
     dataset_id: mdcc_traffic_snr10
     version: icefall-20260908
@@ -4216,6 +4231,9 @@
     provenance:
       source: icefall runtime manifest snapshot
       snapshot_date: '2026-09-08'
+      cos_locations:
+        - uri: cos://amphion-audio-backup-1373259071/audio-data-contract/datasets/wenetspeech/
+          content: files
   - schema_version: dataset-catalog/2.0
     dataset_id: mdcc_traffic_snr15
     version: icefall-20260908
@@ -4317,6 +4335,9 @@
     provenance:
       source: icefall runtime manifest snapshot
       snapshot_date: '2026-09-08'
+      cos_locations:
+        - uri: cos://amphion-audio-backup-1373259071/audio-data-contract/datasets/wenetspeech/
+          content: files
   - schema_version: dataset-catalog/2.0
     dataset_id: mdcc_traffic_snr20
     version: icefall-20260908

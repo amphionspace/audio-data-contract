@@ -659,6 +659,9 @@
       consumer: open-audio-llm-vllm-eval
       snapshot_date: '2026-08-04'
       loader_kind: multi
+      cos_locations:
+        - uri: cos://amphion-audio-backup-1373259071/audio-data-contract/datasets/wenetspeech/
+          content: files
   - schema_version: dataset-catalog/2.0
     dataset_id: librispeech_test_clean
     version: eval-20260804
@@ -755,6 +758,9 @@
       snapshot_date: '2026-08-04'
       loader_kind: single
       dataset_family: wenetspeech
+      cos_locations:
+        - uri: cos://amphion-audio-backup-1373259071/audio-data-contract/datasets/wenetspeech/
+          content: files
   - schema_version: dataset-catalog/2.0
     dataset_id: wenetspeech_test_meeting
     version: eval-20260804
@@ -787,6 +793,9 @@
       snapshot_date: '2026-08-04'
       loader_kind: single
       dataset_family: wenetspeech
+      cos_locations:
+        - uri: cos://amphion-audio-backup-1373259071/audio-data-contract/datasets/wenetspeech/
+          content: files
   - schema_version: dataset-catalog/2.0
     dataset_id: biic_podcast_ser
     version: eval-20260804

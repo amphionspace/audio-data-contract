@@ -37,6 +37,9 @@
       excluded_source_files: []
       finished_at: '2026-09-28T10:58:54.723592+00:00'
       description: 音频编码字节存放在 Lance 表内；原始划分在 metadata_json.original_split，统一输出全部为 train。ASR 用 tts_lance.iter_asr_samples（tts-asr-rules/v1）读取，会排除原始 dev/test 等。
+      cos_locations:
+        - uri: cos://amphion-tts-data-1373259071/AISHELL-3/
+          content: source
       asr_notes: 人工转写；须排除 original_split=test（与 AISHELL-3 测试集相同）
   - schema_version: dataset-catalog/2.0
     dataset_id: csemotions
@@ -77,6 +80,9 @@
       finished_at: '2026-09-28T07:58:24.382857+00:00'
       description: 音频编码字节存放在 Lance 表内；原始划分在 metadata_json.original_split，统一输出全部为 train。ASR 用 tts_lance.iter_asr_samples（tts-asr-rules/v1）读取，会排除原始 dev/test 等。
       summary: 中文情感语音（CSEMOTIONS），TTS 用
+      cos_locations:
+        - uri: cos://amphion-tts-data-1373259071/CSEMOTIONS/
+          content: source
   - schema_version: dataset-catalog/2.0
     dataset_id: emilia
     version: tts-unified-v0.1
@@ -165,6 +171,9 @@
       excluded_source_files: []
       finished_at: '2026-09-28T15:17:37.931823+00:00'
       description: 音频编码字节存放在 Lance 表内；原始划分在 metadata_json.original_split，统一输出全部为 train。ASR 用 tts_lance.iter_asr_samples（tts-asr-rules/v1）读取，会排除原始 dev/test 等。
+      cos_locations:
+        - uri: cos://amphion-tts-data-1373259071/Emilia/
+          content: source
       asr_notes: 机器转写，须做质量过滤；文本开头带空格
   - schema_version: dataset-catalog/2.0
     dataset_id: emilia2
@@ -280,6 +289,9 @@
         - Emilia2_TTS_m4a/ASMR/asmr-00012.tar
       finished_at: '2026-10-12T03:10:16.232568+08:00'
       description: 音频编码字节存放在 Lance 表内；原始划分在 metadata_json.original_split，统一输出全部为 train。ASR 用 tts_lance.iter_asr_samples（tts-asr-rules/v1）读取，会排除原始 dev/test 等。
+      cos_locations:
+        - uri: cos://amphion-tts-data-1373259071/Emilia2/
+          content: source
       manifest_correction: 2026-10-12 发布方修正 manifest，只补 spec-10 字段（finished_at、code_sha256、speakers 等），Lance 表与快照版本 3 不变；原 manifest sha256 24779fb04467d1926d5ed7e90b310cffd1101059de6406c9eb6fbe424a1102c7（7,290,534 字节）记录在 manifest 的 manifest_correction 字段。登记于 2026-10-18 改为修正后的 sha256，此前按旧值无法打开本版本。
   - schema_version: dataset-catalog/2.0
     dataset_id: emilia_yodas
@@ -349,6 +361,9 @@
       finished_at: '2026-09-29T02:30:50.082640+00:00'
       description: 音频编码字节存放在 Lance 表内；原始划分在 metadata_json.original_split，统一输出全部为 train。ASR 用 tts_lance.iter_asr_samples（tts-asr-rules/v1）读取，会排除原始 dev/test 等。
       summary: Emilia-YODAS 多语种 YouTube 语音
+      cos_locations:
+        - uri: cos://amphion-tts-data-1373259071/Emilia-YODAS/
+          content: source
       asr_notes: 机器转写，须做质量过滤；文本开头带空格
   - schema_version: dataset-catalog/2.0
     dataset_id: galgame
@@ -389,6 +404,9 @@
       finished_at: '2026-09-28T10:43:11.601228+00:00'
       description: 音频编码字节存放在 Lance 表内；原始划分在 metadata_json.original_split，统一输出全部为 train。ASR 用 tts_lance.iter_asr_samples（tts-asr-rules/v1）读取，会排除原始 dev/test 等。
       summary: 日语视觉小说配音，TTS 用
+      cos_locations:
+        - uri: cos://amphion-tts-data-1373259071/Galgame-VisualNovel-Reupload/
+          content: source
   - schema_version: dataset-catalog/2.0
     dataset_id: genshin_voice
     version: tts-unified-v0.1
@@ -453,6 +471,9 @@
       finished_at: '2026-09-28T11:00:30.075741+00:00'
       description: 音频编码字节存放在 Lance 表内；原始划分在 metadata_json.original_split，统一输出全部为 train。ASR 用 tts_lance.iter_asr_samples（tts-asr-rules/v1）读取，会排除原始 dev/test 等。
       summary: 《原神》多语配音，TTS 用
+      cos_locations:
+        - uri: cos://amphion-tts-data-1373259071/genshin-voice/
+          content: source
   - schema_version: dataset-catalog/2.0
     dataset_id: hifitts
     version: tts-unified-v0.1
@@ -493,6 +514,9 @@
       finished_at: '2026-09-28T16:40:21.885207+00:00'
       description: 音频编码字节存放在 Lance 表内；原始划分在 metadata_json.original_split，统一输出全部为 train。ASR 用 tts_lance.iter_asr_samples（tts-asr-rules/v1）读取，会排除原始 dev/test 等。
       summary: 英文有声书高保真朗读（Hi-Fi TTS）
+      cos_locations:
+        - uri: cos://amphion-tts-data-1373259071/HiFiTTS/
+          content: source
       asr_notes: 有声书原文；须排除 original_split=dev/test
   - schema_version: dataset-catalog/2.0
     dataset_id: hifitts2
@@ -616,6 +640,9 @@
       finished_at: '2026-09-28T09:39:41.811450+00:00'
       description: 音频编码字节存放在 Lance 表内；原始划分在 metadata_json.original_split，统一输出全部为 train。ASR 用 tts_lance.iter_asr_samples（tts-asr-rules/v1）读取，会排除原始 dev/test 等。
       summary: 英文有声书 TTS 语料，音频经修复（LibriTTS-R）
+      cos_locations:
+        - uri: cos://amphion-tts-data-1373259071/LibriTTS-R/
+          content: source
       asr_notes: 须排除 dev/test（来自 LibriSpeech dev/test，会污染 LibriSpeech 评测）；音频经修复增强
   - schema_version: dataset-catalog/2.0
     dataset_id: ljspeech
@@ -657,6 +684,9 @@
       finished_at: '2026-09-28T08:44:55.642445+00:00'
       description: 音频编码字节存放在 Lance 表内；原始划分在 metadata_json.original_split，统一输出全部为 train。ASR 用 tts_lance.iter_asr_samples（tts-asr-rules/v1）读取，会排除原始 dev/test 等。
       summary: 单人英文朗读（LJSpeech）
+      cos_locations:
+        - uri: cos://amphion-tts-data-1373259071/LJSpeech/
+          content: source
       asr_notes: 单说话人朗读，数字未展开
   - schema_version: dataset-catalog/2.0
     dataset_id: mls_sidon
@@ -771,6 +801,9 @@
       finished_at: '2026-09-28T11:00:02.901925+00:00'
       description: 音频编码字节存放在 Lance 表内；原始划分在 metadata_json.original_split，统一输出全部为 train。ASR 用 tts_lance.iter_asr_samples（tts-asr-rules/v1）读取，会排除原始 dev/test 等。
       summary: 《崩坏：星穹铁道》多语配音，TTS 用
+      cos_locations:
+        - uri: cos://amphion-tts-data-1373259071/starrail-voice/
+          content: source
       known_issues:
         - en/ja/ko 配音约 94% 配的是中文文本（en 中文 78,864 条、英文 4,786 条），疑为接入时各语言共用了中文台词；待 tts-data-pipeline 修复，本仓库不改，ASR 规则按 script_mismatch 排除
   - schema_version: dataset-catalog/2.0
@@ -813,6 +846,9 @@
       finished_at: '2026-09-28T09:46:51.147054+00:00'
       description: 音频编码字节存放在 Lance 表内；原始划分在 metadata_json.original_split，统一输出全部为 train。ASR 用 tts_lance.iter_asr_samples（tts-asr-rules/v1）读取，会排除原始 dev/test 等。
       summary: 多口音英语朗读（VCTK）
+      cos_locations:
+        - uri: cos://amphion-tts-data-1373259071/VCTK/
+          content: source
       asr_notes: 朗读文本；172 条无文本
   - schema_version: dataset-catalog/2.0
     dataset_id: wenetspeech4tts
@@ -853,6 +889,9 @@
       excluded_source_files: []
       finished_at: '2026-09-28T12:10:29.029508+00:00'
       description: 音频编码字节存放在 Lance 表内；原始划分在 metadata_json.original_split，统一输出全部为 train。ASR 用 tts_lance.iter_asr_samples（tts-asr-rules/v1）读取，会排除原始 dev/test 等。
+      cos_locations:
+        - uri: cos://amphion-tts-data-1373259071/WenetSpeech4TTS/
+          content: source
       asr_notes: 来自 WenetSpeech 的弱标注，建议做置信度或双模型一致性过滤
   - schema_version: dataset-catalog/2.0
     dataset_id: wutheringwaves
@@ -918,6 +957,9 @@
       finished_at: '2026-09-28T09:45:23.403082+00:00'
       description: 音频编码字节存放在 Lance 表内；原始划分在 metadata_json.original_split，统一输出全部为 train。ASR 用 tts_lance.iter_asr_samples（tts-asr-rules/v1）读取，会排除原始 dev/test 等。
       summary: 《鸣潮》多语配音，TTS 用
+      cos_locations:
+        - uri: cos://amphion-tts-data-1373259071/WutheringWaves-2.2/
+          content: source
   - schema_version: dataset-catalog/2.0
     dataset_id: zenless_voice
     version: tts-unified-v0.1
@@ -982,3 +1024,6 @@
       finished_at: '2026-10-09T10:53:17.008755+00:00'
       description: 音频编码字节存放在 Lance 表内；原始划分在 metadata_json.original_split，统一输出全部为 train。ASR 用 tts_lance.iter_asr_samples（tts-asr-rules/v1）读取，会排除原始 dev/test 等。
       summary: 《绝区零》多语配音，TTS 用
+      cos_locations:
+        - uri: cos://amphion-tts-data-1373259071/zenless-voice/
+          content: source

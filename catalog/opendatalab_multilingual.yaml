@@ -242,3 +242,8 @@
     limitations: ru 缺 88,880 条音频（见 ru split）。各语种 audio/ 下有少量上传中断留下的 .<名>.wav.tmp* 残片，不在清单中，读取时忽略；ar/json_out/cs-all.jsonl
       为 1 字节空文件，不是有效清单。
     downloaded_at: '2026-10-09'
+    cos_locations:
+    - uri: cos://amphion-audio-backup-1373259071/opendatalab-multilingual/
+      content: source
+    - uri: cos://amphion-audio-backup-1373259071/computer-2/audio/
+      content: source

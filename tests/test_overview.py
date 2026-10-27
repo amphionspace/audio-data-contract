@@ -56,7 +56,7 @@ def test_overview_lists_datasets_instead_of_consumer_versions():
     rendered = render_data_overview(ROOT / "catalog", ROOT / "views")
     inventory = rendered.split("## 下载来源声明")[0]
 
-    assert "| 数据集 | 语言 | 任务 | 时长（小时） | 简介 |" in inventory
+    assert "| 数据集 | 语言 | 任务 | 时长（小时） | 简介 | COS |" in inventory
     assert "<br>" not in inventory
     assert inventory.count("| [common_voice_en](") == 1
     assert "| [commonvoice_en_clean](" not in inventory
@@ -239,7 +239,11 @@ def test_superseded_versions_are_not_listed():
     assert len(police_rows) == 1
     assert police_rows[0].startswith("| [police_asr_unified](")
     versions = render_data_versions(ROOT / "catalog", ROOT / "views")
-    assert "icefall-20260908" not in _section(versions, "police_asr_unified")
+    section = _section(versions, "police_asr_unified")
+    version_rows = [line for line in section.splitlines() if line.startswith("| [")]
+    assert version_rows and all("icefall-20260908" not in line for line in version_rows)
+    # Merged old versions are named only to show where their COS copies are.
+    assert "- 已并入的旧版本：" in section
 
 
 def test_summaries_stay_one_short_line():
@@ -247,3 +251,31 @@ def test_summaries_stay_one_short_line():
         summary = spec.provenance.get("summary")
         if summary is not None:
             assert isinstance(summary, str) and len(summary) <= 30, spec.key
+
+
+def test_cos_column_reads_backups_and_declared_copies():
+    rendered = render_data_overview(ROOT / "catalog", ROOT / "views")
+
+    def row(family):
+        return next(line for line in rendered.splitlines() if line.startswith(f"| [{family}]("))
+
+    assert row("3dspeaker").endswith("| 快照 20260914 |")
+    assert "`TTS 桶:HiFiTTS/`（原始数据）" in row("hifitts")
+    versions = render_data_versions(ROOT / "catalog", ROOT / "views")
+    assert (
+        "`amphion-audio-backup-1373259071:audio-data-contract/datasets/wenetspeech/`"
+        in _section(versions, "wenetspeech")
+    )
+
+
+def test_cos_cell_marks_missing_and_partial_coverage():
+    from audio_data_contract.overview import _cos_cell
+
+    base = load_catalog(ROOT / "catalog").get("librispeech", "legacy-20260804")
+    first = replace(base, dataset_id="a", version="v1")
+    second = replace(base, dataset_id="a", version="v2")
+    locations = {"a@v1": [("snapshot", "bucket", "audio-data-contract/v1/full-catalog-20260914/")]}
+
+    assert _cos_cell([first], locations) == "快照 20260914"
+    assert _cos_cell([first, second], locations) == "部分版本：快照 20260914"
+    assert _cos_cell([second], locations) == "没有"

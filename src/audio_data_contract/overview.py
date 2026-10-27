@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import json
 import re
 from collections import defaultdict
 from dataclasses import dataclass
@@ -42,6 +43,16 @@ QUALIFIERS = {
     "partial": "部分划分",
     "before_filter": "过滤前",
 }
+
+# Short bucket names for the overview's COS column; the versions page spells them out.
+COS_BUCKETS = {
+    "amphion-audio-backup-1373259071": "备份桶",
+    "amphion-tts-data-1373259071": "TTS 桶",
+}
+
+# snapshot: a backup binding; files: a copy of the version's own files;
+# source: the raw data the version was built from.
+COS_KINDS = ("snapshot", "files", "source")
 
 
 @dataclass(frozen=True)
@@ -260,6 +271,117 @@ def _source_links(catalog_path: str | Path) -> dict[str, str]:
     return links
 
 
+def _cos_uri(uri: object, where: object) -> tuple[str, str]:
+    if not isinstance(uri, str) or not uri.startswith("cos://") or "/" not in uri[6:]:
+        raise ContractError(f"{where}: not a cos://bucket/path URI: {uri!r}")
+    bucket, path = uri[6:].split("/", 1)
+    return bucket, path
+
+
+def _cos_locations(
+    catalog_path: str | Path, specs: list[DatasetSpec]
+) -> dict[str, list[tuple[str, str, str]]]:
+    """(kind, bucket, path) per version, from backup records and declared copies."""
+    locations = defaultdict(list)
+    backups = Path(catalog_path) / "backups"
+    for record_path in sorted(backups.glob("*.json")) if backups.is_dir() else []:
+        record = json.loads(record_path.read_text(encoding="utf-8"))
+        if "dataset_bindings" in record:
+            for key, binding in record["dataset_bindings"].items():
+                locations[key].append(
+                    ("snapshot", *_cos_uri(binding["cos_uri"], record_path))
+                )
+        elif {"bucket", "prefix", "datasets"} <= record.keys():
+            for key, mirror in record["datasets"].items():
+                locations[key].append(
+                    ("files", record["bucket"], f"{record['prefix']}{mirror['alias']}/")
+                )
+        else:
+            raise ContractError(f"{record_path}: unknown COS backup record")
+    for spec in specs:
+        for entry in spec.provenance.get("cos_locations", []):
+            if entry.get("content") not in ("files", "source"):
+                raise ContractError(f"{spec.key}: cos_locations content must be files or source")
+            locations[spec.key].append(
+                (entry["content"], *_cos_uri(entry.get("uri"), spec.key))
+            )
+    return locations
+
+
+def _cos_label(location: tuple[str, str, str], full: bool) -> str:
+    kind, bucket, path = location
+    if kind == "snapshot":
+        name = path.rstrip("/").rsplit("/", 1)[-1]
+        date = re.search(r"\d{8}", name)
+        return f"快照 {date.group() if date else name}"
+    shown = bucket if full else COS_BUCKETS.get(bucket, bucket)
+    return f"`{shown}:{path}`" + ("（原始数据）" if kind == "source" else "")
+
+
+def _cos_cell(
+    specs: list[DatasetSpec],
+    locations: dict[str, list[tuple[str, str, str]]],
+    full: bool = False,
+) -> str:
+    found = sorted(
+        {location for spec in specs for location in locations.get(spec.key, [])},
+        key=lambda item: (COS_KINDS.index(item[0]), _cos_label(item, True)),
+    )
+    if not found:
+        return "没有"
+    if not full:
+        # A directory already listed covers the paths below it.
+        found = [
+            location for location in found
+            if not any(
+                other[1] == location[1] and other[2] != location[2]
+                and location[2].startswith(other[2]) and other[0] != "snapshot"
+                for other in found
+            )
+        ]
+    cell = "、".join(dict.fromkeys(_cos_label(location, full) for location in found))
+    if any(spec.key not in locations for spec in specs):
+        cell = "部分版本：" + cell
+    return cell
+
+
+def _predecessors(specs: list[DatasetSpec]) -> dict[str, list[DatasetSpec]]:
+    """Versions merged into each consolidated version (superseded_by)."""
+    merged = defaultdict(list)
+    for spec in specs:
+        target = spec.provenance.get("superseded_by")
+        if target:
+            merged[target].append(spec)
+    return merged
+
+
+def _cos_specs(
+    members: list[DatasetSpec], merged: dict[str, list[DatasetSpec]]
+) -> list[DatasetSpec]:
+    """A family's versions plus the old versions merged into them."""
+    return members + [old for spec in members for old in merged.get(spec.key, [])]
+
+
+def _cos_legend(
+    locations: dict[str, list[tuple[str, str, str]]], keys: set[str]
+) -> list[str]:
+    snapshots = sorted(
+        {location for key in keys for location in locations.get(key, [])
+         if location[0] == "snapshot"},
+        key=lambda item: _cos_label(item, True),
+    )
+    lines = [
+        f"- {_cos_label(location, True)}：`cos://{location[1]}/{location[2]}`"
+        for location in snapshots
+    ]
+    buckets = "、".join(f"{short} = `{bucket}`" for bucket, short in COS_BUCKETS.items())
+    return lines + [
+        "- 快照内的文件按内容去重分批存放，要用 [cos_restore.py](../guides/cos-restore.md) 按版本取回；快照只表示该版本纳入了这次同步，文件是否已上传以 `locate` 结果为准。",
+        f"- 其他地址是桶内目录，可直接 `ab pull`（{buckets}）。标“原始数据”的是登记版本所依据的原始文件，取回后还要按来源说明处理。",
+        "- 没有：仓库里没有 COS 记录；“部分版本：”表示只有部分版本有。",
+    ]
+
+
 def _family_peak(specs: list[DatasetSpec]) -> tuple[float, str, str] | None:
     """The largest complete single-version or reference duration of a family."""
     candidates = []
@@ -309,22 +431,28 @@ def _family_flags(specs: list[DatasetSpec]) -> list[str]:
     return flags
 
 
-def _version_rows(specs: list[DatasetSpec], links: dict[str, str]) -> list[str]:
+def _version_rows(
+    specs: list[DatasetSpec],
+    links: dict[str, str],
+    locations: dict[str, list[tuple[str, str, str]]],
+) -> list[str]:
     rows = []
     for spec in specs:
+        cos = _cos_cell([spec], locations, full=True)
         duration = _duration(spec)
         hours = "—" if duration.hours is None else _format_hours(duration.hours)
         scope = QUALIFIERS.get(duration.kind, "未登记")
         label = spec.provenance.get("duration_label")
         if label and duration.hours is not None:
             scope += f"：{_cell(label)}"
-        rows.append(f"| [{spec.key}]({links[spec.key]}) | {hours} | {scope} |")
+        rows.append(f"| [{spec.key}]({links[spec.key]}) | {hours} | {scope} | {cos} |")
     for spec in specs:
         reference = spec.provenance.get("reference_duration")
         if reference:
             rows.append(
                 f"| [{spec.key}]({links[spec.key]}) | "
-                f"{_format_hours(reference['hours'])} | [参考表]({reference['url']}) |"
+                f"{_format_hours(reference['hours'])} | [参考表]({reference['url']}) | "
+                f"{_cos_cell([spec], locations, full=True)} |"
             )
     return rows
 
@@ -450,12 +578,21 @@ def render_data_overview(
     specs = _sorted_specs(catalog_path, views_path)
     families, groups, planned, mixtures = _inventory(specs)
     links = _source_links(catalog_path)
+    locations = _cos_locations(catalog_path, specs)
+    merged = _predecessors(specs)
+    shown = {
+        spec.key for members in groups.values() for spec in _cos_specs(members, merged)
+    }
     lines = [
         "# 数据总览",
         "",
         f"当前登记 **{len(groups)} 个数据集**；另有 **{len(planned)} 个下载来源声明**和 **{len(mixtures)} 个训练混合配方**。登记不代表本机文件已齐备。",
         "",
-        "时长取单个版本的最大值，不跨版本相加；≈ 为参考表或估算值，— 为暂无完整时长。各版本的时长、说明和质量证据见[版本明细](data-versions.md)。",
+        "时长取单个版本的最大值，不跨版本相加；≈ 为参考表或估算值，— 为暂无完整时长。各版本的时长、说明、COS 地址和质量证据见[版本明细](data-versions.md)。",
+        "",
+        "COS 列：",
+        "",
+        *_cos_legend(locations, shown),
         "",
         "## 数据规模与登记覆盖",
         "",
@@ -471,15 +608,16 @@ def render_data_overview(
             [
                 f"## {section}",
                 "",
-                "| 数据集 | 语言 | 任务 | 时长（小时） | 简介 |",
-                "|---|---|---|---:|---|",
+                "| 数据集 | 语言 | 任务 | 时长（小时） | 简介 | COS |",
+                "|---|---|---|---:|---|---|",
             ]
         )
         for family, members in entries:
             languages, tasks = _languages_and_tasks(members)
             lines.append(
                 f"| [{_cell(family)}](data-versions.md#{_anchor(family)}) | {languages} | "
-                f"{tasks} | {_peak_cell(members)} | {_summary(members)} |"
+                f"{tasks} | {_peak_cell(members)} | {_summary(members)} | "
+                f"{_cos_cell(_cos_specs(members, merged), locations)} |"
             )
         lines.append("")
     lines.extend(
@@ -516,7 +654,7 @@ def render_data_overview(
             "- [目录说明](../../catalog/README.md)：声明格式、字段和统计规则。",
             "- [组织规范](../reference/data-organization.md)：数据身份、版本、处理层与视图。",
             "- 新增数据时登记任务、语言、`provenance.summary`（一句话简介）和顶层 split 的 `statistics.duration_hours`；未知时长留空，不填 0。",
-            "- 更新 catalog 或 views 后运行 `audio-data-contract generate-overview`；CI 用 `--check` 检查本页、版本明细和图表同步。",
+            "- 更新 catalog（含 `catalog/backups/`）或 views 后运行 `audio-data-contract generate-overview`；CI 用 `--check` 检查本页、版本明细和图表同步。",
             "",
         ]
     )
@@ -531,15 +669,24 @@ def render_data_versions(
     specs = _sorted_specs(catalog_path, views_path)
     _, groups, _, _ = _inventory(specs)
     links = _source_links(catalog_path)
+    locations = _cos_locations(catalog_path, specs)
+    merged = _predecessors(specs)
+    shown = {
+        spec.key for members in groups.values() for spec in _cos_specs(members, merged)
+    }
     lines = [
         "# 数据版本明细",
         "",
-        "[数据总览](data-overview.md)中每个数据集的展开：各已登记版本的时长、口径和说明。",
+        "[数据总览](data-overview.md)中每个数据集的展开：各已登记版本的时长、口径、COS 地址和说明。",
         "",
         "- 时长单位为小时。不同版本、子集和标注片段可能重叠，不相加为总量。",
         "- 口径：已登记为各顶层划分时长之和或发布方总时长；估算为名义时长；部分划分为只有部分划分登记了时长；过滤前不能当作清洗后时长；参考表数字未核实当前文件与划分覆盖。",
         "- 已被合并版本取代（`superseded_by`）的旧版本不再列出，仍可按原 ID 和版本解析。",
         "- 任务是各版本能力的并集，具体版本和划分以链接内声明为准。标点、热词和文件哈希校验都不能单独证明做过内容清洗。",
+        "",
+        "COS 列：",
+        "",
+        *_cos_legend(locations, shown),
         "",
     ]
     for section, entries in _sections(groups):
@@ -554,13 +701,22 @@ def render_data_versions(
                     "",
                     f"语言：{languages} · 任务：{tasks}",
                     "",
-                    "| 版本 | 时长（小时） | 口径 |",
-                    "|---|---:|---|",
-                    *_version_rows(members, links),
+                    "| 版本 | 时长（小时） | 口径 | COS |",
+                    "|---|---:|---|---|",
+                    *_version_rows(members, links, locations),
                     "",
                 ]
             )
             notes = _family_notes(members)
+            old = [spec for member in members for spec in merged.get(member.key, [])]
+            if old:
+                notes.append(
+                    "- 已并入的旧版本："
+                    + "、".join(
+                        f"`{spec.key}`（COS：{_cos_cell([spec], locations, full=True)}）"
+                        for spec in old
+                    )
+                )
             if notes:
                 lines.extend([*notes, ""])
     lines.extend(
