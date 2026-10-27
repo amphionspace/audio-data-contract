@@ -1,0 +1,46 @@
+{
+  "bucket": "amphion-audio-backup-1373259071",
+  "datasets": {
+    "asr_babble_bench@v1-20261023": {
+      "alias": "asr_babble_bench",
+      "synced": "2026-10-27"
+    },
+    "asr_babble_bench@v2-20261023": {
+      "alias": "asr_babble_bench",
+      "synced": "2026-10-27"
+    },
+    "business_feedback@ts-20261010": {
+      "alias": "business_feedback",
+      "synced": "2026-10-27"
+    },
+    "business_feedback@ts-20261012": {
+      "alias": "business_feedback",
+      "synced": "2026-10-27"
+    },
+    "business_feedback@ts-20261016": {
+      "alias": "business_feedback",
+      "synced": "2026-10-27"
+    },
+    "business_feedback@ts-20261019": {
+      "alias": "business_feedback",
+      "synced": "2026-10-27"
+    },
+    "business_feedback@ts-20261021": {
+      "alias": "business_feedback",
+      "synced": "2026-10-27"
+    },
+    "business_feedback@ts-20261022": {
+      "alias": "business_feedback",
+      "synced": "2026-10-27"
+    },
+    "meeting_180s_benchmark@v1-20261008": {
+      "alias": "meeting_180s_benchmark",
+      "synced": "2026-10-27"
+    },
+    "meeting_selection_panel@v1-20261008": {
+      "alias": "meeting_selection_panel",
+      "synced": "2026-10-27"
+    }
+  },
+  "prefix": "audio-data-contract/datasets/"
+}

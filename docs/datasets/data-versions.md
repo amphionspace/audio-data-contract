@@ -748,12 +748,12 @@ AliMeeting 远场会议切窗的多人按人转写数据
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
-| [business_feedback@ts-20261010](../../catalog/business_feedback.yaml#L1) | 0.0 | 已登记 | 没有 |
-| [business_feedback@ts-20261012](../../catalog/business_feedback.yaml#L64) | 0.0 | 已登记 | 没有 |
-| [business_feedback@ts-20261016](../../catalog/business_feedback.yaml#L126) | 0.0 | 已登记 | 没有 |
-| [business_feedback@ts-20261019](../../catalog/business_feedback.yaml#L208) | 0.0 | 已登记 | 没有 |
-| [business_feedback@ts-20261021](../../catalog/business_feedback.yaml#L270) | 0.0 | 已登记 | 没有 |
-| [business_feedback@ts-20261022](../../catalog/business_feedback.yaml#L312) | 0.1 | 已登记 | 没有 |
+| [business_feedback@ts-20261010](../../catalog/business_feedback.yaml#L1) | 0.0 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/business_feedback/` |
+| [business_feedback@ts-20261012](../../catalog/business_feedback.yaml#L64) | 0.0 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/business_feedback/` |
+| [business_feedback@ts-20261016](../../catalog/business_feedback.yaml#L126) | 0.0 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/business_feedback/` |
+| [business_feedback@ts-20261019](../../catalog/business_feedback.yaml#L208) | 0.0 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/business_feedback/` |
+| [business_feedback@ts-20261021](../../catalog/business_feedback.yaml#L270) | 0.0 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/business_feedback/` |
+| [business_feedback@ts-20261022](../../catalog/business_feedback.yaml#L312) | 0.1 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/business_feedback/` |
 
 - `business_feedback@ts-20261010`：业务反馈的目标说话人 bad case，每个批次一个版本，只用于评测，不进训练。测试人员在办公室注册一个人的声纹，同时用 pad 播放干扰声（歌曲、对白）时反馈的 7 个调试包（8 段输入）。 每段输入为 3 秒注册音频加一个识别片段；7 个包使用同一段注册音频
 - `business_feedback@ts-20261012`：业务反馈的目标说话人 bad case，每个批次一个版本，只用于评测，不进训练。测试人员把设备放在一个环境里持续收音，定时查看结果，反馈的 5 个调试包（case-08 到 case-12）。 每段输入为 3 秒注册音频加一个识别片段；与第一批使用同一段注册音频
@@ -1643,8 +1643,8 @@ WenetSpeech-Yue 全量，含非 clean 部分
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
-| [asr_babble_bench@v1-20261023](../../catalog/asr_babble_bench.yaml#L1) | 10.1 | 已登记 | 没有 |
-| [asr_babble_bench@v2-20261023](../../catalog/asr_babble_bench.yaml#L399) | 8.8 | 已登记 | 没有 |
+| [asr_babble_bench@v1-20261023](../../catalog/asr_babble_bench.yaml#L1) | 10.1 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/asr_babble_bench/` |
+| [asr_babble_bench@v2-20261023](../../catalog/asr_babble_bench.yaml#L399) | 8.8 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/asr_babble_bench/` |
 
 - `asr_babble_bench@v1-20261023`：普通 ASR 背景人声评测集：只有背景人声的片段（合成的中文、英文背景人声和真实录音的人群声，期望输出为空），以及一句话前后和说话时都有背景人声的片段（与无背景人声的对照逐条配对）。合成背景人声由不进训练、也不与目标语音重叠的 test/dev 说话人混成。只用于评测，不进训练。配方 scripts/asr_babble_bench/recipe.yaml
 - `asr_babble_bench@v2-20261023`：普通 ASR 背景人声评测集：只有背景人声的片段（合成的中文、英文背景人声和真实录音的人群声，期望输出为空），以及一句话前后和说话时都有背景人声的片段（与无背景人声的对照逐条配对）。合成背景人声由不进训练、也不与目标语音重叠的 test/dev 说话人在模拟房间里混成。只用于评测，不进训练。配方 scripts/asr_babble_bench/recipe.yaml
@@ -1896,7 +1896,7 @@ Emilia-YODAS 多语种 YouTube 语音
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
-| [meeting_180s_benchmark@v1-20261008](../../catalog/meeting_180s_benchmark.yaml#L1) | 21.2 | 已登记 | 没有 |
+| [meeting_180s_benchmark@v1-20261008](../../catalog/meeting_180s_benchmark.yaml#L1) | 21.2 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/meeting_180s_benchmark/` |
 
 - `meeting_180s_benchmark@v1-20261008`：部署长度（约 180 秒）会议转写评测集：AISHELL-4 test、AliMeeting Test、AMI SDM test 各会议均匀取 6 个窗口，另有中文 / 英文 / 中英混合 6、8、10 人远场合成会议各 10 段；共 424 段 21.2 小时。仅用于评测
 
@@ -1908,7 +1908,7 @@ Emilia-YODAS 多语种 YouTube 语音
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
-| [meeting_selection_panel@v1-20261008](../../catalog/meeting_selection_panel.yaml#L1) | 12.4 | 已登记 | 没有 |
+| [meeting_selection_panel@v1-20261008](../../catalog/meeting_selection_panel.yaml#L1) | 12.4 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/meeting_selection_panel/` |
 
 - `meeting_selection_panel@v1-20261008`：独立会议选模面板：AliMeeting 官方 Eval 8 场全部 120 秒窗口（中文）、NOTSOFAR 官方 dev 36 场每场一台设备的全部 120 秒窗口（英文 3–7 人）、CHiME-6 官方 dev 2 场全部 120 秒窗口（英文晚宴，仅报告）。不进训练，不按难度筛选
 

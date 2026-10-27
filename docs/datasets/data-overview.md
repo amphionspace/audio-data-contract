@@ -77,7 +77,7 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [alimeeting_near_farsim_meeting_sot](data-versions.md#alimeeting_near_farsim_meeting_sot) | zh | 带说话人标注的语音识别 | 399.5 | AliMeeting 近讲加混响噪声模拟远场的会议窗口 | 没有 |
 | [alimeeting_sdm_meeting_sot](data-versions.md#alimeeting_sdm_meeting_sot) | zh | 带说话人标注的语音识别 | 327.3 | AliMeeting 远场会议切窗的多人按人转写数据 | 没有 |
 | [biic_podcast_ser](data-versions.md#biic_podcast_ser) | zh | 语音情感识别 | 22.6 | 中文播客情感识别评测（BIIC-Podcast） | 快照 20260914 |
-| [business_feedback](data-versions.md#business_feedback) | zh | 目标说话人语音识别 | 0.1 | 业务反馈的目标说话人 bad case，仅评测 | 没有 |
+| [business_feedback](data-versions.md#business_feedback) | zh | 目标说话人语音识别 | 0.1 | 业务反馈的目标说话人 bad case，仅评测 | `备份桶:audio-data-contract/datasets/business_feedback/` |
 | [childmandarin](data-versions.md#childmandarin) | zh | 语音识别 | 41.0 | 3–5 岁儿童普通话语音（ChildMandarin） | 快照 20260914 |
 | [cnceleb1](data-versions.md#cnceleb1) | zh | 说话人身份识别、声纹验证 | 270.1 | 中文跨场景声纹数据（CN-Celeb1） | 快照 20260914 |
 | [cnceleb2](data-versions.md#cnceleb2) | zh | 说话人身份识别、声纹验证 | 1,084.3 | 中文跨场景声纹训练数据（CN-Celeb2） | 快照 20260914 |
@@ -141,7 +141,7 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 |---|---|---|---:|---|---|
 | [BAAI/CS-Dialogue long_wav (ModelScope master)](data-versions.md#baaics-dialogue-long_wav-modelscope-master) | en、zh、zh-en | 语音识别、带说话人标注的语音识别 | 98.3 | 中英语码转换双人对话（CS-Dialogue） | 部分版本：快照 20260914 |
 | [ami](data-versions.md#ami) | en、zh | 语音识别、说话人分段与归属、目标说话人语音识别 | 259.3 | 英文会议远场版（AMI SDM）；含轮流说话混合版 | 部分版本：快照 20260914 |
-| [asr_babble_bench](data-versions.md#asr_babble_bench) | en、zh | 语音识别 | 10.1 | 普通 ASR 背景人声评测集（中英），仅评测 | 没有 |
+| [asr_babble_bench](data-versions.md#asr_babble_bench) | en、zh | 语音识别 | 10.1 | 普通 ASR 背景人声评测集（中英），仅评测 | `备份桶:audio-data-contract/datasets/asr_babble_bench/` |
 | [asr_babble_speech_pool](data-versions.md#asr_babble_speech_pool) | en、zh | 语音识别 | 85.5 | 带房间背景人声的中英 ASR 训练句 | 没有 |
 | [babble_noise_synth](data-versions.md#babble_noise_synth) | en、zh | noise | 50.0 | 合成中英背景人声噪声（5–20 人叠加） | 没有 |
 | [babble_noise_train](data-versions.md#babble_noise_train) | en、zh | noise | 50.0 | 训练用合成背景人声噪声（中英） | 没有 |
@@ -160,8 +160,8 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [hotword_bench](data-versions.md#hotword_bench) | en、zh | 热词增强语音识别 | — | 中英热词评测集，仅评测 | 没有 |
 | [hw_sft](data-versions.md#hw_sft) | en、zh | 语音识别、热词增强语音识别 | 2,636.5 | 热词 SFT 数据（ShareGPT 格式），含普通转写 | 没有 |
 | [indicvoices](data-versions.md#indicvoices) | as、bn、brx、doi、gu、hi、kn、kok、ks、mai、ml、mni、mr、ne、or、pa、sa、sat、sd、ta、te、ur | 语音识别 | — | 22 种印度语言自然语音（IndicVoices） | 快照 20260914 |
-| [meeting_benchmark](data-versions.md#meeting_benchmark) | en、zh、zh-en | 带说话人标注的语音识别 | 21.2 | 约 180 秒长度的中英会议转写评测集 | 没有 |
-| [meeting_selection_panel](data-versions.md#meeting_selection_panel) | en、zh | 带说话人标注的语音识别 | 12.4 | 会议模型选模面板（中英真实会议） | 没有 |
+| [meeting_benchmark](data-versions.md#meeting_benchmark) | en、zh、zh-en | 带说话人标注的语音识别 | 21.2 | 约 180 秒长度的中英会议转写评测集 | `备份桶:audio-data-contract/datasets/meeting_180s_benchmark/` |
+| [meeting_selection_panel](data-versions.md#meeting_selection_panel) | en、zh | 带说话人标注的语音识别 | 12.4 | 会议模型选模面板（中英真实会议） | `备份桶:audio-data-contract/datasets/meeting_selection_panel/` |
 | [mls_sidon](data-versions.md#mls_sidon) | de、en、es、fr、it、nl、pl、pt | 语音识别、语音合成 | 50,834.3 | 8 种语言有声书，音频经 Sidon 修复（MLS） | 没有 |
 | [multi-talker-sd](data-versions.md#multi-talker-sd) | en、zh | 语音识别、语码转换语音识别、连续语音分离、重叠语音检测、带说话人标注的语音识别、说话人分段与归属 | — | AISHELL-1、LibriSpeech 合成的多人对话 | 快照 20260914 |
 | [opendatalab_multilingual](data-versions.md#opendatalab_multilingual) | ar、cs、hu、ko、ru、sr、th、vi | 语音识别 | 8,588.2 | 8 个语种的语音识别数据（OpenDataLab） | `备份桶:computer-2/audio/`（原始数据）、`备份桶:opendatalab-multilingual/`（原始数据） |
