@@ -1459,6 +1459,7 @@ VITW 中文远场转写训练数据
 | [wenetspeech@weak-source-20260904](../../catalog/wenetspeech_weak.yaml#L1) | 2,477.9 | 已登记 | 快照 20260914、`amphion-audio-backup-1373259071:audio-data-contract/datasets/wenetspeech/` |
 | [wenetspeech_clean@clean-v1-20260805](../../catalog/local_lhotse_derived.yaml#L265) | 10,005.4 | 已登记 | 快照 20260914、`amphion-audio-backup-1373259071:audio-data-contract/datasets/wenetspeech/` |
 | [wenetspeech_clean@clean-v3-20260828](../../catalog/local_lhotse_derived.yaml#L980) | 9,971.1 | 已登记 | 快照 20260914、`amphion-audio-backup-1373259071:audio-data-contract/datasets/wenetspeech/` |
+| [wenetspeech_clean@clean-v3-pass-20261027](../../catalog/wenetspeech_clean_pass.yaml#L1) | 9,971.1 | 已登记 | 没有 |
 | [wenetspeech_test_meeting@eval-20260804](../../catalog/open_audio_eval.yaml#L764) | 15.2 | 已登记 | 快照 20260914、`amphion-audio-backup-1373259071:audio-data-contract/datasets/wenetspeech/` |
 | [wenetspeech_test_net@eval-20260804](../../catalog/open_audio_eval.yaml#L729) | 23.1 | 已登记 | 快照 20260914、`amphion-audio-backup-1373259071:audio-data-contract/datasets/wenetspeech/` |
 | [wenetspeech_traffic_snr0@icefall-20260908](../../catalog/icefall_runtime.yaml#L3900) | — | 未登记 | 快照 20260914、`amphion-audio-backup-1373259071:audio-data-contract/datasets/wenetspeech/` |
@@ -1473,6 +1474,7 @@ VITW 中文远场转写训练数据
 | [wenetspeech_traffic_snr5@recipe-1](../../catalog/icefall_traffic_derived.yaml#L166) | 23.1 | 已登记 | 快照 20260914、`amphion-audio-backup-1373259071:audio-data-contract/datasets/wenetspeech/` |
 | [wenetspeech@legacy-20260804](../../catalog/icefall_base.yaml#L498) | 10,000.0 | [参考表](https://ccnuebbmik1f.feishu.cn/wiki/CEXFwEjPoi2bIukVjk9c5FdOn12?sheet=3d4d23) | 快照 20260914、`amphion-audio-backup-1373259071:audio-data-contract/datasets/wenetspeech/` |
 
+- `wenetspeech_clean@clean-v3-pass-20261027`：wenetspeech_clean@clean-v3-20260828 训练集（WenetSpeech L）里上游清洗标记 custom.clean.pass=true 的分段，共 14568791 条 / 9971.1 小时（源 14625245 条，去掉未通过的 56454 条）；每行原样保留，包括 custom.clean，只用无标点文本。录音清单沿用源版本，不复制音频。用途：带 Lance 记录索引的 clean-only 版本，recipe_parameters.clean_pass_only 声明每行都已通过，open-audio-llm 据此让 require_clean_pass 的来源走 Lance 索引。脚本 scripts/wenetspeech_clean_pass.py
 - 含派生版本（与源数据可能重叠）
 
 ### wenetspeech4tts
