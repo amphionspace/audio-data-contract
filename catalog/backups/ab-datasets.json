@@ -40,6 +40,110 @@
     "meeting_selection_panel@v1-20261008": {
       "alias": "meeting_selection_panel",
       "synced": "2026-10-27"
+    },
+    "ts_asr_benchmark@v1-20261013": {
+      "alias": "ts_asr_benchmark",
+      "synced": "2026-10-27"
+    },
+    "ts_asr_benchmark@v2-20261013": {
+      "alias": "ts_asr_benchmark",
+      "synced": "2026-10-27"
+    },
+    "ts_asr_benchmark@v3-20261013": {
+      "alias": "ts_asr_benchmark",
+      "synced": "2026-10-27"
+    },
+    "ts_asr_benchmark@v4-20261022": {
+      "alias": "ts_asr_benchmark",
+      "synced": "2026-10-27"
+    },
+    "ts_asr_dev@v1-20261017": {
+      "alias": "ts_asr_dev",
+      "synced": "2026-10-27"
+    },
+    "ts_asr_farfield@v1-20261014": {
+      "alias": "ts_asr_farfield",
+      "synced": "2026-10-27"
+    },
+    "ts_asr_farfield@v2-20261022": {
+      "alias": "ts_asr_farfield",
+      "synced": "2026-10-27"
+    },
+    "ts_asr_handover@v1-20261020": {
+      "alias": "ts_asr_handover",
+      "synced": "2026-10-27"
+    },
+    "ts_asr_handover@v2-20261022": {
+      "alias": "ts_asr_handover",
+      "synced": "2026-10-27"
+    },
+    "ts_asr_nearfar@v1-20261014": {
+      "alias": "ts_asr_nearfar",
+      "synced": "2026-10-27"
+    },
+    "ts_asr_nearfar@v2-20261022": {
+      "alias": "ts_asr_nearfar",
+      "synced": "2026-10-27"
+    },
+    "ts_asr_nearfar@v3-20261022": {
+      "alias": "ts_asr_nearfar",
+      "synced": "2026-10-27"
+    },
+    "ts_asr_nearshort@v2-20261022": {
+      "alias": "ts_asr_nearshort",
+      "synced": "2026-10-27"
+    },
+    "ts_asr_nearshort@v3-20261022": {
+      "alias": "ts_asr_nearshort",
+      "synced": "2026-10-27"
+    },
+    "ts_asr_noise@v1-20261013": {
+      "alias": "ts_asr_noise",
+      "synced": "2026-10-27"
+    },
+    "ts_asr_noise@v2-20261022": {
+      "alias": "ts_asr_noise",
+      "synced": "2026-10-27"
+    },
+    "ts_asr_real@dev-v1-20261017": {
+      "alias": "ts_asr_real",
+      "synced": "2026-10-27"
+    },
+    "ts_asr_real@overlap-v1-20261017": {
+      "alias": "ts_asr_real",
+      "synced": "2026-10-27"
+    },
+    "ts_asr_real@v1-20261013": {
+      "alias": "ts_asr_real",
+      "synced": "2026-10-27"
+    },
+    "ts_asr_real@v2-20261013": {
+      "alias": "ts_asr_real",
+      "synced": "2026-10-27"
+    },
+    "ts_asr_real@v3-20261022": {
+      "alias": "ts_asr_real",
+      "synced": "2026-10-27"
+    },
+    "ts_asr_real@v4-20261022": {
+      "alias": "ts_asr_real",
+      "synced": "2026-10-27"
+    },
+    "ts_asr_shortseg@v1-20261017": {
+      "alias": "ts_asr_shortseg",
+      "synced": "2026-10-27"
+    },
+    "ts_asr_shortseg@v2-20261022": {
+      "alias": "ts_asr_shortseg",
+      "synced": "2026-10-27"
+    },
+    "ts_asr_singing@v1-20261017": {
+      "alias": "ts_asr_singing",
+      "synced": "2026-10-27"
+    },
+    "ts_asr_singing@v2-20261022": {
+      "alias": "ts_asr_singing",
+      "synced": "2026-10-27"
     }
   },
   "prefix": "audio-data-contract/datasets/"
