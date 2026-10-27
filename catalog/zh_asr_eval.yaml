@@ -58,6 +58,9 @@
       WenetSpeech v1 test sets)
     transcript: official, unpunctuated supervisions (not the *_punc variants)
     snapshot_date: '2026-10-11'
+    cos_locations:
+    - uri: cos://amphion-audio-backup-1373259071/audio-data-contract/datasets/wenetspeech/legacy_asr/
+      content: source
 - schema_version: dataset-catalog/2.0
   dataset_id: speechio
   version: eval-original-20261011

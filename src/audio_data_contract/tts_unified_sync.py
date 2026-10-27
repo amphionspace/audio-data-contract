@@ -121,6 +121,27 @@ SUMMARIES = {
 }
 
 
+# Raw source copies in COS. Each release manifest input was found there with the
+# same size on 2026-10-26; the LibriHeavy/ directory holds other files.
+COS_SOURCES = {
+    "aishell3": "cos://amphion-tts-data-1373259071/AISHELL-3/",
+    "csemotions": "cos://amphion-tts-data-1373259071/CSEMOTIONS/",
+    "emilia": "cos://amphion-tts-data-1373259071/Emilia/",
+    "emilia2": "cos://amphion-tts-data-1373259071/Emilia2/",
+    "emilia_yodas": "cos://amphion-tts-data-1373259071/Emilia-YODAS/",
+    "galgame": "cos://amphion-tts-data-1373259071/Galgame-VisualNovel-Reupload/",
+    "genshin_voice": "cos://amphion-tts-data-1373259071/genshin-voice/",
+    "hifitts": "cos://amphion-tts-data-1373259071/HiFiTTS/",
+    "libritts_r": "cos://amphion-tts-data-1373259071/LibriTTS-R/",
+    "ljspeech": "cos://amphion-tts-data-1373259071/LJSpeech/",
+    "starrail_voice": "cos://amphion-tts-data-1373259071/starrail-voice/",
+    "vctk": "cos://amphion-tts-data-1373259071/VCTK/",
+    "wenetspeech4tts": "cos://amphion-tts-data-1373259071/WenetSpeech4TTS/",
+    "wutheringwaves": "cos://amphion-tts-data-1373259071/WutheringWaves-2.2/",
+    "zenless_voice": "cos://amphion-tts-data-1373259071/zenless-voice/",
+}
+
+
 def _sha256(path: Path) -> str:
     digest = hashlib.sha256()
     with path.open("rb") as stream:
@@ -192,6 +213,8 @@ def release_entry(data_root: Path, dataset_id: str, release_id: str) -> dict:
     }
     if dataset_id in SUMMARIES:
         provenance["summary"] = SUMMARIES[dataset_id]
+    if dataset_id in COS_SOURCES:
+        provenance["cos_locations"] = [{"uri": COS_SOURCES[dataset_id], "content": "source"}]
     if asr:
         provenance["asr_notes"] = asr
     if dataset_id in KNOWN_ISSUES:

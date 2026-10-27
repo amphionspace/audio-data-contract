@@ -65,6 +65,9 @@
     provenance:
       source: icefall
       recipe: build_noisy_test_cuts.py
+      cos_locations:
+        - uri: cos://amphion-audio-backup-1373259071/audio-data-contract/datasets/wenetspeech/
+          content: files
   - schema_version: dataset-catalog/2.0
     dataset_id: mdcc_traffic_snr0
     version: recipe-1
@@ -188,6 +191,9 @@
     provenance:
       source: icefall
       recipe: build_noisy_test_cuts.py
+      cos_locations:
+        - uri: cos://amphion-audio-backup-1373259071/audio-data-contract/datasets/wenetspeech/
+          content: files
   - schema_version: dataset-catalog/2.0
     dataset_id: mdcc_traffic_snr5
     version: recipe-1
@@ -311,6 +317,9 @@
     provenance:
       source: icefall
       recipe: build_noisy_test_cuts.py
+      cos_locations:
+        - uri: cos://amphion-audio-backup-1373259071/audio-data-contract/datasets/wenetspeech/
+          content: files
   - schema_version: dataset-catalog/2.0
     dataset_id: mdcc_traffic_snr10
     version: recipe-1
@@ -434,6 +443,9 @@
     provenance:
       source: icefall
       recipe: build_noisy_test_cuts.py
+      cos_locations:
+        - uri: cos://amphion-audio-backup-1373259071/audio-data-contract/datasets/wenetspeech/
+          content: files
   - schema_version: dataset-catalog/2.0
     dataset_id: mdcc_traffic_snr15
     version: recipe-1
@@ -557,6 +569,9 @@
     provenance:
       source: icefall
       recipe: build_noisy_test_cuts.py
+      cos_locations:
+        - uri: cos://amphion-audio-backup-1373259071/audio-data-contract/datasets/wenetspeech/
+          content: files
   - schema_version: dataset-catalog/2.0
     dataset_id: mdcc_traffic_snr20
     version: recipe-1

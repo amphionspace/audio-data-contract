@@ -580,6 +580,9 @@
         sheet_range: A8:P8
         sheet_revision: 1594
         consulted_at: '2026-09-09'
+      cos_locations:
+        - uri: cos://amphion-audio-backup-1373259071/audio-data-contract/datasets/wenetspeech/
+          content: files
   - schema_version: dataset-catalog/2.0
     dataset_id: wenetspeech4tts
     version: legacy-20260804
