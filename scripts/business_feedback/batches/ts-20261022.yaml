@@ -1,0 +1,15 @@
+# 业务反馈第六批：用户 2026-10-22 直接提供的压缩包（badcase-1022.zip），没有调试包，只有一段机主注册录音（8.28 秒）
+# 和两段长录音（55 秒、167 秒）。用户说明两条的标签都是空：全程机主没说话，旁边外放电视剧对白，期望输出为空。
+# 线上的切分方式未知，按 25 秒分窗（线上注册 5 秒，单次请求最多 30 秒）；注册录音整段保存，客户端取前 5 秒。
+# 复测：10.21 版本 2/10 窗输出、10.22 版本 3/10 窗输出（见 badcase 目录 README）。
+version: ts-20261022
+source: 2026-10-22_amphionasr-tv-drama-absent
+language: zh
+description: >-
+  用户直接提供的两段长录音（没有调试包），机主全程未说话，旁边外放电视剧对白，期望输出为空；
+  按 25 秒连续分窗，每窗一条，共 10 条；注册录音 8.28 秒整段保存，客户端取前 5 秒。
+registration: recordings/注册音频.wav
+window_seconds: 25
+recordings:
+  badcase: {file: recordings/badcase.wav, split: target_speaker, target_present: false, issue: tv_dialogue_transcribed}
+  badcase-2: {file: recordings/badcase-2.wav, split: target_speaker, target_present: false, issue: tv_dialogue_transcribed}

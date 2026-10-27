@@ -43,6 +43,9 @@
       confidence_range:
         - 0.6
         - 0.95
+      cos_locations:
+        - uri: cos://amphion-audio-backup-1373259071/audio-data-contract/datasets/wenetspeech/
+          content: files
   - schema_version: dataset-catalog/2.0
     dataset_id: wenetspeech
     version: clean-weak-v1-20260904
@@ -125,3 +128,6 @@
         replaced_review: 4
         proposal_confirmed: 10
         proposal_rejected: 0
+      cos_locations:
+        - uri: cos://amphion-audio-backup-1373259071/audio-data-contract/datasets/wenetspeech/
+          content: files

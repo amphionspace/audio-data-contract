@@ -1,3 +1,4 @@
+import re
 from dataclasses import replace
 from pathlib import Path
 
@@ -9,10 +10,16 @@ from audio_data_contract.errors import ContractError
 from audio_data_contract.overview import (
     _duration,
     render_data_overview,
+    render_data_versions,
     update_data_overview,
 )
 
 ROOT = Path(__file__).parents[1]
+
+
+def _section(page, family):
+    """One family's section of the versions page."""
+    return page.split(f"\n### {family}\n", 1)[1].split("\n### ", 1)[0]
 
 
 def _with_statistics(spec, **statistics):
@@ -49,10 +56,8 @@ def test_overview_lists_datasets_instead_of_consumer_versions():
     rendered = render_data_overview(ROOT / "catalog", ROOT / "views")
     inventory = rendered.split("## 下载来源声明")[0]
 
-    assert (
-        "| 数据集 | 语言 | 支持任务 | 时长（小时，注明范围） | 特性 / 备注 |"
-        in inventory
-    )
+    assert "| 数据集 | 语言 | 任务 | 时长（小时） | 简介 | COS |" in inventory
+    assert "<br>" not in inventory
     assert inventory.count("| [common_voice_en](") == 1
     assert "| [commonvoice_en_clean](" not in inventory
     assert "| [cv_en_noise_dns](" not in inventory
@@ -61,29 +66,34 @@ def test_overview_lists_datasets_instead_of_consumer_versions():
     assert "| [granary](" not in inventory
     assert "| [icefall_v10_farfield_replay](" not in inventory
     assert "| [mls](" in inventory
-    assert "已登记" in next(
-        line for line in inventory.splitlines() if "| [tal100_en](" in line
-    )
+    tal100 = next(line for line in inventory.splitlines() if "| [tal100_en](" in line)
+    assert re.fullmatch(r"[\d,]+\.\d", tal100.split(" | ")[3])
     # Missing duration must still not hide sources awaiting format-specific statistics.
-    assert "未登记" in next(
+    assert "| — |" in next(
         line for line in inventory.splitlines() if "| [multi-talker-sd](" in line
     )
     assert "按版本相加的可汇总时长" not in rendered
     assert "## 下载来源声明" in rendered
     assert "## 训练混合配方" in rendered
-    assert "文件校验通过，不等于内容正确" in rendered
-    assert "有已知标注问题" in rendered
-    assert "不能代表整集准确率" in rendered
+    versions = render_data_versions(ROOT / "catalog", ROOT / "views")
+    assert "文件校验通过，不等于内容正确" in versions
+    assert "有已知标注问题" in versions
+    assert "不能代表整集准确率" in versions
 
 
 def test_family_duration_preserves_scope_and_does_not_add_versions():
     rendered = render_data_overview(ROOT / "catalog", ROOT / "views")
     row = next(line for line in rendered.splitlines() if "| [notsofar](" in line)
-    assert "200.0（估算" in row
-    assert "176.9（已登记" in row
+    assert "| ≈200.0 |" in row
+    assert "176.9" not in row
     assert "376.9" not in row
-    cv = next(line for line in rendered.splitlines() if "| [common_voice_en](" in line)
-    assert "1,854.0" in cv and "参考表" in cv
+    versions = render_data_versions(ROOT / "catalog", ROOT / "views")
+    notsofar = _section(versions, "notsofar")
+    assert "| 200.0 | 估算 |" in notsofar
+    assert "| 176.9 | 已登记：" in notsofar
+    assert "376.9" not in notsofar
+    cv = _section(versions, "common_voice_en")
+    assert "| 1,854.0 | [参考表](" in cv
 
 
 def test_cv_cleaning_evidence_distinguishes_report_from_published_manifest():
@@ -95,7 +105,9 @@ def test_cv_cleaning_evidence_distinguishes_report_from_published_manifest():
     evidence = spec.provenance["cleaning_verification"]
     assert evidence["test_report"]["reject"] == 108
     assert evidence["manifest_findings"]["test_filter_applied"] is False
-    rendered = render_data_overview(ROOT / "catalog", ROOT / "views")
+    rendered = render_data_versions(ROOT / "catalog", ROOT / "views").split(
+        "## 已记录的质量证据"
+    )[1]
     row = next(
         line for line in rendered.splitlines() if "| [commonvoice_en_clean@" in line
     )
@@ -218,7 +230,52 @@ def test_superseded_versions_are_not_listed():
     rendered = render_data_overview(ROOT / "catalog", ROOT / "views")
     inventory = rendered.split("## 下载来源声明")[0]
 
-    police_rows = [line for line in inventory.splitlines() if line.startswith("| [police")]
+    # police_terms_single(_train) are separate single-term sets, not superseded batches.
+    police_rows = [
+        line
+        for line in inventory.splitlines()
+        if line.startswith("| [police") and not line.startswith("| [police_terms_single")
+    ]
     assert len(police_rows) == 1
     assert police_rows[0].startswith("| [police_asr_unified](")
-    assert "icefall-20260908" not in police_rows[0]
+    versions = render_data_versions(ROOT / "catalog", ROOT / "views")
+    section = _section(versions, "police_asr_unified")
+    version_rows = [line for line in section.splitlines() if line.startswith("| [")]
+    assert version_rows and all("icefall-20260908" not in line for line in version_rows)
+    # Merged old versions are named only to show where their COS copies are.
+    assert "- 已并入的旧版本：" in section
+
+
+def test_summaries_stay_one_short_line():
+    for spec in load_catalog(ROOT / "catalog"):
+        summary = spec.provenance.get("summary")
+        if summary is not None:
+            assert isinstance(summary, str) and len(summary) <= 30, spec.key
+
+
+def test_cos_column_reads_backups_and_declared_copies():
+    rendered = render_data_overview(ROOT / "catalog", ROOT / "views")
+
+    def row(family):
+        return next(line for line in rendered.splitlines() if line.startswith(f"| [{family}]("))
+
+    assert row("3dspeaker").endswith("| 快照 20260914 |")
+    assert "`TTS 桶:HiFiTTS/`（原始数据）" in row("hifitts")
+    versions = render_data_versions(ROOT / "catalog", ROOT / "views")
+    assert (
+        "`amphion-audio-backup-1373259071:audio-data-contract/datasets/wenetspeech/`"
+        in _section(versions, "wenetspeech")
+    )
+
+
+def test_cos_cell_marks_missing_and_partial_coverage():
+    from audio_data_contract.overview import _cos_cell
+
+    base = load_catalog(ROOT / "catalog").get("librispeech", "legacy-20260804")
+    first = replace(base, dataset_id="a", version="v1")
+    second = replace(base, dataset_id="a", version="v2")
+    locations = {"a@v1": [("snapshot", "bucket", "audio-data-contract/v1/full-catalog-20260914/")]}
+
+    assert _cos_cell([first], locations) == "快照 20260914"
+    assert _cos_cell([first, second], locations) == "部分版本：快照 20260914"
+    assert _cos_cell([second], locations) == "没有"

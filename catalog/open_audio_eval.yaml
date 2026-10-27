@@ -659,6 +659,9 @@
       consumer: open-audio-llm-vllm-eval
       snapshot_date: '2026-08-04'
       loader_kind: multi
+      cos_locations:
+        - uri: cos://amphion-audio-backup-1373259071/audio-data-contract/datasets/wenetspeech/
+          content: files
   - schema_version: dataset-catalog/2.0
     dataset_id: librispeech_test_clean
     version: eval-20260804
@@ -755,6 +758,9 @@
       snapshot_date: '2026-08-04'
       loader_kind: single
       dataset_family: wenetspeech
+      cos_locations:
+        - uri: cos://amphion-audio-backup-1373259071/audio-data-contract/datasets/wenetspeech/
+          content: files
   - schema_version: dataset-catalog/2.0
     dataset_id: wenetspeech_test_meeting
     version: eval-20260804
@@ -787,6 +793,9 @@
       snapshot_date: '2026-08-04'
       loader_kind: single
       dataset_family: wenetspeech
+      cos_locations:
+        - uri: cos://amphion-audio-backup-1373259071/audio-data-contract/datasets/wenetspeech/
+          content: files
   - schema_version: dataset-catalog/2.0
     dataset_id: biic_podcast_ser
     version: eval-20260804
@@ -815,6 +824,7 @@
           duration_hours: 22.580983315972222
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_ser:LHOTSE/biic_podcast/data/manifests/biic_podcast_ser_supervisions_test.jsonl.gz'
     provenance:
+      summary: 中文播客情感识别评测（BIIC-Podcast）
       consumer: open-audio-llm-vllm-eval
       snapshot_date: '2026-08-04'
       loader_kind: single
@@ -846,6 +856,7 @@
           duration_hours: 1.691794878472222
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_ser:LHOTSE/m3ed/data/manifests/m3ed_ser_supervisions_test.jsonl.gz'
     provenance:
+      summary: 中文电视剧对话情感识别评测（M3ED）
       consumer: open-audio-llm-vllm-eval
       snapshot_date: '2026-08-04'
       loader_kind: single
@@ -877,6 +888,7 @@
           duration_hours: 2.3218382653061225
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_ser:LHOTSE/meld/data/manifests/meld_ser_supervisions_test.jsonl.gz'
     provenance:
+      summary: 美剧《老友记》对话情感识别评测（MELD）
       consumer: open-audio-llm-vllm-eval
       snapshot_date: '2026-08-04'
       loader_kind: single
@@ -908,6 +920,7 @@
           duration_hours: 1.5457552777777779
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_ser:LHOTSE/iemocap/data/manifests/iemocap_ser_supervisions_test.jsonl.gz'
     provenance:
+      summary: 英文双人表演对话情感识别评测（IEMOCAP）
       consumer: open-audio-llm-vllm-eval
       snapshot_date: '2026-08-04'
       loader_kind: single
@@ -952,6 +965,7 @@
             - msp_podcast_test2_supervisions
         group: test
     provenance:
+      summary: 英文播客情感识别评测（MSP-Podcast）
       consumer: open-audio-llm-vllm-eval
       snapshot_date: '2026-08-04'
       loader_kind: multi
@@ -1047,6 +1061,7 @@
           duration_hours: 5.175772291666666
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_ser:LHOTSE/emotion1200_en_sec/data/manifests/emotion1200_en_sec_supervisions_test.jsonl.gz'
     provenance:
+      summary: 英文情感识别与描述评测（Emotion1200）
       consumer: open-audio-llm-vllm-eval
       snapshot_date: '2026-08-04'
       loader_kind: single
@@ -1079,6 +1094,7 @@
           duration_hours: 4.877483333333333
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_ser:LHOTSE/emotion1200_zh_sec/data/manifests/emotion1200_zh_sec_supervisions_test.jsonl.gz'
     provenance:
+      summary: 中文情感识别与描述评测（Emotion1200）
       consumer: open-audio-llm-vllm-eval
       snapshot_date: '2026-08-04'
       loader_kind: single
@@ -1222,6 +1238,7 @@
           duration_hours: 7.707681028055555
           duration_basis: 'sum of cuts durations; overlapping segments may count speech more than once; sources: legacy_mix_tsstyle:cuts/ts_hw_test_libristyle_cuts.jsonl.gz'
     provenance:
+      summary: 目标说话人加热词评测（LibriSpeech 风格）
       consumer: open-audio-llm-vllm-eval
       snapshot_date: '2026-08-04'
       loader_kind: cuts_file
@@ -1248,6 +1265,7 @@
           duration_hours: 8.374322676111111
           duration_basis: 'sum of cuts durations; overlapping segments may count speech more than once; sources: legacy_mix_tsstyle:output_librimix_libristyle/libri2mix/libri2mix_lib_cuts.jsonl.gz'
     provenance:
+      summary: LibriMix 两人混合的目标说话人评测
       consumer: open-audio-llm-vllm-eval
       snapshot_date: '2026-08-04'
       loader_kind: cuts_file
@@ -1274,6 +1292,7 @@
           duration_hours: 10.889554794166665
           duration_basis: 'sum of cuts durations; overlapping segments may count speech more than once; sources: legacy_mix_tsstyle:output_librimix_libristyle/libri3mix/libri3mix_lib_cuts.jsonl.gz'
     provenance:
+      summary: LibriMix 三人混合的目标说话人评测
       consumer: open-audio-llm-vllm-eval
       snapshot_date: '2026-08-04'
       loader_kind: cuts_file
@@ -1404,6 +1423,7 @@
           duration_hours: 6.835043370211111
           duration_basis: 'sum of cuts durations; overlapping segments may count speech more than once; sources: multilingual:sound/AudioSet/manifest_v1_esc/audioset_esc_test_mixed_cuts.jsonl.gz'
     provenance:
+      summary: AudioSet 背景声场景描述评测集
       consumer: open-audio-llm-vllm-eval
       snapshot_date: '2026-08-04'
       loader_kind: cuts_file

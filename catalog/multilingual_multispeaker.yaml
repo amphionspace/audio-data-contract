@@ -207,6 +207,7 @@
           snapshot:
             - snapshot
     provenance:
+      summary: 22 种印度语言自然语音（IndicVoices）
       source: Hugging Face
       source_id: ai4bharat/IndicVoices
       revision: c96f9088f138cf89d419da7e8e643e1f05c00a87
@@ -267,6 +268,7 @@
           source:
             - test
     provenance:
+      summary: AISHELL-1、LibriSpeech 合成的多人对话
       source: Hugging Face
       source_id: yihao005/Multi-Talker-SD
       revision: be2d372003fd880ac80a34aca41ce848ec6d2eed
@@ -337,6 +339,7 @@
         provenance:
           split_policy: ASR_v2 speaker-disjoint metadata
     provenance:
+      summary: 19 种非洲语言语音（WAXAL）
       source: Hugging Face
       source_id: google/WaxalNLP
       revision: e91442a8989b291485cb6f8a56c0a8743d36036a

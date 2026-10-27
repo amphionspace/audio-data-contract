@@ -17,5 +17,6 @@
           recordings:
             - recordings
     provenance:
+      summary: AudioSet 道路交通噪声
       snapshot_date: '2026-08-07'
       source: AmphionASR augmentation registry

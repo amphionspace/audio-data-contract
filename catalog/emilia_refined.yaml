@@ -75,6 +75,7 @@
         rows: 31275879
         duration_hours: 78091.0
   provenance:
+    summary: 多语种视频野外语音（Emilia）；含精修文本版
     source: amphion-tts-data:Emilia-Refined-Metadata/
     downloaded_at: 2026-10-10
     download_tool: AmphionBucket 0.7.1（逐文件校验 ETag）

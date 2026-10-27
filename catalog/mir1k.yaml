@@ -37,6 +37,7 @@
         duration_hours: 2.22
         num_clips: 1000
   provenance:
+    summary: 中文流行歌卡拉 OK 片段，人声伴奏分轨（MIR-1K）
     source: MIR-1K (Multimedia Information Retrieval lab, National Tsing Hua University)
     url: http://mirlab.org/dataset/public/MIR-1K.zip
     snapshot_date: '2026-10-17'

@@ -163,6 +163,7 @@
         duration_hours: 27.85
         num_clips: 10231
   provenance:
+    summary: 200 类声音事件（FSD50K）
     source: FSD50K (Freesound Datasets, UPF)
     url: https://zenodo.org/records/4060432
     snapshot_date: '2026-10-13'
@@ -236,6 +237,7 @@
         duration_hours: 9.0
         num_clips: 3000
   provenance:
+    summary: 湾区餐厅、咖啡馆等真实环境噪声（WHAM!）
     source: WHAM! noise dataset (Whisper / Mitsubishi Electric Research Labs)
     url: http://wham.whisper.ai/
     snapshot_date: '2026-10-13'

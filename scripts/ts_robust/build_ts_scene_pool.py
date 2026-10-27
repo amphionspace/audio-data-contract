@@ -38,12 +38,115 @@ records are twins: the same utterance, but the enrollment is another speaker, so
     python build_ts_scene_pool.py --output-dir DIR --version solo-20261019 --solo --twin-share 0.3 --zh 60000 --en 20000
     python build_ts_scene_pool.py --output-dir DIR --version solo-20261020 --solo --neighbors FILE --twin-share 0.3 \\
         --zh 60000 --en 20000
+
+With ``--handover`` it builds the handover version: the target says one utterance and one other speaker says one
+utterance, one after the other without overlap, in either order (alternate mode). The other pools never hold this:
+alternate scenes have at least two other speakers and the solo scenes have none, and the benchmark's handover scenes
+(ts_asr_handover) showed the model staying silent on them. With ``--neighbors`` half of the other speakers are a close
+neighbour of the target. A share of the records are twins: the same two utterances, but the enrollment is another
+speaker (half of the time a neighbour of the target), so both utterances are interferers and the transcript is empty.
+
+    python build_ts_scene_pool.py --output-dir DIR --version handover-20261021 --handover --neighbors FILE \\
+        --twin-share 0.3 --zh 40000 --en 12000
+
+With ``--multi --xsession`` the targets are KeSpeech speakers who recorded both a Mandarin (phase1) and a dialect
+(phase2) session. A scene's target utterances come from one session; with XSESSION_CROSS_PROB the enrollment comes
+from the other session (``labels.cross_session``), otherwise from the same one. The other pools take their targets from
+AISHELL-2 / AISHELL-1, one session per speaker, so the model never has to accept a voice across sessions and can lean on
+the channel; on ts-asr-benchmark@v12 a Mandarin/dialect mismatch between enrollment and target leaves 34% of KeSpeech
+targets untranscribed (5.7% within one variety). AISHELL-2 stays among the other speakers, and twins enroll another
+KeSpeech speaker, so neither the channel nor the corpus tells present from absent.
+
+    python build_ts_scene_pool.py --output-dir DIR --version xsession-20261023 --multi --xsession --twin-share 0.3 \\
+        --zh 80000 --en 0
+
+With ``--multi --magicdata`` the targets are MagicData speakers (read speech recorded on phones). On
+ts-asr-benchmark@v12 a MagicData target speaking alone is transcribed at 14.5% CER through TS against 1.7% for plain
+ASR (mostly untranscribed targets), while AISHELL-1/2/3 targets alone match plain ASR; no pool has had a MagicData
+target. Twins enroll another MagicData speaker. 73% of MagicData test utterances repeat a train sentence, so train
+utterances whose text is in the test split are dropped (HELD_OUT_TEXT).
+
+    python build_ts_scene_pool.py --output-dir DIR --version magicdata-20261023 --multi --magicdata --twin-share 0.3 \\
+        --zh 80000 --en 0
+
+Both pools need ``--neighbors`` from ``speaker_neighbors.py --kespeech-magicdata``: without it every twin enrolls a
+random speaker, far from the target (ERes2NetV2 cosine median 0.09 / 0.12 against 0.25 in the AISHELL-2 pools), and
+040 (v7set13) learned to transcribe other speakers after a KeSpeech or MagicData target's utterance (MagicData target
+with a MagicData other speaker: 1.2% -> 16.9% of the v12 samples). With it half of the twins enroll a close neighbour,
+as in every other pool.
+
+    python build_ts_scene_pool.py --output-dir DIR --version xsession-near-20261023 --multi --xsession \\
+        --neighbors FILE --twin-share 0.3 --zh 80000 --en 0
+    python build_ts_scene_pool.py --output-dir DIR --version magicdata-near-20261023 --multi --magicdata \\
+        --neighbors FILE --twin-share 0.3 --zh 80000 --en 0
+
+The near twins did not stop it (041@5000 matches 040@5000): the transcribed other speakers are in turn-taking scenes,
+where the target and the others do not overlap (KeSpeech/MagicData targets on v12 handover-* 15-28%, dyn-alternate
+18%, dyn-enter/leave 9-14%; overlapped scenes 1-3%; AISHELL targets 0-3% everywhere). AISHELL-2 targets also train on
+the turn-taking pools (v2-20261016 alternate/burst/short, hard-20261016, handover-20261021); KeSpeech and MagicData
+targets only had full scenes. ``--xsession`` and ``--magicdata`` therefore also build the alternate/burst/short and
+the handover version, with the same target corpora, other speakers and (for --xsession) sessions:
+
+    python build_ts_scene_pool.py --output-dir DIR --version xsession-alt-20261023 --xsession --zh 60000 --en 0
+    python build_ts_scene_pool.py --output-dir DIR --version xsession-handover-20261023 --handover --xsession \\
+        --neighbors FILE --twin-share 0.3 --zh 40000 --en 0
+    python build_ts_scene_pool.py --output-dir DIR --version magicdata-alt-20261023 --magicdata --zh 60000 --en 0
+    python build_ts_scene_pool.py --output-dir DIR --version magicdata-handover-20261023 --handover --magicdata \\
+        --neighbors FILE --twin-share 0.3 --zh 40000 --en 0
+
+The alternate/burst/short version has every target present; AISHELL-2 targets balance it with the hard version
+(hard-20261016, 55% absent with a similar voice in the scene). Without that, 042 (alt + handover, no hard) stopped
+transcribing the other speakers but answered absent KeSpeech / MagicData enrollments with another speaker's words
+(v12 absent false alarms 5.2% -> 13.0% / 2.4% -> 7.6%; AISHELL enrollments unchanged), so they get the hard version too:
+
+    python build_ts_scene_pool.py --output-dir DIR --version xsession-hard-20261023 --xsession --neighbors FILE \\
+        --zh 40000 --en 0
+    python build_ts_scene_pool.py --output-dir DIR --version magicdata-hard-20261023 --magicdata --neighbors FILE \\
+        --zh 40000 --en 0
+
+With ``--alt-twins`` it builds the turn-taking version (alternate / burst / short, as without a mode flag) with twins,
+as the multi-turn, solo and handover versions have: a share of the records (``--twin-share``) are the scene again with
+another speaker enrolled, half of the time a close neighbour from ``--neighbors``. Without twins these modes are almost
+always present: v2-20261016, xsession-alt and magicdata-alt hold no absent scene, and the hard version's absent scenes
+are alternate or burst, never short. Checkpoints trained on them transcribe one of the speakers whatever the enrollment
+says. Rendered training scenes with another speaker of the same pool enrolled are answered by 10.21 (033 avg3) in 17% of
+v2-20261016's scenes (29% of its short ones) and by 044@5000, which added the KeSpeech / MagicData alt pools, in 43% of
+xsession-alt's (65% of short ones), against 4-8% on the twinned multi-turn pools. On ts-asr-benchmark@v12 the same
+checkpoints answer absent KeSpeech-enrolled samples with another speaker's words (2.6% -> 17.8%).
+
+    python build_ts_scene_pool.py --output-dir DIR --version alt-twins-20261024 --alt-twins --neighbors FILE \\
+        --twin-share 0.3
+    python build_ts_scene_pool.py --output-dir DIR --version xsession-alt-twins-20261024 --alt-twins --xsession \\
+        --neighbors FILE --twin-share 0.3 --zh 60000 --en 0
+    python build_ts_scene_pool.py --output-dir DIR --version magicdata-alt-twins-20261024 --alt-twins --magicdata \\
+        --neighbors FILE --twin-share 0.3 --zh 60000 --en 0
+
+With ``--hard-twins`` it builds the hard version with twins: every base scene is a present one with a close neighbour of
+the target among the others (alternate / burst / short), and a share of the records (``--twin-share``) are the scene
+again with another speaker enrolled, half of the time another close neighbour of the target. The hard version's absent
+scenes are separate scenes, never short and never the twin of a present one, the last scene family without twins.
+048 avg3 still answers the hard absent splits of ts-asr-benchmark@v12 more often than 10.21 (abs-hard, realreg, short),
+while every twinned family improved. ``--twin-share 0.5`` twins every base scene (half the records absent, as the
+hard version's 55%):
+
+    python build_ts_scene_pool.py --output-dir DIR --version hard-twins-20261026 --hard-twins --neighbors FILE \\
+        --twin-share 0.5 --zh 40000 --en 25000
+    python build_ts_scene_pool.py --output-dir DIR --version xsession-hard-twins-20261026 --hard-twins --xsession \\
+        --neighbors FILE --twin-share 0.5 --zh 40000 --en 0
+    python build_ts_scene_pool.py --output-dir DIR --version magicdata-hard-twins-20261026 --hard-twins --magicdata \\
+        --neighbors FILE --twin-share 0.5 --zh 40000 --en 0
+
+A KeSpeech speaker reads the same prompts in both sessions, so a cross-session enrollment can say the target's own
+sentence (3.9% of xsession-near-20261023's present records); the transcript can then be read off the enrollment, and
+v12 nonspeech samples with a KeSpeech enrollment come back as the enrollment's words. Enrollments never say a sentence
+of the scene's target utterances.
 """
 
 import argparse
 import gzip
 import json
 import random
+import unicodedata
 from collections import Counter
 from pathlib import Path
 
@@ -66,6 +169,14 @@ MODES = {"zh": (("alternate", 0.35), ("burst", 0.35), ("short", 0.30)),
 UTTERANCE_SECONDS = {"zh": (1.0, 12.0), "en": (1.0, 8.0)}
 SHORT_TARGET_SECONDS = {"zh": (0.8, 2.5), "en": (1.0, 3.5)}
 ENROLLMENT_SECONDS = (2.5, 8.0)
+# --xsession: targets are KeSpeech speakers with both sessions (phase1 Mandarin, phase2 dialect, the directory names).
+XSESSION_CORPORA = [("aishell2", "legacy-20260804", "train", 0.5, False), ("kespeech", "legacy-20260804", "train", 0.5, True)]
+SESSIONS = ("phase1", "phase2")
+XSESSION_CROSS_PROB = 0.5
+# --magicdata: targets are MagicData speakers; the other speakers are half AISHELL-2, half MagicData.
+MAGICDATA_CORPORA = [("aishell2", "legacy-20260804", "train", 0.5, False), ("magicdata", "legacy-20260804", "train", 0.5, True)]
+# Splits whose sentences a corpus must not train on (73% of MagicData test utterances repeat a train sentence).
+HELD_OUT_TEXT = {"magicdata": "test"}
 # Longest scene per mode, gaps included. The benchmark's scenes run 5-18 s; the training
 # batch holds about a dozen windows, so a 70 s scene would not fit.
 SCENE_SECONDS = {"alternate": 30.0, "burst": 22.0, "short": 14.0, "full": 32.0}
@@ -76,14 +187,21 @@ FULL_UTTERANCE_SECONDS = (1.5, 9.0)
 FULL_TARGET_TURNS = ((2, 3, 4, 5), (0.4, 0.3, 0.2, 0.1))
 # --solo: one short target utterance, nobody else. The benchmark's solo-mid clips are 2-6 s with a median of 6 characters.
 SOLO_UTTERANCE_SECONDS = (1.0, 3.5)
+# --handover: one target utterance and one other utterance in a row. The benchmark's handover utterances are 1.5-5 s.
+HANDOVER_UTTERANCE_SECONDS = (1.0, 6.0)
 FULL_INTERFERERS = ((1, 2, 3, 4), (0.3, 0.3, 0.25, 0.15))
 MAX_UTTERANCES_PER_TRACK = 6
 COLUMNS = ["id", "speaker", "text", "duration", "cut_id", "root_alias", "relative_path",
            "start_frame", "num_frames", "sample_rate", "channels"]
 
 
+def _plain(text):
+    """Text compared for held-out sentences: NFKC, lower case, no punctuation, symbols or spaces."""
+    return "".join(c for c in unicodedata.normalize("NFKC", text or "").lower() if unicodedata.category(c)[0] not in "PSZ")
+
+
 class Corpus:
-    def __init__(self, dataset, version, split, weight, target, language):
+    def __init__(self, dataset, version, split, weight, target, language, sessions=False):
         self.name, self.weight, self.target = dataset, weight, target
         entry = next(e for e in yaml.safe_load(REGISTRY.read_text())
                      if e["dataset_id"] == dataset and e["version"] == version)
@@ -98,7 +216,22 @@ class Corpus:
         speaker = table["speaker"].to_pylist()
         keep = np.array([bool(t and len(t.strip()) >= 2) and bool(s) for t, s in zip(text, speaker)]
                         ) & (duration >= UTTERANCE_SECONDS[language][0]) & (duration <= UTTERANCE_SECONDS[language][1])
+        if dataset in HELD_OUT_TEXT:
+            held = {_plain(t) for t in lance.dataset(str(directory / manifest["table_path"])).to_table(
+                columns=["text"], filter=f"array_has(splits, '{HELD_OUT_TEXT[dataset]}')")["text"].to_pylist()}
+            same = np.array([_plain(t) in held for t in text])
+            print(dataset, "dropped", int((keep & same).sum()), "utterances with a", HELD_OUT_TEXT[dataset], "sentence", flush=True)
+            keep &= ~same
+        session = None
+        if sessions:
+            # Keep only speakers with an utterance in every session, so any scene can enroll across sessions.
+            session = np.array([path.rsplit("/", 2)[-2] for path in table["relative_path"].to_pylist()])
+            names = np.array(speaker)
+            both = set.intersection(*(set(names[keep & (session == s)]) for s in SESSIONS))
+            keep &= np.isin(names, sorted(both))
         self.rows = table.filter(keep).to_pydict()
+        self.plain = [_plain(t) for t in self.rows["text"]]
+        self.session = session[keep] if sessions else None
         self.duration = duration[keep]
         names, inverse = np.unique(np.array(self.rows["speaker"]), return_inverse=True)
         order = np.argsort(inverse, kind="stable")
@@ -107,20 +240,27 @@ class Corpus:
         self.by_speaker = [order[bounds[i]:bounds[i + 1]] for i in range(len(names))]
         print(dataset, "utterances", int(keep.sum()), "speakers", len(names), flush=True)
 
-    def pick(self, rng, speaker, count, low=None, high=None, exclude=()):
-        """``count`` distinct utterances of one speaker, optionally within a duration range."""
+    def pick(self, rng, speaker, count, low=None, high=None, exclude=(), session=None):
+        """``count`` distinct utterances of one speaker, optionally within a duration range and one session."""
         rows = [i for i in self.by_speaker[speaker] if i not in exclude
-                and (low is None or low <= self.duration[i] <= high)]
+                and (low is None or low <= self.duration[i] <= high)
+                and (session is None or self.session[i] == session)]
         return rng.sample(rows, count) if len(rows) >= count else None
+
+    def not_enrollment(self, speaker, targets):
+        """The target utterances and every other utterance of the speaker that says one of their sentences."""
+        said = {self.plain[i] for i in targets}
+        return set(targets) | {i for i in self.by_speaker[speaker] if self.plain[i] in said}
 
     def usable(self, speaker, count):
         return len(self.by_speaker[speaker]) >= count
 
 
 class Builder:
-    def __init__(self, language, rng, neighbors=None, hard_rank=10):
-        self.language, self.rng = language, rng
-        self.corpora = [Corpus(*c, language) for c in CORPORA[language]]
+    def __init__(self, language, rng, neighbors=None, hard_rank=10, xsession=False, magicdata=False):
+        self.language, self.rng, self.xsession = language, rng, xsession
+        corpora = XSESSION_CORPORA if xsession else MAGICDATA_CORPORA if magicdata else CORPORA[language]
+        self.corpora = [Corpus(*c, language, sessions=xsession and c[4]) for c in corpora]
         self.targets = [c for c in self.corpora if c.target]
         self.neighbors, self.hard_rank = neighbors, hard_rank
         self.where = {name: (c, i) for c in self.corpora for i, name in enumerate(c.speakers)}
@@ -135,6 +275,13 @@ class Builder:
             "sample_rate": rate, "channels": rows["channels"][i] or 1,
             "num_frames": start + frames, "duration": round((start + frames) / rate, 3)})
         return {"cut_id": cut, "start": round(start / rate, 3), "duration": round(frames / rate, 3)}
+
+    def sessions(self):
+        """(target session, enrollment session) of a --xsession scene: the other session with XSESSION_CROSS_PROB."""
+        if not self.xsession:
+            return None, None
+        own = self.rng.choice(SESSIONS)
+        return own, next(s for s in SESSIONS if s != own) if self.rng.random() < XSESSION_CROSS_PROB else own
 
     def other_speaker(self, used, count):
         """A (corpus, speaker, utterances) for one other speaker, never one already in the scene."""
@@ -170,8 +317,11 @@ class Builder:
                 if not near:
                     continue
             wanted = 0 if hard == "absent" else 1 if mode != "alternate" else (2 if rng.random() < 0.4 else 1)
-            targets = corpus.pick(rng, speaker, wanted, *((short_low, short_high) if mode == "short" else (None, None))) if wanted else []
-            enrollment = corpus.pick(rng, speaker, 1, *ENROLLMENT_SECONDS, exclude=set(targets)) if targets is not None else None
+            own, enrolled = self.sessions()
+            targets = corpus.pick(rng, speaker, wanted, *((short_low, short_high) if mode == "short" else (None, None)),
+                                  session=own) if wanted else []
+            enrollment = corpus.pick(rng, speaker, 1, *ENROLLMENT_SECONDS, exclude=corpus.not_enrollment(speaker, targets),
+                                     session=enrolled) if targets is not None else None
             if targets is not None and enrollment:
                 break
         used = {corpus.speakers[speaker]}
@@ -210,6 +360,8 @@ class Builder:
         joiner = "" if self.language == "zh" else " "
         scene = {"hard": {"kind": hard, "neighbor": name,
                           "cosine": dict(self.neighbors[corpus.speakers[speaker]])[name]}} if hard else {}
+        if self.xsession and targets:
+            scene["session"] = {"targets": own, "enrollment": enrolled}
         return {
             **scene, "mode": mode, "target_speaker": corpus.speakers[speaker],
             "targets": [{**self.ref(corpus, i), "text": corpus.rows["text"][i].strip()} for i in targets],
@@ -237,8 +389,9 @@ class Builder:
         low, high = FULL_UTTERANCE_SECONDS
         while True:
             speaker = rng.randrange(len(corpus.speakers))
-            targets = corpus.pick(rng, speaker, turns, low, high)
-            enrollment = corpus.pick(rng, speaker, 1, *ENROLLMENT_SECONDS, exclude=set(targets)) if targets else None
+            own, enrolled = self.sessions()
+            targets = corpus.pick(rng, speaker, turns, low, high, session=own)
+            enrollment = corpus.pick(rng, speaker, 1, *ENROLLMENT_SECONDS, exclude=corpus.not_enrollment(speaker, targets), session=enrolled) if targets else None
             if enrollment:
                 break
         used = {corpus.speakers[speaker]}
@@ -260,6 +413,7 @@ class Builder:
             others.append({"speaker": other.speakers[who], "gap": list(gap), "utts": [self.ref(other, i) for i in picks]})
             seconds = max(seconds, sum(other.duration[i] for i in picks) + gap[1] * (len(picks) - 1))
         return {
+            **({"session": {"targets": own, "enrollment": enrolled}} if self.xsession else {}),
             "mode": "full", "target_speaker": corpus.speakers[speaker], "target_gap": list(target_gap),
             "targets": [{**self.ref(corpus, i), "text": corpus.rows["text"][i].strip()} for i in targets],
             "enrollment": self.ref(corpus, enrollment[0]), "interferers": others}, seconds
@@ -272,13 +426,68 @@ class Builder:
         while True:
             speaker = rng.randrange(len(corpus.speakers))
             targets = corpus.pick(rng, speaker, 1, *SOLO_UTTERANCE_SECONDS)
-            enrollment = corpus.pick(rng, speaker, 1, *ENROLLMENT_SECONDS, exclude=set(targets)) if targets else None
+            enrollment = corpus.pick(rng, speaker, 1, *ENROLLMENT_SECONDS, exclude=corpus.not_enrollment(speaker, targets)) if targets else None
             if enrollment:
                 break
         gap = rng.choice(GAP_PROFILES)
         scene = {"mode": "full", "target_speaker": corpus.speakers[speaker], "target_gap": list(gap),
                  "targets": [{**self.ref(corpus, targets[0]), "text": corpus.rows["text"][targets[0]].strip()}],
                  "enrollment": self.ref(corpus, enrollment[0]), "interferers": []}
+        paired = self.draw_twin(scene) if twin else None
+        self.audio.update(self.pending)
+        return scene, paired
+
+    def handover_pair(self, twin):
+        """One target utterance and one other speaker's utterance in a row; when ``twin``, the same with another speaker enrolled."""
+        rng = self.rng
+        self.pending = {}
+        corpus = rng.choice(self.targets)
+        low, high = HANDOVER_UTTERANCE_SECONDS
+        while True:
+            speaker = rng.randrange(len(corpus.speakers))
+            own, enrolled = self.sessions()
+            targets = corpus.pick(rng, speaker, 1, low, high, session=own)
+            enrollment = corpus.pick(rng, speaker, 1, *ENROLLMENT_SECONDS, exclude=corpus.not_enrollment(speaker, targets), session=enrolled) if targets else None
+            if enrollment:
+                break
+        name = corpus.speakers[speaker]
+        hard, other = None, None
+        near = [(n, c) for n, c in (self.neighbors or {}).get(name, [])[: self.hard_rank] if n in self.where]
+        if near and rng.random() < 0.5:
+            neighbor, cosine = rng.choice(near)
+            close, who = self.where[neighbor]
+            picks = close.pick(rng, who, 1, low, high)
+            if picks:
+                hard, other = {"kind": "handover", "neighbor": neighbor, "cosine": cosine}, (close, who, picks)
+        while other is None:
+            close, who, _ = self.other_speaker({name}, 1)
+            picks = close.pick(rng, who, 1, low, high)
+            other = (close, who, picks) if picks else None
+        close, who, picks = other
+        scene = {**({"hard": hard} if hard else {}),
+                 **({"session": {"targets": own, "enrollment": enrolled}} if self.xsession else {}),
+                 "mode": "alternate", "target_speaker": name,
+                 "targets": [{**self.ref(corpus, targets[0]), "text": corpus.rows["text"][targets[0]].strip()}],
+                 "enrollment": self.ref(corpus, enrollment[0]),
+                 "interferers": [{"speaker": close.speakers[who], "utts": [self.ref(close, picks[0])]}]}
+        paired = self.draw_twin(scene) if twin else None
+        self.audio.update(self.pending)
+        return scene, paired
+
+    def alt_pair(self, twin):
+        """An alternate / burst / short scene and, when ``twin``, the scene with another speaker enrolled (transcript empty)."""
+        modes, weights = zip(*MODES[self.language])
+        scene, _ = self.scene(self.rng.choices(modes, weights)[0])
+        self.pending = {}
+        paired = self.draw_twin(scene) if twin else None
+        self.audio.update(self.pending)
+        return scene, paired
+
+    def hard_pair(self, twin):
+        """A present scene with a close neighbour of the target among the others and, when ``twin``, the scene with another speaker enrolled."""
+        modes, weights = zip(*MODES[self.language])
+        scene, _ = self.scene(self.rng.choices(modes, weights)[0], "present")
+        self.pending = {}
         paired = self.draw_twin(scene) if twin else None
         self.audio.update(self.pending)
         return scene, paired
@@ -303,11 +512,13 @@ class Builder:
             picks = corpus.pick(rng, who, 1, *ENROLLMENT_SECONDS) if corpus.speakers[who] not in present else None
             enrollment = (corpus, who, picks[0]) if picks else None
         corpus, who, utterance = enrollment
-        former = {"speaker": scene["target_speaker"], "gap": scene["target_gap"],
+        timed = scene["mode"] == "full"  # alternate scenes take their gaps from the loader
+        former = {"speaker": scene["target_speaker"], **({"gap": scene["target_gap"]} if timed else {}),
                   "utts": [{k: t[k] for k in ("cut_id", "start", "duration")} for t in scene["targets"]]}
         interferers = [*scene["interferers"], former]
         rng.shuffle(interferers)
-        return {"mode": "full", "target_speaker": corpus.speakers[who], "target_gap": scene["target_gap"],
+        return {"mode": scene["mode"], "target_speaker": corpus.speakers[who],
+                **({"target_gap": scene["target_gap"]} if timed else {}),
                 "targets": [], "enrollment": self.ref(corpus, utterance), "interferers": interferers,
                 "twin": {"kind": kind, **({"cosine": cosine} if cosine is not None else {})}}
 
@@ -326,6 +537,8 @@ def record(language, number, scene, joiner, pair=None):
         labels["hard_cosine"] = scene["hard"]["cosine"]
     if pair is not None:
         labels["pair"] = pair
+    if "session" in scene:
+        labels["cross_session"] = scene["session"]["targets"] != scene["session"]["enrollment"]
     if "twin" in scene:
         labels["twin_enrollment"] = scene["twin"]["kind"]
         if "cosine" in scene["twin"]:
@@ -353,26 +566,46 @@ def main():
     parser.add_argument("--multi", action="store_true", help="build the multi-turn (full) version with twins")
     parser.add_argument("--twin-share", type=float, default=0.26, help="share of the records that are twins")
     parser.add_argument("--solo", action="store_true", help="build the short solo version (one short target utterance, nobody else) with twins")
+    parser.add_argument("--handover", action="store_true", help="build the handover version (target and one other speaker, one utterance each, in a row) with twins")
+    parser.add_argument("--alt-twins", action="store_true", help="build the turn-taking version (alternate / burst / short) with twins")
+    parser.add_argument("--hard-twins", action="store_true", help="build the hard (similar voice) version with twins")
+    parser.add_argument("--xsession", action="store_true", help="KeSpeech targets enrolled from the same or the other session (zh only)")
+    parser.add_argument("--magicdata", action="store_true", help="MagicData targets (zh only)")
     args = parser.parse_args()
-    if (args.multi or args.solo) and not 0 <= args.twin_share < 1:
+    if sum((args.multi, args.solo, args.handover, args.alt_twins, args.hard_twins)) > 1:
+        parser.error("--multi, --solo, --handover, --alt-twins and --hard-twins build different pools; pick one")
+    if args.hard_twins and not args.neighbors:
+        parser.error("--hard-twins needs --neighbors")
+    if (args.xsession or args.magicdata) and (args.en or args.solo):
+        parser.error("--xsession and --magicdata build zh pools: pass --en 0, without --solo")
+    if args.xsession and args.magicdata:
+        parser.error("--xsession and --magicdata take their targets from different corpora; pick one")
+    twinned = args.multi or args.solo or args.handover or args.alt_twins or args.hard_twins
+    if twinned and not 0 <= args.twin_share < 1:
         parser.error("--twin-share must be in [0, 1)")
     VERSION = args.version
     args.output_dir.mkdir(parents=True, exist_ok=True)
     neighbors = json.loads(args.neighbors.read_text()) if args.neighbors else None
     report = {}
     for language, count in (("zh", args.zh), ("en", args.en)):
+        if (args.xsession or args.magicdata) and not count:
+            continue
         builder = Builder(language, random.Random(f"{SEED}:{language}:{args.version}"),
-                          neighbors and neighbors[language], args.hard_rank)
+                          neighbors and neighbors[language], args.hard_rank, args.xsession, args.magicdata)
         modes, weights = zip(*MODES[language])
         records, tally = [], Counter()
-        if args.multi or args.solo:
+        if twinned:
             twin_chance = args.twin_share / (1 - args.twin_share)  # twins per base scene
             number = 0
             while number < count:
-                scene, paired = (builder.solo_pair if args.solo else builder.full_pair)(builder.rng.random() < twin_chance)
+                draw = builder.solo_pair if args.solo else builder.handover_pair if args.handover \
+                    else builder.alt_pair if args.alt_twins else builder.hard_pair if args.hard_twins else builder.full_pair
+                scene, paired = draw(builder.rng.random() < twin_chance)
                 joiner = "" if language == "zh" else " "
                 records.append(record(language, number, scene, joiner, pair=number if paired else None))
-                tally["solo" if args.solo else f"full-{len(scene['targets'])}turns"] += 1
+                tally["solo" if args.solo else f"handover-{'near' if 'hard' in scene else 'random'}" if args.handover
+                      else scene["mode"] if args.alt_twins else f"present-{scene['mode']}" if args.hard_twins
+                      else f"full-{len(scene['targets'])}turns"] += 1
                 number += 1
                 if paired and number < count:
                     records.append(record(language, number, paired, joiner, pair=number - 1))

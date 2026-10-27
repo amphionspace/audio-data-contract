@@ -102,6 +102,46 @@ NOTES = {
 }
 
 
+# Overview summaries (provenance.summary) for datasets declared only in this file.
+SUMMARIES = {
+    "csemotions": "中文情感语音（CSEMOTIONS），TTS 用",
+    "emilia_yodas": "Emilia-YODAS 多语种 YouTube 语音",
+    "galgame": "日语视觉小说配音，TTS 用",
+    "genshin_voice": "《原神》多语配音，TTS 用",
+    "hifitts": "英文有声书高保真朗读（Hi-Fi TTS）",
+    "hifitts2": "英文有声书高保真朗读（Hi-Fi TTS 2）",
+    "libriheavy": "英文有声书，带标点和大小写（Libriheavy）",
+    "libritts_r": "英文有声书 TTS 语料，音频经修复（LibriTTS-R）",
+    "ljspeech": "单人英文朗读（LJSpeech）",
+    "mls_sidon": "8 种语言有声书，音频经 Sidon 修复（MLS）",
+    "starrail_voice": "《崩坏：星穹铁道》多语配音，TTS 用",
+    "vctk": "多口音英语朗读（VCTK）",
+    "wutheringwaves": "《鸣潮》多语配音，TTS 用",
+    "zenless_voice": "《绝区零》多语配音，TTS 用",
+}
+
+
+# Raw source copies in COS. Each release manifest input was found there with the
+# same size on 2026-10-26; the LibriHeavy/ directory holds other files.
+COS_SOURCES = {
+    "aishell3": "cos://amphion-tts-data-1373259071/AISHELL-3/",
+    "csemotions": "cos://amphion-tts-data-1373259071/CSEMOTIONS/",
+    "emilia": "cos://amphion-tts-data-1373259071/Emilia/",
+    "emilia2": "cos://amphion-tts-data-1373259071/Emilia2/",
+    "emilia_yodas": "cos://amphion-tts-data-1373259071/Emilia-YODAS/",
+    "galgame": "cos://amphion-tts-data-1373259071/Galgame-VisualNovel-Reupload/",
+    "genshin_voice": "cos://amphion-tts-data-1373259071/genshin-voice/",
+    "hifitts": "cos://amphion-tts-data-1373259071/HiFiTTS/",
+    "libritts_r": "cos://amphion-tts-data-1373259071/LibriTTS-R/",
+    "ljspeech": "cos://amphion-tts-data-1373259071/LJSpeech/",
+    "starrail_voice": "cos://amphion-tts-data-1373259071/starrail-voice/",
+    "vctk": "cos://amphion-tts-data-1373259071/VCTK/",
+    "wenetspeech4tts": "cos://amphion-tts-data-1373259071/WenetSpeech4TTS/",
+    "wutheringwaves": "cos://amphion-tts-data-1373259071/WutheringWaves-2.2/",
+    "zenless_voice": "cos://amphion-tts-data-1373259071/zenless-voice/",
+}
+
+
 def _sha256(path: Path) -> str:
     digest = hashlib.sha256()
     with path.open("rb") as stream:
@@ -171,6 +211,10 @@ def release_entry(data_root: Path, dataset_id: str, release_id: str) -> dict:
         **{key: manifest[key] for key in ("finished_at",) if key in manifest},
         "description": "音频编码字节存放在 Lance 表内；原始划分在 metadata_json.original_split，统一输出全部为 train。ASR 用 tts_lance.iter_asr_samples（tts-asr-rules/v1）读取，会排除原始 dev/test 等。",
     }
+    if dataset_id in SUMMARIES:
+        provenance["summary"] = SUMMARIES[dataset_id]
+    if dataset_id in COS_SOURCES:
+        provenance["cos_locations"] = [{"uri": COS_SOURCES[dataset_id], "content": "source"}]
     if asr:
         provenance["asr_notes"] = asr
     if dataset_id in KNOWN_ISSUES:

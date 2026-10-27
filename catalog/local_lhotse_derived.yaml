@@ -34,6 +34,7 @@
           duration_hours: 1980.1218666666666
           duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:GigaSpeech2/lhotse/gigaspeech2_id_supervisions_train_full.jsonl.gz'
     provenance:
+      summary: 印尼语网络语音（GigaSpeech 2）；含热词版
       source: local DATA_ASR lhotse scan
       snapshot_date: '2026-08-05'
       integrity: verified
@@ -304,6 +305,9 @@
       source: local DATA_ASR lhotse scan
       snapshot_date: '2026-08-05'
       integrity: verified
+      cos_locations:
+        - uri: cos://amphion-audio-backup-1373259071/audio-data-contract/datasets/wenetspeech/
+          content: files
   - schema_version: dataset-catalog/2.0
     dataset_id: commonvoice_en_clean
     version: clean-v1-20260805
@@ -382,6 +386,7 @@
         - whisper-large-v3
       rules: v1
     provenance:
+      summary: Common Voice 英语众包朗读；含清洗、热词、加噪版
       source: local DATA_ASR lhotse scan
       snapshot_date: '2026-08-05'
       integrity: verified
@@ -1033,3 +1038,6 @@
       registered_at: '2026-08-28'
       integrity: verified
       verification_report: WenetSpeech/lhotse/clean/v3-firered/verification_report.json
+      cos_locations:
+        - uri: cos://amphion-audio-backup-1373259071/audio-data-contract/datasets/wenetspeech/
+          content: files

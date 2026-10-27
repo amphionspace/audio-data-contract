@@ -621,6 +621,7 @@
         silence_seconds: 3
       source_version: original-source-20260910
     provenance:
+      summary: AISHELL-2 混合的目标说话人训练与测试数据
       description: AISHELLMix 原版历史训练（enrollment 至少 2 秒）与项目测试数据；纯转写、独立 enrollment/mixture、空转写负样本。
       duration_label: 按目标样本累计混合音频，非去重语料时长
       integrity: verified
