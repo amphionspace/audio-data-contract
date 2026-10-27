@@ -124,7 +124,7 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [ts_asr_singing](data-versions.md#ts_asr_singing) | zh | 目标说话人语音识别 | 0.3 | 目标说话人评测：歌声干扰 | 没有 |
 | [ts_real_train](data-versions.md#ts_real_train) | zh | 目标说话人语音识别 | 123.6 | 真实会议切出的目标说话人训练窗口 | 没有 |
 | [vitw_zh_far_asr](data-versions.md#vitw_zh_far_asr) | zh | 语音识别 | 49.6 | VITW 中文远场转写训练数据 | 没有 |
-| [wenetspeech](data-versions.md#wenetspeech) | zh | 语音识别 | 10,025.4 | 中文网络语音万余小时（WenetSpeech）；含清洗版 | 快照 20260914、`备份桶:audio-data-contract/datasets/wenetspeech/` |
+| [wenetspeech](data-versions.md#wenetspeech) | zh | 语音识别 | 10,025.4 | 中文网络语音万余小时（WenetSpeech）；含清洗版 | 部分版本：快照 20260914、`备份桶:audio-data-contract/datasets/wenetspeech/` |
 | [wenetspeech4tts](data-versions.md#wenetspeech4tts) | zh | 语音识别、语音合成 | ≈7,700.0 | WenetSpeech 筛出的中文 TTS 语音 | 快照 20260914、`TTS 桶:WenetSpeech4TTS/`（原始数据） |
 | [wenetspeech_chuan](data-versions.md#wenetspeech_chuan) | zh | 语音识别 | 10,259.6 | 川渝方言网络语音（WenetSpeech-Chuan） | 部分版本：快照 20260914 |
 | [wenetspeech_diarize](data-versions.md#wenetspeech_diarize) | zh | diarization、带说话人标注的语音识别 | — | WenetSpeech 长音频的说话人日志伪标签 | 没有 |
