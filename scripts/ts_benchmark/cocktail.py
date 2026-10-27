@@ -7,8 +7,10 @@ transformers with ``trust_remote_code``, bf16, greedy. The model's own feature e
 than 4 s at a random point, so the random generator is seeded per record to make a run reproducible.
 The output has the layout ``analyze.py`` reads (``predictions.jsonl`` with ``id`` and ``prediction``).
 
-Under AmphionEval it runs as a ``--worker-command`` (``worker`` subcommand): the request audio is the 3 s
-enrollment followed by the mixture, split back at 3 s, and ``--gpus`` shards the requests over GPUs.
+Under AmphionEval it runs as a ``--worker-command`` (``worker`` subcommand): the request audio is the
+enrollment (the eval set's ``enroll_seconds``, 3 s unless set; pass the same ``--enroll-seconds``) followed by
+the mixture, split back there, and ``--gpus`` shards the requests over GPUs. With ``--cot`` the model writes
+``<think>...</think><answer>...</answer>`` and only the answer is kept.
 
     python scripts/ts_benchmark/cocktail.py jobs --dataset ts_asr_benchmark --version v3-20261013 \
         --per-split 40 --roots roots.json --output jobs.jsonl
@@ -21,13 +23,14 @@ import gzip
 import hashlib
 import json
 import os
+import re
 import subprocess
 import sys
 import time
 from pathlib import Path
 
 MODEL = "/workspace/model/Xiaomi-CocktailASR-1"
-ENROLL_SECONDS = 3  # AmphionEval prepares TS-ASR audio as a 3 s enrollment plus the mixture
+ENROLL_SECONDS = 3  # AmphionEval's default TS-ASR enrollment length (eval sets may set enroll_seconds)
 SAMPLE_RATE = 16000
 
 
@@ -71,6 +74,15 @@ def transcribe(model, extractor_random, sample_id, mix, enroll, args):
     return model(mix, enroll, cot=args.cot, max_new_tokens=args.max_new_tokens)
 
 
+def final_text(output, cot):
+    """The transcript in the model output; with CoT only the <answer> part."""
+    if not cot:
+        return output
+    # No <answer> means the reasoning ran out of tokens: the model gave no transcript.
+    answer = re.search(r"<answer>(.*?)(?:</answer>|$)", output, re.DOTALL)
+    return answer.group(1).strip() if answer else ""
+
+
 def run(args):
     import soundfile as sf
 
@@ -89,7 +101,8 @@ def run(args):
             try:
                 # Arrays, not paths: torchaudio.load needs torchcodec in recent torch versions.
                 mix, enroll = (sf.read(job[k], dtype="float32")[0] for k in ("mix", "enroll"))
-                text, error = transcribe(model, extractor_random, job["id"], mix, enroll, args), None
+                text, error = final_text(transcribe(model, extractor_random, job["id"], mix, enroll, args),
+                                         args.cot), None
             except Exception as exc:  # noqa: BLE001 - recorded, the run continues
                 text, error = "", f"{type(exc).__name__}: {exc}"
             out.write(json.dumps({"id": job["id"], "prediction": text, "reference": job["reference"],
@@ -120,15 +133,17 @@ def worker(args):
 
     requests = [json.loads(line) for line in args.input.read_text(encoding="utf-8").splitlines() if line.strip()]
     model, extractor_random = load_model()
-    cut = ENROLL_SECONDS * SAMPLE_RATE
+    cut = round(args.enroll_seconds * SAMPLE_RATE)
     with Path(f"{args.output}.{args.shard}").open("w", encoding="utf-8") as out:
         for request in requests[args.shard::len(gpus)]:
             started = time.time()
             try:
                 audio, rate = sf.read(request["audio"], dtype="float32")
                 assert rate == SAMPLE_RATE, rate
-                text = transcribe(model, extractor_random, request["id"], audio[cut:], audio[:cut], args)
-                result = {"status": "success", "text": text}
+                output = transcribe(model, extractor_random, request["id"], audio[cut:], audio[:cut], args)
+                # The full CoT output stays in the worker file for auditing; ae scores "text" only.
+                result = {"status": "success", "text": final_text(output, args.cot),
+                          **({"cot_output": output} if args.cot else {})}
             except Exception as exc:  # noqa: BLE001 - reported per sample
                 result = {"status": "failed", "error": f"{type(exc).__name__}: {exc}"}
             out.write(json.dumps({"id": request["id"], **result,
@@ -169,6 +184,7 @@ def main():
     p.add_argument("--output", type=Path, required=True)
     p.add_argument("--gpus", default="0")
     p.add_argument("--shard", type=int)
+    p.add_argument("--enroll-seconds", type=float, default=ENROLL_SECONDS)
     p.add_argument("--cot", action="store_true")
     p.add_argument("--max-new-tokens", type=int, default=None)
     p.set_defaults(func=worker)
