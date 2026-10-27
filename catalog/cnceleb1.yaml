@@ -40,6 +40,7 @@
         provenance:
           source_split: eval
     provenance:
+      summary: 中文跨场景声纹数据（CN-Celeb1）
       source: OpenSLR
       url: https://www.openslr.org/82/
       snapshot_date: '2026-09-11'

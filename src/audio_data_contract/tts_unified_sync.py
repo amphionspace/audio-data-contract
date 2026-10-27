@@ -102,6 +102,25 @@ NOTES = {
 }
 
 
+# Overview summaries (provenance.summary) for datasets declared only in this file.
+SUMMARIES = {
+    "csemotions": "中文情感语音（CSEMOTIONS），TTS 用",
+    "emilia_yodas": "Emilia-YODAS 多语种 YouTube 语音",
+    "galgame": "日语视觉小说配音，TTS 用",
+    "genshin_voice": "《原神》多语配音，TTS 用",
+    "hifitts": "英文有声书高保真朗读（Hi-Fi TTS）",
+    "hifitts2": "英文有声书高保真朗读（Hi-Fi TTS 2）",
+    "libriheavy": "英文有声书，带标点和大小写（Libriheavy）",
+    "libritts_r": "英文有声书 TTS 语料，音频经修复（LibriTTS-R）",
+    "ljspeech": "单人英文朗读（LJSpeech）",
+    "mls_sidon": "8 种语言有声书，音频经 Sidon 修复（MLS）",
+    "starrail_voice": "《崩坏：星穹铁道》多语配音，TTS 用",
+    "vctk": "多口音英语朗读（VCTK）",
+    "wutheringwaves": "《鸣潮》多语配音，TTS 用",
+    "zenless_voice": "《绝区零》多语配音，TTS 用",
+}
+
+
 def _sha256(path: Path) -> str:
     digest = hashlib.sha256()
     with path.open("rb") as stream:
@@ -171,6 +190,8 @@ def release_entry(data_root: Path, dataset_id: str, release_id: str) -> dict:
         **{key: manifest[key] for key in ("finished_at",) if key in manifest},
         "description": "音频编码字节存放在 Lance 表内；原始划分在 metadata_json.original_split，统一输出全部为 train。ASR 用 tts_lance.iter_asr_samples（tts-asr-rules/v1）读取，会排除原始 dev/test 等。",
     }
+    if dataset_id in SUMMARIES:
+        provenance["summary"] = SUMMARIES[dataset_id]
     if asr:
         provenance["asr_notes"] = asr
     if dataset_id in KNOWN_ISSUES:

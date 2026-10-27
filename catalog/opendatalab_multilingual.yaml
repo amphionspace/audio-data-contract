@@ -227,6 +227,7 @@
         duration_hours: 1114.1182
         duration_basis: Sum of audio.duration in the manifest
   provenance:
+    summary: 8 个语种的语音识别数据（OpenDataLab）
     status: complete
     synthetic: none
     description: OpenDataLab 多语言语音识别数据，8 个语种（ar 阿拉伯语、cs 捷克语、hu 匈牙利语、ko 韩语、ru 俄语、sr 塞尔维亚语、th 泰语、vi 越南语），每语种约 1000 小时。16 kHz

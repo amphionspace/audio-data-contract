@@ -123,6 +123,7 @@
         provenance:
           source_split: eval
     provenance:
+      summary: 家庭聚会英文对话，多通道远场重叠（CHiME-6）
       source: OpenSLR
       url: https://www.openslr.org/150/
       snapshot_date: '2026-09-11'

@@ -341,9 +341,17 @@ def init(args):
     config = {'roots': {k: str(p) for k, p in roots.items()}, 'allowed': allowed,
               'bucket': args.bucket, 'region': args.region, 'prefix': args.prefix,
               'datasets': [s.to_dict() for s in catalog]}
+    chosen = catalog
+    if args.dataset_file:
+        # Dependencies still resolve against the whole catalog; only these are inventoried and bound.
+        wanted = set(args.dataset_file.read_text().split())
+        chosen = [s for s in catalog if s.key in wanted]
+        if len(chosen) != len(wanted):
+            raise ValueError('not in catalog: ' + ', '.join(sorted(wanted - {s.key for s in chosen})))
+        config['selected'] = sorted(wanted)
     db = connect(args.work)
     inv = Inventory(db, roots, allowed, config['datasets'])
-    for spec in catalog:
+    for spec in chosen:
         if spec.provenance.get('inventory_status') == 'download_planned':
             verified = False
             for artifact in spec.artifacts:
@@ -623,6 +631,7 @@ def main():
     parser.add_argument('--region', default='ap-guangzhou')
     parser.add_argument('--prefix', default='audio-data-contract/v1/full-catalog-20260914')
     parser.add_argument('--allow-root', type=Path, action='append', default=[])
+    parser.add_argument('--dataset-file', type=Path, help='Back up only the dataset_id@version lines listed in this file')
     parser.add_argument('--hash-journal', type=Path, action='append', default=[])
     parser.add_argument('--reuse', type=Path, action='append', default=[])
     parser.add_argument('--shard-bytes', type=int, default=4 * 1024**3)

@@ -355,6 +355,373 @@
       provenance:
         description: 'noise: {"kind": "nonspeech", "duration": [1, 15], "noise": {"kind": "fsd_events", "level_dbfs": [-40, -25]}, "noise_floor": {"dbfs": [-65, -35], "kinds": {"white": 0.15, "pink": 0.15, "real": 0.7}, "real_pools": ["wham", "dns5_audioset", "dns5_freesound"]}}'
   provenance:
+    summary: 目标说话人评测：噪声与背景人声
+    status: complete
+    synthetic: full
+    description: 目标说话人 ASR 评测集：由 AISHELL-3、KeSpeech、MagicData、AISHELL-2、AISHELL-1 的官方 test 划分合成，覆盖注册音频劣化、目标说话人进场离场与缺席、纯噪声、环境与设备。只用于评测，不进训练。场景见 scripts/ts_benchmark/recipe.yaml。
+    sources:
+    - aishell3@legacy-20260804:test
+    - kespeech@legacy-20260804:test
+    - magicdata@legacy-20260804:test
+    - aishell2@legacy-20260804:test
+    - aishell@legacy-20260804:test
+- schema_version: dataset-catalog/2.0
+  dataset_id: ts_asr_noise
+  version: v2-20261022
+  languages:
+  - zh
+  tasks:
+  - ts_asr
+  artifacts:
+  - name: audio-index
+    kind: audio-index
+    root_alias: ts_asr_noise
+    relative_path: versions/v2-20261022/audio-index.jsonl.gz
+    sha256: 353a672868c5b9b9453ef4ff59f7eee87b688121a612a12dee04036519d27937
+    metadata:
+      record_count: 4080
+  - name: panel-base-pos-records
+    kind: audio-records
+    root_alias: ts_asr_noise
+    relative_path: versions/v2-20261022/records/panel-base-pos.jsonl.gz
+    sha256: 38b358b3cf270196cbbcdf75ad619689fec4ec2f849713dabca64828f4bb4f97
+    metadata:
+      record_count: 120
+  - name: panel-base-neg-records
+    kind: audio-records
+    root_alias: ts_asr_noise
+    relative_path: versions/v2-20261022/records/panel-base-neg.jsonl.gz
+    sha256: 109ca37a74f97c2b7abfe4d589ea2c9f2338c70289cf8e0a3cef133d859812f0
+    metadata:
+      record_count: 120
+  - name: babble20-pos-records
+    kind: audio-records
+    root_alias: ts_asr_noise
+    relative_path: versions/v2-20261022/records/babble20-pos.jsonl.gz
+    sha256: 14a37adc591d8a0a5e8c9aa66047531c17ad89600ba97efd085c727e3199f210
+    metadata:
+      record_count: 120
+  - name: babble20-neg-records
+    kind: audio-records
+    root_alias: ts_asr_noise
+    relative_path: versions/v2-20261022/records/babble20-neg.jsonl.gz
+    sha256: d47a4ee109ef72205e18faa697fd251c614a8ede206a738d0c9e9d250054f17a
+    metadata:
+      record_count: 120
+  - name: babble10-pos-records
+    kind: audio-records
+    root_alias: ts_asr_noise
+    relative_path: versions/v2-20261022/records/babble10-pos.jsonl.gz
+    sha256: 71c77cdd206e1c0ad2dbb787648990c8e248839d4da395ad7ae545c196e29b5b
+    metadata:
+      record_count: 120
+  - name: babble10-neg-records
+    kind: audio-records
+    root_alias: ts_asr_noise
+    relative_path: versions/v2-20261022/records/babble10-neg.jsonl.gz
+    sha256: f64c7b8f12cb246b89b148edf5abed30a1d22430e93702bcf99085c1cb74df35
+    metadata:
+      record_count: 120
+  - name: babble5-pos-records
+    kind: audio-records
+    root_alias: ts_asr_noise
+    relative_path: versions/v2-20261022/records/babble5-pos.jsonl.gz
+    sha256: 9d4abdea47ac90cad358daf034d262b3e4e816583af1050554d674ece925dd3c
+    metadata:
+      record_count: 120
+  - name: babble5-neg-records
+    kind: audio-records
+    root_alias: ts_asr_noise
+    relative_path: versions/v2-20261022/records/babble5-neg.jsonl.gz
+    sha256: 506ebc8e67b8bd224e30e08dfb10eac8ce1485aa663701db902482fe124e67e1
+    metadata:
+      record_count: 120
+  - name: events20-pos-records
+    kind: audio-records
+    root_alias: ts_asr_noise
+    relative_path: versions/v2-20261022/records/events20-pos.jsonl.gz
+    sha256: 10f6e96b9313d11e1c4fdeb1ee490dfc125b2cbc8d747ce5764beaf03b86020d
+    metadata:
+      record_count: 120
+  - name: events20-neg-records
+    kind: audio-records
+    root_alias: ts_asr_noise
+    relative_path: versions/v2-20261022/records/events20-neg.jsonl.gz
+    sha256: cc404db0653cee2db131a36610404ce8ad6b240d4a9dd33e66a34cb7dc9a9458
+    metadata:
+      record_count: 120
+  - name: events10-pos-records
+    kind: audio-records
+    root_alias: ts_asr_noise
+    relative_path: versions/v2-20261022/records/events10-pos.jsonl.gz
+    sha256: aae7332ed0a70c83febbb265fa8f99bbfce9c9941de9bd32ba29c1d2b9247d06
+    metadata:
+      record_count: 120
+  - name: events10-neg-records
+    kind: audio-records
+    root_alias: ts_asr_noise
+    relative_path: versions/v2-20261022/records/events10-neg.jsonl.gz
+    sha256: 55430edeeba0be9c919f8e1b7cf456c280dd48c4dab429e250b9b99fa5b96e19
+    metadata:
+      record_count: 120
+  - name: crowd10-pos-records
+    kind: audio-records
+    root_alias: ts_asr_noise
+    relative_path: versions/v2-20261022/records/crowd10-pos.jsonl.gz
+    sha256: 99fa6e11abf06bed5198851b8920f831623fb6679b63224352aba664f4782dce
+    metadata:
+      record_count: 120
+  - name: crowd10-neg-records
+    kind: audio-records
+    root_alias: ts_asr_noise
+    relative_path: versions/v2-20261022/records/crowd10-neg.jsonl.gz
+    sha256: 0013977fb17039489b3b0424b4e721d5a0ebf70ba532ff79eea51843c3d398cb
+    metadata:
+      record_count: 120
+  - name: nonspeech-babble-records
+    kind: audio-records
+    root_alias: ts_asr_noise
+    relative_path: versions/v2-20261022/records/nonspeech-babble.jsonl.gz
+    sha256: a93dbe750774971881bdea9513a7d91e08e63ae81db50c0123df5751e8e0e9fd
+    metadata:
+      record_count: 120
+  - name: nonspeech-crowd-records
+    kind: audio-records
+    root_alias: ts_asr_noise
+    relative_path: versions/v2-20261022/records/nonspeech-crowd.jsonl.gz
+    sha256: 169fd4a45cbcdd05f8408c40f655b0fcf5bb4ae4e9ea5ce6807c8d15fb0430d7
+    metadata:
+      record_count: 120
+  - name: nonspeech-events-records
+    kind: audio-records
+    root_alias: ts_asr_noise
+    relative_path: versions/v2-20261022/records/nonspeech-events.jsonl.gz
+    sha256: 7be60fdab4c612c6628328fbdd851539f58a8f58bb6353983b61750eea08c652
+    metadata:
+      record_count: 120
+  splits:
+    panel-base-pos:
+      artifacts:
+        records:
+        - panel-base-pos-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 120
+        duration_hours: 0.373
+        duration_basis: Mixture duration
+      provenance:
+        description: 'noise: {"kind": "pos", "schedule": "full", "k": [1, 2], "duration": [6, 15], "sir_db": [-3, 3], "pair": "panel-pos", "noise_floor": {"dbfs": [-65, -35], "kinds": {"white": 0.15, "pink": 0.15, "real": 0.7}, "real_pools": ["wham", "dns5_audioset", "dns5_freesound"]}, "enroll_store_seconds": 10}'
+    panel-base-neg:
+      artifacts:
+        records:
+        - panel-base-neg-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 120
+        duration_hours: 0.3522
+        duration_basis: Mixture duration
+      provenance:
+        description: 'noise: {"kind": "neg", "k": [1, 2], "duration": [6, 15], "pair": "panel-neg", "noise_floor": {"dbfs": [-65, -35], "kinds": {"white": 0.15, "pink": 0.15, "real": 0.7}, "real_pools": ["wham", "dns5_audioset", "dns5_freesound"]}, "enroll_store_seconds": 10}'
+    babble20-pos:
+      artifacts:
+        records:
+        - babble20-pos-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 120
+        duration_hours: 0.373
+        duration_basis: Mixture duration
+      provenance:
+        description: 'noise: {"kind": "pos", "schedule": "full", "k": [1, 2], "duration": [6, 15], "sir_db": [-3, 3], "noise": {"kind": "babble_zh", "snr_db": [20, 20]}, "pair": "panel-pos", "noise_floor": {"dbfs": [-65, -35], "kinds": {"white": 0.15, "pink": 0.15, "real": 0.7}, "real_pools": ["wham", "dns5_audioset", "dns5_freesound"]}, "enroll_store_seconds": 10}'
+    babble20-neg:
+      artifacts:
+        records:
+        - babble20-neg-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 120
+        duration_hours: 0.3522
+        duration_basis: Mixture duration
+      provenance:
+        description: 'noise: {"kind": "neg", "k": [1, 2], "duration": [6, 15], "noise": {"kind": "babble_zh", "snr_db": [20, 20]}, "pair": "panel-neg", "noise_floor": {"dbfs": [-65, -35], "kinds": {"white": 0.15, "pink": 0.15, "real": 0.7}, "real_pools": ["wham", "dns5_audioset", "dns5_freesound"]}, "enroll_store_seconds": 10}'
+    babble10-pos:
+      artifacts:
+        records:
+        - babble10-pos-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 120
+        duration_hours: 0.373
+        duration_basis: Mixture duration
+      provenance:
+        description: 'noise: {"kind": "pos", "schedule": "full", "k": [1, 2], "duration": [6, 15], "sir_db": [-3, 3], "noise": {"kind": "babble_zh", "snr_db": [10, 10]}, "pair": "panel-pos", "noise_floor": {"dbfs": [-65, -35], "kinds": {"white": 0.15, "pink": 0.15, "real": 0.7}, "real_pools": ["wham", "dns5_audioset", "dns5_freesound"]}, "enroll_store_seconds": 10}'
+    babble10-neg:
+      artifacts:
+        records:
+        - babble10-neg-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 120
+        duration_hours: 0.3522
+        duration_basis: Mixture duration
+      provenance:
+        description: 'noise: {"kind": "neg", "k": [1, 2], "duration": [6, 15], "noise": {"kind": "babble_zh", "snr_db": [10, 10]}, "pair": "panel-neg", "noise_floor": {"dbfs": [-65, -35], "kinds": {"white": 0.15, "pink": 0.15, "real": 0.7}, "real_pools": ["wham", "dns5_audioset", "dns5_freesound"]}, "enroll_store_seconds": 10}'
+    babble5-pos:
+      artifacts:
+        records:
+        - babble5-pos-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 120
+        duration_hours: 0.373
+        duration_basis: Mixture duration
+      provenance:
+        description: 'noise: {"kind": "pos", "schedule": "full", "k": [1, 2], "duration": [6, 15], "sir_db": [-3, 3], "noise": {"kind": "babble_zh", "snr_db": [5, 5]}, "pair": "panel-pos", "noise_floor": {"dbfs": [-65, -35], "kinds": {"white": 0.15, "pink": 0.15, "real": 0.7}, "real_pools": ["wham", "dns5_audioset", "dns5_freesound"]}, "enroll_store_seconds": 10}'
+    babble5-neg:
+      artifacts:
+        records:
+        - babble5-neg-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 120
+        duration_hours: 0.3522
+        duration_basis: Mixture duration
+      provenance:
+        description: 'noise: {"kind": "neg", "k": [1, 2], "duration": [6, 15], "noise": {"kind": "babble_zh", "snr_db": [5, 5]}, "pair": "panel-neg", "noise_floor": {"dbfs": [-65, -35], "kinds": {"white": 0.15, "pink": 0.15, "real": 0.7}, "real_pools": ["wham", "dns5_audioset", "dns5_freesound"]}, "enroll_store_seconds": 10}'
+    events20-pos:
+      artifacts:
+        records:
+        - events20-pos-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 120
+        duration_hours: 0.373
+        duration_basis: Mixture duration
+      provenance:
+        description: 'noise: {"kind": "pos", "schedule": "full", "k": [1, 2], "duration": [6, 15], "sir_db": [-3, 3], "noise": {"kind": "fsd_events", "snr_db": [20, 20]}, "pair": "panel-pos", "noise_floor": {"dbfs": [-65, -35], "kinds": {"white": 0.15, "pink": 0.15, "real": 0.7}, "real_pools": ["wham", "dns5_audioset", "dns5_freesound"]}, "enroll_store_seconds": 10}'
+    events20-neg:
+      artifacts:
+        records:
+        - events20-neg-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 120
+        duration_hours: 0.3522
+        duration_basis: Mixture duration
+      provenance:
+        description: 'noise: {"kind": "neg", "k": [1, 2], "duration": [6, 15], "noise": {"kind": "fsd_events", "snr_db": [20, 20]}, "pair": "panel-neg", "noise_floor": {"dbfs": [-65, -35], "kinds": {"white": 0.15, "pink": 0.15, "real": 0.7}, "real_pools": ["wham", "dns5_audioset", "dns5_freesound"]}, "enroll_store_seconds": 10}'
+    events10-pos:
+      artifacts:
+        records:
+        - events10-pos-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 120
+        duration_hours: 0.373
+        duration_basis: Mixture duration
+      provenance:
+        description: 'noise: {"kind": "pos", "schedule": "full", "k": [1, 2], "duration": [6, 15], "sir_db": [-3, 3], "noise": {"kind": "fsd_events", "snr_db": [10, 10]}, "pair": "panel-pos", "noise_floor": {"dbfs": [-65, -35], "kinds": {"white": 0.15, "pink": 0.15, "real": 0.7}, "real_pools": ["wham", "dns5_audioset", "dns5_freesound"]}, "enroll_store_seconds": 10}'
+    events10-neg:
+      artifacts:
+        records:
+        - events10-neg-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 120
+        duration_hours: 0.3522
+        duration_basis: Mixture duration
+      provenance:
+        description: 'noise: {"kind": "neg", "k": [1, 2], "duration": [6, 15], "noise": {"kind": "fsd_events", "snr_db": [10, 10]}, "pair": "panel-neg", "noise_floor": {"dbfs": [-65, -35], "kinds": {"white": 0.15, "pink": 0.15, "real": 0.7}, "real_pools": ["wham", "dns5_audioset", "dns5_freesound"]}, "enroll_store_seconds": 10}'
+    crowd10-pos:
+      artifacts:
+        records:
+        - crowd10-pos-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 120
+        duration_hours: 0.373
+        duration_basis: Mixture duration
+      provenance:
+        description: 'noise: {"kind": "pos", "schedule": "full", "k": [1, 2], "duration": [6, 15], "sir_db": [-3, 3], "noise": {"kind": "fsd_crowd", "snr_db": [10, 10]}, "pair": "panel-pos", "noise_floor": {"dbfs": [-65, -35], "kinds": {"white": 0.15, "pink": 0.15, "real": 0.7}, "real_pools": ["wham", "dns5_audioset", "dns5_freesound"]}, "enroll_store_seconds": 10}'
+    crowd10-neg:
+      artifacts:
+        records:
+        - crowd10-neg-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 120
+        duration_hours: 0.3522
+        duration_basis: Mixture duration
+      provenance:
+        description: 'noise: {"kind": "neg", "k": [1, 2], "duration": [6, 15], "noise": {"kind": "fsd_crowd", "snr_db": [10, 10]}, "pair": "panel-neg", "noise_floor": {"dbfs": [-65, -35], "kinds": {"white": 0.15, "pink": 0.15, "real": 0.7}, "real_pools": ["wham", "dns5_audioset", "dns5_freesound"]}, "enroll_store_seconds": 10}'
+    nonspeech-babble:
+      artifacts:
+        records:
+        - nonspeech-babble-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 120
+        duration_hours: 0.2635
+        duration_basis: Mixture duration
+      provenance:
+        description: 'noise: {"kind": "nonspeech", "duration": [1, 15], "noise": {"kind": "babble_zh", "level_dbfs": [-40, -25]}, "noise_floor": {"dbfs": [-65, -35], "kinds": {"white": 0.15, "pink": 0.15, "real": 0.7}, "real_pools": ["wham", "dns5_audioset", "dns5_freesound"]}, "enroll_store_seconds": 10}'
+    nonspeech-crowd:
+      artifacts:
+        records:
+        - nonspeech-crowd-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 120
+        duration_hours: 0.2839
+        duration_basis: Mixture duration
+      provenance:
+        description: 'noise: {"kind": "nonspeech", "duration": [1, 15], "noise": {"kind": "fsd_crowd", "level_dbfs": [-40, -25]}, "noise_floor": {"dbfs": [-65, -35], "kinds": {"white": 0.15, "pink": 0.15, "real": 0.7}, "real_pools": ["wham", "dns5_audioset", "dns5_freesound"]}, "enroll_store_seconds": 10}'
+    nonspeech-events:
+      artifacts:
+        records:
+        - nonspeech-events-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 120
+        duration_hours: 0.3028
+        duration_basis: Mixture duration
+      provenance:
+        description: 'noise: {"kind": "nonspeech", "duration": [1, 15], "noise": {"kind": "fsd_events", "level_dbfs": [-40, -25]}, "noise_floor": {"dbfs": [-65, -35], "kinds": {"white": 0.15, "pink": 0.15, "real": 0.7}, "real_pools": ["wham", "dns5_audioset", "dns5_freesound"]}, "enroll_store_seconds": 10}'
+  provenance:
     status: complete
     synthetic: full
     description: 目标说话人 ASR 评测集：由 AISHELL-3、KeSpeech、MagicData、AISHELL-2、AISHELL-1 的官方 test 划分合成，覆盖注册音频劣化、目标说话人进场离场与缺席、纯噪声、环境与设备。只用于评测，不进训练。场景见 scripts/ts_benchmark/recipe.yaml。

@@ -25,5 +25,6 @@
           recordings:
             - noise_recordings
     provenance:
+      summary: 噪声与音乐素材（MUSAN）
       snapshot_date: '2026-08-07'
       source: AmphionASR augmentation registry

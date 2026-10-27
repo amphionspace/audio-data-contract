@@ -111,6 +111,7 @@
         duration_hours: 268.0
         duration_basis: clip duration (segment span, or the whole file)
   provenance:
+    summary: 在线混合用的干扰人语音素材池
     status: complete
     synthetic: none
     snapshot_date: '2026-10-16'

@@ -74,6 +74,7 @@
         records: 5000
         duration_hours: 1.39
   provenance:
+    summary: 训练用 DNS5 噪声与模拟房间响应
     status: complete
     synthetic: none
     snapshot_date: '2026-10-16'

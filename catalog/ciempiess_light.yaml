@@ -25,6 +25,7 @@
           duration_hours: 18.42401555557218
           duration_basis: sum of upstream train Parquet duration column in seconds; embedded audio; pinned upstream file hashes verified
     provenance:
+      summary: 墨西哥西班牙语广播语音（CIEMPIESS LIGHT）
       source: Hugging Face
       url: https://huggingface.co/datasets/ciempiess/ciempiess_light
       license:
