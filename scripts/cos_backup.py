@@ -71,11 +71,18 @@ def build_plan(args):
     paths = {}
     expected = {}
     recordings = set()
+    listings = set()
     # These artifacts are self-contained, or have the explicit expansion below.
     supported = {"lhotse-recordings", "lhotse-supervisions", "metadata",
-                 "json-metadata", "jsonl-metadata", "quality-report", "license",
+                 "json-metadata", "jsonl-metadata", "jsonl-manifest",
+                 "quality-report", "license",
                  "archive", "source-archive", "source-archive-part",
-                 "repaired-source-archive"}
+                 "repaired-source-archive",
+                 # AudioRecord-style declarations: the payload is enumerated by
+                 # audio-index (one audio file per row) and file-inventory (every
+                 # payload file, including sidecar references such as RTTM/UEM).
+                 # Both are expanded below.
+                 "audio-records", "audio-index", "file-inventory"}
 
     def add(path, category):
         path = Path(os.path.abspath(path))
@@ -103,6 +110,8 @@ def build_plan(args):
                 expected[path] = artifact.sha256
             if artifact.kind == "lhotse-recordings":
                 recordings.add(path)
+            elif artifact.kind in ("audio-index", "file-inventory"):
+                listings.add((path, artifact.kind, artifact.root_alias))
     for path in sorted(recordings):
         opener = gzip.open if path.name.endswith(".gz") else open
         with opener(path, "rt", encoding="utf-8") as stream:
@@ -117,6 +126,28 @@ def build_plan(args):
                     # Preserve the original absolute spelling used by manifests.
                     if source["type"] == "file" and Path(source["source"]).is_absolute():
                         add(source["source"], "audio")
+    # audio-index rows name one audio file each; file-inventory rows name every
+    # payload file, including sidecar references. Both spell paths relative to a
+    # configured root, so they resolve without --source-root. `add` is keyed by
+    # path, so a file named by both indexes is inventoried once.
+    for path, kind, artifact_alias in sorted(listings):
+        with open(path, "rt", encoding="utf-8") as stream:
+            for line in stream:
+                line = line.strip()
+                if not line:
+                    continue
+                row = json.loads(line)
+                relative = row.get("relative_path")
+                if not relative:
+                    raise ValueError(f"{kind} row without relative_path: {path}")
+                alias = row.get("root_alias", artifact_alias)
+                if alias not in roots:
+                    raise ValueError(f"{kind} references unconfigured root: {alias}")
+                target = Path(roots[alias]) / relative
+                if not target.is_file():
+                    raise ValueError(f"{kind} references missing file: {target}")
+                parts = Path(relative).parts
+                add(target, "audio" if parts and parts[0] == "audio" else "metadata")
     for path in args.include_file:
         add(path, "metadata")
     if args.include_repository:

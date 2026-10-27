@@ -1,0 +1,88 @@
+# 丁桥客户会议验收录音（2026-09-18）
+#
+# 这是客户现场验收录音，不是公开语料，也不是完整可计分的 diarization 测试集。
+# 参考标注只有人工听审范围（19 段 / 78.542 s，覆盖 5 条中的 4 条），
+# rttm/ 与 uem/ 均为从 annotations/human-final.json 派生的产物，不是原始数据包自带的 RTTM。
+# 作为 benchmark 使用前必须读 provenance.limitations。
+- schema_version: dataset-catalog/2.0
+  dataset_id: dingqiao_meeting
+  version: acceptance-20260918
+  languages:
+  - zh
+  tasks:
+  - speaker_diarization
+  artifacts:
+  - name: test
+    kind: audio-records
+    root_alias: dingqiao_meeting
+    relative_path: records.jsonl
+    expected_bytes: 6464
+    sha256: 27ee2fb30d23c296e789ee4ce93690cd61e2541aa83170873a4c638f77b40987
+    metadata:
+      record_count: 5
+  - name: audio_index
+    kind: audio-index
+    root_alias: dingqiao_meeting
+    relative_path: audio-index.jsonl
+    expected_bytes: 1186
+    sha256: a46922ba7fe747b7234ac8476a8fda145b5ab58b9d8d1fabd55d22e39606ef97
+    metadata:
+      record_count: 5
+  - name: file_inventory
+    kind: file-inventory
+    root_alias: dingqiao_meeting
+    relative_path: files.jsonl
+    expected_bytes: 2951
+    sha256: f3300ba3e511da87a719840217dec0c293ce119209a11864232416e695a971a0
+    metadata:
+      record_count: 15
+  - name: legacy_manifest
+    kind: jsonl-manifest
+    root_alias: dingqiao_meeting
+    relative_path: test.jsonl
+    expected_bytes: 3286
+    sha256: 5d6de1762ce8facf167c91e92211cfb28a71f994a36f3c7afefc3754e0347fd0
+    metadata:
+      record_count: 5
+  splits:
+    test:
+      task: speaker_diarization
+      artifacts:
+        records:
+        - test
+        audio_index:
+        - audio_index
+        file_inventory:
+        - file_inventory
+      statistics:
+        recordings: 5
+        duration_hours: 0.2807333333333333
+        duration_basis: sum of measured whole-recording durations (samples.json frames / sample_rate)
+  provenance:
+    status: reference_incomplete
+    description: Customer on-site acceptance recordings supplied 2026-09-18 for SDK replay. Audio bytes unchanged from the delivered WAVs and verified against samples.json sha256, frames, sample rate and channels.
+    license: Internal team evaluation only; no public redistribution license granted. Do not publish on any externally reachable page.
+    source_package: data/diarization_mainfest/dingqiao-meeting-20260918
+    source_samples_manifest_sha256: see samples.json in the source package
+    excluded_from_source: 会议-在线-同时说话丢字.wav (cloud recognition; excluded by the data owner)
+    renamed_files: recording-a is delivered as 会议-离线-无角色4.wav and stored here as meeting-offline-unknown4.wav; bytes identical (sha256 180944f0fcbcce93cd41b2316345bbe79e68880e28b45674db9574916fdcfbc5).
+    reference_origin: Derived in-repo from annotations/human-final.json by rttm-derived/generate_partial_rttm.py; reproduced and split per recording for this registration. NOT an original RTTM shipped with the data package.
+    reference_completeness: partial-audited-ranges
+    reference_statistics:
+      segments: 19
+      reference_speaker_seconds: 78.542
+      recordings_with_reference: 4
+      recordings_scorable: 4
+      scoring_region_seconds: 78.542
+    unscorable_recordings:
+    - 095700-039 has background-exclusion annotation only and no positive-identity segment; rttm/095700-039.rttm and uem/095700-039.uem are intentionally empty. This does not mean the recording contains no speech.
+    limitations:
+    - The reference is a listening-audit range, not frame-level truth. Exact speech onsets/offsets are not guaranteed and pauses may fall inside a range. Unannotated regions mean unknown, not non-speech.
+    - Whole-recording DER is prohibited by the source README. Only UEM-restricted scoring over uem/ is defined.
+    - The UEM union coincides exactly with the reference segments (78.542 s both), so there is no reference silence inside the scoring region and false alarm is structurally near zero. A low FA on this data is not evidence of a low false-alarm rate.
+    - 102010-230 has a single reference speaker, so its confusion component is structurally zero.
+    - Speaker labels denote identity groups from the audit (H/I/J merged, E/F/K merged). Different labels must not all be read as verified distinct natural persons; only L and M were adjudicated as different people.
+    - Overlapped speech and uncertain multi-party ranges (T/W) were conservatively excluded rather than guessed.
+    - Not suitable as a standalone accuracy benchmark; 78.542 s of reference cannot resolve differences below roughly ten DER points.
+    official_release_and_split_equivalence: not applicable; private customer data with no official release
+    limitations_document: data/diarization_mainfest/dingqiao-meeting-20260918/rttm-derived/README.md
