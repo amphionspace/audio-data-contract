@@ -1126,6 +1126,18 @@ MagicData-RAMC 对话切窗的按人转写数据
 - `police_asr_unified@v1-20261009`：警务合成语音统合版：V1-V6 全部批次合并为 train/dev/test 三个集合，不复制音频
 - 已并入的旧版本：`police_robust_monitor@icefall-20260908`（COS：快照 20260914）、`police_synthetic_zh_accent@icefall-20260908`（COS：快照 20260914）、`police_synthetic_zh_accent@legacy-rebalance-100k-20260916`（COS：没有）、`police_synthetic_zh_accent@v1-20260817`（COS：快照 20260914）、`police_synthetic_zh_accent@v2-20260818`（COS：快照 20260914）、`police_synthetic_zh_accent@v3-20260820`（COS：快照 20260914）、`police_synthetic_zh_accent@v5-20260830-qc`（COS：快照 20260914）、`police_synthetic_zh_accent@v5-20260830-qwen75-cosy25`（COS：快照 20260914）、`police_terms_v5@icefall-20260908`（COS：快照 20260914）、`police_terms_v5_dev@icefall-20260908`（COS：快照 20260914）、`police_terms_v5_test@icefall-20260908`（COS：快照 20260914）、`police_v6_8h@icefall-20260908`（COS：没有）、`police_v6_8h@v6-8h-20260915`（COS：没有）、`police_v6_acceptance_205@icefall-20260908`（COS：快照 20260921）、`police_v6_acceptance_205@v6-acceptance-20260921`（COS：快照 20260921）、`police_v6_expanded@icefall-20260908`（COS：没有）、`police_v6_expanded@v6-expanded-20260915`（COS：没有）
 
+### police_scene_bench
+
+鼎桥验收表各使用场景的模拟评测，仅评测
+
+语言：zh · 任务：语音识别、热词增强语音识别、带说话人标注的语音识别、目标说话人语音识别
+
+| 版本 | 时长（小时） | 口径 | COS |
+|---|---:|---|---|
+| [police_scene_bench@v1-20261028](../../catalog/police_scene_bench.yaml#L1) | 70.7 | 已登记 | 没有 |
+
+- `police_scene_bench@v1-20261028`：警务场景模拟评测集，用于与鼎桥（td-tech）的验收：按《技术指标_场景分级拆分_鼎桥沟通更新版_20261026》的具体使用场景逐个模拟，每个场景 100 条，覆盖通用识别、行业术语（含 300 词热词表）、号码（含新合成的全国车牌、新能源车牌和电动车号牌）、机主识别（分开/重叠讲话）、角色分离（≤4 人、5–8 人）、上下文矫正和各能力的极限档。佩戴设备的民警近讲不加混响，其他人加所在场所的 MIT 实测混响；噪声为 DEMAND、FSD50K 评测划分的真实录音和不进训练的中文合成背景人声，按表格噪声分档的信噪比混合。PDT 对讲机用低码率窄带编解码模拟链路，执法记录仪用过载削波、高通和自动增益近似（极限档全部经过，另有与原场景配对的设备通道和 2 米远场版本）。另附 TTS 听测文本（tts-eval-texts，在线 LLM 生成，MOS 仍需人工听测）。语音是合成数据（Qwen3-TTS 等，未人工听审），多人对话由独立的句子拼接，内容不连贯。只用于评测，不进训练。配方 scripts/police_scene_bench/recipe.yaml
+
 ### police_terms_single
 
 警务术语单说测试集，仅评测

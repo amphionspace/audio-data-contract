@@ -27,6 +27,7 @@
 | [警言警语 V6](datasets/police-v6.md) | expanded、8h 两批数据及测试范围 |
 | [V6 指令验收](datasets/police-v6-acceptance.md) | 205 条指令验收集的生成与评测约定 |
 | [警务数据统合版](datasets/police-unified.md) | 全部警务批次合并为 train/dev/test |
+| [警务场景模拟评测集](datasets/police-scene-bench.md) | 鼎桥（td-tech）验收用：按验收表的具体使用场景逐个模拟，每个场景 100 条 |
 | [DATA-TTS-UNIFIED](datasets/tts-unified.md) | 18 个 TTS 数据集及其标注的登记、自动同步、读取方式和待办 |
 
 ## 协议与框架接入
