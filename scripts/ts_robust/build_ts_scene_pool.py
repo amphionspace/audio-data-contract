@@ -136,6 +136,26 @@ hard version's 55%):
     python build_ts_scene_pool.py --output-dir DIR --version magicdata-hard-twins-20261026 --hard-twins --magicdata \\
         --neighbors FILE --twin-share 0.5 --zh 40000 --en 0
 
+With ``--ramc`` the targets are MagicData-RAMC speakers: real Mandarin phone conversations (mono, so a target utterance
+can carry the partner's back-channel). The KeSpeech and MagicData pools hold read speech; the only conversational TS data
+are the real meeting windows. Utterances come from magicdata_ramc@clean-dual-pass-20261027 (clean-pass rows with a Lance
+record index); speakers of the RAMC dev and test splits (HELD_OUT_SPEAKERS) are dropped, because ts-asr-benchmark@v12's
+real-ramc windows come from the test split and 9 train speakers also talk there. RAMC gives a person a new ID in every
+conversation, so ``--same-voice`` (ramc_voice_identities.py) is required: IDs that sound like one person are never
+target and other speaker (or twin enrollee) of one scene and are no near voice of each other, and train IDs that sound
+like a dev / test speaker are dropped. Other speakers are half AISHELL-2, half RAMC, and the four pool kinds the
+MagicData pools of the training recipe use are built (multi-turn with near twins, turn-taking with twins, hard,
+handover with twins), neighbours from ``speaker_neighbors.py --ramc``:
+
+    python build_ts_scene_pool.py --output-dir DIR --version ramc-near-20261028 --multi --ramc --same-voice FILE \\
+        --neighbors FILE --twin-share 0.3 --zh 40000 --en 0
+    python build_ts_scene_pool.py --output-dir DIR --version ramc-alt-twins-20261028 --alt-twins --ramc --same-voice FILE \\
+        --neighbors FILE --twin-share 0.3 --zh 30000 --en 0
+    python build_ts_scene_pool.py --output-dir DIR --version ramc-hard-20261028 --ramc --same-voice FILE \\
+        --neighbors FILE --zh 20000 --en 0
+    python build_ts_scene_pool.py --output-dir DIR --version ramc-handover-20261028 --handover --ramc --same-voice FILE \\
+        --neighbors FILE --twin-share 0.3 --zh 20000 --en 0
+
 A KeSpeech speaker reads the same prompts in both sessions, so a cross-session enrollment can say the target's own
 sentence (3.9% of xsession-near-20261023's present records); the transcript can then be read off the enrollment, and
 v12 nonspeech samples with a KeSpeech enrollment come back as the enrollment's words. Enrollments never say a sentence
@@ -175,6 +195,11 @@ SESSIONS = ("phase1", "phase2")
 XSESSION_CROSS_PROB = 0.5
 # --magicdata: targets are MagicData speakers; the other speakers are half AISHELL-2, half MagicData.
 MAGICDATA_CORPORA = [("aishell2", "legacy-20260804", "train", 0.5, False), ("magicdata", "legacy-20260804", "train", 0.5, True)]
+# --ramc: targets are MagicData-RAMC speakers (clean-pass conversation turns); the other speakers are half AISHELL-2, half RAMC.
+RAMC_CORPORA = [("aishell2", "legacy-20260804", "train", 0.5, False), ("magicdata_ramc", "clean-dual-pass-20261027", "train", 0.5, True)]
+# Speakers a corpus must not train on: (version, splits) whose speakers are dropped. RAMC dev / test speakers (9 of the
+# test speakers also talk in train) are the targets of the benchmark's real-ramc windows.
+HELD_OUT_SPEAKERS = {"magicdata_ramc": ("icefall-20260908", ("dev", "test"))}
 # Splits whose sentences a corpus must not train on (73% of MagicData test utterances repeat a train sentence).
 HELD_OUT_TEXT = {"magicdata": "test"}
 # Longest scene per mode, gaps included. The benchmark's scenes run 5-18 s; the training
@@ -195,16 +220,38 @@ COLUMNS = ["id", "speaker", "text", "duration", "cut_id", "root_alias", "relativ
            "start_frame", "num_frames", "sample_rate", "channels"]
 
 
+def catalog_entry(dataset, version):
+    """The catalog entry of dataset@version from any file of the registry (datasets.yaml holds most, not all)."""
+    for path in sorted(REGISTRY.parent.glob("*.yaml")):
+        for entry in yaml.safe_load(path.read_text()) or []:
+            if isinstance(entry, dict) and entry.get("dataset_id") == dataset and entry.get("version") == version:
+                return entry
+    raise KeyError(f"{dataset}@{version} is not in {REGISTRY.parent}")
+
+
+def held_out_speakers(dataset):
+    """Speakers of the held-out splits of HELD_OUT_SPEAKERS[dataset], from that version's lhotse supervisions."""
+    version, splits = HELD_OUT_SPEAKERS[dataset]
+    entry = catalog_entry(dataset, version)
+    roots = json.loads((DATA / "registry/roots.json").read_text())
+    speakers = set()
+    for split in splits:
+        for name in entry["splits"][split]["artifacts"]["supervisions"]:
+            artifact = next(a for a in entry["artifacts"] if a["name"] == name)
+            with gzip.open(Path(roots[artifact["root_alias"]]) / artifact["relative_path"], "rt", encoding="utf-8") as stream:
+                speakers |= {json.loads(line)["speaker"] for line in stream if line.strip()}
+    return speakers
+
+
 def _plain(text):
     """Text compared for held-out sentences: NFKC, lower case, no punctuation, symbols or spaces."""
     return "".join(c for c in unicodedata.normalize("NFKC", text or "").lower() if unicodedata.category(c)[0] not in "PSZ")
 
 
 class Corpus:
-    def __init__(self, dataset, version, split, weight, target, language, sessions=False):
+    def __init__(self, dataset, version, split, weight, target, language, sessions=False, drop=()):
         self.name, self.weight, self.target = dataset, weight, target
-        entry = next(e for e in yaml.safe_load(REGISTRY.read_text())
-                     if e["dataset_id"] == dataset and e["version"] == version)
+        entry = catalog_entry(dataset, version)
         artifact = next(a for a in entry["artifacts"]
                         if a["name"] == entry["splits"][split]["artifacts"]["records_lance"][0])
         directory = DATA / artifact["relative_path"].rsplit("/", 1)[0]
@@ -222,6 +269,15 @@ class Corpus:
             same = np.array([_plain(t) in held for t in text])
             print(dataset, "dropped", int((keep & same).sum()), "utterances with a", HELD_OUT_TEXT[dataset], "sentence", flush=True)
             keep &= ~same
+        if dataset in HELD_OUT_SPEAKERS:
+            held = held_out_speakers(dataset)
+            out = np.isin(np.array(speaker), sorted(held))
+            print(dataset, "dropped", int((keep & out).sum()), "utterances of", len(held & set(speaker)), "held-out speakers", flush=True)
+            keep &= ~out
+        if drop:
+            out = np.isin(np.array(speaker), sorted(drop))
+            print(dataset, "dropped", int((keep & out).sum()), "utterances of", len(set(drop) & set(speaker)), "speakers (--same-voice drop)", flush=True)
+            keep &= ~out
         session = None
         if sessions:
             # Keep only speakers with an utterance in every session, so any scene can enroll across sessions.
@@ -257,14 +313,27 @@ class Corpus:
 
 
 class Builder:
-    def __init__(self, language, rng, neighbors=None, hard_rank=10, xsession=False, magicdata=False):
+    def __init__(self, language, rng, neighbors=None, hard_rank=10, xsession=False, magicdata=False, ramc=False, same_voice=None):
         self.language, self.rng, self.xsession = language, rng, xsession
-        corpora = XSESSION_CORPORA if xsession else MAGICDATA_CORPORA if magicdata else CORPORA[language]
-        self.corpora = [Corpus(*c, language, sessions=xsession and c[4]) for c in corpora]
+        corpora = XSESSION_CORPORA if xsession else MAGICDATA_CORPORA if magicdata else RAMC_CORPORA if ramc else CORPORA[language]
+        drop = {n.split(":", 1)[1] for n in (same_voice or {}).get("drop", {})}
+        self.corpora = [Corpus(*c, language, sessions=xsession and c[4], drop=drop if c[0] == "magicdata_ramc" else ())
+                        for c in corpora]
         self.targets = [c for c in self.corpora if c.target]
+        # IDs that sound like one person (--same-voice): kept apart like one speaker, and no near voice of each other.
+        self.alike = {}
+        for a, b, _ in (same_voice or {}).get("same_voice", []):
+            self.alike.setdefault(a, set()).add(b)
+            self.alike.setdefault(b, set()).add(a)
+        if neighbors and self.alike:
+            neighbors = {k: [x for x in v if x[0] not in self.alike.get(k, ())] for k, v in neighbors.items()}
         self.neighbors, self.hard_rank = neighbors, hard_rank
         self.where = {name: (c, i) for c in self.corpora for i, name in enumerate(c.speakers)}
         self.audio, self.pending = {}, {}
+
+    def blocked(self, names):
+        """The speakers who must not join a scene of ``names``: those speakers and every ID that sounds like one of them."""
+        return set(names).union(*(self.alike.get(n, ()) for n in names))
 
     def ref(self, corpus, i):
         rows = corpus.rows
@@ -289,7 +358,7 @@ class Builder:
         for _ in range(200):
             corpus = rng.choices(self.corpora, [c.weight for c in self.corpora])[0]
             speaker = rng.randrange(len(corpus.speakers))
-            if corpus.speakers[speaker] in used or not corpus.usable(speaker, count):
+            if corpus.speakers[speaker] in self.blocked(used) or not corpus.usable(speaker, count):
                 continue
             picks = corpus.pick(rng, speaker, count)
             if picks:
@@ -495,7 +564,7 @@ class Builder:
     def draw_twin(self, scene):
         """The scene with another speaker enrolled; half of the time one close to the real target."""
         rng = self.rng
-        present = {scene["target_speaker"], *(o["speaker"] for o in scene["interferers"])}
+        present = self.blocked({scene["target_speaker"], *(o["speaker"] for o in scene["interferers"])})
         kind, cosine = "random", None
         near = [(n, c) for n, c in (self.neighbors or {}).get(scene["target_speaker"], [])[: self.hard_rank]
                 if n in self.where and n not in present]
@@ -571,27 +640,32 @@ def main():
     parser.add_argument("--hard-twins", action="store_true", help="build the hard (similar voice) version with twins")
     parser.add_argument("--xsession", action="store_true", help="KeSpeech targets enrolled from the same or the other session (zh only)")
     parser.add_argument("--magicdata", action="store_true", help="MagicData targets (zh only)")
+    parser.add_argument("--ramc", action="store_true", help="MagicData-RAMC conversation targets (zh only)")
+    parser.add_argument("--same-voice", type=Path, help="identities.json of ramc_voice_identities.py (required with --ramc)")
     args = parser.parse_args()
     if sum((args.multi, args.solo, args.handover, args.alt_twins, args.hard_twins)) > 1:
         parser.error("--multi, --solo, --handover, --alt-twins and --hard-twins build different pools; pick one")
     if args.hard_twins and not args.neighbors:
         parser.error("--hard-twins needs --neighbors")
-    if (args.xsession or args.magicdata) and (args.en or args.solo):
-        parser.error("--xsession and --magicdata build zh pools: pass --en 0, without --solo")
-    if args.xsession and args.magicdata:
-        parser.error("--xsession and --magicdata take their targets from different corpora; pick one")
+    if (args.xsession or args.magicdata or args.ramc) and (args.en or args.solo):
+        parser.error("--xsession, --magicdata and --ramc build zh pools: pass --en 0, without --solo")
+    if args.ramc != bool(args.same_voice):
+        parser.error("--ramc needs --same-voice, and --same-voice is for --ramc")
+    if sum((args.xsession, args.magicdata, args.ramc)) > 1:
+        parser.error("--xsession, --magicdata and --ramc take their targets from different corpora; pick one")
     twinned = args.multi or args.solo or args.handover or args.alt_twins or args.hard_twins
     if twinned and not 0 <= args.twin_share < 1:
         parser.error("--twin-share must be in [0, 1)")
     VERSION = args.version
     args.output_dir.mkdir(parents=True, exist_ok=True)
     neighbors = json.loads(args.neighbors.read_text()) if args.neighbors else None
+    same_voice = json.loads(args.same_voice.read_text()) if args.same_voice else None
     report = {}
     for language, count in (("zh", args.zh), ("en", args.en)):
-        if (args.xsession or args.magicdata) and not count:
+        if (args.xsession or args.magicdata or args.ramc) and not count:
             continue
         builder = Builder(language, random.Random(f"{SEED}:{language}:{args.version}"),
-                          neighbors and neighbors[language], args.hard_rank, args.xsession, args.magicdata)
+                          neighbors and neighbors[language], args.hard_rank, args.xsession, args.magicdata, args.ramc, same_voice)
         modes, weights = zip(*MODES[language])
         records, tally = [], Counter()
         if twinned:

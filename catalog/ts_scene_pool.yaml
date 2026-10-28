@@ -1581,3 +1581,237 @@
     - kespeech:legacy-20260804
     - librispeech:legacy-20260804
     - common_voice_en:legacy-20260804
+- schema_version: dataset-catalog/2.0
+  dataset_id: ts_scene_pool
+  version: ramc-near-20261028
+  languages:
+  - zh
+  tasks:
+  - ts_asr
+  aliases: []
+  artifacts:
+  - name: zh-records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/ramc-near-20261028/records_zh.jsonl.gz
+    sha256: 515223fc8282bc355841dbfb54bebdf10c060a065d869515f619e082685587c3
+    metadata:
+      record_count: 40000
+  - name: zh-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/ramc-near-20261028/audio_index_zh.jsonl.gz
+    sha256: f3447cc0c871f3051a4d4e794cc11781d4af57131783f531125156c2052a1f2b
+    metadata:
+      record_count: 174757
+  - name: record_index
+    kind: lance-record-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/ramc-near-20261028/record_index/index.json
+    sha256: 8cc569874615f663e192f841161a3a5dfe48bf9998c207671735d19c5f48b246
+    expected_bytes: 732
+    metadata:
+      snapshot_version: 13
+      rows: 40000
+      schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
+  splits:
+    zh:
+      artifacts:
+        records:
+        - zh-records
+        audio_index:
+        - zh-audio-index
+        records_lance:
+        - record_index
+      task: ts_asr
+      statistics:
+        records: 40000
+        duration_hours: 49.15
+        duration_basis: clip duration (segment span, or the whole file)
+  provenance:
+    status: complete
+    synthetic: none
+    snapshot_date: '2026-10-28'
+    description: magicdata-near-20261023 的 RAMC 版：多句场景（目标说 2–5 句、1–4 个他人各有自己的轨道），约 30% 缺席孪生（同一场景换另一个人注册，目标的话成为干扰、转写为空），孪生注册人一半取目标的相近声音。目标人取自
+      MagicData-RAMC 清洗版 train（magicdata_ramc@clean-dual-pass-20261027：真实手机电话对话，单声道，双模型转写都与人工标注一致的句子），注册取同一人另一句 2.5–8 秒；他人一半
+      RAMC、一半 AISHELL-2。RAMC 每段对话给说话人发新编号，同一个人会挂在几个编号下：声纹（ERes2NetV2，每个编号每段录音取 6 句平均）相似度 ≥ 0.60 的不同编号互斥（不在同一场景里分别当目标和他人/孪生注册人，也不互当相近声音），与
+      dev/test 说话人声纹 ≥ 0.60 的 113 个 train 编号和 17 个 dev/test 编号整体剔除（ramc-voice-identities-20261028）；相近声音取 speaker-neighbors-20261028（候选限于
+      RAMC 与 AISHELL-2）。用来补训练里没有的真实对话说话人：已有 TS 场景池的目标都是朗读语音（AISHELL-2、KeSpeech、MagicData）。
+    sources:
+    - aishell2:legacy-20260804
+    - magicdata_ramc:clean-dual-pass-20261027
+- schema_version: dataset-catalog/2.0
+  dataset_id: ts_scene_pool
+  version: ramc-alt-twins-20261028
+  languages:
+  - zh
+  tasks:
+  - ts_asr
+  aliases: []
+  artifacts:
+  - name: zh-records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/ramc-alt-twins-20261028/records_zh.jsonl.gz
+    sha256: 58edbf7cea551f7d7cef8064c14b6f4d6ee01c709367a79e144d3d4e8e3f550c
+    metadata:
+      record_count: 30000
+  - name: zh-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/ramc-alt-twins-20261028/audio_index_zh.jsonl.gz
+    sha256: b205e267d1b22b8976b5689bc15a43176a497ca18654dd67c8c59497ecd1ac5f
+    metadata:
+      record_count: 130951
+  - name: record_index
+    kind: lance-record-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/ramc-alt-twins-20261028/record_index/index.json
+    sha256: 7d81cfa906d770452b82b950fcf72d02a3bb582ab68df11dc73b497dc650a32e
+    expected_bytes: 737
+    metadata:
+      snapshot_version: 13
+      rows: 30000
+      schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
+  splits:
+    zh:
+      artifacts:
+        records:
+        - zh-records
+        audio_index:
+        - zh-audio-index
+        records_lance:
+        - record_index
+      task: ts_asr
+      statistics:
+        records: 30000
+        duration_hours: 37.13
+        duration_basis: clip duration (segment span, or the whole file)
+  provenance:
+    status: complete
+    synthetic: none
+    snapshot_date: '2026-10-28'
+    description: magicdata-alt-twins-20261024 的 RAMC 版：交替 / 插话 / 短句场景，约 30% 缺席孪生，孪生注册人一半取相近声音。目标人取自 MagicData-RAMC 清洗版 train（magicdata_ramc@clean-dual-pass-20261027：真实手机电话对话，单声道，双模型转写都与人工标注一致的句子），注册取同一人另一句
+      2.5–8 秒；他人一半 RAMC、一半 AISHELL-2。RAMC 每段对话给说话人发新编号，同一个人会挂在几个编号下：声纹（ERes2NetV2，每个编号每段录音取 6 句平均）相似度 ≥ 0.60 的不同编号互斥（不在同一场景里分别当目标和他人/孪生注册人，也不互当相近声音），与
+      dev/test 说话人声纹 ≥ 0.60 的 113 个 train 编号和 17 个 dev/test 编号整体剔除（ramc-voice-identities-20261028）；相近声音取 speaker-neighbors-20261028（候选限于
+      RAMC 与 AISHELL-2）。用来补训练里没有的真实对话说话人：已有 TS 场景池的目标都是朗读语音（AISHELL-2、KeSpeech、MagicData）。
+    sources:
+    - aishell2:legacy-20260804
+    - magicdata_ramc:clean-dual-pass-20261027
+- schema_version: dataset-catalog/2.0
+  dataset_id: ts_scene_pool
+  version: ramc-hard-20261028
+  languages:
+  - zh
+  tasks:
+  - ts_asr
+  aliases: []
+  artifacts:
+  - name: zh-records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/ramc-hard-20261028/records_zh.jsonl.gz
+    sha256: 2a6e60be6ca9e6f7e77629e96a6bf73dcdf704f7af88e5baabff30f7ffa1f885
+    metadata:
+      record_count: 20000
+  - name: zh-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/ramc-hard-20261028/audio_index_zh.jsonl.gz
+    sha256: dd5714acbc0115ec49b88c1c25a7dfc62b67837f221598adc4c2da33b994ab0a
+    metadata:
+      record_count: 127601
+  - name: record_index
+    kind: lance-record-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/ramc-hard-20261028/record_index/index.json
+    sha256: 5f1735d8ffc512c15b134d97ae5f56e1e96cb0170052817e2d426fd6363f5023
+    expected_bytes: 732
+    metadata:
+      snapshot_version: 13
+      rows: 20000
+      schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
+  splits:
+    zh:
+      artifacts:
+        records:
+        - zh-records
+        audio_index:
+        - zh-audio-index
+        records_lance:
+        - record_index
+      task: ts_asr
+      statistics:
+        records: 20000
+        duration_hours: 24.87
+        duration_basis: clip duration (segment span, or the whole file)
+  provenance:
+    status: complete
+    synthetic: none
+    snapshot_date: '2026-10-28'
+    description: magicdata-hard-20261023 的 RAMC 版：交替 / 插话 / 短句场景，他人之一是目标的相近声音，55% 目标缺席（转写为空）。目标人取自 MagicData-RAMC 清洗版 train（magicdata_ramc@clean-dual-pass-20261027：真实手机电话对话，单声道，双模型转写都与人工标注一致的句子），注册取同一人另一句
+      2.5–8 秒；他人一半 RAMC、一半 AISHELL-2。RAMC 每段对话给说话人发新编号，同一个人会挂在几个编号下：声纹（ERes2NetV2，每个编号每段录音取 6 句平均）相似度 ≥ 0.60 的不同编号互斥（不在同一场景里分别当目标和他人/孪生注册人，也不互当相近声音），与
+      dev/test 说话人声纹 ≥ 0.60 的 113 个 train 编号和 17 个 dev/test 编号整体剔除（ramc-voice-identities-20261028）；相近声音取 speaker-neighbors-20261028（候选限于
+      RAMC 与 AISHELL-2）。用来补训练里没有的真实对话说话人：已有 TS 场景池的目标都是朗读语音（AISHELL-2、KeSpeech、MagicData）。
+    sources:
+    - aishell2:legacy-20260804
+    - magicdata_ramc:clean-dual-pass-20261027
+- schema_version: dataset-catalog/2.0
+  dataset_id: ts_scene_pool
+  version: ramc-handover-20261028
+  languages:
+  - zh
+  tasks:
+  - ts_asr
+  aliases: []
+  artifacts:
+  - name: zh-records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/ramc-handover-20261028/records_zh.jsonl.gz
+    sha256: 5494317a2d2575b7e6d8e0152c7bcb2fe8755479cdb048d6412c094848feadc9
+    metadata:
+      record_count: 20000
+  - name: zh-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/ramc-handover-20261028/audio_index_zh.jsonl.gz
+    sha256: 21e27f20e0f2c1218a984a88888bcbdd920b9e45dbfff011bb11ecbd27383c53
+    metadata:
+      record_count: 37803
+  - name: record_index
+    kind: lance-record-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/ramc-handover-20261028/record_index/index.json
+    sha256: 7a0ef65ad7cf56e10e40fd1718ffa8393b2070af3c4a2bfd20e3f447948ea207
+    expected_bytes: 736
+    metadata:
+      snapshot_version: 13
+      rows: 20000
+      schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
+  splits:
+    zh:
+      artifacts:
+        records:
+        - zh-records
+        audio_index:
+        - zh-audio-index
+        records_lance:
+        - record_index
+      task: ts_asr
+      statistics:
+        records: 20000
+        duration_hours: 24.86
+        duration_basis: clip duration (segment span, or the whole file)
+  provenance:
+    status: complete
+    synthetic: none
+    snapshot_date: '2026-10-28'
+    description: magicdata-handover-20261023 的 RAMC 版：交接场景（目标与另一人各说一句、前后不重叠、先后随机），另一人一半取相近声音，约 30% 缺席孪生。目标人取自 MagicData-RAMC
+      清洗版 train（magicdata_ramc@clean-dual-pass-20261027：真实手机电话对话，单声道，双模型转写都与人工标注一致的句子），注册取同一人另一句 2.5–8 秒；他人一半 RAMC、一半 AISHELL-2。RAMC
+      每段对话给说话人发新编号，同一个人会挂在几个编号下：声纹（ERes2NetV2，每个编号每段录音取 6 句平均）相似度 ≥ 0.60 的不同编号互斥（不在同一场景里分别当目标和他人/孪生注册人，也不互当相近声音），与 dev/test
+      说话人声纹 ≥ 0.60 的 113 个 train 编号和 17 个 dev/test 编号整体剔除（ramc-voice-identities-20261028）；相近声音取 speaker-neighbors-20261028（候选限于
+      RAMC 与 AISHELL-2）。用来补训练里没有的真实对话说话人：已有 TS 场景池的目标都是朗读语音（AISHELL-2、KeSpeech、MagicData）。
+    sources:
+    - aishell2:legacy-20260804
+    - magicdata_ramc:clean-dual-pass-20261027
