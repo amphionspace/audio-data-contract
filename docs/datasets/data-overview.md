@@ -1,6 +1,6 @@
 # 数据总览
 
-当前登记 **199 个数据集**；另有 **20 个下载来源声明**和 **1 个训练混合配方**。登记不代表本机文件已齐备。
+当前登记 **198 个数据集**；另有 **20 个下载来源声明**和 **1 个训练混合配方**。登记不代表本机文件已齐备。
 
 时长取单个版本的最大值，不跨版本相加；≈ 为参考表或估算值，— 为暂无完整时长。各版本的时长、说明、COS 地址和质量证据见[版本明细](data-versions.md)。
 
@@ -102,7 +102,6 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [mir1k](data-versions.md#mir1k) | zh | noise | 2.2 | 中文流行歌卡拉 OK 片段，人声伴奏分轨（MIR-1K） | 没有 |
 | [police_asr_unified](data-versions.md#police_asr_unified) | zh | 语音识别 | 805.6 | 警务合成语音统合版（V1–V6 合并） | 部分版本：快照 20260914、快照 20260921 |
 | [police_scene_bench](data-versions.md#police_scene_bench) | zh | 语音识别、热词增强语音识别、带说话人标注的语音识别、目标说话人语音识别 | 70.7 | 鼎桥验收表各使用场景的模拟评测，仅评测 | `备份桶:audio-data-contract/datasets/police_scene_bench/` |
-| [police_synthetic_zh_accent](data-versions.md#police_synthetic_zh_accent) | zh | 语音识别 | — | — | 没有 |
 | [police_terms_single](data-versions.md#police_terms_single) | zh | 语音识别 | 1.7 | 警务术语单说测试集，仅评测 | 没有 |
 | [police_terms_single_train](data-versions.md#police_terms_single_train) | zh | 语音识别 | 11.7 | 警务术语单说训练集 | 没有 |
 | [primewords](data-versions.md#primewords) | zh | 语音识别 | 99.0 | 中文手机朗读（Primewords）；含清洗版 | 部分版本：快照 20260914 |

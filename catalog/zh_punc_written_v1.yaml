@@ -1,38 +1,5 @@
 # 占位登记：普通话 ASR 训练集原标注加书面化标点（2026-10-29 开工），进度见各版本状态文件。
 - schema_version: dataset-catalog/2.0
-  dataset_id: police_synthetic_zh_accent
-  version: punc-written-v1-20261029
-  languages:
-  - zh
-  tasks:
-  - asr
-  aliases: []
-  derived_from: police_synthetic_zh_accent@icefall-20260908
-  artifacts:
-  - name: preparation_state
-    kind: dataset-state
-    root_alias: aidc_data
-    relative_path: datasets/police_synthetic_zh_accent/versions/punc-written-v1-20261029/state.json
-  splits:
-    train:
-      artifacts:
-        preparation_state:
-        - preparation_state
-      statistics:
-        source_records: 14093
-      provenance:
-        preparation_status: building
-  provenance:
-    preparation_status: building
-    owner: mingdong
-    description: police_synthetic_zh_accent@icefall-20260908 训练集原标注加书面化标点（GB/T 15834，逗号从紧）：微调后的 Qwen3-4B 只往原标注里插标点，以 Qwen3-ASR 听音频得到的带标点转写作语气提示；去掉标点后必须与原标注逐字一致。进行中，进度见状态文件。
-    source: police_synthetic_zh_accent@icefall-20260908
-    run_dir: /workspace/workspace/mingdong/data/amphiondata/zh-punc-distill-20261029
-  recipe_parameters:
-    punctuation_model: Qwen3-4B-Instruct-2507 + LoRA distilled from Qwen3.8-27B
-    hint: Qwen3-ASR-1.7B punctuated transcript
-    spec: zh-punc-pilot-20261028 spec v1, compact commas
-- schema_version: dataset-catalog/2.0
   dataset_id: aishell
   version: punc-written-v1-20261029
   languages:
