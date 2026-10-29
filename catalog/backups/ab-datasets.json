@@ -41,6 +41,10 @@
       "alias": "meeting_selection_panel",
       "synced": "2026-10-27"
     },
+    "police_scene_bench@v1-20261028": {
+      "alias": "police_scene_bench",
+      "synced": "2026-10-29"
+    },
     "ts_asr_benchmark@v1-20261013": {
       "alias": "ts_asr_benchmark",
       "synced": "2026-10-27"
