@@ -567,11 +567,13 @@ TAL 英语语音识别数据
 | [aishell@eval-20260804](../../catalog/open_audio_eval.yaml#L1) | 10.0 | 已登记 | 快照 20260914 |
 | [aishell@icefall-20260908](../../catalog/icefall_runtime.yaml#L1012) | 179.0 | 已登记 | 快照 20260914 |
 | [aishell@legacy-20260804](../../catalog/icefall_base.yaml#L708) | 179.0 | 已登记 | 快照 20260914 |
+| [aishell@punc-written-v1-20261029](../../catalog/zh_punc_written_v1.yaml#L35) | — | 未登记 | 没有 |
 | [aishell_clean@clean-v1-20260805](../../catalog/local_lhotse_derived.yaml#L605) | 10.0 | 已登记 | 快照 20260914 |
 | [aishell_hotwords@eval-20260804](../../catalog/open_audio_eval.yaml#L414) | 10.0 | 已登记 | 快照 20260914 |
 | [aishell_hotwords@hotwords-v1-20260805](../../catalog/local_lhotse_derived.yaml#L652) | 160.9 | 已登记 | 快照 20260914 |
 | [aishell@legacy-20260804](../../catalog/icefall_base.yaml#L708) | 155.0 | [参考表](https://ccnuebbmik1f.feishu.cn/wiki/CEXFwEjPoi2bIukVjk9c5FdOn12?sheet=3d4d23) | 快照 20260914 |
 
+- `aishell@punc-written-v1-20261029`：aishell@icefall-20260908 训练集原标注加书面化标点（GB/T 15834，逗号从紧）：微调后的 Qwen3-4B 只往原标注里插标点，以 Qwen3-ASR 听音频得到的带标点转写作语气提示；去掉标点后必须与原标注逐字一致。进行中，进度见状态文件
 - 含派生版本（与源数据可能重叠）
 
 ### aishell2
@@ -585,11 +587,13 @@ TAL 英语语音识别数据
 | [aishell2@eval-20260804](../../catalog/open_audio_eval.yaml#L32) | 4.0 | 已登记 | 快照 20260914 |
 | [aishell2@icefall-20260908](../../catalog/icefall_runtime.yaml#L1094) | 1,004.8 | 已登记 | 快照 20260914 |
 | [aishell2@legacy-20260804](../../catalog/icefall_base.yaml#L781) | 1,004.8 | 已登记 | 快照 20260914 |
+| [aishell2@punc-written-v1-20261029](../../catalog/zh_punc_written_v1.yaml#L68) | — | 未登记 | 没有 |
 | [aishell2_clean@clean-v1-20260805](../../catalog/local_lhotse_derived.yaml#L723) | 4.0 | 已登记 | 快照 20260914 |
 | [aishell2_hotwords@eval-20260804](../../catalog/open_audio_eval.yaml#L446) | 4.0 | 已登记 | 快照 20260914 |
 | [aishell2_hotwords@hotwords-v1-20260805](../../catalog/local_lhotse_derived.yaml#L769) | 4.0 | 已登记 | 快照 20260914 |
 | [aishell2@legacy-20260804](../../catalog/icefall_base.yaml#L781) | 1,036.0 | [参考表](https://ccnuebbmik1f.feishu.cn/wiki/CEXFwEjPoi2bIukVjk9c5FdOn12?sheet=3d4d23) | 快照 20260914 |
 
+- `aishell2@punc-written-v1-20261029`：aishell2@icefall-20260908 训练集原标注加书面化标点（GB/T 15834，逗号从紧）：微调后的 Qwen3-4B 只往原标注里插标点，以 Qwen3-ASR 听音频得到的带标点转写作语气提示；去掉标点后必须与原标注逐字一致。进行中，进度见状态文件
 - 含派生版本（与源数据可能重叠）
 
 ### aishell3
@@ -625,11 +629,13 @@ TAL 英语语音识别数据
 | [aishell4@diarization-benchmark-v1-20261021](../../catalog/diarization_benchmark.yaml#L1) | 12.7 | 已登记 | 没有 |
 | [aishell4@icefall-20260908](../../catalog/icefall_runtime.yaml#L1206) | 119.5 | 已登记 | 快照 20260914 |
 | [aishell4@legacy-20260804](../../catalog/icefall_base.yaml#L892) | 28.4 | 已登记 | 快照 20260914 |
+| [aishell4@punc-written-v1-20261029](../../catalog/zh_punc_written_v1.yaml#L101) | — | 未登记 | 没有 |
 | [aishell4@turn-taking-20261014](../../catalog/amphionasr_v4.yaml#L1) | 322.3 | 已登记 | 没有 |
 | [aishell4@turn-taking-20261014-utts](../../catalog/ts_window_utts.yaml#L115) | 66.9 | 已登记 | 没有 |
 
 - `aishell4@asr-20261014`：会议普通转写。每条 supervision 一条，时长 0.5～30 秒，文本非空。多通道只取第 0 路
 - `aishell4@diarization-benchmark-v1-20261021`：Frozen local evaluation slice; audio and RTTM bytes copied unchanged. Not a claim of official release equivalence or training disjointness.
+- `aishell4@punc-written-v1-20261029`：aishell4@icefall-20260908 训练集原标注加书面化标点（GB/T 15834，逗号从紧）：微调后的 Qwen3-4B 只往原标注里插标点，以 Qwen3-ASR 听音频得到的带标点转写作语气提示；去掉标点后必须与原标注逐字一致。进行中，进度见状态文件
 - `aishell4@turn-taking-20261014`：会议 turn-taking。整句拼成 2/3 人混合窗，时长 0.5～30 秒。注册音是窗外另一句，1～30 秒。有近场时远场:近场 = 3:1
 - `aishell4@turn-taking-20261014-utts`：aishell4@turn-taking-20261014 的 train 划分（不含 eval/test），时间线取自 aishell4@icefall-20260908 的 train 人工标注。加 metadata.window_utts（窗口内每句的说话人与相对混合起点的起止，取自来源标注并截到窗口，截断的标 clipped）与同一命名空间的 metadata.target_speaker，供 open-audio-llm 帧级说话人活动标签（objective.ts_activity_weight）；其余字段不变，音频引用改指本版本，音频索引与原版逐行相同。正样本的目标语句与转写逐字一致（忽略空白和标点；窗口边缘截断的句子允许只转写一部分）才写时间线，负样本只有注册人确实不在窗口里说话才写；其余记录不写时间线（不出帧级标签）。负样本中注册人按标注其实在窗口内说话的记录 ID 列在 excluded-records-<split>.txt，训练配方用 exclude_records 排除。生成脚本 audio-data-contract scripts/ts_robust/add_window_utts.py，逐划分统计见 report.json
 - 含派生版本（与源数据可能重叠）
@@ -693,6 +699,7 @@ AISHELL-2 混合的目标说话人训练与测试数据
 | [alimeeting@openslr-119-local-20260826](../../catalog/multilingual_multispeaker.yaml#L1) | 157.9 | 已登记 | 快照 20260914 |
 | [alimeeting_sdm@asr-20261014](../../catalog/amphionasr_v4.yaml#L726) | — | 未登记 | 没有 |
 | [alimeeting_sdm@icefall-20260908](../../catalog/icefall_runtime.yaml#L2839) | 157.9 | 已登记：单远场麦克风标注片段 | 快照 20260914 |
+| [alimeeting_sdm@punc-written-v1-20261029](../../catalog/zh_punc_written_v1.yaml#L267) | — | 未登记 | 没有 |
 | [alimeeting_sdm@turn-taking-20261014](../../catalog/amphionasr_v4.yaml#L378) | 427.7 | 已登记 | 没有 |
 | [alimeeting_sdm@turn-taking-20261014-utts](../../catalog/ts_window_utts.yaml#L1) | 82.7 | 已登记 | 没有 |
 
@@ -700,6 +707,7 @@ AISHELL-2 混合的目标说话人训练与测试数据
 - `alimeeting@openslr-119-far-local-20260903`：远场会议、多说话人、重叠语音；训练集 8 条标注越界，使用前需处理
 - `alimeeting_sdm@asr-20261014`：会议普通转写。每条 supervision 一条，时长 0.5～30 秒，文本非空。多通道只取第 0 路
 - `alimeeting_sdm@icefall-20260908`：标注片段时长，重叠语音或多麦克风可能重复计时
+- `alimeeting_sdm@punc-written-v1-20261029`：alimeeting_sdm@icefall-20260908 训练集原标注加书面化标点（GB/T 15834，逗号从紧）：微调后的 Qwen3-4B 只往原标注里插标点，以 Qwen3-ASR 听音频得到的带标点转写作语气提示；去掉标点后必须与原标注逐字一致。进行中，进度见状态文件
 - `alimeeting_sdm@turn-taking-20261014`：会议 turn-taking。整句拼成 2/3 人混合窗，时长 0.5～30 秒。注册音是窗外另一句，1～30 秒。有近场时远场:近场 = 3:1
 - `alimeeting_sdm@turn-taking-20261014-utts`：alimeeting_sdm@turn-taking-20261014 的 train 划分（不含 eval/test），时间线取自 alimeeting_sdm@icefall-20260908 的 train 人工标注。加 metadata.window_utts（窗口内每句的说话人与相对混合起点的起止，取自来源标注并截到窗口，截断的标 clipped）与同一命名空间的 metadata.target_speaker，供 open-audio-llm 帧级说话人活动标签（objective.ts_activity_weight）；其余字段不变，音频引用改指本版本，音频索引与原版逐行相同。正样本的目标语句与转写逐字一致（忽略空白和标点；窗口边缘截断的句子允许只转写一部分）才写时间线，负样本只有注册人确实不在窗口里说话才写；其余记录不写时间线（不出帧级标签）。负样本中注册人按标注其实在窗口内说话的记录 ID 列在 excluded-records-<split>.txt，训练配方用 exclude_records 排除。生成脚本 audio-data-contract scripts/ts_robust/add_window_utts.py，逐划分统计见 report.json
 - 含派生版本（与源数据可能重叠）
@@ -983,10 +991,12 @@ Emilia 中文野外语音（已清洗）
 | [kespeech@eval-southwestern-20261012](../../catalog/zh_asr_eval.yaml#L165) | 4.2 | 已登记 | 没有 |
 | [kespeech@icefall-20260908](../../catalog/icefall_runtime.yaml#L1501) | 1,434.8 | 已登记 | 快照 20260914 |
 | [kespeech@legacy-20260804](../../catalog/icefall_base.yaml#L1150) | 1,434.8 | 已登记 | 快照 20260914 |
+| [kespeech@punc-written-v1-20261029](../../catalog/zh_punc_written_v1.yaml#L167) | — | 未登记 | 没有 |
 | [kespeech_clean@clean-v1-20260805](../../catalog/local_lhotse_derived.yaml#L86) | 31.1 | 已登记 | 快照 20260914 |
 | [kespeech_hotwords@hotwords-v1-20260805](../../catalog/local_lhotse_derived.yaml#L129) | 31.1 | 已登记 | 快照 20260914 |
 | [kespeech@legacy-20260804](../../catalog/icefall_base.yaml#L1150) | 1,428.0 | [参考表](https://ccnuebbmik1f.feishu.cn/wiki/CEXFwEjPoi2bIukVjk9c5FdOn12?sheet=3d4d23) | 快照 20260914 |
 
+- `kespeech@punc-written-v1-20261029`：kespeech@icefall-20260908 训练集原标注加书面化标点（GB/T 15834，逗号从紧）：微调后的 Qwen3-4B 只往原标注里插标点，以 Qwen3-ASR 听音频得到的带标点转写作语气提示；去掉标点后必须与原标注逐字一致。进行中，进度见状态文件
 - 含派生版本（与源数据可能重叠）
 
 ### legco_speech
@@ -1045,12 +1055,14 @@ Emilia 中文野外语音（已清洗）
 | [magicdata_ramc@diarization-benchmark-v1-20261021](../../catalog/diarization_benchmark.yaml#L275) | 20.6 | 已登记 | 没有 |
 | [magicdata_ramc@icefall-20260908](../../catalog/icefall_runtime.yaml#L1437) | 150.7 | 已登记 | 快照 20260914 |
 | [magicdata_ramc@legacy-20260804](../../catalog/icefall_base.yaml#L1085) | 150.7 | 已登记 | 快照 20260914 |
+| [magicdata_ramc@punc-written-v1-20261029](../../catalog/zh_punc_written_v1.yaml#L134) | — | 未登记 | 没有 |
 | [magicdata_ramc@turn-taking-20261014](../../catalog/amphionasr_v4.yaml#L2863) | 403.5 | 已登记 | 没有 |
 | [magicdata_ramc@turn-taking-20261014-utts](../../catalog/ts_window_utts.yaml#L341) | 41.5 | 已登记 | 没有 |
 
 - `magicdata_ramc@asr-20261014`：会议普通转写。每条 supervision 一条，时长 0.5～30 秒，文本非空。多通道只取第 0 路
 - `magicdata_ramc@clean-dual-qwen-moss-v1-20261008`：magicdata_ramc@icefall-20260908 的 train 监督片段，经 Qwen3-ASR-1.7B 与 MOSS-Transcribe-Diarize 双引擎一致性清洗；逐条写入 custom.clean（pass、reason、action、engine_status），不删除记录，读取时按 require_clean_pass 过滤。音频沿用源版本，不复制。规则 consensus-v6 / wenetspeech-faithful-v5：pass 166711、reject 1753。少于 2 个字的 too_short 共 16573 条按规则不经引擎直接 pass。用于合成时建议在 pass 之外再要求：两引擎均有效、MOSS 只输出 1 个说话人、action 不是 review_consensus；too_short 另要求两引擎规范化后与原文完全一致。按此筛选保留 122956 条、88.85 小时（too_short 通过 10332/16573）
 - `magicdata_ramc@diarization-benchmark-v1-20261021`：Frozen local evaluation slice; audio and RTTM bytes copied unchanged. Not a claim of official release equivalence or training disjointness.
+- `magicdata_ramc@punc-written-v1-20261029`：magicdata_ramc@icefall-20260908 训练集原标注加书面化标点（GB/T 15834，逗号从紧）：微调后的 Qwen3-4B 只往原标注里插标点，以 Qwen3-ASR 听音频得到的带标点转写作语气提示；去掉标点后必须与原标注逐字一致。进行中，进度见状态文件
 - `magicdata_ramc@turn-taking-20261014`：会议 turn-taking。整句拼成 2/3 人混合窗，时长 0.5～30 秒。注册音是窗外另一句，1～30 秒。有近场时远场:近场 = 3:1
 - `magicdata_ramc@turn-taking-20261014-utts`：magicdata_ramc@turn-taking-20261014 的 train 划分（不含 eval/test），时间线取自 magicdata_ramc@icefall-20260908 的 train 人工标注。加 metadata.window_utts（窗口内每句的说话人与相对混合起点的起止，取自来源标注并截到窗口，截断的标 clipped）与同一命名空间的 metadata.target_speaker，供 open-audio-llm 帧级说话人活动标签（objective.ts_activity_weight）；其余字段不变，音频引用改指本版本，音频索引与原版逐行相同。正样本的目标语句与转写逐字一致（忽略空白和标点；窗口边缘截断的句子允许只转写一部分）才写时间线，负样本只有注册人确实不在窗口里说话才写；其余记录不写时间线（不出帧级标签）。负样本中注册人按标注其实在窗口内说话的记录 ID 列在 excluded-records-<split>.txt，训练配方用 exclude_records 排除。生成脚本 audio-data-contract scripts/ts_robust/add_window_utts.py，逐划分统计见 report.json
 - 含派生版本（与源数据可能重叠）
@@ -1138,6 +1150,19 @@ MagicData-RAMC 对话切窗的按人转写数据
 
 - `police_scene_bench@v1-20261028`：警务场景模拟评测集，用于与鼎桥（td-tech）的验收：按《技术指标_场景分级拆分_鼎桥沟通更新版_20261026》的具体使用场景逐个模拟，每个场景 100 条，覆盖通用识别、行业术语（含 300 词热词表）、号码（含新合成的全国车牌、新能源车牌和电动车号牌）、机主识别（分开/重叠讲话）、角色分离（≤4 人、5–8 人）、上下文矫正和各能力的极限档。佩戴设备的民警近讲不加混响，其他人加所在场所的 MIT 实测混响；噪声为 DEMAND、FSD50K 评测划分的真实录音和不进训练的中文合成背景人声，按表格噪声分档的信噪比混合。PDT 对讲机用低码率窄带编解码模拟链路，执法记录仪用过载削波、高通和自动增益近似（极限档全部经过，另有与原场景配对的设备通道和 2 米远场版本）。另附 TTS 听测文本（tts-eval-texts，在线 LLM 生成，MOS 仍需人工听测）。语音是合成数据（Qwen3-TTS 等，未人工听审），多人对话由独立的句子拼接，内容不连贯。只用于评测，不进训练。配方 scripts/police_scene_bench/recipe.yaml
 
+### police_synthetic_zh_accent
+
+—
+
+语言：zh · 任务：语音识别
+
+| 版本 | 时长（小时） | 口径 | COS |
+|---|---:|---|---|
+| [police_synthetic_zh_accent@punc-written-v1-20261029](../../catalog/zh_punc_written_v1.yaml#L2) | — | 未登记 | 没有 |
+
+- `police_synthetic_zh_accent@punc-written-v1-20261029`：police_synthetic_zh_accent@icefall-20260908 训练集原标注加书面化标点（GB/T 15834，逗号从紧）：微调后的 Qwen3-4B 只往原标注里插标点，以 Qwen3-ASR 听音频得到的带标点转写作语气提示；去掉标点后必须与原标注逐字一致。进行中，进度见状态文件
+- 含派生版本（与源数据可能重叠）
+
 ### police_terms_single
 
 警务术语单说测试集，仅评测
@@ -1187,9 +1212,12 @@ MagicData-RAMC 对话切窗的按人转写数据
 |---|---:|---|---|
 | [realman@hf-aishell-20261025](../../catalog/realman.yaml#L1) | 83.7 | 已登记 | 没有 |
 | [realman@icefall-20260908](../../catalog/icefall_runtime.yaml#L3115) | 83.7 | 已登记：已准备标注片段 | 快照 20260914 |
+| [realman@punc-written-v1-20261029](../../catalog/zh_punc_written_v1.yaml#L334) | — | 未登记 | 没有 |
 
 - `realman@hf-aishell-20261025`：RealMAN 真实录制的 32 麦阵列中文数据（NeurIPS 2024）：扬声器在 32 个真实场景（教室、办公室、食堂、球场、地铁、公交、轿车、街边等）外放普通话，阵列录下 32 路 48 kHz 音频，含静止和移动声源，每句带直达声干净参考（dp_speech）、声源方位和距离、转写。语音共 51147 句、83.7 小时（train 64.0、val 8.1、test 11.6），来自 55 个说话人的 19629 条不同句子，三个划分之间句子和说话人都不重叠；另有 31 个场景的纯噪声录音 144.5 小时。用于多通道/单通道降噪、远场 ASR 和声源定位；单通道用时取任意一个 CH。val/test 的 ma_noisy_speech 是官方带噪混合，*_raw 里是对应的干净阵列语音和噪声。这是完整版（32 通道全部解压）；只要 ASR 的 CH0 可用 `realman@icefall-20260908`
 - `realman@icefall-20260908`：标注片段时长，重叠语音或多麦克风可能重复计时
+- `realman@punc-written-v1-20261029`：realman@icefall-20260908 训练集原标注加书面化标点（GB/T 15834，逗号从紧）：微调后的 Qwen3-4B 只往原标注里插标点，以 Qwen3-ASR 听音频得到的带标点转写作语气提示；去掉标点后必须与原标注逐字一致。进行中，进度见状态文件
+- 含派生版本（与源数据可能重叠）
 
 ### realman_zh_far_asr
 
@@ -1468,10 +1496,12 @@ VITW 中文远场转写训练数据
 | [wenetspeech@eval-20261011](../../catalog/zh_asr_eval.yaml#L1) | 38.2 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/wenetspeech/legacy_asr/`（原始数据） |
 | [wenetspeech@icefall-20260908](../../catalog/icefall_runtime.yaml#L570) | 10,025.4 | 已登记 | 快照 20260914、`amphion-audio-backup-1373259071:audio-data-contract/datasets/wenetspeech/` |
 | [wenetspeech@legacy-20260804](../../catalog/icefall_base.yaml#L498) | 10,025.4 | 已登记 | 快照 20260914、`amphion-audio-backup-1373259071:audio-data-contract/datasets/wenetspeech/` |
+| [wenetspeech@punc-written-v1-20261029](../../catalog/zh_punc_written_v1.yaml#L367) | — | 未登记 | 没有 |
 | [wenetspeech@weak-source-20260904](../../catalog/wenetspeech_weak.yaml#L1) | 2,477.9 | 已登记 | 快照 20260914、`amphion-audio-backup-1373259071:audio-data-contract/datasets/wenetspeech/` |
 | [wenetspeech_clean@clean-v1-20260805](../../catalog/local_lhotse_derived.yaml#L265) | 10,005.4 | 已登记 | 快照 20260914、`amphion-audio-backup-1373259071:audio-data-contract/datasets/wenetspeech/` |
 | [wenetspeech_clean@clean-v3-20260828](../../catalog/local_lhotse_derived.yaml#L980) | 9,971.1 | 已登记 | 快照 20260914、`amphion-audio-backup-1373259071:audio-data-contract/datasets/wenetspeech/` |
 | [wenetspeech_clean@clean-v3-pass-20261027](../../catalog/wenetspeech_clean_pass.yaml#L1) | 9,971.1 | 已登记 | 没有 |
+| [wenetspeech_clean@punc-written-v1-20261029](../../catalog/zh_punc_written_v1.yaml#L429) | — | 未登记 | 没有 |
 | [wenetspeech_test_meeting@eval-20260804](../../catalog/open_audio_eval.yaml#L764) | 15.2 | 已登记 | 快照 20260914、`amphion-audio-backup-1373259071:audio-data-contract/datasets/wenetspeech/` |
 | [wenetspeech_test_net@eval-20260804](../../catalog/open_audio_eval.yaml#L729) | 23.1 | 已登记 | 快照 20260914、`amphion-audio-backup-1373259071:audio-data-contract/datasets/wenetspeech/` |
 | [wenetspeech_traffic_snr0@icefall-20260908](../../catalog/icefall_runtime.yaml#L3900) | — | 未登记 | 快照 20260914、`amphion-audio-backup-1373259071:audio-data-contract/datasets/wenetspeech/` |
@@ -1486,7 +1516,9 @@ VITW 中文远场转写训练数据
 | [wenetspeech_traffic_snr5@recipe-1](../../catalog/icefall_traffic_derived.yaml#L166) | 23.1 | 已登记 | 快照 20260914、`amphion-audio-backup-1373259071:audio-data-contract/datasets/wenetspeech/` |
 | [wenetspeech@legacy-20260804](../../catalog/icefall_base.yaml#L498) | 10,000.0 | [参考表](https://ccnuebbmik1f.feishu.cn/wiki/CEXFwEjPoi2bIukVjk9c5FdOn12?sheet=3d4d23) | 快照 20260914、`amphion-audio-backup-1373259071:audio-data-contract/datasets/wenetspeech/` |
 
+- `wenetspeech@punc-written-v1-20261029`：wenetspeech@icefall-20260908 训练集原标注加书面化标点（GB/T 15834，逗号从紧）：微调后的 Qwen3-4B 只往原标注里插标点，以 Qwen3-ASR 听音频得到的带标点转写作语气提示；去掉标点后必须与原标注逐字一致。进行中，进度见状态文件
 - `wenetspeech_clean@clean-v3-pass-20261027`：wenetspeech_clean@clean-v3-20260828 训练集（WenetSpeech L）里上游清洗标记 custom.clean.pass=true 的分段，共 14568791 条 / 9971.1 小时（源 14625245 条，去掉未通过的 56454 条）；每行原样保留，包括 custom.clean，只用无标点文本。录音清单沿用源版本，不复制音频。用途：带 Lance 记录索引的 clean-only 版本，recipe_parameters.clean_pass_only 声明每行都已通过，open-audio-llm 据此让 require_clean_pass 的来源走 Lance 索引。脚本 scripts/wenetspeech_clean_pass.py
+- `wenetspeech_clean@punc-written-v1-20261029`：wenetspeech_clean@clean-v3-20260828 训练集原标注加书面化标点（GB/T 15834，逗号从紧）：微调后的 Qwen3-4B 只往原标注里插标点，以 Qwen3-ASR 听音频得到的带标点转写作语气提示；去掉标点后必须与原标注逐字一致。进行中，进度见状态文件
 - 含派生版本（与源数据可能重叠）
 
 ### wenetspeech4tts
@@ -1544,6 +1576,10 @@ WenetSpeech L 保留口语不流利词的转写
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
 | [wenetspeech_disfluency@icefall-20260908](../../catalog/icefall_runtime.yaml#L680) | 182.5 | 已登记 | 快照 20260914、`amphion-audio-backup-1373259071:audio-data-contract/datasets/wenetspeech/` |
+| [wenetspeech_disfluency@punc-written-v1-20261029](../../catalog/zh_punc_written_v1.yaml#L398) | — | 未登记 | 没有 |
+
+- `wenetspeech_disfluency@punc-written-v1-20261029`：wenetspeech_disfluency@icefall-20260908 训练集原标注加书面化标点（GB/T 15834，逗号从紧）：微调后的 Qwen3-4B 只往原标注里插标点，以 Qwen3-ASR 听音频得到的带标点转写作语气提示；去掉标点后必须与原标注逐字一致。进行中，进度见状态文件
+- 含派生版本（与源数据可能重叠）
 
 ### wenetspeech_podcast
 
@@ -1625,7 +1661,9 @@ WenetSpeech-Yue 全量，含非 clean 部分
 | [cs_dialogue@icefall-20260908](../../catalog/icefall_runtime.yaml#L2042) | 46.0 | 已登记 | 快照 20260914 |
 | [cs_dialogue@legacy-20260804](../../catalog/icefall_base.yaml#L1636) | 46.0 | 已登记 | 快照 20260914 |
 | [cs_dialogue@long-mix-v1-20261010](../../catalog/zh_dialogue.yaml#L1) | 98.3 | 已登记 | 没有 |
+| [cs_dialogue@punc-written-v1-20261029](../../catalog/zh_punc_written_v1.yaml#L234) | — | 未登记 | 没有 |
 
+- `cs_dialogue@punc-written-v1-20261029`：cs_dialogue@icefall-20260908 训练集原标注加书面化标点（GB/T 15834，逗号从紧）：微调后的 Qwen3-4B 只往原标注里插标点，以 Qwen3-ASR 听音频得到的带标点转写作语气提示；去掉标点后必须与原标注逐字一致。进行中，进度见状态文件
 - 含派生版本（与源数据可能重叠）
 
 ### ami
@@ -1998,6 +2036,7 @@ AISHELL-1、LibriSpeech 合成的多人对话
 | [talcs@eval-20260804](../../catalog/open_audio_eval.yaml#L187) | 23.6 | 已登记 | 快照 20260914 |
 | [talcs@icefall-20260908](../../catalog/icefall_runtime.yaml#L1959) | 587.6 | 已登记 | 快照 20260914 |
 | [talcs@legacy-20260804](../../catalog/icefall_base.yaml#L1563) | 587.6 | 已登记 | 快照 20260914 |
+| [talcs@punc-written-v1-20261029](../../catalog/zh_punc_written_v1.yaml#L200) | — | 未登记 | 没有 |
 | [talcs_hotwords@hotwords-v1-20260805](../../catalog/local_lhotse_derived.yaml#L222) | 555.9 | 已登记 | 快照 20260914 |
 | [talcs_traffic_snr0@icefall-20260908](../../catalog/icefall_runtime.yaml#L3949) | 23.6 | 已登记 | 快照 20260914 |
 | [talcs_traffic_snr0@recipe-1](../../catalog/icefall_traffic_derived.yaml#L99) | 23.6 | 已登记 | 快照 20260914 |
@@ -2011,6 +2050,7 @@ AISHELL-1、LibriSpeech 合成的多人对话
 | [talcs_traffic_snr5@recipe-1](../../catalog/icefall_traffic_derived.yaml#L225) | 23.6 | 已登记 | 快照 20260914 |
 | [talcs@legacy-20260804](../../catalog/icefall_base.yaml#L1563) | 300.0 | [参考表](https://ccnuebbmik1f.feishu.cn/wiki/CEXFwEjPoi2bIukVjk9c5FdOn12?sheet=3d4d23) | 快照 20260914 |
 
+- `talcs@punc-written-v1-20261029`：talcs@icefall-20260908 训练集原标注加书面化标点（GB/T 15834，逗号从紧）：微调后的 Qwen3-4B 只往原标注里插标点，以 Qwen3-ASR 听音频得到的带标点转写作语气提示；去掉标点后必须与原标注逐字一致。进行中，进度见状态文件
 - 含派生版本（与源数据可能重叠）
 
 ### ts_hw_test
@@ -2122,6 +2162,7 @@ AISHELL-1、LibriSpeech 合成的多人对话
 | [vitw@icefall-20260908](../../catalog/icefall_runtime.yaml#L2568) | 1,085.4 | 已登记 | 快照 20260914 |
 | [vitw@legacy-20260804](../../catalog/icefall_base.yaml#L2179) | 1,085.4 | 已登记 | 快照 20260914 |
 | [vitw_far_field@icefall-20260908](../../catalog/icefall_runtime.yaml#L3075) | 77.3 | 已登记：远场子集 | 快照 20260914 |
+| [vitw_far_field@punc-written-v1-20261029](../../catalog/zh_punc_written_v1.yaml#L300) | — | 未登记 | 没有 |
 | [vitw_real_distortion@eval-20260804](../../catalog/open_audio_eval.yaml#L2838) | 0.3 | 已登记 | 快照 20260914 |
 | [vitw_real_dropout@eval-20260804](../../catalog/open_audio_eval.yaml#L2871) | 0.3 | 已登记 | 快照 20260914 |
 | [vitw_real_echo@eval-20260804](../../catalog/open_audio_eval.yaml#L2904) | 0.3 | 已登记 | 快照 20260914 |
@@ -2141,6 +2182,7 @@ AISHELL-1、LibriSpeech 合成的多人对话
 
 - `vitw@2m-20261013`：Voices-in-the-Wild 2M 配方全量转写。音频仍在 2M 源目录，按原 jsonl 顺序登记；不是 Bench 的 legacy-20260804
 - `vitw_far_field@icefall-20260908`：标注片段时长，重叠语音或多麦克风可能重复计时
+- `vitw_far_field@punc-written-v1-20261029`：vitw_far_field@icefall-20260908 训练集原标注加书面化标点（GB/T 15834，逗号从紧）：微调后的 Qwen3-4B 只往原标注里插标点，以 Qwen3-ASR 听音频得到的带标点转写作语气提示；去掉标点后必须与原标注逐字一致。进行中，进度见状态文件
 - 含派生版本（与源数据可能重叠）
 
 ### waxal-asr
