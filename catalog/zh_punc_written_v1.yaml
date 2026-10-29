@@ -1,0 +1,426 @@
+# 占位登记：普通话 ASR 训练集原标注加书面化标点（2026-10-29 开工），进度见各版本状态文件。
+- schema_version: dataset-catalog/2.0
+  dataset_id: aishell
+  version: punc-written-v1-20261029
+  languages:
+  - zh
+  tasks:
+  - asr
+  aliases: []
+  derived_from: aishell@icefall-20260908
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/aishell/versions/punc-written-v1-20261029/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      statistics:
+        source_records: 120098
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: aishell@icefall-20260908 训练集原标注加书面化标点（GB/T 15834，逗号从紧）：微调后的 Qwen3-4B 只往原标注里插标点，以 Qwen3-ASR 听音频得到的带标点转写作语气提示；去掉标点后必须与原标注逐字一致。进行中，进度见状态文件。
+    source: aishell@icefall-20260908
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/zh-punc-distill-20261029
+  recipe_parameters:
+    punctuation_model: Qwen3-4B-Instruct-2507 + LoRA distilled from Qwen3.8-27B
+    hint: Qwen3-ASR-1.7B punctuated transcript
+    spec: zh-punc-pilot-20261028 spec v1, compact commas
+- schema_version: dataset-catalog/2.0
+  dataset_id: aishell2
+  version: punc-written-v1-20261029
+  languages:
+  - zh
+  tasks:
+  - asr
+  aliases: []
+  derived_from: aishell2@icefall-20260908
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/aishell2/versions/punc-written-v1-20261029/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      statistics:
+        source_records: 1009223
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: aishell2@icefall-20260908 训练集原标注加书面化标点（GB/T 15834，逗号从紧）：微调后的 Qwen3-4B 只往原标注里插标点，以 Qwen3-ASR 听音频得到的带标点转写作语气提示；去掉标点后必须与原标注逐字一致。进行中，进度见状态文件。
+    source: aishell2@icefall-20260908
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/zh-punc-distill-20261029
+  recipe_parameters:
+    punctuation_model: Qwen3-4B-Instruct-2507 + LoRA distilled from Qwen3.8-27B
+    hint: Qwen3-ASR-1.7B punctuated transcript
+    spec: zh-punc-pilot-20261028 spec v1, compact commas
+- schema_version: dataset-catalog/2.0
+  dataset_id: aishell4
+  version: punc-written-v1-20261029
+  languages:
+  - zh
+  tasks:
+  - asr
+  aliases: []
+  derived_from: aishell4@icefall-20260908
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/aishell4/versions/punc-written-v1-20261029/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      statistics:
+        source_records: 101826
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: aishell4@icefall-20260908 训练集原标注加书面化标点（GB/T 15834，逗号从紧）：微调后的 Qwen3-4B 只往原标注里插标点，以 Qwen3-ASR 听音频得到的带标点转写作语气提示；去掉标点后必须与原标注逐字一致。进行中，进度见状态文件。
+    source: aishell4@icefall-20260908
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/zh-punc-distill-20261029
+  recipe_parameters:
+    punctuation_model: Qwen3-4B-Instruct-2507 + LoRA distilled from Qwen3.8-27B
+    hint: Qwen3-ASR-1.7B punctuated transcript
+    spec: zh-punc-pilot-20261028 spec v1, compact commas
+- schema_version: dataset-catalog/2.0
+  dataset_id: magicdata_ramc
+  version: punc-written-v1-20261029
+  languages:
+  - zh
+  tasks:
+  - asr
+  aliases: []
+  derived_from: magicdata_ramc@icefall-20260908
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/magicdata_ramc/versions/punc-written-v1-20261029/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      statistics:
+        source_records: 168464
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: magicdata_ramc@icefall-20260908 训练集原标注加书面化标点（GB/T 15834，逗号从紧）：微调后的 Qwen3-4B 只往原标注里插标点，以 Qwen3-ASR 听音频得到的带标点转写作语气提示；去掉标点后必须与原标注逐字一致。进行中，进度见状态文件。
+    source: magicdata_ramc@icefall-20260908
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/zh-punc-distill-20261029
+  recipe_parameters:
+    punctuation_model: Qwen3-4B-Instruct-2507 + LoRA distilled from Qwen3.8-27B
+    hint: Qwen3-ASR-1.7B punctuated transcript
+    spec: zh-punc-pilot-20261028 spec v1, compact commas
+- schema_version: dataset-catalog/2.0
+  dataset_id: kespeech
+  version: punc-written-v1-20261029
+  languages:
+  - zh
+  tasks:
+  - asr
+  aliases: []
+  derived_from: kespeech@icefall-20260908
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/kespeech/versions/punc-written-v1-20261029/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      statistics:
+        source_records: 884021
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: kespeech@icefall-20260908 训练集原标注加书面化标点（GB/T 15834，逗号从紧）：微调后的 Qwen3-4B 只往原标注里插标点，以 Qwen3-ASR 听音频得到的带标点转写作语气提示；去掉标点后必须与原标注逐字一致。进行中，进度见状态文件。
+    source: kespeech@icefall-20260908
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/zh-punc-distill-20261029
+  recipe_parameters:
+    punctuation_model: Qwen3-4B-Instruct-2507 + LoRA distilled from Qwen3.8-27B
+    hint: Qwen3-ASR-1.7B punctuated transcript
+    spec: zh-punc-pilot-20261028 spec v1, compact commas
+- schema_version: dataset-catalog/2.0
+  dataset_id: talcs
+  version: punc-written-v1-20261029
+  languages:
+  - zh
+  - en
+  tasks:
+  - asr
+  aliases: []
+  derived_from: talcs@icefall-20260908
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/talcs/versions/punc-written-v1-20261029/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      statistics:
+        source_records: 350000
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: talcs@icefall-20260908 训练集原标注加书面化标点（GB/T 15834，逗号从紧）：微调后的 Qwen3-4B 只往原标注里插标点，以 Qwen3-ASR 听音频得到的带标点转写作语气提示；去掉标点后必须与原标注逐字一致。进行中，进度见状态文件。
+    source: talcs@icefall-20260908
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/zh-punc-distill-20261029
+  recipe_parameters:
+    punctuation_model: Qwen3-4B-Instruct-2507 + LoRA distilled from Qwen3.8-27B
+    hint: Qwen3-ASR-1.7B punctuated transcript
+    spec: zh-punc-pilot-20261028 spec v1, compact commas
+- schema_version: dataset-catalog/2.0
+  dataset_id: cs_dialogue
+  version: punc-written-v1-20261029
+  languages:
+  - zh
+  tasks:
+  - asr
+  aliases: []
+  derived_from: cs_dialogue@icefall-20260908
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/cs_dialogue/versions/punc-written-v1-20261029/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      statistics:
+        source_records: 13992
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: cs_dialogue@icefall-20260908 训练集原标注加书面化标点（GB/T 15834，逗号从紧）：微调后的 Qwen3-4B 只往原标注里插标点，以 Qwen3-ASR 听音频得到的带标点转写作语气提示；去掉标点后必须与原标注逐字一致。进行中，进度见状态文件。
+    source: cs_dialogue@icefall-20260908
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/zh-punc-distill-20261029
+  recipe_parameters:
+    punctuation_model: Qwen3-4B-Instruct-2507 + LoRA distilled from Qwen3.8-27B
+    hint: Qwen3-ASR-1.7B punctuated transcript
+    spec: zh-punc-pilot-20261028 spec v1, compact commas
+- schema_version: dataset-catalog/2.0
+  dataset_id: alimeeting_sdm
+  version: punc-written-v1-20261029
+  languages:
+  - zh
+  tasks:
+  - asr
+  aliases: []
+  derived_from: alimeeting_sdm@icefall-20260908
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/alimeeting_sdm/versions/punc-written-v1-20261029/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      statistics:
+        source_records: 186360
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: alimeeting_sdm@icefall-20260908 训练集原标注加书面化标点（GB/T 15834，逗号从紧）：微调后的 Qwen3-4B 只往原标注里插标点，以 Qwen3-ASR 听音频得到的带标点转写作语气提示；去掉标点后必须与原标注逐字一致。进行中，进度见状态文件。
+    source: alimeeting_sdm@icefall-20260908
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/zh-punc-distill-20261029
+  recipe_parameters:
+    punctuation_model: Qwen3-4B-Instruct-2507 + LoRA distilled from Qwen3.8-27B
+    hint: Qwen3-ASR-1.7B punctuated transcript
+    spec: zh-punc-pilot-20261028 spec v1, compact commas
+- schema_version: dataset-catalog/2.0
+  dataset_id: vitw_far_field
+  version: punc-written-v1-20261029
+  languages:
+  - zh
+  - en
+  tasks:
+  - asr
+  aliases: []
+  derived_from: vitw_far_field@icefall-20260908
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/vitw_far_field/versions/punc-written-v1-20261029/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      statistics:
+        source_records: 45437
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: vitw_far_field@icefall-20260908 训练集原标注加书面化标点（GB/T 15834，逗号从紧）：微调后的 Qwen3-4B 只往原标注里插标点，以 Qwen3-ASR 听音频得到的带标点转写作语气提示；去掉标点后必须与原标注逐字一致。进行中，进度见状态文件。
+    source: vitw_far_field@icefall-20260908
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/zh-punc-distill-20261029
+  recipe_parameters:
+    punctuation_model: Qwen3-4B-Instruct-2507 + LoRA distilled from Qwen3.8-27B
+    hint: Qwen3-ASR-1.7B punctuated transcript
+    spec: zh-punc-pilot-20261028 spec v1, compact commas
+- schema_version: dataset-catalog/2.0
+  dataset_id: realman
+  version: punc-written-v1-20261029
+  languages:
+  - zh
+  tasks:
+  - asr
+  aliases: []
+  derived_from: realman@icefall-20260908
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/realman/versions/punc-written-v1-20261029/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      statistics:
+        source_records: 36816
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: realman@icefall-20260908 训练集原标注加书面化标点（GB/T 15834，逗号从紧）：微调后的 Qwen3-4B 只往原标注里插标点，以 Qwen3-ASR 听音频得到的带标点转写作语气提示；去掉标点后必须与原标注逐字一致。进行中，进度见状态文件。
+    source: realman@icefall-20260908
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/zh-punc-distill-20261029
+  recipe_parameters:
+    punctuation_model: Qwen3-4B-Instruct-2507 + LoRA distilled from Qwen3.8-27B
+    hint: Qwen3-ASR-1.7B punctuated transcript
+    spec: zh-punc-pilot-20261028 spec v1, compact commas
+- schema_version: dataset-catalog/2.0
+  dataset_id: wenetspeech
+  version: punc-written-v1-20261029
+  languages:
+  - zh
+  tasks:
+  - asr
+  aliases: []
+  derived_from: wenetspeech@icefall-20260908
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/wenetspeech/versions/punc-written-v1-20261029/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: wenetspeech@icefall-20260908 训练集原标注加书面化标点（GB/T 15834，逗号从紧）：微调后的 Qwen3-4B 只往原标注里插标点，以 Qwen3-ASR 听音频得到的带标点转写作语气提示；去掉标点后必须与原标注逐字一致。进行中，进度见状态文件。
+    source: wenetspeech@icefall-20260908
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/zh-punc-distill-20261029
+  recipe_parameters:
+    punctuation_model: Qwen3-4B-Instruct-2507 + LoRA distilled from Qwen3.8-27B
+    hint: Qwen3-ASR-1.7B punctuated transcript
+    spec: zh-punc-pilot-20261028 spec v1, compact commas
+- schema_version: dataset-catalog/2.0
+  dataset_id: wenetspeech_disfluency
+  version: punc-written-v1-20261029
+  languages:
+  - zh
+  tasks:
+  - asr
+  aliases: []
+  derived_from: wenetspeech_disfluency@icefall-20260908
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/wenetspeech_disfluency/versions/punc-written-v1-20261029/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: wenetspeech_disfluency@icefall-20260908 训练集原标注加书面化标点（GB/T 15834，逗号从紧）：微调后的 Qwen3-4B 只往原标注里插标点，以 Qwen3-ASR 听音频得到的带标点转写作语气提示；去掉标点后必须与原标注逐字一致。进行中，进度见状态文件。
+    source: wenetspeech_disfluency@icefall-20260908
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/zh-punc-distill-20261029
+  recipe_parameters:
+    punctuation_model: Qwen3-4B-Instruct-2507 + LoRA distilled from Qwen3.8-27B
+    hint: Qwen3-ASR-1.7B punctuated transcript
+    spec: zh-punc-pilot-20261028 spec v1, compact commas
+- schema_version: dataset-catalog/2.0
+  dataset_id: wenetspeech_clean
+  version: punc-written-v1-20261029
+  languages:
+  - zh
+  tasks:
+  - asr
+  aliases: []
+  derived_from: wenetspeech_clean@clean-v3-20260828
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/wenetspeech_clean/versions/punc-written-v1-20261029/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: wenetspeech_clean@clean-v3-20260828 训练集原标注加书面化标点（GB/T 15834，逗号从紧）：微调后的 Qwen3-4B 只往原标注里插标点，以 Qwen3-ASR 听音频得到的带标点转写作语气提示；去掉标点后必须与原标注逐字一致。进行中，进度见状态文件。
+    source: wenetspeech_clean@clean-v3-20260828
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/zh-punc-distill-20261029
+  recipe_parameters:
+    punctuation_model: Qwen3-4B-Instruct-2507 + LoRA distilled from Qwen3.8-27B
+    hint: Qwen3-ASR-1.7B punctuated transcript
+    spec: zh-punc-pilot-20261028 spec v1, compact commas

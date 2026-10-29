@@ -66,8 +66,8 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [3dspeaker](data-versions.md#3dspeaker) | zh | 说话人身份识别、声纹验证 | 1,275.3 | 跨设备、距离和方言的中文声纹数据（3D-Speaker） | 快照 20260914 |
 | [OpenSLR 159 AISHELL-5](data-versions.md#openslr-159-aishell-5) | zh | 语音识别、带说话人标注的语音识别 | 445.4 | 车内多人中文对话，远场麦克风（AISHELL-5） | 没有 |
 | [aidatatang](data-versions.md#aidatatang) | zh | 语音识别、热词增强语音识别 | 145.5 | 中文手机朗读（aidatatang）；含清洗和热词版 | 部分版本：快照 20260914 |
-| [aishell](data-versions.md#aishell) | zh | 语音识别、热词增强语音识别 | 179.0 | 中文朗读（AISHELL-1）；含清洗和热词版 | 快照 20260914 |
-| [aishell2](data-versions.md#aishell2) | zh | 语音识别、热词增强语音识别 | ≈1,036.0 | 中文朗读（AISHELL-2）；含清洗和热词版 | 快照 20260914 |
+| [aishell](data-versions.md#aishell) | zh | 语音识别、热词增强语音识别 | 179.0 | 中文朗读（AISHELL-1）；含清洗和热词版 | 部分版本：快照 20260914 |
+| [aishell2](data-versions.md#aishell2) | zh | 语音识别、热词增强语音识别 | ≈1,036.0 | 中文朗读（AISHELL-2）；含清洗和热词版 | 部分版本：快照 20260914 |
 | [aishell3](data-versions.md#aishell3) | zh | 语音识别、热词增强语音识别、语音合成 | 85.6 | 中文多人朗读（AISHELL-3）；含清洗、热词、TTS 版 | 部分版本：快照 20260914、`TTS 桶:AISHELL-3/`（原始数据） |
 | [aishell4](data-versions.md#aishell4) | zh | 语音识别、说话人分段与归属、目标说话人语音识别 | 322.3 | 中文多人会议（AISHELL-4）；含轮流说话混合版 | 部分版本：快照 20260914 |
 | [aishell4_meeting_sot](data-versions.md#aishell4_meeting_sot) | zh | 带说话人标注的语音识别 | 377.5 | AISHELL-4 会议切窗的多人按人转写数据 | 没有 |
@@ -129,7 +129,7 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [wenetspeech4tts](data-versions.md#wenetspeech4tts) | zh | 语音识别、语音合成 | ≈7,700.0 | WenetSpeech 筛出的中文 TTS 语音 | 快照 20260914、`TTS 桶:WenetSpeech4TTS/`（原始数据） |
 | [wenetspeech_chuan](data-versions.md#wenetspeech_chuan) | zh | 语音识别 | 10,259.6 | 川渝方言网络语音（WenetSpeech-Chuan） | 部分版本：快照 20260914 |
 | [wenetspeech_diarize](data-versions.md#wenetspeech_diarize) | zh | diarization、带说话人标注的语音识别 | — | WenetSpeech 长音频的说话人日志伪标签 | 没有 |
-| [wenetspeech_disfluency](data-versions.md#wenetspeech_disfluency) | zh | 语音识别 | 182.5 | WenetSpeech L 保留口语不流利词的转写 | 快照 20260914、`备份桶:audio-data-contract/datasets/wenetspeech/` |
+| [wenetspeech_disfluency](data-versions.md#wenetspeech_disfluency) | zh | 语音识别 | 182.5 | WenetSpeech L 保留口语不流利词的转写 | 部分版本：快照 20260914、`备份桶:audio-data-contract/datasets/wenetspeech/` |
 | [wenetspeech_podcast](data-versions.md#wenetspeech_podcast) | zh | 语音识别 | 3,892.3 | WenetSpeech L 中的播客部分 | 没有 |
 | [wenetspeech_wu](data-versions.md#wenetspeech_wu) | zh | 语音识别 | 8,740.7 | 吴语网络语音（WenetSpeech-Wu） | 快照 20260914 |
 | [wenetspeech_youtube](data-versions.md#wenetspeech_youtube) | zh | 语音识别 | 6,113.1 | WenetSpeech L 中的 YouTube 部分 | 没有 |
@@ -168,7 +168,7 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [opendatalab_multilingual](data-versions.md#opendatalab_multilingual) | ar、cs、hu、ko、ru、sr、th、vi | 语音识别 | 8,588.2 | 8 个语种的语音识别数据（OpenDataLab） | `备份桶:computer-2/audio/`（原始数据）、`备份桶:opendatalab-multilingual/`（原始数据） |
 | [sot_multispeaker_zh_en](data-versions.md#sot_multispeaker_zh_en) | en、zh、zh-en | 带说话人标注的语音识别 | 7,664.4 | 1–5 人中英合成混音，按人完整转写 | 没有 |
 | [starrail_voice](data-versions.md#starrail_voice) | en、ja、ko、zh-CN | 语音合成 | 692.6 | 《崩坏：星穹铁道》多语配音，TTS 用 | `TTS 桶:starrail-voice/`（原始数据） |
-| [talcs](data-versions.md#talcs) | en、zh | 语音识别、热词增强语音识别 | 587.6 | 中英语码转换课堂语音（TALCS）；含热词和加噪版 | 快照 20260914 |
+| [talcs](data-versions.md#talcs) | en、zh | 语音识别、热词增强语音识别 | 587.6 | 中英语码转换课堂语音（TALCS）；含热词和加噪版 | 部分版本：快照 20260914 |
 | [ts_hw_test](data-versions.md#ts_hw_test) | en、zh | 目标说话人语音识别 | 7.7 | 目标说话人加热词评测（LibriSpeech 风格） | 快照 20260914 |
 | [ts_interference_pool](data-versions.md#ts_interference_pool) | en、zh | ts_asr_interference | 656.6 | 在线混合用的干扰人语音素材池 | 没有 |
 | [ts_nonspeech_pool](data-versions.md#ts_nonspeech_pool) | en、zh | 语音识别 | 65.7 | 非人声与背景人声的空输出训练片段 | 没有 |
