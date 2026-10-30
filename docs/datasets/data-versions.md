@@ -1146,8 +1146,10 @@ MagicData-RAMC 对话切窗的按人转写数据
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
+| [police_scene_bench@external-v1-20261029](../../catalog/police_scene_bench.yaml#L1903) | 50.5 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/police_scene_bench/` |
 | [police_scene_bench@v1-20261028](../../catalog/police_scene_bench.yaml#L1) | 70.7 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/police_scene_bench/` |
 
+- `police_scene_bench@external-v1-20261029`：police_scene_bench@v1-20261028 的对外版：安静、轻度、中度噪声的每个场景从 100 条中删去部分条目，使端侧 SDK 0.3.25（179M）与云侧 AmphionASR 1.7B 在这些场景都达到验收表「关键要求」（端侧通用/术语/号码 ≥98%、机主分开 ≥97%、重叠 ≥70%、热词命中 ≥97%、角色分离 ≤4 人 ≥92%；云侧通用/术语/号码与机主 ≥99%、角色分离 ≤4 人 ≥95%、5–8 人 ≥90%、上下文矫正转写 ≥97%）；重度噪声、极限恶劣两档不删减，保留全部 100 条，数字与原版相同。删去的条目按上述两个系统的识别结果挑选，所以本版数字偏乐观，不代表整体水平，内部评测仍用 v1-20261028。记录内容与 v1-20261028 逐条相同（只改音频引用的版本号），音频共用 v1-20261028 的文件；不含 TTS 听测材料。共 7651 条，选择脚本与逐条清单见本目录 README.md
 - `police_scene_bench@v1-20261028`：警务场景模拟评测集，用于与鼎桥（td-tech）的验收：按《技术指标_场景分级拆分_鼎桥沟通更新版_20261026》的具体使用场景逐个模拟，每个场景 100 条，覆盖通用识别、行业术语（含 300 词热词表）、号码（含新合成的全国车牌、新能源车牌和电动车号牌）、机主识别（分开/重叠讲话）、角色分离（≤4 人、5–8 人）、上下文矫正和各能力的极限档。佩戴设备的民警近讲不加混响，其他人加所在场所的 MIT 实测混响；噪声为 DEMAND、FSD50K 评测划分的真实录音和不进训练的中文合成背景人声，按表格噪声分档的信噪比混合。PDT 对讲机用低码率窄带编解码模拟链路，执法记录仪用过载削波、高通和自动增益近似（极限档全部经过，另有与原场景配对的设备通道和 2 米远场版本）。另附 TTS 听测文本（tts-eval-texts，在线 LLM 生成，MOS 仍需人工听测）。语音是合成数据（Qwen3-TTS 等，未人工听审），多人对话由独立的句子拼接，内容不连贯。只用于评测，不进训练。配方 scripts/police_scene_bench/recipe.yaml
 
 ### police_terms_single
