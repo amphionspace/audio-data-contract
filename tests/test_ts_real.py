@@ -108,3 +108,19 @@ def test_stored_enrollment_appends_clean_utterances_outside_the_window():
     # Others are counted over the first ENROLL_CROP (5 s) of the joined pieces: B's 1 s inside A's first utterance.
     assert real["pieces_others"](e, "A", pieces) == (1.0, ["B"])
     assert real["pieces_others"](e, "A", [(60.0, 64.0), (0.0, 5.0)]) == (0.0, [])
+
+
+def test_english_transcripts_lose_markup_and_fragments_but_flag_missing_words():
+    english = runpy.run_path(str(SCRIPTS / "english.py"))
+    assert english["clean"]("[noise] the whe- food [laugh]", "dipco") == ("the food", None)
+    assert english["clean"]("So, <PName> Rachel </PName> ?", "notsofar") == ("So, Rachel?", None)
+    assert english["clean"]("[inaudible 0:01:19.47] the th- pot -", "chime6") == ("the pot", "unintelligible")
+    with pytest.raises(ValueError):
+        english["clean"]("[cough] yes", "dipco")
+
+
+def test_an_english_target_needs_a_scored_word_and_no_unintelligible_speech():
+    utts = [(0.0, 2.0, "A", "Um, mm-hmm."), (3.0, 5.0, "B", "the pot"), (5.0, 7.0, "C", "yes")]
+    e = {"language": "en", "excluded": {(5.0, 7.0, "C"): "unintelligible"}}
+    assert [real["scorable"](e, utts, s) for s in "ABC"] == [False, True, False]
+    assert real["scorable"]({}, utts, "A")  # Chinese entries keep every speaker

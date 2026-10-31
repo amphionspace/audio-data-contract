@@ -657,3 +657,228 @@
     - magicdata@legacy-20260804:test
     - aishell2@legacy-20260804:test
     - aishell@legacy-20260804:test
+- schema_version: dataset-catalog/2.0
+  dataset_id: ts_asr_nearshort
+  version: en-v1-20261031
+  languages:
+  - en
+  tasks:
+  - ts_asr
+  artifacts:
+  - name: audio-index
+    kind: audio-index
+    root_alias: ts_asr_nearshort
+    relative_path: versions/en-v1-20261031/audio-index.jsonl.gz
+    sha256: d310be21e4ff11b96dfced6d9f33d85e304bb6eca8f55b8a29151cdcc2933543
+    metadata:
+      record_count: 6000
+  - name: short-rand-neg-records
+    kind: audio-records
+    root_alias: ts_asr_nearshort
+    relative_path: versions/en-v1-20261031/records/short-rand-neg.jsonl.gz
+    sha256: 869d6b50eab38d4afcbe117287fe26ef0606ebb8ec80a32ff7570ba57c3aa9d7
+    metadata:
+      record_count: 300
+  - name: short-hard-neg-records
+    kind: audio-records
+    root_alias: ts_asr_nearshort
+    relative_path: versions/en-v1-20261031/records/short-hard-neg.jsonl.gz
+    sha256: 4ac0c8e1a094cc09fb25ba1ff30603de72f3315d8dc92d6e03a41a9fdbf8b6ea
+    metadata:
+      record_count: 300
+  - name: solo-short-pos-records
+    kind: audio-records
+    root_alias: ts_asr_nearshort
+    relative_path: versions/en-v1-20261031/records/solo-short-pos.jsonl.gz
+    sha256: 201fc0824c68413abced77380d19447eda2e157283e9a420740416a74a980c40
+    metadata:
+      record_count: 300
+  - name: solo-short-q20-pos-records
+    kind: audio-records
+    root_alias: ts_asr_nearshort
+    relative_path: versions/en-v1-20261031/records/solo-short-q20-pos.jsonl.gz
+    sha256: 076b2d4cccfdc2e18fa00b10c1b04a055cab620bd551b5d623ba50230c5b2a96
+    metadata:
+      record_count: 300
+  - name: solo-short-wham40-pos-records
+    kind: audio-records
+    root_alias: ts_asr_nearshort
+    relative_path: versions/en-v1-20261031/records/solo-short-wham40-pos.jsonl.gz
+    sha256: 5760fa5bc30270a55f3d15e824b5191f65161e8db418746f5e0b2645e1f0a954
+    metadata:
+      record_count: 300
+  - name: solo-short-wham30-pos-records
+    kind: audio-records
+    root_alias: ts_asr_nearshort
+    relative_path: versions/en-v1-20261031/records/solo-short-wham30-pos.jsonl.gz
+    sha256: 295de9f9dea586aa9e48275e8239fc81c479b87836b3da1521459e61c2802ca8
+    metadata:
+      record_count: 300
+  - name: solo-short-babble10-pos-records
+    kind: audio-records
+    root_alias: ts_asr_nearshort
+    relative_path: versions/en-v1-20261031/records/solo-short-babble10-pos.jsonl.gz
+    sha256: fe35d5657b9b5a1716a767a8d84a41c3ebc4b21fe43a6e77359fe2c9f4763b23
+    metadata:
+      record_count: 300
+  - name: solo-short-far-pos-records
+    kind: audio-records
+    root_alias: ts_asr_nearshort
+    relative_path: versions/en-v1-20261031/records/solo-short-far-pos.jsonl.gz
+    sha256: 569e2bcd4d102ac9a24530502a9e4d2d25a24625999c3023b715883c74e27247
+    metadata:
+      record_count: 300
+  - name: solo-short-farfar-pos-records
+    kind: audio-records
+    root_alias: ts_asr_nearshort
+    relative_path: versions/en-v1-20261031/records/solo-short-farfar-pos.jsonl.gz
+    sha256: 828855f7de1b94bffc9a6b501f1e6296f1eaf286be553aa87da306b3c95f8e4a
+    metadata:
+      record_count: 300
+  - name: short-k1-pos-records
+    kind: audio-records
+    root_alias: ts_asr_nearshort
+    relative_path: versions/en-v1-20261031/records/short-k1-pos.jsonl.gz
+    sha256: 00c90cb968948771622648e524fed1e4d06061c97a9fe3753a05ed6bfdc4ee0d
+    metadata:
+      record_count: 300
+  splits:
+    short-rand-neg:
+      artifacts:
+        records:
+        - short-rand-neg-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 300
+        duration_hours: 0.1963
+        duration_basis: Mixture duration
+      provenance:
+        description: 'nearshort: {"kind": "neg", "k": 1, "duration": [1.5, 3.0], "interferer_utts": "single_short", "interferer_start": [0.1, 0.6], "pair": "short1", "noise_floor": {"dbfs": [-65, -35], "kinds": {"white": 0.15, "pink": 0.15, "real": 0.7}, "real_pools": ["wham", "dns5_audioset", "dns5_freesound"]}, "enroll_store_seconds": 10, "language": "en"}'
+    short-hard-neg:
+      artifacts:
+        records:
+        - short-hard-neg-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 300
+        duration_hours: 0.1963
+        duration_basis: Mixture duration
+      provenance:
+        description: 'nearshort: {"kind": "neg", "k": 1, "duration": [1.5, 3.0], "interferer_utts": "single_short", "interferer_start": [0.1, 0.6], "hard": true, "pair": "short1", "noise_floor": {"dbfs": [-65, -35], "kinds": {"white": 0.15, "pink": 0.15, "real": 0.7}, "real_pools": ["wham", "dns5_audioset", "dns5_freesound"]}, "enroll_store_seconds": 10, "language": "en"}'
+    solo-short-pos:
+      artifacts:
+        records:
+        - solo-short-pos-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 300
+        duration_hours: 0.2203
+        duration_basis: Mixture duration
+      provenance:
+        description: 'nearshort: {"kind": "pos", "schedule": "short", "k": 0, "duration": [1.5, 3.0], "noise_floor": {"dbfs": [-65, -35], "kinds": {"white": 0.15, "pink": 0.15, "real": 0.7}, "real_pools": ["wham", "dns5_audioset", "dns5_freesound"]}, "enroll_store_seconds": 10, "language": "en"}'
+    solo-short-q20-pos:
+      artifacts:
+        records:
+        - solo-short-q20-pos-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 300
+        duration_hours: 0.2203
+        duration_basis: Mixture duration
+      provenance:
+        description: 'nearshort: {"kind": "pos", "schedule": "short", "k": 0, "duration": [1.5, 3.0], "mix_gain_db": -20, "pair": "solo-short-pos", "noise_floor": {"dbfs": [-65, -35], "kinds": {"white": 0.15, "pink": 0.15, "real": 0.7}, "real_pools": ["wham", "dns5_audioset", "dns5_freesound"]}, "enroll_store_seconds": 10, "language": "en"}'
+    solo-short-wham40-pos:
+      artifacts:
+        records:
+        - solo-short-wham40-pos-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 300
+        duration_hours: 0.2203
+        duration_basis: Mixture duration
+      provenance:
+        description: 'nearshort: {"kind": "pos", "schedule": "short", "k": 0, "duration": [1.5, 3.0], "noise_floor": {"dbfs": [-40, -40], "kinds": ["wham"]}, "pair": "solo-short-pos", "enroll_store_seconds": 10, "language": "en"}'
+    solo-short-wham30-pos:
+      artifacts:
+        records:
+        - solo-short-wham30-pos-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 300
+        duration_hours: 0.2203
+        duration_basis: Mixture duration
+      provenance:
+        description: 'nearshort: {"kind": "pos", "schedule": "short", "k": 0, "duration": [1.5, 3.0], "noise_floor": {"dbfs": [-30, -30], "kinds": ["wham"]}, "pair": "solo-short-pos", "enroll_store_seconds": 10, "language": "en"}'
+    solo-short-babble10-pos:
+      artifacts:
+        records:
+        - solo-short-babble10-pos-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 300
+        duration_hours: 0.2203
+        duration_basis: Mixture duration
+      provenance:
+        description: 'nearshort: {"kind": "pos", "schedule": "short", "k": 0, "duration": [1.5, 3.0], "noise": {"kind": "babble_en", "snr_db": [10, 10]}, "pair": "solo-short-pos", "noise_floor": {"dbfs": [-65, -35], "kinds": {"white": 0.15, "pink": 0.15, "real": 0.7}, "real_pools": ["wham", "dns5_audioset", "dns5_freesound"]}, "enroll_store_seconds": 10, "language": "en"}'
+    solo-short-far-pos:
+      artifacts:
+        records:
+        - solo-short-far-pos-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 300
+        duration_hours: 0.2203
+        duration_basis: Mixture duration
+      provenance:
+        description: 'nearshort: {"kind": "pos", "schedule": "short", "k": 0, "duration": [1.5, 3.0], "rir": {"target": "real"}, "pair": "solo-short-pos", "noise_floor": {"dbfs": [-65, -35], "kinds": {"white": 0.15, "pink": 0.15, "real": 0.7}, "real_pools": ["wham", "dns5_audioset", "dns5_freesound"]}, "enroll_store_seconds": 10, "language": "en"}'
+    solo-short-farfar-pos:
+      artifacts:
+        records:
+        - solo-short-farfar-pos-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 300
+        duration_hours: 0.2203
+        duration_basis: Mixture duration
+      provenance:
+        description: 'nearshort: {"kind": "pos", "schedule": "short", "k": 0, "duration": [1.5, 3.0], "rir": {"target": "real"}, "enroll": "reverb", "enroll_rir_pool": "real", "pair": "solo-short-pos", "noise_floor": {"dbfs": [-65, -35], "kinds": {"white": 0.15, "pink": 0.15, "real": 0.7}, "real_pools": ["wham", "dns5_audioset", "dns5_freesound"]}, "enroll_store_seconds": 10, "language": "en"}'
+    short-k1-pos:
+      artifacts:
+        records:
+        - short-k1-pos-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 300
+        duration_hours: 0.2192
+        duration_basis: Mixture duration
+      provenance:
+        description: 'nearshort: {"kind": "pos", "schedule": "short", "k": 1, "duration": [1.5, 3.0], "interferer_utts": "single_short", "interferer_start": [0.1, 0.6], "noise_floor": {"dbfs": [-65, -35], "kinds": {"white": 0.15, "pink": 0.15, "real": 0.7}, "real_pools": ["wham", "dns5_audioset", "dns5_freesound"]}, "enroll_store_seconds": 10, "language": "en"}'
+  provenance:
+    status: complete
+    synthetic: full
+    description: 英文目标说话人 ASR 评测集（ts_asr_nearshort）：与中文版同一配方与随机种子，说话人换成 VCTK、CS-Dialogue 英文 test、LibriSpeech test-clean/test-other；不含业务真实注册录音条件。只用于评测，不进训练。场景见 scripts/ts_benchmark/recipe-nearshort-en.yaml。
+    sources:
+    - vctk@tts-unified-v0.1:train
+    - cs_dialogue_en@legacy-20260804:test
+    - librispeech@legacy-20260804:test_clean
+    - librispeech@legacy-20260804:test_other

@@ -111,18 +111,10 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [tal100_zh](data-versions.md#tal100_zh) | zh | 语音识别 | 5.5 | TAL 中文语音识别数据 | 快照 20260914 |
 | [thchs30](data-versions.md#thchs30) | zh | 语音识别、热词增强语音识别 | ≈35.0 | 清华中文朗读（THCHS-30）；含热词版 | 快照 20260914 |
 | [threed_speaker_zh_far_asr](data-versions.md#threed_speaker_zh_far_asr) | zh | 语音识别 | 75.5 | 3D-Speaker 远场普通话转写训练数据 | 没有 |
-| [ts_asr_benchmark](data-versions.md#ts_asr_benchmark) | zh | 目标说话人语音识别 | 46.5 | 合成的中文目标说话人 ASR 评测集 | `备份桶:audio-data-contract/datasets/ts_asr_benchmark/` |
 | [ts_asr_dev](data-versions.md#ts_asr_dev) | zh | 目标说话人语音识别 | 10.7 | 合成的中文目标说话人 ASR 开发集 | `备份桶:audio-data-contract/datasets/ts_asr_dev/` |
 | [ts_asr_enroll_len](data-versions.md#ts_asr_enroll_len) | zh | 目标说话人语音识别 | 1.5 | 目标说话人评测：注册音频长度 | 没有 |
-| [ts_asr_farfield](data-versions.md#ts_asr_farfield) | zh | 目标说话人语音识别 | 5.1 | 目标说话人评测：远场与混响 | `备份桶:audio-data-contract/datasets/ts_asr_farfield/` |
-| [ts_asr_handover](data-versions.md#ts_asr_handover) | zh | 目标说话人语音识别 | 3.8 | 目标说话人评测：与他人交替说话 | `备份桶:audio-data-contract/datasets/ts_asr_handover/` |
 | [ts_asr_nearfar](data-versions.md#ts_asr_nearfar) | zh | 目标说话人语音识别 | 6.0 | 目标说话人评测：AliMeeting 近场与远场对照 | `备份桶:audio-data-contract/datasets/ts_asr_nearfar/` |
-| [ts_asr_nearshort](data-versions.md#ts_asr_nearshort) | zh | 目标说话人语音识别 | 2.5 | 目标说话人评测：他人只说一句约 1 秒短话 | 部分版本：`备份桶:audio-data-contract/datasets/ts_asr_nearshort/` |
-| [ts_asr_noise](data-versions.md#ts_asr_noise) | zh | 目标说话人语音识别 | 5.9 | 目标说话人评测：噪声与背景人声 | `备份桶:audio-data-contract/datasets/ts_asr_noise/` |
 | [ts_asr_playback](data-versions.md#ts_asr_playback) | zh | 目标说话人语音识别 | 3.4 | 目标说话人评测：外放播放的干扰声 | 没有 |
-| [ts_asr_real](data-versions.md#ts_asr_real) | zh | 目标说话人语音识别 | 12.0 | 真实会议对话的目标说话人评测集 | `备份桶:audio-data-contract/datasets/ts_asr_real/` |
-| [ts_asr_shortseg](data-versions.md#ts_asr_shortseg) | zh | 目标说话人语音识别 | 0.8 | 目标说话人评测：他人说话的 1–6 秒短片段 | `备份桶:audio-data-contract/datasets/ts_asr_shortseg/` |
-| [ts_asr_singing](data-versions.md#ts_asr_singing) | zh | 目标说话人语音识别 | 0.3 | 目标说话人评测：歌声干扰 | `备份桶:audio-data-contract/datasets/ts_asr_singing/` |
 | [ts_real_train](data-versions.md#ts_real_train) | zh | 目标说话人语音识别 | 123.6 | 真实会议切出的目标说话人训练窗口 | 没有 |
 | [vitw_zh_far_asr](data-versions.md#vitw_zh_far_asr) | zh | 语音识别 | 49.6 | VITW 中文远场转写训练数据 | 没有 |
 | [wenetspeech](data-versions.md#wenetspeech) | zh | 语音识别 | 10,025.4 | 中文网络语音万余小时（WenetSpeech）；含清洗版 | 部分版本：快照 20260914、`备份桶:audio-data-contract/datasets/wenetspeech/` |
@@ -169,6 +161,14 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [sot_multispeaker_zh_en](data-versions.md#sot_multispeaker_zh_en) | en、zh、zh-en | 带说话人标注的语音识别 | 7,664.4 | 1–5 人中英合成混音，按人完整转写 | 没有 |
 | [starrail_voice](data-versions.md#starrail_voice) | en、ja、ko、zh-CN | 语音合成 | 692.6 | 《崩坏：星穹铁道》多语配音，TTS 用 | `TTS 桶:starrail-voice/`（原始数据） |
 | [talcs](data-versions.md#talcs) | en、zh | 语音识别、热词增强语音识别 | 587.6 | 中英语码转换课堂语音（TALCS）；含热词和加噪版 | 部分版本：快照 20260914 |
+| [ts_asr_benchmark](data-versions.md#ts_asr_benchmark) | en、zh | 目标说话人语音识别 | 46.5 | 合成的中文目标说话人 ASR 评测集 | 部分版本：`备份桶:audio-data-contract/datasets/ts_asr_benchmark/` |
+| [ts_asr_farfield](data-versions.md#ts_asr_farfield) | en、zh | 目标说话人语音识别 | 5.1 | 目标说话人评测：远场与混响 | 部分版本：`备份桶:audio-data-contract/datasets/ts_asr_farfield/` |
+| [ts_asr_handover](data-versions.md#ts_asr_handover) | en、zh | 目标说话人语音识别 | 3.8 | 目标说话人评测：与他人交替说话 | 部分版本：`备份桶:audio-data-contract/datasets/ts_asr_handover/` |
+| [ts_asr_nearshort](data-versions.md#ts_asr_nearshort) | en、zh | 目标说话人语音识别 | 2.5 | 目标说话人评测：他人只说一句约 1 秒短话 | 部分版本：`备份桶:audio-data-contract/datasets/ts_asr_nearshort/` |
+| [ts_asr_noise](data-versions.md#ts_asr_noise) | en、zh | 目标说话人语音识别 | 5.9 | 目标说话人评测：噪声与背景人声 | 部分版本：`备份桶:audio-data-contract/datasets/ts_asr_noise/` |
+| [ts_asr_real](data-versions.md#ts_asr_real) | en、zh | 目标说话人语音识别 | 12.0 | 真实会议对话的目标说话人评测集 | 部分版本：`备份桶:audio-data-contract/datasets/ts_asr_real/` |
+| [ts_asr_shortseg](data-versions.md#ts_asr_shortseg) | en、zh | 目标说话人语音识别 | 0.8 | 目标说话人评测：他人说话的 1–6 秒短片段 | 部分版本：`备份桶:audio-data-contract/datasets/ts_asr_shortseg/` |
+| [ts_asr_singing](data-versions.md#ts_asr_singing) | en、zh | 目标说话人语音识别 | 0.3 | 目标说话人评测：歌声干扰 | 部分版本：`备份桶:audio-data-contract/datasets/ts_asr_singing/` |
 | [ts_hw_test](data-versions.md#ts_hw_test) | en、zh | 目标说话人语音识别 | 7.7 | 目标说话人加热词评测（LibriSpeech 风格） | 快照 20260914 |
 | [ts_interference_pool](data-versions.md#ts_interference_pool) | en、zh | ts_asr_interference | 656.6 | 在线混合用的干扰人语音素材池 | 没有 |
 | [ts_nonspeech_pool](data-versions.md#ts_nonspeech_pool) | en、zh | 语音识别 | 65.7 | 非人声与背景人声的空输出训练片段 | 没有 |
