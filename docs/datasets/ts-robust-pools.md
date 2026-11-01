@@ -86,6 +86,20 @@
 
     python build_ts_scene_pool.py --output-dir DIR --version multi-20261017 --multi --neighbors FILE --zh 120000 --en 40000
 
+### 英文口音目标版（cvaccent-* / csd-*，2026-11-01）
+
+10.28 版本在英文目标说话人评测集（ts-asr-benchmark-en）上，VCTK 带口音的目标有 13.8% 被判成缺席（苏格兰、爱尔兰、加拿大口音约 20%，短目标 27%），LibriSpeech 目标只有 1.8%；CS-Dialogue（中国人说英语）词错率 44.6%。训练里的英文目标 63% 是 LibriSpeech 有声书朗读。这两组场景池换上带口音的英文目标，场景做法与 MagicData 系列一致（多句带孪生、轮流带孪生、相近声音、交接），另加短句单人版（solo）：
+
+| 系列 | 目标说话人 | 其他说话人 |
+| --- | --- | --- |
+| `cvaccent-*` | Common Voice 英文 train 中填写了口音的说话人（至少 6 句 1–8 秒），按口音组抽取：每组占比为说话人数的平方根，单组不超过 15%（按人数美国 52%、英格兰 16%）。文本、清洗通过标记和口音取自双引擎清洗清单（`common_voice_en@icefall-20260908` 的 `clean_supervisions`，见 [cv-en-cleaning.md](cv-en-cleaning.md)），未通过的句子不用 | 一半同一批口音说话人，一半 LibriSpeech |
+| `csd-*` | CS-Dialogue 英文 train 的 140 位说话人；含 `<NPS/>`（旁人说话）或 `**`（听不清）的句子不用，其余标签（`<FIL/>` 等）去掉，与评测集一致 | 一半 CS-Dialogue，Common Voice 口音说话人与 LibriSpeech 各四分之一 |
+
+- 口音组：Common Voice 的预设选项（美国、英格兰、苏格兰、爱尔兰、威尔士、加拿大、澳新、南亚、南部非洲、加勒比、东南亚、香港）加少量含义明确的自填答案（如 Northern Irish）；只有自填答案的归 `other`（多为德、俄、波兰等非母语口音）；同时填了两个组的说话人不用。CS-Dialogue 说话人记为 `mandarin_l1`。
+- `labels.accent` 记录注册人的口音组；孪生样本的注册人与目标同语料、按同样的口音占比抽取，注册音频的语料和口音都不能用来区分在场与缺席。
+- 相近声音：`speaker_neighbors.py --en-accents` 对全部口音说话人和 CS-Dialogue 说话人求 ERes2NetV2 最近邻，候选限于该池会抽到的语料（cvaccent：LibriSpeech、Common Voice；csd：再加 CS-Dialogue）。
+- 与评测集互不重叠：三份语料的 dev / test 说话人在生成时剔除（`HELD_OUT_SPEAKERS`，按说话人 ID 核对过 train 与 dev / test 没有共同说话人）；不使用 VCTK。`qc_ts_scene_pool.py` 逐条核对说话人、语句、音频范围和文本。
+
 ## dns5_noise_train
 
 DNS5 噪声包里的 AudioSet 和 Freesound 噪声（16 kHz 单声道 FLAC，≤30 s，RMS 归一到 −30 dBFS，与评测集的噪声同样处理），以及模拟房间响应。split：
@@ -139,4 +153,4 @@ DNS5 噪声包里的 AudioSet 和 Freesound 噪声（16 kHz 单声道 FLAC，≤
 
 ## 生成脚本
 
-`scripts/ts_robust/`：`build_interference_pool.py`、`build_interference_pool_v3.py`、`build_nonspeech_pool.py`、`build_ts_scene_pool.py`、`speaker_neighbors.py`、`prepare_training_noise.py`、`register_training_noise.py`、`register_records_pool.py`（把 `records` + `audio_index` 版本写成声明）、`build_ts_real_train.py`、`register_babble_noise.py`。登记后用 `build-record-index --register` 建索引。
+`scripts/ts_robust/`：`build_interference_pool.py`、`build_interference_pool_v3.py`、`build_nonspeech_pool.py`、`build_ts_scene_pool.py`、`qc_ts_scene_pool.py`（登记前检查场景池）、`speaker_neighbors.py`、`prepare_training_noise.py`、`register_training_noise.py`、`register_records_pool.py`（把 `records` + `audio_index` 版本写成声明）、`build_ts_real_train.py`、`register_babble_noise.py`。登记后用 `build-record-index --register` 建索引。
