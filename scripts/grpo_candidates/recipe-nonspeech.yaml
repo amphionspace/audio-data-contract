@@ -1,0 +1,61 @@
+# 普通 ASR 非人声空输出候选（ts_nonspeech_pool@env-20261101）：给 10.28 版本挖"非人声上编文字"的提示。
+#
+# 记录格式同 ts_nonspeech_pool@v1-20261016 / babble-20261024：源文件的一段（0.3–26 s，对数均匀），
+# 目标为空，电平在训练时按数据源配置随机（`nonspeech: {level_dbfs: [-60, -20]}`）。
+# 来源都不在配方的空输出数据里（v1 = MUSAN 噪声与音乐，babble = 合成房间背景人声，
+# asr_babble_speech_pool 有语音；TS 在线混合的 nonspeech_sources = audioset_road_traffic、MUSAN、babble v1），
+# 也不是任何评测集的音频：
+#   - FSD50K 只用 dev 里 split=train 的片段；评测集（asr_babble_bench、police_scene_bench、TS 基准）用 eval 划分
+#   - DNS5 噪声用 dns5_noise_train@v1-20261016（已去掉 TS 基准取用的片段）
+#   - RealMAN 只用 train 的纯噪声录音（每段取 CH0）
+#   - 不用 DEMAND（police_scene_bench 的环境底噪）、audioset_road_traffic（TS 基准的交通噪声）、
+#     WHAM（可能有听得清的人声）、MUSAN 与 babble（已在配方空输出池里）
+# 人声三道：FSD50K 先按标签去掉人声类；所有片段过 Silero VAD（默认参数），检出任何语音段的不收；
+# 过了 VAD 的再过 SenseVoiceSmall，写出超过 asr_max_units 个字/词的隔离（抽查发现 Silero 漏掉音乐下的
+# 旁白和嘈杂房间里的说话）。只写 1 个字/词的留下：SenseVoice 在非人声上常写单字（如 the），不代表有可懂人声，
+# 而模型在这类片段上编字正是要挖的内容。隔离的片段不进数据集，记在版本目录 quarantine.jsonl.gz。
+dataset_id: ts_nonspeech_pool
+version: env-20261101
+split: all
+seed: 20261101
+min_seconds: 0.3
+max_seconds: 26.0
+# 先多切一些，过 VAD 和解码检查后每个来源取前 count 条
+oversample: 1.5
+# ASR 检查只跑过 VAD 的前 count × asr_share 条（CPU 上约 2–10 条/秒），够补隔离掉的
+asr_share: 1.15
+asr_max_units: 1
+# 片段整体 RMS 低于此值视为无信号（同 build_nonspeech_pool.py）
+min_rms: 1.0e-4
+# VAD 前把片段 RMS 归一到这个电平，检测与原始录音电平无关
+vad_rms_dbfs: -25.0
+
+sources:
+  fsd50k:
+    # (count, most clips per file)
+    count: 9000
+    per_file: 1
+    ground_truth: noise_open/fsd50k/extracted/FSD50K.ground_truth/dev.csv
+    audio_dir: noise_open/fsd50k/extracted/FSD50K.dev_audio
+    dev_split: train
+    # 含人声或人群声的标签（police_scene_bench 的 VOICE_LABELS 加上笑、喊、哭、人群、欢呼等），带任一标签的片段不收
+    exclude_labels: [Speech, Male_speech_and_man_speaking, Female_speech_and_woman_speaking,
+      Child_speech_and_kid_speaking, Conversation, Speech_synthesizer, Singing, Male_singing, Female_singing,
+      Whispering, Human_voice, Chatter, Crowd, Cheering, Human_group_actions, Laughter, Giggle,
+      Chuckle_and_chortle, Screaming, Shout, Yell, Crying_and_sobbing, Sigh, Gasp]
+  dns5_audioset:
+    count: 5000
+    per_file: 1
+    catalog: {dataset: dns5_noise_train, version: v1-20261016, split: audioset}
+  dns5_freesound:
+    count: 2500
+    per_file: 1
+    catalog: {dataset: dns5_noise_train, version: v1-20261016, split: freesound}
+  realman:
+    count: 3000
+    per_file: 2
+    glob: realman/source/hf-aishell-20261025/extracted/train/ma_noise/*/*_CH0.flac
+  meeting_room:
+    count: 1000
+    per_file: 8
+    catalog: {dataset: meeting_room_noise, version: v2-20261014, split: train}
