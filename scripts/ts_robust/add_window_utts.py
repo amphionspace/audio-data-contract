@@ -15,8 +15,9 @@ at the derived version, whose audio index rows are the original's.
 * ``moss`` - ts_real_train v3 emilia2_1spk, from the MOSS diarization window each record names.
 * ``dialog`` - emilia2_dialog turn-taking windows, from the Emilia2 dialogue JSON (``short`` segments).
 * ``mix`` - emilia2_mix, from its mixing protocol (``supervision/protocol-*.jsonl.gz``).
-* ``keep`` - ts_real_train v2, whose builder wrote the timeline itself: only the check below is applied. Speakers
-  recur across AliMeeting and RAMC sessions, so a few ``other_recording`` negatives enrolled the window's own speaker.
+* ``keep`` - ts_real_train v2 and en-v1, whose builders wrote the timeline themselves: only the check below is
+  applied. Speakers recur across AliMeeting and RAMC sessions, so a few v2 ``other_recording`` negatives enrolled the
+  window's own speaker (en-v1 excludes the window's speakers when it enrolls from another recording).
 
 An utterance overlapping the mixture is kept, clipped to it (marked ``clipped``). A positive keeps its timeline
 only when its target utterances spell the record's transcript (whitespace and punctuation ignored; an utterance
@@ -60,6 +61,7 @@ SOURCES = {
     "emilia2_dialog@dialog-turn-taking-20261013-enroll": dict.fromkeys(TURN_TAKING, "dialog"),
     "emilia2_mix@mix-20261013": dict.fromkeys(("train_2spk", "train_3spk"), "mix"),
     "ts_real_train@v2-20261018": dict.fromkeys(("alimeeting", "aishell4", "ramc"), "keep"),
+    "ts_real_train@en-v1-20261101": dict.fromkeys(("ami", "notsofar", "chime6", "dipco", "icsi"), "keep"),
 }
 # Utterances touching the mixture edge by less than this are not in it.
 EDGE_SECONDS = 0.01

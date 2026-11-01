@@ -40,10 +40,11 @@ TAGS = {
     "dipco": {"remove": {"[noise]", "[laugh]"}, "exclude": {"[unintelligible]": "unintelligible"}},
     # NOTSOFAR-1 GT: <ST/> segment-continuation mark, <FILL/> filled pause, <FILLlaugh/> laughter, <PName> name tags;
     # <UNKNOWN/> unintelligible word, <FL/> foreign language, <BA/> segment without words, <ISSUE/> annotator flag,
-    # #ignore="SegmTooShort" segment flag.
-    "notsofar": {"remove": {"<ST/>", "<FILL/>", "<FILLlaugh/>", "<PName>", "</PName>"},
+    # #ignore="SegmTooShort" segment flag. Train / dev only: <PAUSE/> pause mark; <SN/> (2 segments, undocumented) is
+    # taken as words missing from the transcript.
+    "notsofar": {"remove": {"<ST/>", "<FILL/>", "<FILLlaugh/>", "<PName>", "</PName>", "<PAUSE/>"},
                  "exclude": {"<UNKNOWN/>": "unintelligible", "<FL/>": "foreign", "<BA/>": "untranscribed",
-                             "<ISSUE/>": "annotation_issue", "#ignore=": "ignored_segment"}},
+                             "<ISSUE/>": "annotation_issue", "#ignore=": "ignored_segment", "<SN/>": "undocumented_tag"}},
     # AMI (lhotse text, already without markup).
     "ami": {"remove": set(), "exclude": {}},
 }
@@ -286,12 +287,13 @@ def icsi_segment(segment):
     return clean_words(raw.replace("_", " ")), reason
 
 
-def load_icsi(spec, catalog, roots):
-    """The recipe's ``meetings`` (the ICSI test partition), MRT transcripts, audio = the official headset mix."""
+def load_icsi(spec, catalog, roots, audio=None):
+    """The recipe's ``meetings`` (the ICSI test partition), MRT transcripts, audio = the official headset mix
+    (``audio``: {meeting: samples} already decoded; decoding the parquet shards runs at a few MB/s)."""
     transcripts = next(p for p in resolve_split(catalog, spec["dataset"], spec["version"], spec["split"], "transcriptions", roots)
                        if (p / "transcripts").is_dir())
     (parquet_dir,) = resolve_split(catalog, spec["dataset"], spec["version"], spec["split"], "records", roots)
-    audio = icsi_audio(parquet_dir, set(spec["meetings"]))
+    audio = audio if audio is not None else icsi_audio(parquet_dir, set(spec["meetings"]))
     out = {}
     for meeting in spec["meetings"]:
         root = ET.parse(transcripts / "transcripts" / f"{meeting}.mrt").getroot()
