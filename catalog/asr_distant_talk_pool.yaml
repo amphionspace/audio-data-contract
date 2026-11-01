@@ -1,0 +1,141 @@
+- schema_version: dataset-catalog/2.0
+  dataset_id: asr_distant_talk_pool
+  version: v1-20261102
+  languages:
+  - zh
+  - en
+  tasks:
+  - asr
+  aliases: []
+  artifacts:
+  - name: empty_zh-records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/asr_distant_talk_pool/versions/v1-20261102/records_empty_zh.jsonl.gz
+    sha256: 78ad32542270d95d6eb05901010f23454920604d3937743eb61c687da7d9e1fe
+    metadata:
+      record_count: 8677
+  - name: empty_zh-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/asr_distant_talk_pool/versions/v1-20261102/audio_index_empty_zh.jsonl.gz
+    sha256: df11b7a53187d9c00309725053abf21fa308c0bd38d720a5aae197946b917b9f
+    metadata:
+      record_count: 8677
+  - name: empty_en-records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/asr_distant_talk_pool/versions/v1-20261102/records_empty_en.jsonl.gz
+    sha256: 365bcc10426b5a13ddca5fcaea41ee4ef763a5d02e56c0eaa59cdb41106fddb1
+    metadata:
+      record_count: 5609
+  - name: empty_en-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/asr_distant_talk_pool/versions/v1-20261102/audio_index_empty_en.jsonl.gz
+    sha256: 64e2bed7d2e9674b98bba633f5cfe688a44290cd9885ec979c44d7f911c76e77
+    metadata:
+      record_count: 5609
+  - name: text_zh-records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/asr_distant_talk_pool/versions/v1-20261102/records_text_zh.jsonl.gz
+    sha256: 06e18479ff9672c4610179ed278b7008c65b39c01528784a4cabc9fa94e1ebd7
+    metadata:
+      record_count: 4449
+  - name: text_zh-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/asr_distant_talk_pool/versions/v1-20261102/audio_index_text_zh.jsonl.gz
+    sha256: d9b1f3fb796297e278b8609ae1497900d440efcff765e23f786253bfdc8fb6c0
+    metadata:
+      record_count: 4449
+  - name: text_en-records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/asr_distant_talk_pool/versions/v1-20261102/records_text_en.jsonl.gz
+    sha256: 648c798fc92e8aa64f4145b065e08b219b82a645155ba7d160b512327a6fddab
+    metadata:
+      record_count: 554
+  - name: text_en-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/asr_distant_talk_pool/versions/v1-20261102/audio_index_text_en.jsonl.gz
+    sha256: 5e68565bc09763c10653d7485775098c0c45a0bf847a5652a065abe003fbf0b8
+    metadata:
+      record_count: 554
+  - name: record_index
+    kind: lance-record-index
+    root_alias: aidc_data
+    relative_path: datasets/asr_distant_talk_pool/versions/v1-20261102/record_index/index.json
+    sha256: 0c49a29c4dd4bef29c9ee0cb848d0a28511b934b4994d2e8837baf7c8ff92b7c
+    expected_bytes: 1781
+    metadata:
+      rows: 19289
+      schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
+      snapshot_version: 13
+  splits:
+    empty_zh:
+      artifacts:
+        records:
+        - empty_zh-records
+        audio_index:
+        - empty_zh-audio-index
+        records_lance:
+        - record_index
+      task: asr
+      statistics:
+        records: 8677
+        duration_hours: 24.83
+        duration_basis: clip duration (segment span, or the whole file)
+    empty_en:
+      artifacts:
+        records:
+        - empty_en-records
+        audio_index:
+        - empty_en-audio-index
+        records_lance:
+        - record_index
+      task: asr
+      statistics:
+        records: 5609
+        duration_hours: 16.23
+        duration_basis: clip duration (segment span, or the whole file)
+    text_zh:
+      artifacts:
+        records:
+        - text_zh-records
+        audio_index:
+        - text_zh-audio-index
+        records_lance:
+        - record_index
+      task: asr
+      statistics:
+        records: 4449
+        duration_hours: 12.66
+        duration_basis: clip duration (segment span, or the whole file)
+    text_en:
+      artifacts:
+        records:
+        - text_en-records
+        audio_index:
+        - text_en-audio-index
+        records_lance:
+        - record_index
+      task: asr
+      statistics:
+        records: 554
+        duration_hours: 1.48
+        duration_basis: clip duration (segment span, or the whole file)
+  provenance:
+    status: complete
+    synthetic: none
+    snapshot_date: '2026-11-02'
+    description: 普通 ASR 用的「远处背景人声」训练池：把真实对话（中文 MagicData-RAMC train，英文 ICSI 非评测会议的耳麦混音）渲染成房间另一头的说话声，约 30% 片段同时有两段对话；SLR28
+      模拟房间冲激响应（中、大房间）并削弱直达声 0–15 dB，高频衰减，叠真实会议室底噪，信噪比 −8 到 8 dB，帧级 p95 −36 到 −21 dBFS。目标不由渲染决定：由基线 Qwen3-ASR-1.7B 与 FireRedASR2-AED
+      独立转写，对照原转写判定。empty_*：两者都跟不上（都为空，或都偏离原转写且彼此不一致），目标为空；text_*：两者都接近原转写（字错率不超过 0.3），目标为原转写，作为对照，防止安静的真实远场语音也被学成空。其余丢弃。脚本 scripts/ts_robust/{build,label,finalize}_distant_talk_pool.py。
+    sources:
+    - magicdata_ramc:legacy-20260804
+    - icsi:modelscope-argmaxinc-20261025
+    - sim_rir_slr28:legacy-20260804
+    - meeting_room_noise:v2-20261014
