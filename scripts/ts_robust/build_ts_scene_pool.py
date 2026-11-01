@@ -154,8 +154,9 @@ and transcribes CS-Dialogue (Chinese speakers' English) at 44.6% WER.
                  intelligible) are skipped and the other tags removed, as ts-asr-benchmark-en does. Other speakers are
                  half CS-Dialogue, a quarter the accent-labelled Common Voice speakers, a quarter LibriSpeech.
 Speakers of the corpora's dev / test splits (HELD_OUT_SPEAKERS) never enter a pool; CS-Dialogue test speakers are
-ts-asr-benchmark-en targets. Twins enroll a speaker drawn like the targets (same corpus, same accent shares), so neither
-the corpus nor the accent of the enrollment tells present from absent. Records carry ``labels.accent`` (the enrolled
+ts-asr-benchmark-en targets. Random twins enroll a speaker drawn like the targets (same corpus, same accent shares). Near
+twins enroll a neighbour, and neighbours follow the speaker counts: enrollments with a United States accent are absent
+in about half of a pool, the others in 21-28% (cvaccent-near-20261101). Records carry ``labels.accent`` (the enrolled
 speaker's accent group). Neighbours from ``speaker_neighbors.py --en-accents``; all five pool kinds are built:
 
     python build_ts_scene_pool.py --output-dir DIR --version cvaccent-near-20261101 --multi --cv-accents \\
