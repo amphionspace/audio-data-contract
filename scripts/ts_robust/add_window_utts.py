@@ -61,7 +61,7 @@ SOURCES = {
     "emilia2_dialog@dialog-turn-taking-20261013-enroll": dict.fromkeys(TURN_TAKING, "dialog"),
     "emilia2_mix@mix-20261013": dict.fromkeys(("train_2spk", "train_3spk"), "mix"),
     "ts_real_train@v2-20261018": dict.fromkeys(("alimeeting", "aishell4", "ramc"), "keep"),
-    "ts_real_train@en-v1-20261101": dict.fromkeys(("ami", "notsofar", "chime6", "dipco", "icsi"), "keep"),
+    "ts_real_train@en-v1-20261101": dict.fromkeys(("ami", "notsofar", "dipco", "icsi"), "keep"),
 }
 # Utterances touching the mixture edge by less than this are not in it.
 EDGE_SECONDS = 0.01

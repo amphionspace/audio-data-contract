@@ -115,7 +115,6 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [ts_asr_enroll_len](data-versions.md#ts_asr_enroll_len) | zh | 目标说话人语音识别 | 1.5 | 目标说话人评测：注册音频长度 | 没有 |
 | [ts_asr_nearfar](data-versions.md#ts_asr_nearfar) | zh | 目标说话人语音识别 | 6.0 | 目标说话人评测：AliMeeting 近场与远场对照 | `备份桶:audio-data-contract/datasets/ts_asr_nearfar/` |
 | [ts_asr_playback](data-versions.md#ts_asr_playback) | zh | 目标说话人语音识别 | 3.4 | 目标说话人评测：外放播放的干扰声 | 没有 |
-| [ts_real_train](data-versions.md#ts_real_train) | zh | 目标说话人语音识别 | 123.6 | 真实会议切出的目标说话人训练窗口 | 没有 |
 | [vitw_zh_far_asr](data-versions.md#vitw_zh_far_asr) | zh | 语音识别 | 49.6 | VITW 中文远场转写训练数据 | 没有 |
 | [wenetspeech](data-versions.md#wenetspeech) | zh | 语音识别 | 10,025.4 | 中文网络语音万余小时（WenetSpeech）；含清洗版 | 部分版本：快照 20260914、`备份桶:audio-data-contract/datasets/wenetspeech/` |
 | [wenetspeech4tts](data-versions.md#wenetspeech4tts) | zh | 语音识别、语音合成 | ≈7,700.0 | WenetSpeech 筛出的中文 TTS 语音 | 快照 20260914、`TTS 桶:WenetSpeech4TTS/`（原始数据） |
@@ -172,6 +171,7 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [ts_hw_test](data-versions.md#ts_hw_test) | en、zh | 目标说话人语音识别 | 7.7 | 目标说话人加热词评测（LibriSpeech 风格） | 快照 20260914 |
 | [ts_interference_pool](data-versions.md#ts_interference_pool) | en、zh | ts_asr_interference | 656.6 | 在线混合用的干扰人语音素材池 | 没有 |
 | [ts_nonspeech_pool](data-versions.md#ts_nonspeech_pool) | en、zh | 语音识别 | 65.7 | 非人声与背景人声的空输出训练片段 | 没有 |
+| [ts_real_train](data-versions.md#ts_real_train) | en、zh | 目标说话人语音识别 | 123.6 | 真实会议切出的目标说话人训练窗口 | 没有 |
 | [ts_scene_pool](data-versions.md#ts_scene_pool) | en、zh | 目标说话人语音识别 | 386.2 | 目标说话人难例场景素材（相近声音、交接） | 没有 |
 | [vitw](data-versions.md#vitw) | en、zh | 语音识别 | 1,085.4 | 真实场景中英语音（VITW）；含回声、远场等评测 | 部分版本：快照 20260914 |
 | [waxal-asr](data-versions.md#waxal-asr) | ach、aka、am、dag、dga、ee、ff、kpo、lg、ln、mas、mg、nyn、om、sid、sn、sog、ti、wal | 语音识别 | — | 19 种非洲语言语音（WAXAL） | 快照 20260914 |

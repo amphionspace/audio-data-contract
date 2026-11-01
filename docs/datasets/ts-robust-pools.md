@@ -7,7 +7,7 @@
 | `ts_interference_pool` | `v3-20261018`（`v2-20261016` 同内容读 m4a；`v1-20261015` 为首版） | 干扰人：单人语音片段，按偏移取自源文件；Emilia2 片段读 Lance | zh 32 万条 389 h、en 20 万条 268 h |
 | `ts_nonspeech_pool` | `v1-20261016` | 没有人声的噪声和音乐，转写为空 | 4.8 万条 65.7 h |
 | `ts_scene_pool` | `v2-20261016`；`hard-20261016`；`multi-20261017` | 多句场景：alternate / burst / short；相近声音版；目标说多句的并行版（full，含缺席孪生） | v2：zh 15 万条、en 10 万条；hard：zh 4 万条、en 2.5 万条；multi：zh 12 万条、en 4 万条 |
-| `ts_real_train` | `v1-20261017`；`v2-20261018` | 真实会议窗口（训练划分），在场与缺席成对。v1 按 1 / 2 / 3+ 人分档；v2 以目标为锚开窗、按重叠比例分档，带窗口内每句的时间戳 | v1：9.1 万条（alimeeting 2.5 万、aishell4 3.0 万、ramc 3.7 万）；v2：8.4 万条（alimeeting 4.2 万、aishell4 3.0 万、ramc 1.2 万） |
+| `ts_real_train` | `v1-20261017`；`v2-20261018`；`en-v1-20261101`（ami 24,054、icsi 3,416、notsofar 2,372、dipco 432 条，及 `-utts`） | 真实会议窗口（训练划分），在场与缺席成对。v1 按 1 / 2 / 3+ 人分档；v2 以目标为锚开窗、按重叠比例分档，带窗口内每句的时间戳 | v1：9.1 万条（alimeeting 2.5 万、aishell4 3.0 万、ramc 3.7 万）；v2：8.4 万条（alimeeting 4.2 万、aishell4 3.0 万、ramc 1.2 万） |
 | `babble_noise_train` | `v1-20261017` | 合成背景人声（babble）训练划分，可作噪声或空目标 | zh、en 各 2,600 条，30 秒 |
 | `dns5_noise_train` | `v1-20261016` | DNS5 的 AudioSet 和 Freesound 噪声，以及模拟房间响应 | 见下 |
 | `audioset_road_traffic` | `legacy-20260804` | 道路交通噪声（早已登记，这里只说明用法） | 10.9 万条 299 h |
