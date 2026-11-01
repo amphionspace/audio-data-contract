@@ -492,6 +492,18 @@ def test_handover_openings():
     assert not mixer.shares_no_opening("现在我开始说话", "今天我们")
 
 
+def test_english_handover_openings_compare_words():
+    assert mixer.same_opening("We need to get the right people in.", "Well, we need to chat.", "en")
+    assert not mixer.same_opening("We need to go.", "Weed needs water.", "en")
+    assert mixer.shares_no_opening("It was late.", "Are you going to win?", "en")
+    assert not mixer.shares_no_opening("It was late.", "Then it rained.", "en")
+
+
+def test_english_text_keeps_words_and_drops_annotation_tags():
+    assert build["normalize_text"]("<FIL/> Okay , I  get it. <SPK/>", "en") == "Okay, I get it."
+    assert build["normalize_text"]("今天 天气 好", "zh") == "今天天气好"
+
+
 def test_hard_negatives_of_a_recorded_registration_are_its_nearest_speakers():
     pool = pools()
     speakers = {f"s{i}": pool["mixed"]["speakers"]["s0"] for i in range(14)}
