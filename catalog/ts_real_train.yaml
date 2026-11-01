@@ -681,3 +681,287 @@
       report.json。
     sources:
     - ts_real_train@v2-20261018
+- schema_version: dataset-catalog/2.0
+  dataset_id: ts_real_train
+  version: en-v1-20261101
+  languages:
+  - en
+  tasks:
+  - ts_asr
+  aliases: []
+  artifacts:
+  - name: ami-records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/ts_real_train/versions/en-v1-20261101/records_ami.jsonl.gz
+    sha256: 910175188580e704257cce7248d642f653f572776767b31ce2a1b91f2886bb5a
+    metadata:
+      record_count: 24054
+  - name: ami-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_real_train/versions/en-v1-20261101/audio_index_ami.jsonl.gz
+    sha256: 84a4226a4d272f43c3ae443aec86addbd71e70b222bce0f18db836f98edb46e9
+    metadata:
+      record_count: 134
+  - name: notsofar-records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/ts_real_train/versions/en-v1-20261101/records_notsofar.jsonl.gz
+    sha256: fe6a28ef155edbacd8955ab492a00cc14123fe010a0b4798a20eb37a4c58822b
+    metadata:
+      record_count: 2372
+  - name: notsofar-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_real_train/versions/en-v1-20261101/audio_index_notsofar.jsonl.gz
+    sha256: b0fe179e048cf30d8423b2a4be28607ad3cf110f06ef9191515c4faee79e84ce
+    metadata:
+      record_count: 106
+  - name: dipco-records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/ts_real_train/versions/en-v1-20261101/records_dipco.jsonl.gz
+    sha256: bf0e4551ced0707cfa5a316c0a79a0037db4ed48d1000885db2919496eb911d3
+    metadata:
+      record_count: 432
+  - name: dipco-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_real_train/versions/en-v1-20261101/audio_index_dipco.jsonl.gz
+    sha256: 7b4fe9eb2fbf7bce77ff868e4ae0da8777ab29ae660414871f92bab1eb8309fe
+    metadata:
+      record_count: 5
+  - name: icsi-records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/ts_real_train/versions/en-v1-20261101/records_icsi.jsonl.gz
+    sha256: f8fa31041471eb86f7a88407a9c3dec43b1931546f529a7cf6748394869ddd4e
+    metadata:
+      record_count: 3416
+  - name: icsi-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_real_train/versions/en-v1-20261101/audio_index_icsi.jsonl.gz
+    sha256: cd2dea8958745810a0712b1ce2b63964c2e0bd85325c4eafc5bf6015e58d2fff
+    metadata:
+      record_count: 11
+  - name: record_index
+    kind: lance-record-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_real_train/versions/en-v1-20261101/record_index/index.json
+    sha256: 148c4a6c910e42b123ce15d9bf12f70e31f42f8131bed69efaa4801085d1f03d
+    expected_bytes: 1747
+    metadata:
+      rows: 30274
+      schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
+      snapshot_version: 13
+  splits:
+    ami:
+      artifacts:
+        records:
+        - ami-records
+        audio_index:
+        - ami-audio-index
+        records_lance:
+        - record_index
+      task: ts_asr
+      statistics:
+        records: 24054
+        duration_hours: 33.87
+        duration_basis: clip duration (segment span, or the whole file)
+    notsofar:
+      artifacts:
+        records:
+        - notsofar-records
+        audio_index:
+        - notsofar-audio-index
+        records_lance:
+        - record_index
+      task: ts_asr
+      statistics:
+        records: 2372
+        duration_hours: 3.02
+        duration_basis: clip duration (segment span, or the whole file)
+    dipco:
+      artifacts:
+        records:
+        - dipco-records
+        audio_index:
+        - dipco-audio-index
+        records_lance:
+        - record_index
+      task: ts_asr
+      statistics:
+        records: 432
+        duration_hours: 0.61
+        duration_basis: clip duration (segment span, or the whole file)
+    icsi:
+      artifacts:
+        records:
+        - icsi-records
+        audio_index:
+        - icsi-audio-index
+        records_lance:
+        - record_index
+      task: ts_asr
+      statistics:
+        records: 3416
+        duration_hours: 4.39
+        duration_basis: clip duration (segment span, or the whole file)
+  provenance:
+    status: complete
+    synthetic: none
+    snapshot_date: '2026-11-01'
+    description: '英文真实会议的目标说话人窗口（训练划分）：AMI train 单远场麦 Array1-01、NOTSOFAR-1 train 与 dev 每场一台单通道设备、DiPCo dev 远场设备通道 1（时间轴按近讲麦对齐）、ICSI
+      中与 test / dev 会议没有共同说话人的 11 场 Bed 会议（官方近讲耳麦混音，镜像音频写成 WAV 放在 source/en-v1-20261101/icsi/），按 ts_real_train v1 的方法切 8–22
+      秒、由完整语句组成的窗口，说话人数分 1 / 2 / 3+ 三档，用尽所有可用窗口；每个窗口一对样本，同一段音频：目标在场（注册取窗口外同一录音的另一句，3–6 秒）和目标缺席（同一录音里没在窗口说话的另一人，没有则取其他录音中同样不在窗口说话的人）。转写清洗沿用英文评测
+      ts_asr_real en-v2-20261031（scripts/ts_real/english.py），目标各句须都有完整转写；每条注册过英文评测的声纹核对（WeSpeaker ECAPA），不过的换一句或丢掉这一对。评测用的
+      AMI dev/test、NOTSOFAR-1 eval、DiPCo eval、ICSI test/dev 会议及其说话人都不在内（report.json 的 heldout）。不含 CHiME-6（train 标注没有房间信息）。记录带
+      metadata.window_utts 与 target_speaker。音频是原始长录音的片段，channel: 0。脚本 scripts/ts_robust/build_ts_real_train_en.py。'
+    sources:
+    - ami_sdm:icefall-20260908
+    - notsofar_sdm:icefall-20260908
+    - dipco:zenodo-8122551-20261023
+    - icsi:modelscope-argmaxinc-20261025
+- schema_version: dataset-catalog/2.0
+  dataset_id: ts_real_train
+  version: en-v1-20261101-utts
+  derived_from: ts_real_train@en-v1-20261101
+  languages:
+  - en
+  tasks:
+  - ts_asr
+  aliases: []
+  artifacts:
+  - name: ami-records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/ts_real_train/versions/en-v1-20261101-utts/records_ami.jsonl.gz
+    sha256: b8c62b3bcf63c982cb5276911bb0d99cfb1e0294a289a3513731873edd4ebd90
+    metadata:
+      record_count: 24054
+  - name: ami-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_real_train/versions/en-v1-20261101-utts/audio_index_ami.jsonl.gz
+    sha256: c77604cbba35e6a9f72178a5ca3398078c354f914aebbcbcf1520cf37b3377ff
+    metadata:
+      record_count: 134
+  - name: notsofar-records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/ts_real_train/versions/en-v1-20261101-utts/records_notsofar.jsonl.gz
+    sha256: f3cf4d19de86fcb8448a82a1991721c814ef958777d77ad15c2fafc9bf7e70aa
+    metadata:
+      record_count: 2372
+  - name: notsofar-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_real_train/versions/en-v1-20261101-utts/audio_index_notsofar.jsonl.gz
+    sha256: edec39ab2ba33474a4f21f86c8fc3c6d32605aaca4455e354b05fcf194a8e5e6
+    metadata:
+      record_count: 106
+  - name: dipco-records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/ts_real_train/versions/en-v1-20261101-utts/records_dipco.jsonl.gz
+    sha256: 26afca55d4203b186f737e7728917703d2253a8a3ba6fb48afa742a2582532eb
+    metadata:
+      record_count: 432
+  - name: dipco-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_real_train/versions/en-v1-20261101-utts/audio_index_dipco.jsonl.gz
+    sha256: a8937ae3203977ccecbb19ac2cd5fb0ff4bcc85c5979af8924581c4374c43af5
+    metadata:
+      record_count: 5
+  - name: icsi-records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/ts_real_train/versions/en-v1-20261101-utts/records_icsi.jsonl.gz
+    sha256: ec01a40dbea4c267d5aef8e927f439af0c3444959f82389ea097f505655421fc
+    metadata:
+      record_count: 3416
+  - name: icsi-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_real_train/versions/en-v1-20261101-utts/audio_index_icsi.jsonl.gz
+    sha256: 07f553e6bf76d58435b5f44c9c781c6f9c6e9ababcfb33954ac1b4101830bf12
+    metadata:
+      record_count: 11
+  - name: record_index
+    kind: lance-record-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_real_train/versions/en-v1-20261101-utts/record_index/index.json
+    sha256: e55ae48b60b6592ddeed018500f2756413298c5daa8ad04a08f143f7b5b48776
+    expected_bytes: 1752
+    metadata:
+      rows: 30274
+      schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
+      snapshot_version: 13
+  splits:
+    ami:
+      artifacts:
+        records:
+        - ami-records
+        audio_index:
+        - ami-audio-index
+        records_lance:
+        - record_index
+      task: ts_asr
+      statistics:
+        records: 24054
+        duration_hours: 33.87
+        duration_basis: clip duration (segment span, or the whole file)
+    notsofar:
+      artifacts:
+        records:
+        - notsofar-records
+        audio_index:
+        - notsofar-audio-index
+        records_lance:
+        - record_index
+      task: ts_asr
+      statistics:
+        records: 2372
+        duration_hours: 3.02
+        duration_basis: clip duration (segment span, or the whole file)
+    dipco:
+      artifacts:
+        records:
+        - dipco-records
+        audio_index:
+        - dipco-audio-index
+        records_lance:
+        - record_index
+      task: ts_asr
+      statistics:
+        records: 432
+        duration_hours: 0.61
+        duration_basis: clip duration (segment span, or the whole file)
+    icsi:
+      artifacts:
+        records:
+        - icsi-records
+        audio_index:
+        - icsi-audio-index
+        records_lance:
+        - record_index
+      task: ts_asr
+      statistics:
+        records: 3416
+        duration_hours: 4.39
+        duration_basis: clip duration (segment span, or the whole file)
+  provenance:
+    status: complete
+    synthetic: none
+    snapshot_date: '2026-11-01'
+    description: ts_real_train@en-v1-20261101 的同一批记录，构建脚本自带的 metadata.window_utts / target_speaker 按与其他 -utts 版本相同的规则复核：正样本的目标语句与转写逐字一致（忽略空白和标点）才保留时间线，负样本只有注册人确实不在窗口里说话才保留；不满足的记录去掉
+      window_utts（保留 target_speaker），ID 列在 excluded-records-<split>.txt。供 open-audio-llm 帧级说话人活动标签（objective.ts_activity_weight）。其余字段不变，音频引用改指本版本，音频索引与原版逐行相同。生成脚本
+      audio-data-contract scripts/ts_robust/add_window_utts.py（keep），逐划分统计见 report.json。
+    sources:
+    - ami_sdm:icefall-20260908
+    - notsofar_sdm:icefall-20260908
+    - dipco:zenodo-8122551-20261023
+    - icsi:modelscope-argmaxinc-20261025
