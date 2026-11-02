@@ -49,6 +49,10 @@
       "alias": "police_scene_bench",
       "synced": "2026-10-29"
     },
+    "tdtech_customer_bench@v1-20261102": {
+      "alias": "tdtech_customer_bench",
+      "synced": "2026-11-02"
+    },
     "ts_asr_benchmark@en-v1-20261031": {
       "alias": "ts_asr_benchmark",
       "synced": "2026-11-01"

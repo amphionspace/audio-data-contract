@@ -1271,6 +1271,18 @@ TAL 中文语音识别数据
 
 - 含派生版本（与源数据可能重叠）
 
+### tdtech_customer_bench
+
+鼎桥客户真实录音的语音识别评测，仅评测
+
+语言：zh · 任务：语音识别
+
+| 版本 | 时长（小时） | 口径 | COS |
+|---|---:|---|---|
+| [tdtech_customer_bench@v1-20261102](../../catalog/tdtech_customer_bench.yaml#L1) | 0.1 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/tdtech_customer_bench/` |
+
+- `tdtech_customer_bench@v1-20261102`：鼎桥（td-tech）客户提供的真实录音（邮件/Wiki 基线 2026-09-30，由 EvalHub 整理发布），只用于评测，不进训练。参考文本未全部经人工听审：通用识别只保留三份机器转写中两份一致的条目，难样例被筛掉，数字偏乐观；警务指令的参考来自录音分组的指令词，39 条经人工确认
+
 ### thchs30
 
 清华中文朗读（THCHS-30）；含热词版
