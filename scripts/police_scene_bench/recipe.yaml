@@ -1,0 +1,315 @@
+# 警务场景模拟评测集（police_scene_bench）：按《技术指标_场景分级拆分_鼎桥沟通更新版_20261026》的“具体使用场景”逐个模拟，
+# 每个场景 100 条。语音全部来自警务合成数据的 test 划分（不够时补 dev，二者都不进训练）和上下文纠偏评测集；
+# 噪声、混响全部是真实录音（DEMAND、FSD50K 评测划分、MIT 实测冲激响应）加不进训练的中文合成背景人声。
+# 现有数据没有的：全国车牌、新能源车牌、电动车号牌由 synthesize_plates.py 新合成；PDT 对讲机用低码率窄带编解码模拟链路；
+# 执法记录仪用过载削波、高通、自动增益近似；TTS 听测文本由 generate_tts_texts.py 用在线 LLM 生成。性能项不需要专门数据。
+version: v1-20261028
+dataset_id: police_scene_bench
+seed: 20261028
+sample_rate: 16000
+speech_dbfs: -25.0  # 佩戴设备的民警（机主）每句话按 RMS 归一到这个电平；信噪比 = 这个电平 − 整段噪声电平
+default_n: 100
+max_text_repeats: 3  # 同一 split 里同一文本最多出现几次（不同说话人）
+padding_seconds: [0.3, 1.5]
+noise_floor: {dbfs: [-65, -55], kinds: [white, pink]}
+other_gain_db: [-6.0, 0.0]  # 其他在场人员相对民警的电平；他们离设备 1–2 米，另加所在场所的实测混响
+
+speech:
+  police:
+    - {dataset: police_asr_unified, version: v1-20261009, split: test}
+    - {dataset: police_asr_unified, version: v1-20261009, split: dev}
+  context: {dataset: context_correction_zh, version: v1-20261018, splits: [synthetic]}
+  # 本评测集自己合成的号牌朗读（synthesize_plates.py，test 口音说话人，ASR 核对号牌后保留），记为 split tts
+  extra:
+    - {name: tts, alias: police_scene_bench, recordings: tts/plates-20261028/manifests/recordings.jsonl.gz,
+       supervisions: tts/plates-20261028/manifests/supervisions.jsonl.gz}
+tts_texts: tts/texts-20261028/tts_eval_texts.jsonl  # 表格第 75 行 TTS 听测文本，作为 artifact 附在本版本里
+
+# 文本池：条件同时满足；pattern 匹配文本，categories 匹配 source_metadata.category，profiles 匹配 speech_profile，
+# numbers 匹配文本里的号码（汉字读法：11 位为手机号，17–18 位为身份证号，省份简称加字母为车牌）；
+# splits 为取哪些语音来源，默认只取警务数据（test、dev）
+pools:
+  command: {categories: [开关镜头摄录, 媒体配置, 预录延录, AI求助标记打点, 警单签收选择, 查询系统工具, 业务应用与指令], seconds: [0.8, 12]}
+  mark: {categories: [AI求助标记打点, 开关镜头摄录], seconds: [0.8, 12]}
+  record_control: {categories: [开关镜头摄录, 预录延录, 媒体配置], seconds: [0.8, 12]}
+  # 数据里没有“语音检索法条”的指令：用查询类业务语句（查一下、帮我查、查询…）和引用法条、法律规定的语句代替
+  law_query: {pattern: "法条|法律条文|条例|处罚法|刑法|法律依据|法律规定|第.{1,4}条规定|查询|搜索|检索|查一下|帮我查|查下|查查",
+              exclude_categories: [开关镜头摄录, 媒体配置, 预录延录, AI求助标记打点, 警单签收选择, 查询系统工具], seconds: [1, 20]}
+  id_check: {pattern: "核查.{0,4}身份|查询.{0,4}身份|身份信息|前科", seconds: [1, 20]}
+  dialogue: {profiles: [conversational_medium, colloquial_short], exclude_categories: [开关镜头摄录, 媒体配置, 预录延录, AI求助标记打点, 警单签收选择, 查询系统工具], seconds: [2, 15]}
+  narrative: {profiles: [narrative_long], seconds: [8, 40]}
+  phone: {numbers: [phone], seconds: [2, 30]}
+  id_number: {numbers: [id], seconds: [2, 30]}
+  plate: {numbers: [plate], seconds: [1, 30]}
+  terms_interrogation: {terms: [传唤, 强制传唤, 拘传, 继续盘问, 辨认, 捺印, 告知权利义务, 同步录音录像, 视听资料, 证据固定, 涉案财物, 扣押, 先行登记保存, 呈请审批, 法制审核], seconds: [1, 30]}
+  terms_car: {terms: [盘查, 临检, 核查身份, 在逃人员, 前科, 预警弹窗, 核查回执, 现场勘验, 简易程序, 当场处罚], seconds: [1, 30]}
+  terms_community: {terms: [治安调解, 民间纠纷, 治安隐患, 流动人口, 实有人口, 实有房屋, 重点关注人员, 帮教, 警情回访], seconds: [1, 30]}
+  terms_street: {terms: [盘查, 查验, 驾驶证, 行驶证, 酒驾, 醉驾, 呼气检测, 暂扣, 扣留, 移交, 移送, 嫌疑对象, 涉案线索, 口头传唤], seconds: [1, 30]}
+  terms_reception: {terms: [受案, 立案, 不予立案, 接处警, 报警回执, 报案笔录, 受害人, 证人, 被害人, 伤情鉴定, 法医鉴定, 涉案线索, 警情编号], seconds: [1, 30]}
+  # 表格列的事故术语只有 30 种句子，补上交通事故、肇事、责任认定等常见事故用语
+  terms_accident: {terms: [简易事故, 一般程序, 事故认定书, 痕迹勘验, 扣留机动车, 检验鉴定, 保全, 逃逸, 痕迹物证,
+                           交通事故, 肇事, 责任认定, 追尾, 剐蹭, 事故现场], seconds: [1, 30]}
+  terms_security: {terms: [PDT, 集群, 组呼, 单呼, 基站, 链路, 优先级, 离线值守, 音视频回传, 图传, 封控, 警戒, 隔离带, 人流疏导,
+                           点位值守, 应急处突, 集结, 撤岗], seconds: [1, 30]}
+  plate_new: {categories: [普通车牌, 新能源车牌], splits: [tts]}  # 新合成：31 省普通车牌、新能源车牌
+  plate_ebike: {categories: [电动车号牌], splits: [tts]}  # 新合成：电动车号牌（格式各地不同，按近似格式）
+
+# 噪声底：DEMAND 某环境的一个通道，或 asr_babble_bench v2 的中文背景人声（KeSpeech test 说话人，不进训练）；
+# 事件：FSD50K 评测划分里带这些标签、不带人声标签的片段（crowd 类本身就是人声）。
+# rir_places：其他在场人员的混响取 MIT 实测冲激响应里这些场所的
+environments:
+  office: {display: 室内办公/审讯/接待室, beds: [demand/OOFFICE, demand/OMEETING, demand/OHALLWAY], events: [],
+           rir_places: [Office, Classroom, ComputerRoom, DoctorsOffice, OfficeFoyer, OfficeKitchen]}
+  hall: {display: 派出所大厅, beds: [babble_zh, demand/PSTATION, demand/OHALLWAY], events: [],
+         rir_places: [Atrium, Hallway, DormLobby, HospitalWaitingRoom, OfficeFoyer, Hotel, TrainStation]}
+  car: {display: 警车车内（关窗、空调）, beds: [demand/TCAR], events: [Idling, Engine], rir_places: [Car]}
+  home: {display: 居民家中（家电底噪）, beds: [demand/DLIVING, demand/DKITCHEN, demand/DWASHING], events: [Mechanical_fan],
+         rir_places: [Bedroom, LivingRoom, Kitchen, DiningRoom, HomeFoyer, MasterBedroom]}
+  street: {display: 街面（车流、行人）, beds: [demand/STRAFFIC, demand/SPSQUARE], babble: 0.5,
+           events: [Traffic_noise_and_roadway_noise, Car_passing_by, Motorcycle],
+           rir_places: [Outside, StreetsOfCambridge, StreetsOfBoston, ParkingLot]}
+  shop: {display: 商铺（冰柜排风、背景音乐）, beds: [demand/PCAFETER, demand/PRESTO], events: [Music, Mechanical_fan],
+         rir_places: [Supermarket, Restaurant, CoffeeShop, SandwichShop, FastFoodRestaurant, Pizzeria, IceCreamParlor, Bookstore]}
+  crowd: {display: 集市/人群聚集, beds: [babble_zh, demand/SPSQUARE, demand/PSTATION], babble: 0.5,
+          events: [Crowd, Chatter, Shout, Yell], speech_events: true, rir_places: [Outside, StreetsOfCambridge, ParkingLot]}
+  construction_wind: {display: 施工/大风/河边, beds: [demand/NFIELD, demand/NRIVER, demand/NPARK],
+                      events: [Wind, Drill, Hammer, Sawing, Power_tool], rir_places: [Outside, Campground]}
+  main_road: {display: 主干道车流（鸣笛、重型车）, beds: [demand/STRAFFIC], babble: 0.3,
+              events: [Vehicle_horn_and_car_horn_and_honking, Truck, Bus, Traffic_noise_and_roadway_noise, Accelerating_and_revving_and_vroom],
+              rir_places: [Outside, StreetsOfCambridge, StreetsOfBoston, ParkingLot]}
+  emergency: {display: 事故救援/警笛/暴乱现场, beds: [babble_zh, demand/STRAFFIC], babble: 0.7,
+              events: [Siren, Truck, Shout, Screaming, Vehicle_horn_and_car_horn_and_honking], speech_events: true,
+              rir_places: [Outside, StreetsOfCambridge, ParkingLot]}
+event_rate: [0.5, 1.5]  # 每 10 秒放几个事件
+event_gain_db: [-6.0, 6.0]  # 事件相对噪声底的电平
+event_max_seconds: 8.0
+
+# 表格的噪声分档（F 列信噪比）；极限档按 −5～0 dB
+levels:
+  quiet: {display: 安静, snr_db: [20, 30]}
+  light: {display: 轻度噪声, snr_db: [10, 20]}
+  medium: {display: 中度噪声, snr_db: [5, 10]}
+  heavy: {display: 重度噪声, snr_db: [0, 5]}
+  extreme: {display: 极限恶劣, snr_db: [-5, 0]}
+
+# PDT 对讲机链路近似：PDT 的声码器没有开源实现，用同类的低码率窄带编解码（AMR-NB、Speex）代替。
+# 对讲内容是远端手台录到的声音（说话人加远端环境噪声），经按键发射、话筒压限、300–3400 Hz、编解码、丢帧、静噪尾音
+pdt:
+  codecs: [{name: amr_nb, bitrate: 4750}, {name: amr_nb, bitrate: 5150}, {name: amr_nb, bitrate: 5900},
+           {name: speex, quality: 1}, {name: speex, quality: 2}, {name: speex, quality: 3}]
+  drive: [1.5, 3.0]       # 手台话筒压限
+  frame_loss: [0.0, 0.05] # 20 ms 帧丢失率（丢一帧后下一帧丢失概率 50%）
+  key_up_s: [0.15, 0.5]   # 按下 PTT 到开始说话
+  hang_s: [0.2, 0.5]      # 说完到松开
+  squelch_s: [0.12, 0.3]  # 松开后的静噪尾音
+  squelch_dbfs: [-32, -22]
+  beep: 0.5               # 结束提示音的概率
+# 执法记录仪通道近似：现场声压过高时话筒/ADC 削波（overload_db 为削掉的峰值），再经高通和自动增益
+device:
+  overload_db: {quiet: [0, 0], light: [0, 0], medium: [0, 0], heavy: [0, 6], extreme: [3, 12]}
+  highpass_hz: [100, 200]
+  agc_dbfs: -22.0
+  agc_max_gain_db: 20.0
+
+hotword_list_size: 300  # 端侧“支持热词配置 300 个”：术语场景另出一份带 300 词热词表的记录，音频相同
+
+# form：
+#   short    民警近讲一句（count 为同一人连续说几句）；asr
+#   long     多句长语音，speakers 人轮流说，不重叠；asr，参考为全部文字
+#   meeting  多人对话，按 overlap 概率抢话；speaker_attributed_asr，参考为 [S1] … 按人分行，metadata.segments 有每段起止
+#   owner    机主识别：enrollment 为机主安静环境下的另一段话，mixture 里有机主一句和他人 interferers 句；ts_asr，参考为机主的话。
+#            mode=separate 轮流说、不重叠；overlap 为他人与机主重叠。same_text 为他人说同一句话的概率，absent 为只有他人、
+#            机主没说话的概率（参考为空，期望无输出）
+#   context  上下文纠偏评测集的一句话放进场景噪声；asr
+# channel: pdt 经对讲机链路；device: true 经执法记录仪通道；far_field: true 民警也离设备 1–3 米（加实测混响）；
+# variant_of 为另一个 split 的配对版本：逐条同一批语音、噪声和房间，只改上面几项
+# rows 为表格行号（端侧, 云侧）
+splits:
+  # --- 通用普通话识别（端侧第 2–6 行，云侧第 39–43 行） ---
+  - {name: asr-quiet-interview, rows: [2, 39], level: quiet, env: office, form: long, pool: dialogue, speakers: [2, 2], seconds: [30, 75],
+     display: 室内访谈笔录, description: 办案民警和参与者轮流说话，极少抢话重叠}
+  - {name: asr-quiet-discussion, rows: [2, 39], level: quiet, env: office, form: long, pool: dialogue, speakers: [2, 4], seconds: [30, 75],
+     display: 室内研讨, description: 内勤办公室、调解室，2–4 名民警内部讨论案情、梳理线索}
+  - {name: asr-quiet-reception, rows: [2, 39], level: quiet, env: office, form: long, pool: dialogue, key_pool: terms_reception, speakers: [2, 2], seconds: [20, 60],
+     display: 接待室群众单人来访登记, description: 派出所接待室，单独接待群众，一对一沟通}
+  - {name: asr-quiet-dictation, rows: [2, 39], level: quiet, env: office, form: long, pool: narrative, speakers: [1, 1], seconds: [30, 75],
+     display: 内勤单人口述台账/备注, description: 内勤在安静工位独自口述备注、案件标签、核查要点}
+  - {name: asr-quiet-command, rows: [2, 39], level: quiet, env: office, form: short, pool: [command, law_query],
+     display: 设备指令控制、搜索法律条文, description: 操控执法记录仪/AR 终端（启停、标记、抓拍），搜索法条、查身份、查警情}
+  - {name: asr-light-car-command, rows: [3, 40], level: light, env: car, form: short, pool: command,
+     display: 警车内部语音控制记录仪, description: 关窗、低速行驶、空调底噪，民警发出设备指令}
+  - {name: asr-light-home-law, rows: [3, 40], level: light, env: home, form: short, pool: law_query,
+     display: 入户走访时语音快速查询法条, description: 居民家中冰箱电视底噪，走访调解间隙语音检索法条；数据里没有法条检索指令，用查询类业务语句和引用法条的语句代替}
+  - {name: asr-medium-street-idcheck, rows: [4, 41], level: medium, env: street, form: short, pool: id_check,
+     display: 路边盘查语音发起人员核查, description: 人行道盘查，持续车流、行人背景噪音}
+  - {name: asr-medium-accident-mark, rows: [4, 41], level: medium, env: main_road, form: short, pool: mark,
+     display: 简易事故现场语音标记取证快照, description: 道路轻微事故现场，车流背景噪音}
+  - {name: asr-medium-shop-record, rows: [4, 41], level: medium, env: shop, form: short, pool: record_control,
+     display: 商铺走访语音控制开启笔录转写, description: 便利店冰柜排风、背景音乐噪声}
+  - {name: asr-medium-visit-idcheck, rows: [4, 41], level: medium, env: [street, shop], form: short, pool: id_check,
+     display: 走访中人员身份核查, description: 走访过程中语音发起核查}
+  - {name: asr-medium-command, rows: [4, 41], level: medium, env: [street, shop, main_road], form: short, pool: [command, law_query],
+     display: 设备指令控制、搜索法律条文（中噪）, description: 中噪现场操控终端、搜索法条与业务查询}
+  - {name: asr-heavy-crowd, rows: [5, 42], level: heavy, env: crowd, form: short, pool: [command, narrative],
+     display: 人群聚集现场近距离取证, description: 集市、群体性处置现场，嘈杂人声；语音控制设备、简述案情}
+  - {name: asr-heavy-construction-wind, rows: [5, 42], level: heavy, env: construction_wind, form: short, pool: [command, narrative],
+     display: 施工区域、露天大风现场问询, description: 户外野外、河边处置，风噪与施工噪声明显；语音控制设备、简述案情}
+  - {name: asr-extreme-emergency, rows: [6, 43], level: extreme, env: emergency, form: short, pool: command, device: true,
+     display: 突发紧急情况现场, description: 双手忙碌，紧急控制设备取证；警笛、重型车辆、人群喊叫}
+
+  # --- GA 行业术语（端侧第 7–10 行，云侧第 44–47 行；热词第 27–30 行另出 -hw300 记录）---
+  - {name: term-quiet-interrogation, rows: [7, 44, 27], level: quiet, env: office, form: short, pool: terms_interrogation, hotwords: true,
+     display: 审讯室/办案中心讯问笔录, description: 讯问、询问、辨认，大量法言法语和办案流程术语}
+  - {name: term-light-car, rows: [8, 45, 28], level: light, env: car, form: short, pool: terms_car, hotwords: true,
+     display: 警车车内问询、指挥沟通, description: 关窗、空调底噪，车内盘查询问、口头汇报}
+  - {name: term-light-community, rows: [8, 45, 28], level: light, env: home, form: short, pool: terms_community, hotwords: true,
+     display: 入户走访、调解、社区警务, description: 居民家中、物业调解室，邻里纠纷、反诈走访}
+  - {name: term-medium-street, rows: [9, 46, 29], level: medium, env: street, form: short, pool: terms_street, hotwords: true,
+     display: 路面盘查、街面执勤, description: 人行道、路口临检，车流行人噪音}
+  - {name: term-medium-reception, rows: [9, 46, 29], level: medium, env: hall, form: short, pool: terms_reception, hotwords: true,
+     display: 派出所接待大厅、报案接待, description: 前台接报案，大厅人声}
+  - {name: term-medium-accident, rows: [9, 46, 29], level: medium, env: main_road, form: short, pool: terms_accident, hotwords: true,
+     display: 事故现场处置, description: 道路交通事故，询问双方当事人}
+  - {name: term-heavy-pdt-link, rows: [10, 47, 30], level: heavy, env: crowd, form: short, pool: terms_security, channel: pdt, hotwords: true,
+     display: 大型安保对讲机集群通话（PDT 链路）, description: 民警互相对讲、向指挥中心汇报；远端手台在嘈杂现场，经对讲链路收到的声音}
+  - {name: term-heavy-pdt-local, rows: [10, 47, 30], level: heavy, env: crowd, form: short, pool: terms_security, hotwords: true,
+     display: 大型安保对讲机集群通话（终端原音）, description: 民警对着手台说话时执法记录仪录到的原音，嘈杂人声}
+  - {name: term-extreme-emergency, rows: [11, 48, 31], level: extreme, env: emergency, form: short, pool: [terms_security, terms_accident, terms_street],
+     device: true, hotwords: true,
+     display: 极限工况下的行业术语, description: 表格本行没有具体场景，按事故救援、警笛、暴乱现场模拟，经执法记录仪过载削波与自动增益}
+
+  # --- 号码识别（端侧第 12–15 行，云侧第 49–52 行）---
+  - {name: num-quiet-reception, rows: [12, 49], level: quiet, env: office, form: short, pool: [id_number, phone],
+     display: 接待室前台接报案记录证件、联系方式, description: 口述报案人、受害人身份证号和手机号}
+  - {name: num-quiet-plate, rows: [12, 49], level: quiet, env: office, form: short, pool: [plate, plate_new],
+     display: 办案中心口述涉案车辆号牌, description: 内勤/办案民警口述机动车号牌；一半为新合成的全国各省普通车牌和新能源车牌}
+  - {name: num-light-car, rows: [13, 50], level: light, env: car, form: short, pool: [plate, id_number, phone, plate_new],
+     display: 警车车内核查口述号牌、证件号, description: 关窗、空调轻微噪音，口述车牌、身份证号、手机号}
+  - {name: num-light-home, rows: [13, 50], level: light, env: home, form: short, pool: [id_number, phone],
+     display: 入户走访、反诈劝阻记录证件与联系方式, description: 冰箱电视底噪，口述住户身份证号、联系电话}
+  - {name: num-light-mediation, rows: [13, 50], level: light, env: office, form: short, pool: [id_number, phone],
+     display: 调解室登记双方身份信息, description: 口述双方身份证号、手机号}
+  - {name: num-medium-street-id, rows: [14, 51], level: medium, env: street, form: short, pool: id_number,
+     display: 路面盘查口述身份证号, description: 人行道、路口盘查，车流背景噪音}
+  - {name: num-medium-phone, rows: [14, 51], level: medium, env: [street, crowd], form: short, pool: phone,
+     display: 现场处置口述当事人电话, description: 事故、纠纷现场记录当事人、证人手机号}
+  - {name: num-medium-multi-plate, rows: [14, 51], level: medium, env: main_road, form: short, pool: [plate, plate_new], count: [2, 3],
+     display: 交通事故现场多车号牌登记, description: 多车剐蹭，民警依次口述每辆车的号牌}
+  - {name: num-medium-ebike-plate, rows: [14, 51], level: medium, env: street, form: short, pool: plate_ebike,
+     display: 街面查获电动自行车登记号牌, description: 路面整治电动车，口述防盗/备案号牌；号牌为新合成，格式各地不同，按近似格式}
+  - {name: num-heavy-crowd-id, rows: [15, 52], level: heavy, env: crowd, form: short, pool: id_number,
+     display: 群体性事件现场核查身份, description: 人员聚集、背景人声杂乱，记录身份证号}
+  - {name: num-heavy-main-road, rows: [15, 52], level: heavy, env: main_road, form: short, pool: [plate, id_number, plate_new],
+     display: 拥堵主干道事故记录车牌、身份证号, description: 高峰车流轰鸣、鸣笛强噪声}
+  - {name: num-extreme-emergency, rows: [16, 53], level: extreme, env: emergency, form: short, pool: [plate, id_number, phone, plate_new], device: true,
+     display: 极限工况下的号码识别, description: 表格本行没有具体场景，按事故救援、警笛现场模拟，经执法记录仪过载削波与自动增益}
+
+  # --- 机主识别·分开讲话（端侧第 17–20 行，云侧第 54–57 行）---
+  - {name: owner-quiet-sep-reception, rows: [17, 54], level: quiet, env: office, form: owner, mode: separate, pool: dialogue, interferers: [1, 2],
+     display: 接待室接报案转写（分开讲话）, description: 接待报案群众，只转写机主的话}
+  - {name: owner-light-sep-car, rows: [18, 55], level: light, env: car, form: owner, mode: separate, pool: record_control, interferers: [1, 2],
+     display: 警车车内语音操控记录仪（分开讲话）, description: 标记重点、锁定视频、抓拍、暂停转写、开启录音}
+  - {name: owner-light-sep-home-law, rows: [18, 55], level: light, env: home, form: owner, mode: separate, pool: law_query, interferers: [1, 2],
+     same_text: 0.4, absent: 0.2,
+     display: 入户调解语音发起法条检索（分开讲话）, description: 非机主说同样的检索词不能触发查询；检索词用查询类业务语句和引用法条的语句代替}
+  - {name: owner-medium-sep-street, rows: [19, 56], level: medium, env: street, form: owner, mode: separate, pool: id_check, interferers: [1, 2],
+     display: 街面盘查语音发起身份核查（分开讲话）, description: 车流、行人背景噪音，民警双手忙碌}
+  - {name: owner-medium-sep-shop, rows: [19, 56], level: medium, env: shop, form: owner, mode: separate, pool: record_control, interferers: [1, 2],
+     display: 商铺走访语音控制笔录启停（分开讲话）, description: 冰柜、排风、背景音乐底噪}
+  - {name: owner-heavy-sep-accident, rows: [20, 57], level: heavy, env: main_road, form: owner, mode: separate, pool: mark, interferers: [1, 2],
+     display: 事故现场语音标记取证快照（分开讲话）, description: 持续车流噪音，区分民警指令和当事人对话}
+  - {name: owner-extreme-sep-emergency, rows: [21, 58], level: extreme, env: emergency, form: owner, mode: separate, pool: [mark, record_control],
+     interferers: [1, 2], device: true,
+     display: 极限工况下的机主识别（分开讲话）, description: 表格本行没有具体场景，按事故救援、警笛现场模拟，经执法记录仪过载削波与自动增益}
+
+  # --- 机主识别·重叠讲话（端侧第 22–25 行，云侧第 59–62 行）---
+  - {name: owner-quiet-overlap-reception, rows: [22, 59], level: quiet, env: office, form: owner, mode: overlap, pool: dialogue, interferers: [1, 2],
+     display: 接待室多人同时描述（重叠讲话）, description: 多名群众同时描述案情或高频插话}
+  - {name: owner-light-overlap-car, rows: [23, 60], level: light, env: car, form: owner, mode: overlap, pool: [record_control, dialogue], interferers: [1, 2],
+     display: 警车车内两人以上交流或争论（重叠讲话）, description: 参与者高频插话，区分机主指令和参与者}
+  - {name: owner-light-overlap-home-law, rows: [23, 60], level: light, env: home, form: owner, mode: overlap, pool: law_query, interferers: [1, 3],
+     same_text: 0.3, absent: 0.2,
+     display: 入户调解多人参与（重叠讲话）, description: 多人重叠发言，非机主说同样的检索词不能触发查询；检索词用查询类业务语句和引用法条的语句代替}
+  - {name: owner-medium-overlap-street, rows: [24, 61], level: medium, env: street, form: owner, mode: overlap, pool: id_check, interferers: [1, 3],
+     display: 街面盘查周围多人问询（重叠讲话）, description: 多人同时说话问询或催促}
+  - {name: owner-medium-overlap-shop, rows: [24, 61], level: medium, env: shop, form: owner, mode: overlap, pool: [record_control, dialogue], interferers: [1, 3],
+     display: 走访时与多名群众沟通（重叠讲话）, description: 群众同时说话或高频插话}
+  - {name: owner-heavy-overlap-security, rows: [25, 62], level: heavy, env: crowd, form: owner, mode: overlap, pool: record_control, interferers: [1, 3],
+     same_text: 0.3, absent: 0.2,
+     display: 大型安保紧急锁定录像（重叠讲话）, description: 周围无关人员喊话不应触发动作}
+  - {name: owner-heavy-overlap-crowd, rows: [25, 62], level: heavy, env: crowd, form: owner, mode: overlap, pool: dialogue, interferers: [1, 3],
+     display: 群体性事件现场口头取证（重叠讲话）, description: 近距离和当事人简短对话，周围持续嘈杂}
+  - {name: owner-heavy-overlap-construction, rows: [25, 62], level: heavy, env: [construction_wind, crowd], form: owner, mode: overlap, pool: [dialogue, law_query], interferers: [1, 3],
+     display: 施工现场、大型集市走访（重叠讲话）, description: 高分贝持续环境噪音，近距离问询、口头普法}
+  - {name: owner-heavy-overlap-main-road, rows: [25, 62], level: heavy, env: main_road, form: owner, mode: overlap, pool: dialogue, interferers: [1, 3],
+     display: 拥堵主干道事故多方争执（重叠讲话）, description: 车辆轰鸣、鸣笛，多方当事人同时争执}
+  - {name: owner-extreme-overlap-emergency, rows: [26, 63], level: extreme, env: emergency, form: owner, mode: overlap, pool: record_control,
+     interferers: [1, 3], same_text: 0.3, absent: 0.2, device: true,
+     display: 极限工况下的机主识别（重叠讲话）, description: 表格本行没有具体场景，按暴乱嘈杂、警笛现场模拟，无关人员喊话不应触发}
+
+  # --- 角色分离（端侧第 33–36 行 ≤4 人；云侧第 64–67 行 ≤4 人与 5–8 人）---
+  - {name: diar-quiet-interrogation, rows: [33, 64], level: quiet, env: office, form: meeting, pool: dialogue, key_pool: terms_interrogation, speakers: [2, 3], overlap: 0.05, seconds: [45, 90],
+     display: 审讯室讯问笔录（角色分离）, description: 隔音环境，对话交替进行，少量插话}
+  - {name: diar-quiet-identification, rows: [33, 64], level: quiet, env: office, form: meeting, pool: dialogue, speakers: [2, 3], overlap: 0.05, seconds: [45, 90],
+     display: 辨认谈话、辨认告知（角色分离）, description: 民警向辨认人告知权利、组织辨认问询}
+  - {name: diar-quiet-discussion, rows: [33, 64], level: quiet, env: office, form: meeting, pool: dialogue, speakers: [3, 4], overlap: 0.1, seconds: [45, 90],
+     display: 内勤小范围案情研讨、法制会审（角色分离）, description: 小团队讨论案件定性、证据瑕疵、处置方案}
+  - {name: diar-quiet-reception, rows: [33, 64], level: quiet, env: office, form: meeting, pool: dialogue, key_pool: terms_reception, speakers: [2, 3], overlap: 0.05, seconds: [45, 90],
+     display: 接待室一对一/三方报案询问（角色分离）, description: 接待受害人、证人，形成带角色标签的询问底稿}
+  - {name: diar-quiet-hall, rows: [33, 64], level: quiet, env: hall, form: meeting, pool: dialogue, key_pool: terms_reception, speakers: [3, 4], overlap: 0.1, seconds: [45, 90],
+     display: 派出所大厅报案、多方纠纷接待（角色分离）, description: 记录多方陈述，区分不同人员说辞}
+  - {name: diar-light-car, rows: [34, 65], level: light, env: car, form: meeting, pool: dialogue, speakers: [2, 3], overlap: 0.1, seconds: [45, 90],
+     display: 警车车内询问当事人（角色分离）, description: 车窗关闭、空调底噪，区分民警问话、当事人陈述}
+  - {name: diar-light-mediation, rows: [34, 65], level: light, env: home, form: meeting, pool: dialogue, key_pool: terms_community, speakers: [3, 4], overlap: 0.1, seconds: [45, 90],
+     display: 居民家中矛盾调解（角色分离）, description: 家电微弱底噪，完整记录双方诉求、承诺}
+  - {name: diar-light-visit, rows: [34, 65], level: light, env: home, form: meeting, pool: dialogue, speakers: [2, 3], overlap: 0.05, seconds: [45, 90],
+     display: 入户走访核查、流动人口问询（角色分离）, description: 自动区分问话人和被走访群众}
+  - {name: diar-medium-accident, rows: [35, 66], level: medium, env: street, form: meeting, pool: dialogue, key_pool: terms_accident, speakers: [3, 4], overlap: 0.2, seconds: [45, 90],
+     display: 道路轻微交通事故现场问询（角色分离）, description: 双方车主插话、争执、轻度重叠}
+  - {name: diar-medium-shop, rows: [35, 66], level: medium, env: shop, form: meeting, pool: dialogue, speakers: [2, 3], overlap: 0.1, seconds: [45, 90],
+     display: 商铺内线索摸排、纠纷处置（角色分离）, description: 排风、冰柜、背景音乐底噪}
+  - {name: diar-medium-street-mediation, rows: [35, 66], level: medium, env: street, form: meeting, pool: dialogue, speakers: [3, 4], overlap: 0.2, seconds: [45, 90],
+     display: 街边现场口头调解（角色分离）, description: 口角纠纷、小额纠纷现场处置}
+  - {name: diar-heavy-market, rows: [36, 67], level: heavy, env: crowd, form: meeting, pool: dialogue, speakers: [3, 4], overlap: 0.15, seconds: [45, 90],
+     display: 集市、工地、活动现场近距离多方问询（角色分离）, description: 民警近距离和 2–3 名当事人对话，背景嘈杂人声}
+  - {name: diar-extreme-emergency, rows: [37, 68], level: extreme, env: emergency, form: meeting, pool: dialogue, speakers: [2, 4], overlap: 0.2,
+     seconds: [45, 90], device: true,
+     display: 极限工况下的角色分离, description: 表格本行没有具体场景，按事故救援现场多方问询模拟，经执法记录仪过载削波与自动增益}
+  - {name: diar8-quiet-discussion, rows: [64], level: quiet, env: office, form: meeting, pool: dialogue, speakers: [5, 8], overlap: 0.1, seconds: [60, 120],
+     display: 案情研讨、法制会审（5–8 人）, description: 较多人参与的讨论，轮流发言为主}
+  - {name: diar8-quiet-hall, rows: [64], level: quiet, env: hall, form: meeting, pool: dialogue, speakers: [5, 8], overlap: 0.1, seconds: [60, 120],
+     display: 派出所大厅多方纠纷接待（5–8 人）, description: 记录多方陈述，区分不同人员说辞}
+  - {name: diar8-light-mediation, rows: [65], level: light, env: home, form: meeting, pool: dialogue, speakers: [5, 8], overlap: 0.1, seconds: [60, 120],
+     display: 居民家中矛盾调解（5–8 人）, description: 多方家属在场的调解}
+  - {name: diar8-medium-accident, rows: [66], level: medium, env: street, form: meeting, pool: dialogue, speakers: [5, 8], overlap: 0.2, seconds: [60, 120],
+     display: 交通事故现场问询（5–8 人）, description: 多车多方当事人、证人在场}
+  - {name: diar8-heavy-market, rows: [67], level: heavy, env: crowd, form: meeting, pool: dialogue, speakers: [5, 8], overlap: 0.15, seconds: [60, 120],
+     display: 集市、活动现场多方问询（5–8 人）, description: 背景嘈杂人声}
+
+  # --- 上下文矫正（云侧第 69–71 行；第 72 行为对讲机，不做）。内容取自上下文纠偏评测集里与警务相关的场景 ---
+  - {name: ctx-quiet-record, rows: [69], level: quiet, env: office, form: context, scenarios: [警务笔录],
+     display: 审讯、辨认、案情研讨笔录（上下文矫正）, description: 安静环境下按上下文定字}
+  - {name: ctx-quiet-reception, rows: [69], level: quiet, env: office, form: context, scenarios: [报警电话, 派出所户籍窗口],
+     display: 接待室、大厅报案询问（上下文矫正）, description: 报案人口述人名、地点，按上下文定字}
+  - {name: ctx-light-visit, rows: [70], level: light, env: home, form: context, scenarios: [物业登记, 警务笔录],
+     display: 社区民警入户走访、矛盾调解记录（上下文矫正）, description: 生活化口语、人名、楼栋信息}
+  - {name: ctx-medium-street, rows: [71], level: medium, env: [street, crowd], form: context, scenarios: [警务笔录, 报警电话],
+     display: 执法记录仪实时语音转写（上下文矫正）, description: 街面盘查、现场纠纷调解，连贯对话下语义矫正}
+  - {name: ctx-heavy-pdt-link, rows: [72], level: heavy, env: [street, crowd], form: context, scenarios: [警务笔录, 报警电话], channel: pdt,
+     display: 户外远程协同、集群对讲态势记录（上下文矫正）, description: 多警力协同处置，经对讲链路收到的口述}
+  - {name: ctx-extreme-emergency, rows: [73], level: extreme, env: emergency, form: context, scenarios: [警务笔录, 报警电话], device: true,
+     display: 极限工况下的上下文矫正, description: 表格本行没有具体场景，按事故救援、警笛现场模拟，经执法记录仪过载削波与自动增益}
+
+  # --- 执法记录仪通道、2 米远场：与原场景逐条配对（同一批语音、噪声、房间），只改通道 ---
+  - {name: dev-asr-heavy-crowd, variant_of: asr-heavy-crowd, rows: [5, 42], device: true,
+     display: 人群聚集现场近距离取证（执法记录仪通道）, description: 与 asr-heavy-crowd 相同，经过载削波、高通和自动增益}
+  - {name: dev-term-medium-street, variant_of: term-medium-street, rows: [9, 46], device: true,
+     display: 路面盘查、街面执勤（执法记录仪通道）, description: 与 term-medium-street 相同，经高通和自动增益}
+  - {name: dev-num-heavy-main-road, variant_of: num-heavy-main-road, rows: [15, 52], device: true,
+     display: 拥堵主干道事故记录车牌、身份证号（执法记录仪通道）, description: 与 num-heavy-main-road 相同，经过载削波、高通和自动增益}
+  - {name: dev-owner-heavy-sep-accident, variant_of: owner-heavy-sep-accident, rows: [20, 57], device: true,
+     display: 事故现场语音标记取证快照（执法记录仪通道）, description: 与 owner-heavy-sep-accident 相同，经过载削波、高通和自动增益}
+  - {name: far-asr-quiet-command, variant_of: asr-quiet-command, rows: [2, 39], far_field: true,
+     display: 设备指令控制、搜索法律条文（设备离人 1–3 米）, description: 与 asr-quiet-command 相同，但设备放在桌上或离民警较远，民警语音也带房间混响}
+  - {name: far-owner-quiet-sep-reception, variant_of: owner-quiet-sep-reception, rows: [17, 54], far_field: true,
+     display: 接待室接报案转写（设备离人 1–3 米，分开讲话）, description: 与 owner-quiet-sep-reception 相同，但机主也离设备较远；注册音频仍为近讲}

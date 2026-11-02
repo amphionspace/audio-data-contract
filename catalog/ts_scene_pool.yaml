@@ -1583,6 +1583,606 @@
     - common_voice_en:legacy-20260804
 - schema_version: dataset-catalog/2.0
   dataset_id: ts_scene_pool
+  version: cvaccent-near-20261101
+  languages:
+  - en
+  tasks:
+  - ts_asr
+  aliases: []
+  artifacts:
+  - name: en-records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/cvaccent-near-20261101/records_en.jsonl.gz
+    sha256: a1640b8e78e4e78925583b4fbb0c5b8bd8b316ff7c20e48da0d91719976470ac
+    metadata:
+      record_count: 60000
+  - name: en-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/cvaccent-near-20261101/audio_index_en.jsonl.gz
+    sha256: 8f92da03eb7f320bfdd384e52a4c538a620f3e50684dec748369407db39284ee
+    metadata:
+      record_count: 159588
+  - name: record_index
+    kind: lance-record-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/cvaccent-near-20261101/record_index/index.json
+    sha256: 96ecc05a7b2c085cc3028f2537bb0b8aa26bbf99ab7bc43d56c79f68a84a398d
+    expected_bytes: 736
+    metadata:
+      rows: 60000
+      schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
+      snapshot_version: 13
+  splits:
+    en:
+      artifacts:
+        records:
+        - en-records
+        audio_index:
+        - en-audio-index
+        records_lance:
+        - record_index
+      task: ts_asr
+      statistics:
+        records: 60000
+        duration_hours: 91.21
+        duration_basis: clip duration (segment span, or the whole file)
+  provenance:
+    status: complete
+    synthetic: none
+    snapshot_date: '2026-11-01'
+    description: cvaccent-near-20261101：多句场景（multi 同款 full 模式，目标说 2–5 句，1–4 个他人各自一条轨道），约 30% 缺席孪生（同一场景换人注册，一半取目标近邻，转写为空，同一对共用
+      labels.pair）。Common Voice 英文 train 带口音标注的目标说话人（至少 6 句 1–8 秒，按口音组抽取：每组占比为说话人数平方根、单组不超过 15%；文本、清洗通过标记与口音取自 common_voice_en@icefall-20260908
+      的双引擎清洗清单，未通过的句子不用），他人一半同批口音说话人、一半 LibriSpeech train；随机孪生注册人按同样口音占比抽取，近邻孪生取近邻（美式口音注册人约一半缺席，其他口音 21–28%），labels.accent
+      记注册人口音组；近邻表 speaker-neighbors-en-accents-20261101（ERes2NetV2）。剔除三份语料 dev/test 说话人，不含 VCTK。起因：10.28 版本在 ts-asr-benchmark-en
+      上 VCTK 口音目标 13.8% 判为缺席（苏格兰、爱尔兰、加拿大约 20%，短目标 27%），LibriSpeech 目标 1.8%；训练英文目标 63% 是 LibriSpeech。
+    sources:
+    - librispeech:legacy-20260804
+    - common_voice_en:legacy-20260804
+    - common_voice_en:icefall-20260908
+- schema_version: dataset-catalog/2.0
+  dataset_id: ts_scene_pool
+  version: cvaccent-alt-twins-20261101
+  languages:
+  - en
+  tasks:
+  - ts_asr
+  aliases: []
+  artifacts:
+  - name: en-records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/cvaccent-alt-twins-20261101/records_en.jsonl.gz
+    sha256: f2038b55bc82d2402320db75bfaf98fef8ccdd1a21af0ec3ba7b3339ad636f9f
+    metadata:
+      record_count: 40000
+  - name: en-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/cvaccent-alt-twins-20261101/audio_index_en.jsonl.gz
+    sha256: 024e13c3808c585100bc2221c2b6bfb7c8a632fb3e1947bdb79a21097b5c560d
+    metadata:
+      record_count: 113874
+  - name: record_index
+    kind: lance-record-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/cvaccent-alt-twins-20261101/record_index/index.json
+    sha256: 99e988f527aa327a90d1c37cb14de574c98cece9e428d12f6f766b86c9f58b51
+    expected_bytes: 741
+    metadata:
+      rows: 40000
+      schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
+      snapshot_version: 13
+  splits:
+    en:
+      artifacts:
+        records:
+        - en-records
+        audio_index:
+        - en-audio-index
+        records_lance:
+        - record_index
+      task: ts_asr
+      statistics:
+        records: 40000
+        duration_hours: 60.74
+        duration_basis: clip duration (segment span, or the whole file)
+  provenance:
+    status: complete
+    synthetic: none
+    snapshot_date: '2026-11-01'
+    description: cvaccent-alt-twins-20261101：alternate/burst/short 轮流与插话场景，约 30% 缺席孪生（一半近邻注册）。Common Voice 英文 train 带口音标注的目标说话人（至少
+      6 句 1–8 秒，按口音组抽取：每组占比为说话人数平方根、单组不超过 15%；文本、清洗通过标记与口音取自 common_voice_en@icefall-20260908 的双引擎清洗清单，未通过的句子不用），他人一半同批口音说话人、一半
+      LibriSpeech train；随机孪生注册人按同样口音占比抽取，近邻孪生取近邻（美式口音注册人约一半缺席，其他口音 21–28%），labels.accent 记注册人口音组；近邻表 speaker-neighbors-en-accents-20261101（ERes2NetV2）。剔除三份语料
+      dev/test 说话人，不含 VCTK。起因：10.28 版本在 ts-asr-benchmark-en 上 VCTK 口音目标 13.8% 判为缺席（苏格兰、爱尔兰、加拿大约 20%，短目标 27%），LibriSpeech 目标
+      1.8%；训练英文目标 63% 是 LibriSpeech。
+    sources:
+    - librispeech:legacy-20260804
+    - common_voice_en:legacy-20260804
+    - common_voice_en:icefall-20260908
+- schema_version: dataset-catalog/2.0
+  dataset_id: ts_scene_pool
+  version: cvaccent-hard-20261101
+  languages:
+  - en
+  tasks:
+  - ts_asr
+  aliases: []
+  artifacts:
+  - name: en-records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/cvaccent-hard-20261101/records_en.jsonl.gz
+    sha256: 1cdc924a382a01e7032401b7f8d9211273a538d8318c8915c968643f0c94b921
+    metadata:
+      record_count: 25000
+  - name: en-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/cvaccent-hard-20261101/audio_index_en.jsonl.gz
+    sha256: 39669159db05353fb930b244d85dd9779f3f0fb6e50e3acc72583cc3934bcd4b
+    metadata:
+      record_count: 111670
+  - name: record_index
+    kind: lance-record-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/cvaccent-hard-20261101/record_index/index.json
+    sha256: 744f5ac91d28c4bbad67e2c62876f4913fa19189ea6fe5e63b128a347e184efd
+    expected_bytes: 736
+    metadata:
+      rows: 25000
+      schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
+      snapshot_version: 13
+  splits:
+    en:
+      artifacts:
+        records:
+        - en-records
+        audio_index:
+        - en-audio-index
+        records_lance:
+        - record_index
+      task: ts_asr
+      statistics:
+        records: 25000
+        duration_hours: 37.92
+        duration_basis: clip duration (segment span, or the whole file)
+  provenance:
+    status: complete
+    synthetic: none
+    snapshot_date: '2026-11-01'
+    description: cvaccent-hard-20261101：相近声音场景：他人之一是目标 ERes2NetV2 最近邻前 10 名之一，约 55% 目标缺席（转写为空）。Common Voice 英文 train 带口音标注的目标说话人（至少
+      6 句 1–8 秒，按口音组抽取：每组占比为说话人数平方根、单组不超过 15%；文本、清洗通过标记与口音取自 common_voice_en@icefall-20260908 的双引擎清洗清单，未通过的句子不用），他人一半同批口音说话人、一半
+      LibriSpeech train；随机孪生注册人按同样口音占比抽取，近邻孪生取近邻（美式口音注册人约一半缺席，其他口音 21–28%），labels.accent 记注册人口音组；近邻表 speaker-neighbors-en-accents-20261101（ERes2NetV2）。剔除三份语料
+      dev/test 说话人，不含 VCTK。起因：10.28 版本在 ts-asr-benchmark-en 上 VCTK 口音目标 13.8% 判为缺席（苏格兰、爱尔兰、加拿大约 20%，短目标 27%），LibriSpeech 目标
+      1.8%；训练英文目标 63% 是 LibriSpeech。
+    sources:
+    - librispeech:legacy-20260804
+    - common_voice_en:legacy-20260804
+    - common_voice_en:icefall-20260908
+- schema_version: dataset-catalog/2.0
+  dataset_id: ts_scene_pool
+  version: cvaccent-handover-20261101
+  languages:
+  - en
+  tasks:
+  - ts_asr
+  aliases: []
+  artifacts:
+  - name: en-records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/cvaccent-handover-20261101/records_en.jsonl.gz
+    sha256: 62b531dae7ca54e8984e0b9223936228c149c56a46dff50966439f95c1634c43
+    metadata:
+      record_count: 20000
+  - name: en-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/cvaccent-handover-20261101/audio_index_en.jsonl.gz
+    sha256: 62bf10911b758f27b6c56f22a8a94b15531d628d7a75a63f46f225bb888c1a00
+    metadata:
+      record_count: 36741
+  - name: record_index
+    kind: lance-record-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/cvaccent-handover-20261101/record_index/index.json
+    sha256: 6c0b35897f6d834c9806bba5c8278e75a075f396582aa7f10bc284a3246b8a54
+    expected_bytes: 740
+    metadata:
+      rows: 20000
+      schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
+      snapshot_version: 13
+  splits:
+    en:
+      artifacts:
+        records:
+        - en-records
+        audio_index:
+        - en-audio-index
+        records_lance:
+        - record_index
+      task: ts_asr
+      statistics:
+        records: 20000
+        duration_hours: 30.71
+        duration_basis: clip duration (segment span, or the whole file)
+  provenance:
+    status: complete
+    synthetic: none
+    snapshot_date: '2026-11-01'
+    description: cvaccent-handover-20261101：交接场景：目标与另一人各说一句、先后不重叠（一半另一人取目标近邻），约 30% 缺席孪生。Common Voice 英文 train 带口音标注的目标说话人（至少
+      6 句 1–8 秒，按口音组抽取：每组占比为说话人数平方根、单组不超过 15%；文本、清洗通过标记与口音取自 common_voice_en@icefall-20260908 的双引擎清洗清单，未通过的句子不用），他人一半同批口音说话人、一半
+      LibriSpeech train；随机孪生注册人按同样口音占比抽取，近邻孪生取近邻（美式口音注册人约一半缺席，其他口音 21–28%），labels.accent 记注册人口音组；近邻表 speaker-neighbors-en-accents-20261101（ERes2NetV2）。剔除三份语料
+      dev/test 说话人，不含 VCTK。起因：10.28 版本在 ts-asr-benchmark-en 上 VCTK 口音目标 13.8% 判为缺席（苏格兰、爱尔兰、加拿大约 20%，短目标 27%），LibriSpeech 目标
+      1.8%；训练英文目标 63% 是 LibriSpeech。
+    sources:
+    - librispeech:legacy-20260804
+    - common_voice_en:legacy-20260804
+    - common_voice_en:icefall-20260908
+- schema_version: dataset-catalog/2.0
+  dataset_id: ts_scene_pool
+  version: cvaccent-solo-20261101
+  languages:
+  - en
+  tasks:
+  - ts_asr
+  aliases: []
+  artifacts:
+  - name: en-records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/cvaccent-solo-20261101/records_en.jsonl.gz
+    sha256: 9694c9321c0f0db7fffc228a0d70225628b292560b42ea35a1651a0bf372b945
+    metadata:
+      record_count: 30000
+  - name: en-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/cvaccent-solo-20261101/audio_index_en.jsonl.gz
+    sha256: b08e92616b21962b64a70319dcd4b5f8f648450e7ae35a5036a30f2a6c2463a6
+    metadata:
+      record_count: 33021
+  - name: record_index
+    kind: lance-record-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/cvaccent-solo-20261101/record_index/index.json
+    sha256: 16ec8bff00a79e57d451169377fa7c1146cd6dcf6299c31f1b1fa8090700940a
+    expected_bytes: 736
+    metadata:
+      rows: 30000
+      schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
+      snapshot_version: 13
+  splits:
+    en:
+      artifacts:
+        records:
+        - en-records
+        audio_index:
+        - en-audio-index
+        records_lance:
+        - record_index
+      task: ts_asr
+      statistics:
+        records: 30000
+        duration_hours: 44.68
+        duration_basis: clip duration (segment span, or the whole file)
+  provenance:
+    status: complete
+    synthetic: none
+    snapshot_date: '2026-11-01'
+    description: cvaccent-solo-20261101：短句单人场景：目标单独说一句 1–3.5 秒的话，没有其他说话人，约 30% 缺席孪生（一半近邻注册）。Common Voice 英文 train 带口音标注的目标说话人（至少
+      6 句 1–8 秒，按口音组抽取：每组占比为说话人数平方根、单组不超过 15%；文本、清洗通过标记与口音取自 common_voice_en@icefall-20260908 的双引擎清洗清单，未通过的句子不用），他人一半同批口音说话人、一半
+      LibriSpeech train；随机孪生注册人按同样口音占比抽取，近邻孪生取近邻（美式口音注册人约一半缺席，其他口音 21–28%），labels.accent 记注册人口音组；近邻表 speaker-neighbors-en-accents-20261101（ERes2NetV2）。剔除三份语料
+      dev/test 说话人，不含 VCTK。起因：10.28 版本在 ts-asr-benchmark-en 上 VCTK 口音目标 13.8% 判为缺席（苏格兰、爱尔兰、加拿大约 20%，短目标 27%），LibriSpeech 目标
+      1.8%；训练英文目标 63% 是 LibriSpeech。
+    sources:
+    - librispeech:legacy-20260804
+    - common_voice_en:legacy-20260804
+    - common_voice_en:icefall-20260908
+- schema_version: dataset-catalog/2.0
+  dataset_id: ts_scene_pool
+  version: csd-near-20261101
+  languages:
+  - en
+  tasks:
+  - ts_asr
+  aliases: []
+  artifacts:
+  - name: en-records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/csd-near-20261101/records_en.jsonl.gz
+    sha256: 8760ac8b327e5289cf12f3e0983d0de11a9c7ed2d326168367474abf5fdd5afa
+    metadata:
+      record_count: 12000
+  - name: en-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/csd-near-20261101/audio_index_en.jsonl.gz
+    sha256: c559870b236a19fa5978a1857151fdbe8f615163c63012db1727c69512fd2472
+    metadata:
+      record_count: 26098
+  - name: record_index
+    kind: lance-record-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/csd-near-20261101/record_index/index.json
+    sha256: 0914fc6bed004c0a4d018cb7bf92f67f580768bc8688afc6ceec38a0cbd1705e
+    expected_bytes: 731
+    metadata:
+      rows: 12000
+      schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
+      snapshot_version: 13
+  splits:
+    en:
+      artifacts:
+        records:
+        - en-records
+        audio_index:
+        - en-audio-index
+        records_lance:
+        - record_index
+      task: ts_asr
+      statistics:
+        records: 12000
+        duration_hours: 16.33
+        duration_basis: clip duration (segment span, or the whole file)
+  provenance:
+    status: complete
+    synthetic: none
+    snapshot_date: '2026-11-01'
+    description: csd-near-20261101：多句场景（multi 同款 full 模式，目标说 2–5 句，1–4 个他人各自一条轨道），约 30% 缺席孪生（同一场景换人注册，一半取目标近邻，转写为空，同一对共用 labels.pair）。CS-Dialogue
+      英文 train 140 位说话人（中国人说英语）为目标，含 <NPS/>（旁人说话）或 **（听不清）的句子不用、其余标签去掉（与 ts-asr-benchmark-en 一致），他人一半 CS-Dialogue、Common Voice
+      口音说话人与 LibriSpeech 各四分之一；孪生注册人取另一位 CS-Dialogue 说话人或近邻，近邻表 speaker-neighbors-en-accents-20261101。CS-Dialogue dev/test
+      说话人剔除（test 是评测目标），按说话人 ID 核对无重叠。起因：10.28 版本在 ts-asr-benchmark-en 的 CS-Dialogue 目标上词错率 44.6%。
+    sources:
+    - cs_dialogue_en:legacy-20260804
+    - common_voice_en:legacy-20260804
+    - common_voice_en:icefall-20260908
+    - librispeech:legacy-20260804
+- schema_version: dataset-catalog/2.0
+  dataset_id: ts_scene_pool
+  version: csd-alt-twins-20261101
+  languages:
+  - en
+  tasks:
+  - ts_asr
+  aliases: []
+  artifacts:
+  - name: en-records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/csd-alt-twins-20261101/records_en.jsonl.gz
+    sha256: 7ab6347d77ebb8740bde5d40e079102a6ae9bd78ac6f96655e43f44578748fa9
+    metadata:
+      record_count: 8000
+  - name: en-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/csd-alt-twins-20261101/audio_index_en.jsonl.gz
+    sha256: bf02702d387c438e820be33a654af66ce9bdc995a8f967e0dfa7ab4392a3ea1c
+    metadata:
+      record_count: 19044
+  - name: record_index
+    kind: lance-record-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/csd-alt-twins-20261101/record_index/index.json
+    sha256: f3513213138a70639f43a65a84d2ebccf9025d189336101aec401e26c0769274
+    expected_bytes: 734
+    metadata:
+      rows: 8000
+      schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
+      snapshot_version: 13
+  splits:
+    en:
+      artifacts:
+        records:
+        - en-records
+        audio_index:
+        - en-audio-index
+        records_lance:
+        - record_index
+      task: ts_asr
+      statistics:
+        records: 8000
+        duration_hours: 10.84
+        duration_basis: clip duration (segment span, or the whole file)
+  provenance:
+    status: complete
+    synthetic: none
+    snapshot_date: '2026-11-01'
+    description: csd-alt-twins-20261101：alternate/burst/short 轮流与插话场景，约 30% 缺席孪生（一半近邻注册）。CS-Dialogue 英文 train 140 位说话人（中国人说英语）为目标，含
+      <NPS/>（旁人说话）或 **（听不清）的句子不用、其余标签去掉（与 ts-asr-benchmark-en 一致），他人一半 CS-Dialogue、Common Voice 口音说话人与 LibriSpeech 各四分之一；孪生注册人取另一位
+      CS-Dialogue 说话人或近邻，近邻表 speaker-neighbors-en-accents-20261101。CS-Dialogue dev/test 说话人剔除（test 是评测目标），按说话人 ID 核对无重叠。起因：10.28
+      版本在 ts-asr-benchmark-en 的 CS-Dialogue 目标上词错率 44.6%。
+    sources:
+    - cs_dialogue_en:legacy-20260804
+    - common_voice_en:legacy-20260804
+    - common_voice_en:icefall-20260908
+    - librispeech:legacy-20260804
+- schema_version: dataset-catalog/2.0
+  dataset_id: ts_scene_pool
+  version: csd-hard-20261101
+  languages:
+  - en
+  tasks:
+  - ts_asr
+  aliases: []
+  artifacts:
+  - name: en-records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/csd-hard-20261101/records_en.jsonl.gz
+    sha256: ebce8cff5a443482b9bdcb1361326201ec84d9a75e7057c261f4051315f36e4b
+    metadata:
+      record_count: 5000
+  - name: en-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/csd-hard-20261101/audio_index_en.jsonl.gz
+    sha256: 292bde825ce27d5d9a2e993f5fe72ead907876cfcecf7c43ce8672ed9933966b
+    metadata:
+      record_count: 19510
+  - name: record_index
+    kind: lance-record-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/csd-hard-20261101/record_index/index.json
+    sha256: e4cf56457d7dd042bc83186d1f9e9f2bcfc3c9abd6499207117ccf0b70709842
+    expected_bytes: 729
+    metadata:
+      rows: 5000
+      schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
+      snapshot_version: 13
+  splits:
+    en:
+      artifacts:
+        records:
+        - en-records
+        audio_index:
+        - en-audio-index
+        records_lance:
+        - record_index
+      task: ts_asr
+      statistics:
+        records: 5000
+        duration_hours: 6.67
+        duration_basis: clip duration (segment span, or the whole file)
+  provenance:
+    status: complete
+    synthetic: none
+    snapshot_date: '2026-11-01'
+    description: csd-hard-20261101：相近声音场景：他人之一是目标 ERes2NetV2 最近邻前 10 名之一，约 55% 目标缺席（转写为空）。CS-Dialogue 英文 train 140 位说话人（中国人说英语）为目标，含
+      <NPS/>（旁人说话）或 **（听不清）的句子不用、其余标签去掉（与 ts-asr-benchmark-en 一致），他人一半 CS-Dialogue、Common Voice 口音说话人与 LibriSpeech 各四分之一；孪生注册人取另一位
+      CS-Dialogue 说话人或近邻，近邻表 speaker-neighbors-en-accents-20261101。CS-Dialogue dev/test 说话人剔除（test 是评测目标），按说话人 ID 核对无重叠。起因：10.28
+      版本在 ts-asr-benchmark-en 的 CS-Dialogue 目标上词错率 44.6%。
+    sources:
+    - cs_dialogue_en:legacy-20260804
+    - common_voice_en:legacy-20260804
+    - common_voice_en:icefall-20260908
+    - librispeech:legacy-20260804
+- schema_version: dataset-catalog/2.0
+  dataset_id: ts_scene_pool
+  version: csd-handover-20261101
+  languages:
+  - en
+  tasks:
+  - ts_asr
+  aliases: []
+  artifacts:
+  - name: en-records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/csd-handover-20261101/records_en.jsonl.gz
+    sha256: 3767883f72d5e9d407920f92a2cb7ce5659acd696d434e9afeeaed0f09a3dc3f
+    metadata:
+      record_count: 5000
+  - name: en-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/csd-handover-20261101/audio_index_en.jsonl.gz
+    sha256: 372bad6a1192156db04c8af859f2503fedc0470f3dd987bae69d0611516b1dc1
+    metadata:
+      record_count: 5849
+  - name: record_index
+    kind: lance-record-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/csd-handover-20261101/record_index/index.json
+    sha256: 210c439c1b850ce9f287563c3d6244001902662714d5bfd43f9d05c7c8b04922
+    expected_bytes: 733
+    metadata:
+      rows: 5000
+      schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
+      snapshot_version: 13
+  splits:
+    en:
+      artifacts:
+        records:
+        - en-records
+        audio_index:
+        - en-audio-index
+        records_lance:
+        - record_index
+      task: ts_asr
+      statistics:
+        records: 5000
+        duration_hours: 6.85
+        duration_basis: clip duration (segment span, or the whole file)
+  provenance:
+    status: complete
+    synthetic: none
+    snapshot_date: '2026-11-01'
+    description: csd-handover-20261101：交接场景：目标与另一人各说一句、先后不重叠（一半另一人取目标近邻），约 30% 缺席孪生。CS-Dialogue 英文 train 140 位说话人（中国人说英语）为目标，含
+      <NPS/>（旁人说话）或 **（听不清）的句子不用、其余标签去掉（与 ts-asr-benchmark-en 一致），他人一半 CS-Dialogue、Common Voice 口音说话人与 LibriSpeech 各四分之一；孪生注册人取另一位
+      CS-Dialogue 说话人或近邻，近邻表 speaker-neighbors-en-accents-20261101。CS-Dialogue dev/test 说话人剔除（test 是评测目标），按说话人 ID 核对无重叠。起因：10.28
+      版本在 ts-asr-benchmark-en 的 CS-Dialogue 目标上词错率 44.6%。
+    sources:
+    - cs_dialogue_en:legacy-20260804
+    - common_voice_en:legacy-20260804
+    - common_voice_en:icefall-20260908
+    - librispeech:legacy-20260804
+- schema_version: dataset-catalog/2.0
+  dataset_id: ts_scene_pool
+  version: csd-solo-20261101
+  languages:
+  - en
+  tasks:
+  - ts_asr
+  aliases: []
+  artifacts:
+  - name: en-records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/csd-solo-20261101/records_en.jsonl.gz
+    sha256: ae9e470115f8e79f2664d837154b2a97e240b08bd84442ddaa05db3fa4b99da7
+    metadata:
+      record_count: 6000
+  - name: en-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/csd-solo-20261101/audio_index_en.jsonl.gz
+    sha256: 9bb769e62b90209d854fd9946e4bbed48b48623d05a51c1c946e7cd7795dc6fc
+    metadata:
+      record_count: 3993
+  - name: record_index
+    kind: lance-record-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/csd-solo-20261101/record_index/index.json
+    sha256: 3da3240974743bbfead0e3dcd07dea1549df88e64ff88ea09a2e9709672fed82
+    expected_bytes: 729
+    metadata:
+      rows: 6000
+      schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
+      snapshot_version: 13
+  splits:
+    en:
+      artifacts:
+        records:
+        - en-records
+        audio_index:
+        - en-audio-index
+        records_lance:
+        - record_index
+      task: ts_asr
+      statistics:
+        records: 6000
+        duration_hours: 8.27
+        duration_basis: clip duration (segment span, or the whole file)
+  provenance:
+    status: complete
+    synthetic: none
+    snapshot_date: '2026-11-01'
+    description: csd-solo-20261101：短句单人场景：目标单独说一句 1–3.5 秒的话，没有其他说话人，约 30% 缺席孪生（一半近邻注册）。CS-Dialogue 英文 train 140 位说话人（中国人说英语）为目标，含
+      <NPS/>（旁人说话）或 **（听不清）的句子不用、其余标签去掉（与 ts-asr-benchmark-en 一致），他人一半 CS-Dialogue、Common Voice 口音说话人与 LibriSpeech 各四分之一；孪生注册人取另一位
+      CS-Dialogue 说话人或近邻，近邻表 speaker-neighbors-en-accents-20261101。CS-Dialogue dev/test 说话人剔除（test 是评测目标），按说话人 ID 核对无重叠。起因：10.28
+      版本在 ts-asr-benchmark-en 的 CS-Dialogue 目标上词错率 44.6%。
+    sources:
+    - cs_dialogue_en:legacy-20260804
+    - common_voice_en:legacy-20260804
+    - common_voice_en:icefall-20260908
+    - librispeech:legacy-20260804
+- schema_version: dataset-catalog/2.0
+  dataset_id: ts_scene_pool
   version: ramc-near-20261028
   languages:
   - zh

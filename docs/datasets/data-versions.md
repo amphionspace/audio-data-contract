@@ -567,11 +567,13 @@ TAL 英语语音识别数据
 | [aishell@eval-20260804](../../catalog/open_audio_eval.yaml#L1) | 10.0 | 已登记 | 快照 20260914 |
 | [aishell@icefall-20260908](../../catalog/icefall_runtime.yaml#L1012) | 179.0 | 已登记 | 快照 20260914 |
 | [aishell@legacy-20260804](../../catalog/icefall_base.yaml#L708) | 179.0 | 已登记 | 快照 20260914 |
+| [aishell@punc-written-v1-20261029](../../catalog/zh_punc_written_v1.yaml#L2) | 150.9 | 已登记 | 没有 |
 | [aishell_clean@clean-v1-20260805](../../catalog/local_lhotse_derived.yaml#L605) | 10.0 | 已登记 | 快照 20260914 |
 | [aishell_hotwords@eval-20260804](../../catalog/open_audio_eval.yaml#L414) | 10.0 | 已登记 | 快照 20260914 |
 | [aishell_hotwords@hotwords-v1-20260805](../../catalog/local_lhotse_derived.yaml#L652) | 160.9 | 已登记 | 快照 20260914 |
 | [aishell@legacy-20260804](../../catalog/icefall_base.yaml#L708) | 155.0 | [参考表](https://ccnuebbmik1f.feishu.cn/wiki/CEXFwEjPoi2bIukVjk9c5FdOn12?sheet=3d4d23) | 快照 20260914 |
 
+- `aishell@punc-written-v1-20261029`：aishell@icefall-20260908 训练集原标注加书面化标点（GB/T 15834，逗号从紧）：微调后的 Qwen3-4B（Qwen3.8-27B 的 9.6 万条输出蒸馏）以 Qwen3-ASR-1.7B 听音频得到的带标点转写作语气提示，只往原标注里插标点。模型改动了原文的条目，把模型输出的标点按字对齐搬回原标注；每条以 。？！ 结尾；原标注的字、空格（首尾除外）和大小写不变。没有汉字的条目（英文句子、拼读字母）和标注为空的条目原样保留。文件与源 supervisions 条数、顺序相同，只换 text。试点 200 条人工参照上：WenetSpeech markF1 92.4、其他来源 88.9（老师 93.2 / 88.2，原 FireRedPunc 79.8）
 - 含派生版本（与源数据可能重叠）
 
 ### aishell2
@@ -585,11 +587,13 @@ TAL 英语语音识别数据
 | [aishell2@eval-20260804](../../catalog/open_audio_eval.yaml#L32) | 4.0 | 已登记 | 快照 20260914 |
 | [aishell2@icefall-20260908](../../catalog/icefall_runtime.yaml#L1094) | 1,004.8 | 已登记 | 快照 20260914 |
 | [aishell2@legacy-20260804](../../catalog/icefall_base.yaml#L781) | 1,004.8 | 已登记 | 快照 20260914 |
+| [aishell2@punc-written-v1-20261029](../../catalog/zh_punc_written_v1.yaml#L66) | 1,000.8 | 已登记 | 没有 |
 | [aishell2_clean@clean-v1-20260805](../../catalog/local_lhotse_derived.yaml#L723) | 4.0 | 已登记 | 快照 20260914 |
 | [aishell2_hotwords@eval-20260804](../../catalog/open_audio_eval.yaml#L446) | 4.0 | 已登记 | 快照 20260914 |
 | [aishell2_hotwords@hotwords-v1-20260805](../../catalog/local_lhotse_derived.yaml#L769) | 4.0 | 已登记 | 快照 20260914 |
 | [aishell2@legacy-20260804](../../catalog/icefall_base.yaml#L781) | 1,036.0 | [参考表](https://ccnuebbmik1f.feishu.cn/wiki/CEXFwEjPoi2bIukVjk9c5FdOn12?sheet=3d4d23) | 快照 20260914 |
 
+- `aishell2@punc-written-v1-20261029`：aishell2@icefall-20260908 训练集原标注加书面化标点（GB/T 15834，逗号从紧）：微调后的 Qwen3-4B（Qwen3.8-27B 的 9.6 万条输出蒸馏）以 Qwen3-ASR-1.7B 听音频得到的带标点转写作语气提示，只往原标注里插标点。模型改动了原文的条目，把模型输出的标点按字对齐搬回原标注；每条以 。？！ 结尾；原标注的字、空格（首尾除外）和大小写不变。没有汉字的条目（英文句子、拼读字母）和标注为空的条目原样保留。文件与源 supervisions 条数、顺序相同，只换 text。试点 200 条人工参照上：WenetSpeech markF1 92.4、其他来源 88.9（老师 93.2 / 88.2，原 FireRedPunc 79.8）
 - 含派生版本（与源数据可能重叠）
 
 ### aishell3
@@ -625,11 +629,13 @@ TAL 英语语音识别数据
 | [aishell4@diarization-benchmark-v1-20261021](../../catalog/diarization_benchmark.yaml#L1) | 12.7 | 已登记 | 没有 |
 | [aishell4@icefall-20260908](../../catalog/icefall_runtime.yaml#L1206) | 119.5 | 已登记 | 快照 20260914 |
 | [aishell4@legacy-20260804](../../catalog/icefall_base.yaml#L892) | 28.4 | 已登记 | 快照 20260914 |
+| [aishell4@punc-written-v1-20261029](../../catalog/zh_punc_written_v1.yaml#L130) | 107.4 | 已登记 | 没有 |
 | [aishell4@turn-taking-20261014](../../catalog/amphionasr_v4.yaml#L1) | 322.3 | 已登记 | 没有 |
 | [aishell4@turn-taking-20261014-utts](../../catalog/ts_window_utts.yaml#L115) | 66.9 | 已登记 | 没有 |
 
 - `aishell4@asr-20261014`：会议普通转写。每条 supervision 一条，时长 0.5～30 秒，文本非空。多通道只取第 0 路
 - `aishell4@diarization-benchmark-v1-20261021`：Frozen local evaluation slice; audio and RTTM bytes copied unchanged. Not a claim of official release equivalence or training disjointness.
+- `aishell4@punc-written-v1-20261029`：aishell4@icefall-20260908 训练集原标注加书面化标点（GB/T 15834，逗号从紧）：微调后的 Qwen3-4B（Qwen3.8-27B 的 9.6 万条输出蒸馏）以 Qwen3-ASR-1.7B 听音频得到的带标点转写作语气提示，只往原标注里插标点。模型改动了原文的条目，把模型输出的标点按字对齐搬回原标注；每条以 。？！ 结尾；原标注的字、空格（首尾除外）和大小写不变。没有汉字的条目（英文句子、拼读字母）和标注为空的条目原样保留。文件与源 supervisions 条数、顺序相同，只换 text。试点 200 条人工参照上：WenetSpeech markF1 92.4、其他来源 88.9（老师 93.2 / 88.2，原 FireRedPunc 79.8）
 - `aishell4@turn-taking-20261014`：会议 turn-taking。整句拼成 2/3 人混合窗，时长 0.5～30 秒。注册音是窗外另一句，1～30 秒。有近场时远场:近场 = 3:1
 - `aishell4@turn-taking-20261014-utts`：aishell4@turn-taking-20261014 的 train 划分（不含 eval/test），时间线取自 aishell4@icefall-20260908 的 train 人工标注。加 metadata.window_utts（窗口内每句的说话人与相对混合起点的起止，取自来源标注并截到窗口，截断的标 clipped）与同一命名空间的 metadata.target_speaker，供 open-audio-llm 帧级说话人活动标签（objective.ts_activity_weight）；其余字段不变，音频引用改指本版本，音频索引与原版逐行相同。正样本的目标语句与转写逐字一致（忽略空白和标点；窗口边缘截断的句子允许只转写一部分）才写时间线，负样本只有注册人确实不在窗口里说话才写；其余记录不写时间线（不出帧级标签）。负样本中注册人按标注其实在窗口内说话的记录 ID 列在 excluded-records-<split>.txt，训练配方用 exclude_records 排除。生成脚本 audio-data-contract scripts/ts_robust/add_window_utts.py，逐划分统计见 report.json
 - 含派生版本（与源数据可能重叠）
@@ -693,6 +699,7 @@ AISHELL-2 混合的目标说话人训练与测试数据
 | [alimeeting@openslr-119-local-20260826](../../catalog/multilingual_multispeaker.yaml#L1) | 157.9 | 已登记 | 快照 20260914 |
 | [alimeeting_sdm@asr-20261014](../../catalog/amphionasr_v4.yaml#L726) | — | 未登记 | 没有 |
 | [alimeeting_sdm@icefall-20260908](../../catalog/icefall_runtime.yaml#L2839) | 157.9 | 已登记：单远场麦克风标注片段 | 快照 20260914 |
+| [alimeeting_sdm@punc-written-v1-20261029](../../catalog/zh_punc_written_v1.yaml#L473) | 140.6 | 已登记 | 没有 |
 | [alimeeting_sdm@turn-taking-20261014](../../catalog/amphionasr_v4.yaml#L378) | 427.7 | 已登记 | 没有 |
 | [alimeeting_sdm@turn-taking-20261014-utts](../../catalog/ts_window_utts.yaml#L1) | 82.7 | 已登记 | 没有 |
 
@@ -700,6 +707,7 @@ AISHELL-2 混合的目标说话人训练与测试数据
 - `alimeeting@openslr-119-far-local-20260903`：远场会议、多说话人、重叠语音；训练集 8 条标注越界，使用前需处理
 - `alimeeting_sdm@asr-20261014`：会议普通转写。每条 supervision 一条，时长 0.5～30 秒，文本非空。多通道只取第 0 路
 - `alimeeting_sdm@icefall-20260908`：标注片段时长，重叠语音或多麦克风可能重复计时
+- `alimeeting_sdm@punc-written-v1-20261029`：alimeeting_sdm@icefall-20260908 训练集原标注加书面化标点（GB/T 15834，逗号从紧）：微调后的 Qwen3-4B（Qwen3.8-27B 的 9.6 万条输出蒸馏）以 Qwen3-ASR-1.7B 听音频得到的带标点转写作语气提示，只往原标注里插标点。模型改动了原文的条目，把模型输出的标点按字对齐搬回原标注；每条以 。？！ 结尾；原标注的字、空格（首尾除外）和大小写不变。没有汉字的条目（英文句子、拼读字母）和标注为空的条目原样保留。文件与源 supervisions 条数、顺序相同，只换 text。试点 200 条人工参照上：WenetSpeech markF1 92.4、其他来源 88.9（老师 93.2 / 88.2，原 FireRedPunc 79.8）
 - `alimeeting_sdm@turn-taking-20261014`：会议 turn-taking。整句拼成 2/3 人混合窗，时长 0.5～30 秒。注册音是窗外另一句，1～30 秒。有近场时远场:近场 = 3:1
 - `alimeeting_sdm@turn-taking-20261014-utts`：alimeeting_sdm@turn-taking-20261014 的 train 划分（不含 eval/test），时间线取自 alimeeting_sdm@icefall-20260908 的 train 人工标注。加 metadata.window_utts（窗口内每句的说话人与相对混合起点的起止，取自来源标注并截到窗口，截断的标 clipped）与同一命名空间的 metadata.target_speaker，供 open-audio-llm 帧级说话人活动标签（objective.ts_activity_weight）；其余字段不变，音频引用改指本版本，音频索引与原版逐行相同。正样本的目标语句与转写逐字一致（忽略空白和标点；窗口边缘截断的句子允许只转写一部分）才写时间线，负样本只有注册人确实不在窗口里说话才写；其余记录不写时间线（不出帧级标签）。负样本中注册人按标注其实在窗口内说话的记录 ID 列在 excluded-records-<split>.txt，训练配方用 exclude_records 排除。生成脚本 audio-data-contract scripts/ts_robust/add_window_utts.py，逐划分统计见 report.json
 - 含派生版本（与源数据可能重叠）
@@ -888,16 +896,16 @@ Emilia2 中文对话的说话人日志伪标签
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
-| [emilia2_zh_dialogue_diarize@hotwords-qwen3.8-flash-m4a64k-v1](../../catalog/emilia2_zh_dialogue_diarize.yaml#L288) | 3,167.4 | 已登记 | 没有 |
-| [emilia2_zh_dialogue_diarize@moss-transcribe-diarize-0.9B-m4a64k](../../catalog/emilia2_zh_dialogue_diarize.yaml#L200) | — | 未登记 | 没有 |
-| [emilia2_zh_dialogue_diarize@moss-transcribe-diarize-0.9B-pro4plus](../../catalog/emilia2_zh_dialogue_diarize.yaml#L105) | — | 未登记 | 没有 |
+| [emilia2_zh_dialogue_diarize@hotwords-qwen3.8-flash-m4a64k-v1](../../catalog/emilia2_zh_dialogue_diarize.yaml#L392) | 3,167.4 | 已登记 | 没有 |
+| [emilia2_zh_dialogue_diarize@moss-transcribe-diarize-0.9B-m4a64k](../../catalog/emilia2_zh_dialogue_diarize.yaml#L304) | — | 未登记 | 没有 |
+| [emilia2_zh_dialogue_diarize@moss-transcribe-diarize-0.9B-pro4plus-sim06](../../catalog/emilia2_zh_dialogue_diarize.yaml#L201) | — | 未登记 | 没有 |
 | [emilia2_zh_dialogue_diarize@similar-voice-v1-20261014](../../catalog/similar_voice.yaml#L696) | — | 未登记 | 没有 |
 
 - `emilia2_zh_dialogue_diarize@hotwords-qwen3.8-flash-m4a64k-v1`：对 emilia2_zh_dialogue_diarize@moss-transcribe-diarize-0.9B-m4a64k 窗口合并后的每句转写， 用通用大模型抽取热词（人名、地名、机构、专有名词），每次 20 句、按录音内相邻句分组， 结果逐句写回；经规则过滤（单字、纯英文碎片、常见国名、长于 12 字）。 前后两段用了不同模型：b000–b020（1,710,408 句）用阿里 qwen3.8-flash；阿里账号欠费后， b021–b046（2,084,494 句）改用火山 doubao-seed-2-1-turbo-260628，提示词相同。 在 300 句开发集上 doubao 精确率 0.79、召回 0.70，qwen3.8-flash 为 0.87、0.74（参照由 qwen 输出生成，偏向 qwen）； 有热词的句子占比 qwen 段 20.9%、doubao 段 18.1%。文件里不区分行来自哪个模型，按批次号区分。 hotwords.jsonl.gz 每行 {id, hotwords}，id 对应窗口合并 supervisions 的句 id；842 句未标（hotwords 缺失）， 其中 234 句是 qwen 段内容审核拒绝，608 句是 doubao 段重试后仍失败。 句级旁路文件，按窗口使用时需同时排除 speaker_merge 窗口
 - `emilia2_zh_dialogue_diarize@moss-transcribe-diarize-0.9B-m4a64k`：Emilia2 解包数据中 m4a-64k 子集的中文对话（≥120 秒，源 46,615 条 / 3,895 h）的说话人日志伪标签； moss-transcribe-diarize-0.9B 版本只覆盖 m4a-128k 子集，两者录音不重叠，可以一起用。 流程与该版本相同：本地 MOSS-Transcribe-Diarize 0.9B 粗筛（≥2 人且每人 ≥5 秒，保留 43,877 条 / 3,720.4 h）并整条打说话人和文本； 在停顿处切成 30–120 秒窗口（149,199 个 / 3,715.4 h），按窗口整体保留或丢弃：Qwen3-ASR 整窗识别，文字差异 ≤ 15%（不计重叠处，丢 48.8 h）； 与 Emilia2 自带的带时间短句比对说话人，上游同一人被拆到其他编号的比例 ≤ 0.2（丢 45.0 h）；120 秒内无停顿等其他原因丢 19.4 h， 剩 144,774 个 / 3,602.0 h。规则和门槛沿用 128k 版本的校准与听审结论，没有重新校准（同一来源、同类节目，只是码率不同）。 与 128k 版本不同，被并人检查标记的窗口（一个 MOSS 说话人覆盖两个及以上 Emilia2 原始说话人）导出时已经剔除， 共 6,130 个 / 161.1 h，各说话人数档丢 3.0–6.5%；训练不需要再排除。 音频引用解包后转成的 16 kHz 单声道 FLAC（完整解码 m4a，不补零不截断），记录按 cut_id + start/duration 引用，不需要 ffmpeg。 约 3.3% 的记录最后一句的结束时间比音频末尾晚（MOSS 时间戳），几乎都在 0.1 秒以内，最多的两条晚 0.8 秒和 9.9 秒；128k 版本也有同样现象。 已知局限：约 10.7% 的窗口只有一个说话人；有声剧、短剧中一人配多角时 MOSS 可能按角色拆成多个说话人。 与 emilia2@tts-unified-v0.1 同源，可按 recording_id 对应；如需留验证/测试集，请两边一起排除
-- `emilia2_zh_dialogue_diarize@moss-transcribe-diarize-0.9B-pro4plus`：替代 moss-transcribe-diarize-0.9B：同一批 m4a-128k 中文对话录音、同样的 30–120 秒窗口，两个版本不要一起用。 MOSS Pro 质量抽检显示本地 0.9B 在 ≥4 个说话人的窗口上偏弱（好窗口 4 人约 74%、5 人及以上 51–60%）， 因此把上一版本保留窗口中本地标出 ≥4 人的 28,834 个 / 778.2 h 按窗口片段送 MOSS Pro（moss-transcribe-diarize-pro）重标， 再过同样的整窗文字核对（Qwen3-ASR，CER ≤ 15%，不计重叠）和说话人检查（Emilia2 自带短句，split ≤ 0.2）： 27,762 个 / 749.4 h 换成 Pro 标注；521 个 / 13.5 h 未通过而丢弃；551 个 / 15.3 h Pro 没有结果（多为安全策略拒绝），沿用本地标注。 Pro 常把本地多出来的说话人合并：本地 4 人的窗口中 3,396 个 Pro 判为 3 人、411 个判为 2 人（听审确认过本地把同一人拆成多人的例子）。 被并人检查标记的窗口（一个说话人覆盖两个及以上 Emilia2 原始说话人）导出时已经剔除，按最终标注重算，共 11,155 个 / 306.7 h （本地标注 8,813 个，与上一版本的排除名单一致；Pro 标注 2,342 个），训练不需要再排除。 结果 209,816 条 / 5,483.6 h，其中 Pro 标注 25,420 条 / 682.6 h；上一版本排除并人窗口后是 210,726 条 / 5,508.2 h。 记录里不区分标注来源，逐窗口的来源（labels_from）在运行目录 export/window-merge-v6/。 音频引用解包后转成的 16 kHz 单声道 FLAC，记录按 cut_id + start/duration 引用，不需要 ffmpeg； 约 11% 的记录窗口末尾超出 FLAC 末尾，最多 0.6 毫秒（上一版本同样）。 已知局限：约 16.8% 的窗口只有一个说话人；有声剧、短剧中一人配多角时可能按角色拆成多个说话人； 10 题听审中多人重叠处 Pro 并不比本地明显更好（两边都会漏标对方标出的重叠）。 与 emilia2@tts-unified-v0.1 同源，可按 recording_id 对应；如需留验证/测试集，请两边一起排除
+- `emilia2_zh_dialogue_diarize@moss-transcribe-diarize-0.9B-pro4plus-sim06`：替代 moss-transcribe-diarize-0.9B-pro4plus：同一批录音、同样的 30–120 秒窗口，两个版本不要一起用。 我们的模型和 MOSS 的差距主要在声音相近时把话归错人（AliMeeting dev 高相似窗口归错 3.3% 对 0.3%）， 因此把上一版本中仍是本地 0.9B 标注、2–3 个说话人、两个最像的说话人声纹余弦 ≥ 0.6 的 10,721 个窗口 / 277.8 h （用户 2026-10-28 批准付费）按窗口片段送 MOSS Pro（moss-transcribe-diarize-pro）重标，再过同样的整窗文字核对 （Qwen3-ASR，CER ≤ 15%，不计重叠）和说话人检查（Emilia2 自带短句，split ≤ 0.2）：10,396 个换成 Pro 标注； 225 个未通过而丢弃；100 个 Pro 没有结果（安全策略拒绝），沿用本地标注。 并人窗口按最终标注重算后剔除，共 11,427 个 / 314.0 h（本地标注 8,813 个，与上一版本相同；Pro 标注 2,614 个，比上一版本多 272 个，都来自这次重标）。 结果 209,319 条 / 5470.1 h，其中 Pro 标注 35,544 条 / 944.2 h（上一版本 25,420 条 / 682.6 h）。 训练排除名单（train_120s-training-exclusion）只剩 515 条：仍是本地标注的 ≥4 人窗口和 0.80 拆人嫌疑窗口；上一版本同规则的名单是 1,850 条。 记录里不区分标注来源，逐窗口的来源（labels_from）在运行目录 export/window-merge-v7/。 音频与上一版本相同（16 kHz 单声道 FLAC，按 cut_id + start/duration 引用，不需要 ffmpeg）。 已知局限同上一版本：约 17% 的窗口只有一个说话人；有声剧、短剧中一人配多角时可能按角色拆成多个说话人。 与 emilia2@tts-unified-v0.1 同源，可按 recording_id 对应；如需留验证/测试集，请两边一起排除
 - `emilia2_zh_dialogue_diarize@similar-voice-v1-20261014`：Emilia2 中文多人对话说话人日志伪标签的“音色相近”子集：先剔除源版本训练排除名单 train_120s-speaker-merge-excluded-records.txt （10,766 个 MOSS 把两人并成一人的窗口），其余窗口按最相近两位说话人的 ERes2NetV2 声纹余弦相似度取前 1/3。每人取不与他人重叠的语音（片段 ≥0.3 秒，合计 ≥1.5 秒，最多 10 秒）；少于两个有声纹说话人的窗口（含单人窗口）不入选。标注不改，记录逐行照抄源版本，音频仍指向源版本（解包 m4a，读取需要 ffmpeg）。用途：下一轮训练额外加采相近音色的窗口
-- 已并入的旧版本：`emilia2_zh_dialogue_diarize@moss-transcribe-diarize-0.9B`（COS：没有）
+- 已并入的旧版本：`emilia2_zh_dialogue_diarize@moss-transcribe-diarize-0.9B-pro4plus`（COS：没有）
 
 ### emilia2_zh_overlap_farsim
 
@@ -983,10 +991,12 @@ Emilia 中文野外语音（已清洗）
 | [kespeech@eval-southwestern-20261012](../../catalog/zh_asr_eval.yaml#L165) | 4.2 | 已登记 | 没有 |
 | [kespeech@icefall-20260908](../../catalog/icefall_runtime.yaml#L1501) | 1,434.8 | 已登记 | 快照 20260914 |
 | [kespeech@legacy-20260804](../../catalog/icefall_base.yaml#L1150) | 1,434.8 | 已登记 | 快照 20260914 |
+| [kespeech@punc-written-v1-20261029](../../catalog/zh_punc_written_v1.yaml#L275) | 1,396.9 | 已登记 | 没有 |
 | [kespeech_clean@clean-v1-20260805](../../catalog/local_lhotse_derived.yaml#L86) | 31.1 | 已登记 | 快照 20260914 |
 | [kespeech_hotwords@hotwords-v1-20260805](../../catalog/local_lhotse_derived.yaml#L129) | 31.1 | 已登记 | 快照 20260914 |
 | [kespeech@legacy-20260804](../../catalog/icefall_base.yaml#L1150) | 1,428.0 | [参考表](https://ccnuebbmik1f.feishu.cn/wiki/CEXFwEjPoi2bIukVjk9c5FdOn12?sheet=3d4d23) | 快照 20260914 |
 
+- `kespeech@punc-written-v1-20261029`：kespeech@icefall-20260908 训练集原标注加书面化标点（GB/T 15834，逗号从紧）：微调后的 Qwen3-4B（Qwen3.8-27B 的 9.6 万条输出蒸馏）以 Qwen3-ASR-1.7B 听音频得到的带标点转写作语气提示，只往原标注里插标点。模型改动了原文的条目，把模型输出的标点按字对齐搬回原标注；每条以 。？！ 结尾；原标注的字、空格（首尾除外）和大小写不变。没有汉字的条目（英文句子、拼读字母）和标注为空的条目原样保留。文件与源 supervisions 条数、顺序相同，只换 text。试点 200 条人工参照上：WenetSpeech markF1 92.4、其他来源 88.9（老师 93.2 / 88.2，原 FireRedPunc 79.8）
 - 含派生版本（与源数据可能重叠）
 
 ### legco_speech
@@ -1046,6 +1056,7 @@ Emilia 中文野外语音（已清洗）
 | [magicdata_ramc@diarization-benchmark-v1-20261021](../../catalog/diarization_benchmark.yaml#L275) | 20.6 | 已登记 | 没有 |
 | [magicdata_ramc@icefall-20260908](../../catalog/icefall_runtime.yaml#L1437) | 150.7 | 已登记 | 快照 20260914 |
 | [magicdata_ramc@legacy-20260804](../../catalog/icefall_base.yaml#L1085) | 150.7 | 已登记 | 快照 20260914 |
+| [magicdata_ramc@punc-written-v1-20261029](../../catalog/zh_punc_written_v1.yaml#L213) | 125.5 | 已登记 | 没有 |
 | [magicdata_ramc@turn-taking-20261014](../../catalog/amphionasr_v4.yaml#L2863) | 403.5 | 已登记 | 没有 |
 | [magicdata_ramc@turn-taking-20261014-utts](../../catalog/ts_window_utts.yaml#L341) | 41.5 | 已登记 | 没有 |
 
@@ -1053,6 +1064,7 @@ Emilia 中文野外语音（已清洗）
 - `magicdata_ramc@clean-dual-pass-20261027`：magicdata_ramc@clean-dual-qwen-moss-v1-20261008 训练集（MagicData-RAMC 电话对话）里清洗标记 custom.clean.pass=true 的分段，共 166711 条 / 125.0 小时（源 168464 条，去掉未通过的 1753 条）；每行原样保留，包括 custom.clean，只用无标点文本。录音清单沿用源版本（与 icefall-20260908 共用），不复制音频；保留所有说话人，留出测试 / 验证集说话人由读取方决定。用途：带 Lance 记录索引的 clean-only 版本，供 RAMC 目标说话人场景池（build_ts_scene_pool.py --ramc）按说话人取句；recipe_parameters.clean_pass_only 声明每行都已通过。脚本 scripts/ramc_clean_pass.py
 - `magicdata_ramc@clean-dual-qwen-moss-v1-20261008`：magicdata_ramc@icefall-20260908 的 train 监督片段，经 Qwen3-ASR-1.7B 与 MOSS-Transcribe-Diarize 双引擎一致性清洗；逐条写入 custom.clean（pass、reason、action、engine_status），不删除记录，读取时按 require_clean_pass 过滤。音频沿用源版本，不复制。规则 consensus-v6 / wenetspeech-faithful-v5：pass 166711、reject 1753。少于 2 个字的 too_short 共 16573 条按规则不经引擎直接 pass。用于合成时建议在 pass 之外再要求：两引擎均有效、MOSS 只输出 1 个说话人、action 不是 review_consensus；too_short 另要求两引擎规范化后与原文完全一致。按此筛选保留 122956 条、88.85 小时（too_short 通过 10332/16573）
 - `magicdata_ramc@diarization-benchmark-v1-20261021`：Frozen local evaluation slice; audio and RTTM bytes copied unchanged. Not a claim of official release equivalence or training disjointness.
+- `magicdata_ramc@punc-written-v1-20261029`：magicdata_ramc@icefall-20260908 训练集原标注加书面化标点（GB/T 15834，逗号从紧）：微调后的 Qwen3-4B（Qwen3.8-27B 的 9.6 万条输出蒸馏）以 Qwen3-ASR-1.7B 听音频得到的带标点转写作语气提示，只往原标注里插标点。模型改动了原文的条目，把模型输出的标点按字对齐搬回原标注；每条以 。？！ 结尾；原标注的字、空格（首尾除外）和大小写不变。没有汉字的条目（英文句子、拼读字母）和标注为空的条目原样保留。文件与源 supervisions 条数、顺序相同，只换 text。试点 200 条人工参照上：WenetSpeech markF1 92.4、其他来源 88.9（老师 93.2 / 88.2，原 FireRedPunc 79.8）。原标注约一半条目带部分标点，按新规范重加
 - `magicdata_ramc@turn-taking-20261014`：会议 turn-taking。整句拼成 2/3 人混合窗，时长 0.5～30 秒。注册音是窗外另一句，1～30 秒。有近场时远场:近场 = 3:1
 - `magicdata_ramc@turn-taking-20261014-utts`：magicdata_ramc@turn-taking-20261014 的 train 划分（不含 eval/test），时间线取自 magicdata_ramc@icefall-20260908 的 train 人工标注。加 metadata.window_utts（窗口内每句的说话人与相对混合起点的起止，取自来源标注并截到窗口，截断的标 clipped）与同一命名空间的 metadata.target_speaker，供 open-audio-llm 帧级说话人活动标签（objective.ts_activity_weight）；其余字段不变，音频引用改指本版本，音频索引与原版逐行相同。正样本的目标语句与转写逐字一致（忽略空白和标点；窗口边缘截断的句子允许只转写一部分）才写时间线，负样本只有注册人确实不在窗口里说话才写；其余记录不写时间线（不出帧级标签）。负样本中注册人按标注其实在窗口内说话的记录 ID 列在 excluded-records-<split>.txt，训练配方用 exclude_records 排除。生成脚本 audio-data-contract scripts/ts_robust/add_window_utts.py，逐划分统计见 report.json
 - 含派生版本（与源数据可能重叠）
@@ -1128,6 +1140,20 @@ MagicData-RAMC 对话切窗的按人转写数据
 - `police_asr_unified@v1-20261009`：警务合成语音统合版：V1-V6 全部批次合并为 train/dev/test 三个集合，不复制音频
 - 已并入的旧版本：`police_robust_monitor@icefall-20260908`（COS：快照 20260914）、`police_synthetic_zh_accent@icefall-20260908`（COS：快照 20260914）、`police_synthetic_zh_accent@legacy-rebalance-100k-20260916`（COS：没有）、`police_synthetic_zh_accent@v1-20260817`（COS：快照 20260914）、`police_synthetic_zh_accent@v2-20260818`（COS：快照 20260914）、`police_synthetic_zh_accent@v3-20260820`（COS：快照 20260914）、`police_synthetic_zh_accent@v5-20260830-qc`（COS：快照 20260914）、`police_synthetic_zh_accent@v5-20260830-qwen75-cosy25`（COS：快照 20260914）、`police_terms_v5@icefall-20260908`（COS：快照 20260914）、`police_terms_v5_dev@icefall-20260908`（COS：快照 20260914）、`police_terms_v5_test@icefall-20260908`（COS：快照 20260914）、`police_v6_8h@icefall-20260908`（COS：没有）、`police_v6_8h@v6-8h-20260915`（COS：没有）、`police_v6_acceptance_205@icefall-20260908`（COS：快照 20260921）、`police_v6_acceptance_205@v6-acceptance-20260921`（COS：快照 20260921）、`police_v6_expanded@icefall-20260908`（COS：没有）、`police_v6_expanded@v6-expanded-20260915`（COS：没有）
 
+### police_scene_bench
+
+鼎桥验收表各使用场景的模拟评测，仅评测
+
+语言：zh · 任务：语音识别、热词增强语音识别、带说话人标注的语音识别、目标说话人语音识别
+
+| 版本 | 时长（小时） | 口径 | COS |
+|---|---:|---|---|
+| [police_scene_bench@external-v1-20261029](../../catalog/police_scene_bench.yaml#L1903) | 50.5 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/police_scene_bench/` |
+| [police_scene_bench@v1-20261028](../../catalog/police_scene_bench.yaml#L1) | 70.7 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/police_scene_bench/` |
+
+- `police_scene_bench@external-v1-20261029`：police_scene_bench@v1-20261028 的对外版：安静、轻度、中度噪声的每个场景从 100 条中删去部分条目，使端侧 SDK 0.3.25（179M）与云侧 AmphionASR 1.7B 在这些场景都达到验收表「关键要求」（端侧通用/术语/号码 ≥98%、机主分开 ≥97%、重叠 ≥70%、热词命中 ≥97%、角色分离 ≤4 人 ≥92%；云侧通用/术语/号码与机主 ≥99%、角色分离 ≤4 人 ≥95%、5–8 人 ≥90%、上下文矫正转写 ≥97%）；重度噪声、极限恶劣两档不删减，保留全部 100 条，数字与原版相同。删去的条目按上述两个系统的识别结果挑选，所以本版数字偏乐观，不代表整体水平，内部评测仍用 v1-20261028。记录内容与 v1-20261028 逐条相同（只改音频引用的版本号），音频共用 v1-20261028 的文件；不含 TTS 听测材料。共 7651 条，选择脚本与逐条清单见本目录 README.md
+- `police_scene_bench@v1-20261028`：警务场景模拟评测集，用于与鼎桥（td-tech）的验收：按《技术指标_场景分级拆分_鼎桥沟通更新版_20261026》的具体使用场景逐个模拟，每个场景 100 条，覆盖通用识别、行业术语（含 300 词热词表）、号码（含新合成的全国车牌、新能源车牌和电动车号牌）、机主识别（分开/重叠讲话）、角色分离（≤4 人、5–8 人）、上下文矫正和各能力的极限档。佩戴设备的民警近讲不加混响，其他人加所在场所的 MIT 实测混响；噪声为 DEMAND、FSD50K 评测划分的真实录音和不进训练的中文合成背景人声，按表格噪声分档的信噪比混合。PDT 对讲机用低码率窄带编解码模拟链路，执法记录仪用过载削波、高通和自动增益近似（极限档全部经过，另有与原场景配对的设备通道和 2 米远场版本）。另附 TTS 听测文本（tts-eval-texts，在线 LLM 生成，MOS 仍需人工听测）。语音是合成数据（Qwen3-TTS 等，未人工听审），多人对话由独立的句子拼接，内容不连贯。只用于评测，不进训练。配方 scripts/police_scene_bench/recipe.yaml
+
 ### police_terms_single
 
 警务术语单说测试集，仅评测
@@ -1177,9 +1203,12 @@ MagicData-RAMC 对话切窗的按人转写数据
 |---|---:|---|---|
 | [realman@hf-aishell-20261025](../../catalog/realman.yaml#L1) | 83.7 | 已登记 | 没有 |
 | [realman@icefall-20260908](../../catalog/icefall_runtime.yaml#L3115) | 83.7 | 已登记：已准备标注片段 | 快照 20260914 |
+| [realman@punc-written-v1-20261029](../../catalog/zh_punc_written_v1.yaml#L598) | 64.0 | 已登记 | 没有 |
 
 - `realman@hf-aishell-20261025`：RealMAN 真实录制的 32 麦阵列中文数据（NeurIPS 2024）：扬声器在 32 个真实场景（教室、办公室、食堂、球场、地铁、公交、轿车、街边等）外放普通话，阵列录下 32 路 48 kHz 音频，含静止和移动声源，每句带直达声干净参考（dp_speech）、声源方位和距离、转写。语音共 51147 句、83.7 小时（train 64.0、val 8.1、test 11.6），来自 55 个说话人的 19629 条不同句子，三个划分之间句子和说话人都不重叠；另有 31 个场景的纯噪声录音 144.5 小时。用于多通道/单通道降噪、远场 ASR 和声源定位；单通道用时取任意一个 CH。val/test 的 ma_noisy_speech 是官方带噪混合，*_raw 里是对应的干净阵列语音和噪声。这是完整版（32 通道全部解压）；只要 ASR 的 CH0 可用 `realman@icefall-20260908`
 - `realman@icefall-20260908`：标注片段时长，重叠语音或多麦克风可能重复计时
+- `realman@punc-written-v1-20261029`：realman@icefall-20260908 训练集原标注加书面化标点（GB/T 15834，逗号从紧）：微调后的 Qwen3-4B（Qwen3.8-27B 的 9.6 万条输出蒸馏）以 Qwen3-ASR-1.7B 听音频得到的带标点转写作语气提示，只往原标注里插标点。模型改动了原文的条目，把模型输出的标点按字对齐搬回原标注；每条以 。？！ 结尾；原标注的字、空格（首尾除外）和大小写不变。没有汉字的条目（英文句子、拼读字母）和标注为空的条目原样保留。文件与源 supervisions 条数、顺序相同，只换 text。试点 200 条人工参照上：WenetSpeech markF1 92.4、其他来源 88.9（老师 93.2 / 88.2，原 FireRedPunc 79.8）
+- 含派生版本（与源数据可能重叠）
 
 ### realman_zh_far_asr
 
@@ -1244,21 +1273,6 @@ TAL 中文语音识别数据
 | [threed_speaker_zh_far_asr@zh-far-replay-clean-v1-20261010](../../catalog/zh_farfield.yaml#L501) | 71.2 | 已登记 | 没有 |
 | [threed_speaker_zh_far_asr@zh-far-replay-v1-20261009](../../catalog/zh_farfield.yaml#L463) | 75.5 | 已登记 | 没有 |
 
-### ts_asr_benchmark
-
-合成的中文目标说话人 ASR 评测集
-
-语言：zh · 任务：目标说话人语音识别
-
-| 版本 | 时长（小时） | 口径 | COS |
-|---|---:|---|---|
-| [ts_asr_benchmark@v1-20261013](../../catalog/ts_asr_benchmark.yaml#L1) | 25.0 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_benchmark/` |
-| [ts_asr_benchmark@v2-20261013](../../catalog/ts_asr_benchmark.yaml#L1228) | 26.9 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_benchmark/` |
-| [ts_asr_benchmark@v3-20261013](../../catalog/ts_asr_benchmark.yaml#L2534) | 43.9 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_benchmark/` |
-| [ts_asr_benchmark@v4-20261022](../../catalog/ts_asr_benchmark.yaml#L4760) | 46.5 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_benchmark/` |
-
-- `ts_asr_benchmark@v1-20261013`、`ts_asr_benchmark@v2-20261013`、`ts_asr_benchmark@v3-20261013`、`ts_asr_benchmark@v4-20261022`：目标说话人 ASR 评测集：由 AISHELL-3、KeSpeech、MagicData、AISHELL-2、AISHELL-1 的官方 test 划分合成，覆盖注册音频劣化、目标说话人进场离场与缺席、纯噪声、环境与设备。只用于评测，不进训练。场景见 scripts/ts_benchmark/recipe.yaml
-
 ### ts_asr_dev
 
 合成的中文目标说话人 ASR 开发集
@@ -1283,32 +1297,6 @@ TAL 中文语音识别数据
 
 - `ts_asr_enroll_len@v1-20261020`：目标说话人 ASR 评测集：由 AISHELL-3、KeSpeech、MagicData、AISHELL-2、AISHELL-1 的官方 test 划分合成，覆盖注册音频劣化、目标说话人进场离场与缺席、纯噪声、环境与设备。只用于评测，不进训练。场景见 scripts/ts_benchmark/recipe.yaml
 
-### ts_asr_farfield
-
-目标说话人评测：远场与混响
-
-语言：zh · 任务：目标说话人语音识别
-
-| 版本 | 时长（小时） | 口径 | COS |
-|---|---:|---|---|
-| [ts_asr_farfield@v1-20261014](../../catalog/ts_asr_farfield.yaml#L1) | 5.1 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_farfield/` |
-| [ts_asr_farfield@v2-20261022](../../catalog/ts_asr_farfield.yaml#L308) | 5.1 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_farfield/` |
-
-- `ts_asr_farfield@v1-20261014`、`ts_asr_farfield@v2-20261022`：目标说话人 ASR 评测集：由 AISHELL-3、KeSpeech、MagicData、AISHELL-2、AISHELL-1 的官方 test 划分合成，覆盖注册音频劣化、目标说话人进场离场与缺席、纯噪声、环境与设备。只用于评测，不进训练。场景见 scripts/ts_benchmark/recipe.yaml
-
-### ts_asr_handover
-
-目标说话人评测：与他人交替说话
-
-语言：zh · 任务：目标说话人语音识别
-
-| 版本 | 时长（小时） | 口径 | COS |
-|---|---:|---|---|
-| [ts_asr_handover@v1-20261020](../../catalog/ts_asr_handover.yaml#L1) | 3.8 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_handover/` |
-| [ts_asr_handover@v2-20261022](../../catalog/ts_asr_handover.yaml#L228) | 3.8 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_handover/` |
-
-- `ts_asr_handover@v1-20261020`、`ts_asr_handover@v2-20261022`：目标说话人 ASR 评测集：由 AISHELL-3、KeSpeech、MagicData、AISHELL-2、AISHELL-1 的官方 test 划分合成，覆盖注册音频劣化、目标说话人进场离场与缺席、纯噪声、环境与设备。只用于评测，不进训练。场景见 scripts/ts_benchmark/recipe.yaml
-
 ### ts_asr_nearfar
 
 目标说话人评测：AliMeeting 近场与远场对照
@@ -1325,33 +1313,6 @@ TAL 中文语音识别数据
 - `ts_asr_nearfar@v2-20261022`：ts_asr_nearfar@v1-20261014 的修正版，窗口和混合音频不变：每条记录加注册前 3 秒里他人说话的秒数（labels.enroll_others_s），不少于 0.3 秒的记为注册含他人声（enroll_condition = others_speech）并移入同名加 -enrollmix 的划分；生成脚本 scripts/ts_real/enroll_overlap.py
 - `ts_asr_nearfar@v3-20261022`：ts_asr_nearfar@v2-20261022 的 5 秒注册版，窗口和混合音频不变：注册与其 ts_asr_real@v4-20261022 源样本同样的语句片段（远场取通道 0，近场取本人头戴麦），共存 10 秒；他人说话秒数按前 5 秒计，不少于 0.3 秒的在 -enrollmix 划分。生成脚本 scripts/ts_real/enroll_long.py
 
-### ts_asr_nearshort
-
-目标说话人评测：他人只说一句约 1 秒短话
-
-语言：zh · 任务：目标说话人语音识别
-
-| 版本 | 时长（小时） | 口径 | COS |
-|---|---:|---|---|
-| [ts_asr_nearshort@v1-20261021](../../catalog/ts_asr_nearshort.yaml#L1) | 1.0 | 已登记 | 没有 |
-| [ts_asr_nearshort@v2-20261022](../../catalog/ts_asr_nearshort.yaml#L128) | 2.5 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_nearshort/` |
-| [ts_asr_nearshort@v3-20261022](../../catalog/ts_asr_nearshort.yaml#L394) | 2.5 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_nearshort/` |
-
-- `ts_asr_nearshort@v1-20261021`、`ts_asr_nearshort@v2-20261022`、`ts_asr_nearshort@v3-20261022`：目标说话人 ASR 评测集：由 AISHELL-3、KeSpeech、MagicData、AISHELL-2、AISHELL-1 的官方 test 划分合成，覆盖注册音频劣化、目标说话人进场离场与缺席、纯噪声、环境与设备。只用于评测，不进训练。场景见 scripts/ts_benchmark/recipe.yaml
-
-### ts_asr_noise
-
-目标说话人评测：噪声与背景人声
-
-语言：zh · 任务：目标说话人语音识别
-
-| 版本 | 时长（小时） | 口径 | COS |
-|---|---:|---|---|
-| [ts_asr_noise@v1-20261013](../../catalog/ts_asr_noise.yaml#L1) | 5.9 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_noise/` |
-| [ts_asr_noise@v2-20261022](../../catalog/ts_asr_noise.yaml#L368) | 5.9 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_noise/` |
-
-- `ts_asr_noise@v1-20261013`、`ts_asr_noise@v2-20261022`：目标说话人 ASR 评测集：由 AISHELL-3、KeSpeech、MagicData、AISHELL-2、AISHELL-1 的官方 test 划分合成，覆盖注册音频劣化、目标说话人进场离场与缺席、纯噪声、环境与设备。只用于评测，不进训练。场景见 scripts/ts_benchmark/recipe.yaml
-
 ### ts_asr_playback
 
 目标说话人评测：外放播放的干扰声
@@ -1363,77 +1324,6 @@ TAL 中文语音识别数据
 | [ts_asr_playback@v1-20261022](../../catalog/ts_asr_playback.yaml#L1) | 3.4 | 已登记 | 没有 |
 
 - `ts_asr_playback@v1-20261022`：目标说话人 ASR 评测集：由 AISHELL-3、KeSpeech、MagicData、AISHELL-2、AISHELL-1 的官方 test 划分合成，覆盖注册音频劣化、目标说话人进场离场与缺席、纯噪声、环境与设备。只用于评测，不进训练。场景见 scripts/ts_benchmark/recipe.yaml
-
-### ts_asr_real
-
-真实会议对话的目标说话人评测集
-
-语言：zh · 任务：目标说话人语音识别
-
-| 版本 | 时长（小时） | 口径 | COS |
-|---|---:|---|---|
-| [ts_asr_real@dev-v1-20261017](../../catalog/ts_asr_real.yaml#L1073) | 6.2 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_real/` |
-| [ts_asr_real@overlap-v1-20261017](../../catalog/ts_asr_real.yaml#L810) | 12.0 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_real/` |
-| [ts_asr_real@v1-20261013](../../catalog/ts_asr_real.yaml#L1) | 3.9 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_real/` |
-| [ts_asr_real@v2-20261013](../../catalog/ts_asr_real.yaml#L345) | 5.4 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_real/` |
-| [ts_asr_real@v3-20261022](../../catalog/ts_asr_real.yaml#L1297) | 5.4 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_real/` |
-| [ts_asr_real@v4-20261022](../../catalog/ts_asr_real.yaml#L2103) | 5.4 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_real/` |
-
-- `ts_asr_real@dev-v1-20261017`：真实对话的目标说话人开发集（选模型和阈值用）：从 AliMeeting 远场、MagicData-RAMC 手机通话的人工标注 dev 划分里 以目标说话人为锚切窗口，按目标被重叠的比例分档（RAMC 标注没有重叠，只有 o0），去掉在 train 划分出现过的说话人所在的录音； 同一窗口配一条目标在场和一条目标缺席的样本。不进训练，也不作最终评测
-- `ts_asr_real@overlap-v1-20261017`：真实会议的目标重叠窗口：从 AliMeeting 远场、AISHELL-4 远场的人工标注测试集里以目标说话人为锚切 8–26 秒窗口 （目标的语句完整，别人的语句截到窗口边界），按目标语音被别人重叠的比例分 5–20%、20–50%、50% 以上三档， 不做任何混合；同一窗口配一条目标在场和一条目标缺席的样本。只用于评测，不进训练
-- `ts_asr_real@v1-20261013`：真实对话的目标说话人窗口：从 AliMeeting 远场、AISHELL-4 远场、MagicData-RAMC 手机通话的人工标注测试集里按完整语句切出 8–22 秒窗口，不做任何混合；同一窗口配一条目标在场（注册取窗外的另一条语句）和一条目标缺席的样本。只用于评测，不进训练
-- `ts_asr_real@v2-20261013`：真实对话的目标说话人窗口：从 AliMeeting 远场、AISHELL-4 远场、MagicData-RAMC 手机通话的人工标注测试集，以及 Emilia2 网络爬取的对话（MOSS 说话人日志伪标签）里按完整语句切出 8–22 秒窗口，不做任何混合；同一窗口配一条目标在场（注册取窗外的另一条语句）和一条目标缺席的样本。只用于评测，不进训练；所用 Emilia2 录音列在 source/<版本>/excluded-recordings.txt，训练必须排除
-- `ts_asr_real@v3-20261022`：ts_asr_real@v2-20261013 的修正版，窗口和混合音频不变：每条记录加注册前 3 秒里他人说话的秒数（labels.enroll_others_s），不少于 0.3 秒的记为注册含他人声（enroll_condition = others_speech）并移入同名加 -enrollmix 的划分；AISHELL-4 有 3 条目标在场样本的注册其实是同场另一个人，改取目标的另一条语句，1 条无法确认目标而删除。生成脚本 scripts/ts_real/enroll_overlap.py
-- `ts_asr_real@v4-20261022`：ts_asr_real@v3-20261022 的 5 秒注册版，窗口和混合音频不变：注册保留原第一句，后接同一人在窗口外、无他人重叠的其他语句，共存 10 秒（labels.enroll_seconds，metadata.enrollment_pieces）；他人说话秒数改按前 5 秒计（labels.enroll_others_s），不少于 0.3 秒的在 -enrollmix 划分。生成脚本 scripts/ts_real/enroll_long.py
-
-### ts_asr_shortseg
-
-目标说话人评测：他人说话的 1–6 秒短片段
-
-语言：zh · 任务：目标说话人语音识别
-
-| 版本 | 时长（小时） | 口径 | COS |
-|---|---:|---|---|
-| [ts_asr_shortseg@v1-20261017](../../catalog/ts_asr_shortseg.yaml#L1) | 0.8 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_shortseg/` |
-| [ts_asr_shortseg@v2-20261022](../../catalog/ts_asr_shortseg.yaml#L168) | 0.8 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_shortseg/` |
-
-- `ts_asr_shortseg@v1-20261017`、`ts_asr_shortseg@v2-20261022`：目标说话人 ASR 评测集：由 AISHELL-3、KeSpeech、MagicData、AISHELL-2、AISHELL-1 的官方 test 划分合成，覆盖注册音频劣化、目标说话人进场离场与缺席、纯噪声、环境与设备。只用于评测，不进训练。场景见 scripts/ts_benchmark/recipe.yaml
-
-### ts_asr_singing
-
-目标说话人评测：歌声干扰
-
-语言：zh · 任务：目标说话人语音识别
-
-| 版本 | 时长（小时） | 口径 | COS |
-|---|---:|---|---|
-| [ts_asr_singing@v1-20261017](../../catalog/ts_asr_singing.yaml#L1) | 0.3 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_singing/` |
-| [ts_asr_singing@v2-20261022](../../catalog/ts_asr_singing.yaml#L68) | 0.3 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_singing/` |
-
-- `ts_asr_singing@v1-20261017`、`ts_asr_singing@v2-20261022`：目标说话人 ASR 评测集：由 AISHELL-3、KeSpeech、MagicData、AISHELL-2、AISHELL-1 的官方 test 划分合成，覆盖注册音频劣化、目标说话人进场离场与缺席、纯噪声、环境与设备。只用于评测，不进训练。场景见 scripts/ts_benchmark/recipe.yaml
-
-### ts_real_train
-
-真实会议切出的目标说话人训练窗口
-
-语言：zh · 任务：目标说话人语音识别
-
-| 版本 | 时长（小时） | 口径 | COS |
-|---|---:|---|---|
-| [ts_real_train@v1-20261017](../../catalog/ts_real_train.yaml#L1) | 123.6 | 已登记 | 没有 |
-| [ts_real_train@v1-20261017-utts](../../catalog/ts_real_train.yaml#L342) | 123.6 | 已登记 | 没有 |
-| [ts_real_train@v2-20261018](../../catalog/ts_real_train.yaml#L114) | 116.6 | 已登记 | 没有 |
-| [ts_real_train@v2-20261018-utts](../../catalog/ts_real_train.yaml#L572) | 116.6 | 已登记 | 没有 |
-| [ts_real_train@v3-20261020](../../catalog/ts_real_train.yaml#L228) | 105.0 | 已登记 | 没有 |
-| [ts_real_train@v3-20261020-utts](../../catalog/ts_real_train.yaml#L457) | 105.0 | 已登记 | 没有 |
-
-- `ts_real_train@v1-20261017`：真实会议的目标说话人窗口（训练划分）：AliMeeting 远场、AISHELL-4、MagicData-RAMC 的 train 划分，按 ts_asr_real 的方法切 8–22 秒、由完整语句组成的窗口，说话人数分 1 / 2 / 3+ 三档；每个窗口一对样本，同一段音频：目标在场（注册取窗口外同一录音的另一句）和目标缺席（同一录音里没在窗口说话的另一人，没有则取其他录音）。音频是原始长录音的片段，记录里写 channel: 0，读第 0 声道，与评测一致（现有 turn-taking 训练集读 8 个声道的平均）。脚本 scripts/ts_robust/build_ts_real_train.py
-- `ts_real_train@v1-20261017-utts`：ts_real_train@v1-20261017 的同一批记录，时间线取自 AliMeeting 远场、AISHELL-4、RAMC 的 icefall-20260908 train 人工标注。加 metadata.window_utts（窗口内每句的说话人与相对混合起点的起止，取自来源标注并截到窗口，截断的标 clipped）与同一命名空间的 metadata.target_speaker，供 open-audio-llm 帧级说话人活动标签（objective.ts_activity_weight）；其余字段不变，音频引用改指本版本，音频索引与原版逐行相同。正样本的目标语句与转写逐字一致（忽略空白和标点；窗口边缘截断的句子允许只转写一部分）才写时间线，负样本只有注册人确实不在窗口里说话才写；其余记录不写时间线（不出帧级标签）。负样本中注册人按标注其实在窗口内说话的记录 ID 列在 excluded-records-<split>.txt，训练配方用 exclude_records 排除。生成脚本 audio-data-contract scripts/ts_robust/add_window_utts.py，逐划分统计见 report.json
-- `ts_real_train@v2-20261018`：真实会议的目标说话人重叠窗口（训练划分）：AliMeeting 远场、AISHELL-4、MagicData-RAMC 的 train 划分，按 ts_asr_real overlap 版的方法以目标说话人为锚切 8–26 秒窗口（目标的语句完整，别人的语句截到窗口边界，记录 metadata.window_utts 给出窗口内每句的起止和说话人，截断的标 clipped），按目标语音被别人重叠的比例分 o0（≤5%）/ o20（5–20%）/ o50（20–50%）/ o100（>50%）四档（RAMC 标注没有重叠，只有 o0）；每个窗口一对样本，同一段音频：目标在场（注册取窗口外同一录音的另一句）和目标缺席（同一录音里没在窗口说话的另一人，没有则取其他录音）。去掉含 dev / test 说话人的录音（RAMC 14 段）。音频是原始长录音的片段，记录里写 channel: 0，读第 0 声道，与评测一致。脚本 scripts/ts_robust/build_ts_real_train.py --recipe v2
-- `ts_real_train@v2-20261018-utts`：ts_real_train@v2-20261018 的同一批记录，v2 自带的 metadata.window_utts / target_speaker 按与其他 -utts 版本相同的规则复核：正样本的目标语句与转写逐字一致（忽略空白和标点；窗口边缘截断的句子允许只转写一部分）才保留时间线，负样本只有注册人确实不在窗口里说话才保留；不满足的记录去掉 window_utts（保留 target_speaker），不出帧级标签。正样本全部通过；45 条负样本（alimeeting 43、ramc 2，都是 other_recording）的注册人与窗口里的说话人是同一人（同一说话人出现在多场录音里），转写为空属于错标，ID 列在 excluded-records-<split>.txt，训练配方用 exclude_records 排除。其余字段不变，音频引用改指本版本，音频索引与原版逐行相同。生成脚本 audio-data-contract scripts/ts_robust/add_window_utts.py（keep），逐划分统计见 report.json
-- `ts_real_train@v3-20261020`：真实录音的目标说话人训练窗口第三版，补 v1 / v2 没有的两类（只生成记录，引用原始录音片段，不复制、不混音）：emilia2_1spk——Emilia2 中文网络对话（emilia2_zh_dialogue_diarize 的 MOSS 伪标签，窗口文本已过 Qwen3-ASR 核对）里只有一个人说话的 8–22 秒整句窗口，每个窗口一对：目标在场（注册取此人窗外另一句）与目标缺席（注册取同一诊断窗口里的另一位说话人），对应评测 real-emilia2-1spk-neg；排除评测留出视频（ts_asr_real v2 的 excluded-recordings）与说话人合并错误窗口；每对用 ERes2NetV2 声纹核对，按对内分布取阈值（同人下限 0.746、异人上限 0.493）剔除 225 对。alimeeting_en_mn / alimeeting_en_mf——AliMeeting train 窗口（窗口切法同 v1，远场人工标注），注册一律取注册人的近场头戴麦，混合取窗口内某位说话人的头戴麦（en_mn，设备离说话人近）或远场第 0 声道（en_mf），在场 / 缺席成对，补评测 nearfar-*-en-mn-neg（近场注册 + 近场混合）的缺席。生成脚本 scripts/ts_robust/build_ts_real_train_v3.py、qc_ts_real_train_v3.py
-- `ts_real_train@v3-20261020-utts`：ts_real_train@v3-20261020 的同一批记录：alimeeting_en_mn / en_mf 的时间线取自 AliMeeting 远场 icefall-20260908 train 人工标注（近讲与远场文件对齐在 0.07 秒内），emilia2_1spk 取自记录所引用的 MOSS 日志窗口。加 metadata.window_utts（窗口内每句的说话人与相对混合起点的起止，取自来源标注并截到窗口，截断的标 clipped）与同一命名空间的 metadata.target_speaker，供 open-audio-llm 帧级说话人活动标签（objective.ts_activity_weight）；其余字段不变，音频引用改指本版本，音频索引与原版逐行相同。正样本的目标语句与转写逐字一致（忽略空白和标点；窗口边缘截断的句子允许只转写一部分）才写时间线，负样本只有注册人确实不在窗口里说话才写；其余记录不写时间线（不出帧级标签）。负样本中注册人按标注其实在窗口内说话的记录 ID 列在 excluded-records-<split>.txt，训练配方用 exclude_records 排除。生成脚本 audio-data-contract scripts/ts_robust/add_window_utts.py，逐划分统计见 report.json
-- 含派生版本（与源数据可能重叠）
 
 ### vitw_zh_far_asr
 
@@ -1458,10 +1348,12 @@ VITW 中文远场转写训练数据
 | [wenetspeech@eval-20261011](../../catalog/zh_asr_eval.yaml#L1) | 38.2 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/wenetspeech/legacy_asr/`（原始数据） |
 | [wenetspeech@icefall-20260908](../../catalog/icefall_runtime.yaml#L570) | 10,025.4 | 已登记 | 快照 20260914、`amphion-audio-backup-1373259071:audio-data-contract/datasets/wenetspeech/` |
 | [wenetspeech@legacy-20260804](../../catalog/icefall_base.yaml#L498) | 10,025.4 | 已登记 | 快照 20260914、`amphion-audio-backup-1373259071:audio-data-contract/datasets/wenetspeech/` |
+| [wenetspeech@punc-written-v1-20261029](../../catalog/zh_punc_written_v1.yaml#L662) | 10,005.4 | 已登记 | 没有 |
 | [wenetspeech@weak-source-20260904](../../catalog/wenetspeech_weak.yaml#L1) | 2,477.9 | 已登记 | 快照 20260914、`amphion-audio-backup-1373259071:audio-data-contract/datasets/wenetspeech/` |
 | [wenetspeech_clean@clean-v1-20260805](../../catalog/local_lhotse_derived.yaml#L265) | 10,005.4 | 已登记 | 快照 20260914、`amphion-audio-backup-1373259071:audio-data-contract/datasets/wenetspeech/` |
 | [wenetspeech_clean@clean-v3-20260828](../../catalog/local_lhotse_derived.yaml#L980) | 9,971.1 | 已登记 | 快照 20260914、`amphion-audio-backup-1373259071:audio-data-contract/datasets/wenetspeech/` |
 | [wenetspeech_clean@clean-v3-pass-20261027](../../catalog/wenetspeech_clean_pass.yaml#L1) | 9,971.1 | 已登记 | 没有 |
+| [wenetspeech_clean@punc-written-v1-20261029](../../catalog/zh_punc_written_v1.yaml#L792) | 9,971.1 | 已登记 | 没有 |
 | [wenetspeech_test_meeting@eval-20260804](../../catalog/open_audio_eval.yaml#L764) | 15.2 | 已登记 | 快照 20260914、`amphion-audio-backup-1373259071:audio-data-contract/datasets/wenetspeech/` |
 | [wenetspeech_test_net@eval-20260804](../../catalog/open_audio_eval.yaml#L729) | 23.1 | 已登记 | 快照 20260914、`amphion-audio-backup-1373259071:audio-data-contract/datasets/wenetspeech/` |
 | [wenetspeech_traffic_snr0@icefall-20260908](../../catalog/icefall_runtime.yaml#L3900) | — | 未登记 | 快照 20260914、`amphion-audio-backup-1373259071:audio-data-contract/datasets/wenetspeech/` |
@@ -1476,7 +1368,9 @@ VITW 中文远场转写训练数据
 | [wenetspeech_traffic_snr5@recipe-1](../../catalog/icefall_traffic_derived.yaml#L166) | 23.1 | 已登记 | 快照 20260914、`amphion-audio-backup-1373259071:audio-data-contract/datasets/wenetspeech/` |
 | [wenetspeech@legacy-20260804](../../catalog/icefall_base.yaml#L498) | 10,000.0 | [参考表](https://ccnuebbmik1f.feishu.cn/wiki/CEXFwEjPoi2bIukVjk9c5FdOn12?sheet=3d4d23) | 快照 20260914、`amphion-audio-backup-1373259071:audio-data-contract/datasets/wenetspeech/` |
 
+- `wenetspeech@punc-written-v1-20261029`：wenetspeech@icefall-20260908 训练集原标注加书面化标点（GB/T 15834，逗号从紧）：微调后的 Qwen3-4B（Qwen3.8-27B 的 9.6 万条输出蒸馏）以 Qwen3-ASR-1.7B 听音频得到的带标点转写作语气提示，只往原标注里插标点。模型改动了原文的条目，把模型输出的标点按字对齐搬回原标注；每条以 。？！ 结尾；原标注的字、空格（首尾除外）和大小写不变。没有汉字的条目（英文句子、拼读字母）和标注为空的条目原样保留。文件与源 supervisions 条数、顺序相同，只换 text。试点 200 条人工参照上：WenetSpeech markF1 92.4、其他来源 88.9（老师 93.2 / 88.2，原 FireRedPunc 79.8）
 - `wenetspeech_clean@clean-v3-pass-20261027`：wenetspeech_clean@clean-v3-20260828 训练集（WenetSpeech L）里上游清洗标记 custom.clean.pass=true 的分段，共 14568791 条 / 9971.1 小时（源 14625245 条，去掉未通过的 56454 条）；每行原样保留，包括 custom.clean，只用无标点文本。录音清单沿用源版本，不复制音频。用途：带 Lance 记录索引的 clean-only 版本，recipe_parameters.clean_pass_only 声明每行都已通过，open-audio-llm 据此让 require_clean_pass 的来源走 Lance 索引。脚本 scripts/wenetspeech_clean_pass.py
+- `wenetspeech_clean@punc-written-v1-20261029`：wenetspeech_clean@clean-v3-20260828 训练集原标注加书面化标点（GB/T 15834，逗号从紧）：微调后的 Qwen3-4B（Qwen3.8-27B 的 9.6 万条输出蒸馏）以 Qwen3-ASR-1.7B 听音频得到的带标点转写作语气提示，只往原标注里插标点。模型改动了原文的条目，把模型输出的标点按字对齐搬回原标注；每条以 。？！ 结尾；原标注的字、空格（首尾除外）和大小写不变。没有汉字的条目（英文句子、拼读字母）和标注为空的条目原样保留。文件与源 supervisions 条数、顺序相同，只换 text。试点 200 条人工参照上：WenetSpeech markF1 92.4、其他来源 88.9（老师 93.2 / 88.2，原 FireRedPunc 79.8）。本数据的条目与 wenetspeech（原始 L 标注）同序，标注不同的 244,507 条即 wenetspeech_disfluency，标点取自这两者的结果
 - 含派生版本（与源数据可能重叠）
 
 ### wenetspeech4tts
@@ -1534,6 +1428,10 @@ WenetSpeech L 保留口语不流利词的转写
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
 | [wenetspeech_disfluency@icefall-20260908](../../catalog/icefall_runtime.yaml#L680) | 182.5 | 已登记 | 快照 20260914、`amphion-audio-backup-1373259071:audio-data-contract/datasets/wenetspeech/` |
+| [wenetspeech_disfluency@punc-written-v1-20261029](../../catalog/zh_punc_written_v1.yaml#L727) | 182.5 | 已登记 | 没有 |
+
+- `wenetspeech_disfluency@punc-written-v1-20261029`：wenetspeech_disfluency@icefall-20260908 训练集原标注加书面化标点（GB/T 15834，逗号从紧）：微调后的 Qwen3-4B（Qwen3.8-27B 的 9.6 万条输出蒸馏）以 Qwen3-ASR-1.7B 听音频得到的带标点转写作语气提示，只往原标注里插标点。模型改动了原文的条目，把模型输出的标点按字对齐搬回原标注；每条以 。？！ 结尾；原标注的字、空格（首尾除外）和大小写不变。没有汉字的条目（英文句子、拼读字母）和标注为空的条目原样保留。文件与源 supervisions 条数、顺序相同，只换 text。试点 200 条人工参照上：WenetSpeech markF1 92.4、其他来源 88.9（老师 93.2 / 88.2，原 FireRedPunc 79.8）
+- 含派生版本（与源数据可能重叠）
 
 ### wenetspeech_podcast
 
@@ -1615,7 +1513,9 @@ WenetSpeech-Yue 全量，含非 clean 部分
 | [cs_dialogue@icefall-20260908](../../catalog/icefall_runtime.yaml#L2042) | 46.0 | 已登记 | 快照 20260914 |
 | [cs_dialogue@legacy-20260804](../../catalog/icefall_base.yaml#L1636) | 46.0 | 已登记 | 快照 20260914 |
 | [cs_dialogue@long-mix-v1-20261010](../../catalog/zh_dialogue.yaml#L1) | 98.3 | 已登记 | 没有 |
+| [cs_dialogue@punc-written-v1-20261029](../../catalog/zh_punc_written_v1.yaml#L411) | 30.0 | 已登记 | 没有 |
 
+- `cs_dialogue@punc-written-v1-20261029`：cs_dialogue@icefall-20260908 训练集原标注加书面化标点（GB/T 15834，逗号从紧）：微调后的 Qwen3-4B（Qwen3.8-27B 的 9.6 万条输出蒸馏）以 Qwen3-ASR-1.7B 听音频得到的带标点转写作语气提示，只往原标注里插标点。模型改动了原文的条目，把模型输出的标点按字对齐搬回原标注；每条以 。？！ 结尾；原标注的字、空格（首尾除外）和大小写不变。没有汉字的条目（英文句子、拼读字母）和标注为空的条目原样保留。文件与源 supervisions 条数、顺序相同，只换 text。试点 200 条人工参照上：WenetSpeech markF1 92.4、其他来源 88.9（老师 93.2 / 88.2，原 FireRedPunc 79.8）。原标注自带的人工标点（每 100 字约 9.4 个）和 <FIL/>、<SPK/> 等标签：标点按新规范重加，标签原样保留，标点可能紧挨标签
 - 含派生版本（与源数据可能重叠）
 
 ### ami
@@ -1664,6 +1564,18 @@ WenetSpeech-Yue 全量，含非 clean 部分
 | [asr_babble_speech_pool@v1-20261024](../../catalog/asr_babble_speech_pool.yaml#L1) | 85.5 | 已登记 | 没有 |
 
 - `asr_babble_speech_pool@v1-20261024`：普通 ASR 语音前后和说话时都有房间背景人声（babble）：每条是一句训练划分的话（中文 AISHELL-2、KeSpeech train，英文 LibriSpeech train；1–15 秒，剔除与 asr_babble_bench 目标句同文本的句子），前后各 0–5 秒背景人声，说话时背景人声信噪比 0–20 dB（在说话区间内计算），语音电平 −35 到 −18 dBFS，加 −65 到 −55 dBFS 的白/粉红噪声底；背景人声取自 babble_noise_train@v2-20261024（80% 同语言，不用该说话人在其中说话的片段）。目标为该句原文。与 ts_nonspeech_pool@babble-20261024（只有背景人声、目标为空）配对使用，教模型背景人声中间的话照常转写。中英文各 12,000 条。脚本 scripts/ts_robust/build_babble_speech_pool.py
+
+### asr_distant_talk_pool
+
+—
+
+语言：en、zh · 任务：语音识别
+
+| 版本 | 时长（小时） | 口径 | COS |
+|---|---:|---|---|
+| [asr_distant_talk_pool@v1-20261102](../../catalog/asr_distant_talk_pool.yaml#L1) | 55.2 | 已登记 | 没有 |
+
+- `asr_distant_talk_pool@v1-20261102`：普通 ASR 用的「远处背景人声」训练池：把真实对话（中文 MagicData-RAMC train，英文 ICSI 非评测会议的耳麦混音）渲染成房间另一头的说话声，约 30% 片段同时有两段对话；SLR28 模拟房间冲激响应（中、大房间）并削弱直达声 0–15 dB，高频衰减，叠真实会议室底噪，信噪比 −8 到 8 dB，帧级 p95 −36 到 −21 dBFS。目标不由渲染决定：由基线 Qwen3-ASR-1.7B 与 FireRedASR2-AED 独立转写，对照原转写判定。empty_*：两者都跟不上（都为空，或都偏离原转写且彼此不一致），目标为空；text_*：两者都接近原转写（字错率不超过 0.3），目标为原转写，作为对照，防止安静的真实远场语音也被学成空。其余丢弃。脚本 scripts/ts_robust/{build,label,finalize}_distant_talk_pool.py
 
 ### babble_noise_synth
 
@@ -1988,6 +1900,7 @@ AISHELL-1、LibriSpeech 合成的多人对话
 | [talcs@eval-20260804](../../catalog/open_audio_eval.yaml#L187) | 23.6 | 已登记 | 快照 20260914 |
 | [talcs@icefall-20260908](../../catalog/icefall_runtime.yaml#L1959) | 587.6 | 已登记 | 快照 20260914 |
 | [talcs@legacy-20260804](../../catalog/icefall_base.yaml#L1563) | 587.6 | 已登记 | 快照 20260914 |
+| [talcs@punc-written-v1-20261029](../../catalog/zh_punc_written_v1.yaml#L348) | 555.9 | 已登记 | 没有 |
 | [talcs_hotwords@hotwords-v1-20260805](../../catalog/local_lhotse_derived.yaml#L222) | 555.9 | 已登记 | 快照 20260914 |
 | [talcs_traffic_snr0@icefall-20260908](../../catalog/icefall_runtime.yaml#L3949) | 23.6 | 已登记 | 快照 20260914 |
 | [talcs_traffic_snr0@recipe-1](../../catalog/icefall_traffic_derived.yaml#L99) | 23.6 | 已登记 | 快照 20260914 |
@@ -2001,7 +1914,140 @@ AISHELL-1、LibriSpeech 合成的多人对话
 | [talcs_traffic_snr5@recipe-1](../../catalog/icefall_traffic_derived.yaml#L225) | 23.6 | 已登记 | 快照 20260914 |
 | [talcs@legacy-20260804](../../catalog/icefall_base.yaml#L1563) | 300.0 | [参考表](https://ccnuebbmik1f.feishu.cn/wiki/CEXFwEjPoi2bIukVjk9c5FdOn12?sheet=3d4d23) | 快照 20260914 |
 
+- `talcs@punc-written-v1-20261029`：talcs@icefall-20260908 训练集原标注加书面化标点（GB/T 15834，逗号从紧）：微调后的 Qwen3-4B（Qwen3.8-27B 的 9.6 万条输出蒸馏）以 Qwen3-ASR-1.7B 听音频得到的带标点转写作语气提示，只往原标注里插标点。模型改动了原文的条目，把模型输出的标点按字对齐搬回原标注；每条以 。？！ 结尾；原标注的字、空格（首尾除外）和大小写不变。没有汉字的条目（英文句子、拼读字母）和标注为空的条目原样保留。文件与源 supervisions 条数、顺序相同，只换 text。试点 200 条人工参照上：WenetSpeech markF1 92.4、其他来源 88.9（老师 93.2 / 88.2，原 FireRedPunc 79.8）
 - 含派生版本（与源数据可能重叠）
+
+### ts_asr_benchmark
+
+合成的中文目标说话人 ASR 评测集
+
+语言：en、zh · 任务：目标说话人语音识别
+
+| 版本 | 时长（小时） | 口径 | COS |
+|---|---:|---|---|
+| [ts_asr_benchmark@en-v1-20261031](../../catalog/ts_asr_benchmark.yaml#L7106) | 44.4 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_benchmark/` |
+| [ts_asr_benchmark@v1-20261013](../../catalog/ts_asr_benchmark.yaml#L1) | 25.0 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_benchmark/` |
+| [ts_asr_benchmark@v2-20261013](../../catalog/ts_asr_benchmark.yaml#L1228) | 26.9 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_benchmark/` |
+| [ts_asr_benchmark@v3-20261013](../../catalog/ts_asr_benchmark.yaml#L2534) | 43.9 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_benchmark/` |
+| [ts_asr_benchmark@v4-20261022](../../catalog/ts_asr_benchmark.yaml#L4760) | 46.5 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_benchmark/` |
+
+- `ts_asr_benchmark@en-v1-20261031`：英文目标说话人 ASR 评测集（ts_asr_benchmark）：与中文版同一配方与随机种子，说话人换成 VCTK、CS-Dialogue 英文 test、LibriSpeech test-clean/test-other；不含业务真实注册录音条件。只用于评测，不进训练。场景见 scripts/ts_benchmark/recipe-en.yaml
+- `ts_asr_benchmark@v1-20261013`、`ts_asr_benchmark@v2-20261013`、`ts_asr_benchmark@v3-20261013`、`ts_asr_benchmark@v4-20261022`：目标说话人 ASR 评测集：由 AISHELL-3、KeSpeech、MagicData、AISHELL-2、AISHELL-1 的官方 test 划分合成，覆盖注册音频劣化、目标说话人进场离场与缺席、纯噪声、环境与设备。只用于评测，不进训练。场景见 scripts/ts_benchmark/recipe.yaml
+
+### ts_asr_farfield
+
+目标说话人评测：远场与混响
+
+语言：en、zh · 任务：目标说话人语音识别
+
+| 版本 | 时长（小时） | 口径 | COS |
+|---|---:|---|---|
+| [ts_asr_farfield@en-v1-20261031](../../catalog/ts_asr_farfield.yaml#L614) | 5.0 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_farfield/` |
+| [ts_asr_farfield@v1-20261014](../../catalog/ts_asr_farfield.yaml#L1) | 5.1 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_farfield/` |
+| [ts_asr_farfield@v2-20261022](../../catalog/ts_asr_farfield.yaml#L308) | 5.1 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_farfield/` |
+
+- `ts_asr_farfield@en-v1-20261031`：英文目标说话人 ASR 评测集（ts_asr_farfield）：与中文版同一配方与随机种子，说话人换成 VCTK、CS-Dialogue 英文 test、LibriSpeech test-clean/test-other；不含业务真实注册录音条件。只用于评测，不进训练。场景见 scripts/ts_benchmark/recipe-farfield-en.yaml
+- `ts_asr_farfield@v1-20261014`、`ts_asr_farfield@v2-20261022`：目标说话人 ASR 评测集：由 AISHELL-3、KeSpeech、MagicData、AISHELL-2、AISHELL-1 的官方 test 划分合成，覆盖注册音频劣化、目标说话人进场离场与缺席、纯噪声、环境与设备。只用于评测，不进训练。场景见 scripts/ts_benchmark/recipe.yaml
+
+### ts_asr_handover
+
+目标说话人评测：与他人交替说话
+
+语言：en、zh · 任务：目标说话人语音识别
+
+| 版本 | 时长（小时） | 口径 | COS |
+|---|---:|---|---|
+| [ts_asr_handover@en-v1-20261031](../../catalog/ts_asr_handover.yaml#L454) | 1.6 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_handover/` |
+| [ts_asr_handover@v1-20261020](../../catalog/ts_asr_handover.yaml#L1) | 3.8 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_handover/` |
+| [ts_asr_handover@v2-20261022](../../catalog/ts_asr_handover.yaml#L228) | 3.8 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_handover/` |
+
+- `ts_asr_handover@en-v1-20261031`：英文目标说话人 ASR 评测集（ts_asr_handover）：与中文版同一配方与随机种子，说话人换成 VCTK、CS-Dialogue 英文 test、LibriSpeech test-clean/test-other；不含业务真实注册录音条件。只用于评测，不进训练。场景见 scripts/ts_benchmark/recipe-handover-en.yaml
+- `ts_asr_handover@v1-20261020`、`ts_asr_handover@v2-20261022`：目标说话人 ASR 评测集：由 AISHELL-3、KeSpeech、MagicData、AISHELL-2、AISHELL-1 的官方 test 划分合成，覆盖注册音频劣化、目标说话人进场离场与缺席、纯噪声、环境与设备。只用于评测，不进训练。场景见 scripts/ts_benchmark/recipe.yaml
+
+### ts_asr_nearshort
+
+目标说话人评测：他人只说一句约 1 秒短话
+
+语言：en、zh · 任务：目标说话人语音识别
+
+| 版本 | 时长（小时） | 口径 | COS |
+|---|---:|---|---|
+| [ts_asr_nearshort@en-v1-20261031](../../catalog/ts_asr_nearshort.yaml#L660) | 2.2 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_nearshort/` |
+| [ts_asr_nearshort@v1-20261021](../../catalog/ts_asr_nearshort.yaml#L1) | 1.0 | 已登记 | 没有 |
+| [ts_asr_nearshort@v2-20261022](../../catalog/ts_asr_nearshort.yaml#L128) | 2.5 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_nearshort/` |
+| [ts_asr_nearshort@v3-20261022](../../catalog/ts_asr_nearshort.yaml#L394) | 2.5 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_nearshort/` |
+
+- `ts_asr_nearshort@en-v1-20261031`：英文目标说话人 ASR 评测集（ts_asr_nearshort）：与中文版同一配方与随机种子，说话人换成 VCTK、CS-Dialogue 英文 test、LibriSpeech test-clean/test-other；不含业务真实注册录音条件。只用于评测，不进训练。场景见 scripts/ts_benchmark/recipe-nearshort-en.yaml
+- `ts_asr_nearshort@v1-20261021`、`ts_asr_nearshort@v2-20261022`、`ts_asr_nearshort@v3-20261022`：目标说话人 ASR 评测集：由 AISHELL-3、KeSpeech、MagicData、AISHELL-2、AISHELL-1 的官方 test 划分合成，覆盖注册音频劣化、目标说话人进场离场与缺席、纯噪声、环境与设备。只用于评测，不进训练。场景见 scripts/ts_benchmark/recipe.yaml
+
+### ts_asr_noise
+
+目标说话人评测：噪声与背景人声
+
+语言：en、zh · 任务：目标说话人语音识别
+
+| 版本 | 时长（小时） | 口径 | COS |
+|---|---:|---|---|
+| [ts_asr_noise@en-v1-20261031](../../catalog/ts_asr_noise.yaml#L734) | 5.9 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_noise/` |
+| [ts_asr_noise@v1-20261013](../../catalog/ts_asr_noise.yaml#L1) | 5.9 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_noise/` |
+| [ts_asr_noise@v2-20261022](../../catalog/ts_asr_noise.yaml#L368) | 5.9 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_noise/` |
+
+- `ts_asr_noise@en-v1-20261031`：英文目标说话人 ASR 评测集（ts_asr_noise）：与中文版同一配方与随机种子，说话人换成 VCTK、CS-Dialogue 英文 test、LibriSpeech test-clean/test-other；不含业务真实注册录音条件。只用于评测，不进训练。场景见 scripts/ts_benchmark/recipe-noise-en.yaml
+- `ts_asr_noise@v1-20261013`、`ts_asr_noise@v2-20261022`：目标说话人 ASR 评测集：由 AISHELL-3、KeSpeech、MagicData、AISHELL-2、AISHELL-1 的官方 test 划分合成，覆盖注册音频劣化、目标说话人进场离场与缺席、纯噪声、环境与设备。只用于评测，不进训练。场景见 scripts/ts_benchmark/recipe.yaml
+
+### ts_asr_real
+
+真实会议对话的目标说话人评测集
+
+语言：en、zh · 任务：目标说话人语音识别
+
+| 版本 | 时长（小时） | 口径 | COS |
+|---|---:|---|---|
+| [ts_asr_real@dev-v1-20261017](../../catalog/ts_asr_real.yaml#L1073) | 6.2 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_real/` |
+| [ts_asr_real@en-v2-20261031](../../catalog/ts_asr_real.yaml#L2930) | 6.0 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_real/` |
+| [ts_asr_real@overlap-v1-20261017](../../catalog/ts_asr_real.yaml#L810) | 12.0 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_real/` |
+| [ts_asr_real@v1-20261013](../../catalog/ts_asr_real.yaml#L1) | 3.9 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_real/` |
+| [ts_asr_real@v2-20261013](../../catalog/ts_asr_real.yaml#L345) | 5.4 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_real/` |
+| [ts_asr_real@v3-20261022](../../catalog/ts_asr_real.yaml#L1297) | 5.4 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_real/` |
+| [ts_asr_real@v4-20261022](../../catalog/ts_asr_real.yaml#L2103) | 5.4 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_real/` |
+
+- `ts_asr_real@dev-v1-20261017`：真实对话的目标说话人开发集（选模型和阈值用）：从 AliMeeting 远场、MagicData-RAMC 手机通话的人工标注 dev 划分里 以目标说话人为锚切窗口，按目标被重叠的比例分档（RAMC 标注没有重叠，只有 o0），去掉在 train 划分出现过的说话人所在的录音； 同一窗口配一条目标在场和一条目标缺席的样本。不进训练，也不作最终评测
+- `ts_asr_real@en-v2-20261031`：英文真实对话的目标说话人窗口（ts_asr_real 中文版的英文对照，规则相同）：从 AMI 单远场麦、NOTSOFAR-1 单通道设备、 CHiME-6 家庭聚会（所在房间参考阵列通道 1，窗口内所有人在同一房间）、DiPCo 晚宴（远场设备通道 1，时间轴按近讲麦对齐）的 人工标注 test/eval 划分，以及 ICSI 会议测试会议（官方近讲耳麦混音，不是远场）里按完整语句切出 8–22 秒窗口，不做任何混合； 同一窗口配一条目标在场（注册取窗外同一人的语句）和一条目标缺席的样本。参考文本为目标在窗口内各句按时间顺序用空格拼接， 去掉了笑声、噪声、截断词等标注；含听不清、外语、被消音或数字朗读的语句算作有人说话，但不作目标、不作注册。注册存 10 秒、 客户端取前 5 秒，前 5 秒里他人说话不少于 0.3 秒的在 -enrollmix 划分；每条注册都过声纹核对（与本人在本录音其他语句比 与其他人更像，有近讲麦的语料用近讲麦之和），不过的换一句或剔除，见 source/<版本>/report.json。只用于评测，不进训练
+- `ts_asr_real@overlap-v1-20261017`：真实会议的目标重叠窗口：从 AliMeeting 远场、AISHELL-4 远场的人工标注测试集里以目标说话人为锚切 8–26 秒窗口 （目标的语句完整，别人的语句截到窗口边界），按目标语音被别人重叠的比例分 5–20%、20–50%、50% 以上三档， 不做任何混合；同一窗口配一条目标在场和一条目标缺席的样本。只用于评测，不进训练
+- `ts_asr_real@v1-20261013`：真实对话的目标说话人窗口：从 AliMeeting 远场、AISHELL-4 远场、MagicData-RAMC 手机通话的人工标注测试集里按完整语句切出 8–22 秒窗口，不做任何混合；同一窗口配一条目标在场（注册取窗外的另一条语句）和一条目标缺席的样本。只用于评测，不进训练
+- `ts_asr_real@v2-20261013`：真实对话的目标说话人窗口：从 AliMeeting 远场、AISHELL-4 远场、MagicData-RAMC 手机通话的人工标注测试集，以及 Emilia2 网络爬取的对话（MOSS 说话人日志伪标签）里按完整语句切出 8–22 秒窗口，不做任何混合；同一窗口配一条目标在场（注册取窗外的另一条语句）和一条目标缺席的样本。只用于评测，不进训练；所用 Emilia2 录音列在 source/<版本>/excluded-recordings.txt，训练必须排除
+- `ts_asr_real@v3-20261022`：ts_asr_real@v2-20261013 的修正版，窗口和混合音频不变：每条记录加注册前 3 秒里他人说话的秒数（labels.enroll_others_s），不少于 0.3 秒的记为注册含他人声（enroll_condition = others_speech）并移入同名加 -enrollmix 的划分；AISHELL-4 有 3 条目标在场样本的注册其实是同场另一个人，改取目标的另一条语句，1 条无法确认目标而删除。生成脚本 scripts/ts_real/enroll_overlap.py
+- `ts_asr_real@v4-20261022`：ts_asr_real@v3-20261022 的 5 秒注册版，窗口和混合音频不变：注册保留原第一句，后接同一人在窗口外、无他人重叠的其他语句，共存 10 秒（labels.enroll_seconds，metadata.enrollment_pieces）；他人说话秒数改按前 5 秒计（labels.enroll_others_s），不少于 0.3 秒的在 -enrollmix 划分。生成脚本 scripts/ts_real/enroll_long.py
+
+### ts_asr_shortseg
+
+目标说话人评测：他人说话的 1–6 秒短片段
+
+语言：en、zh · 任务：目标说话人语音识别
+
+| 版本 | 时长（小时） | 口径 | COS |
+|---|---:|---|---|
+| [ts_asr_shortseg@en-v1-20261031](../../catalog/ts_asr_shortseg.yaml#L334) | 0.6 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_shortseg/` |
+| [ts_asr_shortseg@v1-20261017](../../catalog/ts_asr_shortseg.yaml#L1) | 0.8 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_shortseg/` |
+| [ts_asr_shortseg@v2-20261022](../../catalog/ts_asr_shortseg.yaml#L168) | 0.8 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_shortseg/` |
+
+- `ts_asr_shortseg@en-v1-20261031`：英文目标说话人 ASR 评测集（ts_asr_shortseg）：与中文版同一配方与随机种子，说话人换成 VCTK、CS-Dialogue 英文 test、LibriSpeech test-clean/test-other；不含业务真实注册录音条件。只用于评测，不进训练。场景见 scripts/ts_benchmark/recipe-shortseg-en.yaml
+- `ts_asr_shortseg@v1-20261017`、`ts_asr_shortseg@v2-20261022`：目标说话人 ASR 评测集：由 AISHELL-3、KeSpeech、MagicData、AISHELL-2、AISHELL-1 的官方 test 划分合成，覆盖注册音频劣化、目标说话人进场离场与缺席、纯噪声、环境与设备。只用于评测，不进训练。场景见 scripts/ts_benchmark/recipe.yaml
+
+### ts_asr_singing
+
+目标说话人评测：歌声干扰
+
+语言：en、zh · 任务：目标说话人语音识别
+
+| 版本 | 时长（小时） | 口径 | COS |
+|---|---:|---|---|
+| [ts_asr_singing@en-v1-20261031](../../catalog/ts_asr_singing.yaml#L134) | 0.2 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_singing/` |
+| [ts_asr_singing@v1-20261017](../../catalog/ts_asr_singing.yaml#L1) | 0.3 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_singing/` |
+| [ts_asr_singing@v2-20261022](../../catalog/ts_asr_singing.yaml#L68) | 0.3 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_singing/` |
+
+- `ts_asr_singing@en-v1-20261031`：英文目标说话人 ASR 评测集（ts_asr_singing）：与中文版同一配方与随机种子，说话人换成 VCTK、CS-Dialogue 英文 test、LibriSpeech test-clean/test-other；不含业务真实注册录音条件。只用于评测，不进训练。场景见 scripts/ts_benchmark/recipe-singing-en.yaml
+- `ts_asr_singing@v1-20261017`、`ts_asr_singing@v2-20261022`：目标说话人 ASR 评测集：由 AISHELL-3、KeSpeech、MagicData、AISHELL-2、AISHELL-1 的官方 test 划分合成，覆盖注册音频劣化、目标说话人进场离场与缺席、纯噪声、环境与设备。只用于评测，不进训练。场景见 scripts/ts_benchmark/recipe.yaml
 
 ### ts_hw_test
 
@@ -2044,6 +2090,33 @@ AISHELL-1、LibriSpeech 合成的多人对话
 - `ts_nonspeech_pool@babble-20261024`：普通 ASR 的背景人声空输出训练数据：babble_noise_train@v2-20261024 的房间背景人声（16–24 人同时说话、各站在模拟房间的不同位置，听不出某一个人说的内容）的片段（0.3–26 s，对数均匀），中英文各 12,000 条，目标为空；片段语言即背景人声的语言。电平在训练时按数据源配置随机。来源：在 asr_babble_bench@v2-20261023 上，普通 ASR 训练里没有只有背景人声、目标为空的样本（v1-20261016 只有 MUSAN 噪声与音乐），模型在只有背景人声时会编出文字。脚本 scripts/ts_robust/build_nonspeech_pool.py --source babble
 - `ts_nonspeech_pool@v1-20261016`：普通 ASR 的非人声空输出训练数据：MUSAN 噪声与音乐的片段（0.3–26 s，对数均匀），目标为空。电平在训练时按数据源配置随机。不含 WHAM（咖啡馆底噪里可能有可懂的人声）
 
+### ts_real_train
+
+真实会议切出的目标说话人训练窗口
+
+语言：en、zh · 任务：目标说话人语音识别
+
+| 版本 | 时长（小时） | 口径 | COS |
+|---|---:|---|---|
+| [ts_real_train@en-v1-20261101](../../catalog/ts_real_train.yaml#L684) | 41.9 | 已登记 | 没有 |
+| [ts_real_train@en-v1-20261101-utts](../../catalog/ts_real_train.yaml#L827) | 41.9 | 已登记 | 没有 |
+| [ts_real_train@v1-20261017](../../catalog/ts_real_train.yaml#L1) | 123.6 | 已登记 | 没有 |
+| [ts_real_train@v1-20261017-utts](../../catalog/ts_real_train.yaml#L342) | 123.6 | 已登记 | 没有 |
+| [ts_real_train@v2-20261018](../../catalog/ts_real_train.yaml#L114) | 116.6 | 已登记 | 没有 |
+| [ts_real_train@v2-20261018-utts](../../catalog/ts_real_train.yaml#L572) | 116.6 | 已登记 | 没有 |
+| [ts_real_train@v3-20261020](../../catalog/ts_real_train.yaml#L228) | 105.0 | 已登记 | 没有 |
+| [ts_real_train@v3-20261020-utts](../../catalog/ts_real_train.yaml#L457) | 105.0 | 已登记 | 没有 |
+
+- `ts_real_train@en-v1-20261101`：英文真实会议的目标说话人窗口（训练划分）：AMI train 单远场麦 Array1-01、NOTSOFAR-1 train 与 dev 每场一台单通道设备、DiPCo dev 远场设备通道 1（时间轴按近讲麦对齐）、ICSI 中与 test / dev 会议没有共同说话人的 11 场 Bed 会议（官方近讲耳麦混音，镜像音频写成 WAV 放在 source/en-v1-20261101/icsi/），按 ts_real_train v1 的方法切 8–22 秒、由完整语句组成的窗口，说话人数分 1 / 2 / 3+ 三档，用尽所有可用窗口；每个窗口一对样本，同一段音频：目标在场（注册取窗口外同一录音的另一句，3–6 秒）和目标缺席（同一录音里没在窗口说话的另一人，没有则取其他录音中同样不在窗口说话的人）。转写清洗沿用英文评测 ts_asr_real en-v2-20261031（scripts/ts_real/english.py），目标各句须都有完整转写；每条注册过英文评测的声纹核对（WeSpeaker ECAPA），不过的换一句或丢掉这一对。评测用的 AMI dev/test、NOTSOFAR-1 eval、DiPCo eval、ICSI test/dev 会议及其说话人都不在内（report.json 的 heldout）。不含 CHiME-6（train 标注没有房间信息）。记录带 metadata.window_utts 与 target_speaker。音频是原始长录音的片段，channel: 0。脚本 scripts/ts_robust/build_ts_real_train_en.py
+- `ts_real_train@en-v1-20261101-utts`：ts_real_train@en-v1-20261101 的同一批记录，构建脚本自带的 metadata.window_utts / target_speaker 按与其他 -utts 版本相同的规则复核：正样本的目标语句与转写逐字一致（忽略空白和标点）才保留时间线，负样本只有注册人确实不在窗口里说话才保留；不满足的记录去掉 window_utts（保留 target_speaker），ID 列在 excluded-records-<split>.txt。供 open-audio-llm 帧级说话人活动标签（objective.ts_activity_weight）。其余字段不变，音频引用改指本版本，音频索引与原版逐行相同。生成脚本 audio-data-contract scripts/ts_robust/add_window_utts.py（keep），逐划分统计见 report.json
+- `ts_real_train@v1-20261017`：真实会议的目标说话人窗口（训练划分）：AliMeeting 远场、AISHELL-4、MagicData-RAMC 的 train 划分，按 ts_asr_real 的方法切 8–22 秒、由完整语句组成的窗口，说话人数分 1 / 2 / 3+ 三档；每个窗口一对样本，同一段音频：目标在场（注册取窗口外同一录音的另一句）和目标缺席（同一录音里没在窗口说话的另一人，没有则取其他录音）。音频是原始长录音的片段，记录里写 channel: 0，读第 0 声道，与评测一致（现有 turn-taking 训练集读 8 个声道的平均）。脚本 scripts/ts_robust/build_ts_real_train.py
+- `ts_real_train@v1-20261017-utts`：ts_real_train@v1-20261017 的同一批记录，时间线取自 AliMeeting 远场、AISHELL-4、RAMC 的 icefall-20260908 train 人工标注。加 metadata.window_utts（窗口内每句的说话人与相对混合起点的起止，取自来源标注并截到窗口，截断的标 clipped）与同一命名空间的 metadata.target_speaker，供 open-audio-llm 帧级说话人活动标签（objective.ts_activity_weight）；其余字段不变，音频引用改指本版本，音频索引与原版逐行相同。正样本的目标语句与转写逐字一致（忽略空白和标点；窗口边缘截断的句子允许只转写一部分）才写时间线，负样本只有注册人确实不在窗口里说话才写；其余记录不写时间线（不出帧级标签）。负样本中注册人按标注其实在窗口内说话的记录 ID 列在 excluded-records-<split>.txt，训练配方用 exclude_records 排除。生成脚本 audio-data-contract scripts/ts_robust/add_window_utts.py，逐划分统计见 report.json
+- `ts_real_train@v2-20261018`：真实会议的目标说话人重叠窗口（训练划分）：AliMeeting 远场、AISHELL-4、MagicData-RAMC 的 train 划分，按 ts_asr_real overlap 版的方法以目标说话人为锚切 8–26 秒窗口（目标的语句完整，别人的语句截到窗口边界，记录 metadata.window_utts 给出窗口内每句的起止和说话人，截断的标 clipped），按目标语音被别人重叠的比例分 o0（≤5%）/ o20（5–20%）/ o50（20–50%）/ o100（>50%）四档（RAMC 标注没有重叠，只有 o0）；每个窗口一对样本，同一段音频：目标在场（注册取窗口外同一录音的另一句）和目标缺席（同一录音里没在窗口说话的另一人，没有则取其他录音）。去掉含 dev / test 说话人的录音（RAMC 14 段）。音频是原始长录音的片段，记录里写 channel: 0，读第 0 声道，与评测一致。脚本 scripts/ts_robust/build_ts_real_train.py --recipe v2
+- `ts_real_train@v2-20261018-utts`：ts_real_train@v2-20261018 的同一批记录，v2 自带的 metadata.window_utts / target_speaker 按与其他 -utts 版本相同的规则复核：正样本的目标语句与转写逐字一致（忽略空白和标点；窗口边缘截断的句子允许只转写一部分）才保留时间线，负样本只有注册人确实不在窗口里说话才保留；不满足的记录去掉 window_utts（保留 target_speaker），不出帧级标签。正样本全部通过；45 条负样本（alimeeting 43、ramc 2，都是 other_recording）的注册人与窗口里的说话人是同一人（同一说话人出现在多场录音里），转写为空属于错标，ID 列在 excluded-records-<split>.txt，训练配方用 exclude_records 排除。其余字段不变，音频引用改指本版本，音频索引与原版逐行相同。生成脚本 audio-data-contract scripts/ts_robust/add_window_utts.py（keep），逐划分统计见 report.json
+- `ts_real_train@v3-20261020`：真实录音的目标说话人训练窗口第三版，补 v1 / v2 没有的两类（只生成记录，引用原始录音片段，不复制、不混音）：emilia2_1spk——Emilia2 中文网络对话（emilia2_zh_dialogue_diarize 的 MOSS 伪标签，窗口文本已过 Qwen3-ASR 核对）里只有一个人说话的 8–22 秒整句窗口，每个窗口一对：目标在场（注册取此人窗外另一句）与目标缺席（注册取同一诊断窗口里的另一位说话人），对应评测 real-emilia2-1spk-neg；排除评测留出视频（ts_asr_real v2 的 excluded-recordings）与说话人合并错误窗口；每对用 ERes2NetV2 声纹核对，按对内分布取阈值（同人下限 0.746、异人上限 0.493）剔除 225 对。alimeeting_en_mn / alimeeting_en_mf——AliMeeting train 窗口（窗口切法同 v1，远场人工标注），注册一律取注册人的近场头戴麦，混合取窗口内某位说话人的头戴麦（en_mn，设备离说话人近）或远场第 0 声道（en_mf），在场 / 缺席成对，补评测 nearfar-*-en-mn-neg（近场注册 + 近场混合）的缺席。生成脚本 scripts/ts_robust/build_ts_real_train_v3.py、qc_ts_real_train_v3.py
+- `ts_real_train@v3-20261020-utts`：ts_real_train@v3-20261020 的同一批记录：alimeeting_en_mn / en_mf 的时间线取自 AliMeeting 远场 icefall-20260908 train 人工标注（近讲与远场文件对齐在 0.07 秒内），emilia2_1spk 取自记录所引用的 MOSS 日志窗口。加 metadata.window_utts（窗口内每句的说话人与相对混合起点的起止，取自来源标注并截到窗口，截断的标 clipped）与同一命名空间的 metadata.target_speaker，供 open-audio-llm 帧级说话人活动标签（objective.ts_activity_weight）；其余字段不变，音频引用改指本版本，音频索引与原版逐行相同。正样本的目标语句与转写逐字一致（忽略空白和标点；窗口边缘截断的句子允许只转写一部分）才写时间线，负样本只有注册人确实不在窗口里说话才写；其余记录不写时间线（不出帧级标签）。负样本中注册人按标注其实在窗口内说话的记录 ID 列在 excluded-records-<split>.txt，训练配方用 exclude_records 排除。生成脚本 audio-data-contract scripts/ts_robust/add_window_utts.py，逐划分统计见 report.json
+- 含派生版本（与源数据可能重叠）
+
 ### ts_scene_pool
 
 目标说话人难例场景素材（相近声音、交接）
@@ -2053,6 +2126,16 @@ AISHELL-1、LibriSpeech 合成的多人对话
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
 | [ts_scene_pool@alt-twins-20261024](../../catalog/ts_scene_pool.yaml#L1177) | 316.4 | 已登记 | 没有 |
+| [ts_scene_pool@csd-alt-twins-20261101](../../catalog/ts_scene_pool.yaml#L1944) | 10.8 | 已登记 | 没有 |
+| [ts_scene_pool@csd-handover-20261101](../../catalog/ts_scene_pool.yaml#L2064) | 6.8 | 已登记 | 没有 |
+| [ts_scene_pool@csd-hard-20261101](../../catalog/ts_scene_pool.yaml#L2004) | 6.7 | 已登记 | 没有 |
+| [ts_scene_pool@csd-near-20261101](../../catalog/ts_scene_pool.yaml#L1884) | 16.3 | 已登记 | 没有 |
+| [ts_scene_pool@csd-solo-20261101](../../catalog/ts_scene_pool.yaml#L2124) | 8.3 | 已登记 | 没有 |
+| [ts_scene_pool@cvaccent-alt-twins-20261101](../../catalog/ts_scene_pool.yaml#L1644) | 60.7 | 已登记 | 没有 |
+| [ts_scene_pool@cvaccent-handover-20261101](../../catalog/ts_scene_pool.yaml#L1764) | 30.7 | 已登记 | 没有 |
+| [ts_scene_pool@cvaccent-hard-20261101](../../catalog/ts_scene_pool.yaml#L1704) | 37.9 | 已登记 | 没有 |
+| [ts_scene_pool@cvaccent-near-20261101](../../catalog/ts_scene_pool.yaml#L1584) | 91.2 | 已登记 | 没有 |
+| [ts_scene_pool@cvaccent-solo-20261101](../../catalog/ts_scene_pool.yaml#L1824) | 44.7 | 已登记 | 没有 |
 | [ts_scene_pool@handover-20261021](../../catalog/ts_scene_pool.yaml#L515) | 62.9 | 已登记 | 没有 |
 | [ts_scene_pool@hard-20261016](../../catalog/ts_scene_pool.yaml#L86) | 81.7 | 已登记 | 没有 |
 | [ts_scene_pool@hard-twins-20261026](../../catalog/ts_scene_pool.yaml#L1497) | 81.9 | 已登记 | 没有 |
@@ -2081,6 +2164,16 @@ AISHELL-1、LibriSpeech 合成的多人对话
 | [ts_scene_pool@xsession-near-20261023](../../catalog/ts_scene_pool.yaml#L718) | 116.0 | 已登记 | 没有 |
 
 - `ts_scene_pool@alt-twins-20261024`：v2-20261016 的同配方带孪生版：alternate/burst/short 场景（AISHELL-2 / LibriSpeech 目标），30% 为孪生样本，即同一场景换成另一个人注册（一半是 speaker-neighbors-20261016 的相近声音），目标为空；注册音频不选与目标同一句的话。起因：轮流说话场景在训练里几乎只有在场（v2-20261016、xsession-alt-20261023、magicdata-alt-20261023 没有缺席样本，hard 池的缺席只有交替 / 插话、没有短句），模型学成“其中总有一个是目标”；换成同池另一个人注册后，044@5000 在 xsession-alt 场景仍转写 43%（短句 65%），10.21 版本在 v2 场景 17%，带孪生的多人重叠池 4–8%；ts-asr-benchmark@v12 上 KeSpeech 注册人缺席误输出 2.6% → 17.8%
+- `ts_scene_pool@csd-alt-twins-20261101`：csd-alt-twins-20261101：alternate/burst/short 轮流与插话场景，约 30% 缺席孪生（一半近邻注册）。CS-Dialogue 英文 train 140 位说话人（中国人说英语）为目标，含 <NPS/>（旁人说话）或 **（听不清）的句子不用、其余标签去掉（与 ts-asr-benchmark-en 一致），他人一半 CS-Dialogue、Common Voice 口音说话人与 LibriSpeech 各四分之一；孪生注册人取另一位 CS-Dialogue 说话人或近邻，近邻表 speaker-neighbors-en-accents-20261101。CS-Dialogue dev/test 说话人剔除（test 是评测目标），按说话人 ID 核对无重叠。起因：10.28 版本在 ts-asr-benchmark-en 的 CS-Dialogue 目标上词错率 44.6%
+- `ts_scene_pool@csd-handover-20261101`：csd-handover-20261101：交接场景：目标与另一人各说一句、先后不重叠（一半另一人取目标近邻），约 30% 缺席孪生。CS-Dialogue 英文 train 140 位说话人（中国人说英语）为目标，含 <NPS/>（旁人说话）或 **（听不清）的句子不用、其余标签去掉（与 ts-asr-benchmark-en 一致），他人一半 CS-Dialogue、Common Voice 口音说话人与 LibriSpeech 各四分之一；孪生注册人取另一位 CS-Dialogue 说话人或近邻，近邻表 speaker-neighbors-en-accents-20261101。CS-Dialogue dev/test 说话人剔除（test 是评测目标），按说话人 ID 核对无重叠。起因：10.28 版本在 ts-asr-benchmark-en 的 CS-Dialogue 目标上词错率 44.6%
+- `ts_scene_pool@csd-hard-20261101`：csd-hard-20261101：相近声音场景：他人之一是目标 ERes2NetV2 最近邻前 10 名之一，约 55% 目标缺席（转写为空）。CS-Dialogue 英文 train 140 位说话人（中国人说英语）为目标，含 <NPS/>（旁人说话）或 **（听不清）的句子不用、其余标签去掉（与 ts-asr-benchmark-en 一致），他人一半 CS-Dialogue、Common Voice 口音说话人与 LibriSpeech 各四分之一；孪生注册人取另一位 CS-Dialogue 说话人或近邻，近邻表 speaker-neighbors-en-accents-20261101。CS-Dialogue dev/test 说话人剔除（test 是评测目标），按说话人 ID 核对无重叠。起因：10.28 版本在 ts-asr-benchmark-en 的 CS-Dialogue 目标上词错率 44.6%
+- `ts_scene_pool@csd-near-20261101`：csd-near-20261101：多句场景（multi 同款 full 模式，目标说 2–5 句，1–4 个他人各自一条轨道），约 30% 缺席孪生（同一场景换人注册，一半取目标近邻，转写为空，同一对共用 labels.pair）。CS-Dialogue 英文 train 140 位说话人（中国人说英语）为目标，含 <NPS/>（旁人说话）或 **（听不清）的句子不用、其余标签去掉（与 ts-asr-benchmark-en 一致），他人一半 CS-Dialogue、Common Voice 口音说话人与 LibriSpeech 各四分之一；孪生注册人取另一位 CS-Dialogue 说话人或近邻，近邻表 speaker-neighbors-en-accents-20261101。CS-Dialogue dev/test 说话人剔除（test 是评测目标），按说话人 ID 核对无重叠。起因：10.28 版本在 ts-asr-benchmark-en 的 CS-Dialogue 目标上词错率 44.6%
+- `ts_scene_pool@csd-solo-20261101`：csd-solo-20261101：短句单人场景：目标单独说一句 1–3.5 秒的话，没有其他说话人，约 30% 缺席孪生（一半近邻注册）。CS-Dialogue 英文 train 140 位说话人（中国人说英语）为目标，含 <NPS/>（旁人说话）或 **（听不清）的句子不用、其余标签去掉（与 ts-asr-benchmark-en 一致），他人一半 CS-Dialogue、Common Voice 口音说话人与 LibriSpeech 各四分之一；孪生注册人取另一位 CS-Dialogue 说话人或近邻，近邻表 speaker-neighbors-en-accents-20261101。CS-Dialogue dev/test 说话人剔除（test 是评测目标），按说话人 ID 核对无重叠。起因：10.28 版本在 ts-asr-benchmark-en 的 CS-Dialogue 目标上词错率 44.6%
+- `ts_scene_pool@cvaccent-alt-twins-20261101`：cvaccent-alt-twins-20261101：alternate/burst/short 轮流与插话场景，约 30% 缺席孪生（一半近邻注册）。Common Voice 英文 train 带口音标注的目标说话人（至少 6 句 1–8 秒，按口音组抽取：每组占比为说话人数平方根、单组不超过 15%；文本、清洗通过标记与口音取自 common_voice_en@icefall-20260908 的双引擎清洗清单，未通过的句子不用），他人一半同批口音说话人、一半 LibriSpeech train；随机孪生注册人按同样口音占比抽取，近邻孪生取近邻（美式口音注册人约一半缺席，其他口音 21–28%），labels.accent 记注册人口音组；近邻表 speaker-neighbors-en-accents-20261101（ERes2NetV2）。剔除三份语料 dev/test 说话人，不含 VCTK。起因：10.28 版本在 ts-asr-benchmark-en 上 VCTK 口音目标 13.8% 判为缺席（苏格兰、爱尔兰、加拿大约 20%，短目标 27%），LibriSpeech 目标 1.8%；训练英文目标 63% 是 LibriSpeech
+- `ts_scene_pool@cvaccent-handover-20261101`：cvaccent-handover-20261101：交接场景：目标与另一人各说一句、先后不重叠（一半另一人取目标近邻），约 30% 缺席孪生。Common Voice 英文 train 带口音标注的目标说话人（至少 6 句 1–8 秒，按口音组抽取：每组占比为说话人数平方根、单组不超过 15%；文本、清洗通过标记与口音取自 common_voice_en@icefall-20260908 的双引擎清洗清单，未通过的句子不用），他人一半同批口音说话人、一半 LibriSpeech train；随机孪生注册人按同样口音占比抽取，近邻孪生取近邻（美式口音注册人约一半缺席，其他口音 21–28%），labels.accent 记注册人口音组；近邻表 speaker-neighbors-en-accents-20261101（ERes2NetV2）。剔除三份语料 dev/test 说话人，不含 VCTK。起因：10.28 版本在 ts-asr-benchmark-en 上 VCTK 口音目标 13.8% 判为缺席（苏格兰、爱尔兰、加拿大约 20%，短目标 27%），LibriSpeech 目标 1.8%；训练英文目标 63% 是 LibriSpeech
+- `ts_scene_pool@cvaccent-hard-20261101`：cvaccent-hard-20261101：相近声音场景：他人之一是目标 ERes2NetV2 最近邻前 10 名之一，约 55% 目标缺席（转写为空）。Common Voice 英文 train 带口音标注的目标说话人（至少 6 句 1–8 秒，按口音组抽取：每组占比为说话人数平方根、单组不超过 15%；文本、清洗通过标记与口音取自 common_voice_en@icefall-20260908 的双引擎清洗清单，未通过的句子不用），他人一半同批口音说话人、一半 LibriSpeech train；随机孪生注册人按同样口音占比抽取，近邻孪生取近邻（美式口音注册人约一半缺席，其他口音 21–28%），labels.accent 记注册人口音组；近邻表 speaker-neighbors-en-accents-20261101（ERes2NetV2）。剔除三份语料 dev/test 说话人，不含 VCTK。起因：10.28 版本在 ts-asr-benchmark-en 上 VCTK 口音目标 13.8% 判为缺席（苏格兰、爱尔兰、加拿大约 20%，短目标 27%），LibriSpeech 目标 1.8%；训练英文目标 63% 是 LibriSpeech
+- `ts_scene_pool@cvaccent-near-20261101`：cvaccent-near-20261101：多句场景（multi 同款 full 模式，目标说 2–5 句，1–4 个他人各自一条轨道），约 30% 缺席孪生（同一场景换人注册，一半取目标近邻，转写为空，同一对共用 labels.pair）。Common Voice 英文 train 带口音标注的目标说话人（至少 6 句 1–8 秒，按口音组抽取：每组占比为说话人数平方根、单组不超过 15%；文本、清洗通过标记与口音取自 common_voice_en@icefall-20260908 的双引擎清洗清单，未通过的句子不用），他人一半同批口音说话人、一半 LibriSpeech train；随机孪生注册人按同样口音占比抽取，近邻孪生取近邻（美式口音注册人约一半缺席，其他口音 21–28%），labels.accent 记注册人口音组；近邻表 speaker-neighbors-en-accents-20261101（ERes2NetV2）。剔除三份语料 dev/test 说话人，不含 VCTK。起因：10.28 版本在 ts-asr-benchmark-en 上 VCTK 口音目标 13.8% 判为缺席（苏格兰、爱尔兰、加拿大约 20%，短目标 27%），LibriSpeech 目标 1.8%；训练英文目标 63% 是 LibriSpeech
+- `ts_scene_pool@cvaccent-solo-20261101`：cvaccent-solo-20261101：短句单人场景：目标单独说一句 1–3.5 秒的话，没有其他说话人，约 30% 缺席孪生（一半近邻注册）。Common Voice 英文 train 带口音标注的目标说话人（至少 6 句 1–8 秒，按口音组抽取：每组占比为说话人数平方根、单组不超过 15%；文本、清洗通过标记与口音取自 common_voice_en@icefall-20260908 的双引擎清洗清单，未通过的句子不用），他人一半同批口音说话人、一半 LibriSpeech train；随机孪生注册人按同样口音占比抽取，近邻孪生取近邻（美式口音注册人约一半缺席，其他口音 21–28%），labels.accent 记注册人口音组；近邻表 speaker-neighbors-en-accents-20261101（ERes2NetV2）。剔除三份语料 dev/test 说话人，不含 VCTK。起因：10.28 版本在 ts-asr-benchmark-en 上 VCTK 口音目标 13.8% 判为缺席（苏格兰、爱尔兰、加拿大约 20%，短目标 27%），LibriSpeech 目标 1.8%；训练英文目标 63% 是 LibriSpeech
 - `ts_scene_pool@handover-20261021`：交接场景：目标说一句、另一个说话人说一句，前后不重叠、先后随机（alternate，同一注册与转写口径），每句 1–6 秒，注册取同一说话人另一句 2.5–8 秒；另一个说话人一半取目标的近邻声音（speaker-neighbors-20261016，ERes2NetV2 前 10 名，labels.hard_cosine），一半随机。约 30% 是缺席孪生：同两句话，注册人换成另一个人（一半取目标近邻，labels.twin_enrollment），两句都成为干扰人、转写为空，同一对共用 labels.pair。用来补其他场景池缺的“目标 + 仅 1 个他人”轮流场景（alternate 至少 2 个他人，solo 没有他人）：ts-asr-benchmark@v9 的 handover-* 子集里模型约 15% 整条不出字
 - `ts_scene_pool@hard-20261016`：相近声音多句场景：目标缺席且相近声音在场（absent，转写为空）或目标与相近声音同时说话（present）。相近说话人取 ERes2NetV2 说话人向量余弦最近邻前 10 名之一（按排名，不设阈值），邻居表在 source/speaker-neighbors-20261016
 - `ts_scene_pool@hard-twins-20261026`：hard-20261016 的带孪生版：AISHELL-2 / LibriSpeech 目标的 alternate/burst/short 在场场景，他人之一是目标的相近声音（speaker-neighbors-20261016，ERes2NetV2 最近邻前 10 名之一），每个在场场景后跟一条孪生样本（同一场景换成另一个人注册，一半是目标的另一个相近声音，目标为空），缺席 50%；注册音频不选与目标同一句的话。起因：原 hard 池的缺席场景是单独的场景、没有短句，也不是某个在场场景的孪生，是最后一类没有孪生的场景；048 avg3 在带孪生的场景类别上都好于 10.21 版本，难缺席划分的误输出仍持平或偏高（abs 3.4 对 3.0、realreg 1.6 对 0.8、短片段 11.1 对 10.5）
@@ -2120,6 +2213,7 @@ AISHELL-1、LibriSpeech 合成的多人对话
 | [vitw@icefall-20260908](../../catalog/icefall_runtime.yaml#L2568) | 1,085.4 | 已登记 | 快照 20260914 |
 | [vitw@legacy-20260804](../../catalog/icefall_base.yaml#L2179) | 1,085.4 | 已登记 | 快照 20260914 |
 | [vitw_far_field@icefall-20260908](../../catalog/icefall_runtime.yaml#L3075) | 77.3 | 已登记：远场子集 | 快照 20260914 |
+| [vitw_far_field@punc-written-v1-20261029](../../catalog/zh_punc_written_v1.yaml#L532) | 77.3 | 已登记 | 没有 |
 | [vitw_real_distortion@eval-20260804](../../catalog/open_audio_eval.yaml#L2838) | 0.3 | 已登记 | 快照 20260914 |
 | [vitw_real_dropout@eval-20260804](../../catalog/open_audio_eval.yaml#L2871) | 0.3 | 已登记 | 快照 20260914 |
 | [vitw_real_echo@eval-20260804](../../catalog/open_audio_eval.yaml#L2904) | 0.3 | 已登记 | 快照 20260914 |
@@ -2139,6 +2233,7 @@ AISHELL-1、LibriSpeech 合成的多人对话
 
 - `vitw@2m-20261013`：Voices-in-the-Wild 2M 配方全量转写。音频仍在 2M 源目录，按原 jsonl 顺序登记；不是 Bench 的 legacy-20260804
 - `vitw_far_field@icefall-20260908`：标注片段时长，重叠语音或多麦克风可能重复计时
+- `vitw_far_field@punc-written-v1-20261029`：vitw_far_field@icefall-20260908 训练集原标注加书面化标点（GB/T 15834，逗号从紧）：微调后的 Qwen3-4B（Qwen3.8-27B 的 9.6 万条输出蒸馏）以 Qwen3-ASR-1.7B 听音频得到的带标点转写作语气提示，只往原标注里插标点。模型改动了原文的条目，把模型输出的标点按字对齐搬回原标注；每条以 。？！ 结尾；原标注的字、空格（首尾除外）和大小写不变。没有汉字的条目（英文句子、拼读字母）和标注为空的条目原样保留。文件与源 supervisions 条数、顺序相同，只换 text。试点 200 条人工参照上：WenetSpeech markF1 92.4、其他来源 88.9（老师 93.2 / 88.2，原 FireRedPunc 79.8）。约一半条目是英文句子，原样保留（含原有英文标点）；中文条目原有的标点按新规范重加
 - 含派生版本（与源数据可能重叠）
 
 ### waxal-asr

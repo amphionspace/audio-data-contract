@@ -18,6 +18,11 @@ scene pools (build_ts_scene_pool.py --xsession / --magicdata), and a target's ca
 pool draws other speakers from (AISHELL-2 and its own corpus): the builder keeps only neighbours it can draw, after
 taking the top ``--hard-rank``, so neighbours from another corpus would leave it without any.
 
+With ``--en-accents`` the targets are the speakers of the English accent scene pools (build_ts_scene_pool.py
+--cv-accents / --cs-dialogue): every accent-labelled Common Voice train speaker and every CS-Dialogue English train
+speaker, read with the builder's own filters (clean pass, held-out speakers dropped, at least MIN_SPEAKER_UTTERANCES).
+Candidates are limited to the corpora each pool draws other speakers from, LibriSpeech among them.
+
 Output: neighbors.json  {language: {speaker: [[neighbor, cosine], ...]}}
         embeddings.npz  speaker names and vectors
         report.json     distribution of the closest-neighbor cosines
@@ -25,6 +30,7 @@ Output: neighbors.json  {language: {speaker: [[neighbor, cosine], ...]}}
     python speaker_neighbors.py --output-dir DIR [--device cuda:2]
     python speaker_neighbors.py --output-dir DIR --kespeech-magicdata
     python speaker_neighbors.py --output-dir DIR --ramc
+    python speaker_neighbors.py --output-dir DIR --en-accents
 """
 
 import argparse
@@ -58,9 +64,17 @@ KESPEECH_MAGICDATA_CORPORA = {
 RAMC_CORPORA = {
     "zh": [("aishell2", "legacy-20260804", "train", False, None), ("magicdata_ramc", "clean-dual-pass-20261027", "train", True, None)],
 }
-# The corpora a target corpus's scene pool draws other speakers from (XSESSION_CORPORA / MAGICDATA_CORPORA / RAMC_CORPORA there).
+# --en-accents: every speaker of the three corpora, read through build_ts_scene_pool.Corpus (accents=True).
+EN_ACCENT_CORPORA = {
+    "en": [("librispeech", "legacy-20260804", "train", False, None), ("common_voice_en", "legacy-20260804", "train", True, None),
+           ("cs_dialogue_en", "legacy-20260804", "train", True, None)],
+}
+# The corpora a target corpus's scene pool draws other speakers from (XSESSION_CORPORA / MAGICDATA_CORPORA / RAMC_CORPORA /
+# CV_ACCENT_CORPORA / CS_DIALOGUE_CORPORA there).
 POOL_PEERS = {"kespeech": {"aishell2", "kespeech"}, "magicdata": {"aishell2", "magicdata"},
-              "magicdata_ramc": {"aishell2", "magicdata_ramc"}}
+              "magicdata_ramc": {"aishell2", "magicdata_ramc"},
+              "common_voice_en": {"librispeech", "common_voice_en"},
+              "cs_dialogue_en": {"librispeech", "common_voice_en", "cs_dialogue_en"}}
 COLUMNS = ["speaker", "duration", "root_alias", "relative_path", "start_frame", "num_frames", "sample_rate"]
 
 
@@ -149,20 +163,30 @@ def main():
     parser.add_argument("--kespeech-magicdata", action="store_true",
                         help="neighbours of KeSpeech and MagicData speakers within their scene pools' corpora")
     parser.add_argument("--ramc", action="store_true", help="neighbours of MagicData-RAMC speakers within their scene pools' corpora")
+    parser.add_argument("--en-accents", action="store_true",
+                        help="neighbours of the accent-labelled Common Voice and CS-Dialogue speakers within their scene pools' corpora")
     args = parser.parse_args()
     args.output_dir.mkdir(parents=True, exist_ok=True)
     from modelscope.pipelines import pipeline
 
     model = pipeline(task="speaker-verification", model=MODEL, device=args.device)
     neighbors, report, store = {}, {}, {}
-    if args.kespeech_magicdata and args.ramc:
-        parser.error("--kespeech-magicdata and --ramc embed different corpora; pick one")
-    pooled = args.kespeech_magicdata or args.ramc
-    for language, corpora in (KESPEECH_MAGICDATA_CORPORA if args.kespeech_magicdata else RAMC_CORPORA if args.ramc else CORPORA).items():
+    if sum((args.kespeech_magicdata, args.ramc, args.en_accents)) > 1:
+        parser.error("--kespeech-magicdata, --ramc and --en-accents embed different corpora; pick one")
+    restricted = args.kespeech_magicdata or args.ramc or args.en_accents
+    table = KESPEECH_MAGICDATA_CORPORA if args.kespeech_magicdata else RAMC_CORPORA if args.ramc \
+        else EN_ACCENT_CORPORA if args.en_accents else CORPORA
+    for language, corpora in table.items():
         names, vectors, targets = [], [], []
         for dataset, version, split, can_target, wanted in corpora:
             print(language, dataset, flush=True)
-            rows = load_rows(dataset, version, split)
+            if args.en_accents:
+                # The pools' own utterance filters, so every target the builder can draw has a vector.
+                from build_ts_scene_pool import Corpus
+
+                rows = Corpus(dataset, version, split, 0, can_target, language, accents=True).rows
+            else:
+                rows = load_rows(dataset, version, split)
             chosen = pick_utterances(rows, args.utterances, 50 if args.smoke else wanted, random.Random(f"{SEED}:{dataset}"))
             speakers, embeddings = embed_corpus(model, rows, chosen, args.workers)
             names += [f"{dataset}:{s}" for s in speakers]
@@ -175,7 +199,7 @@ def main():
         for i in np.nonzero(targets)[0]:
             scores = vectors @ vectors[i]
             scores[i] = -1
-            if pooled:
+            if restricted:
                 scores[~np.isin(corpus_of, sorted(POOL_PEERS[corpus_of[i]]))] = -1
             order = np.argsort(-scores)[: args.top]
             result[names[i]] = [[names[j], round(float(scores[j]), 4)] for j in order]
