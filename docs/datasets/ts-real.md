@@ -54,6 +54,24 @@ v1/v2 的窗口要求“与窗口重叠的语句都完整”，重叠多的地�
   训练配置按记录 ID 排除（`exclude_records`），用 `scripts/ts_real/exclusion_records.py` 把录音清单换成某个训练划分的记录 ID。已生成的清单在 `source/v2-20261013/`：`excluded-records-emilia2_zh_dialogue_diarize-train_120s.txt`（1,030 条，225 个录音）和 `excluded-records-emilia2_zh_overlap_farsim-train_120s.txt`（380 条，166 个录音）。`exclude_records` 只接受一个文件，和已有的排除清单（例如 4 人以上）一起用时需要合并成一个文件。2026-10-14 正在运行的 `zh-overlap-farsim-acp-20261013` 在建数据时没有排除，约 0.5% 的训练记录来自这些录音。
 - 污染说明：这批窗口来自 `train_120s`，34479 的原训练管线用过 Emilia2 对话，新的 SOT 训练轮用过整个 `train_120s`，所以对这些模型这是**可能见过的音频**，结果偏乐观；对以后排除了这些录音的训练才是干净的评测。
 
+## 英文版（en-v2-20261031）
+
+`ts_asr_real@en-v2-20261031`：1,301 条、60 个划分，`build.py --recipe en`（加载与转写清洗在 `english.py`，声纹核对在 `voice_check.py`，需 `--embed-python` 指向装有 onnxruntime 与 torchaudio 的环境，如 conda `k2`）。切窗、正负配对、10 秒注册与 `-enrollmix` 规则与中文 v4 相同；`language: en`，参考文本按时间顺序用空格拼接。`en-v1` 是同一配方的首次构建，声纹缓存按录音名取键，DiPCo 与 CHiME-6 都有 `S01`/`P01–P04` 而串用，已作废、未登记。
+
+| 语料（只用 test / eval） | 通道 | 窗口 1spk/2spk/3plus | 记录 | 与 AmphionASR 2.0 训练的关系 |
+| --- | --- | --- | --- | --- |
+| AMI（ES2004、IS1009、TS3003、EN2002 四组，16 场） | 单远场麦 Array1-01 | 50/50/56 | 312 | 同域：训练用过 AMI train，测试会议与说话人不在其中 |
+| NOTSOFAR-1（官方 eval，`240825.1_eval_full_with_GT`） | 每场随机一台单通道设备 | 50/50/55 | 292 | 跨域 |
+| CHiME-6 eval（S01、S21） | 说话人所在房间参考阵列的通道 1，窗口内所有人同一房间 | 11/50/56 | 234 | 同域：训练用过 CHiME-6 train，S01/S21 与其 8 位说话人不在其中 |
+| DiPCo eval | 每场随机一台远场设备的通道 1 | 4/27/56 | 151 | 跨域 |
+| ICSI（Bmr013、Bmr018、Bro021） | 官方近讲耳麦混音（登记的版本没有桌面麦） | 50/50/56 | 312 | 跨域 |
+
+- **转写清洗**：笑声、噪声、截断词、填充标签直接去掉；听不清、被消音、外语、读数字的语句仍算有人说话（影响窗口边界与在场判断），但不作目标、不作注册；目标在窗口里的话去掉 um/uh/mm 后要留有实词（与英文打分的 Whisper 归一化一致）。每种语料遇到未知标注直接报错。
+- **DiPCo 时间轴**：转写给远场设备抄的是近讲麦时间，实测远场整场偏 −0.10 到 +0.25 秒，按场平移后再切窗（互相关测得，`source/en-v2-20261031/report.json` 的 `timeline_offsets_s`）。AMI、NOTSOFAR 核对过不需要修正。
+- **声纹核对**（WeSpeaker ECAPA VoxCeleb）：注册前 5 秒要比同场其他人更像本人在本录音的其他语句（有近讲麦的语料用近讲麦之和建档）。换掉 9 条、剔除 43 条（NOTSOFAR 20、DiPCo 23，都是本人在录音里没有别的可用语句、无法建档）；分数在 `metadata.enroll_voice_check`。这是相对判断，没有人工听审。
+- **注册含他人声比例**：首句注册沿用 v2 的「他人重叠 ≤ 20%」规则（recipe `enrollmix: true`），前 5 秒他人说话 ≥ 0.3 秒的进 `-enrollmix`，占 22–41%，高于中文；干净注册的划分因此较小。68 条注册不足 10 秒（最短 3.05 秒），客户端补零。
+- **没有近远场对照**：登记的 `ami_ihm` 只有切好的句子片段，没有整场耳麦录音，拼不出中文 `ts_asr_nearfar` 那样的近场混合；要做需先登记 AMI 官方 Headset / Mix-Headset 整场录音。顺带发现 AMI turn-taking 的 train 含全部 18 场 AMI dev 会议，AMI dev 对 2.0 不干净。
+
 ## 注意
 
 - 34479 的训练用过前三个语料的训练集（不同的录音和说话人），所以这里测的是同域表现，不是脆弱点；它的作用是校准：合成评测集的失败率与同域真实数据差多少。

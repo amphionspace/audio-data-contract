@@ -198,18 +198,21 @@ def _alternate(rng, target_utts, interferer_utts, total):
     return target, others
 
 
-def _plain(text):
-    return re.sub(r"\W", "", text)
+def _plain(text, language="zh"):
+    """Units the handover rules compare: characters without punctuation for Chinese, lower-cased words otherwise."""
+    if language == "zh":
+        return re.sub(r"\W", "", text)
+    return re.findall(r"[^\W_]+(?:'[^\W_]+)*", text.lower())
 
 
-def same_opening(target, other):
-    """The other sentence has the target's first two characters among its own first four."""
-    target, other = _plain(target), _plain(other)
-    return len(target) >= 2 and target[:2] in other[:4]
+def same_opening(target, other, language="zh"):
+    """The other sentence has the target's first two units (characters or words) among its own first four."""
+    target, other = _plain(target, language), _plain(other, language)
+    return len(target) >= 2 and any(other[i:i + 2] == target[:2] for i in range(min(len(other), 4) - 1))
 
 
-def shares_no_opening(target, other):
-    return not set(_plain(target)[:4]) & set(_plain(other)[:4])
+def shares_no_opening(target, other, language="zh"):
+    return not set(_plain(target, language)[:4]) & set(_plain(other, language)[:4])
 
 
 def _edit_distance(a, b):
@@ -222,23 +225,23 @@ def _edit_distance(a, b):
     return previous[-1]
 
 
-def _distinguishable(target, other):
-    target, other = _plain(target), _plain(other)
+def _distinguishable(target, other, language="zh"):
+    target, other = _plain(target, language), _plain(other, language)
     return _edit_distance(target, other) >= HANDOVER_MIN_DISTANCE * len(target)
 
 
-def handover_index(speakers, seconds=HANDOVER_SECONDS):
-    """Sentences of the right length, indexed by every two-character string in their first four characters."""
-    fits = {s: [u for u in utts if seconds[0] <= u.duration <= seconds[1] and len(_plain(u.text)) >= 4]
+def handover_index(speakers, seconds=HANDOVER_SECONDS, language="zh"):
+    """Sentences of the right length, indexed by every pair of adjacent units in their first four units."""
+    fits = {s: [u for u in utts if seconds[0] <= u.duration <= seconds[1] and len(_plain(u.text, language)) >= 4]
             for s, utts in speakers.items()}
     by_opening = defaultdict(list)
     for speaker in sorted(fits):
         for utt in fits[speaker]:
-            text = _plain(utt.text)
-            for key in sorted({text[i:i + 2] for i in range(3)}):
+            text = _plain(utt.text, language)
+            for key in sorted({tuple(text[i:i + 2]) for i in range(3)}):
                 by_opening[key].append(utt)
     targets = [u for s in sorted(fits) for u in fits[s]
-               if any(o.speaker != u.speaker for o in by_opening[_plain(u.text)[:2]])]
+               if any(o.speaker != u.speaker for o in by_opening[tuple(_plain(u.text, language)[:2])])]
     return {"fits": fits, "by_opening": dict(by_opening), "targets": targets}
 
 
@@ -252,17 +255,18 @@ def _plan_handover(rng, params, target_pool, plan):
     if variant not in HANDOVER_VARIANTS:
         raise ValueError(f"unknown handover variant: {variant}")
     seconds = tuple(params.get("handover_seconds", HANDOVER_SECONDS))
+    language = params.get("language", "zh")
     index = target_pool.setdefault("_handover", {}).get(seconds)
     if index is None:
-        index = target_pool["_handover"][seconds] = handover_index(target_pool["speakers"], seconds)
+        index = target_pool["_handover"][seconds] = handover_index(target_pool["speakers"], seconds, language)
     if not index["targets"]:
         raise ValueError("no sentence pair opens the same way in this pool")
     target = rng.choice(index["targets"])
-    partner = rng.choice(index["by_opening"][_plain(target.text)[:2]])
-    if partner.speaker == target.speaker or not _distinguishable(target.text, partner.text):
+    partner = rng.choice(index["by_opening"][tuple(_plain(target.text, language)[:2])])
+    if partner.speaker == target.speaker or not _distinguishable(target.text, partner.text, language):
         raise PlanError("no same-opening sentence from another speaker")
     controls = [u for u in index["fits"][partner.speaker]
-                if shares_no_opening(target.text, u.text) and _distinguishable(target.text, u.text)]
+                if shares_no_opening(target.text, u.text, language) and _distinguishable(target.text, u.text, language)]
     if not controls:
         raise PlanError("the interferer has no sentence with a different opening")
     control = min(controls, key=lambda u: (abs(u.duration - partner.duration), u.id))

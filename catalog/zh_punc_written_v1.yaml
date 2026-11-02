@@ -1,4 +1,4 @@
-# 占位登记：普通话 ASR 训练集原标注加书面化标点（2026-10-29 开工），进度见各版本状态文件。
+# 普通话 ASR 训练集原标注加书面化标点（2026-10-29 开工，10-30 转正）；只插标点、不改字，不影响 icefall-20260908 版本，训练何时切换另定。
 - schema_version: dataset-catalog/2.0
   dataset_id: aishell
   version: punc-written-v1-20261029
@@ -13,21 +13,52 @@
     kind: dataset-state
     root_alias: aidc_data
     relative_path: datasets/aishell/versions/punc-written-v1-20261029/state.json
+  - name: train_supervisions_punc_0
+    kind: lhotse-supervisions
+    root_alias: aidc_data
+    relative_path: datasets/aishell/versions/punc-written-v1-20261029/aishell_supervisions_train_punc_written.jsonl.gz
+    expected_bytes: 4687893
+    sha256: 0d5ba53fb79d5eb6cee79f36545fa4e7e325d82dba429e1c96fccf513eb8faf9
+    metadata:
+      record_count: 120098
+      punctuated: true
+      source: datasets/aishell/versions/legacy-20260804/train_sup_0/aishell_supervisions_train.jsonl.gz
   splits:
     train:
       artifacts:
+        punctuated_supervisions:
+        - train_supervisions_punc_0
         preparation_state:
         - preparation_state
       statistics:
-        source_records: 120098
+        records: 120098
+        duration_hours: 150.9
+        duration_basis: sum of supervision durations; same records in the same order as the source supervisions
+        records_punctuated: 120098
+        records_student_kept_label: 120038
+        records_marks_aligned_from_student_output: 60
+        records_without_student_output: 0
+        records_copied_unchanged: 0
+        marks_per_100_chars:
+          。: 6.857
+          ，: 1.108
+          、: 0.379
+          ？: 0.113
+          ：: 0.064
+          》: 0.064
+          《: 0.064
+          “: 0.032
+          ”: 0.032
       provenance:
-        preparation_status: building
+        preparation_status: prepared
   provenance:
-    preparation_status: building
+    preparation_status: prepared
     owner: mingdong
-    description: aishell@icefall-20260908 训练集原标注加书面化标点（GB/T 15834，逗号从紧）：微调后的 Qwen3-4B 只往原标注里插标点，以 Qwen3-ASR 听音频得到的带标点转写作语气提示；去掉标点后必须与原标注逐字一致。进行中，进度见状态文件。
+    description: aishell@icefall-20260908 训练集原标注加书面化标点（GB/T 15834，逗号从紧）：微调后的 Qwen3-4B（Qwen3.8-27B 的 9.6 万条输出蒸馏）以 Qwen3-ASR-1.7B 听音频得到的带标点转写作语气提示，只往原标注里插标点。模型改动了原文的条目，把模型输出的标点按字对齐搬回原标注；每条以 。？！ 结尾；原标注的字、空格（首尾除外）和大小写不变。没有汉字的条目（英文句子、拼读字母）和标注为空的条目原样保留。文件与源 supervisions 条数、顺序相同，只换 text。试点 200 条人工参照上：WenetSpeech markF1 92.4、其他来源 88.9（老师 93.2 / 88.2，原 FireRedPunc 79.8）。
     source: aishell@icefall-20260908
     run_dir: /workspace/workspace/mingdong/data/amphiondata/zh-punc-distill-20261029
+    audit: datasets/aishell/versions/punc-written-v1-20261029/state.json
+    known_issues: 学生模型只在试点的 WenetSpeech、KeSpeech、AISHELL-2、AISHELL、RAMC、AliMeeting 上有人工参照评测；逗号可加可不加处与参照常有出入。搬回标点的条目可能少标逗号。
   recipe_parameters:
     punctuation_model: Qwen3-4B-Instruct-2507 + LoRA distilled from Qwen3.8-27B
     hint: Qwen3-ASR-1.7B punctuated transcript
@@ -46,21 +77,52 @@
     kind: dataset-state
     root_alias: aidc_data
     relative_path: datasets/aishell2/versions/punc-written-v1-20261029/state.json
+  - name: train_supervisions_punc_0
+    kind: lhotse-supervisions
+    root_alias: aidc_data
+    relative_path: datasets/aishell2/versions/punc-written-v1-20261029/aishell2_supervisions_train_punc_written.jsonl.gz
+    expected_bytes: 32756002
+    sha256: 04993314357389d977a4aac97ce2a7146a85762b93f977aa1da096e42e4b8433
+    metadata:
+      record_count: 1009223
+      punctuated: true
+      source: datasets/aishell2/versions/legacy-20260804/train_sup_0/aishell2_supervisions_train.jsonl.gz
   splits:
     train:
       artifacts:
+        punctuated_supervisions:
+        - train_supervisions_punc_0
         preparation_state:
         - preparation_state
       statistics:
-        source_records: 1009223
+        records: 1009223
+        duration_hours: 1000.8
+        duration_basis: sum of supervision durations; same records in the same order as the source supervisions
+        records_punctuated: 1002999
+        records_student_kept_label: 1002279
+        records_marks_aligned_from_student_output: 720
+        records_without_student_output: 0
+        records_copied_unchanged: 6224
+        marks_per_100_chars:
+          。: 8.673
+          ，: 0.965
+          ？: 0.484
+          《: 0.337
+          》: 0.337
+          、: 0.262
+          ：: 0.045
+          “: 0.019
+          ”: 0.019
       provenance:
-        preparation_status: building
+        preparation_status: prepared
   provenance:
-    preparation_status: building
+    preparation_status: prepared
     owner: mingdong
-    description: aishell2@icefall-20260908 训练集原标注加书面化标点（GB/T 15834，逗号从紧）：微调后的 Qwen3-4B 只往原标注里插标点，以 Qwen3-ASR 听音频得到的带标点转写作语气提示；去掉标点后必须与原标注逐字一致。进行中，进度见状态文件。
+    description: aishell2@icefall-20260908 训练集原标注加书面化标点（GB/T 15834，逗号从紧）：微调后的 Qwen3-4B（Qwen3.8-27B 的 9.6 万条输出蒸馏）以 Qwen3-ASR-1.7B 听音频得到的带标点转写作语气提示，只往原标注里插标点。模型改动了原文的条目，把模型输出的标点按字对齐搬回原标注；每条以 。？！ 结尾；原标注的字、空格（首尾除外）和大小写不变。没有汉字的条目（英文句子、拼读字母）和标注为空的条目原样保留。文件与源 supervisions 条数、顺序相同，只换 text。试点 200 条人工参照上：WenetSpeech markF1 92.4、其他来源 88.9（老师 93.2 / 88.2，原 FireRedPunc 79.8）。
     source: aishell2@icefall-20260908
     run_dir: /workspace/workspace/mingdong/data/amphiondata/zh-punc-distill-20261029
+    audit: datasets/aishell2/versions/punc-written-v1-20261029/state.json
+    known_issues: 学生模型只在试点的 WenetSpeech、KeSpeech、AISHELL-2、AISHELL、RAMC、AliMeeting 上有人工参照评测；逗号可加可不加处与参照常有出入。搬回标点的条目可能少标逗号。
   recipe_parameters:
     punctuation_model: Qwen3-4B-Instruct-2507 + LoRA distilled from Qwen3.8-27B
     hint: Qwen3-ASR-1.7B punctuated transcript
@@ -79,21 +141,71 @@
     kind: dataset-state
     root_alias: aidc_data
     relative_path: datasets/aishell4/versions/punc-written-v1-20261029/state.json
+  - name: train_supervisions_punc_0
+    kind: lhotse-supervisions
+    root_alias: aidc_data
+    relative_path: datasets/aishell4/versions/punc-written-v1-20261029/aishell4_supervisions_train_L_punc_written.jsonl.gz
+    expected_bytes: 571450
+    sha256: 375b693241941dea520f94ddb4a6bea753bde6b60182584af15c06b2ae67a671
+    metadata:
+      record_count: 12524
+      punctuated: true
+      source: datasets/aishell4/versions/legacy-20260804/train_sup_0/aishell4_supervisions_train_L.jsonl.gz
+  - name: train_supervisions_punc_1
+    kind: lhotse-supervisions
+    root_alias: aidc_data
+    relative_path: datasets/aishell4/versions/punc-written-v1-20261029/aishell4_supervisions_train_M_punc_written.jsonl.gz
+    expected_bytes: 2256392
+    sha256: 1e35431f5ab24e89b89b5f762fcdd43573fb7bc4197b21debdbd50ce037b68c0
+    metadata:
+      record_count: 59065
+      punctuated: true
+      source: datasets/aishell4/versions/icefall-20260908/train_sup_1/aishell4_supervisions_train_M.jsonl.gz
+  - name: train_supervisions_punc_2
+    kind: lhotse-supervisions
+    root_alias: aidc_data
+    relative_path: datasets/aishell4/versions/punc-written-v1-20261029/aishell4_supervisions_train_S_punc_written.jsonl.gz
+    expected_bytes: 1157944
+    sha256: d1a3dc889653c0eb543bb207490ba22f43e702c3ca7bebe61d50869c2f44cd90
+    metadata:
+      record_count: 30665
+      punctuated: true
+      source: datasets/aishell4/versions/icefall-20260908/train_sup_2/aishell4_supervisions_train_S.jsonl.gz
   splits:
     train:
       artifacts:
+        punctuated_supervisions:
+        - train_supervisions_punc_0
+        - train_supervisions_punc_1
+        - train_supervisions_punc_2
         preparation_state:
         - preparation_state
       statistics:
-        source_records: 101826
+        records: 102254
+        duration_hours: 107.4
+        duration_basis: sum of supervision durations; same records in the same order as the source supervisions
+        records_punctuated: 101807
+        records_student_kept_label: 101148
+        records_marks_aligned_from_student_output: 659
+        records_without_student_output: 0
+        records_copied_unchanged: 447
+        marks_per_100_chars:
+          ，: 6.992
+          。: 6.282
+          ？: 0.633
+          、: 0.249
+          《: 0.015
+          》: 0.015
       provenance:
-        preparation_status: building
+        preparation_status: prepared
   provenance:
-    preparation_status: building
+    preparation_status: prepared
     owner: mingdong
-    description: aishell4@icefall-20260908 训练集原标注加书面化标点（GB/T 15834，逗号从紧）：微调后的 Qwen3-4B 只往原标注里插标点，以 Qwen3-ASR 听音频得到的带标点转写作语气提示；去掉标点后必须与原标注逐字一致。进行中，进度见状态文件。
+    description: aishell4@icefall-20260908 训练集原标注加书面化标点（GB/T 15834，逗号从紧）：微调后的 Qwen3-4B（Qwen3.8-27B 的 9.6 万条输出蒸馏）以 Qwen3-ASR-1.7B 听音频得到的带标点转写作语气提示，只往原标注里插标点。模型改动了原文的条目，把模型输出的标点按字对齐搬回原标注；每条以 。？！ 结尾；原标注的字、空格（首尾除外）和大小写不变。没有汉字的条目（英文句子、拼读字母）和标注为空的条目原样保留。文件与源 supervisions 条数、顺序相同，只换 text。试点 200 条人工参照上：WenetSpeech markF1 92.4、其他来源 88.9（老师 93.2 / 88.2，原 FireRedPunc 79.8）。
     source: aishell4@icefall-20260908
     run_dir: /workspace/workspace/mingdong/data/amphiondata/zh-punc-distill-20261029
+    audit: datasets/aishell4/versions/punc-written-v1-20261029/state.json
+    known_issues: 学生模型只在试点的 WenetSpeech、KeSpeech、AISHELL-2、AISHELL、RAMC、AliMeeting 上有人工参照评测；逗号可加可不加处与参照常有出入。搬回标点的条目可能少标逗号。
   recipe_parameters:
     punctuation_model: Qwen3-4B-Instruct-2507 + LoRA distilled from Qwen3.8-27B
     hint: Qwen3-ASR-1.7B punctuated transcript
@@ -112,21 +224,50 @@
     kind: dataset-state
     root_alias: aidc_data
     relative_path: datasets/magicdata_ramc/versions/punc-written-v1-20261029/state.json
+  - name: train_supervisions_punc_0
+    kind: lhotse-supervisions
+    root_alias: aidc_data
+    relative_path: datasets/magicdata_ramc/versions/punc-written-v1-20261029/magicdata_ramc_supervisions_train_punc_written.jsonl.gz
+    expected_bytes: 6746778
+    sha256: c280164060b5078c41ee0a20c83aabe970c618864961a7a759e14f21c1bf2681
+    metadata:
+      record_count: 168464
+      punctuated: true
+      source: datasets/magicdata_ramc/versions/legacy-20260804/train_sup_0/magicdata_ramc_supervisions_train.jsonl.gz
   splits:
     train:
       artifacts:
+        punctuated_supervisions:
+        - train_supervisions_punc_0
         preparation_state:
         - preparation_state
       statistics:
-        source_records: 168464
+        records: 168464
+        duration_hours: 125.5
+        duration_basis: sum of supervision durations; same records in the same order as the source supervisions
+        records_punctuated: 168385
+        records_student_kept_label: 167804
+        records_marks_aligned_from_student_output: 581
+        records_without_student_output: 0
+        records_copied_unchanged: 79
+        marks_per_100_chars:
+          。: 7.223
+          ，: 6.13
+          ？: 0.884
+          、: 0.185
+          》: 0.067
+          《: 0.067
+          ！: 0.014
       provenance:
-        preparation_status: building
+        preparation_status: prepared
   provenance:
-    preparation_status: building
+    preparation_status: prepared
     owner: mingdong
-    description: magicdata_ramc@icefall-20260908 训练集原标注加书面化标点（GB/T 15834，逗号从紧）：微调后的 Qwen3-4B 只往原标注里插标点，以 Qwen3-ASR 听音频得到的带标点转写作语气提示；去掉标点后必须与原标注逐字一致。进行中，进度见状态文件。
+    description: magicdata_ramc@icefall-20260908 训练集原标注加书面化标点（GB/T 15834，逗号从紧）：微调后的 Qwen3-4B（Qwen3.8-27B 的 9.6 万条输出蒸馏）以 Qwen3-ASR-1.7B 听音频得到的带标点转写作语气提示，只往原标注里插标点。模型改动了原文的条目，把模型输出的标点按字对齐搬回原标注；每条以 。？！ 结尾；原标注的字、空格（首尾除外）和大小写不变。没有汉字的条目（英文句子、拼读字母）和标注为空的条目原样保留。文件与源 supervisions 条数、顺序相同，只换 text。试点 200 条人工参照上：WenetSpeech markF1 92.4、其他来源 88.9（老师 93.2 / 88.2，原 FireRedPunc 79.8）。原标注约一半条目带部分标点，按新规范重加。
     source: magicdata_ramc@icefall-20260908
     run_dir: /workspace/workspace/mingdong/data/amphiondata/zh-punc-distill-20261029
+    audit: datasets/magicdata_ramc/versions/punc-written-v1-20261029/state.json
+    known_issues: 学生模型只在试点的 WenetSpeech、KeSpeech、AISHELL-2、AISHELL、RAMC、AliMeeting 上有人工参照评测；逗号可加可不加处与参照常有出入。搬回标点的条目可能少标逗号。
   recipe_parameters:
     punctuation_model: Qwen3-4B-Instruct-2507 + LoRA distilled from Qwen3.8-27B
     hint: Qwen3-ASR-1.7B punctuated transcript
@@ -145,21 +286,61 @@
     kind: dataset-state
     root_alias: aidc_data
     relative_path: datasets/kespeech/versions/punc-written-v1-20261029/state.json
+  - name: train_supervisions_punc_0
+    kind: lhotse-supervisions
+    root_alias: aidc_data
+    relative_path: datasets/kespeech/versions/punc-written-v1-20261029/kespeech-asr_supervisions_train_phase1_punc_written.jsonl.gz
+    expected_bytes: 25351087
+    sha256: 49d39262cbe3aed6410d304d3e49976e75064f0d2328437938efdeb3701e454a
+    metadata:
+      record_count: 543634
+      punctuated: true
+      source: datasets/kespeech/versions/legacy-20260804/train_sup_0/kespeech-asr_supervisions_train_phase1.jsonl.gz
+  - name: train_supervisions_punc_1
+    kind: lhotse-supervisions
+    root_alias: aidc_data
+    relative_path: datasets/kespeech/versions/punc-written-v1-20261029/kespeech-asr_supervisions_train_phase2_punc_written.jsonl.gz
+    expected_bytes: 15817443
+    sha256: 842617ebdbef72ae983297193f93137abbabb08fa4e2304e3d53c267550ef0aa
+    metadata:
+      record_count: 340387
+      punctuated: true
+      source: datasets/kespeech/versions/legacy-20260804/train_sup_1/kespeech-asr_supervisions_train_phase2.jsonl.gz
   splits:
     train:
       artifacts:
+        punctuated_supervisions:
+        - train_supervisions_punc_0
+        - train_supervisions_punc_1
         preparation_state:
         - preparation_state
       statistics:
-        source_records: 884021
+        records: 884021
+        duration_hours: 1396.9
+        duration_basis: sum of supervision durations; same records in the same order as the source supervisions
+        records_punctuated: 884021
+        records_student_kept_label: 883551
+        records_marks_aligned_from_student_output: 470
+        records_without_student_output: 0
+        records_copied_unchanged: 0
+        marks_per_100_chars:
+          。: 6.772
+          ，: 0.966
+          ？: 0.192
+          、: 0.148
+          》: 0.021
+          《: 0.021
+          ：: 0.017
       provenance:
-        preparation_status: building
+        preparation_status: prepared
   provenance:
-    preparation_status: building
+    preparation_status: prepared
     owner: mingdong
-    description: kespeech@icefall-20260908 训练集原标注加书面化标点（GB/T 15834，逗号从紧）：微调后的 Qwen3-4B 只往原标注里插标点，以 Qwen3-ASR 听音频得到的带标点转写作语气提示；去掉标点后必须与原标注逐字一致。进行中，进度见状态文件。
+    description: kespeech@icefall-20260908 训练集原标注加书面化标点（GB/T 15834，逗号从紧）：微调后的 Qwen3-4B（Qwen3.8-27B 的 9.6 万条输出蒸馏）以 Qwen3-ASR-1.7B 听音频得到的带标点转写作语气提示，只往原标注里插标点。模型改动了原文的条目，把模型输出的标点按字对齐搬回原标注；每条以 。？！ 结尾；原标注的字、空格（首尾除外）和大小写不变。没有汉字的条目（英文句子、拼读字母）和标注为空的条目原样保留。文件与源 supervisions 条数、顺序相同，只换 text。试点 200 条人工参照上：WenetSpeech markF1 92.4、其他来源 88.9（老师 93.2 / 88.2，原 FireRedPunc 79.8）。
     source: kespeech@icefall-20260908
     run_dir: /workspace/workspace/mingdong/data/amphiondata/zh-punc-distill-20261029
+    audit: datasets/kespeech/versions/punc-written-v1-20261029/state.json
+    known_issues: 学生模型只在试点的 WenetSpeech、KeSpeech、AISHELL-2、AISHELL、RAMC、AliMeeting 上有人工参照评测；逗号可加可不加处与参照常有出入。搬回标点的条目可能少标逗号。
   recipe_parameters:
     punctuation_model: Qwen3-4B-Instruct-2507 + LoRA distilled from Qwen3.8-27B
     hint: Qwen3-ASR-1.7B punctuated transcript
@@ -179,21 +360,50 @@
     kind: dataset-state
     root_alias: aidc_data
     relative_path: datasets/talcs/versions/punc-written-v1-20261029/state.json
+  - name: train_supervisions_punc_0
+    kind: lhotse-supervisions
+    root_alias: aidc_data
+    relative_path: datasets/talcs/versions/punc-written-v1-20261029/talcs_supervisions_train_cleaned_punc_written.jsonl.gz
+    expected_bytes: 15577944
+    sha256: 898b9e4dde6dcb72be530b0adc0d954bec3f27db6eff8171c838878abe441d2e
+    metadata:
+      record_count: 350000
+      punctuated: true
+      source: datasets/talcs/versions/legacy-20260804/train_sup_0/talcs_supervisions_train_cleaned.jsonl.gz
   splits:
     train:
       artifacts:
+        punctuated_supervisions:
+        - train_supervisions_punc_0
         preparation_state:
         - preparation_state
       statistics:
-        source_records: 350000
+        records: 350000
+        duration_hours: 555.9
+        duration_basis: sum of supervision durations; same records in the same order as the source supervisions
+        records_punctuated: 342581
+        records_student_kept_label: 318470
+        records_marks_aligned_from_student_output: 24111
+        records_without_student_output: 0
+        records_copied_unchanged: 7419
+        marks_per_100_chars:
+          ，: 6.624
+          。: 3.036
+          ？: 1.671
+          、: 0.2
+          ：: 0.017
+          “: 0.011
+          ”: 0.011
       provenance:
-        preparation_status: building
+        preparation_status: prepared
   provenance:
-    preparation_status: building
+    preparation_status: prepared
     owner: mingdong
-    description: talcs@icefall-20260908 训练集原标注加书面化标点（GB/T 15834，逗号从紧）：微调后的 Qwen3-4B 只往原标注里插标点，以 Qwen3-ASR 听音频得到的带标点转写作语气提示；去掉标点后必须与原标注逐字一致。进行中，进度见状态文件。
+    description: talcs@icefall-20260908 训练集原标注加书面化标点（GB/T 15834，逗号从紧）：微调后的 Qwen3-4B（Qwen3.8-27B 的 9.6 万条输出蒸馏）以 Qwen3-ASR-1.7B 听音频得到的带标点转写作语气提示，只往原标注里插标点。模型改动了原文的条目，把模型输出的标点按字对齐搬回原标注；每条以 。？！ 结尾；原标注的字、空格（首尾除外）和大小写不变。没有汉字的条目（英文句子、拼读字母）和标注为空的条目原样保留。文件与源 supervisions 条数、顺序相同，只换 text。试点 200 条人工参照上：WenetSpeech markF1 92.4、其他来源 88.9（老师 93.2 / 88.2，原 FireRedPunc 79.8）。
     source: talcs@icefall-20260908
     run_dir: /workspace/workspace/mingdong/data/amphiondata/zh-punc-distill-20261029
+    audit: datasets/talcs/versions/punc-written-v1-20261029/state.json
+    known_issues: 学生模型只在试点的 WenetSpeech、KeSpeech、AISHELL-2、AISHELL、RAMC、AliMeeting 上有人工参照评测；逗号可加可不加处与参照常有出入。搬回标点的条目可能少标逗号。
   recipe_parameters:
     punctuation_model: Qwen3-4B-Instruct-2507 + LoRA distilled from Qwen3.8-27B
     hint: Qwen3-ASR-1.7B punctuated transcript
@@ -212,21 +422,50 @@
     kind: dataset-state
     root_alias: aidc_data
     relative_path: datasets/cs_dialogue/versions/punc-written-v1-20261029/state.json
+  - name: train_supervisions_punc_0
+    kind: lhotse-supervisions
+    root_alias: aidc_data
+    relative_path: datasets/cs_dialogue/versions/punc-written-v1-20261029/cs_dialogue_supervisions_train_punc_written.jsonl.gz
+    expected_bytes: 891416
+    sha256: 1a7dd4cd5d960ba1449219bbe19551043fe4af2903ec868a03e1c0fc3ff2c1f6
+    metadata:
+      record_count: 13992
+      punctuated: true
+      source: datasets/cs_dialogue/versions/legacy-20260804/train_sup_0/cs_dialogue_supervisions_train.jsonl.gz
   splits:
     train:
       artifacts:
+        punctuated_supervisions:
+        - train_supervisions_punc_0
         preparation_state:
         - preparation_state
       statistics:
-        source_records: 13992
+        records: 13992
+        duration_hours: 30.0
+        duration_basis: sum of supervision durations; same records in the same order as the source supervisions
+        records_punctuated: 13965
+        records_student_kept_label: 11562
+        records_marks_aligned_from_student_output: 2403
+        records_without_student_output: 0
+        records_copied_unchanged: 27
+        marks_per_100_chars:
+          ，: 6.18
+          。: 3.26
+          ？: 0.689
+          、: 0.19
+          《: 0.046
+          》: 0.046
+          ！: 0.01
       provenance:
-        preparation_status: building
+        preparation_status: prepared
   provenance:
-    preparation_status: building
+    preparation_status: prepared
     owner: mingdong
-    description: cs_dialogue@icefall-20260908 训练集原标注加书面化标点（GB/T 15834，逗号从紧）：微调后的 Qwen3-4B 只往原标注里插标点，以 Qwen3-ASR 听音频得到的带标点转写作语气提示；去掉标点后必须与原标注逐字一致。进行中，进度见状态文件。
+    description: cs_dialogue@icefall-20260908 训练集原标注加书面化标点（GB/T 15834，逗号从紧）：微调后的 Qwen3-4B（Qwen3.8-27B 的 9.6 万条输出蒸馏）以 Qwen3-ASR-1.7B 听音频得到的带标点转写作语气提示，只往原标注里插标点。模型改动了原文的条目，把模型输出的标点按字对齐搬回原标注；每条以 。？！ 结尾；原标注的字、空格（首尾除外）和大小写不变。没有汉字的条目（英文句子、拼读字母）和标注为空的条目原样保留。文件与源 supervisions 条数、顺序相同，只换 text。试点 200 条人工参照上：WenetSpeech markF1 92.4、其他来源 88.9（老师 93.2 / 88.2，原 FireRedPunc 79.8）。原标注自带的人工标点（每 100 字约 9.4 个）和 <FIL/>、<SPK/> 等标签：标点按新规范重加，标签原样保留，标点可能紧挨标签。
     source: cs_dialogue@icefall-20260908
     run_dir: /workspace/workspace/mingdong/data/amphiondata/zh-punc-distill-20261029
+    audit: datasets/cs_dialogue/versions/punc-written-v1-20261029/state.json
+    known_issues: 学生模型只在试点的 WenetSpeech、KeSpeech、AISHELL-2、AISHELL、RAMC、AliMeeting 上有人工参照评测；逗号可加可不加处与参照常有出入。搬回标点的条目可能少标逗号。
   recipe_parameters:
     punctuation_model: Qwen3-4B-Instruct-2507 + LoRA distilled from Qwen3.8-27B
     hint: Qwen3-ASR-1.7B punctuated transcript
@@ -245,21 +484,47 @@
     kind: dataset-state
     root_alias: aidc_data
     relative_path: datasets/alimeeting_sdm/versions/punc-written-v1-20261029/state.json
+  - name: train_supervisions_punc_0
+    kind: lhotse-supervisions
+    root_alias: aidc_data
+    relative_path: datasets/alimeeting_sdm/versions/punc-written-v1-20261029/alimeeting_sdm_supervisions_train_punc_written.jsonl.gz
+    expected_bytes: 5855174
+    sha256: 1c76177b40a687387c00b06b235baca9569e3d9ed9213ab64ba7e9d5ce4ce0db
+    metadata:
+      record_count: 186360
+      punctuated: true
+      source: datasets/alimeeting_sdm/versions/icefall-20260908/train_sup_0/alimeeting_sdm_supervisions_train.jsonl.gz
   splits:
     train:
       artifacts:
+        punctuated_supervisions:
+        - train_supervisions_punc_0
         preparation_state:
         - preparation_state
       statistics:
-        source_records: 186360
+        records: 186360
+        duration_hours: 140.6
+        duration_basis: sum of supervision durations; same records in the same order as the source supervisions
+        records_punctuated: 186281
+        records_student_kept_label: 185315
+        records_marks_aligned_from_student_output: 966
+        records_without_student_output: 0
+        records_copied_unchanged: 79
+        marks_per_100_chars:
+          ，: 8.135
+          。: 7.298
+          ？: 0.96
+          、: 0.179
       provenance:
-        preparation_status: building
+        preparation_status: prepared
   provenance:
-    preparation_status: building
+    preparation_status: prepared
     owner: mingdong
-    description: alimeeting_sdm@icefall-20260908 训练集原标注加书面化标点（GB/T 15834，逗号从紧）：微调后的 Qwen3-4B 只往原标注里插标点，以 Qwen3-ASR 听音频得到的带标点转写作语气提示；去掉标点后必须与原标注逐字一致。进行中，进度见状态文件。
+    description: alimeeting_sdm@icefall-20260908 训练集原标注加书面化标点（GB/T 15834，逗号从紧）：微调后的 Qwen3-4B（Qwen3.8-27B 的 9.6 万条输出蒸馏）以 Qwen3-ASR-1.7B 听音频得到的带标点转写作语气提示，只往原标注里插标点。模型改动了原文的条目，把模型输出的标点按字对齐搬回原标注；每条以 。？！ 结尾；原标注的字、空格（首尾除外）和大小写不变。没有汉字的条目（英文句子、拼读字母）和标注为空的条目原样保留。文件与源 supervisions 条数、顺序相同，只换 text。试点 200 条人工参照上：WenetSpeech markF1 92.4、其他来源 88.9（老师 93.2 / 88.2，原 FireRedPunc 79.8）。
     source: alimeeting_sdm@icefall-20260908
     run_dir: /workspace/workspace/mingdong/data/amphiondata/zh-punc-distill-20261029
+    audit: datasets/alimeeting_sdm/versions/punc-written-v1-20261029/state.json
+    known_issues: 学生模型只在试点的 WenetSpeech、KeSpeech、AISHELL-2、AISHELL、RAMC、AliMeeting 上有人工参照评测；逗号可加可不加处与参照常有出入。搬回标点的条目可能少标逗号。
   recipe_parameters:
     punctuation_model: Qwen3-4B-Instruct-2507 + LoRA distilled from Qwen3.8-27B
     hint: Qwen3-ASR-1.7B punctuated transcript
@@ -279,21 +544,53 @@
     kind: dataset-state
     root_alias: aidc_data
     relative_path: datasets/vitw_far_field/versions/punc-written-v1-20261029/state.json
+  - name: train_supervisions_punc_0
+    kind: lhotse-supervisions
+    root_alias: aidc_data
+    relative_path: datasets/vitw_far_field/versions/punc-written-v1-20261029/vitw_supervisions_far_field_punc_written.jsonl.gz
+    expected_bytes: 3021480
+    sha256: 0f2b9f4bc1bf20799ca1554e3f229ea25169f71495242886ea76524fb2a6da9f
+    metadata:
+      record_count: 45437
+      punctuated: true
+      source: datasets/vitw_far_field/versions/icefall-20260908/train_sup_0/vitw_supervisions_far_field.jsonl.gz
   splits:
     train:
       artifacts:
+        punctuated_supervisions:
+        - train_supervisions_punc_0
         preparation_state:
         - preparation_state
       statistics:
-        source_records: 45437
+        records: 45437
+        duration_hours: 77.3
+        duration_basis: sum of supervision durations; same records in the same order as the source supervisions
+        records_punctuated: 22673
+        records_student_kept_label: 22641
+        records_marks_aligned_from_student_output: 32
+        records_without_student_output: 0
+        records_copied_unchanged: 22764
+        marks_per_100_chars:
+          。: 6.975
+          ，: 2.12
+          ？: 0.619
+          、: 0.233
+          《: 0.058
+          》: 0.058
+          ：: 0.034
+          ！: 0.023
+          “: 0.016
+          ”: 0.016
       provenance:
-        preparation_status: building
+        preparation_status: prepared
   provenance:
-    preparation_status: building
+    preparation_status: prepared
     owner: mingdong
-    description: vitw_far_field@icefall-20260908 训练集原标注加书面化标点（GB/T 15834，逗号从紧）：微调后的 Qwen3-4B 只往原标注里插标点，以 Qwen3-ASR 听音频得到的带标点转写作语气提示；去掉标点后必须与原标注逐字一致。进行中，进度见状态文件。
+    description: vitw_far_field@icefall-20260908 训练集原标注加书面化标点（GB/T 15834，逗号从紧）：微调后的 Qwen3-4B（Qwen3.8-27B 的 9.6 万条输出蒸馏）以 Qwen3-ASR-1.7B 听音频得到的带标点转写作语气提示，只往原标注里插标点。模型改动了原文的条目，把模型输出的标点按字对齐搬回原标注；每条以 。？！ 结尾；原标注的字、空格（首尾除外）和大小写不变。没有汉字的条目（英文句子、拼读字母）和标注为空的条目原样保留。文件与源 supervisions 条数、顺序相同，只换 text。试点 200 条人工参照上：WenetSpeech markF1 92.4、其他来源 88.9（老师 93.2 / 88.2，原 FireRedPunc 79.8）。约一半条目是英文句子，原样保留（含原有英文标点）；中文条目原有的标点按新规范重加。
     source: vitw_far_field@icefall-20260908
     run_dir: /workspace/workspace/mingdong/data/amphiondata/zh-punc-distill-20261029
+    audit: datasets/vitw_far_field/versions/punc-written-v1-20261029/state.json
+    known_issues: 学生模型只在试点的 WenetSpeech、KeSpeech、AISHELL-2、AISHELL、RAMC、AliMeeting 上有人工参照评测；逗号可加可不加处与参照常有出入。搬回标点的条目可能少标逗号。
   recipe_parameters:
     punctuation_model: Qwen3-4B-Instruct-2507 + LoRA distilled from Qwen3.8-27B
     hint: Qwen3-ASR-1.7B punctuated transcript
@@ -312,21 +609,52 @@
     kind: dataset-state
     root_alias: aidc_data
     relative_path: datasets/realman/versions/punc-written-v1-20261029/state.json
+  - name: train_supervisions_punc_0
+    kind: lhotse-supervisions
+    root_alias: aidc_data
+    relative_path: datasets/realman/versions/punc-written-v1-20261029/realman_supervisions_train_punc_written.jsonl.gz
+    expected_bytes: 2130845
+    sha256: 43d2f47d7f0df3513763842ab21bea744e729c7690c407936ad5ba1c7e0b98f0
+    metadata:
+      record_count: 36816
+      punctuated: true
+      source: datasets/realman/versions/icefall-20260908/train_sup_0/realman_supervisions_train.jsonl.gz
   splits:
     train:
       artifacts:
+        punctuated_supervisions:
+        - train_supervisions_punc_0
         preparation_state:
         - preparation_state
       statistics:
-        source_records: 36816
+        records: 36816
+        duration_hours: 64.0
+        duration_basis: sum of supervision durations; same records in the same order as the source supervisions
+        records_punctuated: 36816
+        records_student_kept_label: 36258
+        records_marks_aligned_from_student_output: 558
+        records_without_student_output: 0
+        records_copied_unchanged: 0
+        marks_per_100_chars:
+          ，: 7.077
+          。: 3.709
+          ？: 0.49
+          、: 0.292
+          》: 0.047
+          《: 0.047
+          ：: 0.037
+          ”: 0.033
+          “: 0.033
       provenance:
-        preparation_status: building
+        preparation_status: prepared
   provenance:
-    preparation_status: building
+    preparation_status: prepared
     owner: mingdong
-    description: realman@icefall-20260908 训练集原标注加书面化标点（GB/T 15834，逗号从紧）：微调后的 Qwen3-4B 只往原标注里插标点，以 Qwen3-ASR 听音频得到的带标点转写作语气提示；去掉标点后必须与原标注逐字一致。进行中，进度见状态文件。
+    description: realman@icefall-20260908 训练集原标注加书面化标点（GB/T 15834，逗号从紧）：微调后的 Qwen3-4B（Qwen3.8-27B 的 9.6 万条输出蒸馏）以 Qwen3-ASR-1.7B 听音频得到的带标点转写作语气提示，只往原标注里插标点。模型改动了原文的条目，把模型输出的标点按字对齐搬回原标注；每条以 。？！ 结尾；原标注的字、空格（首尾除外）和大小写不变。没有汉字的条目（英文句子、拼读字母）和标注为空的条目原样保留。文件与源 supervisions 条数、顺序相同，只换 text。试点 200 条人工参照上：WenetSpeech markF1 92.4、其他来源 88.9（老师 93.2 / 88.2，原 FireRedPunc 79.8）。
     source: realman@icefall-20260908
     run_dir: /workspace/workspace/mingdong/data/amphiondata/zh-punc-distill-20261029
+    audit: datasets/realman/versions/punc-written-v1-20261029/state.json
+    known_issues: 学生模型只在试点的 WenetSpeech、KeSpeech、AISHELL-2、AISHELL、RAMC、AliMeeting 上有人工参照评测；逗号可加可不加处与参照常有出入。搬回标点的条目可能少标逗号。
   recipe_parameters:
     punctuation_model: Qwen3-4B-Instruct-2507 + LoRA distilled from Qwen3.8-27B
     hint: Qwen3-ASR-1.7B punctuated transcript
@@ -345,19 +673,53 @@
     kind: dataset-state
     root_alias: aidc_data
     relative_path: datasets/wenetspeech/versions/punc-written-v1-20261029/state.json
+  - name: train_supervisions_punc_0
+    kind: lhotse-supervisions
+    root_alias: aidc_data
+    relative_path: datasets/wenetspeech/versions/punc-written-v1-20261029/wenetspeech_supervisions_L_punc_written.jsonl.gz
+    expected_bytes: 448983963
+    sha256: d4736c2d38e726dacf81b8f593803091b5e23ef5765ad8636d6b43611e174410
+    metadata:
+      record_count: 14625245
+      punctuated: true
+      source: datasets/wenetspeech/source/cos-backup-20261011/legacy_asr/LHOTSE/WenetSpeech/data/manifests/wenetspeech_supervisions_L.jsonl.gz
   splits:
     train:
       artifacts:
+        punctuated_supervisions:
+        - train_supervisions_punc_0
         preparation_state:
         - preparation_state
+      statistics:
+        records: 14625245
+        duration_hours: 10005.4
+        duration_basis: sum of supervision durations; same records in the same order as the source supervisions
+        records_punctuated: 14625245
+        records_student_kept_label: 14611767
+        records_marks_aligned_from_student_output: 13478
+        records_without_student_output: 0
+        records_copied_unchanged: 0
+        marks_per_100_chars:
+          。: 8.296
+          ，: 2.654
+          ？: 1.32
+          、: 0.115
+          ！: 0.067
+          《: 0.039
+          》: 0.039
+          ”: 0.026
+          “: 0.026
+          ：: 0.024
       provenance:
-        preparation_status: building
+        preparation_status: prepared
   provenance:
-    preparation_status: building
+    preparation_status: prepared
     owner: mingdong
-    description: wenetspeech@icefall-20260908 训练集原标注加书面化标点（GB/T 15834，逗号从紧）：微调后的 Qwen3-4B 只往原标注里插标点，以 Qwen3-ASR 听音频得到的带标点转写作语气提示；去掉标点后必须与原标注逐字一致。进行中，进度见状态文件。
+    description: wenetspeech@icefall-20260908 训练集原标注加书面化标点（GB/T 15834，逗号从紧）：微调后的 Qwen3-4B（Qwen3.8-27B 的 9.6 万条输出蒸馏）以 Qwen3-ASR-1.7B 听音频得到的带标点转写作语气提示，只往原标注里插标点。模型改动了原文的条目，把模型输出的标点按字对齐搬回原标注；每条以 。？！ 结尾；原标注的字、空格（首尾除外）和大小写不变。没有汉字的条目（英文句子、拼读字母）和标注为空的条目原样保留。文件与源 supervisions 条数、顺序相同，只换 text。试点 200 条人工参照上：WenetSpeech markF1 92.4、其他来源 88.9（老师 93.2 / 88.2，原 FireRedPunc 79.8）。
     source: wenetspeech@icefall-20260908
     run_dir: /workspace/workspace/mingdong/data/amphiondata/zh-punc-distill-20261029
+    audit: datasets/wenetspeech/versions/punc-written-v1-20261029/state.json
+    known_issues: 学生模型只在试点的 WenetSpeech、KeSpeech、AISHELL-2、AISHELL、RAMC、AliMeeting 上有人工参照评测；逗号可加可不加处与参照常有出入。搬回标点的条目可能少标逗号。
   recipe_parameters:
     punctuation_model: Qwen3-4B-Instruct-2507 + LoRA distilled from Qwen3.8-27B
     hint: Qwen3-ASR-1.7B punctuated transcript
@@ -376,19 +738,53 @@
     kind: dataset-state
     root_alias: aidc_data
     relative_path: datasets/wenetspeech_disfluency/versions/punc-written-v1-20261029/state.json
+  - name: train_supervisions_punc_0
+    kind: lhotse-supervisions
+    root_alias: aidc_data
+    relative_path: datasets/wenetspeech_disfluency/versions/punc-written-v1-20261029/wenetspeech_supervisions_restore_disfluency_punc_written.jsonl.gz
+    expected_bytes: 12184782
+    sha256: efeb3d411a62f84c466470d40684327a908bff02fb3622193d474a5d89b6e0a1
+    metadata:
+      record_count: 244507
+      punctuated: true
+      source: datasets/wenetspeech/source/cos-backup-20261011/legacy_asr/WenetSpeech/lhotse/clean/v3-firered/derived/police-v9/wenetspeech_supervisions_restore_disfluency.jsonl.gz
   splits:
     train:
       artifacts:
+        punctuated_supervisions:
+        - train_supervisions_punc_0
         preparation_state:
         - preparation_state
+      statistics:
+        records: 244507
+        duration_hours: 182.5
+        duration_basis: sum of supervision durations; same records in the same order as the source supervisions
+        records_punctuated: 244507
+        records_student_kept_label: 244410
+        records_marks_aligned_from_student_output: 97
+        records_without_student_output: 0
+        records_copied_unchanged: 0
+        marks_per_100_chars:
+          ，: 9.472
+          。: 8.055
+          ？: 1.973
+          ！: 0.13
+          、: 0.113
+          “: 0.023
+          ”: 0.023
+          ：: 0.021
+          《: 0.02
+          》: 0.02
       provenance:
-        preparation_status: building
+        preparation_status: prepared
   provenance:
-    preparation_status: building
+    preparation_status: prepared
     owner: mingdong
-    description: wenetspeech_disfluency@icefall-20260908 训练集原标注加书面化标点（GB/T 15834，逗号从紧）：微调后的 Qwen3-4B 只往原标注里插标点，以 Qwen3-ASR 听音频得到的带标点转写作语气提示；去掉标点后必须与原标注逐字一致。进行中，进度见状态文件。
+    description: wenetspeech_disfluency@icefall-20260908 训练集原标注加书面化标点（GB/T 15834，逗号从紧）：微调后的 Qwen3-4B（Qwen3.8-27B 的 9.6 万条输出蒸馏）以 Qwen3-ASR-1.7B 听音频得到的带标点转写作语气提示，只往原标注里插标点。模型改动了原文的条目，把模型输出的标点按字对齐搬回原标注；每条以 。？！ 结尾；原标注的字、空格（首尾除外）和大小写不变。没有汉字的条目（英文句子、拼读字母）和标注为空的条目原样保留。文件与源 supervisions 条数、顺序相同，只换 text。试点 200 条人工参照上：WenetSpeech markF1 92.4、其他来源 88.9（老师 93.2 / 88.2，原 FireRedPunc 79.8）。
     source: wenetspeech_disfluency@icefall-20260908
     run_dir: /workspace/workspace/mingdong/data/amphiondata/zh-punc-distill-20261029
+    audit: datasets/wenetspeech_disfluency/versions/punc-written-v1-20261029/state.json
+    known_issues: 学生模型只在试点的 WenetSpeech、KeSpeech、AISHELL-2、AISHELL、RAMC、AliMeeting 上有人工参照评测；逗号可加可不加处与参照常有出入。搬回标点的条目可能少标逗号。
   recipe_parameters:
     punctuation_model: Qwen3-4B-Instruct-2507 + LoRA distilled from Qwen3.8-27B
     hint: Qwen3-ASR-1.7B punctuated transcript
@@ -407,19 +803,53 @@
     kind: dataset-state
     root_alias: aidc_data
     relative_path: datasets/wenetspeech_clean/versions/punc-written-v1-20261029/state.json
+  - name: train_supervisions_punc_0
+    kind: lhotse-supervisions
+    root_alias: aidc_data
+    relative_path: datasets/wenetspeech_clean/versions/punc-written-v1-20261029/wenetspeech_supervisions_L_clean_punc_written.jsonl.gz
+    expected_bytes: 540655822
+    sha256: d702fb153fa8aeab1c18a59c121786d28c385d5d6799d572e35469365900c830
+    metadata:
+      record_count: 14625245
+      punctuated: true
+      source: datasets/wenetspeech/source/cos-backup-20261011/legacy_asr/WenetSpeech/lhotse/clean/v3-firered/wenetspeech_supervisions_L_clean.jsonl.gz
   splits:
     train:
       artifacts:
+        punctuated_supervisions:
+        - train_supervisions_punc_0
         preparation_state:
         - preparation_state
+      statistics:
+        records: 14625245
+        duration_hours: 9971.1
+        duration_basis: sum of supervision durations with custom.clean.pass=true, as in the source version; the files hold all source records
+        records_punctuated: 14625245
+        records_student_kept_label: 14611837
+        records_marks_aligned_from_student_output: 13408
+        records_without_student_output: 0
+        records_copied_unchanged: 0
+        marks_per_100_chars:
+          。: 8.292
+          ，: 2.736
+          ？: 1.319
+          、: 0.114
+          ！: 0.068
+          《: 0.039
+          》: 0.039
+          ”: 0.026
+          “: 0.026
+          ：: 0.024
       provenance:
-        preparation_status: building
+        preparation_status: prepared
   provenance:
-    preparation_status: building
+    preparation_status: prepared
     owner: mingdong
-    description: wenetspeech_clean@clean-v3-20260828 训练集原标注加书面化标点（GB/T 15834，逗号从紧）：微调后的 Qwen3-4B 只往原标注里插标点，以 Qwen3-ASR 听音频得到的带标点转写作语气提示；去掉标点后必须与原标注逐字一致。进行中，进度见状态文件。
+    description: wenetspeech_clean@clean-v3-20260828 训练集原标注加书面化标点（GB/T 15834，逗号从紧）：微调后的 Qwen3-4B（Qwen3.8-27B 的 9.6 万条输出蒸馏）以 Qwen3-ASR-1.7B 听音频得到的带标点转写作语气提示，只往原标注里插标点。模型改动了原文的条目，把模型输出的标点按字对齐搬回原标注；每条以 。？！ 结尾；原标注的字、空格（首尾除外）和大小写不变。没有汉字的条目（英文句子、拼读字母）和标注为空的条目原样保留。文件与源 supervisions 条数、顺序相同，只换 text。试点 200 条人工参照上：WenetSpeech markF1 92.4、其他来源 88.9（老师 93.2 / 88.2，原 FireRedPunc 79.8）。本数据的条目与 wenetspeech（原始 L 标注）同序，标注不同的 244,507 条即 wenetspeech_disfluency，标点取自这两者的结果。
     source: wenetspeech_clean@clean-v3-20260828
     run_dir: /workspace/workspace/mingdong/data/amphiondata/zh-punc-distill-20261029
+    audit: datasets/wenetspeech_clean/versions/punc-written-v1-20261029/state.json
+    known_issues: 学生模型只在试点的 WenetSpeech、KeSpeech、AISHELL-2、AISHELL、RAMC、AliMeeting 上有人工参照评测；逗号可加可不加处与参照常有出入。搬回标点的条目可能少标逗号。
   recipe_parameters:
     punctuation_model: Qwen3-4B-Instruct-2507 + LoRA distilled from Qwen3.8-27B
     hint: Qwen3-ASR-1.7B punctuated transcript

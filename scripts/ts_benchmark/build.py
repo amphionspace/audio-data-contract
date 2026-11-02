@@ -82,6 +82,9 @@ def expand_splits(recipe):
     if recipe.get("enroll_store_seconds"):
         for split in out:
             split["params"].setdefault("enroll_store_seconds", recipe["enroll_store_seconds"])
+    if recipe.get("language"):  # recipes without it are Chinese (the handover openings compare characters)
+        for split in out:
+            split["params"].setdefault("language", recipe["language"])
     return out
 
 
@@ -145,16 +148,41 @@ def load_speaker_records(source, catalog, roots):
     return dict(by_speaker)
 
 
-def load_source(source, catalog, roots, rng):
-    """{speaker: [Utt]} of one registered single-speaker split."""
+def normalize_text(text, language):
+    """Chinese text loses its spaces; other languages lose annotation tags (``<FIL/>``) and keep single spaces."""
+    if language == "zh":
+        return re.sub(r"\s+", "", text)
+    text = " ".join(re.sub(r"<[^>]*>", " ", text).split())
+    return re.sub(r" ([.,!?;:])", r"\1", text)
+
+
+def manifest_rows(source, roots):
+    """Supervision-like rows of an exported utterance list (``export_tts_pool.py``), audio paths made absolute."""
+    path = Path(roots[source["manifest"]["alias"]]) / source["manifest"]["path"]
+    for row in _rows(path):
+        yield {**row, "recording_id": row["id"], "audio": str(path.parent / row["path"])}
+
+
+def load_source(source, catalog, roots, rng, language="zh"):
+    """{speaker: [Utt]} of one registered single-speaker split, or of an exported utterance list."""
     if "genres" in source:
         return load_speaker_records(source, catalog, roots)
-    paths = {role: resolve_split(catalog, source["dataset"], source["version"], source["split"], role, roots)
-             for role in ("recordings", "supervisions")}
-    audio = {r["id"]: r["sources"][0]["source"] for path in paths["recordings"] for r in _rows(path)}
+    if "manifest" in source:
+        rows = list(manifest_rows(source, roots))
+        audio = {row["id"]: row["audio"] for row in rows}
+    else:
+        paths = {role: resolve_split(catalog, source["dataset"], source["version"], source["split"], role, roots)
+                 for role in ("recordings", "supervisions")}
+        audio = {r["id"]: r["sources"][0]["source"] for path in paths["recordings"] for r in _rows(path)}
+        rows = (row for path in paths["supervisions"] for row in _rows(path))
     by_speaker = defaultdict(list)
-    for row in (row for path in paths["supervisions"] for row in _rows(path)):
-        text = re.sub(r"\s+", "", row.get("text") or "")
+    for row in rows:
+        raw = row.get("text") or ""
+        if source.get("skip_text") and re.search(source["skip_text"], raw):  # e.g. a tag for someone else's voice
+            continue
+        text = normalize_text(raw, language)
+        if language != "zh" and not re.search(r"[^\W_]", text):  # only tags and punctuation were left
+            continue
         if not text or row.get("start", 0) != 0 or row["recording_id"] not in audio:
             continue
         speaker = f"{source['dataset']}:{row['speaker']}"
@@ -178,7 +206,7 @@ def build_pools(recipe, catalog, roots):
             continue
         speakers = {}
         for source in spec["sources"]:
-            speakers.update(load_source(source, catalog, roots, rng))
+            speakers.update(load_source(source, catalog, roots, rng, recipe.get("language", "zh")))
         raw[name] = speakers
     for name, spec in recipe["pools"].items():
         if "union" in spec:
@@ -287,8 +315,8 @@ def prepare_rirs(recipe, directory):
 # --- sample construction ------------------------------------------------------
 
 
-def _label_text(items):
-    return "".join(u.text for u, _ in sorted(items, key=lambda x: x[1]))
+def _label_text(items, language="zh"):
+    return ("" if language == "zh" else " ").join(u.text for u, _ in sorted(items, key=lambda x: x[1]))
 
 
 def _utt_json(utt, start):
@@ -419,7 +447,7 @@ def render_job(job):
     if plan.get("enroll_store_seconds"):  # what the stored enrollment holds; a client sends its first L seconds
         labels["enroll_seconds"] = entries[1]["duration"]
     target = next((t for t in plan["tracks"] if t.role == "target"), None)
-    text = _label_text(target.items) if target else ""
+    text = _label_text(target.items, G["recipe"].get("language", "zh")) if target else ""
     return {"split": name, "index": index, "target": text, "labels": labels,
             "metadata": metadata, "entries": entries}
 
@@ -447,6 +475,7 @@ def write_jsonl_gz(path, rows):
 
 def register(recipe, splits, results, data_root, alias):
     version, dataset_id = recipe["version"], recipe["dataset_id"]
+    language = recipe.get("language", "zh")
     by_split = defaultdict(list)
     for r in results:
         by_split[r["split"]].append(r)
@@ -468,7 +497,7 @@ def register(recipe, splits, results, data_root, alias):
                 "task": "ts_asr",
                 "audio_slots": [{"name": "enrollment", "purpose": "enrollment", "ref": ref(enroll)},
                                 {"name": "mixture", "purpose": "mixture", "ref": ref(mix)}],
-                "target": r["target"], "language": "zh", "labels": r["labels"], "metadata": r["metadata"],
+                "target": r["target"], "language": language, "labels": r["labels"], "metadata": r["metadata"],
             }).to_dict())
         records_by_split[split["name"]] = records
         write_jsonl_gz(data_root / "versions" / version / "records" / f"{split['name']}.jsonl.gz", records)
@@ -500,12 +529,13 @@ def register(recipe, splits, results, data_root, alias):
                             "provenance": {"description": f"{split['group']}: {json.dumps(split['params'], ensure_ascii=False)}"}}
     return {
         "schema_version": "dataset-catalog/2.0", "dataset_id": dataset_id, "version": version,
-        "languages": ["zh"], "tasks": ["ts_asr"], "artifacts": artifacts, "splits": split_decl,
+        "languages": [language], "tasks": ["ts_asr"], "artifacts": artifacts, "splits": split_decl,
         "provenance": {
             "status": "complete", "synthetic": "full",
-            "description": "目标说话人 ASR 评测集：由 AISHELL-3、KeSpeech、MagicData、AISHELL-2、AISHELL-1 的官方 test "
-                           "划分合成，覆盖注册音频劣化、目标说话人进场离场与缺席、纯噪声、环境与设备。只用于评测，不进训练。"
-                           "场景见 scripts/ts_benchmark/recipe.yaml。",
+            "description": recipe.get("description") or (
+                "目标说话人 ASR 评测集：由 AISHELL-3、KeSpeech、MagicData、AISHELL-2、AISHELL-1 的官方 test "
+                "划分合成，覆盖注册音频劣化、目标说话人进场离场与缺席、纯噪声、环境与设备。只用于评测，不进训练。"
+                "场景见 scripts/ts_benchmark/recipe.yaml。"),
             "sources": [f"{s['dataset']}@{s['version']}:{s['split']}" for p in recipe["pools"].values()
                         for s in p.get("sources", [])],
         },

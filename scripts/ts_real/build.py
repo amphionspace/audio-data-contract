@@ -18,6 +18,12 @@ are sampled per bucket of the target's overlap ratio, so heavily overlapped stre
 kept (the run-of-whole-utterances closure drops most of them). Recipe ``dev`` cuts both kinds from the dev
 splits for model selection.
 
+Recipe ``en`` applies the same rules to English test/eval sets (AMI, NOTSOFAR-1, CHiME-6, DiPCo, ICSI; loaders and
+transcript cleaning in ``english.py``): references join a speaker's utterances with spaces, records carry
+``language: en``, enrollments follow v4 (an utterance others overlap for up to 20%, stored to 10 s; >= 0.3 s of
+others in the first 5 s moves the record to ``<split>-enrollmix``), and every enrollment passes a voice check
+(``voice_check.py``; ``--embed-python`` is a Python with onnxruntime and torchaudio for ``embed_worker.py``).
+
     python scripts/ts_real/build.py --roots /workspace/data/registry/roots.json [--recipe overlap]
 """
 
@@ -26,13 +32,15 @@ from __future__ import annotations
 import argparse
 import bisect
 import gzip
+import importlib.util
 import json
 import os
 import random
+import re
 import shutil
 import subprocess
 import sys
-from collections import defaultdict
+from collections import Counter, defaultdict
 from pathlib import Path
 
 import numpy as np
@@ -61,6 +69,12 @@ ENROLL_PIECE_MIN = 1.0  # shortest further utterance appended to an enrollment
 ENROLL_CROP_OTHERS_MAX = 0.3
 MIN_TARGET_SECONDS = 1.0
 ATTEMPTS = 60
+ENROLLMIX = "-enrollmix"
+JOINERS = {"zh": "", "en": " "}  # between a speaker's utterances in the reference
+# Fillers Whisper's EnglishTextNormalizer (the English scorer) deletes; a target needs a word beyond them.
+EN_FILLERS = re.compile(r"\b(hmm|mm|mhm|mmm|uh|um)\b")
+SPEAKER_MODEL = "/workspace/model/wespeaker-ecapa-tdnn512-LM/voxceleb_ECAPA512_LM.onnx"
+VOICE_ATTEMPTS = 20  # further enrollment utterances tried when one fails the voice check
 
 RECIPE = yaml.safe_load("""
 version: v2-20261013
@@ -107,6 +121,27 @@ corpora:
   alimeeting: {dataset: alimeeting_sdm, version: icefall-20260908, split: dev, label: AliMeeting 远场会议 dev, windows: {o0: 100, o20: 100, o50: 150, o100: 150}}
   ramc: {dataset: magicdata_ramc, version: icefall-20260908, split: dev, label: MagicData-RAMC 手机通话 dev, windows: {o0: 150}}
 """),
+    "en": yaml.safe_load("""
+version: en-v2-20261031
+seed: 20261031
+language: en
+enrollmix: true
+voice_check: true
+description: >-
+  英文真实对话的目标说话人窗口（ts_asr_real 中文版的英文对照，规则相同）：从 AMI 单远场麦、NOTSOFAR-1 单通道设备、
+  CHiME-6 家庭聚会（所在房间参考阵列通道 1，窗口内所有人在同一房间）、DiPCo 晚宴（远场设备通道 1，时间轴按近讲麦对齐）的
+  人工标注 test/eval 划分，以及 ICSI 会议测试会议（官方近讲耳麦混音，不是远场）里按完整语句切出 8–22 秒窗口，不做任何混合；
+  同一窗口配一条目标在场（注册取窗外同一人的语句）和一条目标缺席的样本。参考文本为目标在窗口内各句按时间顺序用空格拼接，
+  去掉了笑声、噪声、截断词等标注；含听不清、外语、被消音或数字朗读的语句算作有人说话，但不作目标、不作注册。注册存 10 秒、
+  客户端取前 5 秒，前 5 秒里他人说话不少于 0.3 秒的在 -enrollmix 划分；每条注册都过声纹核对（与本人在本录音其他语句比
+  与其他人更像，有近讲麦的语料用近讲麦之和），不过的换一句或剔除，见 source/<版本>/report.json。只用于评测，不进训练。
+corpora:
+  ami: {dataset: ami_sdm, version: icefall-20260908, split: test, label: AMI 远场会议, windows: 150}
+  notsofar: {kind: notsofar, dataset: notsofar_sdm, version: icefall-20260908, split: test, label: NOTSOFAR-1 远场会议, windows: 150}
+  chime6: {kind: chime6, dataset: chime6, version: speaker-records-v1-20260912, split: test, label: CHiME-6 家庭聚会, windows: 150}
+  dipco: {kind: dipco, dataset: dipco, version: zenodo-8122551-20261023, split: eval, label: DiPCo 晚宴, windows: 150}
+  icsi: {kind: icsi, dataset: icsi, version: modelscope-argmaxinc-20261025, split: test, label: ICSI 会议（近讲耳麦混音）, windows: 150, meetings: [Bmr013, Bmr018, Bro021]}
+"""),
 }
 
 
@@ -123,17 +158,72 @@ def load_corpus(spec, catalog, roots, split=None):
         return out
 
     recordings = {r["id"]: r for r in rows("recordings")}
+    english = spec.get("language") == "en"
     out = {}
     for row in rows("supervisions"):
         rid = row["recording_id"]
         if rid not in recordings or not (row.get("text") or "").strip():
             continue
+        text = _english().clean(row["text"], "ami")[0] if english else "".join(row["text"].split())
         entry = out.setdefault(rid, {"path": recordings[rid]["sources"][0]["source"], "sups": [],
                                      "duration": float(recordings[rid]["duration"]),
                                      "channels": len(recordings[rid].get("channel_ids") or [0])})
         entry["sups"].append((float(row["start"]), float(row["start"]) + float(row["duration"]),
-                              str(row["speaker"]), "".join(row["text"].split())))
+                              str(row["speaker"]), text))
+    for rid, entry in out.items():
+        if english:
+            entry.update(language="en", enrollmix=spec.get("enrollmix"), excluded={},
+                         source=Path(recordings[rid]["sources"][0]["source"]).stem.split(".")[-1])
+        finish_entry(entry)
+    return out
+
+
+_SIBLINGS = {}
+
+
+def _sibling(name):
+    """A module next to this file, loaded once (this file is itself loaded under other names)."""
+    if name not in _SIBLINGS:
+        spec = importlib.util.spec_from_file_location(f"ts_real_{name}", Path(__file__).with_name(f"{name}.py"))
+        _SIBLINGS[name] = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(_SIBLINGS[name])
+    return _SIBLINGS[name]
+
+
+def _english():
+    return _sibling("english")
+
+
+def load_recordings(name, corpus, catalog, roots, seed, report):
+    """{recording: entry} of one recipe corpus, by its ``kind``."""
+    kind = corpus.get("kind")
+    if kind == "emilia2":
+        return load_emilia2(corpus, catalog, roots, random.Random(f"{seed}:{name}:recordings"))
+    if kind is None:
+        return load_corpus(corpus, catalog, roots)
+    english = _english()
+    if kind == "notsofar":
+        out = english.load_notsofar(corpus, catalog, roots, random.Random(f"{seed}:{name}:devices"))
+    elif kind == "chime6":
+        out = english.load_chime6(corpus, catalog, roots)
+    elif kind == "icsi":
+        out = english.load_icsi(corpus, catalog, roots)
+    elif kind == "dipco":
+        out = english.load_dipco(corpus, catalog, roots, random.Random(f"{seed}:{name}:devices"))
+        for session, entry in out.items():
+            # 120 s stretches every 300 s; a session-wide offset must agree across them within 50 ms.
+            starts = [60.0 + 300.0 * i for i in range(int(max(entry["duration"] - 240.0, 0) // 300) + 1)]
+            lag, lags, peaks = english.measure_offset(entry["close_talk"], entry["path"], starts)
+            if lag is None or max(lags) - min(lags) > 0.05:
+                raise ValueError(f"DiPCo {session} {entry['source']}: no stable far-field offset {lags} {peaks}")
+            english.shift(entry, round(lag, 3))
+            report.setdefault("timeline_offsets_s", {})[f"{name}:{session}"] = {
+                "channel": entry["source"], "offset": round(lag, 3), "per_stretch": lags, "correlation": peaks}
+            print(f"DiPCo {session} {entry['source']}: far-field lags the transcript by {lag:+.3f} s {lags}", flush=True)
+    else:
+        raise ValueError(f"unknown corpus kind {kind}")
     for entry in out.values():
+        entry.update(language=corpus.get("language"), enrollmix=corpus.get("enrollmix"))
         finish_entry(entry)
     return out
 
@@ -144,11 +234,14 @@ def finish_entry(entry):
     entry["starts"] = [u[0] for u in entry["sups"]]
     entry["longest"] = max(u[1] - u[0] for u in entry["sups"])
     entry["eligible"] = defaultdict(list)
+    excluded = entry.get("excluded", {})
     for s, e, spk, text in entry["sups"]:
-        if e - s >= ENROLL_MIN:
+        if e - s >= ENROLL_MIN and (s, e, spk) not in excluded:
             others = sum(max(0.0, min(e, oe) - max(s, os_)) for os_, oe, ospk, _ in overlapping(entry, s, e) if ospk != spk)
+            # ``enrollmix`` recipes keep v2's rule (20% overlap) and split off crowded crops; others drop them here.
             if (others <= ENROLL_MAX_OVERLAP * (e - s)
-                    and crop_others(entry, spk, s, min(e, s + ENROLL_CROP))[0] < ENROLL_CROP_OTHERS_MAX):
+                    and (entry.get("enrollmix")
+                         or crop_others(entry, spk, s, min(e, s + ENROLL_CROP))[0] < ENROLL_CROP_OTHERS_MAX)):
                 entry["eligible"][spk].append((s, e, text))
 
 
@@ -169,8 +262,10 @@ def enrollment_pieces(entry, speaker, first, lo, hi, rng):
     ENROLL_STORE seconds. Appended utterances lie outside the window [lo, hi] (1 s margin) and nobody else is
     annotated in them, so only the first utterance can carry someone else's voice (``labels.enroll_others_s``)."""
     pieces, have = [first], first[1] - first[0]
+    excluded = entry.get("excluded", {})
     candidates = [(s, e) for s, e, spk, _ in entry["sups"]
                   if spk == speaker and e - s >= ENROLL_PIECE_MIN and not (e > lo - 1.0 and s < hi + 1.0)
+                  and (s, e, spk) not in excluded
                   and not (e > first[0] and s < first[1])
                   and not any(o[2] != speaker for o in overlapping(entry, s, e))]
     rng.shuffle(candidates)
@@ -341,6 +436,23 @@ def eligible_enrollments(entry, speaker, window_lo, window_hi):
             if not (e > window_lo - 1.0 and s < window_hi + 1.0)]
 
 
+def single_room(entry, window):
+    """CHiME-6: everyone in the window talks in one room (the one whose array the audio comes from)."""
+    rooms = entry.get("locations")
+    return rooms is None or len({rooms[u[:3]] for u in window["utts"]}) == 1
+
+
+def scorable(entry, utts, speaker):
+    """``speaker`` can be a window's target: none of their utterances in it is excluded (words missing from the
+    transcript), and an English reference keeps a word after the scorer drops fillers."""
+    own = [u for u in utts if u[2] == speaker]
+    if any(u[:3] in entry.get("excluded", {}) for u in own):
+        return False
+    if entry.get("language") == "en":
+        return any(ch.isalnum() for ch in EN_FILLERS.sub(" ", " ".join(u[3] for u in own).lower()))
+    return True
+
+
 def overlap_ratio(target_utts, all_utts):
     covered = total = 0.0
     for s, e, spk, _ in target_utts:
@@ -361,6 +473,8 @@ def plan_samples(name, corpus, recordings, rng):
     by_bucket = defaultdict(list)
     for rid, rec in recordings.items():
         for window in candidate_windows(rec, rng):
+            if not single_room(rec, window):
+                continue
             present = speaker_seconds(window["utts"])
             window.update(recording=rid, present=present, speakers=len(present))
             for bucket, (lo, hi) in RECIPE["buckets"].items():
@@ -374,12 +488,13 @@ def plan_samples(name, corpus, recordings, rng):
             if len(chosen) >= corpus["windows"] // len(RECIPE["buckets"]) + (6 if bucket == "3plus" else 0):
                 break
             rec = recordings[window["recording"]]
-            usable = [s for s, sec in window["present"].items() if sec >= MIN_TARGET_SECONDS]
+            usable = [s for s, sec in window["present"].items()
+                      if sec >= MIN_TARGET_SECONDS and scorable(rec, window["utts"], s)]
             rng.shuffle(usable)
             target = next((s for s in usable if eligible_enrollments(rec, s, window["lo"], window["hi"])), None)
             if target is None:
                 continue
-            absent = pick_absent(window, recordings, rng)
+            absent = pick_absent(window, recordings, rng, strict=corpus.get("language") == "en")
             if absent is None:
                 continue
             chosen.append({"window": window, "target": target, "absent": absent})
@@ -387,8 +502,12 @@ def plan_samples(name, corpus, recordings, rng):
     return plans
 
 
-def pick_absent(window, recordings, rng):
-    """(recording, speaker, source) of a speaker not talking in the window, enrollable outside it."""
+def pick_absent(window, recordings, rng, strict=False):
+    """(recording, speaker, source) of a speaker not talking in the window, enrollable outside it.
+
+    ``strict``: a speaker taken from another recording must not talk in the window either (the English corpora
+    reuse speaker IDs across meetings).
+    """
     rec = recordings[window["recording"]]
     speakers_in_recording = {u[2] for u in rec["sups"]}
     absent = [s for s in sorted(speakers_in_recording - set(window["present"]))
@@ -397,7 +516,7 @@ def pick_absent(window, recordings, rng):
         return window["recording"], rng.choice(absent), "same_recording"
     pool = [(r, s) for r, other in sorted(recordings.items()) if r != window["recording"]
             for s in sorted({u[2] for u in other["sups"]})
-            if eligible_enrollments(other, s, -1e9, -1e9)]
+            if eligible_enrollments(other, s, -1e9, -1e9) and not (strict and s in window["present"])]
     if not pool:
         return None
     absent_recording, absent_speaker = rng.choice(pool)
@@ -461,10 +580,52 @@ def cut(recordings, recording, start, end):
             _DECODED.clear()
             _DECODED[recording] = decode_m4a(entry["path"], entry["offset"], entry["duration"])
         return _DECODED[recording][round(max(start, 0) * SR):round(end * SR)]
+    if "samples" in entry:  # decoded at load time (ICSI)
+        return entry["samples"][round(max(start, 0) * SR):round(end * SR)]
+    if "paths" in entry:  # one array per room (CHiME-6)
+        return read_channel0(entry["paths"][_english().location_at(entry, start, end)], start, end)
     return read_channel0(entry["path"], start, end)
 
 
-def render(plan, name, corpus, recordings, rng, out_dir, split, index):
+def check_cut(recordings, recording, start, end):
+    """Audio for the voice check: the sum of the close-talk microphones where the corpus has them (on the
+    transcript's time base, before ``offset_s``), else the channel the set is cut from."""
+    entry = recordings[recording]
+    if "close_talk" not in entry:
+        return cut(recordings, recording, start, end)
+    first = round((start - entry.get("offset_s", 0.0)) * SR)
+    count = round((end - start) * SR)
+    total = np.zeros(count, dtype=np.float32)
+    for path in entry["close_talk"]:
+        w = read_channel0(path, max(first, 0) / SR, (first + count) / SR)
+        total[max(-first, 0):max(-first, 0) + len(w)] += w[: count - max(-first, 0)]
+    return total
+
+
+def check_view(entry):
+    return "close_talk_sum" if "close_talk" in entry else "mixture_channel"
+
+
+def verified_enrollment(checker, recordings, recording, speaker, first, lo, hi, key, pieces, audio):
+    """(first, pieces, audio, verdict, failed verdict or None) of an enrollment that passes the voice check:
+    the given one, else another eligible utterance of the speaker (``key``'s own order); None if none passes."""
+    verdict = checker.check(recordings, recording, speaker, pieces)
+    if verdict["passed"]:
+        return first, pieces, audio, verdict, None
+    entry = recordings[recording]
+    alternatives = [(s, min(e, s + ENROLL_MAX)) for s, e, _ in eligible_enrollments(entry, speaker, lo, hi) if s != first[0]]
+    random.Random(f"{key}:voice-check").shuffle(alternatives)
+    for alternative in alternatives[:VOICE_ATTEMPTS]:
+        new_pieces = enrollment_pieces(entry, speaker, alternative, lo, hi, random.Random(f"{key}:enroll-pieces"))
+        new_verdict = checker.check(recordings, recording, speaker, new_pieces)
+        if new_verdict["passed"]:
+            return alternative, new_pieces, cut_pieces(recordings, recording, new_pieces), new_verdict, verdict
+    checker.events.append({"key": key, "recording": recording, "speaker": speaker, "verdict": verdict,
+                           "alternatives_tried": min(len(alternatives), VOICE_ATTEMPTS)})
+    return None
+
+
+def render(plan, name, corpus, recordings, rng, out_dir, split, index, checker=None):
     window = plan["window"]
     rec = recordings[window["recording"]]
     mix = cut(recordings, window["recording"], window["lo"], window["hi"])
@@ -478,7 +639,7 @@ def render(plan, name, corpus, recordings, rng, out_dir, split, index):
     absent_s, absent_e, _ = rng.choice(eligible_enrollments(absent_rec, absent_speaker, -1e9, -1e9)
                                        if absent_source == "other_recording" else
                                        eligible_enrollments(absent_rec, absent_speaker, window["lo"], window["hi"]))
-    files, pieces = {}, {}
+    files, pieces, firsts, checks, replaced = {}, {}, {}, {}, {}
     for kind, (recording, start, end, speaker) in {
         "pos": (window["recording"], enroll_s, min(enroll_e, enroll_s + ENROLL_MAX), target),
         "neg": (absent_recording, absent_s, min(absent_e, absent_s + ENROLL_MAX), absent_speaker),
@@ -488,9 +649,21 @@ def render(plan, name, corpus, recordings, rng, out_dir, split, index):
         own = random.Random(f"{split}-{kind}:{index:04d}:enroll-pieces")
         pieces[kind] = enrollment_pieces(recordings[recording], speaker, (start, end), lo, hi, own)
         files[kind] = cut_pieces(recordings, recording, pieces[kind])
+        firsts[kind] = (start, end)
+        if checker is not None:
+            picked = verified_enrollment(checker, recordings, recording, speaker, (start, end), lo, hi,
+                                         f"{split}-{kind}:{index:04d}", pieces[kind], files[kind])
+            if picked is None:
+                checker.stats[(name, kind, "dropped")] += 1
+                del files[kind]
+                continue
+            firsts[kind], pieces[kind], files[kind], checks[kind], failed = picked
+            checker.stats[(name, kind, "replaced" if failed else "passed")] += 1
+            if failed:
+                replaced[kind] = {"start": round(start, 3), "end": round(end, 3), "voice_check": failed}
     base = f"{split}-{index:04d}"
     results = []
-    for kind in ("pos", "neg"):
+    for kind in [k for k in ("pos", "neg") if k in files]:
         sample = f"{split}-{kind}"
         entries = []
         for suffix, w in (("mix", mix), ("enroll", files[kind])):
@@ -520,18 +693,28 @@ def render(plan, name, corpus, recordings, rng, out_dir, split, index):
         labels["enroll_seconds"] = round(len(files[kind]) / SR, 3)
         labels["enroll_others_s"] = pieces_others(recordings[enroll_rec], speaker, pieces[kind])[0]
         labels["enroll_condition"] = "clean" if labels["enroll_others_s"] < ENROLL_CROP_OTHERS_MAX else "others_speech"
+        excluded = rec.get("excluded", {})
         metadata = {
             "split": sample, "index": index, "target_speaker": f"{name}:{speaker}",
-            "enrollment": {"recording": window["recording"] if present else absent_recording,
-                           "start": round(enroll_s if present else absent_s, 3),
-                           "end": round(min(enroll_e, enroll_s + ENROLL_MAX) if present else min(absent_e, absent_s + ENROLL_MAX), 3)},
+            "enrollment": {"recording": enroll_rec, "start": round(firsts[kind][0], 3), "end": round(firsts[kind][1], 3)},
             "enrollment_pieces": [[round(s, 3), round(e, 3)] for s, e in pieces[kind]],
             "window_utts": [{"speaker": f"{name}:{spk}", "start": round(s - window["lo"], 3),
                              "duration": round(e - s, 3), "text": text,
-                             **({"clipped": True} if (s, e, spk, text) in window.get("clipped", ()) else {})}
+                             **({"clipped": True} if (s, e, spk, text) in window.get("clipped", ()) else {}),
+                             **({"excluded": excluded[(s, e, spk)]} if (s, e, spk) in excluded else {})}
                             for s, e, spk, text in sorted(window["utts"])],
         }
-        results.append({"split": sample, "index": index, "target": "".join(t for *_, t in target_utts) if present else "",
+        if "source" in rec:
+            metadata["mixture_source"] = (rec["arrays"][_english().location_at(rec, window["lo"], window["hi"])]
+                                          if "arrays" in rec else rec["source"])
+        if "offset_s" in rec:
+            metadata["timeline_offset_s"] = rec["offset_s"]
+        if kind in checks:
+            metadata["enroll_voice_check"] = checks[kind]
+        if kind in replaced:  # as ts_asr_real v3: the first utterance drawn sounded like someone else
+            metadata["enrollment_replaced"] = replaced[kind]
+        joiner = JOINERS[corpus.get("language", "zh")]
+        results.append({"split": sample, "index": index, "target": joiner.join(t for *_, t in target_utts) if present else "",
                         "labels": labels, "metadata": metadata, "entries": entries})
     return results
 
@@ -543,9 +726,13 @@ def main():
     parser.add_argument("--limit", type=int, help="windows per bucket (smoke runs)")
     parser.add_argument("--no-register", action="store_true")
     parser.add_argument("--recipe", choices=sorted(RECIPES), default="v2")
+    parser.add_argument("--embed-python", type=Path, help="Python with onnxruntime and torchaudio (voice_check recipes)")
+    parser.add_argument("--speaker-model", type=Path, default=Path(SPEAKER_MODEL))
     args = parser.parse_args()
     roots = json.loads(args.roots.read_text())
     recipe_spec = RECIPES[args.recipe]
+    if recipe_spec.get("voice_check") and not args.embed_python:
+        parser.error(f"recipe {args.recipe} checks enrollment voices: pass --embed-python")
     version = recipe_spec["version"]
     data_root = Path(roots[DATASET_ID])
     final = data_root / "source" / version
@@ -558,9 +745,15 @@ def main():
     splits, results, excluded = [], [], []
     seed = recipe_spec["seed"]
     rng = random.Random(seed)
+    language, enrollmix = recipe_spec.get("language", "zh"), recipe_spec.get("enrollmix", False)
+    report, checker = {"language": language}, None
+    if recipe_spec.get("voice_check"):
+        voice = _sibling("voice_check")
+        checker = voice.VoiceCheck(voice.Embedder(args.embed_python, args.speaker_model), check_cut, ENROLL_CROP,
+                                   ENROLL_STORE, check_view)
     for name, corpus in recipe_spec["corpora"].items():
-        recordings = (load_emilia2(corpus, catalog, roots, random.Random(f"{seed}:{name}:recordings"))
-                      if corpus.get("kind") == "emilia2" else load_corpus(corpus, catalog, roots))
+        corpus = {**corpus, **({"language": language, "enrollmix": enrollmix} if language != "zh" else {})}
+        recordings = load_recordings(name, corpus, catalog, roots, seed, report)
         if corpus.get("kind") == "emilia2":
             excluded = sorted({e["recording_id"] for e in recordings.values()})
         if recipe_spec.get("exclude_train_speakers"):
@@ -573,20 +766,46 @@ def main():
                                          recipe_spec["prefix"])
         else:
             plans = plan_samples(name, corpus, recordings, random.Random(f"{seed}:{name}"))
+        counts = Counter()
         for split, chosen in sorted(plans.items()):
             if args.limit:
                 chosen = chosen[: args.limit]
             for index, plan in enumerate(chosen):
-                results += render(plan, name, corpus, recordings, rng, partial, split, index)
+                for result in render(plan, name, corpus, recordings, rng, partial, split, index, checker):
+                    if enrollmix and result["labels"]["enroll_condition"] != "clean":
+                        result["split"] += ENROLLMIX
+                        result["labels"]["scenario"] = result["metadata"]["split"] = result["split"]
+                    counts[result["split"]] += 1
+                    results.append(result)
             for kind in ("pos", "neg"):
-                splits.append({"name": f"{split}-{kind}", "group": "real", "params": {"corpus": name, "kind": kind}, "n": len(chosen)})
+                if not enrollmix:
+                    splits.append({"name": f"{split}-{kind}", "group": "real", "params": {"corpus": name, "kind": kind}, "n": len(chosen)})
+                    continue
+                for suffix, extra in (("", {}), (ENROLLMIX, {"enroll_condition": "others_speech"})):
+                    if counts[f"{split}-{kind}{suffix}"]:
+                        splits.append({"name": f"{split}-{kind}{suffix}", "group": "real",
+                                       "params": {"corpus": name, "kind": kind, **extra}, "n": counts[f"{split}-{kind}{suffix}"]})
         print(name, {s: len(c) for s, c in plans.items()}, flush=True)
+        if language != "zh":
+            report.setdefault("corpora", {})[name] = {
+                "recordings": len(recordings), "windows_planned": {s: len(c) for s, c in sorted(plans.items())},
+                "records": dict(sorted(counts.items())),
+                "sources": {r: e.get("source") for r, e in sorted(recordings.items())
+                            if any(p["window"]["recording"] == r for c in plans.values() for p in c)}}
+    if checker is not None:
+        checker.embed.close()
+        report["voice_check"] = {"counts": {"/".join(k): v for k, v in sorted(checker.stats.items())},
+                                 "dropped": checker.events}
     (partial).mkdir(parents=True, exist_ok=True)
+    if language != "zh":
+        (partial / "report.json").write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n")
     if excluded or args.recipe == "v2":
         (partial / "excluded-recordings.txt").write_text("\n".join(excluded) + "\n")
     partial.rename(final)
-    recipe = {"version": version, "dataset_id": DATASET_ID, "pools": {}}
+    recipe = {"version": version, "dataset_id": DATASET_ID, "pools": {}, "language": language}
     declaration = synth.register(recipe, splits, results, data_root, DATASET_ID)
+    if declaration["languages"] != [language]:  # register() takes the language from the recipe since 2026-10-31
+        raise RuntimeError(f"ts_benchmark/build.py register() wrote {declaration['languages']}, expected {language}")
     declaration["provenance"] = {
         "status": "complete", "synthetic": "none",
         "description": recipe_spec.get("description") or "真实对话的目标说话人窗口：从 AliMeeting 远场、AISHELL-4 远场、MagicData-RAMC 手机通话的人工标注测试集，"
