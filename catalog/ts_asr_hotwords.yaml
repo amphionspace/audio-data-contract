@@ -1,0 +1,25 @@
+# TS-ASR + 热词评测集（2026-11-02 开工，占位）。
+- schema_version: dataset-catalog/2.0
+  dataset_id: ts_asr_hotwords
+  version: v1-20261102
+  languages:
+  - zh
+  - en
+  tasks:
+  - ts_asr
+  aliases: []
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/ts_asr_hotwords/versions/v1-20261102/state.json
+  splits: {}
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: TS-ASR + 热词评测集（占位，构建中）：从中文 v12 与英文 TS benchmark 的记录派生，沿用原音频与目标；hotwords 为目标说话人转写里的热词，metadata.bias_lists
+      给 random（正确词 + 随机词）与 interferer（正确词 + 其他说话人说出的热词 + 随机词）两种列表，评测目标热词召回、其他说话人热词误出、漏检与缺席误输出。热词由 amphiondata 的热词提取提示词经 Qwen3.8-27B
+      标注并复核。
+    source: ts_asr_benchmark@v4-20261022 and the other datasets of ts-asr-benchmark@v12-20261022 and ts-asr-benchmark-en@v1-20261031
+    run_dir: /workspace/workspace/mingdong/scratch/ts-hotwords
+    audit: datasets/ts_asr_hotwords/versions/v1-20261102/state.json

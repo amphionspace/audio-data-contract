@@ -81,6 +81,7 @@ Common Voice 英语众包朗读；含清洗、热词、加噪版
 |---|---:|---|---|
 | [common_voice_en@icefall-20260908](../../catalog/icefall_runtime.yaml#L311) | 1,862.7 | 已登记 | 快照 20260914 |
 | [common_voice_en@legacy-20260804](../../catalog/icefall_base.yaml#L263) | 1,862.7 | 已登记 | 快照 20260914 |
+| [common_voice_en@punc-written-en-v1-20261102](../../catalog/en_punc_written_v1.yaml#L46) | — | 未登记 | 没有 |
 | [commonvoice_en@eval-20260804](../../catalog/open_audio_eval.yaml#L280) | 27.2 | 已登记 | 快照 20260914 |
 | [commonvoice_en_clean@clean-v1-20260805](../../catalog/local_lhotse_derived.yaml#L311) | 1,835.4 | 已登记 | 快照 20260914 |
 | [commonvoice_en_hotwords@eval-20260804](../../catalog/open_audio_eval.yaml#L350) | 27.2 | 已登记 | 快照 20260914 |
@@ -109,6 +110,7 @@ Common Voice 英语众包朗读；含清洗、热词、加噪版
 | [cv_en_rir_slr28_sim_hotwords@eval-20260804](../../catalog/open_audio_eval.yaml#L2166) | 27.2 | 已登记 | 快照 20260914 |
 | [common_voice_en@legacy-20260804](../../catalog/icefall_base.yaml#L263) | 1,854.0 | [参考表](https://ccnuebbmik1f.feishu.cn/wiki/CEXFwEjPoi2bIukVjk9c5FdOn12?sheet=3d4d23) | 快照 20260914 |
 
+- `common_voice_en@punc-written-en-v1-20261102`：英文 ASR 训练集原标注加书面化标点并恢复大小写（规范 en-v1：只插 , . ? ! ; : 和改大小写，转小写去标点后与原标注逐词一致；27B 老师 10 万条 → Qwen3-4B 学生跑全量）。占位，处理中
 - `commonvoice_en_clean@clean-v1-20260805`：Qwen3-ASR-1.7B + whisper-large-v3 双引擎筛选；train 需过滤 1,127 条失败记录；test 清单尚未应用筛选结果
 - 含派生版本（与源数据可能重叠）
 
@@ -189,8 +191,10 @@ Emilia 英语野外语音（已清洗）
 | [gigaspeech@eval-20260804](../../catalog/open_audio_eval.yaml#L218) | 40.3 | 已登记 | 快照 20260914 |
 | [gigaspeech@icefall-20260908](../../catalog/icefall_runtime.yaml#L229) | 10,050.7 | 已登记 | 快照 20260914 |
 | [gigaspeech@legacy-20260804](../../catalog/icefall_base.yaml#L190) | 10,050.7 | 已登记 | 快照 20260914 |
+| [gigaspeech@punc-written-en-v1-20261102](../../catalog/en_punc_written_v1.yaml#L24) | — | 未登记 | 没有 |
 | [gigaspeech@legacy-20260804](../../catalog/icefall_base.yaml#L190) | 10,000.0 | [参考表](https://ccnuebbmik1f.feishu.cn/wiki/CEXFwEjPoi2bIukVjk9c5FdOn12?sheet=3d4d23) | 快照 20260914 |
 
+- `gigaspeech@punc-written-en-v1-20261102`：英文 ASR 训练集原标注加书面化标点并恢复大小写（规范 en-v1：只插 , . ? ! ; : 和改大小写，转小写去标点后与原标注逐词一致；27B 老师 10 万条 → Qwen3-4B 学生跑全量）。占位，处理中
 - 含派生版本（与源数据可能重叠）
 
 ### hifitts
@@ -337,6 +341,7 @@ LibriSpeech 混合的目标说话人数据
 | [librispeech@eval-20260804](../../catalog/open_audio_eval.yaml#L574) | — | 未登记 | 快照 20260914 |
 | [librispeech@icefall-20260908](../../catalog/icefall_runtime.yaml#L1) | 971.6 | 已登记 | 快照 20260914 |
 | [librispeech@legacy-20260804](../../catalog/icefall_base.yaml#L1) | 971.6 | 已登记 | 快照 20260914 |
+| [librispeech@punc-written-en-v1-20261102](../../catalog/en_punc_written_v1.yaml#L2) | — | 未登记 | 没有 |
 | [librispeech_test_clean@eval-20260804](../../catalog/open_audio_eval.yaml#L665) | 5.4 | 已登记 | 快照 20260914 |
 | [librispeech_test_clean_hotwords@eval-20260804](../../catalog/open_audio_eval.yaml#L510) | 5.4 | 已登记 | 快照 20260914 |
 | [librispeech_test_other@eval-20260804](../../catalog/open_audio_eval.yaml#L697) | 5.3 | 已登记 | 快照 20260914 |
@@ -353,6 +358,7 @@ LibriSpeech 混合的目标说话人数据
 | [librispeech_traffic_snr5@recipe-1](../../catalog/icefall_traffic_derived.yaml#L127) | 10.7 | 已登记 | 快照 20260914 |
 | [librispeech@legacy-20260804](../../catalog/icefall_base.yaml#L1) | 960.0 | [参考表](https://ccnuebbmik1f.feishu.cn/wiki/CEXFwEjPoi2bIukVjk9c5FdOn12?sheet=3d4d23) | 快照 20260914 |
 
+- `librispeech@punc-written-en-v1-20261102`：英文 ASR 训练集原标注加书面化标点并恢复大小写（规范 en-v1：只插 , . ? ! ; : 和改大小写，转小写去标点后与原标注逐词一致；27B 老师 10 万条 → Qwen3-4B 学生跑全量）。占位，处理中
 - 含派生版本（与源数据可能重叠）
 
 ### libritts_r
@@ -821,6 +827,7 @@ Common Voice 中文众包朗读；含清洗、热词、加噪版
 |---|---:|---|---|
 | [common_voice_zh@icefall-20260908](../../catalog/icefall_runtime.yaml#L1685) | 76.1 | 已登记 | 快照 20260914 |
 | [common_voice_zh@legacy-20260804](../../catalog/icefall_base.yaml#L1311) | 76.1 | 已登记 | 快照 20260914 |
+| [common_voice_zh@punc-written-v1-20261102](../../catalog/zh_punc_written_v1_gaps.yaml#L66) | 42.6 | 已登记 | 没有 |
 | [commonvoice_zh@eval-20260804](../../catalog/open_audio_eval.yaml#L318) | 17.5 | 已登记 | 快照 20260914 |
 | [commonvoice_zh_clean@clean-v1-20260805](../../catalog/local_lhotse_derived.yaml#L487) | 17.5 | 已登记 | 快照 20260914 |
 | [commonvoice_zh_hotwords@eval-20260804](../../catalog/open_audio_eval.yaml#L382) | 17.5 | 已登记 | 快照 20260914 |
@@ -849,6 +856,7 @@ Common Voice 中文众包朗读；含清洗、热词、加噪版
 | [cv_zh_rir_slr28_sim_hotwords@eval-20260804](../../catalog/open_audio_eval.yaml#L2518) | 17.4 | 已登记 | 快照 20260914 |
 | [common_voice_zh@legacy-20260804](../../catalog/icefall_base.yaml#L1311) | 43.0 | [参考表](https://ccnuebbmik1f.feishu.cn/wiki/CEXFwEjPoi2bIukVjk9c5FdOn12?sheet=3d4d23) | 快照 20260914 |
 
+- `common_voice_zh@punc-written-v1-20261102`：common_voice_zh@legacy-20260804 训练集原标注加书面化标点，方法与 punc-written-v1-20261029 相同（amphiondata docs/written-punctuation.md：GB/T 15834、逗号从紧；Qwen3-4B 学生 punc-student-v1 以 Qwen3-ASR-1.7B 听音频得到的带标点转写作语气提示，只往原标注里插标点）。模型改动原文的条目按字对齐把标点搬回原标注；每条以 。？！ 结尾；没有汉字的条目和空标注原样保留。文件与源 supervisions 条数、顺序相同，只换 text
 - 含派生版本（与源数据可能重叠）
 
 ### common_voice_zh_hk
@@ -1048,10 +1056,12 @@ GRPO 热词挖掘候选（未背过的中文热词提示，含近音易混词）
 | [magicdata@eval-20260804](../../catalog/open_audio_eval.yaml#L94) | 28.1 | 已登记 | 快照 20260914 |
 | [magicdata@icefall-20260908](../../catalog/icefall_runtime.yaml#L1355) | 754.7 | 已登记 | 快照 20260914 |
 | [magicdata@legacy-20260804](../../catalog/icefall_base.yaml#L1013) | 754.7 | 已登记 | 快照 20260914 |
+| [magicdata@punc-written-v1-20261102](../../catalog/zh_punc_written_v1_gaps.yaml#L2) | 711.9 | 已登记 | 没有 |
 | [magicdata_hotwords@hotwords-v1-20260805](../../catalog/local_lhotse_derived.yaml#L176) | 711.9 | 已登记 | 快照 20260914 |
 | [magicdata@legacy-20260804](../../catalog/icefall_base.yaml#L1013) | 747.0 | [参考表](https://ccnuebbmik1f.feishu.cn/wiki/CEXFwEjPoi2bIukVjk9c5FdOn12?sheet=3d4d23) | 快照 20260914 |
 
 - `magicdata@clean-dual-qwen-moss-v1-20261008`：magicdata@icefall-20260908 的 train 监督片段，经 Qwen3-ASR-1.7B 与 MOSS-Transcribe-Diarize 双引擎一致性清洗；逐条写入 custom.clean（pass、reason、action、engine_status），不删除记录，读取时按 require_clean_pass 过滤。音频沿用源版本，不复制。规则 consensus-v6 / wenetspeech-faithful-v5：pass 572637、reject 841。少于 2 个字的 too_short 共 241 条按规则不经引擎直接 pass。用于合成时建议在 pass 之外再要求：两引擎均有效、MOSS 只输出 1 个说话人、action 不是 review_consensus；too_short 另要求两引擎规范化后与原文完全一致。按此筛选保留 525329 条、644.54 小时（too_short 通过 136/241）
+- `magicdata@punc-written-v1-20261102`：magicdata@legacy-20260804 训练集原标注加书面化标点，方法与 punc-written-v1-20261029 相同（amphiondata docs/written-punctuation.md：GB/T 15834、逗号从紧；Qwen3-4B 学生 punc-student-v1 以 Qwen3-ASR-1.7B 听音频得到的带标点转写作语气提示，只往原标注里插标点）。模型改动原文的条目按字对齐把标点搬回原标注；每条以 。？！ 结尾；没有汉字的条目和空标注原样保留。文件与源 supervisions 条数、顺序相同，只换 text。语音助手类指令多，书名号较密（每百字约 1.25 对）
 - 含派生版本（与源数据可能重叠）
 
 ### magicdata_ramc
@@ -1186,9 +1196,12 @@ MagicData-RAMC 对话切窗的按人转写数据
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
+| [police_terms_single_train@punc-written-v1-20261102](../../catalog/zh_punc_written_v1_gaps.yaml#L130) | 11.7 | 已登记 | 没有 |
 | [police_terms_single_train@v1-20261023](../../catalog/police_terms_single_train.yaml#L2) | 11.7 | 已登记 | 没有 |
 
+- `police_terms_single_train@punc-written-v1-20261102`：police_terms_single_train@v1-20261023 训练集原标注加书面化标点，方法与 punc-written-v1-20261029 相同（amphiondata docs/written-punctuation.md：GB/T 15834、逗号从紧；Qwen3-4B 学生 punc-student-v1 以 Qwen3-ASR-1.7B 听音频得到的带标点转写作语气提示，只往原标注里插标点）。模型改动原文的条目按字对齐把标点搬回原标注；每条以 。？！ 结尾；没有汉字的条目和空标注原样保留。文件与源 supervisions 条数、顺序相同，只换 text。每条只说一个术语，多数只补句号；120 条没有汉字的术语（如 WPS、DNA）原样保留
 - `police_terms_single_train@v1-20261023`：警务术语单说训练集：每条录音只说一个警务术语，不带句子；文本就是术语，supervision 的 custom.target_terms 为该术语。 术语取自警言警语 V6.0 术语表（police_synthetic_zh_accent@legacy-rebalance-100k-20260916 source_entries 中 term/app 两类，共 1,088 个，全部使用，不按旧的术语划分留出），每个术语 20 个不同说话人。 Qwen3-TTS-12Hz-1.7B-Base 克隆原警务数据的 train 口音说话人（不含粤语、不用 dev/test 说话人；参考音频为本机找回的原片段， 参考文本用 Qwen3-ASR 重新转写），全部是带口音的普通话。起因：实测单说术语时命中率很低， police_asr_unified@v1-20261009 train 里单说术语只有 2,065 条、1.11 h
+- 含派生版本（与源数据可能重叠）
 
 ### primewords
 
@@ -1282,8 +1295,12 @@ TAL 中文语音识别数据
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
+| [threed_speaker_zh_far_asr@punc-written-v1-20261102](../../catalog/zh_punc_written_v1_gaps.yaml#L194) | 71.2 | 已登记 | 没有 |
 | [threed_speaker_zh_far_asr@zh-far-replay-clean-v1-20261010](../../catalog/zh_farfield.yaml#L501) | 71.2 | 已登记 | 没有 |
 | [threed_speaker_zh_far_asr@zh-far-replay-v1-20261009](../../catalog/zh_farfield.yaml#L463) | 75.5 | 已登记 | 没有 |
+
+- `threed_speaker_zh_far_asr@punc-written-v1-20261102`：threed_speaker_zh_far_asr@zh-far-replay-clean-v1-20261010 训练集原标注加书面化标点，方法与 punc-written-v1-20261029 相同（amphiondata docs/written-punctuation.md：GB/T 15834、逗号从紧；Qwen3-4B 学生 punc-student-v1 以 Qwen3-ASR-1.7B 听音频得到的带标点转写作语气提示，只往原标注里插标点）。模型改动原文的条目按字对齐把标点搬回原标注；每条以 。？！ 结尾；没有汉字的条目和空标注原样保留。文件与源 supervisions 条数、顺序相同，只换 text
+- 含派生版本（与源数据可能重叠）
 
 ### ts_asr_dev
 
@@ -1975,6 +1992,18 @@ AISHELL-1、LibriSpeech 合成的多人对话
 
 - `ts_asr_handover@en-v1-20261031`：英文目标说话人 ASR 评测集（ts_asr_handover）：与中文版同一配方与随机种子，说话人换成 VCTK、CS-Dialogue 英文 test、LibriSpeech test-clean/test-other；不含业务真实注册录音条件。只用于评测，不进训练。场景见 scripts/ts_benchmark/recipe-handover-en.yaml
 - `ts_asr_handover@v1-20261020`、`ts_asr_handover@v2-20261022`：目标说话人 ASR 评测集：由 AISHELL-3、KeSpeech、MagicData、AISHELL-2、AISHELL-1 的官方 test 划分合成，覆盖注册音频劣化、目标说话人进场离场与缺席、纯噪声、环境与设备。只用于评测，不进训练。场景见 scripts/ts_benchmark/recipe.yaml
+
+### ts_asr_hotwords
+
+—
+
+语言：en、zh · 任务：目标说话人语音识别
+
+| 版本 | 时长（小时） | 口径 | COS |
+|---|---:|---|---|
+| [ts_asr_hotwords@v1-20261102](../../catalog/ts_asr_hotwords.yaml#L2) | — | 未登记 | 没有 |
+
+- `ts_asr_hotwords@v1-20261102`：TS-ASR + 热词评测集（占位，构建中）：从中文 v12 与英文 TS benchmark 的记录派生，沿用原音频与目标；hotwords 为目标说话人转写里的热词，metadata.bias_lists 给 random（正确词 + 随机词）与 interferer（正确词 + 其他说话人说出的热词 + 随机词）两种列表，评测目标热词召回、其他说话人热词误出、漏检与缺席误输出。热词由 amphiondata 的热词提取提示词经 Qwen3.8-27B 标注并复核
 
 ### ts_asr_nearshort
 
