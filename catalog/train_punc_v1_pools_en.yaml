@@ -1,0 +1,901 @@
+# TS 场景池英文分片的带标点 + 热词版本 v2（2026-11-02）：同 -punchw-20261102，但英文干扰者热词按其所在句的大小写还原（v1 里 76% 是全小写、目标热词只有 7%，模型可借大小写分辨哪些词不用写），英文整词匹配允许所有格。
+- schema_version: dataset-catalog/2.0
+  dataset_id: ts_scene_pool
+  version: alt-twins-20261024-punchw2-20261102
+  languages:
+  - en
+  tasks:
+  - ts_asr
+  aliases: []
+  derived_from: ts_scene_pool@alt-twins-20261024
+  artifacts:
+  - name: en-records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/alt-twins-20261024-punchw2-20261102/records_en.jsonl.gz
+    expected_bytes: 25155241
+    sha256: c5c9193be762051629d5607c26ebc18a02b45a5635568d598343631ba300cbc0
+    metadata:
+      record_count: 100000
+  - name: en-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/alt-twins-20261024/audio_index_en.jsonl.gz
+    sha256: 39304ba4f6be5e6246facd6fcd484215d4d74b5c3e89bdbc4a7ce76445ffb3bd
+    metadata:
+      record_count: 172419
+  - name: record_index
+    kind: lance-record-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/alt-twins-20261024-punchw2-20261102/record_index/index.json
+    expected_bytes: 751
+    sha256: 670be9e13b28a356c01899ea8c7cc8c16eb9dd380dd68dc3f32f41ae5da23dce
+    metadata:
+      snapshot_version: 13
+      rows: 100000
+      schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
+  splits:
+    en:
+      artifacts:
+        records:
+        - en-records
+        audio_index:
+        - en-audio-index
+        records_lance:
+        - record_index
+      task: ts_asr
+      statistics:
+        records: 100000
+        duration_hours: 148.3
+        duration_basis: clip duration (segment span, or the whole file)
+  provenance:
+    status: complete
+    synthetic: none
+    snapshot_date: '2026-11-02'
+    description: ts_scene_pool@alt-twins-20261024 的 en，供 TS + 热词训练：每条目标句按片段 ID 换成带书面化标点的写法（中文 punc-written-v1，英文 en-v1 加标点并恢复大小写；去掉标点和空格、转小写后与原目标一致才替换，源语料本身带标点的保留原样），hotwords 为目标所说的热词，metadata.interferer_hotwords 为干扰者所说、目标没说的热词（标签：Qwen3.8-27B + amphiondata 热词提示词，已有的 hw_sft 标签复用；英文按整词匹配，所有格算同一个词，干扰者热词按其所在句的大小写还原写法）。其余字段、场景与音频同源版本（记录仍引用源版本音频）。en：100000 条，目标改写 70019，带目标热词 20566，带干扰者热词 80998。
+    sources:
+    - ts_scene_pool:alt-twins-20261024
+    - aishell2:punc-written-v1-20261029
+    - kespeech:punc-written-v1-20261029
+    - magicdata:punc-written-v1-20261102
+    - librispeech:punc-written-en-v1-20261102
+- schema_version: dataset-catalog/2.0
+  dataset_id: ts_scene_pool
+  version: csd-alt-twins-20261101-punchw2-20261102
+  languages:
+  - en
+  tasks:
+  - ts_asr
+  aliases: []
+  derived_from: ts_scene_pool@csd-alt-twins-20261101
+  artifacts:
+  - name: en-records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/csd-alt-twins-20261101-punchw2-20261102/records_en.jsonl.gz
+    expected_bytes: 1457740
+    sha256: a393149556e3ed093f526689591dadb9c31fb5b9513a064171e0e53fcb30edfe
+    metadata:
+      record_count: 8000
+  - name: en-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/csd-alt-twins-20261101/audio_index_en.jsonl.gz
+    sha256: bf02702d387c438e820be33a654af66ce9bdc995a8f967e0dfa7ab4392a3ea1c
+    metadata:
+      record_count: 19044
+  - name: record_index
+    kind: lance-record-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/csd-alt-twins-20261101-punchw2-20261102/record_index/index.json
+    expected_bytes: 751
+    sha256: a54804bb69d9a245dd1c0939e1df7da72d9677bea08878b95811920264b74363
+    metadata:
+      snapshot_version: 13
+      rows: 8000
+      schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
+  splits:
+    en:
+      artifacts:
+        records:
+        - en-records
+        audio_index:
+        - en-audio-index
+        records_lance:
+        - record_index
+      task: ts_asr
+      statistics:
+        records: 8000
+        duration_hours: 10.84
+        duration_basis: clip duration (segment span, or the whole file)
+  provenance:
+    status: complete
+    synthetic: none
+    snapshot_date: '2026-11-02'
+    description: ts_scene_pool@csd-alt-twins-20261101 的 en，供 TS + 热词训练：每条目标句按片段 ID 换成带书面化标点的写法（中文 punc-written-v1，英文 en-v1 加标点并恢复大小写；去掉标点和空格、转小写后与原目标一致才替换，源语料本身带标点的保留原样），hotwords 为目标所说的热词，metadata.interferer_hotwords 为干扰者所说、目标没说的热词（标签：Qwen3.8-27B + amphiondata 热词提示词，已有的 hw_sft 标签复用；英文按整词匹配，所有格算同一个词，干扰者热词按其所在句的大小写还原写法）。其余字段、场景与音频同源版本（记录仍引用源版本音频）。en：8000 条，目标改写 0，带目标热词 313，带干扰者热词 4911。
+    sources:
+    - ts_scene_pool:csd-alt-twins-20261101
+    - aishell2:punc-written-v1-20261029
+    - kespeech:punc-written-v1-20261029
+    - magicdata:punc-written-v1-20261102
+    - librispeech:punc-written-en-v1-20261102
+- schema_version: dataset-catalog/2.0
+  dataset_id: ts_scene_pool
+  version: csd-handover-20261101-punchw2-20261102
+  languages:
+  - en
+  tasks:
+  - ts_asr
+  aliases: []
+  derived_from: ts_scene_pool@csd-handover-20261101
+  artifacts:
+  - name: en-records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/csd-handover-20261101-punchw2-20261102/records_en.jsonl.gz
+    expected_bytes: 536424
+    sha256: 74e39633162fd6387016069d1ad531853cf57e0176af320aa9b25965aea9d47b
+    metadata:
+      record_count: 5000
+  - name: en-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/csd-handover-20261101/audio_index_en.jsonl.gz
+    sha256: 372bad6a1192156db04c8af859f2503fedc0470f3dd987bae69d0611516b1dc1
+    metadata:
+      record_count: 5849
+  - name: record_index
+    kind: lance-record-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/csd-handover-20261101-punchw2-20261102/record_index/index.json
+    expected_bytes: 750
+    sha256: 78e83470b8b21b0318fd5126e4d6595e12bbf39120c494f57ad923f2fc000057
+    metadata:
+      snapshot_version: 13
+      rows: 5000
+      schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
+  splits:
+    en:
+      artifacts:
+        records:
+        - en-records
+        audio_index:
+        - en-audio-index
+        records_lance:
+        - record_index
+      task: ts_asr
+      statistics:
+        records: 5000
+        duration_hours: 6.85
+        duration_basis: clip duration (segment span, or the whole file)
+  provenance:
+    status: complete
+    synthetic: none
+    snapshot_date: '2026-11-02'
+    description: ts_scene_pool@csd-handover-20261101 的 en，供 TS + 热词训练：每条目标句按片段 ID 换成带书面化标点的写法（中文 punc-written-v1，英文 en-v1 加标点并恢复大小写；去掉标点和空格、转小写后与原目标一致才替换，源语料本身带标点的保留原样），hotwords 为目标所说的热词，metadata.interferer_hotwords 为干扰者所说、目标没说的热词（标签：Qwen3.8-27B + amphiondata 热词提示词，已有的 hw_sft 标签复用；英文按整词匹配，所有格算同一个词，干扰者热词按其所在句的大小写还原写法）。其余字段、场景与音频同源版本（记录仍引用源版本音频）。en：5000 条，目标改写 0，带目标热词 165，带干扰者热词 1214。
+    sources:
+    - ts_scene_pool:csd-handover-20261101
+    - aishell2:punc-written-v1-20261029
+    - kespeech:punc-written-v1-20261029
+    - magicdata:punc-written-v1-20261102
+    - librispeech:punc-written-en-v1-20261102
+- schema_version: dataset-catalog/2.0
+  dataset_id: ts_scene_pool
+  version: csd-hard-20261101-punchw2-20261102
+  languages:
+  - en
+  tasks:
+  - ts_asr
+  aliases: []
+  derived_from: ts_scene_pool@csd-hard-20261101
+  artifacts:
+  - name: en-records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/csd-hard-20261101-punchw2-20261102/records_en.jsonl.gz
+    expected_bytes: 1203129
+    sha256: fd953d40455604ba6f7f84c64f08cbb9220269fde1ca3a4ae770477d70bc3729
+    metadata:
+      record_count: 5000
+  - name: en-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/csd-hard-20261101/audio_index_en.jsonl.gz
+    sha256: 292bde825ce27d5d9a2e993f5fe72ead907876cfcecf7c43ce8672ed9933966b
+    metadata:
+      record_count: 19510
+  - name: record_index
+    kind: lance-record-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/csd-hard-20261101-punchw2-20261102/record_index/index.json
+    expected_bytes: 746
+    sha256: 0ace5db71f4443e5b15f9d3dad6aec79f23598d11db21d7e18e50751e4c2cab8
+    metadata:
+      snapshot_version: 13
+      rows: 5000
+      schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
+  splits:
+    en:
+      artifacts:
+        records:
+        - en-records
+        audio_index:
+        - en-audio-index
+        records_lance:
+        - record_index
+      task: ts_asr
+      statistics:
+        records: 5000
+        duration_hours: 6.67
+        duration_basis: clip duration (segment span, or the whole file)
+  provenance:
+    status: complete
+    synthetic: none
+    snapshot_date: '2026-11-02'
+    description: ts_scene_pool@csd-hard-20261101 的 en，供 TS + 热词训练：每条目标句按片段 ID 换成带书面化标点的写法（中文 punc-written-v1，英文 en-v1 加标点并恢复大小写；去掉标点和空格、转小写后与原目标一致才替换，源语料本身带标点的保留原样），hotwords 为目标所说的热词，metadata.interferer_hotwords 为干扰者所说、目标没说的热词（标签：Qwen3.8-27B + amphiondata 热词提示词，已有的 hw_sft 标签复用；英文按整词匹配，所有格算同一个词，干扰者热词按其所在句的大小写还原写法）。其余字段、场景与音频同源版本（记录仍引用源版本音频）。en：5000 条，目标改写 0，带目标热词 110，带干扰者热词 3537。
+    sources:
+    - ts_scene_pool:csd-hard-20261101
+    - aishell2:punc-written-v1-20261029
+    - kespeech:punc-written-v1-20261029
+    - magicdata:punc-written-v1-20261102
+    - librispeech:punc-written-en-v1-20261102
+- schema_version: dataset-catalog/2.0
+  dataset_id: ts_scene_pool
+  version: csd-near-20261101-punchw2-20261102
+  languages:
+  - en
+  tasks:
+  - ts_asr
+  aliases: []
+  derived_from: ts_scene_pool@csd-near-20261101
+  artifacts:
+  - name: en-records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/csd-near-20261101-punchw2-20261102/records_en.jsonl.gz
+    expected_bytes: 2526619
+    sha256: cb0d5f04a058baed73047a9ac9f3e999aaee92739bba8565780f7ecccb2397c3
+    metadata:
+      record_count: 12000
+  - name: en-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/csd-near-20261101/audio_index_en.jsonl.gz
+    sha256: c559870b236a19fa5978a1857151fdbe8f615163c63012db1727c69512fd2472
+    metadata:
+      record_count: 26098
+  - name: record_index
+    kind: lance-record-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/csd-near-20261101-punchw2-20261102/record_index/index.json
+    expected_bytes: 748
+    sha256: 7a731fb57c10350442af41e4b94287ff94441cbd2722933b28b94d8dfa5ae913
+    metadata:
+      snapshot_version: 13
+      rows: 12000
+      schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
+  splits:
+    en:
+      artifacts:
+        records:
+        - en-records
+        audio_index:
+        - en-audio-index
+        records_lance:
+        - record_index
+      task: ts_asr
+      statistics:
+        records: 12000
+        duration_hours: 16.33
+        duration_basis: clip duration (segment span, or the whole file)
+  provenance:
+    status: complete
+    synthetic: none
+    snapshot_date: '2026-11-02'
+    description: ts_scene_pool@csd-near-20261101 的 en，供 TS + 热词训练：每条目标句按片段 ID 换成带书面化标点的写法（中文 punc-written-v1，英文 en-v1 加标点并恢复大小写；去掉标点和空格、转小写后与原目标一致才替换，源语料本身带标点的保留原样），hotwords 为目标所说的热词，metadata.interferer_hotwords 为干扰者所说、目标没说的热词（标签：Qwen3.8-27B + amphiondata 热词提示词，已有的 hw_sft 标签复用；英文按整词匹配，所有格算同一个词，干扰者热词按其所在句的大小写还原写法）。其余字段、场景与音频同源版本（记录仍引用源版本音频）。en：12000 条，目标改写 0，带目标热词 1199，带干扰者热词 7735。
+    sources:
+    - ts_scene_pool:csd-near-20261101
+    - aishell2:punc-written-v1-20261029
+    - kespeech:punc-written-v1-20261029
+    - magicdata:punc-written-v1-20261102
+    - librispeech:punc-written-en-v1-20261102
+- schema_version: dataset-catalog/2.0
+  dataset_id: ts_scene_pool
+  version: csd-solo-20261101-punchw2-20261102
+  languages:
+  - en
+  tasks:
+  - ts_asr
+  aliases: []
+  derived_from: ts_scene_pool@csd-solo-20261101
+  artifacts:
+  - name: en-records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/csd-solo-20261101-punchw2-20261102/records_en.jsonl.gz
+    expected_bytes: 364228
+    sha256: 220b1bb5bf92c1811cb76bc59f88bd81220d8a0717ca94c9d2ca155fdc4a0c6b
+    metadata:
+      record_count: 6000
+  - name: en-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/csd-solo-20261101/audio_index_en.jsonl.gz
+    sha256: 9bb769e62b90209d854fd9946e4bbed48b48623d05a51c1c946e7cd7795dc6fc
+    metadata:
+      record_count: 3993
+  - name: record_index
+    kind: lance-record-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/csd-solo-20261101-punchw2-20261102/record_index/index.json
+    expected_bytes: 746
+    sha256: 15636ba881205a3b2f9399559023f7f8a899304911202ab5607b069bbfe6af75
+    metadata:
+      snapshot_version: 13
+      rows: 6000
+      schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
+  splits:
+    en:
+      artifacts:
+        records:
+        - en-records
+        audio_index:
+        - en-audio-index
+        records_lance:
+        - record_index
+      task: ts_asr
+      statistics:
+        records: 6000
+        duration_hours: 8.27
+        duration_basis: clip duration (segment span, or the whole file)
+  provenance:
+    status: complete
+    synthetic: none
+    snapshot_date: '2026-11-02'
+    description: ts_scene_pool@csd-solo-20261101 的 en，供 TS + 热词训练：每条目标句按片段 ID 换成带书面化标点的写法（中文 punc-written-v1，英文 en-v1 加标点并恢复大小写；去掉标点和空格、转小写后与原目标一致才替换，源语料本身带标点的保留原样），hotwords 为目标所说的热词，metadata.interferer_hotwords 为干扰者所说、目标没说的热词（标签：Qwen3.8-27B + amphiondata 热词提示词，已有的 hw_sft 标签复用；英文按整词匹配，所有格算同一个词，干扰者热词按其所在句的大小写还原写法）。其余字段、场景与音频同源版本（记录仍引用源版本音频）。en：6000 条，目标改写 0，带目标热词 93，带干扰者热词 33。
+    sources:
+    - ts_scene_pool:csd-solo-20261101
+    - aishell2:punc-written-v1-20261029
+    - kespeech:punc-written-v1-20261029
+    - magicdata:punc-written-v1-20261102
+    - librispeech:punc-written-en-v1-20261102
+- schema_version: dataset-catalog/2.0
+  dataset_id: ts_scene_pool
+  version: cvaccent-alt-twins-20261101-punchw2-20261102
+  languages:
+  - en
+  tasks:
+  - ts_asr
+  aliases: []
+  derived_from: ts_scene_pool@cvaccent-alt-twins-20261101
+  artifacts:
+  - name: en-records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/cvaccent-alt-twins-20261101-punchw2-20261102/records_en.jsonl.gz
+    expected_bytes: 13151974
+    sha256: b462d0d4d28ee9c2cc09a8712b384d9cae74b0ad44f287f3be71ca8baed3650d
+    metadata:
+      record_count: 40000
+  - name: en-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/cvaccent-alt-twins-20261101/audio_index_en.jsonl.gz
+    sha256: 024e13c3808c585100bc2221c2b6bfb7c8a632fb3e1947bdb79a21097b5c560d
+    metadata:
+      record_count: 113874
+  - name: record_index
+    kind: lance-record-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/cvaccent-alt-twins-20261101-punchw2-20261102/record_index/index.json
+    expected_bytes: 758
+    sha256: 413889d285c860e0a9df95bc02e95cddcdfac0bd662f44a3fb53a38a6cb4e5e4
+    metadata:
+      snapshot_version: 13
+      rows: 40000
+      schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
+  splits:
+    en:
+      artifacts:
+        records:
+        - en-records
+        audio_index:
+        - en-audio-index
+        records_lance:
+        - record_index
+      task: ts_asr
+      statistics:
+        records: 40000
+        duration_hours: 60.74
+        duration_basis: clip duration (segment span, or the whole file)
+  provenance:
+    status: complete
+    synthetic: none
+    snapshot_date: '2026-11-02'
+    description: ts_scene_pool@cvaccent-alt-twins-20261101 的 en，供 TS + 热词训练：每条目标句按片段 ID 换成带书面化标点的写法（中文 punc-written-v1，英文 en-v1 加标点并恢复大小写；去掉标点和空格、转小写后与原目标一致才替换，源语料本身带标点的保留原样），hotwords 为目标所说的热词，metadata.interferer_hotwords 为干扰者所说、目标没说的热词（标签：Qwen3.8-27B + amphiondata 热词提示词，已有的 hw_sft 标签复用；英文按整词匹配，所有格算同一个词，干扰者热词按其所在句的大小写还原写法）。其余字段、场景与音频同源版本（记录仍引用源版本音频）。en：40000 条，目标改写 0，带目标热词 12365，带干扰者热词 33224。
+    sources:
+    - ts_scene_pool:cvaccent-alt-twins-20261101
+    - aishell2:punc-written-v1-20261029
+    - kespeech:punc-written-v1-20261029
+    - magicdata:punc-written-v1-20261102
+    - librispeech:punc-written-en-v1-20261102
+- schema_version: dataset-catalog/2.0
+  dataset_id: ts_scene_pool
+  version: cvaccent-handover-20261101-punchw2-20261102
+  languages:
+  - en
+  tasks:
+  - ts_asr
+  aliases: []
+  derived_from: ts_scene_pool@cvaccent-handover-20261101
+  artifacts:
+  - name: en-records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/cvaccent-handover-20261101-punchw2-20261102/records_en.jsonl.gz
+    expected_bytes: 4567987
+    sha256: 1437dd544714e858858deb7b640124302bd70c6492a0b84885ab6de839f339f6
+    metadata:
+      record_count: 20000
+  - name: en-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/cvaccent-handover-20261101/audio_index_en.jsonl.gz
+    sha256: 62bf10911b758f27b6c56f22a8a94b15531d628d7a75a63f46f225bb888c1a00
+    metadata:
+      record_count: 36741
+  - name: record_index
+    kind: lance-record-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/cvaccent-handover-20261101-punchw2-20261102/record_index/index.json
+    expected_bytes: 757
+    sha256: 498bb2fab720a7151323c469268fb184e8f525ddfa293a227570646dbc7de474
+    metadata:
+      snapshot_version: 13
+      rows: 20000
+      schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
+  splits:
+    en:
+      artifacts:
+        records:
+        - en-records
+        audio_index:
+        - en-audio-index
+        records_lance:
+        - record_index
+      task: ts_asr
+      statistics:
+        records: 20000
+        duration_hours: 30.71
+        duration_basis: clip duration (segment span, or the whole file)
+  provenance:
+    status: complete
+    synthetic: none
+    snapshot_date: '2026-11-02'
+    description: ts_scene_pool@cvaccent-handover-20261101 的 en，供 TS + 热词训练：每条目标句按片段 ID 换成带书面化标点的写法（中文 punc-written-v1，英文 en-v1 加标点并恢复大小写；去掉标点和空格、转小写后与原目标一致才替换，源语料本身带标点的保留原样），hotwords 为目标所说的热词，metadata.interferer_hotwords 为干扰者所说、目标没说的热词（标签：Qwen3.8-27B + amphiondata 热词提示词，已有的 hw_sft 标签复用；英文按整词匹配，所有格算同一个词，干扰者热词按其所在句的大小写还原写法）。其余字段、场景与音频同源版本（记录仍引用源版本音频）。en：20000 条，目标改写 0，带目标热词 6004，带干扰者热词 9339。
+    sources:
+    - ts_scene_pool:cvaccent-handover-20261101
+    - aishell2:punc-written-v1-20261029
+    - kespeech:punc-written-v1-20261029
+    - magicdata:punc-written-v1-20261102
+    - librispeech:punc-written-en-v1-20261102
+- schema_version: dataset-catalog/2.0
+  dataset_id: ts_scene_pool
+  version: cvaccent-hard-20261101-punchw2-20261102
+  languages:
+  - en
+  tasks:
+  - ts_asr
+  aliases: []
+  derived_from: ts_scene_pool@cvaccent-hard-20261101
+  artifacts:
+  - name: en-records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/cvaccent-hard-20261101-punchw2-20261102/records_en.jsonl.gz
+    expected_bytes: 10759269
+    sha256: 4c916cb14ac5a8051eea88e6e21cc5e24ea6aef4ef7ca60430109d376a7ff8e3
+    metadata:
+      record_count: 25000
+  - name: en-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/cvaccent-hard-20261101/audio_index_en.jsonl.gz
+    sha256: 39669159db05353fb930b244d85dd9779f3f0fb6e50e3acc72583cc3934bcd4b
+    metadata:
+      record_count: 111670
+  - name: record_index
+    kind: lance-record-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/cvaccent-hard-20261101-punchw2-20261102/record_index/index.json
+    expected_bytes: 753
+    sha256: 02f8802a4f6fa74bbe577dc4c2e3e378643e8c7ca25f7c3dc4ef3095647b58d5
+    metadata:
+      snapshot_version: 13
+      rows: 25000
+      schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
+  splits:
+    en:
+      artifacts:
+        records:
+        - en-records
+        audio_index:
+        - en-audio-index
+        records_lance:
+        - record_index
+      task: ts_asr
+      statistics:
+        records: 25000
+        duration_hours: 37.92
+        duration_basis: clip duration (segment span, or the whole file)
+  provenance:
+    status: complete
+    synthetic: none
+    snapshot_date: '2026-11-02'
+    description: ts_scene_pool@cvaccent-hard-20261101 的 en，供 TS + 热词训练：每条目标句按片段 ID 换成带书面化标点的写法（中文 punc-written-v1，英文 en-v1 加标点并恢复大小写；去掉标点和空格、转小写后与原目标一致才替换，源语料本身带标点的保留原样），hotwords 为目标所说的热词，metadata.interferer_hotwords 为干扰者所说、目标没说的热词（标签：Qwen3.8-27B + amphiondata 热词提示词，已有的 hw_sft 标签复用；英文按整词匹配，所有格算同一个词，干扰者热词按其所在句的大小写还原写法）。其余字段、场景与音频同源版本（记录仍引用源版本音频）。en：25000 条，目标改写 0，带目标热词 5019，带干扰者热词 21705。
+    sources:
+    - ts_scene_pool:cvaccent-hard-20261101
+    - aishell2:punc-written-v1-20261029
+    - kespeech:punc-written-v1-20261029
+    - magicdata:punc-written-v1-20261102
+    - librispeech:punc-written-en-v1-20261102
+- schema_version: dataset-catalog/2.0
+  dataset_id: ts_scene_pool
+  version: cvaccent-near-20261101-punchw2-20261102
+  languages:
+  - en
+  tasks:
+  - ts_asr
+  aliases: []
+  derived_from: ts_scene_pool@cvaccent-near-20261101
+  artifacts:
+  - name: en-records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/cvaccent-near-20261101-punchw2-20261102/records_en.jsonl.gz
+    expected_bytes: 22751925
+    sha256: 2d37f358bb0f996c6a4e011259da899b6b3d6c16e349f29c7d6c59bf2b3496c1
+    metadata:
+      record_count: 60000
+  - name: en-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/cvaccent-near-20261101/audio_index_en.jsonl.gz
+    sha256: 8f92da03eb7f320bfdd384e52a4c538a620f3e50684dec748369407db39284ee
+    metadata:
+      record_count: 159588
+  - name: record_index
+    kind: lance-record-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/cvaccent-near-20261101-punchw2-20261102/record_index/index.json
+    expected_bytes: 753
+    sha256: 77c51d607056e1f5fcd24eeca1f83326d2a5661ee06af515630114720167f3d4
+    metadata:
+      snapshot_version: 13
+      rows: 60000
+      schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
+  splits:
+    en:
+      artifacts:
+        records:
+        - en-records
+        audio_index:
+        - en-audio-index
+        records_lance:
+        - record_index
+      task: ts_asr
+      statistics:
+        records: 60000
+        duration_hours: 91.21
+        duration_basis: clip duration (segment span, or the whole file)
+  provenance:
+    status: complete
+    synthetic: none
+    snapshot_date: '2026-11-02'
+    description: ts_scene_pool@cvaccent-near-20261101 的 en，供 TS + 热词训练：每条目标句按片段 ID 换成带书面化标点的写法（中文 punc-written-v1，英文 en-v1 加标点并恢复大小写；去掉标点和空格、转小写后与原目标一致才替换，源语料本身带标点的保留原样），hotwords 为目标所说的热词，metadata.interferer_hotwords 为干扰者所说、目标没说的热词（标签：Qwen3.8-27B + amphiondata 热词提示词，已有的 hw_sft 标签复用；英文按整词匹配，所有格算同一个词，干扰者热词按其所在句的大小写还原写法）。其余字段、场景与音频同源版本（记录仍引用源版本音频）。en：60000 条，目标改写 0，带目标热词 31507，带干扰者热词 53816。
+    sources:
+    - ts_scene_pool:cvaccent-near-20261101
+    - aishell2:punc-written-v1-20261029
+    - kespeech:punc-written-v1-20261029
+    - magicdata:punc-written-v1-20261102
+    - librispeech:punc-written-en-v1-20261102
+- schema_version: dataset-catalog/2.0
+  dataset_id: ts_scene_pool
+  version: cvaccent-solo-20261101-punchw2-20261102
+  languages:
+  - en
+  tasks:
+  - ts_asr
+  aliases: []
+  derived_from: ts_scene_pool@cvaccent-solo-20261101
+  artifacts:
+  - name: en-records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/cvaccent-solo-20261101-punchw2-20261102/records_en.jsonl.gz
+    expected_bytes: 4546161
+    sha256: 896c4a270ac1d61d8ddeac48d950d6bac42779b3741f3df7380ec241289f9734
+    metadata:
+      record_count: 30000
+  - name: en-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/cvaccent-solo-20261101/audio_index_en.jsonl.gz
+    sha256: b08e92616b21962b64a70319dcd4b5f8f648450e7ae35a5036a30f2a6c2463a6
+    metadata:
+      record_count: 33021
+  - name: record_index
+    kind: lance-record-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/cvaccent-solo-20261101-punchw2-20261102/record_index/index.json
+    expected_bytes: 753
+    sha256: c91fab5e2975faa0625ba5464d460aacc82a30c25e31a302e30fadd55c2a6105
+    metadata:
+      snapshot_version: 13
+      rows: 30000
+      schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
+  splits:
+    en:
+      artifacts:
+        records:
+        - en-records
+        audio_index:
+        - en-audio-index
+        records_lance:
+        - record_index
+      task: ts_asr
+      statistics:
+        records: 30000
+        duration_hours: 44.68
+        duration_basis: clip duration (segment span, or the whole file)
+  provenance:
+    status: complete
+    synthetic: none
+    snapshot_date: '2026-11-02'
+    description: ts_scene_pool@cvaccent-solo-20261101 的 en，供 TS + 热词训练：每条目标句按片段 ID 换成带书面化标点的写法（中文 punc-written-v1，英文 en-v1 加标点并恢复大小写；去掉标点和空格、转小写后与原目标一致才替换，源语料本身带标点的保留原样），hotwords 为目标所说的热词，metadata.interferer_hotwords 为干扰者所说、目标没说的热词（标签：Qwen3.8-27B + amphiondata 热词提示词，已有的 hw_sft 标签复用；英文按整词匹配，所有格算同一个词，干扰者热词按其所在句的大小写还原写法）。其余字段、场景与音频同源版本（记录仍引用源版本音频）。en：30000 条，目标改写 0，带目标热词 5567，带干扰者热词 2446。
+    sources:
+    - ts_scene_pool:cvaccent-solo-20261101
+    - aishell2:punc-written-v1-20261029
+    - kespeech:punc-written-v1-20261029
+    - magicdata:punc-written-v1-20261102
+    - librispeech:punc-written-en-v1-20261102
+- schema_version: dataset-catalog/2.0
+  dataset_id: ts_scene_pool
+  version: handover-20261021-punchw2-20261102
+  languages:
+  - en
+  tasks:
+  - ts_asr
+  aliases: []
+  derived_from: ts_scene_pool@handover-20261021
+  artifacts:
+  - name: en-records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/handover-20261021-punchw2-20261102/records_en.jsonl.gz
+    expected_bytes: 1598203
+    sha256: 3918a0640861979e4cda7786da7f5102350ccbac9627c7b3d5384df750e0f9eb
+    metadata:
+      record_count: 12000
+  - name: en-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/handover-20261021/audio_index_en.jsonl.gz
+    sha256: 26c6aa76ed7508ed7123ee932ea06a3b820be4de16d1b30b42f3b9407a6d8cac
+    metadata:
+      record_count: 20213
+  - name: record_index
+    kind: lance-record-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/handover-20261021-punchw2-20261102/record_index/index.json
+    expected_bytes: 748
+    sha256: e2af84fa08f32e82453c79febcfdeed69027d60c03fd9dbdff35b4fcd07986e6
+    metadata:
+      snapshot_version: 13
+      rows: 12000
+      schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
+  splits:
+    en:
+      artifacts:
+        records:
+        - en-records
+        audio_index:
+        - en-audio-index
+        records_lance:
+        - record_index
+      task: ts_asr
+      statistics:
+        records: 12000
+        duration_hours: 17.99
+        duration_basis: clip duration (segment span, or the whole file)
+  provenance:
+    status: complete
+    synthetic: none
+    snapshot_date: '2026-11-02'
+    description: ts_scene_pool@handover-20261021 的 en，供 TS + 热词训练：每条目标句按片段 ID 换成带书面化标点的写法（中文 punc-written-v1，英文 en-v1 加标点并恢复大小写；去掉标点和空格、转小写后与原目标一致才替换，源语料本身带标点的保留原样），hotwords 为目标所说的热词，metadata.interferer_hotwords 为干扰者所说、目标没说的热词（标签：Qwen3.8-27B + amphiondata 热词提示词，已有的 hw_sft 标签复用；英文按整词匹配，所有格算同一个词，干扰者热词按其所在句的大小写还原写法）。其余字段、场景与音频同源版本（记录仍引用源版本音频）。en：12000 条，目标改写 8473，带目标热词 2231，带干扰者热词 4411。
+    sources:
+    - ts_scene_pool:handover-20261021
+    - aishell2:punc-written-v1-20261029
+    - kespeech:punc-written-v1-20261029
+    - magicdata:punc-written-v1-20261102
+    - librispeech:punc-written-en-v1-20261102
+- schema_version: dataset-catalog/2.0
+  dataset_id: ts_scene_pool
+  version: hard-20261016-punchw2-20261102
+  languages:
+  - en
+  tasks:
+  - ts_asr
+  aliases: []
+  derived_from: ts_scene_pool@hard-20261016
+  artifacts:
+  - name: en-records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/hard-20261016-punchw2-20261102/records_en.jsonl.gz
+    expected_bytes: 7209502
+    sha256: f0c43708240f50f35715246334c0a3282e84fd4addb039a2c9d2af24d2f1862e
+    metadata:
+      record_count: 25000
+  - name: en-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/hard-20261016/audio_index_en.jsonl.gz
+    sha256: c81511a9cd852419c4b66d7ab0d1c7bce472ac3ccef8896ddcf90b67323009c3
+    metadata:
+      record_count: 89560
+  - name: record_index
+    kind: lance-record-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/hard-20261016-punchw2-20261102/record_index/index.json
+    expected_bytes: 744
+    sha256: 5751e0fcfac49489275c3de1173455f00ed6f5a657f7f9fdfb4fc8ba6410318e
+    metadata:
+      snapshot_version: 13
+      rows: 25000
+      schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
+  splits:
+    en:
+      artifacts:
+        records:
+        - en-records
+        audio_index:
+        - en-audio-index
+        records_lance:
+        - record_index
+      task: ts_asr
+      statistics:
+        records: 25000
+        duration_hours: 36.95
+        duration_basis: clip duration (segment span, or the whole file)
+  provenance:
+    status: complete
+    synthetic: none
+    snapshot_date: '2026-11-02'
+    description: ts_scene_pool@hard-20261016 的 en，供 TS + 热词训练：每条目标句按片段 ID 换成带书面化标点的写法（中文 punc-written-v1，英文 en-v1 加标点并恢复大小写；去掉标点和空格、转小写后与原目标一致才替换，源语料本身带标点的保留原样），hotwords 为目标所说的热词，metadata.interferer_hotwords 为干扰者所说、目标没说的热词（标签：Qwen3.8-27B + amphiondata 热词提示词，已有的 hw_sft 标签复用；英文按整词匹配，所有格算同一个词，干扰者热词按其所在句的大小写还原写法）。其余字段、场景与音频同源版本（记录仍引用源版本音频）。en：25000 条，目标改写 11184，带目标热词 3271，带干扰者热词 20379。
+    sources:
+    - ts_scene_pool:hard-20261016
+    - aishell2:punc-written-v1-20261029
+    - kespeech:punc-written-v1-20261029
+    - magicdata:punc-written-v1-20261102
+    - librispeech:punc-written-en-v1-20261102
+- schema_version: dataset-catalog/2.0
+  dataset_id: ts_scene_pool
+  version: multi-20261017-punchw2-20261102
+  languages:
+  - en
+  tasks:
+  - ts_asr
+  aliases: []
+  derived_from: ts_scene_pool@multi-20261017
+  artifacts:
+  - name: en-records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/multi-20261017-punchw2-20261102/records_en.jsonl.gz
+    expected_bytes: 12793335
+    sha256: b5afcf3afa887f29c5dc87dab11cf9af4838127477e93bcf7921de4f0d6c8a1b
+    metadata:
+      record_count: 40000
+  - name: en-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/multi-20261017/audio_index_en.jsonl.gz
+    sha256: 9ceee171b51664406b03633f593216e0e54f4d981be49562100f5773923b304c
+    metadata:
+      record_count: 115458
+  - name: record_index
+    kind: lance-record-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/multi-20261017-punchw2-20261102/record_index/index.json
+    expected_bytes: 745
+    sha256: f2e10bc020765998efe3296fa04c16ee38418965244d20991c7417e56773644b
+    metadata:
+      snapshot_version: 13
+      rows: 40000
+      schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
+  splits:
+    en:
+      artifacts:
+        records:
+        - en-records
+        audio_index:
+        - en-audio-index
+        records_lance:
+        - record_index
+      task: ts_asr
+      statistics:
+        records: 40000
+        duration_hours: 59.2
+        duration_basis: clip duration (segment span, or the whole file)
+  provenance:
+    status: complete
+    synthetic: none
+    snapshot_date: '2026-11-02'
+    description: ts_scene_pool@multi-20261017 的 en，供 TS + 热词训练：每条目标句按片段 ID 换成带书面化标点的写法（中文 punc-written-v1，英文 en-v1 加标点并恢复大小写；去掉标点和空格、转小写后与原目标一致才替换，源语料本身带标点的保留原样），hotwords 为目标所说的热词，metadata.interferer_hotwords 为干扰者所说、目标没说的热词（标签：Qwen3.8-27B + amphiondata 热词提示词，已有的 hw_sft 标签复用；英文按整词匹配，所有格算同一个词，干扰者热词按其所在句的大小写还原写法）。其余字段、场景与音频同源版本（记录仍引用源版本音频）。en：40000 条，目标改写 29613，带目标热词 16028，带干扰者热词 34518。
+    sources:
+    - ts_scene_pool:multi-20261017
+    - aishell2:punc-written-v1-20261029
+    - kespeech:punc-written-v1-20261029
+    - magicdata:punc-written-v1-20261102
+    - librispeech:punc-written-en-v1-20261102
+- schema_version: dataset-catalog/2.0
+  dataset_id: ts_scene_pool
+  version: solo-20261020-punchw2-20261102
+  languages:
+  - en
+  tasks:
+  - ts_asr
+  aliases: []
+  derived_from: ts_scene_pool@solo-20261020
+  artifacts:
+  - name: en-records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/solo-20261020-punchw2-20261102/records_en.jsonl.gz
+    expected_bytes: 1602527
+    sha256: 5b3c4273ffc20b8222804dfe610513cd7094336bf497db01915e8443670b8998
+    metadata:
+      record_count: 20000
+  - name: en-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/solo-20261020/audio_index_en.jsonl.gz
+    sha256: bda2a26891c5660ea51462ff91dcce75dc9cfc3c82cd4d4a4a104396db92dbf6
+    metadata:
+      record_count: 20160
+  - name: record_index
+    kind: lance-record-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/solo-20261020-punchw2-20261102/record_index/index.json
+    expected_bytes: 744
+    sha256: eeacab43d4026fe2fc200b37bc7b2a6d4923986d03de5c895475d2c6997f8a0f
+    metadata:
+      snapshot_version: 13
+      rows: 20000
+      schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
+  splits:
+    en:
+      artifacts:
+        records:
+        - en-records
+        audio_index:
+        - en-audio-index
+        records_lance:
+        - record_index
+      task: ts_asr
+      statistics:
+        records: 20000
+        duration_hours: 29.86
+        duration_basis: clip duration (segment span, or the whole file)
+  provenance:
+    status: complete
+    synthetic: none
+    snapshot_date: '2026-11-02'
+    description: ts_scene_pool@solo-20261020 的 en，供 TS + 热词训练：每条目标句按片段 ID 换成带书面化标点的写法（中文 punc-written-v1，英文 en-v1 加标点并恢复大小写；去掉标点和空格、转小写后与原目标一致才替换，源语料本身带标点的保留原样），hotwords 为目标所说的热词，metadata.interferer_hotwords 为干扰者所说、目标没说的热词（标签：Qwen3.8-27B + amphiondata 热词提示词，已有的 hw_sft 标签复用；英文按整词匹配，所有格算同一个词，干扰者热词按其所在句的大小写还原写法）。其余字段、场景与音频同源版本（记录仍引用源版本音频）。en：20000 条，目标改写 14050，带目标热词 2980，带干扰者热词 1255。
+    sources:
+    - ts_scene_pool:solo-20261020
+    - aishell2:punc-written-v1-20261029
+    - kespeech:punc-written-v1-20261029
+    - magicdata:punc-written-v1-20261102
+    - librispeech:punc-written-en-v1-20261102
