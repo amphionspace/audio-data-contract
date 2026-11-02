@@ -331,3 +331,128 @@
     - magicdata@legacy-20260804:test
     - aishell2@legacy-20260804:test
     - aishell@legacy-20260804:test
+- schema_version: dataset-catalog/2.0
+  dataset_id: ts_asr_shortseg
+  version: en-v1-20261031
+  languages:
+  - en
+  tasks:
+  - ts_asr
+  artifacts:
+  - name: audio-index
+    kind: audio-index
+    root_alias: ts_asr_shortseg
+    relative_path: versions/en-v1-20261031/audio-index.jsonl.gz
+    sha256: aa52f516a9e41748a1721d90c04b486e9a8b39b7040f8d2de4c947b7729d9f04
+    metadata:
+      record_count: 1200
+  - name: abs-mid1-k1-records
+    kind: audio-records
+    root_alias: ts_asr_shortseg
+    relative_path: versions/en-v1-20261031/records/abs-mid1-k1.jsonl.gz
+    sha256: 78b5494499573e03615f425b2c9ed8d3d5442a7c997c82ff468dd5542403dcd0
+    metadata:
+      record_count: 120
+  - name: abs-mid1-k2-records
+    kind: audio-records
+    root_alias: ts_asr_shortseg
+    relative_path: versions/en-v1-20261031/records/abs-mid1-k2.jsonl.gz
+    sha256: c5c1f589520930a3b7075e89b71cedfc9b080039f84fdb7f53f5f471a10f1882
+    metadata:
+      record_count: 120
+  - name: abs-mid2-k1-records
+    kind: audio-records
+    root_alias: ts_asr_shortseg
+    relative_path: versions/en-v1-20261031/records/abs-mid2-k1.jsonl.gz
+    sha256: 43e759548734ac0cfb2ae300b4aceb16f356d546cecae20ea3fbf64c43f2a29c
+    metadata:
+      record_count: 120
+  - name: abs-mid2-k2-records
+    kind: audio-records
+    root_alias: ts_asr_shortseg
+    relative_path: versions/en-v1-20261031/records/abs-mid2-k2.jsonl.gz
+    sha256: 8f3d92505c08693695b67fafe106d48aa79b34f7f9f4ca11343ddfe7253b65d1
+    metadata:
+      record_count: 120
+  - name: solo-mid-records
+    kind: audio-records
+    root_alias: ts_asr_shortseg
+    relative_path: versions/en-v1-20261031/records/solo-mid.jsonl.gz
+    sha256: 0a1213f52537e8cd93a384893155af114b1a613930e2d9c3fd594b5cfc36aa2f
+    metadata:
+      record_count: 120
+  splits:
+    abs-mid1-k1:
+      artifacts:
+        records:
+        - abs-mid1-k1-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 120
+        duration_hours: 0.0698
+        duration_basis: Mixture duration
+      provenance:
+        description: 'shortseg: {"kind": "neg", "k": 1, "duration": [1.2, 3.0], "interferer_start": [0.0, 0.3], "noise_floor": {"dbfs": [-65, -35], "kinds": {"white": 0.15, "pink": 0.15, "real": 0.7}, "real_pools": ["wham", "dns5_audioset", "dns5_freesound"]}, "enroll_store_seconds": 10, "language": "en"}'
+    abs-mid1-k2:
+      artifacts:
+        records:
+        - abs-mid1-k2-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 120
+        duration_hours: 0.0687
+        duration_basis: Mixture duration
+      provenance:
+        description: 'shortseg: {"kind": "neg", "k": 2, "duration": [1.2, 3.0], "interferer_start": [0.0, 0.3], "noise_floor": {"dbfs": [-65, -35], "kinds": {"white": 0.15, "pink": 0.15, "real": 0.7}, "real_pools": ["wham", "dns5_audioset", "dns5_freesound"]}, "enroll_store_seconds": 10, "language": "en"}'
+    abs-mid2-k1:
+      artifacts:
+        records:
+        - abs-mid2-k1-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 120
+        duration_hours: 0.1493
+        duration_basis: Mixture duration
+      provenance:
+        description: 'shortseg: {"kind": "neg", "k": 1, "duration": [3.0, 6.0], "interferer_start": [0.0, 0.3], "noise_floor": {"dbfs": [-65, -35], "kinds": {"white": 0.15, "pink": 0.15, "real": 0.7}, "real_pools": ["wham", "dns5_audioset", "dns5_freesound"]}, "enroll_store_seconds": 10, "language": "en"}'
+    abs-mid2-k2:
+      artifacts:
+        records:
+        - abs-mid2-k2-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 120
+        duration_hours: 0.148
+        duration_basis: Mixture duration
+      provenance:
+        description: 'shortseg: {"kind": "neg", "k": 2, "duration": [3.0, 6.0], "interferer_start": [0.0, 0.3], "noise_floor": {"dbfs": [-65, -35], "kinds": {"white": 0.15, "pink": 0.15, "real": 0.7}, "real_pools": ["wham", "dns5_audioset", "dns5_freesound"]}, "enroll_store_seconds": 10, "language": "en"}'
+    solo-mid:
+      artifacts:
+        records:
+        - solo-mid-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 120
+        duration_hours: 0.1551
+        duration_basis: Mixture duration
+      provenance:
+        description: 'shortseg: {"kind": "pos", "schedule": "full", "k": 0, "duration": [2.0, 6.0], "noise_floor": {"dbfs": [-65, -35], "kinds": {"white": 0.15, "pink": 0.15, "real": 0.7}, "real_pools": ["wham", "dns5_audioset", "dns5_freesound"]}, "enroll_store_seconds": 10, "language": "en"}'
+  provenance:
+    status: complete
+    synthetic: full
+    description: 英文目标说话人 ASR 评测集（ts_asr_shortseg）：与中文版同一配方与随机种子，说话人换成 VCTK、CS-Dialogue 英文 test、LibriSpeech test-clean/test-other；不含业务真实注册录音条件。只用于评测，不进训练。场景见 scripts/ts_benchmark/recipe-shortseg-en.yaml。
+    sources:
+    - vctk@tts-unified-v0.1:train
+    - cs_dialogue_en@legacy-20260804:test
+    - librispeech@legacy-20260804:test_clean
+    - librispeech@legacy-20260804:test_other

@@ -7,7 +7,7 @@
 | `ts_interference_pool` | `v3-20261018`（`v2-20261016` 同内容读 m4a；`v1-20261015` 为首版） | 干扰人：单人语音片段，按偏移取自源文件；Emilia2 片段读 Lance | zh 32 万条 389 h、en 20 万条 268 h |
 | `ts_nonspeech_pool` | `v1-20261016` | 没有人声的噪声和音乐，转写为空 | 4.8 万条 65.7 h |
 | `ts_scene_pool` | `v2-20261016`；`hard-20261016`；`multi-20261017` | 多句场景：alternate / burst / short；相近声音版；目标说多句的并行版（full，含缺席孪生） | v2：zh 15 万条、en 10 万条；hard：zh 4 万条、en 2.5 万条；multi：zh 12 万条、en 4 万条 |
-| `ts_real_train` | `v1-20261017`；`v2-20261018` | 真实会议窗口（训练划分），在场与缺席成对。v1 按 1 / 2 / 3+ 人分档；v2 以目标为锚开窗、按重叠比例分档，带窗口内每句的时间戳 | v1：9.1 万条（alimeeting 2.5 万、aishell4 3.0 万、ramc 3.7 万）；v2：8.4 万条（alimeeting 4.2 万、aishell4 3.0 万、ramc 1.2 万） |
+| `ts_real_train` | `v1-20261017`；`v2-20261018`；`en-v1-20261101`（ami 24,054、icsi 3,416、notsofar 2,372、dipco 432 条，及 `-utts`） | 真实会议窗口（训练划分），在场与缺席成对。v1 按 1 / 2 / 3+ 人分档；v2 以目标为锚开窗、按重叠比例分档，带窗口内每句的时间戳 | v1：9.1 万条（alimeeting 2.5 万、aishell4 3.0 万、ramc 3.7 万）；v2：8.4 万条（alimeeting 4.2 万、aishell4 3.0 万、ramc 1.2 万） |
 | `babble_noise_train` | `v1-20261017` | 合成背景人声（babble）训练划分，可作噪声或空目标 | zh、en 各 2,600 条，30 秒 |
 | `dns5_noise_train` | `v1-20261016` | DNS5 的 AudioSet 和 Freesound 噪声，以及模拟房间响应 | 见下 |
 | `audioset_road_traffic` | `legacy-20260804` | 道路交通噪声（早已登记，这里只说明用法） | 10.9 万条 299 h |
@@ -86,6 +86,20 @@
 
     python build_ts_scene_pool.py --output-dir DIR --version multi-20261017 --multi --neighbors FILE --zh 120000 --en 40000
 
+### 英文口音目标版（cvaccent-* / csd-*，2026-11-01）
+
+10.28 版本在英文目标说话人评测集（ts-asr-benchmark-en）上，VCTK 带口音的目标有 13.8% 被判成缺席（苏格兰、爱尔兰、加拿大口音约 20%，短目标 27%），LibriSpeech 目标只有 1.8%；CS-Dialogue（中国人说英语）词错率 44.6%。训练里的英文目标 63% 是 LibriSpeech 有声书朗读。这两组场景池换上带口音的英文目标，场景做法与 MagicData 系列一致（多句带孪生、轮流带孪生、相近声音、交接），另加短句单人版（solo）：
+
+| 系列 | 目标说话人 | 其他说话人 |
+| --- | --- | --- |
+| `cvaccent-*` | Common Voice 英文 train 中填写了口音的说话人（至少 6 句 1–8 秒），按口音组抽取：每组占比为说话人数的平方根，单组不超过 15%（按人数美国 52%、英格兰 16%）。文本、清洗通过标记和口音取自双引擎清洗清单（`common_voice_en@icefall-20260908` 的 `clean_supervisions`，见 [cv-en-cleaning.md](cv-en-cleaning.md)），未通过的句子不用 | 一半同一批口音说话人，一半 LibriSpeech |
+| `csd-*` | CS-Dialogue 英文 train 的 140 位说话人；含 `<NPS/>`（旁人说话）或 `**`（听不清）的句子不用，其余标签（`<FIL/>` 等）去掉，与评测集一致 | 一半 CS-Dialogue，Common Voice 口音说话人与 LibriSpeech 各四分之一 |
+
+- 口音组：Common Voice 的预设选项（美国、英格兰、苏格兰、爱尔兰、威尔士、加拿大、澳新、南亚、南部非洲、加勒比、东南亚、香港）加少量含义明确的自填答案（如 Northern Irish）；只有自填答案的归 `other`（多为德、俄、波兰等非母语口音）；同时填了两个组的说话人不用。CS-Dialogue 说话人记为 `mandarin_l1`。
+- `labels.accent` 记录注册人的口音组；孪生样本的注册人与目标同语料、按同样的口音占比抽取，注册音频的语料和口音都不能用来区分在场与缺席。
+- 相近声音：`speaker_neighbors.py --en-accents` 对全部口音说话人和 CS-Dialogue 说话人求 ERes2NetV2 最近邻，候选限于该池会抽到的语料（cvaccent：LibriSpeech、Common Voice；csd：再加 CS-Dialogue）。
+- 与评测集互不重叠：三份语料的 dev / test 说话人在生成时剔除（`HELD_OUT_SPEAKERS`，按说话人 ID 核对过 train 与 dev / test 没有共同说话人）；不使用 VCTK。`qc_ts_scene_pool.py` 逐条核对说话人、语句、音频范围和文本。
+
 ## dns5_noise_train
 
 DNS5 噪声包里的 AudioSet 和 Freesound 噪声（16 kHz 单声道 FLAC，≤30 s，RMS 归一到 −30 dBFS，与评测集的噪声同样处理），以及模拟房间响应。split：
@@ -116,6 +130,16 @@ DNS5 噪声包里的 AudioSet 和 Freesound 噪声（16 kHz 单声道 FLAC，≤
 - 去掉含 dev / test 说话人的录音（ramc 14 段，alimeeting、aishell4 没有），评测和选模的说话人不进训练。
 - 其余同 v1：成对样本、注册取同一录音窗口外的另一句、`channel: 0`、不复制音频。
 
+**`en-v1-20261101`：英文真实会议窗口。** 英文评测 ts_asr_real `en-v2-20261031` 的真实缺席误输出远高于中文，而训练里英文真实录音的缺席样本很少。这一版用英文评测的读取和清洗规则（`scripts/ts_real/english.py`），在评测不用的划分上按 v1 的方法切窗口。
+
+- 来源（一个语料一个划分）：`ami`：`ami_sdm@icefall-20260908` train，单远场麦 Array1-01；`notsofar`：`notsofar_sdm@icefall-20260908` train 与 dev（240825.1_train、_dev1），每场会议随机取一台单通道设备；`dipco`：`dipco@zenodo-8122551-20261023` dev（S02、S04、S05、S09、S10），远场设备通道 1，时间轴按近讲麦对齐到远场文件；`icsi`：`icsi@modelscope-argmaxinc-20261025` 中 lhotse train 划分的会议，官方近讲耳麦混音（镜像把音频存在 parquet 里，写成 WAV 放在 `source/en-v1-20261101/icsi/`）。
+- 与评测互不重叠：评测用的 AMI test、NOTSOFAR-1 eval、DiPCo eval、ICSI test（Bmr013、Bmr018、Bro021）以及 AMI dev、ICSI dev（Bmr021、Bns001）的会议都不用；含这些划分说话人的录音也去掉（ICSI 说话人跨会议重复，只剩 11 场 Bed 会议；AMI、NOTSOFAR、DiPCo 本来就不重叠）。检查结果写在 `report.json` 的 `heldout`。
+- 不含 CHiME-6：评测按每句所在房间取该房间的参考阵列，房间信息只在 dev / eval 的标注里有，train 标注没有，窗口对不上听得见说话人的阵列（CHiME-6 train 已经通过 `chime6@turn-taking-20261014` 进入训练）。
+- 窗口同 v1：8–22 秒、由完整语句组成、窗口之间不重叠，按说话人数分 `1spk`、`2spk`、`3plus`，用尽所有可用窗口（不设配额）。目标在窗口内各句须都有完整转写（含听不清、外语、被消音、数字朗读的语句算作有人说话，但不作目标、不作注册），且去掉语气词后还有词；参考文本为目标各句按时间顺序用空格拼接，保留原标注的大小写（AMI 为全大写，与现有 AMI 训练集一致）。
+- 注册同 v1：窗口外同一录音的另一句，3–6 秒，被他人重叠不超过 20%，前 5 秒内他人说话少于 0.3 秒。缺席样本先取同一录音里没在窗口说话的人；没有时取其他录音的说话人，且此人不在窗口里说话（英文语料的说话人编号跨会议重复）。
+- 声纹核对：每条注册都过英文评测的声纹核对（`scripts/ts_real/voice_check.py`，WeSpeaker ECAPA-TDNN512-LM）——注册与本人在该录音其他语句的平均声纹比与其他每个人都更像（NOTSOFAR、DiPCo 用近讲麦之和，其余用记录所读的通道）；不过的换一句（`metadata.enrollment_replaced`），换不到就丢掉这一对，结果在 `metadata.enroll_voice_check`。没有沿用 v3 按分位数定阈值的做法：远场多人窗口里正负两组余弦重叠很大，那样会丢掉 AMI 27%、NOTSOFAR 46% 的样本对，远多于人工标注的错标。
+- 记录自带 `metadata.window_utts`（窗口内每句的说话人、相对起止、文本，无转写的语句标 `excluded`）与 `metadata.target_speaker`，`-utts` 版按 `keep` 复核派生。生成脚本 `scripts/ts_robust/build_ts_real_train_en.py`。
+
 ## babble_noise_train
 
 `babble_noise_synth` 的 zh、en 训练划分（每种语言 2,600 条，每条 30 秒，5–20 位说话人同时说话）。原数据集只登记了源目录和 manifest，训练加载器读不了，这里写成 Lhotse 录音清单，可以放进 `noise_sources`（叠加在目标说话人场景上）或 `nonspeech_sources`（空目标）。评测的 babble 来自 dev / test 说话人，与训练说话人互不重叠。脚本 `scripts/ts_robust/register_babble_noise.py`。
@@ -129,4 +153,4 @@ DNS5 噪声包里的 AudioSet 和 Freesound 噪声（16 kHz 单声道 FLAC，≤
 
 ## 生成脚本
 
-`scripts/ts_robust/`：`build_interference_pool.py`、`build_interference_pool_v3.py`、`build_nonspeech_pool.py`、`build_ts_scene_pool.py`、`speaker_neighbors.py`、`prepare_training_noise.py`、`register_training_noise.py`、`register_records_pool.py`（把 `records` + `audio_index` 版本写成声明）、`build_ts_real_train.py`、`register_babble_noise.py`。登记后用 `build-record-index --register` 建索引。
+`scripts/ts_robust/`：`build_interference_pool.py`、`build_interference_pool_v3.py`、`build_nonspeech_pool.py`、`build_ts_scene_pool.py`、`qc_ts_scene_pool.py`（登记前检查场景池）、`speaker_neighbors.py`、`prepare_training_noise.py`、`register_training_noise.py`、`register_records_pool.py`（把 `records` + `audio_index` 版本写成声明）、`build_ts_real_train.py`、`register_babble_noise.py`。登记后用 `build-record-index --register` 建索引。
