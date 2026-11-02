@@ -1,0 +1,257 @@
+# 普通话 ASR 训练集书面化标点的补充批次（2026-11-02）：punc-written-v1-20261029 没覆盖、而 TS 训练配方用到的 4 个训练集；方法相同，只插标点、不改字。
+- schema_version: dataset-catalog/2.0
+  dataset_id: magicdata
+  version: punc-written-v1-20261102
+  languages:
+  - zh
+  tasks:
+  - asr
+  aliases: []
+  derived_from: magicdata@legacy-20260804
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/magicdata/versions/punc-written-v1-20261102/state.json
+  - name: train_supervisions_punc_0
+    kind: lhotse-supervisions
+    root_alias: aidc_data
+    relative_path: datasets/magicdata/versions/punc-written-v1-20261102/magicdata_supervisions_train_punc_written.jsonl.gz
+    expected_bytes: 17212102
+    sha256: 7af6e3af8216b35194172eeb36ef53c91d8faadb163973b8a3849e22a7a89a69
+    metadata:
+      record_count: 573478
+      punctuated: true
+      source: datasets/magicdata/versions/legacy-20260804/train_sup_0/magicdata_supervisions_train.jsonl.gz
+  splits:
+    train:
+      artifacts:
+        punctuated_supervisions:
+        - train_supervisions_punc_0
+        preparation_state:
+        - preparation_state
+      statistics:
+        records: 573478
+        duration_hours: 711.9
+        duration_basis: sum of supervision durations; same records in the same order as the source supervisions
+        records_punctuated: 573477
+        records_student_kept_label: 570005
+        records_marks_aligned_from_student_output: 3472
+        records_without_student_output: 0
+        records_copied_unchanged: 1
+        marks_per_100_chars:
+          。: 8.2
+          ，: 3.646
+          ？: 2.448
+          》: 1.253
+          《: 1.252
+          、: 0.195
+          ！: 0.057
+      provenance:
+        preparation_status: prepared
+  provenance:
+    preparation_status: prepared
+    owner: mingdong
+    description: magicdata@legacy-20260804 训练集原标注加书面化标点，方法与 punc-written-v1-20261029 相同（amphiondata docs/written-punctuation.md：GB/T
+      15834、逗号从紧；Qwen3-4B 学生 punc-student-v1 以 Qwen3-ASR-1.7B 听音频得到的带标点转写作语气提示，只往原标注里插标点）。模型改动原文的条目按字对齐把标点搬回原标注；每条以 。？！ 结尾；没有汉字的条目和空标注原样保留。文件与源
+      supervisions 条数、顺序相同，只换 text。语音助手类指令多，书名号较密（每百字约 1.25 对）。
+    source: magicdata@legacy-20260804
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/zh-punc-gaps-20261102
+    audit: datasets/magicdata/versions/punc-written-v1-20261102/state.json
+    known_issues: 学生模型的人工参照评测只覆盖试点来源（WenetSpeech、KeSpeech、AISHELL-2、AISHELL、RAMC、AliMeeting）；本批来源没有单独的人工参照。
+  recipe_parameters:
+    punctuation_model: Qwen3-4B-Instruct-2507 + LoRA distilled from Qwen3.8-27B (punc-student-v1)
+    hint: Qwen3-ASR-1.7B punctuated transcript
+    spec: amphiondata written_punctuation v1
+- schema_version: dataset-catalog/2.0
+  dataset_id: common_voice_zh
+  version: punc-written-v1-20261102
+  languages:
+  - zh
+  tasks:
+  - asr
+  aliases: []
+  derived_from: common_voice_zh@legacy-20260804
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/common_voice_zh/versions/punc-written-v1-20261102/state.json
+  - name: train_supervisions_punc_0
+    kind: lhotse-supervisions
+    root_alias: aidc_data
+    relative_path: datasets/common_voice_zh/versions/punc-written-v1-20261102/cv-zh-CN_supervisions_train_punc_written.jsonl.gz
+    expected_bytes: 1472996
+    sha256: ffbc43f4f500d27c58ec24d7e5195e2d1252fbd2540148c3b8cccb6150731dac
+    metadata:
+      record_count: 29560
+      punctuated: true
+      source: datasets/common_voice_zh/versions/legacy-20260804/train_sup_0/cv-zh-CN_supervisions_train.jsonl.gz
+  splits:
+    train:
+      artifacts:
+        punctuated_supervisions:
+        - train_supervisions_punc_0
+        preparation_state:
+        - preparation_state
+      statistics:
+        records: 29560
+        duration_hours: 42.6
+        duration_basis: sum of supervision durations; same records in the same order as the source supervisions
+        records_punctuated: 29560
+        records_student_kept_label: 29511
+        records_marks_aligned_from_student_output: 49
+        records_without_student_output: 0
+        records_copied_unchanged: 0
+        marks_per_100_chars:
+          。: 6.262
+          ，: 1.198
+          、: 0.175
+          》: 0.045
+          《: 0.045
+          ？: 0.03
+          ：: 0.006
+      provenance:
+        preparation_status: prepared
+  provenance:
+    preparation_status: prepared
+    owner: mingdong
+    description: common_voice_zh@legacy-20260804 训练集原标注加书面化标点，方法与 punc-written-v1-20261029 相同（amphiondata docs/written-punctuation.md：GB/T
+      15834、逗号从紧；Qwen3-4B 学生 punc-student-v1 以 Qwen3-ASR-1.7B 听音频得到的带标点转写作语气提示，只往原标注里插标点）。模型改动原文的条目按字对齐把标点搬回原标注；每条以 。？！ 结尾；没有汉字的条目和空标注原样保留。文件与源
+      supervisions 条数、顺序相同，只换 text。
+    source: common_voice_zh@legacy-20260804
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/zh-punc-gaps-20261102
+    audit: datasets/common_voice_zh/versions/punc-written-v1-20261102/state.json
+    known_issues: 学生模型的人工参照评测只覆盖试点来源（WenetSpeech、KeSpeech、AISHELL-2、AISHELL、RAMC、AliMeeting）；本批来源没有单独的人工参照。
+  recipe_parameters:
+    punctuation_model: Qwen3-4B-Instruct-2507 + LoRA distilled from Qwen3.8-27B (punc-student-v1)
+    hint: Qwen3-ASR-1.7B punctuated transcript
+    spec: amphiondata written_punctuation v1
+- schema_version: dataset-catalog/2.0
+  dataset_id: police_terms_single_train
+  version: punc-written-v1-20261102
+  languages:
+  - zh
+  tasks:
+  - asr
+  aliases: []
+  derived_from: police_terms_single_train@v1-20261023
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/police_terms_single_train/versions/punc-written-v1-20261102/state.json
+  - name: train_supervisions_punc_0
+    kind: lhotse-supervisions
+    root_alias: aidc_data
+    relative_path: datasets/police_terms_single_train/versions/punc-written-v1-20261102/police_terms_single_train_supervisions_train_punc_written.jsonl.gz
+    expected_bytes: 738564
+    sha256: ccf1aac164155864ecc15010f041ce96279ae59a9a1c9a042bb48da00084fa8a
+    metadata:
+      record_count: 21760
+      punctuated: true
+      source: datasets/police_terms_single_train/versions/v1-20261023/manifests/police_terms_single_train_supervisions_train.jsonl.gz
+  splits:
+    train:
+      artifacts:
+        punctuated_supervisions:
+        - train_supervisions_punc_0
+        preparation_state:
+        - preparation_state
+      statistics:
+        records: 21760
+        duration_hours: 11.7
+        duration_basis: sum of supervision durations; same records in the same order as the source supervisions
+        records_punctuated: 21640
+        records_student_kept_label: 21640
+        records_marks_aligned_from_student_output: 0
+        records_without_student_output: 0
+        records_copied_unchanged: 120
+        marks_per_100_chars:
+          。: 26.072
+          、: 0.229
+          ？: 0.097
+          ，: 0.08
+          《: 0.059
+          》: 0.059
+          ！: 0.042
+      provenance:
+        preparation_status: prepared
+  provenance:
+    preparation_status: prepared
+    owner: mingdong
+    description: police_terms_single_train@v1-20261023 训练集原标注加书面化标点，方法与 punc-written-v1-20261029 相同（amphiondata docs/written-punctuation.md：GB/T
+      15834、逗号从紧；Qwen3-4B 学生 punc-student-v1 以 Qwen3-ASR-1.7B 听音频得到的带标点转写作语气提示，只往原标注里插标点）。模型改动原文的条目按字对齐把标点搬回原标注；每条以 。？！ 结尾；没有汉字的条目和空标注原样保留。文件与源
+      supervisions 条数、顺序相同，只换 text。每条只说一个术语，多数只补句号；120 条没有汉字的术语（如 WPS、DNA）原样保留。
+    source: police_terms_single_train@v1-20261023
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/zh-punc-gaps-20261102
+    audit: datasets/police_terms_single_train/versions/punc-written-v1-20261102/state.json
+    known_issues: 学生模型的人工参照评测只覆盖试点来源（WenetSpeech、KeSpeech、AISHELL-2、AISHELL、RAMC、AliMeeting）；本批来源没有单独的人工参照。
+  recipe_parameters:
+    punctuation_model: Qwen3-4B-Instruct-2507 + LoRA distilled from Qwen3.8-27B (punc-student-v1)
+    hint: Qwen3-ASR-1.7B punctuated transcript
+    spec: amphiondata written_punctuation v1
+- schema_version: dataset-catalog/2.0
+  dataset_id: threed_speaker_zh_far_asr
+  version: punc-written-v1-20261102
+  languages:
+  - zh
+  tasks:
+  - asr
+  aliases: []
+  derived_from: threed_speaker_zh_far_asr@zh-far-replay-clean-v1-20261010
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/threed_speaker_zh_far_asr/versions/punc-written-v1-20261102/state.json
+  - name: train_supervisions_punc_0
+    kind: lhotse-supervisions
+    root_alias: aidc_data
+    relative_path: datasets/threed_speaker_zh_far_asr/versions/punc-written-v1-20261102/threed_speaker_zh_far_asr_supervisions_train_punc_written.jsonl.gz
+    expected_bytes: 1587276
+    sha256: 8d2f1ec5782a9f4db7db0dd6abed0ceafd039b139db12ee2db281908bf538ea9
+    metadata:
+      record_count: 34600
+      punctuated: true
+      source: datasets/threed_speaker_zh_far_asr/versions/zh-far-replay-clean-v1-20261010/threed_speaker_zh_far_asr_supervisions_train.jsonl.gz
+  splits:
+    train:
+      artifacts:
+        punctuated_supervisions:
+        - train_supervisions_punc_0
+        preparation_state:
+        - preparation_state
+      statistics:
+        records: 34600
+        duration_hours: 71.2
+        duration_basis: sum of supervision durations; same records in the same order as the source supervisions
+        records_punctuated: 34600
+        records_student_kept_label: 33785
+        records_marks_aligned_from_student_output: 815
+        records_without_student_output: 0
+        records_copied_unchanged: 0
+        marks_per_100_chars:
+          ，: 9.01
+          。: 4.671
+          ？: 1.784
+          、: 0.149
+          ！: 0.062
+          《: 0.039
+          》: 0.039
+      provenance:
+        preparation_status: prepared
+  provenance:
+    preparation_status: prepared
+    owner: mingdong
+    description: threed_speaker_zh_far_asr@zh-far-replay-clean-v1-20261010 训练集原标注加书面化标点，方法与 punc-written-v1-20261029 相同（amphiondata
+      docs/written-punctuation.md：GB/T 15834、逗号从紧；Qwen3-4B 学生 punc-student-v1 以 Qwen3-ASR-1.7B 听音频得到的带标点转写作语气提示，只往原标注里插标点）。模型改动原文的条目按字对齐把标点搬回原标注；每条以
+      。？！ 结尾；没有汉字的条目和空标注原样保留。文件与源 supervisions 条数、顺序相同，只换 text。
+    source: threed_speaker_zh_far_asr@zh-far-replay-clean-v1-20261010
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/zh-punc-gaps-20261102
+    audit: datasets/threed_speaker_zh_far_asr/versions/punc-written-v1-20261102/state.json
+    known_issues: 学生模型的人工参照评测只覆盖试点来源（WenetSpeech、KeSpeech、AISHELL-2、AISHELL、RAMC、AliMeeting）；本批来源没有单独的人工参照。
+  recipe_parameters:
+    punctuation_model: Qwen3-4B-Instruct-2507 + LoRA distilled from Qwen3.8-27B (punc-student-v1)
+    hint: Qwen3-ASR-1.7B punctuated transcript
+    spec: amphiondata written_punctuation v1

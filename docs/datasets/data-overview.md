@@ -1,6 +1,6 @@
 # 数据总览
 
-当前登记 **200 个数据集**；另有 **20 个下载来源声明**和 **1 个训练混合配方**。登记不代表本机文件已齐备。
+当前登记 **201 个数据集**；另有 **20 个下载来源声明**和 **1 个训练混合配方**。登记不代表本机文件已齐备。
 
 时长取单个版本的最大值，不跨版本相加；≈ 为参考表或估算值，— 为暂无完整时长。各版本的时长、说明、COS 地址和质量证据见[版本明细](data-versions.md)。
 
@@ -28,13 +28,13 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [audioset_esc_test](data-versions.md#audioset_esc_test) | en | 背景声场景描述 | 6.8 | AudioSet 背景声场景描述评测集 | 快照 20260914 |
 | [chime4](data-versions.md#chime4) | en | 语音识别 | 10.1 | 四种噪声环境的英文朗读评测集（CHiME-4） | 没有 |
 | [chime6](data-versions.md#chime6) | en | 语音识别、重叠语音检测、带说话人标注的语音识别、说话人分段与归属、目标说话人语音识别 | 174.5 | 家庭聚会英文对话，多通道远场重叠（CHiME-6） | 部分版本：快照 20260914 |
-| [common_voice_en](data-versions.md#common_voice_en) | en | 语音识别、热词增强语音识别 | 1,862.7 | Common Voice 英语众包朗读；含清洗、热词、加噪版 | 快照 20260914 |
+| [common_voice_en](data-versions.md#common_voice_en) | en | 语音识别、热词增强语音识别 | 1,862.7 | Common Voice 英语众包朗读；含清洗、热词、加噪版 | 部分版本：快照 20260914 |
 | [cs_dialogue_en](data-versions.md#cs_dialogue_en) | en | 语音识别 | 26.6 | CS-Dialogue 对话中的纯英文语句 | 快照 20260914 |
 | [dipco](data-versions.md#dipco) | en | 语音识别、带说话人标注的语音识别、说话人分段与归属 | 6.5 | 家庭晚宴英文对话，近讲与远场阵列（DiPCo） | 没有 |
 | [emilia_en](data-versions.md#emilia_en) | en | 语音识别 | 43,624.0 | Emilia 英语野外语音（已清洗） | 快照 20260914 |
 | [emotion1200_en](data-versions.md#emotion1200_en) | en | 说话人情感分类、情感与说话风格描述、语音情感识别 | 5.2 | 英文情感识别与描述评测（Emotion1200） | 快照 20260914 |
 | [fleurs_en](data-versions.md#fleurs_en) | en | 语音识别 | 10.3 | 多语朗读英语部分（FLEURS） | 快照 20260914 |
-| [gigaspeech](data-versions.md#gigaspeech) | en | 语音识别 | 10,050.7 | 有声书、播客和 YouTube 英语（GigaSpeech） | 快照 20260914 |
+| [gigaspeech](data-versions.md#gigaspeech) | en | 语音识别 | 10,050.7 | 有声书、播客和 YouTube 英语（GigaSpeech） | 部分版本：快照 20260914 |
 | [hifitts](data-versions.md#hifitts) | en | 语音识别、语音合成 | 291.7 | 英文有声书高保真朗读（Hi-Fi TTS） | `TTS 桶:HiFiTTS/`（原始数据） |
 | [hifitts2](data-versions.md#hifitts2) | en | 语音识别、语音合成 | 35,932.7 | 英文有声书高保真朗读（Hi-Fi TTS 2） | 没有 |
 | [icsi](data-versions.md#icsi) | en | 语音识别、说话人分段与归属 | 71.7 | 伯克利 ICSI 英文工作会议（近讲混合音轨） | 没有 |
@@ -45,7 +45,7 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [libricss](data-versions.md#libricss) | en | 语音识别、重叠语音检测、speech_separation | 10.1 | LibriSpeech 外放录制的模拟会议 | 没有 |
 | [libriheavy](data-versions.md#libriheavy) | en | 语音识别、语音合成 | 51,044.7 | 英文有声书，带标点和大小写（Libriheavy） | 没有 |
 | [librimix](data-versions.md#librimix) | en | 目标说话人语音识别 | 6,921.9 | LibriSpeech 混合的目标说话人数据 | 快照 20260914 |
-| [librispeech](data-versions.md#librispeech) | en | 语音识别、热词增强语音识别 | 971.6 | 英文有声书朗读（LibriSpeech）；含热词和加噪版 | 快照 20260914 |
+| [librispeech](data-versions.md#librispeech) | en | 语音识别、热词增强语音识别 | 971.6 | 英文有声书朗读（LibriSpeech）；含热词和加噪版 | 部分版本：快照 20260914 |
 | [libritts_r](data-versions.md#libritts_r) | en | 语音识别、语音合成 | 583.1 | 英文有声书 TTS 语料，音频经修复（LibriTTS-R） | `TTS 桶:LibriTTS-R/`（原始数据） |
 | [ljspeech](data-versions.md#ljspeech) | en | 语音识别、语音合成 | 23.9 | 单人英文朗读（LJSpeech） | `TTS 桶:LJSpeech/`（原始数据） |
 | [meld_ser](data-versions.md#meld_ser) | en | 语音情感识别 | 2.3 | 美剧《老友记》对话情感识别评测（MELD） | 快照 20260914 |
@@ -81,7 +81,7 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [childmandarin](data-versions.md#childmandarin) | zh | 语音识别 | 41.0 | 3–5 岁儿童普通话语音（ChildMandarin） | 快照 20260914 |
 | [cnceleb1](data-versions.md#cnceleb1) | zh | 说话人身份识别、声纹验证 | 270.1 | 中文跨场景声纹数据（CN-Celeb1） | 快照 20260914 |
 | [cnceleb2](data-versions.md#cnceleb2) | zh | 说话人身份识别、声纹验证 | 1,084.3 | 中文跨场景声纹训练数据（CN-Celeb2） | 快照 20260914 |
-| [common_voice_zh](data-versions.md#common_voice_zh) | zh | 语音识别、热词增强语音识别 | 76.1 | Common Voice 中文众包朗读；含清洗、热词、加噪版 | 快照 20260914 |
+| [common_voice_zh](data-versions.md#common_voice_zh) | zh | 语音识别、热词增强语音识别 | 76.1 | Common Voice 中文众包朗读；含清洗、热词、加噪版 | 部分版本：快照 20260914 |
 | [common_voice_zh_hk](data-versions.md#common_voice_zh_hk) | yue | 语音识别 | 25.3 | 众包朗读粤语（Common Voice 香港） | 快照 20260914 |
 | [context_correction_zh](data-versions.md#context_correction_zh) | zh | 语音识别、目标说话人语音识别 | 17.6 | 中文上下文纠偏评测集，同音词按语境写 | 没有 |
 | [csemotions](data-versions.md#csemotions) | zh | 语音合成 | 10.2 | 中文情感语音（CSEMOTIONS），TTS 用 | `TTS 桶:CSEMOTIONS/`（原始数据） |
@@ -165,6 +165,7 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [ts_asr_benchmark](data-versions.md#ts_asr_benchmark) | en、zh | 目标说话人语音识别 | 46.5 | 合成的中文目标说话人 ASR 评测集 | `备份桶:audio-data-contract/datasets/ts_asr_benchmark/` |
 | [ts_asr_farfield](data-versions.md#ts_asr_farfield) | en、zh | 目标说话人语音识别 | 5.1 | 目标说话人评测：远场与混响 | `备份桶:audio-data-contract/datasets/ts_asr_farfield/` |
 | [ts_asr_handover](data-versions.md#ts_asr_handover) | en、zh | 目标说话人语音识别 | 3.8 | 目标说话人评测：与他人交替说话 | `备份桶:audio-data-contract/datasets/ts_asr_handover/` |
+| [ts_asr_hotwords](data-versions.md#ts_asr_hotwords) | en、zh | 目标说话人语音识别 | — | — | 没有 |
 | [ts_asr_nearshort](data-versions.md#ts_asr_nearshort) | en、zh | 目标说话人语音识别 | 2.5 | 目标说话人评测：他人只说一句约 1 秒短话 | 部分版本：`备份桶:audio-data-contract/datasets/ts_asr_nearshort/` |
 | [ts_asr_noise](data-versions.md#ts_asr_noise) | en、zh | 目标说话人语音识别 | 5.9 | 目标说话人评测：噪声与背景人声 | `备份桶:audio-data-contract/datasets/ts_asr_noise/` |
 | [ts_asr_real](data-versions.md#ts_asr_real) | en、zh | 目标说话人语音识别 | 12.0 | 真实会议对话的目标说话人评测集 | `备份桶:audio-data-contract/datasets/ts_asr_real/` |

@@ -1,0 +1,67 @@
+# 英文 ASR 训练集书面化标点与大小写（2026-11-02 开工，占位）：TS 训练配方要求训练语料全部带标点。
+- schema_version: dataset-catalog/2.0
+  dataset_id: librispeech
+  version: punc-written-en-v1-20261102
+  languages:
+  - en
+  tasks:
+  - asr
+  aliases: []
+  derived_from: librispeech@legacy-20260804
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/librispeech/versions/punc-written-en-v1-20261102/state.json
+  splits: {}
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: '英文 ASR 训练集原标注加书面化标点并恢复大小写（规范 en-v1：只插 , . ? ! ; : 和改大小写，转小写去标点后与原标注逐词一致；27B 老师 10 万条 → Qwen3-4B 学生跑全量）。占位，处理中。'
+    source: librispeech@legacy-20260804
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/en-punc-20261102
+    audit: datasets/librispeech/versions/punc-written-en-v1-20261102/state.json
+- schema_version: dataset-catalog/2.0
+  dataset_id: gigaspeech
+  version: punc-written-en-v1-20261102
+  languages:
+  - en
+  tasks:
+  - asr
+  aliases: []
+  derived_from: gigaspeech@legacy-20260804
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/gigaspeech/versions/punc-written-en-v1-20261102/state.json
+  splits: {}
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: '英文 ASR 训练集原标注加书面化标点并恢复大小写（规范 en-v1：只插 , . ? ! ; : 和改大小写，转小写去标点后与原标注逐词一致；27B 老师 10 万条 → Qwen3-4B 学生跑全量）。占位，处理中。'
+    source: gigaspeech@legacy-20260804
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/en-punc-20261102
+    audit: datasets/gigaspeech/versions/punc-written-en-v1-20261102/state.json
+- schema_version: dataset-catalog/2.0
+  dataset_id: common_voice_en
+  version: punc-written-en-v1-20261102
+  languages:
+  - en
+  tasks:
+  - asr
+  aliases: []
+  derived_from: common_voice_en@legacy-20260804
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/common_voice_en/versions/punc-written-en-v1-20261102/state.json
+  splits: {}
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: '英文 ASR 训练集原标注加书面化标点并恢复大小写（规范 en-v1：只插 , . ? ! ; : 和改大小写，转小写去标点后与原标注逐词一致；27B 老师 10 万条 → Qwen3-4B 学生跑全量）。占位，处理中。'
+    source: common_voice_en@legacy-20260804
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/en-punc-20261102
+    audit: datasets/common_voice_en/versions/punc-written-en-v1-20261102/state.json
