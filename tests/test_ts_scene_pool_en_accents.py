@@ -42,6 +42,7 @@ def builder(corpora):
     b.neighbors, b.hard_rank = None, 10
     b.where = {name: (c, i) for c in corpora for i, name in enumerate(c.speakers)}
     b.accent = {n: g for c in corpora for n, g in c.accent.items()}
+    b.alike = {}
     b.audio, b.pending = {}, {}
     return b
 
