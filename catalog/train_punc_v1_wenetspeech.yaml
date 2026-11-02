@@ -1,0 +1,63 @@
+# WenetSpeech 清洗版（通过子集）的带标点训练版本（2026-11-02），说明同 train_punc_v1.yaml。
+- schema_version: dataset-catalog/2.0
+  dataset_id: wenetspeech_clean
+  version: train-punc-v1-20261102
+  languages:
+  - zh
+  tasks:
+  - asr
+  aliases: []
+  derived_from: wenetspeech_clean@clean-v3-pass-20261027
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/wenetspeech_clean/versions/train-punc-v1-20261102/state.json
+  - name: train_recordings
+    kind: lhotse-recordings
+    root_alias: aidc_data
+    relative_path: datasets/wenetspeech/source/cos-backup-20261011/relocated/LHOTSE/WenetSpeech/data/manifests/wenetspeech_recordings_L.jsonl.gz
+    expected_bytes: 1464697
+    sha256: aad6b67a67486fa091b7f6da28715e7db378c1001186a9c6330e5692303f6e51
+  - name: train_supervisions_punc_0
+    kind: lhotse-supervisions
+    root_alias: aidc_data
+    relative_path: datasets/wenetspeech_clean/versions/train-punc-v1-20261102/train_punc.jsonl.gz
+    expected_bytes: 519775836
+    sha256: 6f26ca85e6622a1edf4fe94d306d4287084a2d0a6b617408bc7a46f653f266a9
+    metadata:
+      record_count: 14568791
+      punctuated: true
+      source: datasets/wenetspeech_clean/versions/clean-v3-pass-20261027/supervisions/train.jsonl.gz
+  - name: record_index
+    kind: lance-record-index
+    root_alias: aidc_data
+    relative_path: datasets/wenetspeech_clean/versions/train-punc-v1-20261102/record_index/index.json
+    expected_bytes: 778
+    sha256: 37c2543f51e85c73c2a53171166b33657efd1d6c25afd0a0eac65c104c0c5752
+    metadata:
+      snapshot_version: 13
+      rows: 14568791
+      schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
+  splits:
+    train:
+      artifacts:
+        recordings:
+        - train_recordings
+        supervisions:
+        - train_supervisions_punc_0
+        preparation_state:
+        - preparation_state
+        records_lance:
+        - record_index
+      statistics:
+        records: 14568791
+        records_punctuated: 14568791
+      provenance:
+        preparation_status: prepared
+  provenance:
+    preparation_status: prepared
+    owner: mingdong
+    description: wenetspeech_clean@clean-v3-pass-20261027 的 train 训练版本，目标文本换成带标点的写法（按 id 取自 datasets/wenetspeech_clean/versions/punc-written-v1-20261029/wenetspeech_supervisions_L_clean_punc_written.jsonl.gz；去掉标点和空格、转小写后与原文一致才替换，否则保留原文）。其余字段与源版本相同，录音引用源版本。
+    source: wenetspeech_clean@clean-v3-pass-20261027
+

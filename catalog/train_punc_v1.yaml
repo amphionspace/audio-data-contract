@@ -1,0 +1,453 @@
+# 训练用的带标点版本（2026-11-02）：普通 ASR 训练集的目标文本换成书面化标点写法（中文 punc-written-v1-20261029 / -20261102），其余字段和录音与源训练版本相同；
+# police_terms_single_train@hotwords-confusable-v1-20261102 为单说术语的热词记录版本（带读音相近的易混词）。用于 TS + 热词、全量标点的下一轮训练。
+- schema_version: dataset-catalog/2.0
+  dataset_id: aishell2
+  version: train-punc-v1-20261102
+  languages:
+  - zh
+  tasks:
+  - asr
+  aliases: []
+  derived_from: aishell2@legacy-20260804
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/aishell2/versions/train-punc-v1-20261102/state.json
+  - kind: lhotse-recordings
+    name: train_rec_0
+    relative_path: datasets/aishell2/versions/legacy-20260804/train_rec_0/aishell2_recordings_train.jsonl.gz
+    root_alias: aidc_data
+    expected_bytes: 13768214
+    sha256: 6bc4d05821a5d287c0e9c9b402abc49ff87bebbd5f5d97770263bf6f0c732304
+  - name: train_supervisions_punc_0
+    kind: lhotse-supervisions
+    root_alias: aidc_data
+    relative_path: datasets/aishell2/versions/train-punc-v1-20261102/aishell2_supervisions_train_punc.jsonl.gz
+    expected_bytes: 31778297
+    sha256: 2eea5e67e075362b924a1e398a6533f3357e7d38dc650ccbe6ffcc23d156672e
+    metadata:
+      record_count: 1009223
+      punctuated: true
+      source: datasets/aishell2/versions/legacy-20260804/train_sup_0/aishell2_supervisions_train.jsonl.gz
+  - name: record_index
+    kind: lance-record-index
+    root_alias: aidc_data
+    relative_path: datasets/aishell2/versions/train-punc-v1-20261102/record_index/index.json
+    expected_bytes: 762
+    sha256: 049456619d4ea7f98c677fbc08d5ba707b312aac693436417104c2b1f47cdbea
+    metadata:
+      snapshot_version: 13
+      rows: 1009223
+      schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
+  splits:
+    train:
+      artifacts:
+        recordings:
+        - train_rec_0
+        supervisions:
+        - train_supervisions_punc_0
+        preparation_state:
+        - preparation_state
+        records_lance:
+        - record_index
+      statistics:
+        records: 1009223
+        records_punctuated: 1009223
+      provenance:
+        preparation_status: prepared
+  provenance:
+    preparation_status: prepared
+    owner: mingdong
+    description: aishell2@legacy-20260804 的 train 训练版本，目标文本换成带标点的写法（按 id 取自 datasets/aishell2/versions/punc-written-v1-20261029/aishell2_supervisions_train_punc_written.jsonl.gz；去掉标点和空格、转小写后与原文一致才替换，否则保留原文）。其余字段与源版本相同，录音引用源版本。
+    source: aishell2@legacy-20260804
+- schema_version: dataset-catalog/2.0
+  dataset_id: kespeech
+  version: train-punc-v1-20261102
+  languages:
+  - zh
+  tasks:
+  - asr
+  aliases: []
+  derived_from: kespeech@legacy-20260804
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/kespeech/versions/train-punc-v1-20261102/state.json
+  - kind: lhotse-recordings
+    name: train_rec_0
+    relative_path: datasets/kespeech/versions/legacy-20260804/train_rec_0/kespeech-asr_recordings_train_phase1.jsonl.gz
+    root_alias: aidc_data
+    expected_bytes: 9537983
+    sha256: f1ed873b6f03708d18e4983283aadd7fef3e06436575186e4141332d1a71e5a1
+  - kind: lhotse-recordings
+    name: train_rec_1
+    relative_path: datasets/kespeech/versions/legacy-20260804/train_rec_1/kespeech-asr_recordings_train_phase2.jsonl.gz
+    root_alias: aidc_data
+    expected_bytes: 6027737
+    sha256: 89095d701ff3cc66ecea0b90d77829f41e6ace3d5fadcf928af6bc2769af02c2
+  - name: train_supervisions_punc_0
+    kind: lhotse-supervisions
+    root_alias: aidc_data
+    relative_path: datasets/kespeech/versions/train-punc-v1-20261102/kespeech-asr_supervisions_train_phase1_punc.jsonl.gz
+    expected_bytes: 24870205
+    sha256: ac0a90d361cd03e2fbdbf407e0d85affe14ee44de6ddad7e6006ad08c960f7af
+    metadata:
+      record_count: 543634
+      punctuated: true
+      source: datasets/kespeech/versions/legacy-20260804/train_sup_0/kespeech-asr_supervisions_train_phase1.jsonl.gz
+  - name: train_supervisions_punc_1
+    kind: lhotse-supervisions
+    root_alias: aidc_data
+    relative_path: datasets/kespeech/versions/train-punc-v1-20261102/kespeech-asr_supervisions_train_phase2_punc.jsonl.gz
+    expected_bytes: 15537625
+    sha256: 0314575e038ae362c47915eaf85a48ebf1e0740dab8768e661bf05fd01bc7820
+    metadata:
+      record_count: 340387
+      punctuated: true
+      source: datasets/kespeech/versions/legacy-20260804/train_sup_1/kespeech-asr_supervisions_train_phase2.jsonl.gz
+  - name: record_index
+    kind: lance-record-index
+    root_alias: aidc_data
+    relative_path: datasets/kespeech/versions/train-punc-v1-20261102/record_index/index.json
+    expected_bytes: 1096
+    sha256: 8d3969469a320e13e9c6b199503d9f634a9075ba30927d913406c7dc2df8ab49
+    metadata:
+      snapshot_version: 13
+      rows: 884021
+      schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
+  splits:
+    train:
+      artifacts:
+        recordings:
+        - train_rec_0
+        - train_rec_1
+        supervisions:
+        - train_supervisions_punc_0
+        - train_supervisions_punc_1
+        preparation_state:
+        - preparation_state
+        records_lance:
+        - record_index
+      statistics:
+        records: 884021
+        records_punctuated: 884021
+      provenance:
+        preparation_status: prepared
+  provenance:
+    preparation_status: prepared
+    owner: mingdong
+    description: kespeech@legacy-20260804 的 train 训练版本，目标文本换成带标点的写法（按 id 取自 datasets/kespeech/versions/punc-written-v1-20261029/kespeech-asr_supervisions_train_phase1_punc_written.jsonl.gz, datasets/kespeech/versions/punc-written-v1-20261029/kespeech-asr_supervisions_train_phase2_punc_written.jsonl.gz；去掉标点和空格、转小写后与原文一致才替换，否则保留原文）。其余字段与源版本相同，录音引用源版本。
+    source: kespeech@legacy-20260804
+- schema_version: dataset-catalog/2.0
+  dataset_id: magicdata_ramc
+  version: train-punc-v1-20261102
+  languages:
+  - zh
+  tasks:
+  - asr
+  aliases: []
+  derived_from: magicdata_ramc@clean-dual-qwen-moss-v1-20261008
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/magicdata_ramc/versions/train-punc-v1-20261102/state.json
+  - name: train_recordings
+    kind: lhotse-recordings
+    root_alias: aidc_data
+    relative_path: datasets/magicdata_ramc/versions/legacy-20260804/train_rec_0/magicdata_ramc_recordings_train.jsonl.gz
+    expected_bytes: 4561
+    sha256: 9b3dbbe731f17f1821d92aad52cd2ae7d7d5333a4586e13b31c8a4378f79bcdc
+    metadata:
+      record_count: 289
+      shared_with: magicdata_ramc@icefall-20260908
+  - name: train_supervisions_punc_0
+    kind: lhotse-supervisions
+    root_alias: aidc_data
+    relative_path: datasets/magicdata_ramc/versions/train-punc-v1-20261102/magicdata_ramc_supervisions_train_punc.jsonl.gz
+    expected_bytes: 7433753
+    sha256: b36bb0988f116d21a95ccf4b02789c346cb891e947e594bac745a7013c9a579a
+    metadata:
+      record_count: 168464
+      punctuated: true
+      source: datasets/magicdata_ramc/versions/clean-dual-qwen-moss-v1-20261008/supervisions/magicdata_ramc_supervisions_train.jsonl.gz
+  - name: record_index
+    kind: lance-record-index
+    root_alias: aidc_data
+    relative_path: datasets/magicdata_ramc/versions/train-punc-v1-20261102/record_index/index.json
+    expected_bytes: 771
+    sha256: e1081710336a7db5d7f50099097819e779e7090a44b9873269b60c0ca50e53cc
+    metadata:
+      snapshot_version: 13
+      rows: 168464
+      schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
+  splits:
+    train:
+      artifacts:
+        recordings:
+        - train_recordings
+        supervisions:
+        - train_supervisions_punc_0
+        preparation_state:
+        - preparation_state
+        records_lance:
+        - record_index
+      statistics:
+        records: 168464
+        records_punctuated: 167953
+      provenance:
+        preparation_status: prepared
+  provenance:
+    preparation_status: prepared
+    owner: mingdong
+    description: magicdata_ramc@clean-dual-qwen-moss-v1-20261008 的 train 训练版本，目标文本换成带标点的写法（按 id 取自 datasets/magicdata_ramc/versions/punc-written-v1-20261029/magicdata_ramc_supervisions_train_punc_written.jsonl.gz；去掉标点和空格、转小写后与原文一致才替换，否则保留原文）。其余字段与源版本相同，录音引用源版本。
+    source: magicdata_ramc@clean-dual-qwen-moss-v1-20261008
+- schema_version: dataset-catalog/2.0
+  dataset_id: common_voice_zh
+  version: train-punc-v1-20261102
+  languages:
+  - zh
+  tasks:
+  - asr
+  aliases: []
+  derived_from: common_voice_zh@legacy-20260804
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/common_voice_zh/versions/train-punc-v1-20261102/state.json
+  - kind: lhotse-recordings
+    name: train_rec_0
+    relative_path: datasets/common_voice_zh/versions/legacy-20260804/train_rec_0/cv-zh-CN_recordings_train.jsonl.gz
+    root_alias: aidc_data
+    expected_bytes: 388006
+    sha256: 45248c8beb117549796ab441fcb1b5bd4e391811e2c463d4925a6af53e05bd80
+  - name: train_supervisions_punc_0
+    kind: lhotse-supervisions
+    root_alias: aidc_data
+    relative_path: datasets/common_voice_zh/versions/train-punc-v1-20261102/cv-zh-CN_supervisions_train_punc.jsonl.gz
+    expected_bytes: 1447360
+    sha256: 512a7eb8c32f21880518a1192681617fa81433b32c85842bf9dd12e26603b073
+    metadata:
+      record_count: 29560
+      punctuated: true
+      source: datasets/common_voice_zh/versions/legacy-20260804/train_sup_0/cv-zh-CN_supervisions_train.jsonl.gz
+  - name: record_index
+    kind: lance-record-index
+    root_alias: aidc_data
+    relative_path: datasets/common_voice_zh/versions/train-punc-v1-20261102/record_index/index.json
+    expected_bytes: 765
+    sha256: c4f1f7bcd736e87769b775eb0f9d1e6c60993d3b5fb57074fb4332e3b50d12b0
+    metadata:
+      snapshot_version: 13
+      rows: 29560
+      schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
+  splits:
+    train:
+      artifacts:
+        recordings:
+        - train_rec_0
+        supervisions:
+        - train_supervisions_punc_0
+        preparation_state:
+        - preparation_state
+        records_lance:
+        - record_index
+      statistics:
+        records: 29560
+        records_punctuated: 29560
+      provenance:
+        preparation_status: prepared
+  provenance:
+    preparation_status: prepared
+    owner: mingdong
+    description: common_voice_zh@legacy-20260804 的 train 训练版本，目标文本换成带标点的写法（按 id 取自 datasets/common_voice_zh/versions/punc-written-v1-20261102/cv-zh-CN_supervisions_train_punc_written.jsonl.gz；去掉标点和空格、转小写后与原文一致才替换，否则保留原文）。其余字段与源版本相同，录音引用源版本。
+    source: common_voice_zh@legacy-20260804
+- schema_version: dataset-catalog/2.0
+  dataset_id: police_terms_single_train
+  version: train-punc-v1-20261102
+  languages:
+  - zh
+  tasks:
+  - asr
+  aliases: []
+  derived_from: police_terms_single_train@v1-20261023
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/police_terms_single_train/versions/train-punc-v1-20261102/state.json
+  - name: train_recordings
+    kind: lhotse-recordings
+    root_alias: aidc_data
+    relative_path: datasets/police_terms_single_train/versions/v1-20261023/manifests/police_terms_single_train_recordings_train.jsonl.gz
+    expected_bytes: 373471
+    sha256: 25af1420f7cfb45f6b271ebab87881012967567521014993cff01c2922d0a2fd
+    metadata:
+      record_count: 21760
+  - name: train_supervisions_punc_0
+    kind: lhotse-supervisions
+    root_alias: aidc_data
+    relative_path: datasets/police_terms_single_train/versions/train-punc-v1-20261102/police_terms_single_train_supervisions_train_punc.jsonl.gz
+    expected_bytes: 721100
+    sha256: 1f81045c957dabbaac15f0bbb4243d0d9d38e3e582894c3de3041a8bd47acb87
+    metadata:
+      record_count: 21760
+      punctuated: true
+      source: datasets/police_terms_single_train/versions/v1-20261023/manifests/police_terms_single_train_supervisions_train.jsonl.gz
+  - name: record_index
+    kind: lance-record-index
+    root_alias: aidc_data
+    relative_path: datasets/police_terms_single_train/versions/train-punc-v1-20261102/record_index/index.json
+    expected_bytes: 780
+    sha256: 9ddecb1fbf85a558fafe3537f819d26150eca98a8086beae0530a16d7a769cd5
+    metadata:
+      snapshot_version: 13
+      rows: 21760
+      schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
+  splits:
+    train:
+      artifacts:
+        recordings:
+        - train_recordings
+        supervisions:
+        - train_supervisions_punc_0
+        preparation_state:
+        - preparation_state
+        records_lance:
+        - record_index
+      statistics:
+        records: 21760
+        records_punctuated: 21760
+      provenance:
+        preparation_status: prepared
+  provenance:
+    preparation_status: prepared
+    owner: mingdong
+    description: police_terms_single_train@v1-20261023 的 train 训练版本，目标文本换成带标点的写法（按 id 取自 datasets/police_terms_single_train/versions/punc-written-v1-20261102/police_terms_single_train_supervisions_train_punc_written.jsonl.gz；去掉标点和空格、转小写后与原文一致才替换，否则保留原文）。其余字段与源版本相同，录音引用源版本。
+    source: police_terms_single_train@v1-20261023
+- schema_version: dataset-catalog/2.0
+  dataset_id: threed_speaker_zh_far_asr
+  version: train-punc-v1-20261102
+  languages:
+  - zh
+  tasks:
+  - asr
+  aliases: []
+  derived_from: threed_speaker_zh_far_asr@zh-far-replay-clean-v1-20261010
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/threed_speaker_zh_far_asr/versions/train-punc-v1-20261102/state.json
+  - name: train-recordings
+    kind: lhotse-recordings
+    root_alias: farfield_replay_3dspeaker_clean
+    relative_path: threed_speaker_zh_far_asr_recordings_train.jsonl.gz
+    sha256: b0c1871b3eb257fcf62db5bc7e55e88100defcfe0c6a0763c138552f26d2975e
+    metadata:
+      record_count: 34600
+  - name: train_supervisions_punc_0
+    kind: lhotse-supervisions
+    root_alias: aidc_data
+    relative_path: datasets/threed_speaker_zh_far_asr/versions/train-punc-v1-20261102/threed_speaker_zh_far_asr_supervisions_train_punc.jsonl.gz
+    expected_bytes: 1455218
+    sha256: 23949a06651618417149ab070d0eb69ec9c46d03bca398c660d6762b3d3e703b
+    metadata:
+      record_count: 34600
+      punctuated: true
+      source: threed_speaker_zh_far_asr_supervisions_train.jsonl.gz
+  - name: record_index
+    kind: lance-record-index
+    root_alias: aidc_data
+    relative_path: datasets/threed_speaker_zh_far_asr/versions/train-punc-v1-20261102/record_index/index.json
+    expected_bytes: 780
+    sha256: 54d5a631dbe77b6fada3a0958be7c32c0038a3759fa406f254025f03b0368ca3
+    metadata:
+      snapshot_version: 13
+      rows: 34600
+      schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
+  splits:
+    train:
+      artifacts:
+        recordings:
+        - train-recordings
+        supervisions:
+        - train_supervisions_punc_0
+        preparation_state:
+        - preparation_state
+        records_lance:
+        - record_index
+      statistics:
+        records: 34600
+        records_punctuated: 34600
+      provenance:
+        preparation_status: prepared
+  provenance:
+    preparation_status: prepared
+    owner: mingdong
+    description: threed_speaker_zh_far_asr@zh-far-replay-clean-v1-20261010 的 train 训练版本，目标文本换成带标点的写法（按 id 取自 datasets/threed_speaker_zh_far_asr/versions/punc-written-v1-20261102/threed_speaker_zh_far_asr_supervisions_train_punc_written.jsonl.gz；去掉标点和空格、转小写后与原文一致才替换，否则保留原文）。其余字段与源版本相同，录音引用源版本。
+    source: threed_speaker_zh_far_asr@zh-far-replay-clean-v1-20261010
+- schema_version: dataset-catalog/2.0
+  dataset_id: police_terms_single_train
+  version: hotwords-confusable-v1-20261102
+  languages:
+  - zh
+  tasks:
+  - asr_hotwords
+  aliases: []
+  derived_from: police_terms_single_train@v1-20261023
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/police_terms_single_train/versions/hotwords-confusable-v1-20261102/state.json
+  - name: train
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/police_terms_single_train/versions/hotwords-confusable-v1-20261102/records/train.jsonl.gz
+    expected_bytes: 583559
+    sha256: ca7d078bcaef5e7daa41f0dee56805019ba1c2c3da346f51a3a5424980bb4ec9
+    metadata:
+      record_count: 21760
+  - name: audio_index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/police_terms_single_train/versions/hotwords-confusable-v1-20261102/audio_index/audio-index.jsonl.gz
+    expected_bytes: 368311
+    sha256: 6775625f3cb3b2e6c8d58afc919288bdfde6ef9a6425761d0e6f30a1c48f4992
+    metadata:
+      record_count: 21760
+  - name: record_index
+    kind: lance-record-index
+    root_alias: aidc_data
+    relative_path: datasets/police_terms_single_train/versions/hotwords-confusable-v1-20261102/record_index/index.json
+    expected_bytes: 752
+    sha256: 2056ebe995bd42c880e39d67163846eb4f570fb2e10372900ac6950a8ad09b53
+    metadata:
+      snapshot_version: 13
+      rows: 21760
+      schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
+  splits:
+    train:
+      artifacts:
+        records:
+        - train
+        audio_index:
+        - audio_index
+        preparation_state:
+        - preparation_state
+        records_lance:
+        - record_index
+      statistics:
+        records: 21760
+        records_with_confusables: 16940
+      provenance:
+        preparation_status: prepared
+  provenance:
+    preparation_status: prepared
+    owner: mingdong
+    description: 警务术语单说训练集的热词版本：每条录音一条 asr_hotwords 记录，hotwords 为该条的目标术语，metadata.confusable_hotwords 为读音相近的其他警务术语（拼音音节最长公共片段 ≥ 较短术语的一半且 ≥ 2 个音节；字母按中文习惯读法，如 e 读 yi），训练时可作为干扰词放进列表（如 e警保 与 义警）。文本为 punc-written-v1-20261102 的带标点写法，录音同 v1-20261023。
+    source: police_terms_single_train@v1-20261023, police_terms_single_train@punc-written-v1-20261102
