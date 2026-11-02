@@ -30,7 +30,6 @@ from pathlib import Path
 
 import numpy as np
 import soundfile as sf
-
 from build_ts_scene_pool import DATA, catalog_entry
 from speaker_neighbors import MODEL, embed_corpus, load_rows
 

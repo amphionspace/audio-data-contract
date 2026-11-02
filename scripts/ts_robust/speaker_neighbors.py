@@ -166,13 +166,13 @@ def main():
     parser.add_argument("--en-accents", action="store_true",
                         help="neighbours of the accent-labelled Common Voice and CS-Dialogue speakers within their scene pools' corpora")
     args = parser.parse_args()
+    if sum((args.kespeech_magicdata, args.ramc, args.en_accents)) > 1:
+        parser.error("--kespeech-magicdata, --ramc and --en-accents embed different corpora; pick one")
     args.output_dir.mkdir(parents=True, exist_ok=True)
     from modelscope.pipelines import pipeline
 
     model = pipeline(task="speaker-verification", model=MODEL, device=args.device)
     neighbors, report, store = {}, {}, {}
-    if sum((args.kespeech_magicdata, args.ramc, args.en_accents)) > 1:
-        parser.error("--kespeech-magicdata, --ramc and --en-accents embed different corpora; pick one")
     restricted = args.kespeech_magicdata or args.ramc or args.en_accents
     table = KESPEECH_MAGICDATA_CORPORA if args.kespeech_magicdata else RAMC_CORPORA if args.ramc \
         else EN_ACCENT_CORPORA if args.en_accents else CORPORA
