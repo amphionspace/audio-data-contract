@@ -1,6 +1,6 @@
 # 数据总览
 
-当前登记 **199 个数据集**；另有 **20 个下载来源声明**和 **1 个训练混合配方**。登记不代表本机文件已齐备。
+当前登记 **200 个数据集**；另有 **20 个下载来源声明**和 **1 个训练混合配方**。登记不代表本机文件已齐备。
 
 时长取单个版本的最大值，不跨版本相加；≈ 为参考表或估算值，— 为暂无完整时长。各版本的时长、说明、COS 地址和质量证据见[版本明细](data-versions.md)。
 
@@ -91,6 +91,7 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [emotion1200_zh](data-versions.md#emotion1200_zh) | zh | 说话人情感分类、情感与说话风格描述、语音情感识别 | 4.9 | 中文情感识别与描述评测（Emotion1200） | 快照 20260914 |
 | [fleurs_zh](data-versions.md#fleurs_zh) | zh | 语音识别 | 14.1 | 多语朗读中文部分（FLEURS） | 快照 20260914 |
 | [hi_mia](data-versions.md#hi_mia) | zh | 说话人身份识别、声纹验证 | 533.6 | 固定中文唤醒词的远场声纹验证（HI-MIA） | 快照 20260914 |
+| [hw_grpo_candidates](data-versions.md#hw_grpo_candidates) | zh | 热词增强语音识别 | 62.1 | GRPO 热词挖掘候选（未背过的中文热词提示，含近音易混词） | 没有 |
 | [kespeech](data-versions.md#kespeech) | zh | 语音识别、热词增强语音识别 | 1,434.8 | 普通话与 8 种次方言（KeSpeech）；含清洗和热词版 | 部分版本：快照 20260914 |
 | [legco_speech](data-versions.md#legco_speech) | yue | 语音识别 | 20,227.2 | 香港立法会会议粤语 | 快照 20260914 |
 | [m3ed_ser](data-versions.md#m3ed_ser) | zh | 语音情感识别 | 1.7 | 中文电视剧对话情感识别评测（M3ED） | 快照 20260914 |

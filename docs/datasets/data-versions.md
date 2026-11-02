@@ -979,6 +979,18 @@ Emilia 中文野外语音（已清洗）
 - `hi_mia@openslr-85-test-v2`：固定中文唤醒词的远场声纹验证；使用修复损坏音频的 test_v2，含官方同人/异人配对答案
 - `hi_mia@speaker-records-v1-20260912`：已解包、实测音频头并生成通用说话人记录；保留官方划分和标注
 
+### hw_grpo_candidates
+
+GRPO 热词挖掘候选（未背过的中文热词提示，含近音易混词）
+
+语言：zh · 任务：热词增强语音识别
+
+| 版本 | 时长（小时） | 口径 | COS |
+|---|---:|---|---|
+| [hw_grpo_candidates@v1-20261101](../../catalog/hw_grpo_candidates.yaml#L1) | 62.1 | 已登记 | 没有 |
+
+- `hw_grpo_candidates@v1-20261101`：GRPO 热词挖掘候选：10.28 版本没背过的中文热词提示。语音取自 primewords、MagicData、TALCS 的 train 划分（有 clean 版本的只用通过且文本未改的），剔除 054 配方用过的录音与文本和所有评测集的文本与音频；正确词由 LLM 抽取、另一 LLM 复核，人名优先；易混词由 doubao-seed-2-1-pro 生成、deepseek-v4-pro 复核。gold 列表 = 正确词 + 易混词 + 无关词，no_gold 列表不含正确词，均打乱且首位不放正确词，长度 30–50（训练加载器不再追加池词）。只是候选：挖掘阶段用 10.28 采样后只留会出错的提示。脚本 scripts/grpo_candidates/hotwords.py
+
 ### kespeech
 
 普通话与 8 种次方言（KeSpeech）；含清洗和热词版
@@ -2085,9 +2097,11 @@ AISHELL-1、LibriSpeech 合成的多人对话
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
 | [ts_nonspeech_pool@babble-20261024](../../catalog/ts_nonspeech_pool.yaml#L57) | 38.7 | 已登记 | 没有 |
+| [ts_nonspeech_pool@env-20261101](../../catalog/ts_nonspeech_pool.yaml#L116) | 22.6 | 已登记 | 没有 |
 | [ts_nonspeech_pool@v1-20261016](../../catalog/ts_nonspeech_pool.yaml#L1) | 65.7 | 已登记 | 没有 |
 
 - `ts_nonspeech_pool@babble-20261024`：普通 ASR 的背景人声空输出训练数据：babble_noise_train@v2-20261024 的房间背景人声（16–24 人同时说话、各站在模拟房间的不同位置，听不出某一个人说的内容）的片段（0.3–26 s，对数均匀），中英文各 12,000 条，目标为空；片段语言即背景人声的语言。电平在训练时按数据源配置随机。来源：在 asr_babble_bench@v2-20261023 上，普通 ASR 训练里没有只有背景人声、目标为空的样本（v1-20261016 只有 MUSAN 噪声与音乐），模型在只有背景人声时会编出文字。脚本 scripts/ts_robust/build_nonspeech_pool.py --source babble
+- `ts_nonspeech_pool@env-20261101`：GRPO 非人声挖掘候选：配方空输出池之外的环境声与音乐片段（0.3–26 s，对数均匀，受源文件长度限制），目标为空，电平在训练时按数据源配置随机。来源 FSD50K dev 的 train 部分（去人声标签）9,000、DNS5 AudioSet 5,000、DNS5 Freesound 2,500、RealMAN train 纯噪声（CH0）3,000、真实会议室底噪 1,000；不用评测集用的 FSD50K eval、DEMAND、audioset_road_traffic。所有片段过 Silero VAD 和 SenseVoiceSmall，检出语音或写出 2 个及以上字词的隔离。只是候选：挖掘阶段用 10.28 采样后只留会编字的片段。脚本 scripts/grpo_candidates/nonspeech.py
 - `ts_nonspeech_pool@v1-20261016`：普通 ASR 的非人声空输出训练数据：MUSAN 噪声与音乐的片段（0.3–26 s，对数均匀），目标为空。电平在训练时按数据源配置随机。不含 WHAM（咖啡馆底噪里可能有可懂的人声）
 
 ### ts_real_train

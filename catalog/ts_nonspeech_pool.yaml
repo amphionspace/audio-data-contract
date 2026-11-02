@@ -113,3 +113,65 @@
     sources:
     - babble_noise_train@v2-20261024:zh
     - babble_noise_train@v2-20261024:en
+- schema_version: dataset-catalog/2.0
+  dataset_id: ts_nonspeech_pool
+  version: env-20261101
+  languages:
+  - zh
+  - en
+  tasks:
+  - asr
+  aliases: []
+  artifacts:
+  - name: all-records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/ts_nonspeech_pool/versions/env-20261101/records_all.jsonl.gz
+    sha256: 55a0983b6893f19e9d8404f7042d5d96e71107ef0a550be2df5954b3582a177e
+    metadata:
+      record_count: 20500
+  - name: all-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_nonspeech_pool/versions/env-20261101/audio_index_all.jsonl.gz
+    sha256: 4e92caba2e317026229c30a7751f548f02e5a74e4b4b742f92189e5b96206828
+    metadata:
+      record_count: 19708
+  - name: record_index
+    kind: lance-record-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_nonspeech_pool/versions/env-20261101/record_index/index.json
+    expected_bytes: 733
+    sha256: ac930425c36c43a4ce4eb629e4c42ef7d02dd1c1ceb03f5f6b9c1810af1df387
+    metadata:
+      snapshot_version: 13
+      rows: 20500
+      schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
+  splits:
+    all:
+      artifacts:
+        records:
+        - all-records
+        audio_index:
+        - all-audio-index
+        records_lance:
+        - record_index
+      task: asr
+      statistics:
+        records: 20500
+        duration_hours: 22.58
+        duration_basis: clip duration (segment span, or the whole file)
+  provenance:
+    summary: GRPO 非人声挖掘候选（配方空输出池之外的环境声与音乐）
+    status: complete
+    synthetic: none
+    snapshot_date: '2026-11-01'
+    description: GRPO 非人声挖掘候选：配方空输出池之外的环境声与音乐片段（0.3–26 s，对数均匀，受源文件长度限制），目标为空，电平在训练时按数据源配置随机。来源 FSD50K dev 的 train 部分（去人声标签）9,000、DNS5
+      AudioSet 5,000、DNS5 Freesound 2,500、RealMAN train 纯噪声（CH0）3,000、真实会议室底噪 1,000；不用评测集用的 FSD50K eval、DEMAND、audioset_road_traffic。所有片段过
+      Silero VAD 和 SenseVoiceSmall，检出语音或写出 2 个及以上字词的隔离。只是候选：挖掘阶段用 10.28 采样后只留会编字的片段。脚本 scripts/grpo_candidates/nonspeech.py。
+    sources:
+    - fsd50k@zenodo-4060432-20261013:dev
+    - dns5_noise_train@v1-20261016:audioset
+    - dns5_noise_train@v1-20261016:freesound
+    - realman@hf-aishell-20261025:train
+    - meeting_room_noise@v2-20261014:train

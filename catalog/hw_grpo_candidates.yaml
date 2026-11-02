@@ -1,0 +1,59 @@
+- schema_version: dataset-catalog/2.0
+  dataset_id: hw_grpo_candidates
+  version: v1-20261101
+  languages:
+  - zh
+  tasks:
+  - asr_hotwords
+  aliases: []
+  artifacts:
+  - name: zh-records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/hw_grpo_candidates/versions/v1-20261101/records_zh.jsonl.gz
+    sha256: ec3312a357cdd27e463e02b0a64e088ac8bb12b9a4e4d8d6e2b2276684ee5d41
+    metadata:
+      record_count: 30000
+  - name: zh-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/hw_grpo_candidates/versions/v1-20261101/audio_index_zh.jsonl.gz
+    sha256: e7fd0d84f0f86221cf4210b4d121b53484fc32c34e5f9b087924f82bd2bb6204
+    metadata:
+      record_count: 26092
+  - name: record_index
+    kind: lance-record-index
+    root_alias: aidc_data
+    relative_path: datasets/hw_grpo_candidates/versions/v1-20261101/record_index/index.json
+    expected_bytes: 730
+    sha256: 2242e5acdfd7c3d32c7f2e40fc05c1f7c910739671deffc7b2c882c7718cae03
+    metadata:
+      snapshot_version: 13
+      rows: 30000
+      schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
+  splits:
+    zh:
+      artifacts:
+        records:
+        - zh-records
+        audio_index:
+        - zh-audio-index
+        records_lance:
+        - record_index
+      task: asr_hotwords
+      statistics:
+        records: 30000
+        duration_hours: 62.07
+        duration_basis: clip duration (segment span, or the whole file)
+  provenance:
+    summary: GRPO 热词挖掘候选（未背过的中文热词提示，含近音易混词）
+    status: complete
+    synthetic: none
+    snapshot_date: '2026-11-01'
+    description: GRPO 热词挖掘候选：10.28 版本没背过的中文热词提示。语音取自 primewords、MagicData、TALCS 的 train 划分（有 clean 版本的只用通过且文本未改的），剔除 054 配方用过的录音与文本和所有评测集的文本与音频；正确词由
+      LLM 抽取、另一 LLM 复核，人名优先；易混词由 doubao-seed-2-1-pro 生成、deepseek-v4-pro 复核。gold 列表 = 正确词 + 易混词 + 无关词，no_gold 列表不含正确词，均打乱且首位不放正确词，长度
+      30–50（训练加载器不再追加池词）。只是候选：挖掘阶段用 10.28 采样后只留会出错的提示。脚本 scripts/grpo_candidates/hotwords.py。
+    sources:
+    - primewords@clean-dual-qwen-moss-v1-20261008:train
+    - magicdata@clean-dual-qwen-moss-v1-20261008:train
+    - talcs_hotwords@hotwords-v1-20260805:train

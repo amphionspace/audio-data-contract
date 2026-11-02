@@ -1,0 +1,63 @@
+# GRPO 热词候选（hw_grpo_candidates）：给 10.28 版本挖"有时出错"的热词提示。
+#
+# 记录格式与 hw_sft / hard_hw_sft 相同（task asr_hotwords，hotwords 字段即完整提示列表），
+# 训练加载器原样渲染成 "Hotwords: ..."。每条一个列表：
+#   gold     说出的正确词 + 它们经复核的近音易混词 + 本候选集热词池的无关词，打乱，首位不放正确词
+#   no_gold  同样的易混词 + 无关词，不含正确词（说的词不在列表里时测误写）
+# 每条语音先按哈希取一种；不足 target_records 时，同一语音再补另一种（person 优先的顺序）。
+# 列表长度 30–50：训练加载器 max_hotwords=30，列表不少于 30 个词时不再随机追加池词，
+# 挖掘与 GRPO 看到的列表就是这里存的列表。
+dataset_id: hw_grpo_candidates
+version: v1-20261101
+split: zh
+seed: 20261101
+target_records: 30000
+list_size: [30, 50]
+confusables_per_word: 4
+# 同一个正确词最多出现在多少条候选里（MagicData 的歌手名高度重复）
+max_per_gold: 6
+min_seconds: 1.0
+max_seconds: 30.0
+
+llm:
+  base_url: https://ark.cn-beijing.volces.com/api/v3
+  api_key_env: ARK_API_KEY
+  # primewords 没有现成热词标注：用 AmphionData EXTRACT_HOTWORD 抽取（本地热词集同一 prompt、同一模型家族；
+  # doubao-seed-2-0-lite-260215 的接入点已关闭，用同系列 260428）
+  extractor: {model: doubao-seed-2-0-lite-260428, extra_body: {thinking: {type: disabled}}, temperature: 0.0}
+  # 易混词生成与复核沿用 hotword_bench（生成 doubao-seed-2-1-pro，另一模型家族 deepseek-v4-pro 复核）
+  generator: {model: doubao-seed-2-1-pro-260915, extra_body: {thinking: {type: disabled}}, temperature: 0.7}
+  reviewer: {model: deepseek-v4-pro-ga-260813, extra_body: {thinking: {type: disabled}}, temperature: 0.0}
+  workers: 32
+  extract_batch: 20
+  review_batch: 20
+  confusable_batch: 40
+
+amphiondata:
+  repo: /workspace/workspace/mingdong/repo/amphiondata
+  commit: 4d2dca2      # src/amphiondata/llm/prompts.py EXTRACT_HOTWORD（HEAD e3bc1cc 与之相同）
+
+# 只用 train 划分。有 clean 版本的按上游通过标记过滤（custom.clean.pass=true 且 action=keep_original，
+# 文本未被清洗改写）；TALCS 没有 clean 版本，记录不带 clean_pass。
+# aidatatang 不用：本地版本是官方 train+dev+test 全量，没有官方说话人划分清单（见 catalog zh_source_clean.yaml split_note）。
+sources:
+  magicdata:
+    # MagicData train 经 hw_sft、hard_hw_sft 和 ts_scene_pool magicdata-* 进过配方：只取这些都没用过的录音和文本
+    clean_supervisions: magicdata/versions/clean-dual-qwen-moss-v1-20261008/supervisions/magicdata_supervisions_train.jsonl.gz
+    recordings: magicdata/versions/legacy-20260804/train_rec_0/magicdata_recordings_train.jsonl.gz
+    # 带标点文本与热词：AmphionData hotwords-v1-20260805（doubao-seed-2-0-lite 抽取，未复核）
+    hotwords: magicdata_hotwords/versions/hotwords-v1-20260805/train_supervisions/magicdata_supervisions_train_punc_hotwords.jsonl.gz
+  primewords:
+    # 只有 train（上游无 dev/test）；无现成热词标注，先抽取
+    clean_supervisions: primewords/versions/clean-dual-qwen-moss-v1-20261008/supervisions/primewords_supervisions_train_cleaned.jsonl.gz
+    recordings: primewords/versions/legacy-20260804/train_rec_0/primewords_recordings_train.jsonl.gz
+  talcs:
+    # 不在配方里；课堂中英混说，官方 test 在 asr-benchmark（文本按评测集排除）。带标点文本与热词同 MagicData 的来源
+    recordings: talcs/versions/legacy-20260804/train_rec_0/talcs_recordings_train.jsonl.gz
+    hotwords: talcs_hotwords/versions/hotwords-v1-20260805/train_supervisions/talcs_supervisions_train_cleaned_punc_hotwords.jsonl.gz
+
+# 配方（recipe_refs.py）之外再查一遍热词集的全部行（train 含 train_hotwords 之外的普通转写行）：
+# 这些录音与文本不进候选（录音按文件名，文本按规范化后全等）
+seen_records:
+  - hw_sft/versions/hw-20261014/records/train.jsonl.gz
+  - hard_hw_sft/versions/hard-20261014/records/train.jsonl.gz
