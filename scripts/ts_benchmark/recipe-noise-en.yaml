@@ -1,0 +1,83 @@
+# 目标说话人评测集的噪声补充（ts_asr_noise）：用新登记的噪声集（合成背景人声 babble、FSD50K）扩充脆弱性面板。
+# 基线场景与 ts_asr_benchmark v3 的 panel-base 逐条相同（同样的配对键和参数），所以可以直接与 v3 的面板结果比较。
+version: en-v1-20261031
+enroll_store_seconds: 10
+dataset_id: ts_asr_noise
+language: en
+description: 英文目标说话人 ASR 评测集（ts_asr_noise）：与中文版同一配方与随机种子，说话人换成 VCTK、CS-Dialogue 英文 test、LibriSpeech test-clean/test-other；不含业务真实注册录音条件。只用于评测，不进训练。场景见 scripts/ts_benchmark/recipe-noise-en.yaml。
+seed: 20261013
+sample_rate: 16000
+
+# 说话人来自训练没有用过的英文语料：LibriSpeech、CS-Dialogue 取官方 test 划分；VCTK 训练从未使用（无官方划分）。
+pools:
+  studio:
+    description: VCTK 棚内录音（mic1），109 位说话人、多种英语口音，每人取 80 句（export_tts_pool.py 导出）
+    sources:
+      - {dataset: vctk, version: tts-unified-v0.1, split: train, manifest: {alias: aidc_data, path: datasets/ts_asr_benchmark/source/pools/vctk-tts-unified-v0.1-mic1/utterances.jsonl.gz}}
+  phone:
+    description: CS-Dialogue 英文 test，中国说话人用英语自由对话、各自设备录音（有口音），27 位可用说话人
+    sources:
+      - {dataset: cs_dialogue_en, version: legacy-20260804, split: test, skip_text: "<NPS/>|\\*\\*"}  # <NPS/>（旁人说话）和 **（听不清）的句子不用；其余标签（<FIL/> 等）去掉
+  read:
+    description: LibriSpeech test-clean 与 test-other，有声书朗读，73 位说话人
+    sources:
+      - {dataset: librispeech, version: legacy-20260804, split: test_clean}
+      - {dataset: librispeech, version: legacy-20260804, split: test_other}
+  mixed:
+    description: 上面三个池的并集
+    union: [studio, phone, read]
+utterance_seconds: [1.5, 9.0]
+short_utterance_seconds: [0.5, 1.6]
+min_utterances_per_speaker: 6
+
+noise:
+  musan_noise: {dataset: musan, version: legacy-20260804, split: noise}
+  musan_music: {dataset: musan, version: legacy-20260804, split: music}
+  traffic: {dataset: audioset_road_traffic, version: legacy-20260804, split: all}
+  # 新登记的噪声集（noise_open）：合成背景人声（中文测试划分，34 位说话人，每条叠加 5–20 人）和 FSD50K 评测划分。
+  babble_en: {alias: open_noise, glob: "babble_synth/en/test/*.flac"}
+  fsd_events:
+    alias: open_noise
+    fsd: {split: eval, min_seconds: 5, count: 400,
+          include: [Domestic_sounds_and_home_sounds, Motor_vehicle_(road), Door, Water, Engine, Mechanisms, Alarm, Wind, Rain],
+          exclude: [Human_voice, Music, Musical_instrument, Speech, Singing, Crowd, Chatter]}
+  fsd_crowd:
+    alias: open_noise
+    fsd: {split: eval, min_seconds: 3, count: 400, include: [Crowd, Chatter], exclude: [Music, Singing, Applause, Cheering]}
+rir:
+  archive: /workspace/data/DATA-TTS/dns5/datasets_fullband.impulse_responses_000.tar.bz2
+  count: 300
+
+default_n: 120
+
+noise_floor:
+  dbfs: [-65, -35]
+  kinds: {white: 0.15, pink: 0.15, real: 0.70}
+  real_pools: [wham, dns5_audioset, dns5_freesound]
+
+splits:
+  # 与 v3 面板共用的基线（同一批场景）
+  - {group: noise, name: panel-base-pos, kind: pos, schedule: full, k: [1, 2], duration: [6, 15], sir_db: [-3, 3], pair: panel-pos, n: 120}
+  - {group: noise, name: panel-base-neg, kind: neg, k: [1, 2], duration: [6, 15], pair: panel-neg, n: 120}
+  - group: noise
+    n: 120
+    expand:
+      pair: "panel-{kind}"   # 与基线（以及 v3 的面板）共用同一批场景
+      template: "{cond}-{kind}"
+      over:
+        cond: [babble20, babble10, babble5, events20, events10, crowd10]
+        kind: [pos, neg]
+      cond_params:
+        babble20: {noise: {kind: babble_en, snr_db: [20, 20]}}
+        babble10: {noise: {kind: babble_en, snr_db: [10, 10]}}
+        babble5: {noise: {kind: babble_en, snr_db: [5, 5]}}
+        events20: {noise: {kind: fsd_events, snr_db: [20, 20]}}
+        events10: {noise: {kind: fsd_events, snr_db: [10, 10]}}
+        crowd10: {noise: {kind: fsd_crowd, snr_db: [10, 10]}}
+    base:
+      pos: {kind: pos, schedule: full, k: [1, 2], duration: [6, 15], sir_db: [-3, 3]}
+      neg: {kind: neg, k: [1, 2], duration: [6, 15]}
+  # 没有目标、也没有人说话的背景
+  - {group: noise, name: nonspeech-babble, kind: nonspeech, duration: [1, 15], noise: {kind: babble_en, level_dbfs: [-40, -25]}}
+  - {group: noise, name: nonspeech-crowd, kind: nonspeech, duration: [1, 15], noise: {kind: fsd_crowd, level_dbfs: [-40, -25]}}
+  - {group: noise, name: nonspeech-events, kind: nonspeech, duration: [1, 15], noise: {kind: fsd_events, level_dbfs: [-40, -25]}}

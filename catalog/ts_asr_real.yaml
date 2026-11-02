@@ -2927,3 +2927,1229 @@
     - emilia2_zh_dialogue_diarize@moss-transcribe-diarize-0.9B:train_120s
     - ts_asr_real@v2-20261013
     - ts_asr_real@v3-20261022
+- schema_version: dataset-catalog/2.0
+  dataset_id: ts_asr_real
+  version: en-v2-20261031
+  languages:
+  - en
+  tasks:
+  - ts_asr
+  artifacts:
+  - name: audio-index
+    kind: audio-index
+    root_alias: ts_asr_real
+    relative_path: versions/en-v2-20261031/audio-index.jsonl.gz
+    sha256: 19bd685e44b08c42ec995c5807fa338e91afe26101c9a1f57f41d47c897d27db
+    metadata:
+      record_count: 2602
+  - name: real-ami-1spk-pos-records
+    kind: audio-records
+    root_alias: ts_asr_real
+    relative_path: versions/en-v2-20261031/records/real-ami-1spk-pos.jsonl.gz
+    sha256: 46aec7e830a8b6f3eef33cc04904b938282548e43bd5bb2d37e5b05a696731df
+    metadata:
+      record_count: 43
+  - name: real-ami-1spk-pos-enrollmix-records
+    kind: audio-records
+    root_alias: ts_asr_real
+    relative_path: versions/en-v2-20261031/records/real-ami-1spk-pos-enrollmix.jsonl.gz
+    sha256: 14686175f55945418ba9d709eb6b9e6270e86315c87de14342c29e56ce418cf3
+    metadata:
+      record_count: 7
+  - name: real-ami-1spk-neg-records
+    kind: audio-records
+    root_alias: ts_asr_real
+    relative_path: versions/en-v2-20261031/records/real-ami-1spk-neg.jsonl.gz
+    sha256: 82ed01436370abd38fef59b73995d8c650b1f42aa716421a1ff01e1258ee5049
+    metadata:
+      record_count: 40
+  - name: real-ami-1spk-neg-enrollmix-records
+    kind: audio-records
+    root_alias: ts_asr_real
+    relative_path: versions/en-v2-20261031/records/real-ami-1spk-neg-enrollmix.jsonl.gz
+    sha256: 94b543f4bda93e41d8865af4fa69a171adec80c15dc35c9be61014f56b6d2967
+    metadata:
+      record_count: 10
+  - name: real-ami-2spk-pos-records
+    kind: audio-records
+    root_alias: ts_asr_real
+    relative_path: versions/en-v2-20261031/records/real-ami-2spk-pos.jsonl.gz
+    sha256: 971b34158dca99f05092645fece7f9198c59a07d2564ad94a19a9bc4d3c97ee9
+    metadata:
+      record_count: 44
+  - name: real-ami-2spk-pos-enrollmix-records
+    kind: audio-records
+    root_alias: ts_asr_real
+    relative_path: versions/en-v2-20261031/records/real-ami-2spk-pos-enrollmix.jsonl.gz
+    sha256: e15d41d2bc465578e814741b8f3ba3f9d8b33160252063c259958bafb77706b2
+    metadata:
+      record_count: 6
+  - name: real-ami-2spk-neg-records
+    kind: audio-records
+    root_alias: ts_asr_real
+    relative_path: versions/en-v2-20261031/records/real-ami-2spk-neg.jsonl.gz
+    sha256: af0256c4c40f032fc23fd45b3156b58294482b0c058fb067c0e77dc700fc57d3
+    metadata:
+      record_count: 36
+  - name: real-ami-2spk-neg-enrollmix-records
+    kind: audio-records
+    root_alias: ts_asr_real
+    relative_path: versions/en-v2-20261031/records/real-ami-2spk-neg-enrollmix.jsonl.gz
+    sha256: 99653be3f48caa2754219fc277fa17c883a4aa7ff2aed805eda269685e6cb2c0
+    metadata:
+      record_count: 14
+  - name: real-ami-3plus-pos-records
+    kind: audio-records
+    root_alias: ts_asr_real
+    relative_path: versions/en-v2-20261031/records/real-ami-3plus-pos.jsonl.gz
+    sha256: afc96bdbb1ddb10199a12fe3422fcf2240d7788016678486387777cfc91d7915
+    metadata:
+      record_count: 35
+  - name: real-ami-3plus-pos-enrollmix-records
+    kind: audio-records
+    root_alias: ts_asr_real
+    relative_path: versions/en-v2-20261031/records/real-ami-3plus-pos-enrollmix.jsonl.gz
+    sha256: 564d495e1228db0e344223e2a5a7d7cf970b4136b57cf022d34fd09336f9cda1
+    metadata:
+      record_count: 21
+  - name: real-ami-3plus-neg-records
+    kind: audio-records
+    root_alias: ts_asr_real
+    relative_path: versions/en-v2-20261031/records/real-ami-3plus-neg.jsonl.gz
+    sha256: 8caa2d558dcf7eb680fde48bfa416867947898d12c421b7f2e82e2da057ebd5b
+    metadata:
+      record_count: 42
+  - name: real-ami-3plus-neg-enrollmix-records
+    kind: audio-records
+    root_alias: ts_asr_real
+    relative_path: versions/en-v2-20261031/records/real-ami-3plus-neg-enrollmix.jsonl.gz
+    sha256: 45528061c26fc2e5c998f5afb21a45a83aa0cd78ee76c464ec4fc761063ae296
+    metadata:
+      record_count: 14
+  - name: real-notsofar-1spk-pos-records
+    kind: audio-records
+    root_alias: ts_asr_real
+    relative_path: versions/en-v2-20261031/records/real-notsofar-1spk-pos.jsonl.gz
+    sha256: 1a42dea313c1e36bd757f57c45966a28c435a6c90899c69976dbec6e0068a787
+    metadata:
+      record_count: 40
+  - name: real-notsofar-1spk-pos-enrollmix-records
+    kind: audio-records
+    root_alias: ts_asr_real
+    relative_path: versions/en-v2-20261031/records/real-notsofar-1spk-pos-enrollmix.jsonl.gz
+    sha256: c6c5b756efef90d71347fac3da2332338ddf1e8e6b290d79a348766015a3db55
+    metadata:
+      record_count: 10
+  - name: real-notsofar-1spk-neg-records
+    kind: audio-records
+    root_alias: ts_asr_real
+    relative_path: versions/en-v2-20261031/records/real-notsofar-1spk-neg.jsonl.gz
+    sha256: 06781884b6cb3ade557a603da6d69772f79505972d94bf7f571f131f8ce400d5
+    metadata:
+      record_count: 37
+  - name: real-notsofar-1spk-neg-enrollmix-records
+    kind: audio-records
+    root_alias: ts_asr_real
+    relative_path: versions/en-v2-20261031/records/real-notsofar-1spk-neg-enrollmix.jsonl.gz
+    sha256: ba4e8bff89163ef207c98d6465f99d03cf0cbfedc91d09e216ea286f0d822365
+    metadata:
+      record_count: 11
+  - name: real-notsofar-2spk-pos-records
+    kind: audio-records
+    root_alias: ts_asr_real
+    relative_path: versions/en-v2-20261031/records/real-notsofar-2spk-pos.jsonl.gz
+    sha256: 0a0f3c5acf6bc5909f4ed23cceb1354fbb699623dbcb3141d54b1d7744ecc699
+    metadata:
+      record_count: 33
+  - name: real-notsofar-2spk-pos-enrollmix-records
+    kind: audio-records
+    root_alias: ts_asr_real
+    relative_path: versions/en-v2-20261031/records/real-notsofar-2spk-pos-enrollmix.jsonl.gz
+    sha256: a9a50e982ed040bc50e1278db319134bdc5f732062d9cce138ab18d0a89aecef
+    metadata:
+      record_count: 17
+  - name: real-notsofar-2spk-neg-records
+    kind: audio-records
+    root_alias: ts_asr_real
+    relative_path: versions/en-v2-20261031/records/real-notsofar-2spk-neg.jsonl.gz
+    sha256: e7a4e09f2b2e84021369d9af2806a0b343e81ee324642d8c5e6c1345cb034100
+    metadata:
+      record_count: 32
+  - name: real-notsofar-2spk-neg-enrollmix-records
+    kind: audio-records
+    root_alias: ts_asr_real
+    relative_path: versions/en-v2-20261031/records/real-notsofar-2spk-neg-enrollmix.jsonl.gz
+    sha256: 571f0441517c2461d80d6aed1f53af02256a0a569567df813e9cd47c79e32673
+    metadata:
+      record_count: 12
+  - name: real-notsofar-3plus-pos-records
+    kind: audio-records
+    root_alias: ts_asr_real
+    relative_path: versions/en-v2-20261031/records/real-notsofar-3plus-pos.jsonl.gz
+    sha256: a9d1a1c249ad98707e62f4039105fda55c0b39e824060bb50660c8a96f7cb032
+    metadata:
+      record_count: 34
+  - name: real-notsofar-3plus-pos-enrollmix-records
+    kind: audio-records
+    root_alias: ts_asr_real
+    relative_path: versions/en-v2-20261031/records/real-notsofar-3plus-pos-enrollmix.jsonl.gz
+    sha256: 1fb9da2b7e70b0edb4edd3f1f877e7888f9dd1def3b1d8f415bcf4a76b5e2c1b
+    metadata:
+      record_count: 15
+  - name: real-notsofar-3plus-neg-records
+    kind: audio-records
+    root_alias: ts_asr_real
+    relative_path: versions/en-v2-20261031/records/real-notsofar-3plus-neg.jsonl.gz
+    sha256: 5fa2c7b13409f9834f189a6c98b1a411fe6ceaa33a9f836f7e488a21a038ad87
+    metadata:
+      record_count: 27
+  - name: real-notsofar-3plus-neg-enrollmix-records
+    kind: audio-records
+    root_alias: ts_asr_real
+    relative_path: versions/en-v2-20261031/records/real-notsofar-3plus-neg-enrollmix.jsonl.gz
+    sha256: b787f2837b133c7e98b0ba03c4f280c1e11c43d7523dd6bba7ed49e755d87f67
+    metadata:
+      record_count: 24
+  - name: real-chime6-1spk-pos-records
+    kind: audio-records
+    root_alias: ts_asr_real
+    relative_path: versions/en-v2-20261031/records/real-chime6-1spk-pos.jsonl.gz
+    sha256: b3a82312212d1c5b7e4660fe6380455c770d22130a86729ce813975e8811655f
+    metadata:
+      record_count: 7
+  - name: real-chime6-1spk-pos-enrollmix-records
+    kind: audio-records
+    root_alias: ts_asr_real
+    relative_path: versions/en-v2-20261031/records/real-chime6-1spk-pos-enrollmix.jsonl.gz
+    sha256: 0b35647de919bb6cb17508cb01f366b2b14009eef51c285929401c5e3e8552cc
+    metadata:
+      record_count: 4
+  - name: real-chime6-1spk-neg-records
+    kind: audio-records
+    root_alias: ts_asr_real
+    relative_path: versions/en-v2-20261031/records/real-chime6-1spk-neg.jsonl.gz
+    sha256: 497b8d3600a67c103e6794ed10df850189846c0eb3b1328676c863fa9d2c7996
+    metadata:
+      record_count: 5
+  - name: real-chime6-1spk-neg-enrollmix-records
+    kind: audio-records
+    root_alias: ts_asr_real
+    relative_path: versions/en-v2-20261031/records/real-chime6-1spk-neg-enrollmix.jsonl.gz
+    sha256: ffd027faaa4558f26a93cc3f6439337934d108c74d0b43da1544d3b3229b8568
+    metadata:
+      record_count: 6
+  - name: real-chime6-2spk-pos-records
+    kind: audio-records
+    root_alias: ts_asr_real
+    relative_path: versions/en-v2-20261031/records/real-chime6-2spk-pos.jsonl.gz
+    sha256: bef94b6aa1147283a4cdedde9e8e29df9346545c3bf0546b7638be72515ed9af
+    metadata:
+      record_count: 36
+  - name: real-chime6-2spk-pos-enrollmix-records
+    kind: audio-records
+    root_alias: ts_asr_real
+    relative_path: versions/en-v2-20261031/records/real-chime6-2spk-pos-enrollmix.jsonl.gz
+    sha256: 334cb4ae9197c010e941b7df37face8fb01f0b823a68ca0040ab23295620b6c9
+    metadata:
+      record_count: 14
+  - name: real-chime6-2spk-neg-records
+    kind: audio-records
+    root_alias: ts_asr_real
+    relative_path: versions/en-v2-20261031/records/real-chime6-2spk-neg.jsonl.gz
+    sha256: 5bd11f9e45273284315a00fc434439505902d20b0f5eb3362e86e53dc3f1ee07
+    metadata:
+      record_count: 34
+  - name: real-chime6-2spk-neg-enrollmix-records
+    kind: audio-records
+    root_alias: ts_asr_real
+    relative_path: versions/en-v2-20261031/records/real-chime6-2spk-neg-enrollmix.jsonl.gz
+    sha256: b161ff1d9b7eb7369ad3b64a0a629f9b8a5afb5bb91af04d39440dd31274f8cd
+    metadata:
+      record_count: 16
+  - name: real-chime6-3plus-pos-records
+    kind: audio-records
+    root_alias: ts_asr_real
+    relative_path: versions/en-v2-20261031/records/real-chime6-3plus-pos.jsonl.gz
+    sha256: 3dbadcfda906541a95f2c7dc55123c0431a70f4c7f648cc718016c54fa458f94
+    metadata:
+      record_count: 34
+  - name: real-chime6-3plus-pos-enrollmix-records
+    kind: audio-records
+    root_alias: ts_asr_real
+    relative_path: versions/en-v2-20261031/records/real-chime6-3plus-pos-enrollmix.jsonl.gz
+    sha256: 36c4cdaa74539ad8fe8da5f5b1e0666980e1befdc5416ec106875202073800cd
+    metadata:
+      record_count: 22
+  - name: real-chime6-3plus-neg-records
+    kind: audio-records
+    root_alias: ts_asr_real
+    relative_path: versions/en-v2-20261031/records/real-chime6-3plus-neg.jsonl.gz
+    sha256: 9918acde0431cca9195280cd95ab990157c08e071d66d9c3eeeed8bed30e8800
+    metadata:
+      record_count: 36
+  - name: real-chime6-3plus-neg-enrollmix-records
+    kind: audio-records
+    root_alias: ts_asr_real
+    relative_path: versions/en-v2-20261031/records/real-chime6-3plus-neg-enrollmix.jsonl.gz
+    sha256: 0fe8e99c556199aeec077847cb92d6774a963afa488b421098d79eb0bce911c3
+    metadata:
+      record_count: 20
+  - name: real-dipco-1spk-pos-records
+    kind: audio-records
+    root_alias: ts_asr_real
+    relative_path: versions/en-v2-20261031/records/real-dipco-1spk-pos.jsonl.gz
+    sha256: 1a3b502d175e47cb3b2dbe3cbdde4bb966e93ab3df6353e676eb9a25db5161e2
+    metadata:
+      record_count: 3
+  - name: real-dipco-1spk-pos-enrollmix-records
+    kind: audio-records
+    root_alias: ts_asr_real
+    relative_path: versions/en-v2-20261031/records/real-dipco-1spk-pos-enrollmix.jsonl.gz
+    sha256: 789526ed15c540d56450824f26b6aa7eec37737335220c917153129b19bbdfb9
+    metadata:
+      record_count: 1
+  - name: real-dipco-1spk-neg-records
+    kind: audio-records
+    root_alias: ts_asr_real
+    relative_path: versions/en-v2-20261031/records/real-dipco-1spk-neg.jsonl.gz
+    sha256: 834beacd46674310e54975468dde5ae1387cdd835e5e9f7be0317a49e5443d60
+    metadata:
+      record_count: 3
+  - name: real-dipco-1spk-neg-enrollmix-records
+    kind: audio-records
+    root_alias: ts_asr_real
+    relative_path: versions/en-v2-20261031/records/real-dipco-1spk-neg-enrollmix.jsonl.gz
+    sha256: 0dda3ddfa72f20a9634d6734c083b9204a844afb13af711ae76c0b9db4cfa7df
+    metadata:
+      record_count: 1
+  - name: real-dipco-2spk-pos-records
+    kind: audio-records
+    root_alias: ts_asr_real
+    relative_path: versions/en-v2-20261031/records/real-dipco-2spk-pos.jsonl.gz
+    sha256: 9220df83d84fa4af3e632be97d46f4f11909ac9e1e2f154e4e7172426af9900c
+    metadata:
+      record_count: 17
+  - name: real-dipco-2spk-pos-enrollmix-records
+    kind: audio-records
+    root_alias: ts_asr_real
+    relative_path: versions/en-v2-20261031/records/real-dipco-2spk-pos-enrollmix.jsonl.gz
+    sha256: 854f212716be57a752b4371300fdfdf70aa80e0bc07707209da779d4ceb219dc
+    metadata:
+      record_count: 9
+  - name: real-dipco-2spk-neg-records
+    kind: audio-records
+    root_alias: ts_asr_real
+    relative_path: versions/en-v2-20261031/records/real-dipco-2spk-neg.jsonl.gz
+    sha256: e71769059c49f4be7769206aa30daa159c753c000ba4eaf982e350225e14cf8c
+    metadata:
+      record_count: 13
+  - name: real-dipco-2spk-neg-enrollmix-records
+    kind: audio-records
+    root_alias: ts_asr_real
+    relative_path: versions/en-v2-20261031/records/real-dipco-2spk-neg-enrollmix.jsonl.gz
+    sha256: 14b7a3e653a6a76bd88f73f23cd2234d8e6ff9a805c4fc6a0996f17b08ea0267
+    metadata:
+      record_count: 6
+  - name: real-dipco-3plus-pos-records
+    kind: audio-records
+    root_alias: ts_asr_real
+    relative_path: versions/en-v2-20261031/records/real-dipco-3plus-pos.jsonl.gz
+    sha256: 8da7b699ab1da72537406db1cb1ea8596681de07bb0492a24c9ce3f6793ab0f3
+    metadata:
+      record_count: 27
+  - name: real-dipco-3plus-pos-enrollmix-records
+    kind: audio-records
+    root_alias: ts_asr_real
+    relative_path: versions/en-v2-20261031/records/real-dipco-3plus-pos-enrollmix.jsonl.gz
+    sha256: 621400e0345c44251a85e0f3d3e3ead12cbe0fedb67805a61229a92b8c078dff
+    metadata:
+      record_count: 26
+  - name: real-dipco-3plus-neg-records
+    kind: audio-records
+    root_alias: ts_asr_real
+    relative_path: versions/en-v2-20261031/records/real-dipco-3plus-neg.jsonl.gz
+    sha256: 82b5ce776772c7d915950876fe73dc1b0e0165c8233b35a2af383795c89cc306
+    metadata:
+      record_count: 26
+  - name: real-dipco-3plus-neg-enrollmix-records
+    kind: audio-records
+    root_alias: ts_asr_real
+    relative_path: versions/en-v2-20261031/records/real-dipco-3plus-neg-enrollmix.jsonl.gz
+    sha256: fb363a40a9e622198a33f8a6d4ad09e3cc464864c2514e430ed19f253a8096ba
+    metadata:
+      record_count: 19
+  - name: real-icsi-1spk-pos-records
+    kind: audio-records
+    root_alias: ts_asr_real
+    relative_path: versions/en-v2-20261031/records/real-icsi-1spk-pos.jsonl.gz
+    sha256: a390de5873470276baf6b84b3a342228d1fe709098a9f5af7fddcc00d2121851
+    metadata:
+      record_count: 39
+  - name: real-icsi-1spk-pos-enrollmix-records
+    kind: audio-records
+    root_alias: ts_asr_real
+    relative_path: versions/en-v2-20261031/records/real-icsi-1spk-pos-enrollmix.jsonl.gz
+    sha256: 95e0aed3c230fa16e2455c4ece5d0fc3bf28c067bf896641fddac3db6b122001
+    metadata:
+      record_count: 11
+  - name: real-icsi-1spk-neg-records
+    kind: audio-records
+    root_alias: ts_asr_real
+    relative_path: versions/en-v2-20261031/records/real-icsi-1spk-neg.jsonl.gz
+    sha256: c305e3c802cdcc80d843cb335b95d64973d0b4909805c30bab52edbe7989cf4a
+    metadata:
+      record_count: 38
+  - name: real-icsi-1spk-neg-enrollmix-records
+    kind: audio-records
+    root_alias: ts_asr_real
+    relative_path: versions/en-v2-20261031/records/real-icsi-1spk-neg-enrollmix.jsonl.gz
+    sha256: 941f7d0f06f6274d3cdf4cc21347c2b7665b50d3e9918e60eea1988040a6508f
+    metadata:
+      record_count: 12
+  - name: real-icsi-2spk-pos-records
+    kind: audio-records
+    root_alias: ts_asr_real
+    relative_path: versions/en-v2-20261031/records/real-icsi-2spk-pos.jsonl.gz
+    sha256: 8e8e16541ffb8ddc73d42ddcb2335102825d9484faf57771c2f16c15e53e59c7
+    metadata:
+      record_count: 39
+  - name: real-icsi-2spk-pos-enrollmix-records
+    kind: audio-records
+    root_alias: ts_asr_real
+    relative_path: versions/en-v2-20261031/records/real-icsi-2spk-pos-enrollmix.jsonl.gz
+    sha256: 62997891acafc4e3134b9ab5c3a0f46d6b1993b93df7a084e2c7b7b3d378ec2f
+    metadata:
+      record_count: 11
+  - name: real-icsi-2spk-neg-records
+    kind: audio-records
+    root_alias: ts_asr_real
+    relative_path: versions/en-v2-20261031/records/real-icsi-2spk-neg.jsonl.gz
+    sha256: 7e0b867607614f2e7f3cb2b29fad4a0957dd53b8467b6569ab2b4164fd0466ac
+    metadata:
+      record_count: 41
+  - name: real-icsi-2spk-neg-enrollmix-records
+    kind: audio-records
+    root_alias: ts_asr_real
+    relative_path: versions/en-v2-20261031/records/real-icsi-2spk-neg-enrollmix.jsonl.gz
+    sha256: b01cc80172ef3f2a84370ee7e5157fdc7ac15cc7b72a2252dd8e1f54e7278445
+    metadata:
+      record_count: 9
+  - name: real-icsi-3plus-pos-records
+    kind: audio-records
+    root_alias: ts_asr_real
+    relative_path: versions/en-v2-20261031/records/real-icsi-3plus-pos.jsonl.gz
+    sha256: b89d84e3341befb2afd57055bea45c44a7bf96f2f5a36be89aaa19c442c7f26c
+    metadata:
+      record_count: 40
+  - name: real-icsi-3plus-pos-enrollmix-records
+    kind: audio-records
+    root_alias: ts_asr_real
+    relative_path: versions/en-v2-20261031/records/real-icsi-3plus-pos-enrollmix.jsonl.gz
+    sha256: 857a46481d283e2d057b0029c20df7332fada4ba42621cf97f7eaa886282fb1b
+    metadata:
+      record_count: 16
+  - name: real-icsi-3plus-neg-records
+    kind: audio-records
+    root_alias: ts_asr_real
+    relative_path: versions/en-v2-20261031/records/real-icsi-3plus-neg.jsonl.gz
+    sha256: 74ac9495bb84487bfd55afdd67af8516106d4bd31be9b8e78e6913328c34b6d5
+    metadata:
+      record_count: 47
+  - name: real-icsi-3plus-neg-enrollmix-records
+    kind: audio-records
+    root_alias: ts_asr_real
+    relative_path: versions/en-v2-20261031/records/real-icsi-3plus-neg-enrollmix.jsonl.gz
+    sha256: 781cc26221deba5333636de0a7e250c9d91387e476089804f84956d07a56d961
+    metadata:
+      record_count: 9
+  splits:
+    real-ami-1spk-pos:
+      artifacts:
+        records:
+        - real-ami-1spk-pos-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 43
+        duration_hours: 0.1883
+        duration_basis: Mixture duration
+      provenance:
+        description: 'real: {"corpus": "ami", "kind": "pos"}'
+    real-ami-1spk-pos-enrollmix:
+      artifacts:
+        records:
+        - real-ami-1spk-pos-enrollmix-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 7
+        duration_hours: 0.0329
+        duration_basis: Mixture duration
+      provenance:
+        description: 'real: {"corpus": "ami", "kind": "pos", "enroll_condition": "others_speech"}'
+    real-ami-1spk-neg:
+      artifacts:
+        records:
+        - real-ami-1spk-neg-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 40
+        duration_hours: 0.1802
+        duration_basis: Mixture duration
+      provenance:
+        description: 'real: {"corpus": "ami", "kind": "neg"}'
+    real-ami-1spk-neg-enrollmix:
+      artifacts:
+        records:
+        - real-ami-1spk-neg-enrollmix-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 10
+        duration_hours: 0.0409
+        duration_basis: Mixture duration
+      provenance:
+        description: 'real: {"corpus": "ami", "kind": "neg", "enroll_condition": "others_speech"}'
+    real-ami-2spk-pos:
+      artifacts:
+        records:
+        - real-ami-2spk-pos-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 44
+        duration_hours: 0.199
+        duration_basis: Mixture duration
+      provenance:
+        description: 'real: {"corpus": "ami", "kind": "pos"}'
+    real-ami-2spk-pos-enrollmix:
+      artifacts:
+        records:
+        - real-ami-2spk-pos-enrollmix-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 6
+        duration_hours: 0.0251
+        duration_basis: Mixture duration
+      provenance:
+        description: 'real: {"corpus": "ami", "kind": "pos", "enroll_condition": "others_speech"}'
+    real-ami-2spk-neg:
+      artifacts:
+        records:
+        - real-ami-2spk-neg-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 36
+        duration_hours: 0.1605
+        duration_basis: Mixture duration
+      provenance:
+        description: 'real: {"corpus": "ami", "kind": "neg"}'
+    real-ami-2spk-neg-enrollmix:
+      artifacts:
+        records:
+        - real-ami-2spk-neg-enrollmix-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 14
+        duration_hours: 0.0636
+        duration_basis: Mixture duration
+      provenance:
+        description: 'real: {"corpus": "ami", "kind": "neg", "enroll_condition": "others_speech"}'
+    real-ami-3plus-pos:
+      artifacts:
+        records:
+        - real-ami-3plus-pos-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 35
+        duration_hours: 0.1675
+        duration_basis: Mixture duration
+      provenance:
+        description: 'real: {"corpus": "ami", "kind": "pos"}'
+    real-ami-3plus-pos-enrollmix:
+      artifacts:
+        records:
+        - real-ami-3plus-pos-enrollmix-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 21
+        duration_hours: 0.1069
+        duration_basis: Mixture duration
+      provenance:
+        description: 'real: {"corpus": "ami", "kind": "pos", "enroll_condition": "others_speech"}'
+    real-ami-3plus-neg:
+      artifacts:
+        records:
+        - real-ami-3plus-neg-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 42
+        duration_hours: 0.1972
+        duration_basis: Mixture duration
+      provenance:
+        description: 'real: {"corpus": "ami", "kind": "neg"}'
+    real-ami-3plus-neg-enrollmix:
+      artifacts:
+        records:
+        - real-ami-3plus-neg-enrollmix-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 14
+        duration_hours: 0.0772
+        duration_basis: Mixture duration
+      provenance:
+        description: 'real: {"corpus": "ami", "kind": "neg", "enroll_condition": "others_speech"}'
+    real-notsofar-1spk-pos:
+      artifacts:
+        records:
+        - real-notsofar-1spk-pos-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 40
+        duration_hours: 0.174
+        duration_basis: Mixture duration
+      provenance:
+        description: 'real: {"corpus": "notsofar", "kind": "pos"}'
+    real-notsofar-1spk-pos-enrollmix:
+      artifacts:
+        records:
+        - real-notsofar-1spk-pos-enrollmix-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 10
+        duration_hours: 0.0377
+        duration_basis: Mixture duration
+      provenance:
+        description: 'real: {"corpus": "notsofar", "kind": "pos", "enroll_condition": "others_speech"}'
+    real-notsofar-1spk-neg:
+      artifacts:
+        records:
+        - real-notsofar-1spk-neg-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 37
+        duration_hours: 0.1621
+        duration_basis: Mixture duration
+      provenance:
+        description: 'real: {"corpus": "notsofar", "kind": "neg"}'
+    real-notsofar-1spk-neg-enrollmix:
+      artifacts:
+        records:
+        - real-notsofar-1spk-neg-enrollmix-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 11
+        duration_hours: 0.0433
+        duration_basis: Mixture duration
+      provenance:
+        description: 'real: {"corpus": "notsofar", "kind": "neg", "enroll_condition": "others_speech"}'
+    real-notsofar-2spk-pos:
+      artifacts:
+        records:
+        - real-notsofar-2spk-pos-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 33
+        duration_hours: 0.1459
+        duration_basis: Mixture duration
+      provenance:
+        description: 'real: {"corpus": "notsofar", "kind": "pos"}'
+    real-notsofar-2spk-pos-enrollmix:
+      artifacts:
+        records:
+        - real-notsofar-2spk-pos-enrollmix-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 17
+        duration_hours: 0.0794
+        duration_basis: Mixture duration
+      provenance:
+        description: 'real: {"corpus": "notsofar", "kind": "pos", "enroll_condition": "others_speech"}'
+    real-notsofar-2spk-neg:
+      artifacts:
+        records:
+        - real-notsofar-2spk-neg-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 32
+        duration_hours: 0.1426
+        duration_basis: Mixture duration
+      provenance:
+        description: 'real: {"corpus": "notsofar", "kind": "neg"}'
+    real-notsofar-2spk-neg-enrollmix:
+      artifacts:
+        records:
+        - real-notsofar-2spk-neg-enrollmix-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 12
+        duration_hours: 0.0546
+        duration_basis: Mixture duration
+      provenance:
+        description: 'real: {"corpus": "notsofar", "kind": "neg", "enroll_condition": "others_speech"}'
+    real-notsofar-3plus-pos:
+      artifacts:
+        records:
+        - real-notsofar-3plus-pos-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 34
+        duration_hours: 0.173
+        duration_basis: Mixture duration
+      provenance:
+        description: 'real: {"corpus": "notsofar", "kind": "pos"}'
+    real-notsofar-3plus-pos-enrollmix:
+      artifacts:
+        records:
+        - real-notsofar-3plus-pos-enrollmix-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 15
+        duration_hours: 0.0831
+        duration_basis: Mixture duration
+      provenance:
+        description: 'real: {"corpus": "notsofar", "kind": "pos", "enroll_condition": "others_speech"}'
+    real-notsofar-3plus-neg:
+      artifacts:
+        records:
+        - real-notsofar-3plus-neg-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 27
+        duration_hours: 0.1411
+        duration_basis: Mixture duration
+      provenance:
+        description: 'real: {"corpus": "notsofar", "kind": "neg"}'
+    real-notsofar-3plus-neg-enrollmix:
+      artifacts:
+        records:
+        - real-notsofar-3plus-neg-enrollmix-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 24
+        duration_hours: 0.1243
+        duration_basis: Mixture duration
+      provenance:
+        description: 'real: {"corpus": "notsofar", "kind": "neg", "enroll_condition": "others_speech"}'
+    real-chime6-1spk-pos:
+      artifacts:
+        records:
+        - real-chime6-1spk-pos-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 7
+        duration_hours: 0.0222
+        duration_basis: Mixture duration
+      provenance:
+        description: 'real: {"corpus": "chime6", "kind": "pos"}'
+    real-chime6-1spk-pos-enrollmix:
+      artifacts:
+        records:
+        - real-chime6-1spk-pos-enrollmix-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 4
+        duration_hours: 0.0152
+        duration_basis: Mixture duration
+      provenance:
+        description: 'real: {"corpus": "chime6", "kind": "pos", "enroll_condition": "others_speech"}'
+    real-chime6-1spk-neg:
+      artifacts:
+        records:
+        - real-chime6-1spk-neg-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 5
+        duration_hours: 0.0154
+        duration_basis: Mixture duration
+      provenance:
+        description: 'real: {"corpus": "chime6", "kind": "neg"}'
+    real-chime6-1spk-neg-enrollmix:
+      artifacts:
+        records:
+        - real-chime6-1spk-neg-enrollmix-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 6
+        duration_hours: 0.0219
+        duration_basis: Mixture duration
+      provenance:
+        description: 'real: {"corpus": "chime6", "kind": "neg", "enroll_condition": "others_speech"}'
+    real-chime6-2spk-pos:
+      artifacts:
+        records:
+        - real-chime6-2spk-pos-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 36
+        duration_hours: 0.1529
+        duration_basis: Mixture duration
+      provenance:
+        description: 'real: {"corpus": "chime6", "kind": "pos"}'
+    real-chime6-2spk-pos-enrollmix:
+      artifacts:
+        records:
+        - real-chime6-2spk-pos-enrollmix-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 14
+        duration_hours: 0.055
+        duration_basis: Mixture duration
+      provenance:
+        description: 'real: {"corpus": "chime6", "kind": "pos", "enroll_condition": "others_speech"}'
+    real-chime6-2spk-neg:
+      artifacts:
+        records:
+        - real-chime6-2spk-neg-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 34
+        duration_hours: 0.143
+        duration_basis: Mixture duration
+      provenance:
+        description: 'real: {"corpus": "chime6", "kind": "neg"}'
+    real-chime6-2spk-neg-enrollmix:
+      artifacts:
+        records:
+        - real-chime6-2spk-neg-enrollmix-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 16
+        duration_hours: 0.0649
+        duration_basis: Mixture duration
+      provenance:
+        description: 'real: {"corpus": "chime6", "kind": "neg", "enroll_condition": "others_speech"}'
+    real-chime6-3plus-pos:
+      artifacts:
+        records:
+        - real-chime6-3plus-pos-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 34
+        duration_hours: 0.1674
+        duration_basis: Mixture duration
+      provenance:
+        description: 'real: {"corpus": "chime6", "kind": "pos"}'
+    real-chime6-3plus-pos-enrollmix:
+      artifacts:
+        records:
+        - real-chime6-3plus-pos-enrollmix-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 22
+        duration_hours: 0.1039
+        duration_basis: Mixture duration
+      provenance:
+        description: 'real: {"corpus": "chime6", "kind": "pos", "enroll_condition": "others_speech"}'
+    real-chime6-3plus-neg:
+      artifacts:
+        records:
+        - real-chime6-3plus-neg-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 36
+        duration_hours: 0.1709
+        duration_basis: Mixture duration
+      provenance:
+        description: 'real: {"corpus": "chime6", "kind": "neg"}'
+    real-chime6-3plus-neg-enrollmix:
+      artifacts:
+        records:
+        - real-chime6-3plus-neg-enrollmix-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 20
+        duration_hours: 0.1004
+        duration_basis: Mixture duration
+      provenance:
+        description: 'real: {"corpus": "chime6", "kind": "neg", "enroll_condition": "others_speech"}'
+    real-dipco-1spk-pos:
+      artifacts:
+        records:
+        - real-dipco-1spk-pos-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 3
+        duration_hours: 0.0144
+        duration_basis: Mixture duration
+      provenance:
+        description: 'real: {"corpus": "dipco", "kind": "pos"}'
+    real-dipco-1spk-pos-enrollmix:
+      artifacts:
+        records:
+        - real-dipco-1spk-pos-enrollmix-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 1
+        duration_hours: 0.0036
+        duration_basis: Mixture duration
+      provenance:
+        description: 'real: {"corpus": "dipco", "kind": "pos", "enroll_condition": "others_speech"}'
+    real-dipco-1spk-neg:
+      artifacts:
+        records:
+        - real-dipco-1spk-neg-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 3
+        duration_hours: 0.0144
+        duration_basis: Mixture duration
+      provenance:
+        description: 'real: {"corpus": "dipco", "kind": "neg"}'
+    real-dipco-1spk-neg-enrollmix:
+      artifacts:
+        records:
+        - real-dipco-1spk-neg-enrollmix-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 1
+        duration_hours: 0.0036
+        duration_basis: Mixture duration
+      provenance:
+        description: 'real: {"corpus": "dipco", "kind": "neg", "enroll_condition": "others_speech"}'
+    real-dipco-2spk-pos:
+      artifacts:
+        records:
+        - real-dipco-2spk-pos-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 17
+        duration_hours: 0.0685
+        duration_basis: Mixture duration
+      provenance:
+        description: 'real: {"corpus": "dipco", "kind": "pos"}'
+    real-dipco-2spk-pos-enrollmix:
+      artifacts:
+        records:
+        - real-dipco-2spk-pos-enrollmix-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 9
+        duration_hours: 0.0404
+        duration_basis: Mixture duration
+      provenance:
+        description: 'real: {"corpus": "dipco", "kind": "pos", "enroll_condition": "others_speech"}'
+    real-dipco-2spk-neg:
+      artifacts:
+        records:
+        - real-dipco-2spk-neg-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 13
+        duration_hours: 0.0527
+        duration_basis: Mixture duration
+      provenance:
+        description: 'real: {"corpus": "dipco", "kind": "neg"}'
+    real-dipco-2spk-neg-enrollmix:
+      artifacts:
+        records:
+        - real-dipco-2spk-neg-enrollmix-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 6
+        duration_hours: 0.0263
+        duration_basis: Mixture duration
+      provenance:
+        description: 'real: {"corpus": "dipco", "kind": "neg", "enroll_condition": "others_speech"}'
+    real-dipco-3plus-pos:
+      artifacts:
+        records:
+        - real-dipco-3plus-pos-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 27
+        duration_hours: 0.148
+        duration_basis: Mixture duration
+      provenance:
+        description: 'real: {"corpus": "dipco", "kind": "pos"}'
+    real-dipco-3plus-pos-enrollmix:
+      artifacts:
+        records:
+        - real-dipco-3plus-pos-enrollmix-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 26
+        duration_hours: 0.1316
+        duration_basis: Mixture duration
+      provenance:
+        description: 'real: {"corpus": "dipco", "kind": "pos", "enroll_condition": "others_speech"}'
+    real-dipco-3plus-neg:
+      artifacts:
+        records:
+        - real-dipco-3plus-neg-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 26
+        duration_hours: 0.1363
+        duration_basis: Mixture duration
+      provenance:
+        description: 'real: {"corpus": "dipco", "kind": "neg"}'
+    real-dipco-3plus-neg-enrollmix:
+      artifacts:
+        records:
+        - real-dipco-3plus-neg-enrollmix-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 19
+        duration_hours: 0.0984
+        duration_basis: Mixture duration
+      provenance:
+        description: 'real: {"corpus": "dipco", "kind": "neg", "enroll_condition": "others_speech"}'
+    real-icsi-1spk-pos:
+      artifacts:
+        records:
+        - real-icsi-1spk-pos-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 39
+        duration_hours: 0.1605
+        duration_basis: Mixture duration
+      provenance:
+        description: 'real: {"corpus": "icsi", "kind": "pos"}'
+    real-icsi-1spk-pos-enrollmix:
+      artifacts:
+        records:
+        - real-icsi-1spk-pos-enrollmix-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 11
+        duration_hours: 0.0415
+        duration_basis: Mixture duration
+      provenance:
+        description: 'real: {"corpus": "icsi", "kind": "pos", "enroll_condition": "others_speech"}'
+    real-icsi-1spk-neg:
+      artifacts:
+        records:
+        - real-icsi-1spk-neg-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 38
+        duration_hours: 0.1555
+        duration_basis: Mixture duration
+      provenance:
+        description: 'real: {"corpus": "icsi", "kind": "neg"}'
+    real-icsi-1spk-neg-enrollmix:
+      artifacts:
+        records:
+        - real-icsi-1spk-neg-enrollmix-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 12
+        duration_hours: 0.0466
+        duration_basis: Mixture duration
+      provenance:
+        description: 'real: {"corpus": "icsi", "kind": "neg", "enroll_condition": "others_speech"}'
+    real-icsi-2spk-pos:
+      artifacts:
+        records:
+        - real-icsi-2spk-pos-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 39
+        duration_hours: 0.1753
+        duration_basis: Mixture duration
+      provenance:
+        description: 'real: {"corpus": "icsi", "kind": "pos"}'
+    real-icsi-2spk-pos-enrollmix:
+      artifacts:
+        records:
+        - real-icsi-2spk-pos-enrollmix-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 11
+        duration_hours: 0.0534
+        duration_basis: Mixture duration
+      provenance:
+        description: 'real: {"corpus": "icsi", "kind": "pos", "enroll_condition": "others_speech"}'
+    real-icsi-2spk-neg:
+      artifacts:
+        records:
+        - real-icsi-2spk-neg-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 41
+        duration_hours: 0.1869
+        duration_basis: Mixture duration
+      provenance:
+        description: 'real: {"corpus": "icsi", "kind": "neg"}'
+    real-icsi-2spk-neg-enrollmix:
+      artifacts:
+        records:
+        - real-icsi-2spk-neg-enrollmix-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 9
+        duration_hours: 0.0417
+        duration_basis: Mixture duration
+      provenance:
+        description: 'real: {"corpus": "icsi", "kind": "neg", "enroll_condition": "others_speech"}'
+    real-icsi-3plus-pos:
+      artifacts:
+        records:
+        - real-icsi-3plus-pos-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 40
+        duration_hours: 0.2012
+        duration_basis: Mixture duration
+      provenance:
+        description: 'real: {"corpus": "icsi", "kind": "pos"}'
+    real-icsi-3plus-pos-enrollmix:
+      artifacts:
+        records:
+        - real-icsi-3plus-pos-enrollmix-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 16
+        duration_hours: 0.087
+        duration_basis: Mixture duration
+      provenance:
+        description: 'real: {"corpus": "icsi", "kind": "pos", "enroll_condition": "others_speech"}'
+    real-icsi-3plus-neg:
+      artifacts:
+        records:
+        - real-icsi-3plus-neg-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 47
+        duration_hours: 0.244
+        duration_basis: Mixture duration
+      provenance:
+        description: 'real: {"corpus": "icsi", "kind": "neg"}'
+    real-icsi-3plus-neg-enrollmix:
+      artifacts:
+        records:
+        - real-icsi-3plus-neg-enrollmix-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 9
+        duration_hours: 0.0442
+        duration_basis: Mixture duration
+      provenance:
+        description: 'real: {"corpus": "icsi", "kind": "neg", "enroll_condition": "others_speech"}'
+  provenance:
+    status: complete
+    synthetic: none
+    description: 英文真实对话的目标说话人窗口（ts_asr_real 中文版的英文对照，规则相同）：从 AMI 单远场麦、NOTSOFAR-1 单通道设备、 CHiME-6 家庭聚会（所在房间参考阵列通道 1，窗口内所有人在同一房间）、DiPCo 晚宴（远场设备通道 1，时间轴按近讲麦对齐）的 人工标注 test/eval 划分，以及 ICSI 会议测试会议（官方近讲耳麦混音，不是远场）里按完整语句切出 8–22 秒窗口，不做任何混合； 同一窗口配一条目标在场（注册取窗外同一人的语句）和一条目标缺席的样本。参考文本为目标在窗口内各句按时间顺序用空格拼接， 去掉了笑声、噪声、截断词等标注；含听不清、外语、被消音或数字朗读的语句算作有人说话，但不作目标、不作注册。注册存 10 秒、 客户端取前 5 秒，前 5 秒里他人说话不少于 0.3 秒的在 -enrollmix 划分；每条注册都过声纹核对（与本人在本录音其他语句比 与其他人更像，有近讲麦的语料用近讲麦之和），不过的换一句或剔除，见 source/<版本>/report.json。只用于评测，不进训练。
+    sources:
+    - ami_sdm@icefall-20260908:test
+    - notsofar_sdm@icefall-20260908:test
+    - chime6@speaker-records-v1-20260912:test
+    - dipco@zenodo-8122551-20261023:eval
+    - icsi@modelscope-argmaxinc-20261025:test

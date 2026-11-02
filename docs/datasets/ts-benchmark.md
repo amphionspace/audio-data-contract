@@ -112,6 +112,36 @@
 - **测不出业务上的问题，没有收入 `ts-asr-benchmark`**：v12 评测里机主缺席三列的误输出 9.26 / 10.19 / 10.21 / 10.22 版本为 26.8 / 0.3 / 0.2 / 1.3%，注册换成第六批真实录音的那列也只有 42.0 / 1.0 / 0.0 / 2.0%；第六批真实录音的 10 窗是 80 / 70 / 10 / 30%。用 10.19 版本定位：这 10 窗配公开测试集 20 位随机说话人的注册，200 次一次都不出字；配业务侧另一个人（第四、五批）的注册录音，仍有 6/10、5/10 出字。误输出跟着「注册和录音都来自业务设备」走，而不是录音内容或某个人的声音；合成数据里注册和台词不经过同一条录音链路，测不出来。这类问题要靠业务设备上的真实录音（同一设备先注册、再在机主不说话时外放或有人说话），按批次进 `business_feedback`。
 - `realreg5` 的注册录音 8.28 秒，整段保存（`enroll_store_seconds` 下录制的注册按录音长度、最多存满 10 秒；此前的业务注册录音都是 3 秒，结果不变）。底噪、房间响应缓存取 `ts_asr_handover` 的 `source/v2-20261022/noise`、`rir`。
 
+## 英文版（各数据集的 en-v1-20261031）
+
+技术报告需要英文对照，七个合成数据集各加一个英文版本 `en-v1-20261031`：`ts_asr_benchmark`（14,160 条、112 个场景）、`ts_asr_noise`（2,040 / 17）、`ts_asr_farfield`（1,680 / 14）、`ts_asr_shortseg`（600 / 5）、`ts_asr_singing`（120 / 1）、`ts_asr_handover`（600 / 5）、`ts_asr_nearshort`（3,000 / 10），共 22,200 条。配方是同目录的 `recipe*-en.yaml`，由中文配方逐行派生：场景定义、随机种子和 `pair` 与中文最新版相同，只换说话人和三处素材；中英文是两套说话人，同名场景不能逐条配对，只按场景比较。记录的 `language` 是 `en`，`target` 按时间顺序用空格拼接。
+
+| 池 | 来源 | 说话人（合格） |
+| --- | --- | --- |
+| studio | VCTK（mic1，棚内录音，多种英语口音）；无官方划分，训练从未使用。`export_tts_pool.py` 从 TTS Lance 表导出每人 80 句 16 kHz FLAC 到 `ts_asr_benchmark/source/pools/vctk-tts-unified-v0.1-mic1/` | 109 |
+| phone | CS-Dialogue 英文 test：中国说话人用英语自由对话、各自设备录音（带口音）。去掉 `<FIL/>` 等标注标签；标了 `<NPS/>`（旁人说话）或 `**`（听不清）的句子不用（3 + 125 句，参考文本不可靠） | 27 |
+| read | LibriSpeech test-clean、test-other | 73 |
+| mixed | 并集 | 209 |
+
+Common Voice 英文 test 每人只有 1–2 句、MLS 英文语句多为 10–20 秒，都凑不出注册和多句场景，没有用。训练的英文场景来自 LibriSpeech train 和 Common Voice train，与上述说话人不重叠。
+
+与中文版的差别：
+
+- **不含业务真实注册录音**（`realreg*` 场景）：没有英文对应物。
+- **背景人声**用 `babble_synth/en/test`（26 位 LibriSpeech 说话人合成）。
+- **歌声**：MIR-1K 是中文卡拉 OK，改用 FSD50K eval 中标为歌声（独唱、合唱等）且不含说话标签的片段。
+- **接话场景的「开头相同」按词比较**（配方 `language: en` 时，`mixer._plain` 取小写单词）：干扰人那句的前 4 个词里包含目标那句的前 2 个词；对照句前 4 个词与目标没有共同词；可区分度按词编辑距离。
+- **相近声音**（`abs-hard`、`abs-hard-k1`、`short-hard-neg`）同样取 ECAPA 余弦最近的 5 位之一。英文池更分散（不同说话人余弦中位数 0.10、p95 0.33；中文 0.22、0.47），所以挑出的余弦更低（中位数约 0.40，中文约 0.53），但同样高于不同说话人的 p95。向量在 `source/en-v1-20261031/speaker-embeddings.npz`。
+- **短句目标**（0.5–1.6 秒）一半来自 CS-Dialogue，多为 “yeah / okay / yes” 这类应答语：12,000 条在场样本里 1,414 条参考只有一个词。这是英文短句池的实际构成（LibriSpeech 几乎没有这么短的整句），读短句列时要注意。
+- 底噪、房间响应缓存与中文 v4 相同（`--noise-cache` / `--rir-cache` 指向 `ts_asr_benchmark/source/v4-20261022`）。
+
+```bash
+python scripts/ts_benchmark/speaker_embeddings.py --recipe scripts/ts_benchmark/recipe-en.yaml --roots roots.json --output en.npz
+python scripts/ts_benchmark/build.py --recipe scripts/ts_benchmark/recipe-en.yaml --roots roots.json --embeddings en.npz \
+    --noise-cache /workspace/data/datasets/ts_asr_benchmark/source/v4-20261022/noise \
+    --rir-cache /workspace/data/datasets/ts_asr_benchmark/source/v4-20261022/rir   # 其余 recipe-*-en.yaml 同理
+```
+
 ## 开发集（ts_asr_dev）
 
 `ts_asr_dev@v1-20261017`：3,240 条、54 个场景，配方 `scripts/ts_benchmark/recipe-pvad-dev.yaml`。用与 v3 相同的场景定义，换成各语料 dev 划分的说话人（KeSpeech、MagicData、AISHELL-1 dev，共 159 位，与 train、test 都不重叠）和新种子，用来选模型和阈值（`amphion-tse/pvad-dev@v1-20261017` 的合成部分），**不进训练，也不作最终评测**。
