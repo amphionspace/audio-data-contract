@@ -44,7 +44,7 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [libri3mix](data-versions.md#libri3mix) | en | 目标说话人语音识别 | 16.3 | LibriMix 三人混合的目标说话人评测 | 快照 20260914 |
 | [libricss](data-versions.md#libricss) | en | 语音识别、重叠语音检测、speech_separation | 10.1 | LibriSpeech 外放录制的模拟会议 | 没有 |
 | [libriheavy](data-versions.md#libriheavy) | en | 语音识别、语音合成 | 51,044.7 | 英文有声书，带标点和大小写（Libriheavy） | 没有 |
-| [librimix](data-versions.md#librimix) | en | 目标说话人语音识别 | 6,921.9 | LibriSpeech 混合的目标说话人数据 | 快照 20260914 |
+| [librimix](data-versions.md#librimix) | en | 目标说话人语音识别 | 6,921.9 | LibriSpeech 混合的目标说话人数据 | 部分版本：快照 20260914 |
 | [librispeech](data-versions.md#librispeech) | en | 语音识别、热词增强语音识别 | 971.6 | 英文有声书朗读（LibriSpeech）；含热词和加噪版 | 部分版本：快照 20260914 |
 | [libritts_r](data-versions.md#libritts_r) | en | 语音识别、语音合成 | 583.1 | 英文有声书 TTS 语料，音频经修复（LibriTTS-R） | `TTS 桶:LibriTTS-R/`（原始数据） |
 | [ljspeech](data-versions.md#ljspeech) | en | 语音识别、语音合成 | 23.9 | 单人英文朗读（LJSpeech） | `TTS 桶:LJSpeech/`（原始数据） |
@@ -72,7 +72,7 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [aishell4](data-versions.md#aishell4) | zh | 语音识别、说话人分段与归属、目标说话人语音识别 | 322.3 | 中文多人会议（AISHELL-4）；含轮流说话混合版 | 部分版本：快照 20260914 |
 | [aishell4_meeting_sot](data-versions.md#aishell4_meeting_sot) | zh | 带说话人标注的语音识别 | 377.5 | AISHELL-4 会议切窗的多人按人转写数据 | 没有 |
 | [aishell5_meeting_sot](data-versions.md#aishell5_meeting_sot) | zh | 带说话人标注的语音识别 | — | AISHELL-5 车内对话切窗的多人按人转写数据 | 没有 |
-| [aishellmix](data-versions.md#aishellmix) | zh | 目标说话人语音识别 | 7,489.2 | AISHELL-2 混合的目标说话人训练与测试数据 | 快照 20260914 |
+| [aishellmix](data-versions.md#aishellmix) | zh | 目标说话人语音识别 | 7,489.2 | AISHELL-2 混合的目标说话人训练与测试数据 | 部分版本：快照 20260914 |
 | [alimeeting](data-versions.md#alimeeting) | zh | 语音识别、连续语音分离、重叠语音检测、带说话人标注的语音识别、说话人分段与归属、目标说话人语音识别 | 427.7 | 中文远场会议，多人重叠语音（AliMeeting） | 部分版本：快照 20260914 |
 | [alimeeting_near_farsim_meeting_sot](data-versions.md#alimeeting_near_farsim_meeting_sot) | zh | 带说话人标注的语音识别 | 399.5 | AliMeeting 近讲加混响噪声模拟远场的会议窗口 | 没有 |
 | [alimeeting_sdm_meeting_sot](data-versions.md#alimeeting_sdm_meeting_sot) | zh | 带说话人标注的语音识别 | 327.3 | AliMeeting 远场会议切窗的多人按人转写数据 | 没有 |
@@ -104,7 +104,7 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [police_asr_unified](data-versions.md#police_asr_unified) | zh | 语音识别 | 805.6 | 警务合成语音统合版（V1–V6 合并） | 部分版本：快照 20260914、快照 20260921 |
 | [police_scene_bench](data-versions.md#police_scene_bench) | zh | 语音识别、热词增强语音识别、带说话人标注的语音识别、目标说话人语音识别 | 70.7 | 鼎桥验收表各使用场景的模拟评测，仅评测 | `备份桶:audio-data-contract/datasets/police_scene_bench/` |
 | [police_terms_single](data-versions.md#police_terms_single) | zh | 语音识别 | 1.7 | 警务术语单说测试集，仅评测 | 没有 |
-| [police_terms_single_train](data-versions.md#police_terms_single_train) | zh | 语音识别 | 11.7 | 警务术语单说训练集 | 没有 |
+| [police_terms_single_train](data-versions.md#police_terms_single_train) | zh | 语音识别、热词增强语音识别 | 11.7 | 警务术语单说训练集 | 没有 |
 | [primewords](data-versions.md#primewords) | zh | 语音识别 | 99.0 | 中文手机朗读（Primewords）；含清洗版 | 部分版本：快照 20260914 |
 | [realman](data-versions.md#realman) | zh | 语音识别、noise、sound_source_localization、speech_enhancement | 83.7 | 真实录制的中文多通道阵列语音（RealMAN） | 部分版本：快照 20260914 |
 | [realman_zh_far_asr](data-versions.md#realman_zh_far_asr) | zh | 语音识别 | 64.0 | RealMAN 远场中文转写训练数据 | 没有 |

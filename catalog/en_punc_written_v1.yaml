@@ -1,4 +1,4 @@
-# 英文 ASR 训练集书面化标点与大小写（2026-11-02 开工，占位）：TS 训练配方要求训练语料全部带标点。
+# 英文 ASR 训练集书面化标点与大小写（2026-11-02 开工，同日转正）：TS 训练配方要求训练语料全部带标点。
 - schema_version: dataset-catalog/2.0
   dataset_id: librispeech
   version: punc-written-en-v1-20261102
@@ -13,14 +13,62 @@
     kind: dataset-state
     root_alias: aidc_data
     relative_path: datasets/librispeech/versions/punc-written-en-v1-20261102/state.json
-  splits: {}
+  - name: train_supervisions_punc_0
+    kind: lhotse-supervisions
+    root_alias: aidc_data
+    relative_path: datasets/librispeech/versions/punc-written-en-v1-20261102/librispeech_supervisions_train-clean-100_punc_written.jsonl.gz
+    expected_bytes: 2562802
+    sha256: ebef019873a432f3e61bd0663b5c1b9b433f20eb400634a458e8e1b7dc377159
+    metadata:
+      record_count: 28539
+      punctuated: true
+  - name: train_supervisions_punc_1
+    kind: lhotse-supervisions
+    root_alias: aidc_data
+    relative_path: datasets/librispeech/versions/punc-written-en-v1-20261102/librispeech_supervisions_train-clean-360_punc_written.jsonl.gz
+    expected_bytes: 9263775
+    sha256: 0bb53a9d7199a1020beb04da47a0e179ff1b3f32ac9057048c93b32aa87021ee
+    metadata:
+      record_count: 104014
+      punctuated: true
+  - name: train_supervisions_punc_2
+    kind: lhotse-supervisions
+    root_alias: aidc_data
+    relative_path: datasets/librispeech/versions/punc-written-en-v1-20261102/librispeech_supervisions_train-other-500_punc_written.jsonl.gz
+    expected_bytes: 12509666
+    sha256: b76b979dc9df182a97cc7edb5a1c104e122cec76371d8ba4391078feaef8f9b1
+    metadata:
+      record_count: 148688
+      punctuated: true
+  splits:
+    train:
+      artifacts:
+        punctuated_supervisions:
+        - train_supervisions_punc_0
+        - train_supervisions_punc_1
+        - train_supervisions_punc_2
+        preparation_state:
+        - preparation_state
+      statistics:
+        records: 281241
+        records_output_kept_words: 279320
+        records_output_changed_words: 1884
+        records_without_output: 37
+        pronoun_i_capitalized: 636
+      provenance:
+        preparation_status: prepared
   provenance:
-    preparation_status: building
+    preparation_status: prepared
     owner: mingdong
-    description: '英文 ASR 训练集原标注加书面化标点并恢复大小写（规范 en-v1：只插 , . ? ! ; : 和改大小写，转小写去标点后与原标注逐词一致；27B 老师 10 万条 → Qwen3-4B 学生跑全量）。占位，处理中。'
+    description: 'librispeech@legacy-20260804 训练集原标注加英文书面化标点并恢复大小写（规范 en-v1，amphiondata written_punctuation_en）：Qwen3.8-27B 给 10 万条加标点，蒸馏到 Qwen3-4B 学生（LoRA）跑全量，不带听音提示。只插 , . ? ! ; : 和改大小写，转小写去标点后与原标注逐词一致；模型改了词的条目退回原标注只加句号；代词 I 统一大写，首字母大写，每条以 . ? ! 结尾。文件与源 supervisions 条数、顺序相同，只换 text；导出后逐条回读核对。'
     source: librispeech@legacy-20260804
     run_dir: /workspace/workspace/mingdong/data/amphiondata/en-punc-20261102
     audit: datasets/librispeech/versions/punc-written-en-v1-20261102/state.json
+    known_issues: 老师约 0.4% 的长句漏标大小写（如小写的专有名词）；英文规范没有人工参照评测。
+  recipe_parameters:
+    teacher: Qwen3.8-27B, 8 rows per request
+    student: Qwen3-4B-Instruct-2507 + LoRA r16 (1 epoch, 97k teacher rows)
+    spec: amphiondata written_punctuation_en en-v1
 - schema_version: dataset-catalog/2.0
   dataset_id: gigaspeech
   version: punc-written-en-v1-20261102
@@ -35,14 +83,42 @@
     kind: dataset-state
     root_alias: aidc_data
     relative_path: datasets/gigaspeech/versions/punc-written-en-v1-20261102/state.json
-  splits: {}
+  - name: train_supervisions_punc_0
+    kind: lhotse-supervisions
+    root_alias: aidc_data
+    relative_path: datasets/gigaspeech/versions/punc-written-en-v1-20261102/gigaspeech_supervisions_XL_punc_written.jsonl.gz
+    expected_bytes: 349077682
+    sha256: 3c4c754f5e2223d3938705b782a22bc126835c6ef68e53d061667001b6839031
+    metadata:
+      record_count: 8282988
+      punctuated: true
+  splits:
+    train:
+      artifacts:
+        punctuated_supervisions:
+        - train_supervisions_punc_0
+        preparation_state:
+        - preparation_state
+      statistics:
+        records: 8282988
+        records_output_kept_words: 8263169
+        records_output_changed_words: 19750
+        records_without_output: 69
+        pronoun_i_capitalized: 4870
+      provenance:
+        preparation_status: prepared
   provenance:
-    preparation_status: building
+    preparation_status: prepared
     owner: mingdong
-    description: '英文 ASR 训练集原标注加书面化标点并恢复大小写（规范 en-v1：只插 , . ? ! ; : 和改大小写，转小写去标点后与原标注逐词一致；27B 老师 10 万条 → Qwen3-4B 学生跑全量）。占位，处理中。'
+    description: 'gigaspeech@legacy-20260804 训练集原标注加英文书面化标点并恢复大小写（规范 en-v1，amphiondata written_punctuation_en）：Qwen3.8-27B 给 10 万条加标点，蒸馏到 Qwen3-4B 学生（LoRA）跑全量，不带听音提示。只插 , . ? ! ; : 和改大小写，转小写去标点后与原标注逐词一致；模型改了词的条目退回原标注只加句号；代词 I 统一大写，首字母大写，每条以 . ? ! 结尾。文件与源 supervisions 条数、顺序相同，只换 text；导出后逐条回读核对。'
     source: gigaspeech@legacy-20260804
     run_dir: /workspace/workspace/mingdong/data/amphiondata/en-punc-20261102
     audit: datasets/gigaspeech/versions/punc-written-en-v1-20261102/state.json
+    known_issues: 老师约 0.4% 的长句漏标大小写（如小写的专有名词）；英文规范没有人工参照评测。
+  recipe_parameters:
+    teacher: Qwen3.8-27B, 8 rows per request
+    student: Qwen3-4B-Instruct-2507 + LoRA r16 (1 epoch, 97k teacher rows)
+    spec: amphiondata written_punctuation_en en-v1
 - schema_version: dataset-catalog/2.0
   dataset_id: common_voice_en
   version: punc-written-en-v1-20261102
@@ -57,11 +133,39 @@
     kind: dataset-state
     root_alias: aidc_data
     relative_path: datasets/common_voice_en/versions/punc-written-en-v1-20261102/state.json
-  splits: {}
+  - name: train_supervisions_punc_0
+    kind: lhotse-supervisions
+    root_alias: aidc_data
+    relative_path: datasets/common_voice_en/versions/punc-written-en-v1-20261102/cv-en_supervisions_train_cleaned_punc_written.jsonl.gz
+    expected_bytes: 57537768
+    sha256: b071a2c7008d458924865f9fc639fab9aa8ce3360ea0d9cfb5452690e421ac8a
+    metadata:
+      record_count: 1143276
+      punctuated: true
+  splits:
+    train:
+      artifacts:
+        punctuated_supervisions:
+        - train_supervisions_punc_0
+        preparation_state:
+        - preparation_state
+      statistics:
+        records: 1143276
+        records_output_kept_words: 1138947
+        records_output_changed_words: 4329
+        records_without_output: 0
+        pronoun_i_capitalized: 220
+      provenance:
+        preparation_status: prepared
   provenance:
-    preparation_status: building
+    preparation_status: prepared
     owner: mingdong
-    description: '英文 ASR 训练集原标注加书面化标点并恢复大小写（规范 en-v1：只插 , . ? ! ; : 和改大小写，转小写去标点后与原标注逐词一致；27B 老师 10 万条 → Qwen3-4B 学生跑全量）。占位，处理中。'
+    description: 'common_voice_en@legacy-20260804 训练集原标注加英文书面化标点并恢复大小写（规范 en-v1，amphiondata written_punctuation_en）：Qwen3.8-27B 给 10 万条加标点，蒸馏到 Qwen3-4B 学生（LoRA）跑全量，不带听音提示。只插 , . ? ! ; : 和改大小写，转小写去标点后与原标注逐词一致；模型改了词的条目退回原标注只加句号；代词 I 统一大写，首字母大写，每条以 . ? ! 结尾。文件与源 supervisions 条数、顺序相同，只换 text；导出后逐条回读核对。'
     source: common_voice_en@legacy-20260804
     run_dir: /workspace/workspace/mingdong/data/amphiondata/en-punc-20261102
     audit: datasets/common_voice_en/versions/punc-written-en-v1-20261102/state.json
+    known_issues: 老师约 0.4% 的长句漏标大小写（如小写的专有名词）；英文规范没有人工参照评测。
+  recipe_parameters:
+    teacher: Qwen3.8-27B, 8 rows per request
+    student: Qwen3-4B-Instruct-2507 + LoRA r16 (1 epoch, 97k teacher rows)
+    spec: amphiondata written_punctuation_en en-v1

@@ -1,0 +1,1600 @@
+# 派生记录集的带标点版本（2026-11-02）：目标文本由中文 / 英文学生模型加书面化标点，其余字段和音频与源版本相同。用于 TS + 热词、全量标点的下一轮训练。
+- schema_version: dataset-catalog/2.0
+  dataset_id: ami_sdm
+  version: asr-20261014-punc-20261102
+  languages:
+  - en
+  tasks:
+  - asr
+  aliases: []
+  derived_from: ami_sdm@asr-20261014
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/ami_sdm/versions/asr-20261014-punc-20261102/state.json
+  - name: train_records_punc
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/ami_sdm/versions/asr-20261014-punc-20261102/records/train.jsonl.gz
+    expected_bytes: 3367171
+    sha256: fb372fd902fbfa0c5612f07158a5c382ec138b2245c676966d404ab630199f45
+    metadata:
+      record_count: 85414
+      punctuated: true
+      source: datasets/ami_sdm/versions/asr-20261014/records/train.jsonl.gz
+  - name: audio_index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/ami_sdm/versions/asr-20261014/audio_index/audio-index.jsonl.gz
+    expected_bytes: 11708
+    sha256: d3160c9de5f7009e0b75c90ca4f39e336967007c065f9418164e84feca2f4656
+    metadata:
+      record_count: 168
+  - name: record_index
+    kind: lance-record-index
+    root_alias: aidc_data
+    relative_path: datasets/ami_sdm/versions/asr-20261014-punc-20261102/record_index/index.json
+    expected_bytes: 742
+    sha256: 49da4ec70042ceb4959be1f386f76ae8903081f947bdc99eca15401488e9f415
+    metadata:
+      snapshot_version: 13
+      rows: 85414
+      schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
+  splits:
+    train:
+      group: train
+      artifacts:
+        records:
+        - train_records_punc
+        audio_index:
+        - audio_index
+        preparation_state:
+        - preparation_state
+        records_lance:
+        - record_index
+      statistics:
+        records: 85414
+      provenance:
+        preparation_status: prepared
+  provenance:
+    preparation_status: prepared
+    owner: mingdong
+    description: ami_sdm@asr-20261014 的 train，目标文本加书面化标点：中文用 amphiondata 的中文学生模型（punc-student-v1，不带听音提示），英文用英文规范 en-v1 的学生模型（加标点并恢复大小写）；标点按字 / 按词搬回原文，原文的字词不变，找不到输出的目标保留原样。其余字段与源版本相同，音频引用源版本。
+    source: ami_sdm@asr-20261014
+- schema_version: dataset-catalog/2.0
+  dataset_id: ami_sdm
+  version: turn-taking-20261014-utts-punc-20261102
+  languages:
+  - zh
+  tasks:
+  - ts_asr
+  aliases: []
+  derived_from: ami_sdm@turn-taking-20261014-utts
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/ami_sdm/versions/turn-taking-20261014-utts-punc-20261102/state.json
+  - name: train_2spk_records_punc
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/ami_sdm/versions/turn-taking-20261014-utts-punc-20261102/records/records_train_2spk.jsonl.gz
+    expected_bytes: 1300347
+    sha256: a18a2c5cec7845c0bea89e19cfd44c0452b4600364387ad72e3b75006944dae9
+    metadata:
+      record_count: 5081
+      punctuated: true
+      source: datasets/ami_sdm/versions/turn-taking-20261014-utts/records_train_2spk.jsonl.gz
+  - name: train_2spk-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/ami_sdm/versions/turn-taking-20261014-utts/audio_index_train_2spk.jsonl.gz
+    sha256: 691399b39176f958e6d0f96793714d731a7878e38c7272d1cba2e9925b7c2954
+    metadata:
+      record_count: 144
+  - name: train_3spk_records_punc
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/ami_sdm/versions/turn-taking-20261014-utts-punc-20261102/records/records_train_3spk.jsonl.gz
+    expected_bytes: 4573525
+    sha256: c9bbd7c94b1f2958f068c35ecd7fb1739175a13aec4c648062d7b58b78928b7a
+    metadata:
+      record_count: 23853
+      punctuated: true
+      source: datasets/ami_sdm/versions/turn-taking-20261014-utts/records_train_3spk.jsonl.gz
+  - name: train_3spk-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/ami_sdm/versions/turn-taking-20261014-utts/audio_index_train_3spk.jsonl.gz
+    sha256: ee0025ec85cf16927d469c7f75612efbcab45161a265f97a66e36a4013975a3b
+    metadata:
+      record_count: 144
+  - name: train_neg_records_punc
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/ami_sdm/versions/turn-taking-20261014-utts-punc-20261102/records/records_train_neg.jsonl.gz
+    expected_bytes: 2372279
+    sha256: 25e10d739124a2b2a6f09bf19ab76e61e200766f44e662e1ac7fd44868d1e577
+    metadata:
+      record_count: 13117
+      punctuated: true
+      source: datasets/ami_sdm/versions/turn-taking-20261014-utts/records_train_neg.jsonl.gz
+  - name: train_neg-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/ami_sdm/versions/turn-taking-20261014-utts/audio_index_train_neg.jsonl.gz
+    sha256: 4cc12452fab80397f606ec16290b6e6e21e5f92ea3fd4a43957dc4df47354033
+    metadata:
+      record_count: 144
+  - name: record_index
+    kind: lance-record-index
+    root_alias: aidc_data
+    relative_path: datasets/ami_sdm/versions/turn-taking-20261014-utts-punc-20261102/record_index/index.json
+    expected_bytes: 1488
+    sha256: 2db005bf371b302994188f8292985cfc466fcd88c982a5a0ce4af1d48f6f1019
+    metadata:
+      snapshot_version: 13
+      rows: 42051
+      schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
+  splits:
+    train_2spk:
+      task: ts_asr
+      artifacts:
+        records:
+        - train_2spk_records_punc
+        audio_index:
+        - train_2spk-audio-index
+        preparation_state:
+        - preparation_state
+        records_lance:
+        - record_index
+      statistics:
+        records: 5081
+      provenance:
+        preparation_status: prepared
+    train_3spk:
+      task: ts_asr
+      artifacts:
+        records:
+        - train_3spk_records_punc
+        audio_index:
+        - train_3spk-audio-index
+        preparation_state:
+        - preparation_state
+        records_lance:
+        - record_index
+      statistics:
+        records: 23853
+      provenance:
+        preparation_status: prepared
+    train_neg:
+      task: ts_asr
+      artifacts:
+        records:
+        - train_neg_records_punc
+        audio_index:
+        - train_neg-audio-index
+        preparation_state:
+        - preparation_state
+        records_lance:
+        - record_index
+      statistics:
+        records: 13117
+      provenance:
+        preparation_status: prepared
+  provenance:
+    preparation_status: prepared
+    owner: mingdong
+    description: ami_sdm@turn-taking-20261014-utts 的 train_2spk, train_3spk, train_neg，目标文本加书面化标点：中文用 amphiondata 的中文学生模型（punc-student-v1，不带听音提示），英文用英文规范 en-v1 的学生模型（加标点并恢复大小写）；标点按字 / 按词搬回原文，原文的字词不变，找不到输出的目标保留原样。其余字段与源版本相同，音频引用源版本。
+    source: ami_sdm@turn-taking-20261014-utts
+- schema_version: dataset-catalog/2.0
+  dataset_id: librimix
+  version: 960-current-audio-record-20260910-punc-20261102
+  languages:
+  - en
+  tasks:
+  - ts_asr
+  aliases: []
+  derived_from: librimix@960-current-audio-record-20260910
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/librimix/versions/960-current-audio-record-20260910-punc-20261102/state.json
+  - name: train_1spk_records_punc
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/librimix/versions/960-current-audio-record-20260910-punc-20261102/records/train_1spk.jsonl.gz
+    expected_bytes: 45612044
+    sha256: 805686a61c14c4fb575eb845761532834480ed98f9a87f27a375a791c494c3f1
+    metadata:
+      record_count: 273541
+      punctuated: true
+      source: datasets/librimix/versions/960-current-audio-record-20260910/train_1spk/train_1spk.jsonl.gz
+  - expected_bytes: 56266486
+    kind: audio-index
+    metadata:
+      record_count: 836599
+    name: audio_index
+    relative_path: datasets/librimix/versions/960-current-audio-record-20260910/audio_index/audio-index.jsonl.gz
+    root_alias: aidc_data
+    sha256: 580029cb4604dc5855cbf660a19273cbfb2c240d6e0c0d77830ab980b1400e90
+  - name: train_2spk_records_punc
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/librimix/versions/960-current-audio-record-20260910-punc-20261102/records/train_2spk.jsonl.gz
+    expected_bytes: 103821484
+    sha256: 21afcb323adf7f896ca559a5a7a5f5f0b3dd222a21c92f41cebe29d886842bc3
+    metadata:
+      record_count: 543842
+      punctuated: true
+      source: datasets/librimix/versions/960-current-audio-record-20260910/train_2spk/train_2spk.jsonl.gz
+  - name: train_3spk_records_punc
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/librimix/versions/960-current-audio-record-20260910-punc-20261102/records/train_3spk.jsonl.gz
+    expected_bytes: 150251376
+    sha256: 4c36400b8b1c423d3c38fc674a095d3923445dec576b22ddb1c4c8e4670c8e4e
+    metadata:
+      record_count: 812217
+      punctuated: true
+      source: datasets/librimix/versions/960-current-audio-record-20260910/train_3spk/train_3spk.jsonl.gz
+  - name: train_neg_records_punc
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/librimix/versions/960-current-audio-record-20260910-punc-20261102/records/train_neg.jsonl.gz
+    expected_bytes: 10195227
+    sha256: 26c236099071a9bee219307e9535df835345021af65555e689aff75ba780825a
+    metadata:
+      record_count: 82020
+      punctuated: true
+      source: datasets/librimix/versions/960-current-audio-record-20260910/train_neg/train_neg.jsonl.gz
+  - name: record_index
+    kind: lance-record-index
+    root_alias: aidc_data
+    relative_path: datasets/librimix/versions/960-current-audio-record-20260910-punc-20261102/record_index/index.json
+    expected_bytes: 1356
+    sha256: 83ce5dd48b9b903b4a66a0bc8c075563b4cad9b65f425c453606eea4bf65f0c9
+    metadata:
+      snapshot_version: 13
+      rows: 1711620
+      schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
+  splits:
+    train_1spk:
+      group: train
+      artifacts:
+        audio_index:
+        - audio_index
+        records:
+        - train_1spk_records_punc
+        preparation_state:
+        - preparation_state
+        records_lance:
+        - record_index
+      statistics:
+        records: 273541
+      provenance:
+        preparation_status: prepared
+    train_2spk:
+      group: train
+      artifacts:
+        audio_index:
+        - audio_index
+        records:
+        - train_2spk_records_punc
+        preparation_state:
+        - preparation_state
+        records_lance:
+        - record_index
+      statistics:
+        records: 543842
+      provenance:
+        preparation_status: prepared
+    train_3spk:
+      group: train
+      artifacts:
+        audio_index:
+        - audio_index
+        records:
+        - train_3spk_records_punc
+        preparation_state:
+        - preparation_state
+        records_lance:
+        - record_index
+      statistics:
+        records: 812217
+      provenance:
+        preparation_status: prepared
+    train_neg:
+      group: train
+      artifacts:
+        audio_index:
+        - audio_index
+        records:
+        - train_neg_records_punc
+        preparation_state:
+        - preparation_state
+        records_lance:
+        - record_index
+      statistics:
+        records: 82020
+      provenance:
+        preparation_status: prepared
+  provenance:
+    preparation_status: prepared
+    owner: mingdong
+    description: librimix@960-current-audio-record-20260910 的 train_1spk, train_2spk, train_3spk, train_neg，目标文本加书面化标点：中文用 amphiondata 的中文学生模型（punc-student-v1，不带听音提示），英文用英文规范 en-v1 的学生模型（加标点并恢复大小写）；标点按字 / 按词搬回原文，原文的字词不变，找不到输出的目标保留原样。其余字段与源版本相同，音频引用源版本。
+    source: librimix@960-current-audio-record-20260910
+- schema_version: dataset-catalog/2.0
+  dataset_id: ts_real_train
+  version: en-v1-20261101-utts-punc-20261102
+  languages:
+  - en
+  tasks:
+  - ts_asr
+  aliases: []
+  derived_from: ts_real_train@en-v1-20261101-utts
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/ts_real_train/versions/en-v1-20261101-utts-punc-20261102/state.json
+  - name: ami_records_punc
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/ts_real_train/versions/en-v1-20261101-utts-punc-20261102/records/records_ami.jsonl.gz
+    expected_bytes: 5891912
+    sha256: 67b7c4751508737430ee108628c20f05733c9e16dbe3857dfbb8c0a59ac13be8
+    metadata:
+      record_count: 24054
+      punctuated: true
+      source: datasets/ts_real_train/versions/en-v1-20261101-utts/records_ami.jsonl.gz
+  - name: ami-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_real_train/versions/en-v1-20261101-utts/audio_index_ami.jsonl.gz
+    sha256: c77604cbba35e6a9f72178a5ca3398078c354f914aebbcbcf1520cf37b3377ff
+    metadata:
+      record_count: 134
+  - name: dipco_records_punc
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/ts_real_train/versions/en-v1-20261101-utts-punc-20261102/records/records_dipco.jsonl.gz
+    expected_bytes: 79779
+    sha256: 89fecb4af02fa1bc1716a5381231ee22e5bae7741afa1190768be9644b6190a6
+    metadata:
+      record_count: 432
+      punctuated: true
+      source: datasets/ts_real_train/versions/en-v1-20261101-utts/records_dipco.jsonl.gz
+  - name: dipco-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_real_train/versions/en-v1-20261101-utts/audio_index_dipco.jsonl.gz
+    sha256: a8937ae3203977ccecbb19ac2cd5fb0ff4bcc85c5979af8924581c4374c43af5
+    metadata:
+      record_count: 5
+  - name: record_index
+    kind: lance-record-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_real_train/versions/en-v1-20261101-utts-punc-20261102/record_index/index.json
+    expected_bytes: 1096
+    sha256: d0eee5e8ccdb76aa5441b57c138aca8cb9f9450e2e416f9fe7df107f69d0c246
+    metadata:
+      snapshot_version: 13
+      rows: 24486
+      schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
+  splits:
+    ami:
+      task: ts_asr
+      artifacts:
+        records:
+        - ami_records_punc
+        audio_index:
+        - ami-audio-index
+        preparation_state:
+        - preparation_state
+        records_lance:
+        - record_index
+      statistics:
+        records: 24054
+      provenance:
+        preparation_status: prepared
+    dipco:
+      task: ts_asr
+      artifacts:
+        records:
+        - dipco_records_punc
+        audio_index:
+        - dipco-audio-index
+        preparation_state:
+        - preparation_state
+        records_lance:
+        - record_index
+      statistics:
+        records: 432
+      provenance:
+        preparation_status: prepared
+  provenance:
+    preparation_status: prepared
+    owner: mingdong
+    description: ts_real_train@en-v1-20261101-utts 的 ami, dipco，目标文本加书面化标点：中文用 amphiondata 的中文学生模型（punc-student-v1，不带听音提示），英文用英文规范 en-v1 的学生模型（加标点并恢复大小写）；标点按字 / 按词搬回原文，原文的字词不变，找不到输出的目标保留原样。其余字段与源版本相同，音频引用源版本。
+    source: ts_real_train@en-v1-20261101-utts
+- schema_version: dataset-catalog/2.0
+  dataset_id: aishell4
+  version: asr-20261014-punc-20261102
+  languages:
+  - zh
+  tasks:
+  - asr
+  aliases: []
+  derived_from: aishell4@asr-20261014
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/aishell4/versions/asr-20261014-punc-20261102/state.json
+  - name: train_records_punc
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/aishell4/versions/asr-20261014-punc-20261102/records/train.jsonl.gz
+    expected_bytes: 4624028
+    sha256: a9aa3f2e35d6f303e0b4db595ae903a82d4e14953aec590b242d7df6db6d80a7
+    metadata:
+      record_count: 96999
+      punctuated: true
+      source: datasets/aishell4/versions/asr-20261014/records/train.jsonl.gz
+  - name: audio_index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/aishell4/versions/asr-20261014/audio_index/audio-index.jsonl.gz
+    expected_bytes: 13978
+    sha256: 7740f79f34264edad30ceefa593cf078be42e3c6100384217d7d1ef37f5333f5
+    metadata:
+      record_count: 209
+  - name: record_index
+    kind: lance-record-index
+    root_alias: aidc_data
+    relative_path: datasets/aishell4/versions/asr-20261014-punc-20261102/record_index/index.json
+    expected_bytes: 743
+    sha256: 64114eae3eb4eff4ca2b967a9e0e108413cb134a9df1bc11e68a42e04b17eb9f
+    metadata:
+      snapshot_version: 13
+      rows: 96999
+      schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
+  splits:
+    train:
+      group: train
+      artifacts:
+        records:
+        - train_records_punc
+        audio_index:
+        - audio_index
+        preparation_state:
+        - preparation_state
+        records_lance:
+        - record_index
+      statistics:
+        records: 96999
+      provenance:
+        preparation_status: prepared
+  provenance:
+    preparation_status: prepared
+    owner: mingdong
+    description: aishell4@asr-20261014 的 train，目标文本加书面化标点：中文用 amphiondata 的中文学生模型（punc-student-v1，不带听音提示），英文用英文规范 en-v1 的学生模型（加标点并恢复大小写）；标点按字 / 按词搬回原文，原文的字词不变，找不到输出的目标保留原样。其余字段与源版本相同，音频引用源版本。
+    source: aishell4@asr-20261014
+- schema_version: dataset-catalog/2.0
+  dataset_id: aishell4
+  version: turn-taking-20261014-utts-punc-20261102
+  languages:
+  - zh
+  tasks:
+  - ts_asr
+  aliases: []
+  derived_from: aishell4@turn-taking-20261014-utts
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/aishell4/versions/turn-taking-20261014-utts-punc-20261102/state.json
+  - name: train_2spk_records_punc
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/aishell4/versions/turn-taking-20261014-utts-punc-20261102/records/records_train_2spk.jsonl.gz
+    expected_bytes: 2285648
+    sha256: 6130143f02c3fc5ed83757c36b08f1767ab55582b9e9313a9050616eee26df51
+    metadata:
+      record_count: 10506
+      punctuated: true
+      source: datasets/aishell4/versions/turn-taking-20261014-utts/records_train_2spk.jsonl.gz
+  - name: train_2spk-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/aishell4/versions/turn-taking-20261014-utts/audio_index_train_2spk.jsonl.gz
+    sha256: 1fe6171ad0e2620923fe8557dfa293a7eb97ec5f19d3735862904e0f6c458851
+    metadata:
+      record_count: 189
+  - name: train_3spk_records_punc
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/aishell4/versions/turn-taking-20261014-utts-punc-20261102/records/records_train_3spk.jsonl.gz
+    expected_bytes: 3746147
+    sha256: e682b8249278e33e912368b64c74b0a8ef0ccd15ab46622a384b07f19d44fa78
+    metadata:
+      record_count: 21925
+      punctuated: true
+      source: datasets/aishell4/versions/turn-taking-20261014-utts/records_train_3spk.jsonl.gz
+  - name: train_3spk-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/aishell4/versions/turn-taking-20261014-utts/audio_index_train_3spk.jsonl.gz
+    sha256: ba3f767a1ad813be7b61c200dbfd116b37c7ffedcdfccc9330c00e66233d36ff
+    metadata:
+      record_count: 189
+  - name: train_neg_records_punc
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/aishell4/versions/turn-taking-20261014-utts-punc-20261102/records/records_train_neg.jsonl.gz
+    expected_bytes: 3874532
+    sha256: f8216d2139252baecd678737bdfaae4c12e914202afa0bed04374bb07e68ec40
+    metadata:
+      record_count: 14128
+      punctuated: true
+      source: datasets/aishell4/versions/turn-taking-20261014-utts/records_train_neg.jsonl.gz
+  - name: train_neg-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/aishell4/versions/turn-taking-20261014-utts/audio_index_train_neg.jsonl.gz
+    sha256: a3eaaa7d6855fae876dc08763e32232b0c10c1e7dc17692a05dd0919a17c438b
+    metadata:
+      record_count: 189
+  - name: record_index
+    kind: lance-record-index
+    root_alias: aidc_data
+    relative_path: datasets/aishell4/versions/turn-taking-20261014-utts-punc-20261102/record_index/index.json
+    expected_bytes: 1490
+    sha256: 754cfb042130574a216f18357e553775117c7d4dbe312c50f4d32f5cedf84798
+    metadata:
+      snapshot_version: 13
+      rows: 46559
+      schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
+  splits:
+    train_2spk:
+      task: ts_asr
+      artifacts:
+        records:
+        - train_2spk_records_punc
+        audio_index:
+        - train_2spk-audio-index
+        preparation_state:
+        - preparation_state
+        records_lance:
+        - record_index
+      statistics:
+        records: 10506
+      provenance:
+        preparation_status: prepared
+    train_3spk:
+      task: ts_asr
+      artifacts:
+        records:
+        - train_3spk_records_punc
+        audio_index:
+        - train_3spk-audio-index
+        preparation_state:
+        - preparation_state
+        records_lance:
+        - record_index
+      statistics:
+        records: 21925
+      provenance:
+        preparation_status: prepared
+    train_neg:
+      task: ts_asr
+      artifacts:
+        records:
+        - train_neg_records_punc
+        audio_index:
+        - train_neg-audio-index
+        preparation_state:
+        - preparation_state
+        records_lance:
+        - record_index
+      statistics:
+        records: 14128
+      provenance:
+        preparation_status: prepared
+  provenance:
+    preparation_status: prepared
+    owner: mingdong
+    description: aishell4@turn-taking-20261014-utts 的 train_2spk, train_3spk, train_neg，目标文本加书面化标点：中文用 amphiondata 的中文学生模型（punc-student-v1，不带听音提示），英文用英文规范 en-v1 的学生模型（加标点并恢复大小写）；标点按字 / 按词搬回原文，原文的字词不变，找不到输出的目标保留原样。其余字段与源版本相同，音频引用源版本。
+    source: aishell4@turn-taking-20261014-utts
+- schema_version: dataset-catalog/2.0
+  dataset_id: aishellmix
+  version: pack3-current-audio-record-20260910-punc-20261102
+  languages:
+  - zh
+  tasks:
+  - ts_asr
+  aliases: []
+  derived_from: aishellmix@pack3-current-audio-record-20260910
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/aishellmix/versions/pack3-current-audio-record-20260910-punc-20261102/state.json
+  - name: train_1spk_records_punc
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/aishellmix/versions/pack3-current-audio-record-20260910-punc-20261102/records/train_1spk.jsonl.gz
+    expected_bytes: 47454670
+    sha256: 9bad770e4650a43d2076ed02d96a1b36101509cc42842d495b1b32b01510c7ed
+    metadata:
+      record_count: 326176
+      punctuated: true
+      source: datasets/aishellmix/versions/pack3-current-audio-record-20260910/train_1spk/train_1spk.jsonl.gz
+  - expected_bytes: 59763441
+    kind: audio-index
+    metadata:
+      record_count: 978376
+    name: audio_index
+    relative_path: datasets/aishellmix/versions/pack3-current-audio-record-20260910/audio_index/audio-index.jsonl.gz
+    root_alias: aidc_data
+    sha256: a82663fcc88a6434bde1943ddafe89dafb880e99e3919c6be066fac55bef4aa0
+  - name: train_2spk_records_punc
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/aishellmix/versions/pack3-current-audio-record-20260910-punc-20261102/records/train_2spk.jsonl.gz
+    expected_bytes: 105936051
+    sha256: c463566249ff0e3a08b9edb43f682ae91189895d0f2dbf70ffecd16a415e4e94
+    metadata:
+      record_count: 652200
+      punctuated: true
+      source: datasets/aishellmix/versions/pack3-current-audio-record-20260910/train_2spk/train_2spk.jsonl.gz
+  - name: train_3spk_records_punc
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/aishellmix/versions/pack3-current-audio-record-20260910-punc-20261102/records/train_3spk.jsonl.gz
+    expected_bytes: 152617678
+    sha256: c096ab3e5a47fa84592256d069bdae52cb743a6864ee181e0db3431e3cb8caea
+    metadata:
+      record_count: 978300
+      punctuated: true
+      source: datasets/aishellmix/versions/pack3-current-audio-record-20260910/train_3spk/train_3spk.jsonl.gz
+  - name: train_neg_records_punc
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/aishellmix/versions/pack3-current-audio-record-20260910-punc-20261102/records/train_neg.jsonl.gz
+    expected_bytes: 11007570
+    sha256: 8cf4ee4e9273272751b5405b8aa5ed0f29e426468234a46a0f04854f63429def
+    metadata:
+      record_count: 97830
+      punctuated: true
+      source: datasets/aishellmix/versions/pack3-current-audio-record-20260910/train_neg/train_neg.jsonl.gz
+  - name: record_index
+    kind: lance-record-index
+    root_alias: aidc_data
+    relative_path: datasets/aishellmix/versions/pack3-current-audio-record-20260910-punc-20261102/record_index/index.json
+    expected_bytes: 1360
+    sha256: f349869bec832202e853b115e7446768f60de74c63909d0c43fdc436dca0ee0e
+    metadata:
+      snapshot_version: 13
+      rows: 2054506
+      schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
+  splits:
+    train_1spk:
+      group: train
+      artifacts:
+        audio_index:
+        - audio_index
+        records:
+        - train_1spk_records_punc
+        preparation_state:
+        - preparation_state
+        records_lance:
+        - record_index
+      statistics:
+        records: 326176
+      provenance:
+        preparation_status: prepared
+    train_2spk:
+      group: train
+      artifacts:
+        audio_index:
+        - audio_index
+        records:
+        - train_2spk_records_punc
+        preparation_state:
+        - preparation_state
+        records_lance:
+        - record_index
+      statistics:
+        records: 652200
+      provenance:
+        preparation_status: prepared
+    train_3spk:
+      group: train
+      artifacts:
+        audio_index:
+        - audio_index
+        records:
+        - train_3spk_records_punc
+        preparation_state:
+        - preparation_state
+        records_lance:
+        - record_index
+      statistics:
+        records: 978300
+      provenance:
+        preparation_status: prepared
+    train_neg:
+      group: train
+      artifacts:
+        audio_index:
+        - audio_index
+        records:
+        - train_neg_records_punc
+        preparation_state:
+        - preparation_state
+        records_lance:
+        - record_index
+      statistics:
+        records: 97830
+      provenance:
+        preparation_status: prepared
+  provenance:
+    preparation_status: prepared
+    owner: mingdong
+    description: aishellmix@pack3-current-audio-record-20260910 的 train_1spk, train_2spk, train_3spk, train_neg，目标文本加书面化标点：中文用 amphiondata 的中文学生模型（punc-student-v1，不带听音提示），英文用英文规范 en-v1 的学生模型（加标点并恢复大小写）；标点按字 / 按词搬回原文，原文的字词不变，找不到输出的目标保留原样。其余字段与源版本相同，音频引用源版本。
+    source: aishellmix@pack3-current-audio-record-20260910
+- schema_version: dataset-catalog/2.0
+  dataset_id: alimeeting_sdm
+  version: asr-20261014-punc-20261102
+  languages:
+  - zh
+  tasks:
+  - asr
+  aliases: []
+  derived_from: alimeeting_sdm@asr-20261014
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/alimeeting_sdm/versions/asr-20261014-punc-20261102/state.json
+  - name: train_records_punc
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/alimeeting_sdm/versions/asr-20261014-punc-20261102/records/train.jsonl.gz
+    expected_bytes: 6575329
+    sha256: dc788f8b0fd362f1e42320830f1615b9cdbe8c50eb3f86dc7fa5983707a0ff25
+    metadata:
+      record_count: 152368
+      punctuated: true
+      source: datasets/alimeeting_sdm/versions/asr-20261014/records/train.jsonl.gz
+  - name: audio_index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/alimeeting_sdm/versions/asr-20261014/audio_index/audio-index.jsonl.gz
+    expected_bytes: 16233
+    sha256: 0c787c89ff42b1e074eb4b7a2bce0d71e47a715fde7014bfd4000054ac842b0f
+    metadata:
+      record_count: 237
+  - name: record_index
+    kind: lance-record-index
+    root_alias: aidc_data
+    relative_path: datasets/alimeeting_sdm/versions/asr-20261014-punc-20261102/record_index/index.json
+    expected_bytes: 751
+    sha256: 8e01b57f81fc71058e0830e9850d48a3c9dac062b4758cef53ddab724f5ed6f4
+    metadata:
+      snapshot_version: 13
+      rows: 152368
+      schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
+  splits:
+    train:
+      group: train
+      artifacts:
+        records:
+        - train_records_punc
+        audio_index:
+        - audio_index
+        preparation_state:
+        - preparation_state
+        records_lance:
+        - record_index
+      statistics:
+        records: 152368
+      provenance:
+        preparation_status: prepared
+  provenance:
+    preparation_status: prepared
+    owner: mingdong
+    description: alimeeting_sdm@asr-20261014 的 train，目标文本加书面化标点：中文用 amphiondata 的中文学生模型（punc-student-v1，不带听音提示），英文用英文规范 en-v1 的学生模型（加标点并恢复大小写）；标点按字 / 按词搬回原文，原文的字词不变，找不到输出的目标保留原样。其余字段与源版本相同，音频引用源版本。
+    source: alimeeting_sdm@asr-20261014
+- schema_version: dataset-catalog/2.0
+  dataset_id: alimeeting_sdm
+  version: turn-taking-20261014-utts-punc-20261102
+  languages:
+  - zh
+  tasks:
+  - ts_asr
+  aliases: []
+  derived_from: alimeeting_sdm@turn-taking-20261014-utts
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/alimeeting_sdm/versions/turn-taking-20261014-utts-punc-20261102/state.json
+  - name: train_2spk_records_punc
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/alimeeting_sdm/versions/turn-taking-20261014-utts-punc-20261102/records/records_train_2spk.jsonl.gz
+    expected_bytes: 2421086
+    sha256: 35497694f059c4798fe6463d03f2d43e0c195c353c77c9b7a5319a712075e107
+    metadata:
+      record_count: 10020
+      punctuated: true
+      source: datasets/alimeeting_sdm/versions/turn-taking-20261014-utts/records_train_2spk.jsonl.gz
+  - name: train_2spk-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/alimeeting_sdm/versions/turn-taking-20261014-utts/audio_index_train_2spk.jsonl.gz
+    sha256: f1149f0afcc6f2924cdb89aab5d8a89d7acaa126e1c3ab768f51eef9d215ab25
+    metadata:
+      record_count: 507
+  - name: train_3spk_records_punc
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/alimeeting_sdm/versions/turn-taking-20261014-utts-punc-20261102/records/records_train_3spk.jsonl.gz
+    expected_bytes: 7890983
+    sha256: 7e23867175403d022a63cbb342fa6963e4d929b9bdcccf258d224bfa9d9f9dbe
+    metadata:
+      record_count: 47348
+      punctuated: true
+      source: datasets/alimeeting_sdm/versions/turn-taking-20261014-utts/records_train_3spk.jsonl.gz
+  - name: train_3spk-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/alimeeting_sdm/versions/turn-taking-20261014-utts/audio_index_train_3spk.jsonl.gz
+    sha256: 7c5fb8cf45d1ac7a71467787f0770f782e0e23571d90ee1c63c1edc5e2a759c9
+    metadata:
+      record_count: 558
+  - name: train_neg_records_punc
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/alimeeting_sdm/versions/turn-taking-20261014-utts-punc-20261102/records/records_train_neg.jsonl.gz
+    expected_bytes: 5958978
+    sha256: e62ba72af8bd6e213fee909302244391d5a01ebf7673797307e3cf392cae9b8c
+    metadata:
+      record_count: 26581
+      punctuated: true
+      source: datasets/alimeeting_sdm/versions/turn-taking-20261014-utts/records_train_neg.jsonl.gz
+  - name: train_neg-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/alimeeting_sdm/versions/turn-taking-20261014-utts/audio_index_train_neg.jsonl.gz
+    sha256: d5dc0a09659e09d33709b1b0d2bb252088793afc0e3192863adc45e992f7fd08
+    metadata:
+      record_count: 753
+  - name: record_index
+    kind: lance-record-index
+    root_alias: aidc_data
+    relative_path: datasets/alimeeting_sdm/versions/turn-taking-20261014-utts-punc-20261102/record_index/index.json
+    expected_bytes: 1496
+    sha256: 642bb539d5565d0eb97bacda3ff023d6159ff729e6af20891d1a8beeaf257cf7
+    metadata:
+      snapshot_version: 13
+      rows: 83949
+      schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
+  splits:
+    train_2spk:
+      task: ts_asr
+      artifacts:
+        records:
+        - train_2spk_records_punc
+        audio_index:
+        - train_2spk-audio-index
+        preparation_state:
+        - preparation_state
+        records_lance:
+        - record_index
+      statistics:
+        records: 10020
+      provenance:
+        preparation_status: prepared
+    train_3spk:
+      task: ts_asr
+      artifacts:
+        records:
+        - train_3spk_records_punc
+        audio_index:
+        - train_3spk-audio-index
+        preparation_state:
+        - preparation_state
+        records_lance:
+        - record_index
+      statistics:
+        records: 47348
+      provenance:
+        preparation_status: prepared
+    train_neg:
+      task: ts_asr
+      artifacts:
+        records:
+        - train_neg_records_punc
+        audio_index:
+        - train_neg-audio-index
+        preparation_state:
+        - preparation_state
+        records_lance:
+        - record_index
+      statistics:
+        records: 26581
+      provenance:
+        preparation_status: prepared
+  provenance:
+    preparation_status: prepared
+    owner: mingdong
+    description: alimeeting_sdm@turn-taking-20261014-utts 的 train_2spk, train_3spk, train_neg，目标文本加书面化标点：中文用 amphiondata 的中文学生模型（punc-student-v1，不带听音提示），英文用英文规范 en-v1 的学生模型（加标点并恢复大小写）；标点按字 / 按词搬回原文，原文的字词不变，找不到输出的目标保留原样。其余字段与源版本相同，音频引用源版本。
+    source: alimeeting_sdm@turn-taking-20261014-utts
+- schema_version: dataset-catalog/2.0
+  dataset_id: asr_babble_speech_pool
+  version: v1-20261024-punc-20261102
+  languages:
+  - zh
+  - en
+  tasks:
+  - asr
+  aliases: []
+  derived_from: asr_babble_speech_pool@v1-20261024
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/asr_babble_speech_pool/versions/v1-20261024-punc-20261102/state.json
+  - name: en_records_punc
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/asr_babble_speech_pool/versions/v1-20261024-punc-20261102/records/records_en.jsonl.gz
+    expected_bytes: 1869270
+    sha256: 5a4ff6fc820b86f7a56461b465370ae5da495b96fed5dab26a8335ff21ef0114
+    metadata:
+      record_count: 12000
+      punctuated: true
+      source: datasets/asr_babble_speech_pool/versions/v1-20261024/records_en.jsonl.gz
+  - name: en-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/asr_babble_speech_pool/versions/v1-20261024/audio_index_en.jsonl.gz
+    sha256: 78e9d6676d49f5e41c3694ca4d09e555a4cc7b1ecd92e1c68fbebf42a08b7acf
+    metadata:
+      record_count: 12000
+  - name: zh_records_punc
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/asr_babble_speech_pool/versions/v1-20261024-punc-20261102/records/records_zh.jsonl.gz
+    expected_bytes: 1186886
+    sha256: 68ce9154fd14564f281efd45b7cef26465bec0c8530b8c7510cfb882439f20ea
+    metadata:
+      record_count: 12000
+      punctuated: true
+      source: datasets/asr_babble_speech_pool/versions/v1-20261024/records_zh.jsonl.gz
+  - name: zh-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/asr_babble_speech_pool/versions/v1-20261024/audio_index_zh.jsonl.gz
+    sha256: 44534b20d8e980b6c086c42d078992344ce72b58c626c1e86b49ffa60d9d0e42
+    metadata:
+      record_count: 12000
+  - name: record_index
+    kind: lance-record-index
+    root_alias: aidc_data
+    relative_path: datasets/asr_babble_speech_pool/versions/v1-20261024-punc-20261102/record_index/index.json
+    expected_bytes: 1087
+    sha256: 32d495468d8458cd7d1113fecddbdde4dec77ab4efaf42cdcc84f85d8bb1c812
+    metadata:
+      snapshot_version: 13
+      rows: 24000
+      schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
+  splits:
+    en:
+      task: asr
+      artifacts:
+        records:
+        - en_records_punc
+        audio_index:
+        - en-audio-index
+        preparation_state:
+        - preparation_state
+        records_lance:
+        - record_index
+      statistics:
+        records: 12000
+      provenance:
+        preparation_status: prepared
+    zh:
+      task: asr
+      artifacts:
+        records:
+        - zh_records_punc
+        audio_index:
+        - zh-audio-index
+        preparation_state:
+        - preparation_state
+        records_lance:
+        - record_index
+      statistics:
+        records: 12000
+      provenance:
+        preparation_status: prepared
+  provenance:
+    preparation_status: prepared
+    owner: mingdong
+    description: asr_babble_speech_pool@v1-20261024 的 en, zh，目标文本加书面化标点：中文用 amphiondata 的中文学生模型（punc-student-v1，不带听音提示），英文用英文规范 en-v1 的学生模型（加标点并恢复大小写）；标点按字 / 按词搬回原文，原文的字词不变，找不到输出的目标保留原样。其余字段与源版本相同，音频引用源版本。
+    source: asr_babble_speech_pool@v1-20261024
+- schema_version: dataset-catalog/2.0
+  dataset_id: asr_distant_talk_pool
+  version: v1-20261102-punc-20261102
+  languages:
+  - zh
+  - en
+  tasks:
+  - asr
+  aliases: []
+  derived_from: asr_distant_talk_pool@v1-20261102
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/asr_distant_talk_pool/versions/v1-20261102-punc-20261102/state.json
+  - name: empty_en_records_punc
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/asr_distant_talk_pool/versions/v1-20261102-punc-20261102/records/records_empty_en.jsonl.gz
+    expected_bytes: 262876
+    sha256: aad2456598400893567e0ab06f449b3f0d6cae5a0f0d2e1d9e92e221631f2e68
+    metadata:
+      record_count: 5609
+      punctuated: true
+      source: datasets/asr_distant_talk_pool/versions/v1-20261102/records_empty_en.jsonl.gz
+  - name: empty_en-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/asr_distant_talk_pool/versions/v1-20261102/audio_index_empty_en.jsonl.gz
+    sha256: 64e2bed7d2e9674b98bba633f5cfe688a44290cd9885ec979c44d7f911c76e77
+    metadata:
+      record_count: 5609
+  - name: empty_zh_records_punc
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/asr_distant_talk_pool/versions/v1-20261102-punc-20261102/records/records_empty_zh.jsonl.gz
+    expected_bytes: 572495
+    sha256: 5fee111232cdc17d0092d08cbc83899ef24070f078012f0d9e53c3ce25008781
+    metadata:
+      record_count: 8677
+      punctuated: true
+      source: datasets/asr_distant_talk_pool/versions/v1-20261102/records_empty_zh.jsonl.gz
+  - name: empty_zh-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/asr_distant_talk_pool/versions/v1-20261102/audio_index_empty_zh.jsonl.gz
+    sha256: df11b7a53187d9c00309725053abf21fa308c0bd38d720a5aae197946b917b9f
+    metadata:
+      record_count: 8677
+  - name: text_zh_records_punc
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/asr_distant_talk_pool/versions/v1-20261102-punc-20261102/records/records_text_zh.jsonl.gz
+    expected_bytes: 726743
+    sha256: 1aac12fd2121972da848697bf26b739f53007ce2b27b4e897341e4805e7b88fa
+    metadata:
+      record_count: 4449
+      punctuated: true
+      source: datasets/asr_distant_talk_pool/versions/v1-20261102/records_text_zh.jsonl.gz
+  - name: text_zh-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/asr_distant_talk_pool/versions/v1-20261102/audio_index_text_zh.jsonl.gz
+    sha256: d9b1f3fb796297e278b8609ae1497900d440efcff765e23f786253bfdc8fb6c0
+    metadata:
+      record_count: 4449
+  - name: record_index
+    kind: lance-record-index
+    root_alias: aidc_data
+    relative_path: datasets/asr_distant_talk_pool/versions/v1-20261102-punc-20261102/record_index/index.json
+    expected_bytes: 1468
+    sha256: 42b4159b74ed6b00edd153f0868cedda53c49c97f86a96cbe471568bd276dae2
+    metadata:
+      snapshot_version: 13
+      rows: 18735
+      schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
+  splits:
+    empty_en:
+      task: asr
+      artifacts:
+        records:
+        - empty_en_records_punc
+        audio_index:
+        - empty_en-audio-index
+        preparation_state:
+        - preparation_state
+        records_lance:
+        - record_index
+      statistics:
+        records: 5609
+      provenance:
+        preparation_status: prepared
+    empty_zh:
+      task: asr
+      artifacts:
+        records:
+        - empty_zh_records_punc
+        audio_index:
+        - empty_zh-audio-index
+        preparation_state:
+        - preparation_state
+        records_lance:
+        - record_index
+      statistics:
+        records: 8677
+      provenance:
+        preparation_status: prepared
+    text_zh:
+      task: asr
+      artifacts:
+        records:
+        - text_zh_records_punc
+        audio_index:
+        - text_zh-audio-index
+        preparation_state:
+        - preparation_state
+        records_lance:
+        - record_index
+      statistics:
+        records: 4449
+      provenance:
+        preparation_status: prepared
+  provenance:
+    preparation_status: prepared
+    owner: mingdong
+    description: asr_distant_talk_pool@v1-20261102 的 empty_en, empty_zh, text_zh，目标文本加书面化标点：中文用 amphiondata 的中文学生模型（punc-student-v1，不带听音提示），英文用英文规范 en-v1 的学生模型（加标点并恢复大小写）；标点按字 / 按词搬回原文，原文的字词不变，找不到输出的目标保留原样。其余字段与源版本相同，音频引用源版本。
+    source: asr_distant_talk_pool@v1-20261102
+- schema_version: dataset-catalog/2.0
+  dataset_id: magicdata_ramc
+  version: turn-taking-20261014-utts-punc-20261102
+  languages:
+  - zh
+  tasks:
+  - ts_asr
+  aliases: []
+  derived_from: magicdata_ramc@turn-taking-20261014-utts
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/magicdata_ramc/versions/turn-taking-20261014-utts-punc-20261102/state.json
+  - name: train_2spk_records_punc
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/magicdata_ramc/versions/turn-taking-20261014-utts-punc-20261102/records/records_train_2spk.jsonl.gz
+    expected_bytes: 6676588
+    sha256: d27fbb6c31b11ee509e240325bcc6c4b0cb2d2389ac7fe7b94b8def30e4fdb71
+    metadata:
+      record_count: 29508
+      punctuated: true
+      source: datasets/magicdata_ramc/versions/turn-taking-20261014-utts/records_train_2spk.jsonl.gz
+  - name: train_2spk-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/magicdata_ramc/versions/turn-taking-20261014-utts/audio_index_train_2spk.jsonl.gz
+    sha256: 3ed012e46aead910bb6e1f983ce157737e2f7c73481353b9f53c9094f53c83f2
+    metadata:
+      record_count: 289
+  - name: train_neg_records_punc
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/magicdata_ramc/versions/turn-taking-20261014-utts-punc-20261102/records/records_train_neg.jsonl.gz
+    expected_bytes: 6114146
+    sha256: 5c57b2685b21a80ba46d21540900b6362ef861f274ef1d5d87bc9cec7db6726e
+    metadata:
+      record_count: 15372
+      punctuated: true
+      source: datasets/magicdata_ramc/versions/turn-taking-20261014-utts/records_train_neg.jsonl.gz
+  - name: train_neg-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/magicdata_ramc/versions/turn-taking-20261014-utts/audio_index_train_neg.jsonl.gz
+    sha256: 24461b9424fc48ed70e4c50b9cfd676b56e6bedc1a618bcf6e40fd00114dcd15
+    metadata:
+      record_count: 289
+  - name: record_index
+    kind: lance-record-index
+    root_alias: aidc_data
+    relative_path: datasets/magicdata_ramc/versions/turn-taking-20261014-utts-punc-20261102/record_index/index.json
+    expected_bytes: 1138
+    sha256: 4d10e38fe81711fc51f1a326241f183fdd8cae085329568f524f431c63717864
+    metadata:
+      snapshot_version: 13
+      rows: 44880
+      schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
+  splits:
+    train_2spk:
+      task: ts_asr
+      artifacts:
+        records:
+        - train_2spk_records_punc
+        audio_index:
+        - train_2spk-audio-index
+        preparation_state:
+        - preparation_state
+        records_lance:
+        - record_index
+      statistics:
+        records: 29508
+      provenance:
+        preparation_status: prepared
+    train_neg:
+      task: ts_asr
+      artifacts:
+        records:
+        - train_neg_records_punc
+        audio_index:
+        - train_neg-audio-index
+        preparation_state:
+        - preparation_state
+        records_lance:
+        - record_index
+      statistics:
+        records: 15372
+      provenance:
+        preparation_status: prepared
+  provenance:
+    preparation_status: prepared
+    owner: mingdong
+    description: magicdata_ramc@turn-taking-20261014-utts 的 train_2spk, train_neg，目标文本加书面化标点：中文用 amphiondata 的中文学生模型（punc-student-v1，不带听音提示），英文用英文规范 en-v1 的学生模型（加标点并恢复大小写）；标点按字 / 按词搬回原文，原文的字词不变，找不到输出的目标保留原样。其余字段与源版本相同，音频引用源版本。
+    source: magicdata_ramc@turn-taking-20261014-utts
+- schema_version: dataset-catalog/2.0
+  dataset_id: ts_real_train
+  version: v1-20261017-utts-punc-20261102
+  languages:
+  - zh
+  tasks:
+  - ts_asr
+  aliases: []
+  derived_from: ts_real_train@v1-20261017-utts
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/ts_real_train/versions/v1-20261017-utts-punc-20261102/state.json
+  - name: aishell4_records_punc
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/ts_real_train/versions/v1-20261017-utts-punc-20261102/records/records_aishell4.jsonl.gz
+    expected_bytes: 5611685
+    sha256: 23a9fff413d77af42a2ab1ee12e7f52c445d56bfc89c4f4cd22b588962f3f8ac
+    metadata:
+      record_count: 30012
+      punctuated: true
+      source: datasets/ts_real_train/versions/v1-20261017-utts/records_aishell4.jsonl.gz
+  - name: aishell4-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_real_train/versions/v1-20261017-utts/audio_index_aishell4.jsonl.gz
+    sha256: f674cc794536ff797b3a5394278c6b94f33af434bb1f580f8086526fbac9a68b
+    metadata:
+      record_count: 189
+  - name: alimeeting_records_punc
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/ts_real_train/versions/v1-20261017-utts-punc-20261102/records/records_alimeeting.jsonl.gz
+    expected_bytes: 5562428
+    sha256: 75e179a16fb4d04d8c34e3bc88ce0c7c8c47d51004056b6b35667dd15d2704f7
+    metadata:
+      record_count: 24750
+      punctuated: true
+      source: datasets/ts_real_train/versions/v1-20261017-utts/records_alimeeting.jsonl.gz
+  - name: alimeeting-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_real_train/versions/v1-20261017-utts/audio_index_alimeeting.jsonl.gz
+    sha256: 8331ba8e83f46c3a4dff8449c2959401f45a4981b0e52dde0e3fc61d9d10b6b1
+    metadata:
+      record_count: 209
+  - name: ramc_records_punc
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/ts_real_train/versions/v1-20261017-utts-punc-20261102/records/records_ramc.jsonl.gz
+    expected_bytes: 7015710
+    sha256: 96925f7d1af147c01061655099f6a3241e27eebaea0d2f1e1190f43bf020b57e
+    metadata:
+      record_count: 36648
+      punctuated: true
+      source: datasets/ts_real_train/versions/v1-20261017-utts/records_ramc.jsonl.gz
+  - name: ramc-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_real_train/versions/v1-20261017-utts/audio_index_ramc.jsonl.gz
+    sha256: 464a198c6dee91326e75281474288e2df6546714cd090b20f7663af50e157e2d
+    metadata:
+      record_count: 289
+  - name: record_index
+    kind: lance-record-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_real_train/versions/v1-20261017-utts-punc-20261102/record_index/index.json
+    expected_bytes: 1465
+    sha256: 4875f2d91f59178a1e76278c821c4015358db03953873cf4b8be7d50aa479821
+    metadata:
+      snapshot_version: 13
+      rows: 91410
+      schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
+  splits:
+    aishell4:
+      task: ts_asr
+      artifacts:
+        records:
+        - aishell4_records_punc
+        audio_index:
+        - aishell4-audio-index
+        preparation_state:
+        - preparation_state
+        records_lance:
+        - record_index
+      statistics:
+        records: 30012
+      provenance:
+        preparation_status: prepared
+    alimeeting:
+      task: ts_asr
+      artifacts:
+        records:
+        - alimeeting_records_punc
+        audio_index:
+        - alimeeting-audio-index
+        preparation_state:
+        - preparation_state
+        records_lance:
+        - record_index
+      statistics:
+        records: 24750
+      provenance:
+        preparation_status: prepared
+    ramc:
+      task: ts_asr
+      artifacts:
+        records:
+        - ramc_records_punc
+        audio_index:
+        - ramc-audio-index
+        preparation_state:
+        - preparation_state
+        records_lance:
+        - record_index
+      statistics:
+        records: 36648
+      provenance:
+        preparation_status: prepared
+  provenance:
+    preparation_status: prepared
+    owner: mingdong
+    description: ts_real_train@v1-20261017-utts 的 aishell4, alimeeting, ramc，目标文本加书面化标点：中文用 amphiondata 的中文学生模型（punc-student-v1，不带听音提示），英文用英文规范 en-v1 的学生模型（加标点并恢复大小写）；标点按字 / 按词搬回原文，原文的字词不变，找不到输出的目标保留原样。其余字段与源版本相同，音频引用源版本。
+    source: ts_real_train@v1-20261017-utts
+- schema_version: dataset-catalog/2.0
+  dataset_id: ts_real_train
+  version: v2-20261018-utts-punc-20261102
+  languages:
+  - zh
+  tasks:
+  - ts_asr
+  aliases: []
+  derived_from: ts_real_train@v2-20261018-utts
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/ts_real_train/versions/v2-20261018-utts-punc-20261102/state.json
+  - name: aishell4_records_punc
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/ts_real_train/versions/v2-20261018-utts-punc-20261102/records/records_aishell4.jsonl.gz
+    expected_bytes: 6332996
+    sha256: eb882582a00532b9c449561b886ed3d03d6a3266abb8a699b6ca4fd12c6912ad
+    metadata:
+      record_count: 29918
+      punctuated: true
+      source: datasets/ts_real_train/versions/v2-20261018-utts/records_aishell4.jsonl.gz
+  - name: aishell4-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_real_train/versions/v2-20261018-utts/audio_index_aishell4.jsonl.gz
+    sha256: bf72248e8bb698d6563237617d3f0b4344e5c48a302f315a3f1ab366bd9bdb74
+    metadata:
+      record_count: 189
+  - name: alimeeting_records_punc
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/ts_real_train/versions/v2-20261018-utts-punc-20261102/records/records_alimeeting.jsonl.gz
+    expected_bytes: 11593028
+    sha256: 313a35b90f65a510e289de12e47b6b689eace21b8ca568a96415ea7a449c0d9e
+    metadata:
+      record_count: 42000
+      punctuated: true
+      source: datasets/ts_real_train/versions/v2-20261018-utts/records_alimeeting.jsonl.gz
+  - name: alimeeting-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_real_train/versions/v2-20261018-utts/audio_index_alimeeting.jsonl.gz
+    sha256: 4c0cd59413a466db35c577a65acd3d2488328454ab7c8fb3bbc6e50088abd2e8
+    metadata:
+      record_count: 209
+  - name: record_index
+    kind: lance-record-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_real_train/versions/v2-20261018-utts-punc-20261102/record_index/index.json
+    expected_bytes: 1125
+    sha256: 86becd2c47992dc457b791073e2914f6eff8fee2199a99361ddfe086e24b66e1
+    metadata:
+      snapshot_version: 13
+      rows: 71918
+      schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
+  splits:
+    aishell4:
+      task: ts_asr
+      artifacts:
+        records:
+        - aishell4_records_punc
+        audio_index:
+        - aishell4-audio-index
+        preparation_state:
+        - preparation_state
+        records_lance:
+        - record_index
+      statistics:
+        records: 29918
+      provenance:
+        preparation_status: prepared
+    alimeeting:
+      task: ts_asr
+      artifacts:
+        records:
+        - alimeeting_records_punc
+        audio_index:
+        - alimeeting-audio-index
+        preparation_state:
+        - preparation_state
+        records_lance:
+        - record_index
+      statistics:
+        records: 42000
+      provenance:
+        preparation_status: prepared
+  provenance:
+    preparation_status: prepared
+    owner: mingdong
+    description: ts_real_train@v2-20261018-utts 的 aishell4, alimeeting，目标文本加书面化标点：中文用 amphiondata 的中文学生模型（punc-student-v1，不带听音提示），英文用英文规范 en-v1 的学生模型（加标点并恢复大小写）；标点按字 / 按词搬回原文，原文的字词不变，找不到输出的目标保留原样。其余字段与源版本相同，音频引用源版本。
+    source: ts_real_train@v2-20261018-utts
+- schema_version: dataset-catalog/2.0
+  dataset_id: ts_real_train
+  version: v3-20261020-utts-punc-20261102
+  languages:
+  - zh
+  tasks:
+  - ts_asr
+  aliases: []
+  derived_from: ts_real_train@v3-20261020-utts
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/ts_real_train/versions/v3-20261020-utts-punc-20261102/state.json
+  - name: alimeeting_en_mf_records_punc
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/ts_real_train/versions/v3-20261020-utts-punc-20261102/records/records_alimeeting_en_mf.jsonl.gz
+    expected_bytes: 4628112
+    sha256: 3eed4d641861f50a1bb5c5725586476e3405c172d502de32b60a2645088fec81
+    metadata:
+      record_count: 24840
+      punctuated: true
+      source: datasets/ts_real_train/versions/v3-20261020-utts/records_alimeeting_en_mf.jsonl.gz
+  - name: alimeeting_en_mf-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_real_train/versions/v3-20261020-utts/audio_index_alimeeting_en_mf.jsonl.gz
+    sha256: c85eba2de105b41b418b60eb7c9adb8ddf2b55736e4855cb821ff220e429eb71
+    metadata:
+      record_count: 848
+  - name: alimeeting_en_mn_records_punc
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/ts_real_train/versions/v3-20261020-utts-punc-20261102/records/records_alimeeting_en_mn.jsonl.gz
+    expected_bytes: 4625229
+    sha256: 52e9a48079135e06a11de82da14dde4781c3bf169404d5be37936a11a4bbf08e
+    metadata:
+      record_count: 24762
+      punctuated: true
+      source: datasets/ts_real_train/versions/v3-20261020-utts/records_alimeeting_en_mn.jsonl.gz
+  - name: alimeeting_en_mn-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_real_train/versions/v3-20261020-utts/audio_index_alimeeting_en_mn.jsonl.gz
+    sha256: 80e094458557d92cb8c9a801c965338fd581f4b5200f6b0ed136247325a2db0c
+    metadata:
+      record_count: 639
+  - name: emilia2_1spk_records_punc
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/ts_real_train/versions/v3-20261020-utts-punc-20261102/records/records_emilia2_1spk.jsonl.gz
+    expected_bytes: 5916458
+    sha256: 9001e568aa84fa82a3bd6a0efb9ef797ce32d194df874b89a99c9a2be69950ae
+    metadata:
+      record_count: 29550
+      punctuated: true
+      source: datasets/ts_real_train/versions/v3-20261020-utts/records_emilia2_1spk.jsonl.gz
+  - name: emilia2_1spk-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_real_train/versions/v3-20261020-utts/audio_index_emilia2_1spk.jsonl.gz
+    sha256: 6f826c6decfbe87a712afab7dce4fe3cacebf546a5d9e82d6101041cd14f886c
+    metadata:
+      record_count: 11149
+  - name: record_index
+    kind: lance-record-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_real_train/versions/v3-20261020-utts-punc-20261102/record_index/index.json
+    expected_bytes: 1531
+    sha256: 28fc97f24dc3803588c98131dcdfdfa88796ee87ae0b5d7e9cb52313464fdf2e
+    metadata:
+      snapshot_version: 13
+      rows: 79152
+      schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
+  splits:
+    alimeeting_en_mf:
+      task: ts_asr
+      artifacts:
+        records:
+        - alimeeting_en_mf_records_punc
+        audio_index:
+        - alimeeting_en_mf-audio-index
+        preparation_state:
+        - preparation_state
+        records_lance:
+        - record_index
+      statistics:
+        records: 24840
+      provenance:
+        preparation_status: prepared
+    alimeeting_en_mn:
+      task: ts_asr
+      artifacts:
+        records:
+        - alimeeting_en_mn_records_punc
+        audio_index:
+        - alimeeting_en_mn-audio-index
+        preparation_state:
+        - preparation_state
+        records_lance:
+        - record_index
+      statistics:
+        records: 24762
+      provenance:
+        preparation_status: prepared
+    emilia2_1spk:
+      task: ts_asr
+      artifacts:
+        records:
+        - emilia2_1spk_records_punc
+        audio_index:
+        - emilia2_1spk-audio-index
+        preparation_state:
+        - preparation_state
+        records_lance:
+        - record_index
+      statistics:
+        records: 29550
+      provenance:
+        preparation_status: prepared
+  provenance:
+    preparation_status: prepared
+    owner: mingdong
+    description: ts_real_train@v3-20261020-utts 的 alimeeting_en_mf, alimeeting_en_mn, emilia2_1spk，目标文本加书面化标点：中文用 amphiondata 的中文学生模型（punc-student-v1，不带听音提示），英文用英文规范 en-v1 的学生模型（加标点并恢复大小写）；标点按字 / 按词搬回原文，原文的字词不变，找不到输出的目标保留原样。其余字段与源版本相同，音频引用源版本。
+    source: ts_real_train@v3-20261020-utts
