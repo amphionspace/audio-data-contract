@@ -1900,3 +1900,1971 @@
     - fsd50k@zenodo-4060432-20261013:eval
     - asr_babble_bench@v2-20261023:babble-zh
     - mit_ir_survey@flac16k-20261026:all
+- schema_version: dataset-catalog/2.0
+  dataset_id: police_scene_bench
+  version: external-v1-20261029
+  languages:
+  - zh
+  tasks:
+  - asr
+  - asr_hotwords
+  - speaker_attributed_asr
+  - ts_asr
+  artifacts:
+  - name: audio-index
+    kind: audio-index
+    root_alias: police_scene_bench
+    relative_path: versions/external-v1-20261029/audio-index.jsonl.gz
+    sha256: 85e161dee3ee3be22b7bdea8c67e423baeabeac96ac78b7c65f9c97bd547da56
+    metadata:
+      record_count: 8404
+  - name: asr-quiet-interview-records
+    kind: audio-records
+    root_alias: police_scene_bench
+    relative_path: versions/external-v1-20261029/records/asr-quiet-interview.jsonl.gz
+    sha256: 96a75d9c7a3054c71ae9fe77968be6e25f793c4c3bcae4437223ffbefdeb2c70
+    metadata:
+      record_count: 22
+  - name: asr-quiet-discussion-records
+    kind: audio-records
+    root_alias: police_scene_bench
+    relative_path: versions/external-v1-20261029/records/asr-quiet-discussion.jsonl.gz
+    sha256: 84464994530687ada736826a730723c70bae11c2ed573d0937acfccb08759390
+    metadata:
+      record_count: 12
+  - name: asr-quiet-reception-records
+    kind: audio-records
+    root_alias: police_scene_bench
+    relative_path: versions/external-v1-20261029/records/asr-quiet-reception.jsonl.gz
+    sha256: bff3c4cd313358e1fe189a25b7071d4b3a2b396029465488e7d7414d4c220b67
+    metadata:
+      record_count: 21
+  - name: asr-quiet-dictation-records
+    kind: audio-records
+    root_alias: police_scene_bench
+    relative_path: versions/external-v1-20261029/records/asr-quiet-dictation.jsonl.gz
+    sha256: dd698c5c7ddbd9239a8f72045cd9f2d51a8d031ef59e1e4e8ec824ab5b350de6
+    metadata:
+      record_count: 12
+  - name: asr-quiet-command-records
+    kind: audio-records
+    root_alias: police_scene_bench
+    relative_path: versions/external-v1-20261029/records/asr-quiet-command.jsonl.gz
+    sha256: 98166b4635407b9a5b46bf0e51840ac94d41995d2dfdadee660c657120cee86a
+    metadata:
+      record_count: 83
+  - name: asr-light-car-command-records
+    kind: audio-records
+    root_alias: police_scene_bench
+    relative_path: versions/external-v1-20261029/records/asr-light-car-command.jsonl.gz
+    sha256: 651a69c08d9051715891f622766a4f3d46a1b429453f4706722b6a986ba3ec67
+    metadata:
+      record_count: 93
+  - name: asr-light-home-law-records
+    kind: audio-records
+    root_alias: police_scene_bench
+    relative_path: versions/external-v1-20261029/records/asr-light-home-law.jsonl.gz
+    sha256: 052db90e4e1eb43f86e8c0f7a16e8c6be137aea448b1dabd3e2d00734dc1ade6
+    metadata:
+      record_count: 92
+  - name: asr-medium-street-idcheck-records
+    kind: audio-records
+    root_alias: police_scene_bench
+    relative_path: versions/external-v1-20261029/records/asr-medium-street-idcheck.jsonl.gz
+    sha256: 0edcce0ea243542a49fbadc34f465f21c0b1809624f4c51146f03561de94c6d5
+    metadata:
+      record_count: 89
+  - name: asr-medium-accident-mark-records
+    kind: audio-records
+    root_alias: police_scene_bench
+    relative_path: versions/external-v1-20261029/records/asr-medium-accident-mark.jsonl.gz
+    sha256: 31b1b3c02a8e451c37798acb878af31c6b4c95c9083bc834e6cb02072c2c6d03
+    metadata:
+      record_count: 93
+  - name: asr-medium-shop-record-records
+    kind: audio-records
+    root_alias: police_scene_bench
+    relative_path: versions/external-v1-20261029/records/asr-medium-shop-record.jsonl.gz
+    sha256: c1c48222712ba1e551c1f9fd074ba5114c9462a71a61bd7231ba3544a290eb43
+    metadata:
+      record_count: 80
+  - name: asr-medium-visit-idcheck-records
+    kind: audio-records
+    root_alias: police_scene_bench
+    relative_path: versions/external-v1-20261029/records/asr-medium-visit-idcheck.jsonl.gz
+    sha256: 738381b9702da739524295a10e2d94ec7c24638fd580bb4816f36dc3a1e7dd21
+    metadata:
+      record_count: 95
+  - name: asr-medium-command-records
+    kind: audio-records
+    root_alias: police_scene_bench
+    relative_path: versions/external-v1-20261029/records/asr-medium-command.jsonl.gz
+    sha256: 9f9428940388cba949a5ca58bd883abaaa1cdd11468a681db8a77a63d669461d
+    metadata:
+      record_count: 94
+  - name: asr-heavy-crowd-records
+    kind: audio-records
+    root_alias: police_scene_bench
+    relative_path: versions/external-v1-20261029/records/asr-heavy-crowd.jsonl.gz
+    sha256: 6295d73fb1195cdc467ba5bc02406bef6c03d9770511bc012979c856e024bcfb
+    metadata:
+      record_count: 100
+  - name: asr-heavy-construction-wind-records
+    kind: audio-records
+    root_alias: police_scene_bench
+    relative_path: versions/external-v1-20261029/records/asr-heavy-construction-wind.jsonl.gz
+    sha256: a162dac501648083e4828ba6951bc98d91604aa4e0d5af7e5200aa0f5192bc33
+    metadata:
+      record_count: 100
+  - name: asr-extreme-emergency-records
+    kind: audio-records
+    root_alias: police_scene_bench
+    relative_path: versions/external-v1-20261029/records/asr-extreme-emergency.jsonl.gz
+    sha256: 240f8c85e2a2c91f4f2d69180f3bef9179f8f7e63306d2a41773097a470dfb63
+    metadata:
+      record_count: 100
+  - name: term-quiet-interrogation-records
+    kind: audio-records
+    root_alias: police_scene_bench
+    relative_path: versions/external-v1-20261029/records/term-quiet-interrogation.jsonl.gz
+    sha256: 13718e905d7af2fb86d7172b9f289701872f034b5badbaa76abec2d12b1003f6
+    metadata:
+      record_count: 87
+  - name: term-quiet-interrogation-hw300-records
+    kind: audio-records
+    root_alias: police_scene_bench
+    relative_path: versions/external-v1-20261029/records/term-quiet-interrogation-hw300.jsonl.gz
+    sha256: 3e39c62770d0ac7152936661bbe0019c3a1fd74a39ba87ff4fd68eec76f440bc
+    metadata:
+      record_count: 100
+  - name: term-light-car-records
+    kind: audio-records
+    root_alias: police_scene_bench
+    relative_path: versions/external-v1-20261029/records/term-light-car.jsonl.gz
+    sha256: 3ee251e49b914f66dc0f3e7bb3cd421a115eb11a47bd1967a0b5f1606b363462
+    metadata:
+      record_count: 94
+  - name: term-light-car-hw300-records
+    kind: audio-records
+    root_alias: police_scene_bench
+    relative_path: versions/external-v1-20261029/records/term-light-car-hw300.jsonl.gz
+    sha256: a2a41270a46a10c912a1e490820bf8973a36a93bc96c8e4a93717d34b6f69eb5
+    metadata:
+      record_count: 100
+  - name: term-light-community-records
+    kind: audio-records
+    root_alias: police_scene_bench
+    relative_path: versions/external-v1-20261029/records/term-light-community.jsonl.gz
+    sha256: 8cd09e4a3fc73074205adfd7d939148b895a0b706ffeaf45b4ed10893971d63d
+    metadata:
+      record_count: 96
+  - name: term-light-community-hw300-records
+    kind: audio-records
+    root_alias: police_scene_bench
+    relative_path: versions/external-v1-20261029/records/term-light-community-hw300.jsonl.gz
+    sha256: ec25866748cff4834540d730890f45bbe4657fad93d5d20ff1957ea3fd02b742
+    metadata:
+      record_count: 100
+  - name: term-medium-street-records
+    kind: audio-records
+    root_alias: police_scene_bench
+    relative_path: versions/external-v1-20261029/records/term-medium-street.jsonl.gz
+    sha256: 5a908ab92509578e9ecf1077a658264bc665c48a88c5a07a4f8cdf2a3a72775d
+    metadata:
+      record_count: 90
+  - name: term-medium-street-hw300-records
+    kind: audio-records
+    root_alias: police_scene_bench
+    relative_path: versions/external-v1-20261029/records/term-medium-street-hw300.jsonl.gz
+    sha256: ab5351540aac7bac55d1e1bc1e0283aa12688e9cd17f6de31ac718bd9930a182
+    metadata:
+      record_count: 100
+  - name: term-medium-reception-records
+    kind: audio-records
+    root_alias: police_scene_bench
+    relative_path: versions/external-v1-20261029/records/term-medium-reception.jsonl.gz
+    sha256: 691c24ffd6e1d217a067cd299d6d56fa5cb32e08f4286b28511d93d6924c34c1
+    metadata:
+      record_count: 98
+  - name: term-medium-reception-hw300-records
+    kind: audio-records
+    root_alias: police_scene_bench
+    relative_path: versions/external-v1-20261029/records/term-medium-reception-hw300.jsonl.gz
+    sha256: 29294b211ccfb8f5200a5f12c5b08340fb8c186be28e10420748a2d4cc76307e
+    metadata:
+      record_count: 100
+  - name: term-medium-accident-records
+    kind: audio-records
+    root_alias: police_scene_bench
+    relative_path: versions/external-v1-20261029/records/term-medium-accident.jsonl.gz
+    sha256: 21832cc945b485a47fcb95bda1e45f86715bab4220eccf551ffe33c13224d475
+    metadata:
+      record_count: 87
+  - name: term-medium-accident-hw300-records
+    kind: audio-records
+    root_alias: police_scene_bench
+    relative_path: versions/external-v1-20261029/records/term-medium-accident-hw300.jsonl.gz
+    sha256: a2b7982bd8e92d19e0daa80638fbe132322139aa6c555f0af34e0935ed41a4ab
+    metadata:
+      record_count: 100
+  - name: term-heavy-pdt-link-records
+    kind: audio-records
+    root_alias: police_scene_bench
+    relative_path: versions/external-v1-20261029/records/term-heavy-pdt-link.jsonl.gz
+    sha256: 6821f687284312f203a3782ab19fe641f8c61df956c07234b2bd33f4d902b602
+    metadata:
+      record_count: 100
+  - name: term-heavy-pdt-link-hw300-records
+    kind: audio-records
+    root_alias: police_scene_bench
+    relative_path: versions/external-v1-20261029/records/term-heavy-pdt-link-hw300.jsonl.gz
+    sha256: a0b743bf7abeede85f3a282e22ede73682f60cf5c70612e38842f05d3cdfa954
+    metadata:
+      record_count: 100
+  - name: term-heavy-pdt-local-records
+    kind: audio-records
+    root_alias: police_scene_bench
+    relative_path: versions/external-v1-20261029/records/term-heavy-pdt-local.jsonl.gz
+    sha256: 689d1721c7ce452399843151e23aeaa0d902b5524de32475053b8817a64f6282
+    metadata:
+      record_count: 100
+  - name: term-heavy-pdt-local-hw300-records
+    kind: audio-records
+    root_alias: police_scene_bench
+    relative_path: versions/external-v1-20261029/records/term-heavy-pdt-local-hw300.jsonl.gz
+    sha256: 0248f49f2cc7c479491774589cc08245b2ee8320b5fefdc8bc82bff47807dae1
+    metadata:
+      record_count: 100
+  - name: term-extreme-emergency-records
+    kind: audio-records
+    root_alias: police_scene_bench
+    relative_path: versions/external-v1-20261029/records/term-extreme-emergency.jsonl.gz
+    sha256: 9d156a0a3e561e64a2eee58b2a6f95e0c96802eb5d0134f90befa3817bca4cc3
+    metadata:
+      record_count: 100
+  - name: term-extreme-emergency-hw300-records
+    kind: audio-records
+    root_alias: police_scene_bench
+    relative_path: versions/external-v1-20261029/records/term-extreme-emergency-hw300.jsonl.gz
+    sha256: c8bff7bd952497552da6a9b391f6ec2f336e202a67fa6743fb5db7a8d17baf5b
+    metadata:
+      record_count: 100
+  - name: num-quiet-reception-records
+    kind: audio-records
+    root_alias: police_scene_bench
+    relative_path: versions/external-v1-20261029/records/num-quiet-reception.jsonl.gz
+    sha256: 3bede1ccf9aad734963a9a4440b8900304c2f9f5f74a2b0ac2cb7d79f51af7ed
+    metadata:
+      record_count: 90
+  - name: num-quiet-plate-records
+    kind: audio-records
+    root_alias: police_scene_bench
+    relative_path: versions/external-v1-20261029/records/num-quiet-plate.jsonl.gz
+    sha256: a37fa815f8f84c64f533445ca501725e99b10978f40946c5b4d539669c2b1210
+    metadata:
+      record_count: 50
+  - name: num-light-car-records
+    kind: audio-records
+    root_alias: police_scene_bench
+    relative_path: versions/external-v1-20261029/records/num-light-car.jsonl.gz
+    sha256: 4869cdaa5b60361e42ba75530db92bed499505c67ff1c99105339a0a1a386517
+    metadata:
+      record_count: 77
+  - name: num-light-home-records
+    kind: audio-records
+    root_alias: police_scene_bench
+    relative_path: versions/external-v1-20261029/records/num-light-home.jsonl.gz
+    sha256: f1aec9137f9da5ed195dede12dc508b13469848f9c45047146d18b06aa8adc92
+    metadata:
+      record_count: 91
+  - name: num-light-mediation-records
+    kind: audio-records
+    root_alias: police_scene_bench
+    relative_path: versions/external-v1-20261029/records/num-light-mediation.jsonl.gz
+    sha256: 08d550b4d2c18ff01bb6145bb47fe3edebd738e556fe0cfc5e812bf5e3a5240c
+    metadata:
+      record_count: 87
+  - name: num-medium-street-id-records
+    kind: audio-records
+    root_alias: police_scene_bench
+    relative_path: versions/external-v1-20261029/records/num-medium-street-id.jsonl.gz
+    sha256: 69d891b21c3ba7bc8c8d2809489b49cc61bbd7c86764968055e7cb40848a1681
+    metadata:
+      record_count: 91
+  - name: num-medium-phone-records
+    kind: audio-records
+    root_alias: police_scene_bench
+    relative_path: versions/external-v1-20261029/records/num-medium-phone.jsonl.gz
+    sha256: 158587398e24d13ef9d6aa9fc02f7dd20840c45c193f3de3c630abd524f9af43
+    metadata:
+      record_count: 89
+  - name: num-medium-multi-plate-records
+    kind: audio-records
+    root_alias: police_scene_bench
+    relative_path: versions/external-v1-20261029/records/num-medium-multi-plate.jsonl.gz
+    sha256: 1b847cf03b5ac6ef32c0e5334def6cb38db35b50fef4e5ca31a647060d871637
+    metadata:
+      record_count: 36
+  - name: num-medium-ebike-plate-records
+    kind: audio-records
+    root_alias: police_scene_bench
+    relative_path: versions/external-v1-20261029/records/num-medium-ebike-plate.jsonl.gz
+    sha256: c04463895ebbbe7de880270d191bb0c5f721535dc3f9df26d05a036b96920492
+    metadata:
+      record_count: 60
+  - name: num-heavy-crowd-id-records
+    kind: audio-records
+    root_alias: police_scene_bench
+    relative_path: versions/external-v1-20261029/records/num-heavy-crowd-id.jsonl.gz
+    sha256: 9cf71902a1821b4524c9e22047f92898d0db92aa520f68166770709c59d1589f
+    metadata:
+      record_count: 100
+  - name: num-heavy-main-road-records
+    kind: audio-records
+    root_alias: police_scene_bench
+    relative_path: versions/external-v1-20261029/records/num-heavy-main-road.jsonl.gz
+    sha256: 62ec0ebc57a93c2119b11a36252279a3f1bc4ed10ad59fef3ef383d39f03b1f3
+    metadata:
+      record_count: 100
+  - name: num-extreme-emergency-records
+    kind: audio-records
+    root_alias: police_scene_bench
+    relative_path: versions/external-v1-20261029/records/num-extreme-emergency.jsonl.gz
+    sha256: 65b1bacc559429c5d4183f6f5d78981fe9358ae783e9cbeafb3de8cd46cb1274
+    metadata:
+      record_count: 100
+  - name: owner-quiet-sep-reception-records
+    kind: audio-records
+    root_alias: police_scene_bench
+    relative_path: versions/external-v1-20261029/records/owner-quiet-sep-reception.jsonl.gz
+    sha256: 47c42664467ce12f2817c09b986b6d8367c18149a51b05e506adc8ddfb4e8de5
+    metadata:
+      record_count: 78
+  - name: owner-light-sep-car-records
+    kind: audio-records
+    root_alias: police_scene_bench
+    relative_path: versions/external-v1-20261029/records/owner-light-sep-car.jsonl.gz
+    sha256: 6ed9f4050dd29407184fd42950c62c9782943ee0c60745a0b98d3b0a5e821797
+    metadata:
+      record_count: 68
+  - name: owner-light-sep-home-law-records
+    kind: audio-records
+    root_alias: police_scene_bench
+    relative_path: versions/external-v1-20261029/records/owner-light-sep-home-law.jsonl.gz
+    sha256: 0a46d6a7194704657b6a2009a04bee45c688353d844a5c1fca3fd3b10762296c
+    metadata:
+      record_count: 76
+  - name: owner-medium-sep-street-records
+    kind: audio-records
+    root_alias: police_scene_bench
+    relative_path: versions/external-v1-20261029/records/owner-medium-sep-street.jsonl.gz
+    sha256: 6e091aa26fa629c1c22eb853d1fac50a5d35a18a8cc29251dbddea4052d92ad4
+    metadata:
+      record_count: 69
+  - name: owner-medium-sep-shop-records
+    kind: audio-records
+    root_alias: police_scene_bench
+    relative_path: versions/external-v1-20261029/records/owner-medium-sep-shop.jsonl.gz
+    sha256: 74bbec7a520d4e3b2da29ef98814b3517724fccd611ffbe9a016837f8f641039
+    metadata:
+      record_count: 69
+  - name: owner-heavy-sep-accident-records
+    kind: audio-records
+    root_alias: police_scene_bench
+    relative_path: versions/external-v1-20261029/records/owner-heavy-sep-accident.jsonl.gz
+    sha256: 504dcd41779b688bca0845cdb3652b79f73edebc54d7d71f3c93a866c2629ac9
+    metadata:
+      record_count: 100
+  - name: owner-extreme-sep-emergency-records
+    kind: audio-records
+    root_alias: police_scene_bench
+    relative_path: versions/external-v1-20261029/records/owner-extreme-sep-emergency.jsonl.gz
+    sha256: c390363cee3048673fda34beb5b208de38c65b0510aecdcedcd548de6e2b1336
+    metadata:
+      record_count: 100
+  - name: owner-quiet-overlap-reception-records
+    kind: audio-records
+    root_alias: police_scene_bench
+    relative_path: versions/external-v1-20261029/records/owner-quiet-overlap-reception.jsonl.gz
+    sha256: c4ec833445837128fa4ac405df14a00ba724fe83e22b9096e20989040aa7bf8f
+    metadata:
+      record_count: 83
+  - name: owner-light-overlap-car-records
+    kind: audio-records
+    root_alias: police_scene_bench
+    relative_path: versions/external-v1-20261029/records/owner-light-overlap-car.jsonl.gz
+    sha256: 5b0ea7abc747b0a4f657ac0be850d57e593935ce0f7a7cb14670c2ecb0d26a2f
+    metadata:
+      record_count: 84
+  - name: owner-light-overlap-home-law-records
+    kind: audio-records
+    root_alias: police_scene_bench
+    relative_path: versions/external-v1-20261029/records/owner-light-overlap-home-law.jsonl.gz
+    sha256: d7346894b8fa02a02be47906b4d51bb9286b4acc6dfddc1e4498fd9467f909c7
+    metadata:
+      record_count: 75
+  - name: owner-medium-overlap-street-records
+    kind: audio-records
+    root_alias: police_scene_bench
+    relative_path: versions/external-v1-20261029/records/owner-medium-overlap-street.jsonl.gz
+    sha256: 1d6468379d4ffa2d96d616116b2bb9f49fa688a4bcc307f246218b0696cc0448
+    metadata:
+      record_count: 72
+  - name: owner-medium-overlap-shop-records
+    kind: audio-records
+    root_alias: police_scene_bench
+    relative_path: versions/external-v1-20261029/records/owner-medium-overlap-shop.jsonl.gz
+    sha256: 1ce0cf7d00c63d5496332738367daec8d0e11449aabb174381be225161603222
+    metadata:
+      record_count: 57
+  - name: owner-heavy-overlap-security-records
+    kind: audio-records
+    root_alias: police_scene_bench
+    relative_path: versions/external-v1-20261029/records/owner-heavy-overlap-security.jsonl.gz
+    sha256: 5a7e229edcb7fe4cbd07e4aff3e82d074c6dc3e71cfda07f6c4d78b9e9f2f513
+    metadata:
+      record_count: 100
+  - name: owner-heavy-overlap-crowd-records
+    kind: audio-records
+    root_alias: police_scene_bench
+    relative_path: versions/external-v1-20261029/records/owner-heavy-overlap-crowd.jsonl.gz
+    sha256: 73efd221c6be1b8a31a2ee4f4cd679c283b68abb531e948c701d8d899ee3e443
+    metadata:
+      record_count: 100
+  - name: owner-heavy-overlap-construction-records
+    kind: audio-records
+    root_alias: police_scene_bench
+    relative_path: versions/external-v1-20261029/records/owner-heavy-overlap-construction.jsonl.gz
+    sha256: eb910af8645139965c6675ab2d7e8692641dc3d2afce56479b98fc86ebaba262
+    metadata:
+      record_count: 100
+  - name: owner-heavy-overlap-main-road-records
+    kind: audio-records
+    root_alias: police_scene_bench
+    relative_path: versions/external-v1-20261029/records/owner-heavy-overlap-main-road.jsonl.gz
+    sha256: 30a7ae32162958d72c95258c2319e946e96b122cd8cf56ad15405ba2cb72f3bd
+    metadata:
+      record_count: 100
+  - name: owner-extreme-overlap-emergency-records
+    kind: audio-records
+    root_alias: police_scene_bench
+    relative_path: versions/external-v1-20261029/records/owner-extreme-overlap-emergency.jsonl.gz
+    sha256: 68736382969bc682c7e20d3efd47b84f707587b98e3b67c12710106acf06fdf1
+    metadata:
+      record_count: 100
+  - name: diar-quiet-interrogation-records
+    kind: audio-records
+    root_alias: police_scene_bench
+    relative_path: versions/external-v1-20261029/records/diar-quiet-interrogation.jsonl.gz
+    sha256: abb65f5e26b32d0aa67322ab6af306c036a1e81c45c065a98848047793c687b1
+    metadata:
+      record_count: 90
+  - name: diar-quiet-identification-records
+    kind: audio-records
+    root_alias: police_scene_bench
+    relative_path: versions/external-v1-20261029/records/diar-quiet-identification.jsonl.gz
+    sha256: e747e6c696878d7a119fc3d70a9a277a7f79c84b27a9660b26c794d66cb4e7d5
+    metadata:
+      record_count: 77
+  - name: diar-quiet-discussion-records
+    kind: audio-records
+    root_alias: police_scene_bench
+    relative_path: versions/external-v1-20261029/records/diar-quiet-discussion.jsonl.gz
+    sha256: 7407dd3535adc67eaef01040259febf029c514e2c8cfead303b873fe53f613a6
+    metadata:
+      record_count: 69
+  - name: diar-quiet-reception-records
+    kind: audio-records
+    root_alias: police_scene_bench
+    relative_path: versions/external-v1-20261029/records/diar-quiet-reception.jsonl.gz
+    sha256: 1efddd6a481b391202bdab1bb261c0f24873e6fc1eb77d070d41d146cf63270b
+    metadata:
+      record_count: 89
+  - name: diar-quiet-hall-records
+    kind: audio-records
+    root_alias: police_scene_bench
+    relative_path: versions/external-v1-20261029/records/diar-quiet-hall.jsonl.gz
+    sha256: 13f43fe2072fa14cedb6e8668c591bd9a75537300e354184b8a9da53dc486d08
+    metadata:
+      record_count: 72
+  - name: diar-light-car-records
+    kind: audio-records
+    root_alias: police_scene_bench
+    relative_path: versions/external-v1-20261029/records/diar-light-car.jsonl.gz
+    sha256: 2909fc32144d276b0f0482a4f3c637d8ec72d65d3f9692de77469458303fef85
+    metadata:
+      record_count: 80
+  - name: diar-light-mediation-records
+    kind: audio-records
+    root_alias: police_scene_bench
+    relative_path: versions/external-v1-20261029/records/diar-light-mediation.jsonl.gz
+    sha256: 035f327f63991aa77f59e9aba6f485443adaca4419e13aede1e72f91ba2afaf5
+    metadata:
+      record_count: 80
+  - name: diar-light-visit-records
+    kind: audio-records
+    root_alias: police_scene_bench
+    relative_path: versions/external-v1-20261029/records/diar-light-visit.jsonl.gz
+    sha256: 1f5a1d1b698a1f8f3188ea6bb2c9a0b245cb193ad821186d7a56e04b562e7073
+    metadata:
+      record_count: 91
+  - name: diar-medium-accident-records
+    kind: audio-records
+    root_alias: police_scene_bench
+    relative_path: versions/external-v1-20261029/records/diar-medium-accident.jsonl.gz
+    sha256: 471f9c6d4fbd5ad26a78d7265a549c887c6a31bfd4c8d933c5b9bc4eccaaeb2a
+    metadata:
+      record_count: 46
+  - name: diar-medium-shop-records
+    kind: audio-records
+    root_alias: police_scene_bench
+    relative_path: versions/external-v1-20261029/records/diar-medium-shop.jsonl.gz
+    sha256: d1ec270b342bedb196634b5a15fad3bf726fcfae2edd87d3ebb8a3295c4e701a
+    metadata:
+      record_count: 57
+  - name: diar-medium-street-mediation-records
+    kind: audio-records
+    root_alias: police_scene_bench
+    relative_path: versions/external-v1-20261029/records/diar-medium-street-mediation.jsonl.gz
+    sha256: 6354b514b48a8396b02bc30f3521dc86f8bc5688edf29e9644a13a900a57f386
+    metadata:
+      record_count: 30
+  - name: diar-heavy-market-records
+    kind: audio-records
+    root_alias: police_scene_bench
+    relative_path: versions/external-v1-20261029/records/diar-heavy-market.jsonl.gz
+    sha256: d23a96011bb5eb193cb1b38f7d533bc2ce034f935b5b1d79e7fa7165f8290d13
+    metadata:
+      record_count: 100
+  - name: diar-extreme-emergency-records
+    kind: audio-records
+    root_alias: police_scene_bench
+    relative_path: versions/external-v1-20261029/records/diar-extreme-emergency.jsonl.gz
+    sha256: 89b7fec7c0f7b6355a3412bebb35ca655e6b26443966639775d805d71ede0211
+    metadata:
+      record_count: 100
+  - name: diar8-quiet-discussion-records
+    kind: audio-records
+    root_alias: police_scene_bench
+    relative_path: versions/external-v1-20261029/records/diar8-quiet-discussion.jsonl.gz
+    sha256: a03bf2386b7574d33539efe00f709401888908b3d42a41b322650025b0e36548
+    metadata:
+      record_count: 57
+  - name: diar8-quiet-hall-records
+    kind: audio-records
+    root_alias: police_scene_bench
+    relative_path: versions/external-v1-20261029/records/diar8-quiet-hall.jsonl.gz
+    sha256: 4d073384ea085fa29c2438af9e76af9af760d7dbb7934eebd4f80d8d1ffc2b58
+    metadata:
+      record_count: 61
+  - name: diar8-light-mediation-records
+    kind: audio-records
+    root_alias: police_scene_bench
+    relative_path: versions/external-v1-20261029/records/diar8-light-mediation.jsonl.gz
+    sha256: 674f7de9a3f219c54e4e0402c062a646be357736e36db4c513bebebff255c8c1
+    metadata:
+      record_count: 65
+  - name: diar8-medium-accident-records
+    kind: audio-records
+    root_alias: police_scene_bench
+    relative_path: versions/external-v1-20261029/records/diar8-medium-accident.jsonl.gz
+    sha256: 247a2129bf563688c964b0f6cc33a81d4f4042154f20476716deb60a21d8e885
+    metadata:
+      record_count: 34
+  - name: diar8-heavy-market-records
+    kind: audio-records
+    root_alias: police_scene_bench
+    relative_path: versions/external-v1-20261029/records/diar8-heavy-market.jsonl.gz
+    sha256: 8e617b7f2297098bf7750e5fe76b1e693ec156005f1d5cca78066707ac581e58
+    metadata:
+      record_count: 100
+  - name: ctx-quiet-record-records
+    kind: audio-records
+    root_alias: police_scene_bench
+    relative_path: versions/external-v1-20261029/records/ctx-quiet-record.jsonl.gz
+    sha256: c465a16f164128a1f43f34ef854691b23f66f22700a1a2716dcc810302b2733c
+    metadata:
+      record_count: 96
+  - name: ctx-quiet-reception-records
+    kind: audio-records
+    root_alias: police_scene_bench
+    relative_path: versions/external-v1-20261029/records/ctx-quiet-reception.jsonl.gz
+    sha256: c2f77b9feaac0092eda43a35dbd3f3c1bc38f1e0e6f72c931b8034d980220c97
+    metadata:
+      record_count: 96
+  - name: ctx-light-visit-records
+    kind: audio-records
+    root_alias: police_scene_bench
+    relative_path: versions/external-v1-20261029/records/ctx-light-visit.jsonl.gz
+    sha256: 088ab3228d8ab8caf0cfdb5bf8b7a2e4f71ec062dfd847e2b6a9c970b8f6702d
+    metadata:
+      record_count: 100
+  - name: ctx-medium-street-records
+    kind: audio-records
+    root_alias: police_scene_bench
+    relative_path: versions/external-v1-20261029/records/ctx-medium-street.jsonl.gz
+    sha256: b3be341379b602d65ddecd35fee7c4203e9c97fec39f78d49bd4764b1a8f56e8
+    metadata:
+      record_count: 89
+  - name: ctx-heavy-pdt-link-records
+    kind: audio-records
+    root_alias: police_scene_bench
+    relative_path: versions/external-v1-20261029/records/ctx-heavy-pdt-link.jsonl.gz
+    sha256: e72b8a8a0ed91ce15ab77267f094770dc5671be102e7e6fe1f0f3a3edbf4b5d7
+    metadata:
+      record_count: 100
+  - name: ctx-extreme-emergency-records
+    kind: audio-records
+    root_alias: police_scene_bench
+    relative_path: versions/external-v1-20261029/records/ctx-extreme-emergency.jsonl.gz
+    sha256: 307c9b529311ae01a41fc62fe3badfb00729589b840e3a8b37f47abebda17ef6
+    metadata:
+      record_count: 100
+  - name: dev-asr-heavy-crowd-records
+    kind: audio-records
+    root_alias: police_scene_bench
+    relative_path: versions/external-v1-20261029/records/dev-asr-heavy-crowd.jsonl.gz
+    sha256: 03818dc26f8f1719f97d227b788e6df8ffe6fbbacb9560c657c397fdf43a86bf
+    metadata:
+      record_count: 100
+  - name: dev-term-medium-street-records
+    kind: audio-records
+    root_alias: police_scene_bench
+    relative_path: versions/external-v1-20261029/records/dev-term-medium-street.jsonl.gz
+    sha256: 11b4aed51872bcf6d6678055ec4e13e3ae32995ed3365a18bd90df755ece728d
+    metadata:
+      record_count: 80
+  - name: dev-num-heavy-main-road-records
+    kind: audio-records
+    root_alias: police_scene_bench
+    relative_path: versions/external-v1-20261029/records/dev-num-heavy-main-road.jsonl.gz
+    sha256: bb3b177d5be7e9c709d4fa2291766d73de0a42a91f7756032525933c7bc5ed6d
+    metadata:
+      record_count: 100
+  - name: dev-owner-heavy-sep-accident-records
+    kind: audio-records
+    root_alias: police_scene_bench
+    relative_path: versions/external-v1-20261029/records/dev-owner-heavy-sep-accident.jsonl.gz
+    sha256: c34f90b222d28e70af1ab54452b8453088b1dafbf36a0f20a94a84a1d9ddafba
+    metadata:
+      record_count: 100
+  - name: far-asr-quiet-command-records
+    kind: audio-records
+    root_alias: police_scene_bench
+    relative_path: versions/external-v1-20261029/records/far-asr-quiet-command.jsonl.gz
+    sha256: 550e12608f700bed093939203a3fcbcee3b9476999dbffdfe1832e082e854d63
+    metadata:
+      record_count: 78
+  - name: far-owner-quiet-sep-reception-records
+    kind: audio-records
+    root_alias: police_scene_bench
+    relative_path: versions/external-v1-20261029/records/far-owner-quiet-sep-reception.jsonl.gz
+    sha256: 716a5b318ddb4f223a4f3291e799e5316d638a8921632f356dfe3b23cfc51d30
+    metadata:
+      record_count: 74
+  splits:
+    asr-quiet-interview:
+      artifacts:
+        records:
+        - asr-quiet-interview-records
+        audio_index:
+        - audio-index
+      task: asr
+      statistics:
+        records: 22
+        duration_hours: 0.3635
+        duration_basis: mixture duration
+      provenance:
+        description: 室内访谈笔录：办案民警和参与者轮流说话，极少抢话重叠。表格第 2、39 行，安静（信噪比 20～30 dB），室内办公/审讯/接待室。
+    asr-quiet-discussion:
+      artifacts:
+        records:
+        - asr-quiet-discussion-records
+        audio_index:
+        - audio-index
+      task: asr
+      statistics:
+        records: 12
+        duration_hours: 0.1976
+        duration_basis: mixture duration
+      provenance:
+        description: 室内研讨：内勤办公室、调解室，2–4 名民警内部讨论案情、梳理线索。表格第 2、39 行，安静（信噪比 20～30 dB），室内办公/审讯/接待室。
+    asr-quiet-reception:
+      artifacts:
+        records:
+        - asr-quiet-reception-records
+        audio_index:
+        - audio-index
+      task: asr
+      statistics:
+        records: 21
+        duration_hours: 0.2567
+        duration_basis: mixture duration
+      provenance:
+        description: 接待室群众单人来访登记：派出所接待室，单独接待群众，一对一沟通。表格第 2、39 行，安静（信噪比 20～30 dB），室内办公/审讯/接待室。
+    asr-quiet-dictation:
+      artifacts:
+        records:
+        - asr-quiet-dictation-records
+        audio_index:
+        - audio-index
+      task: asr
+      statistics:
+        records: 12
+        duration_hours: 0.1525
+        duration_basis: mixture duration
+      provenance:
+        description: 内勤单人口述台账/备注：内勤在安静工位独自口述备注、案件标签、核查要点。表格第 2、39 行，安静（信噪比 20～30 dB），室内办公/审讯/接待室。
+    asr-quiet-command:
+      artifacts:
+        records:
+        - asr-quiet-command-records
+        audio_index:
+        - audio-index
+      task: asr
+      statistics:
+        records: 83
+        duration_hours: 0.2013
+        duration_basis: mixture duration
+      provenance:
+        description: 设备指令控制、搜索法律条文：操控执法记录仪/AR 终端（启停、标记、抓拍），搜索法条、查身份、查警情。表格第 2、39 行，安静（信噪比 20～30 dB），室内办公/审讯/接待室。
+    asr-light-car-command:
+      artifacts:
+        records:
+        - asr-light-car-command-records
+        audio_index:
+        - audio-index
+      task: asr
+      statistics:
+        records: 93
+        duration_hours: 0.1753
+        duration_basis: mixture duration
+      provenance:
+        description: 警车内部语音控制记录仪：关窗、低速行驶、空调底噪，民警发出设备指令。表格第 3、40 行，轻度噪声（信噪比 10～20 dB），警车车内（关窗、空调）。
+    asr-light-home-law:
+      artifacts:
+        records:
+        - asr-light-home-law-records
+        audio_index:
+        - audio-index
+      task: asr
+      statistics:
+        records: 92
+        duration_hours: 0.2969
+        duration_basis: mixture duration
+      provenance:
+        description: 入户走访时语音快速查询法条：居民家中冰箱电视底噪，走访调解间隙语音检索法条；数据里没有法条检索指令，用查询类业务语句和引用法条的语句代替。表格第 3、40 行，轻度噪声（信噪比 10～20 dB），居民家中（家电底噪）。
+    asr-medium-street-idcheck:
+      artifacts:
+        records:
+        - asr-medium-street-idcheck-records
+        audio_index:
+        - audio-index
+      task: asr
+      statistics:
+        records: 89
+        duration_hours: 0.3048
+        duration_basis: mixture duration
+      provenance:
+        description: 路边盘查语音发起人员核查：人行道盘查，持续车流、行人背景噪音。表格第 4、41 行，中度噪声（信噪比 5～10 dB），街面（车流、行人）。
+    asr-medium-accident-mark:
+      artifacts:
+        records:
+        - asr-medium-accident-mark-records
+        audio_index:
+        - audio-index
+      task: asr
+      statistics:
+        records: 93
+        duration_hours: 0.1615
+        duration_basis: mixture duration
+      provenance:
+        description: 简易事故现场语音标记取证快照：道路轻微事故现场，车流背景噪音。表格第 4、41 行，中度噪声（信噪比 5～10 dB），主干道车流（鸣笛、重型车）。
+    asr-medium-shop-record:
+      artifacts:
+        records:
+        - asr-medium-shop-record-records
+        audio_index:
+        - audio-index
+      task: asr
+      statistics:
+        records: 80
+        duration_hours: 0.1445
+        duration_basis: mixture duration
+      provenance:
+        description: 商铺走访语音控制开启笔录转写：便利店冰柜排风、背景音乐噪声。表格第 4、41 行，中度噪声（信噪比 5～10 dB），商铺（冰柜排风、背景音乐）。
+    asr-medium-visit-idcheck:
+      artifacts:
+        records:
+        - asr-medium-visit-idcheck-records
+        audio_index:
+        - audio-index
+      task: asr
+      statistics:
+        records: 95
+        duration_hours: 0.3236
+        duration_basis: mixture duration
+      provenance:
+        description: 走访中人员身份核查：走访过程中语音发起核查。表格第 4、41 行，中度噪声（信噪比 5～10 dB），街面（车流、行人）、商铺（冰柜排风、背景音乐）。
+    asr-medium-command:
+      artifacts:
+        records:
+        - asr-medium-command-records
+        audio_index:
+        - audio-index
+      task: asr
+      statistics:
+        records: 94
+        duration_hours: 0.2438
+        duration_basis: mixture duration
+      provenance:
+        description: 设备指令控制、搜索法律条文（中噪）：中噪现场操控终端、搜索法条与业务查询。表格第 4、41 行，中度噪声（信噪比 5～10 dB），街面（车流、行人）、商铺（冰柜排风、背景音乐）、主干道车流（鸣笛、重型车）。
+    asr-heavy-crowd:
+      artifacts:
+        records:
+        - asr-heavy-crowd-records
+        audio_index:
+        - audio-index
+      task: asr
+      statistics:
+        records: 100
+        duration_hours: 0.4137
+        duration_basis: mixture duration
+      provenance:
+        description: 人群聚集现场近距离取证：集市、群体性处置现场，嘈杂人声；语音控制设备、简述案情。表格第 5、42 行，重度噪声（信噪比 0～5 dB），集市/人群聚集。
+    asr-heavy-construction-wind:
+      artifacts:
+        records:
+        - asr-heavy-construction-wind-records
+        audio_index:
+        - audio-index
+      task: asr
+      statistics:
+        records: 100
+        duration_hours: 0.4028
+        duration_basis: mixture duration
+      provenance:
+        description: 施工区域、露天大风现场问询：户外野外、河边处置，风噪与施工噪声明显；语音控制设备、简述案情。表格第 5、42 行，重度噪声（信噪比 0～5 dB），施工/大风/河边。
+    asr-extreme-emergency:
+      artifacts:
+        records:
+        - asr-extreme-emergency-records
+        audio_index:
+        - audio-index
+      task: asr
+      statistics:
+        records: 100
+        duration_hours: 0.1977
+        duration_basis: mixture duration
+      provenance:
+        description: 突发紧急情况现场：双手忙碌，紧急控制设备取证；警笛、重型车辆、人群喊叫。表格第 6、43 行，极限恶劣（信噪比 -5～0 dB），事故救援/警笛/暴乱现场。
+    term-quiet-interrogation:
+      artifacts:
+        records:
+        - term-quiet-interrogation-records
+        audio_index:
+        - audio-index
+      task: asr
+      statistics:
+        records: 87
+        duration_hours: 0.2445
+        duration_basis: mixture duration
+      provenance:
+        description: 审讯室/办案中心讯问笔录：讯问、询问、辨认，大量法言法语和办案流程术语。表格第 7、44、27 行，安静（信噪比 20～30 dB），室内办公/审讯/接待室。
+    term-quiet-interrogation-hw300:
+      artifacts:
+        records:
+        - term-quiet-interrogation-hw300-records
+        audio_index:
+        - audio-index
+      task: asr_hotwords
+      statistics:
+        records: 100
+        duration_hours: 0.2963
+        duration_basis: mixture duration
+      provenance:
+        description: 审讯室/办案中心讯问笔录（300 词热词表）：讯问、询问、辨认，大量法言法语和办案流程术语。表格第 7、44、27 行，安静（信噪比 20～30 dB），室内办公/审讯/接待室。音频与 term-quiet-interrogation 相同，每条带同一份热词表。
+      group: term-quiet-interrogation
+    term-light-car:
+      artifacts:
+        records:
+        - term-light-car-records
+        audio_index:
+        - audio-index
+      task: asr
+      statistics:
+        records: 94
+        duration_hours: 0.3116
+        duration_basis: mixture duration
+      provenance:
+        description: 警车车内问询、指挥沟通：关窗、空调底噪，车内盘查询问、口头汇报。表格第 8、45、28 行，轻度噪声（信噪比 10～20 dB），警车车内（关窗、空调）。
+    term-light-car-hw300:
+      artifacts:
+        records:
+        - term-light-car-hw300-records
+        audio_index:
+        - audio-index
+      task: asr_hotwords
+      statistics:
+        records: 100
+        duration_hours: 0.3522
+        duration_basis: mixture duration
+      provenance:
+        description: 警车车内问询、指挥沟通（300 词热词表）：关窗、空调底噪，车内盘查询问、口头汇报。表格第 8、45、28 行，轻度噪声（信噪比 10～20 dB），警车车内（关窗、空调）。音频与 term-light-car 相同，每条带同一份热词表。
+      group: term-light-car
+    term-light-community:
+      artifacts:
+        records:
+        - term-light-community-records
+        audio_index:
+        - audio-index
+      task: asr
+      statistics:
+        records: 96
+        duration_hours: 0.3174
+        duration_basis: mixture duration
+      provenance:
+        description: 入户走访、调解、社区警务：居民家中、物业调解室，邻里纠纷、反诈走访。表格第 8、45、28 行，轻度噪声（信噪比 10～20 dB），居民家中（家电底噪）。
+    term-light-community-hw300:
+      artifacts:
+        records:
+        - term-light-community-hw300-records
+        audio_index:
+        - audio-index
+      task: asr_hotwords
+      statistics:
+        records: 100
+        duration_hours: 0.3445
+        duration_basis: mixture duration
+      provenance:
+        description: 入户走访、调解、社区警务（300 词热词表）：居民家中、物业调解室，邻里纠纷、反诈走访。表格第 8、45、28 行，轻度噪声（信噪比 10～20 dB），居民家中（家电底噪）。音频与 term-light-community 相同，每条带同一份热词表。
+      group: term-light-community
+    term-medium-street:
+      artifacts:
+        records:
+        - term-medium-street-records
+        audio_index:
+        - audio-index
+      task: asr
+      statistics:
+        records: 90
+        duration_hours: 0.2808
+        duration_basis: mixture duration
+      provenance:
+        description: 路面盘查、街面执勤：人行道、路口临检，车流行人噪音。表格第 9、46、29 行，中度噪声（信噪比 5～10 dB），街面（车流、行人）。
+    term-medium-street-hw300:
+      artifacts:
+        records:
+        - term-medium-street-hw300-records
+        audio_index:
+        - audio-index
+      task: asr_hotwords
+      statistics:
+        records: 100
+        duration_hours: 0.339
+        duration_basis: mixture duration
+      provenance:
+        description: 路面盘查、街面执勤（300 词热词表）：人行道、路口临检，车流行人噪音。表格第 9、46、29 行，中度噪声（信噪比 5～10 dB），街面（车流、行人）。音频与 term-medium-street 相同，每条带同一份热词表。
+      group: term-medium-street
+    term-medium-reception:
+      artifacts:
+        records:
+        - term-medium-reception-records
+        audio_index:
+        - audio-index
+      task: asr
+      statistics:
+        records: 98
+        duration_hours: 0.3055
+        duration_basis: mixture duration
+      provenance:
+        description: 派出所接待大厅、报案接待：前台接报案，大厅人声。表格第 9、46、29 行，中度噪声（信噪比 5～10 dB），派出所大厅。
+    term-medium-reception-hw300:
+      artifacts:
+        records:
+        - term-medium-reception-hw300-records
+        audio_index:
+        - audio-index
+      task: asr_hotwords
+      statistics:
+        records: 100
+        duration_hours: 0.3179
+        duration_basis: mixture duration
+      provenance:
+        description: 派出所接待大厅、报案接待（300 词热词表）：前台接报案，大厅人声。表格第 9、46、29 行，中度噪声（信噪比 5～10 dB），派出所大厅。音频与 term-medium-reception 相同，每条带同一份热词表。
+      group: term-medium-reception
+    term-medium-accident:
+      artifacts:
+        records:
+        - term-medium-accident-records
+        audio_index:
+        - audio-index
+      task: asr
+      statistics:
+        records: 87
+        duration_hours: 0.3184
+        duration_basis: mixture duration
+      provenance:
+        description: 事故现场处置：道路交通事故，询问双方当事人。表格第 9、46、29 行，中度噪声（信噪比 5～10 dB），主干道车流（鸣笛、重型车）。
+    term-medium-accident-hw300:
+      artifacts:
+        records:
+        - term-medium-accident-hw300-records
+        audio_index:
+        - audio-index
+      task: asr_hotwords
+      statistics:
+        records: 100
+        duration_hours: 0.3827
+        duration_basis: mixture duration
+      provenance:
+        description: 事故现场处置（300 词热词表）：道路交通事故，询问双方当事人。表格第 9、46、29 行，中度噪声（信噪比 5～10 dB），主干道车流（鸣笛、重型车）。音频与 term-medium-accident 相同，每条带同一份热词表。
+      group: term-medium-accident
+    term-heavy-pdt-link:
+      artifacts:
+        records:
+        - term-heavy-pdt-link-records
+        audio_index:
+        - audio-index
+      task: asr
+      statistics:
+        records: 100
+        duration_hours: 0.327
+        duration_basis: mixture duration
+      provenance:
+        description: 大型安保对讲机集群通话（PDT 链路）：民警互相对讲、向指挥中心汇报；远端手台在嘈杂现场，经对讲链路收到的声音。表格第 10、47、30 行，重度噪声（信噪比 0～5 dB），集市/人群聚集。
+    term-heavy-pdt-link-hw300:
+      artifacts:
+        records:
+        - term-heavy-pdt-link-hw300-records
+        audio_index:
+        - audio-index
+      task: asr_hotwords
+      statistics:
+        records: 100
+        duration_hours: 0.327
+        duration_basis: mixture duration
+      provenance:
+        description: 大型安保对讲机集群通话（PDT 链路）（300 词热词表）：民警互相对讲、向指挥中心汇报；远端手台在嘈杂现场，经对讲链路收到的声音。表格第 10、47、30 行，重度噪声（信噪比 0～5 dB），集市/人群聚集。音频与 term-heavy-pdt-link 相同，每条带同一份热词表。
+      group: term-heavy-pdt-link
+    term-heavy-pdt-local:
+      artifacts:
+        records:
+        - term-heavy-pdt-local-records
+        audio_index:
+        - audio-index
+      task: asr
+      statistics:
+        records: 100
+        duration_hours: 0.3335
+        duration_basis: mixture duration
+      provenance:
+        description: 大型安保对讲机集群通话（终端原音）：民警对着手台说话时执法记录仪录到的原音，嘈杂人声。表格第 10、47、30 行，重度噪声（信噪比 0～5 dB），集市/人群聚集。
+    term-heavy-pdt-local-hw300:
+      artifacts:
+        records:
+        - term-heavy-pdt-local-hw300-records
+        audio_index:
+        - audio-index
+      task: asr_hotwords
+      statistics:
+        records: 100
+        duration_hours: 0.3335
+        duration_basis: mixture duration
+      provenance:
+        description: 大型安保对讲机集群通话（终端原音）（300 词热词表）：民警对着手台说话时执法记录仪录到的原音，嘈杂人声。表格第 10、47、30 行，重度噪声（信噪比 0～5 dB），集市/人群聚集。音频与 term-heavy-pdt-local 相同，每条带同一份热词表。
+      group: term-heavy-pdt-local
+    term-extreme-emergency:
+      artifacts:
+        records:
+        - term-extreme-emergency-records
+        audio_index:
+        - audio-index
+      task: asr
+      statistics:
+        records: 100
+        duration_hours: 0.3684
+        duration_basis: mixture duration
+      provenance:
+        description: 极限工况下的行业术语：表格本行没有具体场景，按事故救援、警笛、暴乱现场模拟，经执法记录仪过载削波与自动增益。表格第 11、48、31 行，极限恶劣（信噪比 -5～0 dB），事故救援/警笛/暴乱现场。
+    term-extreme-emergency-hw300:
+      artifacts:
+        records:
+        - term-extreme-emergency-hw300-records
+        audio_index:
+        - audio-index
+      task: asr_hotwords
+      statistics:
+        records: 100
+        duration_hours: 0.3684
+        duration_basis: mixture duration
+      provenance:
+        description: 极限工况下的行业术语（300 词热词表）：表格本行没有具体场景，按事故救援、警笛、暴乱现场模拟，经执法记录仪过载削波与自动增益。表格第 11、48、31 行，极限恶劣（信噪比 -5～0 dB），事故救援/警笛/暴乱现场。音频与 term-extreme-emergency 相同，每条带同一份热词表。
+      group: term-extreme-emergency
+    num-quiet-reception:
+      artifacts:
+        records:
+        - num-quiet-reception-records
+        audio_index:
+        - audio-index
+      task: asr
+      statistics:
+        records: 90
+        duration_hours: 0.3674
+        duration_basis: mixture duration
+      provenance:
+        description: 接待室前台接报案记录证件、联系方式：口述报案人、受害人身份证号和手机号。表格第 12、49 行，安静（信噪比 20～30 dB），室内办公/审讯/接待室。
+    num-quiet-plate:
+      artifacts:
+        records:
+        - num-quiet-plate-records
+        audio_index:
+        - audio-index
+      task: asr
+      statistics:
+        records: 50
+        duration_hours: 0.1467
+        duration_basis: mixture duration
+      provenance:
+        description: 办案中心口述涉案车辆号牌：内勤/办案民警口述机动车号牌；一半为新合成的全国各省普通车牌和新能源车牌。表格第 12、49 行，安静（信噪比 20～30 dB），室内办公/审讯/接待室。
+    num-light-car:
+      artifacts:
+        records:
+        - num-light-car-records
+        audio_index:
+        - audio-index
+      task: asr
+      statistics:
+        records: 77
+        duration_hours: 0.2513
+        duration_basis: mixture duration
+      provenance:
+        description: 警车车内核查口述号牌、证件号：关窗、空调轻微噪音，口述车牌、身份证号、手机号。表格第 13、50 行，轻度噪声（信噪比 10～20 dB），警车车内（关窗、空调）。
+    num-light-home:
+      artifacts:
+        records:
+        - num-light-home-records
+        audio_index:
+        - audio-index
+      task: asr
+      statistics:
+        records: 91
+        duration_hours: 0.3579
+        duration_basis: mixture duration
+      provenance:
+        description: 入户走访、反诈劝阻记录证件与联系方式：冰箱电视底噪，口述住户身份证号、联系电话。表格第 13、50 行，轻度噪声（信噪比 10～20 dB），居民家中（家电底噪）。
+    num-light-mediation:
+      artifacts:
+        records:
+        - num-light-mediation-records
+        audio_index:
+        - audio-index
+      task: asr
+      statistics:
+        records: 87
+        duration_hours: 0.3564
+        duration_basis: mixture duration
+      provenance:
+        description: 调解室登记双方身份信息：口述双方身份证号、手机号。表格第 13、50 行，轻度噪声（信噪比 10～20 dB），室内办公/审讯/接待室。
+    num-medium-street-id:
+      artifacts:
+        records:
+        - num-medium-street-id-records
+        audio_index:
+        - audio-index
+      task: asr
+      statistics:
+        records: 91
+        duration_hours: 0.3652
+        duration_basis: mixture duration
+      provenance:
+        description: 路面盘查口述身份证号：人行道、路口盘查，车流背景噪音。表格第 14、51 行，中度噪声（信噪比 5～10 dB），街面（车流、行人）。
+    num-medium-phone:
+      artifacts:
+        records:
+        - num-medium-phone-records
+        audio_index:
+        - audio-index
+      task: asr
+      statistics:
+        records: 89
+        duration_hours: 0.3378
+        duration_basis: mixture duration
+      provenance:
+        description: 现场处置口述当事人电话：事故、纠纷现场记录当事人、证人手机号。表格第 14、51 行，中度噪声（信噪比 5～10 dB），街面（车流、行人）、集市/人群聚集。
+    num-medium-multi-plate:
+      artifacts:
+        records:
+        - num-medium-multi-plate-records
+        audio_index:
+        - audio-index
+      task: asr
+      statistics:
+        records: 36
+        duration_hours: 0.2187
+        duration_basis: mixture duration
+      provenance:
+        description: 交通事故现场多车号牌登记：多车剐蹭，民警依次口述每辆车的号牌。表格第 14、51 行，中度噪声（信噪比 5～10 dB），主干道车流（鸣笛、重型车）。
+    num-medium-ebike-plate:
+      artifacts:
+        records:
+        - num-medium-ebike-plate-records
+        audio_index:
+        - audio-index
+      task: asr
+      statistics:
+        records: 60
+        duration_hours: 0.1185
+        duration_basis: mixture duration
+      provenance:
+        description: 街面查获电动自行车登记号牌：路面整治电动车，口述防盗/备案号牌；号牌为新合成，格式各地不同，按近似格式。表格第 14、51 行，中度噪声（信噪比 5～10 dB），街面（车流、行人）。
+    num-heavy-crowd-id:
+      artifacts:
+        records:
+        - num-heavy-crowd-id-records
+        audio_index:
+        - audio-index
+      task: asr
+      statistics:
+        records: 100
+        duration_hours: 0.4384
+        duration_basis: mixture duration
+      provenance:
+        description: 群体性事件现场核查身份：人员聚集、背景人声杂乱，记录身份证号。表格第 15、52 行，重度噪声（信噪比 0～5 dB），集市/人群聚集。
+    num-heavy-main-road:
+      artifacts:
+        records:
+        - num-heavy-main-road-records
+        audio_index:
+        - audio-index
+      task: asr
+      statistics:
+        records: 100
+        duration_hours: 0.3781
+        duration_basis: mixture duration
+      provenance:
+        description: 拥堵主干道事故记录车牌、身份证号：高峰车流轰鸣、鸣笛强噪声。表格第 15、52 行，重度噪声（信噪比 0～5 dB），主干道车流（鸣笛、重型车）。
+    num-extreme-emergency:
+      artifacts:
+        records:
+        - num-extreme-emergency-records
+        audio_index:
+        - audio-index
+      task: asr
+      statistics:
+        records: 100
+        duration_hours: 0.3912
+        duration_basis: mixture duration
+      provenance:
+        description: 极限工况下的号码识别：表格本行没有具体场景，按事故救援、警笛现场模拟，经执法记录仪过载削波与自动增益。表格第 16、53 行，极限恶劣（信噪比 -5～0 dB），事故救援/警笛/暴乱现场。
+    owner-quiet-sep-reception:
+      artifacts:
+        records:
+        - owner-quiet-sep-reception-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 78
+        duration_hours: 0.5265
+        duration_basis: mixture duration
+      provenance:
+        description: 接待室接报案转写（分开讲话）：接待报案群众，只转写机主的话。表格第 17、54 行，安静（信噪比 20～30 dB），室内办公/审讯/接待室。
+    owner-light-sep-car:
+      artifacts:
+        records:
+        - owner-light-sep-car-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 68
+        duration_hours: 0.38
+        duration_basis: mixture duration
+      provenance:
+        description: 警车车内语音操控记录仪（分开讲话）：标记重点、锁定视频、抓拍、暂停转写、开启录音。表格第 18、55 行，轻度噪声（信噪比 10～20 dB），警车车内（关窗、空调）。
+    owner-light-sep-home-law:
+      artifacts:
+        records:
+        - owner-light-sep-home-law-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 76
+        duration_hours: 0.4877
+        duration_basis: mixture duration
+      provenance:
+        description: 入户调解语音发起法条检索（分开讲话）：非机主说同样的检索词不能触发查询；检索词用查询类业务语句和引用法条的语句代替。表格第 18、55 行，轻度噪声（信噪比 10～20 dB），居民家中（家电底噪）。
+    owner-medium-sep-street:
+      artifacts:
+        records:
+        - owner-medium-sep-street-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 69
+        duration_hours: 0.4861
+        duration_basis: mixture duration
+      provenance:
+        description: 街面盘查语音发起身份核查（分开讲话）：车流、行人背景噪音，民警双手忙碌。表格第 19、56 行，中度噪声（信噪比 5～10 dB），街面（车流、行人）。
+    owner-medium-sep-shop:
+      artifacts:
+        records:
+        - owner-medium-sep-shop-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 69
+        duration_hours: 0.3762
+        duration_basis: mixture duration
+      provenance:
+        description: 商铺走访语音控制笔录启停（分开讲话）：冰柜、排风、背景音乐底噪。表格第 19、56 行，中度噪声（信噪比 5～10 dB），商铺（冰柜排风、背景音乐）。
+    owner-heavy-sep-accident:
+      artifacts:
+        records:
+        - owner-heavy-sep-accident-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 100
+        duration_hours: 0.5359
+        duration_basis: mixture duration
+      provenance:
+        description: 事故现场语音标记取证快照（分开讲话）：持续车流噪音，区分民警指令和当事人对话。表格第 20、57 行，重度噪声（信噪比 0～5 dB），主干道车流（鸣笛、重型车）。
+    owner-extreme-sep-emergency:
+      artifacts:
+        records:
+        - owner-extreme-sep-emergency-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 100
+        duration_hours: 0.5732
+        duration_basis: mixture duration
+      provenance:
+        description: 极限工况下的机主识别（分开讲话）：表格本行没有具体场景，按事故救援、警笛现场模拟，经执法记录仪过载削波与自动增益。表格第 21、58 行，极限恶劣（信噪比 -5～0 dB），事故救援/警笛/暴乱现场。
+    owner-quiet-overlap-reception:
+      artifacts:
+        records:
+        - owner-quiet-overlap-reception-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 83
+        duration_hours: 0.3494
+        duration_basis: mixture duration
+      provenance:
+        description: 接待室多人同时描述（重叠讲话）：多名群众同时描述案情或高频插话。表格第 22、59 行，安静（信噪比 20～30 dB），室内办公/审讯/接待室。
+    owner-light-overlap-car:
+      artifacts:
+        records:
+        - owner-light-overlap-car-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 84
+        duration_hours: 0.3162
+        duration_basis: mixture duration
+      provenance:
+        description: 警车车内两人以上交流或争论（重叠讲话）：参与者高频插话，区分机主指令和参与者。表格第 23、60 行，轻度噪声（信噪比 10～20 dB），警车车内（关窗、空调）。
+    owner-light-overlap-home-law:
+      artifacts:
+        records:
+        - owner-light-overlap-home-law-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 75
+        duration_hours: 0.326
+        duration_basis: mixture duration
+      provenance:
+        description: 入户调解多人参与（重叠讲话）：多人重叠发言，非机主说同样的检索词不能触发查询；检索词用查询类业务语句和引用法条的语句代替。表格第 23、60 行，轻度噪声（信噪比 10～20 dB），居民家中（家电底噪）。
+    owner-medium-overlap-street:
+      artifacts:
+        records:
+        - owner-medium-overlap-street-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 72
+        duration_hours: 0.3405
+        duration_basis: mixture duration
+      provenance:
+        description: 街面盘查周围多人问询（重叠讲话）：多人同时说话问询或催促。表格第 24、61 行，中度噪声（信噪比 5～10 dB），街面（车流、行人）。
+    owner-medium-overlap-shop:
+      artifacts:
+        records:
+        - owner-medium-overlap-shop-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 57
+        duration_hours: 0.225
+        duration_basis: mixture duration
+      provenance:
+        description: 走访时与多名群众沟通（重叠讲话）：群众同时说话或高频插话。表格第 24、61 行，中度噪声（信噪比 5～10 dB），商铺（冰柜排风、背景音乐）。
+    owner-heavy-overlap-security:
+      artifacts:
+        records:
+        - owner-heavy-overlap-security-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 100
+        duration_hours: 0.3631
+        duration_basis: mixture duration
+      provenance:
+        description: 大型安保紧急锁定录像（重叠讲话）：周围无关人员喊话不应触发动作。表格第 25、62 行，重度噪声（信噪比 0～5 dB），集市/人群聚集。
+    owner-heavy-overlap-crowd:
+      artifacts:
+        records:
+        - owner-heavy-overlap-crowd-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 100
+        duration_hours: 0.4125
+        duration_basis: mixture duration
+      provenance:
+        description: 群体性事件现场口头取证（重叠讲话）：近距离和当事人简短对话，周围持续嘈杂。表格第 25、62 行，重度噪声（信噪比 0～5 dB），集市/人群聚集。
+    owner-heavy-overlap-construction:
+      artifacts:
+        records:
+        - owner-heavy-overlap-construction-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 100
+        duration_hours: 0.4675
+        duration_basis: mixture duration
+      provenance:
+        description: 施工现场、大型集市走访（重叠讲话）：高分贝持续环境噪音，近距离问询、口头普法。表格第 25、62 行，重度噪声（信噪比 0～5 dB），施工/大风/河边、集市/人群聚集。
+    owner-heavy-overlap-main-road:
+      artifacts:
+        records:
+        - owner-heavy-overlap-main-road-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 100
+        duration_hours: 0.45
+        duration_basis: mixture duration
+      provenance:
+        description: 拥堵主干道事故多方争执（重叠讲话）：车辆轰鸣、鸣笛，多方当事人同时争执。表格第 25、62 行，重度噪声（信噪比 0～5 dB），主干道车流（鸣笛、重型车）。
+    owner-extreme-overlap-emergency:
+      artifacts:
+        records:
+        - owner-extreme-overlap-emergency-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 100
+        duration_hours: 0.3561
+        duration_basis: mixture duration
+      provenance:
+        description: 极限工况下的机主识别（重叠讲话）：表格本行没有具体场景，按暴乱嘈杂、警笛现场模拟，无关人员喊话不应触发。表格第 26、63 行，极限恶劣（信噪比 -5～0 dB），事故救援/警笛/暴乱现场。
+    diar-quiet-interrogation:
+      artifacts:
+        records:
+        - diar-quiet-interrogation-records
+        audio_index:
+        - audio-index
+      task: speaker_attributed_asr
+      statistics:
+        records: 90
+        duration_hours: 1.7088
+        duration_basis: mixture duration
+      provenance:
+        description: 审讯室讯问笔录（角色分离）：隔音环境，对话交替进行，少量插话。表格第 33、64 行，安静（信噪比 20～30 dB），室内办公/审讯/接待室。
+    diar-quiet-identification:
+      artifacts:
+        records:
+        - diar-quiet-identification-records
+        audio_index:
+        - audio-index
+      task: speaker_attributed_asr
+      statistics:
+        records: 77
+        duration_hours: 1.5486
+        duration_basis: mixture duration
+      provenance:
+        description: 辨认谈话、辨认告知（角色分离）：民警向辨认人告知权利、组织辨认问询。表格第 33、64 行，安静（信噪比 20～30 dB），室内办公/审讯/接待室。
+    diar-quiet-discussion:
+      artifacts:
+        records:
+        - diar-quiet-discussion-records
+        audio_index:
+        - audio-index
+      task: speaker_attributed_asr
+      statistics:
+        records: 69
+        duration_hours: 1.4001
+        duration_basis: mixture duration
+      provenance:
+        description: 内勤小范围案情研讨、法制会审（角色分离）：小团队讨论案件定性、证据瑕疵、处置方案。表格第 33、64 行，安静（信噪比 20～30 dB），室内办公/审讯/接待室。
+    diar-quiet-reception:
+      artifacts:
+        records:
+        - diar-quiet-reception-records
+        audio_index:
+        - audio-index
+      task: speaker_attributed_asr
+      statistics:
+        records: 89
+        duration_hours: 1.8197
+        duration_basis: mixture duration
+      provenance:
+        description: 接待室一对一/三方报案询问（角色分离）：接待受害人、证人，形成带角色标签的询问底稿。表格第 33、64 行，安静（信噪比 20～30 dB），室内办公/审讯/接待室。
+    diar-quiet-hall:
+      artifacts:
+        records:
+        - diar-quiet-hall-records
+        audio_index:
+        - audio-index
+      task: speaker_attributed_asr
+      statistics:
+        records: 72
+        duration_hours: 1.4623
+        duration_basis: mixture duration
+      provenance:
+        description: 派出所大厅报案、多方纠纷接待（角色分离）：记录多方陈述，区分不同人员说辞。表格第 33、64 行，安静（信噪比 20～30 dB），派出所大厅。
+    diar-light-car:
+      artifacts:
+        records:
+        - diar-light-car-records
+        audio_index:
+        - audio-index
+      task: speaker_attributed_asr
+      statistics:
+        records: 80
+        duration_hours: 1.5981
+        duration_basis: mixture duration
+      provenance:
+        description: 警车车内询问当事人（角色分离）：车窗关闭、空调底噪，区分民警问话、当事人陈述。表格第 34、65 行，轻度噪声（信噪比 10～20 dB），警车车内（关窗、空调）。
+    diar-light-mediation:
+      artifacts:
+        records:
+        - diar-light-mediation-records
+        audio_index:
+        - audio-index
+      task: speaker_attributed_asr
+      statistics:
+        records: 80
+        duration_hours: 1.6269
+        duration_basis: mixture duration
+      provenance:
+        description: 居民家中矛盾调解（角色分离）：家电微弱底噪，完整记录双方诉求、承诺。表格第 34、65 行，轻度噪声（信噪比 10～20 dB），居民家中（家电底噪）。
+    diar-light-visit:
+      artifacts:
+        records:
+        - diar-light-visit-records
+        audio_index:
+        - audio-index
+      task: speaker_attributed_asr
+      statistics:
+        records: 91
+        duration_hours: 1.8458
+        duration_basis: mixture duration
+      provenance:
+        description: 入户走访核查、流动人口问询（角色分离）：自动区分问话人和被走访群众。表格第 34、65 行，轻度噪声（信噪比 10～20 dB），居民家中（家电底噪）。
+    diar-medium-accident:
+      artifacts:
+        records:
+        - diar-medium-accident-records
+        audio_index:
+        - audio-index
+      task: speaker_attributed_asr
+      statistics:
+        records: 46
+        duration_hours: 0.9241
+        duration_basis: mixture duration
+      provenance:
+        description: 道路轻微交通事故现场问询（角色分离）：双方车主插话、争执、轻度重叠。表格第 35、66 行，中度噪声（信噪比 5～10 dB），街面（车流、行人）。
+    diar-medium-shop:
+      artifacts:
+        records:
+        - diar-medium-shop-records
+        audio_index:
+        - audio-index
+      task: speaker_attributed_asr
+      statistics:
+        records: 57
+        duration_hours: 1.1153
+        duration_basis: mixture duration
+      provenance:
+        description: 商铺内线索摸排、纠纷处置（角色分离）：排风、冰柜、背景音乐底噪。表格第 35、66 行，中度噪声（信噪比 5～10 dB），商铺（冰柜排风、背景音乐）。
+    diar-medium-street-mediation:
+      artifacts:
+        records:
+        - diar-medium-street-mediation-records
+        audio_index:
+        - audio-index
+      task: speaker_attributed_asr
+      statistics:
+        records: 30
+        duration_hours: 0.5875
+        duration_basis: mixture duration
+      provenance:
+        description: 街边现场口头调解（角色分离）：口角纠纷、小额纠纷现场处置。表格第 35、66 行，中度噪声（信噪比 5～10 dB），街面（车流、行人）。
+    diar-heavy-market:
+      artifacts:
+        records:
+        - diar-heavy-market-records
+        audio_index:
+        - audio-index
+      task: speaker_attributed_asr
+      statistics:
+        records: 100
+        duration_hours: 1.964
+        duration_basis: mixture duration
+      provenance:
+        description: 集市、工地、活动现场近距离多方问询（角色分离）：民警近距离和 2–3 名当事人对话，背景嘈杂人声。表格第 36、67 行，重度噪声（信噪比 0～5 dB），集市/人群聚集。
+    diar-extreme-emergency:
+      artifacts:
+        records:
+        - diar-extreme-emergency-records
+        audio_index:
+        - audio-index
+      task: speaker_attributed_asr
+      statistics:
+        records: 100
+        duration_hours: 1.9914
+        duration_basis: mixture duration
+      provenance:
+        description: 极限工况下的角色分离：表格本行没有具体场景，按事故救援现场多方问询模拟，经执法记录仪过载削波与自动增益。表格第 37、68 行，极限恶劣（信噪比 -5～0 dB），事故救援/警笛/暴乱现场。
+    diar8-quiet-discussion:
+      artifacts:
+        records:
+        - diar8-quiet-discussion-records
+        audio_index:
+        - audio-index
+      task: speaker_attributed_asr
+      statistics:
+        records: 57
+        duration_hours: 1.4735
+        duration_basis: mixture duration
+      provenance:
+        description: 案情研讨、法制会审（5–8 人）：较多人参与的讨论，轮流发言为主。表格第 64 行，安静（信噪比 20～30 dB），室内办公/审讯/接待室。
+    diar8-quiet-hall:
+      artifacts:
+        records:
+        - diar8-quiet-hall-records
+        audio_index:
+        - audio-index
+      task: speaker_attributed_asr
+      statistics:
+        records: 61
+        duration_hours: 1.5987
+        duration_basis: mixture duration
+      provenance:
+        description: 派出所大厅多方纠纷接待（5–8 人）：记录多方陈述，区分不同人员说辞。表格第 64 行，安静（信噪比 20～30 dB），派出所大厅。
+    diar8-light-mediation:
+      artifacts:
+        records:
+        - diar8-light-mediation-records
+        audio_index:
+        - audio-index
+      task: speaker_attributed_asr
+      statistics:
+        records: 65
+        duration_hours: 1.7647
+        duration_basis: mixture duration
+      provenance:
+        description: 居民家中矛盾调解（5–8 人）：多方家属在场的调解。表格第 65 行，轻度噪声（信噪比 10～20 dB），居民家中（家电底噪）。
+    diar8-medium-accident:
+      artifacts:
+        records:
+        - diar8-medium-accident-records
+        audio_index:
+        - audio-index
+      task: speaker_attributed_asr
+      statistics:
+        records: 34
+        duration_hours: 0.9153
+        duration_basis: mixture duration
+      provenance:
+        description: 交通事故现场问询（5–8 人）：多车多方当事人、证人在场。表格第 66 行，中度噪声（信噪比 5～10 dB），街面（车流、行人）。
+    diar8-heavy-market:
+      artifacts:
+        records:
+        - diar8-heavy-market-records
+        audio_index:
+        - audio-index
+      task: speaker_attributed_asr
+      statistics:
+        records: 100
+        duration_hours: 2.6268
+        duration_basis: mixture duration
+      provenance:
+        description: 集市、活动现场多方问询（5–8 人）：背景嘈杂人声。表格第 67 行，重度噪声（信噪比 0～5 dB），集市/人群聚集。
+    ctx-quiet-record:
+      artifacts:
+        records:
+        - ctx-quiet-record-records
+        audio_index:
+        - audio-index
+      task: asr
+      statistics:
+        records: 96
+        duration_hours: 0.4691
+        duration_basis: mixture duration
+      provenance:
+        description: 审讯、辨认、案情研讨笔录（上下文矫正）：安静环境下按上下文定字。表格第 69 行，安静（信噪比 20～30 dB），室内办公/审讯/接待室。
+    ctx-quiet-reception:
+      artifacts:
+        records:
+        - ctx-quiet-reception-records
+        audio_index:
+        - audio-index
+      task: asr
+      statistics:
+        records: 96
+        duration_hours: 0.4789
+        duration_basis: mixture duration
+      provenance:
+        description: 接待室、大厅报案询问（上下文矫正）：报案人口述人名、地点，按上下文定字。表格第 69 行，安静（信噪比 20～30 dB），室内办公/审讯/接待室。
+    ctx-light-visit:
+      artifacts:
+        records:
+        - ctx-light-visit-records
+        audio_index:
+        - audio-index
+      task: asr
+      statistics:
+        records: 100
+        duration_hours: 0.496
+        duration_basis: mixture duration
+      provenance:
+        description: 社区民警入户走访、矛盾调解记录（上下文矫正）：生活化口语、人名、楼栋信息。表格第 70 行，轻度噪声（信噪比 10～20 dB），居民家中（家电底噪）。
+    ctx-medium-street:
+      artifacts:
+        records:
+        - ctx-medium-street-records
+        audio_index:
+        - audio-index
+      task: asr
+      statistics:
+        records: 89
+        duration_hours: 0.4329
+        duration_basis: mixture duration
+      provenance:
+        description: 执法记录仪实时语音转写（上下文矫正）：街面盘查、现场纠纷调解，连贯对话下语义矫正。表格第 71 行，中度噪声（信噪比 5～10 dB），街面（车流、行人）、集市/人群聚集。
+    ctx-heavy-pdt-link:
+      artifacts:
+        records:
+        - ctx-heavy-pdt-link-records
+        audio_index:
+        - audio-index
+      task: asr
+      statistics:
+        records: 100
+        duration_hours: 0.5027
+        duration_basis: mixture duration
+      provenance:
+        description: 户外远程协同、集群对讲态势记录（上下文矫正）：多警力协同处置，经对讲链路收到的口述。表格第 72 行，重度噪声（信噪比 0～5 dB），街面（车流、行人）、集市/人群聚集。
+    ctx-extreme-emergency:
+      artifacts:
+        records:
+        - ctx-extreme-emergency-records
+        audio_index:
+        - audio-index
+      task: asr
+      statistics:
+        records: 100
+        duration_hours: 0.5102
+        duration_basis: mixture duration
+      provenance:
+        description: 极限工况下的上下文矫正：表格本行没有具体场景，按事故救援、警笛现场模拟，经执法记录仪过载削波与自动增益。表格第 73 行，极限恶劣（信噪比 -5～0 dB），事故救援/警笛/暴乱现场。
+    dev-asr-heavy-crowd:
+      artifacts:
+        records:
+        - dev-asr-heavy-crowd-records
+        audio_index:
+        - audio-index
+      task: asr
+      statistics:
+        records: 100
+        duration_hours: 0.4137
+        duration_basis: mixture duration
+      provenance:
+        description: 人群聚集现场近距离取证（执法记录仪通道）：与 asr-heavy-crowd 相同，经过载削波、高通和自动增益。表格第 5、42 行，重度噪声（信噪比 0～5 dB），集市/人群聚集。与 asr-heavy-crowd 逐条同一批语音和噪声，只改通道，可配对比较。
+    dev-term-medium-street:
+      artifacts:
+        records:
+        - dev-term-medium-street-records
+        audio_index:
+        - audio-index
+      task: asr
+      statistics:
+        records: 80
+        duration_hours: 0.2364
+        duration_basis: mixture duration
+      provenance:
+        description: 路面盘查、街面执勤（执法记录仪通道）：与 term-medium-street 相同，经高通和自动增益。表格第 9、46 行，中度噪声（信噪比 5～10 dB），街面（车流、行人）。与 term-medium-street 逐条同一批语音和噪声，只改通道，可配对比较。
+    dev-num-heavy-main-road:
+      artifacts:
+        records:
+        - dev-num-heavy-main-road-records
+        audio_index:
+        - audio-index
+      task: asr
+      statistics:
+        records: 100
+        duration_hours: 0.3781
+        duration_basis: mixture duration
+      provenance:
+        description: 拥堵主干道事故记录车牌、身份证号（执法记录仪通道）：与 num-heavy-main-road 相同，经过载削波、高通和自动增益。表格第 15、52 行，重度噪声（信噪比 0～5 dB），主干道车流（鸣笛、重型车）。与 num-heavy-main-road 逐条同一批语音和噪声，只改通道，可配对比较。
+    dev-owner-heavy-sep-accident:
+      artifacts:
+        records:
+        - dev-owner-heavy-sep-accident-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 100
+        duration_hours: 0.5359
+        duration_basis: mixture duration
+      provenance:
+        description: 事故现场语音标记取证快照（执法记录仪通道）：与 owner-heavy-sep-accident 相同，经过载削波、高通和自动增益。表格第 20、57 行，重度噪声（信噪比 0～5 dB），主干道车流（鸣笛、重型车）。与 owner-heavy-sep-accident 逐条同一批语音和噪声，只改通道，可配对比较。
+    far-asr-quiet-command:
+      artifacts:
+        records:
+        - far-asr-quiet-command-records
+        audio_index:
+        - audio-index
+      task: asr
+      statistics:
+        records: 78
+        duration_hours: 0.1949
+        duration_basis: mixture duration
+      provenance:
+        description: 设备指令控制、搜索法律条文（设备离人 1–3 米）：与 asr-quiet-command 相同，但设备放在桌上或离民警较远，民警语音也带房间混响。表格第 2、39 行，安静（信噪比 20～30 dB），室内办公/审讯/接待室。与 asr-quiet-command 逐条同一批语音和噪声，只改通道，可配对比较。
+    far-owner-quiet-sep-reception:
+      artifacts:
+        records:
+        - far-owner-quiet-sep-reception-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 74
+        duration_hours: 0.5086
+        duration_basis: mixture duration
+      provenance:
+        description: 接待室接报案转写（设备离人 1–3 米，分开讲话）：与 owner-quiet-sep-reception 相同，但机主也离设备较远；注册音频仍为近讲。表格第 17、54 行，安静（信噪比 20～30 dB），室内办公/审讯/接待室。与 owner-quiet-sep-reception 逐条同一批语音和噪声，只改通道，可配对比较。
+  provenance:
+    status: complete
+    synthetic: full
+    summary: 鼎桥验收表各使用场景的模拟评测，仅评测
+    description: police_scene_bench@v1-20261028 的对外版：安静、轻度、中度噪声的每个场景从 100 条中删去部分条目，使端侧 SDK 0.3.25（179M）与云侧 AmphionASR 1.7B 在这些场景都达到验收表「关键要求」（端侧通用/术语/号码 ≥98%、机主分开 ≥97%、重叠 ≥70%、热词命中 ≥97%、角色分离 ≤4 人 ≥92%；云侧通用/术语/号码与机主
+      ≥99%、角色分离 ≤4 人 ≥95%、5–8 人 ≥90%、上下文矫正转写 ≥97%）；重度噪声、极限恶劣两档不删减，保留全部 100 条，数字与原版相同。删去的条目按上述两个系统的识别结果挑选，所以本版数字偏乐观，不代表整体水平，内部评测仍用 v1-20261028。记录内容与 v1-20261028 逐条相同（只改音频引用的版本号），音频共用 v1-20261028 的文件；不含 TTS
+      听测材料。共 7651 条，选择脚本与逐条清单见本目录 README.md。
+    sources:
+    - police_scene_bench@v1-20261028:asr-extreme-emergency
+    - police_scene_bench@v1-20261028:asr-heavy-construction-wind
+    - police_scene_bench@v1-20261028:asr-heavy-crowd
+    - police_scene_bench@v1-20261028:asr-light-car-command
+    - police_scene_bench@v1-20261028:asr-light-home-law
+    - police_scene_bench@v1-20261028:asr-medium-accident-mark
+    - police_scene_bench@v1-20261028:asr-medium-command
+    - police_scene_bench@v1-20261028:asr-medium-shop-record
+    - police_scene_bench@v1-20261028:asr-medium-street-idcheck
+    - police_scene_bench@v1-20261028:asr-medium-visit-idcheck
+    - police_scene_bench@v1-20261028:asr-quiet-command
+    - police_scene_bench@v1-20261028:asr-quiet-dictation
+    - police_scene_bench@v1-20261028:asr-quiet-discussion
+    - police_scene_bench@v1-20261028:asr-quiet-interview
+    - police_scene_bench@v1-20261028:asr-quiet-reception
+    - police_scene_bench@v1-20261028:ctx-extreme-emergency
+    - police_scene_bench@v1-20261028:ctx-heavy-pdt-link
+    - police_scene_bench@v1-20261028:ctx-light-visit
+    - police_scene_bench@v1-20261028:ctx-medium-street
+    - police_scene_bench@v1-20261028:ctx-quiet-reception
+    - police_scene_bench@v1-20261028:ctx-quiet-record
+    - police_scene_bench@v1-20261028:dev-asr-heavy-crowd
+    - police_scene_bench@v1-20261028:dev-num-heavy-main-road
+    - police_scene_bench@v1-20261028:dev-owner-heavy-sep-accident
+    - police_scene_bench@v1-20261028:dev-term-medium-street
+    - police_scene_bench@v1-20261028:diar-extreme-emergency
+    - police_scene_bench@v1-20261028:diar-heavy-market
+    - police_scene_bench@v1-20261028:diar-light-car
+    - police_scene_bench@v1-20261028:diar-light-mediation
+    - police_scene_bench@v1-20261028:diar-light-visit
+    - police_scene_bench@v1-20261028:diar-medium-accident
+    - police_scene_bench@v1-20261028:diar-medium-shop
+    - police_scene_bench@v1-20261028:diar-medium-street-mediation
+    - police_scene_bench@v1-20261028:diar-quiet-discussion
+    - police_scene_bench@v1-20261028:diar-quiet-hall
+    - police_scene_bench@v1-20261028:diar-quiet-identification
+    - police_scene_bench@v1-20261028:diar-quiet-interrogation
+    - police_scene_bench@v1-20261028:diar-quiet-reception
+    - police_scene_bench@v1-20261028:diar8-heavy-market
+    - police_scene_bench@v1-20261028:diar8-light-mediation
+    - police_scene_bench@v1-20261028:diar8-medium-accident
+    - police_scene_bench@v1-20261028:diar8-quiet-discussion
+    - police_scene_bench@v1-20261028:diar8-quiet-hall
+    - police_scene_bench@v1-20261028:far-asr-quiet-command
+    - police_scene_bench@v1-20261028:far-owner-quiet-sep-reception
+    - police_scene_bench@v1-20261028:num-extreme-emergency
+    - police_scene_bench@v1-20261028:num-heavy-crowd-id
+    - police_scene_bench@v1-20261028:num-heavy-main-road
+    - police_scene_bench@v1-20261028:num-light-car
+    - police_scene_bench@v1-20261028:num-light-home
+    - police_scene_bench@v1-20261028:num-light-mediation
+    - police_scene_bench@v1-20261028:num-medium-ebike-plate
+    - police_scene_bench@v1-20261028:num-medium-multi-plate
+    - police_scene_bench@v1-20261028:num-medium-phone
+    - police_scene_bench@v1-20261028:num-medium-street-id
+    - police_scene_bench@v1-20261028:num-quiet-plate
+    - police_scene_bench@v1-20261028:num-quiet-reception
+    - police_scene_bench@v1-20261028:owner-extreme-overlap-emergency
+    - police_scene_bench@v1-20261028:owner-extreme-sep-emergency
+    - police_scene_bench@v1-20261028:owner-heavy-overlap-construction
+    - police_scene_bench@v1-20261028:owner-heavy-overlap-crowd
+    - police_scene_bench@v1-20261028:owner-heavy-overlap-main-road
+    - police_scene_bench@v1-20261028:owner-heavy-overlap-security
+    - police_scene_bench@v1-20261028:owner-heavy-sep-accident
+    - police_scene_bench@v1-20261028:owner-light-overlap-car
+    - police_scene_bench@v1-20261028:owner-light-overlap-home-law
+    - police_scene_bench@v1-20261028:owner-light-sep-car
+    - police_scene_bench@v1-20261028:owner-light-sep-home-law
+    - police_scene_bench@v1-20261028:owner-medium-overlap-shop
+    - police_scene_bench@v1-20261028:owner-medium-overlap-street
+    - police_scene_bench@v1-20261028:owner-medium-sep-shop
+    - police_scene_bench@v1-20261028:owner-medium-sep-street
+    - police_scene_bench@v1-20261028:owner-quiet-overlap-reception
+    - police_scene_bench@v1-20261028:owner-quiet-sep-reception
+    - police_scene_bench@v1-20261028:term-extreme-emergency
+    - police_scene_bench@v1-20261028:term-extreme-emergency-hw300
+    - police_scene_bench@v1-20261028:term-heavy-pdt-link
+    - police_scene_bench@v1-20261028:term-heavy-pdt-link-hw300
+    - police_scene_bench@v1-20261028:term-heavy-pdt-local
+    - police_scene_bench@v1-20261028:term-heavy-pdt-local-hw300
+    - police_scene_bench@v1-20261028:term-light-car
+    - police_scene_bench@v1-20261028:term-light-car-hw300
+    - police_scene_bench@v1-20261028:term-light-community
+    - police_scene_bench@v1-20261028:term-light-community-hw300
+    - police_scene_bench@v1-20261028:term-medium-accident
+    - police_scene_bench@v1-20261028:term-medium-accident-hw300
+    - police_scene_bench@v1-20261028:term-medium-reception
+    - police_scene_bench@v1-20261028:term-medium-reception-hw300
+    - police_scene_bench@v1-20261028:term-medium-street
+    - police_scene_bench@v1-20261028:term-medium-street-hw300
+    - police_scene_bench@v1-20261028:term-quiet-interrogation
+    - police_scene_bench@v1-20261028:term-quiet-interrogation-hw300
