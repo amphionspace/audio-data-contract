@@ -1,0 +1,64 @@
+- schema_version: dataset-catalog/2.0
+  dataset_id: tdtech_customer_bench
+  version: v1-20261102
+  languages:
+  - zh
+  tasks:
+  - asr
+  artifacts:
+  - name: audio-index
+    kind: audio-index
+    root_alias: tdtech_customer_bench
+    relative_path: versions/v1-20261102/audio-index.jsonl.gz
+    sha256: c95f55150f50a93128eed3ff14294e1b93447c3a2e847161dfe46190220c4481
+    metadata:
+      record_count: 155
+  - name: general-records
+    kind: audio-records
+    root_alias: tdtech_customer_bench
+    relative_path: versions/v1-20261102/records/general.jsonl.gz
+    sha256: 9486ece26d3ac78721ad8ce36fa7b806a7f4ffb4da385b5c5a97311d00134ea8
+    metadata:
+      record_count: 18
+  - name: police-cmd-records
+    kind: audio-records
+    root_alias: tdtech_customer_bench
+    relative_path: versions/v1-20261102/records/police-cmd.jsonl.gz
+    sha256: a1357c79fb6fd74902d01bca6e75f7f32fd5840c41cfdd6e85957bda3fa448e0
+    metadata:
+      record_count: 137
+  splits:
+    general:
+      artifacts:
+        records:
+        - general-records
+        audio_index:
+        - audio-index
+      task: asr
+      statistics:
+        records: 18
+        duration_hours: 0.0326
+        duration_basis: recording duration
+      provenance:
+        description: 通用识别（远场、长语音、PTT、警务 badcase 等客户录音）：EvalHub 机器参考（Qwen-audio-3.1 / MOSS）、FireRedASR2-AED、MiMo-V2.5-ASR 三份转写中有两份在原生打分口径下逐字一致才保留，参考取一致的那份（含 EvalHub 参考时取 EvalHub 的文本），未经人工听审。
+    police-cmd:
+      artifacts:
+        records:
+        - police-cmd-records
+        audio_index:
+        - audio-index
+      task: asr
+      statistics:
+        records: 137
+        duration_hours: 0.0539
+        duration_basis: recording duration
+      provenance:
+        description: '警务指令（PTT 短句）客户录音：参考为录音分组对应的指令词（按《警言警语 V6.0》对齐），其中 39 条经人工听原音确认（reference_kind: human），其余为按术语表对齐的机器参考。'
+  provenance:
+    status: complete
+    synthetic: none
+    summary: 鼎桥客户真实录音的语音识别评测，仅评测
+    description: 鼎桥（td-tech）客户提供的真实录音（邮件/Wiki 基线 2026-09-30，由 EvalHub 整理发布），只用于评测，不进训练。参考文本未全部经人工听审：通用识别只保留三份机器转写中两份一致的条目，难样例被筛掉，数字偏乐观；警务指令的参考来自录音分组的指令词，39 条经人工确认。
+    sources:
+    - EvalHub asr/dingqiao-asr-quality@20261016-machine01
+    - EvalHub asr/dingqiao-asr-police-cmd@20261020-jyjy-v6-human04
