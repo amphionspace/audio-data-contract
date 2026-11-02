@@ -2148,10 +2148,10 @@ AISHELL-1、LibriSpeech 合成的多人对话
 | [ts_scene_pool@magicdata-near-20261023](../../catalog/ts_scene_pool.yaml#L776) | 96.0 | 已登记 | 没有 |
 | [ts_scene_pool@multi-20261017](../../catalog/ts_scene_pool.yaml#L171) | 193.4 | 已登记 | 没有 |
 | [ts_scene_pool@multi-20261018](../../catalog/ts_scene_pool.yaml#L257) | 386.2 | 已登记 | 没有 |
-| [ts_scene_pool@ramc-alt-twins-20261028](../../catalog/ts_scene_pool.yaml#L1643) | 37.1 | 已登记 | 没有 |
-| [ts_scene_pool@ramc-handover-20261028](../../catalog/ts_scene_pool.yaml#L1759) | 24.9 | 已登记 | 没有 |
-| [ts_scene_pool@ramc-hard-20261028](../../catalog/ts_scene_pool.yaml#L1701) | 24.9 | 已登记 | 没有 |
-| [ts_scene_pool@ramc-near-20261028](../../catalog/ts_scene_pool.yaml#L1584) | 49.1 | 已登记 | 没有 |
+| [ts_scene_pool@ramc-alt-twins-20261028](../../catalog/ts_scene_pool.yaml#L2243) | 37.1 | 已登记 | 没有 |
+| [ts_scene_pool@ramc-handover-20261028](../../catalog/ts_scene_pool.yaml#L2359) | 24.9 | 已登记 | 没有 |
+| [ts_scene_pool@ramc-hard-20261028](../../catalog/ts_scene_pool.yaml#L2301) | 24.9 | 已登记 | 没有 |
+| [ts_scene_pool@ramc-near-20261028](../../catalog/ts_scene_pool.yaml#L2184) | 49.1 | 已登记 | 没有 |
 | [ts_scene_pool@solo-20261019](../../catalog/ts_scene_pool.yaml#L343) | 97.2 | 已登记 | 没有 |
 | [ts_scene_pool@solo-20261020](../../catalog/ts_scene_pool.yaml#L429) | 97.2 | 已登记 | 没有 |
 | [ts_scene_pool@v2-20261016](../../catalog/ts_scene_pool.yaml#L1) | 315.8 | 已登记 | 没有 |
