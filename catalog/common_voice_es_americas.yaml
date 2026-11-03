@@ -1,0 +1,124 @@
+  - schema_version: dataset-catalog/2.0
+    dataset_id: common_voice_es
+    version: americas-v1-20261103
+    languages:
+      - es
+    tasks:
+      - asr
+    aliases: []
+    artifacts:
+      - name: train_recordings
+        kind: lhotse-recordings
+        root_alias: common_voice_es
+        relative_path: versions/americas-v1-20261103/manifests/cv-es-americas_recordings_train.jsonl.gz
+        expected_bytes: 2111237
+        sha256: fe4c364f98eebb222a758895a8b1f275373cc2dd85f71a062ed37b5669d35635
+      - name: train_supervisions
+        kind: lhotse-supervisions
+        root_alias: common_voice_es
+        relative_path: versions/americas-v1-20261103/manifests/cv-es-americas_supervisions_train.jsonl.gz
+        expected_bytes: 8580937
+        sha256: fb293360562221e0726b9bf90bb67fedc0456039cf7ab7adc344e0b2a3cd393c
+      - name: dev_recordings
+        kind: lhotse-recordings
+        root_alias: common_voice_es
+        relative_path: versions/americas-v1-20261103/manifests/cv-es-americas_recordings_dev.jsonl.gz
+        expected_bytes: 27986
+        sha256: d4c1a5461bc7420c2cb7c99039cec165cf55ad31f692c170d531f710394aad54
+      - name: dev_supervisions
+        kind: lhotse-supervisions
+        root_alias: common_voice_es
+        relative_path: versions/americas-v1-20261103/manifests/cv-es-americas_supervisions_dev.jsonl.gz
+        expected_bytes: 134462
+        sha256: 5c8569b5d2b7c2fa027912d05d049cf6d725e5c0ea155651d8ea75481c19e9e2
+      - name: test_recordings
+        kind: lhotse-recordings
+        root_alias: common_voice_es
+        relative_path: versions/americas-v1-20261103/manifests/cv-es-americas_recordings_test.jsonl.gz
+        expected_bytes: 32143
+        sha256: 4e098c9e4a9a5b7a44ed6da57452804b2592359912da7d2e7ba8df6a45b8e400
+      - name: test_supervisions
+        kind: lhotse-supervisions
+        root_alias: common_voice_es
+        relative_path: versions/americas-v1-20261103/manifests/cv-es-americas_supervisions_test.jsonl.gz
+        expected_bytes: 193027
+        sha256: c7e018ca088fe17abae9c3ae3dc54e76e0c6ddcd7b4c28007300bc2b91153d88
+    splits:
+      train:
+        artifacts:
+          recordings:
+            - train_recordings
+          supervisions:
+            - train_supervisions
+        statistics:
+          count: 178944
+          duration_hours: 254.3717
+          duration_basis: sum of kept supervision durations (seconds) from common_voice_es@legacy manifests
+          hours_by_region:
+            mexico: 186.3345
+            andean: 21.3013
+            rioplatense: 17.1903
+            caribbean: 13.5399
+            central_america: 9.6318
+            chilean: 6.1928
+            andean+rioplatense: 0.0904
+            andean+mexico: 0.0435
+            caribbean+central_america: 0.0287
+            andean+caribbean+mexico+rioplatense: 0.0186
+      dev:
+        artifacts:
+          recordings:
+            - dev_recordings
+          supervisions:
+            - dev_supervisions
+        statistics:
+          count: 1961
+          duration_hours: 3.2541
+          duration_basis: sum of kept supervision durations (seconds) from common_voice_es@legacy manifests
+          hours_by_region:
+            mexico: 1.0408
+            andean: 0.6906
+            rioplatense: 0.5397
+            caribbean: 0.5237
+            central_america: 0.2365
+            chilean: 0.2228
+      test:
+        artifacts:
+          recordings:
+            - test_recordings
+          supervisions:
+            - test_supervisions
+        statistics:
+          count: 2136
+          duration_hours: 3.5676
+          duration_basis: sum of kept supervision durations (seconds) from common_voice_es@legacy manifests
+          hours_by_region:
+            mexico: 1.16
+            andean: 0.8308
+            caribbean: 0.5567
+            rioplatense: 0.3973
+            central_america: 0.3607
+            chilean: 0.2527
+            andean+mexico: 0.0067
+            central_america+mexico: 0.0015
+            andean+caribbean: 0.0013
+    derived_from: common_voice_es
+    recipe_parameters:
+      rule: keep a row only when its comma-separated accents field consists of Common Voice preset Americas labels; rows with Spain or Philippines labels, free-text accents or no accent are dropped
+      regions:
+        mexico: México
+        central_america: América central
+        caribbean: 'Caribe: Cuba, Venezuela, Puerto Rico, República Dominicana, Panamá, Colombia caribeña, México caribeño, Costa del golfo de México'
+        andean: 'Andino-Pacífico: Colombia, Perú, Ecuador, oeste de Bolivia y Venezuela andina'
+        rioplatense: 'Rioplatense: Argentina, Uruguay, este de Bolivia, Paraguay'
+        chilean: 'Chileno: Chile, Cuyo'
+      tool: scripts/build_common_voice_es_americas.py
+    provenance:
+      description: 从现有 Common Voice 西语（CV 24.0）里按说话人自填口音选出美洲六个预设口音的录音，不复制音频，音频仍读原版本。没填口音的录音（约占六成）无法判断地区，没有收入。
+      source: common_voice_es@legacy
+      registered_at: '2026-11-03'
+      license: CC0-1.0
+      locales:
+        - es-MX
+        - es-419
+      dataset_family: common_voice_es

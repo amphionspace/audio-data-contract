@@ -1,0 +1,135 @@
+  - schema_version: dataset-catalog/2.0
+    dataset_id: mtedx
+    version: hf-0b97ef40298d
+    languages:
+      - es
+      - pt
+    tasks:
+      - asr
+    aliases: []
+    artifacts:
+      - name: readme
+        kind: documentation
+        root_alias: mtedx
+        relative_path: source/hf-0b97ef40298d/README.md
+        expected_bytes: 28295
+        sha256: ba669358b8e2f29c7f8711ccddb5d0a07246e458827b5b635103723aa31caa59
+      - name: es_parquet
+        kind: parquet-directory
+        root_alias: mtedx
+        relative_path: source/hf-0b97ef40298d/es
+        metadata:
+          file_count: 56
+          expected_bytes: 25062015078
+          tree_sha256: 124a1e61faab6006a289988a08c4282a944f9ad904a8daa7a06019f9ddff542a
+      - name: pt_parquet
+        kind: parquet-directory
+        root_alias: mtedx
+        relative_path: source/hf-0b97ef40298d/pt
+        metadata:
+          file_count: 50
+          expected_bytes: 21173051837
+          tree_sha256: 0733dcfdb1e67ae5f29424afa2ca3a096014dc6b0ae290af6ac4a3cf65a251a0
+      - name: download_state
+        kind: dataset-state
+        root_alias: mtedx
+        relative_path: versions/hf-0b97ef40298d/download_state/state.json
+        expected_bytes: 920
+        sha256: 24f73fa2c04510cd56a2c68246e609385868d2f802a199df78d6356f380bde6d
+    splits:
+      es_train:
+        statistics:
+          count: 100198
+          talks: 988
+          duration_hours: 175.4149
+          duration_basis: sum of Parquet duration column in seconds (es/train-*.parquet); pinned upstream file hashes verified
+          official_count: 102171
+          official_duration_hours: 212.3058
+        artifacts:
+          source:
+            - es_parquet
+        provenance:
+          files: es/train-*.parquet
+      es_valid:
+        statistics:
+          count: 894
+          talks: 16
+          duration_hours: 1.5543
+          duration_basis: sum of Parquet duration column in seconds (es/valid-*.parquet); pinned upstream file hashes verified
+          official_count: 905
+          official_duration_hours: 1.9481
+        artifacts:
+          source:
+            - es_parquet
+        provenance:
+          files: es/valid-*.parquet
+      es_test:
+        statistics:
+          count: 1003
+          talks: 12
+          duration_hours: 1.7281
+          duration_basis: sum of Parquet duration column in seconds (es/test-*.parquet); pinned upstream file hashes verified
+          official_count: 1012
+          official_duration_hours: 2.0764
+        artifacts:
+          source:
+            - es_parquet
+        provenance:
+          files: es/test-*.parquet
+      pt_train:
+        statistics:
+          count: 88798
+          talks: 812
+          duration_hours: 152.0753
+          duration_basis: sum of Parquet duration column in seconds (pt/train-*.parquet); pinned upstream file hashes verified
+          official_count: 90244
+          official_duration_hours: 178.5703
+        artifacts:
+          source:
+            - pt_parquet
+        provenance:
+          files: pt/train-*.parquet
+      pt_valid:
+        statistics:
+          count: 1002
+          talks: 9
+          duration_hours: 1.54
+          duration_basis: sum of Parquet duration column in seconds (pt/valid-*.parquet); pinned upstream file hashes verified
+          official_count: 1013
+          official_duration_hours: 1.8117
+        artifacts:
+          source:
+            - pt_parquet
+        provenance:
+          files: pt/valid-*.parquet
+      pt_test:
+        statistics:
+          count: 1006
+          talks: 13
+          duration_hours: 1.8193
+          duration_basis: sum of Parquet duration column in seconds (pt/test-*.parquet); pinned upstream file hashes verified
+          official_count: 1020
+          official_duration_hours: 2.1244
+        artifacts:
+          source:
+            - pt_parquet
+        provenance:
+          files: pt/test-*.parquet
+    provenance:
+      summary: TEDx 西语/葡语演讲（mTEDx，非商用）
+      source: Hugging Face
+      source_id: deepdml/mtedx
+      revision: 0b97ef40298de2b7ec1c78e76be3969d604aa022
+      url: https://huggingface.co/datasets/deepdml/mtedx
+      download_mirror: https://hf-mirror.com
+      license: cc-by-nc-nd-4.0
+      locales:
+        - es
+        - pt
+      original_source: https://www.openslr.org/100/
+      description: Multilingual TEDx（OpenSLR 100）的 HF Parquet 转存，只下了西语和葡语的 ASR 部分；整段讲座按官方 segments 切成句子，未含 iwslt2021 划分。转存 README 称丢弃了短于 0.5 秒或长于 30 秒的句子，实测只去掉了短于 0.5 秒的，长于 30 秒的仍在（train 西语 639 句、葡语 511 句，最长约 284 秒）。条数比官方少 1–2%，时长比官方 statistics.txt 少约 17%，差异原因未核实；以本条统计为准。讲者口音未标注。CC BY-NC-ND，仅限非商用。OpenSLR 原包在国内镜像上太慢，改用此转存。
+      download_scope: 'Multilingual TEDx (SLR100) parquet copy: Spanish and Portuguese ASR configs only'
+      expected_download_files: 107
+      expected_download_bytes: 46235095210
+      integrity: verified
+      local_scan_date: '2026-11-03'

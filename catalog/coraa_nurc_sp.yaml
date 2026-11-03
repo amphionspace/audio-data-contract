@@ -1,0 +1,92 @@
+  - schema_version: dataset-catalog/2.0
+    dataset_id: coraa_nurc_sp
+    version: hf-c02be121ec19
+    languages:
+      - pt
+    tasks:
+      - asr
+    aliases: []
+    artifacts:
+      - name: source
+        kind: hf-dataset-snapshot
+        root_alias: coraa_nurc_sp
+        relative_path: source/hf-c02be121ec19
+        metadata:
+          file_count: 62
+          expected_bytes: 27510488119
+          tree_sha256: 0e7d8d341f74ce61ecd050874d333e0a25a083daf7ab9ace676ff3242db3991f
+      - name: filtered_parquet
+        kind: parquet-directory
+        root_alias: coraa_nurc_sp
+        relative_path: source/hf-c02be121ec19/data/filtered
+        metadata:
+          file_count: 55
+          expected_bytes: 27433842174
+          tree_sha256: 6ee4aeb5b0434062704f97ffb01b8fe1755778ac8b3b909bc1c45d860eff32e7
+      - name: download_state
+        kind: dataset-state
+        root_alias: coraa_nurc_sp
+        relative_path: versions/hf-c02be121ec19/download_state/state.json
+        expected_bytes: 1116
+        sha256: 368c5c0e02aa1e6eaa5ac4614dab66ff5b312acfd1137247e4dec66950dd15f7
+    splits:
+      train:
+        artifacts:
+          source:
+            - filtered_parquet
+        statistics:
+          count: 166971
+          empty_transcripts: 0
+          duration_hours: 224.471
+          duration_basis: sum of the Parquet duration column (seconds, stored as strings) in data/filtered/train-*.parquet; embedded 16 kHz audio; pinned upstream file hashes verified
+          hours_by_genre:
+            interview: 132.39
+            dialogue: 75.93
+            lecture and talks: 16.15
+        provenance:
+          files: data/filtered/train-*.parquet
+      validation:
+        artifacts:
+          source:
+            - filtered_parquet
+        statistics:
+          count: 3142
+          empty_transcripts: 7
+          duration_hours: 4.5965
+          duration_basis: sum of the Parquet duration column (seconds, stored as strings) in data/filtered/validation-*.parquet; embedded 16 kHz audio; pinned upstream file hashes verified
+          hours_by_genre:
+            lecture and talks: 1.69
+            interview: 1.46
+            dialogue: 1.45
+        provenance:
+          files: data/filtered/validation-*.parquet
+      test:
+        artifacts:
+          source:
+            - filtered_parquet
+        statistics:
+          count: 7110
+          empty_transcripts: 1
+          duration_hours: 10.2303
+          duration_basis: sum of the Parquet duration column (seconds, stored as strings) in data/filtered/test-*.parquet; embedded 16 kHz audio; pinned upstream file hashes verified
+          hours_by_genre:
+            interview: 3.83
+            lecture and talks: 3.28
+            dialogue: 3.12
+        provenance:
+          files: data/filtered/test-*.parquet
+    provenance:
+      summary: 圣保罗口音葡语自发语音（NURC-SP）
+      source: Hugging Face
+      source_id: nilc-nlp/CORAA-NURC-SP-Audio-Corpus
+      revision: c02be121ec191fe35fc5808209c346b59fe7e3e9
+      url: https://huggingface.co/datasets/nilc-nlp/CORAA-NURC-SP-Audio-Corpus
+      download_mirror: https://hf-mirror.com
+      license: cc-by-nc-nd-4.0
+      locale: pt-BR
+      description: CORAA NURC-SP：圣保罗城市口音的巴西葡语自发语音（对话、访谈、讲座），人工校对转写。只下了 filtered 这套 Parquet（已去掉空转写）和全部 CSV 元数据；original 这套 Parquet（同样的句子外加空转写行）和旧版 WAV tar.gz（与 Parquet 同一批音频）内容重复，到 HF 的链路只有约 2 MB/s，没有下载。speaker_id、num_speakers 由 WhisperX 自动生成，不一定准。test 就是 tarsila_asr 里的 NURC-SP 部分（10.23 h），不要一起累计；与 nurc_sp_corpus_minimo 的 21 段录音按录音编号核对没有重合。CC BY-NC-ND，仅限非商用。
+      download_scope: CORAA NURC-SP filtered Parquet config plus README and all legacy metadata CSVs; the original Parquet config (same segments plus empty-transcript rows) and the legacy WAV tarballs (same audio as the Parquet files) were not downloaded
+      expected_download_files: 62
+      expected_download_bytes: 27510488119
+      integrity: verified
+      local_scan_date: '2026-11-03'

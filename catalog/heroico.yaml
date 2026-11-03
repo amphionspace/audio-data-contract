@@ -1,0 +1,119 @@
+  - schema_version: dataset-catalog/2.0
+    dataset_id: heroico
+    version: openslr-39
+    languages:
+      - es
+    tasks:
+      - asr
+    aliases: []
+    artifacts:
+      - name: source_archive
+        kind: source-archive
+        root_alias: heroico
+        relative_path: source/openslr-39/LDC2006S37.tar.gz
+        expected_bytes: 2141920338
+        sha256: e24646cff85e4a3c3be6491affd64a4cc50218d7b84a4f5294a2f0e490f8ed7a
+      - name: download_state
+        kind: dataset-state
+        root_alias: heroico
+        relative_path: versions/openslr-39/download_state/state.json
+        expected_bytes: 864
+        sha256: 571926c00646bdba97932f66073d7f492888be569acdf0607f2d8996f60117ea
+    splits:
+      heroico_recordings:
+        artifacts:
+          source_archive:
+            - source_archive
+        statistics:
+          count: 5640
+          speakers: 102
+          duration_hours: 6.4827
+          duration_basis: RIFF data-chunk bytes / header byte rate for every head-mounted microphone WAV in the tarball; throat-microphone copies (file names starting with t) excluded
+          sample_formats:
+            1ch/22050Hz/16bit/fmt1: 5640
+        provenance:
+          locale: es-MX
+          notes: 墨西哥军校学员朗读
+      heroico_answers:
+        artifacts:
+          source_archive:
+            - source_archive
+        statistics:
+          count: 7267
+          speakers: 102
+          duration_hours: 5.9895
+          duration_basis: RIFF data-chunk bytes / header byte rate for every head-mounted microphone WAV in the tarball; throat-microphone copies (file names starting with t) excluded
+          sample_formats:
+            1ch/22050Hz/16bit/fmt1: 7267
+        provenance:
+          locale: es-MX
+          notes: 墨西哥军校学员自由回答问题
+      usma_native:
+        artifacts:
+          source_archive:
+            - source_archive
+        statistics:
+          count: 1647
+          speakers: 8
+          duration_hours: 1.1388
+          duration_basis: RIFF data-chunk bytes / header byte rate for every head-mounted microphone WAV in the tarball; throat-microphone copies (file names starting with t) excluded
+          sample_formats:
+            1ch/22050Hz/16bit/fmt1: 411
+            1ch/20050Hz/16bit/fmt1: 1236
+          throat_mic_files: 1235
+          throat_mic_hours: 0.8631
+          hours_by_speaker:
+            native-f-Mexico-140-43-69-NA-dhp9104: 0.157
+            native-f-Mexico-190-45-62-NA-mgh8170: 0.157
+            native-f-Venezuela-NA-NA-NA-NA-mxs0000: 0.086
+            native-f-Venezuela-NA-NA-NA-NA-xxx0000: 0.103
+            native-m-Argentina-213-66-74-NA-njm6349: 0.162
+            native-m-Mexico-162-41-68-NA-cgl7958: 0.157
+            native-m-Mexico.Texas-200-35-67-3.3-jxa8451: 0.157
+            native-m-Spain-155-32-69-3.3-jez1112: 0.16
+        provenance:
+          locale: es
+          notes: 西点军校母语者朗读（墨西哥、委内瑞拉、阿根廷各若干人，西班牙 1 人）
+      usma_nonnative:
+        artifacts:
+          source_archive:
+            - source_archive
+        statistics:
+          count: 2028
+          speakers: 10
+          duration_hours: 1.2986
+          duration_basis: RIFF data-chunk bytes / header byte rate for every head-mounted microphone WAV in the tarball; throat-microphone copies (file names starting with t) excluded
+          sample_formats:
+            1ch/20050Hz/16bit/fmt1: 1204
+            1ch/22050Hz/16bit/fmt1: 824
+          throat_mic_files: 1204
+          throat_mic_hours: 0.8683
+          hours_by_speaker:
+            nonnative-f-Argentina.France-109-62-62-NA-jfm3531: 0.157
+            nonnative-f-mic2-152-42-66-3.3-djg6693: 0.165
+            nonnative-m-Castillian-NA-NA-NA-NA-cxs0000: 0.09
+            nonnative-m-NA-NA-NA-NA-NA-xxx0001: 0.081
+            nonnative-m-NA-NA-NA-NA-NA-xxx0002: 0.082
+            nonnative-m-Puerto.Rico-NA-NA-NA-NA-xxx0003: 0.091
+            nonnative-m-mic2-152-34-70-3.3-tdn9604: 0.165
+            nonnative-m-mic2-186-39-73-NA-jjm3586: 0.165
+            nonnative-m-mic2-195-38-72-3.3-tcf9970: 0.165
+            nonnative-m-mic2-210-37-72-3.3-rjf1543: 0.138
+        provenance:
+          locale: es
+          notes: 西点军校非母语学员朗读
+    provenance:
+      summary: 墨西哥军校西语朗读与问答（Heroico）
+      source: OpenSLR
+      source_id: SLR39
+      url: https://www.openslr.org/39/
+      ldc_catalog: LDC2006S37
+      download_mirror: https://openslr.magicdatatech.com (with openslr.elda.org and openslr.trmal.net)
+      locale: es-MX
+      description: West Point Heroico Spanish Speech（LDC2006S37，OpenSLR 39 转发）。主体是 2001 年在墨西哥军校录的朗读和自由问答，墨西哥口音；另有西点军校的小部分录音，含母语者和美国非母语学员，usma_nonnative 不是母语口音，训练美洲口音时应排除。部分西点录音同时录了喉麦（文件名以 t 开头），已从统计中剔除。22.05 kHz 16-bit；部分西点文件头写的是 20050 Hz，按文件头计时长。转写文本是 Latin-1 编码；heroico_answers 有 1 条音频没有转写。
+      license: Apache-2.0 (OpenSLR); LDC2006S37
+      download_scope: Heroico (LDC2006S37) speech and transcripts mirrored by OpenSLR 39
+      expected_download_files: 1
+      expected_download_bytes: 2141920338
+      integrity: verified
+      local_scan_date: '2026-11-03'

@@ -1,0 +1,27 @@
+  - schema_version: dataset-view/1.0
+    view_id: common_voice_es/americas
+    version: americas-v1-20261103
+    source:
+      dataset_id: common_voice_es
+      version: legacy
+    result:
+      dataset_id: common_voice_es
+      version: americas-v1-20261103
+    materialization: full
+    lineage_status: exact
+    transforms:
+      - name: americas-accents
+        version: v1-20261103
+        kind: filter
+        writes:
+          - $membership
+        parameters:
+          kept: rows whose comma-separated accents field consists only of Common Voice preset Americas labels (México, América central, Caribe, Andino-Pacífico, Rioplatense, Chileno)
+          dropped: Spain or Philippines labels, free-text accents, and rows without an accent
+          rows:
+            train: 178944
+            dev: 1961
+            test: 2136
+          tool: scripts/build_common_voice_es_americas.py
+    provenance:
+      registered_at: '2026-11-03'

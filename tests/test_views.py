@@ -139,8 +139,10 @@ def test_registered_local_views_are_valid_and_resolvable(capsys):
     datasets = load_catalog(ROOT / "catalog")
     views = load_view_catalog(ROOT / "views", datasets)
 
-    assert len(views) == 127
+    assert len(views) == 128
     assert all(view.materialization == "full" for view in views)
+    americas = resolve_view(views, datasets, "common_voice_es/americas", "americas-v1-20261103")
+    assert americas.key == "common_voice_es@americas-v1-20261103"
     hotwords = resolve_view(views, datasets, "aishell2/hotwords", "hotwords-v1-20261102")
     assert hotwords.key == "aishell2@hotwords-v1-20261102"
     assert views.get("aishell2/hotwords", "hotwords-v1-20261102").source.version == "train-punc-v1-20261102"
@@ -185,4 +187,4 @@ def test_registered_local_views_are_valid_and_resolvable(capsys):
         assert views.get(view_id, version).lineage_status == "exact"
 
     assert main(["validate-views", str(ROOT / "views"), str(ROOT / "catalog")]) == 0
-    assert json.loads(capsys.readouterr().out) == {"views": 127}
+    assert json.loads(capsys.readouterr().out) == {"views": 128}

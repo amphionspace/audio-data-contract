@@ -2062,6 +2062,18 @@ Emilia-YODAS 多语种 YouTube 语音
 
 - `mls_sidon@tts-unified-v0.1`：音频编码字节存放在 Lance 表内；原始划分在 metadata_json.original_split，统一输出全部为 train。ASR 用 tts_lance.iter_asr_samples（tts-asr-rules/v1）读取，会排除原始 dev/test 等
 
+### mtedx
+
+TEDx 西语/葡语演讲（mTEDx，非商用）
+
+语言：es、pt · 任务：语音识别
+
+| 版本 | 时长（小时） | 口径 | COS |
+|---|---:|---|---|
+| [mtedx@hf-0b97ef40298d](../../catalog/mtedx.yaml#L1) | 334.1 | 已登记 | 没有 |
+
+- `mtedx@hf-0b97ef40298d`：Multilingual TEDx（OpenSLR 100）的 HF Parquet 转存，只下了西语和葡语的 ASR 部分；整段讲座按官方 segments 切成句子，未含 iwslt2021 划分。转存 README 称丢弃了短于 0.5 秒或长于 30 秒的句子，实测只去掉了短于 0.5 秒的，长于 30 秒的仍在（train 西语 639 句、葡语 511 句，最长约 284 秒）。条数比官方少 1–2%，时长比官方 statistics.txt 少约 17%，差异原因未核实；以本条统计为准。讲者口音未标注。CC BY-NC-ND，仅限非商用。OpenSLR 原包在国内镜像上太慢，改用此转存
+
 ### multi-talker-sd
 
 AISHELL-1、LibriSpeech 合成的多人对话
@@ -2637,6 +2649,18 @@ AISHELL-1、LibriSpeech 合成的多人对话
 
 - `wutheringwaves@tts-unified-v0.1`：音频编码字节存放在 Lance 表内；原始划分在 metadata_json.original_split，统一输出全部为 train。ASR 用 tts_lance.iter_asr_samples（tts-asr-rules/v1）读取，会排除原始 dev/test 等
 
+### yodas_granary_es_pt
+
+YouTube 西语/葡语人工字幕语音（YODAS）
+
+语言：es、pt · 任务：语音识别
+
+| 版本 | 时长（小时） | 口径 | COS |
+|---|---:|---|---|
+| [yodas_granary_es_pt@hf-969944574ea3](../../catalog/yodas_granary_es_pt.yaml#L1) | 3,658.5 | 已登记 | 快照 20260914 |
+
+- `yodas_granary_es_pt@hf-969944574ea3`：YODAS-Granary 里西语、葡语的人工字幕分区（es000、pt000），音频已切成句子；asr_only 与 ast 两个划分都带原文转写，ast 另有英文翻译。自动字幕分区（es100–108、pt100–103，约 4 TB）未下载。地区未区分。es000 的视频 99%（23,976/24,208 个）也在 yodas_es 里，是同一批 YouTube 音频、切分和转写不同，西语部分不要与 yodas_es 一起累计；葡语此前没有登记 YODAS
+
 ### zenless_voice
 
 《绝区零》多语配音，TTS 用
@@ -2693,9 +2717,17 @@ AudioSet 道路交通噪声
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
+| [ciempiess_balance@hf-e48eac011954](../../catalog/ciempiess_balance.yaml#L1) | 18.3 | 已登记 | 没有 |
+| [ciempiess_complementary@hf-3401a78c38d7](../../catalog/ciempiess_complementary.yaml#L1) | 0.9 | 已登记 | 没有 |
+| [ciempiess_fem@hf-e49f428d174b](../../catalog/ciempiess_fem.yaml#L1) | 13.9 | 已登记 | 没有 |
 | [ciempiess_light@hf-3d6afb2b3b8d](../../catalog/ciempiess_light.yaml#L1) | 18.4 | 已登记 | 快照 20260914 |
+| [ciempiess_test@hf-c134fff8e335](../../catalog/ciempiess_test.yaml#L1) | 8.1 | 已登记 | 快照 20260914 |
 
+- `ciempiess_balance@hf-e48eac011954`：墨西哥中部口音广播对话，男女时长均衡，官方完整版本
+- `ciempiess_complementary@hf-3401a78c38d7`：墨西哥中部口音的孤立词朗读，按音素均衡挑词，用来补足少见音素
+- `ciempiess_fem@hf-e49f428d174b`：女声广播语音，大部分为墨西哥口音（12.0 h），另有多米尼加、委内瑞拉、阿根廷、萨尔瓦多少量；按 country 字段可区分
 - `ciempiess_light@hf-3d6afb2b3b8d`：墨西哥西语 CIEMPIESS LIGHT 官方完整版本
+- `ciempiess_test@hf-c134fff8e335`：墨西哥西语独立测试集，只用于评测，不进训练
 
 ### cml_tts_fr
 
@@ -2753,9 +2785,12 @@ AudioSet 道路交通噪声
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
+| [common_voice_es@americas-v1-20261103](../../catalog/common_voice_es_americas.yaml#L1) | 261.2 | 已登记 | 没有 |
 | [common_voice_es@legacy](../../catalog/legacy_multilingual.yaml#L951) | 568.5 | 已登记 | 快照 20260914 |
 
+- `common_voice_es@americas-v1-20261103`：从现有 Common Voice 西语（CV 24.0）里按说话人自填口音选出美洲六个预设口音的录音，不复制音频，音频仍读原版本。没填口音的录音（约占六成）无法判断地区，没有收入
 - 有含标点版本
+- 含派生版本（与源数据可能重叠）
 
 ### common_voice_fr
 
@@ -2793,6 +2828,18 @@ AudioSet 道路交通噪声
 
 - 有含标点版本
 
+### common_voice_pt
+
+Common Voice 17 葡语朗读
+
+语言：pt · 任务：语音识别
+
+| 版本 | 时长（小时） | 口径 | COS |
+|---|---:|---|---|
+| [common_voice_pt@hf-8262c16bf297](../../catalog/common_voice_pt.yaml#L31) | 184.3 | 已登记 | 没有 |
+
+- `common_voice_pt@hf-8262c16bf297`：Common Voice 17.0 葡语的非官方 HF 镜像（官方 Mozilla 仓库需要授权）。口音字段大多为空，填写的几乎都是巴西口音。镜像另含 validated / other / invalidated（172.6 / 29.0 / 9.4 h），未登记为划分
+
 ### common_voice_ru
 
 众包朗读俄语（Common Voice）
@@ -2804,6 +2851,42 @@ AudioSet 道路交通噪声
 | [common_voice_ru@legacy](../../catalog/legacy_multilingual.yaml#L2061) | 69.9 | 已登记 | 快照 20260914 |
 
 - 有含标点版本
+
+### coraa
+
+巴西葡语多来源语音（CORAA v1.1）
+
+语言：pt · 任务：语音识别
+
+| 版本 | 时长（小时） | 口径 | COS |
+|---|---:|---|---|
+| [coraa@hf-719c91226a79](../../catalog/coraa.yaml#L1) | 290.5 | 已登记 | 没有 |
+
+- `coraa@hf-719c91226a79`：CORAA v1.1：NURC-Recife、ALIP、SP2010、C-ORAL-BRASIL、TEDx 葡语五个来源的人工校对语音，绝大多数为巴西葡语，少量葡萄牙葡语（metadata 的 variety=pt_pt）。train 是 5 个分卷 rar，需整体解压。CC BY-NC-ND，仅限非商用
+
+### coraa_mupe
+
+巴西葡语生活访谈（CORAA MUPE）
+
+语言：pt · 任务：语音识别
+
+| 版本 | 时长（小时） | 口径 | COS |
+|---|---:|---|---|
+| [coraa_mupe@hf-437966f103b3](../../catalog/coraa_mupe.yaml#L1) | 365.2 | 已登记 | 快照 20260914 |
+
+- `coraa_mupe@hf-437966f103b3`：巴西葡语人生经历访谈（Museu da Pessoa），官方 train/validation/test 三个划分完整下载
+
+### coraa_nurc_sp
+
+圣保罗口音葡语自发语音（NURC-SP）
+
+语言：pt · 任务：语音识别
+
+| 版本 | 时长（小时） | 口径 | COS |
+|---|---:|---|---|
+| [coraa_nurc_sp@hf-c02be121ec19](../../catalog/coraa_nurc_sp.yaml#L1) | 239.3 | 已登记 | 没有 |
+
+- `coraa_nurc_sp@hf-c02be121ec19`：CORAA NURC-SP：圣保罗城市口音的巴西葡语自发语音（对话、访谈、讲座），人工校对转写。只下了 filtered 这套 Parquet（已去掉空转写）和全部 CSV 元数据；original 这套 Parquet（同样的句子外加空转写行）和旧版 WAV tar.gz（与 Parquet 同一批音频）内容重复，到 HF 的链路只有约 2 MB/s，没有下载。speaker_id、num_speakers 由 WhisperX 自动生成，不一定准。test 就是 tarsila_asr 里的 NURC-SP 部分（10.23 h），不要一起累计；与 nurc_sp_corpus_minimo 的 21 段录音按录音编号核对没有重合。CC BY-NC-ND，仅限非商用
 
 ### demand
 
@@ -2953,6 +3036,18 @@ Emilia 韩语野外语音
 
 - 有含标点版本
 
+### fleurs_pt
+
+FLEURS 巴西葡语朗读
+
+语言：pt · 任务：语音识别
+
+| 版本 | 时长（小时） | 口径 | COS |
+|---|---:|---|---|
+| [fleurs_pt@hf-70bb2e84b976](../../catalog/fleurs_pt.yaml#L1) | 14.7 | 已登记 | 没有 |
+
+- `fleurs_pt@hf-70bb2e84b976`：Google FLEURS 的 pt_br 子集（音频归档和 TSV 转写），其余语种未下载
+
 ### fleurs_ru
 
 多语朗读俄语部分（FLEURS）
@@ -3002,6 +3097,30 @@ Emilia 韩语野外语音
 
 - 含派生版本（与源数据可能重叠）
 
+### google_latam
+
+拉美六国西语朗读（Google 众包）
+
+语言：es · 任务：语音识别
+
+| 版本 | 时长（小时） | 口径 | COS |
+|---|---:|---|---|
+| [google_latam@openslr-20260911](../../catalog/google_latam.yaml#L1) | 38.0 | 已登记 | 快照 20260914 |
+
+- `google_latam@openslr-20260911`：Google 众包录制的拉美西语朗读（阿根廷、智利、哥伦比亚、秘鲁、波多黎各、委内瑞拉），按国家各一个划分，48 kHz 录音棚质量。SLR61 包里另有一小份天气播报（weather_messages），其中 es-es 是西班牙口音，只作源文件保留，不要算进美洲口音
+
+### heroico
+
+墨西哥军校西语朗读与问答（Heroico）
+
+语言：es · 任务：语音识别
+
+| 版本 | 时长（小时） | 口径 | COS |
+|---|---:|---|---|
+| [heroico@openslr-39](../../catalog/heroico.yaml#L1) | 14.9 | 已登记 | 没有 |
+
+- `heroico@openslr-39`：West Point Heroico Spanish Speech（LDC2006S37，OpenSLR 39 转发）。主体是 2001 年在墨西哥军校录的朗读和自由问答，墨西哥口音；另有西点军校的小部分录音，含母语者和美国非母语学员，usma_nonnative 不是母语口音，训练美洲口音时应排除。部分西点录音同时录了喉麦（文件名以 t 开头），已从统计中剔除。22.05 kHz 16-bit；部分西点文件头写的是 20050 Hz，按文件头计时长。转写文本是 Latin-1 编码；heroico_answers 有 1 条音频没有转写
+
 ### koreaspeech
 
 韩语语音识别数据（KoreaSpeech）
@@ -3013,6 +3132,18 @@ Emilia 韩语野外语音
 | [koreaspeech@legacy](../../catalog/legacy_multilingual.yaml#L1975) | 3,828.3 | 已登记 | 快照 20260914 |
 
 - 有含标点版本
+
+### librivox_spanish
+
+LibriVox 西语有声书
+
+语言：es · 任务：语音识别
+
+| 版本 | 时长（小时） | 口径 | COS |
+|---|---:|---|---|
+| [librivox_spanish@hf-ef936a31638d](../../catalog/librivox_spanish.yaml#L1) | 73.0 | 已登记 | 没有 |
+
+- `librivox_spanish@hf-ef936a31638d`：LibriVox 西语有声书人工切分转写（LDC2020S01 的 HF 版本），讲者口音未标注
 
 ### meeting_room_noise
 
@@ -3088,6 +3219,18 @@ MIT 日常环境实测冲激响应（270 条）
 
 - 有无标点版本
 
+### mls_pt
+
+MLS 葡语有声书朗读
+
+语言：pt · 任务：语音识别
+
+| 版本 | 时长（小时） | 口径 | COS |
+|---|---:|---|---|
+| [mls_pt@openslr-94](../../catalog/mls_pt.yaml#L1) | 168.3 | 已登记 | 快照 20260914 |
+
+- `mls_pt@openslr-94`：Multilingual LibriSpeech 葡语完整 FLAC 归档（含 train/dev/test），LibriVox 有声书；未按巴西/葡萄牙口音区分。OpenSLR 镜像没有这个文件，从官方地址直连下载
+
 ### musan
 
 噪声与音乐素材（MUSAN）
@@ -3097,6 +3240,18 @@ MIT 日常环境实测冲激响应（270 条）
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
 | [musan@legacy-20260804](../../catalog/musan.yaml#L1) | — | 未登记 | 快照 20260914、`amphion-audio-backup-1373259071:audio-data-contract/datasets/musan/` |
+
+### nurc_sp
+
+圣保罗葡语访谈精选（NURC-SP 最小集）
+
+语言：pt · 任务：语音识别
+
+| 版本 | 时长（小时） | 口径 | COS |
+|---|---:|---|---|
+| [nurc_sp_corpus_minimo@hf-551dea2d5a42](../../catalog/nurc_sp_corpus_minimo.yaml#L1) | 13.0 | 已登记 | 没有 |
+
+- `nurc_sp_corpus_minimo@hf-551dea2d5a42`：NURC-SP 1970–90 年代圣保罗口语录音中精选的 21 段，人工转写切段。train 与 validation 来自同一批录音和说话人，不是独立测试集；与 coraa_nurc_sp 同出 NURC-SP，但按录音编号核对没有共同录音
 
 ### open_large_bn
 
@@ -3167,6 +3322,42 @@ MIT 日常环境实测冲激响应（270 条）
 
 - 有无标点版本
 
+### tarsila_asr
+
+巴西葡语 ASR 合并测试集（TARSILA）
+
+语言：pt · 任务：语音识别
+
+| 版本 | 时长（小时） | 口径 | COS |
+|---|---:|---|---|
+| [tarsila_asr@hf-2785788cf674](../../catalog/tarsila_asr.yaml#L1) | 72.5 | 已登记 | 没有 |
+
+- `tarsila_asr@hf-2785788cf674`：把多个巴西葡语语料的测试集合在一起的评测集，只用于评测。各来源（MUPE、CV17、MLS、CORAA v1.1、mTEDx、NURC-SP）的测试集与本次登记的 coraa_mupe、common_voice_pt、mls_pt、coraa、mtedx 等的 test 重复，不要和它们一起累计。上游未声明许可
+
+### tedx_spanish
+
+TEDx 西语演讲（仅限非商用）
+
+语言：es · 任务：语音识别
+
+| 版本 | 时长（小时） | 口径 | COS |
+|---|---:|---|---|
+| [tedx_spanish@hf-469308f10c91](../../catalog/tedx_spanish.yaml#L1) | 24.5 | 已登记 | 没有 |
+
+- `tedx_spanish@hf-469308f10c91`：TEDx 西语演讲（OpenSLR 67 的 HF 版本），讲者口音未标注。许可为 CC BY-NC-ND，仅限非商用
+
+### tele_con_ciencia
+
+墨西哥西语科普电视节目
+
+语言：es · 任务：语音识别
+
+| 版本 | 时长（小时） | 口径 | COS |
+|---|---:|---|---|
+| [tele_con_ciencia@hf-d870d927f530](../../catalog/tele_con_ciencia.yaml#L1) | 28.3 | 已登记 | 没有 |
+
+- `tele_con_ciencia@hf-d870d927f530`：墨西哥科普电视节目 TELEconCIENCIA 的语音，墨西哥口音
+
 ### voices_noise
 
 VOiCES 真实房间噪声与背景人声
@@ -3191,6 +3382,18 @@ YouTube 视频说话人日志评测（VoxConverse）
 
 - `voxconverse@diarization-benchmark-v1-20261021`：Frozen local evaluation slice; audio and RTTM bytes copied unchanged. Not a claim of official release equivalence or training disjointness.
 
+### voxforge_spanish
+
+VoxForge 西语朗读（多为西班牙）
+
+语言：es · 任务：语音识别
+
+| 版本 | 时长（小时） | 口径 | COS |
+|---|---:|---|---|
+| [voxforge_spanish@hf-1ce6b6f9701d](../../catalog/voxforge_spanish.yaml#L1) | 49.7 | 已登记 | 没有 |
+
+- `voxforge_spanish@hf-1ce6b6f9701d`：VoxForge 西语朗读。约 37.0 h 为西班牙口音，阿根廷、拉美、墨西哥、智利共约 11.6 h；可按 country 字段筛选美洲部分。许可为 GPL-3.0
+
 ### wham
 
 WHAM! 噪声训练划分
@@ -3214,6 +3417,18 @@ WHAM! 噪声训练划分
 | [wham_noise@official-20261013](../../catalog/open_noise.yaml#L177) | 81.7 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/noise_open/` |
 
 - `wham_noise@official-20261013`：WHAM! 噪声：旧金山湾区餐厅、咖啡馆、酒吧和公园的真实环境噪声，双声道 16 kHz float32，共 28000 条（tr 20000、cv 5000、tt 3000）；已切掉听得清的人声，保留含糊的背景人声
+
+### wikipedia_spanish
+
+西语维基百科条目朗读
+
+语言：es · 任务：语音识别
+
+| 版本 | 时长（小时） | 口径 | COS |
+|---|---:|---|---|
+| [wikipedia_spanish@hf-0afbf012ed67](../../catalog/wikipedia_spanish.yaml#L1) | 25.6 | 已登记 | 没有 |
+
+- `wikipedia_spanish@hf-0afbf012ed67`：西语维基百科有声条目（Wikipedia Grabada）朗读，LDC2021S07 的 HF 版本，讲者口音未标注
 
 ### yodas_ar
 
