@@ -1,0 +1,454 @@
+  - schema_version: dataset-view/1.0
+    view_id: ts_asr_benchmark/hotword-labels
+    version: v4-hotword-labels-20261102
+    source:
+      dataset_id: ts_asr_benchmark
+      version: v4-20261022
+    result:
+      dataset_id: ts_asr_benchmark
+      version: v4-hotword-labels-20261102
+    materialization: full
+    lineage_status: exact
+    transforms:
+      - name: hotword-labels
+        version: v1-20261102
+        kind: annotate
+        writes:
+          - metadata.hotword_labels
+        parameters:
+          model: Qwen3.8-27B
+          server: vLLM 0.18, temperature 0, thinking off
+          prompt: amphiondata src/amphiondata/llm/prompts.py PROMPTS['extract_hotword'] at 64fc16e2
+          texts_per_request: 1
+          review_pass: true
+          verbatim_filter: word occurs in the labelled text and has at least two non-space characters
+          texts: target transcript; synthetic metadata.interferers[*].utts[*].text; real metadata.window_utts of speakers other than metadata.target_speaker
+          tool: scripts/ts_hotwords/label_hotwords.py
+          label_inputs: &id001
+            - file: eval-hotwords.jsonl
+              sha256: 56e32fd0913b64ad9d7c0b3ae3a0f9215764f41c20930ff2991e7c15a454693f
+            - file: eval-hotwords-real.jsonl
+              sha256: 237b3caec2dfa1e7f7bcf771d708077e5c30c44256b8cc8f3a03e3346275f364
+          records: 14800
+    provenance:
+      registered_at: '2026-11-03'
+  - schema_version: dataset-view/1.0
+    view_id: ts_asr_farfield/hotword-labels
+    version: v2-hotword-labels-20261102
+    source:
+      dataset_id: ts_asr_farfield
+      version: v2-20261022
+    result:
+      dataset_id: ts_asr_farfield
+      version: v2-hotword-labels-20261102
+    materialization: full
+    lineage_status: exact
+    transforms:
+      - name: hotword-labels
+        version: v1-20261102
+        kind: annotate
+        writes:
+          - metadata.hotword_labels
+        parameters:
+          model: Qwen3.8-27B
+          server: vLLM 0.18, temperature 0, thinking off
+          prompt: amphiondata src/amphiondata/llm/prompts.py PROMPTS['extract_hotword'] at 64fc16e2
+          texts_per_request: 1
+          review_pass: true
+          verbatim_filter: word occurs in the labelled text and has at least two non-space characters
+          texts: target transcript; synthetic metadata.interferers[*].utts[*].text; real metadata.window_utts of speakers other than metadata.target_speaker
+          tool: scripts/ts_hotwords/label_hotwords.py
+          label_inputs: *id001
+          records: 1680
+    provenance:
+      registered_at: '2026-11-03'
+  - schema_version: dataset-view/1.0
+    view_id: ts_asr_handover/hotword-labels
+    version: v2-hotword-labels-20261102
+    source:
+      dataset_id: ts_asr_handover
+      version: v2-20261022
+    result:
+      dataset_id: ts_asr_handover
+      version: v2-hotword-labels-20261102
+    materialization: full
+    lineage_status: exact
+    transforms:
+      - name: hotword-labels
+        version: v1-20261102
+        kind: annotate
+        writes:
+          - metadata.hotword_labels
+        parameters:
+          model: Qwen3.8-27B
+          server: vLLM 0.18, temperature 0, thinking off
+          prompt: amphiondata src/amphiondata/llm/prompts.py PROMPTS['extract_hotword'] at 64fc16e2
+          texts_per_request: 1
+          review_pass: true
+          verbatim_filter: word occurs in the labelled text and has at least two non-space characters
+          texts: target transcript; synthetic metadata.interferers[*].utts[*].text; real metadata.window_utts of speakers other than metadata.target_speaker
+          tool: scripts/ts_hotwords/label_hotwords.py
+          label_inputs: *id001
+          records: 1600
+    provenance:
+      registered_at: '2026-11-03'
+  - schema_version: dataset-view/1.0
+    view_id: ts_asr_nearfar/hotword-labels
+    version: v3-hotword-labels-20261102
+    source:
+      dataset_id: ts_asr_nearfar
+      version: v3-20261022
+    result:
+      dataset_id: ts_asr_nearfar
+      version: v3-hotword-labels-20261102
+    materialization: full
+    lineage_status: exact
+    transforms:
+      - name: hotword-labels
+        version: v1-20261102
+        kind: annotate
+        writes:
+          - metadata.hotword_labels
+        parameters:
+          model: Qwen3.8-27B
+          server: vLLM 0.18, temperature 0, thinking off
+          prompt: amphiondata src/amphiondata/llm/prompts.py PROMPTS['extract_hotword'] at 64fc16e2
+          texts_per_request: 1
+          review_pass: true
+          verbatim_filter: word occurs in the labelled text and has at least two non-space characters
+          texts: target transcript; synthetic metadata.interferers[*].utts[*].text; real metadata.window_utts of speakers other than metadata.target_speaker
+          tool: scripts/ts_hotwords/label_hotwords.py
+          label_inputs: *id001
+          records: 1248
+    provenance:
+      registered_at: '2026-11-03'
+  - schema_version: dataset-view/1.0
+    view_id: ts_asr_nearshort/hotword-labels
+    version: v3-hotword-labels-20261102
+    source:
+      dataset_id: ts_asr_nearshort
+      version: v3-20261022
+    result:
+      dataset_id: ts_asr_nearshort
+      version: v3-hotword-labels-20261102
+    materialization: full
+    lineage_status: exact
+    transforms:
+      - name: hotword-labels
+        version: v1-20261102
+        kind: annotate
+        writes:
+          - metadata.hotword_labels
+        parameters:
+          model: Qwen3.8-27B
+          server: vLLM 0.18, temperature 0, thinking off
+          prompt: amphiondata src/amphiondata/llm/prompts.py PROMPTS['extract_hotword'] at 64fc16e2
+          texts_per_request: 1
+          review_pass: true
+          verbatim_filter: word occurs in the labelled text and has at least two non-space characters
+          texts: target transcript; synthetic metadata.interferers[*].utts[*].text; real metadata.window_utts of speakers other than metadata.target_speaker
+          tool: scripts/ts_hotwords/label_hotwords.py
+          label_inputs: *id001
+          records: 3600
+    provenance:
+      registered_at: '2026-11-03'
+  - schema_version: dataset-view/1.0
+    view_id: ts_asr_noise/hotword-labels
+    version: v2-hotword-labels-20261102
+    source:
+      dataset_id: ts_asr_noise
+      version: v2-20261022
+    result:
+      dataset_id: ts_asr_noise
+      version: v2-hotword-labels-20261102
+    materialization: full
+    lineage_status: exact
+    transforms:
+      - name: hotword-labels
+        version: v1-20261102
+        kind: annotate
+        writes:
+          - metadata.hotword_labels
+        parameters:
+          model: Qwen3.8-27B
+          server: vLLM 0.18, temperature 0, thinking off
+          prompt: amphiondata src/amphiondata/llm/prompts.py PROMPTS['extract_hotword'] at 64fc16e2
+          texts_per_request: 1
+          review_pass: true
+          verbatim_filter: word occurs in the labelled text and has at least two non-space characters
+          texts: target transcript; synthetic metadata.interferers[*].utts[*].text; real metadata.window_utts of speakers other than metadata.target_speaker
+          tool: scripts/ts_hotwords/label_hotwords.py
+          label_inputs: *id001
+          records: 2040
+    provenance:
+      registered_at: '2026-11-03'
+  - schema_version: dataset-view/1.0
+    view_id: ts_asr_real/hotword-labels
+    version: v4-hotword-labels-20261102
+    source:
+      dataset_id: ts_asr_real
+      version: v4-20261022
+    result:
+      dataset_id: ts_asr_real
+      version: v4-hotword-labels-20261102
+    materialization: full
+    lineage_status: exact
+    transforms:
+      - name: hotword-labels
+        version: v1-20261102
+        kind: annotate
+        writes:
+          - metadata.hotword_labels
+        parameters:
+          model: Qwen3.8-27B
+          server: vLLM 0.18, temperature 0, thinking off
+          prompt: amphiondata src/amphiondata/llm/prompts.py PROMPTS['extract_hotword'] at 64fc16e2
+          texts_per_request: 1
+          review_pass: true
+          verbatim_filter: word occurs in the labelled text and has at least two non-space characters
+          texts: target transcript; synthetic metadata.interferers[*].utts[*].text; real metadata.window_utts of speakers other than metadata.target_speaker
+          tool: scripts/ts_hotwords/label_hotwords.py
+          label_inputs: *id001
+          records: 1133
+    provenance:
+      registered_at: '2026-11-03'
+  - schema_version: dataset-view/1.0
+    view_id: ts_asr_shortseg/hotword-labels
+    version: v2-hotword-labels-20261102
+    source:
+      dataset_id: ts_asr_shortseg
+      version: v2-20261022
+    result:
+      dataset_id: ts_asr_shortseg
+      version: v2-hotword-labels-20261102
+    materialization: full
+    lineage_status: exact
+    transforms:
+      - name: hotword-labels
+        version: v1-20261102
+        kind: annotate
+        writes:
+          - metadata.hotword_labels
+        parameters:
+          model: Qwen3.8-27B
+          server: vLLM 0.18, temperature 0, thinking off
+          prompt: amphiondata src/amphiondata/llm/prompts.py PROMPTS['extract_hotword'] at 64fc16e2
+          texts_per_request: 1
+          review_pass: true
+          verbatim_filter: word occurs in the labelled text and has at least two non-space characters
+          texts: target transcript; synthetic metadata.interferers[*].utts[*].text; real metadata.window_utts of speakers other than metadata.target_speaker
+          tool: scripts/ts_hotwords/label_hotwords.py
+          label_inputs: *id001
+          records: 840
+    provenance:
+      registered_at: '2026-11-03'
+  - schema_version: dataset-view/1.0
+    view_id: ts_asr_benchmark/hotword-labels
+    version: en-v1-hotword-labels-20261102
+    source:
+      dataset_id: ts_asr_benchmark
+      version: en-v1-20261031
+    result:
+      dataset_id: ts_asr_benchmark
+      version: en-v1-hotword-labels-20261102
+    materialization: full
+    lineage_status: exact
+    transforms:
+      - name: hotword-labels
+        version: v1-20261102
+        kind: annotate
+        writes:
+          - metadata.hotword_labels
+        parameters:
+          model: Qwen3.8-27B
+          server: vLLM 0.18, temperature 0, thinking off
+          prompt: amphiondata src/amphiondata/llm/prompts.py PROMPTS['extract_hotword'] at 64fc16e2
+          texts_per_request: 1
+          review_pass: true
+          verbatim_filter: word occurs in the labelled text and has at least two non-space characters
+          texts: target transcript; synthetic metadata.interferers[*].utts[*].text; real metadata.window_utts of speakers other than metadata.target_speaker
+          tool: scripts/ts_hotwords/label_hotwords.py
+          label_inputs: *id001
+          records: 14160
+    provenance:
+      registered_at: '2026-11-03'
+  - schema_version: dataset-view/1.0
+    view_id: ts_asr_farfield/hotword-labels
+    version: en-v1-hotword-labels-20261102
+    source:
+      dataset_id: ts_asr_farfield
+      version: en-v1-20261031
+    result:
+      dataset_id: ts_asr_farfield
+      version: en-v1-hotword-labels-20261102
+    materialization: full
+    lineage_status: exact
+    transforms:
+      - name: hotword-labels
+        version: v1-20261102
+        kind: annotate
+        writes:
+          - metadata.hotword_labels
+        parameters:
+          model: Qwen3.8-27B
+          server: vLLM 0.18, temperature 0, thinking off
+          prompt: amphiondata src/amphiondata/llm/prompts.py PROMPTS['extract_hotword'] at 64fc16e2
+          texts_per_request: 1
+          review_pass: true
+          verbatim_filter: word occurs in the labelled text and has at least two non-space characters
+          texts: target transcript; synthetic metadata.interferers[*].utts[*].text; real metadata.window_utts of speakers other than metadata.target_speaker
+          tool: scripts/ts_hotwords/label_hotwords.py
+          label_inputs: *id001
+          records: 1680
+    provenance:
+      registered_at: '2026-11-03'
+  - schema_version: dataset-view/1.0
+    view_id: ts_asr_handover/hotword-labels
+    version: en-v1-hotword-labels-20261102
+    source:
+      dataset_id: ts_asr_handover
+      version: en-v1-20261031
+    result:
+      dataset_id: ts_asr_handover
+      version: en-v1-hotword-labels-20261102
+    materialization: full
+    lineage_status: exact
+    transforms:
+      - name: hotword-labels
+        version: v1-20261102
+        kind: annotate
+        writes:
+          - metadata.hotword_labels
+        parameters:
+          model: Qwen3.8-27B
+          server: vLLM 0.18, temperature 0, thinking off
+          prompt: amphiondata src/amphiondata/llm/prompts.py PROMPTS['extract_hotword'] at 64fc16e2
+          texts_per_request: 1
+          review_pass: true
+          verbatim_filter: word occurs in the labelled text and has at least two non-space characters
+          texts: target transcript; synthetic metadata.interferers[*].utts[*].text; real metadata.window_utts of speakers other than metadata.target_speaker
+          tool: scripts/ts_hotwords/label_hotwords.py
+          label_inputs: *id001
+          records: 600
+    provenance:
+      registered_at: '2026-11-03'
+  - schema_version: dataset-view/1.0
+    view_id: ts_asr_nearshort/hotword-labels
+    version: en-v1-hotword-labels-20261102
+    source:
+      dataset_id: ts_asr_nearshort
+      version: en-v1-20261031
+    result:
+      dataset_id: ts_asr_nearshort
+      version: en-v1-hotword-labels-20261102
+    materialization: full
+    lineage_status: exact
+    transforms:
+      - name: hotword-labels
+        version: v1-20261102
+        kind: annotate
+        writes:
+          - metadata.hotword_labels
+        parameters:
+          model: Qwen3.8-27B
+          server: vLLM 0.18, temperature 0, thinking off
+          prompt: amphiondata src/amphiondata/llm/prompts.py PROMPTS['extract_hotword'] at 64fc16e2
+          texts_per_request: 1
+          review_pass: true
+          verbatim_filter: word occurs in the labelled text and has at least two non-space characters
+          texts: target transcript; synthetic metadata.interferers[*].utts[*].text; real metadata.window_utts of speakers other than metadata.target_speaker
+          tool: scripts/ts_hotwords/label_hotwords.py
+          label_inputs: *id001
+          records: 3000
+    provenance:
+      registered_at: '2026-11-03'
+  - schema_version: dataset-view/1.0
+    view_id: ts_asr_noise/hotword-labels
+    version: en-v1-hotword-labels-20261102
+    source:
+      dataset_id: ts_asr_noise
+      version: en-v1-20261031
+    result:
+      dataset_id: ts_asr_noise
+      version: en-v1-hotword-labels-20261102
+    materialization: full
+    lineage_status: exact
+    transforms:
+      - name: hotword-labels
+        version: v1-20261102
+        kind: annotate
+        writes:
+          - metadata.hotword_labels
+        parameters:
+          model: Qwen3.8-27B
+          server: vLLM 0.18, temperature 0, thinking off
+          prompt: amphiondata src/amphiondata/llm/prompts.py PROMPTS['extract_hotword'] at 64fc16e2
+          texts_per_request: 1
+          review_pass: true
+          verbatim_filter: word occurs in the labelled text and has at least two non-space characters
+          texts: target transcript; synthetic metadata.interferers[*].utts[*].text; real metadata.window_utts of speakers other than metadata.target_speaker
+          tool: scripts/ts_hotwords/label_hotwords.py
+          label_inputs: *id001
+          records: 2040
+    provenance:
+      registered_at: '2026-11-03'
+  - schema_version: dataset-view/1.0
+    view_id: ts_asr_real/hotword-labels
+    version: en-v2-hotword-labels-20261102
+    source:
+      dataset_id: ts_asr_real
+      version: en-v2-20261031
+    result:
+      dataset_id: ts_asr_real
+      version: en-v2-hotword-labels-20261102
+    materialization: full
+    lineage_status: exact
+    transforms:
+      - name: hotword-labels
+        version: v1-20261102
+        kind: annotate
+        writes:
+          - metadata.hotword_labels
+        parameters:
+          model: Qwen3.8-27B
+          server: vLLM 0.18, temperature 0, thinking off
+          prompt: amphiondata src/amphiondata/llm/prompts.py PROMPTS['extract_hotword'] at 64fc16e2
+          texts_per_request: 1
+          review_pass: true
+          verbatim_filter: word occurs in the labelled text and has at least two non-space characters
+          texts: target transcript; synthetic metadata.interferers[*].utts[*].text; real metadata.window_utts of speakers other than metadata.target_speaker
+          tool: scripts/ts_hotwords/label_hotwords.py
+          label_inputs: *id001
+          records: 1301
+    provenance:
+      registered_at: '2026-11-03'
+  - schema_version: dataset-view/1.0
+    view_id: ts_asr_shortseg/hotword-labels
+    version: en-v1-hotword-labels-20261102
+    source:
+      dataset_id: ts_asr_shortseg
+      version: en-v1-20261031
+    result:
+      dataset_id: ts_asr_shortseg
+      version: en-v1-hotword-labels-20261102
+    materialization: full
+    lineage_status: exact
+    transforms:
+      - name: hotword-labels
+        version: v1-20261102
+        kind: annotate
+        writes:
+          - metadata.hotword_labels
+        parameters:
+          model: Qwen3.8-27B
+          server: vLLM 0.18, temperature 0, thinking off
+          prompt: amphiondata src/amphiondata/llm/prompts.py PROMPTS['extract_hotword'] at 64fc16e2
+          texts_per_request: 1
+          review_pass: true
+          verbatim_filter: word occurs in the labelled text and has at least two non-space characters
+          texts: target transcript; synthetic metadata.interferers[*].utts[*].text; real metadata.window_utts of speakers other than metadata.target_speaker
+          tool: scripts/ts_hotwords/label_hotwords.py
+          label_inputs: *id001
+          records: 600
+    provenance:
+      registered_at: '2026-11-03'
