@@ -49,6 +49,10 @@
       "alias": "police_scene_bench",
       "synced": "2026-10-29"
     },
+    "speech_deepfake_bench@v1-20261103": {
+      "alias": "speech_deepfake_bench",
+      "synced": "2026-11-03"
+    },
     "tdtech_customer_bench@v1-20261102": {
       "alias": "tdtech_customer_bench",
       "synced": "2026-11-02"
