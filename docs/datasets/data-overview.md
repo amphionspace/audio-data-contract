@@ -162,7 +162,7 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [opendatalab_multilingual](data-versions.md#opendatalab_multilingual) | ar、cs、hu、ko、ru、sr、th、vi | 语音识别 | 8,588.2 | 8 个语种的语音识别数据（OpenDataLab） | `备份桶:computer-2/audio/`（原始数据）、`备份桶:opendatalab-multilingual/`（原始数据） |
 | [sot_many_speaker_word_zh_en](data-versions.md#sot_many_speaker_word_zh_en) | en、zh | 带说话人标注的语音识别 | 2,128.0 | — | 没有 |
 | [sot_multispeaker_zh_en](data-versions.md#sot_multispeaker_zh_en) | en、zh、zh-en | 带说话人标注的语音识别 | 7,664.4 | 1–5 人中英合成混音，按人完整转写 | 没有 |
-| [speech_deepfake_bench](data-versions.md#speech_deepfake_bench) | ar、de、en、es、ro、ru、zh | deepfake_detection | 3,463.7 | 伪造语音检测公开评测集（SpoofRadar、DF-Arena），仅评测 | 没有 |
+| [speech_deepfake_bench](data-versions.md#speech_deepfake_bench) | ar、de、en、es、ro、ru、zh | deepfake_detection | 3,463.7 | 伪造语音检测公开评测集（SpoofRadar、DF-Arena），仅评测 | `备份桶:audio-data-contract/datasets/speech_deepfake_bench/` |
 | [starrail_voice](data-versions.md#starrail_voice) | en、ja、ko、zh-CN | 语音合成 | 692.6 | 《崩坏：星穹铁道》多语配音，TTS 用 | `TTS 桶:starrail-voice/`（原始数据） |
 | [talcs](data-versions.md#talcs) | en、zh | 语音识别、热词增强语音识别 | 587.6 | 中英语码转换课堂语音（TALCS）；含热词和加噪版 | 部分版本：快照 20260914 |
 | [ts_asr_benchmark](data-versions.md#ts_asr_benchmark) | en、zh | 目标说话人语音识别 | 46.5 | 合成的中文目标说话人 ASR 评测集 | 部分版本：`备份桶:audio-data-contract/datasets/ts_asr_benchmark/` |
