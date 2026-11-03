@@ -1,0 +1,49 @@
+  - schema_version: dataset-catalog/2.0
+    dataset_id: wenetspeech_chuan
+    version: qwen3-asr-full-v1-20261023
+    languages:
+      - zh
+    tasks:
+      - asr
+    aliases: []
+    artifacts:
+      - name: train_cuts_qwen_0
+        kind: lhotse-cuts
+        root_alias: aidc_data
+        relative_path: datasets/wenetspeech_chuan/versions/qwen3-asr-full-v1-20261023/wenetspeech_chuan_cuts_train_qwen.jsonl.gz
+        expected_bytes: 735927143
+        sha256: 04831f63ec226a6291c406ff897181a9fa9102cb58f70cab7d066c611c9b0b55
+        metadata:
+          record_count: 4937906
+          qwen_field: custom.qwen_asr
+    splits:
+      train:
+        artifacts:
+          cuts:
+            - train_cuts_qwen_0
+        statistics:
+          records: 4937906
+          duration_hours: 10209.5437
+          duration_basis: sum of row durations
+    recipe_parameters:
+      adds:
+        - custom.qwen_asr
+      check_model: Qwen3-ASR-1.7B
+      check_unit: utterance
+      text_normalization: speechio-textnorm-zh
+    provenance:
+      preparation_status: prepared
+      lineage_status: exact
+      materialization: full
+      source: wenetspeech_chuan@icefall-20260908
+      description: wenetspeech_chuan@icefall-20260908 里WenetSpeech-Chuan 川渝方言训练集的全部可转写条目（4,937,906 条 / 10209.5 h），原标注（机器标注，不带置信度）一字不改；每条加 custom.qwen_asr：共享的 Qwen3-ASR-1.7B 的转写（hypothesis）、Qwen 报告的语种（language）和与原标注的字错误率（SpeechIO TextNorm，按字，ref_tokens / hyp_tokens / errors / cer 百分数；原标注规范化后为空时 cer 为空）。整体 CER 21.47 %，Qwen 在 WSC-Eval Easy / Hard 上自身 CER 为 12.1 / 21.1；Qwen 空输出 223,268 条。源 4,938,701 条里 795 条（50.0 h，超过约 157 s，服务拒收）没有转写，不在本版本内。原标注里有多人只标一人、漏标语音、音乐、人声太轻太远的条目，CER 高不等于 Qwen 错；已听审的规则见 
+        wenetspeech_chuan@clean-qwen3-asr-v1-20261023。录音沿用父版本，不复制音频。脚本 scripts/wenetspeech_qwen/。
+      facts:
+        source rows: 4938701
+        rows: 4937906
+        ref tokens: 119400436
+        token errors: 25635332
+        qwen empty: 223268
+        kept rows: 3277696
+        rows not transcribed: 795
+        corpus CER: 21.47

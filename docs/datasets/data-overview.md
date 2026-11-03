@@ -124,9 +124,9 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [wenetspeech_diarize](data-versions.md#wenetspeech_diarize) | zh | diarization、带说话人标注的语音识别 | — | WenetSpeech 长音频的说话人日志伪标签 | 没有 |
 | [wenetspeech_disfluency](data-versions.md#wenetspeech_disfluency) | zh | 语音识别 | 182.5 | WenetSpeech L 保留口语不流利词的转写 | 部分版本：快照 20260914、`备份桶:audio-data-contract/datasets/wenetspeech/` |
 | [wenetspeech_podcast](data-versions.md#wenetspeech_podcast) | zh | 语音识别 | 3,892.3 | WenetSpeech L 中的播客部分 | 没有 |
-| [wenetspeech_wu](data-versions.md#wenetspeech_wu) | zh | 语音识别 | 8,740.7 | 吴语网络语音（WenetSpeech-Wu） | 快照 20260914 |
+| [wenetspeech_wu](data-versions.md#wenetspeech_wu) | zh | 语音识别 | 8,740.7 | 吴语网络语音（WenetSpeech-Wu） | 部分版本：快照 20260914 |
 | [wenetspeech_youtube](data-versions.md#wenetspeech_youtube) | zh | 语音识别 | 6,113.1 | WenetSpeech L 中的 YouTube 部分 | 没有 |
-| [wenetspeech_yue](data-versions.md#wenetspeech_yue) | yue | 语音识别 | — | 粤语网络语音（WenetSpeech-Yue）；含清洗版 | 部分版本：快照 20260914 |
+| [wenetspeech_yue](data-versions.md#wenetspeech_yue) | yue | 语音识别 | 4,333.1 | 粤语网络语音（WenetSpeech-Yue）；含清洗版 | 部分版本：快照 20260914 |
 | [wenetspeech_yue_all](data-versions.md#wenetspeech_yue_all) | yue | 语音识别 | — | WenetSpeech-Yue 全量，含非 clean 部分 | 快照 20260914 |
 
 ## 混合语言及多语数据

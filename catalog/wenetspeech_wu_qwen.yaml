@@ -1,0 +1,53 @@
+  - schema_version: dataset-catalog/2.0
+    dataset_id: wenetspeech_wu
+    version: qwen3-asr-pilot-v1-20261025
+    languages:
+      - zh
+    tasks:
+      - asr
+    aliases: []
+    artifacts:
+      - name: preparation_state
+        kind: dataset-state
+        root_alias: aidc_data
+        relative_path: datasets/wenetspeech_wu/versions/qwen3-asr-pilot-v1-20261025/state.json
+      - name: train_cuts_qwen_0
+        kind: lhotse-cuts
+        root_alias: aidc_data
+        relative_path: datasets/wenetspeech_wu/versions/qwen3-asr-pilot-v1-20261025/wenetspeech_wu_cuts_train_qwen.jsonl.gz
+        expected_bytes: 590254
+        sha256: 5f03092f3996667368309057d18d7c5f100895912ddff3ef6237d3fe40f1dca4
+        metadata:
+          record_count: 2000
+          qwen_field: custom.qwen_asr
+    splits:
+      train:
+        artifacts:
+          cuts:
+            - train_cuts_qwen_0
+          preparation_state:
+            - preparation_state
+        statistics:
+          records: 2000
+          duration_hours: 4.1139
+          duration_basis: sum of row durations
+    recipe_parameters:
+      adds:
+        - custom.qwen_asr
+      check_model: Qwen3-ASR-1.7B
+      check_unit: utterance
+      text_normalization: speechio-textnorm-zh
+    provenance:
+      preparation_status: partial
+      lineage_status: exact
+      materialization: full
+      source: wenetspeech_wu@icefall-20260908
+      description: wenetspeech_wu@icefall-20260908 里WenetSpeech-Wu 吴语训练集的随机抽样（2,000 条 / 4.1 h），原标注（吴语写法的机器标注，带置信度和普通话译文）一字不改；每条加 custom.qwen_asr：共享的 Qwen3-ASR-1.7B 的转写（hypothesis）、Qwen 报告的语种（language）和与原标注的字错误率（SpeechIO TextNorm，按字，ref_tokens / hyp_tokens / errors / cer 百分数；原标注规范化后为空时 cer 为空）。整体 CER 35.84 %，Qwen 在 WenetSpeech-Wu-Bench 上自身 CER 为 24.2；Qwen 空输出 0 条。试跑：从 wenetspeech_wu@icefall-20260908 训练集按种子 42 随机抽 2000 条，不是全量，整体 CER 35.8 %，不可用于训练。两边文字都很乱，核对价值低。录音沿用父版本，不复制音频。脚本 scripts/wenetspeech_qwen/。
+      facts:
+        rows: 2000
+        ref tokens: 48050
+        token errors: 17223
+        qwen empty: 0
+        kept rows: 896
+        corpus CER: 35.84
+      ready_for_training: false
