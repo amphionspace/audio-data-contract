@@ -1,0 +1,383 @@
+  - schema_version: dataset-catalog/2.0
+    dataset_id: aishell2
+    version: hotwords-v1-20261102
+    languages:
+      - zh
+    tasks:
+      - asr_hotwords
+    aliases: []
+    artifacts:
+      - name: train_rec_0
+        kind: lhotse-recordings
+        root_alias: aidc_data
+        relative_path: datasets/aishell2/versions/legacy-20260804/train_rec_0/aishell2_recordings_train.jsonl.gz
+        expected_bytes: 13768214
+        sha256: 6bc4d05821a5d287c0e9c9b402abc49ff87bebbd5f5d97770263bf6f0c732304
+      - name: train_supervisions_hotwords_0
+        kind: lhotse-supervisions
+        root_alias: aidc_data
+        relative_path: datasets/aishell2/versions/hotwords-v1-20261102/aishell2_supervisions_train_punc_hotwords.jsonl.gz
+        expected_bytes: 38799944
+        sha256: 00c251b103dc192c44dd4d1a5ac4071b66ce0a74b8c6a736db205c41702a1833
+        metadata:
+          record_count: 902095
+          punctuated: true
+    splits:
+      train:
+        artifacts:
+          recordings:
+            - train_rec_0
+          supervisions:
+            - train_supervisions_hotwords_0
+        statistics:
+          records: 902095
+          records_with_hotwords: 332131
+          duration_hours: 887.1141
+          duration_basis: sum of supervision durations
+    recipe_parameters:
+      adds:
+        - custom.hotwords
+        - custom.hotword_labeling
+      rows: labelled utterances only
+    provenance:
+      preparation_status: prepared
+      lineage_status: exact
+      materialization: full
+      source: aishell2@train-punc-v1-20261102
+      description: aishell2@train-punc-v1-20261102 中被 TS 场景池（open-audio-llm 训练配方 train-data-v7set30）用作目标或干扰语音的句子，带热词标注：custom.hotwords 是这句里说到的热词，按本行文本的写法（中文按子串匹配；本行文本里找不到的词去掉）；custom.hotword_labeling 记标注来源、标注时看到的文本和模型原始抽取。902095 句里 332131 句有热词。只含标过的句子，文本与父版本相同；录音沿用父版本，不复制音频。脚本 scripts/ts_hotwords/register_hotwords.py，标注工具 scripts/ts_hotwords/label_hotwords.py。
+      facts:
+        labels: 902095
+        words: 409653
+        words dropped (not in the row text): 2090
+        rows: 902095
+        rows with hotwords: 332131
+        rows labelled by qwen3.8-27b: 902095
+        labels without a parent row: 0
+  - schema_version: dataset-catalog/2.0
+    dataset_id: kespeech
+    version: hotwords-v1-20261102
+    languages:
+      - zh
+    tasks:
+      - asr_hotwords
+    aliases: []
+    artifacts:
+      - name: train_rec_0
+        kind: lhotse-recordings
+        root_alias: aidc_data
+        relative_path: datasets/kespeech/versions/legacy-20260804/train_rec_0/kespeech-asr_recordings_train_phase1.jsonl.gz
+        expected_bytes: 9537983
+        sha256: f1ed873b6f03708d18e4983283aadd7fef3e06436575186e4141332d1a71e5a1
+      - name: train_rec_1
+        kind: lhotse-recordings
+        root_alias: aidc_data
+        relative_path: datasets/kespeech/versions/legacy-20260804/train_rec_1/kespeech-asr_recordings_train_phase2.jsonl.gz
+        expected_bytes: 6027737
+        sha256: 89095d701ff3cc66ecea0b90d77829f41e6ace3d5fadcf928af6bc2769af02c2
+      - name: train_supervisions_hotwords_0
+        kind: lhotse-supervisions
+        root_alias: aidc_data
+        relative_path: datasets/kespeech/versions/hotwords-v1-20261102/kespeech-asr_supervisions_train_phase1_punc_hotwords.jsonl.gz
+        expected_bytes: 21688562
+        sha256: 6909414800ac0510ff76f5fcec2097af78802770228ef02acba12a1bc6ec9f50
+        metadata:
+          record_count: 376644
+          punctuated: true
+      - name: train_supervisions_hotwords_1
+        kind: lhotse-supervisions
+        root_alias: aidc_data
+        relative_path: datasets/kespeech/versions/hotwords-v1-20261102/kespeech-asr_supervisions_train_phase2_punc_hotwords.jsonl.gz
+        expected_bytes: 14685342
+        sha256: effe6cc070491f5d864f26cca09557cd928076307b23fa514f5c9ad6fb5e06e4
+        metadata:
+          record_count: 256111
+          punctuated: true
+    splits:
+      train:
+        artifacts:
+          recordings:
+            - train_rec_0
+            - train_rec_1
+          supervisions:
+            - train_supervisions_hotwords_0
+            - train_supervisions_hotwords_1
+        statistics:
+          records: 632755
+          records_with_hotwords: 165824
+          duration_hours: 956.0215
+          duration_basis: sum of supervision durations
+    recipe_parameters:
+      adds:
+        - custom.hotwords
+        - custom.hotword_labeling
+      rows: labelled utterances only
+    provenance:
+      preparation_status: prepared
+      lineage_status: exact
+      materialization: full
+      source: kespeech@train-punc-v1-20261102
+      description: kespeech@train-punc-v1-20261102 中被 TS 场景池（open-audio-llm 训练配方 train-data-v7set30）用作目标或干扰语音的句子，带热词标注：custom.hotwords 是这句里说到的热词，按本行文本的写法（中文按子串匹配；本行文本里找不到的词去掉）；custom.hotword_labeling 记标注来源、标注时看到的文本和模型原始抽取。632755 句里 165824 句有热词。只含标过的句子，文本与父版本相同；录音沿用父版本，不复制音频。脚本 scripts/ts_hotwords/register_hotwords.py，标注工具 scripts/ts_hotwords/label_hotwords.py。
+      facts:
+        labels: 632755
+        words: 209119
+        words dropped (not in the row text): 392
+        rows: 632755
+        rows with hotwords: 165824
+        rows labelled by qwen3.8-27b: 632755
+        labels without a parent row: 0
+  - schema_version: dataset-catalog/2.0
+    dataset_id: magicdata
+    version: hotwords-v1-20261102
+    languages:
+      - zh
+    tasks:
+      - asr_hotwords
+    aliases: []
+    artifacts:
+      - name: train_rec_0
+        kind: lhotse-recordings
+        root_alias: aidc_data
+        relative_path: datasets/magicdata/versions/legacy-20260804/train_rec_0/magicdata_recordings_train.jsonl.gz
+        expected_bytes: 6440878
+        sha256: 9aa0b9638398ff018558db0ab848bb48c289e0f99dca366f2da4099d43a0e2ba
+      - name: train_supervisions_hotwords_0
+        kind: lhotse-supervisions
+        root_alias: aidc_data
+        relative_path: datasets/magicdata/versions/hotwords-v1-20261102/magicdata_supervisions_train_punc_written_hotwords.jsonl.gz
+        expected_bytes: 15343750
+        sha256: 04bf6285265a3339859fd38d77010f61e04af8108a2fb4aac9f795a5980a1872
+        metadata:
+          record_count: 391237
+          punctuated: true
+    splits:
+      train:
+        artifacts:
+          recordings:
+            - train_rec_0
+          supervisions:
+            - train_supervisions_hotwords_0
+        statistics:
+          records: 391237
+          records_with_hotwords: 83817
+          duration_hours: 466.6398
+          duration_basis: sum of supervision durations
+    recipe_parameters:
+      adds:
+        - custom.hotwords
+        - custom.hotword_labeling
+      rows: labelled utterances only
+    provenance:
+      preparation_status: prepared
+      lineage_status: exact
+      materialization: full
+      source: magicdata@punc-written-v1-20261102
+      description: magicdata@punc-written-v1-20261102 中被 TS 场景池（open-audio-llm 训练配方 train-data-v7set30）用作目标或干扰语音的句子，带热词标注：custom.hotwords 是这句里说到的热词，按本行文本的写法（中文按子串匹配；本行文本里找不到的词去掉）；custom.hotword_labeling 记标注来源、标注时看到的文本和模型原始抽取。391237 句里 83817 句有热词，其中 238826 句复用 hw_sft@hw-20261014 的已有标注。只含标过的句子，文本与父版本相同；录音沿用 magicdata@legacy-20260804，不复制音频。脚本 scripts/ts_hotwords/register_hotwords.py，标注工具 scripts/ts_hotwords/label_hotwords.py。
+      facts:
+        labels: 391237
+        words: 91552
+        words dropped (not in the row text): 770
+        rows: 391237
+        rows with hotwords: 83817
+        rows labelled by hw_sft@hw-20261014: 238826
+        rows labelled by qwen3.8-27b: 152411
+        labels without a parent row: 0
+  - schema_version: dataset-catalog/2.0
+    dataset_id: common_voice_en
+    version: hotwords-v1-20261102
+    languages:
+      - en
+    tasks:
+      - asr_hotwords
+    aliases: []
+    artifacts:
+      - name: train_rec_0
+        kind: lhotse-recordings
+        root_alias: aidc_data
+        relative_path: datasets/common_voice_en/versions/legacy-20260804/train_rec_0/cv-en_recordings_train.jsonl.gz
+        expected_bytes: 14073476
+        sha256: 859d664439690a58f1f400611eb5b80c127891388cef7f7170959f3137578471
+      - name: train_supervisions_hotwords_0
+        kind: lhotse-supervisions
+        root_alias: aidc_data
+        relative_path: datasets/common_voice_en/versions/hotwords-v1-20261102/cv-en_supervisions_train_cleaned_punc_hotwords.jsonl.gz
+        expected_bytes: 23663883
+        sha256: 729eb39237b5006c58fde47f7519696bbe407af893c931b1cd816590c260ca1b
+        metadata:
+          record_count: 314807
+          punctuated: true
+    splits:
+      train:
+        artifacts:
+          recordings:
+            - train_rec_0
+          supervisions:
+            - train_supervisions_hotwords_0
+        statistics:
+          records: 314807
+          records_with_hotwords: 144126
+          duration_hours: 469.6904
+          duration_basis: sum of supervision durations
+    recipe_parameters:
+      adds:
+        - custom.hotwords
+        - custom.hotword_labeling
+      rows: labelled utterances only
+    provenance:
+      preparation_status: prepared
+      lineage_status: exact
+      materialization: full
+      source: common_voice_en@train-punc-v1-20261102
+      description: common_voice_en@train-punc-v1-20261102 中被 TS 场景池（open-audio-llm 训练配方 train-data-v7set30）用作目标或干扰语音的句子，带热词标注：custom.hotwords 是这句里说到的热词，按本行文本的写法（英文按整词匹配、不分大小写，所有格算同一个词；本行文本里找不到的词去掉）；custom.hotword_labeling 记标注来源、标注时看到的文本和模型原始抽取。314807 句里 144126 句有热词，其中 137676 句复用 hw_sft@hw-20261014 的已有标注。只含标过的句子，文本与父版本相同；录音沿用父版本，不复制音频。脚本 scripts/ts_hotwords/register_hotwords.py，标注工具 scripts/ts_hotwords/label_hotwords.py。
+      facts:
+        labels: 314807
+        words: 214813
+        words dropped (not in the row text): 2529
+        rows: 314807
+        rows with hotwords: 144126
+        rows labelled by qwen3.8-27b: 177131
+        rows labelled by hw_sft@hw-20261014: 137676
+        labels without a parent row: 0
+  - schema_version: dataset-catalog/2.0
+    dataset_id: librispeech
+    version: hotwords-v1-20261102
+    languages:
+      - en
+    tasks:
+      - asr_hotwords
+    aliases: []
+    artifacts:
+      - name: train_rec_0
+        kind: lhotse-recordings
+        root_alias: aidc_data
+        relative_path: datasets/librispeech/versions/legacy-20260804/train_rec_0/librispeech_recordings_train-clean-100.jsonl.gz
+        expected_bytes: 369305
+        sha256: 69945377d72f3eee2567ec086f524a741b0150e264eadc890e23660523604564
+      - name: train_rec_1
+        kind: lhotse-recordings
+        root_alias: aidc_data
+        relative_path: datasets/librispeech/versions/legacy-20260804/train_rec_1/librispeech_recordings_train-clean-360.jsonl.gz
+        expected_bytes: 1346941
+        sha256: 2b24d4e9846e8f84ea192a45fbbb21ec90d168574791e3e8536dd1a8b6f88784
+      - name: train_rec_2
+        kind: lhotse-recordings
+        root_alias: aidc_data
+        relative_path: datasets/librispeech/versions/legacy-20260804/train_rec_2/librispeech_recordings_train-other-500.jsonl.gz
+        expected_bytes: 1938911
+        sha256: 1f919ed6fadde38df5b59248facd874685f09f5fc80f3d94c0c0e877118bddc6
+      - name: train_supervisions_hotwords_0
+        kind: lhotse-supervisions
+        root_alias: aidc_data
+        relative_path: datasets/librispeech/versions/hotwords-v1-20261102/librispeech_supervisions_train-clean-100_punc_hotwords.jsonl.gz
+        expected_bytes: 250873
+        sha256: 3f7c2400bdbd9ffc20ff3de589b3016dbf1b194328f9ae5a9348947989de1af9
+        metadata:
+          record_count: 3861
+          punctuated: true
+      - name: train_supervisions_hotwords_1
+        kind: lhotse-supervisions
+        root_alias: aidc_data
+        relative_path: datasets/librispeech/versions/hotwords-v1-20261102/librispeech_supervisions_train-clean-360_punc_hotwords.jsonl.gz
+        expected_bytes: 964180
+        sha256: 0b03ffbb848d129f01c09a9b64a1a82170967d0688c501d6927cbac3fc3a7160
+        metadata:
+          record_count: 14889
+          punctuated: true
+      - name: train_supervisions_hotwords_2
+        kind: lhotse-supervisions
+        root_alias: aidc_data
+        relative_path: datasets/librispeech/versions/hotwords-v1-20261102/librispeech_supervisions_train-other-500_punc_hotwords.jsonl.gz
+        expected_bytes: 1779969
+        sha256: b89dfd88010a74d08fd2e1391942191303584908d24136804846bec050a75a92
+        metadata:
+          record_count: 28671
+          punctuated: true
+    splits:
+      train:
+        artifacts:
+          recordings:
+            - train_rec_0
+            - train_rec_1
+            - train_rec_2
+          supervisions:
+            - train_supervisions_hotwords_0
+            - train_supervisions_hotwords_1
+            - train_supervisions_hotwords_2
+        statistics:
+          records: 47421
+          records_with_hotwords: 13808
+          duration_hours: 65.6763
+          duration_basis: sum of supervision durations
+    recipe_parameters:
+      adds:
+        - custom.hotwords
+        - custom.hotword_labeling
+      rows: labelled utterances only
+    provenance:
+      preparation_status: prepared
+      lineage_status: exact
+      materialization: full
+      source: librispeech@train-punc-v1-20261102
+      description: librispeech@train-punc-v1-20261102 中被 TS 场景池（open-audio-llm 训练配方 train-data-v7set30）用作目标或干扰语音的句子，带热词标注：custom.hotwords 是这句里说到的热词，按本行文本的写法（英文按整词匹配、不分大小写，所有格算同一个词；本行文本里找不到的词去掉）；custom.hotword_labeling 记标注来源、标注时看到的文本和模型原始抽取。47421 句里 13808 句有热词。只含标过的句子，文本与父版本相同；录音沿用父版本，不复制音频。脚本 scripts/ts_hotwords/register_hotwords.py，标注工具 scripts/ts_hotwords/label_hotwords.py。
+      facts:
+        labels: 47421
+        words: 17824
+        words dropped (not in the row text): 99
+        rows: 47421
+        rows with hotwords: 13808
+        rows labelled by qwen3.8-27b: 47421
+        labels without a parent row: 0
+  - schema_version: dataset-catalog/2.0
+    dataset_id: cs_dialogue_en
+    version: hotwords-v1-20261102
+    languages:
+      - en
+    tasks:
+      - asr_hotwords
+    aliases: []
+    artifacts:
+      - name: train_rec_0
+        kind: lhotse-recordings
+        root_alias: aidc_data
+        relative_path: datasets/cs_dialogue_en/versions/legacy-20260804/train_rec_0/cs_dialogue_recordings_train.en.jsonl.gz
+        expected_bytes: 100524
+        sha256: 9e13dc4eee14a3137bed8711db7159c4e4576fae396cf17d83b3993cc93ef9a2
+      - name: train_supervisions_hotwords_0
+        kind: lhotse-supervisions
+        root_alias: aidc_data
+        relative_path: datasets/cs_dialogue_en/versions/hotwords-v1-20261102/cs_dialogue_supervisions_train.en_hotwords.jsonl.gz
+        expected_bytes: 169382
+        sha256: b62cffe55a4b8d23ea6de24f98afacae7fa4677d32627d4cac1923f1bc4af178
+        metadata:
+          record_count: 4330
+          punctuated: false
+    splits:
+      train:
+        artifacts:
+          recordings:
+            - train_rec_0
+          supervisions:
+            - train_supervisions_hotwords_0
+        statistics:
+          records: 4330
+          records_with_hotwords: 260
+          duration_hours: 4.4747
+          duration_basis: sum of supervision durations
+    recipe_parameters:
+      adds:
+        - custom.hotwords
+        - custom.hotword_labeling
+      rows: labelled utterances only
+    provenance:
+      preparation_status: prepared
+      lineage_status: exact
+      materialization: full
+      source: cs_dialogue_en@legacy-20260804
+      description: cs_dialogue_en@legacy-20260804 中被 TS 场景池（open-audio-llm 训练配方 train-data-v7set30）用作目标或干扰语音的句子，带热词标注：custom.hotwords 是这句里说到的热词，按本行文本的写法（英文按整词匹配、不分大小写，所有格算同一个词；本行文本里找不到的词去掉）；custom.hotword_labeling 记标注来源、标注时看到的文本和模型原始抽取。4330 句里 260 句有热词。只含标过的句子，文本与父版本相同；录音沿用父版本，不复制音频。脚本 scripts/ts_hotwords/register_hotwords.py，标注工具 scripts/ts_hotwords/label_hotwords.py。
+      facts:
+        labels: 4330
+        words: 294
+        words dropped (not in the row text): 0
+        rows: 4330
+        rows with hotwords: 260
+        rows labelled by qwen3.8-27b: 4330
+        labels without a parent row: 0
