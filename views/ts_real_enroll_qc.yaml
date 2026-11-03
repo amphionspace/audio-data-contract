@@ -1,0 +1,180 @@
+# ts_real_train 注册音频质检的 view
+  - schema_version: dataset-view/1.0
+    view_id: ts_real_train/enroll-qc
+    version: v1-20261017-utts-enroll-qc-20261021
+    source:
+      dataset_id: ts_real_train
+      version: v1-20261017-utts-punc-20261102
+    result:
+      dataset_id: ts_real_train
+      version: v1-20261017-utts-enroll-qc-20261021
+    materialization: full
+    lineage_status: exact
+    transforms:
+      - name: enrollment-check
+        version: v1-20261021
+        kind: annotate
+        writes:
+          - metadata.enrollment_check
+        parameters:
+          model: none (transcript overlap)
+          tools:
+            - scripts/label_registration/scan_enrolled_in_window.py
+            - scripts/ts_robust/qc_ts_real_train_v3.py
+          talk_seconds_inputs_sha256:
+            v1-20261017-utts--aishell4.tsv: dd32d43767742e34a63e00ed1776a31e2b6d6d7c2d810587a163d0e5b4b0e90c
+            v1-20261017-utts--alimeeting.tsv: e9a94700f1b081decb670d424ba31414f0f7ae11c6dbca20d07df29d74023030
+            v1-20261017-utts--ramc.tsv: d32cf618d1d5cf63d9702a776d6981ab3eddf5f4d46124659e82b85420c85b47
+          counts:
+            aishell4:
+              records: 30012
+              target-absent checked: 15006
+              enrolled speaker talks in window: 0
+              pair cosines: 0
+            alimeeting:
+              records: 24750
+              target-absent checked: 12375
+              enrolled speaker talks in window: 22
+              pair cosines: 0
+            ramc:
+              records: 36648
+              target-absent checked: 18324
+              enrolled speaker talks in window: 3
+              pair cosines: 0
+          scan_report:
+            v1-20261017-utts/alimeeting:
+              neg: 12375
+              same_recording: 3032
+              other_recording: 9343
+              enrolled_talks_in_window: 22
+              talks>=0.3s: 22
+            v1-20261017-utts/aishell4:
+              neg: 15006
+              same_recording: 13733
+              enrolled_talks_in_window: 21
+              talks>=0.3s: 0
+              other_recording: 1273
+            v1-20261017-utts/ramc:
+              neg: 18324
+              same_recording: 8324
+              enrolled_talks_in_window: 22
+              talks>=0.3s: 3
+              other_recording: 10000
+    provenance:
+      registered_at: '2026-11-03'
+  - schema_version: dataset-view/1.0
+    view_id: ts_real_train/enroll-qc
+    version: v2-20261018-enroll-qc-20261021
+    source:
+      dataset_id: ts_real_train
+      version: v2-20261018-utts-punc-20261102
+    result:
+      dataset_id: ts_real_train
+      version: v2-20261018-enroll-qc-20261021
+    materialization: full
+    lineage_status: exact
+    transforms:
+      - name: enrollment-check
+        version: v1-20261021
+        kind: annotate
+        writes:
+          - metadata.enrollment_check
+        parameters:
+          model: none (transcript overlap)
+          tools:
+            - scripts/label_registration/scan_enrolled_in_window.py
+            - scripts/ts_robust/qc_ts_real_train_v3.py
+          talk_seconds_inputs_sha256:
+            v2-20261018--aishell4.tsv: bd1d7a883c912d35002794f0adafbdbeeab66a6db6089c90b046d2279ed74f41
+            v2-20261018--alimeeting.tsv: e071d0697f5a2e167ac39ee7ac9d6259d4cdfb933d1a35aa54ff82a168828331
+          counts:
+            aishell4:
+              records: 29918
+              target-absent checked: 14959
+              enrolled speaker talks in window: 0
+              pair cosines: 0
+            alimeeting:
+              records: 42000
+              target-absent checked: 21000
+              enrolled speaker talks in window: 43
+              pair cosines: 0
+          scan_report:
+            v2-20261018/alimeeting:
+              neg: 21000
+              other_recording: 17755
+              same_recording: 3245
+              enrolled_talks_in_window: 43
+              talks>=0.3s: 43
+            v2-20261018/aishell4:
+              neg: 14959
+              same_recording: 13226
+              other_recording: 1733
+              enrolled_talks_in_window: 7
+              talks>=0.3s: 0
+            v2-20261018/ramc:
+              neg: 6000
+              same_recording: 1058
+              other_recording: 4942
+              enrolled_talks_in_window: 7
+              talks>=0.3s: 2
+    provenance:
+      registered_at: '2026-11-03'
+  - schema_version: dataset-view/1.0
+    view_id: ts_real_train/enroll-qc
+    version: v3-20261020-enroll-qc-20261021
+    source:
+      dataset_id: ts_real_train
+      version: v3-20261020-utts-punc-20261102
+    result:
+      dataset_id: ts_real_train
+      version: v3-20261020-enroll-qc-20261021
+    materialization: full
+    lineage_status: exact
+    transforms:
+      - name: enrollment-check
+        version: v1-20261021
+        kind: annotate
+        writes:
+          - metadata.enrollment_check
+        parameters:
+          model: ERes2NetV2 (iic/speech_eres2netv2_sv_zh-cn_16k-common)
+          tools:
+            - scripts/label_registration/scan_enrolled_in_window.py
+            - scripts/ts_robust/qc_ts_real_train_v3.py
+          talk_seconds_inputs_sha256:
+            v3-20261020--alimeeting_en_mf.tsv: c4ae4dd4cfd8e664579d2612ccdefbeae5ac4f24af8412c6a34351a010676989
+            v3-20261020--alimeeting_en_mn.tsv: 8738ee01a7b8c24021b236a2bb9fb04f0412419f082fb145baba26b2c3f79baf
+          counts:
+            alimeeting_en_mf:
+              records: 24840
+              target-absent checked: 12420
+              enrolled speaker talks in window: 14
+              pair cosines: 0
+            alimeeting_en_mn:
+              records: 24762
+              target-absent checked: 12381
+              enrolled speaker talks in window: 18
+              pair cosines: 0
+            emilia2_1spk:
+              records: 29550
+              target-absent checked: 0
+              enrolled speaker talks in window: 0
+              pair cosines: 29550
+          scan_report:
+            v3-20261020/alimeeting_en_mn:
+              neg: 12381
+              same_recording: 3076
+              other_recording: 9305
+              enrolled_talks_in_window: 18
+              talks>=0.3s: 18
+            v3-20261020/alimeeting_en_mf:
+              neg: 12420
+              same_recording: 3078
+              other_recording: 9342
+              enrolled_talks_in_window: 14
+              talks>=0.3s: 14
+          pair_cosines_sha256: 2221a3d8b9e44b4d8ec856fef51569c2e8f8a23d9ae5ab3ab14c45ec84ad79f8
+          same_floor: 0.746
+          diff_ceiling: 0.493
+    provenance:
+      registered_at: '2026-11-03'

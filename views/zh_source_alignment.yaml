@@ -1,0 +1,191 @@
+# 五个中文来源语料词级强制对齐的 view
+  - schema_version: dataset-view/1.0
+    view_id: aidatatang/alignment
+    version: alignment-v1-20261008
+    source:
+      dataset_id: aidatatang
+      version: icefall-20260908
+    result:
+      dataset_id: aidatatang
+      version: alignment-v1-20261008
+    materialization: full
+    lineage_status: exact
+    transforms:
+      - name: forced-alignment
+        version: v1-20261008
+        kind: annotate
+        writes:
+          - metadata.alignment
+        parameters:
+          model: Qwen3-ForcedAligner-0.6B
+          model_config_sha256: d616c65d46c4b90bdc651b0a0963ea932732241140f337f9bb6b0335a9c8ef09
+          qwen_asr_version: 0.0.6
+          dtype: bfloat16
+          attention: sdpa
+          tool: amphiondata main 6daabaf (forced-alignment-plan/1.0 pipeline)
+          plan_sha256: 87504c7725f578fe0a1f3808efa712531a112283b5bc1440ba3f25bbf1c827b7
+          plan_schema: forced-alignment-plan/1.0
+          split: train
+          records: 237265
+          aligned: 171212
+          needs_review: 66053
+          issues:
+            zero_duration: 85092
+            out_of_bounds: 1584
+          summary_sha256: 449719df9e995dd725f4b2881d1272870a9ebc54bcfa24c138ef56e6ef540e5e
+          label_sha256: 09cfde86a6d3a1f75d171613d89f7e1b1e9bdc3947a9fdbe61abde663d7ef577
+          script: scripts/label_registration/register_alignments.py
+    provenance:
+      registered_at: '2026-11-03'
+  - schema_version: dataset-view/1.0
+    view_id: aishell3/alignment
+    version: alignment-v1-20261008
+    source:
+      dataset_id: aishell3
+      version: icefall-20260908
+    result:
+      dataset_id: aishell3
+      version: alignment-v1-20261008
+    materialization: full
+    lineage_status: exact
+    transforms:
+      - name: forced-alignment
+        version: v1-20261008
+        kind: annotate
+        writes:
+          - metadata.alignment
+        parameters:
+          model: Qwen3-ForcedAligner-0.6B
+          model_config_sha256: d616c65d46c4b90bdc651b0a0963ea932732241140f337f9bb6b0335a9c8ef09
+          qwen_asr_version: 0.0.6
+          dtype: bfloat16
+          attention: sdpa
+          tool: amphiondata main 6daabaf (forced-alignment-plan/1.0 pipeline)
+          plan_sha256: 8b171848df1094da70717a17484f0ea618db09adc29582adb3dcea37e668b2aa
+          plan_schema: forced-alignment-plan/1.0
+          split: train
+          records: 63262
+          aligned: 57990
+          needs_review: 5272
+          issues:
+            zero_duration: 5629
+            out_of_bounds: 1
+          summary_sha256: d7435a27898d1f9e8abe0b6435727a4a9f13781ecca57a5becd0f91f844bc783
+          label_sha256: c77b198f09d6ad44cda503c13b8ef27a197d062fd9ee4e8ac693f8b1ffca1e1b
+          script: scripts/label_registration/register_alignments.py
+    provenance:
+      registered_at: '2026-11-03'
+  - schema_version: dataset-view/1.0
+    view_id: magicdata/alignment
+    version: alignment-v1-20261008
+    source:
+      dataset_id: magicdata
+      version: icefall-20260908
+    result:
+      dataset_id: magicdata
+      version: alignment-v1-20261008
+    materialization: full
+    lineage_status: exact
+    transforms:
+      - name: forced-alignment
+        version: v1-20261008
+        kind: annotate
+        writes:
+          - metadata.alignment
+        parameters:
+          model: Qwen3-ForcedAligner-0.6B
+          model_config_sha256: d616c65d46c4b90bdc651b0a0963ea932732241140f337f9bb6b0335a9c8ef09
+          qwen_asr_version: 0.0.6
+          dtype: bfloat16
+          attention: sdpa
+          tool: amphiondata main 6daabaf (forced-alignment-plan/1.0 pipeline)
+          plan_sha256: 30cc8d5814cb7bd78a1dafabd91b0e05784dda096bccc0f2c2144bd28352cb65
+          plan_schema: forced-alignment-plan/1.0
+          split: train
+          records: 573478
+          aligned: 402005
+          needs_review: 171473
+          issues:
+            zero_duration: 201930
+            out_of_bounds: 467
+          summary_sha256: 391cf7d4d11674737238549dd8225627c25c26b37c274c781b0f8162e268794c
+          label_sha256: 3eec02b1f9962a4ec981f40d0afe6885853f21a680850213d31e7116ede9a1c6
+          script: scripts/label_registration/register_alignments.py
+    provenance:
+      registered_at: '2026-11-03'
+  - schema_version: dataset-view/1.0
+    view_id: magicdata_ramc/alignment
+    version: alignment-v1-20261008
+    source:
+      dataset_id: magicdata_ramc
+      version: icefall-20260908
+    result:
+      dataset_id: magicdata_ramc
+      version: alignment-v1-20261008
+    materialization: full
+    lineage_status: exact
+    transforms:
+      - name: forced-alignment
+        version: v1-20261008
+        kind: annotate
+        writes:
+          - metadata.alignment
+        parameters:
+          model: Qwen3-ForcedAligner-0.6B
+          model_config_sha256: d616c65d46c4b90bdc651b0a0963ea932732241140f337f9bb6b0335a9c8ef09
+          qwen_asr_version: 0.0.6
+          dtype: bfloat16
+          attention: sdpa
+          tool: amphiondata main 6daabaf (forced-alignment-plan/1.0 pipeline)
+          plan_sha256: 0905b3a0e29d38ccbe19b17684be2a0672894fda8827ba83560179ba28a63555
+          plan_schema: forced-alignment-plan/1.0
+          split: train
+          records: 168464
+          aligned: 109797
+          needs_review: 58667
+          issues:
+            out_of_bounds: 4066
+            zero_duration: 85822
+          summary_sha256: a28e7f2b7e4cede1db679f83eb4b1fb702b09e4cdd7bf30849bcc78ac0348988
+          label_sha256: 9af528bac1d4401a0bf4a3e0290d051d8406db72a1eefcc8973801756e9e1452
+          script: scripts/label_registration/register_alignments.py
+    provenance:
+      registered_at: '2026-11-03'
+  - schema_version: dataset-view/1.0
+    view_id: primewords/alignment
+    version: alignment-v1-20261008
+    source:
+      dataset_id: primewords
+      version: icefall-20260908
+    result:
+      dataset_id: primewords
+      version: alignment-v1-20261008
+    materialization: full
+    lineage_status: exact
+    transforms:
+      - name: forced-alignment
+        version: v1-20261008
+        kind: annotate
+        writes:
+          - metadata.alignment
+        parameters:
+          model: Qwen3-ForcedAligner-0.6B
+          model_config_sha256: d616c65d46c4b90bdc651b0a0963ea932732241140f337f9bb6b0335a9c8ef09
+          qwen_asr_version: 0.0.6
+          dtype: bfloat16
+          attention: sdpa
+          tool: amphiondata main 6daabaf (forced-alignment-plan/1.0 pipeline)
+          plan_sha256: 5bc9338ea426dc09d86082d19845943fcba2bf020f471e14badbd5460692d7cd
+          plan_schema: forced-alignment-plan/1.0
+          split: train
+          records: 50384
+          aligned: 44478
+          needs_review: 5906
+          issues:
+            zero_duration: 6829
+            out_of_bounds: 216
+          summary_sha256: 3bb8bd29c5bbab9ed289a4ff49f24c852e973f99078f6a3735bb93349573b640
+          label_sha256: 37f0d7fc766b334bb4431bb347179a0e9148fe7a082f04549dd228441ff556a1
+          script: scripts/label_registration/register_alignments.py
+    provenance:
+      registered_at: '2026-11-03'

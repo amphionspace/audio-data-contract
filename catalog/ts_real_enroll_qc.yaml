@@ -1,0 +1,329 @@
+# ts_real_train 注册音频质检（注册人是否在窗口内说话、说话人相似度）
+  - schema_version: dataset-catalog/2.0
+    dataset_id: ts_real_train
+    version: v1-20261017-utts-enroll-qc-20261021
+    languages:
+      - zh
+    tasks:
+      - ts_asr
+    aliases: []
+    artifacts:
+      - name: aishell4-audio-index
+        kind: audio-index
+        root_alias: aidc_data
+        relative_path: datasets/ts_real_train/versions/v1-20261017-utts/audio_index_aishell4.jsonl.gz
+        sha256: f674cc794536ff797b3a5394278c6b94f33af434bb1f580f8086526fbac9a68b
+        metadata:
+          record_count: 189
+      - name: alimeeting-audio-index
+        kind: audio-index
+        root_alias: aidc_data
+        relative_path: datasets/ts_real_train/versions/v1-20261017-utts/audio_index_alimeeting.jsonl.gz
+        sha256: 8331ba8e83f46c3a4dff8449c2959401f45a4981b0e52dde0e3fc61d9d10b6b1
+        metadata:
+          record_count: 209
+      - name: ramc-audio-index
+        kind: audio-index
+        root_alias: aidc_data
+        relative_path: datasets/ts_real_train/versions/v1-20261017-utts/audio_index_ramc.jsonl.gz
+        sha256: 464a198c6dee91326e75281474288e2df6546714cd090b20f7663af50e157e2d
+        metadata:
+          record_count: 289
+      - name: aishell4_records_enroll_qc
+        kind: audio-records
+        root_alias: aidc_data
+        relative_path: datasets/ts_real_train/versions/v1-20261017-utts-enroll-qc-20261021/records/records_aishell4.jsonl.gz
+        expected_bytes: 5630631
+        sha256: cac85074ce6ffbcd5fcab1eb04e9bb0eb4d900ac07a52acc9d3557c81360fbb4
+        metadata:
+          record_count: 30012
+          source: datasets/ts_real_train/versions/v1-20261017-utts-punc-20261102/records/records_aishell4.jsonl.gz
+      - name: alimeeting_records_enroll_qc
+        kind: audio-records
+        root_alias: aidc_data
+        relative_path: datasets/ts_real_train/versions/v1-20261017-utts-enroll-qc-20261021/records/records_alimeeting.jsonl.gz
+        expected_bytes: 5579030
+        sha256: f21e33c766368cb4bca07f291851b9b1f065e33dfd430c206e09759bf93bd503
+        metadata:
+          record_count: 24750
+          source: datasets/ts_real_train/versions/v1-20261017-utts-punc-20261102/records/records_alimeeting.jsonl.gz
+      - name: ramc_records_enroll_qc
+        kind: audio-records
+        root_alias: aidc_data
+        relative_path: datasets/ts_real_train/versions/v1-20261017-utts-enroll-qc-20261021/records/records_ramc.jsonl.gz
+        expected_bytes: 7039176
+        sha256: 9804b1bf0a8b08a53c98aaf8d51779b5daa28bfe68f4eea39724cc0cf32c77b2
+        metadata:
+          record_count: 36648
+          source: datasets/ts_real_train/versions/v1-20261017-utts-punc-20261102/records/records_ramc.jsonl.gz
+    splits:
+      aishell4:
+        artifacts:
+          records:
+            - aishell4_records_enroll_qc
+          audio_index:
+            - aishell4-audio-index
+        task: ts_asr
+        statistics:
+          records: 30012
+        provenance:
+          preparation_status: prepared
+      alimeeting:
+        artifacts:
+          records:
+            - alimeeting_records_enroll_qc
+          audio_index:
+            - alimeeting-audio-index
+        task: ts_asr
+        statistics:
+          records: 24750
+        provenance:
+          preparation_status: prepared
+      ramc:
+        artifacts:
+          records:
+            - ramc_records_enroll_qc
+          audio_index:
+            - ramc-audio-index
+        task: ts_asr
+        statistics:
+          records: 36648
+        provenance:
+          preparation_status: prepared
+    recipe_parameters:
+      adds:
+        - metadata.enrollment_check
+      rows: all records of the parent
+    provenance:
+      preparation_status: prepared
+      lineage_status: exact
+      materialization: full
+      source: ts_real_train@v1-20261017-utts-punc-20261102
+      description: ts_real_train@v1-20261017-utts-punc-20261102 的全部记录（aishell4, alimeeting, ramc），内容与父版本相同，新增 metadata.enrollment_check：目标缺席记录给出注册说话人在窗口内实际说话的秒数（enrolled_speaker_talk_seconds，大于 0 说明这条并不缺席，因为 AliMeeting / AISHELL-4 / RAMC 的说话人编号跨会议通用，从别的会议取的注册人可能也在本窗口里说话）；音频索引沿用父版本，不复制音频；本版本只带标注，训练配方仍引用父版本。脚本 scripts/label_registration/register_ts_real_enroll_qc.py，检查工具 scripts/label_registration/scan_enrolled_in_window.py、scripts/ts_robust/qc_ts_real_train_v3.py。
+      facts:
+        aishell4:
+          records: 30012
+          target-absent checked: 15006
+          enrolled speaker talks in window: 0
+          pair cosines: 0
+        alimeeting:
+          records: 24750
+          target-absent checked: 12375
+          enrolled speaker talks in window: 22
+          pair cosines: 0
+        ramc:
+          records: 36648
+          target-absent checked: 18324
+          enrolled speaker talks in window: 3
+          pair cosines: 0
+  - schema_version: dataset-catalog/2.0
+    dataset_id: ts_real_train
+    version: v2-20261018-enroll-qc-20261021
+    languages:
+      - zh
+    tasks:
+      - ts_asr
+    aliases: []
+    artifacts:
+      - name: aishell4-audio-index
+        kind: audio-index
+        root_alias: aidc_data
+        relative_path: datasets/ts_real_train/versions/v2-20261018-utts/audio_index_aishell4.jsonl.gz
+        sha256: bf72248e8bb698d6563237617d3f0b4344e5c48a302f315a3f1ab366bd9bdb74
+        metadata:
+          record_count: 189
+      - name: alimeeting-audio-index
+        kind: audio-index
+        root_alias: aidc_data
+        relative_path: datasets/ts_real_train/versions/v2-20261018-utts/audio_index_alimeeting.jsonl.gz
+        sha256: 4c0cd59413a466db35c577a65acd3d2488328454ab7c8fb3bbc6e50088abd2e8
+        metadata:
+          record_count: 209
+      - name: aishell4_records_enroll_qc
+        kind: audio-records
+        root_alias: aidc_data
+        relative_path: datasets/ts_real_train/versions/v2-20261018-enroll-qc-20261021/records/records_aishell4.jsonl.gz
+        expected_bytes: 6351547
+        sha256: 43d671019f41ad21a065fab6634fda8e102a21c3ad1bd6de4980426d3ac27a84
+        metadata:
+          record_count: 29918
+          source: datasets/ts_real_train/versions/v2-20261018-utts-punc-20261102/records/records_aishell4.jsonl.gz
+      - name: alimeeting_records_enroll_qc
+        kind: audio-records
+        root_alias: aidc_data
+        relative_path: datasets/ts_real_train/versions/v2-20261018-enroll-qc-20261021/records/records_alimeeting.jsonl.gz
+        expected_bytes: 11622724
+        sha256: a36b63c7d9533217ffe393c307f952cc7977ae85681dda8ffbc9e1cbe8cc75b4
+        metadata:
+          record_count: 42000
+          source: datasets/ts_real_train/versions/v2-20261018-utts-punc-20261102/records/records_alimeeting.jsonl.gz
+    splits:
+      aishell4:
+        artifacts:
+          records:
+            - aishell4_records_enroll_qc
+          audio_index:
+            - aishell4-audio-index
+        task: ts_asr
+        statistics:
+          records: 29918
+        provenance:
+          preparation_status: prepared
+      alimeeting:
+        artifacts:
+          records:
+            - alimeeting_records_enroll_qc
+          audio_index:
+            - alimeeting-audio-index
+        task: ts_asr
+        statistics:
+          records: 42000
+        provenance:
+          preparation_status: prepared
+    recipe_parameters:
+      adds:
+        - metadata.enrollment_check
+      rows: all records of the parent
+    provenance:
+      preparation_status: prepared
+      lineage_status: exact
+      materialization: full
+      source: ts_real_train@v2-20261018-utts-punc-20261102
+      description: ts_real_train@v2-20261018-utts-punc-20261102 的全部记录（aishell4, alimeeting），内容与父版本相同，新增 metadata.enrollment_check：目标缺席记录给出注册说话人在窗口内实际说话的秒数（enrolled_speaker_talk_seconds，大于 0 说明这条并不缺席，因为 AliMeeting / AISHELL-4 / RAMC 的说话人编号跨会议通用，从别的会议取的注册人可能也在本窗口里说话）；音频索引沿用父版本，不复制音频；本版本只带标注，训练配方仍引用父版本。脚本 scripts/label_registration/register_ts_real_enroll_qc.py，检查工具 scripts/label_registration/scan_enrolled_in_window.py、scripts/ts_robust/qc_ts_real_train_v3.py。
+      facts:
+        aishell4:
+          records: 29918
+          target-absent checked: 14959
+          enrolled speaker talks in window: 0
+          pair cosines: 0
+        alimeeting:
+          records: 42000
+          target-absent checked: 21000
+          enrolled speaker talks in window: 43
+          pair cosines: 0
+  - schema_version: dataset-catalog/2.0
+    dataset_id: ts_real_train
+    version: v3-20261020-enroll-qc-20261021
+    languages:
+      - zh
+    tasks:
+      - ts_asr
+    aliases: []
+    artifacts:
+      - name: alimeeting_en_mf-audio-index
+        kind: audio-index
+        root_alias: aidc_data
+        relative_path: datasets/ts_real_train/versions/v3-20261020-utts/audio_index_alimeeting_en_mf.jsonl.gz
+        sha256: c85eba2de105b41b418b60eb7c9adb8ddf2b55736e4855cb821ff220e429eb71
+        metadata:
+          record_count: 848
+      - name: alimeeting_en_mn-audio-index
+        kind: audio-index
+        root_alias: aidc_data
+        relative_path: datasets/ts_real_train/versions/v3-20261020-utts/audio_index_alimeeting_en_mn.jsonl.gz
+        sha256: 80e094458557d92cb8c9a801c965338fd581f4b5200f6b0ed136247325a2db0c
+        metadata:
+          record_count: 639
+      - name: emilia2_1spk-audio-index
+        kind: audio-index
+        root_alias: aidc_data
+        relative_path: datasets/ts_real_train/versions/v3-20261020-utts/audio_index_emilia2_1spk.jsonl.gz
+        sha256: 6f826c6decfbe87a712afab7dce4fe3cacebf546a5d9e82d6101041cd14f886c
+        metadata:
+          record_count: 11149
+      - name: alimeeting_en_mf_records_enroll_qc
+        kind: audio-records
+        root_alias: aidc_data
+        relative_path: datasets/ts_real_train/versions/v3-20261020-enroll-qc-20261021/records/records_alimeeting_en_mf.jsonl.gz
+        expected_bytes: 4644103
+        sha256: 17effefaf6cb5d2505686439fd42c9b157cf14f587ac873bda699c09cac3d8b6
+        metadata:
+          record_count: 24840
+          source: datasets/ts_real_train/versions/v3-20261020-utts-punc-20261102/records/records_alimeeting_en_mf.jsonl.gz
+      - name: alimeeting_en_mn_records_enroll_qc
+        kind: audio-records
+        root_alias: aidc_data
+        relative_path: datasets/ts_real_train/versions/v3-20261020-enroll-qc-20261021/records/records_alimeeting_en_mn.jsonl.gz
+        expected_bytes: 4641364
+        sha256: a6389645ca421cb360cf2dc4dd1b0e12ab1dcd8e8972e7d9533507a454179887
+        metadata:
+          record_count: 24762
+          source: datasets/ts_real_train/versions/v3-20261020-utts-punc-20261102/records/records_alimeeting_en_mn.jsonl.gz
+      - name: emilia2_1spk_records_enroll_qc
+        kind: audio-records
+        root_alias: aidc_data
+        relative_path: datasets/ts_real_train/versions/v3-20261020-enroll-qc-20261021/records/records_emilia2_1spk.jsonl.gz
+        expected_bytes: 6267171
+        sha256: 8bb2fc923d64a1987e2ff1db28ca1e4a4290336539671879adbd22814e3d9843
+        metadata:
+          record_count: 29550
+          source: datasets/ts_real_train/versions/v3-20261020-utts-punc-20261102/records/records_emilia2_1spk.jsonl.gz
+      - name: pair_cosines
+        kind: quality-report
+        root_alias: aidc_data
+        relative_path: datasets/ts_real_train/versions/v3-20261020-enroll-qc-20261021/pair_cosines.json
+        expected_bytes: 390939
+        sha256: 2221a3d8b9e44b4d8ec856fef51569c2e8f8a23d9ae5ab3ab14c45ec84ad79f8
+        metadata:
+          pairs: 15000
+    splits:
+      alimeeting_en_mf:
+        artifacts:
+          records:
+            - alimeeting_en_mf_records_enroll_qc
+          audio_index:
+            - alimeeting_en_mf-audio-index
+        task: ts_asr
+        statistics:
+          records: 24840
+        provenance:
+          preparation_status: prepared
+      alimeeting_en_mn:
+        artifacts:
+          records:
+            - alimeeting_en_mn_records_enroll_qc
+          audio_index:
+            - alimeeting_en_mn-audio-index
+        task: ts_asr
+        statistics:
+          records: 24762
+        provenance:
+          preparation_status: prepared
+      emilia2_1spk:
+        artifacts:
+          records:
+            - emilia2_1spk_records_enroll_qc
+          audio_index:
+            - emilia2_1spk-audio-index
+        task: ts_asr
+        statistics:
+          records: 29550
+        provenance:
+          preparation_status: prepared
+    recipe_parameters:
+      adds:
+        - metadata.enrollment_check
+      rows: all records of the parent
+    provenance:
+      preparation_status: prepared
+      lineage_status: exact
+      materialization: full
+      source: ts_real_train@v3-20261020-utts-punc-20261102
+      description: ts_real_train@v3-20261020-utts-punc-20261102 的全部记录（alimeeting_en_mf, alimeeting_en_mn, emilia2_1spk），内容与父版本相同，新增 metadata.enrollment_check：目标缺席记录给出注册说话人在窗口内实际说话的秒数（enrolled_speaker_talk_seconds，大于 0 说明这条并不缺席，因为 AliMeeting / AISHELL-4 / RAMC 的说话人编号跨会议通用，从别的会议取的注册人可能也在本窗口里说话）；Emilia2 单人配对给出注册音频与窗口的 ERes2NetV2 余弦（cosine，expected 为应该相同还是不同的说话人）和整对的两个余弦，另附 pair_cosines.json（15000 对），构建时按 same_floor 0.746 / diff_ceiling 0.493 剔除了 225 对。音频索引沿用父版本，不复制音频；本版本只带标注，训练配方仍引用父版本。脚本 
+        scripts/label_registration/register_ts_real_enroll_qc.py，检查工具 scripts/label_registration/scan_enrolled_in_window.py、scripts/ts_robust/qc_ts_real_train_v3.py。
+      facts:
+        alimeeting_en_mf:
+          records: 24840
+          target-absent checked: 12420
+          enrolled speaker talks in window: 14
+          pair cosines: 0
+        alimeeting_en_mn:
+          records: 24762
+          target-absent checked: 12381
+          enrolled speaker talks in window: 18
+          pair cosines: 0
+        emilia2_1spk:
+          records: 29550
+          target-absent checked: 0
+          enrolled speaker talks in window: 0
+          pair cosines: 29550
