@@ -1,0 +1,58 @@
+  - schema_version: dataset-view/1.0
+    view_id: wenetspeech_chuan/qwen3-asr-full
+    version: qwen3-asr-full-v1-20261023
+    source:
+      dataset_id: wenetspeech_chuan
+      version: icefall-20260908
+    result:
+      dataset_id: wenetspeech_chuan
+      version: qwen3-asr-full-v1-20261023
+    materialization: full
+    lineage_status: exact
+    transforms:
+      - name: transcribed-rows
+        version: v1
+        kind: filter
+        writes:
+          - $membership
+        parameters:
+          kept: rows with a Qwen transcript; audio over about 157 s is refused by the service
+          input_rows: 4938701
+          output_rows: 4937906
+      - name: qwen3-asr-transcript
+        version: v1-20261023
+        kind: annotate
+        writes:
+          - metadata.qwen_asr
+        parameters:
+          model: Qwen/Qwen3-ASR-1.7B (shared vLLM service)
+          request:
+            temperature: 0
+            max_tokens: 2048
+            repetition_penalty: 1.1
+            to_language: zh
+          audio: 16 kHz PCM WAV read from the source tar at the row's byte range
+          scoring:
+            text_normalization: speechio-textnorm-zh
+            unit: one token per CJK character, punctuation dropped
+            cer: 100 * errors / ref_tokens, null when ref_tokens is 0
+          tool: scripts/wenetspeech_qwen/qwen_infer.py, scripts/wenetspeech_qwen/score.py
+          label_inputs:
+            - file: qwen.jsonl
+              sha256: 371f4757f41807c0873b425240e8ecfa3810f3e3c733748c0a0423b5949e6313
+            - file: qwen-scored.jsonl
+              sha256: 4d8ccb0627e294be6834550c8e1a4c2df146cc237ed7c6d3a6b5ed5deba2436a
+          corpus_cer: 21.47
+          qwen_empty_rows: 223268
+          cer_share_rows:
+            '0': 838943
+            (0,5): 344619
+            '[5,10)': 616751
+            '[10,20)': 904216
+            '[20,30)': 573167
+            '[30,50)': 546771
+            '[50,100)': 549327
+            '>=100': 495008
+            label empty after TextNorm: 69104
+    provenance:
+      registered_at: '2026-11-03'
