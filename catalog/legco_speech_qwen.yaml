@@ -1,0 +1,38 @@
+# 占位登记：LegCo-Speech 粤语训练集用 Qwen3-ASR 全量转写核对，进行中，进度见状态文件。
+- schema_version: dataset-catalog/2.0
+  dataset_id: legco_speech
+  version: qwen3-asr-v1-20261103
+  languages:
+    - yue
+  tasks:
+    - asr
+  aliases: []
+  artifacts:
+    - name: preparation_state
+      kind: dataset-state
+      root_alias: aidc_data
+      relative_path: datasets/legco_speech/versions/qwen3-asr-v1-20261103/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+          - preparation_state
+      statistics:
+        source_records: 9445794
+        source_hours: 20227.2
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: >-
+      LegCo-Speech（香港立法会）粤语训练集（9,445,794 段 / 20,227.2 h），原标注是繁体口语粤语、带语气词，看起来是机器转写。
+      用共享的 Qwen3-ASR-1.7B 逐段转写整段音频文件，按粤语版 SpeechIO TextNorm 算与原标注的字错误率；试跑 2,000 条整体 8.62%。
+      注意：清单里每条 supervision 的 start 都是 0，但语音在文件里偏后，只截 [0, duration] 转写时 CER 升到 11.75%（开头混进前一句、结尾被截掉），按 supervision 截音频训练会有同样的错位。
+      目前只记录转写和错误率，不删数据；保留规则在看过被拒样本后再定。
+    source: legco_speech@icefall-20260908
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/legco-speech-qwen-20261103
+  recipe_parameters:
+    check_model: Qwen3-ASR-1.7B
+    check_unit: utterance
+    text_normalization: speechio-textnorm-yue
