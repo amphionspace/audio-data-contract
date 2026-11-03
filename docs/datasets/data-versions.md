@@ -2105,6 +2105,18 @@ AISHELL-1、LibriSpeech 合成的多人对话
 - `sot_multispeaker_zh_en@synthetic-v2-timestamps-v1-20260919`：时间戳版本已登记、尚在准备：复用 v2 原混音，新增每次发言起止时间。源对齐和质检未全部完成，尚未发布可训练记录；不将计划条数计为已完成数据
 - 含派生版本（与源数据可能重叠）
 
+### speech_deepfake_bench
+
+伪造语音检测评测集（SpoofRadar、DF-Arena）
+
+语言：ar、de、en、es、ro、ru、zh · 任务：deepfake_detection
+
+| 版本 | 时长（小时） | 口径 | COS |
+|---|---:|---|---|
+| [speech_deepfake_bench@v1-20261103](../../catalog/speech_deepfake_bench.yaml#L1) | 3,463.7 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/speech_deepfake_bench/` |
+
+- `speech_deepfake_bench@v1-20261103`：SpoofRadar v1.0 与 Speech-DF-Arena 两个伪造语音检测排行榜使用的 16 个公开评测集，只用于评测，不进训练。每条记录的 target 为 bonafide（真人）或 spoof（伪造），metadata.protocols 保留两个榜单 protocol 中的原始样本 ID，可直接生成提交用的打分文件。官方 protocol 原样保存在 source/protocols/。各数据集许可证不同（ADD、Codecfake 为 CC BY-NC-ND 4.0，XMAD-Bench 为 CC BY-NC-SA 4.0），仅限内部研究评测，不得再分发
+
 ### starrail_voice
 
 《崩坏：星穹铁道》多语配音，TTS 用
