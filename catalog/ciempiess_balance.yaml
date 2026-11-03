@@ -1,0 +1,49 @@
+  - schema_version: dataset-catalog/2.0
+    dataset_id: ciempiess_balance
+    version: hf-e48eac011954
+    languages:
+      - es
+    tasks:
+      - asr
+    aliases: []
+    artifacts:
+      - name: source
+        kind: hf-dataset-snapshot
+        root_alias: ciempiess_balance
+        relative_path: source/hf-e48eac011954
+        metadata:
+          file_count: 4
+          expected_bytes: 1295447729
+          tree_sha256: 5927182f88b581c517ac7dc394578d4fe6517f9f95c3584d704fce046e814c67
+      - name: download_state
+        kind: dataset-state
+        root_alias: ciempiess_balance
+        relative_path: versions/hf-e48eac011954/download_state/state.json
+        expected_bytes: 915
+        sha256: f264ebc9420a10dbc77bdbca01e3e5c71c6d6f6a3ea0b3d5f0557f40b52a0318
+    splits:
+      train:
+        artifacts:
+          source:
+            - source
+        statistics:
+          count: 8555
+          speakers: 87
+          duration_hours: 18.3449
+          duration_basis: sum of upstream train Parquet duration column in seconds; embedded audio; pinned upstream file hashes verified
+    provenance:
+      source: Hugging Face
+      source_id: ciempiess/ciempiess_balance
+      revision: e48eac011954e3e08c2dbf64bb95d609677b386f
+      url: https://huggingface.co/datasets/ciempiess/ciempiess_balance
+      download_mirror: https://hf-mirror.com
+      description: 墨西哥中部口音广播对话，男女时长均衡，官方完整版本。
+      locale: es-MX
+      dataset_family: ciempiess
+      license:
+        - cc-by-sa-4.0
+      download_scope: Complete CIEMPIESS BALANCE release
+      expected_download_files: 4
+      expected_download_bytes: 1295447729
+      integrity: verified
+      local_scan_date: '2026-11-03'

@@ -1,0 +1,58 @@
+  - schema_version: dataset-catalog/2.0
+    dataset_id: tarsila_asr
+    version: hf-2785788cf674
+    languages:
+      - pt
+    tasks:
+      - asr
+    aliases: []
+    artifacts:
+      - name: source
+        kind: hf-dataset-snapshot
+        root_alias: tarsila_asr
+        relative_path: source/hf-2785788cf674
+        metadata:
+          file_count: 18
+          expected_bytes: 8124991967
+          tree_sha256: c33d400b26c2a895f31895fc0453f9dd99bdde1b31bae38ed72aa64c38c2e9d9
+      - name: download_state
+        kind: dataset-state
+        root_alias: tarsila_asr
+        relative_path: versions/hf-2785788cf674/download_state/state.json
+        expected_bytes: 890
+        sha256: 3b9d12a52dd97bbdfaf92857b2606e4ddc0d832d5789ff7ce29e321e58001bb1
+    splits:
+      test:
+        artifacts:
+          source:
+            - source
+        statistics:
+          count: 62111
+          duration_hours: 72.5097
+          duration_basis: sum of upstream test Parquet duration column in seconds; embedded audio; pinned upstream file hashes verified
+          hours_by_origin:
+            mupe: 32.91
+            cv17: 12.57
+            nurcsp: 10.23
+            mls: 3.74
+            coraa-nurcrec: 2.94
+            coraa-tedx: 2.59
+            coraa-sp2010: 2.18
+            coraa-coral: 1.97
+            tedx: 1.82
+            coraa-alip: 1.57
+    provenance:
+      summary: 巴西葡语 ASR 合并测试集（TARSILA）
+      source: Hugging Face
+      source_id: nilc-nlp/TARSILA-ASR
+      revision: 2785788cf674adc35caf83c297942dab3592a1b8
+      url: https://huggingface.co/datasets/nilc-nlp/TARSILA-ASR
+      download_mirror: https://hf-mirror.com
+      license: unspecified
+      locale: pt-BR
+      description: 把多个巴西葡语语料的测试集合在一起的评测集，只用于评测。各来源（MUPE、CV17、MLS、CORAA v1.1、mTEDx、NURC-SP）的测试集与本次登记的 coraa_mupe、common_voice_pt、mls_pt、coraa、mtedx 等的 test 重复，不要和它们一起累计。上游未声明许可。
+      download_scope: Complete TARSILA-ASR test release
+      expected_download_files: 18
+      expected_download_bytes: 8124991967
+      integrity: verified
+      local_scan_date: '2026-11-03'

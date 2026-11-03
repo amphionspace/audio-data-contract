@@ -8,27 +8,101 @@
       - asr
     aliases: []
     artifacts:
-      - name: source
-        kind: hf-dataset-snapshot
-        root_alias: multilingual
-        relative_path: multi/yodas_granary_es_pt/source/hf-969944574ea3
+      - name: readme
+        kind: documentation
+        root_alias: yodas_granary_es_pt
+        relative_path: source/hf-969944574ea3/README.md
+        expected_bytes: 26832
+        sha256: ea4fdf514117d630d5124a125cce491477c3d4b4e024c1963bac384c5ae4405d
+      - name: es000_asr_only
+        kind: parquet-directory
+        root_alias: yodas_granary_es_pt
+        relative_path: source/hf-969944574ea3/data/es000/asr_only
+        metadata:
+          file_count: 483
+          expected_bytes: 8954131175
+          tree_sha256: b496f5c0f50d1fa92a620908fd86b11049c03b5891a0ac54381ba12df629382e
+      - name: es000_ast
+        kind: parquet-directory
+        root_alias: yodas_granary_es_pt
+        relative_path: source/hf-969944574ea3/data/es000/ast
+        metadata:
+          file_count: 483
+          expected_bytes: 269269981627
+          tree_sha256: 018e340914ab87fa6162332fcc125fdc77b62a67007f25e46210d0eecfb00bb0
+      - name: pt000_asr_only
+        kind: parquet-directory
+        root_alias: yodas_granary_es_pt
+        relative_path: source/hf-969944574ea3/data/pt000/asr_only
+        metadata:
+          file_count: 202
+          expected_bytes: 2165458070
+          tree_sha256: e101795dbc5bbaf3f554f04a3191d12012ad29a0020d5cd28ed2e353bc2a328a
+      - name: pt000_ast
+        kind: parquet-directory
+        root_alias: yodas_granary_es_pt
+        relative_path: source/hf-969944574ea3/data/pt000/ast
+        metadata:
+          file_count: 202
+          expected_bytes: 135624105230
+          tree_sha256: 6833cca7c99ca845086239e61d0ec73ab61207fdf66ec4324fc5624f2a3d5812
       - name: download_state
         kind: dataset-state
-        root_alias: multilingual
-        relative_path: downloads/language-expansion-20260911/yodas_granary_es_pt/state.json
+        root_alias: yodas_granary_es_pt
+        relative_path: versions/hf-969944574ea3/download_state/state.json
+        expected_bytes: 1019
+        sha256: f27d8b212e29d1e99ace2f945940f715307438312ec36d2082f35b06887db96b
     splits:
-      all:
+      es000_asr_only:
         artifacts:
           source:
-            - source
+            - es000_asr_only
+        statistics:
+          count: 65839
+          videos: 10997
+          duration_hours: 78.5206
+          duration_basis: sum of Parquet duration column in seconds; embedded audio; pinned upstream file hashes verified
+      es000_ast:
+        artifacts:
+          source:
+            - es000_ast
+        statistics:
+          count: 665357
+          videos: 24091
+          duration_hours: 2373.9892
+          duration_basis: sum of Parquet duration column in seconds; embedded audio; pinned upstream file hashes verified
+      pt000_asr_only:
+        artifacts:
+          source:
+            - pt000_asr_only
+        statistics:
+          count: 49667
+          videos: 6943
+          duration_hours: 18.9158
+          duration_basis: sum of Parquet duration column in seconds; embedded audio; pinned upstream file hashes verified
+      pt000_ast:
+        artifacts:
+          source:
+            - pt000_ast
+        statistics:
+          count: 497936
+          videos: 11940
+          duration_hours: 1187.0926
+          duration_basis: sum of Parquet duration column in seconds; embedded audio; pinned upstream file hashes verified
     provenance:
+      summary: YouTube 西语/葡语人工字幕语音（YODAS）
       source: Hugging Face
-      url: https://huggingface.co/datasets/espnet/yodas-granary
-      license: cc-by-3.0
-      inventory_status: download_planned
-      description: 仅下载西语和葡语；保留 asr_only 和带翻译分区，地区尚未筛选。
-      download_scope: Spanish and Portuguese asr_only and ast partitions; region not yet classified
-      expected_download_files: 13538
-      expected_download_bytes: 4556037158599
       source_id: espnet/yodas-granary
       revision: 969944574ea3f37890beaf67ea651e160cfaf043
+      url: https://huggingface.co/datasets/espnet/yodas-granary
+      download_mirror: https://hf-mirror.com, then ModelScope espnet/yodas-granary for the remaining files (sizes and sha256 match the pinned HF revision file by file)
+      license: cc-by-3.0
+      locales:
+        - es
+        - pt
+      description: YODAS-Granary 里西语、葡语的人工字幕分区（es000、pt000），音频已切成句子；asr_only 与 ast 两个划分都带原文转写，ast 另有英文翻译。自动字幕分区（es100–108、pt100–103，约 4 TB）未下载。地区未区分。es000 的视频 99%（23,976/24,208 个）也在 yodas_es 里，是同一批 YouTube 音频、切分和转写不同，西语部分不要与 yodas_es 一起累计；葡语此前没有登记 YODAS。
+      download_scope: YODAS-Granary es000 and pt000 (manual-subtitle subsets) only
+      expected_download_files: 1371
+      expected_download_bytes: 416013702934
+      integrity: verified
+      local_scan_date: '2026-11-03'

@@ -1,6 +1,6 @@
 # 数据总览
 
-当前登记 **203 个数据集**；另有 **20 个下载来源声明**和 **1 个训练混合配方**。登记不代表本机文件已齐备。
+当前登记 **220 个数据集**；另有 **15 个下载来源声明**和 **1 个训练混合配方**。登记不代表本机文件已齐备。
 
 时长取单个版本的最大值，不跨版本相加；≈ 为参考表或估算值，— 为暂无完整时长。各版本的时长、说明、COS 地址和质量证据见[版本明细](data-versions.md)。
 
@@ -158,6 +158,7 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [meeting_benchmark](data-versions.md#meeting_benchmark) | en、zh、zh-en | 带说话人标注的语音识别 | 21.2 | 约 180 秒长度的中英会议转写评测集 | `备份桶:audio-data-contract/datasets/meeting_180s_benchmark/` |
 | [meeting_selection_panel](data-versions.md#meeting_selection_panel) | en、zh | 带说话人标注的语音识别 | 12.4 | 会议模型选模面板（中英真实会议） | `备份桶:audio-data-contract/datasets/meeting_selection_panel/` |
 | [mls_sidon](data-versions.md#mls_sidon) | de、en、es、fr、it、nl、pl、pt | 语音识别、语音合成 | 50,834.3 | 8 种语言有声书，音频经 Sidon 修复（MLS） | 没有 |
+| [mtedx](data-versions.md#mtedx) | es、pt | 语音识别 | 334.1 | TEDx 西语/葡语演讲（mTEDx，非商用） | 没有 |
 | [multi-talker-sd](data-versions.md#multi-talker-sd) | en、zh | 语音识别、语码转换语音识别、连续语音分离、重叠语音检测、带说话人标注的语音识别、说话人分段与归属 | — | AISHELL-1、LibriSpeech 合成的多人对话 | 快照 20260914 |
 | [opendatalab_multilingual](data-versions.md#opendatalab_multilingual) | ar、cs、hu、ko、ru、sr、th、vi | 语音识别 | 8,588.2 | 8 个语种的语音识别数据（OpenDataLab） | `备份桶:computer-2/audio/`（原始数据）、`备份桶:opendatalab-multilingual/`（原始数据） |
 | [sot_many_speaker_word_zh_en](data-versions.md#sot_many_speaker_word_zh_en) | en、zh | 带说话人标注的语音识别 | 2,128.0 | — | 没有 |
@@ -181,6 +182,7 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [vitw](data-versions.md#vitw) | en、zh | 语音识别 | 1,085.4 | 真实场景中英语音（VITW）；含回声、远场等评测 | 部分版本：快照 20260914 |
 | [waxal-asr](data-versions.md#waxal-asr) | ach、aka、am、dag、dga、ee、ff、kpo、lg、ln、mas、mg、nyn、om、sid、sn、sog、ti、wal | 语音识别 | — | 19 种非洲语言语音（WAXAL） | 快照 20260914 |
 | [wutheringwaves](data-versions.md#wutheringwaves) | en、ja、ko、zh | 语音合成 | 134.8 | 《鸣潮》多语配音，TTS 用 | `TTS 桶:WutheringWaves-2.2/`（原始数据） |
+| [yodas_granary_es_pt](data-versions.md#yodas_granary_es_pt) | es、pt | 语音识别 | 3,658.5 | YouTube 西语/葡语人工字幕语音（YODAS） | 快照 20260914 |
 | [zenless_voice](data-versions.md#zenless_voice) | en、ja、ko、zh | 语音合成 | 554.4 | 《绝区零》多语配音，TTS 用 | `TTS 桶:zenless-voice/`（原始数据） |
 
 ## 其他语言数据
@@ -190,16 +192,20 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [audioset_road_traffic](data-versions.md#audioset_road_traffic) | und | noise | — | AudioSet 道路交通噪声 | 快照 20260914、`备份桶:audio-data-contract/datasets/audioset_road_traffic/` |
 | [banspeech_bn](data-versions.md#banspeech_bn) | bn | 语音识别 | 6.5 | 孟加拉语语音识别数据（BanSpeech） | 快照 20260914 |
 | [cbtts_bn](data-versions.md#cbtts_bn) | bn | 语音识别 | 20.1 | 孟加拉语语音识别数据（CBTTS） | 快照 20260914 |
-| [ciempiess](data-versions.md#ciempiess) | es | 语音识别 | 18.4 | 墨西哥西班牙语广播语音（CIEMPIESS LIGHT） | 快照 20260914 |
+| [ciempiess](data-versions.md#ciempiess) | es | 语音识别 | 18.4 | 墨西哥西班牙语广播语音（CIEMPIESS LIGHT） | 部分版本：快照 20260914 |
 | [cml_tts_fr](data-versions.md#cml_tts_fr) | fr | 语音识别 | 316.0 | 法语有声书朗读（CML-TTS） | 快照 20260914 |
 | [common_voice_ar](data-versions.md#common_voice_ar) | ar | 语音识别 | 58.2 | 众包朗读阿拉伯语（Common Voice） | 快照 20260914 |
 | [common_voice_bn](data-versions.md#common_voice_bn) | bn | 语音识别 | 67.4 | 众包朗读孟加拉语（Common Voice） | 快照 20260914 |
 | [common_voice_de](data-versions.md#common_voice_de) | de | 语音识别 | 1,034.8 | 众包朗读德语（Common Voice） | 快照 20260914 |
-| [common_voice_es](data-versions.md#common_voice_es) | es | 语音识别 | 568.5 | 众包朗读西班牙语（Common Voice） | 快照 20260914 |
+| [common_voice_es](data-versions.md#common_voice_es) | es | 语音识别 | 568.5 | 众包朗读西班牙语（Common Voice） | 部分版本：快照 20260914 |
 | [common_voice_fr](data-versions.md#common_voice_fr) | fr | 语音识别 | 924.1 | 众包朗读法语（Common Voice） | 快照 20260914 |
 | [common_voice_ja](data-versions.md#common_voice_ja) | ja | 语音识别 | 48.2 | 众包朗读日语（Common Voice） | 快照 20260914 |
 | [common_voice_ko](data-versions.md#common_voice_ko) | ko | 语音识别 | 2.6 | 众包朗读韩语（Common Voice） | 快照 20260914 |
+| [common_voice_pt](data-versions.md#common_voice_pt) | pt | 语音识别 | 184.3 | Common Voice 17 葡语朗读 | 没有 |
 | [common_voice_ru](data-versions.md#common_voice_ru) | ru | 语音识别 | 69.9 | 众包朗读俄语（Common Voice） | 快照 20260914 |
+| [coraa](data-versions.md#coraa) | pt | 语音识别 | 290.5 | 巴西葡语多来源语音（CORAA v1.1） | 没有 |
+| [coraa_mupe](data-versions.md#coraa_mupe) | pt | 语音识别 | 365.2 | 巴西葡语生活访谈（CORAA MUPE） | 快照 20260914 |
+| [coraa_nurc_sp](data-versions.md#coraa_nurc_sp) | pt | 语音识别 | 239.3 | 圣保罗口音葡语自发语音（NURC-SP） | 没有 |
 | [demand](data-versions.md#demand) | und | noise | 46.7 | 16 麦阵列录制的多环境噪声（DEMAND） | `备份桶:audio-data-contract/datasets/demand/` |
 | [dns5_noise_rir](data-versions.md#dns5_noise_rir) | und | rir、speech_enhancement | — | DNS Challenge 5 官方噪声与冲激响应包 | `备份桶:audio-data-contract/datasets/dns5_noise_rir/` |
 | [dns5_noise_train](data-versions.md#dns5_noise_train) | und | noise、rir | 252.6 | 训练用 DNS5 噪声与模拟房间响应 | `备份桶:audio-data-contract/datasets/dns5_noise_train/` |
@@ -212,28 +218,39 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [fleurs_fr](data-versions.md#fleurs_fr) | fr | 语音识别 | 13.1 | 多语朗读法语部分（FLEURS） | 快照 20260914 |
 | [fleurs_ja](data-versions.md#fleurs_ja) | ja | 语音识别 | 10.7 | 多语朗读日语部分（FLEURS） | 快照 20260914 |
 | [fleurs_ko](data-versions.md#fleurs_ko) | ko | 语音识别 | 10.1 | 多语朗读韩语部分（FLEURS） | 快照 20260914 |
+| [fleurs_pt](data-versions.md#fleurs_pt) | pt | 语音识别 | 14.7 | FLEURS 巴西葡语朗读 | 没有 |
 | [fleurs_ru](data-versions.md#fleurs_ru) | ru | 语音识别 | 11.6 | 多语朗读俄语部分（FLEURS） | 快照 20260914 |
 | [fsd50k](data-versions.md#fsd50k) | und | noise、sound_event | 108.6 | 200 类声音事件（FSD50K） | `备份桶:audio-data-contract/datasets/noise_open/` |
 | [galgame](data-versions.md#galgame) | ja | 语音合成 | 10,173.7 | 日语视觉小说配音，TTS 用 | `TTS 桶:Galgame-VisualNovel-Reupload/`（原始数据） |
 | [gigaspeech2_id](data-versions.md#gigaspeech2_id) | id | 语音识别、热词增强语音识别 | 1,980.1 | 印尼语网络语音（GigaSpeech 2）；含热词版 | 快照 20260914 |
+| [google_latam](data-versions.md#google_latam) | es | 语音识别 | 38.0 | 拉美六国西语朗读（Google 众包） | 快照 20260914 |
+| [heroico](data-versions.md#heroico) | es | 语音识别 | 14.9 | 墨西哥军校西语朗读与问答（Heroico） | 没有 |
 | [koreaspeech](data-versions.md#koreaspeech) | ko | 语音识别 | 3,828.3 | 韩语语音识别数据（KoreaSpeech） | 快照 20260914 |
+| [librivox_spanish](data-versions.md#librivox_spanish) | es | 语音识别 | 73.0 | LibriVox 西语有声书 | 没有 |
 | [meeting_room_noise](data-versions.md#meeting_room_noise) | und | noise | 2.5 | 真实会议室底噪（AliMeeting、AISHELL-4） | `备份桶:audio-data-contract/datasets/meeting_room_noise/` |
 | [mgb2](data-versions.md#mgb2) | ar | 语音识别 | 1,215.5 | 半岛电视台阿拉伯语广播（MGB-2） | 快照 20260914 |
 | [mit_ir_survey](data-versions.md#mit_ir_survey) | und | rir | 0.0 | MIT 日常环境实测冲激响应（270 条） | `备份桶:audio-data-contract/datasets/mit_ir_survey/` |
 | [mls_de](data-versions.md#mls_de) | de | 语音识别 | 1,995.1 | 德语有声书朗读（MLS） | 快照 20260914 |
 | [mls_es](data-versions.md#mls_es) | es | 语音识别 | 937.7 | 西班牙语有声书朗读（MLS） | 快照 20260914 |
 | [mls_fr](data-versions.md#mls_fr) | fr | 语音识别 | 1,096.7 | 法语有声书朗读（MLS） | 快照 20260914 |
+| [mls_pt](data-versions.md#mls_pt) | pt | 语音识别 | 168.3 | MLS 葡语有声书朗读 | 快照 20260914 |
 | [musan](data-versions.md#musan) | und | noise | — | 噪声与音乐素材（MUSAN） | 快照 20260914、`备份桶:audio-data-contract/datasets/musan/` |
+| [nurc_sp](data-versions.md#nurc_sp) | pt | 语音识别 | 13.0 | 圣保罗葡语访谈精选（NURC-SP 最小集） | 没有 |
 | [open_large_bn](data-versions.md#open_large_bn) | bn | 语音识别 | 5,045.8 | 孟加拉语大规模语音识别数据 | 快照 20260914 |
 | [real_rir_slr28](data-versions.md#real_rir_slr28) | und | 音频增强、rir | 0.1 | 真实房间冲激响应（OpenSLR 28） | 快照 20260914、`备份桶:audio-data-contract/datasets/real_rir_slr28/` |
 | [rulibrispeech_ru](data-versions.md#rulibrispeech_ru) | ru | 语音识别 | 98.2 | 俄语有声书朗读（Russian LibriSpeech） | 快照 20260914 |
 | [sim_rir_slr26](data-versions.md#sim_rir_slr26) | und | rir | — | 模拟房间冲激响应（OpenSLR 26） | 快照 20260914、`备份桶:audio-data-contract/datasets/sim_rir_slr26/` |
 | [sim_rir_slr28](data-versions.md#sim_rir_slr28) | und | rir | — | 模拟房间冲激响应（OpenSLR 28） | 快照 20260914、`备份桶:audio-data-contract/datasets/sim_rir_slr28/` |
 | [slr37_bn](data-versions.md#slr37_bn) | bn | 语音识别 | 5.0 | 孟加拉语高质量 TTS 朗读（OpenSLR 37） | 快照 20260914 |
+| [tarsila_asr](data-versions.md#tarsila_asr) | pt | 语音识别 | 72.5 | 巴西葡语 ASR 合并测试集（TARSILA） | 没有 |
+| [tedx_spanish](data-versions.md#tedx_spanish) | es | 语音识别 | 24.5 | TEDx 西语演讲（仅限非商用） | 没有 |
+| [tele_con_ciencia](data-versions.md#tele_con_ciencia) | es | 语音识别 | 28.3 | 墨西哥西语科普电视节目 | 没有 |
 | [voices_noise](data-versions.md#voices_noise) | und | noise | 128.3 | VOiCES 真实房间噪声与背景人声 | `备份桶:audio-data-contract/datasets/voices/` |
 | [voxconverse](data-versions.md#voxconverse) | und | 说话人分段与归属 | 43.5 | YouTube 视频说话人日志评测（VoxConverse） | 没有 |
+| [voxforge_spanish](data-versions.md#voxforge_spanish) | es | 语音识别 | 49.7 | VoxForge 西语朗读（多为西班牙） | 没有 |
 | [wham](data-versions.md#wham) | und | noise | — | WHAM! 噪声训练划分 | `备份桶:audio-data-contract/datasets/wham/` |
 | [wham_noise](data-versions.md#wham_noise) | und | noise | 81.7 | 湾区餐厅、咖啡馆等真实环境噪声（WHAM!） | `备份桶:audio-data-contract/datasets/noise_open/` |
+| [wikipedia_spanish](data-versions.md#wikipedia_spanish) | es | 语音识别 | 25.6 | 西语维基百科条目朗读 | 没有 |
 | [yodas_ar](data-versions.md#yodas_ar) | ar | 语音识别 | 289.7 | YouTube 多语语音阿拉伯语部分（YODAS） | 快照 20260914 |
 | [yodas_bn](data-versions.md#yodas_bn) | bn | 语音识别 | 27.1 | YouTube 多语语音孟加拉语部分（YODAS） | 快照 20260914 |
 | [yodas_de](data-versions.md#yodas_de) | de | 语音识别 | 3,062.9 | YouTube 多语语音德语部分（YODAS） | 快照 20260914 |
@@ -251,24 +268,19 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 |---|---|---|---|
 | [OpenSLR 159 AISHELL-5](../../catalog/download_queue.yaml#L1) | 1.0 | zh | 语音识别 |
 | [ciempiess](../../catalog/ciempiess_original.yaml#L1) | official-2014 | es | 语音识别 |
-| [ciempiess](../../catalog/ciempiess_test.yaml#L1) | hf-c134fff8e335 | es | 语音识别 |
 | [common_voice_en](../../catalog/download_queue.yaml#L59) | 26.0 | en | 语音识别 |
 | [common_voice_es](../../catalog/common_voice_es.yaml#L1) | 26.0 | es | 语音识别 |
 | [common_voice_pt](../../catalog/common_voice_pt.yaml#L1) | 26.0 | pt | 语音识别 |
 | [common_voice_yue](../../catalog/download_queue.yaml#L139) | 26.0 | yue | 语音识别 |
 | [common_voice_zh](../../catalog/download_queue.yaml#L86) | 26.0 | zh | 语音识别 |
 | [common_voice_zh_hk](../../catalog/download_queue.yaml#L113) | 26.0 | yue | 语音识别 |
-| [coraa_mupe](../../catalog/coraa_mupe.yaml#L1) | hf-437966f103b3 | pt-BR | 语音识别 |
 | [gigaspeech2](../../catalog/download_queue.yaml#L165) | hf-8dc0d0e502b7 | id、th、vi | 语音识别 |
-| [google_latam](../../catalog/google_latam.yaml#L1) | openslr-20260911 | es | 语音识别 |
 | [granary](../../catalog/download_queue.yaml#L200) | hf-0fe23a860e35 | multi | 语音识别、语音翻译 |
 | [lemas](../../catalog/download_queue.yaml#L250) | hf-91f0c1b9a29f | multi | 语音识别 |
 | [loquacious_set](../../catalog/loquacious_set.yaml#L1) | hf-0e84cdb9e4b8 | en | 语音识别 |
-| [mls_pt](../../catalog/mls_pt.yaml#L1) | openslr-94 | pt | 语音识别 |
 | [omnilingual-asr-corpus](../../catalog/download_queue.yaml#L225) | hf-8648ba894637 | multi | 语音识别 |
 | [peoples_speech](../../catalog/peoples_speech.yaml#L1) | hf-f10597c5d3d3 | en | 语音识别 |
 | [reazonspeech](../../catalog/download_queue.yaml#L274) | hf-0df78f991f6a | ja | 语音识别 |
-| [yodas_granary_es_pt](../../catalog/yodas_granary_es_pt.yaml#L1) | hf-969944574ea3 | es、pt | 语音识别 |
 
 ## 训练混合配方
 

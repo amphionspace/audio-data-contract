@@ -1,0 +1,96 @@
+  - schema_version: dataset-catalog/2.0
+    dataset_id: nurc_sp_corpus_minimo
+    version: hf-551dea2d5a42
+    languages:
+      - pt
+    tasks:
+      - asr
+    aliases: []
+    artifacts:
+      - name: source
+        kind: hf-dataset-snapshot
+        root_alias: nurc_sp_corpus_minimo
+        relative_path: source/hf-551dea2d5a42
+        metadata:
+          file_count: 8
+          expected_bytes: 7909556253
+          tree_sha256: d9a1d9b9daf809faf070972752e0edf0a97b7fa649b972e7940f471fea74242d
+      - name: audio_archive
+        kind: source-archive
+        root_alias: nurc_sp_corpus_minimo
+        relative_path: source/hf-551dea2d5a42/nurc-sp_corpus_minimo.tar.gz
+        expected_bytes: 7894977768
+        sha256: 5a31c75db3b3a7705577bb39e48811e7bd5b9a3395c6ab4bef7ce68a88b468f0
+      - name: train_metadata
+        kind: transcript-table
+        root_alias: nurc_sp_corpus_minimo
+        relative_path: source/hf-551dea2d5a42/train.csv
+        expected_bytes: 2949974
+        sha256: c0d9529a162fc7a0d1723c46076b74a687c8b67560870153b1950adcfaa9ba9b
+      - name: validation_metadata
+        kind: transcript-table
+        root_alias: nurc_sp_corpus_minimo
+        relative_path: source/hf-551dea2d5a42/validation.csv
+        expected_bytes: 185581
+        sha256: 7d15169fa474b4600782b4258b7327cec662fb54ea36c485ed9c3f9daa6710b8
+      - name: all_segments_metadata
+        kind: transcript-table
+        root_alias: nurc_sp_corpus_minimo
+        relative_path: source/hf-551dea2d5a42/segmented_audios.csv
+        expected_bytes: 4106298
+        sha256: 5fe3a4b734cba055f018cf413ce8f698f9b91d8e1d4ad9d70c1eb1081a54ed35
+        metadata:
+          rows: 11427
+          duration_hours: 15.6186
+          note: all segments of the 21 recordings, including validation; the upstream loader script uses it as its train split
+      - name: download_state
+        kind: dataset-state
+        root_alias: nurc_sp_corpus_minimo
+        relative_path: versions/hf-551dea2d5a42/download_state/state.json
+        expected_bytes: 925
+        sha256: de13171c073f6ace9460cb0c08e9342490468a54d75c3a92996646a3251fb239
+    splits:
+      train:
+        artifacts:
+          source:
+            - source
+          audio_archive:
+            - audio_archive
+          metadata:
+            - train_metadata
+        statistics:
+          count: 7941
+          speakers: 41
+          recordings: 20
+          duration_hours: 12.2651
+          duration_basis: sum of upstream train.csv duration column in seconds; pinned upstream file hashes verified
+      validation:
+        artifacts:
+          source:
+            - source
+          audio_archive:
+            - audio_archive
+          metadata:
+            - validation_metadata
+        statistics:
+          count: 500
+          speakers: 39
+          recordings: 20
+          duration_hours: 0.7495
+          duration_basis: sum of upstream validation.csv duration column in seconds; pinned upstream file hashes verified
+    provenance:
+      summary: 圣保罗葡语访谈精选（NURC-SP 最小集）
+      source: Hugging Face
+      source_id: nilc-nlp/NURC-SP_Corpus_Minimo
+      revision: 551dea2d5a42b2c04ef4f1bc52ec8c6089905184
+      url: https://huggingface.co/datasets/nilc-nlp/NURC-SP_Corpus_Minimo
+      download_mirror: https://hf-mirror.com
+      license: mit
+      locale: pt-BR
+      dataset_family: nurc_sp
+      description: NURC-SP 1970–90 年代圣保罗口语录音中精选的 21 段，人工转写切段。train 与 validation 来自同一批录音和说话人，不是独立测试集；与 coraa_nurc_sp 同出 NURC-SP，但按录音编号核对没有共同录音。
+      download_scope: Complete NURC-SP Corpus Minimo release
+      expected_download_files: 8
+      expected_download_bytes: 7909556253
+      integrity: verified
+      local_scan_date: '2026-11-03'

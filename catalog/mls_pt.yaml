@@ -7,25 +7,56 @@
       - asr
     aliases: []
     artifacts:
-      - name: source
-        kind: source-directory
-        root_alias: multilingual
-        relative_path: pt/mls_pt/source/openslr-94
+      - name: source_archive
+        kind: source-archive
+        root_alias: mls_pt
+        relative_path: source/openslr-94/mls_portuguese.tar.gz
+        expected_bytes: 9982803818
+        sha256: 89bed1e0ba5acb6f69da14e7063d4a3c3999d13c11af50ae652a3ced80f39164
+        metadata:
+          official_md5: 12d54613fae75ae5fb1d55836408f3ee
       - name: download_state
         kind: dataset-state
-        root_alias: multilingual
-        relative_path: downloads/language-expansion-20260911/mls_pt/state.json
+        root_alias: mls_pt
+        relative_path: versions/openslr-94/download_state/state.json
+        expected_bytes: 865
+        sha256: 3d5b2ebc8983cd52058c73018761e370cb5346b242f71b92b15550a750717839
     splits:
-      all:
+      train:
         artifacts:
-          source:
-            - source
+          source_archive:
+            - source_archive
+        statistics:
+          count: 37533
+          duration_hours: 160.9632
+          duration_basis: sum of segments.txt end minus start inside the archive; archive md5 matches the official MLS md5 list
+      dev:
+        artifacts:
+          source_archive:
+            - source_archive
+        statistics:
+          count: 826
+          duration_hours: 3.6443
+          duration_basis: sum of segments.txt end minus start inside the archive; archive md5 matches the official MLS md5 list
+      test:
+        artifacts:
+          source_archive:
+            - source_archive
+        statistics:
+          count: 871
+          duration_hours: 3.7382
+          duration_basis: sum of segments.txt end minus start inside the archive; archive md5 matches the official MLS md5 list
     provenance:
+      summary: MLS 葡语有声书朗读
       source: OpenSLR
+      source_id: SLR94
       url: https://www.openslr.org/94/
+      download_url: https://dl.fbaipublicfiles.com/mls/mls_portuguese.tar.gz
       license: CC-BY-4.0
-      inventory_status: download_planned
-      description: 完整葡语 FLAC ASR 归档；含 train/dev/test，尚未按巴西地区筛选。
+      locale: pt
+      description: Multilingual LibriSpeech 葡语完整 FLAC 归档（含 train/dev/test），LibriVox 有声书；未按巴西/葡萄牙口音区分。OpenSLR 镜像没有这个文件，从官方地址直连下载。
       download_scope: Original FLAC Portuguese ASR archive, including train/dev/test; region classification pending
       expected_download_files: 1
       expected_download_bytes: 9982803818
+      integrity: verified
+      local_scan_date: '2026-11-03'
