@@ -12,6 +12,9 @@ the records point at those wavs.
   MiMo-V2.5-ASR (``agree.py`` writes ``source/agreement.json``). Machine references, not human gold.
 - ``police-cmd``: all 137 recordings. The reference is the term the speaker read (recording group,
   aligned to 警言警语 V6.0); 39 of them were confirmed by listening (``reference_kind: human``).
+- ``police-cmd-hw300`` (from v2): the ``police-cmd`` records again, each with one 300-word hotword list
+  (hotword_bench layout, as ``police_scene_bench``'s ``-hw300`` splits): all 35 command terms plus police
+  terms drawn from the union of ``police_scene_bench@v1-20261028``'s ``-hw300`` lists.
 
     python scripts/tdtech_customer_bench/build.py --roots /workspace/data/registry/roots.json
 """
@@ -22,6 +25,7 @@ import argparse
 import gzip
 import hashlib
 import json
+import random
 from pathlib import Path
 
 import soundfile as sf
@@ -33,10 +37,13 @@ from audio_data_contract.types import DatasetSpec
 
 DATASET_ID = "tdtech_customer_bench"
 ROOT_ALIAS = DATASET_ID
-VERSION = "v1-20261102"
+VERSION = "v2-20261102"
 SAMPLE_RATE = 16000
 GENERAL = "asr_dingqiao-asr-quality@20261016-machine01"
 POLICE = "asr_dingqiao-asr-police-cmd@20261020-jyjy-v6-human04"
+HOTWORD_LIST_SIZE = 300
+HOTWORD_SPLIT = f"police-cmd-hw{HOTWORD_LIST_SIZE}"
+SCENE_ALIAS, SCENE_VERSION = "police_scene_bench", "v1-20261028"
 SPLITS = {
     "general": (
         GENERAL,
@@ -103,7 +110,40 @@ def evalhub_ref(directory_name):
     return f"{category}/{rest}"
 
 
-def build(data_root, agreement):
+def scene_vocabulary(scene_root):
+    """Police terms of the scene bench: the union of its ``-hw300`` lists."""
+    words = set()
+    for path in sorted((scene_root / "versions" / SCENE_VERSION / "records").glob("*-hw300.jsonl.gz")):
+        with gzip.open(path, "rt", encoding="utf-8") as stream:
+            words |= set(json.loads(stream.readline())["metadata"]["bias_lists"]["list300"])
+    if not words:
+        raise ValueError(f"no -hw300 records under {scene_root}")
+    return sorted(words)
+
+
+def hotword_list(rng, gold, vocabulary, size):
+    """``size`` words: every gold term plus police terms drawn at random, shuffled (as police_scene_bench)."""
+    words = sorted(set(gold))
+    rest = sorted(set(vocabulary) - set(words))
+    words += rng.sample(rest, max(size - len(words), 0))
+    rng.shuffle(words)
+    return words[:max(size, len(gold))]
+
+
+def hotword_copy(records, vocabulary):
+    """The police-cmd records once more, each sent with the same list; ``hotwords`` is the term spoken."""
+    words = hotword_list(random.Random(f"{DATASET_ID}:{HOTWORD_SPLIT}:hotwords"),
+                         [r["labels"]["term"] for r in records], vocabulary, HOTWORD_LIST_SIZE)
+    return [AudioRecord.from_dict({
+        **record, "id": record["id"].replace("police-cmd", HOTWORD_SPLIT, 1), "task": "asr_hotwords",
+        "hotwords": [record["labels"]["term"]],
+        "labels": {**record["labels"], "scenario": HOTWORD_SPLIT, "hotword_list_size": len(words)},
+        "metadata": {**record["metadata"], "bias_lists": {f"list{HOTWORD_LIST_SIZE}": words},
+                     "distractor_kinds": {w: "police_term" for w in words if w != record["labels"]["term"]}},
+    }).to_dict() for record in records]
+
+
+def build(data_root, agreement, vocabulary):
     version_dir = data_root / "versions" / VERSION
     if version_dir.exists():
         raise FileExistsError(f"refusing to replace registered version: {version_dir}")
@@ -156,6 +196,7 @@ def build(data_root, agreement):
                 },
             }).to_dict()
             by_split.setdefault(split, []).append(record)
+    by_split[HOTWORD_SPLIT] = hotword_copy(by_split["police-cmd"], vocabulary)
     for split, rows in by_split.items():
         write_jsonl_gz(version_dir / "records" / f"{split}.jsonl.gz", rows)
     write_jsonl_gz(version_dir / "audio-index.jsonl.gz", sorted(index.values(), key=lambda e: e["cut_id"]))
@@ -183,19 +224,25 @@ def declaration(by_split, index, data_root):
             "metadata": {"record_count": len(rows)},
         })
         seconds = sum(r["audio_slots"][0]["ref"]["duration"] for r in rows)
+        description = SPLITS[split][1] if split in SPLITS else (
+            f"警务指令（{HOTWORD_LIST_SIZE} 词热词表）：音频和参考与 police-cmd 相同，每条带同一份 {HOTWORD_LIST_SIZE} 词热词表，"
+            f"含全部 {len({r['hotwords'][0] for r in rows})} 个指令词，其余为从 {SCENE_ALIAS}@{SCENE_VERSION} "
+            "各 -hw300 热词表的并集中随机抽取的警务术语。")
         splits[split] = {
             "artifacts": {"records": [f"{split}-records"], "audio_index": ["audio-index"]},
-            "task": "asr",
+            "task": rows[0]["task"],
             "statistics": {"records": len(rows), "duration_hours": round(seconds / 3600, 4),
                            "duration_basis": "recording duration"},
-            "provenance": {"description": SPLITS[split][1]},
+            "provenance": {"description": description},
         }
+        if split == HOTWORD_SPLIT:  # same audio as police-cmd: not a top-level split, not counted twice
+            splits[split]["group"] = "police-cmd"
     return {
         "schema_version": "dataset-catalog/2.0",
         "dataset_id": DATASET_ID,
         "version": VERSION,
         "languages": ["zh"],
-        "tasks": ["asr"],
+        "tasks": sorted({s["task"] for s in splits.values()}),
         "artifacts": artifacts,
         "splits": splits,
         "provenance": {
@@ -204,8 +251,10 @@ def declaration(by_split, index, data_root):
             "summary": "鼎桥客户真实录音的语音识别评测，仅评测",
             "description": "鼎桥（td-tech）客户提供的真实录音（邮件/Wiki 基线 2026-09-30，由 EvalHub 整理发布），"
                            "只用于评测，不进训练。参考文本未全部经人工听审：通用识别只保留三份机器转写中两份一致的条目，"
-                           "难样例被筛掉，数字偏乐观；警务指令的参考来自录音分组的指令词，39 条经人工确认。",
-            "sources": [f"EvalHub {evalhub_ref(name)}" for name, _ in SPLITS.values()],
+                           "难样例被筛掉，数字偏乐观；警务指令的参考来自录音分组的指令词，39 条经人工确认；"
+                           f"警务指令另有一份带 {HOTWORD_LIST_SIZE} 词热词表的副本（police-cmd-hw300），音频相同。",
+            "sources": [*(f"EvalHub {evalhub_ref(name)}" for name, _ in SPLITS.values()),
+                        f"{SCENE_ALIAS}@{SCENE_VERSION} -hw300 热词表（干扰词）"],
         },
     }
 
@@ -225,9 +274,10 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument("--roots", type=Path, required=True)
     args = parser.parse_args()
-    data_root = Path(json.loads(args.roots.read_text())[ROOT_ALIAS])
+    roots = json.loads(args.roots.read_text())
+    data_root = Path(roots[ROOT_ALIAS])
     agreement = json.loads((data_root / "source" / "agreement.json").read_text())["samples"]
-    by_split, index = build(data_root, agreement)
+    by_split, index = build(data_root, agreement, scene_vocabulary(Path(roots[SCENE_ALIAS])))
     register(Path(__file__).resolve().parents[2], declaration(by_split, index, data_root))
     print({s: len(r) for s, r in by_split.items()}, f"audio files: {len(index)}")
 

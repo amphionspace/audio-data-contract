@@ -1,8 +1,13 @@
 # 鼎桥客户真实录音评测集（tdtech_customer_bench）
 
-`tdtech_customer_bench@v1-20261102` 是鼎桥（td-tech）客户自己提供的真实录音（邮件/Wiki 基线 2026-09-30），用来评测语音识别。录音由 EvalHub 整理发布，本数据集只评测，不进训练。与 `police_scene_bench` 的 TTS 模拟数据不同，这里的音频都来自客户的邮件和 Wiki，基本是设备实录；其中远场信噪比那几条是客户在同一段录音上人工加噪的测试文件。
+`tdtech_customer_bench` 是鼎桥（td-tech）客户自己提供的真实录音（邮件/Wiki 基线 2026-09-30），用来评测语音识别。录音由 EvalHub 整理发布，本数据集只评测，不进训练。与 `police_scene_bench` 的 TTS 模拟数据不同，这里的音频都来自客户的邮件和 Wiki，基本是设备实录；其中远场信噪比那几条是客户在同一段录音上人工加噪的测试文件。
 
 参考文本**没有全部经过人工听审**，使用时注意下面写明的来源。
+
+| 版本 | 内容 |
+|---|---|
+| `v1-20261102` | `general`、`police-cmd` |
+| `v2-20261102` | 同 v1，另加 `police-cmd-hw300`（警务指令带 300 词热词表）；`general`、`police-cmd` 两个 split 的记录与 v1 逐条相同 |
 
 ## 内容
 
@@ -10,6 +15,7 @@
 |---|---:|---:|---|---|
 | `general` | 18 | 0.033 h | `asr/dingqiao-asr-quality@20261016-machine01`（32 条中保留 18 条） | 三份机器转写中有两份一致（见下文） |
 | `police-cmd` | 137 | 0.054 h | `asr/dingqiao-asr-police-cmd@20261020-jyjy-v6-human04`（全部） | 录音分组对应的指令词，按《警言警语 V6.0》对齐；39 条经人工听原音确认 |
+| `police-cmd-hw300`（v2 起） | 137 | 同上 | 与 `police-cmd` 相同 | 与 `police-cmd` 相同，每条另带 300 词热词表 |
 
 `general` 的场景写在 `labels.scenario`，保留情况：
 
@@ -23,6 +29,14 @@
 | `far_field_distance` | 0 / 2 | 55 秒远场录音（MIC / VOICE_COMMUNICATION 采集对照） |
 
 `police-cmd` 是 PTT 警务指令短句，`labels.term` 是指令词。
+
+## 热词版（police-cmd-hw300）
+
+“e警保”“京警智联”这类客户自有的词，不带热词很难认对（FireRedASR2-AED 把 5 条“e警保”全部认错），所以 v2 起把 `police-cmd` 再出一份带热词表的副本，做法与 `police_scene_bench` 的 `-hw300` split 相同：
+
+- 音频、参考与 `police-cmd` 相同，任务是 `asr_hotwords`；`hotwords` 是这条录音念的指令词（`labels.term`）。
+- 137 条用同一份 300 词热词表（`metadata.bias_lists.list300`）：全部 35 个指令词，加 265 个干扰词。干扰词从 `police_scene_bench@v1-20261028` 九个 `-hw300` 热词表的并集（1311 个警务术语）里按固定种子随机抽取，再整体打乱。场景集的热词表只含其中 20 个指令词，所以这里不直接沿用。
+- `metadata.distractor_kinds` 标出不是本条指令词的列表词，用于统计误触发。amphion-eval 的热词评测器对每条录音分别跑不带热词表（`none`）和带热词表（`list300`）两种条件。
 
 ## 参考文本怎么来的
 
@@ -47,14 +61,14 @@
 
 - 音频按 EvalHub 发布时的原样保存在 `source/evalhub/<类别>_<id>@<版本>/`，构建时按其中的 `files.json` 逐个校验 sha256。
 - 两套 ASR 的请求、转写和日志在 `source/firered-aed/`、`source/mimo-asr/`，三选二的结果在 `source/agreement.json`。
-- 脚本：`scripts/tdtech_customer_bench/agree.py`（在 amphion-eval 环境中运行，用它的原生打分口径）和 `build.py`。
+- 脚本：`scripts/tdtech_customer_bench/agree.py`（在 amphion-eval 环境中运行，用它的原生打分口径）和 `build.py`（当前生成 v2；热词表的干扰词需要 roots 中有 `police_scene_bench`）。
 
-对应的测试集登记是 amphion-eval 的 `tdtech/customer-asr@v1-20261102`。
+对应的测试集登记是 amphion-eval 的 `tdtech/customer-asr@v1-20261102`（v1）和 `tdtech/customer-asr@v2-20261102`（v2，含热词版）。
 
 ## 读取
 
 ```bash
-audio-data-contract resolve catalog tdtech_customer_bench v1-20261102 records --roots roots.json
+audio-data-contract resolve catalog tdtech_customer_bench v2-20261102 records --roots roots.json
 ```
 
 roots 中的 `tdtech_customer_bench` 指向 `/workspace/data/datasets/tdtech_customer_bench`。

@@ -62,3 +62,90 @@
     sources:
     - EvalHub asr/dingqiao-asr-quality@20261016-machine01
     - EvalHub asr/dingqiao-asr-police-cmd@20261020-jyjy-v6-human04
+- schema_version: dataset-catalog/2.0
+  dataset_id: tdtech_customer_bench
+  version: v2-20261102
+  languages:
+  - zh
+  tasks:
+  - asr
+  - asr_hotwords
+  artifacts:
+  - name: audio-index
+    kind: audio-index
+    root_alias: tdtech_customer_bench
+    relative_path: versions/v2-20261102/audio-index.jsonl.gz
+    sha256: d58b3c6f7ae016f2834f5c3c8e44cca456dbbab6f02a3cd85243568d8ef5e9f7
+    metadata:
+      record_count: 155
+  - name: general-records
+    kind: audio-records
+    root_alias: tdtech_customer_bench
+    relative_path: versions/v2-20261102/records/general.jsonl.gz
+    sha256: 53597564ed173c206c008ed719c188fb4334b4adfe31370be08a51694a71d98e
+    metadata:
+      record_count: 18
+  - name: police-cmd-records
+    kind: audio-records
+    root_alias: tdtech_customer_bench
+    relative_path: versions/v2-20261102/records/police-cmd.jsonl.gz
+    sha256: a93f902afac31ffc88198589154325845f029d266d1df213e6dced89a2fe114c
+    metadata:
+      record_count: 137
+  - name: police-cmd-hw300-records
+    kind: audio-records
+    root_alias: tdtech_customer_bench
+    relative_path: versions/v2-20261102/records/police-cmd-hw300.jsonl.gz
+    sha256: 02928530de3ea901e6efbe0d8d25752330c56605dbe54ac56ed63eef92c16969
+    metadata:
+      record_count: 137
+  splits:
+    general:
+      artifacts:
+        records:
+        - general-records
+        audio_index:
+        - audio-index
+      task: asr
+      statistics:
+        records: 18
+        duration_hours: 0.0326
+        duration_basis: recording duration
+      provenance:
+        description: 通用识别（远场、长语音、PTT、警务 badcase 等客户录音）：EvalHub 机器参考（Qwen-audio-3.1 / MOSS）、FireRedASR2-AED、MiMo-V2.5-ASR 三份转写中有两份在原生打分口径下逐字一致才保留，参考取一致的那份（含 EvalHub 参考时取 EvalHub 的文本），未经人工听审。
+    police-cmd:
+      artifacts:
+        records:
+        - police-cmd-records
+        audio_index:
+        - audio-index
+      task: asr
+      statistics:
+        records: 137
+        duration_hours: 0.0539
+        duration_basis: recording duration
+      provenance:
+        description: '警务指令（PTT 短句）客户录音：参考为录音分组对应的指令词（按《警言警语 V6.0》对齐），其中 39 条经人工听原音确认（reference_kind: human），其余为按术语表对齐的机器参考。'
+    police-cmd-hw300:
+      artifacts:
+        records:
+        - police-cmd-hw300-records
+        audio_index:
+        - audio-index
+      task: asr_hotwords
+      statistics:
+        records: 137
+        duration_hours: 0.0539
+        duration_basis: recording duration
+      provenance:
+        description: 警务指令（300 词热词表）：音频和参考与 police-cmd 相同，每条带同一份 300 词热词表，含全部 35 个指令词，其余为从 police_scene_bench@v1-20261028 各 -hw300 热词表的并集中随机抽取的警务术语。
+      group: police-cmd
+  provenance:
+    status: complete
+    synthetic: none
+    summary: 鼎桥客户真实录音的语音识别评测，仅评测
+    description: 鼎桥（td-tech）客户提供的真实录音（邮件/Wiki 基线 2026-09-30，由 EvalHub 整理发布），只用于评测，不进训练。参考文本未全部经人工听审：通用识别只保留三份机器转写中两份一致的条目，难样例被筛掉，数字偏乐观；警务指令的参考来自录音分组的指令词，39 条经人工确认；警务指令另有一份带 300 词热词表的副本（police-cmd-hw300），音频相同。
+    sources:
+    - EvalHub asr/dingqiao-asr-quality@20261016-machine01
+    - EvalHub asr/dingqiao-asr-police-cmd@20261020-jyjy-v6-human04
+    - police_scene_bench@v1-20261028 -hw300 热词表（干扰词）
