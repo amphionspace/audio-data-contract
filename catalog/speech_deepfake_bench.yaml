@@ -1,0 +1,443 @@
+- schema_version: dataset-catalog/2.0
+  dataset_id: speech_deepfake_bench
+  version: v1-20261103
+  languages:
+  - en
+  - zh
+  - ar
+  - de
+  - es
+  - ro
+  - ru
+  tasks:
+  - deepfake_detection
+  artifacts:
+  - name: audio-index
+    kind: audio-index
+    root_alias: speech_deepfake_bench
+    relative_path: versions/v1-20261103/audio-index.jsonl.gz
+    sha256: bb2296e40616a249ba516c2c85ef2d598b338ef6cfe72357c78217f1d68bb992
+    metadata:
+      record_count: 2534742
+  - name: asvspoof2019-la-records
+    kind: audio-records
+    root_alias: speech_deepfake_bench
+    relative_path: versions/v1-20261103/records/asvspoof2019-la.jsonl.gz
+    sha256: 9c039655c3d893866c9884ec5962634cf8d1fb1275dbfc8b0d9409dc1feadebc
+    metadata:
+      record_count: 71237
+  - name: asvspoof2021-la-records
+    kind: audio-records
+    root_alias: speech_deepfake_bench
+    relative_path: versions/v1-20261103/records/asvspoof2021-la.jsonl.gz
+    sha256: 99c95cc8bdb530a3d5bddc88d8cd68a5f26d6bfdeaa936d98d6d0126640e628d
+    metadata:
+      record_count: 148176
+  - name: asvspoof2021-df-records
+    kind: audio-records
+    root_alias: speech_deepfake_bench
+    relative_path: versions/v1-20261103/records/asvspoof2021-df.jsonl.gz
+    sha256: 24e2ed693f516fc6526ff8ada5d3bc523e146d31b942bf359bf3b82996350df2
+    metadata:
+      record_count: 533928
+  - name: asvspoof5-eval-records
+    kind: audio-records
+    root_alias: speech_deepfake_bench
+    relative_path: versions/v1-20261103/records/asvspoof5-eval.jsonl.gz
+    sha256: ccea60f8ecfb49c114514038994c50aebe328a836d1241ac0291d5727719b92c
+    metadata:
+      record_count: 680774
+  - name: add2022-t1-records
+    kind: audio-records
+    root_alias: speech_deepfake_bench
+    relative_path: versions/v1-20261103/records/add2022-t1.jsonl.gz
+    sha256: ea0c157fcdf07840c828e43822c8285caa542b6b591a4d581444a3acec9069d6
+    metadata:
+      record_count: 109199
+  - name: add2022-t3-records
+    kind: audio-records
+    root_alias: speech_deepfake_bench
+    relative_path: versions/v1-20261103/records/add2022-t3.jsonl.gz
+    sha256: dd6c9e5ea69fc8859f04928b5cc8e227abbe058b2c4d5c7451d509bcfb831ead
+    metadata:
+      record_count: 126861
+  - name: add2023-r1-records
+    kind: audio-records
+    root_alias: speech_deepfake_bench
+    relative_path: versions/v1-20261103/records/add2023-r1.jsonl.gz
+    sha256: 8a94bfea8296fe65579d338e4b27e25b64c76f86e16455d4250ea1755a2a22c8
+    metadata:
+      record_count: 111976
+  - name: add2023-r2-records
+    kind: audio-records
+    root_alias: speech_deepfake_bench
+    relative_path: versions/v1-20261103/records/add2023-r2.jsonl.gz
+    sha256: 7419f2ce0aa1d5d74e5a5449001de4aac60d31a8d06bc2a2da30ff70c3641b27
+    metadata:
+      record_count: 118477
+  - name: for-norm-records
+    kind: audio-records
+    root_alias: speech_deepfake_bench
+    relative_path: versions/v1-20261103/records/for-norm.jsonl.gz
+    sha256: 4a64b0e43f8816c6be9c2897f4c617cef3d34aad142380824bc454fe5967131e
+    metadata:
+      record_count: 4634
+  - name: for-norm-dfarena-records
+    kind: audio-records
+    root_alias: speech_deepfake_bench
+    relative_path: versions/v1-20261103/records/for-norm-dfarena.jsonl.gz
+    sha256: e12565616277aac45c31e09192cc4e6247181b3a71369231595dfe9985ef5f02
+    metadata:
+      record_count: 4528
+  - name: codecfake-records
+    kind: audio-records
+    root_alias: speech_deepfake_bench
+    relative_path: versions/v1-20261103/records/codecfake.jsonl.gz
+    sha256: 0afa6f47b6b64ee18a1ae83c6559014d26029562c6ae4cc069d86babba7d4f68
+    metadata:
+      record_count: 304241
+  - name: librisevoc-test-records
+    kind: audio-records
+    root_alias: speech_deepfake_bench
+    relative_path: versions/v1-20261103/records/librisevoc-test.jsonl.gz
+    sha256: b11fd1cde9c72828a0db88339fde94667166750b1c7295759f6c105e84006fd6
+    metadata:
+      record_count: 18487
+  - name: librisevoc-all-records
+    kind: audio-records
+    root_alias: speech_deepfake_bench
+    relative_path: versions/v1-20261103/records/librisevoc-all.jsonl.gz
+    sha256: d3a7f0d807eb0e26de2e1c83b902bd314dbf4a8a96f725df8c3148e3d16e985f
+    metadata:
+      record_count: 92407
+  - name: dfadd-records
+    kind: audio-records
+    root_alias: speech_deepfake_bench
+    relative_path: versions/v1-20261103/records/dfadd.jsonl.gz
+    sha256: 62aa2ea925251df62d62fbfc2a0d69fe29b840a5be3db65f8d8337cca56bc495
+    metadata:
+      record_count: 3755
+  - name: sonar-records
+    kind: audio-records
+    root_alias: speech_deepfake_bench
+    relative_path: versions/v1-20261103/records/sonar.jsonl.gz
+    sha256: 958e20995281b394a02a1ad1deaae0dd8ac15364ca03b85d62a8cca2288be48e
+    metadata:
+      record_count: 3948
+  - name: in-the-wild-records
+    kind: audio-records
+    root_alias: speech_deepfake_bench
+    relative_path: versions/v1-20261103/records/in-the-wild.jsonl.gz
+    sha256: 11cf18af196951727afe3473e8ddee1d0b7c11c7ccbcfe7527e1b2ca3d7189b9
+    metadata:
+      record_count: 31779
+  - name: xmad-bench-records
+    kind: audio-records
+    root_alias: speech_deepfake_bench
+    relative_path: versions/v1-20261103/records/xmad-bench.jsonl.gz
+    sha256: 5a02d0e2d42bfec9aa7bac5c5797b32987b4e62e15cde3431056688fce5969fa
+    metadata:
+      record_count: 102220
+  - name: spoofceleb-records
+    kind: audio-records
+    root_alias: speech_deepfake_bench
+    relative_path: versions/v1-20261103/records/spoofceleb.jsonl.gz
+    sha256: d2a2d98fe2666367eaae53651f55b14a933b1ed53bc646a8c53584912a523b10
+    metadata:
+      record_count: 91130
+  splits:
+    asvspoof2019-la:
+      artifacts:
+        records:
+        - asvspoof2019-la-records
+        audio_index:
+        - audio-index
+      task: deepfake_detection
+      statistics:
+        records: 71237
+        bonafide: 7355
+        spoof: 63882
+        duration_hours: 61.4952
+        duration_basis: recording duration
+      provenance:
+        description: ASVspoof 2019 逻辑访问评测集：英文朗读，TTS 与语音转换伪造（A07–A19）。71,237 条（真人 7,355 / 伪造 63,882），用于 spoofradar、df-arena；音频为原始文件：ASVspoof 2019 LA evaluation (Zenodo 6906306), via HF SpeechAntiSpoofingBenchmarks/ASVspoof2019_LA。
+    asvspoof2021-la:
+      artifacts:
+        records:
+        - asvspoof2021-la-records
+        audio_index:
+        - audio-index
+      task: deepfake_detection
+      statistics:
+        records: 148176
+        bonafide: 14816
+        spoof: 133360
+        duration_hours: 111.8247
+        duration_basis: recording duration
+      provenance:
+        description: ASVspoof 2021 逻辑访问评测集：2019 的攻击经电话信道和编解码传输。148,176 条（真人 14,816 / 伪造 133,360），用于 spoofradar、df-arena；音频为原始文件：ASVspoof 2021 LA evaluation (Zenodo 4837263), via HF SpeechAntiSpoofingBenchmarks/ASVspoof2021_LA。
+    asvspoof2021-df:
+      artifacts:
+        records:
+        - asvspoof2021-df-records
+        audio_index:
+        - audio-index
+      task: deepfake_detection
+      statistics:
+        records: 533928
+        bonafide: 14869
+        spoof: 519059
+        duration_hours: 454.4416
+        duration_basis: recording duration
+      provenance:
+        description: ASVspoof 2021 深度伪造评测集：经多种有损压缩（mp3/m4a/ogg 等）的伪造语音。533,928 条（真人 14,869 / 伪造 519,059），用于 spoofradar、df-arena；音频为原始文件：ASVspoof 2021 DF evaluation (Zenodo 4835108), via HF SpeechAntiSpoofingBenchmarks/ASVspoof2021_DF。
+    asvspoof5-eval:
+      artifacts:
+        records:
+        - asvspoof5-eval-records
+        audio_index:
+        - audio-index
+      task: deepfake_detection
+      statistics:
+        records: 680774
+        bonafide: 138688
+        spoof: 542086
+        duration_hours: 1340.7972
+        duration_basis: recording duration
+      provenance:
+        description: ASVspoof 5 评测集：众包录音，更新的 TTS/VC 攻击和对抗攻击。680,774 条（真人 138,688 / 伪造 542,086），用于 spoofradar、df-arena；音频为原始文件：ASVspoof 5 evaluation flac_E_eval (Zenodo 14498691), via HF SpeechAntiSpoofingBenchmarks/ASVspoof5。
+    add2022-t1:
+      artifacts:
+        records:
+        - add2022-t1-records
+        audio_index:
+        - audio-index
+      task: deepfake_detection
+      statistics:
+        records: 109199
+        bonafide: 31334
+        spoof: 77865
+        duration_hours: 106.58
+        duration_basis: recording duration
+      provenance:
+        description: ADD 2022 赛道 1：中文，含噪声和低质量条件的伪造语音。109,199 条（真人 31,334 / 伪造 77,865），用于 spoofradar、df-arena；音频为原始文件：ADD 2022 track 1 evaluation (Zenodo 10843991, md5 checked), via HF shuohann/dfcdata。
+    add2022-t3:
+      artifacts:
+        records:
+        - add2022-t3-records
+        audio_index:
+        - audio-index
+      task: deepfake_detection
+      statistics:
+        records: 126861
+        bonafide: 20776
+        spoof: 106085
+        duration_hours: 116.3004
+        duration_basis: recording duration
+      provenance:
+        description: ADD 2022 赛道 3.2 第二轮：中文，参赛队伍生成的伪造语音。126,861 条（真人 20,776 / 伪造 106,085），用于 spoofradar、df-arena；音频为原始文件：ADD 2022 track 3.2 round 2 evaluation (Zenodo 12188055); the dfcdata copy is track 3.1。
+    add2023-r1:
+      artifacts:
+        records:
+        - add2023-r1-records
+        audio_index:
+        - audio-index
+      task: deepfake_detection
+      statistics:
+        records: 111976
+        bonafide: 80000
+        spoof: 31976
+        duration_hours: 171.4189
+        duration_basis: recording duration
+      provenance:
+        description: ADD 2023 赛道 1.2 第一轮评测：中文伪造语音检测。111,976 条（真人 80,000 / 伪造 31,976），用于 spoofradar、df-arena；音频为原始文件：ADD 2023 track 1.2 round 1 evaluation (Zenodo 12175884, md5 checked), via HF shuohann/dfcdata。
+    add2023-r2:
+      artifacts:
+        records:
+        - add2023-r2-records
+        audio_index:
+        - audio-index
+      task: deepfake_detection
+      statistics:
+        records: 118477
+        bonafide: 87500
+        spoof: 30977
+        duration_hours: 161.6641
+        duration_basis: recording duration
+      provenance:
+        description: ADD 2023 赛道 1.2 第二轮评测：中文，攻击来源更多、鲁棒性要求更高。118,477 条（真人 87,500 / 伪造 30,977），用于 spoofradar、df-arena；音频为原始文件：ADD 2023 track 1.2 round 2 evaluation (Zenodo 12176326, md5 checked), via HF shuohann/dfcdata。
+    for-norm:
+      artifacts:
+        records:
+        - for-norm-records
+        audio_index:
+        - audio-index
+      task: deepfake_detection
+      statistics:
+        records: 4634
+        bonafide: 2264
+        spoof: 2370
+        duration_hours: 2.6744
+        duration_basis: recording duration
+      provenance:
+        description: Fake-or-Real（for-norm 版）测试集：英文，早期商用与开源 TTS。4,634 条（真人 2,264 / 伪造 2,370），用于 spoofradar；音频为原始文件：Fake-or-Real for-norm testing (York University), via HF shuohann/dfcdata (Kaggle packaging)。
+    for-norm-dfarena:
+      artifacts:
+        records:
+        - for-norm-dfarena-records
+        audio_index:
+        - audio-index
+      task: deepfake_detection
+      statistics:
+        records: 4528
+        bonafide: 2264
+        spoof: 2264
+        duration_hours: 2.6241
+        duration_basis: recording duration
+      provenance:
+        description: Fake-or-Real（for-norm 版）测试集：英文，早期商用与开源 TTS。4,528 条（真人 2,264 / 伪造 2,264），用于 df-arena；音频为原始文件：Fake-or-Real for-norm testing (York University), via HF shuohann/dfcdata (Kaggle packaging)。
+    codecfake:
+      artifacts:
+        records:
+        - codecfake-records
+        audio_index:
+        - audio-index
+      task: deepfake_detection
+      statistics:
+        records: 304241
+        bonafide: 92596
+        spoof: 211645
+        duration_hours: 296.7276
+        duration_basis: recording duration
+      provenance:
+        description: Codecfake 测试集 C1–C7（版本 1）：中英文，神经编解码器重合成的语音。304,241 条（真人 92,596 / 伪造 211,645），用于 spoofradar、df-arena；音频为原始文件：Codecfake (Xie et al.) test C1-C7, version 1 (Zenodo 11169781 / 11125029, md5 checked); C5 and C6 from Zenodo version 1, the rest via HF shuohann/dfcdata。
+    librisevoc-test:
+      artifacts:
+        records:
+        - librisevoc-test-records
+        audio_index:
+        - audio-index
+      task: deepfake_detection
+      statistics:
+        records: 18487
+        bonafide: 2641
+        spoof: 15846
+        duration_hours: 48.8595
+        duration_basis: recording duration
+      provenance:
+        description: LibriSeVoc：LibriTTS 语句经 6 种神经声码器重合成。18,487 条（真人 2,641 / 伪造 15,846），用于 spoofradar；音频为原始文件：LibriSeVoc (Zenodo 15127251, md5 checked), via HF shuohann/dfcdata。
+    librisevoc-all:
+      artifacts:
+        records:
+        - librisevoc-all-records
+        audio_index:
+        - audio-index
+      task: deepfake_detection
+      statistics:
+        records: 92407
+        bonafide: 13201
+        spoof: 79206
+        duration_hours: 242.914
+        duration_basis: recording duration
+      provenance:
+        description: LibriSeVoc：LibriTTS 语句经 6 种神经声码器重合成。92,407 条（真人 13,201 / 伪造 79,206），用于 df-arena；音频为原始文件：LibriSeVoc (Zenodo 15127251, md5 checked), via HF shuohann/dfcdata。
+    dfadd:
+      artifacts:
+        records:
+        - dfadd-records
+        audio_index:
+        - audio-index
+      task: deepfake_detection
+      statistics:
+        records: 3755
+        bonafide: 755
+        spoof: 3000
+        duration_hours: 4.1749
+        duration_basis: recording duration
+      provenance:
+        description: DFADD 测试集：VCTK 说话人，扩散和流匹配 TTS（GradTTS、MatchaTTS、NaturalSpeech2、P-Flow、StyleTTS2）。3,755 条（真人 755 / 伪造 3,000），用于 spoofradar、df-arena；音频为原始文件：DFADD test (HF isjwdu/DFADD, the authors' release); DF-Arena lists the same clips converted to wav。
+    sonar:
+      artifacts:
+        records:
+        - sonar-records
+        audio_index:
+        - audio-index
+      task: deepfake_detection
+      statistics:
+        records: 3948
+        bonafide: 2274
+        spoof: 1674
+        duration_hours: 8.0304
+        duration_basis: recording duration
+      provenance:
+        description: SONAR：9 个前沿 TTS 平台与模型（OpenAI、VALL-E、VoiceBox 等）生成的语音和真人语音。3,948 条（真人 2,274 / 伪造 1,674），用于 spoofradar、df-arena；音频为原始文件：SONAR (archived Google Drive release), via HF shuohann/dfcdata。
+    in-the-wild:
+      artifacts:
+        records:
+        - in-the-wild-records
+        audio_index:
+        - audio-index
+      task: deepfake_detection
+      statistics:
+        records: 31779
+        bonafide: 19963
+        spoof: 11816
+        duration_hours: 37.8507
+        duration_basis: recording duration
+      provenance:
+        description: In-the-Wild：网上收集的名人、政治人物真假语音，真实信道。31,779 条（真人 19,963 / 伪造 11,816），用于 spoofradar、df-arena；音频为原始文件：In-the-Wild (deepfake-total.com release_in_the_wild.zip), via HF shuohann/dfcdata。
+    xmad-bench:
+      artifacts:
+        records:
+        - xmad-bench-records
+        audio_index:
+        - audio-index
+      task: deepfake_detection
+      statistics:
+        records: 102220
+        bonafide: 51110
+        spoof: 51110
+        duration_hours: 229.2795
+        duration_basis: recording duration
+      provenance:
+        description: XMAD-Bench 测试集：7 种语言（阿、德、英、西、罗、俄、中），说话人、生成方法和真人来源都与训练集不同。102,220 条（真人 51,110 / 伪造 51,110），用于 spoofradar；音频为原始文件：XMAD-Bench test sources (HF unibuc-cs/XMAD-Bench, the authors' release)。
+    spoofceleb:
+      artifacts:
+        records:
+        - spoofceleb-records
+        audio_index:
+        - audio-index
+      task: deepfake_detection
+      statistics:
+        records: 91130
+        bonafide: 9113
+        spoof: 82017
+        duration_hours: 66.083
+        duration_basis: recording duration
+      provenance:
+        description: SpoofCeleb 评测集：VoxCeleb1 真实场景语音，23 种 TTS 生成。91,130 条（真人 9,113 / 伪造 82,017），用于 spoofradar；音频为原始文件：SpoofCeleb evaluation flac (the jungjee/spoofceleb release unpacked, HF xxuan-speech/SpoofCeleb, sha256 checked per file)。
+  provenance:
+    status: complete
+    synthetic: partial
+    summary: 伪造语音检测公开评测集（SpoofRadar、DF-Arena），仅评测
+    description: SpoofRadar v1.0 与 Speech-DF-Arena 两个伪造语音检测排行榜使用的 16 个公开评测集，只用于评测，不进训练。每条记录的 target 为 bonafide（真人）或 spoof（伪造），metadata.protocols 保留两个榜单 protocol 中的原始样本 ID，可直接生成提交用的打分文件。官方 protocol 原样保存在 source/protocols/。各数据集许可证不同（ADD、Codecfake 为 CC BY-NC-ND 4.0，XMAD-Bench 为 CC BY-NC-SA 4.0），仅限内部研究评测，不得再分发。
+    sources:
+    - 'ASVspoof2019-LA: ASVspoof 2019 LA evaluation (Zenodo 6906306), via HF SpeechAntiSpoofingBenchmarks/ASVspoof2019_LA'
+    - 'ASVspoof2021-LA: ASVspoof 2021 LA evaluation (Zenodo 4837263), via HF SpeechAntiSpoofingBenchmarks/ASVspoof2021_LA'
+    - 'ASVspoof2021-DF: ASVspoof 2021 DF evaluation (Zenodo 4835108), via HF SpeechAntiSpoofingBenchmarks/ASVspoof2021_DF'
+    - 'ASVspoof5-Eval: ASVspoof 5 evaluation flac_E_eval (Zenodo 14498691), via HF SpeechAntiSpoofingBenchmarks/ASVspoof5'
+    - 'ADD2022-T1: ADD 2022 track 1 evaluation (Zenodo 10843991, md5 checked), via HF shuohann/dfcdata'
+    - 'ADD2022-T3: ADD 2022 track 3.2 round 2 evaluation (Zenodo 12188055); the dfcdata copy is track 3.1'
+    - 'ADD2023-R1: ADD 2023 track 1.2 round 1 evaluation (Zenodo 12175884, md5 checked), via HF shuohann/dfcdata'
+    - 'ADD2023-R2: ADD 2023 track 1.2 round 2 evaluation (Zenodo 12176326, md5 checked), via HF shuohann/dfcdata'
+    - 'FoR: Fake-or-Real for-norm testing (York University), via HF shuohann/dfcdata (Kaggle packaging)'
+    - 'Codecfake: Codecfake (Xie et al.) test C1-C7, version 1 (Zenodo 11169781 / 11125029, md5 checked); C5 and C6 from Zenodo version 1, the rest via HF shuohann/dfcdata'
+    - 'LibriSeVoc: LibriSeVoc (Zenodo 15127251, md5 checked), via HF shuohann/dfcdata'
+    - 'DFADD: DFADD test (HF isjwdu/DFADD, the authors'' release); DF-Arena lists the same clips converted to wav'
+    - 'SONAR: SONAR (archived Google Drive release), via HF shuohann/dfcdata'
+    - 'In-the-Wild: In-the-Wild (deepfake-total.com release_in_the_wild.zip), via HF shuohann/dfcdata'
+    - 'XMAD-Bench: XMAD-Bench test sources (HF unibuc-cs/XMAD-Bench, the authors'' release)'
+    - 'SpoofCeleb: SpoofCeleb evaluation flac (the jungjee/spoofceleb release unpacked, HF xxuan-speech/SpoofCeleb, sha256 checked per file)'
+    leaderboards:
+    - https://tefficlabs.com/spoofradar#leaderboard
+    - https://huggingface.co/spaces/Speech-Arena-2025/Speech-DF-Arena

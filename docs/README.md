@@ -29,6 +29,7 @@
 | [警务数据统合版](datasets/police-unified.md) | 全部警务批次合并为 train/dev/test |
 | [警务场景模拟评测集](datasets/police-scene-bench.md) | 鼎桥（td-tech）验收用：按验收表的具体使用场景逐个模拟，每个场景 100 条 |
 | [鼎桥客户真实录音评测集](datasets/tdtech-customer-bench.md) | 鼎桥客户提供的真实录音（通用识别、警务指令），参考文本来源与筛选方式 |
+| [伪造语音检测评测集](datasets/speech-deepfake-bench.md) | SpoofRadar、Speech-DF-Arena 两个排行榜的 16 个公开评测集：样本清单、标签来源与核对、音频来源 |
 | [DATA-TTS-UNIFIED](datasets/tts-unified.md) | 18 个 TTS 数据集及其标注的登记、自动同步、读取方式和待办 |
 
 ## 协议与框架接入
