@@ -1,0 +1,301 @@
+# 说话人日志老师校准：三个老师和 Qwen3-ASR 在 RAMC、AliMeeting、NOTSOFAR 样本上的标签与逐片段对比（数据声明）
+  - schema_version: dataset-catalog/2.0
+    dataset_id: magicdata_ramc
+    version: teacher-calibration-v1-20261009
+    languages:
+      - zh
+    tasks:
+      - diarization
+      - speaker_attributed_asr
+    aliases: []
+    artifacts:
+      - name: train_rec_0
+        kind: lhotse-recordings
+        root_alias: aidc_data
+        relative_path: datasets/magicdata_ramc/versions/legacy-20260804/train_rec_0/magicdata_ramc_recordings_train.jsonl.gz
+        expected_bytes: 4561
+        sha256: 9b3dbbe731f17f1821d92aad52cd2ae7d7d5333a4586e13b31c8a4378f79bcdc
+      - name: local_moss_records
+        kind: audio-records
+        root_alias: aidc_data
+        relative_path: datasets/magicdata_ramc/versions/teacher-calibration-v1-20261009/local_moss_records.jsonl.gz
+        expected_bytes: 207275
+        sha256: 8388a59f5892218510e3b80f2717f642a029b6dbf9dbfd87bdcd4f731941ac77
+        metadata:
+          record_count: 6
+      - name: moss_pro_records
+        kind: audio-records
+        root_alias: aidc_data
+        relative_path: datasets/magicdata_ramc/versions/teacher-calibration-v1-20261009/moss_pro_records.jsonl.gz
+        expected_bytes: 201124
+        sha256: 29b02d20e36b04767baf0209cac4571021d9d8dc41987ce464e56d2eeeb36f88
+        metadata:
+          record_count: 6
+      - name: bailian_records
+        kind: audio-records
+        root_alias: aidc_data
+        relative_path: datasets/magicdata_ramc/versions/teacher-calibration-v1-20261009/bailian_records.jsonl.gz
+        expected_bytes: 157022
+        sha256: 9e4037369659c45a14506381dd34822f792b1ae8cf12d8e83764918df6caf6cb
+        metadata:
+          record_count: 6
+      - name: qwen3_asr_records
+        kind: audio-records
+        root_alias: aidc_data
+        relative_path: datasets/magicdata_ramc/versions/teacher-calibration-v1-20261009/qwen3_asr_records.jsonl.gz
+        expected_bytes: 199686
+        sha256: eccda21df385b10237b5492b70df2bc0670a4c2e754466011d0edee74867d12b
+        metadata:
+          record_count: 6
+      - name: teacher_agreement_records
+        kind: audio-records
+        root_alias: aidc_data
+        relative_path: datasets/magicdata_ramc/versions/teacher-calibration-v1-20261009/teacher_agreement_records.jsonl.gz
+        expected_bytes: 119770
+        sha256: 076e837c95831f1d7d8eb093e8a1df4ca40cd98aa5eb71436b9ce7713e3b4dd0
+        metadata:
+          record_count: 3231
+    splits:
+      train:
+        artifacts:
+          recordings:
+            - train_rec_0
+          records:
+            - local_moss_records
+            - moss_pro_records
+            - bailian_records
+            - qwen3_asr_records
+            - teacher_agreement_records
+        statistics:
+          recordings: 6
+          segments: 3231
+    provenance:
+      preparation_status: prepared
+      lineage_status: exact
+      materialization: full
+      source: magicdata_ramc@legacy-20260804
+      description: 说话人日志老师校准（2026-10-09）：在有人工标注的 RAMC train 6 条 / 3.17 h 上比较本机 MOSS 0.9B、MOSS Pro、百炼 qwen-audio-3.1-asr-flash 三个老师，并用 Qwen3-ASR 对本机 MOSS 的每个片段做文本校验；付费调用经用户批准，仅用于这次校准。每个 *_records 文件一个老师，每行一条录音，target 是按时间排序的 [说话人][起-止] 文本，教师返回的分块、说话人链接、身份断点留在 metadata.<老师>；teacher_agreement_records 每行一个人工标注片段，metadata.teacher_agreement 记各老师的说话人、边界和字错误率（analysis/segments.jsonl，用于确定多老师一致性过滤门槛）。录音沿用 magicdata_ramc@legacy-20260804 train_rec_0（只用其中被抽中的录音），不复制音频。脚本 
+        scripts/diarization_raw_labels/register_raw_labels.py。
+      facts:
+        local_moss_records rows: 6
+        'local_moss_records: rows': 6
+        'local_moss_records: status ok': 6
+        'local_moss_records: segments': 3231
+        moss_pro_records rows: 6
+        'moss_pro_records: rows': 6
+        'moss_pro_records: status ok': 6
+        'moss_pro_records: segments': 2979
+        bailian_records rows: 6
+        'bailian_records: rows': 6
+        'bailian_records: status ok': 6
+        'bailian_records: segments': 1469
+        qwen3_asr_records rows: 6
+        'qwen3_asr_records: rows': 6
+        'qwen3_asr_records: status ok': 6
+        'qwen3_asr_records: segments': 3231
+        teacher_agreement_records rows: 3231
+  - schema_version: dataset-catalog/2.0
+    dataset_id: alimeeting_sdm
+    version: teacher-calibration-v1-20261009
+    languages:
+      - zh
+    tasks:
+      - diarization
+      - speaker_attributed_asr
+    aliases: []
+    artifacts:
+      - name: train_rec_0
+        kind: lhotse-recordings
+        root_alias: aidc_data
+        relative_path: datasets/alimeeting_sdm/versions/icefall-20260908/train_rec_0/alimeeting_sdm_recordings_train.jsonl.gz
+        expected_bytes: 4383
+        sha256: af6bca1dd4cecc7d6a431fc4c0538a3f6dc1f939db09c5769ac1d5a25309a465
+      - name: local_moss_records
+        kind: audio-records
+        root_alias: aidc_data
+        relative_path: datasets/alimeeting_sdm/versions/teacher-calibration-v1-20261009/local_moss_records.jsonl.gz
+        expected_bytes: 269882
+        sha256: a70e739b3232be4846e6d135d96f566a653624b3c561ec84c6bacb417b8788e9
+        metadata:
+          record_count: 6
+      - name: moss_pro_records
+        kind: audio-records
+        root_alias: aidc_data
+        relative_path: datasets/alimeeting_sdm/versions/teacher-calibration-v1-20261009/moss_pro_records.jsonl.gz
+        expected_bytes: 270395
+        sha256: ad5160f7f63844b2a0f6e6d58056bd48c29333cf9bc92fecd1bd20ce4057bd73
+        metadata:
+          record_count: 6
+      - name: bailian_records
+        kind: audio-records
+        root_alias: aidc_data
+        relative_path: datasets/alimeeting_sdm/versions/teacher-calibration-v1-20261009/bailian_records.jsonl.gz
+        expected_bytes: 223160
+        sha256: 9d5b0c40097c18ef1189191e75e884b8d2ff8faf132e8e17ef8fd0375c8aa4c5
+        metadata:
+          record_count: 6
+      - name: qwen3_asr_records
+        kind: audio-records
+        root_alias: aidc_data
+        relative_path: datasets/alimeeting_sdm/versions/teacher-calibration-v1-20261009/qwen3_asr_records.jsonl.gz
+        expected_bytes: 254200
+        sha256: 333a25558134fe2001638a189f2f93b63f7248d757718d5c70377b725741193e
+        metadata:
+          record_count: 6
+      - name: teacher_agreement_records
+        kind: audio-records
+        root_alias: aidc_data
+        relative_path: datasets/alimeeting_sdm/versions/teacher-calibration-v1-20261009/teacher_agreement_records.jsonl.gz
+        expected_bytes: 175281
+        sha256: 1b1263c995c9aa4278bf2beb6c27b8e35b60dbe37f0363fc665a17b2efe0e7b7
+        metadata:
+          record_count: 4716
+    splits:
+      train:
+        artifacts:
+          recordings:
+            - train_rec_0
+          records:
+            - local_moss_records
+            - moss_pro_records
+            - bailian_records
+            - qwen3_asr_records
+            - teacher_agreement_records
+        statistics:
+          recordings: 6
+          segments: 4716
+    provenance:
+      preparation_status: prepared
+      lineage_status: exact
+      materialization: full
+      source: alimeeting_sdm@icefall-20260908
+      description: 说话人日志老师校准（2026-10-09）：在有人工标注的 AliMeeting train 远场 ch0 6 条 / 3.34 h 上比较本机 MOSS 0.9B、MOSS Pro、百炼 qwen-audio-3.1-asr-flash 三个老师，并用 Qwen3-ASR 对本机 MOSS 的每个片段做文本校验；付费调用经用户批准，仅用于这次校准。每个 *_records 文件一个老师，每行一条录音，target 是按时间排序的 [说话人][起-止] 文本，教师返回的分块、说话人链接、身份断点留在 metadata.<老师>；teacher_agreement_records 每行一个人工标注片段，metadata.teacher_agreement 记各老师的说话人、边界和字错误率（analysis/segments.jsonl，用于确定多老师一致性过滤门槛）。录音沿用 alimeeting_sdm@icefall-20260908 train_rec_0（只用其中被抽中的录音），不复制音频。脚本 
+        scripts/diarization_raw_labels/register_raw_labels.py。
+      facts:
+        local_moss_records rows: 6
+        'local_moss_records: rows': 6
+        'local_moss_records: status ok': 6
+        'local_moss_records: segments': 4716
+        moss_pro_records rows: 6
+        'moss_pro_records: rows': 6
+        'moss_pro_records: status ok': 6
+        'moss_pro_records: segments': 4795
+        'moss_pro_records: earlier rows replaced by a retry': 2
+        bailian_records rows: 6
+        'bailian_records: rows': 6
+        'bailian_records: status ok': 6
+        'bailian_records: segments': 3132
+        qwen3_asr_records rows: 6
+        'qwen3_asr_records: rows': 6
+        'qwen3_asr_records: status ok': 6
+        'qwen3_asr_records: segments': 4716
+        teacher_agreement_records rows: 4716
+  - schema_version: dataset-catalog/2.0
+    dataset_id: notsofar_sdm
+    version: teacher-calibration-v1-20261009
+    languages:
+      - en
+    tasks:
+      - diarization
+      - speaker_attributed_asr
+    aliases: []
+    artifacts:
+      - name: train_rec_0
+        kind: lhotse-recordings
+        root_alias: aidc_data
+        relative_path: datasets/notsofar_sdm/versions/icefall-20260908/train_rec_0/notsofar_sdm_recordings_train.jsonl.gz
+        expected_bytes: 3288
+        sha256: 96823e5f9eedd496f1a74183b655129c407db1f756be50cfd2f8acc463dfd902
+      - name: local_moss_records
+        kind: audio-records
+        root_alias: aidc_data
+        relative_path: datasets/notsofar_sdm/versions/teacher-calibration-v1-20261009/local_moss_records.jsonl.gz
+        expected_bytes: 341257
+        sha256: dcc284c4ae4104678d0402f969d20b046ec8d577919b10e77cf62b0f7dabcf66
+        metadata:
+          record_count: 39
+      - name: moss_pro_records
+        kind: audio-records
+        root_alias: aidc_data
+        relative_path: datasets/notsofar_sdm/versions/teacher-calibration-v1-20261009/moss_pro_records.jsonl.gz
+        expected_bytes: 309572
+        sha256: 72696941f7253264dac7650b2e27d8ca45cd0c2d36cc53475a0b35b91661bced
+        metadata:
+          record_count: 39
+      - name: bailian_records
+        kind: audio-records
+        root_alias: aidc_data
+        relative_path: datasets/notsofar_sdm/versions/teacher-calibration-v1-20261009/bailian_records.jsonl.gz
+        expected_bytes: 154959
+        sha256: 7deaaa94c52cf24c90a937e0f9682af5eabb7824e327fa89658f6f9859aec57c
+        metadata:
+          record_count: 39
+      - name: qwen3_asr_records
+        kind: audio-records
+        root_alias: aidc_data
+        relative_path: datasets/notsofar_sdm/versions/teacher-calibration-v1-20261009/qwen3_asr_records.jsonl.gz
+        expected_bytes: 314326
+        sha256: 050cb22ea1d59860bdc09a0b1a3193cad7e858b6fd9410d4748a684485c0b714
+        metadata:
+          record_count: 39
+      - name: qwen3_asr_en_records
+        kind: audio-records
+        root_alias: aidc_data
+        relative_path: datasets/notsofar_sdm/versions/teacher-calibration-v1-20261009/qwen3_asr_en_records.jsonl.gz
+        expected_bytes: 300682
+        sha256: 38d394aba3921059410b51d6cd7d69c0e6b130a2a0926541b9a6c7197259e033
+        metadata:
+          record_count: 39
+      - name: teacher_agreement_records
+        kind: audio-records
+        root_alias: aidc_data
+        relative_path: datasets/notsofar_sdm/versions/teacher-calibration-v1-20261009/teacher_agreement_records.jsonl.gz
+        expected_bytes: 279861
+        sha256: d8bf522c4d225630c51869d857ca3dad9bd2bda05b1201c2442eccf43fef4eda
+        metadata:
+          record_count: 8045
+    splits:
+      train:
+        artifacts:
+          recordings:
+            - train_rec_0
+          records:
+            - local_moss_records
+            - moss_pro_records
+            - bailian_records
+            - qwen3_asr_records
+            - qwen3_asr_en_records
+            - teacher_agreement_records
+        statistics:
+          recordings: 39
+          segments: 8045
+    provenance:
+      preparation_status: prepared
+      lineage_status: exact
+      materialization: full
+      source: notsofar_sdm@icefall-20260908
+      description: 说话人日志老师校准（2026-10-09）：在有人工标注的 NOTSOFAR train 单通道 ch0 39 场 / 4.02 h 上比较本机 MOSS 0.9B、MOSS Pro、百炼 qwen-audio-3.1-asr-flash 三个老师，并用 Qwen3-ASR 对本机 MOSS 的每个片段做文本校验；付费调用经用户批准，仅用于这次校准。每个 *_records 文件一个老师，每行一条录音，target 是按时间排序的 [说话人][起-止] 文本，教师返回的分块、说话人链接、身份断点留在 metadata.<老师>；teacher_agreement_records 每行一个人工标注片段，metadata.teacher_agreement 记各老师的说话人、边界和字错误率（analysis/segments.jsonl，用于确定多老师一致性过滤门槛）。NOTSOFAR 的 qwen3_asr_records 是第一版，误用 to_language=zh 把英文部分译成中文，已被 qwen3_asr_en_records 更正，保留原始输出。录音沿用 
+        notsofar_sdm@icefall-20260908 train_rec_0（只用其中被抽中的录音），不复制音频。脚本 scripts/diarization_raw_labels/register_raw_labels.py。
+      facts:
+        local_moss_records rows: 39
+        'local_moss_records: rows': 39
+        'local_moss_records: status ok': 39
+        'local_moss_records: segments': 8045
+        moss_pro_records rows: 39
+        'moss_pro_records: rows': 39
+        'moss_pro_records: status ok': 39
+        'moss_pro_records: segments': 7137
+        bailian_records rows: 39
+        'bailian_records: rows': 39
+        'bailian_records: status ok': 39
+        'bailian_records: segments': 2227
+        'bailian_records: earlier rows replaced by a retry': 3
+        qwen3_asr_records rows: 39
+        'qwen3_asr_records: rows': 39
+        'qwen3_asr_records: status ok': 39
+        'qwen3_asr_records: segments': 8045
+        qwen3_asr_en_records rows: 39
+        'qwen3_asr_en_records: rows': 39
+        'qwen3_asr_en_records: status ok': 39
+        'qwen3_asr_en_records: segments': 8045
+        teacher_agreement_records rows: 8045

@@ -1,0 +1,84 @@
+# CHiME-6 与 NOTSOFAR 真实会议的说话人归属 ASR 窗口（30 / 120 / 300 / 600 秒）及标注更正（血缘声明）
+  - schema_version: dataset-view/1.0
+    view_id: chime6/meeting-windows
+    version: meeting-windows-v1-20261008
+    source:
+      dataset_id: chime6
+      version: speaker-records-v1-20260912
+    result:
+      dataset_id: chime6
+      version: meeting-windows-v1-20261008
+    materialization: full
+    lineage_status: exact
+    transforms:
+      - name: window-sot
+        version: real-meetings-v1-20261008
+        kind: annotate
+        writes:
+          - target
+          - metadata.turns
+        parameters:
+          source: chime6
+          source_version: speaker-records-v1-20260912
+          annotation: human utterance times and speaker identity
+          channel_policy: mean of the 4 channels of array U01
+          transcript_policy: official words verbatim, whitespace stripped; [noise], [laughs] and [inaudible <session time>] markers and marker-only turns kept
+          window_seconds:
+            - 30
+            - 120
+            - 300
+            - 600
+          tool: amphiondata multispeaker window export
+      - name: annotation-corrections
+        version: chime6-corrections-v1
+        kind: correct
+        writes:
+          - metadata.excluded_annotations
+        parameters:
+          file_sha256: 336d9c51326362379e364ddb1c128bac518b120647616699bafe56f0d7f11f3c
+          excluded_rows: 1
+          forced_aligner: Qwen3-ForcedAligner-0.6B
+      - name: exclude-windows
+        version: v1-20261008
+        kind: filter
+        writes:
+          - $membership
+        parameters:
+          listed: 117
+          reasons:
+            empty_transcript_annotation: 4
+            complete_target_exceeds_context: 113
+    provenance:
+      registered_at: '2026-11-03'
+  - schema_version: dataset-view/1.0
+    view_id: notsofar_sdm/meeting-windows
+    version: meeting-windows-v1-20261008
+    source:
+      dataset_id: notsofar_sdm
+      version: icefall-20260908
+    result:
+      dataset_id: notsofar_sdm
+      version: meeting-windows-v1-20261008
+    materialization: full
+    lineage_status: exact
+    transforms:
+      - name: window-sot
+        version: real-meetings-v1-20261008
+        kind: annotate
+        writes:
+          - target
+          - metadata.turns
+        parameters:
+          source: notsofar_sdm
+          source_version: icefall-20260908
+          annotation: human utterance times and speaker identity
+          channel_policy: official single-channel (SC) device ch0; each device of a meeting is its own recording because devices are not sample-synchronized
+          transcript_policy: source manifest text, whitespace stripped
+          window_seconds:
+            - 30
+            - 120
+            - 300
+            - 600
+          tool: amphiondata multispeaker window export
+    provenance:
+      registered_at: '2026-11-03'

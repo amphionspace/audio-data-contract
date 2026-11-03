@@ -1,0 +1,64 @@
+# Emilia2 m4a-64k 中文对话的本机 MOSS 原始标签和窗口核对结果（上游中间产物，不进训练）（数据声明）
+  - schema_version: dataset-catalog/2.0
+    dataset_id: emilia2_zh_dialogue_diarize
+    version: teacher-labels-v1-20261015
+    languages:
+      - zh
+    tasks:
+      - diarization
+      - speaker_attributed_asr
+    aliases: []
+    artifacts:
+      - name: train-audio-index
+        kind: jsonl-metadata
+        root_alias: aidc_data
+        relative_path: datasets/emilia2_zh_dialogue_diarize/versions/moss-transcribe-diarize-0.9B-m4a64k/emilia2_zh_dialogue-train-audio-index.jsonl.gz
+        expected_bytes: 973289
+        sha256: 87ac6fda8436ef1156f552e4d9a89da29a57dc8f6f2bcf1cc5fa758f1493f050
+        metadata:
+          record_count: 43103
+          description: cut_id → emilia2@extracted-enzh-flac16k-20261012 的 16 kHz 单声道 FLAC（m4a-64k/zh/dialog；m4a 已删除，只用 flac）
+      - name: local_moss_records
+        kind: audio-records
+        root_alias: aidc_data
+        relative_path: datasets/emilia2_zh_dialogue_diarize/versions/teacher-labels-v1-20261015/local_moss_records.jsonl.gz
+        expected_bytes: 226750762
+        sha256: e6d46804985d672b4da1bf11c52f69ad3c5d166631e24af0f1e8e408475c742e
+        metadata:
+          record_count: 46615
+      - name: window_check_records
+        kind: audio-records
+        root_alias: aidc_data
+        relative_path: datasets/emilia2_zh_dialogue_diarize/versions/teacher-labels-v1-20261015/window_check_records.jsonl.gz
+        expected_bytes: 235887259
+        sha256: 379015535f7c3e2fe9c14aaae79c8c0f6bc720336f8a77c35eeb64c8cdb2c537
+        metadata:
+          record_count: 149199
+    splits:
+      train_120s:
+        artifacts:
+          audio_index:
+            - train-audio-index
+          records:
+            - local_moss_records
+            - window_check_records
+        statistics:
+          records: 195814
+    provenance:
+      preparation_status: prepared
+      lineage_status: exact
+      materialization: full
+      source: emilia2_zh_dialogue_diarize@moss-transcribe-diarize-0.9B-m4a64k
+      description: Emilia2 m4a-64k 中文对话（≥120 秒，46,615 条 / 3,895 h）的本机 MOSS-Transcribe-Diarize 0.9B 原始整条标签和窗口核对结果，是 moss-transcribe-diarize-0.9B-m4a64k 训练版本的上游，本身不是训练集。local_moss_records：46,615 条录音（成功 46,615），metadata.local_moss 含分块、说话人链接和身份断点；window_check_records：窗口核对结果 149,199 个（通过 144,774，拒绝 4,425），含被拒窗口及原因、Qwen3-ASR 整窗文字 check_text、字错误率和说话人拆分比例。audio_slots 指向 emilia2_zh_dialogue_diarize@moss-transcribe-diarize-0.9B-m4a64k 的音频索引（FLAC 16 kHz），只有切出窗口的录音有音频文件。未登记：逐块原始响应 raw/、Qwen3-ASR 窗口原始响应（文字已在 
+        check_text）、window-plan、upstream-shorts（Emilia2 自带短句，来源数据的抽取，不是标签）、backup-m4a-paths（m4a 路径备份，不是标签）。脚本 scripts/diarization_raw_labels/register_raw_labels.py。
+      ready_for_training: false
+      facts:
+        local_moss_records rows: 46615
+        'local_moss_records: rows': 46615
+        'local_moss_records: status ok': 46615
+        'local_moss_records: segments': 4106462
+        'local_moss_records: earlier rows replaced by a retry': 30059
+        window_check_records rows: 149199
+        'window_check_records: rows': 149199
+        'window_check_records: kept': 144774
+        'window_check_records: rejected': 4425

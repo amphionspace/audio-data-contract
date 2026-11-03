@@ -63,10 +63,12 @@ AudioSet 背景声场景描述评测集
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
+| [chime6@meeting-windows-v1-20261008](../../catalog/diarization_raw_real-meetings.yaml#L2) | — | 未登记 | 没有 |
 | [chime6@openslr-150-source-20260911](../../catalog/chime6.yaml#L1) | — | 未登记 | 快照 20260914 |
 | [chime6@speaker-records-v1-20260912](../../catalog/chime6.yaml#L150) | 56.3 | 已登记 | 快照 20260914 |
 | [chime6@turn-taking-20261014](../../catalog/amphionasr_v4.yaml#L1365) | 174.5 | 已登记 | 没有 |
 
+- `chime6@meeting-windows-v1-20261008`：CHiME-6 真实会议的说话人归属 ASR 窗口（aligned_utterance_timestamps_v1）：人工标注的说话人和时间，mean of the 4 channels of array U01；转写为官方文字原样，只去空白，保留 [noise]、[laughs]、[inaudible] 标记。按 30 / 120 / 300 / 600 s 切窗，每个 split 的 records 一行一个窗口，turns 在 metadata。训练集上整窗目标超过上下文的 113 个窗口和空转写的 4 个窗口列在 train_excluded_windows（导出时已丢弃，不在 records 里）。标注更正 annotation_corrections：eval S21 第 1959 行开始晚于结束，强制对齐不可靠，整行排除，复核对齐结果在 test_correction_alignments。音频是 U01 阵列 4 路的平均（16 kHz 单声道），源数据集里没有，已按原字节复制 20 个文件到本版本 audio/ 下，由 *-audio-index 引用。没有清洗通过标记，也没有伪造。脚本 scripts/diarization_raw_labels/register_raw_labels.py
 - `chime6@openslr-150-source-20260911`：家庭聚会中的多通道远场和重叠语音；包含音频、官方转写、房间布局和许可文件。 官方转写原包保留尾随字节问题；标注入口使用解压内容不变、通过 CRC 校验的修复归档
 - `chime6@speaker-records-v1-20260912`：已解包、实测音频头并生成通用说话人记录；保留官方划分和标注
 - `chime6@turn-taking-20261014`：会议 turn-taking。整句拼成 2/3 人混合窗，时长 0.5～30 秒。注册音是窗外另一句，1～30 秒。有近场时远场:近场 = 3:1
@@ -190,7 +192,7 @@ Emilia 英语野外语音（已清洗）
 
 有声书、播客和 YouTube 英语（GigaSpeech）
 
-语言：en · 任务：语音识别
+语言：en · 任务：语音识别、diarization、带说话人标注的语音识别
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
@@ -199,10 +201,12 @@ Emilia 英语野外语音（已清洗）
 | [gigaspeech@legacy-20260804](../../catalog/icefall_base.yaml#L190) | 10,050.7 | 已登记 | 快照 20260914 |
 | [gigaspeech@punc-written-en-v1-20261102](../../catalog/en_punc_written_v1.yaml#L72) | — | 未登记 | 没有 |
 | [gigaspeech@train-punc-v1-20261102](../../catalog/train_punc_v1_more.yaml#L160) | — | 未登记 | 没有 |
+| [gigaspeech@youtube-diarize-census-v1-20261009](../../catalog/diarization_raw_gigaspeech-census.yaml#L2) | — | 未登记 | 没有 |
 | [gigaspeech@legacy-20260804](../../catalog/icefall_base.yaml#L190) | 10,000.0 | [参考表](https://ccnuebbmik1f.feishu.cn/wiki/CEXFwEjPoi2bIukVjk9c5FdOn12?sheet=3d4d23) | 快照 20260914 |
 
 - `gigaspeech@punc-written-en-v1-20261102`：gigaspeech@legacy-20260804 训练集原标注加英文书面化标点并恢复大小写（规范 en-v1，amphiondata written_punctuation_en）：Qwen3.8-27B 给 10 万条加标点，蒸馏到 Qwen3-4B 学生（LoRA）跑全量，不带听音提示。只插 , . ? ! ; : 和改大小写，转小写去标点后与原标注逐词一致；模型改了词的条目退回原标注只加句号；代词 I 统一大写，首字母大写，每条以 . ? ! 结尾。文件与源 supervisions 条数、顺序相同，只换 text；导出后逐条回读核对
 - `gigaspeech@train-punc-v1-20261102`：gigaspeech@legacy-20260804 的 train 训练版本，目标文本换成带标点的写法（按 id 取自 datasets/gigaspeech/versions/punc-written-en-v1-20261102/gigaspeech_supervisions_XL_punc_written.jsonl.gz；去掉标点和空格、转小写后与原文一致才替换，否则保留原文）。其余字段与源版本相同，录音引用源版本
+- `gigaspeech@youtube-diarize-census-v1-20261009`：GigaSpeech XL 全部 YouTube 录音（YOU*，21,472 条 / 11,765.9 h）的说话人数普查，只做了一小部分，占位登记，不要用于训练。2026-10-09 用本机 MOSS-Transcribe-Diarize 0.9B 整条打说话人和文本，完成 1082 条成功（共 1087 行，含失败待重试），约占计划 5%；Qwen3-ASR 文本校验只做了 36 条。用户决定先做中文，英文暂缓，没有继续。local_moss_records：每行一条录音，target 是按时间排序的 [说话人][起-止] 文本，metadata.local_moss 保留教师返回的分块、说话人链接、身份断点和 speaker_census（三种说话人数：global_labels 偏高、global_active、max_chunk_active）。qwen3_asr_en_records：Qwen3-ASR 对 MOSS 片段的转写（metadata.qwen3_asr_en）。audio_slots 指向本版本 youtube_xl_recordings 里的同名录音。脚本 scripts/diarization_raw_labels/register_raw_labels.py
 - 含派生版本（与源数据可能重叠）
 
 ### hifitts
@@ -443,15 +447,19 @@ LibriSpeech 混合的目标说话人数据
 
 微软英文远场会议，真实录制与模拟（NOTSOFAR）
 
-语言：en · 任务：语音识别、连续语音分离、重叠语音检测、带说话人标注的语音识别、说话人分段与归属
+语言：en · 任务：语音识别、连续语音分离、diarization、重叠语音检测、带说话人标注的语音识别、说话人分段与归属
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
 | [notsofar@hf-ba8fd0f034ce-recorded-240825.1](../../catalog/multilingual_multispeaker.yaml#L358) | — | 未登记 | 快照 20260914 |
 | [notsofar@hf-ba8fd0f034ce-sim-v1.5-200h](../../catalog/multilingual_multispeaker.yaml#L419) | 200.0 | 估算 | 快照 20260914 |
 | [notsofar_sdm@icefall-20260908](../../catalog/icefall_runtime.yaml#L2995) | 176.9 | 已登记：单远场麦克风标注片段 | 快照 20260914 |
+| [notsofar_sdm@meeting-windows-v1-20261008](../../catalog/diarization_raw_real-meetings.yaml#L288) | — | 未登记 | 没有 |
+| [notsofar_sdm@teacher-calibration-v1-20261009](../../catalog/diarization_raw_teacher-calibration.yaml#L193) | — | 未登记 | 没有 |
 
 - `notsofar_sdm@icefall-20260908`：标注片段时长，重叠语音或多麦克风可能重复计时
+- `notsofar_sdm@meeting-windows-v1-20261008`：NOTSOFAR-1 真实会议（单通道 SC 设备 ch0，每个设备算一条录音，因为设备间采样不同步）的说话人归属 ASR 窗口（aligned_utterance_timestamps_v1）：人工标注的说话人和时间，转写为源清单文字，只去空白。按 30 / 120 / 300 / 600 s 切窗，每个 split 的 records 一行一个窗口，turns 在 metadata；train / dev / test 都有。音频由 audio-index 指向源数据集里的 ch0.wav，不复制。没有窗口被排除。脚本 scripts/diarization_raw_labels/register_raw_labels.py
+- `notsofar_sdm@teacher-calibration-v1-20261009`：说话人日志老师校准（2026-10-09）：在有人工标注的 NOTSOFAR train 单通道 ch0 39 场 / 4.02 h 上比较本机 MOSS 0.9B、MOSS Pro、百炼 qwen-audio-3.1-asr-flash 三个老师，并用 Qwen3-ASR 对本机 MOSS 的每个片段做文本校验；付费调用经用户批准，仅用于这次校准。每个 *_records 文件一个老师，每行一条录音，target 是按时间排序的 [说话人][起-止] 文本，教师返回的分块、说话人链接、身份断点留在 metadata.<老师>；teacher_agreement_records 每行一个人工标注片段，metadata.teacher_agreement 记各老师的说话人、边界和字错误率（analysis/segments.jsonl，用于确定多老师一致性过滤门槛）。NOTSOFAR 的 qwen3_asr_records 是第一版，误用 to_language=zh 把英文部分译成中文，已被 qwen3_asr_en_records 更正，保留原始输出。录音沿用 notsofar_sdm@icefall-20260908 train_rec_0（只用其中被抽中的录音），不复制音频。脚本 scripts/diarization_raw_labels/register_raw_labels.py
 
 ### singapore_english
 
@@ -646,7 +654,7 @@ TAL 英语语音识别数据
 
 中文多人会议（AISHELL-4）；含轮流说话混合版
 
-语言：zh · 任务：语音识别、说话人分段与归属、目标说话人语音识别
+语言：zh · 任务：语音识别、diarization、带说话人标注的语音识别、说话人分段与归属、目标说话人语音识别
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
@@ -656,6 +664,7 @@ TAL 英语语音识别数据
 | [aishell4@icefall-20260908](../../catalog/icefall_runtime.yaml#L1206) | 119.5 | 已登记 | 快照 20260914 |
 | [aishell4@legacy-20260804](../../catalog/icefall_base.yaml#L892) | 28.4 | 已登记 | 快照 20260914 |
 | [aishell4@punc-written-v1-20261029](../../catalog/zh_punc_written_v1.yaml#L130) | 107.4 | 已登记 | 没有 |
+| [aishell4@teacher-review-v1-20261010](../../catalog/diarization_raw_zh-meeting-review.yaml#L2) | — | 未登记 | 没有 |
 | [aishell4@turn-taking-20261014](../../catalog/amphionasr_v4.yaml#L1) | 322.3 | 已登记 | 没有 |
 | [aishell4@turn-taking-20261014-utts](../../catalog/ts_window_utts.yaml#L115) | 66.9 | 已登记 | 没有 |
 | [aishell4@turn-taking-20261014-utts-punc-20261102](../../catalog/train_punc_v1_derived.yaml#L486) | — | 未登记 | 没有 |
@@ -664,6 +673,7 @@ TAL 英语语音识别数据
 - `aishell4@asr-20261014-punc-20261102`：aishell4@asr-20261014 的 train，目标文本加书面化标点：中文用 amphiondata 的中文学生模型（punc-student-v1，不带听音提示），英文用英文规范 en-v1 的学生模型（加标点并恢复大小写）；标点按字 / 按词搬回原文，原文的字词不变，找不到输出的目标保留原样。其余字段与源版本相同，音频引用源版本
 - `aishell4@diarization-benchmark-v1-20261021`：Frozen local evaluation slice; audio and RTTM bytes copied unchanged. Not a claim of official release equivalence or training disjointness.
 - `aishell4@punc-written-v1-20261029`：aishell4@icefall-20260908 训练集原标注加书面化标点（GB/T 15834，逗号从紧）：微调后的 Qwen3-4B（Qwen3.8-27B 的 9.6 万条输出蒸馏）以 Qwen3-ASR-1.7B 听音频得到的带标点转写作语气提示，只往原标注里插标点。模型改动了原文的条目，把模型输出的标点按字对齐搬回原标注；每条以 。？！ 结尾；原标注的字、空格（首尾除外）和大小写不变。没有汉字的条目（英文句子、拼读字母）和标注为空的条目原样保留。文件与源 supervisions 条数、顺序相同，只换 text。试点 200 条人工参照上：WenetSpeech markF1 92.4、其他来源 88.9（老师 93.2 / 88.2，原 FireRedPunc 79.8）
+- `aishell4@teacher-review-v1-20261010`：AISHELL-4 train（186 场）的老师复核与时间更正（2026-10-10）：本机 MOSS-Transcribe-Diarize 0.9B 和 Qwen3-ASR-1.7B 对整场会议打标，与人工标注逐场对照，估计每场标注相对音频的时间偏移（包络滞后、MOSS 与人工配对偏移、AliMeeting 另有近场对远场 GCC-PHAT 滞后），决定平移或整场排除，并写出更正后的参考标注。train_supervisions_corrected_0：更正后的 train 标注 102254 条（源 102254 条，平移了 0 条的开始时间，去掉 0 条，源里没有的 0 条），Lhotse 格式，字段同源版本；整场排除的会议不从标注里删除，切窗口时按 excluded_meetings 跳过。excluded_meetings：3 场整场排除（1.709 h）及原因。train_supervisions_gap_fills_0：老师补出的 34 条漏标语音（fill / gap / overlap_other，说话人为原标注 ID，custom.diarize 记检查），不可用区间与未采纳片段在 gap_merge_records 的 metadata.gap_merge。moss_records / qwen3_asr_records 是两位教师的整场原始标签（metadata.local_moss / metadata.qwen3_asr）；offsets_records / near_far_lag_records / correction_decision_records 是逐场偏移估计和决定（metadata.time_offset / near_far_lag / correction_decision）；review_example_records 是文字差异等抽样证据。录音沿用 aishell4@icefall-20260908，不复制音频。脚本 scripts/diarization_raw_labels/register_raw_labels.py
 - `aishell4@turn-taking-20261014`：会议 turn-taking。整句拼成 2/3 人混合窗，时长 0.5～30 秒。注册音是窗外另一句，1～30 秒。有近场时远场:近场 = 3:1
 - `aishell4@turn-taking-20261014-utts`：aishell4@turn-taking-20261014 的 train 划分（不含 eval/test），时间线取自 aishell4@icefall-20260908 的 train 人工标注。加 metadata.window_utts（窗口内每句的说话人与相对混合起点的起止，取自来源标注并截到窗口，截断的标 clipped）与同一命名空间的 metadata.target_speaker，供 open-audio-llm 帧级说话人活动标签（objective.ts_activity_weight）；其余字段不变，音频引用改指本版本，音频索引与原版逐行相同。正样本的目标语句与转写逐字一致（忽略空白和标点；窗口边缘截断的句子允许只转写一部分）才写时间线，负样本只有注册人确实不在窗口里说话才写；其余记录不写时间线（不出帧级标签）。负样本中注册人按标注其实在窗口内说话的记录 ID 列在 excluded-records-<split>.txt，训练配方用 exclude_records 排除。生成脚本 audio-data-contract scripts/ts_robust/add_window_utts.py，逐划分统计见 report.json
 - `aishell4@turn-taking-20261014-utts-punc-20261102`：aishell4@turn-taking-20261014-utts 的 train_2spk, train_3spk, train_neg，目标文本加书面化标点：中文用 amphiondata 的中文学生模型（punc-student-v1，不带听音提示），英文用英文规范 en-v1 的学生模型（加标点并恢复大小写）；标点按字 / 按词搬回原文，原文的字词不变，找不到输出的目标保留原样。其余字段与源版本相同，音频引用源版本
@@ -721,7 +731,7 @@ AISHELL-2 混合的目标说话人训练与测试数据
 
 中文远场会议，多人重叠语音（AliMeeting）
 
-语言：zh · 任务：语音识别、连续语音分离、重叠语音检测、带说话人标注的语音识别、说话人分段与归属、目标说话人语音识别
+语言：zh · 任务：语音识别、连续语音分离、diarization、重叠语音检测、带说话人标注的语音识别、说话人分段与归属、目标说话人语音识别
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
@@ -733,6 +743,8 @@ AISHELL-2 混合的目标说话人训练与测试数据
 | [alimeeting_sdm@asr-20261014-punc-20261102](../../catalog/train_punc_v1_derived.yaml#L750) | — | 未登记 | 没有 |
 | [alimeeting_sdm@icefall-20260908](../../catalog/icefall_runtime.yaml#L2839) | 157.9 | 已登记：单远场麦克风标注片段 | 快照 20260914 |
 | [alimeeting_sdm@punc-written-v1-20261029](../../catalog/zh_punc_written_v1.yaml#L473) | 140.6 | 已登记 | 没有 |
+| [alimeeting_sdm@teacher-calibration-v1-20261009](../../catalog/diarization_raw_teacher-calibration.yaml#L97) | — | 未登记 | 没有 |
+| [alimeeting_sdm@teacher-review-v1-20261010](../../catalog/diarization_raw_zh-meeting-review.yaml#L155) | — | 未登记 | 没有 |
 | [alimeeting_sdm@turn-taking-20261014](../../catalog/amphionasr_v4.yaml#L378) | 427.7 | 已登记 | 没有 |
 | [alimeeting_sdm@turn-taking-20261014-utts](../../catalog/ts_window_utts.yaml#L1) | 82.7 | 已登记 | 没有 |
 | [alimeeting_sdm@turn-taking-20261014-utts-punc-20261102](../../catalog/train_punc_v1_derived.yaml#L813) | — | 未登记 | 没有 |
@@ -743,6 +755,8 @@ AISHELL-2 混合的目标说话人训练与测试数据
 - `alimeeting_sdm@asr-20261014-punc-20261102`：alimeeting_sdm@asr-20261014 的 train，目标文本加书面化标点：中文用 amphiondata 的中文学生模型（punc-student-v1，不带听音提示），英文用英文规范 en-v1 的学生模型（加标点并恢复大小写）；标点按字 / 按词搬回原文，原文的字词不变，找不到输出的目标保留原样。其余字段与源版本相同，音频引用源版本
 - `alimeeting_sdm@icefall-20260908`：标注片段时长，重叠语音或多麦克风可能重复计时
 - `alimeeting_sdm@punc-written-v1-20261029`：alimeeting_sdm@icefall-20260908 训练集原标注加书面化标点（GB/T 15834，逗号从紧）：微调后的 Qwen3-4B（Qwen3.8-27B 的 9.6 万条输出蒸馏）以 Qwen3-ASR-1.7B 听音频得到的带标点转写作语气提示，只往原标注里插标点。模型改动了原文的条目，把模型输出的标点按字对齐搬回原标注；每条以 。？！ 结尾；原标注的字、空格（首尾除外）和大小写不变。没有汉字的条目（英文句子、拼读字母）和标注为空的条目原样保留。文件与源 supervisions 条数、顺序相同，只换 text。试点 200 条人工参照上：WenetSpeech markF1 92.4、其他来源 88.9（老师 93.2 / 88.2，原 FireRedPunc 79.8）
+- `alimeeting_sdm@teacher-calibration-v1-20261009`：说话人日志老师校准（2026-10-09）：在有人工标注的 AliMeeting train 远场 ch0 6 条 / 3.34 h 上比较本机 MOSS 0.9B、MOSS Pro、百炼 qwen-audio-3.1-asr-flash 三个老师，并用 Qwen3-ASR 对本机 MOSS 的每个片段做文本校验；付费调用经用户批准，仅用于这次校准。每个 *_records 文件一个老师，每行一条录音，target 是按时间排序的 [说话人][起-止] 文本，教师返回的分块、说话人链接、身份断点留在 metadata.<老师>；teacher_agreement_records 每行一个人工标注片段，metadata.teacher_agreement 记各老师的说话人、边界和字错误率（analysis/segments.jsonl，用于确定多老师一致性过滤门槛）。录音沿用 alimeeting_sdm@icefall-20260908 train_rec_0（只用其中被抽中的录音），不复制音频。脚本 scripts/diarization_raw_labels/register_raw_labels.py
+- `alimeeting_sdm@teacher-review-v1-20261010`：AliMeeting train 远场（209 场）的老师复核与时间更正（2026-10-10）：本机 MOSS-Transcribe-Diarize 0.9B 和 Qwen3-ASR-1.7B 对整场会议打标，与人工标注逐场对照，估计每场标注相对音频的时间偏移（包络滞后、MOSS 与人工配对偏移、AliMeeting 另有近场对远场 GCC-PHAT 滞后），决定平移或整场排除，并写出更正后的参考标注。train_supervisions_corrected_0：更正后的 train 标注 186360 条（源 186360 条，平移了 949 条的开始时间，去掉 0 条，源里没有的 0 条），Lhotse 格式，字段同源版本；整场排除的会议不从标注里删除，切窗口时按 excluded_meetings 跳过。excluded_meetings：36 场整场排除（19.211 h）及原因。train_supervisions_gap_fills_0：老师补出的 79 条漏标语音（fill / gap / overlap_other，说话人为原标注 ID，custom.diarize 记检查），不可用区间与未采纳片段在 gap_merge_records 的 metadata.gap_merge。moss_records / qwen3_asr_records 是两位教师的整场原始标签（metadata.local_moss / metadata.qwen3_asr）；offsets_records / near_far_lag_records / correction_decision_records 是逐场偏移估计和决定（metadata.time_offset / near_far_lag / correction_decision）；review_example_records 是文字差异等抽样证据。录音沿用 alimeeting_sdm@icefall-20260908，不复制音频。脚本 scripts/diarization_raw_labels/register_raw_labels.py
 - `alimeeting_sdm@turn-taking-20261014`：会议 turn-taking。整句拼成 2/3 人混合窗，时长 0.5～30 秒。注册音是窗外另一句，1～30 秒。有近场时远场:近场 = 3:1
 - `alimeeting_sdm@turn-taking-20261014-utts`：alimeeting_sdm@turn-taking-20261014 的 train 划分（不含 eval/test），时间线取自 alimeeting_sdm@icefall-20260908 的 train 人工标注。加 metadata.window_utts（窗口内每句的说话人与相对混合起点的起止，取自来源标注并截到窗口，截断的标 clipped）与同一命名空间的 metadata.target_speaker，供 open-audio-llm 帧级说话人活动标签（objective.ts_activity_weight）；其余字段不变，音频引用改指本版本，音频索引与原版逐行相同。正样本的目标语句与转写逐字一致（忽略空白和标点；窗口边缘截断的句子允许只转写一部分）才写时间线，负样本只有注册人确实不在窗口里说话才写；其余记录不写时间线（不出帧级标签）。负样本中注册人按标注其实在窗口内说话的记录 ID 列在 excluded-records-<split>.txt，训练配方用 exclude_records 排除。生成脚本 audio-data-contract scripts/ts_robust/add_window_utts.py，逐划分统计见 report.json
 - `alimeeting_sdm@turn-taking-20261014-utts-punc-20261102`：alimeeting_sdm@turn-taking-20261014-utts 的 train_2spk, train_3spk, train_neg，目标文本加书面化标点：中文用 amphiondata 的中文学生模型（punc-student-v1，不带听音提示），英文用英文规范 en-v1 的学生模型（加标点并恢复大小写）；标点按字 / 按词搬回原文，原文的字词不变，找不到输出的目标保留原样。其余字段与源版本相同，音频引用源版本
@@ -940,11 +954,15 @@ Emilia2 中文对话的说话人日志伪标签
 | [emilia2_zh_dialogue_diarize@moss-transcribe-diarize-0.9B-m4a64k](../../catalog/emilia2_zh_dialogue_diarize.yaml#L304) | — | 未登记 | 没有 |
 | [emilia2_zh_dialogue_diarize@moss-transcribe-diarize-0.9B-pro4plus-sim06](../../catalog/emilia2_zh_dialogue_diarize.yaml#L201) | — | 未登记 | 没有 |
 | [emilia2_zh_dialogue_diarize@similar-voice-v1-20261014](../../catalog/similar_voice.yaml#L696) | — | 未登记 | 没有 |
+| [emilia2_zh_dialogue_diarize@teacher-labels-v1-20261010](../../catalog/diarization_raw_emilia2-128k.yaml#L2) | — | 未登记 | 没有 |
+| [emilia2_zh_dialogue_diarize@teacher-labels-v1-20261015](../../catalog/diarization_raw_emilia2-64k.yaml#L2) | — | 未登记 | 没有 |
 
 - `emilia2_zh_dialogue_diarize@hotwords-qwen3.8-flash-m4a64k-v1`：对 emilia2_zh_dialogue_diarize@moss-transcribe-diarize-0.9B-m4a64k 窗口合并后的每句转写， 用通用大模型抽取热词（人名、地名、机构、专有名词），每次 20 句、按录音内相邻句分组， 结果逐句写回；经规则过滤（单字、纯英文碎片、常见国名、长于 12 字）。 前后两段用了不同模型：b000–b020（1,710,408 句）用阿里 qwen3.8-flash；阿里账号欠费后， b021–b046（2,084,494 句）改用火山 doubao-seed-2-1-turbo-260628，提示词相同。 在 300 句开发集上 doubao 精确率 0.79、召回 0.70，qwen3.8-flash 为 0.87、0.74（参照由 qwen 输出生成，偏向 qwen）； 有热词的句子占比 qwen 段 20.9%、doubao 段 18.1%。文件里不区分行来自哪个模型，按批次号区分。 hotwords.jsonl.gz 每行 {id, hotwords}，id 对应窗口合并 supervisions 的句 id；842 句未标（hotwords 缺失）， 其中 234 句是 qwen 段内容审核拒绝，608 句是 doubao 段重试后仍失败。 句级旁路文件，按窗口使用时需同时排除 speaker_merge 窗口
 - `emilia2_zh_dialogue_diarize@moss-transcribe-diarize-0.9B-m4a64k`：Emilia2 解包数据中 m4a-64k 子集的中文对话（≥120 秒，源 46,615 条 / 3,895 h）的说话人日志伪标签； moss-transcribe-diarize-0.9B 版本只覆盖 m4a-128k 子集，两者录音不重叠，可以一起用。 流程与该版本相同：本地 MOSS-Transcribe-Diarize 0.9B 粗筛（≥2 人且每人 ≥5 秒，保留 43,877 条 / 3,720.4 h）并整条打说话人和文本； 在停顿处切成 30–120 秒窗口（149,199 个 / 3,715.4 h），按窗口整体保留或丢弃：Qwen3-ASR 整窗识别，文字差异 ≤ 15%（不计重叠处，丢 48.8 h）； 与 Emilia2 自带的带时间短句比对说话人，上游同一人被拆到其他编号的比例 ≤ 0.2（丢 45.0 h）；120 秒内无停顿等其他原因丢 19.4 h， 剩 144,774 个 / 3,602.0 h。规则和门槛沿用 128k 版本的校准与听审结论，没有重新校准（同一来源、同类节目，只是码率不同）。 与 128k 版本不同，被并人检查标记的窗口（一个 MOSS 说话人覆盖两个及以上 Emilia2 原始说话人）导出时已经剔除， 共 6,130 个 / 161.1 h，各说话人数档丢 3.0–6.5%；训练不需要再排除。 音频引用解包后转成的 16 kHz 单声道 FLAC（完整解码 m4a，不补零不截断），记录按 cut_id + start/duration 引用，不需要 ffmpeg。 约 3.3% 的记录最后一句的结束时间比音频末尾晚（MOSS 时间戳），几乎都在 0.1 秒以内，最多的两条晚 0.8 秒和 9.9 秒；128k 版本也有同样现象。 已知局限：约 10.7% 的窗口只有一个说话人；有声剧、短剧中一人配多角时 MOSS 可能按角色拆成多个说话人。 与 emilia2@tts-unified-v0.1 同源，可按 recording_id 对应；如需留验证/测试集，请两边一起排除
 - `emilia2_zh_dialogue_diarize@moss-transcribe-diarize-0.9B-pro4plus-sim06`：替代 moss-transcribe-diarize-0.9B-pro4plus：同一批录音、同样的 30–120 秒窗口，两个版本不要一起用。 我们的模型和 MOSS 的差距主要在声音相近时把话归错人（AliMeeting dev 高相似窗口归错 3.3% 对 0.3%）， 因此把上一版本中仍是本地 0.9B 标注、2–3 个说话人、两个最像的说话人声纹余弦 ≥ 0.6 的 10,721 个窗口 / 277.8 h （用户 2026-10-28 批准付费）按窗口片段送 MOSS Pro（moss-transcribe-diarize-pro）重标，再过同样的整窗文字核对 （Qwen3-ASR，CER ≤ 15%，不计重叠）和说话人检查（Emilia2 自带短句，split ≤ 0.2）：10,396 个换成 Pro 标注； 225 个未通过而丢弃；100 个 Pro 没有结果（安全策略拒绝），沿用本地标注。 并人窗口按最终标注重算后剔除，共 11,427 个 / 314.0 h（本地标注 8,813 个，与上一版本相同；Pro 标注 2,614 个，比上一版本多 272 个，都来自这次重标）。 结果 209,319 条 / 5470.1 h，其中 Pro 标注 35,544 条 / 944.2 h（上一版本 25,420 条 / 682.6 h）。 训练排除名单（train_120s-training-exclusion）只剩 515 条：仍是本地标注的 ≥4 人窗口和 0.80 拆人嫌疑窗口；上一版本同规则的名单是 1,850 条。 记录里不区分标注来源，逐窗口的来源（labels_from）在运行目录 export/window-merge-v7/。 音频与上一版本相同（16 kHz 单声道 FLAC，按 cut_id + start/duration 引用，不需要 ffmpeg）。 已知局限同上一版本：约 17% 的窗口只有一个说话人；有声剧、短剧中一人配多角时可能按角色拆成多个说话人。 与 emilia2@tts-unified-v0.1 同源，可按 recording_id 对应；如需留验证/测试集，请两边一起排除
 - `emilia2_zh_dialogue_diarize@similar-voice-v1-20261014`：Emilia2 中文多人对话说话人日志伪标签的“音色相近”子集：先剔除源版本训练排除名单 train_120s-speaker-merge-excluded-records.txt （10,766 个 MOSS 把两人并成一人的窗口），其余窗口按最相近两位说话人的 ERes2NetV2 声纹余弦相似度取前 1/3。每人取不与他人重叠的语音（片段 ≥0.3 秒，合计 ≥1.5 秒，最多 10 秒）；少于两个有声纹说话人的窗口（含单人窗口）不入选。标注不改，记录逐行照抄源版本，音频仍指向源版本（解包 m4a，读取需要 ffmpeg）。用途：下一轮训练额外加采相近音色的窗口
+- `emilia2_zh_dialogue_diarize@teacher-labels-v1-20261010`：Emilia2 中文多人对话（m4a-128k 子集，zh、≥120 秒，78,994 条 / 8,097 h）说话人日志流水线的全部教师原始标签和窗口核对结果，是 moss-transcribe-diarize-0.9B / -pro4plus / -pro4plus-sim06 三个训练版本的上游，本身不是训练集。local_moss_records：本机 MOSS-Transcribe-Diarize 0.9B 整条标注，78,994 条录音（其中 78,994 条成功），每行 metadata.local_moss 含分块、说话人链接和身份断点；qwen3_asr_records：Qwen3-ASR 对本地 MOSS 片段的逐段转写（32,279 条录音，只做了前几批）；merge_local_records：第一版逐片段文字核对的合并结果（31,658 条录音，metadata.merge_local 含 usable / excluded 片段和各项检查，同批的 supervisions.jsonl.gz 与 excluded.jsonl.gz 是它的逐行拆分，已逐批核对一致，没有重复登记）；moss_pro_recording_records：MOSS Pro 对前 4 批的整条标注（积分用完中断，1293 条成功）；pro4plus_records（27,811 个窗口片段，≥4 人窗口）、prosim06_records（10,721 个，2–3 人且声纹相似 ≥0.6，metadata.selection 记人数和相似度）、pro_audit_records（1,500 个随机抽样窗口）是 MOSS Pro 对窗口片段的标注，时间相对窗口起点，audio_slots 带窗口的 start/duration；window_check_records：最终窗口核对结果（232,534 个窗口，kept = 通过，reasons = 拒绝原因，cer / speaker_split，primary_text 和 Qwen3-ASR 的 check_text，labels_from 标明本地 0.9B 还是 Pro），是 sim06 版本的上一层，含被拒窗口。audio_slots 指向 emilia2_zh_dialogue_diarize@moss-transcribe-diarize-0.9B 的 train_120s 音频索引（FLAC 16 kHz），其中只有通过粗筛并切出窗口的 53,965 条录音有音频文件，其余录音只剩标签。未登记：逐块原始响应 raw/（标签文件已含全部分段）、window-plan 与中间窗口核对版本 v1–v6（可由最终版本和标签重算）、listen-review。脚本 scripts/diarization_raw_labels/register_raw_labels.py
+- `emilia2_zh_dialogue_diarize@teacher-labels-v1-20261015`：Emilia2 m4a-64k 中文对话（≥120 秒，46,615 条 / 3,895 h）的本机 MOSS-Transcribe-Diarize 0.9B 原始整条标签和窗口核对结果，是 moss-transcribe-diarize-0.9B-m4a64k 训练版本的上游，本身不是训练集。local_moss_records：46,615 条录音（成功 46,615），metadata.local_moss 含分块、说话人链接和身份断点；window_check_records：窗口核对结果 149,199 个（通过 144,774，拒绝 4,425），含被拒窗口及原因、Qwen3-ASR 整窗文字 check_text、字错误率和说话人拆分比例。audio_slots 指向 emilia2_zh_dialogue_diarize@moss-transcribe-diarize-0.9B-m4a64k 的音频索引（FLAC 16 kHz），只有切出窗口的录音有音频文件。未登记：逐块原始响应 raw/、Qwen3-ASR 窗口原始响应（文字已在 check_text）、window-plan、upstream-shorts（Emilia2 自带短句，来源数据的抽取，不是标签）、backup-m4a-paths（m4a 路径备份，不是标签）。脚本 scripts/diarization_raw_labels/register_raw_labels.py
 - 已并入的旧版本：`emilia2_zh_dialogue_diarize@moss-transcribe-diarize-0.9B-pro4plus`（COS：没有）
 
 ### emilia2_zh_overlap_farsim
@@ -1106,7 +1124,7 @@ GRPO 热词挖掘候选（未背过的中文热词提示，含近音易混词）
 
 中文手机通话自然对话（MagicData-RAMC）
 
-语言：zh · 任务：语音识别、说话人分段与归属、目标说话人语音识别
+语言：zh · 任务：语音识别、diarization、带说话人标注的语音识别、说话人分段与归属、目标说话人语音识别
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
@@ -1114,9 +1132,11 @@ GRPO 热词挖掘候选（未背过的中文热词提示，含近音易混词）
 | [magicdata_ramc@clean-dual-pass-20261027](../../catalog/magicdata_ramc_clean_pass.yaml#L1) | 125.0 | 已登记 | 没有 |
 | [magicdata_ramc@clean-dual-qwen-moss-v1-20261008](../../catalog/zh_source_clean.yaml#L663) | 125.0 | 已登记 | 没有 |
 | [magicdata_ramc@diarization-benchmark-v1-20261021](../../catalog/diarization_benchmark.yaml#L275) | 20.6 | 已登记 | 没有 |
+| [magicdata_ramc@gap-labels-v1-20261009](../../catalog/diarization_raw_ramc-gap.yaml#L2) | — | 未登记 | 没有 |
 | [magicdata_ramc@icefall-20260908](../../catalog/icefall_runtime.yaml#L1437) | 150.7 | 已登记 | 快照 20260914 |
 | [magicdata_ramc@legacy-20260804](../../catalog/icefall_base.yaml#L1085) | 150.7 | 已登记 | 快照 20260914 |
 | [magicdata_ramc@punc-written-v1-20261029](../../catalog/zh_punc_written_v1.yaml#L213) | 125.5 | 已登记 | 没有 |
+| [magicdata_ramc@teacher-calibration-v1-20261009](../../catalog/diarization_raw_teacher-calibration.yaml#L2) | — | 未登记 | 没有 |
 | [magicdata_ramc@train-punc-v1-20261102](../../catalog/train_punc_v1.yaml#L143) | — | 未登记 | 没有 |
 | [magicdata_ramc@turn-taking-20261014](../../catalog/amphionasr_v4.yaml#L2863) | 403.5 | 已登记 | 没有 |
 | [magicdata_ramc@turn-taking-20261014-utts](../../catalog/ts_window_utts.yaml#L341) | 41.5 | 已登记 | 没有 |
@@ -1126,7 +1146,9 @@ GRPO 热词挖掘候选（未背过的中文热词提示，含近音易混词）
 - `magicdata_ramc@clean-dual-pass-20261027`：magicdata_ramc@clean-dual-qwen-moss-v1-20261008 训练集（MagicData-RAMC 电话对话）里清洗标记 custom.clean.pass=true 的分段，共 166711 条 / 125.0 小时（源 168464 条，去掉未通过的 1753 条）；每行原样保留，包括 custom.clean，只用无标点文本。录音清单沿用源版本（与 icefall-20260908 共用），不复制音频；保留所有说话人，留出测试 / 验证集说话人由读取方决定。用途：带 Lance 记录索引的 clean-only 版本，供 RAMC 目标说话人场景池（build_ts_scene_pool.py --ramc）按说话人取句；recipe_parameters.clean_pass_only 声明每行都已通过。脚本 scripts/ramc_clean_pass.py
 - `magicdata_ramc@clean-dual-qwen-moss-v1-20261008`：magicdata_ramc@icefall-20260908 的 train 监督片段，经 Qwen3-ASR-1.7B 与 MOSS-Transcribe-Diarize 双引擎一致性清洗；逐条写入 custom.clean（pass、reason、action、engine_status），不删除记录，读取时按 require_clean_pass 过滤。音频沿用源版本，不复制。规则 consensus-v6 / wenetspeech-faithful-v5：pass 166711、reject 1753。少于 2 个字的 too_short 共 16573 条按规则不经引擎直接 pass。用于合成时建议在 pass 之外再要求：两引擎均有效、MOSS 只输出 1 个说话人、action 不是 review_consensus；too_short 另要求两引擎规范化后与原文完全一致。按此筛选保留 122956 条、88.85 小时（too_short 通过 10332/16573）
 - `magicdata_ramc@diarization-benchmark-v1-20261021`：Frozen local evaluation slice; audio and RTTM bytes copied unchanged. Not a claim of official release equivalence or training disjointness.
+- `magicdata_ramc@gap-labels-v1-20261009`：MagicData-RAMC train（289 段对话 / 149.65 h）原标注漏标语音的补全标注，原标注不改。2026-10-09 用本机 MOSS-Transcribe-Diarize 0.9B 整段打说话人（540 s 切块、120 s 重叠），Qwen3-ASR-1.7B 只转写可能新增语音的片段，再对照原标注合并（文字错误率 ≤ 10%）。train_supervisions_gap_fills_0：5304 条可用补全（1.2232 h，Lhotse supervision，说话人为原标注 ID，custom.diarize 记类别 fill / gap / overlap_other 和一致性检查），只含补全，不含原标注；11806 个不可用区间（4.0447 h，切窗口时应掩蔽）和未采纳的重叠记录在 gap_merge_cer10_records 的 metadata.gap_merge。moss_records / qwen3_asr_records 是两位教师的整段原始标签（每行一段对话，metadata.local_moss / metadata.qwen3_asr）。更宽松门槛的 merge/ 结果（5,484 条）可由 gap_merge_cer10_records 里保留的逐片段 cer 重算，没有单独登记。录音沿用 magicdata_ramc@legacy-20260804 train_rec_0，不复制音频。脚本 scripts/diarization_raw_labels/register_raw_labels.py
 - `magicdata_ramc@punc-written-v1-20261029`：magicdata_ramc@icefall-20260908 训练集原标注加书面化标点（GB/T 15834，逗号从紧）：微调后的 Qwen3-4B（Qwen3.8-27B 的 9.6 万条输出蒸馏）以 Qwen3-ASR-1.7B 听音频得到的带标点转写作语气提示，只往原标注里插标点。模型改动了原文的条目，把模型输出的标点按字对齐搬回原标注；每条以 。？！ 结尾；原标注的字、空格（首尾除外）和大小写不变。没有汉字的条目（英文句子、拼读字母）和标注为空的条目原样保留。文件与源 supervisions 条数、顺序相同，只换 text。试点 200 条人工参照上：WenetSpeech markF1 92.4、其他来源 88.9（老师 93.2 / 88.2，原 FireRedPunc 79.8）。原标注约一半条目带部分标点，按新规范重加
+- `magicdata_ramc@teacher-calibration-v1-20261009`：说话人日志老师校准（2026-10-09）：在有人工标注的 RAMC train 6 条 / 3.17 h 上比较本机 MOSS 0.9B、MOSS Pro、百炼 qwen-audio-3.1-asr-flash 三个老师，并用 Qwen3-ASR 对本机 MOSS 的每个片段做文本校验；付费调用经用户批准，仅用于这次校准。每个 *_records 文件一个老师，每行一条录音，target 是按时间排序的 [说话人][起-止] 文本，教师返回的分块、说话人链接、身份断点留在 metadata.<老师>；teacher_agreement_records 每行一个人工标注片段，metadata.teacher_agreement 记各老师的说话人、边界和字错误率（analysis/segments.jsonl，用于确定多老师一致性过滤门槛）。录音沿用 magicdata_ramc@legacy-20260804 train_rec_0（只用其中被抽中的录音），不复制音频。脚本 scripts/diarization_raw_labels/register_raw_labels.py
 - `magicdata_ramc@train-punc-v1-20261102`：magicdata_ramc@clean-dual-qwen-moss-v1-20261008 的 train 训练版本，目标文本换成带标点的写法（按 id 取自 datasets/magicdata_ramc/versions/punc-written-v1-20261029/magicdata_ramc_supervisions_train_punc_written.jsonl.gz；去掉标点和空格、转小写后与原文一致才替换，否则保留原文）。其余字段与源版本相同，录音引用源版本
 - `magicdata_ramc@turn-taking-20261014`：会议 turn-taking。整句拼成 2/3 人混合窗，时长 0.5～30 秒。注册音是窗外另一句，1～30 秒。有近场时远场:近场 = 3:1
 - `magicdata_ramc@turn-taking-20261014-utts`：magicdata_ramc@turn-taking-20261014 的 train 划分（不含 eval/test），时间线取自 magicdata_ramc@icefall-20260908 的 train 人工标注。加 metadata.window_utts（窗口内每句的说话人与相对混合起点的起止，取自来源标注并截到窗口，截断的标 clipped）与同一命名空间的 metadata.target_speaker，供 open-audio-llm 帧级说话人活动标签（objective.ts_activity_weight）；其余字段不变，音频引用改指本版本，音频索引与原版逐行相同。正样本的目标语句与转写逐字一致（忽略空白和标点；窗口边缘截断的句子允许只转写一部分）才写时间线，负样本只有注册人确实不在窗口里说话才写；其余记录不写时间线（不出帧级标签）。负样本中注册人按标注其实在窗口内说话的记录 ID 列在 excluded-records-<split>.txt，训练配方用 exclude_records 排除。生成脚本 audio-data-contract scripts/ts_robust/add_window_utts.py，逐划分统计见 report.json
@@ -1514,8 +1536,10 @@ WenetSpeech 长音频的说话人日志伪标签
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
 | [wenetspeech_diarize@moss-transcribe-diarize-0.9B](../../catalog/wenetspeech_diarize.yaml#L2) | — | 未登记 | 没有 |
+| [wenetspeech_diarize@teacher-labels-v1-20261012](../../catalog/diarization_raw_wenetspeech-l.yaml#L2) | — | 未登记 | 没有 |
 
 - `wenetspeech_diarize@moss-transcribe-diarize-0.9B`：WenetSpeech L 训练集原始长音频（≥120 秒，51,358 条 / 22,174 h）的说话人日志伪标签： 沿用 emilia2_zh_dialogue_diarize 的流程，本地 MOSS-Transcribe-Diarize 0.9B 整条打说话人和文本， 粗筛多人录音，在停顿处切 30–120 秒窗口，Qwen3-ASR 整窗核对；门槛先在试跑集上以 MOSS Pro 为参照重新确定。 2026-10-14 停止全量打标：保留 b000–b040 共 41 批（共 52 批）的整条打标与粗筛结果， Qwen3-ASR 整窗核对只做到 30 批。不转正、不进训练，不发布为可用训练版本； 是否改为定向打标（声纹筛选音色相近的多人录音）看音色相近数据的效果再定
+- `wenetspeech_diarize@teacher-labels-v1-20261012`：占位登记，未完成，不转正、不进训练：WenetSpeech L 长音频（≥120 秒，51,358 条 / 22,174 h）的说话人日志伪标签。2026-10-14 用户决定停止全量打标，只保留前 41 批（共 52 批）的整条本机 MOSS-Transcribe-Diarize 0.9B 标注和粗筛结果，Qwen3-ASR 整窗核对 b000–b040 都做完，但不并入训练、不发布为可用训练版本；是否改为定向打标要看音色相近数据的效果再定。train_supervisions_windows_0：通过整窗核对的 398,633 个窗口（11,275 h）的片段，共 12,640,449 条 Lhotse supervision，说话人为 <录音>#S<编号>，custom.window_check 记窗口和字错误率；window_check_records：全部 454,358 个窗口的核对结果（含被拒窗口和原因、Qwen3-ASR 的 check_text）；local_moss_records：41,000 条录音的整条标注；qwen3_asr_window_records：Qwen3-ASR 整窗识别；pilot_*：试跑 100 条录音的本地标注和 MOSS Pro 对 300 个窗口片段的标注（用于定门槛）。已知局限：WenetSpeech 没有带说话人的上游标注，做不了说话人检查；试跑中好窗口比例 71%，不合格窗口多半是说话人分错，文字核对管不住。录音沿用 wenetspeech@legacy-20260804 train_rec_0。未登记：逐块原始响应 raw/、window-plan、远端对齐检查 remote-compare。脚本 scripts/diarization_raw_labels/register_raw_labels.py
 
 ### wenetspeech_disfluency
 

@@ -1,0 +1,86 @@
+# Emilia2 m4a-128k 中文对话说话人日志流水线的全部教师原始标签和窗口核对结果（上游中间产物，不进训练）（血缘声明）
+  - schema_version: dataset-view/1.0
+    view_id: emilia2_zh_dialogue_diarize/teacher-labels
+    version: teacher-labels-v1-20261010
+    source:
+      dataset_id: emilia2_zh_dialogue_diarize
+      version: moss-transcribe-diarize-0.9B
+    result:
+      dataset_id: emilia2_zh_dialogue_diarize
+      version: teacher-labels-v1-20261010
+    materialization: full
+    lineage_status: exact
+    transforms:
+      - name: local-moss-diarize
+        version: v1-20261010
+        kind: annotate
+        writes:
+          - target
+          - metadata.local_moss
+        parameters:
+          model: MOSS-Transcribe-Diarize 0.9B
+          backend:
+            name: local-moss
+            type: local_moss
+            model: MOSS-Transcribe-Diarize
+            url: http://127.0.0.1:18102/v1
+            max_chunk_seconds: 540.0
+            chunk_overlap_seconds: 120.0
+            request_args:
+              temperature: 0.0
+          recordings: 78994
+      - name: qwen3-asr-segment-check
+        version: v1-20261011
+        kind: annotate
+        writes:
+          - metadata.qwen3_asr
+          - metadata.merge_local
+        parameters:
+          model: Qwen3-ASR-1.7B
+          backend:
+            name: qwen3-asr
+            type: qwen3_asr
+            model: Qwen3-ASR-1.7B
+            url: http://127.0.0.1:18101/v1
+            max_chunk_seconds: 540.0
+            chunk_overlap_seconds: 30.0
+            request_args:
+              to_language: zh
+              temperature: 0.0
+              repetition_penalty: 1.1
+          rule: per-segment text check, superseded by the window check
+      - name: moss-pro-relabel
+        version: v1-20261012
+        kind: annotate
+        writes:
+          - metadata.moss_pro
+        parameters:
+          model: moss-transcribe-diarize-pro
+          backend:
+            name: moss-pro
+            type: moss_pro
+            model: moss-transcribe-diarize-pro
+            url: https://api.mosi.cn/v1
+            max_chunk_seconds: 1800.0
+            chunk_overlap_seconds: 120.0
+            request_args: {}
+          selection: 'pro4plus: kept windows with >= 4 local speakers; prosim06: kept 2-3 speaker windows with max ERes2NetV2 cosine >= 0.6; pro-audit: 1,500 random windows'
+          tool: amphiondata scripts merge_pro4plus.py / merge_prosim06.py
+      - name: window-check
+        version: v1-20261028
+        kind: annotate
+        writes:
+          - metadata.window_check
+          - $membership
+        parameters:
+          window_seconds:
+            - 30
+            - 120
+          max_text_cer: 15
+          max_speaker_split: 0.2
+          text_check_model: Qwen3-ASR
+          windows: 232534
+          kept: 209319
+          rejected: 23215
+    provenance:
+      registered_at: '2026-11-03'

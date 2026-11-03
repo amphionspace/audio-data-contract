@@ -1,0 +1,277 @@
+# 说话人日志老师校准：三个老师和 Qwen3-ASR 在 RAMC、AliMeeting、NOTSOFAR 样本上的标签与逐片段对比（血缘声明）
+  - schema_version: dataset-view/1.0
+    view_id: magicdata_ramc/teacher-calibration
+    version: teacher-calibration-v1-20261009
+    source:
+      dataset_id: magicdata_ramc
+      version: legacy-20260804
+    result:
+      dataset_id: magicdata_ramc
+      version: teacher-calibration-v1-20261009
+    materialization: full
+    lineage_status: exact
+    transforms:
+      - name: local_moss-label
+        version: v1-20261009
+        kind: annotate
+        writes:
+          - metadata.local_moss
+        parameters:
+          backend:
+            name: local-moss
+            type: local_moss
+            model: MOSS-Transcribe-Diarize
+            url: http://127.0.0.1:18102/v1
+            max_chunk_seconds: 540.0
+            chunk_overlap_seconds: 120.0
+            request_args:
+              temperature: 0.0
+          teacher: 本机 MOSS-Transcribe-Diarize 0.9B
+      - name: moss_pro-label
+        version: v1-20261009
+        kind: annotate
+        writes:
+          - metadata.moss_pro
+        parameters:
+          backend:
+            name: moss-pro
+            type: moss_pro
+            model: moss-transcribe-diarize-pro
+            url: https://api.mosi.cn/v1
+            max_chunk_seconds: 1800.0
+            chunk_overlap_seconds: 120.0
+            request_args: {}
+          teacher: MOSS Pro（moss-transcribe-diarize-pro）
+      - name: bailian-label
+        version: v1-20261009
+        kind: annotate
+        writes:
+          - metadata.bailian
+        parameters:
+          backend:
+            name: ali
+            type: ali
+            model: qwen-audio-3.1-asr-flash
+            url: https://dashscope.aliyuncs.com/api/v1/services/aigc/multimodal-generation/generation
+            max_chunk_seconds: 300.0
+            chunk_overlap_seconds: 60.0
+            request_args: {}
+          teacher: 百炼 qwen-audio-3.1-asr-flash
+      - name: qwen3_asr-label
+        version: v1-20261009
+        kind: annotate
+        writes:
+          - metadata.qwen3_asr
+        parameters:
+          backend:
+            name: qwen3-asr
+            type: qwen3_asr
+            model: Qwen3-ASR-1.7B
+            url: http://127.0.0.1:18101/v1
+            max_chunk_seconds: 540.0
+            chunk_overlap_seconds: 30.0
+            request_args:
+              to_language: zh
+              temperature: 0.0
+              repetition_penalty: 1.1
+          teacher: Qwen3-ASR-1.7B 对本机 MOSS 片段的文本校验
+      - name: teacher-agreement
+        version: v1-20261009
+        kind: annotate
+        writes:
+          - metadata.teacher_agreement
+        parameters:
+          rule: 'per human-labelled segment: speaker_ok, boundary error and CER of each teacher against the human reference; tool amphiondata diarize analyze (scripts/analyze.py)'
+          segments: 3231
+    provenance:
+      registered_at: '2026-11-03'
+  - schema_version: dataset-view/1.0
+    view_id: alimeeting_sdm/teacher-calibration
+    version: teacher-calibration-v1-20261009
+    source:
+      dataset_id: alimeeting_sdm
+      version: icefall-20260908
+    result:
+      dataset_id: alimeeting_sdm
+      version: teacher-calibration-v1-20261009
+    materialization: full
+    lineage_status: exact
+    transforms:
+      - name: local_moss-label
+        version: v1-20261009
+        kind: annotate
+        writes:
+          - metadata.local_moss
+        parameters:
+          backend:
+            name: local-moss
+            type: local_moss
+            model: MOSS-Transcribe-Diarize
+            url: http://127.0.0.1:18102/v1
+            max_chunk_seconds: 540.0
+            chunk_overlap_seconds: 120.0
+            request_args:
+              temperature: 0.0
+          teacher: 本机 MOSS-Transcribe-Diarize 0.9B
+      - name: moss_pro-label
+        version: v1-20261009
+        kind: annotate
+        writes:
+          - metadata.moss_pro
+        parameters:
+          backend:
+            name: moss-pro
+            type: moss_pro
+            model: moss-transcribe-diarize-pro
+            url: https://api.mosi.cn/v1
+            max_chunk_seconds: 1800.0
+            chunk_overlap_seconds: 120.0
+            request_args: {}
+          teacher: MOSS Pro（moss-transcribe-diarize-pro）
+      - name: bailian-label
+        version: v1-20261009
+        kind: annotate
+        writes:
+          - metadata.bailian
+        parameters:
+          backend:
+            name: ali
+            type: ali
+            model: qwen-audio-3.1-asr-flash
+            url: https://dashscope.aliyuncs.com/api/v1/services/aigc/multimodal-generation/generation
+            max_chunk_seconds: 300.0
+            chunk_overlap_seconds: 60.0
+            request_args: {}
+          teacher: 百炼 qwen-audio-3.1-asr-flash
+      - name: qwen3_asr-label
+        version: v1-20261009
+        kind: annotate
+        writes:
+          - metadata.qwen3_asr
+        parameters:
+          backend:
+            name: qwen3-asr
+            type: qwen3_asr
+            model: Qwen3-ASR-1.7B
+            url: http://127.0.0.1:18101/v1
+            max_chunk_seconds: 540.0
+            chunk_overlap_seconds: 30.0
+            request_args:
+              to_language: zh
+              temperature: 0.0
+              repetition_penalty: 1.1
+          teacher: Qwen3-ASR-1.7B 对本机 MOSS 片段的文本校验
+      - name: teacher-agreement
+        version: v1-20261009
+        kind: annotate
+        writes:
+          - metadata.teacher_agreement
+        parameters:
+          rule: 'per human-labelled segment: speaker_ok, boundary error and CER of each teacher against the human reference; tool amphiondata diarize analyze (scripts/analyze.py)'
+          segments: 4716
+    provenance:
+      registered_at: '2026-11-03'
+  - schema_version: dataset-view/1.0
+    view_id: notsofar_sdm/teacher-calibration
+    version: teacher-calibration-v1-20261009
+    source:
+      dataset_id: notsofar_sdm
+      version: icefall-20260908
+    result:
+      dataset_id: notsofar_sdm
+      version: teacher-calibration-v1-20261009
+    materialization: full
+    lineage_status: exact
+    transforms:
+      - name: local_moss-label
+        version: v1-20261009
+        kind: annotate
+        writes:
+          - metadata.local_moss
+        parameters:
+          backend:
+            name: local-moss
+            type: local_moss
+            model: MOSS-Transcribe-Diarize
+            url: http://127.0.0.1:18102/v1
+            max_chunk_seconds: 540.0
+            chunk_overlap_seconds: 120.0
+            request_args:
+              temperature: 0.0
+          teacher: 本机 MOSS-Transcribe-Diarize 0.9B
+      - name: moss_pro-label
+        version: v1-20261009
+        kind: annotate
+        writes:
+          - metadata.moss_pro
+        parameters:
+          backend:
+            name: moss-pro
+            type: moss_pro
+            model: moss-transcribe-diarize-pro
+            url: https://api.mosi.cn/v1
+            max_chunk_seconds: 1800.0
+            chunk_overlap_seconds: 120.0
+            request_args: {}
+          teacher: MOSS Pro（moss-transcribe-diarize-pro）
+      - name: bailian-label
+        version: v1-20261009
+        kind: annotate
+        writes:
+          - metadata.bailian
+        parameters:
+          backend:
+            name: ali
+            type: ali
+            model: qwen-audio-3.1-asr-flash
+            url: https://dashscope.aliyuncs.com/api/v1/services/aigc/multimodal-generation/generation
+            max_chunk_seconds: 300.0
+            chunk_overlap_seconds: 60.0
+            request_args: {}
+          teacher: 百炼 qwen-audio-3.1-asr-flash
+      - name: qwen3_asr-label
+        version: v1-20261009
+        kind: annotate
+        writes:
+          - metadata.qwen3_asr
+        parameters:
+          backend:
+            name: qwen3-asr
+            type: qwen3_asr
+            model: Qwen3-ASR-1.7B
+            url: http://127.0.0.1:18101/v1
+            max_chunk_seconds: 540.0
+            chunk_overlap_seconds: 30.0
+            request_args:
+              to_language: zh
+              temperature: 0.0
+              repetition_penalty: 1.1
+          teacher: Qwen3-ASR-1.7B 对本机 MOSS 片段的文本校验
+      - name: qwen3_asr_en-label
+        version: v1-20261009
+        kind: annotate
+        writes:
+          - metadata.qwen3_asr_en
+        parameters:
+          backend:
+            name: qwen3-asr-en
+            type: qwen3_asr
+            model: Qwen3-ASR-1.7B
+            url: http://127.0.0.1:18101/v1
+            max_chunk_seconds: 540.0
+            chunk_overlap_seconds: 30.0
+            request_args:
+              to_language: en
+              temperature: 0.0
+              repetition_penalty: 1.1
+          teacher: Qwen3-ASR-1.7B（to_language=en，NOTSOFAR 更正版）
+      - name: teacher-agreement
+        version: v1-20261009
+        kind: annotate
+        writes:
+          - metadata.teacher_agreement
+        parameters:
+          rule: 'per human-labelled segment: speaker_ok, boundary error and CER of each teacher against the human reference; tool amphiondata diarize analyze (scripts/analyze.py)'
+          segments: 8045
+    provenance:
+      registered_at: '2026-11-03'

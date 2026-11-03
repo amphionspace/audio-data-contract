@@ -1,0 +1,88 @@
+# MagicData-RAMC train 漏标补全：两位教师的整段标签、补全 supervisions 和不可用区间（数据声明）
+  - schema_version: dataset-catalog/2.0
+    dataset_id: magicdata_ramc
+    version: gap-labels-v1-20261009
+    languages:
+      - zh
+    tasks:
+      - diarization
+      - speaker_attributed_asr
+    aliases: []
+    artifacts:
+      - name: train_rec_0
+        kind: lhotse-recordings
+        root_alias: aidc_data
+        relative_path: datasets/magicdata_ramc/versions/legacy-20260804/train_rec_0/magicdata_ramc_recordings_train.jsonl.gz
+        expected_bytes: 4561
+        sha256: 9b3dbbe731f17f1821d92aad52cd2ae7d7d5333a4586e13b31c8a4378f79bcdc
+      - name: train_supervisions_gap_fills_0
+        kind: lhotse-supervisions
+        root_alias: aidc_data
+        relative_path: datasets/magicdata_ramc/versions/gap-labels-v1-20261009/ramc_supervisions_gap_fills_cer10.jsonl.gz
+        expected_bytes: 215922
+        sha256: 463dc3ba3ab46bdfdb7493b949248b65e69f70282d53b551ab184a296981b41f
+        metadata:
+          record_count: 5304
+          punctuated: false
+      - name: moss_records
+        kind: audio-records
+        root_alias: aidc_data
+        relative_path: datasets/magicdata_ramc/versions/gap-labels-v1-20261009/ramc_local_moss_records.jsonl.gz
+        expected_bytes: 10033923
+        sha256: 3f8fe39bd35f3a3a64ee197a497ed7a7477ac764ee594d3187eb216ec7d71893
+        metadata:
+          record_count: 289
+      - name: qwen3_asr_records
+        kind: audio-records
+        root_alias: aidc_data
+        relative_path: datasets/magicdata_ramc/versions/gap-labels-v1-20261009/ramc_qwen3_asr_records.jsonl.gz
+        expected_bytes: 751834
+        sha256: 2efc3703b3ece8f3abf60fe8008a919b1923153af52bee2d1b8587739ad2e2bc
+        metadata:
+          record_count: 289
+      - name: gap_merge_cer10_records
+        kind: audio-records
+        root_alias: aidc_data
+        relative_path: datasets/magicdata_ramc/versions/gap-labels-v1-20261009/ramc_gap_merge_cer10_records.jsonl.gz
+        expected_bytes: 2326050
+        sha256: f3447c432675e25be52de5a6a03b4e87ffcee3bc0a593b81f0298717036925c8
+        metadata:
+          record_count: 289
+    splits:
+      train:
+        artifacts:
+          recordings:
+            - train_rec_0
+          supervisions:
+            - train_supervisions_gap_fills_0
+          records:
+            - moss_records
+            - qwen3_asr_records
+            - gap_merge_cer10_records
+        statistics:
+          gap_fill_supervisions: 5304
+          recordings: 289
+    provenance:
+      preparation_status: prepared
+      lineage_status: exact
+      materialization: full
+      source: magicdata_ramc@legacy-20260804
+      description: MagicData-RAMC train（289 段对话 / 149.65 h）原标注漏标语音的补全标注，原标注不改。2026-10-09 用本机 MOSS-Transcribe-Diarize 0.9B 整段打说话人（540 s 切块、120 s 重叠），Qwen3-ASR-1.7B 只转写可能新增语音的片段，再对照原标注合并（文字错误率 ≤ 10%）。train_supervisions_gap_fills_0：5304 条可用补全（1.2232 h，Lhotse supervision，说话人为原标注 ID，custom.diarize 记类别 fill / gap / overlap_other 和一致性检查），只含补全，不含原标注；11806 个不可用区间（4.0447 h，切窗口时应掩蔽）和未采纳的重叠记录在 gap_merge_cer10_records 的 metadata.gap_merge。moss_records / qwen3_asr_records 是两位教师的整段原始标签（每行一段对话，metadata.local_moss / 
+        metadata.qwen3_asr）。更宽松门槛的 merge/ 结果（5,484 条）可由 gap_merge_cer10_records 里保留的逐片段 cer 重算，没有单独登记。录音沿用 magicdata_ramc@legacy-20260804 train_rec_0，不复制音频。脚本 scripts/diarization_raw_labels/register_raw_labels.py。
+      facts:
+        train_supervisions_gap_fills_0 rows: 5304
+        moss_records rows: 289
+        'moss_records: rows': 289
+        'moss_records: status ok': 289
+        'moss_records: segments': 168901
+        qwen3_asr_records rows: 289
+        'qwen3_asr_records: rows': 289
+        'qwen3_asr_records: status ok': 289
+        'qwen3_asr_records: segments': 16811
+        gap_merge_cer10_records rows: 289
+        'gap_merge_cer10_records: rows': 289
+        'gap_merge_cer10_records: usable': 5304
+        'gap_merge_cer10_records: excluded': 11806
+        excluded intervals (in metadata.gap_merge.excluded): 11806
+        usable hours: 1.2232
+        excluded hours: 4.0447

@@ -34,7 +34,7 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [emilia_en](data-versions.md#emilia_en) | en | 语音识别 | 43,624.0 | Emilia 英语野外语音（已清洗） | 快照 20260914 |
 | [emotion1200_en](data-versions.md#emotion1200_en) | en | 说话人情感分类、情感与说话风格描述、语音情感识别 | 5.2 | 英文情感识别与描述评测（Emotion1200） | 快照 20260914 |
 | [fleurs_en](data-versions.md#fleurs_en) | en | 语音识别 | 10.3 | 多语朗读英语部分（FLEURS） | 快照 20260914 |
-| [gigaspeech](data-versions.md#gigaspeech) | en | 语音识别 | 10,050.7 | 有声书、播客和 YouTube 英语（GigaSpeech） | 部分版本：快照 20260914 |
+| [gigaspeech](data-versions.md#gigaspeech) | en | 语音识别、diarization、带说话人标注的语音识别 | 10,050.7 | 有声书、播客和 YouTube 英语（GigaSpeech） | 部分版本：快照 20260914 |
 | [hifitts](data-versions.md#hifitts) | en | 语音识别、语音合成 | 291.7 | 英文有声书高保真朗读（Hi-Fi TTS） | `TTS 桶:HiFiTTS/`（原始数据） |
 | [hifitts2](data-versions.md#hifitts2) | en | 语音识别、语音合成 | 35,932.7 | 英文有声书高保真朗读（Hi-Fi TTS 2） | 没有 |
 | [icsi](data-versions.md#icsi) | en | 语音识别、说话人分段与归属 | 71.7 | 伯克利 ICSI 英文工作会议（近讲混合音轨） | 没有 |
@@ -51,7 +51,7 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [meld_ser](data-versions.md#meld_ser) | en | 语音情感识别 | 2.3 | 美剧《老友记》对话情感识别评测（MELD） | 快照 20260914 |
 | [mls](data-versions.md#mls) | en | 语音识别 | 44,691.0 | 英文有声书朗读（MLS 英语） | 快照 20260914 |
 | [msp_podcast_ser](data-versions.md#msp_podcast_ser) | en | 语音情感识别 | — | 英文播客情感识别评测（MSP-Podcast） | 快照 20260914 |
-| [notsofar](data-versions.md#notsofar) | en | 语音识别、连续语音分离、重叠语音检测、带说话人标注的语音识别、说话人分段与归属 | ≈200.0 | 微软英文远场会议，真实录制与模拟（NOTSOFAR） | 快照 20260914 |
+| [notsofar](data-versions.md#notsofar) | en | 语音识别、连续语音分离、diarization、重叠语音检测、带说话人标注的语音识别、说话人分段与归属 | ≈200.0 | 微软英文远场会议，真实录制与模拟（NOTSOFAR） | 部分版本：快照 20260914 |
 | [singapore_english](data-versions.md#singapore_english) | en | 语音识别 | 3.9 | 新加坡口音英语（Hugging Face 来源） | 快照 20260914 |
 | [singaporean](data-versions.md#singaporean) | en | 语音识别 | ≈0.2 | 新加坡口音英语小样本 | 快照 20260914 |
 | [tal100_en](data-versions.md#tal100_en) | en | 语音识别 | 4.8 | TAL 英语语音识别数据 | 快照 20260914 |
@@ -69,11 +69,11 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [aishell](data-versions.md#aishell) | zh | 语音识别、热词增强语音识别 | 179.0 | 中文朗读（AISHELL-1）；含清洗和热词版 | 部分版本：快照 20260914 |
 | [aishell2](data-versions.md#aishell2) | zh | 语音识别、热词增强语音识别 | ≈1,036.0 | 中文朗读（AISHELL-2）；含清洗和热词版 | 部分版本：快照 20260914 |
 | [aishell3](data-versions.md#aishell3) | zh | 语音识别、热词增强语音识别、语音合成 | 85.6 | 中文多人朗读（AISHELL-3）；含清洗、热词、TTS 版 | 部分版本：快照 20260914、`TTS 桶:AISHELL-3/`（原始数据） |
-| [aishell4](data-versions.md#aishell4) | zh | 语音识别、说话人分段与归属、目标说话人语音识别 | 322.3 | 中文多人会议（AISHELL-4）；含轮流说话混合版 | 部分版本：快照 20260914 |
+| [aishell4](data-versions.md#aishell4) | zh | 语音识别、diarization、带说话人标注的语音识别、说话人分段与归属、目标说话人语音识别 | 322.3 | 中文多人会议（AISHELL-4）；含轮流说话混合版 | 部分版本：快照 20260914 |
 | [aishell4_meeting_sot](data-versions.md#aishell4_meeting_sot) | zh | 带说话人标注的语音识别 | 377.5 | AISHELL-4 会议切窗的多人按人转写数据 | 没有 |
 | [aishell5_meeting_sot](data-versions.md#aishell5_meeting_sot) | zh | 带说话人标注的语音识别 | — | AISHELL-5 车内对话切窗的多人按人转写数据 | 没有 |
 | [aishellmix](data-versions.md#aishellmix) | zh | 目标说话人语音识别 | 7,489.2 | AISHELL-2 混合的目标说话人训练与测试数据 | 部分版本：快照 20260914 |
-| [alimeeting](data-versions.md#alimeeting) | zh | 语音识别、连续语音分离、重叠语音检测、带说话人标注的语音识别、说话人分段与归属、目标说话人语音识别 | 427.7 | 中文远场会议，多人重叠语音（AliMeeting） | 部分版本：快照 20260914 |
+| [alimeeting](data-versions.md#alimeeting) | zh | 语音识别、连续语音分离、diarization、重叠语音检测、带说话人标注的语音识别、说话人分段与归属、目标说话人语音识别 | 427.7 | 中文远场会议，多人重叠语音（AliMeeting） | 部分版本：快照 20260914 |
 | [alimeeting_near_farsim_meeting_sot](data-versions.md#alimeeting_near_farsim_meeting_sot) | zh | 带说话人标注的语音识别 | 399.5 | AliMeeting 近讲加混响噪声模拟远场的会议窗口 | 没有 |
 | [alimeeting_sdm_meeting_sot](data-versions.md#alimeeting_sdm_meeting_sot) | zh | 带说话人标注的语音识别 | 327.3 | AliMeeting 远场会议切窗的多人按人转写数据 | 没有 |
 | [biic_podcast_ser](data-versions.md#biic_podcast_ser) | zh | 语音情感识别 | 22.6 | 中文播客情感识别评测（BIIC-Podcast） | 快照 20260914 |
@@ -96,7 +96,7 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [legco_speech](data-versions.md#legco_speech) | yue | 语音识别 | 20,227.2 | 香港立法会会议粤语 | 快照 20260914 |
 | [m3ed_ser](data-versions.md#m3ed_ser) | zh | 语音情感识别 | 1.7 | 中文电视剧对话情感识别评测（M3ED） | 快照 20260914 |
 | [magicdata](data-versions.md#magicdata) | zh | 语音识别、热词增强语音识别 | 754.7 | 中文手机朗读（MAGICDATA）；含清洗和热词版 | 部分版本：快照 20260914 |
-| [magicdata_ramc](data-versions.md#magicdata_ramc) | zh | 语音识别、说话人分段与归属、目标说话人语音识别 | 403.5 | 中文手机通话自然对话（MagicData-RAMC） | 部分版本：快照 20260914 |
+| [magicdata_ramc](data-versions.md#magicdata_ramc) | zh | 语音识别、diarization、带说话人标注的语音识别、说话人分段与归属、目标说话人语音识别 | 403.5 | 中文手机通话自然对话（MagicData-RAMC） | 部分版本：快照 20260914 |
 | [magicdata_ramc_farsim_meeting_sot](data-versions.md#magicdata_ramc_farsim_meeting_sot) | zh | 带说话人标注的语音识别 | 566.6 | RAMC 对话加混响噪声模拟远场的窗口 | 没有 |
 | [magicdata_ramc_meeting_sot](data-versions.md#magicdata_ramc_meeting_sot) | zh | 带说话人标注的语音识别 | — | MagicData-RAMC 对话切窗的按人转写数据 | 没有 |
 | [mdcc](data-versions.md#mdcc) | yue | 语音识别 | 73.6 | 香港粤语有声书朗读（MDCC）；含加噪版 | 快照 20260914 |
