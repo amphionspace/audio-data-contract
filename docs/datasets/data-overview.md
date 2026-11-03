@@ -87,7 +87,7 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [csemotions](data-versions.md#csemotions) | zh | 语音合成 | 10.2 | 中文情感语音（CSEMOTIONS），TTS 用 | `TTS 桶:CSEMOTIONS/`（原始数据） |
 | [emilia2_zh_dialogue_diarize](data-versions.md#emilia2_zh_dialogue_diarize) | zh | 语音识别、diarization、带说话人标注的语音识别 | 3,167.4 | Emilia2 中文对话的说话人日志伪标签 | 没有 |
 | [emilia2_zh_overlap_farsim](data-versions.md#emilia2_zh_overlap_farsim) | zh | 带说话人标注的语音识别 | — | Emilia2 中文对话重排的重叠远场多人数据 | 没有 |
-| [emilia_zh](data-versions.md#emilia_zh) | zh | 语音识别 | 40,848.4 | Emilia 中文野外语音（已清洗） | 快照 20260914 |
+| [emilia_zh](data-versions.md#emilia_zh) | zh | 语音识别 | 40,848.4 | Emilia 中文野外语音（已清洗） | 部分版本：快照 20260914 |
 | [emotion1200_zh](data-versions.md#emotion1200_zh) | zh | 说话人情感分类、情感与说话风格描述、语音情感识别 | 4.9 | 中文情感识别与描述评测（Emotion1200） | 快照 20260914 |
 | [fleurs_zh](data-versions.md#fleurs_zh) | zh | 语音识别 | 14.1 | 多语朗读中文部分（FLEURS） | 快照 20260914 |
 | [hi_mia](data-versions.md#hi_mia) | zh | 说话人身份识别、声纹验证 | 533.6 | 固定中文唤醒词的远场声纹验证（HI-MIA） | 快照 20260914 |
@@ -141,7 +141,7 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [babble_noise_synth](data-versions.md#babble_noise_synth) | en、zh | noise | 50.0 | 合成中英背景人声噪声（5–20 人叠加） | 没有 |
 | [babble_noise_train](data-versions.md#babble_noise_train) | en、zh | noise | 50.0 | 训练用合成背景人声噪声（中英） | 没有 |
 | [cs_dialogue_meeting_sot](data-versions.md#cs_dialogue_meeting_sot) | zh、zh-en | 带说话人标注的语音识别 | — | CS-Dialogue 中英对话切窗的按人转写数据 | 没有 |
-| [cs_dialogue_mix](data-versions.md#cs_dialogue_mix) | en、zh | 语音识别 | 31.0 | CS-Dialogue 对话中的中英混说语句 | 快照 20260914 |
+| [cs_dialogue_mix](data-versions.md#cs_dialogue_mix) | en、zh | 语音识别 | 31.0 | CS-Dialogue 对话中的中英混说语句 | 部分版本：快照 20260914 |
 | [cumix2017](data-versions.md#cumix2017) | en、yue | 语音识别 | 10.9 | 粤英语码转换语音（CUMIX2017） | 快照 20260914 |
 | [emilia](data-versions.md#emilia) | de、en、fr、ja、ko、zh | 语音识别、语音合成 | 101,655.6 | 多语种视频野外语音（Emilia）；含精修文本版 | 部分版本：`TTS 桶:Emilia/`（原始数据） |
 | [emilia2](data-versions.md#emilia2) | ar、as、bn、cs、da、de、el、en、es、fa、fi、fil、fr、gu、hi、hu、it、ja、kn、ko、mk、ml、mr、ne、nl、pa、pl、pt、ro、ru、sa、sd、sv、ta、te、th、tr、ur、vi、yue、zh | 语音识别、diarization、语音合成 | 146,325.0 | 多语种视频野外语音（Emilia2）；含中英解包版 | 部分版本：`TTS 桶:Emilia2/`（原始数据） |
