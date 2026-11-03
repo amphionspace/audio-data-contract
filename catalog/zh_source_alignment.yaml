@@ -1,0 +1,326 @@
+# 五个中文来源语料的词级强制对齐
+  - schema_version: dataset-catalog/2.0
+    dataset_id: aidatatang
+    version: alignment-v1-20261008
+    languages:
+      - zh
+    tasks:
+      - asr
+    aliases: []
+    artifacts:
+      - name: train_recordings
+        kind: lhotse-recordings
+        root_alias: aidc_data
+        relative_path: datasets/aidatatang/versions/legacy-20260804/train_rec_0/zhaidatatang_recordings_all.jsonl.gz
+        expected_bytes: 2212592
+        sha256: e2e1bf9099dacb7971d11939b3bcf906b0cf71e62db52a824de19e1a87656797
+        metadata:
+          record_count: 237265
+          shared_with: aidatatang@icefall-20260908
+      - name: train_supervisions_alignment_0
+        kind: lhotse-supervisions
+        root_alias: aidc_data
+        relative_path: datasets/aidatatang/versions/alignment-v1-20261008/aidatatang_supervisions_train_alignment.jsonl.gz
+        expected_bytes: 19059829
+        sha256: 09cfde86a6d3a1f75d171613d89f7e1b1e9bdc3947a9fdbe61abde663d7ef577
+        metadata:
+          record_count: 237265
+          alignment_status:
+            aligned: 171212
+            needs_review: 66053
+      - name: alignment_summary
+        kind: json-metadata
+        root_alias: aidc_data
+        relative_path: datasets/aidatatang/versions/alignment-v1-20261008/alignment_summary.json
+        expected_bytes: 845
+        sha256: 449719df9e995dd725f4b2881d1272870a9ebc54bcfa24c138ef56e6ef540e5e
+    splits:
+      train:
+        artifacts:
+          recordings:
+            - train_recordings
+          supervisions:
+            - train_supervisions_alignment_0
+          alignment_summary:
+            - alignment_summary
+        statistics:
+          records: 237265
+          duration_hours: 145.4723
+          duration_basis: sum of supervision durations
+    recipe_parameters:
+      adds:
+        - custom.alignment
+      rows: all rows of the parent train split
+    provenance:
+      preparation_status: prepared
+      lineage_status: exact
+      materialization: full
+      source: aidatatang@icefall-20260908
+      description: aidatatang@icefall-20260908 train 全部 237265 句的词级强制对齐（2026-10-08，Qwen3-ForcedAligner-0.6B，amphiondata main 6daabaf）。custom.alignment 含 status（aligned 171212 句 / needs_review 66053 句，后者有零时长或越界的词）、items（每个字或词的文本和起止秒，从该句开头算起）、issues、time_reference、unit、audio_duration。文本是对齐时所用的原标注文本；录音沿用 aidatatang@clean-dual-qwen-moss-v1-20261008 的 train 录音，不复制音频。脚本 scripts/label_registration/register_alignments.py。
+      facts:
+        rows: 237265
+        aligned: 171212
+        needs_review: 66053
+        words: 2322570
+        issues zero_duration: 85092
+        issues out_of_bounds: 1584
+  - schema_version: dataset-catalog/2.0
+    dataset_id: aishell3
+    version: alignment-v1-20261008
+    languages:
+      - zh
+    tasks:
+      - asr
+    aliases: []
+    artifacts:
+      - name: train_recordings
+        kind: lhotse-recordings
+        root_alias: aidc_data
+        relative_path: datasets/aishell3/versions/legacy-20260804/train_rec_0/aishell3_recordings_train.jsonl.gz
+        expected_bytes: 1017083
+        sha256: 40b5d17e40d479c0c76884b83c4a8ab04b713e245e5ed5c134751515247185fc
+        metadata:
+          record_count: 63262
+          shared_with: aishell3@icefall-20260908
+      - name: train_supervisions_alignment_0
+        kind: lhotse-supervisions
+        root_alias: aidc_data
+        relative_path: datasets/aishell3/versions/alignment-v1-20261008/aishell3_supervisions_train_alignment.jsonl.gz
+        expected_bytes: 6611588
+        sha256: c77b198f09d6ad44cda503c13b8ef27a197d062fd9ee4e8ac693f8b1ffca1e1b
+        metadata:
+          record_count: 63262
+          alignment_status:
+            aligned: 57990
+            needs_review: 5272
+      - name: alignment_summary
+        kind: json-metadata
+        root_alias: aidc_data
+        relative_path: datasets/aishell3/versions/alignment-v1-20261008/alignment_summary.json
+        expected_bytes: 831
+        sha256: d7435a27898d1f9e8abe0b6435727a4a9f13781ecca57a5becd0f91f844bc783
+    splits:
+      train:
+        artifacts:
+          recordings:
+            - train_recordings
+          supervisions:
+            - train_supervisions_alignment_0
+          alignment_summary:
+            - alignment_summary
+        statistics:
+          records: 63262
+          duration_hours: 63.1724
+          duration_basis: sum of supervision durations
+    recipe_parameters:
+      adds:
+        - custom.alignment
+      rows: all rows of the parent train split
+    provenance:
+      preparation_status: prepared
+      lineage_status: exact
+      materialization: full
+      source: aishell3@icefall-20260908
+      description: aishell3@icefall-20260908 train 全部 63262 句的词级强制对齐（2026-10-08，Qwen3-ForcedAligner-0.6B，amphiondata main 6daabaf）。custom.alignment 含 status（aligned 57990 句 / needs_review 5272 句，后者有零时长或越界的词）、items（每个字或词的文本和起止秒，从该句开头算起）、issues、time_reference、unit、audio_duration。文本是对齐时所用的原标注文本；录音沿用 aishell3@clean-dual-qwen-moss-v1-20261008 的 train 录音，不复制音频。脚本 scripts/label_registration/register_alignments.py。
+      facts:
+        rows: 63262
+        aligned: 57990
+        needs_review: 5272
+        words: 739074
+        issues zero_duration: 5629
+        issues out_of_bounds: 1
+  - schema_version: dataset-catalog/2.0
+    dataset_id: magicdata
+    version: alignment-v1-20261008
+    languages:
+      - zh
+    tasks:
+      - asr
+    aliases: []
+    artifacts:
+      - name: train_recordings
+        kind: lhotse-recordings
+        root_alias: aidc_data
+        relative_path: datasets/magicdata/versions/legacy-20260804/train_rec_0/magicdata_recordings_train.jsonl.gz
+        expected_bytes: 6440878
+        sha256: 9aa0b9638398ff018558db0ab848bb48c289e0f99dca366f2da4099d43a0e2ba
+        metadata:
+          record_count: 573478
+          shared_with: magicdata@icefall-20260908
+      - name: train_supervisions_alignment_0
+        kind: lhotse-supervisions
+        root_alias: aidc_data
+        relative_path: datasets/magicdata/versions/alignment-v1-20261008/magicdata_supervisions_train_alignment.jsonl.gz
+        expected_bytes: 49617991
+        sha256: 3eec02b1f9962a4ec981f40d0afe6885853f21a680850213d31e7116ede9a1c6
+        metadata:
+          record_count: 573478
+          alignment_status:
+            aligned: 402005
+            needs_review: 171473
+      - name: alignment_summary
+        kind: json-metadata
+        root_alias: aidc_data
+        relative_path: datasets/magicdata/versions/alignment-v1-20261008/alignment_summary.json
+        expected_bytes: 843
+        sha256: 391cf7d4d11674737238549dd8225627c25c26b37c274c781b0f8162e268794c
+    splits:
+      train:
+        artifacts:
+          recordings:
+            - train_recordings
+          supervisions:
+            - train_supervisions_alignment_0
+          alignment_summary:
+            - alignment_summary
+        statistics:
+          records: 573478
+          duration_hours: 711.9157
+          duration_basis: sum of supervision durations
+    recipe_parameters:
+      adds:
+        - custom.alignment
+      rows: all rows of the parent train split
+    provenance:
+      preparation_status: prepared
+      lineage_status: exact
+      materialization: full
+      source: magicdata@icefall-20260908
+      description: magicdata@icefall-20260908 train 全部 573478 句的词级强制对齐（2026-10-08，Qwen3-ForcedAligner-0.6B，amphiondata main 6daabaf）。custom.alignment 含 status（aligned 402005 句 / needs_review 171473 句，后者有零时长或越界的词）、items（每个字或词的文本和起止秒，从该句开头算起）、issues、time_reference、unit、audio_duration。文本是对齐时所用的原标注文本；录音沿用 magicdata@clean-dual-qwen-moss-v1-20261008 的 train 录音，不复制音频。脚本 scripts/label_registration/register_alignments.py。
+      facts:
+        rows: 573478
+        aligned: 402005
+        needs_review: 171473
+        words: 5667633
+        issues zero_duration: 201930
+        issues out_of_bounds: 467
+  - schema_version: dataset-catalog/2.0
+    dataset_id: magicdata_ramc
+    version: alignment-v1-20261008
+    languages:
+      - zh
+    tasks:
+      - asr
+    aliases: []
+    artifacts:
+      - name: train_recordings
+        kind: lhotse-recordings
+        root_alias: aidc_data
+        relative_path: datasets/magicdata_ramc/versions/legacy-20260804/train_rec_0/magicdata_ramc_recordings_train.jsonl.gz
+        expected_bytes: 4561
+        sha256: 9b3dbbe731f17f1821d92aad52cd2ae7d7d5333a4586e13b31c8a4378f79bcdc
+        metadata:
+          record_count: 289
+          shared_with: magicdata_ramc@icefall-20260908
+      - name: train_supervisions_alignment_0
+        kind: lhotse-supervisions
+        root_alias: aidc_data
+        relative_path: datasets/magicdata_ramc/versions/alignment-v1-20261008/magicdata_ramc_supervisions_train_alignment.jsonl.gz
+        expected_bytes: 19051247
+        sha256: 9af528bac1d4401a0bf4a3e0290d051d8406db72a1eefcc8973801756e9e1452
+        metadata:
+          record_count: 168464
+          alignment_status:
+            needs_review: 58667
+            aligned: 109797
+      - name: alignment_summary
+        kind: json-metadata
+        root_alias: aidc_data
+        relative_path: datasets/magicdata_ramc/versions/alignment-v1-20261008/alignment_summary.json
+        expected_bytes: 856
+        sha256: a28e7f2b7e4cede1db679f83eb4b1fb702b09e4cdd7bf30849bcc78ac0348988
+    splits:
+      train:
+        artifacts:
+          recordings:
+            - train_recordings
+          supervisions:
+            - train_supervisions_alignment_0
+          alignment_summary:
+            - alignment_summary
+        statistics:
+          records: 168464
+          duration_hours: 125.4841
+          duration_basis: sum of supervision durations
+    recipe_parameters:
+      adds:
+        - custom.alignment
+      rows: all rows of the parent train split
+    provenance:
+      preparation_status: prepared
+      lineage_status: exact
+      materialization: full
+      source: magicdata_ramc@icefall-20260908
+      description: magicdata_ramc@icefall-20260908 train 全部 168464 句的词级强制对齐（2026-10-08，Qwen3-ForcedAligner-0.6B，amphiondata main 6daabaf）。custom.alignment 含 status（aligned 109797 句 / needs_review 58667 句，后者有零时长或越界的词）、items（每个字或词的文本和起止秒，从该句开头算起）、issues、time_reference、unit、audio_duration。文本是对齐时所用的原标注文本；录音沿用 magicdata_ramc@clean-dual-qwen-moss-v1-20261008 的 train 录音，不复制音频。脚本 scripts/label_registration/register_alignments.py。
+      facts:
+        rows: 168464
+        aligned: 109797
+        needs_review: 58667
+        words: 2139077
+        issues out_of_bounds: 4066
+        issues zero_duration: 85822
+  - schema_version: dataset-catalog/2.0
+    dataset_id: primewords
+    version: alignment-v1-20261008
+    languages:
+      - zh
+    tasks:
+      - asr
+    aliases: []
+    artifacts:
+      - name: train_recordings
+        kind: lhotse-recordings
+        root_alias: aidc_data
+        relative_path: datasets/primewords/versions/legacy-20260804/train_rec_0/primewords_recordings_train.jsonl.gz
+        expected_bytes: 1563903
+        sha256: 249b02362165a8fdb15d0ce2de04e4ace85b6653ea5479481be7dde97e9b2db9
+        metadata:
+          record_count: 50384
+          shared_with: primewords@icefall-20260908
+      - name: train_supervisions_alignment_0
+        kind: lhotse-supervisions
+        root_alias: aidc_data
+        relative_path: datasets/primewords/versions/alignment-v1-20261008/primewords_supervisions_train_alignment.jsonl.gz
+        expected_bytes: 10042954
+        sha256: 37f0d7fc766b334bb4431bb347179a0e9148fe7a082f04549dd228441ff556a1
+        metadata:
+          record_count: 50384
+          alignment_status:
+            aligned: 44478
+            needs_review: 5906
+      - name: alignment_summary
+        kind: json-metadata
+        root_alias: aidc_data
+        relative_path: datasets/primewords/versions/alignment-v1-20261008/alignment_summary.json
+        expected_bytes: 839
+        sha256: 3bb8bd29c5bbab9ed289a4ff49f24c852e973f99078f6a3735bb93349573b640
+    splits:
+      train:
+        artifacts:
+          recordings:
+            - train_recordings
+          supervisions:
+            - train_supervisions_alignment_0
+          alignment_summary:
+            - alignment_summary
+        statistics:
+          records: 50384
+          duration_hours: 98.9588
+          duration_basis: sum of supervision durations
+    recipe_parameters:
+      adds:
+        - custom.alignment
+      rows: all rows of the parent train split
+    provenance:
+      preparation_status: prepared
+      lineage_status: exact
+      materialization: full
+      source: primewords@icefall-20260908
+      description: primewords@icefall-20260908 train 全部 50384 句的词级强制对齐（2026-10-08，Qwen3-ForcedAligner-0.6B，amphiondata main 6daabaf）。custom.alignment 含 status（aligned 44478 句 / needs_review 5906 句，后者有零时长或越界的词）、items（每个字或词的文本和起止秒，从该句开头算起）、issues、time_reference、unit、audio_duration。文本是对齐时所用的原标注文本；录音沿用 primewords@clean-dual-qwen-moss-v1-20261008 的 train 录音，不复制音频。脚本 scripts/label_registration/register_alignments.py。
+      facts:
+        rows: 50384
+        aligned: 44478
+        needs_review: 5906
+        words: 1041470
+        issues zero_duration: 6829
+        issues out_of_bounds: 216

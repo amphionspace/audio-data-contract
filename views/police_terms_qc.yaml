@@ -1,0 +1,86 @@
+# 警务单说术语集 ASR 质检结果的 view
+  - schema_version: dataset-view/1.0
+    view_id: police_terms_single/qc
+    version: qc-v1-20261022
+    source:
+      dataset_id: police_terms_single
+      version: v1-20261022
+    result:
+      dataset_id: police_terms_single
+      version: qc-v1-20261022
+    materialization: full
+    lineage_status: exact
+    transforms:
+      - name: asr-pinyin-qc
+        version: v1-20261022
+        kind: annotate
+        writes:
+          - metadata.qc
+          - metadata.firered_crosscheck
+        parameters:
+          asr_model: Qwen3-ASR-1.7B (shared vLLM server)
+          rule: pinyin alignment without tones (NFKC, punctuation removed, digits spelled out); extra / missing syllables or reaching the code limit fail, substitutions only pass
+          failure_reasons:
+            - extra_speech
+            - missing_speech
+            - runaway
+          firered_crosscheck: FireRedASR2-AED, flagged rows kept as labels, not applied
+          tool: amphiondata feat/police-terms-single scripts/synthetic/run_police_terms_single.py
+          counts:
+            supervisions: 3264
+            qc verdicts: 5385
+            asr rows: 6429
+            not shipped: 3165
+            not shipped, qc failed: 491
+            not shipped, qc passed (beyond quota): 1630
+            not shipped, asr only: 1044
+            shipped with qc pass: 3264
+            firered flagged (shipped): 227
+            firered flagged (not shipped): 277
+          label_sha256:
+            supervisions: 2d45b383d771abd035cd8eca02fc41522abae51277bb37583ef9ea28b60af8c1
+            qc_not_shipped: 4dd0b4551e374cde2b35b7b7e5071250df4c9137e00e301e31c6ea42e4310752
+          script: scripts/label_registration/register_police_qc.py
+    provenance:
+      registered_at: '2026-11-03'
+  - schema_version: dataset-view/1.0
+    view_id: police_terms_single_train/qc
+    version: qc-v1-20261023
+    source:
+      dataset_id: police_terms_single_train
+      version: v1-20261023
+    result:
+      dataset_id: police_terms_single_train
+      version: qc-v1-20261023
+    materialization: full
+    lineage_status: exact
+    transforms:
+      - name: asr-pinyin-qc
+        version: v1-20261023
+        kind: annotate
+        writes:
+          - metadata.qc
+        parameters:
+          asr_model: Qwen3-ASR-1.7B (shared vLLM server)
+          rule: pinyin alignment without tones (NFKC, punctuation removed, digits spelled out); extra / missing syllables or reaching the code limit fail, substitutions only pass
+          failure_reasons:
+            - extra_speech
+            - missing_speech
+            - runaway
+          firered_crosscheck:
+          tool: amphiondata feat/police-terms-single-train scripts/synthetic/run_police_terms_single.py --split train
+          counts:
+            supervisions: 21760
+            qc verdicts: 25398
+            asr rows: 25398
+            not shipped: 3638
+            not shipped, qc failed: 1660
+            not shipped, qc passed (beyond quota): 1978
+            not shipped, asr only: 0
+            shipped with qc pass: 21760
+          label_sha256:
+            supervisions: e5e698e20b948c6e04d62c09ac52a575127f4d00effc88d9cd5bb15e6423c3f4
+            qc_not_shipped: 7748e967911977e99283b4729cf1411ea60b4f9b5921ff15e18432e1b753b074
+          script: scripts/label_registration/register_police_qc.py
+    provenance:
+      registered_at: '2026-11-03'
