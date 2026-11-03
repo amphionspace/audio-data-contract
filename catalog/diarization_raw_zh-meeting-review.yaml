@@ -1,0 +1,304 @@
+# AISHELL-4 与 AliMeeting 老师复核：教师标签、逐场时间偏移、更正后的 supervisions 和整场排除（数据声明）
+  - schema_version: dataset-catalog/2.0
+    dataset_id: aishell4
+    version: teacher-review-v1-20261010
+    languages:
+      - zh
+    tasks:
+      - diarization
+      - speaker_attributed_asr
+    aliases: []
+    artifacts:
+      - name: train_rec_0
+        kind: lhotse-recordings
+        root_alias: aidc_data
+        relative_path: datasets/aishell4/versions/legacy-20260804/train_rec_0/aishell4_recordings_train_L.jsonl.gz
+        expected_bytes: 814
+        sha256: f3fb0be00239c2182f03ecb2842dbfa28f1f365e3d2d7509931bae39bdfd16eb
+      - name: train_rec_1
+        kind: lhotse-recordings
+        root_alias: aidc_data
+        relative_path: datasets/aishell4/versions/icefall-20260908/train_rec_1/aishell4_recordings_train_M.jsonl.gz
+        expected_bytes: 2286
+        sha256: af8f8e5a01a65e1b04fe870e7709085856c47c0c71ab5f2224e9c8da4731b332
+      - name: train_rec_2
+        kind: lhotse-recordings
+        root_alias: aidc_data
+        relative_path: datasets/aishell4/versions/icefall-20260908/train_rec_2/aishell4_recordings_train_S.jsonl.gz
+        expected_bytes: 1262
+        sha256: 04515f37a6c9714a03b1b287fac0de2f073d03d6c5382b3bebb8308185c714de
+      - name: train_supervisions_corrected_0
+        kind: lhotse-supervisions
+        root_alias: aidc_data
+        relative_path: datasets/aishell4/versions/teacher-review-v1-20261010/aishell4_supervisions_train_corrected.jsonl.gz
+        expected_bytes: 3844333
+        sha256: ccf11451ccb111b9fd79f73ec2390265dbc3f506008ffa46b9a38646f78eb661
+        metadata:
+          record_count: 102254
+          punctuated: false
+      - name: train_supervisions_gap_fills_0
+        kind: lhotse-supervisions
+        root_alias: aidc_data
+        relative_path: datasets/aishell4/versions/teacher-review-v1-20261010/aishell4_supervisions_gap_fills.jsonl.gz
+        expected_bytes: 2414
+        sha256: 31d4568ae1c104ce20db3e0a4e128e24e11407b847c815e8e824f8c410134563
+        metadata:
+          record_count: 34
+          punctuated: false
+      - name: moss_records
+        kind: audio-records
+        root_alias: aidc_data
+        relative_path: datasets/aishell4/versions/teacher-review-v1-20261010/aishell4_local_moss_records.jsonl.gz
+        expected_bytes: 7026119
+        sha256: 6aba452baddd7e41f9e699ce4aaa78766e8990bafd84620c536b7b99b5632ea4
+        metadata:
+          record_count: 189
+      - name: qwen3_asr_records
+        kind: audio-records
+        root_alias: aidc_data
+        relative_path: datasets/aishell4/versions/teacher-review-v1-20261010/aishell4_qwen3_asr_records.jsonl.gz
+        expected_bytes: 6489293
+        sha256: 467db49cc59bf69594a332d35254b99ee93e3352fe053abf8591de447333a38b
+        metadata:
+          record_count: 189
+      - name: gap_merge_records
+        kind: audio-records
+        root_alias: aidc_data
+        relative_path: datasets/aishell4/versions/teacher-review-v1-20261010/aishell4_gap_merge_records.jsonl.gz
+        expected_bytes: 1201937
+        sha256: c8b7dc24bc77d4f99a05cf777b5622b88826664d8673630d2e4ff6080737f3e8
+        metadata:
+          record_count: 189
+      - name: offsets_records
+        kind: audio-records
+        root_alias: aidc_data
+        relative_path: datasets/aishell4/versions/teacher-review-v1-20261010/aishell4_offsets_records.jsonl.gz
+        expected_bytes: 6628
+        sha256: 2935579770277a394f9454eb304cadb8a8c02cfcf9250cbe2c10f5c8bcd70806
+        metadata:
+          record_count: 189
+      - name: correction_decision_records
+        kind: audio-records
+        root_alias: aidc_data
+        relative_path: datasets/aishell4/versions/teacher-review-v1-20261010/aishell4_correction_decision_records.jsonl.gz
+        expected_bytes: 6952
+        sha256: 1388648666aa3fff97ad6329a26438120046e202d761a6f634397f4934cadadb
+        metadata:
+          record_count: 189
+      - name: review_example_records
+        kind: audio-records
+        root_alias: aidc_data
+        relative_path: datasets/aishell4/versions/teacher-review-v1-20261010/aishell4_review_example_records.jsonl.gz
+        expected_bytes: 7429
+        sha256: 1cf2b8266d1746eb02cdf04a40b2b7fd55665d454855f6d4abd71fd0f51ec3d8
+        metadata:
+          record_count: 81
+      - name: excluded_meetings
+        kind: metadata
+        root_alias: aidc_data
+        relative_path: datasets/aishell4/versions/teacher-review-v1-20261010/aishell4_excluded_meetings.jsonl.gz
+        expected_bytes: 201
+        sha256: 1d37ad8e1942e9c195f8ae54708fe6fb14cc88f67a2d32e281703013f9ed80a9
+        metadata:
+          record_count: 3
+          description: 整场排除出训练的会议及原因（标注与音频错位，未能可靠更正）；同样的原因也写在 correction_decision_records 的 metadata.correction_decision.excluded
+    splits:
+      train:
+        artifacts:
+          recordings:
+            - train_rec_0
+            - train_rec_1
+            - train_rec_2
+          supervisions:
+            - train_supervisions_corrected_0
+            - train_supervisions_gap_fills_0
+          records:
+            - moss_records
+            - qwen3_asr_records
+            - gap_merge_records
+            - offsets_records
+            - correction_decision_records
+            - review_example_records
+        statistics:
+          recordings: 189
+          corrected_supervisions: 102254
+    provenance:
+      preparation_status: prepared
+      lineage_status: exact
+      materialization: full
+      source: aishell4@icefall-20260908
+      description: AISHELL-4 train（186 场）的老师复核与时间更正（2026-10-10）：本机 MOSS-Transcribe-Diarize 0.9B 和 Qwen3-ASR-1.7B 对整场会议打标，与人工标注逐场对照，估计每场标注相对音频的时间偏移（包络滞后、MOSS 与人工配对偏移、AliMeeting 另有近场对远场 GCC-PHAT 滞后），决定平移或整场排除，并写出更正后的参考标注。train_supervisions_corrected_0：更正后的 train 标注 102254 条（源 102254 条，平移了 0 条的开始时间，去掉 0 条，源里没有的 0 条），Lhotse 格式，字段同源版本；整场排除的会议不从标注里删除，切窗口时按 excluded_meetings 跳过。excluded_meetings：3 场整场排除（1.709 h）及原因。train_supervisions_gap_fills_0：老师补出的 34 条漏标语音（fill / gap / overlap_other，说话人为原标注 ID，custom.diarize 
+        记检查），不可用区间与未采纳片段在 gap_merge_records 的 metadata.gap_merge。moss_records / qwen3_asr_records 是两位教师的整场原始标签（metadata.local_moss / metadata.qwen3_asr）；offsets_records / near_far_lag_records / correction_decision_records 是逐场偏移估计和决定（metadata.time_offset / near_far_lag / correction_decision）；review_example_records 是文字差异等抽样证据。录音沿用 aishell4@icefall-20260908，不复制音频。脚本 scripts/diarization_raw_labels/register_raw_labels.py。
+      facts:
+        train_supervisions_corrected_0 rows: 102254
+        source supervisions: 102254
+        corrected supervisions with a shifted start: 0
+        source supervisions removed (excluded meetings): 0
+        supervisions not in the source: 0
+        train_supervisions_gap_fills_0 rows: 34
+        moss_records rows: 189
+        'moss_records: rows': 189
+        'moss_records: status ok': 189
+        'moss_records: segments': 97884
+        qwen3_asr_records rows: 189
+        'qwen3_asr_records: rows': 189
+        'qwen3_asr_records: status ok': 189
+        'qwen3_asr_records: segments': 97657
+        gap_merge_records rows: 189
+        'gap_merge_records: rows': 189
+        'gap_merge_records: usable': 34
+        'gap_merge_records: excluded': 3348
+        offsets_records rows: 189
+        correction_decision_records rows: 189
+        review_example_records rows: 81
+        excluded_meetings rows: 3
+  - schema_version: dataset-catalog/2.0
+    dataset_id: alimeeting_sdm
+    version: teacher-review-v1-20261010
+    languages:
+      - zh
+    tasks:
+      - diarization
+      - speaker_attributed_asr
+    aliases: []
+    artifacts:
+      - name: train_rec_0
+        kind: lhotse-recordings
+        root_alias: aidc_data
+        relative_path: datasets/alimeeting_sdm/versions/icefall-20260908/train_rec_0/alimeeting_sdm_recordings_train.jsonl.gz
+        expected_bytes: 4383
+        sha256: af6bca1dd4cecc7d6a431fc4c0538a3f6dc1f939db09c5769ac1d5a25309a465
+      - name: train_supervisions_corrected_0
+        kind: lhotse-supervisions
+        root_alias: aidc_data
+        relative_path: datasets/alimeeting_sdm/versions/teacher-review-v1-20261010/alimeeting_sdm_supervisions_train_corrected.jsonl.gz
+        expected_bytes: 5652341
+        sha256: 6c38c9f93f0dfba198ff51f59f0d27e1e332257ad7a36251fef6879e90fd5c2d
+        metadata:
+          record_count: 186360
+          punctuated: false
+      - name: train_supervisions_gap_fills_0
+        kind: lhotse-supervisions
+        root_alias: aidc_data
+        relative_path: datasets/alimeeting_sdm/versions/teacher-review-v1-20261010/alimeeting_sdm_supervisions_gap_fills.jsonl.gz
+        expected_bytes: 4832
+        sha256: 09d6056290514eabf192a0b0eaa529ab110e823add489694d2ada0b04ad0a8da
+        metadata:
+          record_count: 79
+          punctuated: false
+      - name: moss_records
+        kind: audio-records
+        root_alias: aidc_data
+        relative_path: datasets/alimeeting_sdm/versions/teacher-review-v1-20261010/alimeeting_local_moss_records.jsonl.gz
+        expected_bytes: 10571694
+        sha256: 7b8e4c4f8233158d54c98d76f2c039a59c33a4feffe892bba73bc809a842a812
+        metadata:
+          record_count: 209
+      - name: qwen3_asr_records
+        kind: audio-records
+        root_alias: aidc_data
+        relative_path: datasets/alimeeting_sdm/versions/teacher-review-v1-20261010/alimeeting_qwen3_asr_records.jsonl.gz
+        expected_bytes: 9759169
+        sha256: a441815955f0f3d09496044bce9b4ed162a20b57d7973c58fec5fcba37f84759
+        metadata:
+          record_count: 209
+      - name: gap_merge_records
+        kind: audio-records
+        root_alias: aidc_data
+        relative_path: datasets/alimeeting_sdm/versions/teacher-review-v1-20261010/alimeeting_gap_merge_records.jsonl.gz
+        expected_bytes: 1756329
+        sha256: 51b812d16680320bb67b12686e7c0c07ec37b5ed2d0773b9e530e267479943a2
+        metadata:
+          record_count: 209
+      - name: offsets_records
+        kind: audio-records
+        root_alias: aidc_data
+        relative_path: datasets/alimeeting_sdm/versions/teacher-review-v1-20261010/alimeeting_offsets_records.jsonl.gz
+        expected_bytes: 5092
+        sha256: eded33ce657d7db7de4e841eff7184134103883cf12c2a7be8f6a85387a62663
+        metadata:
+          record_count: 209
+      - name: near_far_lag_records
+        kind: audio-records
+        root_alias: aidc_data
+        relative_path: datasets/alimeeting_sdm/versions/teacher-review-v1-20261010/alimeeting_near_far_lag_records.jsonl.gz
+        expected_bytes: 5478
+        sha256: d3e8d83f627d56ca9a038c255de578fc5a6f2010fc775835f80d20772640df59
+        metadata:
+          record_count: 209
+      - name: correction_decision_records
+        kind: audio-records
+        root_alias: aidc_data
+        relative_path: datasets/alimeeting_sdm/versions/teacher-review-v1-20261010/alimeeting_correction_decision_records.jsonl.gz
+        expected_bytes: 9927
+        sha256: 6747cb66a949c10d43b4fb9bb875e30acb6e4eda01c71976035d5398c2743624
+        metadata:
+          record_count: 209
+      - name: review_example_records
+        kind: audio-records
+        root_alias: aidc_data
+        relative_path: datasets/alimeeting_sdm/versions/teacher-review-v1-20261010/alimeeting_review_example_records.jsonl.gz
+        expected_bytes: 5754
+        sha256: 0f2972d7a761d48c6d4177a35717b0adad507fbd769f0e14b59be4bb0764fdef
+        metadata:
+          record_count: 70
+      - name: excluded_meetings
+        kind: metadata
+        root_alias: aidc_data
+        relative_path: datasets/alimeeting_sdm/versions/teacher-review-v1-20261010/alimeeting_excluded_meetings.jsonl.gz
+        expected_bytes: 347
+        sha256: 384245aaa4040663e12ad68afbec4235af102acd93229a65c65a56b3dcdd85e7
+        metadata:
+          record_count: 36
+          description: 整场排除出训练的会议及原因（标注与音频错位，未能可靠更正）；同样的原因也写在 correction_decision_records 的 metadata.correction_decision.excluded
+    splits:
+      train:
+        artifacts:
+          recordings:
+            - train_rec_0
+          supervisions:
+            - train_supervisions_corrected_0
+            - train_supervisions_gap_fills_0
+          records:
+            - moss_records
+            - qwen3_asr_records
+            - gap_merge_records
+            - offsets_records
+            - near_far_lag_records
+            - correction_decision_records
+            - review_example_records
+        statistics:
+          recordings: 209
+          corrected_supervisions: 186360
+    provenance:
+      preparation_status: prepared
+      lineage_status: exact
+      materialization: full
+      source: alimeeting_sdm@icefall-20260908
+      description: AliMeeting train 远场（209 场）的老师复核与时间更正（2026-10-10）：本机 MOSS-Transcribe-Diarize 0.9B 和 Qwen3-ASR-1.7B 对整场会议打标，与人工标注逐场对照，估计每场标注相对音频的时间偏移（包络滞后、MOSS 与人工配对偏移、AliMeeting 另有近场对远场 GCC-PHAT 滞后），决定平移或整场排除，并写出更正后的参考标注。train_supervisions_corrected_0：更正后的 train 标注 186360 条（源 186360 条，平移了 949 条的开始时间，去掉 0 条，源里没有的 0 条），Lhotse 格式，字段同源版本；整场排除的会议不从标注里删除，切窗口时按 excluded_meetings 跳过。excluded_meetings：36 场整场排除（19.211 h）及原因。train_supervisions_gap_fills_0：老师补出的 79 条漏标语音（fill / gap / overlap_other，说话人为原标注 
+        ID，custom.diarize 记检查），不可用区间与未采纳片段在 gap_merge_records 的 metadata.gap_merge。moss_records / qwen3_asr_records 是两位教师的整场原始标签（metadata.local_moss / metadata.qwen3_asr）；offsets_records / near_far_lag_records / correction_decision_records 是逐场偏移估计和决定（metadata.time_offset / near_far_lag / correction_decision）；review_example_records 是文字差异等抽样证据。录音沿用 alimeeting_sdm@icefall-20260908，不复制音频。脚本 scripts/diarization_raw_labels/register_raw_labels.py。
+      facts:
+        train_supervisions_corrected_0 rows: 186360
+        source supervisions: 186360
+        corrected supervisions with a shifted start: 949
+        source supervisions removed (excluded meetings): 0
+        supervisions not in the source: 0
+        train_supervisions_gap_fills_0 rows: 79
+        moss_records rows: 209
+        'moss_records: rows': 209
+        'moss_records: status ok': 209
+        'moss_records: segments': 175632
+        qwen3_asr_records rows: 209
+        'qwen3_asr_records: rows': 209
+        'qwen3_asr_records: status ok': 209
+        'qwen3_asr_records: segments': 175616
+        'qwen3_asr_records: earlier rows replaced by a retry': 5
+        gap_merge_records rows: 209
+        'gap_merge_records: rows': 209
+        'gap_merge_records: usable': 79
+        'gap_merge_records: excluded': 2985
+        offsets_records rows: 209
+        near_far_lag_records rows: 209
+        correction_decision_records rows: 209
+        review_example_records rows: 70
+        excluded_meetings rows: 36

@@ -1,0 +1,83 @@
+# MagicData-RAMC train 漏标补全：两位教师的整段标签、补全 supervisions 和不可用区间（血缘声明）
+  - schema_version: dataset-view/1.0
+    view_id: magicdata_ramc/gap-labels
+    version: gap-labels-v1-20261009
+    source:
+      dataset_id: magicdata_ramc
+      version: legacy-20260804
+    result:
+      dataset_id: magicdata_ramc
+      version: gap-labels-v1-20261009
+    materialization: full
+    lineage_status: exact
+    transforms:
+      - name: moss-diarize
+        version: v1-20261009
+        kind: annotate
+        writes:
+          - metadata.local_moss
+        parameters:
+          model: MOSS-Transcribe-Diarize 0.9B
+          backend:
+            name: local-moss
+            type: local_moss
+            model: MOSS-Transcribe-Diarize
+            url: http://127.0.0.1:18102/v1
+            max_chunk_seconds: 540.0
+            chunk_overlap_seconds: 120.0
+            request_args:
+              temperature: 0.0
+      - name: qwen3-asr-check
+        version: v1-20261009
+        kind: annotate
+        writes:
+          - metadata.qwen3_asr
+        parameters:
+          model: Qwen3-ASR-1.7B
+          backend:
+            name: qwen3-asr
+            type: qwen3_asr
+            model: Qwen3-ASR-1.7B
+            url: http://127.0.0.1:18101/v1
+            max_chunk_seconds: 540.0
+            chunk_overlap_seconds: 30.0
+            request_args:
+              to_language: zh
+              temperature: 0.0
+              repetition_penalty: 1.1
+      - name: gap-merge
+        version: cer10-20261009
+        kind: annotate
+        writes:
+          - target
+          - metadata.diarize
+          - metadata.gap_merge
+        parameters:
+          max_text_cer: 10.0
+          settings:
+            language: zh-cn
+            max_text_cer: 10.0
+            max_segment_seconds: 60.0
+            max_chars_per_second: 12.0
+            speaker_min_seconds: 5.0
+            speaker_dominance: 0.6
+            turn_gap_seconds: 1.0
+            boundary_tolerance_seconds: 0.5
+            covered_fraction: 0.5
+            gap_max_covered_fraction: 0.2
+            same_speaker_overlap_seconds: 0.2
+            min_fill_seconds: 0.2
+            text_source: primary
+          rule: amphiondata docs/multi-teacher-diarization.md (branch feat/multi-teacher-diarization)
+          usable: 5304
+          excluded: 11806
+          excluded_reasons:
+            text_check_mismatch: 6387
+            reference_speaker_conflict: 3740
+            fill_text_check_mismatch: 3185
+            empty_text: 1805
+            reference_speaker_unmapped: 355
+            partial_reference_overlap: 119
+            implausible_char_rate: 33
+    provenance:
+      registered_at: '2026-11-03'

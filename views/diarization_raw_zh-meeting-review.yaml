@@ -1,0 +1,380 @@
+# AISHELL-4 与 AliMeeting 老师复核：教师标签、逐场时间偏移、更正后的 supervisions 和整场排除（血缘声明）
+  - schema_version: dataset-view/1.0
+    view_id: aishell4/teacher-review
+    version: teacher-review-v1-20261010
+    source:
+      dataset_id: aishell4
+      version: icefall-20260908
+    result:
+      dataset_id: aishell4
+      version: teacher-review-v1-20261010
+    materialization: full
+    lineage_status: exact
+    transforms:
+      - name: moss-diarize
+        version: v1-20261010
+        kind: annotate
+        writes:
+          - metadata.local_moss
+        parameters:
+          model: MOSS-Transcribe-Diarize 0.9B
+          backend:
+            name: local-moss-gpu01
+            type: local_moss
+            model: MOSS-Transcribe-Diarize
+            url: http://127.0.0.1:18202/v1
+            max_chunk_seconds: 540.0
+            chunk_overlap_seconds: 120.0
+            request_args:
+              temperature: 0.0
+          audio: source audio
+      - name: qwen3-asr-check
+        version: v1-20261010
+        kind: annotate
+        writes:
+          - metadata.qwen3_asr
+        parameters:
+          model: Qwen3-ASR-1.7B
+          backend:
+            name: qwen3-asr-gpu01
+            type: qwen3_asr
+            model: Qwen3-ASR-1.7B
+            url: http://127.0.0.1:18203/v1
+            max_chunk_seconds: 540.0
+            chunk_overlap_seconds: 30.0
+            request_args:
+              to_language: zh
+              temperature: 0.0
+              repetition_penalty: 1.1
+      - name: time-offset-estimate
+        version: v1-20261010
+        kind: annotate
+        writes:
+          - metadata.time_offset
+          - metadata.correction_decision
+        parameters:
+          thresholds:
+            A_GAIN: 0.05
+            B_PAIRS: 20
+            B_CI: 0.1
+            C_PEAK: 10.0
+            TOLERANCE: 0.1
+            MIN_SHIFT: 0.1
+          rule: "Decide per-meeting annotation shifts / exclusions and write corrected references.\n\nMethods (all: positive = speech in the training audio is later than the labels):\n  (a) envelope lag of far ch0 energy vs annotated turns (far-field audit method);\n      strong when its correlation gain (peak - zero-lag) >= A_GAIN.\n  (b) MOSS-vs-human matched-utterance offset (median, bootstrap CI, corpus bias\n      removed); strong when >= B_PAIRS pairs and CI width <= B_CI.\n  (c) AliMeeting only, diagnostic:
+            GCC-PHAT lag headset tracks -> far ch0;\n      strong when the peak/mean ratio >= C_PEAK.\nRule (user-approved): shift a meeting only when (a) and (b) are both strong,\nagree within TOLERANCE, the teacher offset is constant over the meeting (medians\nof the three time thirds within TOLERANCE) and their mean is >= MIN_SHIFT; exclude a meeting when it\nis not shifted but any strong method says |offset| >= MIN_SHIFT; otherwise keep.\nTOLERANCE = 0.1 s: headset tracks, which are close-talk and aligned,
+            still show\nenvelope lags of +0.08..0.125 s in rooms R1019/R1021 (≈0 elsewhere), so the\nenvelope method alone carries up to ~0.1 s of room/annotation-style bias.\nUsage: corrections.py <subset>"
+          shifted_meetings: 0
+          shifted_hours: 0.0
+          excluded_meetings: 3
+          excluded_hours: 1.709
+          tool: amphiondata multispeaker corrections (scripts/corrections.py, offsets.py)
+      - name: apply-corrections
+        version: v1-20261010
+        kind: correct
+        writes:
+          - audio_slots
+        parameters:
+          source_supervisions: 102254
+          corrected_supervisions: 102254
+          shifted: 0
+          removed: 0
+          added: 0
+      - name: gap-merge
+        version: v1-20261010
+        kind: annotate
+        writes:
+          - target
+          - metadata.diarize
+          - metadata.gap_merge
+        parameters:
+          usable: 34
+          excluded: 3348
+          review_summary:
+            subset: aishell4
+            meetings_reviewed: 186
+            meetings_excluded_for_time_offset: 3
+            audio_hours: 104.698
+            missing_label_hours:
+              fill: 0.005
+              gap: 0.001
+              overlap_other: 0.002
+            missing_label_total_hours: 0.007
+            speaker_conflict_hours: 0.101
+            unverified_reason_hours:
+              empty_text: 3.396
+              text_check_missing: 3.346
+              repeated: 3.22
+              invalid_span: 3.215
+              reference_speaker_unmapped: 1.26
+              text_check_mismatch: 1.06
+              unterminated: 0.113
+              reference_speaker_conflict: 0.101
+              partial_reference_overlap: 0.079
+              chunk_edge: 0.042
+              too_long: 0.018
+              fill_text_check_mismatch: 0.016
+              implausible_char_rate: 0.0
+            teacher_agreed_covered_segments: 6756
+            teacher_agreed_covered_hours: 12.802
+            human_differs_segments: 1030
+            human_differs_hours: 2.02
+            human_differs_share: 0.1525
+            char_ops_per_100_teacher_chars:
+              sub: 2.578
+              teacher_extra: 1.663
+              human_extra: 1.225
+            top_substitutions_human_to_teacher:
+              -   - 嗯->呃
+                  - 220
+              -   - 呃->嗯
+                  - 118
+              -   - 这->那
+                  - 94
+              -   - 那->这
+                  - 79
+              -   - 它->他
+                  - 73
+              -   - 呀->啊
+                  - 54
+              -   - 嘞->的
+                  - 50
+              -   - 他->它
+                  - 49
+              -   - 啊->呃
+                  - 47
+              -   - 啦->了
+                  - 41
+              -   - 她->他
+                  - 36
+              -   - 这->就
+                  - 33
+              -   - 了->的
+                  - 32
+              -   - 呃->啊
+                  - 28
+              -   - 1->这
+                  - 26
+              -   - 得->的
+                  - 25
+              -   - 诶->哎
+                  - 25
+              -   - 是->就
+                  - 23
+              -   - 的->了
+                  - 23
+              -   - 都->就
+                  - 22
+              -   - 就->这
+                  - 22
+              -   - 啊->呀
+                  - 20
+              -   - 个->的
+                  - 19
+              -   - 1->那
+                  - 19
+              -   - 就->都
+                  - 19
+              -   - 吧->嘛
+                  - 18
+              -   - 吗->嘛
+                  - 17
+              -   - 我->咱
+                  - 17
+              -   - 这->1
+                  - 17
+              -   - 是->这
+                  - 16
+            rules:
+              teacher_agreement_cer: 10.0
+              human_differs_cer: 10.0
+    provenance:
+      registered_at: '2026-11-03'
+  - schema_version: dataset-view/1.0
+    view_id: alimeeting_sdm/teacher-review
+    version: teacher-review-v1-20261010
+    source:
+      dataset_id: alimeeting_sdm
+      version: icefall-20260908
+    result:
+      dataset_id: alimeeting_sdm
+      version: teacher-review-v1-20261010
+    materialization: full
+    lineage_status: exact
+    transforms:
+      - name: moss-diarize
+        version: v1-20261010
+        kind: annotate
+        writes:
+          - metadata.local_moss
+        parameters:
+          model: MOSS-Transcribe-Diarize 0.9B
+          backend:
+            name: local-moss-gpu01
+            type: local_moss
+            model: MOSS-Transcribe-Diarize
+            url: http://127.0.0.1:18202/v1
+            max_chunk_seconds: 540.0
+            chunk_overlap_seconds: 120.0
+            request_args:
+              temperature: 0.0
+          audio: far-field channel mean
+      - name: qwen3-asr-check
+        version: v1-20261010
+        kind: annotate
+        writes:
+          - metadata.qwen3_asr
+        parameters:
+          model: Qwen3-ASR-1.7B
+          backend:
+            name: qwen3-asr
+            type: qwen3_asr
+            model: Qwen3-ASR-1.7B
+            url: http://127.0.0.1:18101/v1
+            max_chunk_seconds: 540.0
+            chunk_overlap_seconds: 30.0
+            request_args:
+              to_language: zh
+              temperature: 0.0
+              repetition_penalty: 1.1
+      - name: time-offset-estimate
+        version: v1-20261010
+        kind: annotate
+        writes:
+          - metadata.time_offset
+          - metadata.near_far_lag
+          - metadata.correction_decision
+        parameters:
+          thresholds:
+            A_GAIN: 0.05
+            B_PAIRS: 20
+            B_CI: 0.1
+            C_PEAK: 10.0
+            TOLERANCE: 0.1
+            MIN_SHIFT: 0.1
+          rule: "Decide per-meeting annotation shifts / exclusions and write corrected references.\n\nMethods (all: positive = speech in the training audio is later than the labels):\n  (a) envelope lag of far ch0 energy vs annotated turns (far-field audit method);\n      strong when its correlation gain (peak - zero-lag) >= A_GAIN.\n  (b) MOSS-vs-human matched-utterance offset (median, bootstrap CI, corpus bias\n      removed); strong when >= B_PAIRS pairs and CI width <= B_CI.\n  (c) AliMeeting only, diagnostic:
+            GCC-PHAT lag headset tracks -> far ch0;\n      strong when the peak/mean ratio >= C_PEAK.\nRule (user-approved): shift a meeting only when (a) and (b) are both strong,\nagree within TOLERANCE, the teacher offset is constant over the meeting (medians\nof the three time thirds within TOLERANCE) and their mean is >= MIN_SHIFT; exclude a meeting when it\nis not shifted but any strong method says |offset| >= MIN_SHIFT; otherwise keep.\nTOLERANCE = 0.1 s: headset tracks, which are close-talk and aligned,
+            still show\nenvelope lags of +0.08..0.125 s in rooms R1019/R1021 (≈0 elsewhere), so the\nenvelope method alone carries up to ~0.1 s of room/annotation-style bias.\nUsage: corrections.py <subset>"
+          shifted_meetings: 1
+          shifted_hours: 0.657
+          excluded_meetings: 36
+          excluded_hours: 19.211
+          tool: amphiondata multispeaker corrections (scripts/corrections.py, offsets.py)
+      - name: apply-corrections
+        version: v1-20261010
+        kind: correct
+        writes:
+          - audio_slots
+        parameters:
+          source_supervisions: 186360
+          corrected_supervisions: 186360
+          shifted: 949
+          removed: 0
+          added: 0
+      - name: gap-merge
+        version: v1-20261010
+        kind: annotate
+        writes:
+          - target
+          - metadata.diarize
+          - metadata.gap_merge
+        parameters:
+          usable: 79
+          excluded: 2985
+          review_summary:
+            subset: alimeeting
+            meetings_reviewed: 173
+            meetings_excluded_for_time_offset: 36
+            audio_hours: 92.147
+            missing_label_hours:
+              fill: 0.009
+              overlap_other: 0.002
+              gap: 0.007
+            missing_label_total_hours: 0.019
+            speaker_conflict_hours: 0.032
+            unverified_reason_hours:
+              reference_speaker_unmapped: 0.866
+              text_check_mismatch: 0.424
+              partial_reference_overlap: 0.322
+              empty_text: 0.145
+              chunk_edge: 0.039
+              reference_speaker_conflict: 0.032
+              fill_text_check_mismatch: 0.016
+              text_check_missing: 0.011
+              invalid_span: 0.011
+              unterminated: 0.0
+              implausible_char_rate: 0.0
+            teacher_agreed_covered_segments: 3735
+            teacher_agreed_covered_hours: 4.882
+            human_differs_segments: 449
+            human_differs_hours: 0.609
+            human_differs_share: 0.1202
+            char_ops_per_100_teacher_chars:
+              teacher_extra: 1.803
+              human_extra: 1.031
+              sub: 2.212
+            top_substitutions_human_to_teacher:
+              -   - 它->他
+                  - 69
+              -   - 他->它
+                  - 36
+              -   - 呀->啊
+                  - 26
+              -   - 了->的
+                  - 23
+              -   - 嗯->呃
+                  - 22
+              -   - 得->的
+                  - 20
+              -   - 吧->嘛
+                  - 16
+              -   - 这->那
+                  - 16
+              -   - 您->你
+                  - 13
+              -   - 吗->嘛
+                  - 11
+              -   - 啊->呀
+                  - 11
+              -   - 她->他
+                  - 11
+              -   - 那->这
+                  - 10
+              -   - 啊->呃
+                  - 9
+              -   - 这->就
+                  - 9
+              -   - 呃->嗯
+                  - 9
+              -   - 的->了
+                  - 9
+              -   - 嘛->吗
+                  - 9
+              -   - 啦->了
+                  - 8
+              -   - 是->就
+                  - 8
+              -   - 再->在
+                  - 7
+              -   - 嘛->吧
+                  - 7
+              -   - 在->再
+                  - 7
+              -   - 就->这
+                  - 7
+              -   - 呃->啊
+                  - 7
+              -   - 这->的
+                  - 6
+              -   - 唉->哎
+                  - 6
+              -   - 工->公
+                  - 6
+              -   - 地->的
+                  - 6
+              -   - 呢->的
+                  - 6
+            rules:
+              teacher_agreement_cer: 10.0
+              human_differs_cer: 10.0
+    provenance:
+      registered_at: '2026-11-03'
