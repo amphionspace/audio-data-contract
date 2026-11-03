@@ -100,7 +100,7 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [magicdata_ramc_farsim_meeting_sot](data-versions.md#magicdata_ramc_farsim_meeting_sot) | zh | 带说话人标注的语音识别 | 566.6 | RAMC 对话加混响噪声模拟远场的窗口 | 没有 |
 | [magicdata_ramc_meeting_sot](data-versions.md#magicdata_ramc_meeting_sot) | zh | 带说话人标注的语音识别 | — | MagicData-RAMC 对话切窗的按人转写数据 | 没有 |
 | [mdcc](data-versions.md#mdcc) | yue | 语音识别 | 73.6 | 香港粤语有声书朗读（MDCC）；含加噪版 | 快照 20260914 |
-| [mir1k](data-versions.md#mir1k) | zh | noise | 2.2 | 中文流行歌卡拉 OK 片段，人声伴奏分轨（MIR-1K） | 没有 |
+| [mir1k](data-versions.md#mir1k) | zh | noise | 2.2 | 中文流行歌卡拉 OK 片段，人声伴奏分轨（MIR-1K） | `备份桶:audio-data-contract/datasets/mir1k/` |
 | [police_asr_unified](data-versions.md#police_asr_unified) | zh | 语音识别 | 805.6 | 警务合成语音统合版（V1–V6 合并） | 部分版本：快照 20260914、快照 20260921 |
 | [police_scene_bench](data-versions.md#police_scene_bench) | zh | 语音识别、热词增强语音识别、带说话人标注的语音识别、目标说话人语音识别 | 70.7 | 鼎桥验收表各使用场景的模拟评测，仅评测 | `备份桶:audio-data-contract/datasets/police_scene_bench/` |
 | [police_terms_single](data-versions.md#police_terms_single) | zh | 语音识别 | 1.7 | 警务术语单说测试集，仅评测 | 没有 |
@@ -138,8 +138,8 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [asr_babble_bench](data-versions.md#asr_babble_bench) | en、zh | 语音识别 | 10.1 | 普通 ASR 背景人声评测集（中英），仅评测 | `备份桶:audio-data-contract/datasets/asr_babble_bench/` |
 | [asr_babble_speech_pool](data-versions.md#asr_babble_speech_pool) | en、zh | 语音识别 | 85.5 | 带房间背景人声的中英 ASR 训练句 | 没有 |
 | [asr_distant_talk_pool](data-versions.md#asr_distant_talk_pool) | en、zh | 语音识别 | 55.2 | — | 没有 |
-| [babble_noise_synth](data-versions.md#babble_noise_synth) | en、zh | noise | 50.0 | 合成中英背景人声噪声（5–20 人叠加） | 没有 |
-| [babble_noise_train](data-versions.md#babble_noise_train) | en、zh | noise | 50.0 | 训练用合成背景人声噪声（中英） | 没有 |
+| [babble_noise_synth](data-versions.md#babble_noise_synth) | en、zh | noise | 50.0 | 合成中英背景人声噪声（5–20 人叠加） | `备份桶:audio-data-contract/datasets/noise_open/` |
+| [babble_noise_train](data-versions.md#babble_noise_train) | en、zh | noise | 50.0 | 训练用合成背景人声噪声（中英） | `备份桶:audio-data-contract/datasets/babble_noise_train/` |
 | [cs_dialogue_meeting_sot](data-versions.md#cs_dialogue_meeting_sot) | zh、zh-en | 带说话人标注的语音识别 | — | CS-Dialogue 中英对话切窗的按人转写数据 | 没有 |
 | [cs_dialogue_mix](data-versions.md#cs_dialogue_mix) | en、zh | 语音识别 | 31.0 | CS-Dialogue 对话中的中英混说语句 | 部分版本：快照 20260914 |
 | [cumix2017](data-versions.md#cumix2017) | en、yue | 语音识别 | 10.9 | 粤英语码转换语音（CUMIX2017） | 快照 20260914 |
@@ -149,7 +149,7 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [emilia2_mix](data-versions.md#emilia2_mix) | en、zh | 目标说话人语音识别 | 35,744.6 | Emilia2 长音频合成的 2/3 人目标说话人混合 | 没有 |
 | [emilia2_short](data-versions.md#emilia2_short) | en、zh | 语音识别 | 5,102.9 | Emilia2 中英短音频普通转写 | 没有 |
 | [emilia_yodas](data-versions.md#emilia_yodas) | de、en、fr、ja、ko、zh | 语音识别、语音合成 | 113,820.6 | Emilia-YODAS 多语种 YouTube 语音 | `TTS 桶:Emilia-YODAS/`（原始数据） |
-| [farfield_speech_noise_1spk](data-versions.md#farfield_speech_noise_1spk) | en、zh | noise | 32.7 | 1–3 人远场人声噪声（Emilia 干声加混响） | 没有 |
+| [farfield_speech_noise_1spk](data-versions.md#farfield_speech_noise_1spk) | en、zh | noise | 32.7 | 1–3 人远场人声噪声（Emilia 干声加混响） | `备份桶:audio-data-contract/datasets/farfield_speech_noise_1spk/`、`备份桶:audio-data-contract/datasets/farfield_speech_noise_2spk/`、`备份桶:audio-data-contract/datasets/farfield_speech_noise_3spk/` |
 | [genshin_voice](data-versions.md#genshin_voice) | en-US、ja、ko、zh | 语音合成 | 1,039.7 | 《原神》多语配音，TTS 用 | `TTS 桶:genshin-voice/`（原始数据） |
 | [hard_hw_sft](data-versions.md#hard_hw_sft) | en、zh | 热词增强语音识别 | 109.4 | 热词难例 SFT 数据（ShareGPT 格式） | 没有 |
 | [hotword_bench](data-versions.md#hotword_bench) | en、zh | 热词增强语音识别 | — | 中英热词评测集，仅评测 | 没有 |
@@ -187,7 +187,7 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 
 | 数据集 | 语言 | 任务 | 时长（小时） | 简介 | COS |
 |---|---|---|---:|---|---|
-| [audioset_road_traffic](data-versions.md#audioset_road_traffic) | und | noise | — | AudioSet 道路交通噪声 | 快照 20260914 |
+| [audioset_road_traffic](data-versions.md#audioset_road_traffic) | und | noise | — | AudioSet 道路交通噪声 | 快照 20260914、`备份桶:audio-data-contract/datasets/audioset_road_traffic/` |
 | [banspeech_bn](data-versions.md#banspeech_bn) | bn | 语音识别 | 6.5 | 孟加拉语语音识别数据（BanSpeech） | 快照 20260914 |
 | [cbtts_bn](data-versions.md#cbtts_bn) | bn | 语音识别 | 20.1 | 孟加拉语语音识别数据（CBTTS） | 快照 20260914 |
 | [ciempiess](data-versions.md#ciempiess) | es | 语音识别 | 18.4 | 墨西哥西班牙语广播语音（CIEMPIESS LIGHT） | 快照 20260914 |
@@ -200,9 +200,9 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [common_voice_ja](data-versions.md#common_voice_ja) | ja | 语音识别 | 48.2 | 众包朗读日语（Common Voice） | 快照 20260914 |
 | [common_voice_ko](data-versions.md#common_voice_ko) | ko | 语音识别 | 2.6 | 众包朗读韩语（Common Voice） | 快照 20260914 |
 | [common_voice_ru](data-versions.md#common_voice_ru) | ru | 语音识别 | 69.9 | 众包朗读俄语（Common Voice） | 快照 20260914 |
-| [demand](data-versions.md#demand) | und | noise | 46.7 | 16 麦阵列录制的多环境噪声（DEMAND） | 没有 |
-| [dns5_noise_rir](data-versions.md#dns5_noise_rir) | und | rir、speech_enhancement | — | DNS Challenge 5 官方噪声与冲激响应包 | 没有 |
-| [dns5_noise_train](data-versions.md#dns5_noise_train) | und | noise、rir | 252.6 | 训练用 DNS5 噪声与模拟房间响应 | 没有 |
+| [demand](data-versions.md#demand) | und | noise | 46.7 | 16 麦阵列录制的多环境噪声（DEMAND） | `备份桶:audio-data-contract/datasets/demand/` |
+| [dns5_noise_rir](data-versions.md#dns5_noise_rir) | und | rir、speech_enhancement | — | DNS Challenge 5 官方噪声与冲激响应包 | `备份桶:audio-data-contract/datasets/dns5_noise_rir/` |
+| [dns5_noise_train](data-versions.md#dns5_noise_train) | und | noise、rir | 252.6 | 训练用 DNS5 噪声与模拟房间响应 | `备份桶:audio-data-contract/datasets/dns5_noise_train/` |
 | [emilia_ja](data-versions.md#emilia_ja) | ja | 语音识别 | 1,715.5 | Emilia 日语野外语音 | 快照 20260914 |
 | [emilia_ko](data-versions.md#emilia_ko) | ko | 语音识别 | 217.2 | Emilia 韩语野外语音 | 快照 20260914 |
 | [fleurs_ar](data-versions.md#fleurs_ar) | ar | 语音识别 | 8.2 | 多语朗读阿拉伯语部分（FLEURS） | 快照 20260914 |
@@ -213,27 +213,27 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [fleurs_ja](data-versions.md#fleurs_ja) | ja | 语音识别 | 10.7 | 多语朗读日语部分（FLEURS） | 快照 20260914 |
 | [fleurs_ko](data-versions.md#fleurs_ko) | ko | 语音识别 | 10.1 | 多语朗读韩语部分（FLEURS） | 快照 20260914 |
 | [fleurs_ru](data-versions.md#fleurs_ru) | ru | 语音识别 | 11.6 | 多语朗读俄语部分（FLEURS） | 快照 20260914 |
-| [fsd50k](data-versions.md#fsd50k) | und | noise、sound_event | 108.6 | 200 类声音事件（FSD50K） | 没有 |
+| [fsd50k](data-versions.md#fsd50k) | und | noise、sound_event | 108.6 | 200 类声音事件（FSD50K） | `备份桶:audio-data-contract/datasets/noise_open/` |
 | [galgame](data-versions.md#galgame) | ja | 语音合成 | 10,173.7 | 日语视觉小说配音，TTS 用 | `TTS 桶:Galgame-VisualNovel-Reupload/`（原始数据） |
 | [gigaspeech2_id](data-versions.md#gigaspeech2_id) | id | 语音识别、热词增强语音识别 | 1,980.1 | 印尼语网络语音（GigaSpeech 2）；含热词版 | 快照 20260914 |
 | [koreaspeech](data-versions.md#koreaspeech) | ko | 语音识别 | 3,828.3 | 韩语语音识别数据（KoreaSpeech） | 快照 20260914 |
-| [meeting_room_noise](data-versions.md#meeting_room_noise) | und | noise | 2.5 | 真实会议室底噪（AliMeeting、AISHELL-4） | 没有 |
+| [meeting_room_noise](data-versions.md#meeting_room_noise) | und | noise | 2.5 | 真实会议室底噪（AliMeeting、AISHELL-4） | `备份桶:audio-data-contract/datasets/meeting_room_noise/` |
 | [mgb2](data-versions.md#mgb2) | ar | 语音识别 | 1,215.5 | 半岛电视台阿拉伯语广播（MGB-2） | 快照 20260914 |
-| [mit_ir_survey](data-versions.md#mit_ir_survey) | und | rir | 0.0 | MIT 日常环境实测冲激响应（270 条） | 没有 |
+| [mit_ir_survey](data-versions.md#mit_ir_survey) | und | rir | 0.0 | MIT 日常环境实测冲激响应（270 条） | `备份桶:audio-data-contract/datasets/mit_ir_survey/` |
 | [mls_de](data-versions.md#mls_de) | de | 语音识别 | 1,995.1 | 德语有声书朗读（MLS） | 快照 20260914 |
 | [mls_es](data-versions.md#mls_es) | es | 语音识别 | 937.7 | 西班牙语有声书朗读（MLS） | 快照 20260914 |
 | [mls_fr](data-versions.md#mls_fr) | fr | 语音识别 | 1,096.7 | 法语有声书朗读（MLS） | 快照 20260914 |
-| [musan](data-versions.md#musan) | und | noise | — | 噪声与音乐素材（MUSAN） | 快照 20260914 |
+| [musan](data-versions.md#musan) | und | noise | — | 噪声与音乐素材（MUSAN） | 快照 20260914、`备份桶:audio-data-contract/datasets/musan/` |
 | [open_large_bn](data-versions.md#open_large_bn) | bn | 语音识别 | 5,045.8 | 孟加拉语大规模语音识别数据 | 快照 20260914 |
-| [real_rir_slr28](data-versions.md#real_rir_slr28) | und | 音频增强、rir | 0.1 | 真实房间冲激响应（OpenSLR 28） | 快照 20260914 |
+| [real_rir_slr28](data-versions.md#real_rir_slr28) | und | 音频增强、rir | 0.1 | 真实房间冲激响应（OpenSLR 28） | 快照 20260914、`备份桶:audio-data-contract/datasets/real_rir_slr28/` |
 | [rulibrispeech_ru](data-versions.md#rulibrispeech_ru) | ru | 语音识别 | 98.2 | 俄语有声书朗读（Russian LibriSpeech） | 快照 20260914 |
-| [sim_rir_slr26](data-versions.md#sim_rir_slr26) | und | rir | — | 模拟房间冲激响应（OpenSLR 26） | 快照 20260914 |
-| [sim_rir_slr28](data-versions.md#sim_rir_slr28) | und | rir | — | 模拟房间冲激响应（OpenSLR 28） | 快照 20260914 |
+| [sim_rir_slr26](data-versions.md#sim_rir_slr26) | und | rir | — | 模拟房间冲激响应（OpenSLR 26） | 快照 20260914、`备份桶:audio-data-contract/datasets/sim_rir_slr26/` |
+| [sim_rir_slr28](data-versions.md#sim_rir_slr28) | und | rir | — | 模拟房间冲激响应（OpenSLR 28） | 快照 20260914、`备份桶:audio-data-contract/datasets/sim_rir_slr28/` |
 | [slr37_bn](data-versions.md#slr37_bn) | bn | 语音识别 | 5.0 | 孟加拉语高质量 TTS 朗读（OpenSLR 37） | 快照 20260914 |
-| [voices_noise](data-versions.md#voices_noise) | und | noise | 128.3 | VOiCES 真实房间噪声与背景人声 | 没有 |
+| [voices_noise](data-versions.md#voices_noise) | und | noise | 128.3 | VOiCES 真实房间噪声与背景人声 | `备份桶:audio-data-contract/datasets/voices/` |
 | [voxconverse](data-versions.md#voxconverse) | und | 说话人分段与归属 | 43.5 | YouTube 视频说话人日志评测（VoxConverse） | 没有 |
-| [wham](data-versions.md#wham) | und | noise | — | WHAM! 噪声训练划分 | 没有 |
-| [wham_noise](data-versions.md#wham_noise) | und | noise | 81.7 | 湾区餐厅、咖啡馆等真实环境噪声（WHAM!） | 没有 |
+| [wham](data-versions.md#wham) | und | noise | — | WHAM! 噪声训练划分 | `备份桶:audio-data-contract/datasets/wham/` |
+| [wham_noise](data-versions.md#wham_noise) | und | noise | 81.7 | 湾区餐厅、咖啡馆等真实环境噪声（WHAM!） | `备份桶:audio-data-contract/datasets/noise_open/` |
 | [yodas_ar](data-versions.md#yodas_ar) | ar | 语音识别 | 289.7 | YouTube 多语语音阿拉伯语部分（YODAS） | 快照 20260914 |
 | [yodas_bn](data-versions.md#yodas_bn) | bn | 语音识别 | 27.1 | YouTube 多语语音孟加拉语部分（YODAS） | 快照 20260914 |
 | [yodas_de](data-versions.md#yodas_de) | de | 语音识别 | 3,062.9 | YouTube 多语语音德语部分（YODAS） | 快照 20260914 |

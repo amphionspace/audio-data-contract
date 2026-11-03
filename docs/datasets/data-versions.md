@@ -1261,7 +1261,7 @@ MagicData-RAMC 对话切窗的按人转写数据
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
-| [mir1k@modelscope-20261017](../../catalog/mir1k.yaml#L1) | 2.2 | 已登记 | 没有 |
+| [mir1k@modelscope-20261017](../../catalog/mir1k.yaml#L1) | 2.2 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/mir1k/` |
 
 - `mir1k@modelscope-20261017`：MIR-1K：1000 段中文流行歌卡拉 OK 片段（3–12 秒，共 2.22 小时），16 kHz 双声道 16 bit，左声道伴奏、右声道人声；`Wavfile/` 是切好的片段，`Lyrics/` 是 Big5 编码的歌词。两个声道相加即带伴奏的歌（近似外放的歌曲），只用于评测里「只有歌声、没有人说话」的场景
 
@@ -1797,7 +1797,7 @@ WenetSpeech-Yue 全量，含非 clean 部分
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
-| [babble_noise_synth@v1-20261013](../../catalog/babble_noise_synth.yaml#L1) | 50.0 | 已登记 | 没有 |
+| [babble_noise_synth@v1-20261013](../../catalog/babble_noise_synth.yaml#L1) | 50.0 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/noise_open/` |
 
 - `babble_noise_synth@v1-20261013`：合成背景人声（babble）噪声：每条 30 秒，叠加 5–20 个不同说话人，中英文各 3000 条（train 2600、dev 200、test 200）；train/dev/test 的说话人互不重叠。每条的说话人、增益和来源句子见 manifest.jsonl
 
@@ -1809,8 +1809,8 @@ WenetSpeech-Yue 全量，含非 clean 部分
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
-| [babble_noise_train@v1-20261017](../../catalog/babble_noise_train.yaml#L1) | 43.3 | 已登记 | 没有 |
-| [babble_noise_train@v2-20261024](../../catalog/babble_noise_train.yaml#L51) | 50.0 | 已登记 | 没有 |
+| [babble_noise_train@v1-20261017](../../catalog/babble_noise_train.yaml#L1) | 43.3 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/babble_noise_train/` |
+| [babble_noise_train@v2-20261024](../../catalog/babble_noise_train.yaml#L51) | 50.0 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/babble_noise_train/` |
 
 - `babble_noise_train@v1-20261017`：训练用合成背景人声（babble）：babble_noise_synth 的 zh、en 训练划分（每种语言 2,600 条，30 秒，5–20 位说话人同时说，16 kHz 单声道 FLAC），按 Lhotse 录音清单登记，可作为 noise_sources 或空目标的 nonspeech_sources。评测的 babble 用 dev/test 说话人，与训练说话人互不重叠。脚本 scripts/ts_robust/register_babble_noise.py
 - `babble_noise_train@v2-20261024`：训练用房间背景人声（babble）：按 asr_babble_bench@v2-20261023 的合成方法（同一个渲染函数）用训练划分的说话人生成，每段 30 秒、16–24 人同时连续说话、每人站在 SLR28 中/大模拟房间的不同位置，听不出某一个人说的内容；中文说话人取自 AISHELL-2、KeSpeech train，英文取自 LibriSpeech train，与评测的背景人声和目标说话人互不重叠。按 Lhotse 录音清单登记，可作为 noise_sources、nonspeech_sources 或普通 ASR 空目标片段的来源。v1-20261017 是 5–20 人、无混响，可能听得清某句话。脚本 scripts/ts_robust/build_babble_noise_room.py
@@ -1947,9 +1947,9 @@ Emilia-YODAS 多语种 YouTube 语音
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
-| [farfield_speech_noise_1spk@20261014](../../catalog/amphionasr_v4.yaml#L3283) | 25.5 | 已登记 | 没有 |
-| [farfield_speech_noise_2spk@20261014](../../catalog/amphionasr_v4.yaml#L3412) | 30.4 | 已登记 | 没有 |
-| [farfield_speech_noise_3spk@20261014](../../catalog/amphionasr_v4.yaml#L3541) | 32.7 | 已登记 | 没有 |
+| [farfield_speech_noise_1spk@20261014](../../catalog/amphionasr_v4.yaml#L3283) | 25.5 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/farfield_speech_noise_1spk/` |
+| [farfield_speech_noise_2spk@20261014](../../catalog/amphionasr_v4.yaml#L3412) | 30.4 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/farfield_speech_noise_2spk/` |
+| [farfield_speech_noise_3spk@20261014](../../catalog/amphionasr_v4.yaml#L3541) | 32.7 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/farfield_speech_noise_3spk/` |
 
 - `farfield_speech_noise_1spk@20261014`：单人远场人声噪声。Emilia 中文或英文干声卷上一条远场房间冲激响应，16 kHz 单声道
 - `farfield_speech_noise_2spk@20261014`：两人远场人声噪声。由两条不同说话人的 1spk 音频错开开口时间后叠加
@@ -2651,7 +2651,7 @@ AudioSet 道路交通噪声
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
-| [audioset_road_traffic@legacy-20260804](../../catalog/audioset_road_traffic.yaml#L1) | — | 未登记 | 快照 20260914 |
+| [audioset_road_traffic@legacy-20260804](../../catalog/audioset_road_traffic.yaml#L1) | — | 未登记 | 快照 20260914、`amphion-audio-backup-1373259071:audio-data-contract/datasets/audioset_road_traffic/` |
 
 ### banspeech_bn
 
@@ -2805,9 +2805,9 @@ AudioSet 道路交通噪声
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
-| [demand@hf-voice-biomarkers-20261023](../../catalog/demand.yaml#L1) | 46.7 | 已登记 | 没有 |
-| [demand@zenodo-1227121-16k-20261023](../../catalog/demand.yaml#L62) | 22.7 | 已登记 | 没有 |
-| [demand@zenodo-1227121-48k-20261023](../../catalog/demand.yaml#L296) | 24.0 | 已登记 | 没有 |
+| [demand@hf-voice-biomarkers-20261023](../../catalog/demand.yaml#L1) | 46.7 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/demand/` |
+| [demand@zenodo-1227121-16k-20261023](../../catalog/demand.yaml#L62) | 22.7 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/demand/` |
+| [demand@zenodo-1227121-48k-20261023](../../catalog/demand.yaml#L296) | 24.0 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/demand/` |
 
 - `demand@hf-voice-biomarkers-20261023`：DEMAND 多通道环境噪声：16 麦阵列在 18 种真实环境录的 5 分钟噪声（厨房、客厅、洗衣房、田野、公园、河边、走廊、会议室、办公室、食堂、餐馆、车站、广场、街道、咖啡馆、公交、轿车、地铁），每个通道一个单声道 WAV。这份 parquet 有 16 kHz（17 个环境，没有咖啡馆 SCAFE）和 48 kHz（18 个环境）两种采样率，共 560 个单通道文件、46.7 小时。可当加噪素材用，16 个通道彼此高度相关，混入时按录音取一个通道即可。这份镜像丢了环境名，要按环境挑噪声用 `demand@zenodo-1227121-16k-20261023`
 - `demand@zenodo-1227121-16k-20261023`：DEMAND 环境噪声 16 kHz 原版，带环境名：16 麦阵列在 17 种真实环境各录 5 分钟（D 家庭：厨房、客厅、洗衣房；N 户外：运动场、公园、小河边；O 办公：走廊、会议室、办公室；P 公共场所：食堂、餐馆、地铁站；S 街道：广场、路口；T 交通：公交、轿车、地铁），每个通道一个单声道 WAV，共 272 个文件、22.7 小时。咖啡馆 SCAFE 官方只有 48 kHz，见 48 kHz 原版。按环境挑噪声用这一版；16 个通道彼此高度相关，混入时按环境取一个通道即可
@@ -2821,7 +2821,7 @@ DNS Challenge 5 官方噪声与冲激响应包
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
-| [dns5_noise_rir@official-noise-rir-20260924](../../catalog/dns5_noise_rir.yaml#L1) | — | 未登记 | 没有 |
+| [dns5_noise_rir@official-noise-rir-20260924](../../catalog/dns5_noise_rir.yaml#L1) | — | 未登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/dns5_noise_rir/` |
 
 - `dns5_noise_rir@official-noise-rir-20260924`：官方脚本列出的全部 7 个 AudioSet 噪声包、2 个 Freesound 噪声包及 1 个脉冲响应包；不包含干净语音
 
@@ -2833,7 +2833,7 @@ DNS Challenge 5 官方噪声与冲激响应包
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
-| [dns5_noise_train@v1-20261016](../../catalog/dns5_noise_train.yaml#L1) | 252.6 | 已登记 | 没有 |
+| [dns5_noise_train@v1-20261016](../../catalog/dns5_noise_train.yaml#L1) | 252.6 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/dns5_noise_train/` |
 
 - `dns5_noise_train@v1-20261016`：训练用 DNS5 噪声与模拟房间响应：AudioSet 与 Freesound 噪声（16 kHz 单声道 FLAC，≤30 s，RMS 归一到 −30 dBFS），stationary 为电平稳定、适合做噪声底的片段；rir 为 impulse_responses_000 的模拟房间响应。已跳过 ts_asr_benchmark v3 用到的片段与哈希最小的 300 个响应，训练与评测互不重叠。提取脚本 scripts/ts_robust/prepare_training_noise.py
 
@@ -2965,7 +2965,7 @@ Emilia 韩语野外语音
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
-| [fsd50k@zenodo-4060432-20261013](../../catalog/open_noise.yaml#L1) | 108.6 | 已登记 | 没有 |
+| [fsd50k@zenodo-4060432-20261013](../../catalog/open_noise.yaml#L1) | 108.6 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/noise_open/` |
 
 - `fsd50k@zenodo-4060432-20261013`：FSD50K：200 类 AudioSet 本体声音事件，44.1 kHz 单声道 16 bit，共 51197 条（dev 40966、eval 10231）；可按 ground_truth 的 Crowd、Chatter 等标签筛选背景人声
 
@@ -3014,7 +3014,7 @@ Emilia 韩语野外语音
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
-| [meeting_room_noise@v2-20261014](../../catalog/meeting_room_noise.yaml#L1) | 2.5 | 已登记 | 没有 |
+| [meeting_room_noise@v2-20261014](../../catalog/meeting_room_noise.yaml#L1) | 2.5 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/meeting_room_noise/` |
 
 - `meeting_room_noise@v2-20261014`：真实会议室底噪：从 AliMeeting 与 AISHELL-4 训练集远场阵列录音里截取无人说话的片段，每场会议取 1 个麦克风拼成 1 条，共 209 条、2.48 小时。先按标注空隙（前后扩 0.5 秒、剔除比该场底噪高 10 dB 的突发声）取候选，再每 4 秒用 Qwen3-ASR 转写，有文字就丢弃，因为部分会议有未标注的说话人。噪声已带录制房间的混响
 
@@ -3038,8 +3038,8 @@ MIT 日常环境实测冲激响应（270 条）
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
-| [mit_ir_survey@flac16k-20261026](../../catalog/mit_ir_survey.yaml#L54) | 0.0 | 已登记 | 没有 |
-| [mit_ir_survey@modelscope-benjamin-paine-20261025](../../catalog/mit_ir_survey.yaml#L1) | 0.0 | 已登记 | 没有 |
+| [mit_ir_survey@flac16k-20261026](../../catalog/mit_ir_survey.yaml#L54) | 0.0 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/mit_ir_survey/` |
+| [mit_ir_survey@modelscope-benjamin-paine-20261025](../../catalog/mit_ir_survey.yaml#L1) | 0.0 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/mit_ir_survey/` |
 
 - `mit_ir_survey@flac16k-20261026`：MIT 真实环境冲激响应的 16 kHz 训练版：270 条 RIR 从 32 kHz 按 2:1 多相滤波降采样到 16 kHz，存成 24 位单声道 FLAC，带 lhotse 录音清单，可直接放进训练的 rir_sources。文件按调查编号命名（mit-ir-NNN），场所类别、说明与原文件名在 places 元数据文件里
 - `mit_ir_survey@modelscope-benjamin-paine-20261025`：MIT 真实环境冲激响应（RIR）：志愿者两周日常生活里到过的地方（办公室、教室、餐厅、商场、地铁站、浴室、车里、户外等 68 类）实测的 RIR，声源和麦克风相距 1.5 米。共 270 条，32 kHz 单声道。可给干净语音加真实混响，补充模拟 RIR 和 `real_rir_slr28`
@@ -3088,7 +3088,7 @@ MIT 日常环境实测冲激响应（270 条）
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
-| [musan@legacy-20260804](../../catalog/musan.yaml#L1) | — | 未登记 | 快照 20260914 |
+| [musan@legacy-20260804](../../catalog/musan.yaml#L1) | — | 未登记 | 快照 20260914、`amphion-audio-backup-1373259071:audio-data-contract/datasets/musan/` |
 
 ### open_large_bn
 
@@ -3110,8 +3110,8 @@ MIT 日常环境实测冲激响应（270 条）
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
-| [real_rir_slr28@legacy-20260804](../../catalog/real_rir_slr28.yaml#L1) | — | 未登记 | 快照 20260914 |
-| [real_rir_slr28@prepared-20260908](../../catalog/icefall_runtime.yaml#L4474) | 0.1 | 已登记 | 快照 20260914 |
+| [real_rir_slr28@legacy-20260804](../../catalog/real_rir_slr28.yaml#L1) | — | 未登记 | 快照 20260914、`amphion-audio-backup-1373259071:audio-data-contract/datasets/real_rir_slr28/` |
+| [real_rir_slr28@prepared-20260908](../../catalog/icefall_runtime.yaml#L4474) | 0.1 | 已登记 | 快照 20260914、`amphion-audio-backup-1373259071:audio-data-contract/datasets/real_rir_slr28/` |
 
 - `real_rir_slr28@prepared-20260908`：Real room impulse responses only; not speech/transcription training examples
 
@@ -3135,7 +3135,7 @@ MIT 日常环境实测冲激响应（270 条）
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
-| [sim_rir_slr26@legacy-20260804](../../catalog/sim_rir_slr26.yaml#L1) | — | 未登记 | 快照 20260914 |
+| [sim_rir_slr26@legacy-20260804](../../catalog/sim_rir_slr26.yaml#L1) | — | 未登记 | 快照 20260914、`amphion-audio-backup-1373259071:audio-data-contract/datasets/sim_rir_slr26/` |
 
 ### sim_rir_slr28
 
@@ -3145,7 +3145,7 @@ MIT 日常环境实测冲激响应（270 条）
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
-| [sim_rir_slr28@legacy-20260804](../../catalog/sim_rir_slr28.yaml#L1) | — | 未登记 | 快照 20260914 |
+| [sim_rir_slr28@legacy-20260804](../../catalog/sim_rir_slr28.yaml#L1) | — | 未登记 | 快照 20260914、`amphion-audio-backup-1373259071:audio-data-contract/datasets/sim_rir_slr28/` |
 
 ### slr37_bn
 
@@ -3167,7 +3167,7 @@ VOiCES 真实房间噪声与背景人声
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
-| [voices_noise@hf-prummn-20261023](../../catalog/voices.yaml#L69) | 128.3 | 已登记 | 没有 |
+| [voices_noise@hf-prummn-20261023](../../catalog/voices.yaml#L69) | 128.3 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/voices/` |
 
 - `voices_noise@hf-prummn-20261023`：VOiCES 真实房间噪声：4 个房间里只放干扰声、没有目标说话人时的录音，切成 15 秒一段，16 kHz 单声道。分四组：babble（多人说话背景，全部麦克风，58.7 小时）、none（不放干扰的房间底噪，远处麦克风，3.7 小时）、distractors_close（babble、音乐、电视、无干扰四种，近处麦克风，36.7 小时）、distractors_far（同四种，远处麦克风，29.3 小时）。都带真实房间混响，加噪时不要再叠混响。babble 和电视片段里含人声，做“无人说话”负样本前要先筛
 
@@ -3191,7 +3191,7 @@ WHAM! 噪声训练划分
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
-| [wham@tr-20261014](../../catalog/amphionasr_v4.yaml#L3670) | — | 未登记 | 没有 |
+| [wham@tr-20261014](../../catalog/amphionasr_v4.yaml#L3670) | — | 未登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/wham/` |
 
 - `wham@tr-20261014`：WHAM training noise. Paths point at noise_open/wham_noise/extracted/wham_noise/tr.
 
@@ -3203,7 +3203,7 @@ WHAM! 噪声训练划分
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
-| [wham_noise@official-20261013](../../catalog/open_noise.yaml#L177) | 81.7 | 已登记 | 没有 |
+| [wham_noise@official-20261013](../../catalog/open_noise.yaml#L177) | 81.7 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/noise_open/` |
 
 - `wham_noise@official-20261013`：WHAM! 噪声：旧金山湾区餐厅、咖啡馆、酒吧和公园的真实环境噪声，双声道 16 kHz float32，共 28000 条（tr 20000、cv 5000、tt 3000）；已切掉听得清的人声，保留含糊的背景人声
 
