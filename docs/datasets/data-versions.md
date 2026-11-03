@@ -1123,7 +1123,9 @@ GRPO 热词挖掘候选（未背过的中文热词提示，含近音易混词）
 |---|---:|---|---|
 | [legco_speech@icefall-20260908](../../catalog/icefall_runtime.yaml#L2266) | 20,227.2 | 已登记 | 快照 20260914 |
 | [legco_speech@legacy-20260804](../../catalog/icefall_base.yaml#L1866) | 20,227.2 | 已登记 | 快照 20260914 |
+| [legco_speech@qwen3-asr-v1-20261103](../../catalog/legco_speech_qwen.yaml#L2) | — | 未登记 | 没有 |
 
+- `legco_speech@qwen3-asr-v1-20261103`：LegCo-Speech（香港立法会）粤语训练集（9,445,794 段 / 20,227.2 h），原标注是繁体口语粤语、带语气词，看起来是机器转写。 用共享的 Qwen3-ASR-1.7B 逐段转写整段音频文件，按粤语版 SpeechIO TextNorm 算与原标注的字错误率；试跑 2,000 条整体 8.62%。 注意：清单里每条 supervision 的 start 都是 0，但语音在文件里偏后，只截 [0, duration] 转写时 CER 升到 11.75%（开头混进前一句、结尾被截掉），按 supervision 截音频训练会有同样的错位。 目前只记录转写和错误率，不删数据；保留规则在看过被拒样本后再定
 - 含派生版本（与源数据可能重叠）
 
 ### m3ed_ser
