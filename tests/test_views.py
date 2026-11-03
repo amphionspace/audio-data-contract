@@ -139,11 +139,14 @@ def test_registered_local_views_are_valid_and_resolvable(capsys):
     datasets = load_catalog(ROOT / "catalog")
     views = load_view_catalog(ROOT / "views", datasets)
 
-    assert len(views) == 124
+    assert len(views) == 127
     assert all(view.materialization == "full" for view in views)
     hotwords = resolve_view(views, datasets, "aishell2/hotwords", "hotwords-v1-20261102")
     assert hotwords.key == "aishell2@hotwords-v1-20261102"
     assert views.get("aishell2/hotwords", "hotwords-v1-20261102").source.version == "train-punc-v1-20261102"
+    allspk = resolve_view(views, datasets, "magicdata_ramc/allspk-asr", "allspk-asr-v1-20261103")
+    assert allspk.key == "magicdata_ramc@allspk-asr-v1-20261103"
+    assert views.get("magicdata_ramc/allspk-asr", "allspk-asr-v1-20261103").source.version == "punc-written-v1-20261029"
     labels = resolve_view(
         views, datasets, "ts_asr_benchmark/hotword-labels", "v4-hotword-labels-20261102"
     )
@@ -182,4 +185,4 @@ def test_registered_local_views_are_valid_and_resolvable(capsys):
         assert views.get(view_id, version).lineage_status == "exact"
 
     assert main(["validate-views", str(ROOT / "views"), str(ROOT / "catalog")]) == 0
-    assert json.loads(capsys.readouterr().out) == {"views": 124}
+    assert json.loads(capsys.readouterr().out) == {"views": 127}
