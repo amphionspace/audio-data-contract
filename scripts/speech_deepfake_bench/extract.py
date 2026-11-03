@@ -31,7 +31,7 @@ import tarfile
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from sources import SOURCES, SR  # noqa: E402
+from sources import SOURCES, SR
 
 ROOT_ALIAS = "speech_deepfake_bench"
 WRITERS = 16
@@ -117,7 +117,7 @@ def extract_archives(spec, staging, dest):
                 raise ValueError(f"unsafe member {name}")
         local = threading.local()
 
-        def copy(name):
+        def copy(name, path=path, local=local):
             if not hasattr(local, "zf"):
                 local.zf = zipfile.ZipFile(path)
             write_file(dest / name, local.zf.read(name))
@@ -155,6 +155,7 @@ def extract_tars(spec, staging, dest):
 def extract_hf_files(spec, data_root, name, dest):
     """Fetch the protocol's files one by one from an unpacked Hugging Face copy, sha256-checked."""
     import hashlib
+    import http.client
     import ssl
     import time
     import urllib.error
@@ -231,12 +232,12 @@ def extract_hf_files(spec, data_root, name, dest):
             try:
                 data = download(sample, attempt)
                 if len(data) != entry["size"] or (digest and hashlib.sha256(data).hexdigest() != digest):
-                    raise IOError(f"{sample}: size or sha256 differs from the Hub")
+                    raise OSError(f"{sample}: size or sha256 differs from the Hub")
                 write_file(target, data)
                 return
-            except Exception:
+            except (OSError, http.client.HTTPException):
                 time.sleep(min(60, 3 * (attempt + 1)))
-        raise IOError(f"{sample}: gave up")
+        raise OSError(f"{sample}: gave up")
 
     with cf.ThreadPoolExecutor(128) as pool:
         for done, _ in enumerate(pool.map(fetch, wanted), 1):

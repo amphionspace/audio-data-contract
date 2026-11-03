@@ -39,7 +39,7 @@ from audio_data_contract.catalog import validate_catalog
 from audio_data_contract.types import DatasetSpec
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from sources import DFA, SOURCES, SR  # noqa: E402
+from sources import DFA, SOURCES, SR
 
 DATASET_ID = "speech_deepfake_bench"
 ROOT_ALIAS = DATASET_ID
@@ -349,7 +349,7 @@ def declaration(by_split, index, data_root):
         "provenance": {
             "status": "complete",
             "synthetic": "partial",
-            "summary": "伪造语音检测公开评测集（SpoofRadar、DF-Arena），仅评测",
+            "summary": "伪造语音检测评测集（SpoofRadar、DF-Arena）",
             "description": (
                 "SpoofRadar v1.0 与 Speech-DF-Arena 两个伪造语音检测排行榜使用的 16 个公开评测集，只用于评测，不进训练。"
                 "每条记录的 target 为 bonafide（真人）或 spoof（伪造），metadata.protocols 保留两个榜单 protocol 中的原始样本 ID，"

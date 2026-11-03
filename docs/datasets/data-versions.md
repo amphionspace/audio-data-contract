@@ -2158,7 +2158,7 @@ AISHELL-1、LibriSpeech 合成的多人对话
 
 ### speech_deepfake_bench
 
-伪造语音检测公开评测集（SpoofRadar、DF-Arena），仅评测
+伪造语音检测评测集（SpoofRadar、DF-Arena）
 
 语言：ar、de、en、es、ro、ru、zh · 任务：deepfake_detection
 
