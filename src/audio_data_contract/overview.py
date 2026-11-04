@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import posixpath
 import re
 from collections import defaultdict
 from dataclasses import dataclass
@@ -339,7 +340,24 @@ def _cos_cell(
                 for other in found
             )
         ]
-    cell = "、".join(dict.fromkeys(_cos_label(location, full) for location in found))
+    labels = [_cos_label(location, full) for location in found]
+    if not full:
+        # Many mirrored directories in one bucket collapse to their common
+        # parent; data-versions.md lists each one.
+        groups = defaultdict(list)
+        for location in found:
+            if location[0] == "files":
+                groups[location[1]].append(location[2])
+        labels = []
+        for location in found:
+            paths = groups.get(location[1], []) if location[0] == "files" else []
+            if len(paths) < 3:
+                labels.append(_cos_label(location, full))
+            elif location[2] == paths[0]:
+                common = posixpath.commonpath(paths)
+                parent = ("files", location[1], f"{common}/" if common else "")
+                labels.append(f"{_cos_label(parent, full)} 下 {len(paths)} 个目录")
+    cell = "、".join(dict.fromkeys(labels))
     if any(spec.key not in locations for spec in specs):
         cell = "部分版本：" + cell
     return cell
