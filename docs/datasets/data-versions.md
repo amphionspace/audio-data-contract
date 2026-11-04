@@ -1183,7 +1183,7 @@ GRPO 热词挖掘候选（未背过的中文热词提示，含近音易混词）
 | [magicdata_ramc@alignment-v1-20261008](../../catalog/zh_source_alignment.yaml#L197) | 125.5 | 已登记 | 没有 |
 | [magicdata_ramc@allspk-asr-v1-20261103](../../catalog/allspk_asr_v1.yaml#L1) | — | 未登记 | 没有 |
 | [magicdata_ramc@allspk-ts-v1-20261104](../../catalog/allspk_ts_v1.yaml#L1) | — | 未登记 | 没有 |
-| [magicdata_ramc@asr-20261014](../../catalog/amphionasr_v4.yaml#L3136) | — | 未登记 | 没有 |
+| [magicdata_ramc@asr-20261014](../../catalog/amphionasr_v4.yaml#L3140) | — | 未登记 | 没有 |
 | [magicdata_ramc@clean-dual-pass-20261027](../../catalog/magicdata_ramc_clean_pass.yaml#L1) | 125.0 | 已登记 | 没有 |
 | [magicdata_ramc@clean-dual-qwen-moss-v1-20261008](../../catalog/zh_source_clean.yaml#L663) | 125.0 | 已登记 | 没有 |
 | [magicdata_ramc@diarization-benchmark-v1-20261021](../../catalog/diarization_benchmark.yaml#L275) | 20.6 | 已登记 | 没有 |
@@ -1197,7 +1197,7 @@ GRPO 热词挖掘候选（未背过的中文热词提示，含近音易混词）
 | [magicdata_ramc@speaker-identity-v1-20261028](../../catalog/ramc_speaker_identity.yaml#L2) | 125.0 | 已登记 | 没有 |
 | [magicdata_ramc@teacher-calibration-v1-20261009](../../catalog/diarization_raw_teacher-calibration.yaml#L2) | — | 未登记 | 没有 |
 | [magicdata_ramc@train-punc-v1-20261102](../../catalog/train_punc_v1.yaml#L143) | — | 未登记 | 没有 |
-| [magicdata_ramc@turn-taking-20261014](../../catalog/amphionasr_v4.yaml#L2863) | 403.5 | 已登记 | 没有 |
+| [magicdata_ramc@turn-taking-20261014](../../catalog/amphionasr_v4.yaml#L2867) | 403.5 | 已登记 | 没有 |
 | [magicdata_ramc@turn-taking-20261014-utts](../../catalog/ts_window_utts.yaml#L341) | 41.5 | 已登记 | 没有 |
 | [magicdata_ramc@turn-taking-20261014-utts-punc-20261102](../../catalog/train_punc_v1_derived.yaml#L1161) | — | 未登记 | 没有 |
 
@@ -1651,7 +1651,7 @@ WenetSpeech L 中的播客部分
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
-| [wenetspeech_podcast@l-20261014](../../catalog/amphionasr_v4.yaml#L3701) | 3,892.3 | 已登记 | 没有 |
+| [wenetspeech_podcast@l-20261014](../../catalog/amphionasr_v4.yaml#L3705) | 3,892.3 | 已登记 | 没有 |
 
 - `wenetspeech_podcast@l-20261014`：WenetSpeech L 集按录音路径分成 YouTube 或 podcast。这是全集，不是 replay 的 3000 小时抽样
 
@@ -1678,7 +1678,7 @@ WenetSpeech L 中的 YouTube 部分
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
-| [wenetspeech_youtube@l-20261014](../../catalog/amphionasr_v4.yaml#L3753) | 6,113.1 | 已登记 | 没有 |
+| [wenetspeech_youtube@l-20261014](../../catalog/amphionasr_v4.yaml#L3757) | 6,113.1 | 已登记 | 没有 |
 
 - `wenetspeech_youtube@l-20261014`：WenetSpeech L 集按录音路径分成 YouTube 或 podcast。这是全集，不是 replay 的 3000 小时抽样
 
@@ -1927,7 +1927,7 @@ Emilia2 中英短音频普通转写
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
 | [emilia2_short@short-20261014](../../catalog/amphionasr_v4.yaml#L2445) | 5,102.9 | 已登记 | 没有 |
-| [emilia2_short@short-lance-20261023](../../catalog/amphionasr_v4.yaml#L3890) | 5,102.9 | 已登记 | 没有 |
+| [emilia2_short@short-lance-20261023](../../catalog/amphionasr_v4.yaml#L3894) | 5,102.9 | 已登记 | 没有 |
 
 - `emilia2_short@short-20261014`：Emilia2 已抽出的 m4a-128k short。每条短音频是一条普通转写，只保留语言标签为纯中文或纯英文、时长 0.5～30 秒的片段。不使用 m4a-64k 和 asmr
 - `emilia2_short@short-lance-20261023`：与 short-20261014 相同的记录与记录 ID，音频改读 emilia2@tts-unified-v0.1 Lance 发布里的同一条 m4a-128k standalone short（按上游 short ID 与 m4a 文件名对应；发布里存的是同一份完整解码的 FLAC），训练不再为这些片段启动 ffmpeg。音频引用写入 Lance 样本时长。Lance 中没有对应样本的 20 条（zh 11、en 9）已去掉。全部片段都在 Lance 里，没有音频索引，因此也没有 Lance 记录索引，训练端走 JSONL 记录缓存；读取需要 open-audio-llm 支持指向其他数据集 Lance 发布的音频引用（code-v14 起）。生成脚本 scripts/build_emilia2_short_lance.py
@@ -1952,9 +1952,9 @@ Emilia-YODAS 多语种 YouTube 语音
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
-| [farfield_speech_noise_1spk@20261014](../../catalog/amphionasr_v4.yaml#L3283) | 25.5 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/farfield_speech_noise_1spk/` |
-| [farfield_speech_noise_2spk@20261014](../../catalog/amphionasr_v4.yaml#L3412) | 30.4 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/farfield_speech_noise_2spk/` |
-| [farfield_speech_noise_3spk@20261014](../../catalog/amphionasr_v4.yaml#L3541) | 32.7 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/farfield_speech_noise_3spk/` |
+| [farfield_speech_noise_1spk@20261014](../../catalog/amphionasr_v4.yaml#L3287) | 25.5 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/farfield_speech_noise_1spk/` |
+| [farfield_speech_noise_2spk@20261014](../../catalog/amphionasr_v4.yaml#L3416) | 30.4 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/farfield_speech_noise_2spk/` |
+| [farfield_speech_noise_3spk@20261014](../../catalog/amphionasr_v4.yaml#L3545) | 32.7 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/farfield_speech_noise_3spk/` |
 
 - `farfield_speech_noise_1spk@20261014`：单人远场人声噪声。Emilia 中文或英文干声卷上一条远场房间冲激响应，16 kHz 单声道
 - `farfield_speech_noise_2spk@20261014`：两人远场人声噪声。由两条不同说话人的 1spk 音频错开开口时间后叠加
@@ -1981,7 +1981,7 @@ Emilia-YODAS 多语种 YouTube 语音
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
-| [hard_hw_sft@hard-20261014](../../catalog/amphionasr_v4.yaml#L2579) | 109.4 | 已登记 | 没有 |
+| [hard_hw_sft@hard-20261014](../../catalog/amphionasr_v4.yaml#L2583) | 109.4 | 已登记 | 没有 |
 
 - `hard_hw_sft@hard-20261014`：热词难例 ShareGPT。每条系统提示都带 Hotwords。音频指向已注册源文件
 
@@ -2009,7 +2009,7 @@ Emilia-YODAS 多语种 YouTube 语音
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
-| [hw_sft@hw-20261014](../../catalog/amphionasr_v4.yaml#L2698) | 2,636.5 | 已登记 | 没有 |
+| [hw_sft@hw-20261014](../../catalog/amphionasr_v4.yaml#L2702) | 2,636.5 | 已登记 | 没有 |
 
 - `hw_sft@hw-20261014`：阶段 3 热词 ShareGPT。带 Hotwords 的行是热词转写，系统提示为空的行是普通转写。音频指向已注册源文件
 
@@ -2364,7 +2364,7 @@ AISHELL-1、LibriSpeech 合成的多人对话
 |---|---:|---|---|
 | [ts_interference_pool@v1-20261015](../../catalog/ts_interference_pool.yaml#L1) | — | 未登记 | 没有 |
 | [ts_interference_pool@v2-20261016](../../catalog/ts_interference_pool.yaml#L38) | 656.6 | 已登记 | 没有 |
-| [ts_interference_pool@v3-20261018](../../catalog/ts_interference_pool.yaml#L126) | 656.6 | 已登记 | 没有 |
+| [ts_interference_pool@v3-20261018](../../catalog/ts_interference_pool.yaml#L130) | 656.6 | 已登记 | 没有 |
 
 - `ts_interference_pool@v2-20261016`：在线混合 TS 数据的干扰人素材池 v2：单人语音片段 1–15 s，每说话人或每来源视频限量；片段按偏移取自源文件，不复制音频。已排除 AISHELL-2 与 LibriSpeech（AISHELLMix、LibriMix 的目标说话人来源）。质量列 loudness_dbfs、clip_ratio、voiced_ratio 写在 metadata（Emilia2 未测量）
 - `ts_interference_pool@v3-20261018`：干扰人素材池 v3：与 v2-20261016 相同的记录与记录 ID，其中 Emilia2 short 片段（zh 149,999、en 100,000）改为读 emilia2@tts-unified-v0.1 Lance 表内同一条 m4a-128k standalone short（按上游 short ID 与文件名对应，同一 FFmpeg 完整解码存为 FLAC，抽查 40 条与 m4a 解码 SNR ≥ 66.7 dB），训练不再为干扰人启动 ffmpeg；其余来源沿用 v2 的音频索引。Lance 中缺失的 1 条 zh 片段已去掉。生成脚本 scripts/ts_robust/build_interference_pool_v3.py；读取 Lance 片段需要 open-audio-llm 的干扰人池支持指向 Lance 发布的记录（feat/lance-interference-clips）
@@ -2595,7 +2595,7 @@ AISHELL-1、LibriSpeech 合成的多人对话
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
-| [vitw@2m-20261013](../../catalog/amphionasr_v4.yaml#L3833) | 1,085.4 | 已登记 | 没有 |
+| [vitw@2m-20261013](../../catalog/amphionasr_v4.yaml#L3837) | 1,085.4 | 已登记 | 没有 |
 | [vitw@icefall-20260908](../../catalog/icefall_runtime.yaml#L2568) | 1,085.4 | 已登记 | 快照 20260914 |
 | [vitw@legacy-20260804](../../catalog/icefall_base.yaml#L2179) | 1,085.4 | 已登记 | 快照 20260914 |
 | [vitw_far_field@icefall-20260908](../../catalog/icefall_runtime.yaml#L3075) | 77.3 | 已登记：远场子集 | 快照 20260914 |
@@ -3399,7 +3399,7 @@ WHAM! 噪声训练划分
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
-| [wham@tr-20261014](../../catalog/amphionasr_v4.yaml#L3670) | — | 未登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/wham/` |
+| [wham@tr-20261014](../../catalog/amphionasr_v4.yaml#L3674) | — | 未登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/wham/` |
 
 - `wham@tr-20261014`：WHAM training noise. Paths point at noise_open/wham_noise/extracted/wham_noise/tr.
 

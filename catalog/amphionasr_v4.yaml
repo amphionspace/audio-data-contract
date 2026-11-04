@@ -2570,6 +2570,10 @@
         max: 30.0
         mean: 4.598483770316901
   provenance:
+    retired:
+      date: '2026-11-04'
+      superseded_by: emilia2_short@short-lance-20261023
+      reason: 音频 m4a 已按 Lance 发布里的同一份 FLAC 清除；请改用 short-lance-20261023（记录与 ID 相同，少 20 条无 Lance 样本的记录）
     summary: Emilia2 中英短音频普通转写
     description: Emilia2 已抽出的 m4a-128k short。每条短音频是一条普通转写，只保留语言标签为纯中文或纯英文、时长 0.5～30 秒的片段。不使用 m4a-64k 和 asmr。
     snapshot_date: '2026-10-14'

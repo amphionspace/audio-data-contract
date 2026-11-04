@@ -111,6 +111,10 @@
         duration_hours: 268.0
         duration_basis: clip duration (segment span, or the whole file)
   provenance:
+    retired:
+      date: '2026-11-04'
+      superseded_by: ts_interference_pool@v3-20261018
+      reason: 其中 25 万条 Emilia2 short 片段的 m4a 已清除；v3-20261018 记录与 ID 相同，这些片段已换成可读的来源
     summary: 在线混合用的干扰人语音素材池
     status: complete
     synthetic: none
