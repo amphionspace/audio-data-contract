@@ -1682,7 +1682,7 @@ WenetSpeech L 中的 YouTube 部分
 
 - `wenetspeech_youtube@l-20261014`：WenetSpeech L 集按录音路径分成 YouTube 或 podcast。这是全集，不是 replay 的 3000 小时抽样
 
-### wenetspeech_yue
+### wenetspeech_yue_all
 
 粤语网络语音（WenetSpeech-Yue）；含清洗版
 
@@ -1694,24 +1694,15 @@ WenetSpeech L 中的 YouTube 部分
 | [wenetspeech_yue@clean-qwen3-asr-v1-20261024](../../catalog/wenetspeech_yue_clean.yaml#L2) | 4,324.5 | 已登记 | 没有 |
 | [wenetspeech_yue@icefall-20260908](../../catalog/icefall_runtime.yaml#L2390) | — | 未登记 | 快照 20260914 |
 | [wenetspeech_yue@legacy-20260804](../../catalog/icefall_base.yaml#L1996) | — | 未登记 | 快照 20260914 |
-| [wenetspeech_yue@nonclean-qwen3-asr-v1-20261025](../../catalog/wenetspeech_yue_nonclean.yaml#L2) | — | 未登记 | 没有 |
-
-- `wenetspeech_yue@clean-qwen3-asr-full-v1-20261024`：wenetspeech_yue@icefall-20260908 里WenetSpeech-Yue 粤语训练集 clean 部分的全部可转写条目（1,244,949 条 / 4333.1 h），原标注（发布方多系统融合（ROVER）的机器标注，每条置信度 ≥ 0.9）一字不改；每条加 custom.qwen_asr：共享的 Qwen3-ASR-1.7B 的转写（hypothesis）、Qwen 报告的语种（language）和与原标注的字错误率（SpeechIO TextNorm，按字，ref_tokens / hyp_tokens / errors / cer 百分数；原标注规范化后为空时 cer 为空）。整体 CER 6.15 %，Qwen 在 WSYue-ASR-eval short 上自身 CER 为 6.2；Qwen 空输出 1 条。粤语保留规则沿用川渝（CER < 30 %），未单独听审。录音沿用父版本，不复制音频。脚本 scripts/wenetspeech_qwen/
-- `wenetspeech_yue@clean-qwen3-asr-v1-20261024`：WenetSpeech-Yue 粤语训练集 clean 部分（wenetspeech_yue@icefall-20260908）用 Qwen3-ASR-1.7B 逐条核对后保留的部分：原标注规范化后非空且与 Qwen 的字错误率 < 30 % 的 1,240,512 条 / 4324.5 h（占可转写 1,244,949 条的 99.6 %），规则同 wenetspeech_chuan@clean-qwen3-asr-v1-20261023；原标注不改，不拿 Qwen 的文字替换。每行保留 custom.qwen_asr（Qwen 转写、语种、CER），与 wenetspeech_yue@clean-qwen3-asr-full-v1-20261024 中的相同；被去掉的条目和全部转写见 wenetspeech_yue@clean-qwen3-asr-full-v1-20261024。粤语保留规则沿用川渝（CER < 30 %），未单独听审。录音沿用父版本，不复制音频。脚本 scripts/wenetspeech_qwen/
-- `wenetspeech_yue@nonclean-qwen3-asr-v1-20261025`：WenetSpeech-Yue 训练集里 clean 以外的部分（5,592,487 条 / 17,373.9 h），原标注是发布方多系统融合（ROVER）的机器标注，置信度 0.6–1.0。 用共享的 Qwen3-ASR-1.7B 逐条转写，按粤语版 SpeechIO TextNorm 算与原标注的字错误率；试跑 2,000 条整体 13.2%，置信度越低差异越大。 clean 部分见 clean-qwen3-asr-v1-20261024。目前只记录转写和错误率，不删数据；保留规则在看过被拒样本后再定
-- 含派生版本（与源数据可能重叠）
-
-### wenetspeech_yue_all
-
-WenetSpeech-Yue 全量，含非 clean 部分
-
-语言：yue · 任务：语音识别
-
-| 版本 | 时长（小时） | 口径 | COS |
-|---|---:|---|---|
+| [wenetspeech_yue@nonclean-qwen3-asr-full-v1-20261025](../../catalog/wenetspeech_yue_nonclean.yaml#L69) | 17,373.9 | 已登记 | 没有 |
+| [wenetspeech_yue@nonclean-qwen3-asr-v1-20261025](../../catalog/wenetspeech_yue_nonclean.yaml#L1) | 15,909.1 | 已登记 | 没有 |
 | [wenetspeech_yue_all@icefall-20260908](../../catalog/icefall_runtime.yaml#L2447) | — | 未登记 | 快照 20260914 |
 | [wenetspeech_yue_all@legacy-20260804](../../catalog/icefall_base.yaml#L2054) | — | 未登记 | 快照 20260914 |
 
+- `wenetspeech_yue@clean-qwen3-asr-full-v1-20261024`：wenetspeech_yue@icefall-20260908 里WenetSpeech-Yue 粤语训练集 clean 部分的全部可转写条目（1,244,949 条 / 4333.1 h），原标注（发布方多系统融合（ROVER）的机器标注，每条置信度 ≥ 0.9）一字不改；每条加 custom.qwen_asr：共享的 Qwen3-ASR-1.7B 的转写（hypothesis）、Qwen 报告的语种（language）和与原标注的字错误率（SpeechIO TextNorm，按字，ref_tokens / hyp_tokens / errors / cer 百分数；原标注规范化后为空时 cer 为空）。整体 CER 6.15 %，Qwen 在 WSYue-ASR-eval short 上自身 CER 为 6.2；Qwen 空输出 1 条。粤语保留规则沿用川渝（CER < 30 %），未单独听审。录音沿用父版本，不复制音频。脚本 scripts/wenetspeech_qwen/
+- `wenetspeech_yue@clean-qwen3-asr-v1-20261024`：WenetSpeech-Yue 粤语训练集 clean 部分（wenetspeech_yue@icefall-20260908）用 Qwen3-ASR-1.7B 逐条核对后保留的部分：原标注规范化后非空且与 Qwen 的字错误率 < 30 % 的 1,240,512 条 / 4324.5 h（占可转写 1,244,949 条的 99.6 %），规则同 wenetspeech_chuan@clean-qwen3-asr-v1-20261023；原标注不改，不拿 Qwen 的文字替换。每行保留 custom.qwen_asr（Qwen 转写、语种、CER），与 wenetspeech_yue@clean-qwen3-asr-full-v1-20261024 中的相同；被去掉的条目和全部转写见 wenetspeech_yue@clean-qwen3-asr-full-v1-20261024。粤语保留规则沿用川渝（CER < 30 %），未单独听审。录音沿用父版本，不复制音频。脚本 scripts/wenetspeech_qwen/
+- `wenetspeech_yue@nonclean-qwen3-asr-full-v1-20261025`：wenetspeech_yue_all@icefall-20260908 里WenetSpeech-Yue 粤语训练集里 clean 以外的部分的全部可转写条目（5,592,487 条 / 17373.9 h），原标注（发布方多系统融合（ROVER）的机器标注，置信度 0.6–1.0）一字不改；每条加 custom.qwen_asr：共享的 Qwen3-ASR-1.7B 的转写（hypothesis）、Qwen 报告的语种（language）和与原标注的字错误率（SpeechIO TextNorm，按字，ref_tokens / hyp_tokens / errors / cer 百分数；原标注规范化后为空时 cer 为空）。整体 CER 13.49 %，Qwen 在 WSYue-ASR-eval short 上自身 CER 为 6.2；试跑 2,000 条整体 13.2%，置信度越低差异越大；Qwen 空输出 2,582 条。粤语保留规则沿用川渝（CER < 30 %），未单独听审。录音沿用父版本，不复制音频。脚本 scripts/wenetspeech_qwen/
+- `wenetspeech_yue@nonclean-qwen3-asr-v1-20261025`：WenetSpeech-Yue 粤语训练集里 clean 以外的部分（wenetspeech_yue_all@icefall-20260908）用 Qwen3-ASR-1.7B 逐条核对后保留的部分：原标注规范化后非空且与 Qwen 的字错误率 < 30 % 的 5,049,806 条 / 15909.1 h（占可转写 5,592,487 条的 90.3 %），规则同 wenetspeech_chuan@clean-qwen3-asr-v1-20261023；原标注不改，不拿 Qwen 的文字替换。每行保留 custom.qwen_asr（Qwen 转写、语种、CER），与 wenetspeech_yue@nonclean-qwen3-asr-full-v1-20261025 中的相同；被去掉的条目和全部转写见 wenetspeech_yue@nonclean-qwen3-asr-full-v1-20261025。粤语保留规则沿用川渝（CER < 30 %），未单独听审。录音沿用父版本，不复制音频。脚本 scripts/wenetspeech_qwen/
 - 含派生版本（与源数据可能重叠）
 
 ## 混合语言及多语数据
