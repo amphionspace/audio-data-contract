@@ -754,3 +754,265 @@
     - sim_rir_slr28@legacy-20260804:all
     - wham_noise@official-20261013:tt
     - fsd50k@zenodo-4060432-20261013:eval
+- schema_version: dataset-catalog/2.0
+  dataset_id: asr_babble_bench
+  version: v3-20261104
+  languages:
+  - zh
+  tasks:
+  - asr
+  artifacts:
+  - name: audio-index
+    kind: audio-index
+    root_alias: asr_babble_bench
+    relative_path: versions/v3-20261104/audio-index.jsonl.gz
+    sha256: 617f2be411aeaf30ccec5a00ec531cb56ea646f8a28659a0ca61b3632545b998
+    metadata:
+      record_count: 1964
+  - name: tdtech-blank-0.3-1-records
+    kind: audio-records
+    root_alias: asr_babble_bench
+    relative_path: versions/v3-20261104/records/tdtech-blank-0.3-1.jsonl.gz
+    sha256: 03d83912cd75308c058c8927604e6bc02ad6826a40b6f9efeb47d63f5cc5fc90
+    metadata:
+      record_count: 169
+  - name: tdtech-blank-1-3-records
+    kind: audio-records
+    root_alias: asr_babble_bench
+    relative_path: versions/v3-20261104/records/tdtech-blank-1-3.jsonl.gz
+    sha256: 68d2cad30359655de3050c1e7101a5c22bf53b89d4a08ec40d333c39737e373f
+    metadata:
+      record_count: 131
+  - name: tdtech-blank-3plus-records
+    kind: audio-records
+    root_alias: asr_babble_bench
+    relative_path: versions/v3-20261104/records/tdtech-blank-3plus.jsonl.gz
+    sha256: a0744704d1d97c4eb79020740734c7d88fe22234952de5737aa1d3c42997d10f
+    metadata:
+      record_count: 64
+  - name: near-silence-records
+    kind: audio-records
+    root_alias: asr_babble_bench
+    relative_path: versions/v3-20261104/records/near-silence.jsonl.gz
+    sha256: 02ef3d7ea6b5301e81437a66e7a37ea630d4726116acd173d34f609c55b37c20
+    metadata:
+      record_count: 200
+  - name: floor-low-records
+    kind: audio-records
+    root_alias: asr_babble_bench
+    relative_path: versions/v3-20261104/records/floor-low.jsonl.gz
+    sha256: cf85f95d0190d04a2a337f2efb22d9d6b6291531e2e33d3cfd65cdb48573f404
+    metadata:
+      record_count: 200
+  - name: floor-mid-records
+    kind: audio-records
+    root_alias: asr_babble_bench
+    relative_path: versions/v3-20261104/records/floor-mid.jsonl.gz
+    sha256: f002566f89e4195fb206679373df8a2c4a26d2a7f9b15395abec76a693a4bf12
+    metadata:
+      record_count: 200
+  - name: hum-records
+    kind: audio-records
+    root_alias: asr_babble_bench
+    relative_path: versions/v3-20261104/records/hum.jsonl.gz
+    sha256: 3bb16157cdd97cc08e54fb463deb46df2a14437f297bce745c8d9ab0986dfb95
+    metadata:
+      record_count: 200
+  - name: fsd-stationary-records
+    kind: audio-records
+    root_alias: asr_babble_bench
+    relative_path: versions/v3-20261104/records/fsd-stationary.jsonl.gz
+    sha256: 65af9d06e33743382c8e6f868f47fd68c0e10f2c2faa108d5eeda4ecaa618b0a
+    metadata:
+      record_count: 200
+  - name: fsd-events-records
+    kind: audio-records
+    root_alias: asr_babble_bench
+    relative_path: versions/v3-20261104/records/fsd-events.jsonl.gz
+    sha256: 3b92503901a3d5e8b4f075e1bcee644bab2693f0ccfc1d7261b1789a5194b6d1
+    metadata:
+      record_count: 200
+  - name: fsd-body-records
+    kind: audio-records
+    root_alias: asr_babble_bench
+    relative_path: versions/v3-20261104/records/fsd-body.jsonl.gz
+    sha256: 07e5562b35c2f2bb6e75968139877c6fcee6f838379b006c0ec7d80ba359dff7
+    metadata:
+      record_count: 200
+  - name: short-mixed-records
+    kind: audio-records
+    root_alias: asr_babble_bench
+    relative_path: versions/v3-20261104/records/short-mixed.jsonl.gz
+    sha256: c5ec98244211923571850cc7968c44f3e380a4555678dbd4d84ff5a9f7274867
+    metadata:
+      record_count: 200
+  - name: tdtech-candidates
+    kind: jsonl-metadata
+    root_alias: asr_babble_bench
+    relative_path: source/v3-20261104/tdtech-candidates/candidates.jsonl
+    sha256: c958d25942ede1f8753869d83d3a03a180e619ab00a368abc9a9efa75b2c0501
+    metadata:
+      record_count: 665
+  - name: tdtech-quarantine
+    kind: jsonl-metadata
+    root_alias: asr_babble_bench
+    relative_path: source/v3-20261104/tdtech-candidates/quarantine.jsonl
+    sha256: 5081b995b36a793e3638ab0b0af406869fd6bc74c55abbd6cd33a8db4f35319c
+    metadata:
+      record_count: 301
+  splits:
+    tdtech-blank-0.3-1:
+      artifacts:
+        records:
+        - tdtech-blank-0.3-1-records
+        audio_index:
+        - audio-index
+      task: asr
+      statistics:
+        records: 169
+        duration_hours: 0.0271
+        duration_basis: clip duration
+      provenance:
+        description: '鼎桥真实空白 · 0.3–1 秒：鼎桥设备真实录音里三个说话人老师都判为无人说话的区间（前后各留 0.5 秒），原电平；期望输出为空。参数 {"source": "tdtech", "bin": [0.3, 1.0]}'
+    tdtech-blank-1-3:
+      artifacts:
+        records:
+        - tdtech-blank-1-3-records
+        audio_index:
+        - audio-index
+      task: asr
+      statistics:
+        records: 131
+        duration_hours: 0.0604
+        duration_basis: clip duration
+      provenance:
+        description: '鼎桥真实空白 · 1–3 秒：同上，1–3 秒。参数 {"source": "tdtech", "bin": [1.0, 3.0]}'
+    tdtech-blank-3plus:
+      artifacts:
+        records:
+        - tdtech-blank-3plus-records
+        audio_index:
+        - audio-index
+      task: asr
+      statistics:
+        records: 64
+        duration_hours: 0.1202
+        duration_basis: clip duration
+      provenance:
+        description: '鼎桥真实空白 · 3 秒以上：同上，3 秒以上；10 秒以上的区间从起点截取，最长 30 秒。参数 {"source": "tdtech", "bin": [3.0, 30.0]}'
+    near-silence:
+      artifacts:
+        records:
+        - near-silence-records
+        audio_index:
+        - audio-index
+      task: asr
+      statistics:
+        records: 200
+        duration_hours: 0.264
+        duration_basis: clip duration
+      provenance:
+        description: '近乎数字静音：白 / 粉 / 棕噪声，−90 到 −80 dBFS（接近 16 位量化噪声），0.3–20 秒；期望输出为空。参数 {"source": "floor", "level_dbfs": [-90, -80], "duration": [0.3, 20]}'
+    floor-low:
+      artifacts:
+        records:
+        - floor-low-records
+        audio_index:
+        - audio-index
+      task: asr
+      statistics:
+        records: 200
+        duration_hours: 0.2643
+        duration_basis: clip duration
+      provenance:
+        description: '很低的底噪：白 / 粉 / 棕噪声，−65 到 −55 dBFS（安静房间的麦克风底噪），0.3–20 秒；期望输出为空。参数 {"source": "floor", "level_dbfs": [-65, -55], "duration": [0.3, 20]}'
+    floor-mid:
+      artifacts:
+        records:
+        - floor-mid-records
+        audio_index:
+        - audio-index
+      task: asr
+      statistics:
+        records: 200
+        duration_hours: 0.2618
+        duration_basis: clip duration
+      provenance:
+        description: '明显的底噪：白 / 粉 / 棕噪声，−55 到 −45 dBFS（便宜麦克风或增益开大），0.3–20 秒；期望输出为空。参数 {"source": "floor", "level_dbfs": [-55, -45], "duration": [0.3, 20]}'
+    hum:
+      artifacts:
+        records:
+        - hum-records
+        audio_index:
+        - audio-index
+      task: asr
+      statistics:
+        records: 200
+        duration_hours: 0.2374
+        duration_basis: clip duration
+      provenance:
+        description: '电流嗡声：50 Hz 及其 2–10 次谐波的嗡声（各谐波随机幅度）加 −65 到 −55 dBFS 底噪，−50 到 −35 dBFS，0.3–20 秒；期望输出为空。参数 {"source": "hum", "level_dbfs": [-50, -35], "duration": [0.3, 20]}'
+    fsd-stationary:
+      artifacts:
+        records:
+        - fsd-stationary-records
+        audio_index:
+        - audio-index
+      task: asr
+      statistics:
+        records: 200
+        duration_hours: 0.3573
+        duration_basis: clip duration
+      provenance:
+        description: '稳态环境噪声 · FSD50K：FSD50K 评测划分里风扇、发动机、嗡声、嘶声、雨、风、流水、交通、微波炉、打印机（不含人声和音乐），−45 到 −25 dBFS，2–20 秒；期望输出为空。参数 {"source": "fsd:stationary", "level_dbfs": [-45, -25], "duration": [2, 20]}'
+    fsd-events:
+      artifacts:
+        records:
+        - fsd-events-records
+        audio_index:
+        - audio-index
+      task: asr
+      statistics:
+        records: 200
+        duration_hours: 0.1727
+        duration_basis: clip duration
+      provenance:
+        description: '突发环境声 · FSD50K：FSD50K 评测划分里键盘、开关门、敲门、脚步、餐具、电话铃、纸张、剪刀、书写、抽屉、钥匙、钟表（不含人声和音乐），−45 到 −25 dBFS，1–10 秒；期望输出为空。参数 {"source": "fsd:events", "level_dbfs": [-45, -25], "duration": [1, 10]}'
+    fsd-body:
+      artifacts:
+        records:
+        - fsd-body-records
+        audio_index:
+        - audio-index
+      task: asr
+      statistics:
+        records: 200
+        duration_hours: 0.0892
+        duration_basis: clip duration
+      provenance:
+        description: '咳嗽 / 喷嚏 / 呼吸 · FSD50K：FSD50K 评测划分里咳嗽、喷嚏、呼吸（不带任何说话或人声标签），−45 到 −25 dBFS，0.5–5 秒；期望输出为空。参数 {"source": "fsd:body", "level_dbfs": [-45, -25], "duration": [0.5, 5]}'
+    short-mixed:
+      artifacts:
+        records:
+        - short-mixed-records
+        audio_index:
+        - audio-index
+      task: asr
+      statistics:
+        records: 200
+        duration_hours: 0.0372
+        duration_basis: clip duration
+      provenance:
+        description: '短片段 · 混合非人声：0.3–1.5 秒（客户端 VAD 误触发时送进模型的长度），等概率取自底噪、电流嗡声、稳态噪声、突发声、咳嗽呼吸，电平同各自的切分；期望输出为空。参数 {"source": "mixed", "donors": ["floor-low", "floor-mid", "hum", "fsd-stationary", "fsd-events", "fsd-body"], "duration": [0.3, 1.5]}'
+  provenance:
+    status: complete
+    synthetic: partial
+    description: 普通 ASR 空白 / 非人声评测切分（参考全部为空，看误输出率）：鼎桥设备真实录音里三个说话人老师（local-moss, moss-pro, ali）都判为无人说话、FSMN-VAD 也未检出语音的区间（按时长分四档，原电平）；合成的近静音、底噪、50 Hz 电流嗡声；FSD50K 评测划分的稳态噪声、突发声、咳嗽呼吸（不含人声和音乐）；0.3–1.5 秒混合短片段。自动质检隔离 301 条（tdtech-quarantine），未发起人工听审。只用于评测，不进训练。配方 scripts/asr_babble_bench/recipe-blank.yaml；原 16 个背景人声切分仍在 v2-20261023。
+    sources:
+    - diarization/dingqiao-diarization-quality@20261016-machine01
+    - diarization/dingqiao-online-issues@20261015-v1
+    - /workspace/data/runs/tdtech-customer-v4/diar (三个老师时间线)
+    - fsd50k@zenodo-4060432-20261013:eval
+    known_risks:
+    - DNS5 noise 的 freesound 部分已按内容哈希改名，无法按 freesound ID 与 FSD50K 去重；DNS5 只作训练时有字语音的背景噪声
+    - 鼎桥空白只由三个说话人老师与 FSMN-VAD 自动判定，极轻的远处人声可能漏判
