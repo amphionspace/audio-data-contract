@@ -35,6 +35,13 @@ class DatasetCatalog:
                 self._aliases[alias] = spec.dataset_id
         for versions in self._versions.values():
             versions.sort(key=lambda item: item.version)
+        for spec in self._by_key.values():
+            target = (retirement(spec) or {}).get("superseded_by")
+            if target is not None and target not in self._by_key:
+                raise ContractError(
+                    f"{spec.key}: provenance.retired.superseded_by names an "
+                    f"unregistered version: {target!r}"
+                )
 
     def __len__(self) -> int:
         return len(self._by_key)
@@ -198,12 +205,20 @@ def verify_artifact_file(
     return result
 
 
+def retirement(spec: DatasetSpec) -> dict | None:
+    """``provenance.retired`` of a version: {reason, date, superseded_by: "id@version"}."""
+
+    retired = spec.provenance.get("retired")
+    return retired if isinstance(retired, dict) else None
+
+
 def check_registration(
     spec: DatasetSpec,
     roots: Mapping[str, str | Path],
     *,
     sample: int = 20,
     seed: int = 0,
+    verify_digests: bool = True,
 ) -> list[str]:
     """Full registration check of one dataset version; returns problems found.
 
@@ -225,7 +240,9 @@ def check_registration(
         if not path.exists():
             problems.append(f"{label}: artifact is missing: {path}")
             continue
-        if artifact.sha256 is not None or "tree_sha256" in artifact.metadata:
+        if verify_digests and (
+            artifact.sha256 is not None or "tree_sha256" in artifact.metadata
+        ):
             try:
                 verify_artifact_file(artifact, path)
             except (ContractError, OSError) as exc:
@@ -239,6 +256,94 @@ def check_registration(
                 check_index(spec, artifact, path, roots, sample=sample, seed=seed)
             )
     return problems
+
+
+def check_dangling(
+    catalog: DatasetCatalog,
+    roots: Mapping[str, str | Path],
+    *,
+    sample: int = 20,
+    seed: int = 0,
+) -> dict[str, list[str]]:
+    """Registered versions whose artifacts or index rows point at missing files.
+
+    Retired versions are skipped; live versions must not point at removed data.
+    Digests are not re-verified, only existence and readability.
+    """
+
+    broken: dict[str, list[str]] = {}
+    for spec in catalog:
+        if retirement(spec) is not None:
+            continue
+        problems = check_registration(
+            spec, roots, sample=sample, seed=seed, verify_digests=False
+        )
+        if problems:
+            broken[spec.key] = problems
+    return broken
+
+
+def find_dependents(
+    catalog: DatasetCatalog,
+    prefix: str,
+    roots: Mapping[str, str | Path] | None = None,
+) -> list[dict]:
+    """Versions that reference files under ``prefix`` ("alias:relative/path" or "relative/path").
+
+    Artifact paths are matched from the catalog alone. When ``roots`` is given,
+    every row of each audio-index is also scanned, because an index can name
+    files under a directory that no artifact path mentions.
+    """
+
+    alias, _, relative = prefix.partition(":") if ":" in prefix else ("", "", prefix)
+    relative = relative.strip("/")
+
+    def matches(row_alias: str, row_path: str) -> bool:
+        return (not alias or row_alias == alias) and (
+            row_path == relative or row_path.startswith(relative + "/")
+        )
+
+    found: list[dict] = []
+    for spec in catalog:
+        retired = retirement(spec) is not None
+        for artifact in spec.artifacts:
+            if matches(artifact.root_alias, artifact.relative_path):
+                found.append(
+                    {"version": spec.key, "artifact": artifact.name,
+                     "via": "artifact path", "retired": retired}
+                )
+            if roots is None or artifact.kind != "audio-index":
+                continue
+            try:
+                path = resolve_root_path(
+                    artifact.root_alias, artifact.relative_path, roots, spec.key
+                )
+                rows = _count_index_rows(path, matches)
+            except (ContractError, OSError, EOFError, zlib.error):
+                continue
+            if rows:
+                found.append(
+                    {"version": spec.key, "artifact": artifact.name,
+                     "via": f"{rows} index rows", "retired": retired}
+                )
+    return found
+
+
+def _count_index_rows(path: Path, matches) -> int:
+    from .records import open_text
+
+    count = 0
+    with open_text(path, "r") as stream:
+        for line in stream:
+            if not line.strip():
+                continue
+            try:
+                row = json.loads(line)
+                hit = matches(row["root_alias"], row["relative_path"])
+            except (json.JSONDecodeError, KeyError, TypeError):
+                continue
+            count += hit
+    return count
 
 
 def _check_audio_index(
