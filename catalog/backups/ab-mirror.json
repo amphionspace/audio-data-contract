@@ -1,0 +1,4469 @@
+{
+ "bucket": "amphion-audio-backup-1373259071",
+ "data_root": "/workspace/data",
+ "datasets": {
+  "aidatatang_hotwords@hotwords-v1-20260805": {
+   "alias": "datasets/aidatatang_hotwords",
+   "synced": "2026-11-04"
+  },
+  "aishell2_clean@clean-v1-20260805": {
+   "alias": "datasets/aishell2_clean",
+   "synced": "2026-11-04"
+  },
+  "aishell2_hotwords@eval-20260804": {
+   "alias": "datasets/aishell2_hotwords",
+   "requires": [
+    "datasets/aishell2_clean/versions/clean-v1-20260805",
+    "datasets/aishell2_hotwords/versions/hotwords-v1-20260805"
+   ],
+   "synced": "2026-11-04"
+  },
+  "aishell2_hotwords@hotwords-v1-20260805": {
+   "alias": "datasets/aishell2_hotwords",
+   "requires": [
+    "datasets/aishell2_clean/versions/clean-v1-20260805",
+    "datasets/aishell2_hotwords/versions/hotwords-v1-20260805"
+   ],
+   "synced": "2026-11-04"
+  },
+  "aishell3_hotwords@eval-20260804": {
+   "alias": "datasets/aishell3_hotwords",
+   "synced": "2026-11-04"
+  },
+  "aishell3_hotwords@hotwords-v1-20260805": {
+   "alias": "datasets/aishell3_hotwords",
+   "synced": "2026-11-04"
+  },
+  "aishell4_meeting_sot@meeting-channel-view-v2-20261010": {
+   "alias": "datasets/zh_farfield_channel_views",
+   "synced": "2026-11-04"
+  },
+  "aishell4_meeting_sot@real-meetings-v2-20261010": {
+   "alias": "datasets/aishell4_meeting_sot",
+   "synced": "2026-11-04"
+  },
+  "aishell4_meeting_sot@similar-voice-v1-20261014": {
+   "alias": "datasets/aishell4_meeting_sot",
+   "synced": "2026-11-04"
+  },
+  "aishell5_meeting_sot@far-mic-v1-20261010": {
+   "alias": "datasets/aishell5_meeting_sot",
+   "synced": "2026-11-04"
+  },
+  "aishell5_meeting_sot@similar-voice-v1-20261014": {
+   "alias": "datasets/aishell5_meeting_sot",
+   "synced": "2026-11-04"
+  },
+  "aishell_clean@clean-v1-20260805": {
+   "alias": "datasets/aishell_clean",
+   "synced": "2026-11-04"
+  },
+  "aishell_hotwords@eval-20260804": {
+   "alias": "datasets/aishell_hotwords",
+   "requires": [
+    "datasets/aishell_clean/versions/clean-v1-20260805",
+    "datasets/aishell_hotwords/versions/hotwords-v1-20260805"
+   ],
+   "synced": "2026-11-04"
+  },
+  "aishell_hotwords@hotwords-v1-20260805": {
+   "alias": "datasets/aishell_hotwords",
+   "requires": [
+    "datasets/aishell_clean/versions/clean-v1-20260805",
+    "datasets/aishell_hotwords/versions/hotwords-v1-20260805"
+   ],
+   "synced": "2026-11-04"
+  },
+  "alimeeting_sdm@allspk-asr-v1-20261103": {
+   "alias": "datasets/alimeeting_sdm",
+   "synced": "2026-11-04"
+  },
+  "alimeeting_sdm@allspk-ts-v1-20261104": {
+   "alias": "datasets/alimeeting_sdm",
+   "synced": "2026-11-04"
+  },
+  "alimeeting_sdm@asr-20261014": {
+   "alias": "datasets/alimeeting_sdm",
+   "synced": "2026-11-04"
+  },
+  "alimeeting_sdm@asr-20261014-punc-20261102": {
+   "alias": "datasets/alimeeting_sdm",
+   "synced": "2026-11-04"
+  },
+  "alimeeting_sdm@icefall-20260908": {
+   "alias": "datasets/alimeeting_sdm",
+   "synced": "2026-11-04"
+  },
+  "alimeeting_sdm@punc-gold-v1-20261029": {
+   "alias": "datasets/alimeeting_sdm",
+   "synced": "2026-11-04"
+  },
+  "alimeeting_sdm@punc-teacher-v1-20261029": {
+   "alias": "datasets/alimeeting_sdm",
+   "synced": "2026-11-04"
+  },
+  "alimeeting_sdm@punc-written-v1-20261029": {
+   "alias": "datasets/alimeeting_sdm",
+   "synced": "2026-11-04"
+  },
+  "alimeeting_sdm@teacher-calibration-v1-20261009": {
+   "alias": "datasets/alimeeting_sdm",
+   "synced": "2026-11-04"
+  },
+  "alimeeting_sdm@teacher-review-v1-20261010": {
+   "alias": "datasets/alimeeting_sdm",
+   "synced": "2026-11-04"
+  },
+  "alimeeting_sdm@turn-taking-20261014": {
+   "alias": "datasets/alimeeting_sdm",
+   "synced": "2026-11-04"
+  },
+  "alimeeting_sdm@turn-taking-20261014-utts": {
+   "alias": "datasets/alimeeting_sdm",
+   "synced": "2026-11-04"
+  },
+  "alimeeting_sdm@turn-taking-20261014-utts-punc-20261102": {
+   "alias": "datasets/alimeeting_sdm",
+   "synced": "2026-11-04"
+  },
+  "alimeeting_sdm_meeting_sot@meeting-channel-view-v2-20261010": {
+   "alias": "datasets/zh_farfield_channel_views",
+   "synced": "2026-11-04"
+  },
+  "alimeeting_sdm_meeting_sot@real-meetings-v2-20261010": {
+   "alias": "datasets/alimeeting_sdm_meeting_sot",
+   "synced": "2026-11-04"
+  },
+  "alimeeting_sdm_meeting_sot@similar-voice-v1-20261014": {
+   "alias": "datasets/alimeeting_sdm_meeting_sot",
+   "synced": "2026-11-04"
+  },
+  "business_feedback@ts-20261010": {
+   "alias": "datasets/business_feedback",
+   "synced": "2026-11-04"
+  },
+  "business_feedback@ts-20261012": {
+   "alias": "datasets/business_feedback",
+   "synced": "2026-11-04"
+  },
+  "business_feedback@ts-20261016": {
+   "alias": "datasets/business_feedback",
+   "synced": "2026-11-04"
+  },
+  "business_feedback@ts-20261019": {
+   "alias": "datasets/business_feedback",
+   "synced": "2026-11-04"
+  },
+  "business_feedback@ts-20261021": {
+   "alias": "datasets/business_feedback",
+   "synced": "2026-11-04"
+  },
+  "business_feedback@ts-20261022": {
+   "alias": "datasets/business_feedback",
+   "synced": "2026-11-04"
+  },
+  "ciempiess_complementary@hf-3401a78c38d7": {
+   "alias": "datasets/ciempiess_complementary",
+   "synced": "2026-11-04"
+  },
+  "ciempiess_test@hf-c134fff8e335": {
+   "alias": "datasets/ciempiess_test",
+   "synced": "2026-11-04"
+  },
+  "common_voice_ko@legacy": {
+   "alias": "datasets/common_voice_ko",
+   "synced": "2026-11-04"
+  },
+  "commonvoice_en_hotwords@eval-20260804": {
+   "alias": "datasets/commonvoice_en_hotwords",
+   "requires": [
+    "datasets/commonvoice_en_clean/versions/clean-v1-20260805",
+    "datasets/commonvoice_en_hotwords/versions/hotwords-v1-20260805"
+   ],
+   "synced": "2026-11-04"
+  },
+  "commonvoice_en_hotwords@hotwords-v1-20260805": {
+   "alias": "datasets/commonvoice_en_hotwords",
+   "requires": [
+    "datasets/commonvoice_en_clean/versions/clean-v1-20260805",
+    "datasets/commonvoice_en_hotwords/versions/hotwords-v1-20260805"
+   ],
+   "synced": "2026-11-04"
+  },
+  "commonvoice_zh_hotwords@eval-20260804": {
+   "alias": "datasets/commonvoice_zh_hotwords",
+   "requires": [
+    "datasets/commonvoice_zh_clean/versions/clean-v1-20260805",
+    "datasets/commonvoice_zh_hotwords/versions/hotwords-v1-20260805"
+   ],
+   "synced": "2026-11-04"
+  },
+  "commonvoice_zh_hotwords@hotwords-v1-20260805": {
+   "alias": "datasets/commonvoice_zh_hotwords",
+   "requires": [
+    "datasets/commonvoice_zh_clean/versions/clean-v1-20260805",
+    "datasets/commonvoice_zh_hotwords/versions/hotwords-v1-20260805"
+   ],
+   "synced": "2026-11-04"
+  },
+  "cs_dialogue_meeting_sot@meeting-v1-20261010": {
+   "alias": "datasets/cs_dialogue_meeting_sot",
+   "synced": "2026-11-04"
+  },
+  "cs_dialogue_meeting_sot@similar-voice-v1-20261014": {
+   "alias": "datasets/cs_dialogue_meeting_sot",
+   "synced": "2026-11-04"
+  },
+  "emilia2_short@short-lance-20261023": {
+   "alias": "datasets/emilia2_short",
+   "synced": "2026-11-04"
+  },
+  "emilia2_zh_dialogue_diarize@hotwords-qwen3.8-flash-m4a64k-v1": {
+   "alias": "datasets/emilia2_zh_dialogue_diarize",
+   "synced": "2026-11-04"
+  },
+  "emilia2_zh_dialogue_diarize@listening-review-v1-20261014": {
+   "alias": "datasets/emilia2_zh_dialogue_diarize",
+   "synced": "2026-11-04"
+  },
+  "emilia2_zh_dialogue_diarize@listening-review-v1-20261016": {
+   "alias": "datasets/emilia2_zh_dialogue_diarize",
+   "synced": "2026-11-04"
+  },
+  "emilia2_zh_dialogue_diarize@moss-transcribe-diarize-0.9B": {
+   "alias": "datasets/emilia2_zh_dialogue_diarize",
+   "synced": "2026-11-04"
+  },
+  "emilia2_zh_dialogue_diarize@moss-transcribe-diarize-0.9B-m4a64k": {
+   "alias": "datasets/emilia2_zh_dialogue_diarize",
+   "synced": "2026-11-04"
+  },
+  "emilia2_zh_dialogue_diarize@moss-transcribe-diarize-0.9B-pro4plus": {
+   "alias": "datasets/emilia2_zh_dialogue_diarize",
+   "synced": "2026-11-04"
+  },
+  "emilia2_zh_dialogue_diarize@similar-voice-v1-20261014": {
+   "alias": "datasets/emilia2_zh_dialogue_diarize",
+   "synced": "2026-11-04"
+  },
+  "emilia2_zh_dialogue_diarize@teacher-labels-v1-20261015": {
+   "alias": "datasets/emilia2_zh_dialogue_diarize",
+   "synced": "2026-11-04"
+  },
+  "farfield_speech_noise_1spk@20261014": {
+   "alias": "datasets/farfield_speech_noise_1spk",
+   "synced": "2026-11-04"
+  },
+  "farfield_speech_noise_2spk@20261014": {
+   "alias": "datasets/farfield_speech_noise_2spk",
+   "synced": "2026-11-04"
+  },
+  "farfield_speech_noise_3spk@20261014": {
+   "alias": "datasets/farfield_speech_noise_3spk",
+   "synced": "2026-11-04"
+  },
+  "fleurs_ar@legacy": {
+   "alias": "datasets/fleurs_ar",
+   "synced": "2026-11-04"
+  },
+  "hard_hw_sft@hard-20261014": {
+   "alias": "datasets/hard_hw_sft",
+   "synced": "2026-11-04"
+  },
+  "hw_grpo_candidates@v1-20261101": {
+   "alias": "datasets/hw_grpo_candidates",
+   "synced": "2026-11-04"
+  },
+  "iemocap_ser@eval-20260804": {
+   "alias": "datasets/iemocap_ser",
+   "synced": "2026-11-04"
+  },
+  "kespeech_hotwords@hotwords-v1-20260805": {
+   "alias": "datasets/kespeech_hotwords",
+   "synced": "2026-11-04"
+  },
+  "librispeech_traffic_snr0@icefall-20260908": {
+   "alias": "datasets/librispeech_traffic_snr0",
+   "synced": "2026-11-04"
+  },
+  "librispeech_traffic_snr0@recipe-1": {
+   "alias": "datasets/librispeech_traffic_snr0",
+   "synced": "2026-11-04"
+  },
+  "librispeech_traffic_snr10@icefall-20260908": {
+   "alias": "datasets/librispeech_traffic_snr10",
+   "synced": "2026-11-04"
+  },
+  "librispeech_traffic_snr10@recipe-1": {
+   "alias": "datasets/librispeech_traffic_snr10",
+   "synced": "2026-11-04"
+  },
+  "librispeech_traffic_snr15@icefall-20260908": {
+   "alias": "datasets/librispeech_traffic_snr15",
+   "synced": "2026-11-04"
+  },
+  "librispeech_traffic_snr15@recipe-1": {
+   "alias": "datasets/librispeech_traffic_snr15",
+   "synced": "2026-11-04"
+  },
+  "librispeech_traffic_snr20@icefall-20260908": {
+   "alias": "datasets/librispeech_traffic_snr20",
+   "synced": "2026-11-04"
+  },
+  "librispeech_traffic_snr20@recipe-1": {
+   "alias": "datasets/librispeech_traffic_snr20",
+   "synced": "2026-11-04"
+  },
+  "librispeech_traffic_snr5@icefall-20260908": {
+   "alias": "datasets/librispeech_traffic_snr5",
+   "synced": "2026-11-04"
+  },
+  "librispeech_traffic_snr5@recipe-1": {
+   "alias": "datasets/librispeech_traffic_snr5",
+   "synced": "2026-11-04"
+  },
+  "m3ed_ser@eval-20260804": {
+   "alias": "datasets/m3ed_ser",
+   "synced": "2026-11-04"
+  },
+  "magicdata_hotwords@hotwords-v1-20260805": {
+   "alias": "datasets/magicdata_hotwords",
+   "synced": "2026-11-04"
+  },
+  "magicdata_ramc_meeting_sot@real-meetings-v2-20261010": {
+   "alias": "datasets/magicdata_ramc_meeting_sot",
+   "synced": "2026-11-04"
+  },
+  "magicdata_ramc_meeting_sot@similar-voice-v1-20261014": {
+   "alias": "datasets/magicdata_ramc_meeting_sot",
+   "synced": "2026-11-04"
+  },
+  "mdcc_traffic_snr0@icefall-20260908": {
+   "alias": "datasets/mdcc_traffic_snr0",
+   "synced": "2026-11-04"
+  },
+  "mdcc_traffic_snr0@recipe-1": {
+   "alias": "datasets/mdcc_traffic_snr0",
+   "synced": "2026-11-04"
+  },
+  "mdcc_traffic_snr10@icefall-20260908": {
+   "alias": "datasets/mdcc_traffic_snr10",
+   "synced": "2026-11-04"
+  },
+  "mdcc_traffic_snr10@recipe-1": {
+   "alias": "datasets/mdcc_traffic_snr10",
+   "synced": "2026-11-04"
+  },
+  "mdcc_traffic_snr15@icefall-20260908": {
+   "alias": "datasets/mdcc_traffic_snr15",
+   "synced": "2026-11-04"
+  },
+  "mdcc_traffic_snr15@recipe-1": {
+   "alias": "datasets/mdcc_traffic_snr15",
+   "synced": "2026-11-04"
+  },
+  "mdcc_traffic_snr20@icefall-20260908": {
+   "alias": "datasets/mdcc_traffic_snr20",
+   "synced": "2026-11-04"
+  },
+  "mdcc_traffic_snr20@recipe-1": {
+   "alias": "datasets/mdcc_traffic_snr20",
+   "synced": "2026-11-04"
+  },
+  "mdcc_traffic_snr5@icefall-20260908": {
+   "alias": "datasets/mdcc_traffic_snr5",
+   "synced": "2026-11-04"
+  },
+  "mdcc_traffic_snr5@recipe-1": {
+   "alias": "datasets/mdcc_traffic_snr5",
+   "synced": "2026-11-04"
+  },
+  "meeting_room_noise@v2-20261014": {
+   "alias": "datasets/meeting_room_noise",
+   "synced": "2026-11-04"
+  },
+  "mit_ir_survey@flac16k-20261026": {
+   "alias": "datasets/mit_ir_survey",
+   "synced": "2026-11-04"
+  },
+  "mit_ir_survey@modelscope-benjamin-paine-20261025": {
+   "alias": "datasets/mit_ir_survey",
+   "synced": "2026-11-04"
+  },
+  "notsofar_sdm@icefall-20260908": {
+   "alias": "datasets/notsofar_sdm",
+   "synced": "2026-11-04"
+  },
+  "notsofar_sdm@meeting-windows-v1-20261008": {
+   "alias": "datasets/notsofar_sdm",
+   "synced": "2026-11-04"
+  },
+  "notsofar_sdm@teacher-calibration-v1-20261009": {
+   "alias": "datasets/notsofar_sdm",
+   "synced": "2026-11-04"
+  },
+  "police_asr_unified@train-punc-v1-20261102": {
+   "alias": "datasets/police_asr_unified",
+   "synced": "2026-11-04"
+  },
+  "police_asr_unified@v1-20261009": {
+   "alias": "datasets/police_asr_unified",
+   "synced": "2026-11-04"
+  },
+  "police_robust_monitor@icefall-20260908": {
+   "alias": "datasets/police_robust_monitor",
+   "synced": "2026-11-04"
+  },
+  "police_terms_single@listening-review-v1-20261022": {
+   "alias": "datasets/police_terms_single",
+   "synced": "2026-11-04"
+  },
+  "police_terms_single@qc-v1-20261022": {
+   "alias": "datasets/police_terms_single",
+   "synced": "2026-11-04"
+  },
+  "police_terms_single@v1-20261022": {
+   "alias": "datasets/police_terms_single",
+   "synced": "2026-11-04"
+  },
+  "police_terms_single_train@hotwords-confusable-v1-20261102": {
+   "alias": "datasets/police_terms_single_train",
+   "synced": "2026-11-04"
+  },
+  "police_terms_single_train@punc-written-v1-20261102": {
+   "alias": "datasets/police_terms_single_train",
+   "synced": "2026-11-04"
+  },
+  "police_terms_v5_test@icefall-20260908": {
+   "alias": "datasets/police_terms_v5_test",
+   "synced": "2026-11-04"
+  },
+  "police_v6_acceptance_205@icefall-20260908": {
+   "alias": "datasets/police_v6_acceptance_205",
+   "synced": "2026-11-04"
+  },
+  "police_v6_acceptance_205@v6-acceptance-20260921": {
+   "alias": "datasets/police_v6_acceptance_205",
+   "synced": "2026-11-04"
+  },
+  "realman_zh_far_asr@zh-far-replay-v1-20261009": {
+   "alias": "datasets/zh_far_replay",
+   "synced": "2026-11-04"
+  },
+  "singaporean@icefall-20260908": {
+   "alias": "datasets/singaporean",
+   "synced": "2026-11-04"
+  },
+  "singaporean@legacy-20260804": {
+   "alias": "datasets/singaporean",
+   "synced": "2026-11-04"
+  },
+  "tal100_en@icefall-20260908": {
+   "alias": "datasets/tal100_en",
+   "synced": "2026-11-04"
+  },
+  "tal100_en@legacy-20260804": {
+   "alias": "datasets/tal100_en",
+   "synced": "2026-11-04"
+  },
+  "talcs_traffic_snr0@icefall-20260908": {
+   "alias": "datasets/talcs_traffic_snr0",
+   "synced": "2026-11-04"
+  },
+  "talcs_traffic_snr0@recipe-1": {
+   "alias": "datasets/talcs_traffic_snr0",
+   "synced": "2026-11-04"
+  },
+  "talcs_traffic_snr10@icefall-20260908": {
+   "alias": "datasets/talcs_traffic_snr10",
+   "synced": "2026-11-04"
+  },
+  "talcs_traffic_snr10@recipe-1": {
+   "alias": "datasets/talcs_traffic_snr10",
+   "synced": "2026-11-04"
+  },
+  "talcs_traffic_snr15@icefall-20260908": {
+   "alias": "datasets/talcs_traffic_snr15",
+   "synced": "2026-11-04"
+  },
+  "talcs_traffic_snr15@recipe-1": {
+   "alias": "datasets/talcs_traffic_snr15",
+   "synced": "2026-11-04"
+  },
+  "talcs_traffic_snr20@icefall-20260908": {
+   "alias": "datasets/talcs_traffic_snr20",
+   "synced": "2026-11-04"
+  },
+  "talcs_traffic_snr20@recipe-1": {
+   "alias": "datasets/talcs_traffic_snr20",
+   "synced": "2026-11-04"
+  },
+  "talcs_traffic_snr5@icefall-20260908": {
+   "alias": "datasets/talcs_traffic_snr5",
+   "synced": "2026-11-04"
+  },
+  "talcs_traffic_snr5@recipe-1": {
+   "alias": "datasets/talcs_traffic_snr5",
+   "synced": "2026-11-04"
+  },
+  "thchs30_hotwords@hotwords-v1-20260805": {
+   "alias": "datasets/thchs30_hotwords",
+   "synced": "2026-11-04"
+  },
+  "threed_speaker_zh_far_asr@punc-written-v1-20261102": {
+   "alias": "datasets/threed_speaker_zh_far_asr",
+   "synced": "2026-11-04"
+  },
+  "threed_speaker_zh_far_asr@train-punc-v1-20261102": {
+   "alias": "datasets/threed_speaker_zh_far_asr",
+   "synced": "2026-11-04"
+  },
+  "threed_speaker_zh_far_asr@zh-far-replay-clean-v1-20261010": {
+   "alias": "datasets/threed_speaker_zh_far_asr",
+   "synced": "2026-11-04"
+  },
+  "threed_speaker_zh_far_asr@zh-far-replay-v1-20261009": {
+   "alias": "datasets/zh_far_replay",
+   "synced": "2026-11-04"
+  },
+  "ts_asr_hotwords@v1-20261102": {
+   "alias": "datasets/ts_asr_hotwords",
+   "synced": "2026-11-04"
+  },
+  "ts_interference_pool@v1-20261015": {
+   "alias": "datasets/ts_interference_pool",
+   "synced": "2026-11-04"
+  },
+  "ts_interference_pool@v3-20261018": {
+   "alias": "datasets/ts_interference_pool",
+   "synced": "2026-11-04"
+  },
+  "ts_nonspeech_pool@babble-20261024": {
+   "alias": "datasets/ts_nonspeech_pool",
+   "synced": "2026-11-04"
+  },
+  "ts_nonspeech_pool@env-20261101": {
+   "alias": "datasets/ts_nonspeech_pool",
+   "synced": "2026-11-04"
+  },
+  "ts_nonspeech_pool@v1-20261016": {
+   "alias": "datasets/ts_nonspeech_pool",
+   "synced": "2026-11-04"
+  },
+  "ts_scene_pool@alt-twins-20261024": {
+   "alias": "datasets/ts_scene_pool",
+   "synced": "2026-11-04"
+  },
+  "ts_scene_pool@alt-twins-20261024-punchw2-20261102": {
+   "alias": "datasets/ts_scene_pool",
+   "synced": "2026-11-04"
+  },
+  "ts_scene_pool@csd-alt-twins-20261101": {
+   "alias": "datasets/ts_scene_pool",
+   "synced": "2026-11-04"
+  },
+  "ts_scene_pool@csd-alt-twins-20261101-punchw-20261102": {
+   "alias": "datasets/ts_scene_pool",
+   "synced": "2026-11-04"
+  },
+  "ts_scene_pool@csd-alt-twins-20261101-punchw2-20261102": {
+   "alias": "datasets/ts_scene_pool",
+   "synced": "2026-11-04"
+  },
+  "ts_scene_pool@csd-handover-20261101": {
+   "alias": "datasets/ts_scene_pool",
+   "synced": "2026-11-04"
+  },
+  "ts_scene_pool@csd-handover-20261101-punchw-20261102": {
+   "alias": "datasets/ts_scene_pool",
+   "synced": "2026-11-04"
+  },
+  "ts_scene_pool@csd-handover-20261101-punchw2-20261102": {
+   "alias": "datasets/ts_scene_pool",
+   "synced": "2026-11-04"
+  },
+  "ts_scene_pool@csd-hard-20261101": {
+   "alias": "datasets/ts_scene_pool",
+   "synced": "2026-11-04"
+  },
+  "ts_scene_pool@csd-hard-20261101-punchw-20261102": {
+   "alias": "datasets/ts_scene_pool",
+   "synced": "2026-11-04"
+  },
+  "ts_scene_pool@csd-hard-20261101-punchw2-20261102": {
+   "alias": "datasets/ts_scene_pool",
+   "synced": "2026-11-04"
+  },
+  "ts_scene_pool@csd-near-20261101": {
+   "alias": "datasets/ts_scene_pool",
+   "synced": "2026-11-04"
+  },
+  "ts_scene_pool@csd-near-20261101-punchw-20261102": {
+   "alias": "datasets/ts_scene_pool",
+   "synced": "2026-11-04"
+  },
+  "ts_scene_pool@csd-near-20261101-punchw2-20261102": {
+   "alias": "datasets/ts_scene_pool",
+   "synced": "2026-11-04"
+  },
+  "ts_scene_pool@csd-solo-20261101": {
+   "alias": "datasets/ts_scene_pool",
+   "synced": "2026-11-04"
+  },
+  "ts_scene_pool@csd-solo-20261101-punchw-20261102": {
+   "alias": "datasets/ts_scene_pool",
+   "synced": "2026-11-04"
+  },
+  "ts_scene_pool@csd-solo-20261101-punchw2-20261102": {
+   "alias": "datasets/ts_scene_pool",
+   "synced": "2026-11-04"
+  },
+  "ts_scene_pool@cvaccent-alt-twins-20261101": {
+   "alias": "datasets/ts_scene_pool",
+   "synced": "2026-11-04"
+  },
+  "ts_scene_pool@cvaccent-alt-twins-20261101-punchw-20261102": {
+   "alias": "datasets/ts_scene_pool",
+   "synced": "2026-11-04"
+  },
+  "ts_scene_pool@cvaccent-alt-twins-20261101-punchw2-20261102": {
+   "alias": "datasets/ts_scene_pool",
+   "synced": "2026-11-04"
+  },
+  "ts_scene_pool@cvaccent-handover-20261101": {
+   "alias": "datasets/ts_scene_pool",
+   "synced": "2026-11-04"
+  },
+  "ts_scene_pool@cvaccent-handover-20261101-punchw-20261102": {
+   "alias": "datasets/ts_scene_pool",
+   "synced": "2026-11-04"
+  },
+  "ts_scene_pool@cvaccent-handover-20261101-punchw2-20261102": {
+   "alias": "datasets/ts_scene_pool",
+   "synced": "2026-11-04"
+  },
+  "ts_scene_pool@cvaccent-hard-20261101": {
+   "alias": "datasets/ts_scene_pool",
+   "synced": "2026-11-04"
+  },
+  "ts_scene_pool@cvaccent-hard-20261101-punchw-20261102": {
+   "alias": "datasets/ts_scene_pool",
+   "synced": "2026-11-04"
+  },
+  "ts_scene_pool@cvaccent-hard-20261101-punchw2-20261102": {
+   "alias": "datasets/ts_scene_pool",
+   "synced": "2026-11-04"
+  },
+  "ts_scene_pool@cvaccent-near-20261101": {
+   "alias": "datasets/ts_scene_pool",
+   "synced": "2026-11-04"
+  },
+  "ts_scene_pool@cvaccent-near-20261101-punchw-20261102": {
+   "alias": "datasets/ts_scene_pool",
+   "synced": "2026-11-04"
+  },
+  "ts_scene_pool@cvaccent-near-20261101-punchw2-20261102": {
+   "alias": "datasets/ts_scene_pool",
+   "synced": "2026-11-04"
+  },
+  "ts_scene_pool@cvaccent-solo-20261101": {
+   "alias": "datasets/ts_scene_pool",
+   "synced": "2026-11-04"
+  },
+  "ts_scene_pool@cvaccent-solo-20261101-punchw-20261102": {
+   "alias": "datasets/ts_scene_pool",
+   "synced": "2026-11-04"
+  },
+  "ts_scene_pool@cvaccent-solo-20261101-punchw2-20261102": {
+   "alias": "datasets/ts_scene_pool",
+   "synced": "2026-11-04"
+  },
+  "ts_scene_pool@handover-20261021": {
+   "alias": "datasets/ts_scene_pool",
+   "synced": "2026-11-04"
+  },
+  "ts_scene_pool@handover-20261021-punchw-20261102": {
+   "alias": "datasets/ts_scene_pool",
+   "synced": "2026-11-04"
+  },
+  "ts_scene_pool@handover-20261021-punchw2-20261102": {
+   "alias": "datasets/ts_scene_pool",
+   "synced": "2026-11-04"
+  },
+  "ts_scene_pool@hard-20261016": {
+   "alias": "datasets/ts_scene_pool",
+   "synced": "2026-11-04"
+  },
+  "ts_scene_pool@hard-20261016-punchw-20261102": {
+   "alias": "datasets/ts_scene_pool",
+   "synced": "2026-11-04"
+  },
+  "ts_scene_pool@hard-20261016-punchw2-20261102": {
+   "alias": "datasets/ts_scene_pool",
+   "synced": "2026-11-04"
+  },
+  "ts_scene_pool@hard-twins-20261026": {
+   "alias": "datasets/ts_scene_pool",
+   "synced": "2026-11-04"
+  },
+  "ts_scene_pool@magicdata-20261023": {
+   "alias": "datasets/ts_scene_pool",
+   "synced": "2026-11-04"
+  },
+  "ts_scene_pool@magicdata-alt-20261023": {
+   "alias": "datasets/ts_scene_pool",
+   "synced": "2026-11-04"
+  },
+  "ts_scene_pool@magicdata-alt-twins-20261024": {
+   "alias": "datasets/ts_scene_pool",
+   "synced": "2026-11-04"
+  },
+  "ts_scene_pool@magicdata-alt-twins-20261024-punchw-20261102": {
+   "alias": "datasets/ts_scene_pool",
+   "synced": "2026-11-04"
+  },
+  "ts_scene_pool@magicdata-handover-20261023": {
+   "alias": "datasets/ts_scene_pool",
+   "synced": "2026-11-04"
+  },
+  "ts_scene_pool@magicdata-handover-20261023-punchw-20261102": {
+   "alias": "datasets/ts_scene_pool",
+   "synced": "2026-11-04"
+  },
+  "ts_scene_pool@magicdata-hard-20261023": {
+   "alias": "datasets/ts_scene_pool",
+   "synced": "2026-11-04"
+  },
+  "ts_scene_pool@magicdata-hard-20261023-punchw-20261102": {
+   "alias": "datasets/ts_scene_pool",
+   "synced": "2026-11-04"
+  },
+  "ts_scene_pool@magicdata-hard-twins-20261026": {
+   "alias": "datasets/ts_scene_pool",
+   "synced": "2026-11-04"
+  },
+  "ts_scene_pool@magicdata-near-20261023": {
+   "alias": "datasets/ts_scene_pool",
+   "synced": "2026-11-04"
+  },
+  "ts_scene_pool@magicdata-near-20261023-punchw-20261102": {
+   "alias": "datasets/ts_scene_pool",
+   "synced": "2026-11-04"
+  },
+  "ts_scene_pool@multi-20261017": {
+   "alias": "datasets/ts_scene_pool",
+   "synced": "2026-11-04"
+  },
+  "ts_scene_pool@multi-20261017-punchw-20261102": {
+   "alias": "datasets/ts_scene_pool",
+   "synced": "2026-11-04"
+  },
+  "ts_scene_pool@multi-20261017-punchw2-20261102": {
+   "alias": "datasets/ts_scene_pool",
+   "synced": "2026-11-04"
+  },
+  "ts_scene_pool@ramc-alt-twins-20261028": {
+   "alias": "datasets/ts_scene_pool",
+   "synced": "2026-11-04"
+  },
+  "ts_scene_pool@ramc-handover-20261028": {
+   "alias": "datasets/ts_scene_pool",
+   "synced": "2026-11-04"
+  },
+  "ts_scene_pool@ramc-hard-20261028": {
+   "alias": "datasets/ts_scene_pool",
+   "synced": "2026-11-04"
+  },
+  "ts_scene_pool@ramc-near-20261028": {
+   "alias": "datasets/ts_scene_pool",
+   "synced": "2026-11-04"
+  },
+  "ts_scene_pool@solo-20261019": {
+   "alias": "datasets/ts_scene_pool",
+   "synced": "2026-11-04"
+  },
+  "ts_scene_pool@solo-20261020": {
+   "alias": "datasets/ts_scene_pool",
+   "synced": "2026-11-04"
+  },
+  "ts_scene_pool@solo-20261020-punchw-20261102": {
+   "alias": "datasets/ts_scene_pool",
+   "synced": "2026-11-04"
+  },
+  "ts_scene_pool@solo-20261020-punchw2-20261102": {
+   "alias": "datasets/ts_scene_pool",
+   "synced": "2026-11-04"
+  },
+  "ts_scene_pool@xsession-20261023": {
+   "alias": "datasets/ts_scene_pool",
+   "synced": "2026-11-04"
+  },
+  "ts_scene_pool@xsession-alt-20261023": {
+   "alias": "datasets/ts_scene_pool",
+   "synced": "2026-11-04"
+  },
+  "ts_scene_pool@xsession-alt-twins-20261024": {
+   "alias": "datasets/ts_scene_pool",
+   "synced": "2026-11-04"
+  },
+  "ts_scene_pool@xsession-alt-twins-20261024-punchw-20261102": {
+   "alias": "datasets/ts_scene_pool",
+   "synced": "2026-11-04"
+  },
+  "ts_scene_pool@xsession-handover-20261023": {
+   "alias": "datasets/ts_scene_pool",
+   "synced": "2026-11-04"
+  },
+  "ts_scene_pool@xsession-handover-20261023-punchw-20261102": {
+   "alias": "datasets/ts_scene_pool",
+   "synced": "2026-11-04"
+  },
+  "ts_scene_pool@xsession-hard-20261023": {
+   "alias": "datasets/ts_scene_pool",
+   "synced": "2026-11-04"
+  },
+  "ts_scene_pool@xsession-hard-20261023-punchw-20261102": {
+   "alias": "datasets/ts_scene_pool",
+   "synced": "2026-11-04"
+  },
+  "ts_scene_pool@xsession-hard-twins-20261026": {
+   "alias": "datasets/ts_scene_pool",
+   "synced": "2026-11-04"
+  },
+  "ts_scene_pool@xsession-near-20261023": {
+   "alias": "datasets/ts_scene_pool",
+   "synced": "2026-11-04"
+  },
+  "ts_scene_pool@xsession-near-20261023-punchw-20261102": {
+   "alias": "datasets/ts_scene_pool",
+   "synced": "2026-11-04"
+  },
+  "vitw_far_field@icefall-20260908": {
+   "alias": "datasets/vitw_far_field",
+   "synced": "2026-11-04"
+  },
+  "vitw_far_field@punc-teacher-v1-20261029": {
+   "alias": "datasets/vitw_far_field",
+   "synced": "2026-11-04"
+  },
+  "vitw_far_field@punc-written-v1-20261029": {
+   "alias": "datasets/vitw_far_field",
+   "synced": "2026-11-04"
+  },
+  "vitw_real_distortion@eval-20260804": {
+   "alias": "datasets/vitw_real_distortion",
+   "synced": "2026-11-04"
+  },
+  "vitw_real_dropout@eval-20260804": {
+   "alias": "datasets/vitw_real_dropout",
+   "synced": "2026-11-04"
+  },
+  "vitw_real_echo@eval-20260804": {
+   "alias": "datasets/vitw_real_echo",
+   "synced": "2026-11-04"
+  },
+  "vitw_real_far_field@eval-20260804": {
+   "alias": "datasets/vitw_real_far_field",
+   "synced": "2026-11-04"
+  },
+  "vitw_real_mixed@eval-20260804": {
+   "alias": "datasets/vitw_real_mixed",
+   "synced": "2026-11-04"
+  },
+  "vitw_real_noise@eval-20260804": {
+   "alias": "datasets/vitw_real_noise",
+   "synced": "2026-11-04"
+  },
+  "vitw_real_obstructed@eval-20260804": {
+   "alias": "datasets/vitw_real_obstructed",
+   "synced": "2026-11-04"
+  },
+  "vitw_real_recording@eval-20260804": {
+   "alias": "datasets/vitw_real_recording",
+   "synced": "2026-11-04"
+  },
+  "vitw_syn_distortion@eval-20260804": {
+   "alias": "datasets/vitw_syn_distortion",
+   "synced": "2026-11-04"
+  },
+  "vitw_syn_dropout@eval-20260804": {
+   "alias": "datasets/vitw_syn_dropout",
+   "synced": "2026-11-04"
+  },
+  "vitw_syn_echo@eval-20260804": {
+   "alias": "datasets/vitw_syn_echo",
+   "synced": "2026-11-04"
+  },
+  "vitw_syn_far_field@eval-20260804": {
+   "alias": "datasets/vitw_syn_far_field",
+   "synced": "2026-11-04"
+  },
+  "vitw_syn_mixed@eval-20260804": {
+   "alias": "datasets/vitw_syn_mixed",
+   "synced": "2026-11-04"
+  },
+  "vitw_syn_noise@eval-20260804": {
+   "alias": "datasets/vitw_syn_noise",
+   "synced": "2026-11-04"
+  },
+  "vitw_syn_obstructed@eval-20260804": {
+   "alias": "datasets/vitw_syn_obstructed",
+   "synced": "2026-11-04"
+  },
+  "vitw_syn_recording@eval-20260804": {
+   "alias": "datasets/vitw_syn_recording",
+   "synced": "2026-11-04"
+  },
+  "vitw_zh_far_asr@zh-far-replay-v1-20261009": {
+   "alias": "datasets/zh_far_replay",
+   "synced": "2026-11-04"
+  },
+  "wenetspeech_clean@punc-written-v1-20261029": {
+   "alias": "datasets/wenetspeech_clean",
+   "synced": "2026-11-04"
+  },
+  "wenetspeech_diarize@listening-review-v1-20261012": {
+   "alias": "datasets/wenetspeech_diarize",
+   "synced": "2026-11-04"
+  },
+  "wenetspeech_diarize@moss-transcribe-diarize-0.9B": {
+   "alias": "datasets/wenetspeech_diarize",
+   "synced": "2026-11-04"
+  },
+  "wenetspeech_disfluency@punc-written-v1-20261029": {
+   "alias": "datasets/wenetspeech_disfluency",
+   "synced": "2026-11-04"
+  },
+  "wenetspeech_wu@qwen3-asr-pilot-v1-20261025": {
+   "alias": "datasets/wenetspeech_wu",
+   "synced": "2026-11-04"
+  },
+  "wenetspeech_yue@nonclean-qwen3-asr-v1-20261025": {
+   "alias": "datasets/wenetspeech_yue",
+   "synced": "2026-11-04"
+  },
+  "wham@tr-20261014": {
+   "alias": "datasets/wham",
+   "synced": "2026-11-04"
+  }
+ },
+ "directories": {
+  "DATA-TTS-UNIFIED/annotations/effective_bandwidth/tts-ann-effective_bandwidth-20261020T153104bjt-01": {
+   "bytes": 8076,
+   "dest": "audio-data-contract/DATA-TTS-UNIFIED/annotations/effective_bandwidth/tts-ann-effective_bandwidth-20261020T153104bjt-01/",
+   "files": 2,
+   "verified": "2026-11-04"
+  },
+  "DATA-TTS-UNIFIED/annotations/effective_bandwidth/tts-ann-effective_bandwidth-20261020T155412bjt-01": {
+   "bytes": 8124,
+   "dest": "audio-data-contract/DATA-TTS-UNIFIED/annotations/effective_bandwidth/tts-ann-effective_bandwidth-20261020T155412bjt-01/",
+   "files": 2,
+   "verified": "2026-11-04"
+  },
+  "DATA-TTS-UNIFIED/annotations/speaker_structure/tts-ann-speaker_structure-20261019T093525bjt-01": {
+   "bytes": 10613,
+   "dest": "audio-data-contract/DATA-TTS-UNIFIED/annotations/speaker_structure/tts-ann-speaker_structure-20261019T093525bjt-01/",
+   "files": 1,
+   "verified": "2026-11-04"
+  },
+  "DATA-TTS-UNIFIED/annotations/speaker_structure/tts-ann-speaker_structure-20261021T124643bjt-01": {
+   "bytes": 25405,
+   "dest": "audio-data-contract/DATA-TTS-UNIFIED/annotations/speaker_structure/tts-ann-speaker_structure-20261021T124643bjt-01/",
+   "files": 1,
+   "verified": "2026-11-04"
+  },
+  "DATA-TTS-UNIFIED/annotations/transcription/tts-ann-transcription-20261010T111659bjt-01": {
+   "bytes": 24808,
+   "dest": "audio-data-contract/DATA-TTS-UNIFIED/annotations/transcription/tts-ann-transcription-20261010T111659bjt-01/",
+   "files": 1,
+   "verified": "2026-11-04"
+  },
+  "DATA-TTS-UNIFIED/annotations/transcription/tts-ann-transcription-20261010T161238bjt-01": {
+   "bytes": 26065,
+   "dest": "audio-data-contract/DATA-TTS-UNIFIED/annotations/transcription/tts-ann-transcription-20261010T161238bjt-01/",
+   "files": 1,
+   "verified": "2026-11-04"
+  },
+  "DATA-TTS-UNIFIED/annotations/transcription/tts-ann-transcription-20261012T092945bjt-01": {
+   "bytes": 937423,
+   "dest": "audio-data-contract/DATA-TTS-UNIFIED/annotations/transcription/tts-ann-transcription-20261012T092945bjt-01/",
+   "files": 1,
+   "verified": "2026-11-04"
+  },
+  "DATA-TTS-UNIFIED/annotations/transcription/tts-ann-transcription-20261019T143130bjt-01": {
+   "bytes": 17822,
+   "dest": "audio-data-contract/DATA-TTS-UNIFIED/annotations/transcription/tts-ann-transcription-20261019T143130bjt-01/",
+   "files": 1,
+   "verified": "2026-11-04"
+  },
+  "DATA-TTS-UNIFIED/annotations/upstream_quality/tts-ann-upstream_quality-20261013T143341bjt-01": {
+   "bytes": 11963,
+   "dest": "audio-data-contract/DATA-TTS-UNIFIED/annotations/upstream_quality/tts-ann-upstream_quality-20261013T143341bjt-01/",
+   "files": 1,
+   "verified": "2026-11-04"
+  },
+  "DATA-TTS/WenetSpeech-Yue/data/manifests": {
+   "bytes": 2126681937,
+   "dest": "audio-data-contract/DATA-TTS/WenetSpeech-Yue/data/manifests/",
+   "files": 16,
+   "verified": "2026-11-04"
+  },
+  "datasets/3dspeaker/versions/official-source-20260911": {
+   "bytes": 1048,
+   "dest": "audio-data-contract/datasets/3dspeaker/versions/official-source-20260911/",
+   "files": 1,
+   "verified": "2026-11-04"
+  },
+  "datasets/3dspeaker/versions/speaker-records-v1-20260912": {
+   "bytes": 355470360,
+   "dest": "audio-data-contract/datasets/3dspeaker/versions/speaker-records-v1-20260912/",
+   "files": 12,
+   "verified": "2026-11-04"
+  },
+  "datasets/aidatatang/versions/alignment-v1-20261008": {
+   "bytes": 19060674,
+   "dest": "audio-data-contract/datasets/aidatatang/versions/alignment-v1-20261008/",
+   "files": 2,
+   "verified": "2026-11-04"
+  },
+  "datasets/aidatatang/versions/clean-dual-qwen-moss-v1-20261008": {
+   "bytes": 30400457,
+   "dest": "audio-data-contract/datasets/aidatatang/versions/clean-dual-qwen-moss-v1-20261008/",
+   "files": 9,
+   "verified": "2026-11-04"
+  },
+  "datasets/aidatatang/versions/legacy-20260804": {
+   "bytes": 8551890,
+   "dest": "audio-data-contract/datasets/aidatatang/versions/legacy-20260804/",
+   "files": 2,
+   "verified": "2026-11-04"
+  },
+  "datasets/aidatatang_hotwords/versions/hotwords-v1-20260805": {
+   "bytes": 9109421,
+   "dest": "audio-data-contract/datasets/aidatatang_hotwords/versions/hotwords-v1-20260805/",
+   "files": 2,
+   "verified": "2026-11-04"
+  },
+  "datasets/aishell/versions/legacy-20260804": {
+   "bytes": 7255443,
+   "dest": "audio-data-contract/datasets/aishell/versions/legacy-20260804/",
+   "files": 6,
+   "verified": "2026-11-04"
+  },
+  "datasets/aishell/versions/punc-gold-v1-20261029": {
+   "bytes": 1002,
+   "dest": "audio-data-contract/datasets/aishell/versions/punc-gold-v1-20261029/",
+   "files": 1,
+   "verified": "2026-11-04"
+  },
+  "datasets/aishell/versions/punc-teacher-v1-20261029": {
+   "bytes": 188165,
+   "dest": "audio-data-contract/datasets/aishell/versions/punc-teacher-v1-20261029/",
+   "files": 1,
+   "verified": "2026-11-04"
+  },
+  "datasets/aishell/versions/punc-written-v1-20261029": {
+   "bytes": 4690196,
+   "dest": "audio-data-contract/datasets/aishell/versions/punc-written-v1-20261029/",
+   "files": 2,
+   "verified": "2026-11-04"
+  },
+  "datasets/aishell2/versions/clean-dual-qwen-moss-v1-20261009": {
+   "bytes": 168964345,
+   "dest": "audio-data-contract/datasets/aishell2/versions/clean-dual-qwen-moss-v1-20261009/",
+   "files": 7,
+   "verified": "2026-11-04"
+  },
+  "datasets/aishell2/versions/hotwords-v1-20261102": {
+   "bytes": 38799944,
+   "dest": "audio-data-contract/datasets/aishell2/versions/hotwords-v1-20261102/",
+   "files": 1,
+   "verified": "2026-11-04"
+  },
+  "datasets/aishell2/versions/legacy-20260804": {
+   "bytes": 566312242,
+   "dest": "audio-data-contract/datasets/aishell2/versions/legacy-20260804/",
+   "files": 66,
+   "verified": "2026-11-04"
+  },
+  "datasets/aishell2/versions/punc-gold-v1-20261029": {
+   "bytes": 1557,
+   "dest": "audio-data-contract/datasets/aishell2/versions/punc-gold-v1-20261029/",
+   "files": 1,
+   "verified": "2026-11-04"
+  },
+  "datasets/aishell2/versions/punc-teacher-v1-20261029": {
+   "bytes": 449867,
+   "dest": "audio-data-contract/datasets/aishell2/versions/punc-teacher-v1-20261029/",
+   "files": 1,
+   "verified": "2026-11-04"
+  },
+  "datasets/aishell2/versions/punc-written-v1-20261029": {
+   "bytes": 32758369,
+   "dest": "audio-data-contract/datasets/aishell2/versions/punc-written-v1-20261029/",
+   "files": 2,
+   "verified": "2026-11-04"
+  },
+  "datasets/aishell2/versions/train-punc-v1-20261102": {
+   "bytes": 554190991,
+   "dest": "audio-data-contract/datasets/aishell2/versions/train-punc-v1-20261102/",
+   "files": 64,
+   "verified": "2026-11-04"
+  },
+  "datasets/aishell2_clean/versions/clean-v1-20260805": {
+   "bytes": 228105,
+   "dest": "audio-data-contract/datasets/aishell2_clean/versions/clean-v1-20260805/",
+   "files": 2,
+   "verified": "2026-11-04"
+  },
+  "datasets/aishell2_hotwords/versions/hotwords-v1-20260805": {
+   "bytes": 159426,
+   "dest": "audio-data-contract/datasets/aishell2_hotwords/versions/hotwords-v1-20260805/",
+   "files": 1,
+   "verified": "2026-11-04"
+  },
+  "datasets/aishell3/versions/alignment-v1-20261008": {
+   "bytes": 6612419,
+   "dest": "audio-data-contract/datasets/aishell3/versions/alignment-v1-20261008/",
+   "files": 2,
+   "verified": "2026-11-04"
+  },
+  "datasets/aishell3/versions/clean-dual-qwen-moss-v1-20261008": {
+   "bytes": 19310012,
+   "dest": "audio-data-contract/datasets/aishell3/versions/clean-dual-qwen-moss-v1-20261008/",
+   "files": 9,
+   "verified": "2026-11-04"
+  },
+  "datasets/aishell3/versions/legacy-20260804": {
+   "bytes": 7196087,
+   "dest": "audio-data-contract/datasets/aishell3/versions/legacy-20260804/",
+   "files": 4,
+   "verified": "2026-11-04"
+  },
+  "datasets/aishell3_hotwords/versions/hotwords-v1-20260805": {
+   "bytes": 7499249,
+   "dest": "audio-data-contract/datasets/aishell3_hotwords/versions/hotwords-v1-20260805/",
+   "files": 4,
+   "verified": "2026-11-04"
+  },
+  "datasets/aishell4/versions/allspk-asr-v1-20261103": {
+   "bytes": 17576223,
+   "dest": "audio-data-contract/datasets/aishell4/versions/allspk-asr-v1-20261103/",
+   "files": 49,
+   "verified": "2026-11-04"
+  },
+  "datasets/aishell4/versions/allspk-ts-v1-20261104": {
+   "bytes": 29427170,
+   "dest": "audio-data-contract/datasets/aishell4/versions/allspk-ts-v1-20261104/",
+   "files": 50,
+   "verified": "2026-11-04"
+  },
+  "datasets/aishell4/versions/asr-20261014": {
+   "bytes": 146795990,
+   "dest": "audio-data-contract/datasets/aishell4/versions/asr-20261014/",
+   "files": 52,
+   "verified": "2026-11-04"
+  },
+  "datasets/aishell4/versions/asr-20261014-punc-20261102": {
+   "bytes": 136448737,
+   "dest": "audio-data-contract/datasets/aishell4/versions/asr-20261014-punc-20261102/",
+   "files": 50,
+   "verified": "2026-11-04"
+  },
+  "datasets/aishell4/versions/icefall-20260908": {
+   "bytes": 3228770,
+   "dest": "audio-data-contract/datasets/aishell4/versions/icefall-20260908/",
+   "files": 4,
+   "verified": "2026-11-04"
+  },
+  "datasets/aishell4/versions/legacy-20260804": {
+   "bytes": 959539,
+   "dest": "audio-data-contract/datasets/aishell4/versions/legacy-20260804/",
+   "files": 4,
+   "verified": "2026-11-04"
+  },
+  "datasets/aishell4/versions/punc-teacher-v1-20261029": {
+   "bytes": 211809,
+   "dest": "audio-data-contract/datasets/aishell4/versions/punc-teacher-v1-20261029/",
+   "files": 1,
+   "verified": "2026-11-04"
+  },
+  "datasets/aishell4/versions/punc-written-v1-20261029": {
+   "bytes": 3989052,
+   "dest": "audio-data-contract/datasets/aishell4/versions/punc-written-v1-20261029/",
+   "files": 4,
+   "verified": "2026-11-04"
+  },
+  "datasets/aishell4/versions/teacher-review-v1-20261010": {
+   "bytes": 18585306,
+   "dest": "audio-data-contract/datasets/aishell4/versions/teacher-review-v1-20261010/",
+   "files": 9,
+   "verified": "2026-11-04"
+  },
+  "datasets/aishell4/versions/turn-taking-20261014": {
+   "bytes": 133697504,
+   "dest": "audio-data-contract/datasets/aishell4/versions/turn-taking-20261014/",
+   "files": 55,
+   "verified": "2026-11-04"
+  },
+  "datasets/aishell4/versions/turn-taking-20261014-utts": {
+   "bytes": 173739163,
+   "dest": "audio-data-contract/datasets/aishell4/versions/turn-taking-20261014-utts/",
+   "files": 57,
+   "verified": "2026-11-04"
+  },
+  "datasets/aishell4/versions/turn-taking-20261014-utts-punc-20261102": {
+   "bytes": 174908235,
+   "dest": "audio-data-contract/datasets/aishell4/versions/turn-taking-20261014-utts-punc-20261102/",
+   "files": 51,
+   "verified": "2026-11-04"
+  },
+  "datasets/aishell4_meeting_sot/versions/real-meetings-v2-20261010": {
+   "bytes": 27638981,
+   "dest": "audio-data-contract/datasets/aishell4_meeting_sot/versions/real-meetings-v2-20261010/",
+   "files": 14,
+   "verified": "2026-11-04"
+  },
+  "datasets/aishell4_meeting_sot/versions/similar-voice-v1-20261014": {
+   "bytes": 7547704,
+   "dest": "audio-data-contract/datasets/aishell4_meeting_sot/versions/similar-voice-v1-20261014/",
+   "files": 5,
+   "verified": "2026-11-04"
+  },
+  "datasets/aishell5/versions/far-mic-v1-20261010": {
+   "bytes": 16188076,
+   "dest": "audio-data-contract/datasets/aishell5/versions/far-mic-v1-20261010/",
+   "files": 6,
+   "verified": "2026-11-04"
+  },
+  "datasets/aishell5_meeting_sot/versions/far-mic-v1-20261010": {
+   "bytes": 120143175,
+   "dest": "audio-data-contract/datasets/aishell5_meeting_sot/versions/far-mic-v1-20261010/",
+   "files": 15,
+   "verified": "2026-11-04"
+  },
+  "datasets/aishell5_meeting_sot/versions/similar-voice-v1-20261014": {
+   "bytes": 31191990,
+   "dest": "audio-data-contract/datasets/aishell5_meeting_sot/versions/similar-voice-v1-20261014/",
+   "files": 5,
+   "verified": "2026-11-04"
+  },
+  "datasets/aishell_clean/versions/clean-v1-20260805": {
+   "bytes": 390435,
+   "dest": "audio-data-contract/datasets/aishell_clean/versions/clean-v1-20260805/",
+   "files": 2,
+   "verified": "2026-11-04"
+  },
+  "datasets/aishell_hotwords/versions/hotwords-v1-20260805": {
+   "bytes": 6848360,
+   "dest": "audio-data-contract/datasets/aishell_hotwords/versions/hotwords-v1-20260805/",
+   "files": 3,
+   "verified": "2026-11-04"
+  },
+  "datasets/alimeeting/versions/openslr-119-far-local-20260903": {
+   "bytes": 30497,
+   "dest": "audio-data-contract/datasets/alimeeting/versions/openslr-119-far-local-20260903/",
+   "files": 1,
+   "verified": "2026-11-04"
+  },
+  "datasets/alimeeting/versions/openslr-119-local-20260826": {
+   "bytes": 13460907,
+   "dest": "audio-data-contract/datasets/alimeeting/versions/openslr-119-local-20260826/",
+   "files": 9,
+   "verified": "2026-11-04"
+  },
+  "datasets/alimeeting_sdm/versions/allspk-asr-v1-20261103": {
+   "bytes": 11779055,
+   "dest": "audio-data-contract/datasets/alimeeting_sdm/versions/allspk-asr-v1-20261103/",
+   "files": 49,
+   "verified": "2026-11-04"
+  },
+  "datasets/alimeeting_sdm/versions/allspk-ts-v1-20261104": {
+   "bytes": 12965129,
+   "dest": "audio-data-contract/datasets/alimeeting_sdm/versions/allspk-ts-v1-20261104/",
+   "files": 50,
+   "verified": "2026-11-04"
+  },
+  "datasets/alimeeting_sdm/versions/asr-20261014": {
+   "bytes": 186352878,
+   "dest": "audio-data-contract/datasets/alimeeting_sdm/versions/asr-20261014/",
+   "files": 54,
+   "verified": "2026-11-04"
+  },
+  "datasets/alimeeting_sdm/versions/asr-20261014-punc-20261102": {
+   "bytes": 166717810,
+   "dest": "audio-data-contract/datasets/alimeeting_sdm/versions/asr-20261014-punc-20261102/",
+   "files": 51,
+   "verified": "2026-11-04"
+  },
+  "datasets/alimeeting_sdm/versions/icefall-20260908": {
+   "bytes": 6212453,
+   "dest": "audio-data-contract/datasets/alimeeting_sdm/versions/icefall-20260908/",
+   "files": 6,
+   "verified": "2026-11-04"
+  },
+  "datasets/alimeeting_sdm/versions/punc-gold-v1-20261029": {
+   "bytes": 1570,
+   "dest": "audio-data-contract/datasets/alimeeting_sdm/versions/punc-gold-v1-20261029/",
+   "files": 1,
+   "verified": "2026-11-04"
+  },
+  "datasets/alimeeting_sdm/versions/punc-teacher-v1-20261029": {
+   "bytes": 194599,
+   "dest": "audio-data-contract/datasets/alimeeting_sdm/versions/punc-teacher-v1-20261029/",
+   "files": 1,
+   "verified": "2026-11-04"
+  },
+  "datasets/alimeeting_sdm/versions/punc-written-v1-20261029": {
+   "bytes": 5857558,
+   "dest": "audio-data-contract/datasets/alimeeting_sdm/versions/punc-written-v1-20261029/",
+   "files": 2,
+   "verified": "2026-11-04"
+  },
+  "datasets/alimeeting_sdm/versions/teacher-calibration-v1-20261009": {
+   "bytes": 1192918,
+   "dest": "audio-data-contract/datasets/alimeeting_sdm/versions/teacher-calibration-v1-20261009/",
+   "files": 5,
+   "verified": "2026-11-04"
+  },
+  "datasets/alimeeting_sdm/versions/teacher-review-v1-20261010": {
+   "bytes": 27770963,
+   "dest": "audio-data-contract/datasets/alimeeting_sdm/versions/teacher-review-v1-20261010/",
+   "files": 10,
+   "verified": "2026-11-04"
+  },
+  "datasets/alimeeting_sdm/versions/turn-taking-20261014": {
+   "bytes": 238024142,
+   "dest": "audio-data-contract/datasets/alimeeting_sdm/versions/turn-taking-20261014/",
+   "files": 59,
+   "verified": "2026-11-04"
+  },
+  "datasets/alimeeting_sdm/versions/turn-taking-20261014-utts": {
+   "bytes": 308199385,
+   "dest": "audio-data-contract/datasets/alimeeting_sdm/versions/turn-taking-20261014-utts/",
+   "files": 58,
+   "verified": "2026-11-04"
+  },
+  "datasets/alimeeting_sdm/versions/turn-taking-20261014-utts-punc-20261102": {
+   "bytes": 309649851,
+   "dest": "audio-data-contract/datasets/alimeeting_sdm/versions/turn-taking-20261014-utts-punc-20261102/",
+   "files": 52,
+   "verified": "2026-11-04"
+  },
+  "datasets/alimeeting_sdm_meeting_sot/versions/real-meetings-v2-20261010": {
+   "bytes": 35431174,
+   "dest": "audio-data-contract/datasets/alimeeting_sdm_meeting_sot/versions/real-meetings-v2-20261010/",
+   "files": 14,
+   "verified": "2026-11-04"
+  },
+  "datasets/alimeeting_sdm_meeting_sot/versions/similar-voice-v1-20261014": {
+   "bytes": 10781685,
+   "dest": "audio-data-contract/datasets/alimeeting_sdm_meeting_sot/versions/similar-voice-v1-20261014/",
+   "files": 5,
+   "verified": "2026-11-04"
+  },
+  "datasets/ami_sdm/versions/asr-20261014": {
+   "bytes": 123626763,
+   "dest": "audio-data-contract/datasets/ami_sdm/versions/asr-20261014/",
+   "files": 53,
+   "verified": "2026-11-04"
+  },
+  "datasets/ami_sdm/versions/asr-20261014-punc-20261102": {
+   "bytes": 108470259,
+   "dest": "audio-data-contract/datasets/ami_sdm/versions/asr-20261014-punc-20261102/",
+   "files": 50,
+   "verified": "2026-11-04"
+  },
+  "datasets/ami_sdm/versions/icefall-20260908": {
+   "bytes": 10875228,
+   "dest": "audio-data-contract/datasets/ami_sdm/versions/icefall-20260908/",
+   "files": 6,
+   "verified": "2026-11-04"
+  },
+  "datasets/ami_sdm/versions/turn-taking-20261014": {
+   "bytes": 119739441,
+   "dest": "audio-data-contract/datasets/ami_sdm/versions/turn-taking-20261014/",
+   "files": 58,
+   "verified": "2026-11-04"
+  },
+  "datasets/ami_sdm/versions/turn-taking-20261014-utts": {
+   "bytes": 140919502,
+   "dest": "audio-data-contract/datasets/ami_sdm/versions/turn-taking-20261014-utts/",
+   "files": 57,
+   "verified": "2026-11-04"
+  },
+  "datasets/ami_sdm/versions/turn-taking-20261014-utts-punc-20261102": {
+   "bytes": 141516282,
+   "dest": "audio-data-contract/datasets/ami_sdm/versions/turn-taking-20261014-utts-punc-20261102/",
+   "files": 51,
+   "verified": "2026-11-04"
+  },
+  "datasets/asr_babble_bench/versions/v1-20261023": {
+   "bytes": 474538,
+   "dest": "audio-data-contract/datasets/asr_babble_bench/versions/v1-20261023/",
+   "files": 19,
+   "verified": "2026-11-04"
+  },
+  "datasets/asr_babble_bench/versions/v2-20261023": {
+   "bytes": 436853,
+   "dest": "audio-data-contract/datasets/asr_babble_bench/versions/v2-20261023/",
+   "files": 17,
+   "verified": "2026-11-04"
+  },
+  "datasets/asr_babble_speech_pool/versions/v1-20261024": {
+   "bytes": 40348324,
+   "dest": "audio-data-contract/datasets/asr_babble_speech_pool/versions/v1-20261024/",
+   "files": 52,
+   "verified": "2026-11-04"
+  },
+  "datasets/asr_babble_speech_pool/versions/v1-20261024-punc-20261102": {
+   "bytes": 40246325,
+   "dest": "audio-data-contract/datasets/asr_babble_speech_pool/versions/v1-20261024-punc-20261102/",
+   "files": 50,
+   "verified": "2026-11-04"
+  },
+  "datasets/asr_distant_talk_pool/versions/v1-20261102": {
+   "bytes": 29993853,
+   "dest": "audio-data-contract/datasets/asr_distant_talk_pool/versions/v1-20261102/",
+   "files": 57,
+   "verified": "2026-11-04"
+  },
+  "datasets/asr_distant_talk_pool/versions/v1-20261102-punc-20261102": {
+   "bytes": 28708477,
+   "dest": "audio-data-contract/datasets/asr_distant_talk_pool/versions/v1-20261102-punc-20261102/",
+   "files": 51,
+   "verified": "2026-11-04"
+  },
+  "datasets/audioset_esc_test/versions/eval-20260804": {
+   "bytes": 412295,
+   "dest": "audio-data-contract/datasets/audioset_esc_test/versions/eval-20260804/",
+   "files": 1,
+   "verified": "2026-11-04"
+  },
+  "datasets/audioset_road_traffic/versions/legacy-20260804": {
+   "bytes": 1706882,
+   "dest": "audio-data-contract/datasets/audioset_road_traffic/versions/legacy-20260804/",
+   "files": 1,
+   "verified": "2026-11-04"
+  },
+  "datasets/banspeech_bn/versions/legacy": {
+   "bytes": 403557,
+   "dest": "audio-data-contract/datasets/banspeech_bn/versions/legacy/",
+   "files": 2,
+   "verified": "2026-11-04"
+  },
+  "datasets/biic_podcast_ser/versions/eval-20260804": {
+   "bytes": 284007,
+   "dest": "audio-data-contract/datasets/biic_podcast_ser/versions/eval-20260804/",
+   "files": 2,
+   "verified": "2026-11-04"
+  },
+  "datasets/business_feedback/source": {
+   "bytes": 17565318,
+   "dest": "audio-data-contract/datasets/business_feedback/source/",
+   "files": 64,
+   "verified": "2026-11-04"
+  },
+  "datasets/business_feedback/versions/ts-20261010": {
+   "bytes": 2457,
+   "dest": "audio-data-contract/datasets/business_feedback/versions/ts-20261010/",
+   "files": 3,
+   "verified": "2026-11-04"
+  },
+  "datasets/business_feedback/versions/ts-20261012": {
+   "bytes": 2075,
+   "dest": "audio-data-contract/datasets/business_feedback/versions/ts-20261012/",
+   "files": 3,
+   "verified": "2026-11-04"
+  },
+  "datasets/business_feedback/versions/ts-20261016": {
+   "bytes": 5973,
+   "dest": "audio-data-contract/datasets/business_feedback/versions/ts-20261016/",
+   "files": 4,
+   "verified": "2026-11-04"
+  },
+  "datasets/business_feedback/versions/ts-20261019": {
+   "bytes": 1701,
+   "dest": "audio-data-contract/datasets/business_feedback/versions/ts-20261019/",
+   "files": 3,
+   "verified": "2026-11-04"
+  },
+  "datasets/business_feedback/versions/ts-20261021": {
+   "bytes": 1086,
+   "dest": "audio-data-contract/datasets/business_feedback/versions/ts-20261021/",
+   "files": 2,
+   "verified": "2026-11-04"
+  },
+  "datasets/business_feedback/versions/ts-20261022": {
+   "bytes": 1380,
+   "dest": "audio-data-contract/datasets/business_feedback/versions/ts-20261022/",
+   "files": 2,
+   "verified": "2026-11-04"
+  },
+  "datasets/cbtts_bn/versions/legacy": {
+   "bytes": 934383,
+   "dest": "audio-data-contract/datasets/cbtts_bn/versions/legacy/",
+   "files": 2,
+   "verified": "2026-11-04"
+  },
+  "datasets/childmandarin/versions/legacy-20260804": {
+   "bytes": 2030395,
+   "dest": "audio-data-contract/datasets/childmandarin/versions/legacy-20260804/",
+   "files": 3,
+   "verified": "2026-11-04"
+  },
+  "datasets/chime4/versions/isolated-1ch-20261026": {
+   "bytes": 192792,
+   "dest": "audio-data-contract/datasets/chime4/versions/isolated-1ch-20261026/",
+   "files": 4,
+   "verified": "2026-11-04"
+  },
+  "datasets/chime6/versions/openslr-150-source-20260911": {
+   "bytes": 22287,
+   "dest": "audio-data-contract/datasets/chime6/versions/openslr-150-source-20260911/",
+   "files": 2,
+   "verified": "2026-11-04"
+  },
+  "datasets/chime6/versions/speaker-records-v1-20260912": {
+   "bytes": 7473279,
+   "dest": "audio-data-contract/datasets/chime6/versions/speaker-records-v1-20260912/",
+   "files": 14,
+   "verified": "2026-11-04"
+  },
+  "datasets/chime6/versions/turn-taking-20261014": {
+   "bytes": 108170693,
+   "dest": "audio-data-contract/datasets/chime6/versions/turn-taking-20261014/",
+   "files": 58,
+   "verified": "2026-11-04"
+  },
+  "datasets/ciempiess_balance/versions/hf-e48eac011954": {
+   "bytes": 2020,
+   "dest": "audio-data-contract/datasets/ciempiess_balance/versions/hf-e48eac011954/",
+   "files": 2,
+   "verified": "2026-11-04"
+  },
+  "datasets/ciempiess_complementary/source": {
+   "bytes": 60441250,
+   "dest": "audio-data-contract/datasets/ciempiess_complementary/source/",
+   "files": 2,
+   "verified": "2026-11-04"
+  },
+  "datasets/ciempiess_complementary/versions/hf-3401a78c38d7": {
+   "bytes": 1453,
+   "dest": "audio-data-contract/datasets/ciempiess_complementary/versions/hf-3401a78c38d7/",
+   "files": 2,
+   "verified": "2026-11-04"
+  },
+  "datasets/ciempiess_fem/versions/hf-e49f428d174b": {
+   "bytes": 1691,
+   "dest": "audio-data-contract/datasets/ciempiess_fem/versions/hf-e49f428d174b/",
+   "files": 2,
+   "verified": "2026-11-04"
+  },
+  "datasets/ciempiess_light/versions/hf-3d6afb2b3b8d": {
+   "bytes": 674,
+   "dest": "audio-data-contract/datasets/ciempiess_light/versions/hf-3d6afb2b3b8d/",
+   "files": 1,
+   "verified": "2026-11-04"
+  },
+  "datasets/ciempiess_test/source": {
+   "bytes": 569018840,
+   "dest": "audio-data-contract/datasets/ciempiess_test/source/",
+   "files": 5,
+   "verified": "2026-11-04"
+  },
+  "datasets/ciempiess_test/versions/hf-c134fff8e335": {
+   "bytes": 2086,
+   "dest": "audio-data-contract/datasets/ciempiess_test/versions/hf-c134fff8e335/",
+   "files": 2,
+   "verified": "2026-11-04"
+  },
+  "datasets/cml_tts_fr/versions/legacy": {
+   "bytes": 11280055,
+   "dest": "audio-data-contract/datasets/cml_tts_fr/versions/legacy/",
+   "files": 8,
+   "verified": "2026-11-04"
+  },
+  "datasets/cnceleb1/versions/openslr-82-v2": {
+   "bytes": 1020,
+   "dest": "audio-data-contract/datasets/cnceleb1/versions/openslr-82-v2/",
+   "files": 1,
+   "verified": "2026-11-04"
+  },
+  "datasets/cnceleb1/versions/speaker-records-v1-20260912": {
+   "bytes": 231000332,
+   "dest": "audio-data-contract/datasets/cnceleb1/versions/speaker-records-v1-20260912/",
+   "files": 8,
+   "verified": "2026-11-04"
+  },
+  "datasets/cnceleb2/versions/openslr-82-v2": {
+   "bytes": 1020,
+   "dest": "audio-data-contract/datasets/cnceleb2/versions/openslr-82-v2/",
+   "files": 1,
+   "verified": "2026-11-04"
+  },
+  "datasets/cnceleb2/versions/speaker-records-v1-20260912": {
+   "bytes": 222824662,
+   "dest": "audio-data-contract/datasets/cnceleb2/versions/speaker-records-v1-20260912/",
+   "files": 5,
+   "verified": "2026-11-04"
+  },
+  "datasets/common_voice_ar/versions/legacy": {
+   "bytes": 2600890,
+   "dest": "audio-data-contract/datasets/common_voice_ar/versions/legacy/",
+   "files": 6,
+   "verified": "2026-11-04"
+  },
+  "datasets/common_voice_bn/versions/legacy": {
+   "bytes": 3817824,
+   "dest": "audio-data-contract/datasets/common_voice_bn/versions/legacy/",
+   "files": 6,
+   "verified": "2026-11-04"
+  },
+  "datasets/common_voice_de/versions/legacy": {
+   "bytes": 42109083,
+   "dest": "audio-data-contract/datasets/common_voice_de/versions/legacy/",
+   "files": 6,
+   "verified": "2026-11-04"
+  },
+  "datasets/common_voice_en/versions/hotwords-v1-20261102": {
+   "bytes": 23663883,
+   "dest": "audio-data-contract/datasets/common_voice_en/versions/hotwords-v1-20261102/",
+   "files": 1,
+   "verified": "2026-11-04"
+  },
+  "datasets/common_voice_en/versions/icefall-20260908": {
+   "bytes": 61524995,
+   "dest": "audio-data-contract/datasets/common_voice_en/versions/icefall-20260908/",
+   "files": 2,
+   "verified": "2026-11-04"
+  },
+  "datasets/common_voice_en/versions/punc-teacher-v1-20261102": {
+   "bytes": 2434446,
+   "dest": "audio-data-contract/datasets/common_voice_en/versions/punc-teacher-v1-20261102/",
+   "files": 1,
+   "verified": "2026-11-04"
+  },
+  "datasets/common_voice_en/versions/punc-written-en-v1-20261102": {
+   "bytes": 57539104,
+   "dest": "audio-data-contract/datasets/common_voice_en/versions/punc-written-en-v1-20261102/",
+   "files": 2,
+   "verified": "2026-11-04"
+  },
+  "datasets/common_voice_es/versions/americas-v1-20261103": {
+   "bytes": 11079792,
+   "dest": "audio-data-contract/datasets/common_voice_es/versions/americas-v1-20261103/",
+   "files": 6,
+   "verified": "2026-11-04"
+  },
+  "datasets/common_voice_es/versions/legacy": {
+   "bytes": 24421336,
+   "dest": "audio-data-contract/datasets/common_voice_es/versions/legacy/",
+   "files": 6,
+   "verified": "2026-11-04"
+  },
+  "datasets/common_voice_fr/versions/legacy": {
+   "bytes": 39812645,
+   "dest": "audio-data-contract/datasets/common_voice_fr/versions/legacy/",
+   "files": 6,
+   "verified": "2026-11-04"
+  },
+  "datasets/common_voice_ja/versions/legacy": {
+   "bytes": 2853850,
+   "dest": "audio-data-contract/datasets/common_voice_ja/versions/legacy/",
+   "files": 6,
+   "verified": "2026-11-04"
+  },
+  "datasets/common_voice_ko/source": {
+   "bytes": 55918285,
+   "dest": "audio-data-contract/datasets/common_voice_ko/source/",
+   "files": 1685,
+   "verified": "2026-11-04"
+  },
+  "datasets/common_voice_ko/versions/legacy": {
+   "bytes": 116889,
+   "dest": "audio-data-contract/datasets/common_voice_ko/versions/legacy/",
+   "files": 6,
+   "verified": "2026-11-04"
+  },
+  "datasets/common_voice_pt/versions/hf-8262c16bf297": {
+   "bytes": 8107,
+   "dest": "audio-data-contract/datasets/common_voice_pt/versions/hf-8262c16bf297/",
+   "files": 2,
+   "verified": "2026-11-04"
+  },
+  "datasets/common_voice_ru/versions/legacy": {
+   "bytes": 3464646,
+   "dest": "audio-data-contract/datasets/common_voice_ru/versions/legacy/",
+   "files": 6,
+   "verified": "2026-11-04"
+  },
+  "datasets/common_voice_zh/versions/clean-dual-qwen-moss-v1-20261009": {
+   "bytes": 7545441,
+   "dest": "audio-data-contract/datasets/common_voice_zh/versions/clean-dual-qwen-moss-v1-20261009/",
+   "files": 7,
+   "verified": "2026-11-04"
+  },
+  "datasets/common_voice_zh/versions/icefall-20260908": {
+   "bytes": 772104,
+   "dest": "audio-data-contract/datasets/common_voice_zh/versions/icefall-20260908/",
+   "files": 1,
+   "verified": "2026-11-04"
+  },
+  "datasets/common_voice_zh/versions/legacy-20260804": {
+   "bytes": 52503384,
+   "dest": "audio-data-contract/datasets/common_voice_zh/versions/legacy-20260804/",
+   "files": 53,
+   "verified": "2026-11-04"
+  },
+  "datasets/common_voice_zh/versions/punc-written-v1-20261102": {
+   "bytes": 1474637,
+   "dest": "audio-data-contract/datasets/common_voice_zh/versions/punc-written-v1-20261102/",
+   "files": 2,
+   "verified": "2026-11-04"
+  },
+  "datasets/common_voice_zh/versions/train-punc-v1-20261102": {
+   "bytes": 30144101,
+   "dest": "audio-data-contract/datasets/common_voice_zh/versions/train-punc-v1-20261102/",
+   "files": 49,
+   "verified": "2026-11-04"
+  },
+  "datasets/common_voice_zh_hk/versions/legacy-20260804": {
+   "bytes": 1204638,
+   "dest": "audio-data-contract/datasets/common_voice_zh_hk/versions/legacy-20260804/",
+   "files": 6,
+   "verified": "2026-11-04"
+  },
+  "datasets/commonvoice_en/versions/eval-20260804": {
+   "bytes": 1796383,
+   "dest": "audio-data-contract/datasets/commonvoice_en/versions/eval-20260804/",
+   "files": 1,
+   "verified": "2026-11-04"
+  },
+  "datasets/commonvoice_en_clean/versions/clean-v1-20260805": {
+   "bytes": 14345667,
+   "dest": "audio-data-contract/datasets/commonvoice_en_clean/versions/clean-v1-20260805/",
+   "files": 2,
+   "verified": "2026-11-04"
+  },
+  "datasets/commonvoice_en_hotwords/versions/hotwords-v1-20260805": {
+   "bytes": 67322236,
+   "dest": "audio-data-contract/datasets/commonvoice_en_hotwords/versions/hotwords-v1-20260805/",
+   "files": 2,
+   "verified": "2026-11-04"
+  },
+  "datasets/commonvoice_zh_clean/versions/clean-v1-20260805": {
+   "bytes": 148404,
+   "dest": "audio-data-contract/datasets/commonvoice_zh_clean/versions/clean-v1-20260805/",
+   "files": 1,
+   "verified": "2026-11-04"
+  },
+  "datasets/commonvoice_zh_hotwords/versions/hotwords-v1-20260805": {
+   "bytes": 2862958,
+   "dest": "audio-data-contract/datasets/commonvoice_zh_hotwords/versions/hotwords-v1-20260805/",
+   "files": 3,
+   "verified": "2026-11-04"
+  },
+  "datasets/context_correction_zh/versions/v1-20261018": {
+   "bytes": 1020651,
+   "dest": "audio-data-contract/datasets/context_correction_zh/versions/v1-20261018/",
+   "files": 5,
+   "verified": "2026-11-04"
+  },
+  "datasets/coraa/versions/hf-719c91226a79": {
+   "bytes": 3809,
+   "dest": "audio-data-contract/datasets/coraa/versions/hf-719c91226a79/",
+   "files": 2,
+   "verified": "2026-11-04"
+  },
+  "datasets/coraa_mupe/versions/hf-437966f103b3": {
+   "bytes": 2854,
+   "dest": "audio-data-contract/datasets/coraa_mupe/versions/hf-437966f103b3/",
+   "files": 2,
+   "verified": "2026-11-04"
+  },
+  "datasets/coraa_nurc_sp/versions/hf-c02be121ec19": {
+   "bytes": 18562,
+   "dest": "audio-data-contract/datasets/coraa_nurc_sp/versions/hf-c02be121ec19/",
+   "files": 2,
+   "verified": "2026-11-04"
+  },
+  "datasets/cs_dialogue/versions/clean-dual-qwen-moss-v1-20261009": {
+   "bytes": 4296679,
+   "dest": "audio-data-contract/datasets/cs_dialogue/versions/clean-dual-qwen-moss-v1-20261009/",
+   "files": 7,
+   "verified": "2026-11-04"
+  },
+  "datasets/cs_dialogue/versions/eval-utterance-20261011": {
+   "bytes": 448167,
+   "dest": "audio-data-contract/datasets/cs_dialogue/versions/eval-utterance-20261011/",
+   "files": 3,
+   "verified": "2026-11-04"
+  },
+  "datasets/cs_dialogue/versions/legacy-20260804": {
+   "bytes": 1558942,
+   "dest": "audio-data-contract/datasets/cs_dialogue/versions/legacy-20260804/",
+   "files": 6,
+   "verified": "2026-11-04"
+  },
+  "datasets/cs_dialogue/versions/punc-written-v1-20261029": {
+   "bytes": 893776,
+   "dest": "audio-data-contract/datasets/cs_dialogue/versions/punc-written-v1-20261029/",
+   "files": 2,
+   "verified": "2026-11-04"
+  },
+  "datasets/cs_dialogue_en/versions/hotwords-v1-20261102": {
+   "bytes": 169382,
+   "dest": "audio-data-contract/datasets/cs_dialogue_en/versions/hotwords-v1-20261102/",
+   "files": 1,
+   "verified": "2026-11-04"
+  },
+  "datasets/cs_dialogue_en/versions/legacy-20260804": {
+   "bytes": 746414,
+   "dest": "audio-data-contract/datasets/cs_dialogue_en/versions/legacy-20260804/",
+   "files": 6,
+   "verified": "2026-11-04"
+  },
+  "datasets/cs_dialogue_meeting_sot/versions/meeting-v1-20261010": {
+   "bytes": 15565828,
+   "dest": "audio-data-contract/datasets/cs_dialogue_meeting_sot/versions/meeting-v1-20261010/",
+   "files": 22,
+   "verified": "2026-11-04"
+  },
+  "datasets/cs_dialogue_meeting_sot/versions/similar-voice-v1-20261014": {
+   "bytes": 2720660,
+   "dest": "audio-data-contract/datasets/cs_dialogue_meeting_sot/versions/similar-voice-v1-20261014/",
+   "files": 5,
+   "verified": "2026-11-04"
+  },
+  "datasets/cs_dialogue_mix/versions/clean-dual-qwen-moss-v1-20261009": {
+   "bytes": 2630034,
+   "dest": "audio-data-contract/datasets/cs_dialogue_mix/versions/clean-dual-qwen-moss-v1-20261009/",
+   "files": 7,
+   "verified": "2026-11-04"
+  },
+  "datasets/cs_dialogue_mix/versions/legacy-20260804": {
+   "bytes": 863785,
+   "dest": "audio-data-contract/datasets/cs_dialogue_mix/versions/legacy-20260804/",
+   "files": 6,
+   "verified": "2026-11-04"
+  },
+  "datasets/cumix2017/versions/legacy-20260804": {
+   "bytes": 583283,
+   "dest": "audio-data-contract/datasets/cumix2017/versions/legacy-20260804/",
+   "files": 2,
+   "verified": "2026-11-04"
+  },
+  "datasets/cv_en_noise_audioset_esc/versions/eval-20260804": {
+   "bytes": 2029604,
+   "dest": "audio-data-contract/datasets/cv_en_noise_audioset_esc/versions/eval-20260804/",
+   "files": 2,
+   "verified": "2026-11-04"
+  },
+  "datasets/cv_en_noise_audioset_esc_hotwords/versions/eval-20260804": {
+   "bytes": 1865991,
+   "dest": "audio-data-contract/datasets/cv_en_noise_audioset_esc_hotwords/versions/eval-20260804/",
+   "files": 1,
+   "verified": "2026-11-04"
+  },
+  "datasets/cv_en_noise_audioset_traffic/versions/eval-20260804": {
+   "bytes": 2031983,
+   "dest": "audio-data-contract/datasets/cv_en_noise_audioset_traffic/versions/eval-20260804/",
+   "files": 2,
+   "verified": "2026-11-04"
+  },
+  "datasets/cv_en_noise_audioset_traffic_hotwords/versions/eval-20260804": {
+   "bytes": 1865991,
+   "dest": "audio-data-contract/datasets/cv_en_noise_audioset_traffic_hotwords/versions/eval-20260804/",
+   "files": 1,
+   "verified": "2026-11-04"
+  },
+  "datasets/cv_en_noise_dns/versions/eval-20260804": {
+   "bytes": 2027432,
+   "dest": "audio-data-contract/datasets/cv_en_noise_dns/versions/eval-20260804/",
+   "files": 2,
+   "verified": "2026-11-04"
+  },
+  "datasets/cv_en_noise_dns_hotwords/versions/eval-20260804": {
+   "bytes": 1865991,
+   "dest": "audio-data-contract/datasets/cv_en_noise_dns_hotwords/versions/eval-20260804/",
+   "files": 1,
+   "verified": "2026-11-04"
+  },
+  "datasets/cv_en_noise_musan_music/versions/eval-20260804": {
+   "bytes": 2029315,
+   "dest": "audio-data-contract/datasets/cv_en_noise_musan_music/versions/eval-20260804/",
+   "files": 2,
+   "verified": "2026-11-04"
+  },
+  "datasets/cv_en_noise_musan_music_hotwords/versions/eval-20260804": {
+   "bytes": 1865991,
+   "dest": "audio-data-contract/datasets/cv_en_noise_musan_music_hotwords/versions/eval-20260804/",
+   "files": 1,
+   "verified": "2026-11-04"
+  },
+  "datasets/cv_en_noise_musan_noise/versions/eval-20260804": {
+   "bytes": 2029311,
+   "dest": "audio-data-contract/datasets/cv_en_noise_musan_noise/versions/eval-20260804/",
+   "files": 2,
+   "verified": "2026-11-04"
+  },
+  "datasets/cv_en_noise_musan_noise_hotwords/versions/eval-20260804": {
+   "bytes": 1865991,
+   "dest": "audio-data-contract/datasets/cv_en_noise_musan_noise_hotwords/versions/eval-20260804/",
+   "files": 1,
+   "verified": "2026-11-04"
+  },
+  "datasets/cv_en_noise_musan_speech/versions/eval-20260804": {
+   "bytes": 2029610,
+   "dest": "audio-data-contract/datasets/cv_en_noise_musan_speech/versions/eval-20260804/",
+   "files": 2,
+   "verified": "2026-11-04"
+  },
+  "datasets/cv_en_noise_musan_speech_hotwords/versions/eval-20260804": {
+   "bytes": 1865991,
+   "dest": "audio-data-contract/datasets/cv_en_noise_musan_speech_hotwords/versions/eval-20260804/",
+   "files": 1,
+   "verified": "2026-11-04"
+  },
+  "datasets/cv_en_noise_wham/versions/eval-20260804": {
+   "bytes": 2027741,
+   "dest": "audio-data-contract/datasets/cv_en_noise_wham/versions/eval-20260804/",
+   "files": 2,
+   "verified": "2026-11-04"
+  },
+  "datasets/cv_en_noise_wham_hotwords/versions/eval-20260804": {
+   "bytes": 1865991,
+   "dest": "audio-data-contract/datasets/cv_en_noise_wham_hotwords/versions/eval-20260804/",
+   "files": 1,
+   "verified": "2026-11-04"
+  },
+  "datasets/cv_en_rir_rirmega/versions/eval-20260804": {
+   "bytes": 2028134,
+   "dest": "audio-data-contract/datasets/cv_en_rir_rirmega/versions/eval-20260804/",
+   "files": 2,
+   "verified": "2026-11-04"
+  },
+  "datasets/cv_en_rir_rirmega_hotwords/versions/eval-20260804": {
+   "bytes": 1865991,
+   "dest": "audio-data-contract/datasets/cv_en_rir_rirmega_hotwords/versions/eval-20260804/",
+   "files": 1,
+   "verified": "2026-11-04"
+  },
+  "datasets/cv_en_rir_slr26/versions/eval-20260804": {
+   "bytes": 2027431,
+   "dest": "audio-data-contract/datasets/cv_en_rir_slr26/versions/eval-20260804/",
+   "files": 2,
+   "verified": "2026-11-04"
+  },
+  "datasets/cv_en_rir_slr26_hotwords/versions/eval-20260804": {
+   "bytes": 1865991,
+   "dest": "audio-data-contract/datasets/cv_en_rir_slr26_hotwords/versions/eval-20260804/",
+   "files": 1,
+   "verified": "2026-11-04"
+  },
+  "datasets/cv_en_rir_slr28_real/versions/eval-20260804": {
+   "bytes": 2028705,
+   "dest": "audio-data-contract/datasets/cv_en_rir_slr28_real/versions/eval-20260804/",
+   "files": 2,
+   "verified": "2026-11-04"
+  },
+  "datasets/cv_en_rir_slr28_real_hotwords/versions/eval-20260804": {
+   "bytes": 1865991,
+   "dest": "audio-data-contract/datasets/cv_en_rir_slr28_real_hotwords/versions/eval-20260804/",
+   "files": 1,
+   "verified": "2026-11-04"
+  },
+  "datasets/cv_en_rir_slr28_sim/versions/eval-20260804": {
+   "bytes": 2028419,
+   "dest": "audio-data-contract/datasets/cv_en_rir_slr28_sim/versions/eval-20260804/",
+   "files": 2,
+   "verified": "2026-11-04"
+  },
+  "datasets/cv_en_rir_slr28_sim_hotwords/versions/eval-20260804": {
+   "bytes": 1865991,
+   "dest": "audio-data-contract/datasets/cv_en_rir_slr28_sim_hotwords/versions/eval-20260804/",
+   "files": 1,
+   "verified": "2026-11-04"
+  },
+  "datasets/cv_zh_noise_audioset_esc/versions/eval-20260804": {
+   "bytes": 887562,
+   "dest": "audio-data-contract/datasets/cv_zh_noise_audioset_esc/versions/eval-20260804/",
+   "files": 2,
+   "verified": "2026-11-04"
+  },
+  "datasets/cv_zh_noise_audioset_esc_hotwords/versions/eval-20260804": {
+   "bytes": 813897,
+   "dest": "audio-data-contract/datasets/cv_zh_noise_audioset_esc_hotwords/versions/eval-20260804/",
+   "files": 1,
+   "verified": "2026-11-04"
+  },
+  "datasets/cv_zh_noise_audioset_traffic/versions/eval-20260804": {
+   "bytes": 888116,
+   "dest": "audio-data-contract/datasets/cv_zh_noise_audioset_traffic/versions/eval-20260804/",
+   "files": 2,
+   "verified": "2026-11-04"
+  },
+  "datasets/cv_zh_noise_audioset_traffic_hotwords/versions/eval-20260804": {
+   "bytes": 813897,
+   "dest": "audio-data-contract/datasets/cv_zh_noise_audioset_traffic_hotwords/versions/eval-20260804/",
+   "files": 1,
+   "verified": "2026-11-04"
+  },
+  "datasets/cv_zh_noise_dns/versions/eval-20260804": {
+   "bytes": 886474,
+   "dest": "audio-data-contract/datasets/cv_zh_noise_dns/versions/eval-20260804/",
+   "files": 2,
+   "verified": "2026-11-04"
+  },
+  "datasets/cv_zh_noise_dns_hotwords/versions/eval-20260804": {
+   "bytes": 813897,
+   "dest": "audio-data-contract/datasets/cv_zh_noise_dns_hotwords/versions/eval-20260804/",
+   "files": 1,
+   "verified": "2026-11-04"
+  },
+  "datasets/cv_zh_noise_musan_music/versions/eval-20260804": {
+   "bytes": 887388,
+   "dest": "audio-data-contract/datasets/cv_zh_noise_musan_music/versions/eval-20260804/",
+   "files": 2,
+   "verified": "2026-11-04"
+  },
+  "datasets/cv_zh_noise_musan_music_hotwords/versions/eval-20260804": {
+   "bytes": 813897,
+   "dest": "audio-data-contract/datasets/cv_zh_noise_musan_music_hotwords/versions/eval-20260804/",
+   "files": 1,
+   "verified": "2026-11-04"
+  },
+  "datasets/cv_zh_noise_musan_noise/versions/eval-20260804": {
+   "bytes": 887386,
+   "dest": "audio-data-contract/datasets/cv_zh_noise_musan_noise/versions/eval-20260804/",
+   "files": 2,
+   "verified": "2026-11-04"
+  },
+  "datasets/cv_zh_noise_musan_noise_hotwords/versions/eval-20260804": {
+   "bytes": 813897,
+   "dest": "audio-data-contract/datasets/cv_zh_noise_musan_noise_hotwords/versions/eval-20260804/",
+   "files": 1,
+   "verified": "2026-11-04"
+  },
+  "datasets/cv_zh_noise_musan_speech/versions/eval-20260804": {
+   "bytes": 887568,
+   "dest": "audio-data-contract/datasets/cv_zh_noise_musan_speech/versions/eval-20260804/",
+   "files": 2,
+   "verified": "2026-11-04"
+  },
+  "datasets/cv_zh_noise_musan_speech_hotwords/versions/eval-20260804": {
+   "bytes": 813897,
+   "dest": "audio-data-contract/datasets/cv_zh_noise_musan_speech_hotwords/versions/eval-20260804/",
+   "files": 1,
+   "verified": "2026-11-04"
+  },
+  "datasets/cv_zh_noise_wham/versions/eval-20260804": {
+   "bytes": 886547,
+   "dest": "audio-data-contract/datasets/cv_zh_noise_wham/versions/eval-20260804/",
+   "files": 2,
+   "verified": "2026-11-04"
+  },
+  "datasets/cv_zh_noise_wham_hotwords/versions/eval-20260804": {
+   "bytes": 813897,
+   "dest": "audio-data-contract/datasets/cv_zh_noise_wham_hotwords/versions/eval-20260804/",
+   "files": 1,
+   "verified": "2026-11-04"
+  },
+  "datasets/cv_zh_rir_rirmega/versions/eval-20260804": {
+   "bytes": 886659,
+   "dest": "audio-data-contract/datasets/cv_zh_rir_rirmega/versions/eval-20260804/",
+   "files": 2,
+   "verified": "2026-11-04"
+  },
+  "datasets/cv_zh_rir_rirmega_hotwords/versions/eval-20260804": {
+   "bytes": 813897,
+   "dest": "audio-data-contract/datasets/cv_zh_rir_rirmega_hotwords/versions/eval-20260804/",
+   "files": 1,
+   "verified": "2026-11-04"
+  },
+  "datasets/cv_zh_rir_slr26/versions/eval-20260804": {
+   "bytes": 886472,
+   "dest": "audio-data-contract/datasets/cv_zh_rir_slr26/versions/eval-20260804/",
+   "files": 2,
+   "verified": "2026-11-04"
+  },
+  "datasets/cv_zh_rir_slr26_hotwords/versions/eval-20260804": {
+   "bytes": 813897,
+   "dest": "audio-data-contract/datasets/cv_zh_rir_slr26_hotwords/versions/eval-20260804/",
+   "files": 1,
+   "verified": "2026-11-04"
+  },
+  "datasets/cv_zh_rir_slr28_real/versions/eval-20260804": {
+   "bytes": 887021,
+   "dest": "audio-data-contract/datasets/cv_zh_rir_slr28_real/versions/eval-20260804/",
+   "files": 2,
+   "verified": "2026-11-04"
+  },
+  "datasets/cv_zh_rir_slr28_real_hotwords/versions/eval-20260804": {
+   "bytes": 813897,
+   "dest": "audio-data-contract/datasets/cv_zh_rir_slr28_real_hotwords/versions/eval-20260804/",
+   "files": 1,
+   "verified": "2026-11-04"
+  },
+  "datasets/cv_zh_rir_slr28_sim/versions/eval-20260804": {
+   "bytes": 887021,
+   "dest": "audio-data-contract/datasets/cv_zh_rir_slr28_sim/versions/eval-20260804/",
+   "files": 2,
+   "verified": "2026-11-04"
+  },
+  "datasets/cv_zh_rir_slr28_sim_hotwords/versions/eval-20260804": {
+   "bytes": 813897,
+   "dest": "audio-data-contract/datasets/cv_zh_rir_slr28_sim_hotwords/versions/eval-20260804/",
+   "files": 1,
+   "verified": "2026-11-04"
+  },
+  "datasets/emilia2_short/versions/short-lance-20261023": {
+   "bytes": 616227930,
+   "dest": "audio-data-contract/datasets/emilia2_short/versions/short-lance-20261023/",
+   "files": 4,
+   "verified": "2026-11-04"
+  },
+  "datasets/emilia2_zh_dialogue_diarize/versions/hotwords-qwen3.8-flash-m4a64k-v1": {
+   "bytes": 15960483,
+   "dest": "audio-data-contract/datasets/emilia2_zh_dialogue_diarize/versions/hotwords-qwen3.8-flash-m4a64k-v1/",
+   "files": 2,
+   "verified": "2026-11-04"
+  },
+  "datasets/emilia2_zh_dialogue_diarize/versions/listening-review-v1-20261014": {
+   "bytes": 25384,
+   "dest": "audio-data-contract/datasets/emilia2_zh_dialogue_diarize/versions/listening-review-v1-20261014/",
+   "files": 2,
+   "verified": "2026-11-04"
+  },
+  "datasets/emilia2_zh_dialogue_diarize/versions/listening-review-v1-20261016": {
+   "bytes": 65577,
+   "dest": "audio-data-contract/datasets/emilia2_zh_dialogue_diarize/versions/listening-review-v1-20261016/",
+   "files": 2,
+   "verified": "2026-11-04"
+  },
+  "datasets/emilia2_zh_dialogue_diarize/versions/moss-transcribe-diarize-0.9B": {
+   "bytes": 384796804,
+   "dest": "audio-data-contract/datasets/emilia2_zh_dialogue_diarize/versions/moss-transcribe-diarize-0.9B/",
+   "files": 9,
+   "verified": "2026-11-04"
+  },
+  "datasets/emilia2_zh_dialogue_diarize/versions/moss-transcribe-diarize-0.9B-m4a64k": {
+   "bytes": 228771052,
+   "dest": "audio-data-contract/datasets/emilia2_zh_dialogue_diarize/versions/moss-transcribe-diarize-0.9B-m4a64k/",
+   "files": 6,
+   "verified": "2026-11-04"
+  },
+  "datasets/emilia2_zh_dialogue_diarize/versions/moss-transcribe-diarize-0.9B-pro4plus": {
+   "bytes": 362215358,
+   "dest": "audio-data-contract/datasets/emilia2_zh_dialogue_diarize/versions/moss-transcribe-diarize-0.9B-pro4plus/",
+   "files": 7,
+   "verified": "2026-11-04"
+  },
+  "datasets/emilia2_zh_dialogue_diarize/versions/similar-voice-v1-20261014": {
+   "bytes": 90274211,
+   "dest": "audio-data-contract/datasets/emilia2_zh_dialogue_diarize/versions/similar-voice-v1-20261014/",
+   "files": 2,
+   "verified": "2026-11-04"
+  },
+  "datasets/emilia2_zh_dialogue_diarize/versions/teacher-labels-v1-20261015": {
+   "bytes": 462638021,
+   "dest": "audio-data-contract/datasets/emilia2_zh_dialogue_diarize/versions/teacher-labels-v1-20261015/",
+   "files": 2,
+   "verified": "2026-11-04"
+  },
+  "datasets/emilia_ja/versions/legacy": {
+   "bytes": 59329485,
+   "dest": "audio-data-contract/datasets/emilia_ja/versions/legacy/",
+   "files": 2,
+   "verified": "2026-11-04"
+  },
+  "datasets/emilia_ko/versions/legacy": {
+   "bytes": 8035654,
+   "dest": "audio-data-contract/datasets/emilia_ko/versions/legacy/",
+   "files": 2,
+   "verified": "2026-11-04"
+  },
+  "datasets/emotion1200_en_sec/versions/eval-20260804": {
+   "bytes": 348359,
+   "dest": "audio-data-contract/datasets/emotion1200_en_sec/versions/eval-20260804/",
+   "files": 1,
+   "verified": "2026-11-04"
+  },
+  "datasets/emotion1200_en_sepc/versions/eval-20260804": {
+   "bytes": 588441,
+   "dest": "audio-data-contract/datasets/emotion1200_en_sepc/versions/eval-20260804/",
+   "files": 1,
+   "verified": "2026-11-04"
+  },
+  "datasets/emotion1200_en_ser/versions/eval-20260804": {
+   "bytes": 175242,
+   "dest": "audio-data-contract/datasets/emotion1200_en_ser/versions/eval-20260804/",
+   "files": 2,
+   "verified": "2026-11-04"
+  },
+  "datasets/emotion1200_zh_sec/versions/eval-20260804": {
+   "bytes": 390479,
+   "dest": "audio-data-contract/datasets/emotion1200_zh_sec/versions/eval-20260804/",
+   "files": 1,
+   "verified": "2026-11-04"
+  },
+  "datasets/emotion1200_zh_sepc/versions/eval-20260804": {
+   "bytes": 609208,
+   "dest": "audio-data-contract/datasets/emotion1200_zh_sepc/versions/eval-20260804/",
+   "files": 1,
+   "verified": "2026-11-04"
+  },
+  "datasets/emotion1200_zh_ser/versions/eval-20260804": {
+   "bytes": 219479,
+   "dest": "audio-data-contract/datasets/emotion1200_zh_ser/versions/eval-20260804/",
+   "files": 2,
+   "verified": "2026-11-04"
+  },
+  "datasets/farfield_speech_noise_1spk/versions/20261014": {
+   "bytes": 21281601,
+   "dest": "audio-data-contract/datasets/farfield_speech_noise_1spk/versions/20261014/",
+   "files": 51,
+   "verified": "2026-11-04"
+  },
+  "datasets/farfield_speech_noise_2spk/versions/20261014": {
+   "bytes": 27153562,
+   "dest": "audio-data-contract/datasets/farfield_speech_noise_2spk/versions/20261014/",
+   "files": 51,
+   "verified": "2026-11-04"
+  },
+  "datasets/farfield_speech_noise_3spk/versions/20261014": {
+   "bytes": 34982793,
+   "dest": "audio-data-contract/datasets/farfield_speech_noise_3spk/versions/20261014/",
+   "files": 51,
+   "verified": "2026-11-04"
+  },
+  "datasets/fleurs_ar/source": {
+   "bytes": 586996586,
+   "dest": "audio-data-contract/datasets/fleurs_ar/source/",
+   "files": 1702,
+   "verified": "2026-11-04"
+  },
+  "datasets/fleurs_ar/versions/legacy": {
+   "bytes": 239599,
+   "dest": "audio-data-contract/datasets/fleurs_ar/versions/legacy/",
+   "files": 6,
+   "verified": "2026-11-04"
+  },
+  "datasets/fleurs_bn/versions/legacy": {
+   "bytes": 413739,
+   "dest": "audio-data-contract/datasets/fleurs_bn/versions/legacy/",
+   "files": 6,
+   "verified": "2026-11-04"
+  },
+  "datasets/fleurs_de/versions/legacy": {
+   "bytes": 360646,
+   "dest": "audio-data-contract/datasets/fleurs_de/versions/legacy/",
+   "files": 6,
+   "verified": "2026-11-04"
+  },
+  "datasets/fleurs_en/versions/legacy": {
+   "bytes": 2535752,
+   "dest": "audio-data-contract/datasets/fleurs_en/versions/legacy/",
+   "files": 53,
+   "verified": "2026-11-04"
+  },
+  "datasets/fleurs_es/versions/legacy": {
+   "bytes": 347348,
+   "dest": "audio-data-contract/datasets/fleurs_es/versions/legacy/",
+   "files": 6,
+   "verified": "2026-11-04"
+  },
+  "datasets/fleurs_fr/versions/legacy": {
+   "bytes": 356621,
+   "dest": "audio-data-contract/datasets/fleurs_fr/versions/legacy/",
+   "files": 6,
+   "verified": "2026-11-04"
+  },
+  "datasets/fleurs_ja/versions/legacy": {
+   "bytes": 267811,
+   "dest": "audio-data-contract/datasets/fleurs_ja/versions/legacy/",
+   "files": 6,
+   "verified": "2026-11-04"
+  },
+  "datasets/fleurs_ko/versions/legacy": {
+   "bytes": 246664,
+   "dest": "audio-data-contract/datasets/fleurs_ko/versions/legacy/",
+   "files": 6,
+   "verified": "2026-11-04"
+  },
+  "datasets/fleurs_pt/versions/hf-70bb2e84b976": {
+   "bytes": 2394,
+   "dest": "audio-data-contract/datasets/fleurs_pt/versions/hf-70bb2e84b976/",
+   "files": 2,
+   "verified": "2026-11-04"
+  },
+  "datasets/fleurs_ru/versions/legacy": {
+   "bytes": 362890,
+   "dest": "audio-data-contract/datasets/fleurs_ru/versions/legacy/",
+   "files": 6,
+   "verified": "2026-11-04"
+  },
+  "datasets/fleurs_zh/versions/legacy": {
+   "bytes": 382906,
+   "dest": "audio-data-contract/datasets/fleurs_zh/versions/legacy/",
+   "files": 6,
+   "verified": "2026-11-04"
+  },
+  "datasets/fleurs_zh/versions/legacy-20260804": {
+   "bytes": 2787856,
+   "dest": "audio-data-contract/datasets/fleurs_zh/versions/legacy-20260804/",
+   "files": 47,
+   "verified": "2026-11-04"
+  },
+  "datasets/gigaspeech/versions/punc-teacher-v1-20261102": {
+   "bytes": 3017161,
+   "dest": "audio-data-contract/datasets/gigaspeech/versions/punc-teacher-v1-20261102/",
+   "files": 1,
+   "verified": "2026-11-04"
+  },
+  "datasets/gigaspeech/versions/punc-written-en-v1-20261102": {
+   "bytes": 349079034,
+   "dest": "audio-data-contract/datasets/gigaspeech/versions/punc-written-en-v1-20261102/",
+   "files": 2,
+   "verified": "2026-11-04"
+  },
+  "datasets/gigaspeech/versions/youtube-diarize-census-v1-20261009": {
+   "bytes": 30454208,
+   "dest": "audio-data-contract/datasets/gigaspeech/versions/youtube-diarize-census-v1-20261009/",
+   "files": 3,
+   "verified": "2026-11-04"
+  },
+  "datasets/gigaspeech2_id/versions/local-20260805": {
+   "bytes": 80046013,
+   "dest": "audio-data-contract/datasets/gigaspeech2_id/versions/local-20260805/",
+   "files": 2,
+   "verified": "2026-11-04"
+  },
+  "datasets/gigaspeech2_id_hotwords/versions/hotwords-v1-20260805": {
+   "bytes": 6706178,
+   "dest": "audio-data-contract/datasets/gigaspeech2_id_hotwords/versions/hotwords-v1-20260805/",
+   "files": 1,
+   "verified": "2026-11-04"
+  },
+  "datasets/google_latam/versions/openslr-20260911": {
+   "bytes": 11008,
+   "dest": "audio-data-contract/datasets/google_latam/versions/openslr-20260911/",
+   "files": 2,
+   "verified": "2026-11-04"
+  },
+  "datasets/hard_hw_sft/versions/hard-20261014": {
+   "bytes": 229078315,
+   "dest": "audio-data-contract/datasets/hard_hw_sft/versions/hard-20261014/",
+   "files": 51,
+   "verified": "2026-11-04"
+  },
+  "datasets/heroico/versions/openslr-39": {
+   "bytes": 1071,
+   "dest": "audio-data-contract/datasets/heroico/versions/openslr-39/",
+   "files": 2,
+   "verified": "2026-11-04"
+  },
+  "datasets/hi_mia/versions/openslr-85-test-v2": {
+   "bytes": 1020,
+   "dest": "audio-data-contract/datasets/hi_mia/versions/openslr-85-test-v2/",
+   "files": 1,
+   "verified": "2026-11-04"
+  },
+  "datasets/hi_mia/versions/speaker-records-v1-20260912": {
+   "bytes": 595542890,
+   "dest": "audio-data-contract/datasets/hi_mia/versions/speaker-records-v1-20260912/",
+   "files": 12,
+   "verified": "2026-11-04"
+  },
+  "datasets/hotword_bench/versions/v1-20261018": {
+   "bytes": 91337176,
+   "dest": "audio-data-contract/datasets/hotword_bench/versions/v1-20261018/",
+   "files": 14,
+   "verified": "2026-11-04"
+  },
+  "datasets/hotword_bench/versions/v2-20261019": {
+   "bytes": 87550631,
+   "dest": "audio-data-contract/datasets/hotword_bench/versions/v2-20261019/",
+   "files": 15,
+   "verified": "2026-11-04"
+  },
+  "datasets/hotword_bench/versions/v3-20261020": {
+   "bytes": 88501392,
+   "dest": "audio-data-contract/datasets/hotword_bench/versions/v3-20261020/",
+   "files": 15,
+   "verified": "2026-11-04"
+  },
+  "datasets/hw_grpo_candidates/source": {
+   "bytes": 223431354,
+   "dest": "audio-data-contract/datasets/hw_grpo_candidates/source/",
+   "files": 19,
+   "verified": "2026-11-04"
+  },
+  "datasets/hw_grpo_candidates/versions/v1-20261101": {
+   "bytes": 121030954,
+   "dest": "audio-data-contract/datasets/hw_grpo_candidates/versions/v1-20261101/",
+   "files": 51,
+   "verified": "2026-11-04"
+  },
+  "datasets/iemocap_ser/source": {
+   "bytes": 178125612,
+   "dest": "audio-data-contract/datasets/iemocap_ser/source/",
+   "files": 1241,
+   "verified": "2026-11-04"
+  },
+  "datasets/iemocap_ser/versions/eval-20260804": {
+   "bytes": 46499,
+   "dest": "audio-data-contract/datasets/iemocap_ser/versions/eval-20260804/",
+   "files": 2,
+   "verified": "2026-11-04"
+  },
+  "datasets/kespeech/versions/clean-dual-qwen-moss-v1-20261009": {
+   "bytes": 202959036,
+   "dest": "audio-data-contract/datasets/kespeech/versions/clean-dual-qwen-moss-v1-20261009/",
+   "files": 7,
+   "verified": "2026-11-04"
+  },
+  "datasets/kespeech/versions/eval-southwestern-20261012": {
+   "bytes": 171507,
+   "dest": "audio-data-contract/datasets/kespeech/versions/eval-southwestern-20261012/",
+   "files": 2,
+   "verified": "2026-11-04"
+  },
+  "datasets/kespeech/versions/hotwords-v1-20261102": {
+   "bytes": 36373904,
+   "dest": "audio-data-contract/datasets/kespeech/versions/hotwords-v1-20261102/",
+   "files": 2,
+   "verified": "2026-11-04"
+  },
+  "datasets/kespeech/versions/icefall-20260908": {
+   "bytes": 937786,
+   "dest": "audio-data-contract/datasets/kespeech/versions/icefall-20260908/",
+   "files": 1,
+   "verified": "2026-11-04"
+  },
+  "datasets/kespeech/versions/legacy-20260804": {
+   "bytes": 597132976,
+   "dest": "audio-data-contract/datasets/kespeech/versions/legacy-20260804/",
+   "files": 70,
+   "verified": "2026-11-04"
+  },
+  "datasets/kespeech/versions/punc-gold-v1-20261029": {
+   "bytes": 1828,
+   "dest": "audio-data-contract/datasets/kespeech/versions/punc-gold-v1-20261029/",
+   "files": 1,
+   "verified": "2026-11-04"
+  },
+  "datasets/kespeech/versions/punc-teacher-v1-20261029": {
+   "bytes": 724576,
+   "dest": "audio-data-contract/datasets/kespeech/versions/punc-teacher-v1-20261029/",
+   "files": 1,
+   "verified": "2026-11-04"
+  },
+  "datasets/kespeech/versions/punc-written-v1-20261029": {
+   "bytes": 41171354,
+   "dest": "audio-data-contract/datasets/kespeech/versions/punc-written-v1-20261029/",
+   "files": 3,
+   "verified": "2026-11-04"
+  },
+  "datasets/kespeech/versions/train-punc-v1-20261102": {
+   "bytes": 569467465,
+   "dest": "audio-data-contract/datasets/kespeech/versions/train-punc-v1-20261102/",
+   "files": 63,
+   "verified": "2026-11-04"
+  },
+  "datasets/kespeech_hotwords/versions/hotwords-v1-20260805": {
+   "bytes": 1347894,
+   "dest": "audio-data-contract/datasets/kespeech_hotwords/versions/hotwords-v1-20260805/",
+   "files": 2,
+   "verified": "2026-11-04"
+  },
+  "datasets/koreaspeech/versions/legacy": {
+   "bytes": 305641789,
+   "dest": "audio-data-contract/datasets/koreaspeech/versions/legacy/",
+   "files": 6,
+   "verified": "2026-11-04"
+  },
+  "datasets/legco_speech/versions/qwen3-asr-v1-20261103": {
+   "bytes": 1754,
+   "dest": "audio-data-contract/datasets/legco_speech/versions/qwen3-asr-v1-20261103/",
+   "files": 1,
+   "verified": "2026-11-04"
+  },
+  "datasets/legco_speech_en/versions/legacy-20260804": {
+   "bytes": 10571557,
+   "dest": "audio-data-contract/datasets/legco_speech_en/versions/legacy-20260804/",
+   "files": 2,
+   "verified": "2026-11-04"
+  },
+  "datasets/librimix/versions/960-legacy-audio-record-20260910": {
+   "bytes": 360912947,
+   "dest": "audio-data-contract/datasets/librimix/versions/960-legacy-audio-record-20260910/",
+   "files": 5,
+   "verified": "2026-11-04"
+  },
+  "datasets/librispeech/versions/hotwords-v1-20261102": {
+   "bytes": 2995022,
+   "dest": "audio-data-contract/datasets/librispeech/versions/hotwords-v1-20261102/",
+   "files": 3,
+   "verified": "2026-11-04"
+  },
+  "datasets/librispeech/versions/legacy-20260804": {
+   "bytes": 242816745,
+   "dest": "audio-data-contract/datasets/librispeech/versions/legacy-20260804/",
+   "files": 65,
+   "verified": "2026-11-04"
+  },
+  "datasets/librispeech/versions/punc-teacher-v1-20261102": {
+   "bytes": 1945064,
+   "dest": "audio-data-contract/datasets/librispeech/versions/punc-teacher-v1-20261102/",
+   "files": 1,
+   "verified": "2026-11-04"
+  },
+  "datasets/librispeech/versions/punc-written-en-v1-20261102": {
+   "bytes": 24338224,
+   "dest": "audio-data-contract/datasets/librispeech/versions/punc-written-en-v1-20261102/",
+   "files": 4,
+   "verified": "2026-11-04"
+  },
+  "datasets/librispeech/versions/train-punc-v1-20261102": {
+   "bytes": 233694415,
+   "dest": "audio-data-contract/datasets/librispeech/versions/train-punc-v1-20261102/",
+   "files": 55,
+   "verified": "2026-11-04"
+  },
+  "datasets/librispeech_test_clean_hotwords/versions/eval-20260804": {
+   "bytes": 176937,
+   "dest": "audio-data-contract/datasets/librispeech_test_clean_hotwords/versions/eval-20260804/",
+   "files": 1,
+   "verified": "2026-11-04"
+  },
+  "datasets/librispeech_test_other_hotwords/versions/eval-20260804": {
+   "bytes": 173598,
+   "dest": "audio-data-contract/datasets/librispeech_test_other_hotwords/versions/eval-20260804/",
+   "files": 1,
+   "verified": "2026-11-04"
+  },
+  "datasets/librispeech_traffic_snr0/versions/icefall-20260908": {
+   "bytes": 894379,
+   "dest": "audio-data-contract/datasets/librispeech_traffic_snr0/versions/icefall-20260908/",
+   "files": 2,
+   "verified": "2026-11-04"
+  },
+  "datasets/librispeech_traffic_snr10/versions/icefall-20260908": {
+   "bytes": 894901,
+   "dest": "audio-data-contract/datasets/librispeech_traffic_snr10/versions/icefall-20260908/",
+   "files": 2,
+   "verified": "2026-11-04"
+  },
+  "datasets/librispeech_traffic_snr15/versions/icefall-20260908": {
+   "bytes": 893870,
+   "dest": "audio-data-contract/datasets/librispeech_traffic_snr15/versions/icefall-20260908/",
+   "files": 2,
+   "verified": "2026-11-04"
+  },
+  "datasets/librispeech_traffic_snr20/versions/icefall-20260908": {
+   "bytes": 894450,
+   "dest": "audio-data-contract/datasets/librispeech_traffic_snr20/versions/icefall-20260908/",
+   "files": 2,
+   "verified": "2026-11-04"
+  },
+  "datasets/librispeech_traffic_snr5/versions/icefall-20260908": {
+   "bytes": 895642,
+   "dest": "audio-data-contract/datasets/librispeech_traffic_snr5/versions/icefall-20260908/",
+   "files": 2,
+   "verified": "2026-11-04"
+  },
+  "datasets/librivox_spanish/versions/hf-ef936a31638d": {
+   "bytes": 5000,
+   "dest": "audio-data-contract/datasets/librivox_spanish/versions/hf-ef936a31638d/",
+   "files": 2,
+   "verified": "2026-11-04"
+  },
+  "datasets/m3ed_ser/source": {
+   "bytes": 195079306,
+   "dest": "audio-data-contract/datasets/m3ed_ser/source/",
+   "files": 4194,
+   "verified": "2026-11-04"
+  },
+  "datasets/m3ed_ser/versions/eval-20260804": {
+   "bytes": 209214,
+   "dest": "audio-data-contract/datasets/m3ed_ser/versions/eval-20260804/",
+   "files": 2,
+   "verified": "2026-11-04"
+  },
+  "datasets/magicdata/versions/alignment-v1-20261008": {
+   "bytes": 49618834,
+   "dest": "audio-data-contract/datasets/magicdata/versions/alignment-v1-20261008/",
+   "files": 2,
+   "verified": "2026-11-04"
+  },
+  "datasets/magicdata/versions/clean-dual-qwen-moss-v1-20261008": {
+   "bytes": 81527019,
+   "dest": "audio-data-contract/datasets/magicdata/versions/clean-dual-qwen-moss-v1-20261008/",
+   "files": 9,
+   "verified": "2026-11-04"
+  },
+  "datasets/magicdata/versions/hotwords-v1-20261102": {
+   "bytes": 15343750,
+   "dest": "audio-data-contract/datasets/magicdata/versions/hotwords-v1-20261102/",
+   "files": 1,
+   "verified": "2026-11-04"
+  },
+  "datasets/magicdata/versions/legacy-20260804": {
+   "bytes": 381639263,
+   "dest": "audio-data-contract/datasets/magicdata/versions/legacy-20260804/",
+   "files": 63,
+   "verified": "2026-11-04"
+  },
+  "datasets/magicdata/versions/punc-written-v1-20261102": {
+   "bytes": 17213768,
+   "dest": "audio-data-contract/datasets/magicdata/versions/punc-written-v1-20261102/",
+   "files": 2,
+   "verified": "2026-11-04"
+  },
+  "datasets/magicdata_hotwords/versions/hotwords-v1-20260805": {
+   "bytes": 24001281,
+   "dest": "audio-data-contract/datasets/magicdata_hotwords/versions/hotwords-v1-20260805/",
+   "files": 2,
+   "verified": "2026-11-04"
+  },
+  "datasets/magicdata_ramc/versions/alignment-v1-20261008": {
+   "bytes": 19052103,
+   "dest": "audio-data-contract/datasets/magicdata_ramc/versions/alignment-v1-20261008/",
+   "files": 2,
+   "verified": "2026-11-04"
+  },
+  "datasets/magicdata_ramc/versions/allspk-asr-v1-20261103": {
+   "bytes": 49447756,
+   "dest": "audio-data-contract/datasets/magicdata_ramc/versions/allspk-asr-v1-20261103/",
+   "files": 49,
+   "verified": "2026-11-04"
+  },
+  "datasets/magicdata_ramc/versions/allspk-ts-v1-20261104": {
+   "bytes": 58360276,
+   "dest": "audio-data-contract/datasets/magicdata_ramc/versions/allspk-ts-v1-20261104/",
+   "files": 50,
+   "verified": "2026-11-04"
+  },
+  "datasets/magicdata_ramc/versions/asr-20261014": {
+   "bytes": 289441969,
+   "dest": "audio-data-contract/datasets/magicdata_ramc/versions/asr-20261014/",
+   "files": 54,
+   "verified": "2026-11-04"
+  },
+  "datasets/magicdata_ramc/versions/clean-dual-pass-20261027": {
+   "bytes": 127562286,
+   "dest": "audio-data-contract/datasets/magicdata_ramc/versions/clean-dual-pass-20261027/",
+   "files": 50,
+   "verified": "2026-11-04"
+  },
+  "datasets/magicdata_ramc/versions/clean-dual-qwen-moss-v1-20261008": {
+   "bytes": 34489247,
+   "dest": "audio-data-contract/datasets/magicdata_ramc/versions/clean-dual-qwen-moss-v1-20261008/",
+   "files": 13,
+   "verified": "2026-11-04"
+  },
+  "datasets/magicdata_ramc/versions/gap-labels-v1-20261009": {
+   "bytes": 13327729,
+   "dest": "audio-data-contract/datasets/magicdata_ramc/versions/gap-labels-v1-20261009/",
+   "files": 4,
+   "verified": "2026-11-04"
+  },
+  "datasets/magicdata_ramc/versions/legacy-20260804": {
+   "bytes": 7712173,
+   "dest": "audio-data-contract/datasets/magicdata_ramc/versions/legacy-20260804/",
+   "files": 6,
+   "verified": "2026-11-04"
+  },
+  "datasets/magicdata_ramc/versions/listening-review-v1-20261027": {
+   "bytes": 14120,
+   "dest": "audio-data-contract/datasets/magicdata_ramc/versions/listening-review-v1-20261027/",
+   "files": 2,
+   "verified": "2026-11-04"
+  },
+  "datasets/magicdata_ramc/versions/punc-gold-v1-20261029": {
+   "bytes": 1543,
+   "dest": "audio-data-contract/datasets/magicdata_ramc/versions/punc-gold-v1-20261029/",
+   "files": 1,
+   "verified": "2026-11-04"
+  },
+  "datasets/magicdata_ramc/versions/punc-teacher-v1-20261029": {
+   "bytes": 207114,
+   "dest": "audio-data-contract/datasets/magicdata_ramc/versions/punc-teacher-v1-20261029/",
+   "files": 1,
+   "verified": "2026-11-04"
+  },
+  "datasets/magicdata_ramc/versions/punc-written-v1-20261029": {
+   "bytes": 6749171,
+   "dest": "audio-data-contract/datasets/magicdata_ramc/versions/punc-written-v1-20261029/",
+   "files": 2,
+   "verified": "2026-11-04"
+  },
+  "datasets/magicdata_ramc/versions/speaker-identity-v1-20261028": {
+   "bytes": 7503047,
+   "dest": "audio-data-contract/datasets/magicdata_ramc/versions/speaker-identity-v1-20261028/",
+   "files": 5,
+   "verified": "2026-11-04"
+  },
+  "datasets/magicdata_ramc/versions/teacher-calibration-v1-20261009": {
+   "bytes": 884877,
+   "dest": "audio-data-contract/datasets/magicdata_ramc/versions/teacher-calibration-v1-20261009/",
+   "files": 5,
+   "verified": "2026-11-04"
+  },
+  "datasets/magicdata_ramc/versions/train-punc-v1-20261102": {
+   "bytes": 129620519,
+   "dest": "audio-data-contract/datasets/magicdata_ramc/versions/train-punc-v1-20261102/",
+   "files": 51,
+   "verified": "2026-11-04"
+  },
+  "datasets/magicdata_ramc/versions/turn-taking-20261014": {
+   "bytes": 166721274,
+   "dest": "audio-data-contract/datasets/magicdata_ramc/versions/turn-taking-20261014/",
+   "files": 55,
+   "verified": "2026-11-04"
+  },
+  "datasets/magicdata_ramc/versions/turn-taking-20261014-utts": {
+   "bytes": 200791451,
+   "dest": "audio-data-contract/datasets/magicdata_ramc/versions/turn-taking-20261014-utts/",
+   "files": 54,
+   "verified": "2026-11-04"
+  },
+  "datasets/magicdata_ramc/versions/turn-taking-20261014-utts-punc-20261102": {
+   "bytes": 201610350,
+   "dest": "audio-data-contract/datasets/magicdata_ramc/versions/turn-taking-20261014-utts-punc-20261102/",
+   "files": 50,
+   "verified": "2026-11-04"
+  },
+  "datasets/magicdata_ramc_meeting_sot/versions/real-meetings-v2-20261010": {
+   "bytes": 42301033,
+   "dest": "audio-data-contract/datasets/magicdata_ramc_meeting_sot/versions/real-meetings-v2-20261010/",
+   "files": 13,
+   "verified": "2026-11-04"
+  },
+  "datasets/magicdata_ramc_meeting_sot/versions/similar-voice-v1-20261014": {
+   "bytes": 10210676,
+   "dest": "audio-data-contract/datasets/magicdata_ramc_meeting_sot/versions/similar-voice-v1-20261014/",
+   "files": 5,
+   "verified": "2026-11-04"
+  },
+  "datasets/mdcc/versions/legacy-20260804": {
+   "bytes": 6577873,
+   "dest": "audio-data-contract/datasets/mdcc/versions/legacy-20260804/",
+   "files": 6,
+   "verified": "2026-11-04"
+  },
+  "datasets/mdcc_traffic_snr0/versions/icefall-20260908": {
+   "bytes": 1971971,
+   "dest": "audio-data-contract/datasets/mdcc_traffic_snr0/versions/icefall-20260908/",
+   "files": 1,
+   "verified": "2026-11-04"
+  },
+  "datasets/mdcc_traffic_snr10/versions/icefall-20260908": {
+   "bytes": 1971337,
+   "dest": "audio-data-contract/datasets/mdcc_traffic_snr10/versions/icefall-20260908/",
+   "files": 1,
+   "verified": "2026-11-04"
+  },
+  "datasets/mdcc_traffic_snr15/versions/icefall-20260908": {
+   "bytes": 1972818,
+   "dest": "audio-data-contract/datasets/mdcc_traffic_snr15/versions/icefall-20260908/",
+   "files": 1,
+   "verified": "2026-11-04"
+  },
+  "datasets/mdcc_traffic_snr20/versions/icefall-20260908": {
+   "bytes": 1971886,
+   "dest": "audio-data-contract/datasets/mdcc_traffic_snr20/versions/icefall-20260908/",
+   "files": 1,
+   "verified": "2026-11-04"
+  },
+  "datasets/mdcc_traffic_snr5/versions/icefall-20260908": {
+   "bytes": 1972271,
+   "dest": "audio-data-contract/datasets/mdcc_traffic_snr5/versions/icefall-20260908/",
+   "files": 1,
+   "verified": "2026-11-04"
+  },
+  "datasets/meeting_180s_benchmark/versions/v1-20261008": {
+   "bytes": 988876,
+   "dest": "audio-data-contract/datasets/meeting_180s_benchmark/versions/v1-20261008/",
+   "files": 7,
+   "verified": "2026-11-04"
+  },
+  "datasets/meeting_room_noise/versions/v2-20261014": {
+   "bytes": 109201497,
+   "dest": "audio-data-contract/datasets/meeting_room_noise/versions/v2-20261014/",
+   "files": 216,
+   "verified": "2026-11-04"
+  },
+  "datasets/meeting_selection_panel/versions/v1-20261008": {
+   "bytes": 1076336,
+   "dest": "audio-data-contract/datasets/meeting_selection_panel/versions/v1-20261008/",
+   "files": 4,
+   "verified": "2026-11-04"
+  },
+  "datasets/meld_ser/versions/eval-20260804": {
+   "bytes": 138421,
+   "dest": "audio-data-contract/datasets/meld_ser/versions/eval-20260804/",
+   "files": 2,
+   "verified": "2026-11-04"
+  },
+  "datasets/mgb2/versions/legacy": {
+   "bytes": 35536242,
+   "dest": "audio-data-contract/datasets/mgb2/versions/legacy/",
+   "files": 12,
+   "verified": "2026-11-04"
+  },
+  "datasets/mit_ir_survey/source": {
+   "bytes": 15897686,
+   "dest": "audio-data-contract/datasets/mit_ir_survey/source/",
+   "files": 5,
+   "verified": "2026-11-04"
+  },
+  "datasets/mit_ir_survey/versions/flac16k-20261026": {
+   "bytes": 3701682,
+   "dest": "audio-data-contract/datasets/mit_ir_survey/versions/flac16k-20261026/",
+   "files": 272,
+   "verified": "2026-11-04"
+  },
+  "datasets/mls_de/versions/legacy": {
+   "bytes": 86215276,
+   "dest": "audio-data-contract/datasets/mls_de/versions/legacy/",
+   "files": 9,
+   "verified": "2026-11-04"
+  },
+  "datasets/mls_es/versions/legacy": {
+   "bytes": 45665369,
+   "dest": "audio-data-contract/datasets/mls_es/versions/legacy/",
+   "files": 9,
+   "verified": "2026-11-04"
+  },
+  "datasets/mls_fr/versions/legacy": {
+   "bytes": 55287157,
+   "dest": "audio-data-contract/datasets/mls_fr/versions/legacy/",
+   "files": 9,
+   "verified": "2026-11-04"
+  },
+  "datasets/mls_pt/versions/openslr-94": {
+   "bytes": 1073,
+   "dest": "audio-data-contract/datasets/mls_pt/versions/openslr-94/",
+   "files": 2,
+   "verified": "2026-11-04"
+  },
+  "datasets/msp_podcast_ser/versions/eval-20260804": {
+   "bytes": 1359518,
+   "dest": "audio-data-contract/datasets/msp_podcast_ser/versions/eval-20260804/",
+   "files": 4,
+   "verified": "2026-11-04"
+  },
+  "datasets/mtedx/versions/hf-0b97ef40298d": {
+   "bytes": 31230,
+   "dest": "audio-data-contract/datasets/mtedx/versions/hf-0b97ef40298d/",
+   "files": 2,
+   "verified": "2026-11-04"
+  },
+  "datasets/musan/versions/legacy-20260804": {
+   "bytes": 26462,
+   "dest": "audio-data-contract/datasets/musan/versions/legacy-20260804/",
+   "files": 2,
+   "verified": "2026-11-04"
+  },
+  "datasets/notsofar_sdm/versions/icefall-20260908": {
+   "bytes": 27606394,
+   "dest": "audio-data-contract/datasets/notsofar_sdm/versions/icefall-20260908/",
+   "files": 6,
+   "verified": "2026-11-04"
+  },
+  "datasets/notsofar_sdm/versions/meeting-windows-v1-20261008": {
+   "bytes": 52531867,
+   "dest": "audio-data-contract/datasets/notsofar_sdm/versions/meeting-windows-v1-20261008/",
+   "files": 15,
+   "verified": "2026-11-04"
+  },
+  "datasets/notsofar_sdm/versions/teacher-calibration-v1-20261009": {
+   "bytes": 1700657,
+   "dest": "audio-data-contract/datasets/notsofar_sdm/versions/teacher-calibration-v1-20261009/",
+   "files": 6,
+   "verified": "2026-11-04"
+  },
+  "datasets/nurc_sp_corpus_minimo/versions/hf-551dea2d5a42": {
+   "bytes": 2748,
+   "dest": "audio-data-contract/datasets/nurc_sp_corpus_minimo/versions/hf-551dea2d5a42/",
+   "files": 2,
+   "verified": "2026-11-04"
+  },
+  "datasets/open_large_bn/versions/legacy": {
+   "bytes": 440001511,
+   "dest": "audio-data-contract/datasets/open_large_bn/versions/legacy/",
+   "files": 4,
+   "verified": "2026-11-04"
+  },
+  "datasets/police_asr_unified/versions/train-punc-v1-20261102": {
+   "bytes": 378682483,
+   "dest": "audio-data-contract/datasets/police_asr_unified/versions/train-punc-v1-20261102/",
+   "files": 54,
+   "verified": "2026-11-04"
+  },
+  "datasets/police_asr_unified/versions/v1-20261009": {
+   "bytes": 466794089,
+   "dest": "audio-data-contract/datasets/police_asr_unified/versions/v1-20261009/",
+   "files": 60,
+   "verified": "2026-11-04"
+  },
+  "datasets/police_robust_monitor/source": {
+   "bytes": 195840640,
+   "dest": "audio-data-contract/datasets/police_robust_monitor/source/",
+   "files": 480,
+   "verified": "2026-11-04"
+  },
+  "datasets/police_robust_monitor/versions/icefall-20260908": {
+   "bytes": 59668,
+   "dest": "audio-data-contract/datasets/police_robust_monitor/versions/icefall-20260908/",
+   "files": 8,
+   "verified": "2026-11-04"
+  },
+  "datasets/police_scene_bench/tts/plates-20261028": {
+   "bytes": 81024548,
+   "dest": "audio-data-contract/datasets/police_scene_bench/tts/plates-20261028/",
+   "files": 475,
+   "verified": "2026-11-04"
+  },
+  "datasets/police_scene_bench/tts/texts-20261028": {
+   "bytes": 344240,
+   "dest": "audio-data-contract/datasets/police_scene_bench/tts/texts-20261028/",
+   "files": 1,
+   "verified": "2026-11-04"
+  },
+  "datasets/police_scene_bench/versions/v1-20261028": {
+   "bytes": 4953287,
+   "dest": "audio-data-contract/datasets/police_scene_bench/versions/v1-20261028/",
+   "files": 93,
+   "verified": "2026-11-04"
+  },
+  "datasets/police_synthetic_zh_accent/versions/icefall-20260908": {
+   "bytes": 3679305,
+   "dest": "audio-data-contract/datasets/police_synthetic_zh_accent/versions/icefall-20260908/",
+   "files": 8,
+   "verified": "2026-11-04"
+  },
+  "datasets/police_synthetic_zh_accent/versions/legacy-rebalance-100k-20260916": {
+   "bytes": 297893510,
+   "dest": "audio-data-contract/datasets/police_synthetic_zh_accent/versions/legacy-rebalance-100k-20260916/",
+   "files": 13,
+   "verified": "2026-11-04"
+  },
+  "datasets/police_synthetic_zh_accent/versions/v1-20260817": {
+   "bytes": 51286722,
+   "dest": "audio-data-contract/datasets/police_synthetic_zh_accent/versions/v1-20260817/",
+   "files": 8,
+   "verified": "2026-11-04"
+  },
+  "datasets/police_synthetic_zh_accent/versions/v2-20260818": {
+   "bytes": 8158638,
+   "dest": "audio-data-contract/datasets/police_synthetic_zh_accent/versions/v2-20260818/",
+   "files": 3,
+   "verified": "2026-11-04"
+  },
+  "datasets/police_terms_single/versions/listening-review-v1-20261022": {
+   "bytes": 3084,
+   "dest": "audio-data-contract/datasets/police_terms_single/versions/listening-review-v1-20261022/",
+   "files": 2,
+   "verified": "2026-11-04"
+  },
+  "datasets/police_terms_single/versions/qc-v1-20261022": {
+   "bytes": 283764,
+   "dest": "audio-data-contract/datasets/police_terms_single/versions/qc-v1-20261022/",
+   "files": 2,
+   "verified": "2026-11-04"
+  },
+  "datasets/police_terms_single/versions/v1-20261022": {
+   "bytes": 201613929,
+   "dest": "audio-data-contract/datasets/police_terms_single/versions/v1-20261022/",
+   "files": 3268,
+   "verified": "2026-11-04"
+  },
+  "datasets/police_terms_single_train/versions/hotwords-confusable-v1-20261102": {
+   "bytes": 25245680,
+   "dest": "audio-data-contract/datasets/police_terms_single_train/versions/hotwords-confusable-v1-20261102/",
+   "files": 50,
+   "verified": "2026-11-04"
+  },
+  "datasets/police_terms_single_train/versions/listening-review-v1-20261024": {
+   "bytes": 3185,
+   "dest": "audio-data-contract/datasets/police_terms_single_train/versions/listening-review-v1-20261024/",
+   "files": 2,
+   "verified": "2026-11-04"
+  },
+  "datasets/police_terms_single_train/versions/punc-written-v1-20261102": {
+   "bytes": 740158,
+   "dest": "audio-data-contract/datasets/police_terms_single_train/versions/punc-written-v1-20261102/",
+   "files": 2,
+   "verified": "2026-11-04"
+  },
+  "datasets/police_terms_single_train/versions/qc-v1-20261023": {
+   "bytes": 1009151,
+   "dest": "audio-data-contract/datasets/police_terms_single_train/versions/qc-v1-20261023/",
+   "files": 2,
+   "verified": "2026-11-04"
+  },
+  "datasets/police_terms_single_train/versions/train-punc-v1-20261102": {
+   "bytes": 13817613,
+   "dest": "audio-data-contract/datasets/police_terms_single_train/versions/train-punc-v1-20261102/",
+   "files": 49,
+   "verified": "2026-11-04"
+  },
+  "datasets/police_terms_v5_test/versions/icefall-20260908": {
+   "bytes": 122421,
+   "dest": "audio-data-contract/datasets/police_terms_v5_test/versions/icefall-20260908/",
+   "files": 2,
+   "verified": "2026-11-04"
+  },
+  "datasets/police_v6_8h/versions/v6-8h-20260915": {
+   "bytes": 26575812,
+   "dest": "audio-data-contract/datasets/police_v6_8h/versions/v6-8h-20260915/",
+   "files": 8,
+   "verified": "2026-11-04"
+  },
+  "datasets/police_v6_acceptance_205/source": {
+   "bytes": 348136854,
+   "dest": "audio-data-contract/datasets/police_v6_acceptance_205/source/",
+   "files": 3773,
+   "verified": "2026-11-04"
+  },
+  "datasets/police_v6_acceptance_205/versions/v6-acceptance-20260921": {
+   "bytes": 332953,
+   "dest": "audio-data-contract/datasets/police_v6_acceptance_205/versions/v6-acceptance-20260921/",
+   "files": 4,
+   "verified": "2026-11-04"
+  },
+  "datasets/police_v6_expanded/versions/v6-expanded-20260915": {
+   "bytes": 3591452,
+   "dest": "audio-data-contract/datasets/police_v6_expanded/versions/v6-expanded-20260915/",
+   "files": 8,
+   "verified": "2026-11-04"
+  },
+  "datasets/primewords/versions/alignment-v1-20261008": {
+   "bytes": 10043793,
+   "dest": "audio-data-contract/datasets/primewords/versions/alignment-v1-20261008/",
+   "files": 2,
+   "verified": "2026-11-04"
+  },
+  "datasets/primewords/versions/clean-dual-qwen-moss-v1-20261008": {
+   "bytes": 16499897,
+   "dest": "audio-data-contract/datasets/primewords/versions/clean-dual-qwen-moss-v1-20261008/",
+   "files": 9,
+   "verified": "2026-11-04"
+  },
+  "datasets/primewords/versions/legacy-20260804": {
+   "bytes": 5440549,
+   "dest": "audio-data-contract/datasets/primewords/versions/legacy-20260804/",
+   "files": 2,
+   "verified": "2026-11-04"
+  },
+  "datasets/real_rir_slr28/versions/prepared-20260908": {
+   "bytes": 2321,
+   "dest": "audio-data-contract/datasets/real_rir_slr28/versions/prepared-20260908/",
+   "files": 1,
+   "verified": "2026-11-04"
+  },
+  "datasets/realman/versions/icefall-20260908": {
+   "bytes": 175133436,
+   "dest": "audio-data-contract/datasets/realman/versions/icefall-20260908/",
+   "files": 63,
+   "verified": "2026-11-04"
+  },
+  "datasets/realman/versions/punc-teacher-v1-20261029": {
+   "bytes": 244618,
+   "dest": "audio-data-contract/datasets/realman/versions/punc-teacher-v1-20261029/",
+   "files": 1,
+   "verified": "2026-11-04"
+  },
+  "datasets/realman/versions/punc-written-v1-20261029": {
+   "bytes": 2133141,
+   "dest": "audio-data-contract/datasets/realman/versions/punc-written-v1-20261029/",
+   "files": 2,
+   "verified": "2026-11-04"
+  },
+  "datasets/rulibrispeech_ru/versions/legacy": {
+   "bytes": 4435501,
+   "dest": "audio-data-contract/datasets/rulibrispeech_ru/versions/legacy/",
+   "files": 6,
+   "verified": "2026-11-04"
+  },
+  "datasets/sim_rir_slr26/versions/legacy-20260804": {
+   "bytes": 356160,
+   "dest": "audio-data-contract/datasets/sim_rir_slr26/versions/legacy-20260804/",
+   "files": 1,
+   "verified": "2026-11-04"
+  },
+  "datasets/sim_rir_slr28/versions/legacy-20260804": {
+   "bytes": 350629,
+   "dest": "audio-data-contract/datasets/sim_rir_slr28/versions/legacy-20260804/",
+   "files": 1,
+   "verified": "2026-11-04"
+  },
+  "datasets/singapore_english/versions/legacy-20260804": {
+   "bytes": 119925,
+   "dest": "audio-data-contract/datasets/singapore_english/versions/legacy-20260804/",
+   "files": 4,
+   "verified": "2026-11-04"
+  },
+  "datasets/singaporean/source": {
+   "bytes": 12722256,
+   "dest": "audio-data-contract/datasets/singaporean/source/",
+   "files": 100,
+   "verified": "2026-11-04"
+  },
+  "datasets/singaporean/versions/legacy-20260804": {
+   "bytes": 5548,
+   "dest": "audio-data-contract/datasets/singaporean/versions/legacy-20260804/",
+   "files": 2,
+   "verified": "2026-11-04"
+  },
+  "datasets/slr37_bn/versions/legacy": {
+   "bytes": 190019,
+   "dest": "audio-data-contract/datasets/slr37_bn/versions/legacy/",
+   "files": 2,
+   "verified": "2026-11-04"
+  },
+  "datasets/speechio/versions/eval-original-20261011": {
+   "bytes": 4323687,
+   "dest": "audio-data-contract/datasets/speechio/versions/eval-original-20261011/",
+   "files": 3,
+   "verified": "2026-11-04"
+  },
+  "datasets/speechio/versions/legacy": {
+   "bytes": 3971193,
+   "dest": "audio-data-contract/datasets/speechio/versions/legacy/",
+   "files": 2,
+   "verified": "2026-11-04"
+  },
+  "datasets/tal100_en/source": {
+   "bytes": 556580414,
+   "dest": "audio-data-contract/datasets/tal100_en/source/",
+   "files": 3399,
+   "verified": "2026-11-04"
+  },
+  "datasets/tal100_en/versions/legacy-20260804": {
+   "bytes": 221876,
+   "dest": "audio-data-contract/datasets/tal100_en/versions/legacy-20260804/",
+   "files": 6,
+   "verified": "2026-11-04"
+  },
+  "datasets/tal100_zh/versions/legacy-20260804": {
+   "bytes": 397339,
+   "dest": "audio-data-contract/datasets/tal100_zh/versions/legacy-20260804/",
+   "files": 6,
+   "verified": "2026-11-04"
+  },
+  "datasets/talcs/versions/clean-dual-qwen-moss-v1-20261009": {
+   "bytes": 89793010,
+   "dest": "audio-data-contract/datasets/talcs/versions/clean-dual-qwen-moss-v1-20261009/",
+   "files": 7,
+   "verified": "2026-11-04"
+  },
+  "datasets/talcs/versions/legacy-20260804": {
+   "bytes": 20429275,
+   "dest": "audio-data-contract/datasets/talcs/versions/legacy-20260804/",
+   "files": 6,
+   "verified": "2026-11-04"
+  },
+  "datasets/talcs/versions/punc-written-v1-20261029": {
+   "bytes": 15580303,
+   "dest": "audio-data-contract/datasets/talcs/versions/punc-written-v1-20261029/",
+   "files": 2,
+   "verified": "2026-11-04"
+  },
+  "datasets/talcs_hotwords/versions/hotwords-v1-20260805": {
+   "bytes": 15519433,
+   "dest": "audio-data-contract/datasets/talcs_hotwords/versions/hotwords-v1-20260805/",
+   "files": 1,
+   "verified": "2026-11-04"
+  },
+  "datasets/talcs_traffic_snr0/versions/icefall-20260908": {
+   "bytes": 2383027,
+   "dest": "audio-data-contract/datasets/talcs_traffic_snr0/versions/icefall-20260908/",
+   "files": 1,
+   "verified": "2026-11-04"
+  },
+  "datasets/talcs_traffic_snr10/versions/icefall-20260908": {
+   "bytes": 2383507,
+   "dest": "audio-data-contract/datasets/talcs_traffic_snr10/versions/icefall-20260908/",
+   "files": 1,
+   "verified": "2026-11-04"
+  },
+  "datasets/talcs_traffic_snr15/versions/icefall-20260908": {
+   "bytes": 2381385,
+   "dest": "audio-data-contract/datasets/talcs_traffic_snr15/versions/icefall-20260908/",
+   "files": 1,
+   "verified": "2026-11-04"
+  },
+  "datasets/talcs_traffic_snr20/versions/icefall-20260908": {
+   "bytes": 2382398,
+   "dest": "audio-data-contract/datasets/talcs_traffic_snr20/versions/icefall-20260908/",
+   "files": 1,
+   "verified": "2026-11-04"
+  },
+  "datasets/talcs_traffic_snr5/versions/icefall-20260908": {
+   "bytes": 2383031,
+   "dest": "audio-data-contract/datasets/talcs_traffic_snr5/versions/icefall-20260908/",
+   "files": 1,
+   "verified": "2026-11-04"
+  },
+  "datasets/tarsila_asr/versions/hf-2785788cf674": {
+   "bytes": 5941,
+   "dest": "audio-data-contract/datasets/tarsila_asr/versions/hf-2785788cf674/",
+   "files": 2,
+   "verified": "2026-11-04"
+  },
+  "datasets/tedx_spanish/versions/hf-469308f10c91": {
+   "bytes": 2294,
+   "dest": "audio-data-contract/datasets/tedx_spanish/versions/hf-469308f10c91/",
+   "files": 2,
+   "verified": "2026-11-04"
+  },
+  "datasets/tele_con_ciencia/versions/hf-d870d927f530": {
+   "bytes": 2613,
+   "dest": "audio-data-contract/datasets/tele_con_ciencia/versions/hf-d870d927f530/",
+   "files": 2,
+   "verified": "2026-11-04"
+  },
+  "datasets/thchs30/versions/legacy-20260804": {
+   "bytes": 1036501,
+   "dest": "audio-data-contract/datasets/thchs30/versions/legacy-20260804/",
+   "files": 6,
+   "verified": "2026-11-04"
+  },
+  "datasets/thchs30_hotwords/versions/hotwords-v1-20260805": {
+   "bytes": 906843,
+   "dest": "audio-data-contract/datasets/thchs30_hotwords/versions/hotwords-v1-20260805/",
+   "files": 2,
+   "verified": "2026-11-04"
+  },
+  "datasets/threed_speaker_zh_far_asr/versions/punc-written-v1-20261102": {
+   "bytes": 1588999,
+   "dest": "audio-data-contract/datasets/threed_speaker_zh_far_asr/versions/punc-written-v1-20261102/",
+   "files": 2,
+   "verified": "2026-11-04"
+  },
+  "datasets/threed_speaker_zh_far_asr/versions/train-punc-v1-20261102": {
+   "bytes": 33688179,
+   "dest": "audio-data-contract/datasets/threed_speaker_zh_far_asr/versions/train-punc-v1-20261102/",
+   "files": 49,
+   "verified": "2026-11-04"
+  },
+  "datasets/threed_speaker_zh_far_asr/versions/zh-far-replay-clean-v1-20261010": {
+   "bytes": 113064621,
+   "dest": "audio-data-contract/datasets/threed_speaker_zh_far_asr/versions/zh-far-replay-clean-v1-20261010/",
+   "files": 99,
+   "verified": "2026-11-04"
+  },
+  "datasets/ts_asr_benchmark/versions/en-v1-20261031": {
+   "bytes": 6826126,
+   "dest": "audio-data-contract/datasets/ts_asr_benchmark/versions/en-v1-20261031/",
+   "files": 113,
+   "verified": "2026-11-04"
+  },
+  "datasets/ts_asr_benchmark/versions/en-v1-hotword-labels-20261102": {
+   "bytes": 5997017,
+   "dest": "audio-data-contract/datasets/ts_asr_benchmark/versions/en-v1-hotword-labels-20261102/",
+   "files": 112,
+   "verified": "2026-11-04"
+  },
+  "datasets/ts_asr_benchmark/versions/listening-review-v1-20261026": {
+   "bytes": 15839,
+   "dest": "audio-data-contract/datasets/ts_asr_benchmark/versions/listening-review-v1-20261026/",
+   "files": 10,
+   "verified": "2026-11-04"
+  },
+  "datasets/ts_asr_benchmark/versions/v1-20261013": {
+   "bytes": 3170157,
+   "dest": "audio-data-contract/datasets/ts_asr_benchmark/versions/v1-20261013/",
+   "files": 61,
+   "verified": "2026-11-04"
+  },
+  "datasets/ts_asr_benchmark/versions/v2-20261013": {
+   "bytes": 3387877,
+   "dest": "audio-data-contract/datasets/ts_asr_benchmark/versions/v2-20261013/",
+   "files": 65,
+   "verified": "2026-11-04"
+  },
+  "datasets/ts_asr_benchmark/versions/v3-20261013": {
+   "bytes": 5860789,
+   "dest": "audio-data-contract/datasets/ts_asr_benchmark/versions/v3-20261013/",
+   "files": 111,
+   "verified": "2026-11-04"
+  },
+  "datasets/ts_asr_benchmark/versions/v4-20261022": {
+   "bytes": 7092803,
+   "dest": "audio-data-contract/datasets/ts_asr_benchmark/versions/v4-20261022/",
+   "files": 117,
+   "verified": "2026-11-04"
+  },
+  "datasets/ts_asr_benchmark/versions/v4-hotword-labels-20261102": {
+   "bytes": 6366871,
+   "dest": "audio-data-contract/datasets/ts_asr_benchmark/versions/v4-hotword-labels-20261102/",
+   "files": 116,
+   "verified": "2026-11-04"
+  },
+  "datasets/ts_asr_dev/versions/v1-20261017": {
+   "bytes": 1409467,
+   "dest": "audio-data-contract/datasets/ts_asr_dev/versions/v1-20261017/",
+   "files": 55,
+   "verified": "2026-11-04"
+  },
+  "datasets/ts_asr_enroll_len/versions/v1-20261020": {
+   "bytes": 364285,
+   "dest": "audio-data-contract/datasets/ts_asr_enroll_len/versions/v1-20261020/",
+   "files": 5,
+   "verified": "2026-11-04"
+  },
+  "datasets/ts_asr_farfield/versions/en-v1-20261031": {
+   "bytes": 792981,
+   "dest": "audio-data-contract/datasets/ts_asr_farfield/versions/en-v1-20261031/",
+   "files": 15,
+   "verified": "2026-11-04"
+  },
+  "datasets/ts_asr_farfield/versions/en-v1-hotword-labels-20261102": {
+   "bytes": 689546,
+   "dest": "audio-data-contract/datasets/ts_asr_farfield/versions/en-v1-hotword-labels-20261102/",
+   "files": 14,
+   "verified": "2026-11-04"
+  },
+  "datasets/ts_asr_farfield/versions/v1-20261014": {
+   "bytes": 697665,
+   "dest": "audio-data-contract/datasets/ts_asr_farfield/versions/v1-20261014/",
+   "files": 15,
+   "verified": "2026-11-04"
+  },
+  "datasets/ts_asr_farfield/versions/v2-20261022": {
+   "bytes": 793823,
+   "dest": "audio-data-contract/datasets/ts_asr_farfield/versions/v2-20261022/",
+   "files": 15,
+   "verified": "2026-11-04"
+  },
+  "datasets/ts_asr_farfield/versions/v2-hotword-labels-20261102": {
+   "bytes": 704207,
+   "dest": "audio-data-contract/datasets/ts_asr_farfield/versions/v2-hotword-labels-20261102/",
+   "files": 14,
+   "verified": "2026-11-04"
+  },
+  "datasets/ts_asr_handover/versions/en-v1-20261031": {
+   "bytes": 221277,
+   "dest": "audio-data-contract/datasets/ts_asr_handover/versions/en-v1-20261031/",
+   "files": 6,
+   "verified": "2026-11-04"
+  },
+  "datasets/ts_asr_handover/versions/en-v1-hotword-labels-20261102": {
+   "bytes": 171986,
+   "dest": "audio-data-contract/datasets/ts_asr_handover/versions/en-v1-hotword-labels-20261102/",
+   "files": 5,
+   "verified": "2026-11-04"
+  },
+  "datasets/ts_asr_handover/versions/v1-20261020": {
+   "bytes": 440496,
+   "dest": "audio-data-contract/datasets/ts_asr_handover/versions/v1-20261020/",
+   "files": 11,
+   "verified": "2026-11-04"
+  },
+  "datasets/ts_asr_handover/versions/v2-20261022": {
+   "bytes": 474455,
+   "dest": "audio-data-contract/datasets/ts_asr_handover/versions/v2-20261022/",
+   "files": 11,
+   "verified": "2026-11-04"
+  },
+  "datasets/ts_asr_handover/versions/v2-hotword-labels-20261102": {
+   "bytes": 351879,
+   "dest": "audio-data-contract/datasets/ts_asr_handover/versions/v2-hotword-labels-20261102/",
+   "files": 10,
+   "verified": "2026-11-04"
+  },
+  "datasets/ts_asr_hotwords/versions/v1-20261102": {
+   "bytes": 8808946,
+   "dest": "audio-data-contract/datasets/ts_asr_hotwords/versions/v1-20261102/",
+   "files": 7,
+   "verified": "2026-11-04"
+  },
+  "datasets/ts_asr_nearfar/versions/listening-review-v1-20261022": {
+   "bytes": 11604,
+   "dest": "audio-data-contract/datasets/ts_asr_nearfar/versions/listening-review-v1-20261022/",
+   "files": 8,
+   "verified": "2026-11-04"
+  },
+  "datasets/ts_asr_nearfar/versions/v1-20261014": {
+   "bytes": 495535,
+   "dest": "audio-data-contract/datasets/ts_asr_nearfar/versions/v1-20261014/",
+   "files": 25,
+   "verified": "2026-11-04"
+  },
+  "datasets/ts_asr_nearfar/versions/v2-20261022": {
+   "bytes": 523429,
+   "dest": "audio-data-contract/datasets/ts_asr_nearfar/versions/v2-20261022/",
+   "files": 49,
+   "verified": "2026-11-04"
+  },
+  "datasets/ts_asr_nearfar/versions/v3-20261022": {
+   "bytes": 558226,
+   "dest": "audio-data-contract/datasets/ts_asr_nearfar/versions/v3-20261022/",
+   "files": 49,
+   "verified": "2026-11-04"
+  },
+  "datasets/ts_asr_nearfar/versions/v3-hotword-labels-20261102": {
+   "bytes": 473079,
+   "dest": "audio-data-contract/datasets/ts_asr_nearfar/versions/v3-hotword-labels-20261102/",
+   "files": 48,
+   "verified": "2026-11-04"
+  },
+  "datasets/ts_asr_nearshort/versions/en-v1-20261031": {
+   "bytes": 780528,
+   "dest": "audio-data-contract/datasets/ts_asr_nearshort/versions/en-v1-20261031/",
+   "files": 11,
+   "verified": "2026-11-04"
+  },
+  "datasets/ts_asr_nearshort/versions/en-v1-hotword-labels-20261102": {
+   "bytes": 492221,
+   "dest": "audio-data-contract/datasets/ts_asr_nearshort/versions/en-v1-hotword-labels-20261102/",
+   "files": 10,
+   "verified": "2026-11-04"
+  },
+  "datasets/ts_asr_nearshort/versions/v1-20261021": {
+   "bytes": 319710,
+   "dest": "audio-data-contract/datasets/ts_asr_nearshort/versions/v1-20261021/",
+   "files": 6,
+   "verified": "2026-11-04"
+  },
+  "datasets/ts_asr_nearshort/versions/v2-20261022": {
+   "bytes": 807104,
+   "dest": "audio-data-contract/datasets/ts_asr_nearshort/versions/v2-20261022/",
+   "files": 13,
+   "verified": "2026-11-04"
+  },
+  "datasets/ts_asr_nearshort/versions/v3-20261022": {
+   "bytes": 992668,
+   "dest": "audio-data-contract/datasets/ts_asr_nearshort/versions/v3-20261022/",
+   "files": 13,
+   "verified": "2026-11-04"
+  },
+  "datasets/ts_asr_nearshort/versions/v3-hotword-labels-20261102": {
+   "bytes": 660616,
+   "dest": "audio-data-contract/datasets/ts_asr_nearshort/versions/v3-hotword-labels-20261102/",
+   "files": 12,
+   "verified": "2026-11-04"
+  },
+  "datasets/ts_asr_noise/versions/en-v1-20261031": {
+   "bytes": 888350,
+   "dest": "audio-data-contract/datasets/ts_asr_noise/versions/en-v1-20261031/",
+   "files": 18,
+   "verified": "2026-11-04"
+  },
+  "datasets/ts_asr_noise/versions/en-v1-hotword-labels-20261102": {
+   "bytes": 748359,
+   "dest": "audio-data-contract/datasets/ts_asr_noise/versions/en-v1-hotword-labels-20261102/",
+   "files": 17,
+   "verified": "2026-11-04"
+  },
+  "datasets/ts_asr_noise/versions/v1-20261013": {
+   "bytes": 779654,
+   "dest": "audio-data-contract/datasets/ts_asr_noise/versions/v1-20261013/",
+   "files": 18,
+   "verified": "2026-11-04"
+  },
+  "datasets/ts_asr_noise/versions/v2-20261022": {
+   "bytes": 890438,
+   "dest": "audio-data-contract/datasets/ts_asr_noise/versions/v2-20261022/",
+   "files": 18,
+   "verified": "2026-11-04"
+  },
+  "datasets/ts_asr_noise/versions/v2-hotword-labels-20261102": {
+   "bytes": 763840,
+   "dest": "audio-data-contract/datasets/ts_asr_noise/versions/v2-hotword-labels-20261102/",
+   "files": 17,
+   "verified": "2026-11-04"
+  },
+  "datasets/ts_asr_playback/versions/v1-20261022": {
+   "bytes": 395287,
+   "dest": "audio-data-contract/datasets/ts_asr_playback/versions/v1-20261022/",
+   "files": 5,
+   "verified": "2026-11-04"
+  },
+  "datasets/ts_asr_real/versions/dev-v1-20261017": {
+   "bytes": 520333,
+   "dest": "audio-data-contract/datasets/ts_asr_real/versions/dev-v1-20261017/",
+   "files": 11,
+   "verified": "2026-11-04"
+  },
+  "datasets/ts_asr_real/versions/en-v2-20261031": {
+   "bytes": 556953,
+   "dest": "audio-data-contract/datasets/ts_asr_real/versions/en-v2-20261031/",
+   "files": 61,
+   "verified": "2026-11-04"
+  },
+  "datasets/ts_asr_real/versions/en-v2-hotword-labels-20261102": {
+   "bytes": 505961,
+   "dest": "audio-data-contract/datasets/ts_asr_real/versions/en-v2-hotword-labels-20261102/",
+   "files": 60,
+   "verified": "2026-11-04"
+  },
+  "datasets/ts_asr_real/versions/listening-review-v1-20261022": {
+   "bytes": 14941,
+   "dest": "audio-data-contract/datasets/ts_asr_real/versions/listening-review-v1-20261022/",
+   "files": 9,
+   "verified": "2026-11-04"
+  },
+  "datasets/ts_asr_real/versions/listening-review-v1-20261026": {
+   "bytes": 1988,
+   "dest": "audio-data-contract/datasets/ts_asr_real/versions/listening-review-v1-20261026/",
+   "files": 2,
+   "verified": "2026-11-04"
+  },
+  "datasets/ts_asr_real/versions/overlap-v1-20261017": {
+   "bytes": 1100346,
+   "dest": "audio-data-contract/datasets/ts_asr_real/versions/overlap-v1-20261017/",
+   "files": 13,
+   "verified": "2026-11-04"
+  },
+  "datasets/ts_asr_real/versions/v1-20261013": {
+   "bytes": 290066,
+   "dest": "audio-data-contract/datasets/ts_asr_real/versions/v1-20261013/",
+   "files": 17,
+   "verified": "2026-11-04"
+  },
+  "datasets/ts_asr_real/versions/v2-20261013": {
+   "bytes": 411524,
+   "dest": "audio-data-contract/datasets/ts_asr_real/versions/v2-20261013/",
+   "files": 23,
+   "verified": "2026-11-04"
+  },
+  "datasets/ts_asr_real/versions/v3-20261022": {
+   "bytes": 428028,
+   "dest": "audio-data-contract/datasets/ts_asr_real/versions/v3-20261022/",
+   "files": 40,
+   "verified": "2026-11-04"
+  },
+  "datasets/ts_asr_real/versions/v4-20261022": {
+   "bytes": 458015,
+   "dest": "audio-data-contract/datasets/ts_asr_real/versions/v4-20261022/",
+   "files": 41,
+   "verified": "2026-11-04"
+  },
+  "datasets/ts_asr_real/versions/v4-hotword-labels-20261102": {
+   "bytes": 407566,
+   "dest": "audio-data-contract/datasets/ts_asr_real/versions/v4-hotword-labels-20261102/",
+   "files": 40,
+   "verified": "2026-11-04"
+  },
+  "datasets/ts_asr_shortseg/versions/en-v1-20261031": {
+   "bytes": 208936,
+   "dest": "audio-data-contract/datasets/ts_asr_shortseg/versions/en-v1-20261031/",
+   "files": 6,
+   "verified": "2026-11-04"
+  },
+  "datasets/ts_asr_shortseg/versions/en-v1-hotword-labels-20261102": {
+   "bytes": 157205,
+   "dest": "audio-data-contract/datasets/ts_asr_shortseg/versions/en-v1-hotword-labels-20261102/",
+   "files": 5,
+   "verified": "2026-11-04"
+  },
+  "datasets/ts_asr_shortseg/versions/v1-20261017": {
+   "bytes": 235138,
+   "dest": "audio-data-contract/datasets/ts_asr_shortseg/versions/v1-20261017/",
+   "files": 8,
+   "verified": "2026-11-04"
+  },
+  "datasets/ts_asr_shortseg/versions/v2-20261022": {
+   "bytes": 267976,
+   "dest": "audio-data-contract/datasets/ts_asr_shortseg/versions/v2-20261022/",
+   "files": 8,
+   "verified": "2026-11-04"
+  },
+  "datasets/ts_asr_shortseg/versions/v2-hotword-labels-20261102": {
+   "bytes": 198001,
+   "dest": "audio-data-contract/datasets/ts_asr_shortseg/versions/v2-hotword-labels-20261102/",
+   "files": 7,
+   "verified": "2026-11-04"
+  },
+  "datasets/ts_asr_singing/versions/en-v1-20261031": {
+   "bytes": 32041,
+   "dest": "audio-data-contract/datasets/ts_asr_singing/versions/en-v1-20261031/",
+   "files": 2,
+   "verified": "2026-11-04"
+  },
+  "datasets/ts_asr_singing/versions/v1-20261017": {
+   "bytes": 43026,
+   "dest": "audio-data-contract/datasets/ts_asr_singing/versions/v1-20261017/",
+   "files": 3,
+   "verified": "2026-11-04"
+  },
+  "datasets/ts_asr_singing/versions/v2-20261022": {
+   "bytes": 49581,
+   "dest": "audio-data-contract/datasets/ts_asr_singing/versions/v2-20261022/",
+   "files": 3,
+   "verified": "2026-11-04"
+  },
+  "datasets/ts_interference_pool/versions/v1-20261015": {
+   "bytes": 6783678,
+   "dest": "audio-data-contract/datasets/ts_interference_pool/versions/v1-20261015/",
+   "files": 2,
+   "verified": "2026-11-04"
+  },
+  "datasets/ts_interference_pool/versions/v3-20261018": {
+   "bytes": 37384383,
+   "dest": "audio-data-contract/datasets/ts_interference_pool/versions/v3-20261018/",
+   "files": 5,
+   "verified": "2026-11-04"
+  },
+  "datasets/ts_nonspeech_pool/source": {
+   "bytes": 7647774,
+   "dest": "audio-data-contract/datasets/ts_nonspeech_pool/source/",
+   "files": 8,
+   "verified": "2026-11-04"
+  },
+  "datasets/ts_nonspeech_pool/versions/babble-20261024": {
+   "bytes": 28765136,
+   "dest": "audio-data-contract/datasets/ts_nonspeech_pool/versions/babble-20261024/",
+   "files": 50,
+   "verified": "2026-11-04"
+  },
+  "datasets/ts_nonspeech_pool/versions/env-20261101": {
+   "bytes": 31330044,
+   "dest": "audio-data-contract/datasets/ts_nonspeech_pool/versions/env-20261101/",
+   "files": 52,
+   "verified": "2026-11-04"
+  },
+  "datasets/ts_nonspeech_pool/versions/v1-20261016": {
+   "bytes": 51730855,
+   "dest": "audio-data-contract/datasets/ts_nonspeech_pool/versions/v1-20261016/",
+   "files": 50,
+   "verified": "2026-11-04"
+  },
+  "datasets/ts_real_train/versions/en-v1-20261101": {
+   "bytes": 99139264,
+   "dest": "audio-data-contract/datasets/ts_real_train/versions/en-v1-20261101/",
+   "files": 56,
+   "verified": "2026-11-04"
+  },
+  "datasets/ts_real_train/versions/en-v1-20261101-utts": {
+   "bytes": 99438878,
+   "dest": "audio-data-contract/datasets/ts_real_train/versions/en-v1-20261101-utts/",
+   "files": 60,
+   "verified": "2026-11-04"
+  },
+  "datasets/ts_real_train/versions/en-v1-20261101-utts-punc-20261102": {
+   "bytes": 79845252,
+   "dest": "audio-data-contract/datasets/ts_real_train/versions/en-v1-20261101-utts-punc-20261102/",
+   "files": 50,
+   "verified": "2026-11-04"
+  },
+  "datasets/ts_real_train/versions/v1-20261017": {
+   "bytes": 207827080,
+   "dest": "audio-data-contract/datasets/ts_real_train/versions/v1-20261017/",
+   "files": 56,
+   "verified": "2026-11-04"
+  },
+  "datasets/ts_real_train/versions/v1-20261017-utts": {
+   "bytes": 283708045,
+   "dest": "audio-data-contract/datasets/ts_real_train/versions/v1-20261017-utts/",
+   "files": 67,
+   "verified": "2026-11-04"
+  },
+  "datasets/ts_real_train/versions/v1-20261017-utts-enroll-qc-20261021": {
+   "bytes": 18248837,
+   "dest": "audio-data-contract/datasets/ts_real_train/versions/v1-20261017-utts-enroll-qc-20261021/",
+   "files": 3,
+   "verified": "2026-11-04"
+  },
+  "datasets/ts_real_train/versions/v1-20261017-utts-punc-20261102": {
+   "bytes": 282019376,
+   "dest": "audio-data-contract/datasets/ts_real_train/versions/v1-20261017-utts-punc-20261102/",
+   "files": 52,
+   "verified": "2026-11-04"
+  },
+  "datasets/ts_real_train/versions/v2-20261018": {
+   "bytes": 283415406,
+   "dest": "audio-data-contract/datasets/ts_real_train/versions/v2-20261018/",
+   "files": 55,
+   "verified": "2026-11-04"
+  },
+  "datasets/ts_real_train/versions/v2-20261018-enroll-qc-20261021": {
+   "bytes": 17974271,
+   "dest": "audio-data-contract/datasets/ts_real_train/versions/v2-20261018-enroll-qc-20261021/",
+   "files": 2,
+   "verified": "2026-11-04"
+  },
+  "datasets/ts_real_train/versions/v2-20261018-utts": {
+   "bytes": 286810764,
+   "dest": "audio-data-contract/datasets/ts_real_train/versions/v2-20261018-utts/",
+   "files": 64,
+   "verified": "2026-11-04"
+  },
+  "datasets/ts_real_train/versions/v2-20261018-utts-punc-20261102": {
+   "bytes": 247263657,
+   "dest": "audio-data-contract/datasets/ts_real_train/versions/v2-20261018-utts-punc-20261102/",
+   "files": 51,
+   "verified": "2026-11-04"
+  },
+  "datasets/ts_real_train/versions/v3-20261020": {
+   "bytes": 195555839,
+   "dest": "audio-data-contract/datasets/ts_real_train/versions/v3-20261020/",
+   "files": 55,
+   "verified": "2026-11-04"
+  },
+  "datasets/ts_real_train/versions/v3-20261020-enroll-qc-20261021": {
+   "bytes": 15943577,
+   "dest": "audio-data-contract/datasets/ts_real_train/versions/v3-20261020-enroll-qc-20261021/",
+   "files": 4,
+   "verified": "2026-11-04"
+  },
+  "datasets/ts_real_train/versions/v3-20261020-utts": {
+   "bytes": 271129283,
+   "dest": "audio-data-contract/datasets/ts_real_train/versions/v3-20261020-utts/",
+   "files": 66,
+   "verified": "2026-11-04"
+  },
+  "datasets/ts_real_train/versions/v3-20261020-utts-punc-20261102": {
+   "bytes": 268349428,
+   "dest": "audio-data-contract/datasets/ts_real_train/versions/v3-20261020-utts-punc-20261102/",
+   "files": 52,
+   "verified": "2026-11-04"
+  },
+  "datasets/ts_scene_pool/source": {
+   "bytes": 96064570,
+   "dest": "audio-data-contract/datasets/ts_scene_pool/source/",
+   "files": 20,
+   "verified": "2026-11-04"
+  },
+  "datasets/ts_scene_pool/versions/alt-twins-20261024": {
+   "bytes": 670556885,
+   "dest": "audio-data-contract/datasets/ts_scene_pool/versions/alt-twins-20261024/",
+   "files": 56,
+   "verified": "2026-11-04"
+  },
+  "datasets/ts_scene_pool/versions/alt-twins-20261024-punchw2-20261102": {
+   "bytes": 305843488,
+   "dest": "audio-data-contract/datasets/ts_scene_pool/versions/alt-twins-20261024-punchw2-20261102/",
+   "files": 50,
+   "verified": "2026-11-04"
+  },
+  "datasets/ts_scene_pool/versions/csd-alt-twins-20261101": {
+   "bytes": 24902613,
+   "dest": "audio-data-contract/datasets/ts_scene_pool/versions/csd-alt-twins-20261101/",
+   "files": 54,
+   "verified": "2026-11-04"
+  },
+  "datasets/ts_scene_pool/versions/csd-alt-twins-20261101-punchw-20261102": {
+   "bytes": 25115633,
+   "dest": "audio-data-contract/datasets/ts_scene_pool/versions/csd-alt-twins-20261101-punchw-20261102/",
+   "files": 49,
+   "verified": "2026-11-04"
+  },
+  "datasets/ts_scene_pool/versions/csd-alt-twins-20261101-punchw2-20261102": {
+   "bytes": 25119058,
+   "dest": "audio-data-contract/datasets/ts_scene_pool/versions/csd-alt-twins-20261101-punchw2-20261102/",
+   "files": 49,
+   "verified": "2026-11-04"
+  },
+  "datasets/ts_scene_pool/versions/csd-handover-20261101": {
+   "bytes": 12488877,
+   "dest": "audio-data-contract/datasets/ts_scene_pool/versions/csd-handover-20261101/",
+   "files": 54,
+   "verified": "2026-11-04"
+  },
+  "datasets/ts_scene_pool/versions/csd-handover-20261101-punchw-20261102": {
+   "bytes": 12570216,
+   "dest": "audio-data-contract/datasets/ts_scene_pool/versions/csd-handover-20261101-punchw-20261102/",
+   "files": 49,
+   "verified": "2026-11-04"
+  },
+  "datasets/ts_scene_pool/versions/csd-handover-20261101-punchw2-20261102": {
+   "bytes": 12570756,
+   "dest": "audio-data-contract/datasets/ts_scene_pool/versions/csd-handover-20261101-punchw2-20261102/",
+   "files": 49,
+   "verified": "2026-11-04"
+  },
+  "datasets/ts_scene_pool/versions/csd-hard-20261101": {
+   "bytes": 16535654,
+   "dest": "audio-data-contract/datasets/ts_scene_pool/versions/csd-hard-20261101/",
+   "files": 54,
+   "verified": "2026-11-04"
+  },
+  "datasets/ts_scene_pool/versions/csd-hard-20261101-punchw-20261102": {
+   "bytes": 16640519,
+   "dest": "audio-data-contract/datasets/ts_scene_pool/versions/csd-hard-20261101-punchw-20261102/",
+   "files": 49,
+   "verified": "2026-11-04"
+  },
+  "datasets/ts_scene_pool/versions/csd-hard-20261101-punchw2-20261102": {
+   "bytes": 16644023,
+   "dest": "audio-data-contract/datasets/ts_scene_pool/versions/csd-hard-20261101-punchw2-20261102/",
+   "files": 49,
+   "verified": "2026-11-04"
+  },
+  "datasets/ts_scene_pool/versions/csd-near-20261101": {
+   "bytes": 41521373,
+   "dest": "audio-data-contract/datasets/ts_scene_pool/versions/csd-near-20261101/",
+   "files": 54,
+   "verified": "2026-11-04"
+  },
+  "datasets/ts_scene_pool/versions/csd-near-20261101-punchw-20261102": {
+   "bytes": 41925767,
+   "dest": "audio-data-contract/datasets/ts_scene_pool/versions/csd-near-20261101-punchw-20261102/",
+   "files": 49,
+   "verified": "2026-11-04"
+  },
+  "datasets/ts_scene_pool/versions/csd-near-20261101-punchw2-20261102": {
+   "bytes": 41930996,
+   "dest": "audio-data-contract/datasets/ts_scene_pool/versions/csd-near-20261101-punchw2-20261102/",
+   "files": 49,
+   "verified": "2026-11-04"
+  },
+  "datasets/ts_scene_pool/versions/csd-solo-20261101": {
+   "bytes": 13178367,
+   "dest": "audio-data-contract/datasets/ts_scene_pool/versions/csd-solo-20261101/",
+   "files": 54,
+   "verified": "2026-11-04"
+  },
+  "datasets/ts_scene_pool/versions/csd-solo-20261101-punchw-20261102": {
+   "bytes": 13284179,
+   "dest": "audio-data-contract/datasets/ts_scene_pool/versions/csd-solo-20261101-punchw-20261102/",
+   "files": 49,
+   "verified": "2026-11-04"
+  },
+  "datasets/ts_scene_pool/versions/csd-solo-20261101-punchw2-20261102": {
+   "bytes": 13284217,
+   "dest": "audio-data-contract/datasets/ts_scene_pool/versions/csd-solo-20261101-punchw2-20261102/",
+   "files": 49,
+   "verified": "2026-11-04"
+  },
+  "datasets/ts_scene_pool/versions/cvaccent-alt-twins-20261101": {
+   "bytes": 149790777,
+   "dest": "audio-data-contract/datasets/ts_scene_pool/versions/cvaccent-alt-twins-20261101/",
+   "files": 54,
+   "verified": "2026-11-04"
+  },
+  "datasets/ts_scene_pool/versions/cvaccent-alt-twins-20261101-punchw-20261102": {
+   "bytes": 152313604,
+   "dest": "audio-data-contract/datasets/ts_scene_pool/versions/cvaccent-alt-twins-20261101-punchw-20261102/",
+   "files": 49,
+   "verified": "2026-11-04"
+  },
+  "datasets/ts_scene_pool/versions/cvaccent-alt-twins-20261101-punchw2-20261102": {
+   "bytes": 152342370,
+   "dest": "audio-data-contract/datasets/ts_scene_pool/versions/cvaccent-alt-twins-20261101-punchw2-20261102/",
+   "files": 49,
+   "verified": "2026-11-04"
+  },
+  "datasets/ts_scene_pool/versions/cvaccent-handover-20261101": {
+   "bytes": 63837676,
+   "dest": "audio-data-contract/datasets/ts_scene_pool/versions/cvaccent-handover-20261101/",
+   "files": 54,
+   "verified": "2026-11-04"
+  },
+  "datasets/ts_scene_pool/versions/cvaccent-handover-20261101-punchw-20261102": {
+   "bytes": 64336439,
+   "dest": "audio-data-contract/datasets/ts_scene_pool/versions/cvaccent-handover-20261101-punchw-20261102/",
+   "files": 49,
+   "verified": "2026-11-04"
+  },
+  "datasets/ts_scene_pool/versions/cvaccent-handover-20261101-punchw2-20261102": {
+   "bytes": 64338080,
+   "dest": "audio-data-contract/datasets/ts_scene_pool/versions/cvaccent-handover-20261101-punchw2-20261102/",
+   "files": 49,
+   "verified": "2026-11-04"
+  },
+  "datasets/ts_scene_pool/versions/cvaccent-hard-20261101": {
+   "bytes": 101457523,
+   "dest": "audio-data-contract/datasets/ts_scene_pool/versions/cvaccent-hard-20261101/",
+   "files": 54,
+   "verified": "2026-11-04"
+  },
+  "datasets/ts_scene_pool/versions/cvaccent-hard-20261101-punchw-20261102": {
+   "bytes": 102979835,
+   "dest": "audio-data-contract/datasets/ts_scene_pool/versions/cvaccent-hard-20261101-punchw-20261102/",
+   "files": 49,
+   "verified": "2026-11-04"
+  },
+  "datasets/ts_scene_pool/versions/cvaccent-hard-20261101-punchw2-20261102": {
+   "bytes": 103011409,
+   "dest": "audio-data-contract/datasets/ts_scene_pool/versions/cvaccent-hard-20261101-punchw2-20261102/",
+   "files": 49,
+   "verified": "2026-11-04"
+  },
+  "datasets/ts_scene_pool/versions/cvaccent-near-20261101": {
+   "bytes": 250779619,
+   "dest": "audio-data-contract/datasets/ts_scene_pool/versions/cvaccent-near-20261101/",
+   "files": 54,
+   "verified": "2026-11-04"
+  },
+  "datasets/ts_scene_pool/versions/cvaccent-near-20261101-punchw-20261102": {
+   "bytes": 256483671,
+   "dest": "audio-data-contract/datasets/ts_scene_pool/versions/cvaccent-near-20261101-punchw-20261102/",
+   "files": 49,
+   "verified": "2026-11-04"
+  },
+  "datasets/ts_scene_pool/versions/cvaccent-near-20261101-punchw2-20261102": {
+   "bytes": 256516762,
+   "dest": "audio-data-contract/datasets/ts_scene_pool/versions/cvaccent-near-20261101-punchw2-20261102/",
+   "files": 49,
+   "verified": "2026-11-04"
+  },
+  "datasets/ts_scene_pool/versions/cvaccent-solo-20261101": {
+   "bytes": 83111993,
+   "dest": "audio-data-contract/datasets/ts_scene_pool/versions/cvaccent-solo-20261101/",
+   "files": 54,
+   "verified": "2026-11-04"
+  },
+  "datasets/ts_scene_pool/versions/cvaccent-solo-20261101-punchw-20261102": {
+   "bytes": 83659154,
+   "dest": "audio-data-contract/datasets/ts_scene_pool/versions/cvaccent-solo-20261101-punchw-20261102/",
+   "files": 49,
+   "verified": "2026-11-04"
+  },
+  "datasets/ts_scene_pool/versions/cvaccent-solo-20261101-punchw2-20261102": {
+   "bytes": 83656986,
+   "dest": "audio-data-contract/datasets/ts_scene_pool/versions/cvaccent-solo-20261101-punchw2-20261102/",
+   "files": 49,
+   "verified": "2026-11-04"
+  },
+  "datasets/ts_scene_pool/versions/handover-20261021": {
+   "bytes": 108859707,
+   "dest": "audio-data-contract/datasets/ts_scene_pool/versions/handover-20261021/",
+   "files": 52,
+   "verified": "2026-11-04"
+  },
+  "datasets/ts_scene_pool/versions/handover-20261021-punchw-20261102": {
+   "bytes": 109843458,
+   "dest": "audio-data-contract/datasets/ts_scene_pool/versions/handover-20261021-punchw-20261102/",
+   "files": 51,
+   "verified": "2026-11-04"
+  },
+  "datasets/ts_scene_pool/versions/handover-20261021-punchw2-20261102": {
+   "bytes": 28344262,
+   "dest": "audio-data-contract/datasets/ts_scene_pool/versions/handover-20261021-punchw2-20261102/",
+   "files": 49,
+   "verified": "2026-11-04"
+  },
+  "datasets/ts_scene_pool/versions/hard-20261016": {
+   "bytes": 181110514,
+   "dest": "audio-data-contract/datasets/ts_scene_pool/versions/hard-20261016/",
+   "files": 52,
+   "verified": "2026-11-04"
+  },
+  "datasets/ts_scene_pool/versions/hard-20261016-punchw-20261102": {
+   "bytes": 182410674,
+   "dest": "audio-data-contract/datasets/ts_scene_pool/versions/hard-20261016-punchw-20261102/",
+   "files": 51,
+   "verified": "2026-11-04"
+  },
+  "datasets/ts_scene_pool/versions/hard-20261016-punchw2-20261102": {
+   "bytes": 77795171,
+   "dest": "audio-data-contract/datasets/ts_scene_pool/versions/hard-20261016-punchw2-20261102/",
+   "files": 49,
+   "verified": "2026-11-04"
+  },
+  "datasets/ts_scene_pool/versions/hard-twins-20261026": {
+   "bytes": 176470271,
+   "dest": "audio-data-contract/datasets/ts_scene_pool/versions/hard-twins-20261026/",
+   "files": 53,
+   "verified": "2026-11-04"
+  },
+  "datasets/ts_scene_pool/versions/magicdata-20261023": {
+   "bytes": 242778926,
+   "dest": "audio-data-contract/datasets/ts_scene_pool/versions/magicdata-20261023/",
+   "files": 52,
+   "verified": "2026-11-04"
+  },
+  "datasets/ts_scene_pool/versions/magicdata-alt-20261023": {
+   "bytes": 159469273,
+   "dest": "audio-data-contract/datasets/ts_scene_pool/versions/magicdata-alt-20261023/",
+   "files": 51,
+   "verified": "2026-11-04"
+  },
+  "datasets/ts_scene_pool/versions/magicdata-alt-twins-20261024": {
+   "bytes": 158394977,
+   "dest": "audio-data-contract/datasets/ts_scene_pool/versions/magicdata-alt-twins-20261024/",
+   "files": 51,
+   "verified": "2026-11-04"
+  },
+  "datasets/ts_scene_pool/versions/magicdata-alt-twins-20261024-punchw-20261102": {
+   "bytes": 160172901,
+   "dest": "audio-data-contract/datasets/ts_scene_pool/versions/magicdata-alt-twins-20261024-punchw-20261102/",
+   "files": 49,
+   "verified": "2026-11-04"
+  },
+  "datasets/ts_scene_pool/versions/magicdata-handover-20261023": {
+   "bytes": 85358684,
+   "dest": "audio-data-contract/datasets/ts_scene_pool/versions/magicdata-handover-20261023/",
+   "files": 51,
+   "verified": "2026-11-04"
+  },
+  "datasets/ts_scene_pool/versions/magicdata-handover-20261023-punchw-20261102": {
+   "bytes": 86235385,
+   "dest": "audio-data-contract/datasets/ts_scene_pool/versions/magicdata-handover-20261023-punchw-20261102/",
+   "files": 49,
+   "verified": "2026-11-04"
+  },
+  "datasets/ts_scene_pool/versions/magicdata-hard-20261023": {
+   "bytes": 111741410,
+   "dest": "audio-data-contract/datasets/ts_scene_pool/versions/magicdata-hard-20261023/",
+   "files": 51,
+   "verified": "2026-11-04"
+  },
+  "datasets/ts_scene_pool/versions/magicdata-hard-20261023-punchw-20261102": {
+   "bytes": 112070137,
+   "dest": "audio-data-contract/datasets/ts_scene_pool/versions/magicdata-hard-20261023-punchw-20261102/",
+   "files": 49,
+   "verified": "2026-11-04"
+  },
+  "datasets/ts_scene_pool/versions/magicdata-hard-twins-20261026": {
+   "bytes": 108449003,
+   "dest": "audio-data-contract/datasets/ts_scene_pool/versions/magicdata-hard-twins-20261026/",
+   "files": 51,
+   "verified": "2026-11-04"
+  },
+  "datasets/ts_scene_pool/versions/magicdata-near-20261023": {
+   "bytes": 244519211,
+   "dest": "audio-data-contract/datasets/ts_scene_pool/versions/magicdata-near-20261023/",
+   "files": 52,
+   "verified": "2026-11-04"
+  },
+  "datasets/ts_scene_pool/versions/magicdata-near-20261023-punchw-20261102": {
+   "bytes": 249070540,
+   "dest": "audio-data-contract/datasets/ts_scene_pool/versions/magicdata-near-20261023-punchw-20261102/",
+   "files": 50,
+   "verified": "2026-11-04"
+  },
+  "datasets/ts_scene_pool/versions/multi-20261017": {
+   "bytes": 486559665,
+   "dest": "audio-data-contract/datasets/ts_scene_pool/versions/multi-20261017/",
+   "files": 55,
+   "verified": "2026-11-04"
+  },
+  "datasets/ts_scene_pool/versions/multi-20261017-punchw-20261102": {
+   "bytes": 495588277,
+   "dest": "audio-data-contract/datasets/ts_scene_pool/versions/multi-20261017-punchw-20261102/",
+   "files": 53,
+   "verified": "2026-11-04"
+  },
+  "datasets/ts_scene_pool/versions/multi-20261017-punchw2-20261102": {
+   "bytes": 142998894,
+   "dest": "audio-data-contract/datasets/ts_scene_pool/versions/multi-20261017-punchw2-20261102/",
+   "files": 49,
+   "verified": "2026-11-04"
+  },
+  "datasets/ts_scene_pool/versions/ramc-alt-twins-20261028": {
+   "bytes": 94489621,
+   "dest": "audio-data-contract/datasets/ts_scene_pool/versions/ramc-alt-twins-20261028/",
+   "files": 51,
+   "verified": "2026-11-04"
+  },
+  "datasets/ts_scene_pool/versions/ramc-handover-20261028": {
+   "bytes": 50146490,
+   "dest": "audio-data-contract/datasets/ts_scene_pool/versions/ramc-handover-20261028/",
+   "files": 51,
+   "verified": "2026-11-04"
+  },
+  "datasets/ts_scene_pool/versions/ramc-hard-20261028": {
+   "bytes": 66178684,
+   "dest": "audio-data-contract/datasets/ts_scene_pool/versions/ramc-hard-20261028/",
+   "files": 51,
+   "verified": "2026-11-04"
+  },
+  "datasets/ts_scene_pool/versions/ramc-near-20261028": {
+   "bytes": 149575802,
+   "dest": "audio-data-contract/datasets/ts_scene_pool/versions/ramc-near-20261028/",
+   "files": 51,
+   "verified": "2026-11-04"
+  },
+  "datasets/ts_scene_pool/versions/solo-20261019": {
+   "bytes": 148939160,
+   "dest": "audio-data-contract/datasets/ts_scene_pool/versions/solo-20261019/",
+   "files": 53,
+   "verified": "2026-11-04"
+  },
+  "datasets/ts_scene_pool/versions/solo-20261020": {
+   "bytes": 149905542,
+   "dest": "audio-data-contract/datasets/ts_scene_pool/versions/solo-20261020/",
+   "files": 53,
+   "verified": "2026-11-04"
+  },
+  "datasets/ts_scene_pool/versions/solo-20261020-punchw-20261102": {
+   "bytes": 151505370,
+   "dest": "audio-data-contract/datasets/ts_scene_pool/versions/solo-20261020-punchw-20261102/",
+   "files": 52,
+   "verified": "2026-11-04"
+  },
+  "datasets/ts_scene_pool/versions/solo-20261020-punchw2-20261102": {
+   "bytes": 40894533,
+   "dest": "audio-data-contract/datasets/ts_scene_pool/versions/solo-20261020-punchw2-20261102/",
+   "files": 49,
+   "verified": "2026-11-04"
+  },
+  "datasets/ts_scene_pool/versions/xsession-20261023": {
+   "bytes": 254260336,
+   "dest": "audio-data-contract/datasets/ts_scene_pool/versions/xsession-20261023/",
+   "files": 52,
+   "verified": "2026-11-04"
+  },
+  "datasets/ts_scene_pool/versions/xsession-alt-20261023": {
+   "bytes": 165349054,
+   "dest": "audio-data-contract/datasets/ts_scene_pool/versions/xsession-alt-20261023/",
+   "files": 51,
+   "verified": "2026-11-04"
+  },
+  "datasets/ts_scene_pool/versions/xsession-alt-twins-20261024": {
+   "bytes": 161776592,
+   "dest": "audio-data-contract/datasets/ts_scene_pool/versions/xsession-alt-twins-20261024/",
+   "files": 51,
+   "verified": "2026-11-04"
+  },
+  "datasets/ts_scene_pool/versions/xsession-alt-twins-20261024-punchw-20261102": {
+   "bytes": 162405564,
+   "dest": "audio-data-contract/datasets/ts_scene_pool/versions/xsession-alt-twins-20261024-punchw-20261102/",
+   "files": 49,
+   "verified": "2026-11-04"
+  },
+  "datasets/ts_scene_pool/versions/xsession-handover-20261023": {
+   "bytes": 89927191,
+   "dest": "audio-data-contract/datasets/ts_scene_pool/versions/xsession-handover-20261023/",
+   "files": 52,
+   "verified": "2026-11-04"
+  },
+  "datasets/ts_scene_pool/versions/xsession-handover-20261023-punchw-20261102": {
+   "bytes": 90128188,
+   "dest": "audio-data-contract/datasets/ts_scene_pool/versions/xsession-handover-20261023-punchw-20261102/",
+   "files": 49,
+   "verified": "2026-11-04"
+  },
+  "datasets/ts_scene_pool/versions/xsession-hard-20261023": {
+   "bytes": 112678119,
+   "dest": "audio-data-contract/datasets/ts_scene_pool/versions/xsession-hard-20261023/",
+   "files": 52,
+   "verified": "2026-11-04"
+  },
+  "datasets/ts_scene_pool/versions/xsession-hard-20261023-punchw-20261102": {
+   "bytes": 111877500,
+   "dest": "audio-data-contract/datasets/ts_scene_pool/versions/xsession-hard-20261023-punchw-20261102/",
+   "files": 49,
+   "verified": "2026-11-04"
+  },
+  "datasets/ts_scene_pool/versions/xsession-hard-twins-20261026": {
+   "bytes": 109014784,
+   "dest": "audio-data-contract/datasets/ts_scene_pool/versions/xsession-hard-twins-20261026/",
+   "files": 51,
+   "verified": "2026-11-04"
+  },
+  "datasets/ts_scene_pool/versions/xsession-near-20261023": {
+   "bytes": 255855020,
+   "dest": "audio-data-contract/datasets/ts_scene_pool/versions/xsession-near-20261023/",
+   "files": 53,
+   "verified": "2026-11-04"
+  },
+  "datasets/ts_scene_pool/versions/xsession-near-20261023-punchw-20261102": {
+   "bytes": 257935495,
+   "dest": "audio-data-contract/datasets/ts_scene_pool/versions/xsession-near-20261023-punchw-20261102/",
+   "files": 50,
+   "verified": "2026-11-04"
+  },
+  "datasets/vitw/versions/2m-20261013": {
+   "bytes": 470715226,
+   "dest": "audio-data-contract/datasets/vitw/versions/2m-20261013/",
+   "files": 58,
+   "verified": "2026-11-04"
+  },
+  "datasets/vitw/versions/legacy-20260804": {
+   "bytes": 49080372,
+   "dest": "audio-data-contract/datasets/vitw/versions/legacy-20260804/",
+   "files": 34,
+   "verified": "2026-11-04"
+  },
+  "datasets/vitw_far_field/versions/icefall-20260908": {
+   "bytes": 3746962,
+   "dest": "audio-data-contract/datasets/vitw_far_field/versions/icefall-20260908/",
+   "files": 2,
+   "verified": "2026-11-04"
+  },
+  "datasets/vitw_far_field/versions/punc-teacher-v1-20261029": {
+   "bytes": 244047,
+   "dest": "audio-data-contract/datasets/vitw_far_field/versions/punc-teacher-v1-20261029/",
+   "files": 1,
+   "verified": "2026-11-04"
+  },
+  "datasets/vitw_far_field/versions/punc-written-v1-20261029": {
+   "bytes": 3023842,
+   "dest": "audio-data-contract/datasets/vitw_far_field/versions/punc-written-v1-20261029/",
+   "files": 2,
+   "verified": "2026-11-04"
+  },
+  "datasets/vitw_real_distortion/versions/eval-20260804": {
+   "bytes": 11293,
+   "dest": "audio-data-contract/datasets/vitw_real_distortion/versions/eval-20260804/",
+   "files": 2,
+   "verified": "2026-11-04"
+  },
+  "datasets/vitw_real_dropout/versions/eval-20260804": {
+   "bytes": 11335,
+   "dest": "audio-data-contract/datasets/vitw_real_dropout/versions/eval-20260804/",
+   "files": 2,
+   "verified": "2026-11-04"
+  },
+  "datasets/vitw_real_echo/versions/eval-20260804": {
+   "bytes": 11334,
+   "dest": "audio-data-contract/datasets/vitw_real_echo/versions/eval-20260804/",
+   "files": 2,
+   "verified": "2026-11-04"
+  },
+  "datasets/vitw_real_far_field/versions/eval-20260804": {
+   "bytes": 11052,
+   "dest": "audio-data-contract/datasets/vitw_real_far_field/versions/eval-20260804/",
+   "files": 2,
+   "verified": "2026-11-04"
+  },
+  "datasets/vitw_real_mixed/versions/eval-20260804": {
+   "bytes": 30708,
+   "dest": "audio-data-contract/datasets/vitw_real_mixed/versions/eval-20260804/",
+   "files": 2,
+   "verified": "2026-11-04"
+  },
+  "datasets/vitw_real_noise/versions/eval-20260804": {
+   "bytes": 11571,
+   "dest": "audio-data-contract/datasets/vitw_real_noise/versions/eval-20260804/",
+   "files": 2,
+   "verified": "2026-11-04"
+  },
+  "datasets/vitw_real_obstructed/versions/eval-20260804": {
+   "bytes": 11354,
+   "dest": "audio-data-contract/datasets/vitw_real_obstructed/versions/eval-20260804/",
+   "files": 2,
+   "verified": "2026-11-04"
+  },
+  "datasets/vitw_real_recording/versions/eval-20260804": {
+   "bytes": 11172,
+   "dest": "audio-data-contract/datasets/vitw_real_recording/versions/eval-20260804/",
+   "files": 2,
+   "verified": "2026-11-04"
+  },
+  "datasets/vitw_syn_distortion/versions/eval-20260804": {
+   "bytes": 24799,
+   "dest": "audio-data-contract/datasets/vitw_syn_distortion/versions/eval-20260804/",
+   "files": 2,
+   "verified": "2026-11-04"
+  },
+  "datasets/vitw_syn_dropout/versions/eval-20260804": {
+   "bytes": 24716,
+   "dest": "audio-data-contract/datasets/vitw_syn_dropout/versions/eval-20260804/",
+   "files": 2,
+   "verified": "2026-11-04"
+  },
+  "datasets/vitw_syn_echo/versions/eval-20260804": {
+   "bytes": 24580,
+   "dest": "audio-data-contract/datasets/vitw_syn_echo/versions/eval-20260804/",
+   "files": 2,
+   "verified": "2026-11-04"
+  },
+  "datasets/vitw_syn_far_field/versions/eval-20260804": {
+   "bytes": 24809,
+   "dest": "audio-data-contract/datasets/vitw_syn_far_field/versions/eval-20260804/",
+   "files": 2,
+   "verified": "2026-11-04"
+  },
+  "datasets/vitw_syn_mixed/versions/eval-20260804": {
+   "bytes": 69446,
+   "dest": "audio-data-contract/datasets/vitw_syn_mixed/versions/eval-20260804/",
+   "files": 2,
+   "verified": "2026-11-04"
+  },
+  "datasets/vitw_syn_noise/versions/eval-20260804": {
+   "bytes": 24388,
+   "dest": "audio-data-contract/datasets/vitw_syn_noise/versions/eval-20260804/",
+   "files": 2,
+   "verified": "2026-11-04"
+  },
+  "datasets/vitw_syn_obstructed/versions/eval-20260804": {
+   "bytes": 24783,
+   "dest": "audio-data-contract/datasets/vitw_syn_obstructed/versions/eval-20260804/",
+   "files": 2,
+   "verified": "2026-11-04"
+  },
+  "datasets/vitw_syn_recording/versions/eval-20260804": {
+   "bytes": 25153,
+   "dest": "audio-data-contract/datasets/vitw_syn_recording/versions/eval-20260804/",
+   "files": 2,
+   "verified": "2026-11-04"
+  },
+  "datasets/voxforge_spanish/versions/hf-1ce6b6f9701d": {
+   "bytes": 3504,
+   "dest": "audio-data-contract/datasets/voxforge_spanish/versions/hf-1ce6b6f9701d/",
+   "files": 2,
+   "verified": "2026-11-04"
+  },
+  "datasets/wenetspeech/versions/eval-20261011": {
+   "bytes": 1474224,
+   "dest": "audio-data-contract/datasets/wenetspeech/versions/eval-20261011/",
+   "files": 5,
+   "verified": "2026-11-04"
+  },
+  "datasets/wenetspeech/versions/punc-written-v1-20261029": {
+   "bytes": 448986353,
+   "dest": "audio-data-contract/datasets/wenetspeech/versions/punc-written-v1-20261029/",
+   "files": 2,
+   "verified": "2026-11-04"
+  },
+  "datasets/wenetspeech_chuan/versions/clean-qwen3-asr-v1-20261023": {
+   "bytes": 387703752,
+   "dest": "audio-data-contract/datasets/wenetspeech_chuan/versions/clean-qwen3-asr-v1-20261023/",
+   "files": 2,
+   "verified": "2026-11-04"
+  },
+  "datasets/wenetspeech_chuan/versions/eval-20261012": {
+   "bytes": 534810,
+   "dest": "audio-data-contract/datasets/wenetspeech_chuan/versions/eval-20261012/",
+   "files": 4,
+   "verified": "2026-11-04"
+  },
+  "datasets/wenetspeech_chuan/versions/listening-review-v1-20261026": {
+   "bytes": 18548,
+   "dest": "audio-data-contract/datasets/wenetspeech_chuan/versions/listening-review-v1-20261026/",
+   "files": 2,
+   "verified": "2026-11-04"
+  },
+  "datasets/wenetspeech_clean/versions/punc-gold-v1-20261029": {
+   "bytes": 10054,
+   "dest": "audio-data-contract/datasets/wenetspeech_clean/versions/punc-gold-v1-20261029/",
+   "files": 1,
+   "verified": "2026-11-04"
+  },
+  "datasets/wenetspeech_clean/versions/punc-teacher-v1-20261029": {
+   "bytes": 4515499,
+   "dest": "audio-data-contract/datasets/wenetspeech_clean/versions/punc-teacher-v1-20261029/",
+   "files": 1,
+   "verified": "2026-11-04"
+  },
+  "datasets/wenetspeech_clean/versions/punc-written-v1-20261029": {
+   "bytes": 540658186,
+   "dest": "audio-data-contract/datasets/wenetspeech_clean/versions/punc-written-v1-20261029/",
+   "files": 2,
+   "verified": "2026-11-04"
+  },
+  "datasets/wenetspeech_diarize/versions/listening-review-v1-20261012": {
+   "bytes": 1197,
+   "dest": "audio-data-contract/datasets/wenetspeech_diarize/versions/listening-review-v1-20261012/",
+   "files": 1,
+   "verified": "2026-11-04"
+  },
+  "datasets/wenetspeech_diarize/versions/moss-transcribe-diarize-0.9B": {
+   "bytes": 1857,
+   "dest": "audio-data-contract/datasets/wenetspeech_diarize/versions/moss-transcribe-diarize-0.9B/",
+   "files": 1,
+   "verified": "2026-11-04"
+  },
+  "datasets/wenetspeech_disfluency/versions/punc-written-v1-20261029": {
+   "bytes": 12187233,
+   "dest": "audio-data-contract/datasets/wenetspeech_disfluency/versions/punc-written-v1-20261029/",
+   "files": 2,
+   "verified": "2026-11-04"
+  },
+  "datasets/wenetspeech_wu/versions/qwen3-asr-pilot-v1-20261025": {
+   "bytes": 590700,
+   "dest": "audio-data-contract/datasets/wenetspeech_wu/versions/qwen3-asr-pilot-v1-20261025/",
+   "files": 2,
+   "verified": "2026-11-04"
+  },
+  "datasets/wenetspeech_yue/versions/clean-qwen3-asr-full-v1-20261024": {
+   "bytes": 367979523,
+   "dest": "audio-data-contract/datasets/wenetspeech_yue/versions/clean-qwen3-asr-full-v1-20261024/",
+   "files": 1,
+   "verified": "2026-11-04"
+  },
+  "datasets/wenetspeech_yue/versions/clean-qwen3-asr-v1-20261024": {
+   "bytes": 366988364,
+   "dest": "audio-data-contract/datasets/wenetspeech_yue/versions/clean-qwen3-asr-v1-20261024/",
+   "files": 2,
+   "verified": "2026-11-04"
+  },
+  "datasets/wenetspeech_yue/versions/nonclean-qwen3-asr-v1-20261025": {
+   "bytes": 2218,
+   "dest": "audio-data-contract/datasets/wenetspeech_yue/versions/nonclean-qwen3-asr-v1-20261025/",
+   "files": 1,
+   "verified": "2026-11-04"
+  },
+  "datasets/wham/versions/tr-20261014": {
+   "bytes": 559915,
+   "dest": "audio-data-contract/datasets/wham/versions/tr-20261014/",
+   "files": 1,
+   "verified": "2026-11-04"
+  },
+  "datasets/wikipedia_spanish/versions/hf-0afbf012ed67": {
+   "bytes": 2326,
+   "dest": "audio-data-contract/datasets/wikipedia_spanish/versions/hf-0afbf012ed67/",
+   "files": 2,
+   "verified": "2026-11-04"
+  },
+  "datasets/yodas_ar/versions/legacy": {
+   "bytes": 34117959,
+   "dest": "audio-data-contract/datasets/yodas_ar/versions/legacy/",
+   "files": 4,
+   "verified": "2026-11-04"
+  },
+  "datasets/yodas_bn/versions/legacy": {
+   "bytes": 3212458,
+   "dest": "audio-data-contract/datasets/yodas_bn/versions/legacy/",
+   "files": 4,
+   "verified": "2026-11-04"
+  },
+  "datasets/yodas_de/versions/legacy": {
+   "bytes": 326536773,
+   "dest": "audio-data-contract/datasets/yodas_de/versions/legacy/",
+   "files": 4,
+   "verified": "2026-11-04"
+  },
+  "datasets/yodas_es/versions/legacy": {
+   "bytes": 351428912,
+   "dest": "audio-data-contract/datasets/yodas_es/versions/legacy/",
+   "files": 4,
+   "verified": "2026-11-04"
+  },
+  "datasets/yodas_fr/versions/legacy": {
+   "bytes": 266278969,
+   "dest": "audio-data-contract/datasets/yodas_fr/versions/legacy/",
+   "files": 4,
+   "verified": "2026-11-04"
+  },
+  "datasets/yodas_granary_es_pt/versions/hf-969944574ea3": {
+   "bytes": 392857,
+   "dest": "audio-data-contract/datasets/yodas_granary_es_pt/versions/hf-969944574ea3/",
+   "files": 2,
+   "verified": "2026-11-04"
+  },
+  "datasets/yodas_ja/versions/legacy": {
+   "bytes": 113347442,
+   "dest": "audio-data-contract/datasets/yodas_ja/versions/legacy/",
+   "files": 4,
+   "verified": "2026-11-04"
+  },
+  "datasets/yodas_ko/versions/legacy": {
+   "bytes": 310020286,
+   "dest": "audio-data-contract/datasets/yodas_ko/versions/legacy/",
+   "files": 4,
+   "verified": "2026-11-04"
+  },
+  "datasets/yodas_ru/versions/legacy": {
+   "bytes": 553512404,
+   "dest": "audio-data-contract/datasets/yodas_ru/versions/legacy/",
+   "files": 4,
+   "verified": "2026-11-04"
+  },
+  "datasets/zh_far_replay/versions/zh-far-replay-v1-20261009": {
+   "bytes": 7136827,
+   "dest": "audio-data-contract/datasets/zh_far_replay/versions/zh-far-replay-v1-20261009/",
+   "files": 13,
+   "verified": "2026-11-04"
+  },
+  "datasets/zh_farfield_channel_views/versions/meeting-channel-view-v2-20261010": {
+   "bytes": 47822398,
+   "dest": "audio-data-contract/datasets/zh_farfield_channel_views/versions/meeting-channel-view-v2-20261010/",
+   "files": 13,
+   "verified": "2026-11-04"
+  }
+ },
+ "prefix": "audio-data-contract/"
+}
