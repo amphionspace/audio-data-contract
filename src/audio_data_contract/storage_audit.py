@@ -513,12 +513,24 @@ def find_issues(
         # Report the deepest growing directory, not every ancestor above it.
         parents_of_grown = {os.path.dirname(path) for path in grown}
         for path in sorted(grown - parents_of_grown):
-            finding(
-                "growth", path, nodes[path]["bytes"], zones.entry_for(path),
-                f"较上次增长 {format_size(deltas[path])}",
-            )
+            # Name the children that carry most of the growth.
+            parts = sorted(
+                (
+                    (deltas[child], child) for child in nodes
+                    if os.path.dirname(child) == path
+                    and deltas[child] * 10 >= deltas[path]
+                ),
+                reverse=True,
+            )[:3]
+            detail = f"较上次增长 {format_size(deltas[path])}"
+            if parts:
+                detail += "，主要来自 " + "、".join(
+                    f"{os.path.basename(child)} +{format_size(delta)}"
+                    for delta, child in parts
+                )
+            finding("growth", path, nodes[path]["bytes"], zones.entry_for(path), detail)
 
-    order = ["unregistered", "over_budget", "growth", "stale", "expired", "missing"]
+    order = ["unregistered", "over_budget", "stale", "expired", "missing", "growth"]
     findings.sort(key=lambda row: (order.index(row["category"]), -row["bytes"]))
     return findings
 
@@ -526,10 +538,11 @@ def find_issues(
 LABELS = {
     "unregistered": "未注册",
     "over_budget": "超预算",
-    "growth": "增长异常",
     "stale": "长期未修改",
     "expired": "登记过期",
     "missing": "注册失效",
+    # Growth is a heads-up, not a problem: the data may well be registered.
+    "growth": "注意：增长较快",
 }
 
 
@@ -610,8 +623,7 @@ def write_report(
 SERIES = ["#2a78d6", "#eb6834", "#1baf7a"]
 NEUTRAL = "#c3c2b7"
 TAG_COLORS = {
-    "unregistered": "orange", "over_budget": "red", "growth": "violet",
-    "stale": "neutral", "expired": "yellow", "missing": "red",
+    "unregistered": "orange", "over_budget": "red", "stale": "neutral", "expired": "yellow", "missing": "red",
 }
 
 
@@ -697,7 +709,10 @@ def summary_card(
     """Feishu card 2.0: conclusion, headline tiles, charts, and the findings table."""
     root = zones.scan_root
     unregistered = [row for row in findings if row["category"] == "unregistered"]
-    others = [row for row in findings if row["category"] != "unregistered"]
+    growth = [row for row in findings if row["category"] == "growth"]
+    others = [
+        row for row in findings if row["category"] not in ("unregistered", "growth")
+    ]
     stray = sum(row["bytes"] for row in unregistered)
     full = usage["used_percent"] >= zones.watermark_percent
     owners: dict[str, int] = {}
@@ -721,8 +736,12 @@ def summary_card(
         )
     if others:
         lines.append(f"另有 {len(others)} 项其他异常，见下表。")
-    if not findings:
+    if not unregistered and not others:
         lines.append("未发现异常。")
+    if growth:
+        lines.append("注意：" + "；".join(
+            f"{_short(row['path'], root)} {row['detail']}" for row in growth
+        ) + "。")
     elements: list[dict] = [
         {"tag": "markdown", "content": "**结论**：" + "".join(lines)},
         _columns([
@@ -808,7 +827,9 @@ def summary_card(
     if report is not None:
         elements.append({"tag": "markdown", "text_size": "notation",
                          "content": f"<font color='grey'>完整报告：{report}</font>"})
-    return _card("存储巡检", elements, "orange" if full or findings else "green")
+    return _card(
+        "存储巡检", elements, "orange" if full or unregistered or others else "green"
+    )
 
 
 def _card(title: str, elements: list[dict], template: str = "blue") -> dict:
