@@ -1,0 +1,976 @@
+# 人工听审答案：被听过的数据行及其 metadata.listening_review，完整答案在证据文件 listening_review
+  - schema_version: dataset-catalog/2.0
+    dataset_id: emilia2_zh_dialogue_diarize
+    version: listening-review-v1-20261016
+    languages:
+      - zh
+    tasks:
+      - speaker_attributed_asr
+      - diarization
+    aliases: []
+    artifacts:
+      - name: train-audio-index
+        kind: jsonl-metadata
+        root_alias: aidc_data
+        relative_path: datasets/emilia2_zh_dialogue_diarize/versions/moss-transcribe-diarize-0.9B/emilia2_zh_dialogue-train-audio-index-flac.jsonl.gz
+        expected_bytes: 1302821
+        sha256: 8fb1d9e77ef3a72f22e4e0ef15466a5a2f10637e9f53b2b13637e3aaf07e0dd1
+        metadata:
+          record_count: 53965
+          description: cut_id → emilia2@extracted-enzh-20261012 解包后转成的 16 kHz 单声道 FLAC（m4a-128k/zh/dialog；m4a 已删除，只用 flac）
+      - name: train_120s-records_listening
+        kind: audio-records
+        root_alias: aidc_data
+        relative_path: datasets/emilia2_zh_dialogue_diarize/versions/listening-review-v1-20261016/train_120s-records_listening.jsonl.gz
+        expected_bytes: 59436
+        sha256: 187f8d03cc03562da95a2fc74e60c61cec8b48a151f48f5617d9bbbadabbd248
+        metadata:
+          record_count: 34
+          source: emilia2_zh_dialogue_diarize@moss-transcribe-diarize-0.9B:train_120s-records
+      - name: listening_review
+        kind: quality-report
+        root_alias: aidc_data
+        relative_path: datasets/emilia2_zh_dialogue_diarize/versions/listening-review-v1-20261016/listening_review.jsonl.gz
+        expected_bytes: 6141
+        sha256: e72fc1423da23d948b702c0974922efae5aa0a54c3c919b3fffaf049d5a994f9
+        metadata:
+          record_count: 34
+    splits:
+      train_120s:
+        artifacts:
+          records:
+            - train_120s-records_listening
+          audio_index:
+            - train-audio-index
+        statistics:
+          records: 34
+    provenance:
+      preparation_status: prepared
+      lineage_status: exact
+      materialization: full
+      source: emilia2_zh_dialogue_diarize@moss-transcribe-diarize-0.9B
+      description: emilia2_zh_dialogue_diarize@moss-transcribe-diarize-0.9B 中被人工听审过的 34 条数据行（父版本数据行原样照抄，录音和音频索引沿用父版本），每行的 metadata.listening_review（Lhotse custom.listening_review）是关于这条记录的听审答案列表：问题、选项、回答、备注、回答日期、听审名称、片段起止和选项含义（resolved_to）。共 34 条答案（emilia2-speaker-merge-20261014 10 条、emilia2-speaker-split-20261015 24 条），34 条已挂到数据行。证据文件 listening_review.jsonl.gz 含该版本全部答案。只含被听过的记录，不是完整数据版本，不用于训练。脚本 scripts/label_registration/register_listening_review.py。
+      facts:
+        answers: 34
+        answers_attached: 34
+        answers_evidence_only: 0
+        rows: 34
+        reviews:
+          emilia2-speaker-merge-20261014: 10
+          emilia2-speaker-split-20261015: 24
+  - schema_version: dataset-catalog/2.0
+    dataset_id: emilia2_zh_dialogue_diarize
+    version: listening-review-v1-20261014
+    languages:
+      - zh
+    tasks:
+      - speaker_attributed_asr
+      - diarization
+    aliases: []
+    artifacts:
+      - name: train-audio-index
+        kind: jsonl-metadata
+        root_alias: aidc_data
+        relative_path: datasets/emilia2_zh_dialogue_diarize/versions/moss-transcribe-diarize-0.9B-pro4plus/emilia2_zh_dialogue-train-audio-index.jsonl.gz
+        expected_bytes: 1308965
+        sha256: 7b7a788ca1ca932e7748b43c1fad88c2562e2afbafaea3934dc08a4fb2e04241
+        metadata:
+          record_count: 53194
+          description: cut_id → emilia2@extracted-enzh-flac16k-20261012 的 16 kHz 单声道 FLAC（m4a-128k/zh/dialog；m4a 已删除，只用 flac）
+      - name: train_120s-records_listening
+        kind: audio-records
+        root_alias: aidc_data
+        relative_path: datasets/emilia2_zh_dialogue_diarize/versions/listening-review-v1-20261014/train_120s-records_listening.jsonl.gz
+        expected_bytes: 23596
+        sha256: b755fe277f8230490b095f091c5ce42de73a4d7b618c94a6bf1b74f628764bc7
+        metadata:
+          record_count: 11
+          source: emilia2_zh_dialogue_diarize@moss-transcribe-diarize-0.9B-pro4plus:train_120s-records
+      - name: listening_review
+        kind: quality-report
+        root_alias: aidc_data
+        relative_path: datasets/emilia2_zh_dialogue_diarize/versions/listening-review-v1-20261014/listening_review.jsonl.gz
+        expected_bytes: 1788
+        sha256: 7fdc57735daaacf88d76b6a5151f3a029479e37e8a402b150bd539e27e407425
+        metadata:
+          record_count: 12
+    splits:
+      train_120s:
+        artifacts:
+          records:
+            - train_120s-records_listening
+          audio_index:
+            - train-audio-index
+        statistics:
+          records: 11
+    provenance:
+      preparation_status: prepared
+      lineage_status: exact
+      materialization: full
+      source: emilia2_zh_dialogue_diarize@moss-transcribe-diarize-0.9B-pro4plus
+      description: emilia2_zh_dialogue_diarize@moss-transcribe-diarize-0.9B-pro4plus 中被人工听审过的 11 条数据行（父版本数据行原样照抄，录音和音频索引沿用父版本），每行的 metadata.listening_review（Lhotse custom.listening_review）是关于这条记录的听审答案列表：问题、选项、回答、备注、回答日期、听审名称、片段起止和选项含义（resolved_to）。共 12 条答案（emilia2-pro-diff-20261014 10 条、emilia2-pro-overlap-20261014 1 条、listen-review-20261012 1 条），11 条已挂到数据行。其中 1 条没有记录 ID 或记录不在父版本数据行里，无法挂到行上，只在证据文件里。证据文件 listening_review.jsonl.gz 含该版本全部答案。只含被听过的记录，不是完整数据版本，不用于训练。脚本 
+        scripts/label_registration/register_listening_review.py。
+      facts:
+        answers: 12
+        answers_attached: 11
+        answers_evidence_only: 1
+        rows: 11
+        reviews:
+          emilia2-pro-diff-20261014: 10
+          emilia2-pro-overlap-20261014: 1
+          listen-review-20261012: 1
+  - schema_version: dataset-catalog/2.0
+    dataset_id: magicdata_ramc
+    version: listening-review-v1-20261027
+    languages:
+      - zh
+    tasks:
+      - asr
+    aliases: []
+    artifacts:
+      - name: train_recordings
+        kind: lhotse-recordings
+        root_alias: aidc_data
+        relative_path: datasets/magicdata_ramc/versions/legacy-20260804/train_rec_0/magicdata_ramc_recordings_train.jsonl.gz
+        expected_bytes: 4561
+        sha256: 9b3dbbe731f17f1821d92aad52cd2ae7d7d5333a4586e13b31c8a4378f79bcdc
+        metadata:
+          record_count: 289
+          shared_with: magicdata_ramc@icefall-20260908
+      - name: train_supervisions_speaker_identity_listening
+        kind: lhotse-supervisions
+        root_alias: aidc_data
+        relative_path: datasets/magicdata_ramc/versions/listening-review-v1-20261027/train_supervisions_speaker_identity_listening.jsonl.gz
+        expected_bytes: 10948
+        sha256: 6e1af9e5c55ea4e21bfae01eeeed498171fe1907f8957409494957aa06cb524c
+        metadata:
+          record_count: 63
+          source: magicdata_ramc@speaker-identity-v1-20261028:train_supervisions_speaker_identity
+      - name: listening_review
+        kind: quality-report
+        root_alias: aidc_data
+        relative_path: datasets/magicdata_ramc/versions/listening-review-v1-20261027/listening_review.jsonl.gz
+        expected_bytes: 3172
+        sha256: 52a8770ba9678ab903f957f212002928e452cb7b1188510227ef6173db7a2e44
+        metadata:
+          record_count: 34
+    splits:
+      train:
+        artifacts:
+          recordings:
+            - train_recordings
+          supervisions:
+            - train_supervisions_speaker_identity_listening
+        statistics:
+          records: 63
+    provenance:
+      preparation_status: prepared
+      lineage_status: exact
+      materialization: full
+      source: magicdata_ramc@speaker-identity-v1-20261028
+      description: magicdata_ramc@speaker-identity-v1-20261028 中被人工听审过的 63 条数据行（父版本数据行原样照抄，录音和音频索引沿用父版本），每行的 metadata.listening_review（Lhotse custom.listening_review）是关于这条记录的听审答案列表：问题、选项、回答、备注、回答日期、听审名称、片段起止和选项含义（resolved_to）。共 34 条答案（ramc-voice-identities-20261028 34 条），34 条已挂到数据行。证据文件 listening_review.jsonl.gz 含该版本全部答案。只含被听过的记录，不是完整数据版本，不用于训练。脚本 scripts/label_registration/register_listening_review.py。
+      facts:
+        answers: 34
+        answers_attached: 34
+        answers_evidence_only: 0
+        rows: 63
+        reviews:
+          ramc-voice-identities-20261028: 34
+  - schema_version: dataset-catalog/2.0
+    dataset_id: police_terms_single
+    version: listening-review-v1-20261022
+    languages:
+      - zh
+    tasks:
+      - asr
+    aliases: []
+    artifacts:
+      - name: test_recordings
+        kind: lhotse-recordings
+        root_alias: aidc_data
+        relative_path: datasets/police_terms_single/versions/v1-20261022/manifests/police_terms_single_recordings_test.jsonl.gz
+        expected_bytes: 56517
+        sha256: 94f84ce3b51313ba6cc4c66f01d12f85273fa3bd6cf61bb486863113ef875697
+        metadata:
+          record_count: 3264
+      - name: test_supervisions_listening
+        kind: lhotse-supervisions
+        root_alias: aidc_data
+        relative_path: datasets/police_terms_single/versions/listening-review-v1-20261022/test_supervisions_listening.jsonl.gz
+        expected_bytes: 1819
+        sha256: 2d9de2edfd4117f5d38e214fc36f328753064c7d950db309532df0427d36ef11
+        metadata:
+          record_count: 7
+          source: police_terms_single@v1-20261022:test_supervisions
+      - name: listening_review
+        kind: quality-report
+        root_alias: aidc_data
+        relative_path: datasets/police_terms_single/versions/listening-review-v1-20261022/listening_review.jsonl.gz
+        expected_bytes: 1265
+        sha256: dc244f99c528fa281da9a0c240453ac9c53e36374346269b7e85d4c025dd12a9
+        metadata:
+          record_count: 10
+    splits:
+      test:
+        artifacts:
+          recordings:
+            - test_recordings
+          supervisions:
+            - test_supervisions_listening
+        statistics:
+          records: 7
+    provenance:
+      preparation_status: prepared
+      lineage_status: exact
+      materialization: full
+      source: police_terms_single@v1-20261022
+      description: police_terms_single@v1-20261022 中被人工听审过的 7 条数据行（父版本数据行原样照抄，录音和音频索引沿用父版本），每行的 metadata.listening_review（Lhotse custom.listening_review）是关于这条记录的听审答案列表：问题、选项、回答、备注、回答日期、听审名称、片段起止和选项含义（resolved_to）。共 10 条答案（police-terms-single-20261022 10 条），7 条已挂到数据行。其中 3 条没有记录 ID 或记录不在父版本数据行里，无法挂到行上，只在证据文件里。证据文件 listening_review.jsonl.gz 含该版本全部答案。只含被听过的记录，不是完整数据版本，不用于训练。脚本 scripts/label_registration/register_listening_review.py。
+      facts:
+        answers: 10
+        answers_attached: 7
+        answers_evidence_only: 3
+        rows: 7
+        reviews:
+          police-terms-single-20261022: 10
+  - schema_version: dataset-catalog/2.0
+    dataset_id: police_terms_single_train
+    version: listening-review-v1-20261024
+    languages:
+      - zh
+    tasks:
+      - asr
+    aliases: []
+    artifacts:
+      - name: train_recordings
+        kind: lhotse-recordings
+        root_alias: aidc_data
+        relative_path: datasets/police_terms_single_train/versions/v1-20261023/manifests/police_terms_single_train_recordings_train.jsonl.gz
+        expected_bytes: 373471
+        sha256: 25af1420f7cfb45f6b271ebab87881012967567521014993cff01c2922d0a2fd
+        metadata:
+          record_count: 21760
+      - name: train_supervisions_listening
+        kind: lhotse-supervisions
+        root_alias: aidc_data
+        relative_path: datasets/police_terms_single_train/versions/listening-review-v1-20261024/train_supervisions_listening.jsonl.gz
+        expected_bytes: 2102
+        sha256: 8f14b030fda70672b4505cfb2a9085c36dccd667999700772e613d63cdf3f993
+        metadata:
+          record_count: 10
+          source: police_terms_single_train@v1-20261023:train_supervisions
+      - name: listening_review
+        kind: quality-report
+        root_alias: aidc_data
+        relative_path: datasets/police_terms_single_train/versions/listening-review-v1-20261024/listening_review.jsonl.gz
+        expected_bytes: 1083
+        sha256: f4ad8d89910b8e277b205ea5bf03abcb761a3a58dc362ef22fc4f23df231ae28
+        metadata:
+          record_count: 10
+    splits:
+      train:
+        artifacts:
+          recordings:
+            - train_recordings
+          supervisions:
+            - train_supervisions_listening
+        statistics:
+          records: 10
+    provenance:
+      preparation_status: prepared
+      lineage_status: exact
+      materialization: full
+      source: police_terms_single_train@v1-20261023
+      description: police_terms_single_train@v1-20261023 中被人工听审过的 10 条数据行（父版本数据行原样照抄，录音和音频索引沿用父版本），每行的 metadata.listening_review（Lhotse custom.listening_review）是关于这条记录的听审答案列表：问题、选项、回答、备注、回答日期、听审名称、片段起止和选项含义（resolved_to）。共 10 条答案（police-terms-single-train-20261023 10 条），10 条已挂到数据行。证据文件 listening_review.jsonl.gz 含该版本全部答案。只含被听过的记录，不是完整数据版本，不用于训练。脚本 scripts/label_registration/register_listening_review.py。
+      facts:
+        answers: 10
+        answers_attached: 10
+        answers_evidence_only: 0
+        rows: 10
+        reviews:
+          police-terms-single-train-20261023: 10
+  - schema_version: dataset-catalog/2.0
+    dataset_id: ts_asr_benchmark
+    version: listening-review-v1-20261026
+    languages:
+      - zh
+    tasks:
+      - ts_asr
+    aliases: []
+    artifacts:
+      - name: audio-index
+        kind: audio-index
+        root_alias: ts_asr_benchmark
+        relative_path: versions/v4-20261022/audio-index.jsonl.gz
+        sha256: 4a02f16efb1f1b15f3fe09d21e6e56a1be317307d25932d0c6b355b2d1608bc5
+        metadata:
+          record_count: 29600
+      - name: enroll-clean-pos-records_listening
+        kind: audio-records
+        root_alias: aidc_data
+        relative_path: datasets/ts_asr_benchmark/versions/listening-review-v1-20261026/enroll-clean-pos-records_listening.jsonl.gz
+        expected_bytes: 1601
+        sha256: fd8a766cfa47e957f05bab2c3898a01e8be42aa5fb1b3c817a73d0f91ac5a192
+        metadata:
+          record_count: 1
+          source: ts_asr_benchmark@v4-20261022:enroll-clean-pos-records
+      - name: enroll-len2-pos-records_listening
+        kind: audio-records
+        root_alias: aidc_data
+        relative_path: datasets/ts_asr_benchmark/versions/listening-review-v1-20261026/enroll-len2-pos-records_listening.jsonl.gz
+        expected_bytes: 1370
+        sha256: 45d897f85f3c767fc9391991287c13097ef2bac0e330523102361699a4dd3c2a
+        metadata:
+          record_count: 1
+          source: ts_asr_benchmark@v4-20261022:enroll-len2-pos-records
+      - name: dyn-full-k1-records_listening
+        kind: audio-records
+        root_alias: aidc_data
+        relative_path: datasets/ts_asr_benchmark/versions/listening-review-v1-20261026/dyn-full-k1-records_listening.jsonl.gz
+        expected_bytes: 1429
+        sha256: 3cad2ef2f11d6a1623dc0751a69aac321a7362599bfec82ca13f1bb0580d4cea
+        metadata:
+          record_count: 1
+          source: ts_asr_benchmark@v4-20261022:dyn-full-k1-records
+      - name: dyn-leave-k2-records_listening
+        kind: audio-records
+        root_alias: aidc_data
+        relative_path: datasets/ts_asr_benchmark/versions/listening-review-v1-20261026/dyn-leave-k2-records_listening.jsonl.gz
+        expected_bytes: 1749
+        sha256: a3e44c8daaa64214963e5b1886bed9eeac191cfef70398d545fcbe12b2f83f12
+        metadata:
+          record_count: 1
+          source: ts_asr_benchmark@v4-20261022:dyn-leave-k2-records
+      - name: dyn-overlap-k1-records_listening
+        kind: audio-records
+        root_alias: aidc_data
+        relative_path: datasets/ts_asr_benchmark/versions/listening-review-v1-20261026/dyn-overlap-k1-records_listening.jsonl.gz
+        expected_bytes: 1482
+        sha256: ab659db69f46e73390ddce7b1b63c2d3962c327c27ac4f51a9bbd7e12286e90a
+        metadata:
+          record_count: 1
+          source: ts_asr_benchmark@v4-20261022:dyn-overlap-k1-records
+      - name: dom-clean-pos-records_listening
+        kind: audio-records
+        root_alias: aidc_data
+        relative_path: datasets/ts_asr_benchmark/versions/listening-review-v1-20261026/dom-clean-pos-records_listening.jsonl.gz
+        expected_bytes: 1685
+        sha256: 0014d0cf7957839423698f9cb636b47a04dd948f3856b0ce99ac75adf28bf47e
+        metadata:
+          record_count: 1
+          source: ts_asr_benchmark@v4-20261022:dom-clean-pos-records
+      - name: floor-none-pos-records_listening
+        kind: audio-records
+        root_alias: aidc_data
+        relative_path: datasets/ts_asr_benchmark/versions/listening-review-v1-20261026/floor-none-pos-records_listening.jsonl.gz
+        expected_bytes: 1480
+        sha256: ef8479823748b5d529e9dad9c2fc010a91efb61756da8f983bb3b5efd3c00b43
+        metadata:
+          record_count: 1
+          source: ts_asr_benchmark@v4-20261022:floor-none-pos-records
+      - name: room-real-pos-records_listening
+        kind: audio-records
+        root_alias: aidc_data
+        relative_path: datasets/ts_asr_benchmark/versions/listening-review-v1-20261026/room-real-pos-records_listening.jsonl.gz
+        expected_bytes: 1546
+        sha256: a0a674ae7257070407955ae5ab64ab5c6c229f8564951b5b9bb28031b0079dcc
+        metadata:
+          record_count: 1
+          source: ts_asr_benchmark@v4-20261022:room-real-pos-records
+      - name: level-loud10-pos-records_listening
+        kind: audio-records
+        root_alias: aidc_data
+        relative_path: datasets/ts_asr_benchmark/versions/listening-review-v1-20261026/level-loud10-pos-records_listening.jsonl.gz
+        expected_bytes: 1507
+        sha256: fc54dee89897fa33e96f520d584cbbcb672b7b7faa324d787ad6ee58b538a04b
+        metadata:
+          record_count: 1
+          source: ts_asr_benchmark@v4-20261022:level-loud10-pos-records
+      - name: listening_review
+        kind: quality-report
+        root_alias: aidc_data
+        relative_path: datasets/ts_asr_benchmark/versions/listening-review-v1-20261026/listening_review.jsonl.gz
+        expected_bytes: 1990
+        sha256: 39a09473b2e82b9875e786f78bb3a9f112dfeae45052c912e354963c9745535c
+        metadata:
+          record_count: 9
+    splits:
+      enroll-clean-pos:
+        artifacts:
+          records:
+            - enroll-clean-pos-records_listening
+          audio_index:
+            - audio-index
+        statistics:
+          records: 1
+        task: ts_asr
+      enroll-len2-pos:
+        artifacts:
+          records:
+            - enroll-len2-pos-records_listening
+          audio_index:
+            - audio-index
+        statistics:
+          records: 1
+        task: ts_asr
+      dyn-full-k1:
+        artifacts:
+          records:
+            - dyn-full-k1-records_listening
+          audio_index:
+            - audio-index
+        statistics:
+          records: 1
+        task: ts_asr
+      dyn-leave-k2:
+        artifacts:
+          records:
+            - dyn-leave-k2-records_listening
+          audio_index:
+            - audio-index
+        statistics:
+          records: 1
+        task: ts_asr
+      dyn-overlap-k1:
+        artifacts:
+          records:
+            - dyn-overlap-k1-records_listening
+          audio_index:
+            - audio-index
+        statistics:
+          records: 1
+        task: ts_asr
+      dom-clean-pos:
+        artifacts:
+          records:
+            - dom-clean-pos-records_listening
+          audio_index:
+            - audio-index
+        statistics:
+          records: 1
+        task: ts_asr
+      floor-none-pos:
+        artifacts:
+          records:
+            - floor-none-pos-records_listening
+          audio_index:
+            - audio-index
+        statistics:
+          records: 1
+        task: ts_asr
+      room-real-pos:
+        artifacts:
+          records:
+            - room-real-pos-records_listening
+          audio_index:
+            - audio-index
+        statistics:
+          records: 1
+        task: ts_asr
+      level-loud10-pos:
+        artifacts:
+          records:
+            - level-loud10-pos-records_listening
+          audio_index:
+            - audio-index
+        statistics:
+          records: 1
+        task: ts_asr
+    provenance:
+      preparation_status: prepared
+      lineage_status: exact
+      materialization: full
+      source: ts_asr_benchmark@v4-20261022
+      description: ts_asr_benchmark@v4-20261022 中被人工听审过的 9 条数据行（父版本数据行原样照抄，录音和音频索引沿用父版本），每行的 metadata.listening_review（Lhotse custom.listening_review）是关于这条记录的听审答案列表：问题、选项、回答、备注、回答日期、听审名称、片段起止和选项含义（resolved_to）。共 9 条答案（ts-asr-hard-cases-20261026 9 条），9 条已挂到数据行。证据文件 listening_review.jsonl.gz 含该版本全部答案。只含被听过的记录，不是完整数据版本，不用于训练。脚本 scripts/label_registration/register_listening_review.py。
+      facts:
+        answers: 9
+        answers_attached: 9
+        answers_evidence_only: 0
+        rows: 9
+        reviews:
+          ts-asr-hard-cases-20261026: 9
+  - schema_version: dataset-catalog/2.0
+    dataset_id: ts_asr_nearfar
+    version: listening-review-v1-20261022
+    languages:
+      - zh
+    tasks:
+      - ts_asr
+    aliases: []
+    artifacts:
+      - name: audio-index
+        kind: audio-index
+        root_alias: ts_asr_nearfar
+        relative_path: versions/v1-20261014/audio-index.jsonl.gz
+        sha256: adf91b7f362fc2c2f051e7b484bf6dd206cc1a23d8bf3f8315d58f60625966ff
+        metadata:
+          record_count: 2496
+      - name: nearfar-2spk-ef-mn-pos-records_listening
+        kind: audio-records
+        root_alias: aidc_data
+        relative_path: datasets/ts_asr_nearfar/versions/listening-review-v1-20261022/nearfar-2spk-ef-mn-pos-records_listening.jsonl.gz
+        expected_bytes: 1803
+        sha256: d7e587346755b1adfdc45fe57dcd79a20cbac7826436bfdbd3ca43dab4cd3cd5
+        metadata:
+          record_count: 2
+          source: ts_asr_nearfar@v1-20261014:nearfar-2spk-ef-mn-pos-records
+      - name: nearfar-2spk-en-mf-pos-records_listening
+        kind: audio-records
+        root_alias: aidc_data
+        relative_path: datasets/ts_asr_nearfar/versions/listening-review-v1-20261022/nearfar-2spk-en-mf-pos-records_listening.jsonl.gz
+        expected_bytes: 1338
+        sha256: 452bfdfada157ad6954b9d64eab50229c9a86d719188a580a8903aaea586b861
+        metadata:
+          record_count: 1
+          source: ts_asr_nearfar@v1-20261014:nearfar-2spk-en-mf-pos-records
+      - name: nearfar-2spk-en-mn-pos-records_listening
+        kind: audio-records
+        root_alias: aidc_data
+        relative_path: datasets/ts_asr_nearfar/versions/listening-review-v1-20261022/nearfar-2spk-en-mn-pos-records_listening.jsonl.gz
+        expected_bytes: 1411
+        sha256: 1c7903d719e4457cfec2a6f7b0233f1de236dcadb70187e2f1ff9cd26a31ba60
+        metadata:
+          record_count: 1
+          source: ts_asr_nearfar@v1-20261014:nearfar-2spk-en-mn-pos-records
+      - name: nearfar-3plus-ef-mf-neg-records_listening
+        kind: audio-records
+        root_alias: aidc_data
+        relative_path: datasets/ts_asr_nearfar/versions/listening-review-v1-20261022/nearfar-3plus-ef-mf-neg-records_listening.jsonl.gz
+        expected_bytes: 1309
+        sha256: b2bb669d893d33118f604c0b2b9da691ae330b5c6021a62222d78898083a4091
+        metadata:
+          record_count: 1
+          source: ts_asr_nearfar@v1-20261014:nearfar-3plus-ef-mf-neg-records
+      - name: nearfar-3plus-ef-mf-pos-records_listening
+        kind: audio-records
+        root_alias: aidc_data
+        relative_path: datasets/ts_asr_nearfar/versions/listening-review-v1-20261022/nearfar-3plus-ef-mf-pos-records_listening.jsonl.gz
+        expected_bytes: 1342
+        sha256: 348c2f3f216f9c166bf096166e27bd740e670635772e222296de280c717ed0e6
+        metadata:
+          record_count: 1
+          source: ts_asr_nearfar@v1-20261014:nearfar-3plus-ef-mf-pos-records
+      - name: nearfar-3plus-en-mf-pos-records_listening
+        kind: audio-records
+        root_alias: aidc_data
+        relative_path: datasets/ts_asr_nearfar/versions/listening-review-v1-20261022/nearfar-3plus-en-mf-pos-records_listening.jsonl.gz
+        expected_bytes: 1238
+        sha256: 4b2fceaf673d26a46964e453607b76adfba8b02afa1652b0bd602978336af967
+        metadata:
+          record_count: 1
+          source: ts_asr_nearfar@v1-20261014:nearfar-3plus-en-mf-pos-records
+      - name: nearfar-3plus-en-mn-neg-records_listening
+        kind: audio-records
+        root_alias: aidc_data
+        relative_path: datasets/ts_asr_nearfar/versions/listening-review-v1-20261022/nearfar-3plus-en-mn-neg-records_listening.jsonl.gz
+        expected_bytes: 1490
+        sha256: 0d7adcd4353cbd60310ad0a676437886836e276767caba83599c072f3aeb2942
+        metadata:
+          record_count: 1
+          source: ts_asr_nearfar@v1-20261014:nearfar-3plus-en-mn-neg-records
+      - name: listening_review
+        kind: quality-report
+        root_alias: aidc_data
+        relative_path: datasets/ts_asr_nearfar/versions/listening-review-v1-20261022/listening_review.jsonl.gz
+        expected_bytes: 1673
+        sha256: 634badd768c22ed94bd7f74149eb3bf802c034adef961e981baacc6dd8ea981b
+        metadata:
+          record_count: 8
+    splits:
+      nearfar-2spk-ef-mn-pos:
+        artifacts:
+          records:
+            - nearfar-2spk-ef-mn-pos-records_listening
+          audio_index:
+            - audio-index
+        statistics:
+          records: 2
+        task: ts_asr
+      nearfar-2spk-en-mf-pos:
+        artifacts:
+          records:
+            - nearfar-2spk-en-mf-pos-records_listening
+          audio_index:
+            - audio-index
+        statistics:
+          records: 1
+        task: ts_asr
+      nearfar-2spk-en-mn-pos:
+        artifacts:
+          records:
+            - nearfar-2spk-en-mn-pos-records_listening
+          audio_index:
+            - audio-index
+        statistics:
+          records: 1
+        task: ts_asr
+      nearfar-3plus-ef-mf-neg:
+        artifacts:
+          records:
+            - nearfar-3plus-ef-mf-neg-records_listening
+          audio_index:
+            - audio-index
+        statistics:
+          records: 1
+        task: ts_asr
+      nearfar-3plus-ef-mf-pos:
+        artifacts:
+          records:
+            - nearfar-3plus-ef-mf-pos-records_listening
+          audio_index:
+            - audio-index
+        statistics:
+          records: 1
+        task: ts_asr
+      nearfar-3plus-en-mf-pos:
+        artifacts:
+          records:
+            - nearfar-3plus-en-mf-pos-records_listening
+          audio_index:
+            - audio-index
+        statistics:
+          records: 1
+        task: ts_asr
+      nearfar-3plus-en-mn-neg:
+        artifacts:
+          records:
+            - nearfar-3plus-en-mn-neg-records_listening
+          audio_index:
+            - audio-index
+        statistics:
+          records: 1
+        task: ts_asr
+    provenance:
+      preparation_status: prepared
+      lineage_status: exact
+      materialization: full
+      source: ts_asr_nearfar@v1-20261014
+      description: ts_asr_nearfar@v1-20261014 中被人工听审过的 8 条数据行（父版本数据行原样照抄，录音和音频索引沿用父版本），每行的 metadata.listening_review（Lhotse custom.listening_review）是关于这条记录的听审答案列表：问题、选项、回答、备注、回答日期、听审名称、片段起止和选项含义（resolved_to）。共 8 条答案（listen-1021-vs-1022 8 条），8 条已挂到数据行。证据文件 listening_review.jsonl.gz 含该版本全部答案。只含被听过的记录，不是完整数据版本，不用于训练。脚本 scripts/label_registration/register_listening_review.py。
+      facts:
+        answers: 8
+        answers_attached: 8
+        answers_evidence_only: 0
+        rows: 8
+        reviews:
+          listen-1021-vs-1022: 8
+  - schema_version: dataset-catalog/2.0
+    dataset_id: ts_asr_real
+    version: listening-review-v1-20261022
+    languages:
+      - zh
+    tasks:
+      - ts_asr
+    aliases: []
+    artifacts:
+      - name: audio-index
+        kind: audio-index
+        root_alias: ts_asr_real
+        relative_path: versions/v2-20261013/audio-index.jsonl.gz
+        sha256: ae64e310839849292037c7f1b27709a3d6e870bcdb7d4744d9fc7c4b8454c1e8
+        metadata:
+          record_count: 2268
+      - name: real-alimeeting-1spk-neg-records_listening
+        kind: audio-records
+        root_alias: aidc_data
+        relative_path: datasets/ts_asr_real/versions/listening-review-v1-20261022/real-alimeeting-1spk-neg-records_listening.jsonl.gz
+        expected_bytes: 1177
+        sha256: 5921fa9e1f7e5fa8956857ff517e45c8249b16476c67d8d2f0330b63044f2c66
+        metadata:
+          record_count: 1
+          source: ts_asr_real@v2-20261013:real-alimeeting-1spk-neg-records
+      - name: real-alimeeting-3plus-pos-records_listening
+        kind: audio-records
+        root_alias: aidc_data
+        relative_path: datasets/ts_asr_real/versions/listening-review-v1-20261022/real-alimeeting-3plus-pos-records_listening.jsonl.gz
+        expected_bytes: 2392
+        sha256: 5731576fea5db4fbeddde01fca1c8e78762ea2a07cea53c3f9bedd3787273cbb
+        metadata:
+          record_count: 3
+          source: ts_asr_real@v2-20261013:real-alimeeting-3plus-pos-records
+      - name: real-alimeeting-3plus-neg-records_listening
+        kind: audio-records
+        root_alias: aidc_data
+        relative_path: datasets/ts_asr_real/versions/listening-review-v1-20261022/real-alimeeting-3plus-neg-records_listening.jsonl.gz
+        expected_bytes: 1252
+        sha256: f0a9a656aa91bd49b76bfa01faf4a58273a790547153878b40de692e857b004a
+        metadata:
+          record_count: 1
+          source: ts_asr_real@v2-20261013:real-alimeeting-3plus-neg-records
+      - name: real-aishell4-1spk-neg-records_listening
+        kind: audio-records
+        root_alias: aidc_data
+        relative_path: datasets/ts_asr_real/versions/listening-review-v1-20261022/real-aishell4-1spk-neg-records_listening.jsonl.gz
+        expected_bytes: 1044
+        sha256: 2c002b55820515c37325961d917b8940d047f1dc4f48f724d89481c7f142ffc4
+        metadata:
+          record_count: 1
+          source: ts_asr_real@v2-20261013:real-aishell4-1spk-neg-records
+      - name: real-aishell4-2spk-pos-records_listening
+        kind: audio-records
+        root_alias: aidc_data
+        relative_path: datasets/ts_asr_real/versions/listening-review-v1-20261022/real-aishell4-2spk-pos-records_listening.jsonl.gz
+        expected_bytes: 1346
+        sha256: a2b7533b6b516c319c7bc53279f288f3987b11366fd83e9141728e72db42cedf
+        metadata:
+          record_count: 1
+          source: ts_asr_real@v2-20261013:real-aishell4-2spk-pos-records
+      - name: real-aishell4-2spk-neg-records_listening
+        kind: audio-records
+        root_alias: aidc_data
+        relative_path: datasets/ts_asr_real/versions/listening-review-v1-20261022/real-aishell4-2spk-neg-records_listening.jsonl.gz
+        expected_bytes: 1329
+        sha256: acd43816da326001e821ad3f41b26e0904819f05088f8c0ddb32b5cac116391b
+        metadata:
+          record_count: 1
+          source: ts_asr_real@v2-20261013:real-aishell4-2spk-neg-records
+      - name: real-aishell4-3plus-pos-records_listening
+        kind: audio-records
+        root_alias: aidc_data
+        relative_path: datasets/ts_asr_real/versions/listening-review-v1-20261022/real-aishell4-3plus-pos-records_listening.jsonl.gz
+        expected_bytes: 2575
+        sha256: 6081ee4564c2edd674a4c97f0b08756f689e65d6e932b63835bdeef831df3427
+        metadata:
+          record_count: 3
+          source: ts_asr_real@v2-20261013:real-aishell4-3plus-pos-records
+      - name: real-emilia2-2spk-pos-records_listening
+        kind: audio-records
+        root_alias: aidc_data
+        relative_path: datasets/ts_asr_real/versions/listening-review-v1-20261022/real-emilia2-2spk-pos-records_listening.jsonl.gz
+        expected_bytes: 1470
+        sha256: 19431803f3008214d03a74f215e61afb24d6abca5c80245dc4c52a3df061edfa
+        metadata:
+          record_count: 1
+          source: ts_asr_real@v2-20261013:real-emilia2-2spk-pos-records
+      - name: listening_review
+        kind: quality-report
+        root_alias: aidc_data
+        relative_path: datasets/ts_asr_real/versions/listening-review-v1-20261022/listening_review.jsonl.gz
+        expected_bytes: 2356
+        sha256: fc76387671393c4f7fbe20a17cc25f2c1bd53be4bf2d86ae412f94131369107c
+        metadata:
+          record_count: 12
+    splits:
+      real-alimeeting-1spk-neg:
+        artifacts:
+          records:
+            - real-alimeeting-1spk-neg-records_listening
+          audio_index:
+            - audio-index
+        statistics:
+          records: 1
+        task: ts_asr
+      real-alimeeting-3plus-pos:
+        artifacts:
+          records:
+            - real-alimeeting-3plus-pos-records_listening
+          audio_index:
+            - audio-index
+        statistics:
+          records: 3
+        task: ts_asr
+      real-alimeeting-3plus-neg:
+        artifacts:
+          records:
+            - real-alimeeting-3plus-neg-records_listening
+          audio_index:
+            - audio-index
+        statistics:
+          records: 1
+        task: ts_asr
+      real-aishell4-1spk-neg:
+        artifacts:
+          records:
+            - real-aishell4-1spk-neg-records_listening
+          audio_index:
+            - audio-index
+        statistics:
+          records: 1
+        task: ts_asr
+      real-aishell4-2spk-pos:
+        artifacts:
+          records:
+            - real-aishell4-2spk-pos-records_listening
+          audio_index:
+            - audio-index
+        statistics:
+          records: 1
+        task: ts_asr
+      real-aishell4-2spk-neg:
+        artifacts:
+          records:
+            - real-aishell4-2spk-neg-records_listening
+          audio_index:
+            - audio-index
+        statistics:
+          records: 1
+        task: ts_asr
+      real-aishell4-3plus-pos:
+        artifacts:
+          records:
+            - real-aishell4-3plus-pos-records_listening
+          audio_index:
+            - audio-index
+        statistics:
+          records: 3
+        task: ts_asr
+      real-emilia2-2spk-pos:
+        artifacts:
+          records:
+            - real-emilia2-2spk-pos-records_listening
+          audio_index:
+            - audio-index
+        statistics:
+          records: 1
+        task: ts_asr
+    provenance:
+      preparation_status: prepared
+      lineage_status: exact
+      materialization: full
+      source: ts_asr_real@v2-20261013
+      description: ts_asr_real@v2-20261013 中被人工听审过的 12 条数据行（父版本数据行原样照抄，录音和音频索引沿用父版本），每行的 metadata.listening_review（Lhotse custom.listening_review）是关于这条记录的听审答案列表：问题、选项、回答、备注、回答日期、听审名称、片段起止和选项含义（resolved_to）。共 12 条答案（listen-1021-vs-1022 12 条），12 条已挂到数据行。证据文件 listening_review.jsonl.gz 含该版本全部答案。只含被听过的记录，不是完整数据版本，不用于训练。脚本 scripts/label_registration/register_listening_review.py。
+      facts:
+        answers: 12
+        answers_attached: 12
+        answers_evidence_only: 0
+        rows: 12
+        reviews:
+          listen-1021-vs-1022: 12
+  - schema_version: dataset-catalog/2.0
+    dataset_id: ts_asr_real
+    version: listening-review-v1-20261026
+    languages:
+      - zh
+    tasks:
+      - ts_asr
+    aliases: []
+    artifacts:
+      - name: audio-index
+        kind: audio-index
+        root_alias: ts_asr_real
+        relative_path: versions/v4-20261022/audio-index.jsonl.gz
+        sha256: 290c6377194328c7d74699118f65b21f21a301cbc6728ccbaaf524204041497e
+        metadata:
+          record_count: 2266
+      - name: real-ramc-2spk-pos-records_listening
+        kind: audio-records
+        root_alias: aidc_data
+        relative_path: datasets/ts_asr_real/versions/listening-review-v1-20261026/real-ramc-2spk-pos-records_listening.jsonl.gz
+        expected_bytes: 1295
+        sha256: 82ab6c63060406e7bf9ee01439b526298fa7c455f9c22de1dd738f31e22bb59b
+        metadata:
+          record_count: 1
+          source: ts_asr_real@v4-20261022:real-ramc-2spk-pos-records
+      - name: listening_review
+        kind: quality-report
+        root_alias: aidc_data
+        relative_path: datasets/ts_asr_real/versions/listening-review-v1-20261026/listening_review.jsonl.gz
+        expected_bytes: 693
+        sha256: 04cf20a951dc83d6aac2ec526b460754e6a9751a7fe2c116e0562fa101a4e8eb
+        metadata:
+          record_count: 1
+    splits:
+      real-ramc-2spk-pos:
+        artifacts:
+          records:
+            - real-ramc-2spk-pos-records_listening
+          audio_index:
+            - audio-index
+        statistics:
+          records: 1
+        task: ts_asr
+    provenance:
+      preparation_status: prepared
+      lineage_status: exact
+      materialization: full
+      source: ts_asr_real@v4-20261022
+      description: ts_asr_real@v4-20261022 中被人工听审过的 1 条数据行（父版本数据行原样照抄，录音和音频索引沿用父版本），每行的 metadata.listening_review（Lhotse custom.listening_review）是关于这条记录的听审答案列表：问题、选项、回答、备注、回答日期、听审名称、片段起止和选项含义（resolved_to）。共 1 条答案（ts-asr-hard-cases-20261026 1 条），1 条已挂到数据行。证据文件 listening_review.jsonl.gz 含该版本全部答案。只含被听过的记录，不是完整数据版本，不用于训练。脚本 scripts/label_registration/register_listening_review.py。
+      facts:
+        answers: 1
+        answers_attached: 1
+        answers_evidence_only: 0
+        rows: 1
+        reviews:
+          ts-asr-hard-cases-20261026: 1
+  - schema_version: dataset-catalog/2.0
+    dataset_id: wenetspeech_chuan
+    version: listening-review-v1-20261026
+    languages:
+      - zh
+    tasks:
+      - asr
+    aliases: []
+    artifacts:
+      - name: train_cuts_0_listening
+        kind: lhotse-cuts
+        root_alias: aidc_data
+        relative_path: datasets/wenetspeech_chuan/versions/listening-review-v1-20261026/train_cuts_0_listening.jsonl.gz
+        expected_bytes: 12168
+        sha256: 8e8bb4149ffde83969ab512802dc3d442363ed82880789a45b86b88ffde28f13
+        metadata:
+          record_count: 60
+          source: wenetspeech_chuan@extracted-20261021:train_cuts_0
+      - name: listening_review
+        kind: quality-report
+        root_alias: aidc_data
+        relative_path: datasets/wenetspeech_chuan/versions/listening-review-v1-20261026/listening_review.jsonl.gz
+        expected_bytes: 6380
+        sha256: 67b4e37675c0386f93fe02664dc8c7bb3e1f6a8a72836bd16f5d48b8b78f1529
+        metadata:
+          record_count: 60
+    splits:
+      train:
+        artifacts:
+          cuts:
+            - train_cuts_0_listening
+        statistics:
+          records: 60
+    provenance:
+      preparation_status: prepared
+      lineage_status: exact
+      materialization: full
+      source: wenetspeech_chuan@extracted-20261021
+      description: wenetspeech_chuan@extracted-20261021 中被人工听审过的 60 条数据行（父版本数据行原样照抄，录音和音频索引沿用父版本），每行的 metadata.listening_review（Lhotse custom.listening_review）是关于这条记录的听审答案列表：问题、选项、回答、备注、回答日期、听审名称、片段起止和选项含义（resolved_to）。共 60 条答案（wenetspeech-chuan-qwen-diff-20261024 10 条、wenetspeech-chuan-qwen-diff-20261025 10 条、wenetspeech-chuan-qwen-diff-20261026 10 条、wenetspeech-chuan-qwen-diff-20261027 10 条、wenetspeech-chuan-qwen-diff-20261028 10 条、wenetspeech-chuan-qwen-diff-20261029 10 条），60 条已挂到数据行。证据文件 
+        listening_review.jsonl.gz 含该版本全部答案。只含被听过的记录，不是完整数据版本，不用于训练。脚本 scripts/label_registration/register_listening_review.py。
+      facts:
+        answers: 60
+        answers_attached: 60
+        answers_evidence_only: 0
+        rows: 60
+        reviews:
+          wenetspeech-chuan-qwen-diff-20261024: 10
+          wenetspeech-chuan-qwen-diff-20261025: 10
+          wenetspeech-chuan-qwen-diff-20261026: 10
+          wenetspeech-chuan-qwen-diff-20261027: 10
+          wenetspeech-chuan-qwen-diff-20261028: 10
+          wenetspeech-chuan-qwen-diff-20261029: 10
+  - schema_version: dataset-catalog/2.0
+    dataset_id: wenetspeech_diarize
+    version: listening-review-v1-20261012
+    languages:
+      - zh
+    tasks:
+      - diarization
+      - speaker_attributed_asr
+    aliases: []
+    artifacts:
+      - name: listening_review
+        kind: quality-report
+        root_alias: aidc_data
+        relative_path: datasets/wenetspeech_diarize/versions/listening-review-v1-20261012/listening_review.jsonl.gz
+        expected_bytes: 1197
+        sha256: c59fa29e377f79d812fdb8e733b0621c940d9f31a69a0bd9624d508a730dd6aa
+        metadata:
+          record_count: 7
+    splits: {}
+    provenance:
+      preparation_status: prepared
+      lineage_status: exact
+      materialization: full
+      source: wenetspeech_diarize@moss-transcribe-diarize-0.9B
+      description: wenetspeech_diarize@moss-transcribe-diarize-0.9B 中被人工听审过的 0 条数据行（父版本数据行原样照抄，录音和音频索引沿用父版本），每行的 metadata.listening_review（Lhotse custom.listening_review）是关于这条记录的听审答案列表：问题、选项、回答、备注、回答日期、听审名称、片段起止和选项含义（resolved_to）。共 7 条答案（listen-review-20261012 7 条），0 条已挂到数据行。其中 7 条没有记录 ID 或记录不在父版本数据行里，无法挂到行上，只在证据文件里。证据文件 listening_review.jsonl.gz 含该版本全部答案。只含被听过的记录，不是完整数据版本，不用于训练。脚本 scripts/label_registration/register_listening_review.py。
+      facts:
+        answers: 7
+        answers_attached: 0
+        answers_evidence_only: 7
+        rows: 0
+        reviews:
+          listen-review-20261012: 7

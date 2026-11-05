@@ -1,39 +1,124 @@
-# 占位登记：WenetSpeech-Yue 粤语训练集用 Qwen3-ASR 全量转写核对，进行中，进度见状态文件。
-- schema_version: dataset-catalog/2.0
-  dataset_id: wenetspeech_yue
-  version: clean-qwen3-asr-v1-20261024
-  languages:
-    - yue
-  tasks:
-    - asr
-  aliases: []
-  artifacts:
-    - name: preparation_state
-      kind: dataset-state
-      root_alias: aidc_data
-      relative_path: datasets/wenetspeech_yue/versions/clean-qwen3-asr-v1-20261024/state.json
-  splits:
-    train:
-      artifacts:
-        preparation_state:
-          - preparation_state
-      statistics:
-        source_records: 1244949
-        source_hours: 4333.1
-      provenance:
-        preparation_status: building
-  provenance:
-    summary: 粤语网络语音（WenetSpeech-Yue）；含清洗版
-    preparation_status: building
-    owner: mingdong
-    description: >-
-      WenetSpeech-Yue 训练集（clean 部分，1,244,949 条 / 4,333.1 h）是发布方多系统融合（ROVER）的机器标注，每条置信度都 ≥ 0.9。
-      用共享的 Qwen3-ASR-1.7B 逐条转写，按粤语版 SpeechIO TextNorm（保留语气词、繁转简）算与原标注的字错误率；
-      Qwen 在公开粤语测试集 WSYue-ASR-eval short 上的错误率是 6.2。
-      目前只记录转写和错误率，不删数据；保留规则在看过被拒样本后再定。
-    source: wenetspeech_yue@icefall-20260908
-    run_dir: /workspace/workspace/mingdong/data/amphiondata/wenetspeech-yue-qwen-20261024
-  recipe_parameters:
-    check_model: Qwen3-ASR-1.7B
-    check_unit: utterance
-    text_normalization: speechio-textnorm-yue
+# WenetSpeech-Yue 粤语训练集 clean 部分的 Qwen3-ASR-1.7B 全量转写（full 版本，每条带转写与字错误率）与按 CER<30% 保留的 clean 版本（原占位补全）。
+  - schema_version: dataset-catalog/2.0
+    dataset_id: wenetspeech_yue
+    version: clean-qwen3-asr-v1-20261024
+    languages:
+      - yue
+    tasks:
+      - asr
+    aliases: []
+    artifacts:
+      - name: preparation_state
+        kind: dataset-state
+        root_alias: aidc_data
+        relative_path: datasets/wenetspeech_yue/versions/clean-qwen3-asr-v1-20261024/state.json
+      - name: train_rec_0
+        kind: lhotse-recordings
+        root_alias: aidc_data
+        relative_path: datasets/wenetspeech_dialects/source/data-tts-relocated-20261011/WenetSpeech-Yue/data/manifests/wenetspeech_yue_recordings_clean.jsonl.gz
+        expected_bytes: 43167922
+        sha256: 799da834c970c7ac7690995b643c3add5e9896a5ca7d330974b88d38c26e2bed
+      - name: train_supervisions_clean_0
+        kind: lhotse-supervisions
+        root_alias: aidc_data
+        relative_path: datasets/wenetspeech_yue/versions/clean-qwen3-asr-v1-20261024/wenetspeech_yue_supervisions_train_qwen_cer_lt30.jsonl.gz
+        expected_bytes: 366985627
+        sha256: 750ba56687280b958715989a11d9fbd689359825c908924c26307c47aa733485
+        metadata:
+          record_count: 1240512
+          qwen_field: custom.qwen_asr
+    splits:
+      train:
+        artifacts:
+          recordings:
+            - train_rec_0
+          supervisions:
+            - train_supervisions_clean_0
+          preparation_state:
+            - preparation_state
+        statistics:
+          records: 1240512
+          duration_hours: 4324.5022
+          duration_basis: sum of row durations
+          records_before_filter: 1244949
+          hours_before_filter: 4333.1
+    recipe_parameters:
+      adds:
+        - custom.qwen_asr
+      check_model: Qwen3-ASR-1.7B
+      check_unit: utterance
+      text_normalization: speechio-textnorm-yue
+      keep_rule: label non-empty after TextNorm and per-utterance CER vs Qwen < 30 %
+    provenance:
+      preparation_status: prepared
+      lineage_status: exact
+      materialization: full
+      source: wenetspeech_yue@clean-qwen3-asr-full-v1-20261024
+      description: WenetSpeech-Yue 粤语训练集 clean 部分（wenetspeech_yue@icefall-20260908）用 Qwen3-ASR-1.7B 逐条核对后保留的部分：原标注规范化后非空且与 Qwen 的字错误率 < 30 % 的 1,240,512 条 / 4324.5 h（占可转写 1,244,949 条的 99.6 %），规则同 wenetspeech_chuan@clean-qwen3-asr-v1-20261023；原标注不改，不拿 Qwen 的文字替换。每行保留 custom.qwen_asr（Qwen 转写、语种、CER），与 wenetspeech_yue@clean-qwen3-asr-full-v1-20261024 中的相同；被去掉的条目和全部转写见 wenetspeech_yue@clean-qwen3-asr-full-v1-20261024。粤语保留规则沿用川渝（CER < 30 %），未单独听审。录音沿用父版本，不复制音频。脚本 scripts/wenetspeech_qwen/。
+      facts:
+        source rows: 1244949
+        rows: 1244949
+        ref tokens: 56317507
+        token errors: 3461703
+        qwen empty: 1
+        kept rows: 1240512
+        rows not transcribed: 0
+        corpus CER: 6.15
+      summary: 粤语网络语音（WenetSpeech-Yue）；含清洗版
+      owner: mingdong
+  - schema_version: dataset-catalog/2.0
+    dataset_id: wenetspeech_yue
+    version: clean-qwen3-asr-full-v1-20261024
+    languages:
+      - yue
+    tasks:
+      - asr
+    aliases: []
+    artifacts:
+      - name: train_rec_0
+        kind: lhotse-recordings
+        root_alias: aidc_data
+        relative_path: datasets/wenetspeech_dialects/source/data-tts-relocated-20261011/WenetSpeech-Yue/data/manifests/wenetspeech_yue_recordings_clean.jsonl.gz
+        expected_bytes: 43167922
+        sha256: 799da834c970c7ac7690995b643c3add5e9896a5ca7d330974b88d38c26e2bed
+      - name: train_supervisions_qwen_0
+        kind: lhotse-supervisions
+        root_alias: aidc_data
+        relative_path: datasets/wenetspeech_yue/versions/clean-qwen3-asr-full-v1-20261024/wenetspeech_yue_supervisions_train_qwen.jsonl.gz
+        expected_bytes: 367979523
+        sha256: 517bdf5d943cbe7d8c8602bc69b919a7e831d50d0bab628265a8bae7b02111e9
+        metadata:
+          record_count: 1244949
+          qwen_field: custom.qwen_asr
+    splits:
+      train:
+        artifacts:
+          recordings:
+            - train_rec_0
+          supervisions:
+            - train_supervisions_qwen_0
+        statistics:
+          records: 1244949
+          duration_hours: 4333.1491
+          duration_basis: sum of row durations
+    recipe_parameters:
+      adds:
+        - custom.qwen_asr
+      check_model: Qwen3-ASR-1.7B
+      check_unit: utterance
+      text_normalization: speechio-textnorm-yue
+    provenance:
+      preparation_status: prepared
+      lineage_status: exact
+      materialization: full
+      source: wenetspeech_yue@icefall-20260908
+      description: wenetspeech_yue@icefall-20260908 里WenetSpeech-Yue 粤语训练集 clean 部分的全部可转写条目（1,244,949 条 / 4333.1 h），原标注（发布方多系统融合（ROVER）的机器标注，每条置信度 ≥ 0.9）一字不改；每条加 custom.qwen_asr：共享的 Qwen3-ASR-1.7B 的转写（hypothesis）、Qwen 报告的语种（language）和与原标注的字错误率（SpeechIO TextNorm，按字，ref_tokens / hyp_tokens / errors / cer 百分数；原标注规范化后为空时 cer 为空）。整体 CER 6.15 %，Qwen 在 WSYue-ASR-eval short 上自身 CER 为 6.2；Qwen 空输出 1 条。粤语保留规则沿用川渝（CER < 30 %），未单独听审。录音沿用父版本，不复制音频。脚本 scripts/wenetspeech_qwen/。
+      facts:
+        source rows: 1244949
+        rows: 1244949
+        ref tokens: 56317507
+        token errors: 3461703
+        qwen empty: 1
+        kept rows: 1240512
+        rows not transcribed: 0
+        corpus CER: 6.15

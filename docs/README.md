@@ -9,6 +9,7 @@
 - [COS 恢复](guides/cos-restore.md)：查询备份位置、恢复文件、迁移清单路径。
 - [评测集数据镜像](guides/eval-data-mirror.md)：用 ab 把评测集用到的数据集镜像到 COS，并在别处拉取完整评测集。
 - [Lance 记录索引](guides/record-index.md)：把记录元数据和音频位置做成 Lance 表，训练启动直接读取。
+- [清理或移动已登记数据](guides/retire-data.md)：删除、移动前先找依赖、停用旧版本，之后做空地址检查的固定流程。
 
 ## 数据集
 

@@ -262,6 +262,7 @@ def test_cos_column_reads_backups_and_declared_copies():
 
     assert row("3dspeaker").endswith("| 快照 20260914 |")
     assert "`TTS 桶:HiFiTTS/`（原始数据）" in row("hifitts")
+    assert row("fsd50k").endswith("| `备份桶:audio-data-contract/datasets/noise_open/` |")
     versions = render_data_versions(ROOT / "catalog", ROOT / "views")
     assert (
         "`amphion-audio-backup-1373259071:audio-data-contract/datasets/wenetspeech/`"

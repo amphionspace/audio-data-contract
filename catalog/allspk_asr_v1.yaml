@@ -1,0 +1,194 @@
+- schema_version: dataset-catalog/2.0
+  dataset_id: magicdata_ramc
+  version: allspk-asr-v1-20261103
+  languages:
+  - zh
+  tasks:
+  - asr
+  aliases: []
+  artifacts:
+  - name: train_records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/magicdata_ramc/versions/allspk-asr-v1-20261103/records_train.jsonl.gz
+    expected_bytes: 4654044
+    sha256: 933501b8611957baa7ca2c023043e7c9f062eaddf738e42a399c17221c8a00a2
+    metadata:
+      record_count: 9902
+      punctuated: true
+  - name: audio_index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/magicdata_ramc/versions/asr-20261014/audio_index/audio-index.jsonl.gz
+    expected_bytes: 20977
+    sha256: 24427d0c166f8e0c71a86aa13856d288d15038fdd3f5598716761aff45237e2d
+    metadata:
+      record_count: 351
+  - name: record_index
+    kind: lance-record-index
+    root_alias: aidc_data
+    relative_path: datasets/magicdata_ramc/versions/allspk-asr-v1-20261103/record_index/index.json
+    expected_bytes: 738
+    sha256: 6170fe14d13286c42e79297081aaf60e4c0849fa3b012ea00b44a48a3bd2066b
+    metadata:
+      snapshot_version: 13
+      rows: 9902
+      schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
+  splits:
+    train:
+      group: train
+      artifacts:
+        records:
+        - train_records
+        audio_index:
+        - audio_index
+        records_lance:
+        - record_index
+      task: asr
+      statistics:
+        records: 9902
+        duration_hours: 124.14
+        duration_basis: window duration (ref.duration)
+  provenance:
+    status: complete
+    synthetic: none
+    snapshot_date: '2026-11-03'
+    description: 'MagicData-RAMC 训练集的普通 ASR 多人窗口：按 magicdata_ramc@icefall-20260908 训练集标注，在每段录音上依次切出不重叠的窗口，每个窗口长度在 10–90 秒间均匀抽取，只在没人说话（前后静音至少
+      0.2 秒）处下刀；目标文本是窗口内所有说话人每句话的书面化标点文本（magicdata_ramc@punc-written-v1-20261029，同一 ID）按开始时间顺序拼接，不区分说话人。重叠语音超过窗口时长 10% 的窗口丢弃（普通转写的字序不确定），有任一句缺标点文本的窗口丢弃，有任一句未通过
+      magicdata_ramc@clean-dual-qwen-moss-v1-20261008 清洗（custom.clean.pass 为 false）的窗口丢弃。音频引用 magicdata_ramc@asr-20261014
+      训练集（只取第 0 路），不复制。用途：普通 ASR 模式下多人轮流说话时转写每个人、长录音不提前结束（此前普通 ASR 训练数据每条只转写一个说话人）。保留 9902 个窗口，丢弃：重叠 0、缺标点 0、短于 5 秒 72、未过清洗
+      1388；说话人数分布 {''1'': 1767, ''2'': 8135}。'
+    sources:
+    - magicdata_ramc@icefall-20260908
+    - magicdata_ramc@punc-written-v1-20261029
+    - magicdata_ramc@asr-20261014
+    - magicdata_ramc@clean-dual-qwen-moss-v1-20261008
+    audit: datasets/magicdata_ramc/versions/allspk-asr-v1-20261103/report.json
+- schema_version: dataset-catalog/2.0
+  dataset_id: aishell4
+  version: allspk-asr-v1-20261103
+  languages:
+  - zh
+  tasks:
+  - asr
+  aliases: []
+  artifacts:
+  - name: train_records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/aishell4/versions/allspk-asr-v1-20261103/records_train.jsonl.gz
+    expected_bytes: 1820975
+    sha256: 56d3549920a3e5a796fd3de600b952dcd4ec2deff228504d46d1afd150045103
+    metadata:
+      record_count: 4267
+      punctuated: true
+  - name: audio_index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/aishell4/versions/asr-20261014/audio_index/audio-index.jsonl.gz
+    expected_bytes: 13978
+    sha256: 7740f79f34264edad30ceefa593cf078be42e3c6100384217d7d1ef37f5333f5
+    metadata:
+      record_count: 209
+  - name: record_index
+    kind: lance-record-index
+    root_alias: aidc_data
+    relative_path: datasets/aishell4/versions/allspk-asr-v1-20261103/record_index/index.json
+    expected_bytes: 732
+    sha256: 70cbfb49deafc0144397f2af8be92386f11fb19b85842eb642142ab3ed910c3f
+    metadata:
+      snapshot_version: 13
+      rows: 4267
+      schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
+  splits:
+    train:
+      group: train
+      artifacts:
+        records:
+        - train_records
+        audio_index:
+        - audio_index
+        records_lance:
+        - record_index
+      task: asr
+      statistics:
+        records: 4267
+        duration_hours: 51.89
+        duration_basis: window duration (ref.duration)
+  provenance:
+    status: complete
+    synthetic: none
+    snapshot_date: '2026-11-03'
+    description: 'AISHELL-4 训练集的普通 ASR 多人窗口：按 aishell4@icefall-20260908 训练集标注，在每段录音上依次切出不重叠的窗口，每个窗口长度在 10–90 秒间均匀抽取，只在没人说话（前后静音至少
+      0.2 秒）处下刀；目标文本是窗口内所有说话人每句话的书面化标点文本（aishell4@punc-written-v1-20261029，同一 ID）按开始时间顺序拼接，不区分说话人。重叠语音超过窗口时长 10% 的窗口丢弃（普通转写的字序不确定），有任一句缺标点文本的窗口丢弃。音频引用
+      aishell4@asr-20261014 训练集（只取第 0 路），不复制。用途：普通 ASR 模式下多人轮流说话时转写每个人、长录音不提前结束（此前普通 ASR 训练数据每条只转写一个说话人）。保留 4267 个窗口，丢弃：重叠
+      1957、缺标点 0、短于 5 秒 92；说话人数分布 {''1'': 512, ''2'': 1551, ''3'': 1278, ''4+'': 926}。'
+    sources:
+    - aishell4@icefall-20260908
+    - aishell4@punc-written-v1-20261029
+    - aishell4@asr-20261014
+    audit: datasets/aishell4/versions/allspk-asr-v1-20261103/report.json
+- schema_version: dataset-catalog/2.0
+  dataset_id: alimeeting_sdm
+  version: allspk-asr-v1-20261103
+  languages:
+  - zh
+  tasks:
+  - asr
+  aliases: []
+  artifacts:
+  - name: train_records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/alimeeting_sdm/versions/allspk-asr-v1-20261103/records_train.jsonl.gz
+    expected_bytes: 1197050
+    sha256: aa972193f2193d732620219fa312feab547a685eee96ec923a454ea5f8138d72
+    metadata:
+      record_count: 2527
+      punctuated: true
+  - name: audio_index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/alimeeting_sdm/versions/asr-20261014/audio_index/audio-index.jsonl.gz
+    expected_bytes: 16233
+    sha256: 0c787c89ff42b1e074eb4b7a2bce0d71e47a715fde7014bfd4000054ac842b0f
+    metadata:
+      record_count: 237
+  - name: record_index
+    kind: lance-record-index
+    root_alias: aidc_data
+    relative_path: datasets/alimeeting_sdm/versions/allspk-asr-v1-20261103/record_index/index.json
+    expected_bytes: 738
+    sha256: 6b93a7e0463abfdebd9f5629316f5ec30cbd1650ff4c51f587d0a1428eb1a3fd
+    metadata:
+      snapshot_version: 13
+      rows: 2527
+      schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
+  splits:
+    train:
+      group: train
+      artifacts:
+        records:
+        - train_records
+        audio_index:
+        - audio_index
+        records_lance:
+        - record_index
+      task: asr
+      statistics:
+        records: 2527
+        duration_hours: 30.76
+        duration_basis: window duration (ref.duration)
+  provenance:
+    status: complete
+    synthetic: none
+    snapshot_date: '2026-11-03'
+    description: 'AliMeeting 训练集的普通 ASR 多人窗口：按 alimeeting_sdm@icefall-20260908 训练集标注，在每段录音上依次切出不重叠的窗口，每个窗口长度在 10–90 秒间均匀抽取，只在没人说话（前后静音至少
+      0.2 秒）处下刀；目标文本是窗口内所有说话人每句话的书面化标点文本（alimeeting_sdm@punc-written-v1-20261029，同一 ID）按开始时间顺序拼接，不区分说话人。重叠语音超过窗口时长 10% 的窗口丢弃（普通转写的字序不确定），有任一句缺标点文本的窗口丢弃。音频引用
+      alimeeting_sdm@asr-20261014 训练集（只取第 0 路），不复制。用途：普通 ASR 模式下多人轮流说话时转写每个人、长录音不提前结束（此前普通 ASR 训练数据每条只转写一个说话人）。保留 2527 个窗口，丢弃：重叠
+      3811、缺标点 0、短于 5 秒 140；说话人数分布 {''1'': 235, ''2'': 1954, ''3'': 213, ''4+'': 125}。'
+    sources:
+    - alimeeting_sdm@icefall-20260908
+    - alimeeting_sdm@punc-written-v1-20261029
+    - alimeeting_sdm@asr-20261014
+    audit: datasets/alimeeting_sdm/versions/allspk-asr-v1-20261103/report.json

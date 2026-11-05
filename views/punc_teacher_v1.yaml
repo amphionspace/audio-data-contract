@@ -1,0 +1,733 @@
+# 标点老师输出与手写参照各版本的 View。
+  - schema_version: dataset-view/1.0
+    view_id: wenetspeech_clean/punc-teacher
+    version: punc-teacher-v1-20261029
+    source:
+      dataset_id: wenetspeech_clean
+      version: clean-v3-pass-20261027
+    result:
+      dataset_id: wenetspeech_clean
+      version: punc-teacher-v1-20261029
+    materialization: full
+    lineage_status: exact
+    transforms:
+      - name: punctuation-teacher
+        version: v1-20261029
+        kind: annotate
+        writes:
+          - $membership
+          - metadata.punctuation_teacher
+          - metadata.punctuation_hint
+          - metadata.punctuation_student
+        parameters:
+          model: Qwen3.8-27B
+          server: vLLM 0.18, temperature 0, thinking off
+          prompt: amphiondata src/amphiondata/enrichment/written_punctuation.py SYSTEM at 55313b6
+          texts_per_request: 8
+          spec: GB/T 15834 written style, compact commas
+          ok: output equals the input once marks are removed
+          tool: amphiondata scripts/punctuation/punc_llm.py
+          sampling: amphiondata scripts/punctuation/build_teacher_set.py
+          label_inputs:
+            - file: teacher_input.jsonl
+              role: teacher_input
+              sha256: d826868c1bf4abc7db43028b68565cdc65973a6c810b052fcdd6697f256ed099
+            - file: teacher_out.jsonl
+              role: teacher_output
+              sha256: eca87ab0dd9635d24799e07858132ef0fc81b7b2677911a5500c0faac08af2f3
+            - file: holdout_input.jsonl
+              role: holdout_input
+              sha256: 3258d8f8b7c74ce61d5a7523eabd970e311236f692830654155ab4c1e29fe660
+            - file: holdout_S1.jsonl
+              role: holdout_student_output
+              sha256: 3ed7b0dbe316d7073f5dbdeaf8ad4278b30195c5eacb1f561168ff52dde3b268
+          rows: 65000
+          hint: 'Qwen3-ASR-1.7B transcript: stored cleaning transcript for WenetSpeech, transcribe_hints.py for the others'
+          student: Qwen3-4B-Instruct-2507 LoRA r=16, 1 epoch on the 96,201 ok teacher rows outside the held-out 2,000
+    provenance:
+      registered_at: '2026-11-03'
+  - schema_version: dataset-view/1.0
+    view_id: vitw_far_field/punc-teacher
+    version: punc-teacher-v1-20261029
+    source:
+      dataset_id: vitw_far_field
+      version: icefall-20260908
+    result:
+      dataset_id: vitw_far_field
+      version: punc-teacher-v1-20261029
+    materialization: full
+    lineage_status: exact
+    transforms:
+      - name: punctuation-teacher
+        version: v1-20261029
+        kind: annotate
+        writes:
+          - $membership
+          - metadata.punctuation_teacher
+          - metadata.punctuation_hint
+          - metadata.punctuation_student
+        parameters:
+          model: Qwen3.8-27B
+          server: vLLM 0.18, temperature 0, thinking off
+          prompt: amphiondata src/amphiondata/enrichment/written_punctuation.py SYSTEM at 55313b6
+          texts_per_request: 8
+          spec: GB/T 15834 written style, compact commas
+          ok: output equals the input once marks are removed
+          tool: amphiondata scripts/punctuation/punc_llm.py
+          sampling: amphiondata scripts/punctuation/build_teacher_set.py
+          label_inputs:
+            - file: teacher_input.jsonl
+              role: teacher_input
+              sha256: d826868c1bf4abc7db43028b68565cdc65973a6c810b052fcdd6697f256ed099
+            - file: teacher_out.jsonl
+              role: teacher_output
+              sha256: eca87ab0dd9635d24799e07858132ef0fc81b7b2677911a5500c0faac08af2f3
+            - file: holdout_input.jsonl
+              role: holdout_input
+              sha256: 3258d8f8b7c74ce61d5a7523eabd970e311236f692830654155ab4c1e29fe660
+            - file: holdout_S1.jsonl
+              role: holdout_student_output
+              sha256: 3ed7b0dbe316d7073f5dbdeaf8ad4278b30195c5eacb1f561168ff52dde3b268
+          rows: 2500
+          hint: 'Qwen3-ASR-1.7B transcript: stored cleaning transcript for WenetSpeech, transcribe_hints.py for the others'
+          student: Qwen3-4B-Instruct-2507 LoRA r=16, 1 epoch on the 96,201 ok teacher rows outside the held-out 2,000
+    provenance:
+      registered_at: '2026-11-03'
+  - schema_version: dataset-view/1.0
+    view_id: realman/punc-teacher
+    version: punc-teacher-v1-20261029
+    source:
+      dataset_id: realman
+      version: icefall-20260908
+    result:
+      dataset_id: realman
+      version: punc-teacher-v1-20261029
+    materialization: full
+    lineage_status: exact
+    transforms:
+      - name: punctuation-teacher
+        version: v1-20261029
+        kind: annotate
+        writes:
+          - $membership
+          - metadata.punctuation_teacher
+          - metadata.punctuation_hint
+          - metadata.punctuation_student
+        parameters:
+          model: Qwen3.8-27B
+          server: vLLM 0.18, temperature 0, thinking off
+          prompt: amphiondata src/amphiondata/enrichment/written_punctuation.py SYSTEM at 55313b6
+          texts_per_request: 8
+          spec: GB/T 15834 written style, compact commas
+          ok: output equals the input once marks are removed
+          tool: amphiondata scripts/punctuation/punc_llm.py
+          sampling: amphiondata scripts/punctuation/build_teacher_set.py
+          label_inputs:
+            - file: teacher_input.jsonl
+              role: teacher_input
+              sha256: d826868c1bf4abc7db43028b68565cdc65973a6c810b052fcdd6697f256ed099
+            - file: teacher_out.jsonl
+              role: teacher_output
+              sha256: eca87ab0dd9635d24799e07858132ef0fc81b7b2677911a5500c0faac08af2f3
+            - file: holdout_input.jsonl
+              role: holdout_input
+              sha256: 3258d8f8b7c74ce61d5a7523eabd970e311236f692830654155ab4c1e29fe660
+            - file: holdout_S1.jsonl
+              role: holdout_student_output
+              sha256: 3ed7b0dbe316d7073f5dbdeaf8ad4278b30195c5eacb1f561168ff52dde3b268
+          rows: 2500
+          hint: 'Qwen3-ASR-1.7B transcript: stored cleaning transcript for WenetSpeech, transcribe_hints.py for the others'
+          student: Qwen3-4B-Instruct-2507 LoRA r=16, 1 epoch on the 96,201 ok teacher rows outside the held-out 2,000
+    provenance:
+      registered_at: '2026-11-03'
+  - schema_version: dataset-view/1.0
+    view_id: kespeech/punc-teacher
+    version: punc-teacher-v1-20261029
+    source:
+      dataset_id: kespeech
+      version: icefall-20260908
+    result:
+      dataset_id: kespeech
+      version: punc-teacher-v1-20261029
+    materialization: full
+    lineage_status: exact
+    transforms:
+      - name: punctuation-teacher
+        version: v1-20261029
+        kind: annotate
+        writes:
+          - $membership
+          - metadata.punctuation_teacher
+          - metadata.punctuation_hint
+          - metadata.punctuation_student
+        parameters:
+          model: Qwen3.8-27B
+          server: vLLM 0.18, temperature 0, thinking off
+          prompt: amphiondata src/amphiondata/enrichment/written_punctuation.py SYSTEM at 55313b6
+          texts_per_request: 8
+          spec: GB/T 15834 written style, compact commas
+          ok: output equals the input once marks are removed
+          tool: amphiondata scripts/punctuation/punc_llm.py
+          sampling: amphiondata scripts/punctuation/build_teacher_set.py
+          label_inputs:
+            - file: teacher_input.jsonl
+              role: teacher_input
+              sha256: d826868c1bf4abc7db43028b68565cdc65973a6c810b052fcdd6697f256ed099
+            - file: teacher_out.jsonl
+              role: teacher_output
+              sha256: eca87ab0dd9635d24799e07858132ef0fc81b7b2677911a5500c0faac08af2f3
+            - file: holdout_input.jsonl
+              role: holdout_input
+              sha256: 3258d8f8b7c74ce61d5a7523eabd970e311236f692830654155ab4c1e29fe660
+            - file: holdout_S1.jsonl
+              role: holdout_student_output
+              sha256: 3ed7b0dbe316d7073f5dbdeaf8ad4278b30195c5eacb1f561168ff52dde3b268
+          rows: 10000
+          hint: 'Qwen3-ASR-1.7B transcript: stored cleaning transcript for WenetSpeech, transcribe_hints.py for the others'
+          student: Qwen3-4B-Instruct-2507 LoRA r=16, 1 epoch on the 96,201 ok teacher rows outside the held-out 2,000
+    provenance:
+      registered_at: '2026-11-03'
+  - schema_version: dataset-view/1.0
+    view_id: aishell4/punc-teacher
+    version: punc-teacher-v1-20261029
+    source:
+      dataset_id: aishell4
+      version: icefall-20260908
+    result:
+      dataset_id: aishell4
+      version: punc-teacher-v1-20261029
+    materialization: full
+    lineage_status: exact
+    transforms:
+      - name: punctuation-teacher
+        version: v1-20261029
+        kind: annotate
+        writes:
+          - $membership
+          - metadata.punctuation_teacher
+          - metadata.punctuation_hint
+          - metadata.punctuation_student
+        parameters:
+          model: Qwen3.8-27B
+          server: vLLM 0.18, temperature 0, thinking off
+          prompt: amphiondata src/amphiondata/enrichment/written_punctuation.py SYSTEM at 55313b6
+          texts_per_request: 8
+          spec: GB/T 15834 written style, compact commas
+          ok: output equals the input once marks are removed
+          tool: amphiondata scripts/punctuation/punc_llm.py
+          sampling: amphiondata scripts/punctuation/build_teacher_set.py
+          label_inputs:
+            - file: teacher_input.jsonl
+              role: teacher_input
+              sha256: d826868c1bf4abc7db43028b68565cdc65973a6c810b052fcdd6697f256ed099
+            - file: teacher_out.jsonl
+              role: teacher_output
+              sha256: eca87ab0dd9635d24799e07858132ef0fc81b7b2677911a5500c0faac08af2f3
+            - file: holdout_input.jsonl
+              role: holdout_input
+              sha256: 3258d8f8b7c74ce61d5a7523eabd970e311236f692830654155ab4c1e29fe660
+            - file: holdout_S1.jsonl
+              role: holdout_student_output
+              sha256: 3ed7b0dbe316d7073f5dbdeaf8ad4278b30195c5eacb1f561168ff52dde3b268
+          rows: 3000
+          hint: 'Qwen3-ASR-1.7B transcript: stored cleaning transcript for WenetSpeech, transcribe_hints.py for the others'
+          student: Qwen3-4B-Instruct-2507 LoRA r=16, 1 epoch on the 96,201 ok teacher rows outside the held-out 2,000
+    provenance:
+      registered_at: '2026-11-03'
+  - schema_version: dataset-view/1.0
+    view_id: aishell2/punc-teacher
+    version: punc-teacher-v1-20261029
+    source:
+      dataset_id: aishell2
+      version: icefall-20260908
+    result:
+      dataset_id: aishell2
+      version: punc-teacher-v1-20261029
+    materialization: full
+    lineage_status: exact
+    transforms:
+      - name: punctuation-teacher
+        version: v1-20261029
+        kind: annotate
+        writes:
+          - $membership
+          - metadata.punctuation_teacher
+          - metadata.punctuation_hint
+          - metadata.punctuation_student
+        parameters:
+          model: Qwen3.8-27B
+          server: vLLM 0.18, temperature 0, thinking off
+          prompt: amphiondata src/amphiondata/enrichment/written_punctuation.py SYSTEM at 55313b6
+          texts_per_request: 8
+          spec: GB/T 15834 written style, compact commas
+          ok: output equals the input once marks are removed
+          tool: amphiondata scripts/punctuation/punc_llm.py
+          sampling: amphiondata scripts/punctuation/build_teacher_set.py
+          label_inputs:
+            - file: teacher_input.jsonl
+              role: teacher_input
+              sha256: d826868c1bf4abc7db43028b68565cdc65973a6c810b052fcdd6697f256ed099
+            - file: teacher_out.jsonl
+              role: teacher_output
+              sha256: eca87ab0dd9635d24799e07858132ef0fc81b7b2677911a5500c0faac08af2f3
+            - file: holdout_input.jsonl
+              role: holdout_input
+              sha256: 3258d8f8b7c74ce61d5a7523eabd970e311236f692830654155ab4c1e29fe660
+            - file: holdout_S1.jsonl
+              role: holdout_student_output
+              sha256: 3ed7b0dbe316d7073f5dbdeaf8ad4278b30195c5eacb1f561168ff52dde3b268
+          rows: 8000
+          hint: 'Qwen3-ASR-1.7B transcript: stored cleaning transcript for WenetSpeech, transcribe_hints.py for the others'
+          student: Qwen3-4B-Instruct-2507 LoRA r=16, 1 epoch on the 96,201 ok teacher rows outside the held-out 2,000
+    provenance:
+      registered_at: '2026-11-03'
+  - schema_version: dataset-view/1.0
+    view_id: aishell/punc-teacher
+    version: punc-teacher-v1-20261029
+    source:
+      dataset_id: aishell
+      version: icefall-20260908
+    result:
+      dataset_id: aishell
+      version: punc-teacher-v1-20261029
+    materialization: full
+    lineage_status: exact
+    transforms:
+      - name: punctuation-teacher
+        version: v1-20261029
+        kind: annotate
+        writes:
+          - $membership
+          - metadata.punctuation_teacher
+          - metadata.punctuation_hint
+          - metadata.punctuation_student
+        parameters:
+          model: Qwen3.8-27B
+          server: vLLM 0.18, temperature 0, thinking off
+          prompt: amphiondata src/amphiondata/enrichment/written_punctuation.py SYSTEM at 55313b6
+          texts_per_request: 8
+          spec: GB/T 15834 written style, compact commas
+          ok: output equals the input once marks are removed
+          tool: amphiondata scripts/punctuation/punc_llm.py
+          sampling: amphiondata scripts/punctuation/build_teacher_set.py
+          label_inputs:
+            - file: teacher_input.jsonl
+              role: teacher_input
+              sha256: d826868c1bf4abc7db43028b68565cdc65973a6c810b052fcdd6697f256ed099
+            - file: teacher_out.jsonl
+              role: teacher_output
+              sha256: eca87ab0dd9635d24799e07858132ef0fc81b7b2677911a5500c0faac08af2f3
+            - file: holdout_input.jsonl
+              role: holdout_input
+              sha256: 3258d8f8b7c74ce61d5a7523eabd970e311236f692830654155ab4c1e29fe660
+            - file: holdout_S1.jsonl
+              role: holdout_student_output
+              sha256: 3ed7b0dbe316d7073f5dbdeaf8ad4278b30195c5eacb1f561168ff52dde3b268
+          rows: 3000
+          hint: 'Qwen3-ASR-1.7B transcript: stored cleaning transcript for WenetSpeech, transcribe_hints.py for the others'
+          student: Qwen3-4B-Instruct-2507 LoRA r=16, 1 epoch on the 96,201 ok teacher rows outside the held-out 2,000
+    provenance:
+      registered_at: '2026-11-03'
+  - schema_version: dataset-view/1.0
+    view_id: alimeeting_sdm/punc-teacher
+    version: punc-teacher-v1-20261029
+    source:
+      dataset_id: alimeeting_sdm
+      version: icefall-20260908
+    result:
+      dataset_id: alimeeting_sdm
+      version: punc-teacher-v1-20261029
+    materialization: full
+    lineage_status: exact
+    transforms:
+      - name: punctuation-teacher
+        version: v1-20261029
+        kind: annotate
+        writes:
+          - $membership
+          - metadata.punctuation_teacher
+          - metadata.punctuation_hint
+          - metadata.punctuation_student
+        parameters:
+          model: Qwen3.8-27B
+          server: vLLM 0.18, temperature 0, thinking off
+          prompt: amphiondata src/amphiondata/enrichment/written_punctuation.py SYSTEM at 55313b6
+          texts_per_request: 8
+          spec: GB/T 15834 written style, compact commas
+          ok: output equals the input once marks are removed
+          tool: amphiondata scripts/punctuation/punc_llm.py
+          sampling: amphiondata scripts/punctuation/build_teacher_set.py
+          label_inputs:
+            - file: teacher_input.jsonl
+              role: teacher_input
+              sha256: d826868c1bf4abc7db43028b68565cdc65973a6c810b052fcdd6697f256ed099
+            - file: teacher_out.jsonl
+              role: teacher_output
+              sha256: eca87ab0dd9635d24799e07858132ef0fc81b7b2677911a5500c0faac08af2f3
+            - file: holdout_input.jsonl
+              role: holdout_input
+              sha256: 3258d8f8b7c74ce61d5a7523eabd970e311236f692830654155ab4c1e29fe660
+            - file: holdout_S1.jsonl
+              role: holdout_student_output
+              sha256: 3ed7b0dbe316d7073f5dbdeaf8ad4278b30195c5eacb1f561168ff52dde3b268
+          rows: 3000
+          hint: 'Qwen3-ASR-1.7B transcript: stored cleaning transcript for WenetSpeech, transcribe_hints.py for the others'
+          student: Qwen3-4B-Instruct-2507 LoRA r=16, 1 epoch on the 96,201 ok teacher rows outside the held-out 2,000
+    provenance:
+      registered_at: '2026-11-03'
+  - schema_version: dataset-view/1.0
+    view_id: magicdata_ramc/punc-teacher
+    version: punc-teacher-v1-20261029
+    source:
+      dataset_id: magicdata_ramc
+      version: icefall-20260908
+    result:
+      dataset_id: magicdata_ramc
+      version: punc-teacher-v1-20261029
+    materialization: full
+    lineage_status: exact
+    transforms:
+      - name: punctuation-teacher
+        version: v1-20261029
+        kind: annotate
+        writes:
+          - $membership
+          - metadata.punctuation_teacher
+          - metadata.punctuation_hint
+          - metadata.punctuation_student
+        parameters:
+          model: Qwen3.8-27B
+          server: vLLM 0.18, temperature 0, thinking off
+          prompt: amphiondata src/amphiondata/enrichment/written_punctuation.py SYSTEM at 55313b6
+          texts_per_request: 8
+          spec: GB/T 15834 written style, compact commas
+          ok: output equals the input once marks are removed
+          tool: amphiondata scripts/punctuation/punc_llm.py
+          sampling: amphiondata scripts/punctuation/build_teacher_set.py
+          label_inputs:
+            - file: teacher_input.jsonl
+              role: teacher_input
+              sha256: d826868c1bf4abc7db43028b68565cdc65973a6c810b052fcdd6697f256ed099
+            - file: teacher_out.jsonl
+              role: teacher_output
+              sha256: eca87ab0dd9635d24799e07858132ef0fc81b7b2677911a5500c0faac08af2f3
+            - file: holdout_input.jsonl
+              role: holdout_input
+              sha256: 3258d8f8b7c74ce61d5a7523eabd970e311236f692830654155ab4c1e29fe660
+            - file: holdout_S1.jsonl
+              role: holdout_student_output
+              sha256: 3ed7b0dbe316d7073f5dbdeaf8ad4278b30195c5eacb1f561168ff52dde3b268
+          rows: 3000
+          hint: 'Qwen3-ASR-1.7B transcript: stored cleaning transcript for WenetSpeech, transcribe_hints.py for the others'
+          student: Qwen3-4B-Instruct-2507 LoRA r=16, 1 epoch on the 96,201 ok teacher rows outside the held-out 2,000
+    provenance:
+      registered_at: '2026-11-03'
+  - schema_version: dataset-view/1.0
+    view_id: wenetspeech_clean/punc-gold
+    version: punc-gold-v1-20261029
+    source:
+      dataset_id: wenetspeech_clean
+      version: clean-v3-pass-20261027
+    result:
+      dataset_id: wenetspeech_clean
+      version: punc-gold-v1-20261029
+    materialization: full
+    lineage_status: exact
+    transforms:
+      - name: punctuation-gold
+        version: v1-20261029
+        kind: annotate
+        writes:
+          - $membership
+          - metadata.punctuation_gold
+          - metadata.punctuation_hint
+        parameters:
+          reference: hand-written to spec v1 (compact commas); removing the marks gives the unpunctuated label
+          sample: 'amphiondata pilot: 120 WenetSpeech clean-v3 + 80 other Mandarin training utterances'
+          hints: Qwen3-ASR-1.7B and FireRedPunc punctuated transcripts
+          label_inputs:
+            - file: pilot.jsonl
+              role: pilot
+              sha256: 6fbd6228502e11e005d9db5672ac5556f0ed6c78e5ded8c176b90f2e12235a7e
+            - file: gold.jsonl
+              role: gold
+              sha256: 62956437c018163c0c8f19035760276ec4fa5710b5f4b421861483540b0f2f65
+          rows: 120
+    provenance:
+      registered_at: '2026-11-03'
+  - schema_version: dataset-view/1.0
+    view_id: kespeech/punc-gold
+    version: punc-gold-v1-20261029
+    source:
+      dataset_id: kespeech
+      version: icefall-20260908
+    result:
+      dataset_id: kespeech
+      version: punc-gold-v1-20261029
+    materialization: full
+    lineage_status: exact
+    transforms:
+      - name: punctuation-gold
+        version: v1-20261029
+        kind: annotate
+        writes:
+          - $membership
+          - metadata.punctuation_gold
+          - metadata.punctuation_hint
+        parameters:
+          reference: hand-written to spec v1 (compact commas); removing the marks gives the unpunctuated label
+          sample: 'amphiondata pilot: 120 WenetSpeech clean-v3 + 80 other Mandarin training utterances'
+          hints: Qwen3-ASR-1.7B and FireRedPunc punctuated transcripts
+          label_inputs:
+            - file: pilot.jsonl
+              role: pilot
+              sha256: 6fbd6228502e11e005d9db5672ac5556f0ed6c78e5ded8c176b90f2e12235a7e
+            - file: gold.jsonl
+              role: gold
+              sha256: 62956437c018163c0c8f19035760276ec4fa5710b5f4b421861483540b0f2f65
+          rows: 20
+    provenance:
+      registered_at: '2026-11-03'
+  - schema_version: dataset-view/1.0
+    view_id: aishell2/punc-gold
+    version: punc-gold-v1-20261029
+    source:
+      dataset_id: aishell2
+      version: icefall-20260908
+    result:
+      dataset_id: aishell2
+      version: punc-gold-v1-20261029
+    materialization: full
+    lineage_status: exact
+    transforms:
+      - name: punctuation-gold
+        version: v1-20261029
+        kind: annotate
+        writes:
+          - $membership
+          - metadata.punctuation_gold
+          - metadata.punctuation_hint
+        parameters:
+          reference: hand-written to spec v1 (compact commas); removing the marks gives the unpunctuated label
+          sample: 'amphiondata pilot: 120 WenetSpeech clean-v3 + 80 other Mandarin training utterances'
+          hints: Qwen3-ASR-1.7B and FireRedPunc punctuated transcripts
+          label_inputs:
+            - file: pilot.jsonl
+              role: pilot
+              sha256: 6fbd6228502e11e005d9db5672ac5556f0ed6c78e5ded8c176b90f2e12235a7e
+            - file: gold.jsonl
+              role: gold
+              sha256: 62956437c018163c0c8f19035760276ec4fa5710b5f4b421861483540b0f2f65
+          rows: 20
+    provenance:
+      registered_at: '2026-11-03'
+  - schema_version: dataset-view/1.0
+    view_id: aishell/punc-gold
+    version: punc-gold-v1-20261029
+    source:
+      dataset_id: aishell
+      version: icefall-20260908
+    result:
+      dataset_id: aishell
+      version: punc-gold-v1-20261029
+    materialization: full
+    lineage_status: exact
+    transforms:
+      - name: punctuation-gold
+        version: v1-20261029
+        kind: annotate
+        writes:
+          - $membership
+          - metadata.punctuation_gold
+          - metadata.punctuation_hint
+        parameters:
+          reference: hand-written to spec v1 (compact commas); removing the marks gives the unpunctuated label
+          sample: 'amphiondata pilot: 120 WenetSpeech clean-v3 + 80 other Mandarin training utterances'
+          hints: Qwen3-ASR-1.7B and FireRedPunc punctuated transcripts
+          label_inputs:
+            - file: pilot.jsonl
+              role: pilot
+              sha256: 6fbd6228502e11e005d9db5672ac5556f0ed6c78e5ded8c176b90f2e12235a7e
+            - file: gold.jsonl
+              role: gold
+              sha256: 62956437c018163c0c8f19035760276ec4fa5710b5f4b421861483540b0f2f65
+          rows: 10
+    provenance:
+      registered_at: '2026-11-03'
+  - schema_version: dataset-view/1.0
+    view_id: magicdata_ramc/punc-gold
+    version: punc-gold-v1-20261029
+    source:
+      dataset_id: magicdata_ramc
+      version: icefall-20260908
+    result:
+      dataset_id: magicdata_ramc
+      version: punc-gold-v1-20261029
+    materialization: full
+    lineage_status: exact
+    transforms:
+      - name: punctuation-gold
+        version: v1-20261029
+        kind: annotate
+        writes:
+          - $membership
+          - metadata.punctuation_gold
+          - metadata.punctuation_hint
+        parameters:
+          reference: hand-written to spec v1 (compact commas); removing the marks gives the unpunctuated label
+          sample: 'amphiondata pilot: 120 WenetSpeech clean-v3 + 80 other Mandarin training utterances'
+          hints: Qwen3-ASR-1.7B and FireRedPunc punctuated transcripts
+          label_inputs:
+            - file: pilot.jsonl
+              role: pilot
+              sha256: 6fbd6228502e11e005d9db5672ac5556f0ed6c78e5ded8c176b90f2e12235a7e
+            - file: gold.jsonl
+              role: gold
+              sha256: 62956437c018163c0c8f19035760276ec4fa5710b5f4b421861483540b0f2f65
+          rows: 15
+    provenance:
+      registered_at: '2026-11-03'
+  - schema_version: dataset-view/1.0
+    view_id: alimeeting_sdm/punc-gold
+    version: punc-gold-v1-20261029
+    source:
+      dataset_id: alimeeting_sdm
+      version: icefall-20260908
+    result:
+      dataset_id: alimeeting_sdm
+      version: punc-gold-v1-20261029
+    materialization: full
+    lineage_status: exact
+    transforms:
+      - name: punctuation-gold
+        version: v1-20261029
+        kind: annotate
+        writes:
+          - $membership
+          - metadata.punctuation_gold
+          - metadata.punctuation_hint
+        parameters:
+          reference: hand-written to spec v1 (compact commas); removing the marks gives the unpunctuated label
+          sample: 'amphiondata pilot: 120 WenetSpeech clean-v3 + 80 other Mandarin training utterances'
+          hints: Qwen3-ASR-1.7B and FireRedPunc punctuated transcripts
+          label_inputs:
+            - file: pilot.jsonl
+              role: pilot
+              sha256: 6fbd6228502e11e005d9db5672ac5556f0ed6c78e5ded8c176b90f2e12235a7e
+            - file: gold.jsonl
+              role: gold
+              sha256: 62956437c018163c0c8f19035760276ec4fa5710b5f4b421861483540b0f2f65
+          rows: 15
+    provenance:
+      registered_at: '2026-11-03'
+  - schema_version: dataset-view/1.0
+    view_id: gigaspeech/punc-teacher
+    version: punc-teacher-v1-20261102
+    source:
+      dataset_id: gigaspeech
+      version: legacy-20260804
+    result:
+      dataset_id: gigaspeech
+      version: punc-teacher-v1-20261102
+    materialization: full
+    lineage_status: exact
+    transforms:
+      - name: punctuation-teacher
+        version: v1-20261102
+        kind: annotate
+        writes:
+          - $membership
+          - metadata.punctuation_teacher
+        parameters:
+          model: Qwen3.8-27B
+          server: vLLM 0.18, temperature 0, thinking off
+          prompt: amphiondata src/amphiondata/enrichment/written_punctuation_en.py SYSTEM at 7812522
+          texts_per_request: 8
+          spec: 'en-v1: , . ? ! ; :, truecase'
+          ok: output equals the input once lowercased and marks are removed
+          tool: amphiondata scripts/punctuation/punc_llm_en.py
+          sampling: amphiondata scripts/punctuation/build_teacher_set_en.py
+          label_inputs:
+            - file: teacher_input.jsonl
+              role: teacher_input
+              sha256: 76f00a93fb7e278c6b0e7483d8b44eaf1c2dbed4a49a01f502a943203e790ddb
+            - file: teacher_out.jsonl
+              role: teacher_output
+              sha256: 6095f36c95ca8614e189cd15dfd5c29757fb4cd84c41fd280a69576f4b856594
+          rows: 45000
+    provenance:
+      registered_at: '2026-11-03'
+  - schema_version: dataset-view/1.0
+    view_id: common_voice_en/punc-teacher
+    version: punc-teacher-v1-20261102
+    source:
+      dataset_id: common_voice_en
+      version: legacy-20260804
+    result:
+      dataset_id: common_voice_en
+      version: punc-teacher-v1-20261102
+    materialization: full
+    lineage_status: exact
+    transforms:
+      - name: punctuation-teacher
+        version: v1-20261102
+        kind: annotate
+        writes:
+          - $membership
+          - metadata.punctuation_teacher
+        parameters:
+          model: Qwen3.8-27B
+          server: vLLM 0.18, temperature 0, thinking off
+          prompt: amphiondata src/amphiondata/enrichment/written_punctuation_en.py SYSTEM at 7812522
+          texts_per_request: 8
+          spec: 'en-v1: , . ? ! ; :, truecase'
+          ok: output equals the input once lowercased and marks are removed
+          tool: amphiondata scripts/punctuation/punc_llm_en.py
+          sampling: amphiondata scripts/punctuation/build_teacher_set_en.py
+          label_inputs:
+            - file: teacher_input.jsonl
+              role: teacher_input
+              sha256: 76f00a93fb7e278c6b0e7483d8b44eaf1c2dbed4a49a01f502a943203e790ddb
+            - file: teacher_out.jsonl
+              role: teacher_output
+              sha256: 6095f36c95ca8614e189cd15dfd5c29757fb4cd84c41fd280a69576f4b856594
+          rows: 25000
+    provenance:
+      registered_at: '2026-11-03'
+  - schema_version: dataset-view/1.0
+    view_id: librispeech/punc-teacher
+    version: punc-teacher-v1-20261102
+    source:
+      dataset_id: librispeech
+      version: legacy-20260804
+    result:
+      dataset_id: librispeech
+      version: punc-teacher-v1-20261102
+    materialization: full
+    lineage_status: exact
+    transforms:
+      - name: punctuation-teacher
+        version: v1-20261102
+        kind: annotate
+        writes:
+          - $membership
+          - metadata.punctuation_teacher
+        parameters:
+          model: Qwen3.8-27B
+          server: vLLM 0.18, temperature 0, thinking off
+          prompt: amphiondata src/amphiondata/enrichment/written_punctuation_en.py SYSTEM at 7812522
+          texts_per_request: 8
+          spec: 'en-v1: , . ? ! ; :, truecase'
+          ok: output equals the input once lowercased and marks are removed
+          tool: amphiondata scripts/punctuation/punc_llm_en.py
+          sampling: amphiondata scripts/punctuation/build_teacher_set_en.py
+          label_inputs:
+            - file: teacher_input.jsonl
+              role: teacher_input
+              sha256: 76f00a93fb7e278c6b0e7483d8b44eaf1c2dbed4a49a01f502a943203e790ddb
+            - file: teacher_out.jsonl
+              role: teacher_output
+              sha256: 6095f36c95ca8614e189cd15dfd5c29757fb4cd84c41fd280a69576f4b856594
+          rows: 15000
+    provenance:
+      registered_at: '2026-11-03'

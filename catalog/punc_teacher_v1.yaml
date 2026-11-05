@@ -1,0 +1,1082 @@
+# 书面化标点的中间产物：Qwen3.8-27B 老师输出 punc-teacher-v1-20261029（中文）/ punc-teacher-v1-20261102（英文），手写参照 punc-gold-v1-20261029；挂在各源数据集上，原文不变。脚本 scripts/punctuation/register_punc_intermediates.py。
+  - schema_version: dataset-catalog/2.0
+    dataset_id: wenetspeech_clean
+    version: punc-teacher-v1-20261029
+    languages:
+      - zh
+    tasks:
+      - asr
+    aliases: []
+    artifacts:
+      - name: train_rec_0
+        kind: lhotse-recordings
+        root_alias: aidc_data
+        relative_path: datasets/wenetspeech/source/cos-backup-20261011/relocated/LHOTSE/WenetSpeech/data/manifests/wenetspeech_recordings_L.jsonl.gz
+        expected_bytes: 1464697
+        sha256: aad6b67a67486fa091b7f6da28715e7db378c1001186a9c6330e5692303f6e51
+        metadata:
+          record_count: 61127
+          shared_with: wenetspeech_clean@clean-v3-pass-20261027
+      - name: train_supervisions_punc_teacher
+        kind: lhotse-supervisions
+        root_alias: aidc_data
+        relative_path: datasets/wenetspeech_clean/versions/punc-teacher-v1-20261029/wenetspeech_clean_supervisions_punc_teacher.jsonl.gz
+        expected_bytes: 4515499
+        sha256: 476b3cd0a6d0eacc2a6abefd724eaa6e2ec21aee3b8543567e6a842fb405a3d3
+        metadata:
+          record_count: 65000
+          punctuated: false
+    splits:
+      train:
+        artifacts:
+          recordings:
+            - train_rec_0
+          supervisions:
+            - train_supervisions_punc_teacher
+        statistics:
+          records: 65000
+          duration_hours: 44.702
+          duration_basis: sum of supervision durations
+    recipe_parameters:
+      adds:
+        - custom.punctuation_hint
+        - custom.punctuation_student
+        - custom.punctuation_teacher
+      rows: labelled utterances only
+    provenance:
+      preparation_status: prepared
+      lineage_status: exact
+      materialization: full
+      source: wenetspeech_clean@clean-v3-pass-20261027
+      description: wenetspeech_clean@clean-v3-pass-20261027 的 train 监督片段里的 Qwen3.8-27B 老师给 65000 句加的书面化标点（64406 句去掉标点后与输入一致，ok=true）：custom.punctuation_teacher 记输出 text、ok 和模型看到的无标点输入 input；custom.punctuation_hint.qwen 是提示用的 Qwen3-ASR 转写；其中 1309 句是留出的评测句，另带学生 v1 的输出 custom.punctuation_student。这批句子用来微调 Qwen3-4B 学生，抽样见 amphiondata scripts/punctuation/build_teacher_set.py。只含这些句子，text 与父版本相同，不是标点后的文本；录音沿用父版本，不复制音频。中间产物，供复现和比较学生，不直接用于训练。脚本 scripts/punctuation/register_punc_intermediates.py。
+      facts:
+        rows: 65000
+        recording missing from the recordings: 0
+        rows whose input differs from the parent text: 0
+        rows ok (output keeps the input): 64406
+        ok flag differs from recomputation: 0
+        rows with held-out student output: 1309
+        labels without a parent row (not registered): 0
+  - schema_version: dataset-catalog/2.0
+    dataset_id: vitw_far_field
+    version: punc-teacher-v1-20261029
+    languages:
+      - zh
+      - en
+    tasks:
+      - asr
+    aliases: []
+    artifacts:
+      - name: train_rec_0
+        kind: lhotse-recordings
+        root_alias: aidc_data
+        relative_path: datasets/vitw_far_field/versions/icefall-20260908/train_rec_0/vitw_recordings_far_field.jsonl.gz
+        expected_bytes: 751107
+        sha256: a36f66421d301dce38c11bc03156c387bca93c291852c54da5eee5ee0933e122
+        metadata:
+          record_count: 45437
+          shared_with: vitw_far_field@icefall-20260908
+      - name: train_supervisions_punc_teacher
+        kind: lhotse-supervisions
+        root_alias: aidc_data
+        relative_path: datasets/vitw_far_field/versions/punc-teacher-v1-20261029/vitw_far_field_supervisions_punc_teacher.jsonl.gz
+        expected_bytes: 244047
+        sha256: b9571352e1b84a78b556cbe4b803366a47e7880fb2ef34796163cde6cf7a3044
+        metadata:
+          record_count: 2500
+          punctuated: false
+    splits:
+      train:
+        artifacts:
+          recordings:
+            - train_rec_0
+          supervisions:
+            - train_supervisions_punc_teacher
+        statistics:
+          records: 2500
+          duration_hours: 4.1797
+          duration_basis: sum of supervision durations
+    recipe_parameters:
+      adds:
+        - custom.punctuation_hint
+        - custom.punctuation_student
+        - custom.punctuation_teacher
+      rows: labelled utterances only
+    provenance:
+      preparation_status: prepared
+      lineage_status: exact
+      materialization: full
+      source: vitw_far_field@icefall-20260908
+      description: vitw_far_field@icefall-20260908 的 train 监督片段里的 Qwen3.8-27B 老师给 2500 句加的书面化标点（2296 句去掉标点后与输入一致，ok=true）：custom.punctuation_teacher 记输出 text、ok 和模型看到的无标点输入 input；custom.punctuation_hint.qwen 是提示用的 Qwen3-ASR 转写；其中 59 句是留出的评测句，另带学生 v1 的输出 custom.punctuation_student。这批句子用来微调 Qwen3-4B 学生，抽样见 amphiondata scripts/punctuation/build_teacher_set.py。只含这些句子，text 与父版本相同，不是标点后的文本；录音沿用父版本，不复制音频。中间产物，供复现和比较学生，不直接用于训练。脚本 scripts/punctuation/register_punc_intermediates.py。
+      facts:
+        rows: 2500
+        recording missing from the recordings: 0
+        rows whose input differs from the parent text: 0
+        rows ok (output keeps the input): 2296
+        ok flag differs from recomputation: 0
+        rows with held-out student output: 59
+        labels without a parent row (not registered): 0
+  - schema_version: dataset-catalog/2.0
+    dataset_id: realman
+    version: punc-teacher-v1-20261029
+    languages:
+      - zh
+    tasks:
+      - asr
+    aliases: []
+    artifacts:
+      - name: train_rec_0
+        kind: lhotse-recordings
+        root_alias: aidc_data
+        relative_path: datasets/realman/versions/icefall-20260908/train_rec_0/realman_recordings_train.jsonl.gz
+        expected_bytes: 580946
+        sha256: e48a9a72a4a00721ed3ecd63b3eb35d973f9cfe5924491bf9540ff98e5e11fe1
+        metadata:
+          record_count: 36816
+          shared_with: realman@icefall-20260908
+      - name: train_supervisions_punc_teacher
+        kind: lhotse-supervisions
+        root_alias: aidc_data
+        relative_path: datasets/realman/versions/punc-teacher-v1-20261029/realman_supervisions_punc_teacher.jsonl.gz
+        expected_bytes: 244618
+        sha256: 01657ae7641f14a02a449cb6809cd8f3007ab15fae9dc39be87211086aee28d7
+        metadata:
+          record_count: 2500
+          punctuated: false
+    splits:
+      train:
+        artifacts:
+          recordings:
+            - train_rec_0
+          supervisions:
+            - train_supervisions_punc_teacher
+        statistics:
+          records: 2500
+          duration_hours: 4.2871
+          duration_basis: sum of supervision durations
+    recipe_parameters:
+      adds:
+        - custom.punctuation_hint
+        - custom.punctuation_student
+        - custom.punctuation_teacher
+      rows: labelled utterances only
+    provenance:
+      preparation_status: prepared
+      lineage_status: exact
+      materialization: full
+      source: realman@icefall-20260908
+      description: realman@icefall-20260908 的 train 监督片段里的 Qwen3.8-27B 老师给 2500 句加的书面化标点（2257 句去掉标点后与输入一致，ok=true）：custom.punctuation_teacher 记输出 text、ok 和模型看到的无标点输入 input；custom.punctuation_hint.qwen 是提示用的 Qwen3-ASR 转写；其中 53 句是留出的评测句，另带学生 v1 的输出 custom.punctuation_student。这批句子用来微调 Qwen3-4B 学生，抽样见 amphiondata scripts/punctuation/build_teacher_set.py。只含这些句子，text 与父版本相同，不是标点后的文本；录音沿用父版本，不复制音频。中间产物，供复现和比较学生，不直接用于训练。脚本 scripts/punctuation/register_punc_intermediates.py。
+      facts:
+        rows: 2500
+        recording missing from the recordings: 0
+        rows whose input differs from the parent text: 0
+        rows ok (output keeps the input): 2257
+        ok flag differs from recomputation: 0
+        rows with held-out student output: 53
+        labels without a parent row (not registered): 0
+  - schema_version: dataset-catalog/2.0
+    dataset_id: kespeech
+    version: punc-teacher-v1-20261029
+    languages:
+      - zh
+    tasks:
+      - asr
+    aliases: []
+    artifacts:
+      - name: train_rec_0
+        kind: lhotse-recordings
+        root_alias: aidc_data
+        relative_path: datasets/kespeech/versions/legacy-20260804/train_rec_0/kespeech-asr_recordings_train_phase1.jsonl.gz
+        expected_bytes: 9537983
+        sha256: f1ed873b6f03708d18e4983283aadd7fef3e06436575186e4141332d1a71e5a1
+        metadata:
+          record_count: 543634
+          shared_with: kespeech@icefall-20260908
+      - name: train_rec_1
+        kind: lhotse-recordings
+        root_alias: aidc_data
+        relative_path: datasets/kespeech/versions/legacy-20260804/train_rec_1/kespeech-asr_recordings_train_phase2.jsonl.gz
+        expected_bytes: 6027737
+        sha256: 89095d701ff3cc66ecea0b90d77829f41e6ace3d5fadcf928af6bc2769af02c2
+        metadata:
+          record_count: 340387
+          shared_with: kespeech@icefall-20260908
+      - name: train_supervisions_punc_teacher
+        kind: lhotse-supervisions
+        root_alias: aidc_data
+        relative_path: datasets/kespeech/versions/punc-teacher-v1-20261029/kespeech_supervisions_punc_teacher.jsonl.gz
+        expected_bytes: 724576
+        sha256: 6d2accee45ee2e68a92fdcae70dad8395564d4196f1e19e8d788bbca8b33a4e7
+        metadata:
+          record_count: 10000
+          punctuated: false
+    splits:
+      train:
+        artifacts:
+          recordings:
+            - train_rec_0
+            - train_rec_1
+          supervisions:
+            - train_supervisions_punc_teacher
+        statistics:
+          records: 10000
+          duration_hours: 15.8502
+          duration_basis: sum of supervision durations
+    recipe_parameters:
+      adds:
+        - custom.punctuation_hint
+        - custom.punctuation_student
+        - custom.punctuation_teacher
+      rows: labelled utterances only
+    provenance:
+      preparation_status: prepared
+      lineage_status: exact
+      materialization: full
+      source: kespeech@icefall-20260908
+      description: kespeech@icefall-20260908 的 train 监督片段里的 Qwen3.8-27B 老师给 10000 句加的书面化标点（9930 句去掉标点后与输入一致，ok=true）：custom.punctuation_teacher 记输出 text、ok 和模型看到的无标点输入 input；custom.punctuation_hint.qwen 是提示用的 Qwen3-ASR 转写；其中 207 句是留出的评测句，另带学生 v1 的输出 custom.punctuation_student。这批句子用来微调 Qwen3-4B 学生，抽样见 amphiondata scripts/punctuation/build_teacher_set.py。只含这些句子，text 与父版本相同，不是标点后的文本；录音沿用父版本，不复制音频。中间产物，供复现和比较学生，不直接用于训练。脚本 scripts/punctuation/register_punc_intermediates.py。
+      facts:
+        rows: 10000
+        recording missing from the recordings: 0
+        rows whose input differs from the parent text: 0
+        rows ok (output keeps the input): 9930
+        ok flag differs from recomputation: 0
+        rows with held-out student output: 207
+        labels without a parent row (not registered): 0
+  - schema_version: dataset-catalog/2.0
+    dataset_id: aishell4
+    version: punc-teacher-v1-20261029
+    languages:
+      - zh
+    tasks:
+      - asr
+    aliases: []
+    artifacts:
+      - name: train_rec_0
+        kind: lhotse-recordings
+        root_alias: aidc_data
+        relative_path: datasets/aishell4/versions/legacy-20260804/train_rec_0/aishell4_recordings_train_L.jsonl.gz
+        expected_bytes: 814
+        sha256: f3fb0be00239c2182f03ecb2842dbfa28f1f365e3d2d7509931bae39bdfd16eb
+        metadata:
+          record_count: 30
+          shared_with: aishell4@icefall-20260908
+      - name: train_rec_1
+        kind: lhotse-recordings
+        root_alias: aidc_data
+        relative_path: datasets/aishell4/versions/icefall-20260908/train_rec_1/aishell4_recordings_train_M.jsonl.gz
+        expected_bytes: 2286
+        sha256: af8f8e5a01a65e1b04fe870e7709085856c47c0c71ab5f2224e9c8da4731b332
+        metadata:
+          record_count: 106
+          shared_with: aishell4@icefall-20260908
+      - name: train_rec_2
+        kind: lhotse-recordings
+        root_alias: aidc_data
+        relative_path: datasets/aishell4/versions/icefall-20260908/train_rec_2/aishell4_recordings_train_S.jsonl.gz
+        expected_bytes: 1262
+        sha256: 04515f37a6c9714a03b1b287fac0de2f073d03d6c5382b3bebb8308185c714de
+        metadata:
+          record_count: 53
+          shared_with: aishell4@icefall-20260908
+      - name: train_supervisions_punc_teacher
+        kind: lhotse-supervisions
+        root_alias: aidc_data
+        relative_path: datasets/aishell4/versions/punc-teacher-v1-20261029/aishell4_supervisions_punc_teacher.jsonl.gz
+        expected_bytes: 211809
+        sha256: 00dda7e18d93f1f9ea3ebc724ba55d0f7cf579c11af4b636f9f216b5a8b8f08f
+        metadata:
+          record_count: 3000
+          punctuated: false
+    splits:
+      train:
+        artifacts:
+          recordings:
+            - train_rec_0
+            - train_rec_1
+            - train_rec_2
+          supervisions:
+            - train_supervisions_punc_teacher
+        statistics:
+          records: 3000
+          duration_hours: 3.1715
+          duration_basis: sum of supervision durations
+    recipe_parameters:
+      adds:
+        - custom.punctuation_hint
+        - custom.punctuation_student
+        - custom.punctuation_teacher
+      rows: labelled utterances only
+    provenance:
+      preparation_status: prepared
+      lineage_status: exact
+      materialization: full
+      source: aishell4@icefall-20260908
+      description: aishell4@icefall-20260908 的 train 监督片段里的 Qwen3.8-27B 老师给 3000 句加的书面化标点（2765 句去掉标点后与输入一致，ok=true）：custom.punctuation_teacher 记输出 text、ok 和模型看到的无标点输入 input；custom.punctuation_hint.qwen 是提示用的 Qwen3-ASR 转写；其中 53 句是留出的评测句，另带学生 v1 的输出 custom.punctuation_student。这批句子用来微调 Qwen3-4B 学生，抽样见 amphiondata scripts/punctuation/build_teacher_set.py。只含这些句子，text 与父版本相同，不是标点后的文本；录音沿用父版本，不复制音频。中间产物，供复现和比较学生，不直接用于训练。脚本 scripts/punctuation/register_punc_intermediates.py。
+      facts:
+        rows: 3000
+        recording missing from the recordings: 0
+        rows whose input differs from the parent text: 0
+        rows ok (output keeps the input): 2765
+        ok flag differs from recomputation: 0
+        rows with held-out student output: 53
+        labels without a parent row (not registered): 0
+  - schema_version: dataset-catalog/2.0
+    dataset_id: aishell2
+    version: punc-teacher-v1-20261029
+    languages:
+      - zh
+    tasks:
+      - asr
+    aliases: []
+    artifacts:
+      - name: train_rec_0
+        kind: lhotse-recordings
+        root_alias: aidc_data
+        relative_path: datasets/aishell2/versions/legacy-20260804/train_rec_0/aishell2_recordings_train.jsonl.gz
+        expected_bytes: 13768214
+        sha256: 6bc4d05821a5d287c0e9c9b402abc49ff87bebbd5f5d97770263bf6f0c732304
+        metadata:
+          record_count: 1009223
+          shared_with: aishell2@icefall-20260908
+      - name: train_supervisions_punc_teacher
+        kind: lhotse-supervisions
+        root_alias: aidc_data
+        relative_path: datasets/aishell2/versions/punc-teacher-v1-20261029/aishell2_supervisions_punc_teacher.jsonl.gz
+        expected_bytes: 449867
+        sha256: c84860a22ce04f6b3b114ce97f360bf0ff95e55d03603f7ef19f2f243402360c
+        metadata:
+          record_count: 8000
+          punctuated: false
+    splits:
+      train:
+        artifacts:
+          recordings:
+            - train_rec_0
+          supervisions:
+            - train_supervisions_punc_teacher
+        statistics:
+          records: 8000
+          duration_hours: 7.9952
+          duration_basis: sum of supervision durations
+    recipe_parameters:
+      adds:
+        - custom.punctuation_hint
+        - custom.punctuation_student
+        - custom.punctuation_teacher
+      rows: labelled utterances only
+    provenance:
+      preparation_status: prepared
+      lineage_status: exact
+      materialization: full
+      source: aishell2@icefall-20260908
+      description: aishell2@icefall-20260908 的 train 监督片段里的 Qwen3.8-27B 老师给 8000 句加的书面化标点（7985 句去掉标点后与输入一致，ok=true）：custom.punctuation_teacher 记输出 text、ok 和模型看到的无标点输入 input；custom.punctuation_hint.qwen 是提示用的 Qwen3-ASR 转写；其中 142 句是留出的评测句，另带学生 v1 的输出 custom.punctuation_student。这批句子用来微调 Qwen3-4B 学生，抽样见 amphiondata scripts/punctuation/build_teacher_set.py。只含这些句子，text 与父版本相同，不是标点后的文本；录音沿用父版本，不复制音频。中间产物，供复现和比较学生，不直接用于训练。脚本 scripts/punctuation/register_punc_intermediates.py。
+      facts:
+        rows: 8000
+        recording missing from the recordings: 0
+        rows whose input differs from the parent text: 0
+        rows ok (output keeps the input): 7985
+        ok flag differs from recomputation: 0
+        rows with held-out student output: 142
+        labels without a parent row (not registered): 0
+  - schema_version: dataset-catalog/2.0
+    dataset_id: aishell
+    version: punc-teacher-v1-20261029
+    languages:
+      - zh
+    tasks:
+      - asr
+    aliases: []
+    artifacts:
+      - name: train_rec_0
+        kind: lhotse-recordings
+        root_alias: aidc_data
+        relative_path: datasets/aishell/versions/legacy-20260804/train_rec_0/aishell_recordings_train.jsonl.gz
+        expected_bytes: 1697500
+        sha256: 2d490287e8d680e030bc276f8def0f15770f23441c7f7baf04e0b0fdb4cd372a
+        metadata:
+          record_count: 120098
+          shared_with: aishell@icefall-20260908
+      - name: train_supervisions_punc_teacher
+        kind: lhotse-supervisions
+        root_alias: aidc_data
+        relative_path: datasets/aishell/versions/punc-teacher-v1-20261029/aishell_supervisions_punc_teacher.jsonl.gz
+        expected_bytes: 188165
+        sha256: 956253617507b65293eb5d63d19106842ccc1f4210ffc4078badd14f39c72861
+        metadata:
+          record_count: 3000
+          punctuated: false
+    splits:
+      train:
+        artifacts:
+          recordings:
+            - train_rec_0
+          supervisions:
+            - train_supervisions_punc_teacher
+        statistics:
+          records: 3000
+          duration_hours: 3.7435
+          duration_basis: sum of supervision durations
+    recipe_parameters:
+      adds:
+        - custom.punctuation_hint
+        - custom.punctuation_student
+        - custom.punctuation_teacher
+      rows: labelled utterances only
+    provenance:
+      preparation_status: prepared
+      lineage_status: exact
+      materialization: full
+      source: aishell@icefall-20260908
+      description: aishell@icefall-20260908 的 train 监督片段里的 Qwen3.8-27B 老师给 3000 句加的书面化标点（2988 句去掉标点后与输入一致，ok=true）：custom.punctuation_teacher 记输出 text、ok 和模型看到的无标点输入 input；custom.punctuation_hint.qwen 是提示用的 Qwen3-ASR 转写；其中 59 句是留出的评测句，另带学生 v1 的输出 custom.punctuation_student。这批句子用来微调 Qwen3-4B 学生，抽样见 amphiondata scripts/punctuation/build_teacher_set.py。只含这些句子，text 与父版本相同，不是标点后的文本；录音沿用父版本，不复制音频。中间产物，供复现和比较学生，不直接用于训练。脚本 scripts/punctuation/register_punc_intermediates.py。
+      facts:
+        rows: 3000
+        recording missing from the recordings: 0
+        rows whose input differs from the parent text: 0
+        rows ok (output keeps the input): 2988
+        ok flag differs from recomputation: 0
+        rows with held-out student output: 59
+        labels without a parent row (not registered): 0
+  - schema_version: dataset-catalog/2.0
+    dataset_id: alimeeting_sdm
+    version: punc-teacher-v1-20261029
+    languages:
+      - zh
+    tasks:
+      - asr
+    aliases: []
+    artifacts:
+      - name: train_rec_0
+        kind: lhotse-recordings
+        root_alias: aidc_data
+        relative_path: datasets/alimeeting_sdm/versions/icefall-20260908/train_rec_0/alimeeting_sdm_recordings_train.jsonl.gz
+        expected_bytes: 4383
+        sha256: af6bca1dd4cecc7d6a431fc4c0538a3f6dc1f939db09c5769ac1d5a25309a465
+        metadata:
+          record_count: 209
+          shared_with: alimeeting_sdm@icefall-20260908
+      - name: train_supervisions_punc_teacher
+        kind: lhotse-supervisions
+        root_alias: aidc_data
+        relative_path: datasets/alimeeting_sdm/versions/punc-teacher-v1-20261029/alimeeting_sdm_supervisions_punc_teacher.jsonl.gz
+        expected_bytes: 194599
+        sha256: 6761bc437f6d0364e9adf7caf48b08738526f0774d15f621cf5c68ba9104a08b
+        metadata:
+          record_count: 3000
+          punctuated: false
+    splits:
+      train:
+        artifacts:
+          recordings:
+            - train_rec_0
+          supervisions:
+            - train_supervisions_punc_teacher
+        statistics:
+          records: 3000
+          duration_hours: 2.3452
+          duration_basis: sum of supervision durations
+    recipe_parameters:
+      adds:
+        - custom.punctuation_hint
+        - custom.punctuation_student
+        - custom.punctuation_teacher
+      rows: labelled utterances only
+    provenance:
+      preparation_status: prepared
+      lineage_status: exact
+      materialization: full
+      source: alimeeting_sdm@icefall-20260908
+      description: alimeeting_sdm@icefall-20260908 的 train 监督片段里的 Qwen3.8-27B 老师给 3000 句加的书面化标点（2780 句去掉标点后与输入一致，ok=true）：custom.punctuation_teacher 记输出 text、ok 和模型看到的无标点输入 input；custom.punctuation_hint.qwen 是提示用的 Qwen3-ASR 转写；其中 58 句是留出的评测句，另带学生 v1 的输出 custom.punctuation_student。这批句子用来微调 Qwen3-4B 学生，抽样见 amphiondata scripts/punctuation/build_teacher_set.py。只含这些句子，text 与父版本相同，不是标点后的文本；录音沿用父版本，不复制音频。中间产物，供复现和比较学生，不直接用于训练。脚本 scripts/punctuation/register_punc_intermediates.py。
+      facts:
+        rows: 3000
+        recording missing from the recordings: 0
+        rows whose input differs from the parent text: 0
+        rows ok (output keeps the input): 2780
+        ok flag differs from recomputation: 0
+        rows with held-out student output: 58
+        labels without a parent row (not registered): 0
+  - schema_version: dataset-catalog/2.0
+    dataset_id: magicdata_ramc
+    version: punc-teacher-v1-20261029
+    languages:
+      - zh
+    tasks:
+      - asr
+    aliases: []
+    artifacts:
+      - name: train_rec_0
+        kind: lhotse-recordings
+        root_alias: aidc_data
+        relative_path: datasets/magicdata_ramc/versions/legacy-20260804/train_rec_0/magicdata_ramc_recordings_train.jsonl.gz
+        expected_bytes: 4561
+        sha256: 9b3dbbe731f17f1821d92aad52cd2ae7d7d5333a4586e13b31c8a4378f79bcdc
+        metadata:
+          record_count: 289
+          shared_with: magicdata_ramc@icefall-20260908
+      - name: train_supervisions_punc_teacher
+        kind: lhotse-supervisions
+        root_alias: aidc_data
+        relative_path: datasets/magicdata_ramc/versions/punc-teacher-v1-20261029/magicdata_ramc_supervisions_punc_teacher.jsonl.gz
+        expected_bytes: 207114
+        sha256: 61f7009d9f10e30a20b6b21f39c0baecbb2c22a8e62da19cee9be5084742d212
+        metadata:
+          record_count: 3000
+          punctuated: false
+    splits:
+      train:
+        artifacts:
+          recordings:
+            - train_rec_0
+          supervisions:
+            - train_supervisions_punc_teacher
+        statistics:
+          records: 3000
+          duration_hours: 2.2717
+          duration_basis: sum of supervision durations
+    recipe_parameters:
+      adds:
+        - custom.punctuation_hint
+        - custom.punctuation_student
+        - custom.punctuation_teacher
+      rows: labelled utterances only
+    provenance:
+      preparation_status: prepared
+      lineage_status: exact
+      materialization: full
+      source: magicdata_ramc@icefall-20260908
+      description: magicdata_ramc@icefall-20260908 的 train 监督片段里的 Qwen3.8-27B 老师给 3000 句加的书面化标点（2851 句去掉标点后与输入一致，ok=true）：custom.punctuation_teacher 记输出 text、ok 和模型看到的无标点输入 input；custom.punctuation_hint.qwen 是提示用的 Qwen3-ASR 转写；其中 60 句是留出的评测句，另带学生 v1 的输出 custom.punctuation_student。这批句子用来微调 Qwen3-4B 学生，抽样见 amphiondata scripts/punctuation/build_teacher_set.py。只含这些句子，text 与父版本相同，不是标点后的文本；录音沿用父版本，不复制音频。中间产物，供复现和比较学生，不直接用于训练。脚本 scripts/punctuation/register_punc_intermediates.py。
+      facts:
+        rows: 3000
+        recording missing from the recordings: 0
+        rows whose input differs from the parent text: 0
+        rows ok (output keeps the input): 2851
+        ok flag differs from recomputation: 0
+        rows with held-out student output: 60
+        labels without a parent row (not registered): 0
+  - schema_version: dataset-catalog/2.0
+    dataset_id: wenetspeech_clean
+    version: punc-gold-v1-20261029
+    languages:
+      - zh
+    tasks:
+      - asr
+    aliases: []
+    artifacts:
+      - name: train_rec_0
+        kind: lhotse-recordings
+        root_alias: aidc_data
+        relative_path: datasets/wenetspeech/source/cos-backup-20261011/relocated/LHOTSE/WenetSpeech/data/manifests/wenetspeech_recordings_L.jsonl.gz
+        expected_bytes: 1464697
+        sha256: aad6b67a67486fa091b7f6da28715e7db378c1001186a9c6330e5692303f6e51
+        metadata:
+          record_count: 61127
+          shared_with: wenetspeech_clean@clean-v3-pass-20261027
+      - name: train_supervisions_punc_gold
+        kind: lhotse-supervisions
+        root_alias: aidc_data
+        relative_path: datasets/wenetspeech_clean/versions/punc-gold-v1-20261029/wenetspeech_clean_supervisions_punc_gold.jsonl.gz
+        expected_bytes: 10054
+        sha256: 821acce144e0ee0f15449a7c0d8198c4e86aab11c5a91cdfa5ff70f247aa0a35
+        metadata:
+          record_count: 120
+          punctuated: false
+    splits:
+      train:
+        artifacts:
+          recordings:
+            - train_rec_0
+          supervisions:
+            - train_supervisions_punc_gold
+        statistics:
+          records: 120
+          duration_hours: 0.0799
+          duration_basis: sum of supervision durations
+    recipe_parameters:
+      adds:
+        - custom.punctuation_gold
+        - custom.punctuation_hint
+      rows: labelled utterances only
+    provenance:
+      preparation_status: prepared
+      lineage_status: exact
+      materialization: full
+      source: wenetspeech_clean@clean-v3-pass-20261027
+      description: wenetspeech_clean@clean-v3-pass-20261027 的 train 监督片段里的 普通话标点试点的 120 句手写参照标点（规范 v1，逗号从紧）：custom.punctuation_gold.text 是参照，custom.punctuation_hint 记试点用的 Qwen3-ASR 与 FireRedPunc 带标点转写。只含这些句子，text 与父版本相同，不是标点后的文本；录音沿用父版本，不复制音频。中间产物，供复现和比较学生，不直接用于训练。脚本 scripts/punctuation/register_punc_intermediates.py。
+      facts:
+        rows: 120
+        recording missing from the recordings: 0
+        gold differs from the parent text beyond marks: 0
+        rows with held-out student output: 0
+        labels without a parent row (not registered): 0
+  - schema_version: dataset-catalog/2.0
+    dataset_id: kespeech
+    version: punc-gold-v1-20261029
+    languages:
+      - zh
+    tasks:
+      - asr
+    aliases: []
+    artifacts:
+      - name: train_rec_0
+        kind: lhotse-recordings
+        root_alias: aidc_data
+        relative_path: datasets/kespeech/versions/legacy-20260804/train_rec_0/kespeech-asr_recordings_train_phase1.jsonl.gz
+        expected_bytes: 9537983
+        sha256: f1ed873b6f03708d18e4983283aadd7fef3e06436575186e4141332d1a71e5a1
+        metadata:
+          record_count: 543634
+          shared_with: kespeech@icefall-20260908
+      - name: train_rec_1
+        kind: lhotse-recordings
+        root_alias: aidc_data
+        relative_path: datasets/kespeech/versions/legacy-20260804/train_rec_1/kespeech-asr_recordings_train_phase2.jsonl.gz
+        expected_bytes: 6027737
+        sha256: 89095d701ff3cc66ecea0b90d77829f41e6ace3d5fadcf928af6bc2769af02c2
+        metadata:
+          record_count: 340387
+          shared_with: kespeech@icefall-20260908
+      - name: train_supervisions_punc_gold
+        kind: lhotse-supervisions
+        root_alias: aidc_data
+        relative_path: datasets/kespeech/versions/punc-gold-v1-20261029/kespeech_supervisions_punc_gold.jsonl.gz
+        expected_bytes: 1828
+        sha256: 7890dfe205eaf7b467f9d87cc0e64c7f4357516960536c8d629cb1d684c37a39
+        metadata:
+          record_count: 20
+          punctuated: false
+    splits:
+      train:
+        artifacts:
+          recordings:
+            - train_rec_0
+            - train_rec_1
+          supervisions:
+            - train_supervisions_punc_gold
+        statistics:
+          records: 20
+          duration_hours: 0.0297
+          duration_basis: sum of supervision durations
+    recipe_parameters:
+      adds:
+        - custom.punctuation_gold
+        - custom.punctuation_hint
+      rows: labelled utterances only
+    provenance:
+      preparation_status: prepared
+      lineage_status: exact
+      materialization: full
+      source: kespeech@icefall-20260908
+      description: kespeech@icefall-20260908 的 train 监督片段里的 普通话标点试点的 20 句手写参照标点（规范 v1，逗号从紧）：custom.punctuation_gold.text 是参照，custom.punctuation_hint 记试点用的 Qwen3-ASR 与 FireRedPunc 带标点转写。只含这些句子，text 与父版本相同，不是标点后的文本；录音沿用父版本，不复制音频。中间产物，供复现和比较学生，不直接用于训练。脚本 scripts/punctuation/register_punc_intermediates.py。
+      facts:
+        rows: 20
+        recording missing from the recordings: 0
+        gold differs from the parent text beyond marks: 0
+        rows with held-out student output: 0
+        labels without a parent row (not registered): 0
+  - schema_version: dataset-catalog/2.0
+    dataset_id: aishell2
+    version: punc-gold-v1-20261029
+    languages:
+      - zh
+    tasks:
+      - asr
+    aliases: []
+    artifacts:
+      - name: train_rec_0
+        kind: lhotse-recordings
+        root_alias: aidc_data
+        relative_path: datasets/aishell2/versions/legacy-20260804/train_rec_0/aishell2_recordings_train.jsonl.gz
+        expected_bytes: 13768214
+        sha256: 6bc4d05821a5d287c0e9c9b402abc49ff87bebbd5f5d97770263bf6f0c732304
+        metadata:
+          record_count: 1009223
+          shared_with: aishell2@icefall-20260908
+      - name: train_supervisions_punc_gold
+        kind: lhotse-supervisions
+        root_alias: aidc_data
+        relative_path: datasets/aishell2/versions/punc-gold-v1-20261029/aishell2_supervisions_punc_gold.jsonl.gz
+        expected_bytes: 1557
+        sha256: e188fbb05e32b9d03159751ae0487e93ebb26c1a115f48e68582d26a151af161
+        metadata:
+          record_count: 20
+          punctuated: false
+    splits:
+      train:
+        artifacts:
+          recordings:
+            - train_rec_0
+          supervisions:
+            - train_supervisions_punc_gold
+        statistics:
+          records: 20
+          duration_hours: 0.0212
+          duration_basis: sum of supervision durations
+    recipe_parameters:
+      adds:
+        - custom.punctuation_gold
+        - custom.punctuation_hint
+      rows: labelled utterances only
+    provenance:
+      preparation_status: prepared
+      lineage_status: exact
+      materialization: full
+      source: aishell2@icefall-20260908
+      description: aishell2@icefall-20260908 的 train 监督片段里的 普通话标点试点的 20 句手写参照标点（规范 v1，逗号从紧）：custom.punctuation_gold.text 是参照，custom.punctuation_hint 记试点用的 Qwen3-ASR 与 FireRedPunc 带标点转写。只含这些句子，text 与父版本相同，不是标点后的文本；录音沿用父版本，不复制音频。中间产物，供复现和比较学生，不直接用于训练。脚本 scripts/punctuation/register_punc_intermediates.py。
+      facts:
+        rows: 20
+        recording missing from the recordings: 0
+        gold differs from the parent text beyond marks: 0
+        rows with held-out student output: 0
+        labels without a parent row (not registered): 0
+  - schema_version: dataset-catalog/2.0
+    dataset_id: aishell
+    version: punc-gold-v1-20261029
+    languages:
+      - zh
+    tasks:
+      - asr
+    aliases: []
+    artifacts:
+      - name: train_rec_0
+        kind: lhotse-recordings
+        root_alias: aidc_data
+        relative_path: datasets/aishell/versions/legacy-20260804/train_rec_0/aishell_recordings_train.jsonl.gz
+        expected_bytes: 1697500
+        sha256: 2d490287e8d680e030bc276f8def0f15770f23441c7f7baf04e0b0fdb4cd372a
+        metadata:
+          record_count: 120098
+          shared_with: aishell@icefall-20260908
+      - name: train_supervisions_punc_gold
+        kind: lhotse-supervisions
+        root_alias: aidc_data
+        relative_path: datasets/aishell/versions/punc-gold-v1-20261029/aishell_supervisions_punc_gold.jsonl.gz
+        expected_bytes: 1002
+        sha256: cd21955ee77b1eb34697925898485dd03a24c459390434aa2d934488f9802b98
+        metadata:
+          record_count: 10
+          punctuated: false
+    splits:
+      train:
+        artifacts:
+          recordings:
+            - train_rec_0
+          supervisions:
+            - train_supervisions_punc_gold
+        statistics:
+          records: 10
+          duration_hours: 0.0133
+          duration_basis: sum of supervision durations
+    recipe_parameters:
+      adds:
+        - custom.punctuation_gold
+        - custom.punctuation_hint
+      rows: labelled utterances only
+    provenance:
+      preparation_status: prepared
+      lineage_status: exact
+      materialization: full
+      source: aishell@icefall-20260908
+      description: aishell@icefall-20260908 的 train 监督片段里的 普通话标点试点的 10 句手写参照标点（规范 v1，逗号从紧）：custom.punctuation_gold.text 是参照，custom.punctuation_hint 记试点用的 Qwen3-ASR 与 FireRedPunc 带标点转写。只含这些句子，text 与父版本相同，不是标点后的文本；录音沿用父版本，不复制音频。中间产物，供复现和比较学生，不直接用于训练。脚本 scripts/punctuation/register_punc_intermediates.py。
+      facts:
+        rows: 10
+        recording missing from the recordings: 0
+        gold differs from the parent text beyond marks: 0
+        rows with held-out student output: 0
+        labels without a parent row (not registered): 0
+  - schema_version: dataset-catalog/2.0
+    dataset_id: magicdata_ramc
+    version: punc-gold-v1-20261029
+    languages:
+      - zh
+    tasks:
+      - asr
+    aliases: []
+    artifacts:
+      - name: train_rec_0
+        kind: lhotse-recordings
+        root_alias: aidc_data
+        relative_path: datasets/magicdata_ramc/versions/legacy-20260804/train_rec_0/magicdata_ramc_recordings_train.jsonl.gz
+        expected_bytes: 4561
+        sha256: 9b3dbbe731f17f1821d92aad52cd2ae7d7d5333a4586e13b31c8a4378f79bcdc
+        metadata:
+          record_count: 289
+          shared_with: magicdata_ramc@icefall-20260908
+      - name: train_supervisions_punc_gold
+        kind: lhotse-supervisions
+        root_alias: aidc_data
+        relative_path: datasets/magicdata_ramc/versions/punc-gold-v1-20261029/magicdata_ramc_supervisions_punc_gold.jsonl.gz
+        expected_bytes: 1543
+        sha256: c7a503a3e3f5d9bad0d3e14f893e24d0b03437a934cdd42c8a8e2545a0e59f8b
+        metadata:
+          record_count: 15
+          punctuated: false
+    splits:
+      train:
+        artifacts:
+          recordings:
+            - train_rec_0
+          supervisions:
+            - train_supervisions_punc_gold
+        statistics:
+          records: 15
+          duration_hours: 0.0094
+          duration_basis: sum of supervision durations
+    recipe_parameters:
+      adds:
+        - custom.punctuation_gold
+        - custom.punctuation_hint
+      rows: labelled utterances only
+    provenance:
+      preparation_status: prepared
+      lineage_status: exact
+      materialization: full
+      source: magicdata_ramc@icefall-20260908
+      description: magicdata_ramc@icefall-20260908 的 train 监督片段里的 普通话标点试点的 15 句手写参照标点（规范 v1，逗号从紧）：custom.punctuation_gold.text 是参照，custom.punctuation_hint 记试点用的 Qwen3-ASR 与 FireRedPunc 带标点转写。只含这些句子，text 与父版本相同，不是标点后的文本；录音沿用父版本，不复制音频。中间产物，供复现和比较学生，不直接用于训练。脚本 scripts/punctuation/register_punc_intermediates.py。
+      facts:
+        rows: 15
+        recording missing from the recordings: 0
+        gold differs from the parent text beyond marks: 0
+        rows with held-out student output: 0
+        labels without a parent row (not registered): 0
+  - schema_version: dataset-catalog/2.0
+    dataset_id: alimeeting_sdm
+    version: punc-gold-v1-20261029
+    languages:
+      - zh
+    tasks:
+      - asr
+    aliases: []
+    artifacts:
+      - name: train_rec_0
+        kind: lhotse-recordings
+        root_alias: aidc_data
+        relative_path: datasets/alimeeting_sdm/versions/icefall-20260908/train_rec_0/alimeeting_sdm_recordings_train.jsonl.gz
+        expected_bytes: 4383
+        sha256: af6bca1dd4cecc7d6a431fc4c0538a3f6dc1f939db09c5769ac1d5a25309a465
+        metadata:
+          record_count: 209
+          shared_with: alimeeting_sdm@icefall-20260908
+      - name: train_supervisions_punc_gold
+        kind: lhotse-supervisions
+        root_alias: aidc_data
+        relative_path: datasets/alimeeting_sdm/versions/punc-gold-v1-20261029/alimeeting_sdm_supervisions_punc_gold.jsonl.gz
+        expected_bytes: 1570
+        sha256: b50a35fe824badb7914eccde94d7de2fb2c83c0fe5e09afbda376f95d2ce1df4
+        metadata:
+          record_count: 15
+          punctuated: false
+    splits:
+      train:
+        artifacts:
+          recordings:
+            - train_rec_0
+          supervisions:
+            - train_supervisions_punc_gold
+        statistics:
+          records: 15
+          duration_hours: 0.014
+          duration_basis: sum of supervision durations
+    recipe_parameters:
+      adds:
+        - custom.punctuation_gold
+        - custom.punctuation_hint
+      rows: labelled utterances only
+    provenance:
+      preparation_status: prepared
+      lineage_status: exact
+      materialization: full
+      source: alimeeting_sdm@icefall-20260908
+      description: alimeeting_sdm@icefall-20260908 的 train 监督片段里的 普通话标点试点的 15 句手写参照标点（规范 v1，逗号从紧）：custom.punctuation_gold.text 是参照，custom.punctuation_hint 记试点用的 Qwen3-ASR 与 FireRedPunc 带标点转写。只含这些句子，text 与父版本相同，不是标点后的文本；录音沿用父版本，不复制音频。中间产物，供复现和比较学生，不直接用于训练。脚本 scripts/punctuation/register_punc_intermediates.py。
+      facts:
+        rows: 15
+        recording missing from the recordings: 0
+        gold differs from the parent text beyond marks: 0
+        rows with held-out student output: 0
+        labels without a parent row (not registered): 0
+  - schema_version: dataset-catalog/2.0
+    dataset_id: gigaspeech
+    version: punc-teacher-v1-20261102
+    languages:
+      - en
+    tasks:
+      - asr
+    aliases: []
+    artifacts:
+      - name: train_rec_0
+        kind: lhotse-recordings
+        root_alias: aidc_data
+        relative_path: datasets/gigaspeech/versions/legacy-20260804/train_rec_0/gigaspeech_recordings_XL.jsonl.gz
+        expected_bytes: 631262
+        sha256: b1e711b713e19395b118482936f2ea2bec3ad22bc4dbd875c1217001991c949c
+        metadata:
+          record_count: 37972
+          shared_with: gigaspeech@legacy-20260804
+      - name: train_supervisions_punc_teacher
+        kind: lhotse-supervisions
+        root_alias: aidc_data
+        relative_path: datasets/gigaspeech/versions/punc-teacher-v1-20261102/gigaspeech_supervisions_punc_teacher.jsonl.gz
+        expected_bytes: 3017161
+        sha256: 12f08fd01c174fabd87384ce81fbfd95f5541754a02837b762781466e27816d7
+        metadata:
+          record_count: 45000
+          punctuated: false
+    splits:
+      train:
+        artifacts:
+          recordings:
+            - train_rec_0
+          supervisions:
+            - train_supervisions_punc_teacher
+        statistics:
+          records: 45000
+          duration_hours: 54.7031
+          duration_basis: sum of supervision durations
+    recipe_parameters:
+      adds:
+        - custom.punctuation_teacher
+      rows: labelled utterances only
+    provenance:
+      preparation_status: prepared
+      lineage_status: exact
+      materialization: full
+      source: gigaspeech@legacy-20260804
+      description: gigaspeech@legacy-20260804 的 train 监督片段里的 Qwen3.8-27B 老师给 45000 句加的英文标点（44168 句去掉标点后与输入一致，ok=true）：custom.punctuation_teacher 记输出 text、ok 和模型看到的无标点输入 input。这批句子用来微调 Qwen3-4B 学生，抽样见 amphiondata scripts/punctuation/build_teacher_set_en.py。只含这些句子，text 与父版本相同，不是标点后的文本；录音沿用父版本，不复制音频。中间产物，供复现和比较学生，不直接用于训练。脚本 scripts/punctuation/register_punc_intermediates.py。
+      facts:
+        rows: 45000
+        recording missing from the recordings: 0
+        rows whose input differs from the parent text: 0
+        rows ok (output keeps the input): 44168
+        ok flag differs from recomputation: 2
+        rows with held-out student output: 0
+        labels without a parent row (not registered): 0
+  - schema_version: dataset-catalog/2.0
+    dataset_id: common_voice_en
+    version: punc-teacher-v1-20261102
+    languages:
+      - en
+    tasks:
+      - asr
+    aliases: []
+    artifacts:
+      - name: train_rec_0
+        kind: lhotse-recordings
+        root_alias: aidc_data
+        relative_path: datasets/common_voice_en/versions/legacy-20260804/train_rec_0/cv-en_recordings_train.jsonl.gz
+        expected_bytes: 14073476
+        sha256: 859d664439690a58f1f400611eb5b80c127891388cef7f7170959f3137578471
+        metadata:
+          record_count: 1143276
+          shared_with: common_voice_en@legacy-20260804
+      - name: train_supervisions_punc_teacher
+        kind: lhotse-supervisions
+        root_alias: aidc_data
+        relative_path: datasets/common_voice_en/versions/punc-teacher-v1-20261102/common_voice_en_supervisions_punc_teacher.jsonl.gz
+        expected_bytes: 2434446
+        sha256: a080ada2f0df950e641d914efad2667d80b8c82b3839404aad810ebc3029d134
+        metadata:
+          record_count: 25000
+          punctuated: false
+    splits:
+      train:
+        artifacts:
+          recordings:
+            - train_rec_0
+          supervisions:
+            - train_supervisions_punc_teacher
+        statistics:
+          records: 25000
+          duration_hours: 39.4455
+          duration_basis: sum of supervision durations
+    recipe_parameters:
+      adds:
+        - custom.punctuation_teacher
+      rows: labelled utterances only
+    provenance:
+      preparation_status: prepared
+      lineage_status: exact
+      materialization: full
+      source: common_voice_en@legacy-20260804
+      description: common_voice_en@legacy-20260804 的 train 监督片段里的 Qwen3.8-27B 老师给 25000 句加的英文标点（24624 句去掉标点后与输入一致，ok=true）：custom.punctuation_teacher 记输出 text、ok 和模型看到的无标点输入 input。这批句子用来微调 Qwen3-4B 学生，抽样见 amphiondata scripts/punctuation/build_teacher_set_en.py。只含这些句子，text 与父版本相同，不是标点后的文本；录音沿用父版本，不复制音频。中间产物，供复现和比较学生，不直接用于训练。脚本 scripts/punctuation/register_punc_intermediates.py。
+      facts:
+        rows: 25000
+        recording missing from the recordings: 0
+        rows whose input differs from the parent text: 0
+        rows ok (output keeps the input): 24624
+        ok flag differs from recomputation: 0
+        rows with held-out student output: 0
+        labels without a parent row (not registered): 0
+  - schema_version: dataset-catalog/2.0
+    dataset_id: librispeech
+    version: punc-teacher-v1-20261102
+    languages:
+      - en
+    tasks:
+      - asr
+    aliases: []
+    artifacts:
+      - name: train_rec_0
+        kind: lhotse-recordings
+        root_alias: aidc_data
+        relative_path: datasets/librispeech/versions/legacy-20260804/train_rec_0/librispeech_recordings_train-clean-100.jsonl.gz
+        expected_bytes: 369305
+        sha256: 69945377d72f3eee2567ec086f524a741b0150e264eadc890e23660523604564
+        metadata:
+          record_count: 28539
+          shared_with: librispeech@legacy-20260804
+      - name: train_rec_1
+        kind: lhotse-recordings
+        root_alias: aidc_data
+        relative_path: datasets/librispeech/versions/legacy-20260804/train_rec_1/librispeech_recordings_train-clean-360.jsonl.gz
+        expected_bytes: 1346941
+        sha256: 2b24d4e9846e8f84ea192a45fbbb21ec90d168574791e3e8536dd1a8b6f88784
+        metadata:
+          record_count: 104014
+          shared_with: librispeech@legacy-20260804
+      - name: train_rec_2
+        kind: lhotse-recordings
+        root_alias: aidc_data
+        relative_path: datasets/librispeech/versions/legacy-20260804/train_rec_2/librispeech_recordings_train-other-500.jsonl.gz
+        expected_bytes: 1938911
+        sha256: 1f919ed6fadde38df5b59248facd874685f09f5fc80f3d94c0c0e877118bddc6
+        metadata:
+          record_count: 148688
+          shared_with: librispeech@legacy-20260804
+      - name: train_supervisions_punc_teacher
+        kind: lhotse-supervisions
+        root_alias: aidc_data
+        relative_path: datasets/librispeech/versions/punc-teacher-v1-20261102/librispeech_supervisions_punc_teacher.jsonl.gz
+        expected_bytes: 1945064
+        sha256: 6755c7521cf5ad169e3beab683ffba2479a6ac4cc20603e370a1237a3fb31a3b
+        metadata:
+          record_count: 15000
+          punctuated: false
+    splits:
+      train:
+        artifacts:
+          recordings:
+            - train_rec_0
+            - train_rec_1
+            - train_rec_2
+          supervisions:
+            - train_supervisions_punc_teacher
+        statistics:
+          records: 15000
+          duration_hours: 51.2218
+          duration_basis: sum of supervision durations
+    recipe_parameters:
+      adds:
+        - custom.punctuation_teacher
+      rows: labelled utterances only
+    provenance:
+      preparation_status: prepared
+      lineage_status: exact
+      materialization: full
+      source: librispeech@legacy-20260804
+      description: librispeech@legacy-20260804 的 train 监督片段里的 Qwen3.8-27B 老师给 15000 句加的英文标点（14436 句去掉标点后与输入一致，ok=true）：custom.punctuation_teacher 记输出 text、ok 和模型看到的无标点输入 input。这批句子用来微调 Qwen3-4B 学生，抽样见 amphiondata scripts/punctuation/build_teacher_set_en.py。只含这些句子，text 与父版本相同，不是标点后的文本；录音沿用父版本，不复制音频。中间产物，供复现和比较学生，不直接用于训练。脚本 scripts/punctuation/register_punc_intermediates.py。
+      facts:
+        rows: 15000
+        recording missing from the recordings: 0
+        rows whose input differs from the parent text: 0
+        rows ok (output keeps the input): 14436
+        ok flag differs from recomputation: 0
+        rows with held-out student output: 0
+        labels without a parent row (not registered): 0

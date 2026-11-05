@@ -2,32 +2,113 @@
     dataset_id: coraa_mupe
     version: hf-437966f103b3
     languages:
-      - pt-BR
+      - pt
     tasks:
       - asr
     aliases: []
     artifacts:
       - name: source
         kind: hf-dataset-snapshot
-        root_alias: multilingual
-        relative_path: pt/coraa_mupe/source/hf-437966f103b3
+        root_alias: coraa_mupe
+        relative_path: source/hf-437966f103b3
+        metadata:
+          file_count: 8
+          expected_bytes: 34317102130
+          tree_sha256: f75d9124e15a55f19dee3fcc88e9973b2294a227d82fa0b50036ec705f114df5
+      - name: train_audio_archive
+        kind: source-archive
+        root_alias: coraa_mupe
+        relative_path: source/hf-437966f103b3/train.tar.gz
+        expected_bytes: 29978419935
+        sha256: 778c3a8883812844f799666176d5b792a6cd09f380b2905fd62b469f35582f33
+      - name: train_metadata
+        kind: transcript-table
+        root_alias: coraa_mupe
+        relative_path: source/hf-437966f103b3/train.csv
+        expected_bytes: 80420701
+        sha256: 7d79c5857fc9bb5716e71c84ff55b0a38bcc2343daae2fec781e8b46ab05218c
+      - name: validation_audio_archive
+        kind: source-archive
+        root_alias: coraa_mupe
+        relative_path: source/hf-437966f103b3/validation.tar.gz
+        expected_bytes: 1126304583
+        sha256: 4d822be9f332d487aa33e13b7fe72f3cb0ae1b2ebe554cb05a37641f71c8a788
+      - name: validation_metadata
+        kind: transcript-table
+        root_alias: coraa_mupe
+        relative_path: source/hf-437966f103b3/validation.csv
+        expected_bytes: 2979621
+        sha256: 0f3f8f25c0d67ebef30ea4f05e71c5620c6096e5cd65e9a3e13c541c6284dcdd
+      - name: test_audio_archive
+        kind: source-archive
+        root_alias: coraa_mupe
+        relative_path: source/hf-437966f103b3/test.tar.gz
+        expected_bytes: 3120181757
+        sha256: b73017e9e92a9ebce4dbf1bed437cb79634f71d8250c762e2584651a3e0676fe
+      - name: test_metadata
+        kind: transcript-table
+        root_alias: coraa_mupe
+        relative_path: source/hf-437966f103b3/test.csv
+        expected_bytes: 8786945
+        sha256: bbed2f7a3776a720e5f2e9f31ee414010dff89035dc4cf158da812c2c2f645d7
       - name: download_state
         kind: dataset-state
-        root_alias: multilingual
-        relative_path: downloads/language-expansion-20260911/coraa_mupe/state.json
+        root_alias: coraa_mupe
+        relative_path: versions/hf-437966f103b3/download_state/state.json
+        expected_bytes: 941
+        sha256: 4c264379d7199999639f3e8e73ac99f699bcf9e3ed3520bb2aaf2858e623c873
     splits:
-      all:
+      train:
         artifacts:
           source:
             - source
+          audio_archive:
+            - train_audio_archive
+          metadata:
+            - train_metadata
+        statistics:
+          count: 276881
+          speakers: 368
+          duration_hours: 319.9926
+          duration_basis: sum of upstream train.csv duration column in seconds; pinned upstream file hashes verified
+      validation:
+        artifacts:
+          source:
+            - source
+          audio_archive:
+            - validation_audio_archive
+          metadata:
+            - validation_metadata
+        statistics:
+          count: 9894
+          speakers: 21
+          duration_hours: 12.2488
+          duration_basis: sum of upstream validation.csv duration column in seconds; pinned upstream file hashes verified
+      test:
+        artifacts:
+          source:
+            - source
+          audio_archive:
+            - test_audio_archive
+          metadata:
+            - test_metadata
+        statistics:
+          count: 30971
+          speakers: 35
+          duration_hours: 32.9093
+          duration_basis: sum of upstream test.csv duration column in seconds; pinned upstream file hashes verified
     provenance:
+      summary: 巴西葡语生活访谈（CORAA MUPE）
       source: Hugging Face
-      url: https://huggingface.co/datasets/nilc-nlp/CORAA-MUPE-ASR-GZ
-      license: cc-by-sa-4.0
-      inventory_status: download_planned
-      description: 巴西葡语生活访谈；下载完整训练、验证和测试归档。
-      download_scope: Complete source archives, metadata, and official train/validation/test splits
-      expected_download_files: 9
-      expected_download_bytes: 34317104483
       source_id: nilc-nlp/CORAA-MUPE-ASR-GZ
       revision: 437966f103b34f21611600e0ee283c446ba667a8
+      url: https://huggingface.co/datasets/nilc-nlp/CORAA-MUPE-ASR-GZ
+      download_mirror: https://hf-mirror.com
+      license: cc-by-sa-4.0
+      locale: pt-BR
+      description: 巴西葡语人生经历访谈（Museu da Pessoa），官方 train/validation/test 三个划分完整下载。
+      download_scope: Complete CORAA-MUPE-ASR-GZ release (train/validation/test archives and metadata)
+      expected_download_files: 8
+      expected_download_bytes: 34317102130
+      integrity: verified
+      local_scan_date: '2026-11-03'

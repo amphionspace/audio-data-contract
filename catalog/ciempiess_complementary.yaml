@@ -1,0 +1,49 @@
+  - schema_version: dataset-catalog/2.0
+    dataset_id: ciempiess_complementary
+    version: hf-3401a78c38d7
+    languages:
+      - es
+    tasks:
+      - asr
+    aliases: []
+    artifacts:
+      - name: source
+        kind: hf-dataset-snapshot
+        root_alias: ciempiess_complementary
+        relative_path: source/hf-3401a78c38d7
+        metadata:
+          file_count: 2
+          expected_bytes: 60441250
+          tree_sha256: 94fea3c1d43f5542440ef2d2ad026a49e6bc6a831a487c7dc6bdf9da46dcee0d
+      - name: download_state
+        kind: dataset-state
+        root_alias: ciempiess_complementary
+        relative_path: versions/hf-3401a78c38d7/download_state/state.json
+        expected_bytes: 941
+        sha256: 42dea3e633a232ddcb338b7fa48d064e2ed4707c9051339cf38e27cf9ec1bce5
+    splits:
+      train:
+        artifacts:
+          source:
+            - source
+        statistics:
+          count: 520
+          speakers: 20
+          duration_hours: 0.9434
+          duration_basis: sum of upstream train Parquet duration column in seconds; embedded audio; pinned upstream file hashes verified
+    provenance:
+      source: Hugging Face
+      source_id: ciempiess/ciempiess_complementary
+      revision: 3401a78c38d760ac0d0087d406623bd5d2c32fb6
+      url: https://huggingface.co/datasets/ciempiess/ciempiess_complementary
+      download_mirror: https://hf-mirror.com
+      description: 墨西哥中部口音的孤立词朗读，按音素均衡挑词，用来补足少见音素。
+      locale: es-MX
+      dataset_family: ciempiess
+      license:
+        - cc-by-sa-4.0
+      download_scope: Complete CIEMPIESS COMPLEMENTARY release
+      expected_download_files: 2
+      expected_download_bytes: 60441250
+      integrity: verified
+      local_scan_date: '2026-11-03'

@@ -1,0 +1,417 @@
+# 人工听审答案各版本的 view：只保留被听过的记录并写入 metadata.listening_review
+  - schema_version: dataset-view/1.0
+    view_id: emilia2_zh_dialogue_diarize/listening-review
+    version: listening-review-v1-20261016
+    source:
+      dataset_id: emilia2_zh_dialogue_diarize
+      version: moss-transcribe-diarize-0.9B
+    result:
+      dataset_id: emilia2_zh_dialogue_diarize
+      version: listening-review-v1-20261016
+    materialization: full
+    lineage_status: exact
+    transforms:
+      - name: listening-review
+        version: v1
+        kind: annotate
+        writes:
+          - $membership
+          - metadata.listening_review
+        parameters:
+          kept: only the rows whose record or window id has a listening-review answer
+          rows: 34
+          answers: 34
+          answers_attached: 34
+          answers_evidence_only: 0
+          reviews:
+            emilia2-speaker-merge-20261014: 10
+            emilia2-speaker-split-20261015: 24
+          tool: scripts/label_registration/register_listening_review.py
+          label_inputs:
+            - file: emilia2-zh-dialogue-diarize-20261010/listen-review/speaker-merge-20261014/spec.json
+              sha256: 5aa6d8c6d35398aa685bfd5ddb8ac0c13a56a20f9132c8115fe20b62410bd47d
+            - file: emilia2-zh-dialogue-diarize-20261010/listen-review/speaker-merge-20261014/answers.json
+              sha256: 5048e46d54a7ede4450c0add14ca7e09d57bbcb04737960f0a58c74aa27de76d
+            - file: similar-voice-views-20261014/listen-review/speaker-split-20261015/spec.json
+              sha256: 0b9e4ab0a9117379af1807d5cec7ae43a935f1e77b51415998a2c591b1391d08
+            - file: similar-voice-views-20261014/listen-review/speaker-split-20261015/answers.json
+              sha256: 5afdc4911bf467f63f2bf26bf3baa010e8a459dba52431b09319ea840f2ee1eb
+    provenance:
+      registered_at: '2026-11-03'
+  - schema_version: dataset-view/1.0
+    view_id: emilia2_zh_dialogue_diarize/listening-review
+    version: listening-review-v1-20261014
+    source:
+      dataset_id: emilia2_zh_dialogue_diarize
+      version: moss-transcribe-diarize-0.9B-pro4plus
+    result:
+      dataset_id: emilia2_zh_dialogue_diarize
+      version: listening-review-v1-20261014
+    materialization: full
+    lineage_status: exact
+    transforms:
+      - name: listening-review
+        version: v1
+        kind: annotate
+        writes:
+          - $membership
+          - metadata.listening_review
+        parameters:
+          kept: only the rows whose record or window id has a listening-review answer
+          rows: 11
+          answers: 12
+          answers_attached: 11
+          answers_evidence_only: 1
+          reviews:
+            emilia2-pro-diff-20261014: 10
+            emilia2-pro-overlap-20261014: 1
+            listen-review-20261012: 1
+          tool: scripts/label_registration/register_listening_review.py
+          label_inputs:
+            - file: emilia2-zh-dialogue-diarize-20261010/listen-review/pro-diff-20261014/review.json
+              sha256: 931bd97ae8af838d9aa539ac091801e97bb8719bbb70ed80be6562d76acc49cc
+            - file: emilia2-zh-dialogue-diarize-20261010/listen-review/pro-diff-20261014/answers.json
+              sha256: 8bed1712e3f182c09912d223ca71bc3e572cca7569e4ae25fd08416dc7206243
+            - file: emilia2-zh-dialogue-diarize-20261010/listen-review/pro-overlap-20261014/review.json
+              sha256: 166d588374d74f889d742d54b95996861768ebd06dd7624da8f7ea3767f8ac53
+            - file: emilia2-zh-dialogue-diarize-20261010/listen-review/pro-overlap-20261014/answers.json
+              sha256: 1a4bab614ab070938bc1e15e8276c42c22260be1572eeb3207dffb51886b52a8
+            - file: listen-review-20261012/README.md
+              sha256: c4dcd35856b6c79a08a9dad0bb6f2bc1be559b2d9fdb7817c6330288227e1347
+    provenance:
+      registered_at: '2026-11-03'
+  - schema_version: dataset-view/1.0
+    view_id: magicdata_ramc/listening-review
+    version: listening-review-v1-20261027
+    source:
+      dataset_id: magicdata_ramc
+      version: speaker-identity-v1-20261028
+    result:
+      dataset_id: magicdata_ramc
+      version: listening-review-v1-20261027
+    materialization: full
+    lineage_status: exact
+    transforms:
+      - name: listening-review
+        version: v1
+        kind: annotate
+        writes:
+          - $membership
+          - metadata.listening_review
+        parameters:
+          kept: only the rows whose record or window id has a listening-review answer
+          rows: 63
+          answers: 34
+          answers_attached: 34
+          answers_evidence_only: 0
+          reviews:
+            ramc-voice-identities-20261028: 34
+          tool: scripts/label_registration/register_listening_review.py
+          label_inputs:
+            - file: ramc-pools/listen/page/answers.json
+              sha256: e136e3e1dca6b22526dfaf4c0c89d4687f175b365ddf9c5f3d441c6aab851fa3
+            - file: ramc-pools/listen/key.json
+              sha256: 56bb06f444ddb94f525b19219a7de0e6c6df7cde42b8a3660aa137b6f6c1b4ee
+            - file: ts_scene_pool/source/ramc-voice-identities-20261028/listening-20261028.json
+              sha256: 2bd92292ad327b46cbb9f1cbe62e3f6ea47c3d7aa144f2719cdc01c91aa15f21
+    provenance:
+      registered_at: '2026-11-03'
+  - schema_version: dataset-view/1.0
+    view_id: police_terms_single/listening-review
+    version: listening-review-v1-20261022
+    source:
+      dataset_id: police_terms_single
+      version: v1-20261022
+    result:
+      dataset_id: police_terms_single
+      version: listening-review-v1-20261022
+    materialization: full
+    lineage_status: exact
+    transforms:
+      - name: listening-review
+        version: v1
+        kind: annotate
+        writes:
+          - $membership
+          - metadata.listening_review
+        parameters:
+          kept: only the rows whose record or window id has a listening-review answer
+          rows: 7
+          answers: 10
+          answers_attached: 7
+          answers_evidence_only: 3
+          reviews:
+            police-terms-single-20261022: 10
+          tool: scripts/label_registration/register_listening_review.py
+          label_inputs:
+            - file: police-terms-single-20261022/listen-review/review-20261022/review.json
+              sha256: 804b556862c22defb055fa5a16714e7a0fd0cac92749a082902432c3f149402c
+            - file: police-terms-single-20261022/listen-review/review-20261022/answers.json
+              sha256: d9af2310ee62801e84150441eb746bc7f8b6ec1a8b1e0d5750f70f6719e5fc28
+    provenance:
+      registered_at: '2026-11-03'
+  - schema_version: dataset-view/1.0
+    view_id: police_terms_single_train/listening-review
+    version: listening-review-v1-20261024
+    source:
+      dataset_id: police_terms_single_train
+      version: v1-20261023
+    result:
+      dataset_id: police_terms_single_train
+      version: listening-review-v1-20261024
+    materialization: full
+    lineage_status: exact
+    transforms:
+      - name: listening-review
+        version: v1
+        kind: annotate
+        writes:
+          - $membership
+          - metadata.listening_review
+        parameters:
+          kept: only the rows whose record or window id has a listening-review answer
+          rows: 10
+          answers: 10
+          answers_attached: 10
+          answers_evidence_only: 0
+          reviews:
+            police-terms-single-train-20261023: 10
+          tool: scripts/label_registration/register_listening_review.py
+          label_inputs:
+            - file: police-terms-single-train-20261023/listen-review/review-20261023/review.json
+              sha256: eaafcc18c76b15c98ded3999019d8dc39cd8009d6e0364eeb94a519e6deef8d6
+            - file: police-terms-single-train-20261023/listen-review/review-20261023/answers.json
+              sha256: ea635e909fd1e5d962b32e2e91539f6e14cf6e7a42b5b05fa0b8b23692851278
+    provenance:
+      registered_at: '2026-11-03'
+  - schema_version: dataset-view/1.0
+    view_id: ts_asr_benchmark/listening-review
+    version: listening-review-v1-20261026
+    source:
+      dataset_id: ts_asr_benchmark
+      version: v4-20261022
+    result:
+      dataset_id: ts_asr_benchmark
+      version: listening-review-v1-20261026
+    materialization: full
+    lineage_status: exact
+    transforms:
+      - name: listening-review
+        version: v1
+        kind: annotate
+        writes:
+          - $membership
+          - metadata.listening_review
+        parameters:
+          kept: only the rows whose record or window id has a listening-review answer
+          rows: 9
+          answers: 9
+          answers_attached: 9
+          answers_evidence_only: 0
+          reviews:
+            ts-asr-hard-cases-20261026: 9
+          tool: scripts/label_registration/register_listening_review.py
+          label_inputs:
+            - file: ts-hard-listen/review.json
+              sha256: bb504822dee61feb3fd21a25553418a6414f26c8e19326f14a6fc53366fb71ff
+            - file: ts-hard-listen/answers.json
+              sha256: 09c29cad78a03ee7be5cd98a672f5f712641c057b0cd1ef712a9738a81c67350
+            - file: ts-hard-listen-answer-key.json
+              sha256: be7f4d1570298d93282706d55e4555afeba338a501d03d13f060636352827ab0
+    provenance:
+      registered_at: '2026-11-03'
+  - schema_version: dataset-view/1.0
+    view_id: ts_asr_nearfar/listening-review
+    version: listening-review-v1-20261022
+    source:
+      dataset_id: ts_asr_nearfar
+      version: v1-20261014
+    result:
+      dataset_id: ts_asr_nearfar
+      version: listening-review-v1-20261022
+    materialization: full
+    lineage_status: exact
+    transforms:
+      - name: listening-review
+        version: v1
+        kind: annotate
+        writes:
+          - $membership
+          - metadata.listening_review
+        parameters:
+          kept: only the rows whose record or window id has a listening-review answer
+          rows: 8
+          answers: 8
+          answers_attached: 8
+          answers_evidence_only: 0
+          reviews:
+            listen-1021-vs-1022: 8
+          tool: scripts/label_registration/register_listening_review.py
+          label_inputs:
+            - file: listen-1021-vs-1022/page/manifest.json
+              sha256: ad145fcc5b2e9b29424e7efbbc3c09cd43e23c1ee91d77e5aacf4bee87bfd23b
+            - file: listen-1021-vs-1022/page/answers.json
+              sha256: a997a3b6fa47950d860676c5984795b54b266a2ce000a38382f0969da5253b86
+    provenance:
+      registered_at: '2026-11-03'
+  - schema_version: dataset-view/1.0
+    view_id: ts_asr_real/listening-review
+    version: listening-review-v1-20261022
+    source:
+      dataset_id: ts_asr_real
+      version: v2-20261013
+    result:
+      dataset_id: ts_asr_real
+      version: listening-review-v1-20261022
+    materialization: full
+    lineage_status: exact
+    transforms:
+      - name: listening-review
+        version: v1
+        kind: annotate
+        writes:
+          - $membership
+          - metadata.listening_review
+        parameters:
+          kept: only the rows whose record or window id has a listening-review answer
+          rows: 12
+          answers: 12
+          answers_attached: 12
+          answers_evidence_only: 0
+          reviews:
+            listen-1021-vs-1022: 12
+          tool: scripts/label_registration/register_listening_review.py
+          label_inputs:
+            - file: listen-1021-vs-1022/page/manifest.json
+              sha256: ad145fcc5b2e9b29424e7efbbc3c09cd43e23c1ee91d77e5aacf4bee87bfd23b
+            - file: listen-1021-vs-1022/page/answers.json
+              sha256: a997a3b6fa47950d860676c5984795b54b266a2ce000a38382f0969da5253b86
+    provenance:
+      registered_at: '2026-11-03'
+  - schema_version: dataset-view/1.0
+    view_id: ts_asr_real/listening-review
+    version: listening-review-v1-20261026
+    source:
+      dataset_id: ts_asr_real
+      version: v4-20261022
+    result:
+      dataset_id: ts_asr_real
+      version: listening-review-v1-20261026
+    materialization: full
+    lineage_status: exact
+    transforms:
+      - name: listening-review
+        version: v1
+        kind: annotate
+        writes:
+          - $membership
+          - metadata.listening_review
+        parameters:
+          kept: only the rows whose record or window id has a listening-review answer
+          rows: 1
+          answers: 1
+          answers_attached: 1
+          answers_evidence_only: 0
+          reviews:
+            ts-asr-hard-cases-20261026: 1
+          tool: scripts/label_registration/register_listening_review.py
+          label_inputs:
+            - file: ts-hard-listen/review.json
+              sha256: bb504822dee61feb3fd21a25553418a6414f26c8e19326f14a6fc53366fb71ff
+            - file: ts-hard-listen/answers.json
+              sha256: 09c29cad78a03ee7be5cd98a672f5f712641c057b0cd1ef712a9738a81c67350
+            - file: ts-hard-listen-answer-key.json
+              sha256: be7f4d1570298d93282706d55e4555afeba338a501d03d13f060636352827ab0
+    provenance:
+      registered_at: '2026-11-03'
+  - schema_version: dataset-view/1.0
+    view_id: wenetspeech_chuan/listening-review
+    version: listening-review-v1-20261026
+    source:
+      dataset_id: wenetspeech_chuan
+      version: extracted-20261021
+    result:
+      dataset_id: wenetspeech_chuan
+      version: listening-review-v1-20261026
+    materialization: full
+    lineage_status: exact
+    transforms:
+      - name: listening-review
+        version: v1
+        kind: annotate
+        writes:
+          - $membership
+          - metadata.listening_review
+        parameters:
+          kept: only the rows whose record or window id has a listening-review answer
+          rows: 60
+          answers: 60
+          answers_attached: 60
+          answers_evidence_only: 0
+          reviews:
+            wenetspeech-chuan-qwen-diff-20261024: 10
+            wenetspeech-chuan-qwen-diff-20261025: 10
+            wenetspeech-chuan-qwen-diff-20261026: 10
+            wenetspeech-chuan-qwen-diff-20261027: 10
+            wenetspeech-chuan-qwen-diff-20261028: 10
+            wenetspeech-chuan-qwen-diff-20261029: 10
+          tool: scripts/label_registration/register_listening_review.py
+          label_inputs:
+            - file: wenetspeech-chuan-qwen-20261023/listen-review/qwen-diff-20261024.json
+              sha256: c27b0f2a5dfe4780f45972c047b734125c64bd4c81c7affa9a486119545db27f
+            - file: wenetspeech-chuan-qwen-20261023/listen-review/qwen-diff-20261024/answers.json
+              sha256: 9820787cac4f7917483e8e58c87bbee7b2f314fd6fd45397799027aa84b6f177
+            - file: wenetspeech-chuan-qwen-20261023/listen-review/qwen-diff-20261025.json
+              sha256: 00fee36fe1e8622a5f292b7450300cc0d61af98218419fe11ffb35c8fce7465b
+            - file: wenetspeech-chuan-qwen-20261023/listen-review/qwen-diff-20261025/answers.json
+              sha256: 50859b36081ce9326bae0cb14fdad6707a6cd200cdeb96616be3559f17c89e91
+            - file: wenetspeech-chuan-qwen-20261023/listen-review/qwen-diff-20261026.json
+              sha256: e10c5d58c94826a83c37181e13f2cac7cd426c341da50a5db6de5f1a11c2d48d
+            - file: wenetspeech-chuan-qwen-20261023/listen-review/qwen-diff-20261026/answers.json
+              sha256: 705351f0425c650ce0b6c21c6d97f4976c33d13a9dc38a0a1e2daffa2de17113
+            - file: wenetspeech-chuan-qwen-20261023/listen-review/qwen-diff-20261027.json
+              sha256: aadb8eda47ea508b9068d67d15b110e63bb9d153ef58877b43691669fa0ff333
+            - file: wenetspeech-chuan-qwen-20261023/listen-review/qwen-diff-20261027/answers.json
+              sha256: 624c7f70db630ba5062e9e16a2695d97c6613346cdc336b5824c8835a706ba43
+            - file: wenetspeech-chuan-qwen-20261023/listen-review/qwen-diff-20261028.json
+              sha256: 9ec6f058d6a1ce8281fd3c5d94f582547fa4a3cdf10adcf0191526db12480513
+            - file: wenetspeech-chuan-qwen-20261023/listen-review/qwen-diff-20261028/answers.json
+              sha256: 9cea5f2f1a849e1a86c91ba0c2d4a50cd232992496830aa1b68bda3ae2a55726
+            - file: wenetspeech-chuan-qwen-20261023/listen-review/qwen-diff-20261029.json
+              sha256: 861bd4ae406292684f4041bd9233116498b478865f52d0ed814a5f6d5ed724f5
+            - file: wenetspeech-chuan-qwen-20261023/listen-review/qwen-diff-20261029/answers.json
+              sha256: cc7e74434fdeeeafc21ca9e6c628c227d617e390d4b98622e381d5074f793984
+    provenance:
+      registered_at: '2026-11-03'
+  - schema_version: dataset-view/1.0
+    view_id: wenetspeech_diarize/listening-review
+    version: listening-review-v1-20261012
+    source:
+      dataset_id: wenetspeech_diarize
+      version: moss-transcribe-diarize-0.9B
+    result:
+      dataset_id: wenetspeech_diarize
+      version: listening-review-v1-20261012
+    materialization: full
+    lineage_status: exact
+    transforms:
+      - name: listening-review
+        version: v1
+        kind: annotate
+        writes:
+          - $membership
+          - metadata.listening_review
+        parameters:
+          kept: only the rows whose record or window id has a listening-review answer
+          rows: 0
+          answers: 7
+          answers_attached: 0
+          answers_evidence_only: 7
+          reviews:
+            listen-review-20261012: 7
+          tool: scripts/label_registration/register_listening_review.py
+          label_inputs:
+            - file: listen-review-20261012/README.md
+              sha256: c4dcd35856b6c79a08a9dad0bb6f2bc1be559b2d9fdb7817c6330288227e1347
+    provenance:
+      registered_at: '2026-11-03'

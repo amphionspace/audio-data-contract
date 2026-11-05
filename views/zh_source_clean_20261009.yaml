@@ -1,0 +1,325 @@
+# clean-dual-qwen-moss-v1-20261009 各版本的 View（源版本、清洗变换与参数）。
+  - schema_version: dataset-view/1.0
+    view_id: aishell2/clean
+    version: clean-dual-qwen-moss-v1-20261009
+    source:
+      dataset_id: aishell2
+      version: icefall-20260908
+    result:
+      dataset_id: aishell2
+      version: clean-dual-qwen-moss-v1-20261009
+    materialization: full
+    lineage_status: exact
+    transforms:
+      - name: clean-dual-qwen-moss
+        version: consensus-v6+wenetspeech-faithful-v5
+        kind: annotate
+        writes:
+          - target
+          - metadata.clean
+          - metadata.original_text
+        overrides:
+          - target
+        parameters:
+          engines:
+            - Qwen3-ASR-1.7B
+            - MOSS-Transcribe-Diarize
+          params:
+            threshold: 50.0
+            agree_threshold: 30.0
+            min_tokens: 2
+            replace_engine: Qwen3-ASR-1.7B
+            max_replace_ratio: 3.0
+            rewrite_agree_threshold: 10.0
+            max_hyp_ratio: 3.0
+          code: amphiondata 3e1e324 (configs/experiments/zh-source-clean-qwen-moss.toml)
+          input_supervisions:
+            - file: aishell2_supervisions_train.jsonl.gz
+              sha256: 13a6b542668196f773f02085b6ffe71874e1aeed32340ed9e6478c081c265d91
+          rows: 1009223
+          pass: 1006205
+          reject: 3018
+          target_changed_rows: 27
+          rows_dropped: 0
+          text_variants:
+            - 'train_supervisions: source transcript, restored fillers may carry punctuation'
+            - 'train_supervisions_no_punc: marks and apostrophes removed'
+          tool: scripts/zh_source_clean/run_clean.py
+    provenance:
+      registered_at: '2026-11-03'
+  - schema_version: dataset-view/1.0
+    view_id: kespeech/clean
+    version: clean-dual-qwen-moss-v1-20261009
+    source:
+      dataset_id: kespeech
+      version: icefall-20260908
+    result:
+      dataset_id: kespeech
+      version: clean-dual-qwen-moss-v1-20261009
+    materialization: full
+    lineage_status: exact
+    transforms:
+      - name: clean-dual-qwen-moss
+        version: consensus-v6+wenetspeech-faithful-v5
+        kind: annotate
+        writes:
+          - target
+          - metadata.clean
+          - metadata.original_text
+        overrides:
+          - target
+        parameters:
+          engines:
+            - Qwen3-ASR-1.7B
+            - MOSS-Transcribe-Diarize
+          params:
+            threshold: 50.0
+            agree_threshold: 30.0
+            min_tokens: 2
+            replace_engine: Qwen3-ASR-1.7B
+            max_replace_ratio: 3.0
+            rewrite_agree_threshold: 10.0
+            max_hyp_ratio: 3.0
+          code: amphiondata 3e1e324 (configs/experiments/zh-source-clean-qwen-moss.toml)
+          input_supervisions:
+            - file: kespeech-asr_supervisions_train_phase1.jsonl.gz
+              sha256: ed505b125cb8fcec59ebd9c8116277abbddadf7f9fb4a4e8772cf6db22503380
+            - file: kespeech-asr_supervisions_train_phase2.jsonl.gz
+              sha256: 1423f829da418cc6c2131457c4d94190309d9eb7df67e28c4c89bacce87efbe5
+          rows: 884021
+          pass: 882365
+          reject: 1656
+          target_changed_rows: 697
+          rows_dropped: 0
+          text_variants:
+            - 'train_supervisions: source transcript, restored fillers may carry punctuation'
+            - 'train_supervisions_no_punc: marks and apostrophes removed'
+          tool: scripts/zh_source_clean/run_clean.py
+    provenance:
+      registered_at: '2026-11-03'
+  - schema_version: dataset-view/1.0
+    view_id: common_voice_zh/clean
+    version: clean-dual-qwen-moss-v1-20261009
+    source:
+      dataset_id: common_voice_zh
+      version: icefall-20260908
+    result:
+      dataset_id: common_voice_zh
+      version: clean-dual-qwen-moss-v1-20261009
+    materialization: full
+    lineage_status: exact
+    transforms:
+      - name: clean-dual-qwen-moss
+        version: consensus-v6+wenetspeech-faithful-v5
+        kind: annotate
+        writes:
+          - target
+          - metadata.clean
+          - metadata.original_text
+        overrides:
+          - target
+        parameters:
+          engines:
+            - Qwen3-ASR-1.7B
+            - MOSS-Transcribe-Diarize
+          params:
+            threshold: 50.0
+            agree_threshold: 30.0
+            min_tokens: 2
+            replace_engine: Qwen3-ASR-1.7B
+            max_replace_ratio: 3.0
+            rewrite_agree_threshold: 10.0
+            max_hyp_ratio: 3.0
+          code: amphiondata 3e1e324 (configs/experiments/zh-source-clean-qwen-moss.toml)
+          input_supervisions:
+            - file: cv-zh-CN_supervisions_train.jsonl.gz
+              sha256: 92fa40a147023b071210cc4a92d293a9608795a8f220974a9bdb2183242b1854
+          rows: 29560
+          pass: 28448
+          reject: 1112
+          target_changed_rows: 1
+          rows_dropped: 0
+          text_variants:
+            - 'train_supervisions: source transcript, restored fillers may carry punctuation'
+            - 'train_supervisions_no_punc: marks and apostrophes removed'
+          tool: scripts/zh_source_clean/run_clean.py
+    provenance:
+      registered_at: '2026-11-03'
+  - schema_version: dataset-view/1.0
+    view_id: talcs/clean
+    version: clean-dual-qwen-moss-v1-20261009
+    source:
+      dataset_id: talcs
+      version: icefall-20260908
+    result:
+      dataset_id: talcs
+      version: clean-dual-qwen-moss-v1-20261009
+    materialization: full
+    lineage_status: exact
+    transforms:
+      - name: clean-dual-qwen-moss
+        version: consensus-v6+wenetspeech-faithful-v5
+        kind: annotate
+        writes:
+          - target
+          - metadata.clean
+          - metadata.original_text
+        overrides:
+          - target
+        parameters:
+          engines:
+            - Qwen3-ASR-1.7B
+            - MOSS-Transcribe-Diarize
+          params:
+            threshold: 50.0
+            agree_threshold: 30.0
+            min_tokens: 2
+            replace_engine: Qwen3-ASR-1.7B
+            max_replace_ratio: 3.0
+            rewrite_agree_threshold: 10.0
+            max_hyp_ratio: 3.0
+          code: amphiondata 3e1e324 (configs/experiments/zh-source-clean-qwen-moss.toml)
+          input_supervisions:
+            - file: talcs_supervisions_train_cleaned.jsonl.gz
+              sha256: ac4649311bf60c6d9274c8ce711c65e1f365f9d943516cb7af2c356a9766652a
+          rows: 350000
+          pass: 347533
+          reject: 2467
+          target_changed_rows: 2039
+          rows_dropped: 0
+          text_variants:
+            - 'train_supervisions: source transcript, restored fillers may carry punctuation'
+            - 'train_supervisions_no_punc: marks and apostrophes removed'
+          tool: scripts/zh_source_clean/run_clean.py
+    provenance:
+      registered_at: '2026-11-03'
+  - schema_version: dataset-view/1.0
+    view_id: cs_dialogue/clean
+    version: clean-dual-qwen-moss-v1-20261009
+    source:
+      dataset_id: cs_dialogue
+      version: icefall-20260908
+    result:
+      dataset_id: cs_dialogue
+      version: clean-dual-qwen-moss-v1-20261009
+    materialization: full
+    lineage_status: exact
+    transforms:
+      - name: clean-dual-qwen-moss
+        version: consensus-v6+wenetspeech-faithful-v5
+        kind: annotate
+        writes:
+          - target
+          - metadata.clean
+          - metadata.original_text
+        overrides:
+          - target
+        parameters:
+          engines:
+            - Qwen3-ASR-1.7B
+            - MOSS-Transcribe-Diarize
+          params:
+            threshold: 50.0
+            agree_threshold: 30.0
+            min_tokens: 2
+            replace_engine: Qwen3-ASR-1.7B
+            max_replace_ratio: 3.0
+            rewrite_agree_threshold: 10.0
+            max_hyp_ratio: 3.0
+          code: amphiondata 3e1e324 (configs/experiments/zh-source-clean-qwen-moss.toml)
+          input_supervisions:
+            - file: cs_dialogue_supervisions_train.jsonl.gz
+              sha256: 6436a9a208fc131a8b85b8e2af1dc170ce5953316315ee8e07958f0c8f72a79a
+          rows: 13992
+          pass: 13948
+          reject: 44
+          target_changed_rows: 165
+          rows_dropped: 0
+          text_variants:
+            - 'train_supervisions: source transcript, restored fillers may carry punctuation'
+            - 'train_supervisions_no_punc: marks and apostrophes removed'
+          tool: scripts/zh_source_clean/run_clean.py
+    provenance:
+      registered_at: '2026-11-03'
+  - schema_version: dataset-view/1.0
+    view_id: cs_dialogue_mix/clean
+    version: clean-dual-qwen-moss-v1-20261009
+    source:
+      dataset_id: cs_dialogue_mix
+      version: icefall-20260908
+    result:
+      dataset_id: cs_dialogue_mix
+      version: clean-dual-qwen-moss-v1-20261009
+    materialization: full
+    lineage_status: exact
+    transforms:
+      - name: clean-dual-qwen-moss
+        version: consensus-v6+wenetspeech-faithful-v5
+        kind: annotate
+        writes:
+          - target
+          - metadata.clean
+          - metadata.original_text
+        overrides:
+          - target
+        parameters:
+          engines:
+            - Qwen3-ASR-1.7B
+            - MOSS-Transcribe-Diarize
+          params:
+            threshold: 50.0
+            agree_threshold: 30.0
+            min_tokens: 2
+            replace_engine: Qwen3-ASR-1.7B
+            max_replace_ratio: 3.0
+            rewrite_agree_threshold: 10.0
+            max_hyp_ratio: 3.0
+          code: amphiondata 3e1e324 (configs/experiments/zh-source-clean-qwen-moss.toml)
+          input_supervisions:
+            - file: cs_dialogue_supervisions_train.mix.jsonl.gz
+              sha256: 103fae734b4263ac2c0a02c90c4a25b999a4f01593e1ee9c4150e261bfc5638b
+          rows: 4953
+          pass: 4941
+          reject: 12
+          target_changed_rows: 65
+          rows_dropped: 0
+          text_variants:
+            - 'train_supervisions: source transcript, restored fillers may carry punctuation'
+            - 'train_supervisions_no_punc: marks and apostrophes removed'
+          tool: scripts/zh_source_clean/run_clean.py
+    provenance:
+      registered_at: '2026-11-03'
+  - schema_version: dataset-view/1.0
+    view_id: emilia_zh/clean
+    version: clean-dual-qwen-moss-v1-20261009
+    source:
+      dataset_id: emilia_zh
+      version: icefall-20260908
+    result:
+      dataset_id: emilia_zh
+      version: clean-dual-qwen-moss-v1-20261009
+    materialization: full
+    lineage_status: exact
+    transforms:
+      - name: clean-dual-qwen-moss-partial
+        version: consensus-v6+wenetspeech-faithful-v5
+        kind: annotate
+        writes:
+          - metadata.clean_engine_outputs
+        parameters:
+          engines:
+            - Qwen3-ASR-1.7B
+            - MOSS-Transcribe-Diarize
+          code: amphiondata 3e1e324 (configs/experiments/zh-source-clean-qwen-moss.toml)
+          status: 'partial: raw engine outputs only, no verdicts'
+          input_supervisions:
+            - file: emilia_zh_supervisions_train.jsonl.gz
+              sha256: fc130dee7bad7347c08f4ed058ea1aa1db3635d5a80e32f42b7ee54188646b07
+          utterances_done:
+            Qwen3-ASR-1.7B: 4419122
+            MOSS-Transcribe-Diarize: 4487099
+          source_supervisions: 9824236
+          rows_dropped: 0
+    provenance:
+      registered_at: '2026-11-03'
+      ready_for_training: false

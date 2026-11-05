@@ -1,0 +1,49 @@
+  - schema_version: dataset-catalog/2.0
+    dataset_id: librivox_spanish
+    version: hf-ef936a31638d
+    languages:
+      - es
+    tasks:
+      - asr
+    aliases: []
+    artifacts:
+      - name: source
+        kind: hf-dataset-snapshot
+        root_alias: librivox_spanish
+        relative_path: source/hf-ef936a31638d
+        metadata:
+          file_count: 14
+          expected_bytes: 5089509531
+          tree_sha256: 14ed1c4220476412db63a2d978d1d2a26b488567970cbeac56222d2c209a710c
+      - name: download_state
+        kind: dataset-state
+        root_alias: librivox_spanish
+        relative_path: versions/hf-ef936a31638d/download_state/state.json
+        expected_bytes: 919
+        sha256: cde4da93576dd6eb338a13dace63c70a4c783e352fce5c8e44b59441ccdd7dc9
+    splits:
+      train:
+        artifacts:
+          source:
+            - source
+        statistics:
+          count: 36338
+          speakers: 154
+          duration_hours: 73.0306
+          duration_basis: sum of upstream train Parquet duration column in seconds; embedded audio; pinned upstream file hashes verified
+    provenance:
+      summary: LibriVox 西语有声书
+      source: Hugging Face
+      source_id: ciempiess/librivox_spanish
+      revision: ef936a31638d2178b95b086ec323676b059ca726
+      url: https://huggingface.co/datasets/ciempiess/librivox_spanish
+      download_mirror: https://hf-mirror.com
+      description: LibriVox 西语有声书人工切分转写（LDC2020S01 的 HF 版本），讲者口音未标注。
+      locale: es
+      license:
+        - cc-by-sa-4.0
+      download_scope: Complete LibriVox Spanish corpus release
+      expected_download_files: 14
+      expected_download_bytes: 5089509531
+      integrity: verified
+      local_scan_date: '2026-11-03'

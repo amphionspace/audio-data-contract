@@ -7,7 +7,9 @@ import json
 from pathlib import Path
 
 from .catalog import (
+    check_dangling,
     check_registration,
+    find_dependents,
     load_catalog,
     resolve_artifact,
     verify_artifact_file,
@@ -75,6 +77,17 @@ def _parser() -> argparse.ArgumentParser:
         action="store_true",
         help="fail, instead of warn, when indexable splits have no record index",
     )
+
+    dangling = commands.add_parser("check-dangling")
+    dangling.add_argument("catalog")
+    dangling.add_argument("--roots", required=True)
+    dangling.add_argument("--sample", type=int, default=20)
+    dangling.add_argument("--seed", type=int, default=0)
+
+    dependents = commands.add_parser("find-dependents")
+    dependents.add_argument("catalog")
+    dependents.add_argument("prefix", help='"root_alias:relative/path" of what is about to be removed')
+    dependents.add_argument("--roots", help="also scan every audio-index row (slow)")
 
     index = commands.add_parser(
         "build-record-index", help="build a Lance record index; print its catalog ref"
@@ -244,6 +257,20 @@ def main(argv: list[str] | None = None) -> int:
             )
         )
         return 1 if problems else 0
+    if args.command == "check-dangling":
+        broken = check_dangling(
+            load_catalog(args.catalog),
+            load_roots(args.roots),
+            sample=args.sample,
+            seed=args.seed,
+        )
+        print(json.dumps({"ok": not broken, "broken": broken}, ensure_ascii=False, sort_keys=True))
+        return 1 if broken else 0
+    if args.command == "find-dependents":
+        roots = load_roots(args.roots) if args.roots else None
+        found = find_dependents(load_catalog(args.catalog), args.prefix, roots)
+        print(json.dumps({"prefix": args.prefix, "dependents": found}, ensure_ascii=False, sort_keys=True))
+        return 1 if any(not item["retired"] for item in found) else 0
     if args.command == "build-record-index":
         from .record_index import (
             MANIFEST_NAME,

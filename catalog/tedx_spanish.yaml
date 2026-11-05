@@ -1,0 +1,49 @@
+  - schema_version: dataset-catalog/2.0
+    dataset_id: tedx_spanish
+    version: hf-469308f10c91
+    languages:
+      - es
+    tasks:
+      - asr
+    aliases: []
+    artifacts:
+      - name: source
+        kind: hf-dataset-snapshot
+        root_alias: tedx_spanish
+        relative_path: source/hf-469308f10c91
+        metadata:
+          file_count: 5
+          expected_bytes: 1610357415
+          tree_sha256: 26adea179f9461844389f634708b0dd87e859f71c1098ed2105432fb509b6d9e
+      - name: download_state
+        kind: dataset-state
+        root_alias: tedx_spanish
+        relative_path: versions/hf-469308f10c91/download_state/state.json
+        expected_bytes: 911
+        sha256: 2e726e8676e37a99d8b98b757251079882f8a73f106bf68429cacb937f64c806
+    splits:
+      train:
+        artifacts:
+          source:
+            - source
+        statistics:
+          count: 11243
+          speakers: 142
+          duration_hours: 24.4948
+          duration_basis: sum of upstream train Parquet duration column in seconds; embedded audio; pinned upstream file hashes verified
+    provenance:
+      summary: TEDx 西语演讲（仅限非商用）
+      source: Hugging Face
+      source_id: ciempiess/tedx_spanish
+      revision: 469308f10c91c06b5f440d90857b117c1bf0a1c0
+      url: https://huggingface.co/datasets/ciempiess/tedx_spanish
+      download_mirror: https://hf-mirror.com
+      description: TEDx 西语演讲（OpenSLR 67 的 HF 版本），讲者口音未标注。许可为 CC BY-NC-ND，仅限非商用。
+      locale: es
+      license:
+        - cc-by-nc-nd-4.0
+      download_scope: Complete TEDx Spanish corpus (SLR67) HF release
+      expected_download_files: 5
+      expected_download_bytes: 1610357415
+      integrity: verified
+      local_scan_date: '2026-11-03'

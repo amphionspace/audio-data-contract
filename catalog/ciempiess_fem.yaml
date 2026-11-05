@@ -1,0 +1,56 @@
+  - schema_version: dataset-catalog/2.0
+    dataset_id: ciempiess_fem
+    version: hf-e49f428d174b
+    languages:
+      - es
+    tasks:
+      - asr
+    aliases: []
+    artifacts:
+      - name: source
+        kind: hf-dataset-snapshot
+        root_alias: ciempiess_fem
+        relative_path: source/hf-e49f428d174b
+        metadata:
+          file_count: 3
+          expected_bytes: 958155757
+          tree_sha256: 1283b38bf454a97ae683dfe40c9c24e0adb05c5099953aee7aeb75f6a8509260
+      - name: download_state
+        kind: dataset-state
+        root_alias: ciempiess_fem
+        relative_path: versions/hf-e49f428d174b/download_state/state.json
+        expected_bytes: 893
+        sha256: ed09817555c90084d20aeb256518541b2f93087b7a393d1d4a520e31dc699d9f
+    splits:
+      train:
+        artifacts:
+          source:
+            - source
+        statistics:
+          count: 6505
+          speakers: 21
+          duration_hours: 13.9154
+          duration_basis: sum of upstream train Parquet duration column in seconds; embedded audio; pinned upstream file hashes verified
+          hours_by_country:
+            Mexico: 12.0
+            Dominican Republic: 0.64
+            Unknown: 0.43
+            Venezuela: 0.36
+            Argentina: 0.28
+            El Salvador: 0.21
+    provenance:
+      source: Hugging Face
+      source_id: ciempiess/ciempiess_fem
+      revision: e49f428d174bd49002d7569e77c5d5fe73c671d6
+      url: https://huggingface.co/datasets/ciempiess/ciempiess_fem
+      download_mirror: https://hf-mirror.com
+      description: 女声广播语音，大部分为墨西哥口音（12.0 h），另有多米尼加、委内瑞拉、阿根廷、萨尔瓦多少量；按 country 字段可区分。
+      locale: es-MX
+      dataset_family: ciempiess
+      license:
+        - cc-by-sa-4.0
+      download_scope: Complete CIEMPIESS FEM release
+      expected_download_files: 3
+      expected_download_bytes: 958155757
+      integrity: verified
+      local_scan_date: '2026-11-03'

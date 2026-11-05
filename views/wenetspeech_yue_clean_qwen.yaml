@@ -1,0 +1,75 @@
+  - schema_version: dataset-view/1.0
+    view_id: wenetspeech_yue/qwen3-asr-full
+    version: clean-qwen3-asr-full-v1-20261024
+    source:
+      dataset_id: wenetspeech_yue
+      version: icefall-20260908
+    result:
+      dataset_id: wenetspeech_yue
+      version: clean-qwen3-asr-full-v1-20261024
+    materialization: full
+    lineage_status: exact
+    transforms:
+      - name: qwen3-asr-transcript
+        version: v1-20261024
+        kind: annotate
+        writes:
+          - metadata.qwen_asr
+        parameters:
+          model: Qwen/Qwen3-ASR-1.7B (shared vLLM service)
+          request:
+            temperature: 0
+            max_tokens: 2048
+            repetition_penalty: 1.1
+            to_language: not sent (language auto)
+          audio: 16 kHz PCM WAV read from the source tar at the row's byte range
+          scoring:
+            text_normalization: speechio-textnorm-yue
+            unit: one token per CJK character, punctuation dropped
+            cer: 100 * errors / ref_tokens, null when ref_tokens is 0
+          tool: scripts/wenetspeech_qwen/qwen_infer.py, scripts/wenetspeech_qwen/score.py
+          label_inputs:
+            - file: qwen.jsonl
+              sha256: 06830c137a8be69f47d709c2a8d88cf3e02e56252852e833d30b685c0e981922
+            - file: qwen-scored.jsonl
+              sha256: d09fd325ffa50a70a6f7715d0bff6992da3d3378f45c8203259c901c7b03796e
+          corpus_cer: 6.15
+          qwen_empty_rows: 1
+          cer_share_rows:
+            '0': 276887
+            (0,5): 321400
+            '[5,10)': 387793
+            '[10,20)': 230322
+            '[20,30)': 24110
+            '[30,50)': 3601
+            '[50,100)': 525
+            '>=100': 311
+            label empty after TextNorm: 0
+    provenance:
+      registered_at: '2026-11-03'
+  - schema_version: dataset-view/1.0
+    view_id: wenetspeech_yue/qwen3-asr-kept
+    version: clean-qwen3-asr-v1-20261024
+    source:
+      dataset_id: wenetspeech_yue
+      version: clean-qwen3-asr-full-v1-20261024
+    result:
+      dataset_id: wenetspeech_yue
+      version: clean-qwen3-asr-v1-20261024
+    materialization: full
+    lineage_status: exact
+    transforms:
+      - name: cer-filter
+        version: v1
+        kind: filter
+        writes:
+          - $membership
+        parameters:
+          rule: ref_tokens > 0 and 100 * errors / ref_tokens < 30
+          same_rule_as: wenetspeech_chuan@clean-qwen3-asr-v1-20261023 (agreed after six listening rounds on Sichuanese)
+          listening_review: none for this corpus
+          input_rows: 1244949
+          output_rows: 1240512
+          tool: scripts/wenetspeech_qwen/register_qwen_transcripts.py
+    provenance:
+      registered_at: '2026-11-03'
