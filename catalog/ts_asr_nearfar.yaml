@@ -2738,3 +2738,630 @@
     - alimeeting_sdm@icefall-20260908:test
     - alimeeting:Test_Ali_near
     - ts_asr_benchmark/source/v4-20261022/noise/wham
+- schema_version: dataset-catalog/2.0
+  dataset_id: ts_asr_nearfar
+  version: firstother-v2-20261105
+  languages:
+  - zh
+  tasks:
+  - ts_asr
+  artifacts:
+  - name: audio-index
+    kind: audio-index
+    root_alias: ts_asr_nearfar
+    relative_path: versions/firstother-v2-20261105/audio-index.jsonl.gz
+    sha256: 62b7bba6ad670f62e6a0486df079d9e583136e7d84a007af22c92a57620255bf
+    metadata:
+      record_count: 3861
+  - name: firstother-ed-mf-neg-records
+    kind: audio-records
+    root_alias: ts_asr_nearfar
+    relative_path: versions/firstother-v2-20261105/records/firstother-ed-mf-neg.jsonl.gz
+    sha256: 9813e7b9cddcfc895b87afe77f138b6fadd12c96bfda64d4d070a6c05e15062c
+    metadata:
+      record_count: 148
+  - name: firstother-ed-mf-pos-records
+    kind: audio-records
+    root_alias: ts_asr_nearfar
+    relative_path: versions/firstother-v2-20261105/records/firstother-ed-mf-pos.jsonl.gz
+    sha256: 454b73a1e7f103f2dc191f7aa6a669518e9b3ae254daad598746a926417374e3
+    metadata:
+      record_count: 148
+  - name: firstother-ed-mf-pos-hard-records
+    kind: audio-records
+    root_alias: ts_asr_nearfar
+    relative_path: versions/firstother-v2-20261105/records/firstother-ed-mf-pos-hard.jsonl.gz
+    sha256: 21bd09f691dc5ff04570adf1b72ecf304412a18a4e38c74cf7e4269a7a2f0c9a
+    metadata:
+      record_count: 54
+  - name: firstother-ed-mn-neg-records
+    kind: audio-records
+    root_alias: ts_asr_nearfar
+    relative_path: versions/firstother-v2-20261105/records/firstother-ed-mn-neg.jsonl.gz
+    sha256: f405def809399b81428bbd2db3be843e7cda8a352cd2664b5a969f4f2651d5a4
+    metadata:
+      record_count: 148
+  - name: firstother-ed-mn-pos-records
+    kind: audio-records
+    root_alias: ts_asr_nearfar
+    relative_path: versions/firstother-v2-20261105/records/firstother-ed-mn-pos.jsonl.gz
+    sha256: 5944b49d98bfbb1a5a067240f75bf00963095a8c8537e73a7a98816455aab701
+    metadata:
+      record_count: 148
+  - name: firstother-ed-mn-pos-hard-records
+    kind: audio-records
+    root_alias: ts_asr_nearfar
+    relative_path: versions/firstother-v2-20261105/records/firstother-ed-mn-pos-hard.jsonl.gz
+    sha256: 474a95622361eb2ad3da49aef0eea368906d2b7b10c311f3ae0d5adbaef35937
+    metadata:
+      record_count: 33
+  - name: firstother-ef-mf-neg-records
+    kind: audio-records
+    root_alias: ts_asr_nearfar
+    relative_path: versions/firstother-v2-20261105/records/firstother-ef-mf-neg.jsonl.gz
+    sha256: 20b5683b402582fb2c4349587dbfe418ec48bba1e05ce75bf84018aeb64bf76c
+    metadata:
+      record_count: 148
+  - name: firstother-ef-mf-pos-records
+    kind: audio-records
+    root_alias: ts_asr_nearfar
+    relative_path: versions/firstother-v2-20261105/records/firstother-ef-mf-pos.jsonl.gz
+    sha256: 771c708bbc0e3383c895ef103a88c8042f3d732de7dcf078337023359d566035
+    metadata:
+      record_count: 148
+  - name: firstother-ef-mf-pos-hard-records
+    kind: audio-records
+    root_alias: ts_asr_nearfar
+    relative_path: versions/firstother-v2-20261105/records/firstother-ef-mf-pos-hard.jsonl.gz
+    sha256: 762e1d8d2a1f08315b095eea009de5f9a155455398872eca6d7af915010f3c83
+    metadata:
+      record_count: 41
+  - name: firstother-en-mf-neg-records
+    kind: audio-records
+    root_alias: ts_asr_nearfar
+    relative_path: versions/firstother-v2-20261105/records/firstother-en-mf-neg.jsonl.gz
+    sha256: f19da52d71e9928ec4542996a6461c00d288f03c6eb7e7a5430e079850bf7296
+    metadata:
+      record_count: 148
+  - name: firstother-en-mf-pos-records
+    kind: audio-records
+    root_alias: ts_asr_nearfar
+    relative_path: versions/firstother-v2-20261105/records/firstother-en-mf-pos.jsonl.gz
+    sha256: ee33021b4f43b2087412696b45e5d4167d8d4a93ec4e63f6b86143e8462810b2
+    metadata:
+      record_count: 148
+  - name: firstother-en-mf-pos-hard-records
+    kind: audio-records
+    root_alias: ts_asr_nearfar
+    relative_path: versions/firstother-v2-20261105/records/firstother-en-mf-pos-hard.jsonl.gz
+    sha256: 43da695abad975d411541a59545c9f198be4816432591c3cdfca9c707b72b8aa
+    metadata:
+      record_count: 36
+  - name: firstother-en-mn-neg-records
+    kind: audio-records
+    root_alias: ts_asr_nearfar
+    relative_path: versions/firstother-v2-20261105/records/firstother-en-mn-neg.jsonl.gz
+    sha256: 1852fa337222826085883c8b685d03f54d882a98b82ec84f84d5fd1163a7d12e
+    metadata:
+      record_count: 148
+  - name: firstother-en-mn-pos-records
+    kind: audio-records
+    root_alias: ts_asr_nearfar
+    relative_path: versions/firstother-v2-20261105/records/firstother-en-mn-pos.jsonl.gz
+    sha256: 75db1245e118d77a0e662a4c80d9cf320bcf109eff4c29da353b379148a03e3a
+    metadata:
+      record_count: 148
+  - name: firstother-en-mn-pos-hard-records
+    kind: audio-records
+    root_alias: ts_asr_nearfar
+    relative_path: versions/firstother-v2-20261105/records/firstother-en-mn-pos-hard.jsonl.gz
+    sha256: 839b03fc333ef8795dc167cf42cf57acc114d0a9fe53fab670a1d5348137a53d
+    metadata:
+      record_count: 9
+  - name: firsttarget-ed-mf-neg-records
+    kind: audio-records
+    root_alias: ts_asr_nearfar
+    relative_path: versions/firstother-v2-20261105/records/firsttarget-ed-mf-neg.jsonl.gz
+    sha256: dae9f7f2a51db5d96a7ccc98d870756e69293f0e685efb136a916484da7c071e
+    metadata:
+      record_count: 149
+  - name: firsttarget-ed-mf-pos-records
+    kind: audio-records
+    root_alias: ts_asr_nearfar
+    relative_path: versions/firstother-v2-20261105/records/firsttarget-ed-mf-pos.jsonl.gz
+    sha256: 2e933e0effea0063ea4e9eafccd0bb1d8fb1a744f97ee72030fedcdcf11f5b5b
+    metadata:
+      record_count: 149
+  - name: firsttarget-ed-mf-pos-hard-records
+    kind: audio-records
+    root_alias: ts_asr_nearfar
+    relative_path: versions/firstother-v2-20261105/records/firsttarget-ed-mf-pos-hard.jsonl.gz
+    sha256: a94cec887902e44c3b70c0dbc65afa3680d1bacd910299e6e3a5d8507cd735c2
+    metadata:
+      record_count: 51
+  - name: firsttarget-ed-mn-neg-records
+    kind: audio-records
+    root_alias: ts_asr_nearfar
+    relative_path: versions/firstother-v2-20261105/records/firsttarget-ed-mn-neg.jsonl.gz
+    sha256: 9c970e82156ff004b8f7b64a8c9211f8309ee5d6faccff5f1939b0feaf7025a4
+    metadata:
+      record_count: 149
+  - name: firsttarget-ed-mn-pos-records
+    kind: audio-records
+    root_alias: ts_asr_nearfar
+    relative_path: versions/firstother-v2-20261105/records/firsttarget-ed-mn-pos.jsonl.gz
+    sha256: d3f892c4b858cf36e7ad5c4a0e324123105399f8d8ae4ce95151165a080deb1e
+    metadata:
+      record_count: 149
+  - name: firsttarget-ed-mn-pos-hard-records
+    kind: audio-records
+    root_alias: ts_asr_nearfar
+    relative_path: versions/firstother-v2-20261105/records/firsttarget-ed-mn-pos-hard.jsonl.gz
+    sha256: 18c16b62f9acd197565a36c8add139a2621ae89159b285ba3662df74268ed7f9
+    metadata:
+      record_count: 29
+  - name: firsttarget-ef-mf-neg-records
+    kind: audio-records
+    root_alias: ts_asr_nearfar
+    relative_path: versions/firstother-v2-20261105/records/firsttarget-ef-mf-neg.jsonl.gz
+    sha256: 84a88dd0ec151796d98797fea20d9c90436112e7f5e49dc090ae62a0b9aa551a
+    metadata:
+      record_count: 149
+  - name: firsttarget-ef-mf-pos-records
+    kind: audio-records
+    root_alias: ts_asr_nearfar
+    relative_path: versions/firstother-v2-20261105/records/firsttarget-ef-mf-pos.jsonl.gz
+    sha256: 0a2df499685c080191c17e4aca64fbeda0facc8f8cab3635043be527a5bab4b2
+    metadata:
+      record_count: 149
+  - name: firsttarget-ef-mf-pos-hard-records
+    kind: audio-records
+    root_alias: ts_asr_nearfar
+    relative_path: versions/firstother-v2-20261105/records/firsttarget-ef-mf-pos-hard.jsonl.gz
+    sha256: 9128b74b9028f7198a98d0aaf1cfb6774ad774a7378de8fe354be24db9c6257a
+    metadata:
+      record_count: 34
+  - name: firsttarget-en-mf-neg-records
+    kind: audio-records
+    root_alias: ts_asr_nearfar
+    relative_path: versions/firstother-v2-20261105/records/firsttarget-en-mf-neg.jsonl.gz
+    sha256: 60fd584bab058d05409638730543f54f43af6debb506d9dbfe45fda18a4ca917
+    metadata:
+      record_count: 149
+  - name: firsttarget-en-mf-pos-records
+    kind: audio-records
+    root_alias: ts_asr_nearfar
+    relative_path: versions/firstother-v2-20261105/records/firsttarget-en-mf-pos.jsonl.gz
+    sha256: c4e0df0d80df2887f76409dc90183fe8c15acc8376fc35cfd2cf8ae4441f97b5
+    metadata:
+      record_count: 149
+  - name: firsttarget-en-mf-pos-hard-records
+    kind: audio-records
+    root_alias: ts_asr_nearfar
+    relative_path: versions/firstother-v2-20261105/records/firsttarget-en-mf-pos-hard.jsonl.gz
+    sha256: b86485f8c977d5b79ecb1851edccfa1697ea18f1acd1b76275207c19e0aa99f8
+    metadata:
+      record_count: 40
+  - name: firsttarget-en-mn-neg-records
+    kind: audio-records
+    root_alias: ts_asr_nearfar
+    relative_path: versions/firstother-v2-20261105/records/firsttarget-en-mn-neg.jsonl.gz
+    sha256: 151d6fc0be610cd72019e92e12745012aeaa9229e89ab4a2fb44db0e421e125b
+    metadata:
+      record_count: 149
+  - name: firsttarget-en-mn-pos-records
+    kind: audio-records
+    root_alias: ts_asr_nearfar
+    relative_path: versions/firstother-v2-20261105/records/firsttarget-en-mn-pos.jsonl.gz
+    sha256: b1470d3f4cdc57cc2b9499493e208edbbb551c303eb322167bcc8ef79891c311
+    metadata:
+      record_count: 149
+  - name: firsttarget-en-mn-pos-hard-records
+    kind: audio-records
+    root_alias: ts_asr_nearfar
+    relative_path: versions/firstother-v2-20261105/records/firsttarget-en-mn-pos-hard.jsonl.gz
+    sha256: 09fb1424cd8b126feea00ba15079eba233dba8774f8d5348e79b170645b5e287
+    metadata:
+      record_count: 14
+  splits:
+    firstother-ed-mf-neg:
+      artifacts:
+        records:
+        - firstother-ed-mf-neg-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 148
+        duration_hours: 1.5237
+        duration_basis: Mixture duration
+      provenance:
+        description: 窗口里第一个开口的是非目标说话人，且目标第一句之前已有他人一整句清晰语句；注册取本人头戴麦并加噪、限带（劣化注册）；目标缺席
+    firstother-ed-mf-pos:
+      artifacts:
+        records:
+        - firstother-ed-mf-pos-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 148
+        duration_hours: 1.5237
+        duration_basis: Mixture duration
+      provenance:
+        description: 窗口里第一个开口的是非目标说话人，且目标第一句之前已有他人一整句清晰语句；注册取本人头戴麦并加噪、限带（劣化注册）；目标在场
+    firstother-ed-mf-pos-hard:
+      artifacts:
+        records:
+        - firstother-ed-mf-pos-hard-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 54
+        duration_hours: 0.5562
+        duration_basis: Mixture duration
+      provenance:
+        description: 窗口里第一个开口的是非目标说话人，且目标第一句之前已有他人一整句清晰语句；注册取本人头戴麦并加噪、限带（劣化注册）；目标在场；只含 sim_margin ≤ 0.3 的记录（同名划分的子集）
+    firstother-ed-mn-neg:
+      artifacts:
+        records:
+        - firstother-ed-mn-neg-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 148
+        duration_hours: 1.5237
+        duration_basis: Mixture duration
+      provenance:
+        description: 窗口里第一个开口的是非目标说话人，且目标第一句之前已有他人一整句清晰语句；注册取本人头戴麦并加噪、限带（与 ed-mf 同一文件），混合取窗口内各说话人头戴麦之和（电平对齐远场混合）；目标缺席
+    firstother-ed-mn-pos:
+      artifacts:
+        records:
+        - firstother-ed-mn-pos-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 148
+        duration_hours: 1.5237
+        duration_basis: Mixture duration
+      provenance:
+        description: 窗口里第一个开口的是非目标说话人，且目标第一句之前已有他人一整句清晰语句；注册取本人头戴麦并加噪、限带（与 ed-mf 同一文件），混合取窗口内各说话人头戴麦之和（电平对齐远场混合）；目标在场
+    firstother-ed-mn-pos-hard:
+      artifacts:
+        records:
+        - firstother-ed-mn-pos-hard-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 33
+        duration_hours: 0.348
+        duration_basis: Mixture duration
+      provenance:
+        description: 窗口里第一个开口的是非目标说话人，且目标第一句之前已有他人一整句清晰语句；注册取本人头戴麦并加噪、限带（与 ed-mf 同一文件），混合取窗口内各说话人头戴麦之和（电平对齐远场混合）；目标在场；只含 sim_margin ≤ 0.3 的记录（同名划分的子集）
+    firstother-ef-mf-neg:
+      artifacts:
+        records:
+        - firstother-ef-mf-neg-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 148
+        duration_hours: 1.5237
+        duration_basis: Mixture duration
+      provenance:
+        description: 窗口里第一个开口的是非目标说话人，且目标第一句之前已有他人一整句清晰语句；注册取远场通道 0；目标缺席
+    firstother-ef-mf-pos:
+      artifacts:
+        records:
+        - firstother-ef-mf-pos-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 148
+        duration_hours: 1.5237
+        duration_basis: Mixture duration
+      provenance:
+        description: 窗口里第一个开口的是非目标说话人，且目标第一句之前已有他人一整句清晰语句；注册取远场通道 0；目标在场
+    firstother-ef-mf-pos-hard:
+      artifacts:
+        records:
+        - firstother-ef-mf-pos-hard-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 41
+        duration_hours: 0.4269
+        duration_basis: Mixture duration
+      provenance:
+        description: 窗口里第一个开口的是非目标说话人，且目标第一句之前已有他人一整句清晰语句；注册取远场通道 0；目标在场；只含 sim_margin ≤ 0.3 的记录（同名划分的子集）
+    firstother-en-mf-neg:
+      artifacts:
+        records:
+        - firstother-en-mf-neg-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 148
+        duration_hours: 1.5237
+        duration_basis: Mixture duration
+      provenance:
+        description: 窗口里第一个开口的是非目标说话人，且目标第一句之前已有他人一整句清晰语句；注册取本人头戴麦（跨通道）；目标缺席
+    firstother-en-mf-pos:
+      artifacts:
+        records:
+        - firstother-en-mf-pos-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 148
+        duration_hours: 1.5237
+        duration_basis: Mixture duration
+      provenance:
+        description: 窗口里第一个开口的是非目标说话人，且目标第一句之前已有他人一整句清晰语句；注册取本人头戴麦（跨通道）；目标在场
+    firstother-en-mf-pos-hard:
+      artifacts:
+        records:
+        - firstother-en-mf-pos-hard-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 36
+        duration_hours: 0.3685
+        duration_basis: Mixture duration
+      provenance:
+        description: 窗口里第一个开口的是非目标说话人，且目标第一句之前已有他人一整句清晰语句；注册取本人头戴麦（跨通道）；目标在场；只含 sim_margin ≤ 0.3 的记录（同名划分的子集）
+    firstother-en-mn-neg:
+      artifacts:
+        records:
+        - firstother-en-mn-neg-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 148
+        duration_hours: 1.5237
+        duration_basis: Mixture duration
+      provenance:
+        description: 窗口里第一个开口的是非目标说话人，且目标第一句之前已有他人一整句清晰语句；注册取本人头戴麦（干净），混合取窗口内各说话人头戴麦之和（电平对齐远场混合）；目标缺席
+    firstother-en-mn-pos:
+      artifacts:
+        records:
+        - firstother-en-mn-pos-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 148
+        duration_hours: 1.5237
+        duration_basis: Mixture duration
+      provenance:
+        description: 窗口里第一个开口的是非目标说话人，且目标第一句之前已有他人一整句清晰语句；注册取本人头戴麦（干净），混合取窗口内各说话人头戴麦之和（电平对齐远场混合）；目标在场
+    firstother-en-mn-pos-hard:
+      artifacts:
+        records:
+        - firstother-en-mn-pos-hard-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 9
+        duration_hours: 0.0973
+        duration_basis: Mixture duration
+      provenance:
+        description: 窗口里第一个开口的是非目标说话人，且目标第一句之前已有他人一整句清晰语句；注册取本人头戴麦（干净），混合取窗口内各说话人头戴麦之和（电平对齐远场混合）；目标在场；只含 sim_margin ≤ 0.3 的记录（同名划分的子集）
+    firsttarget-ed-mf-neg:
+      artifacts:
+        records:
+        - firsttarget-ed-mf-neg-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 149
+        duration_hours: 1.4917
+        duration_basis: Mixture duration
+      provenance:
+        description: 目标说话人第一个开口（对照）；注册取本人头戴麦并加噪、限带（劣化注册）；目标缺席
+    firsttarget-ed-mf-pos:
+      artifacts:
+        records:
+        - firsttarget-ed-mf-pos-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 149
+        duration_hours: 1.4917
+        duration_basis: Mixture duration
+      provenance:
+        description: 目标说话人第一个开口（对照）；注册取本人头戴麦并加噪、限带（劣化注册）；目标在场
+    firsttarget-ed-mf-pos-hard:
+      artifacts:
+        records:
+        - firsttarget-ed-mf-pos-hard-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 51
+        duration_hours: 0.5165
+        duration_basis: Mixture duration
+      provenance:
+        description: 目标说话人第一个开口（对照）；注册取本人头戴麦并加噪、限带（劣化注册）；目标在场；只含 sim_margin ≤ 0.3 的记录（同名划分的子集）
+    firsttarget-ed-mn-neg:
+      artifacts:
+        records:
+        - firsttarget-ed-mn-neg-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 149
+        duration_hours: 1.4917
+        duration_basis: Mixture duration
+      provenance:
+        description: 目标说话人第一个开口（对照）；注册取本人头戴麦并加噪、限带（与 ed-mf 同一文件），混合取窗口内各说话人头戴麦之和（电平对齐远场混合）；目标缺席
+    firsttarget-ed-mn-pos:
+      artifacts:
+        records:
+        - firsttarget-ed-mn-pos-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 149
+        duration_hours: 1.4917
+        duration_basis: Mixture duration
+      provenance:
+        description: 目标说话人第一个开口（对照）；注册取本人头戴麦并加噪、限带（与 ed-mf 同一文件），混合取窗口内各说话人头戴麦之和（电平对齐远场混合）；目标在场
+    firsttarget-ed-mn-pos-hard:
+      artifacts:
+        records:
+        - firsttarget-ed-mn-pos-hard-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 29
+        duration_hours: 0.2878
+        duration_basis: Mixture duration
+      provenance:
+        description: 目标说话人第一个开口（对照）；注册取本人头戴麦并加噪、限带（与 ed-mf 同一文件），混合取窗口内各说话人头戴麦之和（电平对齐远场混合）；目标在场；只含 sim_margin ≤ 0.3 的记录（同名划分的子集）
+    firsttarget-ef-mf-neg:
+      artifacts:
+        records:
+        - firsttarget-ef-mf-neg-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 149
+        duration_hours: 1.4917
+        duration_basis: Mixture duration
+      provenance:
+        description: 目标说话人第一个开口（对照）；注册取远场通道 0；目标缺席
+    firsttarget-ef-mf-pos:
+      artifacts:
+        records:
+        - firsttarget-ef-mf-pos-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 149
+        duration_hours: 1.4917
+        duration_basis: Mixture duration
+      provenance:
+        description: 目标说话人第一个开口（对照）；注册取远场通道 0；目标在场
+    firsttarget-ef-mf-pos-hard:
+      artifacts:
+        records:
+        - firsttarget-ef-mf-pos-hard-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 34
+        duration_hours: 0.3429
+        duration_basis: Mixture duration
+      provenance:
+        description: 目标说话人第一个开口（对照）；注册取远场通道 0；目标在场；只含 sim_margin ≤ 0.3 的记录（同名划分的子集）
+    firsttarget-en-mf-neg:
+      artifacts:
+        records:
+        - firsttarget-en-mf-neg-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 149
+        duration_hours: 1.4917
+        duration_basis: Mixture duration
+      provenance:
+        description: 目标说话人第一个开口（对照）；注册取本人头戴麦（跨通道）；目标缺席
+    firsttarget-en-mf-pos:
+      artifacts:
+        records:
+        - firsttarget-en-mf-pos-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 149
+        duration_hours: 1.4917
+        duration_basis: Mixture duration
+      provenance:
+        description: 目标说话人第一个开口（对照）；注册取本人头戴麦（跨通道）；目标在场
+    firsttarget-en-mf-pos-hard:
+      artifacts:
+        records:
+        - firsttarget-en-mf-pos-hard-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 40
+        duration_hours: 0.3999
+        duration_basis: Mixture duration
+      provenance:
+        description: 目标说话人第一个开口（对照）；注册取本人头戴麦（跨通道）；目标在场；只含 sim_margin ≤ 0.3 的记录（同名划分的子集）
+    firsttarget-en-mn-neg:
+      artifacts:
+        records:
+        - firsttarget-en-mn-neg-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 149
+        duration_hours: 1.4917
+        duration_basis: Mixture duration
+      provenance:
+        description: 目标说话人第一个开口（对照）；注册取本人头戴麦（干净），混合取窗口内各说话人头戴麦之和（电平对齐远场混合）；目标缺席
+    firsttarget-en-mn-pos:
+      artifacts:
+        records:
+        - firsttarget-en-mn-pos-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 149
+        duration_hours: 1.4917
+        duration_basis: Mixture duration
+      provenance:
+        description: 目标说话人第一个开口（对照）；注册取本人头戴麦（干净），混合取窗口内各说话人头戴麦之和（电平对齐远场混合）；目标在场
+    firsttarget-en-mn-pos-hard:
+      artifacts:
+        records:
+        - firsttarget-en-mn-pos-hard-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 14
+        duration_hours: 0.1433
+        duration_basis: Mixture duration
+      provenance:
+        description: 目标说话人第一个开口（对照）；注册取本人头戴麦（干净），混合取窗口内各说话人头戴麦之和（电平对齐远场混合）；目标在场；只含 sim_margin ≤ 0.3 的记录（同名划分的子集）
+  provenance:
+    summary: 目标说话人评测：AliMeeting 近远场对照与谁先开口对照
+    status: complete
+    synthetic: partial
+    description: ts_asr_nearfar@firstother-v1-20261104 的近场混合与声纹相似度版，窗口、注册、劣化参数和记录 ID 与 v1 相同，可逐条对照。内部返回的 TS-ASR badcase 的注册比会话更吵（会话是安静的近讲录音），而 v1 的混合是远场通道 0、带混响，所以新增 en-mn、ed-mn：注册同 en-mf、ed-mf，混合取窗口内各说话人头戴麦之和、电平对齐远场混合；mf 各划分不变。每条记录加 labels.target_sim / impostor_sim / sim_margin / opener_sim：ECAPA（WeSpeaker ECAPA-TDNN512-LM）计算注册前 5 秒与该条混合里各说话人独自说话部分（标注无他人、每段 ≥0.3 秒、合计 ≥1.0 秒）的余弦；impostor 取非目标中的最大值，sim_margin = target − impostor，目标缺席时 target 与 margin 为空。目标在场且 sim_margin ≤ 0.3 的另列入 <划分>-hard（子集，badcase 的 margin
+      为 0.25）。统计见 source/<版本>/report.json。生成脚本 scripts/ts_real/first_speaker_near.py。只用于评测，不进训练。
+    sources:
+    - alimeeting_sdm@icefall-20260908:test
+    - alimeeting:Test_Ali_near
+    - ts_asr_benchmark/source/v4-20261022/noise/wham
+    - ts_asr_nearfar@firstother-v1-20261104

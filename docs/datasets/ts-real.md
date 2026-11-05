@@ -92,3 +92,9 @@ v1/v2 的窗口要求“与窗口重叠的语句都完整”，重叠多的地�
 - 结果：1,782 条，12 个划分 `<firstother|firsttarget>-<ef|en|ed>-mf-<pos|neg>`，每个划分 148/149 条，用到 10 场会议，窗口平均 36–37 秒。隔离 1 个窗口（开头那句声纹核对不过），所有注册的前 5 秒都无他人说话，所以没有 `-enrollmix`；劣化注册 594 条全部仍通过声纹核对。窗口须 ≥3 人而会议只有 3–4 人，297 个目标缺席样本中有 285 个只能取其他会议的人（`labels.absent_source`）。明细见 `source/firstother-v1-20261104/report.json`。
 - 窗口超过 `ts_asr_real` 的 26 秒上限（原来 TS 服务单段上限 27 秒）：评测要整段送入，客户端或服务若截断，结果不能代表这类场景。
 - `first_speaker_windows`、`match_windows` 的划分和阈值都是参数，可以直接在 train 划分上切训练窗口；这一版只做了评测数据。
+
+`ts_asr_nearfar@firstother-v2-20261105`（`scripts/ts_real/first_speaker_near.py`，AmphionEval `open-audio-llm/ts-asr-first-other@v2-20261105`）由 v1 派生，窗口、注册、劣化参数和记录 ID 不变，可以逐条对照：
+
+- 实测发现 badcase 的注册比会话更吵（会话是安静的近讲录音），而 v1 混合是带混响的远场。所以新增 `en-mn`、`ed-mn`：注册分别同 `en-mf`、`ed-mf`，混合取窗口内各说话人头戴麦之和，电平对齐远场混合。`ed-mn` 最接近 badcase。`mf` 各划分不变。
+- 每条加 `labels.target_sim`、`impostor_sim`、`sim_margin`、`opener_sim`：ECAPA 计算注册前 5 秒与该条混合里各说话人独自说话部分（标注里无他人、每段 ≥0.3 秒、合计 ≥1 秒）的余弦。impostor 取非目标中最像的那个，margin = target − impostor；每格有 6 个目标在窗口里没有足够的独自说话，这几条不打分。目标在场且 margin ≤ 0.30（badcase 为 0.25）的另列为 `<划分>-hard` 子集。
+- 共 3,311 条。正样本 margin 中位数：`ef-mf` 0.38/0.42（firstother/firsttarget，下同），`en-mf` 0.42/0.41，`ed-mf` 0.36/0.36，`en-mn` 0.52/0.53，`ed-mn` 0.44/0.46。hard 条数：`ed-mf` 54/51、`ef-mf` 41/34、`en-mf` 36/40、`ed-mn` 33/29、`en-mn` 9/14。中位数与条数明细见 `source/firstother-v2-20261105/report.json`。
