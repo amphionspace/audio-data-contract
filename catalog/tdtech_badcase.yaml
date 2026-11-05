@@ -1,0 +1,272 @@
+- schema_version: dataset-catalog/2.0
+  dataset_id: tdtech_badcase
+  version: v1-20261104
+  languages:
+  - zh
+  tasks:
+  - asr_hotwords
+  artifacts:
+  - name: audio-index
+    kind: audio-index
+    root_alias: tdtech_badcase
+    relative_path: versions/v1-20261104/audio-index.jsonl.gz
+    sha256: 4bd0808f337ba42c2ffb59c58f6209f1c72b84aa20b6633a2cc70dd6563d3ad4
+    metadata:
+      record_count: 6
+  - name: ejingbao-builtin-records
+    kind: audio-records
+    root_alias: tdtech_badcase
+    relative_path: versions/v1-20261104/records/ejingbao-builtin.jsonl.gz
+    sha256: 262d86d4377be635b020ba25ec063a1bb49ec0d456fa9fec8979f5518636782d
+    metadata:
+      record_count: 6
+  - name: ejingbao-single-records
+    kind: audio-records
+    root_alias: tdtech_badcase
+    relative_path: versions/v1-20261104/records/ejingbao-single.jsonl.gz
+    sha256: a7e515aecf739aadf3087bb328f74befbd2c3b559b86679803f1c67dd5429584
+    metadata:
+      record_count: 6
+  splits:
+    ejingbao-builtin:
+      artifacts:
+        records:
+        - ejingbao-builtin-records
+        audio_index:
+        - audio-index
+      task: asr_hotwords
+      statistics:
+        records: 6
+        duration_hours: 0.00307
+        duration_basis: clip duration
+      provenance:
+        description: e警保 回退样本，热词表 builtin（1296 条）
+    ejingbao-single:
+      artifacts:
+        records:
+        - ejingbao-single-records
+        audio_index:
+        - audio-index
+      task: asr_hotwords
+      statistics:
+        records: 6
+        duration_hours: 0.00307
+        duration_basis: clip duration
+      provenance:
+        description: e警保 回退样本，热词表 single（1 条）
+  provenance:
+    status: complete
+    synthetic: partial
+    summary: 鼎桥反馈的识别回退样本（e警保 × 多种热词表），仅评测
+    description: 鼎桥反馈的识别回退样本，作为固定守门。v1：e警保 6 条（5 条客户真人采集，与 tdtech_customer_bench police-cmd 同 sha256；1 条 macOS 合成），参考一律为 e警保；客户在用的 10.26 版本（048 avg3）6/6，10.28 版本（054 avg3）3/6。两个切分音频相同，分别下发 audiollm-go 出厂内置热词表整表（1296 条）和只含 e警保 的表。只用于评测。
+    sources:
+    - dingqiao-ejingbao-20261102.zip (sha256 d18f785f77e8b50b396a90d1b5c958691f7fcc7e677e5eb302d4a5e83b98d591)
+    - audiollm-go main-td providers/common/rag/vocabulary/builtin-hotwords-20261102.txt
+- schema_version: dataset-catalog/2.0
+  dataset_id: tdtech_badcase
+  version: v2-20261104
+  languages:
+  - zh
+  tasks:
+  - asr_hotwords
+  artifacts:
+  - name: audio-index
+    kind: audio-index
+    root_alias: tdtech_badcase
+    relative_path: versions/v2-20261104/audio-index.jsonl.gz
+    sha256: a2955f7a4e46203276855ae7a0525c9706a2ed19410adc95fa3ad9bea207ddbc
+    metadata:
+      record_count: 6
+  - name: ejingbao-builtin-records
+    kind: audio-records
+    root_alias: tdtech_badcase
+    relative_path: versions/v2-20261104/records/ejingbao-builtin.jsonl.gz
+    sha256: 872bfda023973765993ad6ed4d9e5b459060db08995849f6ce1632543dcc5751
+    metadata:
+      record_count: 6
+  - name: ejingbao-single-records
+    kind: audio-records
+    root_alias: tdtech_badcase
+    relative_path: versions/v2-20261104/records/ejingbao-single.jsonl.gz
+    sha256: 8ad2c390e7a551fd1ae3d81014be7fbcd081f82541f8123f0ca958e515d886ec
+    metadata:
+      record_count: 6
+  - name: ejingbao-yijing-records
+    kind: audio-records
+    root_alias: tdtech_badcase
+    relative_path: versions/v2-20261104/records/ejingbao-yijing.jsonl.gz
+    sha256: d545ab2501c7f979e033262a2ba024c90994caf8849f20e9f5be1e332799ad0d
+    metadata:
+      record_count: 6
+  splits:
+    ejingbao-builtin:
+      artifacts:
+        records:
+        - ejingbao-builtin-records
+        audio_index:
+        - audio-index
+      task: asr_hotwords
+      statistics:
+        records: 6
+        duration_hours: 0.00307
+        duration_basis: clip duration
+      provenance:
+        description: e警保 回退样本，热词表 builtin（1296 条）
+    ejingbao-single:
+      artifacts:
+        records:
+        - ejingbao-single-records
+        audio_index:
+        - audio-index
+      task: asr_hotwords
+      statistics:
+        records: 6
+        duration_hours: 0.00307
+        duration_basis: clip duration
+      provenance:
+        description: e警保 回退样本，热词表 single（1 条）
+    ejingbao-yijing:
+      artifacts:
+        records:
+        - ejingbao-yijing-records
+        audio_index:
+        - audio-index
+      task: asr_hotwords
+      statistics:
+        records: 6
+        duration_hours: 0.00307
+        duration_basis: clip duration
+      provenance:
+        description: e警保 回退样本，热词表 yijing（2 条）
+  provenance:
+    status: complete
+    synthetic: partial
+    summary: 鼎桥反馈的识别回退样本（e警保 × 多种热词表），仅评测
+    description: 鼎桥反馈的识别回退样本，作为固定守门。v1：e警保 6 条（5 条客户真人采集，与 tdtech_customer_bench police-cmd 同 sha256；1 条 macOS 合成），参考一律为 e警保；客户在用的 10.26 版本（048 avg3）6/6，10.28 版本（054 avg3）3/6。三个切分音频相同（在 source/v1-20261104），分别下发 audiollm-go 出厂内置热词表整表（1296 条）、只含 e警保 的表、只含 e警保 与 义警 的表（已知热词表带 义警 时 e警保 出错，这是触发它的最小表；v2 新增）。只用于评测。
+    sources:
+    - dingqiao-ejingbao-20261102.zip (sha256 d18f785f77e8b50b396a90d1b5c958691f7fcc7e677e5eb302d4a5e83b98d591)
+    - audiollm-go main-td providers/common/rag/vocabulary/builtin-hotwords-20261102.txt
+- schema_version: dataset-catalog/2.0
+  dataset_id: tdtech_badcase
+  version: v3-20261104
+  languages:
+  - zh
+  tasks:
+  - asr_hotwords
+  artifacts:
+  - name: audio-index
+    kind: audio-index
+    root_alias: tdtech_badcase
+    relative_path: versions/v3-20261104/audio-index.jsonl.gz
+    sha256: 781320c8316864ee2805878dd6910f605496887ad2da729efdcdb6193495840c
+    metadata:
+      record_count: 6
+  - name: ejingbao-builtin-records
+    kind: audio-records
+    root_alias: tdtech_badcase
+    relative_path: versions/v3-20261104/records/ejingbao-builtin.jsonl.gz
+    sha256: ac5d022ec6c2b887b686d43d6d16bd711548181d297fb3c1edd11c52ad4339f7
+    metadata:
+      record_count: 6
+  - name: ejingbao-single-records
+    kind: audio-records
+    root_alias: tdtech_badcase
+    relative_path: versions/v3-20261104/records/ejingbao-single.jsonl.gz
+    sha256: a682f05cb46b055014761202a8e10427c4c7cc4c3bf07cc03011f2f2ebe27508
+    metadata:
+      record_count: 6
+  - name: ejingbao-yijing-records
+    kind: audio-records
+    root_alias: tdtech_badcase
+    relative_path: versions/v3-20261104/records/ejingbao-yijing.jsonl.gz
+    sha256: b63f28c23f7d7ceec80147f4e273d284b9a02d8c74a78f2b3adcfdf2e2cea773
+    metadata:
+      record_count: 6
+  - name: ejingbao-cluster-records
+    kind: audio-records
+    root_alias: tdtech_badcase
+    relative_path: versions/v3-20261104/records/ejingbao-cluster.jsonl.gz
+    sha256: 6a123bb147bb0eed9daa28db17746ff20a9c8274a940b51ca15ae274f7845fe2
+    metadata:
+      record_count: 6
+  - name: ejingbao-cluster-noterm-records
+    kind: audio-records
+    root_alias: tdtech_badcase
+    relative_path: versions/v3-20261104/records/ejingbao-cluster-noterm.jsonl.gz
+    sha256: 6f8d479810dc98c7e4f329ffcf28e9a07d75170c5f9a2b4e74d4a2b164ead0f7
+    metadata:
+      record_count: 6
+  splits:
+    ejingbao-builtin:
+      artifacts:
+        records:
+        - ejingbao-builtin-records
+        audio_index:
+        - audio-index
+      task: asr_hotwords
+      statistics:
+        records: 6
+        duration_hours: 0.00307
+        duration_basis: clip duration
+      provenance:
+        description: e警保 回退样本，热词表 builtin（1296 条）
+    ejingbao-single:
+      artifacts:
+        records:
+        - ejingbao-single-records
+        audio_index:
+        - audio-index
+      task: asr_hotwords
+      statistics:
+        records: 6
+        duration_hours: 0.00307
+        duration_basis: clip duration
+      provenance:
+        description: e警保 回退样本，热词表 single（1 条）
+    ejingbao-yijing:
+      artifacts:
+        records:
+        - ejingbao-yijing-records
+        audio_index:
+        - audio-index
+      task: asr_hotwords
+      statistics:
+        records: 6
+        duration_hours: 0.00307
+        duration_basis: clip duration
+      provenance:
+        description: e警保 回退样本，热词表 yijing（2 条）
+    ejingbao-cluster:
+      artifacts:
+        records:
+        - ejingbao-cluster-records
+        audio_index:
+        - audio-index
+      task: asr_hotwords
+      statistics:
+        records: 6
+        duration_hours: 0.00307
+        duration_basis: clip duration
+      provenance:
+        description: e警保 回退样本，热词表 cluster（44 条）
+    ejingbao-cluster-noterm:
+      artifacts:
+        records:
+        - ejingbao-cluster-noterm-records
+        audio_index:
+        - audio-index
+      task: asr_hotwords
+      statistics:
+        records: 6
+        duration_hours: 0.00307
+        duration_basis: clip duration
+      provenance:
+        description: e警保 回退样本，热词表 cluster-noterm（43 条）
+  provenance:
+    status: complete
+    synthetic: partial
+    summary: 鼎桥反馈的识别回退样本（e警保 × 多种热词表），仅评测
+    description: 鼎桥反馈的识别回退样本，作为固定守门。v1：e警保 6 条（5 条客户真人采集，与 tdtech_customer_bench police-cmd 同 sha256；1 条 macOS 合成），参考一律为 e警保；客户在用的 10.26 版本（048 avg3）6/6，10.28 版本（054 avg3）3/6。五个切分音频相同（在 source/v1-20261104），分别下发 audiollm-go 出厂内置热词表整表（1296 条）、只含 e警保 的表、只含 e警保 与 义警 的表（v2 新增）；e警保 加词表里 44 条 3 字以内含“警”的近音词（v3 新增，规模同线上单次请求）、同一批近音词去掉 e警保（v3 新增）。只用于评测。
+    sources:
+    - dingqiao-ejingbao-20261102.zip (sha256 d18f785f77e8b50b396a90d1b5c958691f7fcc7e677e5eb302d4a5e83b98d591)
+    - audiollm-go main-td providers/common/rag/vocabulary/builtin-hotwords-20261102.txt

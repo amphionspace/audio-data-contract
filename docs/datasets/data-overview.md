@@ -1,6 +1,6 @@
 # 数据总览
 
-当前登记 **219 个数据集**；另有 **15 个下载来源声明**和 **1 个训练混合配方**。登记不代表本机文件已齐备。
+当前登记 **220 个数据集**；另有 **15 个下载来源声明**和 **1 个训练混合配方**。登记不代表本机文件已齐备。
 
 时长取单个版本的最大值，不跨版本相加；≈ 为参考表或估算值，— 为暂无完整时长。各版本的时长、说明、COS 地址和质量证据见[版本明细](data-versions.md)。
 
@@ -110,6 +110,7 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [realman_zh_far_asr](data-versions.md#realman_zh_far_asr) | zh | 语音识别 | 64.0 | RealMAN 远场中文转写训练数据 | 没有 |
 | [speechio](data-versions.md#speechio) | zh | 语音识别 | 63.8 | SpeechIO 中文 ASR 排行榜评测集 | 部分版本：快照 20260914 |
 | [tal100_zh](data-versions.md#tal100_zh) | zh | 语音识别 | 5.5 | TAL 中文语音识别数据 | 快照 20260914 |
+| [tdtech_badcase](data-versions.md#tdtech_badcase) | zh | 热词增强语音识别 | 0.0 | 鼎桥反馈的识别回退样本（e警保 × 多种热词表），仅评测 | 没有 |
 | [tdtech_customer_bench](data-versions.md#tdtech_customer_bench) | zh | 语音识别 | 0.1 | 鼎桥客户真实录音的语音识别评测，仅评测 | `备份桶:audio-data-contract/datasets/tdtech_customer_bench/` |
 | [thchs30](data-versions.md#thchs30) | zh | 语音识别、热词增强语音识别 | ≈35.0 | 清华中文朗读（THCHS-30）；含热词版 | 快照 20260914 |
 | [threed_speaker_zh_far_asr](data-versions.md#threed_speaker_zh_far_asr) | zh | 语音识别 | 75.5 | 3D-Speaker 远场普通话转写训练数据 | 没有 |
@@ -134,7 +135,7 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 |---|---|---|---:|---|---|
 | [BAAI/CS-Dialogue long_wav (ModelScope master)](data-versions.md#baaics-dialogue-long_wav-modelscope-master) | en、zh、zh-en | 语音识别、带说话人标注的语音识别 | 98.3 | 中英语码转换双人对话（CS-Dialogue） | 部分版本：快照 20260914 |
 | [ami](data-versions.md#ami) | en、zh | 语音识别、说话人分段与归属、目标说话人语音识别 | 259.3 | 英文会议远场版（AMI SDM）；含轮流说话混合版 | 部分版本：快照 20260914 |
-| [asr_babble_bench](data-versions.md#asr_babble_bench) | en、zh | 语音识别 | 10.1 | 普通 ASR 背景人声评测集（中英），仅评测 | `备份桶:audio-data-contract/datasets/asr_babble_bench/` |
+| [asr_babble_bench](data-versions.md#asr_babble_bench) | en、zh | 语音识别 | 10.1 | 普通 ASR 背景人声评测集（中英），仅评测 | 部分版本：`备份桶:audio-data-contract/datasets/asr_babble_bench/` |
 | [asr_babble_speech_pool](data-versions.md#asr_babble_speech_pool) | en、zh | 语音识别 | 85.5 | 带房间背景人声的中英 ASR 训练句 | 没有 |
 | [asr_distant_talk_pool](data-versions.md#asr_distant_talk_pool) | en、zh | 语音识别 | 55.2 | — | 没有 |
 | [babble_noise_synth](data-versions.md#babble_noise_synth) | en、zh | noise | 50.0 | 合成中英背景人声噪声（5–20 人叠加） | `备份桶:audio-data-contract/datasets/noise_open/` |
