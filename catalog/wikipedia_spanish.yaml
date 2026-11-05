@@ -1,0 +1,49 @@
+  - schema_version: dataset-catalog/2.0
+    dataset_id: wikipedia_spanish
+    version: hf-0afbf012ed67
+    languages:
+      - es
+    tasks:
+      - asr
+    aliases: []
+    artifacts:
+      - name: source
+        kind: hf-dataset-snapshot
+        root_alias: wikipedia_spanish
+        relative_path: source/hf-0afbf012ed67
+        metadata:
+          file_count: 5
+          expected_bytes: 1887129144
+          tree_sha256: 59fac0d4e957daffbaeb6000844fc59b4e612602e660eab9ce09c46ba1b63b08
+      - name: download_state
+        kind: dataset-state
+        root_alias: wikipedia_spanish
+        relative_path: versions/hf-0afbf012ed67/download_state/state.json
+        expected_bytes: 922
+        sha256: a16f871dd5d6616fae4ec6c8e352c91f4e55e69bc779fe026284bc7e5384ffa8
+    splits:
+      train:
+        artifacts:
+          source:
+            - source
+        statistics:
+          count: 11569
+          speakers: 193
+          duration_hours: 25.6256
+          duration_basis: sum of upstream train Parquet duration column in seconds; embedded audio; pinned upstream file hashes verified
+    provenance:
+      summary: 西语维基百科条目朗读
+      source: Hugging Face
+      source_id: ciempiess/wikipedia_spanish
+      revision: 0afbf012ed6781753eba60e4482ae71748322b65
+      url: https://huggingface.co/datasets/ciempiess/wikipedia_spanish
+      download_mirror: https://hf-mirror.com
+      description: 西语维基百科有声条目（Wikipedia Grabada）朗读，LDC2021S07 的 HF 版本，讲者口音未标注。
+      locale: es
+      license:
+        - cc-by-sa-3.0
+      download_scope: Complete Wikipedia Spanish corpus release
+      expected_download_files: 5
+      expected_download_bytes: 1887129144
+      integrity: verified
+      local_scan_date: '2026-11-03'

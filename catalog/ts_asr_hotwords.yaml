@@ -132,11 +132,11 @@
       220。
     source: ts_asr_benchmark / ts_asr_real / ts_asr_nearfar / ts_asr_noise / ts_asr_farfield / ts_asr_shortseg / ts_asr_handover
       / ts_asr_nearshort (v12 and en-v1 versions)
-    run_dir: /workspace/workspace/mingdong/scratch/ts-hotwords
+    labels: 热词原始标注已登记为各源版本的 <dataset>@<v>-hotword-labels-20261102（metadata.hotword_labels，view <dataset>/hotword-labels）
     audit: datasets/ts_asr_hotwords/versions/v1-20261102/state.json
     known_issues: 英文合成场景的专有名词少（LibriSpeech/VCTK 朗读文本），英文正例只有 1,500 条左右；真实会议部分条数少（中英文各 200 多条）。
   recipe_parameters:
-    builder: scratch/ts-hotwords/build_eval_set.py
+    builder: scripts/ts_hotwords/build_eval_set.py
     labeler: Qwen3.8-27B, amphiondata extract_hotword prompt + review pass
     random_list: 10
     interferer_list: 20

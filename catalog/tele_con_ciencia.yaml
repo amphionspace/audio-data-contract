@@ -1,0 +1,49 @@
+  - schema_version: dataset-catalog/2.0
+    dataset_id: tele_con_ciencia
+    version: hf-d870d927f530
+    languages:
+      - es
+    tasks:
+      - asr
+    aliases: []
+    artifacts:
+      - name: source
+        kind: hf-dataset-snapshot
+        root_alias: tele_con_ciencia
+        relative_path: source/hf-d870d927f530
+        metadata:
+          file_count: 6
+          expected_bytes: 2041656047
+          tree_sha256: 0e71c371d717ef37f7ef98165935785ffa148cc9822a1379356f0faa248f4801
+      - name: download_state
+        kind: dataset-state
+        root_alias: tele_con_ciencia
+        relative_path: versions/hf-d870d927f530/download_state/state.json
+        expected_bytes: 915
+        sha256: ce3697d2be81785d5e4320e921d18c4e71bcfd6a90d7f289866bdc98d854ff29
+    splits:
+      train:
+        artifacts:
+          source:
+            - source
+        statistics:
+          count: 12073
+          speakers: 101
+          duration_hours: 28.2785
+          duration_basis: sum of upstream train Parquet duration column in seconds; embedded audio; pinned upstream file hashes verified
+    provenance:
+      summary: 墨西哥西语科普电视节目
+      source: Hugging Face
+      source_id: ciempiess/tele_con_ciencia
+      revision: d870d927f530f6fc855b8787f2676b42b57e5dc4
+      url: https://huggingface.co/datasets/ciempiess/tele_con_ciencia
+      download_mirror: https://hf-mirror.com
+      description: 墨西哥科普电视节目 TELEconCIENCIA 的语音，墨西哥口音。
+      locale: es-MX
+      license:
+        - cc-by-sa-4.0
+      download_scope: Complete TELEconCIENCIA corpus release
+      expected_download_files: 6
+      expected_download_bytes: 2041656047
+      integrity: verified
+      local_scan_date: '2026-11-03'

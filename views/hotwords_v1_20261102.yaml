@@ -1,0 +1,249 @@
+  - schema_version: dataset-view/1.0
+    view_id: aishell2/hotwords
+    version: hotwords-v1-20261102
+    source:
+      dataset_id: aishell2
+      version: train-punc-v1-20261102
+    result:
+      dataset_id: aishell2
+      version: hotwords-v1-20261102
+    materialization: full
+    lineage_status: exact
+    transforms:
+      - name: ts-pool-utterances
+        version: train-data-v7set30
+        kind: filter
+        writes:
+          - $membership
+        parameters:
+          kept: utterances used as target or interferer speech in the TS scene pools of open-audio-llm recipe train-data-v7set30 (ts_scene_pool *-punchw-20261102 / *-punchw2-20261102)
+          rows: 902095
+      - name: hotwords
+        version: v1-20261102
+        kind: annotate
+        writes:
+          - hotwords
+          - metadata.hotword_labeling
+        parameters:
+          model: Qwen3.8-27B
+          server: vLLM 0.18, temperature 0, thinking off
+          prompt: amphiondata src/amphiondata/llm/prompts.py PROMPTS['extract_hotword'] at 64fc16e2
+          texts_per_request: 12
+          review_pass: false
+          verbatim_filter: word occurs in the labelled text and has at least two non-space characters
+          surface_form: word as written in the row text; English whole word, case-insensitive, possessive 's allowed
+          reused_labels: hw_sft@hw-20261014 for utterances it already labels (metadata.hotword_labeling.labeler)
+          tool: scripts/ts_hotwords/label_hotwords.py
+          label_inputs: &id001
+            - labeler: qwen3.8-27b
+              file: train-hotwords.jsonl
+              sha256: 3d1dc074b9b4b3d1f3d0047c73f6641d03b21e34a048f41b7bc2ebcc82324b1e
+            - labeler: qwen3.8-27b
+              file: train-hotwords-csd.jsonl
+              sha256: 26ab76eeab36b525be115321bfdc86cf11ec59736fbd36b323bb653c71b18baa
+            - labeler: hw_sft@hw-20261014
+              file: train-hotwords-hwsft.jsonl
+              sha256: 55ce2ddf749c779106a8b9cebe3a3adc7e414e9c83047a374b19e9232cd07841
+          words_dropped_not_in_text: 2090
+    provenance:
+      registered_at: '2026-11-03'
+  - schema_version: dataset-view/1.0
+    view_id: kespeech/hotwords
+    version: hotwords-v1-20261102
+    source:
+      dataset_id: kespeech
+      version: train-punc-v1-20261102
+    result:
+      dataset_id: kespeech
+      version: hotwords-v1-20261102
+    materialization: full
+    lineage_status: exact
+    transforms:
+      - name: ts-pool-utterances
+        version: train-data-v7set30
+        kind: filter
+        writes:
+          - $membership
+        parameters:
+          kept: utterances used as target or interferer speech in the TS scene pools of open-audio-llm recipe train-data-v7set30 (ts_scene_pool *-punchw-20261102 / *-punchw2-20261102)
+          rows: 632755
+      - name: hotwords
+        version: v1-20261102
+        kind: annotate
+        writes:
+          - hotwords
+          - metadata.hotword_labeling
+        parameters:
+          model: Qwen3.8-27B
+          server: vLLM 0.18, temperature 0, thinking off
+          prompt: amphiondata src/amphiondata/llm/prompts.py PROMPTS['extract_hotword'] at 64fc16e2
+          texts_per_request: 12
+          review_pass: false
+          verbatim_filter: word occurs in the labelled text and has at least two non-space characters
+          surface_form: word as written in the row text; English whole word, case-insensitive, possessive 's allowed
+          reused_labels: hw_sft@hw-20261014 for utterances it already labels (metadata.hotword_labeling.labeler)
+          tool: scripts/ts_hotwords/label_hotwords.py
+          label_inputs: *id001
+          words_dropped_not_in_text: 392
+    provenance:
+      registered_at: '2026-11-03'
+  - schema_version: dataset-view/1.0
+    view_id: magicdata/hotwords
+    version: hotwords-v1-20261102
+    source:
+      dataset_id: magicdata
+      version: punc-written-v1-20261102
+    result:
+      dataset_id: magicdata
+      version: hotwords-v1-20261102
+    materialization: full
+    lineage_status: exact
+    transforms:
+      - name: ts-pool-utterances
+        version: train-data-v7set30
+        kind: filter
+        writes:
+          - $membership
+        parameters:
+          kept: utterances used as target or interferer speech in the TS scene pools of open-audio-llm recipe train-data-v7set30 (ts_scene_pool *-punchw-20261102 / *-punchw2-20261102)
+          rows: 391237
+      - name: hotwords
+        version: v1-20261102
+        kind: annotate
+        writes:
+          - hotwords
+          - metadata.hotword_labeling
+        parameters:
+          model: Qwen3.8-27B
+          server: vLLM 0.18, temperature 0, thinking off
+          prompt: amphiondata src/amphiondata/llm/prompts.py PROMPTS['extract_hotword'] at 64fc16e2
+          texts_per_request: 12
+          review_pass: false
+          verbatim_filter: word occurs in the labelled text and has at least two non-space characters
+          surface_form: word as written in the row text; English whole word, case-insensitive, possessive 's allowed
+          reused_labels: hw_sft@hw-20261014 for utterances it already labels (metadata.hotword_labeling.labeler)
+          tool: scripts/ts_hotwords/label_hotwords.py
+          label_inputs: *id001
+          words_dropped_not_in_text: 770
+    provenance:
+      registered_at: '2026-11-03'
+  - schema_version: dataset-view/1.0
+    view_id: common_voice_en/hotwords
+    version: hotwords-v1-20261102
+    source:
+      dataset_id: common_voice_en
+      version: train-punc-v1-20261102
+    result:
+      dataset_id: common_voice_en
+      version: hotwords-v1-20261102
+    materialization: full
+    lineage_status: exact
+    transforms:
+      - name: ts-pool-utterances
+        version: train-data-v7set30
+        kind: filter
+        writes:
+          - $membership
+        parameters:
+          kept: utterances used as target or interferer speech in the TS scene pools of open-audio-llm recipe train-data-v7set30 (ts_scene_pool *-punchw-20261102 / *-punchw2-20261102)
+          rows: 314807
+      - name: hotwords
+        version: v1-20261102
+        kind: annotate
+        writes:
+          - hotwords
+          - metadata.hotword_labeling
+        parameters:
+          model: Qwen3.8-27B
+          server: vLLM 0.18, temperature 0, thinking off
+          prompt: amphiondata src/amphiondata/llm/prompts.py PROMPTS['extract_hotword'] at 64fc16e2
+          texts_per_request: 12
+          review_pass: false
+          verbatim_filter: word occurs in the labelled text and has at least two non-space characters
+          surface_form: word as written in the row text; English whole word, case-insensitive, possessive 's allowed
+          reused_labels: hw_sft@hw-20261014 for utterances it already labels (metadata.hotword_labeling.labeler)
+          tool: scripts/ts_hotwords/label_hotwords.py
+          label_inputs: *id001
+          words_dropped_not_in_text: 2529
+    provenance:
+      registered_at: '2026-11-03'
+  - schema_version: dataset-view/1.0
+    view_id: librispeech/hotwords
+    version: hotwords-v1-20261102
+    source:
+      dataset_id: librispeech
+      version: train-punc-v1-20261102
+    result:
+      dataset_id: librispeech
+      version: hotwords-v1-20261102
+    materialization: full
+    lineage_status: exact
+    transforms:
+      - name: ts-pool-utterances
+        version: train-data-v7set30
+        kind: filter
+        writes:
+          - $membership
+        parameters:
+          kept: utterances used as target or interferer speech in the TS scene pools of open-audio-llm recipe train-data-v7set30 (ts_scene_pool *-punchw-20261102 / *-punchw2-20261102)
+          rows: 47421
+      - name: hotwords
+        version: v1-20261102
+        kind: annotate
+        writes:
+          - hotwords
+          - metadata.hotword_labeling
+        parameters:
+          model: Qwen3.8-27B
+          server: vLLM 0.18, temperature 0, thinking off
+          prompt: amphiondata src/amphiondata/llm/prompts.py PROMPTS['extract_hotword'] at 64fc16e2
+          texts_per_request: 12
+          review_pass: false
+          verbatim_filter: word occurs in the labelled text and has at least two non-space characters
+          surface_form: word as written in the row text; English whole word, case-insensitive, possessive 's allowed
+          reused_labels: hw_sft@hw-20261014 for utterances it already labels (metadata.hotword_labeling.labeler)
+          tool: scripts/ts_hotwords/label_hotwords.py
+          label_inputs: *id001
+          words_dropped_not_in_text: 99
+    provenance:
+      registered_at: '2026-11-03'
+  - schema_version: dataset-view/1.0
+    view_id: cs_dialogue_en/hotwords
+    version: hotwords-v1-20261102
+    source:
+      dataset_id: cs_dialogue_en
+      version: legacy-20260804
+    result:
+      dataset_id: cs_dialogue_en
+      version: hotwords-v1-20261102
+    materialization: full
+    lineage_status: exact
+    transforms:
+      - name: ts-pool-utterances
+        version: train-data-v7set30
+        kind: filter
+        writes:
+          - $membership
+        parameters:
+          kept: utterances used as target or interferer speech in the TS scene pools of open-audio-llm recipe train-data-v7set30 (ts_scene_pool *-punchw-20261102 / *-punchw2-20261102)
+          rows: 4330
+      - name: hotwords
+        version: v1-20261102
+        kind: annotate
+        writes:
+          - hotwords
+          - metadata.hotword_labeling
+        parameters:
+          model: Qwen3.8-27B
+          server: vLLM 0.18, temperature 0, thinking off
+          prompt: amphiondata src/amphiondata/llm/prompts.py PROMPTS['extract_hotword'] at 64fc16e2
+          texts_per_request: 12
+          review_pass: false
+          verbatim_filter: word occurs in the labelled text and has at least two non-space characters
+          surface_form: word as written in the row text; English whole word, case-insensitive, possessive 's allowed
+          reused_labels: hw_sft@hw-20261014 for utterances it already labels (metadata.hotword_labeling.labeler)
+          tool: scripts/ts_hotwords/label_hotwords.py
+          label_inputs: *id001
+          words_dropped_not_in_text: 0
+    provenance:
+      registered_at: '2026-11-03'

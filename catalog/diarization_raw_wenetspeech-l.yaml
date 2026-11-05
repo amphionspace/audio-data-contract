@@ -1,0 +1,118 @@
+# WenetSpeech L 长音频说话人日志教师标签与整窗核对结果（占位登记，2026-10-14 停止打标，不进训练）（数据声明）
+  - schema_version: dataset-catalog/2.0
+    dataset_id: wenetspeech_diarize
+    version: teacher-labels-v1-20261012
+    languages:
+      - zh
+    tasks:
+      - diarization
+      - speaker_attributed_asr
+    aliases: []
+    artifacts:
+      - name: train_rec_0
+        kind: lhotse-recordings
+        root_alias: aidc_data
+        relative_path: datasets/wenetspeech/source/cos-backup-20261011/relocated/LHOTSE/WenetSpeech/data/manifests/wenetspeech_recordings_L.jsonl.gz
+        expected_bytes: 1464697
+        sha256: aad6b67a67486fa091b7f6da28715e7db378c1001186a9c6330e5692303f6e51
+      - name: train_supervisions_windows_0
+        kind: lhotse-supervisions
+        root_alias: aidc_data
+        relative_path: datasets/wenetspeech_diarize/versions/teacher-labels-v1-20261012/wenetspeech_l_diarize_window_supervisions.jsonl.gz
+        expected_bytes: 384968033
+        sha256: 8892caae4ec10fa3e2c569283c94646ab79be225ee245e1bd25fb0e7fe97fa34
+        metadata:
+          record_count: 12640449
+          punctuated: false
+      - name: local_moss_records
+        kind: audio-records
+        root_alias: aidc_data
+        relative_path: datasets/wenetspeech_diarize/versions/teacher-labels-v1-20261012/local_moss_records.jsonl.gz
+        expected_bytes: 820739318
+        sha256: f64d7f4b4d5b12cd8cad3eeb907acb973ed888e102e2c79e4a63b6e110c6ce68
+        metadata:
+          record_count: 41000
+      - name: qwen3_asr_window_records
+        kind: audio-records
+        root_alias: aidc_data
+        relative_path: datasets/wenetspeech_diarize/versions/teacher-labels-v1-20261012/qwen3_asr_window_records.jsonl.gz
+        expected_bytes: 274245233
+        sha256: 5649a95f7df28e19f2a6a10e5cd5a62d36f899337a0d05ec87db2daee8968821
+        metadata:
+          record_count: 27415
+      - name: window_check_records
+        kind: audio-records
+        root_alias: aidc_data
+        relative_path: datasets/wenetspeech_diarize/versions/teacher-labels-v1-20261012/window_check_records.jsonl.gz
+        expected_bytes: 708672689
+        sha256: 24f6b9f3bb28605bc06d04dcd5343f508c2a7034c78fec5e37cd409d51ed0325
+        metadata:
+          record_count: 454358
+      - name: pilot_local_moss_records
+        kind: audio-records
+        root_alias: aidc_data
+        relative_path: datasets/wenetspeech_diarize/versions/teacher-labels-v1-20261012/pilot_local_moss_records.jsonl.gz
+        expected_bytes: 2233000
+        sha256: f14c432658e7a17ef73f6a61a207502346657e89bbe90f4b8b62a43d502efed4
+        metadata:
+          record_count: 100
+      - name: pilot_moss_pro_records
+        kind: audio-records
+        root_alias: aidc_data
+        relative_path: datasets/wenetspeech_diarize/versions/teacher-labels-v1-20261012/pilot_moss_pro_records.jsonl.gz
+        expected_bytes: 384830
+        sha256: 6e941fdaed30e1c26068487dcab2a6c98010ad5e60c28c09b49458c894a028fb
+        metadata:
+          record_count: 300
+    splits:
+      train:
+        artifacts:
+          recordings:
+            - train_rec_0
+          supervisions:
+            - train_supervisions_windows_0
+          records:
+            - local_moss_records
+            - qwen3_asr_window_records
+            - window_check_records
+            - pilot_local_moss_records
+            - pilot_moss_pro_records
+        statistics:
+          kept_windows: 398633
+          kept_window_hours: 11274.8
+    provenance:
+      preparation_status: partial
+      lineage_status: exact
+      materialization: full
+      source: wenetspeech_diarize@moss-transcribe-diarize-0.9B
+      description: 占位登记，未完成，不转正、不进训练：WenetSpeech L 长音频（≥120 秒，51,358 条 / 22,174 h）的说话人日志伪标签。2026-10-14 用户决定停止全量打标，只保留前 41 批（共 52 批）的整条本机 MOSS-Transcribe-Diarize 0.9B 标注和粗筛结果，Qwen3-ASR 整窗核对 b000–b040 都做完，但不并入训练、不发布为可用训练版本；是否改为定向打标要看音色相近数据的效果再定。train_supervisions_windows_0：通过整窗核对的 398,633 个窗口（11,275 h）的片段，共 12,640,449 条 Lhotse supervision，说话人为 <录音>#S<编号>，custom.window_check 记窗口和字错误率；window_check_records：全部 454,358 个窗口的核对结果（含被拒窗口和原因、Qwen3-ASR 的 check_text）；local_moss_records：41,000 
+        条录音的整条标注；qwen3_asr_window_records：Qwen3-ASR 整窗识别；pilot_*：试跑 100 条录音的本地标注和 MOSS Pro 对 300 个窗口片段的标注（用于定门槛）。已知局限：WenetSpeech 没有带说话人的上游标注，做不了说话人检查；试跑中好窗口比例 71%，不合格窗口多半是说话人分错，文字核对管不住。录音沿用 wenetspeech@legacy-20260804 train_rec_0。未登记：逐块原始响应 raw/、window-plan、远端对齐检查 remote-compare。脚本 scripts/diarization_raw_labels/register_raw_labels.py。
+      ready_for_training: false
+      stopped: 2026-10-14 user stopped the full run; labelled b000-b040 of 52 batches
+      facts:
+        train_supervisions_windows_0 rows: 12640449
+        local_moss_records rows: 41000
+        'local_moss_records: rows': 41000
+        'local_moss_records: status ok': 41000
+        'local_moss_records: segments': 15843285
+        'local_moss_records: earlier rows replaced by a retry': 4625
+        qwen3_asr_window_records rows: 27415
+        'qwen3_asr_window_records: rows': 27415
+        'qwen3_asr_window_records: status ok': 27415
+        'qwen3_asr_window_records: segments': 449745
+        'qwen3_asr_window_records: earlier rows replaced by a retry': 2
+        window_check_records rows: 454358
+        'window_check_records: rows': 454358
+        'window_check_records: kept': 398633
+        'window_check_records: rejected': 55725
+        pilot_local_moss_records rows: 100
+        'pilot_local_moss_records: rows': 100
+        'pilot_local_moss_records: status ok': 100
+        'pilot_local_moss_records: segments': 44223
+        pilot_moss_pro_records rows: 300
+        'pilot_moss_pro_records: earlier rows replaced by a retry': 9
+        'pilot_moss_pro_records: rows': 300
+        'pilot_moss_pro_records: status ok': 291
+        'pilot_moss_pro_records: segments': 8290
+        'pilot_moss_pro_records: crops without a known window': 118
+        'pilot_moss_pro_records: status error': 9

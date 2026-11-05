@@ -1,0 +1,55 @@
+# GigaSpeech XL YouTube 录音说话人数普查的教师标签（占位登记，只做了约 5%，不进训练）（血缘声明）
+  - schema_version: dataset-view/1.0
+    view_id: gigaspeech/youtube-diarize-census
+    version: youtube-diarize-census-v1-20261009
+    source:
+      dataset_id: gigaspeech
+      version: legacy-20260804
+    result:
+      dataset_id: gigaspeech
+      version: youtube-diarize-census-v1-20261009
+    materialization: full
+    lineage_status: exact
+    transforms:
+      - name: moss-speaker-census
+        version: v1-20261009
+        kind: annotate
+        writes:
+          - target
+          - metadata.local_moss
+        parameters:
+          model: MOSS-Transcribe-Diarize 0.9B (official vLLM build, DP2)
+          backend:
+            name: local-moss-gpu01
+            type: local_moss
+            model: MOSS-Transcribe-Diarize
+            url: http://127.0.0.1:18202/v1
+            max_chunk_seconds: 540.0
+            chunk_overlap_seconds: 120.0
+            request_args:
+              temperature: 0.0
+          recordings_planned: 21472
+          recordings_done: 1082
+          stopped: user chose Chinese first; census paused 2026-10-09
+          counts: global_labels, global_active (>=30 s), max_chunk_active (>=10 s in one 540 s chunk)
+      - name: qwen3-asr-check
+        version: v1-20261009
+        kind: annotate
+        writes:
+          - metadata.qwen3_asr_en
+        parameters:
+          model: Qwen3-ASR-1.7B
+          backend:
+            name: qwen3-asr-en
+            type: qwen3_asr
+            model: Qwen3-ASR-1.7B
+            url: http://127.0.0.1:18101/v1
+            max_chunk_seconds: 540.0
+            chunk_overlap_seconds: 30.0
+            request_args:
+              to_language: en
+              temperature: 0.0
+              repetition_penalty: 1.1
+          recordings: 36
+    provenance:
+      registered_at: '2026-11-03'

@@ -1,0 +1,69 @@
+# 普通 ASR 空白 / 非人声评测切分（asr_babble_bench v3）：只有空白、底噪、环境声的片段，参考为空，看误输出率。
+# 动机：AmphionASR 这一轮的重点是空白噪声导致的幻觉；v2 的“只有背景人声”组只覆盖背景人声，没有空白、底噪、稳态噪声，
+# 也没有鼎桥设备录下的真实空白。本版本只放新增切分；评测集 v4 中原 16 个切分仍引用 v2-20261023 的数据，结果可逐条对比。
+version: v3-20261104
+dataset_id: asr_babble_bench
+seed: 20261104
+sample_rate: 16000
+default_n: 200
+language: zh  # 只决定打分口径分组；参考为空，不进请求
+
+# 鼎桥真实空白：tdtech_customer_bench v4 打标试跑中三个说话人老师（本机 MOSS、MOSS-pro、百炼）的时间线，
+# 三者都没有语音的区间（每段语音前后再留 margin）。录音来自 EvalHub diarization/dingqiao-diarization-quality@20261016-machine01
+# 与 dingqiao-online-issues@20261015-v1（鼎桥设备真实录音，不在任何训练配方里）。保留原电平，不加噪声底。
+tdtech:
+  teachers:
+    local-moss: /workspace/data/runs/tdtech-customer-v4/diar/local-moss/labels.jsonl
+    moss-pro: /workspace/data/runs/tdtech-customer-v4/diar/moss-pro/labels.jsonl
+    ali: /workspace/data/runs/tdtech-customer-v4/diar/ali/labels.jsonl
+  margin_seconds: 0.5
+  min_seconds: 0.3
+  max_seconds: 30.0  # 更长的区间从起点截 30 秒
+  # 自动质检（不发起人工听审，也不用任何 ASR 输出筛选，以免筛掉模型会幻觉的片段）：FSMN-VAD（/workspace/model/fsmn-vad）
+  # 在片段里检出累计 ≥ vad_max_speech_seconds 的语音即隔离，记录在 quarantine.jsonl。
+  vad_max_speech_seconds: 0.2
+
+# 噪声底的合成方式同 v2（mixer.floor_noise）；brown 为 1/f² 谱
+floor_kinds: [white, pink, brown]
+
+# FSD50K 评测划分（未进训练；训练的环境声来自 MUSAN、DNS5、WHAM train、会议室底噪）。带任一 exclude 标签的片段不用。
+# 已知剩余风险：DNS5 的 freesound 部分已按内容哈希改名，无法按 freesound ID 与 FSD50K 去重。
+fsd:
+  split: eval
+  exclude: [Human_voice, Speech, Male_speech_and_man_speaking, Female_speech_and_woman_speaking, Child_speech_and_kid_speaking,
+            Conversation, Speech_synthesizer, Chatter, Crowd, Whispering, Laughter, Giggle, Chuckle_and_chortle, Singing,
+            Male_singing, Female_singing, Music, Musical_instrument, Yell, Shout, Screaming, Cheering, Applause,
+            Human_group_actions, Television, Radio]
+  pools:
+    stationary: [Mechanical_fan, Engine, Idling, Buzz, Hiss, Rain, Wind, Stream, Traffic_noise_and_roadway_noise, Microwave_oven, Printer]
+    events: [Typing, Computer_keyboard, Door, Knock, Walk_and_footsteps, Dishes_and_pots_and_pans, Cutlery_and_silverware,
+             Ringtone, Telephone, Crumpling_and_crinkling, Tearing, Scissors, Writing, Drawer_open_or_close, Keys_jangling, Tick-tock]
+    body: [Cough, Sneeze, Breathing]
+  min_seconds: 0.3
+
+# kind 都是 noise（参考为空）。source: tdtech | floor | hum | fsd:<pool>；duration 为 log-uniform 抽样区间（秒）
+splits:
+  - {name: tdtech-blank-0.3-1, source: tdtech, bin: [0.3, 1.0],
+     display: 鼎桥真实空白 · 0.3–1 秒, description: "鼎桥设备真实录音里三个说话人老师都判为无人说话的区间（前后各留 0.5 秒），原电平；期望输出为空"}
+  - {name: tdtech-blank-1-3, source: tdtech, bin: [1.0, 3.0],
+     display: 鼎桥真实空白 · 1–3 秒, description: "同上，1–3 秒"}
+  # 3–10 秒与 10 秒以上合并：10 秒以上的 84 段里 77 段被 FSMN-VAD 检出语音而隔离，单独成档只剩 7 段
+  - {name: tdtech-blank-3plus, source: tdtech, bin: [3.0, 30.0],
+     display: 鼎桥真实空白 · 3 秒以上, description: "同上，3 秒以上；10 秒以上的区间从起点截取，最长 30 秒"}
+  - {name: near-silence, source: floor, level_dbfs: [-90, -80], duration: [0.3, 20],
+     display: 近乎数字静音, description: "白 / 粉 / 棕噪声，−90 到 −80 dBFS（接近 16 位量化噪声），0.3–20 秒；期望输出为空"}
+  - {name: floor-low, source: floor, level_dbfs: [-65, -55], duration: [0.3, 20],
+     display: 很低的底噪, description: "白 / 粉 / 棕噪声，−65 到 −55 dBFS（安静房间的麦克风底噪），0.3–20 秒；期望输出为空"}
+  - {name: floor-mid, source: floor, level_dbfs: [-55, -45], duration: [0.3, 20],
+     display: 明显的底噪, description: "白 / 粉 / 棕噪声，−55 到 −45 dBFS（便宜麦克风或增益开大），0.3–20 秒；期望输出为空"}
+  - {name: hum, source: hum, level_dbfs: [-50, -35], duration: [0.3, 20],
+     display: 电流嗡声, description: "50 Hz 及其 2–10 次谐波的嗡声（各谐波随机幅度）加 −65 到 −55 dBFS 底噪，−50 到 −35 dBFS，0.3–20 秒；期望输出为空"}
+  - {name: fsd-stationary, source: "fsd:stationary", level_dbfs: [-45, -25], duration: [2, 20],
+     display: 稳态环境噪声 · FSD50K, description: "FSD50K 评测划分里风扇、发动机、嗡声、嘶声、雨、风、流水、交通、微波炉、打印机（不含人声和音乐），−45 到 −25 dBFS，2–20 秒；期望输出为空"}
+  - {name: fsd-events, source: "fsd:events", level_dbfs: [-45, -25], duration: [1, 10],
+     display: 突发环境声 · FSD50K, description: "FSD50K 评测划分里键盘、开关门、敲门、脚步、餐具、电话铃、纸张、剪刀、书写、抽屉、钥匙、钟表（不含人声和音乐），−45 到 −25 dBFS，1–10 秒；期望输出为空"}
+  - {name: fsd-body, source: "fsd:body", level_dbfs: [-45, -25], duration: [0.5, 5],
+     display: 咳嗽 / 喷嚏 / 呼吸 · FSD50K, description: "FSD50K 评测划分里咳嗽、喷嚏、呼吸（不带任何说话或人声标签），−45 到 −25 dBFS，0.5–5 秒；期望输出为空"}
+  # mixed：每条等概率借用 donors 中一个切分的来源与电平，只把时长换成这里的区间
+  - {name: short-mixed, source: mixed, donors: [floor-low, floor-mid, hum, fsd-stationary, fsd-events, fsd-body], duration: [0.3, 1.5],
+     display: 短片段 · 混合非人声, description: "0.3–1.5 秒（客户端 VAD 误触发时送进模型的长度），等概率取自底噪、电流嗡声、稳态噪声、突发声、咳嗽呼吸，电平同各自的切分；期望输出为空"}

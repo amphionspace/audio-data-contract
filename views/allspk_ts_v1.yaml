@@ -1,0 +1,149 @@
+- schema_version: dataset-view/1.0
+  view_id: magicdata_ramc/allspk-ts
+  version: allspk-ts-v1-20261104
+  source:
+    dataset_id: magicdata_ramc
+    version: allspk-asr-v1-20261103
+  result:
+    dataset_id: magicdata_ramc
+    version: allspk-ts-v1-20261104
+  materialization: full
+  lineage_status: exact
+  transforms:
+  - name: allspk-ts-pairs
+    version: allspk-ts-v1-20261104
+    kind: representation-conversion
+    writes:
+    - $membership
+    - task
+    - target
+    - audio_slots
+    - labels
+    - metadata.enroll_utt
+    - metadata.target_speaker
+    - metadata.window_utts
+    parameters:
+      enroll_s:
+      - 3.0
+      - 10.0
+      enroll_fallback_s:
+      - 2.0
+      - 15.0
+      seed: 20261104
+      tool: scripts/target_asr/build_allspk_ts_pairs.py
+      splits:
+      - train
+      - train_neg
+      windows: magicdata_ramc@allspk-asr-v1-20261103 train records (same windows, mixture = the window's audio reference)
+      utterances: magicdata_ramc@icefall-20260908 train supervisions with non-empty text
+      text: magicdata_ramc@punc-written-v1-20261029 (same supervision IDs), the target speaker's utterances in start order
+      clean_pass: magicdata_ramc@clean-dual-qwen-moss-v1-20261008 custom.clean.pass; enrollments must pass
+      records_sha256:
+        train: f798a62e98baec6de570b51f1638a57b9691bef064379b3fd9e71fd73d940eda
+        train_neg: eba9bd681674f6248a5104a5fb4fe72b411e5c41dd7fc364e95b11c9dd44bd76
+      counts:
+        windows: 9902
+        train: 9902
+        no_absent_speaker: 8135
+        train_neg: 1767
+  provenance:
+    registered_at: '2026-11-04'
+- schema_version: dataset-view/1.0
+  view_id: aishell4/allspk-ts
+  version: allspk-ts-v1-20261104
+  source:
+    dataset_id: aishell4
+    version: allspk-asr-v1-20261103
+  result:
+    dataset_id: aishell4
+    version: allspk-ts-v1-20261104
+  materialization: full
+  lineage_status: exact
+  transforms:
+  - name: allspk-ts-pairs
+    version: allspk-ts-v1-20261104
+    kind: representation-conversion
+    writes:
+    - $membership
+    - task
+    - target
+    - audio_slots
+    - labels
+    - metadata.enroll_utt
+    - metadata.target_speaker
+    - metadata.window_utts
+    parameters:
+      enroll_s:
+      - 3.0
+      - 10.0
+      enroll_fallback_s:
+      - 2.0
+      - 15.0
+      seed: 20261104
+      tool: scripts/target_asr/build_allspk_ts_pairs.py
+      splits:
+      - train
+      - train_neg
+      windows: aishell4@allspk-asr-v1-20261103 train records (same windows, mixture = the window's audio reference)
+      utterances: aishell4@icefall-20260908 train supervisions with non-empty text
+      text: aishell4@punc-written-v1-20261029 (same supervision IDs), the target speaker's utterances in start order
+      records_sha256:
+        train: 78a96aa0e852d587aef5c0f168b3c694fd06b9e3d79e0e83cc56431f941c36d8
+        train_neg: 5b0bcd4d684315da465a34b03e513d86a59c69e545a1f871c6ca08edb31b5ac9
+      counts:
+        windows: 4267
+        train: 4267
+        no_absent_speaker: 756
+        train_neg: 3511
+  provenance:
+    registered_at: '2026-11-04'
+- schema_version: dataset-view/1.0
+  view_id: alimeeting_sdm/allspk-ts
+  version: allspk-ts-v1-20261104
+  source:
+    dataset_id: alimeeting_sdm
+    version: allspk-asr-v1-20261103
+  result:
+    dataset_id: alimeeting_sdm
+    version: allspk-ts-v1-20261104
+  materialization: full
+  lineage_status: exact
+  transforms:
+  - name: allspk-ts-pairs
+    version: allspk-ts-v1-20261104
+    kind: representation-conversion
+    writes:
+    - $membership
+    - task
+    - target
+    - audio_slots
+    - labels
+    - metadata.enroll_utt
+    - metadata.target_speaker
+    - metadata.window_utts
+    parameters:
+      enroll_s:
+      - 3.0
+      - 10.0
+      enroll_fallback_s:
+      - 2.0
+      - 15.0
+      seed: 20261104
+      tool: scripts/target_asr/build_allspk_ts_pairs.py
+      splits:
+      - train
+      - train_neg
+      windows: alimeeting_sdm@allspk-asr-v1-20261103 train records (same windows, mixture = the window's audio reference)
+      utterances: alimeeting_sdm@icefall-20260908 train supervisions with non-empty text
+      text: alimeeting_sdm@punc-written-v1-20261029 (same supervision IDs), the target speaker's utterances in start order
+      records_sha256:
+        train: b82b086a5f00a332145fb1023f83cfe773ee82a6e2114bf230bcb591e2aabb6d
+        train_neg: 836399ad4cbc84fe394758f005d26bff0fa1747220ad4b05b82ea76d8db23cf0
+      counts:
+        windows: 2527
+        train: 2521
+        train_neg: 421
+        no_absent_speaker: 2106
+        no_target_enrollment: 6
+  provenance:
+    registered_at: '2026-11-04'

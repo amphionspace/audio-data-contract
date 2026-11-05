@@ -9,26 +9,251 @@
     artifacts:
       - name: source
         kind: source-directory
-        root_alias: multilingual
-        relative_path: es/google_latam/source/openslr-20260911
+        root_alias: google_latam
+        relative_path: source/openslr-20260911
+        metadata:
+          file_count: 49
+          expected_bytes: 8105181551
+          tree_sha256: 2454c53edf6ef1e74d176b63c6a4989c824b66936e5e62c07273b5a4890d3001
+      - name: es_ar_female
+        kind: source-archive
+        root_alias: google_latam
+        relative_path: source/openslr-20260911/SLR61/es_ar_female.zip
+        expected_bytes: 1262394798
+        sha256: 9cc0f2895d6466c478af9a393def99a9ff4688f26593bbfbb5468eb21627bf08
+        metadata:
+          md5: 7647bfc841e72d2d06442f565af47405
+      - name: es_ar_male
+        kind: source-archive
+        root_alias: google_latam
+        relative_path: source/openslr-20260911/SLR61/es_ar_male.zip
+        expected_bytes: 551574109
+        sha256: 9f0cd8441370ce6a7fe2693c306a83d699d7d05608170f8a1d42b0556bf3d9bc
+        metadata:
+          md5: 0283fa4ed43b094282c38bf85e5e5048
+      - name: es_cl_female
+        kind: source-archive
+        root_alias: google_latam
+        relative_path: source/openslr-20260911/SLR71/es_cl_female.zip
+        expected_bytes: 585615697
+        sha256: 23593f3dac085d26f99df38159c1ab0ae2c23f5c97ad869292496abc6e171bc6
+        metadata:
+          md5: c700820361786f1cfb4da1a2689d336b
+      - name: es_cl_male
+        kind: source-archive
+        root_alias: google_latam
+        relative_path: source/openslr-20260911/SLR71/es_cl_male.zip
+        expected_bytes: 859750206
+        sha256: ace2cbd6df28e94fdd636ba1263b72b557722b0d2abcf4c6e072011ac870cbee
+        metadata:
+          md5: 1554fb3a317e3374f40961610e06d952
+      - name: es_co_female
+        kind: source-archive
+        root_alias: google_latam
+        relative_path: source/openslr-20260911/SLR72/es_co_female.zip
+        expected_bytes: 801960444
+        sha256: 03721aa7b6b7fe1dd309a0c545cbef4898fac99ed811f4e1769b2fc16bb7eb70
+        metadata:
+          md5: 15292e04820004c5e7fbb57ceaa65717
+      - name: es_co_male
+        kind: source-archive
+        root_alias: google_latam
+        relative_path: source/openslr-20260911/SLR72/es_co_male.zip
+        expected_bytes: 810070088
+        sha256: 2e72abf283adf3f52c28d9f4d59709d4a24fa57243dc696a99dfbc1b8e534c9a
+        metadata:
+          md5: 069d8ae6491471065c9d9d2fc8b92380
+      - name: es_pe_female
+        kind: source-archive
+        root_alias: google_latam
+        relative_path: source/openslr-20260911/SLR73/es_pe_female.zip
+        expected_bytes: 913983951
+        sha256: 0bcb138a6a4657fa52ec6ec129807dc2476d9a89184ea2ab4f588bbbddc12062
+        metadata:
+          md5: 806900cc7c20b756113e037e1284a8d7
+      - name: es_pe_male
+        kind: source-archive
+        root_alias: google_latam
+        relative_path: source/openslr-20260911/SLR73/es_pe_male.zip
+        expected_bytes: 1026322863
+        sha256: 8baf41802bc59f7d170ee091d8676db725903efdcfeda12d699a31a746ae50bf
+        metadata:
+          md5: 5a14f5f3031e4aacdc4f8a5e799fae48
+      - name: es_pr_female
+        kind: source-archive
+        root_alias: google_latam
+        relative_path: source/openslr-20260911/SLR74/es_pr_female.zip
+        expected_bytes: 214181314
+        sha256: 0ff2f4ed63fbbc4305140bb88c71ca9a72b18c6686a755534b47ae28dce2861d
+        metadata:
+          md5: 151f45e3e16c5d6d8803570a37a00a1f
+      - name: es_ve_female
+        kind: source-archive
+        root_alias: google_latam
+        relative_path: source/openslr-20260911/SLR75/es_ve_female.zip
+        expected_bytes: 517000277
+        sha256: 4600baead7519afaa5f6b33cf3f4b2373e7f1902aa72841fc38582660b07fe31
+        metadata:
+          md5: 1e73d243bcaefc436cb118008cc2bcd9
+      - name: es_ve_male
+        kind: source-archive
+        root_alias: google_latam
+        relative_path: source/openslr-20260911/SLR75/es_ve_male.zip
+        expected_bytes: 526316727
+        sha256: 3cf8703b1b61de1bf964e26f0a2c7f0ec637b1a85eafd982e98de9301558b289
+        metadata:
+          md5: 97ec07e0ca3efe32c200559b2ca5ef40
+      - name: es_weather_messages
+        kind: source-archive
+        root_alias: google_latam
+        relative_path: source/openslr-20260911/SLR61/es_weather_messages.zip
+        expected_bytes: 33981250
+        sha256: 0a4859fd0a6b1a56bb14eb65aeff9c82462166543c43d42659f586ff428d3399
+        metadata:
+          md5: 35681342f2c32a9ec8bacea0cb544a17
       - name: download_state
         kind: dataset-state
-        root_alias: multilingual
-        relative_path: downloads/language-expansion-20260911/google_latam/state.json
+        root_alias: google_latam
+        relative_path: versions/openslr-20260911/download_state/state.json
+        expected_bytes: 933
+        sha256: 950a1d7597b204f58f07621ef7367b78c6b2301940a496f236b5ea33525c09ac
     splits:
-      all:
+      es_ar:
         artifacts:
           source:
             - source
+          audio_archive:
+            - es_ar_female
+            - es_ar_male
+        statistics:
+          count: 5739
+          speakers: 44
+          duration_hours: 8.0284
+          duration_basis: RIFF data-chunk bytes / 96000 (48 kHz 16-bit mono) for every WAV in the zip; every WAV matched to a line_index row; zip md5 matches the upstream checksum.md5
+          hours_by_gender:
+            female: 5.6097
+            male: 2.4187
+        provenance:
+          source_id: SLR61
+          locale: es-AR
+          url: https://www.openslr.org/61/
+      es_cl:
+        artifacts:
+          source:
+            - source
+          audio_archive:
+            - es_cl_female
+            - es_cl_male
+        statistics:
+          count: 4374
+          speakers: 31
+          duration_hours: 7.1494
+          duration_basis: RIFF data-chunk bytes / 96000 (48 kHz 16-bit mono) for every WAV in the zip; every WAV matched to a line_index row; zip md5 matches the upstream checksum.md5
+          hours_by_gender:
+            female: 2.8365
+            male: 4.3129
+        provenance:
+          source_id: SLR71
+          locale: es-CL
+          url: https://www.openslr.org/71/
+      es_co:
+        artifacts:
+          source:
+            - source
+          audio_archive:
+            - es_co_female
+            - es_co_male
+        statistics:
+          count: 4903
+          speakers: 33
+          duration_hours: 7.5795
+          duration_basis: RIFF data-chunk bytes / 96000 (48 kHz 16-bit mono) for every WAV in the zip; every WAV matched to a line_index row; zip md5 matches the upstream checksum.md5
+          hours_by_gender:
+            female: 3.7407
+            male: 3.8387
+        provenance:
+          source_id: SLR72
+          locale: es-CO
+          url: https://www.openslr.org/72/
+      es_pe:
+        artifacts:
+          source:
+            - source
+          audio_archive:
+            - es_pe_female
+            - es_pe_male
+        statistics:
+          count: 5447
+          speakers: 38
+          duration_hours: 9.2194
+          duration_basis: RIFF data-chunk bytes / 96000 (48 kHz 16-bit mono) for every WAV in the zip; every WAV matched to a line_index row; zip md5 matches the upstream checksum.md5
+          hours_by_gender:
+            female: 4.3456
+            male: 4.8737
+        provenance:
+          source_id: SLR73
+          locale: es-PE
+          url: https://www.openslr.org/73/
+      es_pr:
+        artifacts:
+          source:
+            - source
+          audio_archive:
+            - es_pr_female
+        statistics:
+          count: 617
+          speakers: 5
+          duration_hours: 1.0028
+          duration_basis: RIFF data-chunk bytes / 96000 (48 kHz 16-bit mono) for every WAV in the zip; every WAV matched to a line_index row; zip md5 matches the upstream checksum.md5
+          hours_by_gender:
+            female: 1.0028
+        provenance:
+          source_id: SLR74
+          locale: es-PR
+          url: https://www.openslr.org/74/
+      es_ve:
+        artifacts:
+          source:
+            - source
+          audio_archive:
+            - es_ve_female
+            - es_ve_male
+        statistics:
+          count: 3357
+          speakers: 23
+          duration_hours: 4.8143
+          duration_basis: RIFF data-chunk bytes / 96000 (48 kHz 16-bit mono) for every WAV in the zip; every WAV matched to a line_index row; zip md5 matches the upstream checksum.md5
+          hours_by_gender:
+            female: 2.4146
+            male: 2.3996
+        provenance:
+          source_id: SLR75
+          locale: es-VE
+          url: https://www.openslr.org/75/
+      weather_messages:
+        artifacts:
+          source:
+            - source
+          audio_archive:
+            - es_weather_messages
+        statistics:
+          count: 180
+          speakers: 6
+          duration_hours: 0.1724
+          duration_basis: RIFF data-chunk bytes / 96000 for every WAV in the zip
+          hours_by_locale:
+            es-ar: 0.0983
+            es-es: 0.0741
+        provenance:
+          source_id: SLR61
+          notes: 天气播报短句，es-es 目录是西班牙口音，不属于美洲口音
     provenance:
+      summary: 拉美六国西语朗读（Google 众包）
       source: OpenSLR
+      source_id: SLR61,SLR71-SLR75
       url: https://aclanthology.org/2020.lrec-1.801/
       license: CC-BY-SA-4.0
-      inventory_status: download_planned
-      description: SLR61、71–75 六个拉美口音；源包内的西班牙天气样本不进入美洲视图。
-      download_scope: SLR61 and SLR71-75, complete audio and metadata; SLR61 Spain weather samples retained only as source, excluded from Americas view
-      expected_download_files: 37
-      expected_download_bytes: 8105175208
+      download_mirror: https://openslr.magicdatatech.com (with openslr.elda.org and openslr.trmal.net)
       locales:
         - es-AR
         - es-CL
@@ -36,3 +261,9 @@
         - es-PE
         - es-PR
         - es-VE
+      description: Google 众包录制的拉美西语朗读（阿根廷、智利、哥伦比亚、秘鲁、波多黎各、委内瑞拉），按国家各一个划分，48 kHz 录音棚质量。SLR61 包里另有一小份天气播报（weather_messages），其中 es-es 是西班牙口音，只作源文件保留，不要算进美洲口音。
+      download_scope: SLR61 and SLR71-75 complete audio and metadata from the OpenSLR CN mirror; SLR61 Spain weather samples retained only as source
+      expected_download_files: 49
+      expected_download_bytes: 8105181551
+      integrity: verified
+      local_scan_date: '2026-11-03'

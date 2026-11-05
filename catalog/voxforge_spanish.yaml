@@ -1,0 +1,56 @@
+  - schema_version: dataset-catalog/2.0
+    dataset_id: voxforge_spanish
+    version: hf-1ce6b6f9701d
+    languages:
+      - es
+    tasks:
+      - asr
+    aliases: []
+    artifacts:
+      - name: source
+        kind: hf-dataset-snapshot
+        root_alias: voxforge_spanish
+        relative_path: source/hf-1ce6b6f9701d
+        metadata:
+          file_count: 9
+          expected_bytes: 3441029829
+          tree_sha256: 26429f96afc8c03d036d2332ef0531dbd599b87dbb1eb8ffa7a2aa03923a5926
+      - name: download_state
+        kind: dataset-state
+        root_alias: voxforge_spanish
+        relative_path: versions/hf-1ce6b6f9701d/download_state/state.json
+        expected_bytes: 912
+        sha256: 1fde8967646a1067d79b1fa62dc663aecb07aa9cfdef0f91fc3d47816f746ff5
+    splits:
+      train:
+        artifacts:
+          source:
+            - source
+        statistics:
+          count: 21692
+          speakers: 2180
+          duration_hours: 49.7138
+          duration_basis: sum of upstream train Parquet duration column in seconds; embedded audio; pinned upstream file hashes verified
+          hours_by_country:
+            spain: 36.99
+            argentina: 4.22
+            latin_america: 3.79
+            mexico: 1.89
+            chile: 1.68
+            unknown: 1.14
+    provenance:
+      summary: VoxForge 西语朗读（多为西班牙）
+      source: Hugging Face
+      source_id: ciempiess/voxforge_spanish
+      revision: 1ce6b6f9701d2f2efe5c701319ab03488c694b8e
+      url: https://huggingface.co/datasets/ciempiess/voxforge_spanish
+      download_mirror: https://hf-mirror.com
+      description: VoxForge 西语朗读。约 37.0 h 为西班牙口音，阿根廷、拉美、墨西哥、智利共约 11.6 h；可按 country 字段筛选美洲部分。许可为 GPL-3.0。
+      locale: es
+      license:
+        - gpl-3.0
+      download_scope: Complete VoxForge Spanish corpus release
+      expected_download_files: 9
+      expected_download_bytes: 3441029829
+      integrity: verified
+      local_scan_date: '2026-11-03'

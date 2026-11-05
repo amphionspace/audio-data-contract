@@ -28,3 +28,154 @@
       inventory_status: download_planned
       dataset_family: common_voice_pt
       description: 等待 Mozilla Data Collective 授权；下载后按口音/地区与已有版本去重。
+  - schema_version: dataset-catalog/2.0
+    dataset_id: common_voice_pt
+    version: hf-8262c16bf297
+    languages:
+      - pt
+    tasks:
+      - asr
+    aliases: []
+    artifacts:
+      - name: source
+        kind: hf-dataset-snapshot
+        root_alias: common_voice_pt
+        relative_path: source/hf-8262c16bf297
+        metadata:
+          file_count: 28
+          expected_bytes: 9879462660
+          tree_sha256: ab8afdd2d395ef0339522f5b0ed0f2577af15d5e99e2254d41e71b657f275545
+      - name: clip_durations
+        kind: transcript-table
+        root_alias: common_voice_pt
+        relative_path: source/hf-8262c16bf297/transcript/pt/clip_durations.tsv
+        expected_bytes: 6286630
+        sha256: 43ead60433d7f08dcf5acc1a5a1db7c1ccd4db092b3c364bd8beead6480d51cf
+      - name: train_audio_0
+        kind: source-archive
+        root_alias: common_voice_pt
+        relative_path: source/hf-8262c16bf297/audio/pt/train/pt_train_0.tar
+        expected_bytes: 1173631488
+        sha256: fff9d91bcefe3c824b91b4f3a8c8bc59ca09347cd28e1acb4963c740bacdc6d2
+      - name: train_audio_1
+        kind: source-archive
+        root_alias: common_voice_pt
+        relative_path: source/hf-8262c16bf297/audio/pt/train/pt_train_1.tar
+        expected_bytes: 1115127808
+        sha256: 1341c47fe9d7b6b6203658c556f8af65a4f1bac71ef3b35389bff2dc0101acb1
+      - name: train_audio_2
+        kind: source-archive
+        root_alias: common_voice_pt
+        relative_path: source/hf-8262c16bf297/audio/pt/train/pt_train_2.tar
+        expected_bytes: 1138392064
+        sha256: 467cbcb43a8b62ddc11ebc36b81b197ad3bbc3bef0ed909bc307c459e8dff7a6
+      - name: train_audio_3
+        kind: source-archive
+        root_alias: common_voice_pt
+        relative_path: source/hf-8262c16bf297/audio/pt/train/pt_train_3.tar
+        expected_bytes: 531825664
+        sha256: 3b6e141bfd5689eb1c01de5618bd4de46f5bfa302b63ad810e27174514a865c5
+      - name: train_transcripts
+        kind: transcript-table
+        root_alias: common_voice_pt
+        relative_path: source/hf-8262c16bf297/transcript/pt/train.tsv
+        expected_bytes: 44413232
+        sha256: 74b77b8e0a875ad914ad592d06844f338cbf88b691bb976408f515526f2685bb
+      - name: dev_audio_0
+        kind: source-archive
+        root_alias: common_voice_pt
+        relative_path: source/hf-8262c16bf297/audio/pt/dev/pt_dev_0.tar
+        expected_bytes: 291492352
+        sha256: dcefd8a799effb69a74b8551e48e0d6a7eef909ed228d0209ab13565447ef9e1
+      - name: dev_transcripts
+        kind: transcript-table
+        root_alias: common_voice_pt
+        relative_path: source/hf-8262c16bf297/transcript/pt/dev.tsv
+        expected_bytes: 2781160
+        sha256: 7d05c8f53ef475089c7a518015c4d3bdf1231ebf0ded6b539a2d46df4c2ae362
+      - name: test_audio_0
+        kind: source-archive
+        root_alias: common_voice_pt
+        relative_path: source/hf-8262c16bf297/audio/pt/test/pt_test_0.tar
+        expected_bytes: 305852928
+        sha256: 7e566020e31591fbbd71abf440c00cc1c5423eb988762921edbb752dfe7e2a09
+      - name: test_transcripts
+        kind: transcript-table
+        root_alias: common_voice_pt
+        relative_path: source/hf-8262c16bf297/transcript/pt/test.tsv
+        expected_bytes: 2697011
+        sha256: de4faf92d282fd0210659680adcdc14fbf82850e461888d16b98dc28b976d576
+      - name: download_state
+        kind: dataset-state
+        root_alias: common_voice_pt
+        relative_path: versions/hf-8262c16bf297/download_state/state.json
+        expected_bytes: 950
+        sha256: e14bf0276b1399616dccde7e81f72dae6afe65d1da4b1f783cae53f8bf44e895
+    splits:
+      train:
+        artifacts:
+          source:
+            - source
+          audio_archive:
+            - train_audio_0
+            - train_audio_1
+            - train_audio_2
+            - train_audio_3
+          transcripts:
+            - train_transcripts
+          clip_durations:
+            - clip_durations
+        statistics:
+          count: 143180
+          speakers: 1627
+          duration_hours: 160.0251
+          duration_basis: sum of clip_durations.tsv for the split TSV rows; every row has its clip in the split tar
+      dev:
+        artifacts:
+          source:
+            - source
+          audio_archive:
+            - dev_audio_0
+          transcripts:
+            - dev_transcripts
+          clip_durations:
+            - clip_durations
+        statistics:
+          count: 9464
+          speakers: 525
+          duration_hours: 11.7145
+          duration_basis: sum of clip_durations.tsv for the split TSV rows; every row has its clip in the split tar
+      test:
+        artifacts:
+          source:
+            - source
+          audio_archive:
+            - test_audio_0
+          transcripts:
+            - test_transcripts
+          clip_durations:
+            - clip_durations
+        statistics:
+          count: 9467
+          speakers: 2046
+          duration_hours: 12.5714
+          duration_basis: sum of clip_durations.tsv for the split TSV rows; every row has its clip in the split tar
+    provenance:
+      summary: Common Voice 17 葡语朗读
+      source: Hugging Face
+      source_id: fsicoli/common_voice_17_0
+      revision: 8262c16bf297c87a9cd88c51997c4758ed7a8ba2
+      url: https://huggingface.co/datasets/fsicoli/common_voice_17_0
+      download_mirror: https://hf-mirror.com
+      license: CC0-1.0
+      locale: pt
+      release: Common Voice 17.0
+      dataset_family: common_voice_pt
+      description: Common Voice 17.0 葡语的非官方 HF 镜像（官方 Mozilla 仓库需要授权）。口音字段大多为空，填写的几乎都是巴西口音。镜像另含 validated / other / invalidated（172.6 / 29.0 / 9.4 h），未登记为划分。
+      known_issues:
+        - 镜像的 train 是 validated 去掉 test（143,180 条），包含全部 dev 录音；与 test 有 648 个说话人重叠，test 句子有 9,203/9,467 也出现在 train。用 test 评测时不要用这个 train 训练，用 dev 选模时先从 train 去掉 dev。
+      download_scope: 'Unofficial Common Voice 17.0 Portuguese mirror: all audio splits and transcripts'
+      expected_download_files: 28
+      expected_download_bytes: 9879462660
+      integrity: verified
+      local_scan_date: '2026-11-03'

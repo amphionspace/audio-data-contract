@@ -1,0 +1,145 @@
+- schema_version: dataset-view/1.0
+  view_id: magicdata_ramc/allspk-asr
+  version: allspk-asr-v1-20261103
+  source:
+    dataset_id: magicdata_ramc
+    version: punc-written-v1-20261029
+  result:
+    dataset_id: magicdata_ramc
+    version: allspk-asr-v1-20261103
+  materialization: full
+  lineage_status: exact
+  transforms:
+  - name: allspk-asr-windows
+    version: allspk-asr-v1-20261103
+    kind: representation-conversion
+    writes:
+    - $membership
+    - target
+    - audio_slots
+    - labels.speakers
+    - metadata.window_utts
+    - metadata.recording_id
+    - metadata.window_start
+    - metadata.window_end
+    - metadata.overlap_seconds
+    parameters:
+      length_s:
+      - 10.0
+      - 90.0
+      min_pause_s: 0.2
+      edge_s: 0.1
+      min_window_s: 5.0
+      max_overlap: 0.1
+      seed: 20261103
+      tool: scripts/target_asr/build_allspk_asr_windows.py
+      split: train
+      utterances: magicdata_ramc@icefall-20260908 train supervisions with non-empty text
+      text: magicdata_ramc@punc-written-v1-20261029 (same supervision IDs), joined in start order
+      audio: magicdata_ramc@asr-20261014 train audio index, channel of its records
+      clean_pass: magicdata_ramc@clean-dual-qwen-moss-v1-20261008 custom.clean.pass; windows with a rejected utterance dropped
+      records_sha256: 933501b8611957baa7ca2c023043e7c9f062eaddf738e42a399c17221c8a00a2
+      counts:
+        recordings: 289
+        windows: 11362
+        kept: 9902
+        drop_clean_reject: 1388
+        drop_short: 72
+  provenance:
+    registered_at: '2026-11-03'
+- schema_version: dataset-view/1.0
+  view_id: aishell4/allspk-asr
+  version: allspk-asr-v1-20261103
+  source:
+    dataset_id: aishell4
+    version: punc-written-v1-20261029
+  result:
+    dataset_id: aishell4
+    version: allspk-asr-v1-20261103
+  materialization: full
+  lineage_status: exact
+  transforms:
+  - name: allspk-asr-windows
+    version: allspk-asr-v1-20261103
+    kind: representation-conversion
+    writes:
+    - $membership
+    - target
+    - audio_slots
+    - labels.speakers
+    - metadata.window_utts
+    - metadata.recording_id
+    - metadata.window_start
+    - metadata.window_end
+    - metadata.overlap_seconds
+    parameters:
+      length_s:
+      - 10.0
+      - 90.0
+      min_pause_s: 0.2
+      edge_s: 0.1
+      min_window_s: 5.0
+      max_overlap: 0.1
+      seed: 20261103
+      tool: scripts/target_asr/build_allspk_asr_windows.py
+      split: train
+      utterances: aishell4@icefall-20260908 train supervisions with non-empty text
+      text: aishell4@punc-written-v1-20261029 (same supervision IDs), joined in start order
+      audio: aishell4@asr-20261014 train audio index, channel of its records
+      records_sha256: 56d3549920a3e5a796fd3de600b952dcd4ec2deff228504d46d1afd150045103
+      counts:
+        recordings: 189
+        windows: 6316
+        kept: 4267
+        drop_overlap: 1957
+        drop_short: 92
+  provenance:
+    registered_at: '2026-11-03'
+- schema_version: dataset-view/1.0
+  view_id: alimeeting_sdm/allspk-asr
+  version: allspk-asr-v1-20261103
+  source:
+    dataset_id: alimeeting_sdm
+    version: punc-written-v1-20261029
+  result:
+    dataset_id: alimeeting_sdm
+    version: allspk-asr-v1-20261103
+  materialization: full
+  lineage_status: exact
+  transforms:
+  - name: allspk-asr-windows
+    version: allspk-asr-v1-20261103
+    kind: representation-conversion
+    writes:
+    - $membership
+    - target
+    - audio_slots
+    - labels.speakers
+    - metadata.window_utts
+    - metadata.recording_id
+    - metadata.window_start
+    - metadata.window_end
+    - metadata.overlap_seconds
+    parameters:
+      length_s:
+      - 10.0
+      - 90.0
+      min_pause_s: 0.2
+      edge_s: 0.1
+      min_window_s: 5.0
+      max_overlap: 0.1
+      seed: 20261103
+      tool: scripts/target_asr/build_allspk_asr_windows.py
+      split: train
+      utterances: alimeeting_sdm@icefall-20260908 train supervisions with non-empty text
+      text: alimeeting_sdm@punc-written-v1-20261029 (same supervision IDs), joined in start order
+      audio: alimeeting_sdm@asr-20261014 train audio index, channel of its records
+      records_sha256: aa972193f2193d732620219fa312feab547a685eee96ec923a454ea5f8138d72
+      counts:
+        recordings: 209
+        windows: 6478
+        kept: 2527
+        drop_overlap: 3811
+        drop_short: 140
+  provenance:
+    registered_at: '2026-11-03'

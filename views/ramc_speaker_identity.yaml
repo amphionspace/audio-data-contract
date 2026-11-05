@@ -1,0 +1,42 @@
+# magicdata_ramc 说话人身份标注的 view
+  - schema_version: dataset-view/1.0
+    view_id: magicdata_ramc/speaker-identity
+    version: speaker-identity-v1-20261028
+    source:
+      dataset_id: magicdata_ramc
+      version: clean-dual-pass-20261027
+    result:
+      dataset_id: magicdata_ramc
+      version: speaker-identity-v1-20261028
+    materialization: full
+    lineage_status: exact
+    transforms:
+      - name: ramc-speaker-identity
+        version: v1-20261028
+        kind: annotate
+        writes:
+          - metadata.speaker_identity
+        parameters:
+          model: ERes2NetV2 (iic/speech_eres2netv2_sv_zh-cn_16k-common)
+          unit: mean embedding per (speaker, recording) over up to 6 clean-pass utterances of 2-8 s
+          threshold_cosine: 0.6
+          seed: 20261028
+          held_out: magicdata_ramc@icefall-20260908 dev/test
+          train: magicdata_ramc@clean-dual-pass-20261027
+          tool: scripts/ts_robust/ramc_voice_identities.py
+          tool_sha256: 6f18f3af6a3cc113e0cd88860b5bf1203289f4216890bd7082e3fa100e71024c
+          label_inputs:
+            identities.json: ebe0ee649f17a4872e057f7f19735323fbf91e03edcf0bfd24a65067bf8560cb
+            report.json: f702d7af98d6a9ee2efd9b74554712acaba9f5d50cc548d53d7df591daf61c86
+            suspects.json: bc95ed92024a32ac4a4860f76226114b9a0dcd0c39a5bc3ff5e2599334716e9e
+            heldout_match.json: 7dcc5bb3ce7417ae4a421d8af1601e84cfeb14e78683fe4647b94ff9a529edf1
+          counts:
+            rows: 166711
+            rows with same-voice partners: 118878
+            rows matching a dev/test voice: 35806
+            speakers: 556
+            speakers with same-voice partners: 383
+            same-voice pairs: 298
+            train speakers matching a dev/test voice: 113
+    provenance:
+      registered_at: '2026-11-03'

@@ -1,0 +1,111 @@
+  - schema_version: dataset-catalog/2.0
+    dataset_id: fleurs_pt
+    version: hf-70bb2e84b976
+    languages:
+      - pt
+    tasks:
+      - asr
+    aliases: []
+    artifacts:
+      - name: source
+        kind: hf-dataset-snapshot
+        root_alias: fleurs_pt
+        relative_path: source/hf-70bb2e84b976
+        metadata:
+          file_count: 6
+          expected_bytes: 2676532761
+          tree_sha256: e5964bed1613a8d2aa40d4a6d1306731cf1bbf77c54b44f56dce6b3b16ad120f
+      - name: train_audio_archive
+        kind: source-archive
+        root_alias: fleurs_pt
+        relative_path: source/hf-70bb2e84b976/data/pt_br/audio/train.tar.gz
+        expected_bytes: 1805414677
+        sha256: 49c6a02a57576f99bd0e6e51aacebfdea9a0bd2cee146e5d20cdceac56e9be9e
+      - name: train_transcripts
+        kind: transcript-table
+        root_alias: fleurs_pt
+        relative_path: source/hf-70bb2e84b976/data/pt_br/train.tsv
+        expected_bytes: 1638562
+        sha256: 8d266b0545b9efb535cd1c37a176b4772c987b53cc88b25b39d5f5eacc409f8b
+      - name: dev_audio_archive
+        kind: source-archive
+        root_alias: fleurs_pt
+        relative_path: source/hf-70bb2e84b976/data/pt_br/audio/dev.tar.gz
+        expected_bytes: 247399617
+        sha256: 15f2a075859c3b6448e81c867f9c2a77694b3deab6b24ebc632de09bbf401838
+      - name: dev_transcripts
+        kind: transcript-table
+        root_alias: fleurs_pt
+        relative_path: source/hf-70bb2e84b976/data/pt_br/dev.tsv
+        expected_bytes: 225324
+        sha256: 69a60f2ef2964da22ac38c3fe223a5ff5d59b9d7fb8ccfcc7003737fc7a1f69c
+      - name: test_audio_archive
+        kind: source-archive
+        root_alias: fleurs_pt
+        relative_path: source/hf-70bb2e84b976/data/pt_br/audio/test.tar.gz
+        expected_bytes: 621291324
+        sha256: 968d1b68a90132ca1f044f664866418b0db0351a93601a671d5637016da4f49b
+      - name: test_transcripts
+        kind: transcript-table
+        root_alias: fleurs_pt
+        relative_path: source/hf-70bb2e84b976/data/pt_br/test.tsv
+        expected_bytes: 563257
+        sha256: 4a7b8ae8ce07c355dcd2cf087a6486c7c3ab931d751b9a9218a9ee0cd798964b
+      - name: download_state
+        kind: dataset-state
+        root_alias: fleurs_pt
+        relative_path: versions/hf-70bb2e84b976/download_state/state.json
+        expected_bytes: 892
+        sha256: de2192a4d4295eb79f1fd8574c5c8b621a755fd5d6b001bf615752b5a1f64eea
+    splits:
+      train:
+        artifacts:
+          source:
+            - source
+          audio_archive:
+            - train_audio_archive
+          transcripts:
+            - train_transcripts
+        statistics:
+          count: 2793
+          duration_hours: 10.1789
+          duration_basis: sum of TSV num_samples / 16000; pinned upstream file hashes verified
+      dev:
+        artifacts:
+          source:
+            - source
+          audio_archive:
+            - dev_audio_archive
+          transcripts:
+            - dev_transcripts
+        statistics:
+          count: 386
+          duration_hours: 1.291
+          duration_basis: sum of TSV num_samples / 16000; pinned upstream file hashes verified
+      test:
+        artifacts:
+          source:
+            - source
+          audio_archive:
+            - test_audio_archive
+          transcripts:
+            - test_transcripts
+        statistics:
+          count: 919
+          duration_hours: 3.2389
+          duration_basis: sum of TSV num_samples / 16000; pinned upstream file hashes verified
+    provenance:
+      summary: FLEURS 巴西葡语朗读
+      source: Hugging Face
+      source_id: google/fleurs
+      revision: 70bb2e84b976b7e960aa89f1c648e09c59f894dd
+      url: https://huggingface.co/datasets/google/fleurs
+      download_mirror: https://hf-mirror.com
+      locale: pt-BR
+      license: cc-by-4.0
+      description: Google FLEURS 的 pt_br 子集（音频归档和 TSV 转写），其余语种未下载。
+      download_scope: FLEURS pt_br audio archives and TSV transcripts only
+      expected_download_files: 6
+      expected_download_bytes: 2676532761
+      integrity: verified
+      local_scan_date: '2026-11-03'

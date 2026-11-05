@@ -1,0 +1,539 @@
+# CHiME-6 与 NOTSOFAR 真实会议的说话人归属 ASR 窗口（30 / 120 / 300 / 600 秒）及标注更正（数据声明）
+  - schema_version: dataset-catalog/2.0
+    dataset_id: chime6
+    version: meeting-windows-v1-20261008
+    languages:
+      - en
+    tasks:
+      - speaker_attributed_asr
+    aliases: []
+    artifacts:
+      - name: train-audio-index
+        kind: audio-index
+        root_alias: aidc_data
+        relative_path: datasets/chime6/versions/meeting-windows-v1-20261008/chime6-train-audio-index.jsonl.gz
+        expected_bytes: 633
+        sha256: fee7f395917d9bf7d72646c1a115b1c78cd2d28c3f5ec3cb6ff553be2fd07ba0
+        metadata:
+          record_count: 16
+      - name: dev-audio-index
+        kind: audio-index
+        root_alias: aidc_data
+        relative_path: datasets/chime6/versions/meeting-windows-v1-20261008/chime6-dev-audio-index.jsonl.gz
+        expected_bytes: 273
+        sha256: d7af6ec3d282167183d176e187bed217fcaecc02a6f3a1830b0ca174e3acffa1
+        metadata:
+          record_count: 2
+      - name: test-audio-index
+        kind: audio-index
+        root_alias: aidc_data
+        relative_path: datasets/chime6/versions/meeting-windows-v1-20261008/chime6-test-audio-index.jsonl.gz
+        expected_bytes: 276
+        sha256: 915d6bad18bd9deaef786548cddd0df0ece787b8b0244e9cbc55a7909bf6bd40
+        metadata:
+          record_count: 2
+      - name: train_30s-records
+        kind: audio-records
+        root_alias: aidc_data
+        relative_path: datasets/chime6/versions/meeting-windows-v1-20261008/chime6-train_30s.jsonl.gz
+        expected_bytes: 3224306
+        sha256: 89c8fbeb1a7d63bf1f9c364de9708b6d81bc3e31a8b92e16b9d5a64fbf975f04
+        metadata:
+          record_count: 5182
+      - name: train_120s-records
+        kind: audio-records
+        root_alias: aidc_data
+        relative_path: datasets/chime6/versions/meeting-windows-v1-20261008/chime6-train_120s.jsonl.gz
+        expected_bytes: 3154799
+        sha256: 88e9fa540478237e24021997605fcfbb4be075852690ef56c0f2db23ca1c6408
+        metadata:
+          record_count: 1253
+      - name: train_300s-records
+        kind: audio-records
+        root_alias: aidc_data
+        relative_path: datasets/chime6/versions/meeting-windows-v1-20261008/chime6-train_300s.jsonl.gz
+        expected_bytes: 3236074
+        sha256: 7a58f4a5d9b8551f2e77469bc49f110a56cdba4103060627a4188fa913310a2c
+        metadata:
+          record_count: 498
+      - name: train_600s-records
+        kind: audio-records
+        root_alias: aidc_data
+        relative_path: datasets/chime6/versions/meeting-windows-v1-20261008/chime6-train_600s.jsonl.gz
+        expected_bytes: 1622136
+        sha256: a60325f4bcfdee416cee7de1dc85b009c23d15077805e15e636d9b3b1f36a5c5
+        metadata:
+          record_count: 143
+      - name: dev_30s-records
+        kind: audio-records
+        root_alias: aidc_data
+        relative_path: datasets/chime6/versions/meeting-windows-v1-20261008/chime6-dev_30s.jsonl.gz
+        expected_bytes: 353403
+        sha256: 33b13cd61397e539fc87c4e0f64a38a210e05cce0b9d9ce222c6dc48f35501fe
+        metadata:
+          record_count: 554
+      - name: dev_120s-records
+        kind: audio-records
+        root_alias: aidc_data
+        relative_path: datasets/chime6/versions/meeting-windows-v1-20261008/chime6-dev_120s.jsonl.gz
+        expected_bytes: 342107
+        sha256: aceba591233b1c762404edafb35fbf7ac0fdd42c5b20eb181983a5786758c04d
+        metadata:
+          record_count: 150
+      - name: dev_300s-records
+        kind: audio-records
+        root_alias: aidc_data
+        relative_path: datasets/chime6/versions/meeting-windows-v1-20261008/chime6-dev_300s.jsonl.gz
+        expected_bytes: 345393
+        sha256: 39967fa5a75b41708db6cb3143a06a100b9d921a667e9a775b7885508e666b32
+        metadata:
+          record_count: 58
+      - name: dev_600s-records
+        kind: audio-records
+        root_alias: aidc_data
+        relative_path: datasets/chime6/versions/meeting-windows-v1-20261008/chime6-dev_600s.jsonl.gz
+        expected_bytes: 391743
+        sha256: 012c078df3dbb605ce1070f65855faba5f1fda3eee38febf15b11c0dd452cd6c
+        metadata:
+          record_count: 29
+      - name: test_30s-records
+        kind: audio-records
+        root_alias: aidc_data
+        relative_path: datasets/chime6/versions/meeting-windows-v1-20261008/chime6-test_30s.jsonl.gz
+        expected_bytes: 436560
+        sha256: dfa9cfd96f7db24bf707eecc577837062c5b0cf08f0a0717d5b4a6f2ff0cb6d4
+        metadata:
+          record_count: 686
+      - name: test_120s-records
+        kind: audio-records
+        root_alias: aidc_data
+        relative_path: datasets/chime6/versions/meeting-windows-v1-20261008/chime6-test_120s.jsonl.gz
+        expected_bytes: 427716
+        sha256: 15ee0c5c375a0b2614dd238ae3b4575152e18740337df8c6967c71cd4301c671
+        metadata:
+          record_count: 161
+      - name: test_300s-records
+        kind: audio-records
+        root_alias: aidc_data
+        relative_path: datasets/chime6/versions/meeting-windows-v1-20261008/chime6-test_300s.jsonl.gz
+        expected_bytes: 443708
+        sha256: 078fe80d9d588aa21e0df648ac5b1e75475d754f5a2ff25edffcdf5b68b936aa
+        metadata:
+          record_count: 65
+      - name: test_600s-records
+        kind: audio-records
+        root_alias: aidc_data
+        relative_path: datasets/chime6/versions/meeting-windows-v1-20261008/chime6-test_600s.jsonl.gz
+        expected_bytes: 483835
+        sha256: 842ca8fc395487f4e67ac6516534e8cfba6ccbf48ed6254856fd5b7292d580aa
+        metadata:
+          record_count: 33
+      - name: train_excluded_windows
+        kind: metadata
+        root_alias: aidc_data
+        relative_path: datasets/chime6/versions/meeting-windows-v1-20261008/chime6-train-excluded-windows.jsonl.gz
+        expected_bytes: 106954
+        sha256: e9a75ed8917013babb6011066fe84d116734a77633a5bed053eff8320fdcad88
+        metadata:
+          record_count: 117
+          description: 导出时已丢弃的训练窗口及原因（整窗目标超过上下文、空转写），不在 records 里
+      - name: annotation_corrections
+        kind: metadata
+        root_alias: aidc_data
+        relative_path: datasets/chime6/versions/meeting-windows-v1-20261008/chime6-corrections.json
+        expected_bytes: 3031
+        sha256: 336d9c51326362379e364ddb1c128bac518b120647616699bafe56f0d7f11f3c
+        metadata:
+          schema: chime6-annotation-corrections/1.0
+      - name: test_correction_alignments
+        kind: metadata
+        root_alias: aidc_data
+        relative_path: datasets/chime6/versions/meeting-windows-v1-20261008/chime6-test-correction-alignments.jsonl.gz
+        expected_bytes: 608
+        sha256: 64e5e9b44dcaf83811b3f422e82ad27e7ae361c48aede55f6a49e3791f63d4f0
+        metadata:
+          record_count: 3
+          description: CHiME-6 eval S21 第 1959 行（start>end）的强制对齐复核，三次运行，结论见 annotation_corrections
+    splits:
+      train_30s:
+        artifacts:
+          records:
+            - train_30s-records
+          audio_index:
+            - train-audio-index
+        statistics:
+          records: 5182
+      train_120s:
+        artifacts:
+          records:
+            - train_120s-records
+          audio_index:
+            - train-audio-index
+        statistics:
+          records: 1253
+      train_300s:
+        artifacts:
+          records:
+            - train_300s-records
+          audio_index:
+            - train-audio-index
+        statistics:
+          records: 498
+      train_600s:
+        artifacts:
+          records:
+            - train_600s-records
+          audio_index:
+            - train-audio-index
+        statistics:
+          records: 143
+      dev_30s:
+        artifacts:
+          records:
+            - dev_30s-records
+          audio_index:
+            - dev-audio-index
+        statistics:
+          records: 554
+      dev_120s:
+        artifacts:
+          records:
+            - dev_120s-records
+          audio_index:
+            - dev-audio-index
+        statistics:
+          records: 150
+      dev_300s:
+        artifacts:
+          records:
+            - dev_300s-records
+          audio_index:
+            - dev-audio-index
+        statistics:
+          records: 58
+      dev_600s:
+        artifacts:
+          records:
+            - dev_600s-records
+          audio_index:
+            - dev-audio-index
+        statistics:
+          records: 29
+      test_30s:
+        artifacts:
+          records:
+            - test_30s-records
+          audio_index:
+            - test-audio-index
+        statistics:
+          records: 686
+      test_120s:
+        artifacts:
+          records:
+            - test_120s-records
+          audio_index:
+            - test-audio-index
+        statistics:
+          records: 161
+      test_300s:
+        artifacts:
+          records:
+            - test_300s-records
+          audio_index:
+            - test-audio-index
+        statistics:
+          records: 65
+      test_600s:
+        artifacts:
+          records:
+            - test_600s-records
+          audio_index:
+            - test-audio-index
+        statistics:
+          records: 33
+      test_annotations:
+        artifacts:
+          annotations:
+            - annotation_corrections
+            - test_correction_alignments
+    provenance:
+      preparation_status: prepared
+      lineage_status: exact
+      materialization: full
+      source: chime6@speaker-records-v1-20260912
+      description: CHiME-6 真实会议的说话人归属 ASR 窗口（aligned_utterance_timestamps_v1）：人工标注的说话人和时间，mean of the 4 channels of array U01；转写为官方文字原样，只去空白，保留 [noise]、[laughs]、[inaudible] 标记。按 30 / 120 / 300 / 600 s 切窗，每个 split 的 records 一行一个窗口，turns 在 metadata。训练集上整窗目标超过上下文的 113 个窗口和空转写的 4 个窗口列在 train_excluded_windows（导出时已丢弃，不在 records 里）。标注更正 annotation_corrections：eval S21 第 1959 行开始晚于结束，强制对齐不可靠，整行排除，复核对齐结果在 test_correction_alignments。音频是 U01 阵列 4 路的平均（16 kHz 单声道），源数据集里没有，已按原字节复制 20 个文件到本版本 audio/ 下，由 *-audio-index 
+        引用。没有清洗通过标记，也没有伪造。脚本 scripts/diarization_raw_labels/register_raw_labels.py。
+      facts:
+        train-audio-index rows: 16
+        train recordings: 16
+        dev-audio-index rows: 2
+        dev recordings: 2
+        test-audio-index rows: 2
+        test recordings: 2
+        audio files copied: 20
+        train_30s-records rows: 5182
+        train_120s-records rows: 1253
+        train_300s-records rows: 498
+        train_600s-records rows: 143
+        dev_30s-records rows: 554
+        dev_120s-records rows: 150
+        dev_300s-records rows: 58
+        dev_600s-records rows: 29
+        test_30s-records rows: 686
+        test_120s-records rows: 161
+        test_300s-records rows: 65
+        test_600s-records rows: 33
+        train_excluded_windows rows: 117
+        test_correction_alignments rows: 3
+  - schema_version: dataset-catalog/2.0
+    dataset_id: notsofar_sdm
+    version: meeting-windows-v1-20261008
+    languages:
+      - en
+    tasks:
+      - speaker_attributed_asr
+    aliases: []
+    artifacts:
+      - name: train-audio-index
+        kind: audio-index
+        root_alias: aidc_data
+        relative_path: datasets/notsofar_sdm/versions/meeting-windows-v1-20261008/notsofar_sdm-train-audio-index.jsonl.gz
+        expected_bytes: 3676
+        sha256: 23bb8a262c86da193f3f1b6ce1ce0d0af9b9a1d5014ed939cd3ecccf6fb1bc51
+        metadata:
+          record_count: 346
+      - name: dev-audio-index
+        kind: audio-index
+        root_alias: aidc_data
+        relative_path: datasets/notsofar_sdm/versions/meeting-windows-v1-20261008/notsofar_sdm-dev-audio-index.jsonl.gz
+        expected_bytes: 2009
+        sha256: daf7ad6bebd78df7d6cbd5c4d5443cff48ce2ecf4b9e9362b7ca22bdc50c1172
+        metadata:
+          record_count: 177
+      - name: test-audio-index
+        kind: audio-index
+        root_alias: aidc_data
+        relative_path: datasets/notsofar_sdm/versions/meeting-windows-v1-20261008/notsofar_sdm-test-audio-index.jsonl.gz
+        expected_bytes: 7652
+        sha256: c6bc2101e2206752d0648407042db5fc6bc6dd7374d6ca959123cf97c3ed89e2
+        metadata:
+          record_count: 819
+      - name: train_30s-records
+        kind: audio-records
+        root_alias: aidc_data
+        relative_path: datasets/notsofar_sdm/versions/meeting-windows-v1-20261008/notsofar_sdm-train_30s.jsonl.gz
+        expected_bytes: 3923032
+        sha256: ae59187579d4e145ecedc9a8b6c739dfb725b07d013338367dbd1faaf6fc1e08
+        metadata:
+          record_count: 5083
+      - name: train_120s-records
+        kind: audio-records
+        root_alias: aidc_data
+        relative_path: datasets/notsofar_sdm/versions/meeting-windows-v1-20261008/notsofar_sdm-train_120s.jsonl.gz
+        expected_bytes: 3702680
+        sha256: bc25f79894ca5069957cf2db0a9a5086b8a5596f2627740b4faba48cc6fa51f1
+        metadata:
+          record_count: 1389
+      - name: train_300s-records
+        kind: audio-records
+        root_alias: aidc_data
+        relative_path: datasets/notsofar_sdm/versions/meeting-windows-v1-20261008/notsofar_sdm-train_300s.jsonl.gz
+        expected_bytes: 3498758
+        sha256: d256a869abafb4a718f7786eaad03ce311d695ec67ca3dfc691ba2fa019f7f32
+        metadata:
+          record_count: 692
+      - name: train_600s-records
+        kind: audio-records
+        root_alias: aidc_data
+        relative_path: datasets/notsofar_sdm/versions/meeting-windows-v1-20261008/notsofar_sdm-train_600s.jsonl.gz
+        expected_bytes: 3377858
+        sha256: a6b48d45c96279947b24d1056c0008e72601d684c6b5cee36582170c6d50784f
+        metadata:
+          record_count: 346
+      - name: dev_30s-records
+        kind: audio-records
+        root_alias: aidc_data
+        relative_path: datasets/notsofar_sdm/versions/meeting-windows-v1-20261008/notsofar_sdm-dev_30s.jsonl.gz
+        expected_bytes: 2178142
+        sha256: 22202aaa187f2544bf0621f1725bc35faee5bb40a59082a6292ef8b1861abc0d
+        metadata:
+          record_count: 2640
+      - name: dev_120s-records
+        kind: audio-records
+        root_alias: aidc_data
+        relative_path: datasets/notsofar_sdm/versions/meeting-windows-v1-20261008/notsofar_sdm-dev_120s.jsonl.gz
+        expected_bytes: 2048585
+        sha256: c4034dfdb085d2f9528a46947d2a7067eaf1b95bd122d1ad23ed510ffd341bf2
+        metadata:
+          record_count: 718
+      - name: dev_300s-records
+        kind: audio-records
+        root_alias: aidc_data
+        relative_path: datasets/notsofar_sdm/versions/meeting-windows-v1-20261008/notsofar_sdm-dev_300s.jsonl.gz
+        expected_bytes: 1964470
+        sha256: c6cf447a9a5cb8e8610d238af600a8f30a69bb005aeed0733d230018506408f0
+        metadata:
+          record_count: 354
+      - name: dev_600s-records
+        kind: audio-records
+        root_alias: aidc_data
+        relative_path: datasets/notsofar_sdm/versions/meeting-windows-v1-20261008/notsofar_sdm-dev_600s.jsonl.gz
+        expected_bytes: 1913993
+        sha256: 83c80f6d34fab4c78709cd205eb3c8dfd7b53c47e87396fc69529b6e270b1781
+        metadata:
+          record_count: 177
+      - name: test_30s-records
+        kind: audio-records
+        root_alias: aidc_data
+        relative_path: datasets/notsofar_sdm/versions/meeting-windows-v1-20261008/notsofar_sdm-test_30s.jsonl.gz
+        expected_bytes: 8368237
+        sha256: b133276d8c606d8242827a6eb8037dd751bb47ed0df00e656c44cc49efe5459e
+        metadata:
+          record_count: 11978
+      - name: test_120s-records
+        kind: audio-records
+        root_alias: aidc_data
+        relative_path: datasets/notsofar_sdm/versions/meeting-windows-v1-20261008/notsofar_sdm-test_120s.jsonl.gz
+        expected_bytes: 7718151
+        sha256: 2e81dfbdba90f1b572cfa03735068d0b5759974a022089176e3e5a179153d137
+        metadata:
+          record_count: 3334
+      - name: test_300s-records
+        kind: audio-records
+        root_alias: aidc_data
+        relative_path: datasets/notsofar_sdm/versions/meeting-windows-v1-20261008/notsofar_sdm-test_300s.jsonl.gz
+        expected_bytes: 7072473
+        sha256: 6a47dba5ac35f63d56d2aa9449604d8ad30dc67525dc20b8735c33f7e6de3601
+        metadata:
+          record_count: 1638
+      - name: test_600s-records
+        kind: audio-records
+        root_alias: aidc_data
+        relative_path: datasets/notsofar_sdm/versions/meeting-windows-v1-20261008/notsofar_sdm-test_600s.jsonl.gz
+        expected_bytes: 6752151
+        sha256: d74e4406a30a4e675edcb6057a19e8d22c37eb906bd036766b2bd383ae66c45b
+        metadata:
+          record_count: 819
+    splits:
+      train_30s:
+        artifacts:
+          records:
+            - train_30s-records
+          audio_index:
+            - train-audio-index
+        statistics:
+          records: 5083
+      train_120s:
+        artifacts:
+          records:
+            - train_120s-records
+          audio_index:
+            - train-audio-index
+        statistics:
+          records: 1389
+      train_300s:
+        artifacts:
+          records:
+            - train_300s-records
+          audio_index:
+            - train-audio-index
+        statistics:
+          records: 692
+      train_600s:
+        artifacts:
+          records:
+            - train_600s-records
+          audio_index:
+            - train-audio-index
+        statistics:
+          records: 346
+      dev_30s:
+        artifacts:
+          records:
+            - dev_30s-records
+          audio_index:
+            - dev-audio-index
+        statistics:
+          records: 2640
+      dev_120s:
+        artifacts:
+          records:
+            - dev_120s-records
+          audio_index:
+            - dev-audio-index
+        statistics:
+          records: 718
+      dev_300s:
+        artifacts:
+          records:
+            - dev_300s-records
+          audio_index:
+            - dev-audio-index
+        statistics:
+          records: 354
+      dev_600s:
+        artifacts:
+          records:
+            - dev_600s-records
+          audio_index:
+            - dev-audio-index
+        statistics:
+          records: 177
+      test_30s:
+        artifacts:
+          records:
+            - test_30s-records
+          audio_index:
+            - test-audio-index
+        statistics:
+          records: 11978
+      test_120s:
+        artifacts:
+          records:
+            - test_120s-records
+          audio_index:
+            - test-audio-index
+        statistics:
+          records: 3334
+      test_300s:
+        artifacts:
+          records:
+            - test_300s-records
+          audio_index:
+            - test-audio-index
+        statistics:
+          records: 1638
+      test_600s:
+        artifacts:
+          records:
+            - test_600s-records
+          audio_index:
+            - test-audio-index
+        statistics:
+          records: 819
+    provenance:
+      preparation_status: prepared
+      lineage_status: exact
+      materialization: full
+      source: notsofar_sdm@icefall-20260908
+      description: NOTSOFAR-1 真实会议（单通道 SC 设备 ch0，每个设备算一条录音，因为设备间采样不同步）的说话人归属 ASR 窗口（aligned_utterance_timestamps_v1）：人工标注的说话人和时间，转写为源清单文字，只去空白。按 30 / 120 / 300 / 600 s 切窗，每个 split 的 records 一行一个窗口，turns 在 metadata；train / dev / test 都有。音频由 audio-index 指向源数据集里的 ch0.wav，不复制。没有窗口被排除。脚本 scripts/diarization_raw_labels/register_raw_labels.py。
+      facts:
+        train-audio-index rows: 346
+        train recordings: 346
+        dev-audio-index rows: 177
+        dev recordings: 177
+        test-audio-index rows: 819
+        test recordings: 819
+        audio files copied: 0
+        train_30s-records rows: 5083
+        train_120s-records rows: 1389
+        train_300s-records rows: 692
+        train_600s-records rows: 346
+        dev_30s-records rows: 2640
+        dev_120s-records rows: 718
+        dev_300s-records rows: 354
+        dev_600s-records rows: 177
+        test_30s-records rows: 11978
+        test_120s-records rows: 3334
+        test_300s-records rows: 1638
+        test_600s-records rows: 819

@@ -1,0 +1,166 @@
+# Emilia2 m4a-128k 中文对话说话人日志流水线的全部教师原始标签和窗口核对结果（上游中间产物，不进训练）（数据声明）
+  - schema_version: dataset-catalog/2.0
+    dataset_id: emilia2_zh_dialogue_diarize
+    version: teacher-labels-v1-20261010
+    languages:
+      - zh
+    tasks:
+      - diarization
+      - speaker_attributed_asr
+    aliases: []
+    artifacts:
+      - name: train-audio-index
+        kind: jsonl-metadata
+        root_alias: aidc_data
+        relative_path: datasets/emilia2_zh_dialogue_diarize/versions/moss-transcribe-diarize-0.9B/emilia2_zh_dialogue-train-audio-index-flac.jsonl.gz
+        expected_bytes: 1302821
+        sha256: 8fb1d9e77ef3a72f22e4e0ef15466a5a2f10637e9f53b2b13637e3aaf07e0dd1
+        metadata:
+          record_count: 53965
+          description: cut_id → emilia2@extracted-enzh-20261012 解包后转成的 16 kHz 单声道 FLAC（m4a-128k/zh/dialog；m4a 已删除，只用 flac）
+      - name: local_moss_records
+        kind: audio-records
+        root_alias: aidc_data
+        relative_path: datasets/emilia2_zh_dialogue_diarize/versions/teacher-labels-v1-20261010/local_moss_records.jsonl.gz
+        expected_bytes: 466697929
+        sha256: 64dcb22070beb7403cf195a4123c5902a7727424c7aab58ca3ee0fa41297892c
+        metadata:
+          record_count: 78994
+      - name: moss_pro_recording_records
+        kind: audio-records
+        root_alias: aidc_data
+        relative_path: datasets/emilia2_zh_dialogue_diarize/versions/teacher-labels-v1-20261010/moss_pro_recording_records.jsonl.gz
+        expected_bytes: 9710594
+        sha256: 27731bc7dd37e5e39eee488429f0fe351bc97e381d32fb4b40f37e2efd41e329
+        metadata:
+          record_count: 3260
+      - name: pro4plus_records
+        kind: audio-records
+        root_alias: aidc_data
+        relative_path: datasets/emilia2_zh_dialogue_diarize/versions/teacher-labels-v1-20261010/pro4plus_records.jsonl.gz
+        expected_bytes: 44875345
+        sha256: 772d78e1dd507c88204ad27093c6cf8435c438e35061b36955f06803f444cb6c
+        metadata:
+          record_count: 27811
+      - name: prosim06_records
+        kind: audio-records
+        root_alias: aidc_data
+        relative_path: datasets/emilia2_zh_dialogue_diarize/versions/teacher-labels-v1-20261010/prosim06_records.jsonl.gz
+        expected_bytes: 16585199
+        sha256: b858bc69daa326142860067121e7ede00de0948f779ff7fa4368494366ac15ec
+        metadata:
+          record_count: 10721
+      - name: pro_audit_records
+        kind: audio-records
+        root_alias: aidc_data
+        relative_path: datasets/emilia2_zh_dialogue_diarize/versions/teacher-labels-v1-20261010/pro_audit_records.jsonl.gz
+        expected_bytes: 2282921
+        sha256: eadb24d69a007344ef60c481944a9757c57d2f56c935e33ab4b27e46f076700a
+        metadata:
+          record_count: 1500
+      - name: qwen3_asr_records
+        kind: audio-records
+        root_alias: aidc_data
+        relative_path: datasets/emilia2_zh_dialogue_diarize/versions/teacher-labels-v1-20261010/qwen3_asr_records.jsonl.gz
+        expected_bytes: 215279093
+        sha256: 6b61b0e3838b7ee5bda41fb744ae9da22ce1da7511dcf5411606474fd31f278e
+        metadata:
+          record_count: 32279
+      - name: qwen3_asr_pro_records
+        kind: audio-records
+        root_alias: aidc_data
+        relative_path: datasets/emilia2_zh_dialogue_diarize/versions/teacher-labels-v1-20261010/qwen3_asr_pro_records.jsonl.gz
+        expected_bytes: 8299785
+        sha256: ae1b1b1e4cd657a7b9f13ef3221b1a7242e0507e23443c21c4f8143746d4ccbc
+        metadata:
+          record_count: 1293
+      - name: merge_local_records
+        kind: audio-records
+        root_alias: aidc_data
+        relative_path: datasets/emilia2_zh_dialogue_diarize/versions/teacher-labels-v1-20261010/merge_local_records.jsonl.gz
+        expected_bytes: 246514453
+        sha256: 2c93b193d20d716961bee581d5155f97e19612ddba2e4b58cd5828efbc913bb8
+        metadata:
+          record_count: 31658
+      - name: window_check_records
+        kind: audio-records
+        root_alias: aidc_data
+        relative_path: datasets/emilia2_zh_dialogue_diarize/versions/teacher-labels-v1-20261010/window_check_final_records.jsonl.gz
+        expected_bytes: 390713811
+        sha256: ba31cec2a55195477eb9b9c5e7fce6d03e09b6113c093299097e01796400949a
+        metadata:
+          record_count: 232534
+    splits:
+      train_120s:
+        artifacts:
+          audio_index:
+            - train-audio-index
+          records:
+            - local_moss_records
+            - moss_pro_recording_records
+            - pro4plus_records
+            - prosim06_records
+            - pro_audit_records
+            - qwen3_asr_records
+            - qwen3_asr_pro_records
+            - merge_local_records
+            - window_check_records
+        statistics:
+          records: 840100
+    provenance:
+      preparation_status: prepared
+      lineage_status: exact
+      materialization: full
+      source: emilia2_zh_dialogue_diarize@moss-transcribe-diarize-0.9B
+      description: Emilia2 中文多人对话（m4a-128k 子集，zh、≥120 秒，78,994 条 / 8,097 h）说话人日志流水线的全部教师原始标签和窗口核对结果，是 moss-transcribe-diarize-0.9B / -pro4plus / -pro4plus-sim06 三个训练版本的上游，本身不是训练集。local_moss_records：本机 MOSS-Transcribe-Diarize 0.9B 整条标注，78,994 条录音（其中 78,994 条成功），每行 metadata.local_moss 含分块、说话人链接和身份断点；qwen3_asr_records：Qwen3-ASR 对本地 MOSS 片段的逐段转写（32,279 条录音，只做了前几批）；merge_local_records：第一版逐片段文字核对的合并结果（31,658 条录音，metadata.merge_local 含 usable / excluded 片段和各项检查，同批的 supervisions.jsonl.gz 与 excluded.jsonl.gz 
+        是它的逐行拆分，已逐批核对一致，没有重复登记）；moss_pro_recording_records：MOSS Pro 对前 4 批的整条标注（积分用完中断，1293 条成功）；pro4plus_records（27,811 个窗口片段，≥4 人窗口）、prosim06_records（10,721 个，2–3 人且声纹相似 ≥0.6，metadata.selection 记人数和相似度）、pro_audit_records（1,500 个随机抽样窗口）是 MOSS Pro 对窗口片段的标注，时间相对窗口起点，audio_slots 带窗口的 start/duration；window_check_records：最终窗口核对结果（232,534 个窗口，kept = 通过，reasons = 拒绝原因，cer / speaker_split，primary_text 和 Qwen3-ASR 的 check_text，labels_from 标明本地 0.9B 还是 Pro），是 sim06 版本的上一层，含被拒窗口。audio_slots 指向 
+        emilia2_zh_dialogue_diarize@moss-transcribe-diarize-0.9B 的 train_120s 音频索引（FLAC 16 kHz），其中只有通过粗筛并切出窗口的 53,965 条录音有音频文件，其余录音只剩标签。未登记：逐块原始响应 raw/（标签文件已含全部分段）、window-plan 与中间窗口核对版本 v1–v6（可由最终版本和标签重算）、listen-review。脚本 scripts/diarization_raw_labels/register_raw_labels.py。
+      ready_for_training: false
+      superseded_note: intermediate teacher labels; train with the window versions, not this one
+      facts:
+        local_moss_records rows: 78994
+        'local_moss_records: rows': 78994
+        'local_moss_records: status ok': 78994
+        'local_moss_records: segments': 8030809
+        moss_pro_recording_records rows: 3260
+        'moss_pro_recording_records: rows': 3260
+        'moss_pro_recording_records: status ok': 1293
+        'moss_pro_recording_records: segments': 175482
+        'moss_pro_recording_records: earlier rows replaced by a retry': 1416
+        'moss_pro_recording_records: status error': 1967
+        pro4plus_records rows: 27811
+        'pro4plus_records: rows': 27811
+        'pro4plus_records: status ok': 27410
+        'pro4plus_records: segments': 928242
+        'pro4plus_records: earlier rows replaced by a retry': 33076
+        'pro4plus_records: status error': 401
+        prosim06_records rows: 10721
+        'prosim06_records: rows': 10721
+        'prosim06_records: status ok': 10621
+        'prosim06_records: segments': 320031
+        'prosim06_records: earlier rows replaced by a retry': 105
+        'prosim06_records: status error': 100
+        pro_audit_records rows: 1500
+        'pro_audit_records: rows': 1500
+        'pro_audit_records: status ok': 1488
+        'pro_audit_records: segments': 43072
+        'pro_audit_records: earlier rows replaced by a retry': 19
+        'pro_audit_records: status error': 12
+        qwen3_asr_records rows: 32279
+        'qwen3_asr_records: rows': 32279
+        'qwen3_asr_records: status ok': 32045
+        'qwen3_asr_records: segments': 3810372
+        'qwen3_asr_records: status error': 234
+        qwen3_asr_pro_records rows: 1293
+        'qwen3_asr_pro_records: rows': 1293
+        'qwen3_asr_pro_records: status ok': 1258
+        'qwen3_asr_pro_records: segments': 161353
+        'qwen3_asr_pro_records: status error': 35
+        merge_local_records rows: 31658
+        'merge_local_records: rows': 31658
+        'merge_local_records: usable': 2288681
+        'merge_local_records: excluded': 1491763
+        window_check_records rows: 232534
+        'window_check_records: rows': 232534
+        'window_check_records: kept': 209319
+        'window_check_records: rejected': 23215

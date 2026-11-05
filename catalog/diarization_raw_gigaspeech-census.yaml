@@ -1,0 +1,66 @@
+# GigaSpeech XL YouTube 录音说话人数普查的教师标签（占位登记，只做了约 5%，不进训练）（数据声明）
+  - schema_version: dataset-catalog/2.0
+    dataset_id: gigaspeech
+    version: youtube-diarize-census-v1-20261009
+    languages:
+      - en
+    tasks:
+      - diarization
+      - speaker_attributed_asr
+    aliases: []
+    artifacts:
+      - name: youtube_xl_recordings
+        kind: lhotse-recordings
+        root_alias: aidc_data
+        relative_path: datasets/gigaspeech/versions/youtube-diarize-census-v1-20261009/youtube_xl_recordings.jsonl.gz
+        expected_bytes: 392898
+        sha256: 475d2dacf69c665d08ca5e466980177a7533f4210f0c326cc72c500f1ef25ddd
+        metadata:
+          record_count: 21472
+          description: GigaSpeech XL 的 YOU* 录音（普查输入）
+      - name: local_moss_records
+        kind: audio-records
+        root_alias: aidc_data
+        relative_path: datasets/gigaspeech/versions/youtube-diarize-census-v1-20261009/local_moss_records.jsonl.gz
+        expected_bytes: 29718576
+        sha256: 51b72f8b22a5beb89f6b61c172d025f3cae9047e0f56fd06af59a270e93237b7
+        metadata:
+          record_count: 1087
+      - name: qwen3_asr_en_records
+        kind: audio-records
+        root_alias: aidc_data
+        relative_path: datasets/gigaspeech/versions/youtube-diarize-census-v1-20261009/qwen3_asr_en_records.jsonl.gz
+        expected_bytes: 342734
+        sha256: bf6769389108ad02ef67932b98b59de8cc19c53aba6a99cef2b1ba1535eb548c
+        metadata:
+          record_count: 36
+    splits:
+      train:
+        artifacts:
+          recordings:
+            - youtube_xl_recordings
+          records:
+            - local_moss_records
+            - qwen3_asr_en_records
+        statistics:
+          records: 1087
+    provenance:
+      preparation_status: partial
+      lineage_status: exact
+      materialization: full
+      source: gigaspeech@legacy-20260804
+      description: GigaSpeech XL 全部 YouTube 录音（YOU*，21,472 条 / 11,765.9 h）的说话人数普查，只做了一小部分，占位登记，不要用于训练。2026-10-09 用本机 MOSS-Transcribe-Diarize 0.9B 整条打说话人和文本，完成 1082 条成功（共 1087 行，含失败待重试），约占计划 5%；Qwen3-ASR 文本校验只做了 36 条。用户决定先做中文，英文暂缓，没有继续。local_moss_records：每行一条录音，target 是按时间排序的 [说话人][起-止] 文本，metadata.local_moss 保留教师返回的分块、说话人链接、身份断点和 speaker_census（三种说话人数：global_labels 偏高、global_active、max_chunk_active）。qwen3_asr_en_records：Qwen3-ASR 对 MOSS 片段的转写（metadata.qwen3_asr_en）。audio_slots 指向本版本 youtube_xl_recordings 
+        里的同名录音。脚本 scripts/diarization_raw_labels/register_raw_labels.py。
+      ready_for_training: false
+      facts:
+        youtube_xl_recordings rows: 21472
+        local_moss_records rows: 1087
+        'local_moss_records: rows': 1087
+        'local_moss_records: status ok': 1082
+        'local_moss_records: segments': 492379
+        'local_moss_records: earlier rows replaced by a retry': 2
+        'local_moss_records: status error': 5
+        qwen3_asr_en_records rows: 36
+        'qwen3_asr_en_records: rows': 36
+        'qwen3_asr_en_records: status ok': 36
+        'qwen3_asr_en_records: segments': 7144

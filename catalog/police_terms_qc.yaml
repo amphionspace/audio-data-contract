@@ -1,0 +1,178 @@
+# 警务单说术语集的 ASR 质检结果
+  - schema_version: dataset-catalog/2.0
+    dataset_id: police_terms_single
+    version: qc-v1-20261022
+    languages:
+      - zh
+    tasks:
+      - asr
+    aliases: []
+    artifacts:
+      - name: test_recordings
+        kind: lhotse-recordings
+        root_alias: aidc_data
+        relative_path: datasets/police_terms_single/versions/v1-20261022/manifests/police_terms_single_recordings_test.jsonl.gz
+        expected_bytes: 56517
+        sha256: 94f84ce3b51313ba6cc4c66f01d12f85273fa3bd6cf61bb486863113ef875697
+        metadata:
+          record_count: 3264
+      - name: test_supervisions_qc
+        kind: lhotse-supervisions
+        root_alias: aidc_data
+        relative_path: datasets/police_terms_single/versions/qc-v1-20261022/manifests/police_terms_single_supervisions_test_qc.jsonl.gz
+        expected_bytes: 180864
+        sha256: 2d45b383d771abd035cd8eca02fc41522abae51277bb37583ef9ea28b60af8c1
+        metadata:
+          record_count: 3264
+      - name: report
+        kind: json-metadata
+        root_alias: aidc_data
+        relative_path: datasets/police_terms_single/versions/v1-20261022/report.json
+        expected_bytes: 459
+        sha256: ff921235871a9e17bf5e5d8d424c62b82bce0a5b6abb9d2cafb8ac106bec49ed
+      - name: qc_not_shipped
+        kind: quality-report
+        root_alias: aidc_data
+        relative_path: datasets/police_terms_single/versions/qc-v1-20261022/evidence/qc_not_shipped.jsonl.gz
+        expected_bytes: 102900
+        sha256: 4dd0b4551e374cde2b35b7b7e5071250df4c9137e00e301e31c6ea42e4310752
+        metadata:
+          record_count: 3165
+    splits:
+      test:
+        artifacts:
+          recordings:
+            - test_recordings
+          supervisions:
+            - test_supervisions_qc
+          report:
+            - report
+          qc_not_shipped:
+            - qc_not_shipped
+        statistics:
+          records: 3264
+          duration_hours: 1.747
+          duration_basis: sum_of_recording_durations
+          terms: 1088
+          utterances_per_term: 3
+          speakers: 36
+          utterances_per_speaker:
+            min: 70
+            median: 89
+            max: 131
+          speaker_dataset:
+            KeSpeech: 2679
+            WenetSpeech-Chuan: 294
+            WenetSpeech-Wu: 291
+          term_split:
+            train: 2616
+            dev: 324
+            test: 324
+    recipe_parameters:
+      adds:
+        - custom.qc
+        - custom.firered_crosscheck
+    provenance:
+      preparation_status: prepared
+      lineage_status: exact
+      materialization: full
+      source: police_terms_single@v1-20261022
+      description: police_terms_single@v1-20261022 的 3264 条录音，加上逐条质检结果：custom.qc 是共享 Qwen3-ASR-1.7B 转写后与术语按拼音对齐得到的多出/缺少/替换音节数、是否字全对、是否通过及未通过原因。custom.firered_crosscheck 标出 FireRedASR2-AED 交叉核对会拒绝的录音（试过未采用）。合成并检查过但没有入选的 3165 条（被检查拒绝、超出每术语名额或只转写未打分）在证据文件 qc_not_shipped 里，每条一行，没有录音。录音和文本沿用父版本。脚本 scripts/label_registration/register_police_qc.py。
+      facts:
+        supervisions: 3264
+        qc verdicts: 5385
+        asr rows: 6429
+        not shipped: 3165
+        not shipped, qc failed: 491
+        not shipped, qc passed (beyond quota): 1630
+        not shipped, asr only: 1044
+        shipped with qc pass: 3264
+        firered flagged (shipped): 227
+        firered flagged (not shipped): 277
+  - schema_version: dataset-catalog/2.0
+    dataset_id: police_terms_single_train
+    version: qc-v1-20261023
+    languages:
+      - zh
+    tasks:
+      - asr
+    aliases: []
+    artifacts:
+      - name: train_recordings
+        kind: lhotse-recordings
+        root_alias: aidc_data
+        relative_path: datasets/police_terms_single_train/versions/v1-20261023/manifests/police_terms_single_train_recordings_train.jsonl.gz
+        expected_bytes: 373471
+        sha256: 25af1420f7cfb45f6b271ebab87881012967567521014993cff01c2922d0a2fd
+        metadata:
+          record_count: 21760
+      - name: train_supervisions_qc
+        kind: lhotse-supervisions
+        root_alias: aidc_data
+        relative_path: datasets/police_terms_single_train/versions/qc-v1-20261023/manifests/police_terms_single_train_supervisions_train_qc.jsonl.gz
+        expected_bytes: 866373
+        sha256: e5e698e20b948c6e04d62c09ac52a575127f4d00effc88d9cd5bb15e6423c3f4
+        metadata:
+          record_count: 21760
+      - name: report
+        kind: json-metadata
+        root_alias: aidc_data
+        relative_path: datasets/police_terms_single_train/versions/v1-20261023/report.json
+        expected_bytes: 471
+        sha256: 4a9ec937a448da51b6f2a268945943f3bd679db29ce5a034aef62634ade8e262
+      - name: qc_not_shipped
+        kind: quality-report
+        root_alias: aidc_data
+        relative_path: datasets/police_terms_single_train/versions/qc-v1-20261023/evidence/qc_not_shipped.jsonl.gz
+        expected_bytes: 142778
+        sha256: 7748e967911977e99283b4729cf1411ea60b4f9b5921ff15e18432e1b753b074
+        metadata:
+          record_count: 3638
+    splits:
+      train:
+        artifacts:
+          recordings:
+            - train_recordings
+          supervisions:
+            - train_supervisions_qc
+          report:
+            - report
+          qc_not_shipped:
+            - qc_not_shipped
+        statistics:
+          records: 21760
+          duration_hours: 11.685
+          duration_basis: sum_of_recording_durations
+          terms: 1088
+          utterances_per_term: 20
+          speakers: 348
+          utterances_per_speaker:
+            min: 1
+            median: 64
+            max: 82
+          speaker_dataset:
+            KeSpeech: 18373
+            WenetSpeech-Chuan: 1504
+            WenetSpeech-Wu: 1883
+          term_split:
+            train: 17440
+            dev: 2160
+            test: 2160
+    recipe_parameters:
+      adds:
+        - custom.qc
+    provenance:
+      preparation_status: prepared
+      lineage_status: exact
+      materialization: full
+      source: police_terms_single_train@v1-20261023
+      description: police_terms_single_train@v1-20261023 的 21760 条录音，加上逐条质检结果：custom.qc 是共享 Qwen3-ASR-1.7B 转写后与术语按拼音对齐得到的多出/缺少/替换音节数、是否字全对、是否通过及未通过原因。合成并检查过但没有入选的 3638 条（被检查拒绝、超出每术语名额或只转写未打分）在证据文件 qc_not_shipped 里，每条一行，没有录音。录音和文本沿用父版本。脚本 scripts/label_registration/register_police_qc.py。
+      facts:
+        supervisions: 21760
+        qc verdicts: 25398
+        asr rows: 25398
+        not shipped: 3638
+        not shipped, qc failed: 1660
+        not shipped, qc passed (beyond quota): 1978
+        not shipped, asr only: 0
+        shipped with qc pass: 21760

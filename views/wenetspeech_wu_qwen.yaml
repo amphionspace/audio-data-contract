@@ -1,0 +1,58 @@
+  - schema_version: dataset-view/1.0
+    view_id: wenetspeech_wu/qwen3-asr-full
+    version: qwen3-asr-pilot-v1-20261025
+    source:
+      dataset_id: wenetspeech_wu
+      version: icefall-20260908
+    result:
+      dataset_id: wenetspeech_wu
+      version: qwen3-asr-pilot-v1-20261025
+    materialization: full
+    lineage_status: exact
+    transforms:
+      - name: transcribed-rows
+        version: v1
+        kind: filter
+        writes:
+          - $membership
+        parameters:
+          kept: 2000 rows sampled with random.Random(42).sample over the parent's rows
+          input_rows:
+          output_rows: 2000
+      - name: qwen3-asr-transcript
+        version: v1-20261025
+        kind: annotate
+        writes:
+          - metadata.qwen_asr
+        parameters:
+          model: Qwen/Qwen3-ASR-1.7B (shared vLLM service)
+          request:
+            temperature: 0
+            max_tokens: 2048
+            repetition_penalty: 1.1
+            to_language: zh
+          audio: 16 kHz PCM WAV read from the source tar at the row's byte range
+          scoring:
+            text_normalization: speechio-textnorm-zh
+            unit: one token per CJK character, punctuation dropped
+            cer: 100 * errors / ref_tokens, null when ref_tokens is 0
+          tool: scripts/wenetspeech_qwen/qwen_infer.py, scripts/wenetspeech_qwen/score.py
+          label_inputs:
+            - file: pilot-2000.jsonl
+              sha256: 6d48f99e3d28bc0038207f22de06801834ba0c5b234308f7af7bfa7a8402d163
+            - file: pilot-2000-scored.jsonl
+              sha256: f09ddf5b67ca79ad333fead53842d63285cc3b3145229fa5bc8ba31b5b18aafd
+          corpus_cer: 35.84
+          qwen_empty_rows: 0
+          cer_share_rows:
+            '0': 144
+            (0,5): 56
+            '[5,10)': 136
+            '[10,20)': 290
+            '[20,30)': 270
+            '[30,50)': 382
+            '[50,100)': 641
+            '>=100': 76
+            label empty after TextNorm: 5
+    provenance:
+      registered_at: '2026-11-03'
