@@ -67,3 +67,18 @@ def test_find_dependents_by_artifact_path_and_index_rows(tmp_path):
     assert find_dependents(catalog, "managed:audio") == []
     rows = find_dependents(catalog, "managed:audio", {"managed": tmp_path})
     assert [item["via"] for item in rows] == ["2 index rows"]
+
+
+def test_check_dangling_skips_planned_downloads(tmp_path):
+    spec = _spec("1")
+    planned = DatasetSpec(
+        dataset_id=spec.dataset_id,
+        version=spec.version,
+        languages=spec.languages,
+        tasks=spec.tasks,
+        artifacts=spec.artifacts,
+        splits=spec.splits,
+        provenance={"inventory_status": "download_planned"},
+    )
+    assert check_dangling(DatasetCatalog([planned]), {"managed": tmp_path}) == {}
+    assert list(check_dangling(DatasetCatalog([spec]), {"managed": tmp_path})) == ["demo@1"]

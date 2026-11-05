@@ -267,13 +267,17 @@ def check_dangling(
 ) -> dict[str, list[str]]:
     """Registered versions whose artifacts or index rows point at missing files.
 
-    Retired versions are skipped; live versions must not point at removed data.
-    Digests are not re-verified, only existence and readability.
+    Retired versions and ``download_planned`` declarations (files not downloaded
+    yet) are skipped; live versions must not point at removed data. Digests are
+    not re-verified, only existence and readability.
     """
 
     broken: dict[str, list[str]] = {}
     for spec in catalog:
-        if retirement(spec) is not None:
+        if (
+            retirement(spec) is not None
+            or spec.provenance.get("inventory_status") == "download_planned"
+        ):
             continue
         problems = check_registration(
             spec, roots, sample=sample, seed=seed, verify_digests=False

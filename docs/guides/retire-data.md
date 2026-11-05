@@ -28,7 +28,7 @@ provenance:
 ```
 
 - 载入 catalog 时会检查 `superseded_by` 指向的版本确实存在。
-- `check-dangling` 跳过已停用版本，因此停用版本允许指向已删除的文件；正在使用的版本不允许。
+- `check-dangling` 也跳过 `provenance.inventory_status: download_planned` 的声明（文件尚未下载）。它跳过已停用版本，因此停用版本允许指向已删除的文件；正在使用的版本不允许。
 - 停用不等于删除声明：版本说明、血缘和 View 引用仍保留。仍有未停用版本引用它时，`find-dependents` 返回非零状态。
 
 ## 检查的边界
