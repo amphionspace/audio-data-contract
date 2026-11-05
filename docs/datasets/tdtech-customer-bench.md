@@ -1,6 +1,6 @@
 # 鼎桥客户真实录音评测集（tdtech_customer_bench）
 
-`tdtech_customer_bench` 是鼎桥（td-tech）客户自己提供的真实录音（邮件/Wiki 基线 2026-09-30），用来评测语音识别。录音由 EvalHub 整理发布，本数据集只评测，不进训练。与 `police_scene_bench` 的 TTS 模拟数据不同，这里的音频都来自客户的邮件和 Wiki，基本是设备实录；其中远场信噪比那几条是客户在同一段录音上人工加噪的测试文件。
+`tdtech_customer_bench` 是鼎桥（td-tech）客户自己提供的真实录音（邮件/Wiki 基线 2026-09-30），用来评测语音识别、机主识别和热词。录音由 EvalHub 整理发布，本数据集只评测，不进训练。与 `police_scene_bench` 的 TTS 模拟数据不同，这里的音频都来自客户的邮件和 Wiki，基本是设备实录；其中远场信噪比那几条是客户在同一段录音上人工加噪的测试文件。
 
 参考文本**没有全部经过人工听审**，使用时注意下面写明的来源。
 
@@ -9,6 +9,7 @@
 | `v1-20261102` | `general`、`police-cmd` |
 | `v2-20261102` | 同 v1，另加 `police-cmd-hw300`（警务指令带 300 词热词表）；`general`、`police-cmd` 两个 split 的记录与 v1 逐条相同 |
 | `v3-20261103` | 同 v1，另加 `police-cmd-builtin`（警务指令带 audiollm-go 出厂内置热词表整表，1296 条），代替 v2 的 300 词表；`general`、`police-cmd` 与 v1 逐条相同 |
+| `v4-20261104` | 同 v3，另加 `owner`（机主识别 6 段）和 `hotword`（人名热词 2 段），两者都经人工听审 |
 
 ## 内容
 
@@ -18,6 +19,8 @@
 | `police-cmd` | 137 | 0.054 h | `asr/dingqiao-asr-police-cmd@20261020-jyjy-v6-human04`（全部） | 录音分组对应的指令词，按《警言警语 V6.0》对齐；39 条经人工听原音确认 |
 | `police-cmd-builtin`（v3） | 137 | 同上 | 与 `police-cmd` 相同 | 与 `police-cmd` 相同，每条另带出厂内置热词表（1296 条） |
 | `police-cmd-hw300`（仅 v2） | 137 | 同上 | 与 `police-cmd` 相同 | 与 `police-cmd` 相同，每条另带 300 词热词表 |
+| `owner`（v4） | 6 | 0.016 h（测试音） | `target-speaker/dingqiao-ts@20261014`（28 段中有注册音的 6 段） | 机主由人工听审确定，文字取多模型一致转写（见下文） |
+| `hotword`（v4） | 2 | 0.010 h | `hotword/dingqiao-hotword-quality@20261016-machine01`（全部） | 人工听审确认 |
 
 `general` 的场景写在 `labels.scenario`，保留情况：
 
@@ -46,6 +49,18 @@
 
 **v2 `police-cmd-hw300`**：300 词热词表，全部 35 个指令词加 265 个干扰词；干扰词从 `police_scene_bench@v1-20261028` 九个 `-hw300` 热词表的并集（1311 个警务术语）里按固定种子随机抽取，再整体打乱（列表名 `list300`）。v3 起改用出厂内置热词表；v2 的生成代码见 git 历史。
 
+## 机主识别和人名热词（v4）
+
+**owner**：任务是 `ts_asr`，每条两段音频：`enrollment` 是机主的注册音（同组近场录音，`enroll/<组>/near.wav`），`mixture` 是测试音频，参考是机主在测试音频里说的话。EvalHub 的 28 段机主录音里只有 6 段带同一压缩包里的注册音，其余 22 段没有注册音，不能用来评测。
+
+- 机主是谁：把三段注册音和测试音拼在一起，用本机 MOSS、MOSS-pro、百炼三个说话人日志模型打标，再由人听音，从本机 MOSS 的说话人里选出机主（或判定机主没说话）。
+- 机主说的话：每句取本机 MOSS、MOSS-pro、百炼、Qwen3-ASR 中至少两份一致的转写（不计标点）；文字没有经人逐字校对，`labels.reference_kind` 为 `human_speaker_machine_text`。有分歧的句子（如“清单/警单”“我看看/帮我看看”）各模型的写法记在 `metadata.listening.disagreements`。
+- 6 段中 5 段机主说话、1 段（“非机主说”）机主没说话，参考为空，`labels.target_present` 区分两类。
+
+**hotword**：两段人名短信指令，任务是 `asr_hotwords`。参考文本按文件名和录音内容定人名写法（文赋成、余祈根、王光辉、潘聪），经人工听审确认。每条带客户 Demo 的人名表（`metadata.bias_lists.demo`，上面 4 个名字）。“黄静飞/黄敬飞”同音，听不出写法，参考文本暂写“黄静飞”，但不进人名表和命中统计，待客户提供 Demo 热词配置后再定。
+
+听审结论和每条的选择记在数据目录 `source/listening-review-20261105.json`，打标过程和模型原始输出在 `/workspace/data/runs/tdtech-customer-v4`。
+
 ## 参考文本怎么来的
 
 **general**：EvalHub 的机器参考大多来自 Qwen-audio-3.1，2 条来自 MOSS。另用两套不属于 Qwen 系的 ASR 转写同一批音频：FireRedASR2-AED 和 MiMo-V2.5-ASR。三份转写中，有两份按 amphion-eval 原生打分口径（打分版本 3）逐字一致，才保留这条录音：
@@ -62,22 +77,24 @@
 
 ## 没有收录的
 
-- 角色分离（20 段，3.88 小时）、机主识别（28 段）、热词（2 段）：没有可靠的参考。热词那两段的机器参考把热词本身写错了（如“文赋成”写成“文富成”），交叉核对也纠正不了，需要人工补热词表和参考文本。
+- 角色分离（20 段会议录音加 5 段在线问题复现）：v4 用三个说话人日志模型加 Qwen3-ASR 打标，多模型严格一致的语音只占约 12%，且偏简单，不足以做参考；暂不收录，也不安排人工标注。
+- 机主识别中没有注册音的 22 段。
 - 超过 200 秒的两段长录音：FireRedASR2-AED 无法解码，MiMo-V2.5-ASR 与 EvalHub 参考也不一致。
 
 ## 文件
 
 - 音频按 EvalHub 发布时的原样保存在 `source/evalhub/<类别>_<id>@<版本>/`，构建时按其中的 `files.json` 逐个校验 sha256。
 - 两套 ASR 的请求、转写和日志在 `source/firered-aed/`、`source/mimo-asr/`，三选二的结果在 `source/agreement.json`。
+- v4 的听审结论在 `source/listening-review-20261105.json`。
 - 出厂内置热词表的副本在 `source/audiollm-go/builtin-hotwords-20261102.txt`，来源见同目录 `SOURCE.json`。
-- 脚本：`scripts/tdtech_customer_bench/agree.py`（在 amphion-eval 环境中运行，用它的原生打分口径）和 `build.py`（当前生成 v3）。
+- 脚本：`scripts/tdtech_customer_bench/agree.py`（在 amphion-eval 环境中运行，用它的原生打分口径）和 `build.py`（当前生成 v4）。
 
-对应的测试集登记是 amphion-eval 的 `tdtech/customer-asr@v1-20261102`、`@v2-20261102`（300 词热词表）和 `@v3-20261103`（出厂内置热词表）。
+对应的测试集登记是 amphion-eval 的 `tdtech/customer-asr@v1-20261102`、`@v2-20261102`（300 词热词表）和 `@v3-20261103`（出厂内置热词表）；v4 是 `tdtech/customer-asr@v4-20261104`（加人名热词列）和 `tdtech/customer-ts@v4-20261104`（机主识别）。
 
 ## 读取
 
 ```bash
-audio-data-contract resolve catalog tdtech_customer_bench v3-20261103 records --roots roots.json
+audio-data-contract resolve catalog tdtech_customer_bench v4-20261104 records --roots roots.json
 ```
 
 roots 中的 `tdtech_customer_bench` 指向 `/workspace/data/datasets/tdtech_customer_bench`。

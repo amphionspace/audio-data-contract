@@ -110,7 +110,7 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [realman_zh_far_asr](data-versions.md#realman_zh_far_asr) | zh | 语音识别 | 64.0 | RealMAN 远场中文转写训练数据 | 没有 |
 | [speechio](data-versions.md#speechio) | zh | 语音识别 | 63.8 | SpeechIO 中文 ASR 排行榜评测集 | 部分版本：快照 20260914 |
 | [tal100_zh](data-versions.md#tal100_zh) | zh | 语音识别 | 5.5 | TAL 中文语音识别数据 | 快照 20260914 |
-| [tdtech_customer_bench](data-versions.md#tdtech_customer_bench) | zh | 语音识别、热词增强语音识别 | 0.1 | 鼎桥客户真实录音的语音识别评测，仅评测 | `备份桶:audio-data-contract/datasets/tdtech_customer_bench/` |
+| [tdtech_customer_bench](data-versions.md#tdtech_customer_bench) | zh | 语音识别、热词增强语音识别、目标说话人语音识别 | 0.1 | 鼎桥客户真实录音的语音识别评测，仅评测 | 部分版本：`备份桶:audio-data-contract/datasets/tdtech_customer_bench/` |
 | [thchs30](data-versions.md#thchs30) | zh | 语音识别、热词增强语音识别 | ≈35.0 | 清华中文朗读（THCHS-30）；含热词版 | 快照 20260914 |
 | [threed_speaker_zh_far_asr](data-versions.md#threed_speaker_zh_far_asr) | zh | 语音识别 | 75.5 | 3D-Speaker 远场普通话转写训练数据 | 没有 |
 | [ts_asr_dev](data-versions.md#ts_asr_dev) | zh | 目标说话人语音识别 | 10.7 | 合成的中文目标说话人 ASR 开发集 | `备份桶:audio-data-contract/datasets/ts_asr_dev/` |
