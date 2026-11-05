@@ -23,7 +23,6 @@ from __future__ import annotations
 
 import argparse
 import csv
-import hashlib
 import importlib.util
 import json
 import math
@@ -73,7 +72,7 @@ def teacher_labels(spec):
     """{recording_id: {teacher: label row}} for recordings every teacher labelled successfully."""
     by_recording = defaultdict(dict)
     for teacher, path in spec["teachers"].items():
-        for line in Path(path).open(encoding="utf-8"):
+        for line in Path(path).read_text(encoding="utf-8").splitlines():
             row = json.loads(line)
             if row["status"] == "ok":
                 by_recording[row["recording_id"]][teacher] = row
@@ -94,7 +93,7 @@ def blank_stretches(rows, margin, min_seconds):
 
 def cmd_candidates(recipe, roots):
     spec = recipe["tdtech"]
-    _, partial, cuts = paths(recipe, roots)
+    _, _, cuts = paths(recipe, roots)
     if cuts.exists():
         raise FileExistsError(f"candidates already cut: {cuts}")
     cuts.mkdir(parents=True)
@@ -106,7 +105,7 @@ def cmd_candidates(recipe, roots):
         w = ts_build.read_audio(audio)
         for start, end in blank_stretches(labels, spec["margin_seconds"], spec["min_seconds"]):
             end = min(end, start + spec["max_seconds"])
-            cut_id = f"{rid}-{int(round(start * 1000)):07d}"
+            cut_id = f"{rid}-{round(start * 1000):07d}"
             segment = w[int(start * SR):int(end * SR)]
             ts_build.write_wav(cuts / f"{cut_id}.wav", segment)
             rows.append({"cut_id": cut_id, "recording_id": rid, "audio": audio, "start": start, "end": end,
@@ -217,7 +216,7 @@ def render_job(job):
         labels.update(level_dbfs=cut["rms_dbfs"], vad_speech_s=cut["vad_speech_s"])
         metadata["tdtech"] = {k: cut[k] for k in ("recording_id", "audio", "start", "end")}
     else:
-        n = int(round(plan["duration"] * SR))
+        n = round(plan["duration"] * SR)
         if plan["source"] == "floor":
             w = floor_noise(n, plan["kind"], plan["level_dbfs"], plan["noise_seed"])
         elif plan["source"] == "hum":

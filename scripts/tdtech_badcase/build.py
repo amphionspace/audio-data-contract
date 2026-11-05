@@ -173,6 +173,7 @@ def build(args, data_root, source, archive_sha, lists):
         "tasks": ["asr_hotwords"], "artifacts": artifacts, "splits": splits,
         "provenance": {
             "status": "complete", "synthetic": "partial",
+            "summary": "鼎桥反馈的识别回退样本（e警保 × 多种热词表），仅评测",
             "description": f"鼎桥反馈的识别回退样本，作为固定守门。v1：{TERM} 6 条（5 条客户真人采集，与 tdtech_customer_bench "
                            "police-cmd 同 sha256；1 条 macOS 合成），参考一律为 e警保；客户在用的 10.26 版本（048 avg3）6/6，10.28 版本"
                            "（054 avg3）3/6。五个切分音频相同（在 source/v1-20261104），分别下发 audiollm-go 出厂内置热词表整表（1296 条）、只含 e警保 的表、"

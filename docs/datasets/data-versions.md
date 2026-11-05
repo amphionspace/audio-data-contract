@@ -1420,6 +1420,22 @@ TAL 中文语音识别数据
 
 - 含派生版本（与源数据可能重叠）
 
+### tdtech_badcase
+
+鼎桥反馈的识别回退样本（e警保 × 多种热词表），仅评测
+
+语言：zh · 任务：热词增强语音识别
+
+| 版本 | 时长（小时） | 口径 | COS |
+|---|---:|---|---|
+| [tdtech_badcase@v1-20261104](../../catalog/tdtech_badcase.yaml#L1) | 0.0 | 已登记 | 没有 |
+| [tdtech_badcase@v2-20261104](../../catalog/tdtech_badcase.yaml#L65) | 0.0 | 已登记 | 没有 |
+| [tdtech_badcase@v3-20261104](../../catalog/tdtech_badcase.yaml#L149) | 0.0 | 已登记 | 没有 |
+
+- `tdtech_badcase@v1-20261104`：鼎桥反馈的识别回退样本，作为固定守门。v1：e警保 6 条（5 条客户真人采集，与 tdtech_customer_bench police-cmd 同 sha256；1 条 macOS 合成），参考一律为 e警保；客户在用的 10.26 版本（048 avg3）6/6，10.28 版本（054 avg3）3/6。两个切分音频相同，分别下发 audiollm-go 出厂内置热词表整表（1296 条）和只含 e警保 的表。只用于评测
+- `tdtech_badcase@v2-20261104`：鼎桥反馈的识别回退样本，作为固定守门。v1：e警保 6 条（5 条客户真人采集，与 tdtech_customer_bench police-cmd 同 sha256；1 条 macOS 合成），参考一律为 e警保；客户在用的 10.26 版本（048 avg3）6/6，10.28 版本（054 avg3）3/6。三个切分音频相同（在 source/v1-20261104），分别下发 audiollm-go 出厂内置热词表整表（1296 条）、只含 e警保 的表、只含 e警保 与 义警 的表（已知热词表带 义警 时 e警保 出错，这是触发它的最小表；v2 新增）。只用于评测
+- `tdtech_badcase@v3-20261104`：鼎桥反馈的识别回退样本，作为固定守门。v1：e警保 6 条（5 条客户真人采集，与 tdtech_customer_bench police-cmd 同 sha256；1 条 macOS 合成），参考一律为 e警保；客户在用的 10.26 版本（048 avg3）6/6，10.28 版本（054 avg3）3/6。五个切分音频相同（在 source/v1-20261104），分别下发 audiollm-go 出厂内置热词表整表（1296 条）、只含 e警保 的表、只含 e警保 与 义警 的表（v2 新增）；e警保 加词表里 44 条 3 字以内含“警”的近音词（v3 新增，规模同线上单次请求）、同一批近音词去掉 e警保（v3 新增）。只用于评测
+
 ### tdtech_customer_bench
 
 鼎桥客户真实录音的语音识别评测，仅评测
@@ -1760,9 +1776,11 @@ WenetSpeech L 中的 YouTube 部分
 |---|---:|---|---|
 | [asr_babble_bench@v1-20261023](../../catalog/asr_babble_bench.yaml#L1) | 10.1 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/asr_babble_bench/` |
 | [asr_babble_bench@v2-20261023](../../catalog/asr_babble_bench.yaml#L399) | 8.8 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/asr_babble_bench/` |
+| [asr_babble_bench@v3-20261104](../../catalog/asr_babble_bench.yaml#L757) | 1.9 | 已登记 | 没有 |
 
 - `asr_babble_bench@v1-20261023`：普通 ASR 背景人声评测集：只有背景人声的片段（合成的中文、英文背景人声和真实录音的人群声，期望输出为空），以及一句话前后和说话时都有背景人声的片段（与无背景人声的对照逐条配对）。合成背景人声由不进训练、也不与目标语音重叠的 test/dev 说话人混成。只用于评测，不进训练。配方 scripts/asr_babble_bench/recipe.yaml
 - `asr_babble_bench@v2-20261023`：普通 ASR 背景人声评测集：只有背景人声的片段（合成的中文、英文背景人声和真实录音的人群声，期望输出为空），以及一句话前后和说话时都有背景人声的片段（与无背景人声的对照逐条配对）。合成背景人声由不进训练、也不与目标语音重叠的 test/dev 说话人在模拟房间里混成。只用于评测，不进训练。配方 scripts/asr_babble_bench/recipe.yaml
+- `asr_babble_bench@v3-20261104`：普通 ASR 空白 / 非人声评测切分（参考全部为空，看误输出率）：鼎桥设备真实录音里三个说话人老师（local-moss, moss-pro, ali）都判为无人说话、FSMN-VAD 也未检出语音的区间（按时长分四档，原电平）；合成的近静音、底噪、50 Hz 电流嗡声；FSD50K 评测划分的稳态噪声、突发声、咳嗽呼吸（不含人声和音乐）；0.3–1.5 秒混合短片段。自动质检隔离 301 条（tdtech-quarantine），未发起人工听审。只用于评测，不进训练。配方 scripts/asr_babble_bench/recipe-blank.yaml；原 16 个背景人声切分仍在 v2-20261023
 
 ### asr_babble_speech_pool
 

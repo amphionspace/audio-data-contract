@@ -57,6 +57,7 @@
   provenance:
     status: complete
     synthetic: partial
+    summary: 鼎桥反馈的识别回退样本（e警保 × 多种热词表），仅评测
     description: 鼎桥反馈的识别回退样本，作为固定守门。v1：e警保 6 条（5 条客户真人采集，与 tdtech_customer_bench police-cmd 同 sha256；1 条 macOS 合成），参考一律为 e警保；客户在用的 10.26 版本（048 avg3）6/6，10.28 版本（054 avg3）3/6。两个切分音频相同，分别下发 audiollm-go 出厂内置热词表整表（1296 条）和只含 e警保 的表。只用于评测。
     sources:
     - dingqiao-ejingbao-20261102.zip (sha256 d18f785f77e8b50b396a90d1b5c958691f7fcc7e677e5eb302d4a5e83b98d591)
@@ -140,6 +141,7 @@
   provenance:
     status: complete
     synthetic: partial
+    summary: 鼎桥反馈的识别回退样本（e警保 × 多种热词表），仅评测
     description: 鼎桥反馈的识别回退样本，作为固定守门。v1：e警保 6 条（5 条客户真人采集，与 tdtech_customer_bench police-cmd 同 sha256；1 条 macOS 合成），参考一律为 e警保；客户在用的 10.26 版本（048 avg3）6/6，10.28 版本（054 avg3）3/6。三个切分音频相同（在 source/v1-20261104），分别下发 audiollm-go 出厂内置热词表整表（1296 条）、只含 e警保 的表、只含 e警保 与 义警 的表（已知热词表带 义警 时 e警保 出错，这是触发它的最小表；v2 新增）。只用于评测。
     sources:
     - dingqiao-ejingbao-20261102.zip (sha256 d18f785f77e8b50b396a90d1b5c958691f7fcc7e677e5eb302d4a5e83b98d591)
@@ -263,6 +265,7 @@
   provenance:
     status: complete
     synthetic: partial
+    summary: 鼎桥反馈的识别回退样本（e警保 × 多种热词表），仅评测
     description: 鼎桥反馈的识别回退样本，作为固定守门。v1：e警保 6 条（5 条客户真人采集，与 tdtech_customer_bench police-cmd 同 sha256；1 条 macOS 合成），参考一律为 e警保；客户在用的 10.26 版本（048 avg3）6/6，10.28 版本（054 avg3）3/6。五个切分音频相同（在 source/v1-20261104），分别下发 audiollm-go 出厂内置热词表整表（1296 条）、只含 e警保 的表、只含 e警保 与 义警 的表（v2 新增）；e警保 加词表里 44 条 3 字以内含“警”的近音词（v3 新增，规模同线上单次请求）、同一批近音词去掉 e警保（v3 新增）。只用于评测。
     sources:
     - dingqiao-ejingbao-20261102.zip (sha256 d18f785f77e8b50b396a90d1b5c958691f7fcc7e677e5eb302d4a5e83b98d591)
