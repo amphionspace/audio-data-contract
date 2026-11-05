@@ -116,7 +116,7 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [threed_speaker_zh_far_asr](data-versions.md#threed_speaker_zh_far_asr) | zh | 语音识别 | 75.5 | 3D-Speaker 远场普通话转写训练数据 | 没有 |
 | [ts_asr_dev](data-versions.md#ts_asr_dev) | zh | 目标说话人语音识别 | 10.7 | 合成的中文目标说话人 ASR 开发集 | `备份桶:audio-data-contract/datasets/ts_asr_dev/` |
 | [ts_asr_enroll_len](data-versions.md#ts_asr_enroll_len) | zh | 目标说话人语音识别 | 1.5 | 目标说话人评测：注册音频长度 | 没有 |
-| [ts_asr_nearfar](data-versions.md#ts_asr_nearfar) | zh | 目标说话人语音识别 | 6.0 | 目标说话人评测：AliMeeting 近场与远场对照 | 部分版本：`备份桶:audio-data-contract/datasets/ts_asr_nearfar/` |
+| [ts_asr_nearfar](data-versions.md#ts_asr_nearfar) | zh | 目标说话人语音识别 | 18.1 | 目标说话人评测：AliMeeting 近远场对照与谁先开口对照 | 部分版本：`备份桶:audio-data-contract/datasets/ts_asr_nearfar/` |
 | [ts_asr_playback](data-versions.md#ts_asr_playback) | zh | 目标说话人语音识别 | 3.4 | 目标说话人评测：外放播放的干扰声 | 没有 |
 | [vitw_zh_far_asr](data-versions.md#vitw_zh_far_asr) | zh | 语音识别 | 49.6 | VITW 中文远场转写训练数据 | 没有 |
 | [wenetspeech](data-versions.md#wenetspeech) | zh | 语音识别 | 10,025.4 | 中文网络语音万余小时（WenetSpeech）；含清洗版 | 部分版本：快照 20260914、`备份桶:audio-data-contract/datasets/wenetspeech/` |

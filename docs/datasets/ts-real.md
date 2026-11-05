@@ -81,3 +81,14 @@ v1/v2 的窗口要求“与窗口重叠的语句都完整”，重叠多的地�
 ## 近场与远场对照（ts_asr_nearfar）
 
 `ts_asr_nearfar@v1-20261014`：1,248 条、24 个场景。用 `ts_asr_real@v2-20261013` 的 AliMeeting 窗口（三档说话人数各 50 个），同一窗口、同一条注册语句，注册取远场（`ef`）或说话人的头戴麦（`en`），混合取远场通道 0（`mf`）或该录音所有头戴麦之和（`mn`，电平对齐远场混合，只剩声学差异）。场景名 `nearfar-<人数档>-<注册>-<混合>-<pos|neg>`，`ef-mf` 就是原来的样本。近场与远场录音的时间偏差不超过 0.12 秒。生成脚本 `scripts/ts_real/near_far.py`；AISHELL-4 没有近场录音，所以不含。用来校准合成的远场失配场景，只用于评测。`ts_asr_nearfar@v2-20261022` 是同样的修正版：注册与 v2 窗口相同，所以同一批 67 个注册（×4 种组合，268 条）标为 `others_speech`，移入 `-enrollmix` 划分。
+
+## 谁先开口（ts_asr_nearfar@firstother-v1-20261104）
+
+复现一条内部返回的 TS-ASR badcase：45 秒三人同屋交替说话，注册是另一次单独录的 5 秒声纹，会话开头是非目标说话人清晰地数数，所有版本都整段转写了先开口的人。对照实验表明是两个因素叠加：注册与会话不同录音（匹配信号弱），以及混合开头先是非目标说话人。生成脚本 `scripts/ts_real/first_speaker.py`，评测集配置 `scripts/ts_real/first_speaker_eval_set.py`（AmphionEval `open-audio-llm/ts-asr-first-other@v1-20261104`）。
+
+- 来源：AliMeeting Test 远场通道 0 的人工标注（训练配方只用 train 划分）。从每条语句起点向后取 25–40 秒，再扩到完整语句，保留 25–45 秒、≥3 人说话、目标累计说话 ≥5 秒的窗口。
+- `firstother`：窗口第一个开口的不是目标，且目标第一句之前已有非目标一整句 ≥1.2 秒、被他人重叠 ≤20% 的语句（labels `lead_start_s`、`lead_seconds`，`metadata.lead_utterance`）。`firsttarget`：同样规则，但目标先开口，作对照。同一类窗口在一场会议里互不重叠；两类按（会议，窗口人数）取相同个数，所以会议、人数一致，只有谁先开口不同。
+- 注册、正负配对和 `-enrollmix` 规则同 `ts_asr_real@v4-20261022`；注册和开头那句都要过声纹核对（头戴麦之和建档），开头那句不过的整窗隔离。注册有三种，混合都是远场通道 0：`ef` 远场通道 0，`en` 本人头戴麦上的同样片段，`ed` 是 `en` 先限带（3.5–5 kHz 低通，或 4 kHz 以上 −6 dB 高架）再加 WHAM! 测试集稳态噪声（SNR 15–25 dB），模拟 badcase 声纹比会话更吵、更闷；参数逐条记在 `metadata.enroll_degradation`。声纹核对按干净注册判定，劣化后的结果在 `metadata.enroll_degraded_voice_check`。
+- 结果：1,782 条，12 个划分 `<firstother|firsttarget>-<ef|en|ed>-mf-<pos|neg>`，每个划分 148/149 条，用到 10 场会议，窗口平均 36–37 秒。隔离 1 个窗口（开头那句声纹核对不过），所有注册的前 5 秒都无他人说话，所以没有 `-enrollmix`；劣化注册 594 条全部仍通过声纹核对。窗口须 ≥3 人而会议只有 3–4 人，297 个目标缺席样本中有 285 个只能取其他会议的人（`labels.absent_source`）。明细见 `source/firstother-v1-20261104/report.json`。
+- 窗口超过 `ts_asr_real` 的 26 秒上限（原来 TS 服务单段上限 27 秒）：评测要整段送入，客户端或服务若截断，结果不能代表这类场景。
+- `first_speaker_windows`、`match_windows` 的划分和阈值都是参数，可以直接在 train 划分上切训练窗口；这一版只做了评测数据。
