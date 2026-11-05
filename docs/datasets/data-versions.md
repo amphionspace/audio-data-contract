@@ -1319,12 +1319,14 @@ TAL 中文语音识别数据
 | [tdtech_customer_bench@v1-20261102](../../catalog/tdtech_customer_bench.yaml#L1) | 0.1 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/tdtech_customer_bench/` |
 | [tdtech_customer_bench@v2-20261102](../../catalog/tdtech_customer_bench.yaml#L65) | 0.1 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/tdtech_customer_bench/` |
 | [tdtech_customer_bench@v3-20261103](../../catalog/tdtech_customer_bench.yaml#L152) | 0.1 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/tdtech_customer_bench/` |
-| [tdtech_customer_bench@v4-20261104](../../catalog/tdtech_customer_bench.yaml#L239) | 0.1 | 已登记 | 没有 |
+| [tdtech_customer_bench@v4-20261104](../../catalog/tdtech_customer_bench.yaml#L239) | 0.1 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/tdtech_customer_bench/` |
+| [tdtech_customer_bench@v5-20261105](../../catalog/tdtech_customer_bench.yaml#L371) | 0.1 | 已登记 | 没有 |
 
 - `tdtech_customer_bench@v1-20261102`：鼎桥（td-tech）客户提供的真实录音（邮件/Wiki 基线 2026-09-30，由 EvalHub 整理发布），只用于评测，不进训练。参考文本未全部经人工听审：通用识别只保留三份机器转写中两份一致的条目，难样例被筛掉，数字偏乐观；警务指令的参考来自录音分组的指令词，39 条经人工确认
 - `tdtech_customer_bench@v2-20261102`：鼎桥（td-tech）客户提供的真实录音（邮件/Wiki 基线 2026-09-30，由 EvalHub 整理发布），只用于评测，不进训练。参考文本未全部经人工听审：通用识别只保留三份机器转写中两份一致的条目，难样例被筛掉，数字偏乐观；警务指令的参考来自录音分组的指令词，39 条经人工确认；警务指令另有一份带 300 词热词表的副本（police-cmd-hw300），音频相同
 - `tdtech_customer_bench@v3-20261103`：鼎桥（td-tech）客户提供的真实录音（邮件/Wiki 基线 2026-09-30，由 EvalHub 整理发布），只用于评测，不进训练。参考文本未全部经人工听审：通用识别只保留三份机器转写中两份一致的条目，难样例被筛掉，数字偏乐观；警务指令的参考来自录音分组的指令词，39 条经人工确认；警务指令另有一份带 audiollm-go 出厂内置热词表（1296 条）的副本（police-cmd-builtin），音频相同
 - `tdtech_customer_bench@v4-20261104`：鼎桥（td-tech）客户提供的真实录音（邮件/Wiki 基线 2026-09-30，由 EvalHub 整理发布），只用于评测，不进训练。参考文本未全部经人工听审：通用识别只保留三份机器转写中两份一致的条目，难样例被筛掉，数字偏乐观；警务指令的参考来自录音分组的指令词，39 条经人工确认；警务指令另有一份带 audiollm-go 出厂内置热词表（1296 条）的副本（police-cmd-builtin），音频相同。v4 加机主识别（6 段，机主由人工听审确定，文字取多模型一致转写）和人名热词（2 段，参考经人工听审）；角色分离的多模型打标一致率太低（约 12%），不进本版本
+- `tdtech_customer_bench@v5-20261105`：鼎桥（td-tech）客户提供的真实录音（邮件/Wiki 基线 2026-09-30，由 EvalHub 整理发布），只用于评测，不进训练。参考文本未全部经人工听审：通用识别只保留三份机器转写中两份一致的条目，难样例被筛掉，数字偏乐观；警务指令的参考来自录音分组的指令词，39 条经人工确认；警务指令另有一份带 audiollm-go 出厂内置热词表（1296 条）的副本（police-cmd-builtin），音频相同。v4 加机主识别（6 段，机主由人工听审确定，文字取多模型一致转写）和人名热词（2 段，参考经人工听审）；角色分离的多模型打标一致率太低（约 12%），不进本版本。v5 按客户确认把人名“黄晋飞”写进参考和人名表，其余与 v4 相同
 
 ### thchs30
 

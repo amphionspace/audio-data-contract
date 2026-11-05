@@ -21,8 +21,9 @@ the records point at those wavs.
   listened and chose the owner among the local MOSS speakers (or none); the owner's text is, per turn,
   what two of the four machine transcripts agree on. Results in ``source/listening-review-20261105.json``.
 - ``hotword`` (from v4): EvalHub ``hotword/dingqiao-hotword-quality@20261016-machine01`` (2 clips of
-  person names), reference text confirmed by listening, sent with the four names of the customer's
-  demo whose spelling is certain (黄静飞/黄敬飞 stays out of the list).
+  person names), reference text confirmed by listening, sent with the five names of the customer's
+  demo. v4 left 黄静飞/黄敬飞 out (spelling unknown); from v5 the customer's spelling 黄晋飞
+  (``source/customer-names-20261105.json``) fixes the text and joins the list.
 
     python scripts/tdtech_customer_bench/build.py --roots /workspace/data/registry/roots.json
 """
@@ -44,7 +45,7 @@ from audio_data_contract.types import DatasetSpec
 
 DATASET_ID = "tdtech_customer_bench"
 ROOT_ALIAS = DATASET_ID
-VERSION = "v4-20261104"
+VERSION = "v5-20261105"
 SAMPLE_RATE = 16000
 GENERAL = "asr_dingqiao-asr-quality@20261016-machine01"
 POLICE = "asr_dingqiao-asr-police-cmd@20261020-jyjy-v6-human04"
@@ -55,6 +56,7 @@ POOL_SHA256 = "5ad6238e2677dfd128d2e5e3f3e8b529b0e1e12dd0d2c8dd9b86305d180ba0c1"
 OWNER = "target-speaker_dingqiao-ts@20261014"
 HOTWORD = "hotword_dingqiao-hotword-quality@20261016-machine01"
 REVIEW = "source/listening-review-20261105.json"
+NAMES = "source/customer-names-20261105.json"
 DEMO_LIST = "demo"
 SPLITS = {
     "general": (
@@ -190,7 +192,7 @@ def owner_records(data_root, review, index):
     return records
 
 
-def hotword_records(data_root, review, names, index):
+def hotword_records(data_root, review, names, spelling, index):
     records = []
     for row in evalhub_rows(data_root, HOTWORD):
         decided = review[row["id"]]
@@ -198,26 +200,30 @@ def hotword_records(data_root, review, names, index):
             raise ValueError(f"{row['id']}: reference not confirmed by listening")
         relative = f"source/evalhub/{HOTWORD}/{row['audio']}"
         entry = index.setdefault(row["id"], index_entry(data_root / relative, relative, row["id"]))
-        gold = [name for name in names if name in decided["target"]]
+        target = decided["target"]
+        for heard, written in spelling.items():
+            target = target.replace(heard, written)
+        gold = [name for name in names if name in target]
         records.append(AudioRecord.from_dict({
             "schema_version": "audio-record/1.0",
             "id": f"hotword:{row['id']}",
             "task": "asr_hotwords",
             "audio_slots": [slot("primary", "hotword", entry)],
-            "target": decided["target"],
+            "target": target,
             "language": "zh",
             "hotwords": gold,
             "labels": {"scenario": "hotword", "display_name": row["labels"]["display_name"],
                        "reference_kind": "human"},
             "metadata": {"evalhub": {"ref": evalhub_ref(HOTWORD), "sample_id": row["id"]},
-                         "listening": decided, "bias_lists": {DEMO_LIST: list(names)},
+                         "listening": decided, "customer_spelling": spelling,
+                         "bias_lists": {DEMO_LIST: list(names)},
                          "distractor_kinds": {w: DEMO_LIST for w in names if w not in gold},
                          "source_audio_sha256": row["labels"]["source_audio_sha256"]},
         }).to_dict())
     return records
 
 
-def build(data_root, agreement, pool, review):
+def build(data_root, agreement, pool, review, names):
     version_dir = data_root / "versions" / VERSION
     if (version_dir / "records").exists():
         raise FileExistsError(f"refusing to replace registered version: {version_dir}")
@@ -272,7 +278,7 @@ def build(data_root, agreement, pool, review):
             by_split.setdefault(split, []).append(record)
     by_split[HOTWORD_SPLIT] = hotword_copy(by_split["police-cmd"], pool)
     by_split["owner"] = owner_records(data_root, review["owner"], index)
-    by_split["hotword"] = hotword_records(data_root, review["hotword"], review["hotword_names"]["list"], index)
+    by_split["hotword"] = hotword_records(data_root, review["hotword"], names["names"], names["spelling"], index)
     for split, rows in by_split.items():
         write_jsonl_gz(version_dir / "records" / f"{split}.jsonl.gz", rows)
     write_jsonl_gz(version_dir / "audio-index.jsonl.gz", sorted(index.values(), key=lambda e: e["cut_id"]))
@@ -309,8 +315,8 @@ def declaration(by_split, index, data_root):
                       "Qwen3-ASR 中至少两份一致的转写，文字未经人工逐字校对（reference_kind: human_speaker_machine_text）。")
         elif split == "hotword":
             description = (f"人名热词客户录音 {len(rows)} 段，参考文本经人工听审确认。每条带客户 Demo 的人名表"
-                        f"（{'、'.join(rows[0]['metadata']['bias_lists'][DEMO_LIST])}）；“黄静飞/黄敬飞”同音、写法待客户确认，"
-                        "保留在参考文本里但不进人名表和命中统计。")
+                        f"（{'、'.join(rows[0]['metadata']['bias_lists'][DEMO_LIST])}）；“黄晋飞”的写法由客户确认"
+                        "（听审时与“黄静飞/黄敬飞”同音分不出）。")
         else:
             description = (
             "警务指令（出厂内置热词表）：音频和参考与 police-cmd 相同，每条带 audiollm-go main-td 出厂内置热词表"
@@ -346,11 +352,11 @@ def declaration(by_split, index, data_root):
                            "难样例被筛掉，数字偏乐观；警务指令的参考来自录音分组的指令词，39 条经人工确认；"
                            "警务指令另有一份带 audiollm-go 出厂内置热词表（1296 条）的副本（police-cmd-builtin），音频相同。"
                            "v4 加机主识别（6 段，机主由人工听审确定，文字取多模型一致转写）和人名热词（2 段，参考经人工听审）；"
-                           "角色分离的多模型打标一致率太低（约 12%），不进本版本。",
+                           "角色分离的多模型打标一致率太低（约 12%），不进本版本。v5 按客户确认把人名“黄晋飞”写进参考和人名表，其余与 v4 相同。",
             "sources": [*(f"EvalHub {evalhub_ref(name)}" for name, _ in SPLITS.values()),
                         "audiollm-go main-td providers/common/rag/vocabulary/builtin-hotwords-20261102.txt",
                         f"EvalHub {evalhub_ref(OWNER)}", f"EvalHub {evalhub_ref(HOTWORD)}",
-                        f"人工听审 {REVIEW}"],
+                        f"人工听审 {REVIEW}", f"客户确认人名 {NAMES}"],
         },
     }
 
@@ -376,7 +382,8 @@ def main():
     data_root = Path(json.loads(args.roots.read_text())[ROOT_ALIAS])
     agreement = json.loads((data_root / "source" / "agreement.json").read_text())["samples"]
     review = json.loads((data_root / REVIEW).read_text(encoding="utf-8"))
-    by_split, index = build(data_root, agreement, builtin_pool(data_root), review)
+    names = json.loads((data_root / NAMES).read_text(encoding="utf-8"))
+    by_split, index = build(data_root, agreement, builtin_pool(data_root), review, names)
     register(Path(__file__).resolve().parents[2], declaration(by_split, index, data_root))
     print({s: len(r) for s, r in by_split.items()}, f"audio files: {len(index)}")
 
