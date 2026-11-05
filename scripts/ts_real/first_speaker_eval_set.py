@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
-"""Write the AmphionEval eval-set data config for ts_asr_nearfar@firstother-v1/v2 (``first_speaker.py``,
-``first_speaker_near.py``).
+"""Write the AmphionEval eval-set data config for ts_asr_nearfar@firstother-v1/v2/v3 (``first_speaker.py``,
+``first_speaker_near.py``, ``first_speaker_crowded.py``).
 
     python scripts/ts_real/first_speaker_eval_set.py --version firstother-v2-20261105 > data.yaml
     ae eval-sets publish data.yaml --project open-audio-llm --name ts-asr-first-other --version v2-20261105
@@ -16,7 +16,7 @@ import yaml
 
 from audio_data_contract import load_catalog
 
-VERSIONS = ("firstother-v1-20261104", "firstother-v2-20261105")
+VERSIONS = ("firstother-v1-20261104", "firstother-v2-20261105", "firstother-v3-20261105")
 SUFFIX = "-enrollmix"
 HARD = "-hard"
 BADCASE = ("复现一条内部返回的 TS-ASR badcase：45 秒三人同屋交替说话，注册是另一次单独录的声纹，会话开头是非目标说话人清晰发言，"
@@ -34,6 +34,41 @@ VARIANTS = {"": ("", ""), SUFFIX: ("（注册含他人声）", "注册前 5 秒�
 PRESENCE = {"pos": ("目标在场", "目标说话人在窗口里说话。"), "neg": ("目标缺席", "注册人没有在窗口里说话，期望输出为空。")}
 
 
+STRATA = {"crowded": ("拥挤", "目标语音被他人重叠 ≥30%、目标在窗口里说话 <15 秒"),
+          "control": ("清晰对照", "目标被重叠 <15%、目标说话 ≥20 秒（与拥挤同一批会议和人数）"),
+          "crowded-lowsim": ("拥挤且声纹弱", "拥挤，且注册前 5 秒与目标独自说话的 ECAPA 相似度 <0.5（拥挤划分的子集）")}
+FAMILIES = {"alimeeting": ("AliMeeting", "AliMeeting Test 与 Eval"), "aishell4": ("AISHELL-4", "AISHELL-4 test")}
+MINED = ("复现内部返回的 TS-ASR badcase（整段转写了另一个说话人）。对 v2 四个版本的错人输出挖掘：目标被重叠 ≥0.3 时错人 12%、"
+         "目标说话 <10 秒时 10%、target_sim <0.4 时 21%，重叠 ≥0.3 且 target_sim <0.5 时 27–30%；被重叠 <5% 或说话 >20 秒时为 0%；"
+         "谁先开口影响小（非目标先开口 6.2%、目标先开口 3.6%）。本版按重叠和目标说话时长分层取样，labels.first_speaker 尽量均衡。")
+
+
+def crowded_config(spec, version):
+    entries, groups = [], []
+    for stratum, (stratum_label, stratum_text) in STRATA.items():
+        for variant, (variant_label, variant_text) in {"": ("", ""), SUFFIX: VARIANTS[SUFFIX]}.items():
+            for presence, (presence_label, presence_text) in PRESENCE.items():
+                labels = []
+                for family, (family_label, family_text) in FAMILIES.items():
+                    for cell in ("ef-mf", "en-mf", "ed-mf"):
+                        name = f"{stratum}-{family}-{cell}-{presence}{variant}"
+                        if name not in spec.splits:
+                            continue
+                        labels.append(name)
+                        entries.append({
+                            "dataset_id": "ts_asr_nearfar", "version": version, "split": name, "task": "ts_asr",
+                            "label": name, "tags": ["zh", "target-speaker"],
+                            "display": f"{stratum_label} · {family_label} · {CELLS[cell][0]} · {presence_label}{variant_label}",
+                            "description": (f"{family_text} 远场通道 0 的 25–45 秒窗口（≥3 人，目标说话 ≥5 秒）；{stratum_text}；"
+                                            f"{CELLS[cell][1]}。{presence_text}{variant_text}"),
+                        })
+                if labels:
+                    groups.append({"name": f"{stratum_label} · {presence_label}{variant_label}", "section": "真实对话 · 拥挤窗口",
+                                   "labels": labels, "description": MINED})
+    return {"sampling_rate": 16000, "enroll_seconds": 5, "tags": ["zh", "target-speaker"], "groups": groups,
+            "evaluation": entries}
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--catalog", type=Path, default=Path(__file__).resolve().parents[2] / "catalog")
@@ -41,6 +76,9 @@ def main():
     args = parser.parse_args()
     version = args.version
     spec = next(s for s in load_catalog(args.catalog) if s.dataset_id == "ts_asr_nearfar" and s.version == version)
+    if version == "firstother-v3-20261105":
+        yaml.safe_dump(crowded_config(spec, version), sys.stdout, allow_unicode=True, sort_keys=False, width=200)
+        return
     entries, groups = [], []
     for variant, (variant_label, variant_text) in VARIANTS.items():
         for presence, (presence_label, presence_text) in PRESENCE.items():

@@ -98,3 +98,10 @@ v1/v2 的窗口要求“与窗口重叠的语句都完整”，重叠多的地�
 - 实测发现 badcase 的注册比会话更吵（会话是安静的近讲录音），而 v1 混合是带混响的远场。所以新增 `en-mn`、`ed-mn`：注册分别同 `en-mf`、`ed-mf`，混合取窗口内各说话人头戴麦之和，电平对齐远场混合。`ed-mn` 最接近 badcase。`mf` 各划分不变。
 - 每条加 `labels.target_sim`、`impostor_sim`、`sim_margin`、`opener_sim`：ECAPA 计算注册前 5 秒与该条混合里各说话人独自说话部分（标注里无他人、每段 ≥0.3 秒、合计 ≥1 秒）的余弦。impostor 取非目标中最像的那个，margin = target − impostor；每格有 6 个目标在窗口里没有足够的独自说话，这几条不打分。目标在场且 margin ≤ 0.30（badcase 为 0.25）的另列为 `<划分>-hard` 子集。
 - 共 3,311 条。正样本 margin 中位数：`ef-mf` 0.38/0.42（firstother/firsttarget，下同），`en-mf` 0.42/0.41，`ed-mf` 0.36/0.36，`en-mn` 0.52/0.53，`ed-mn` 0.44/0.46。hard 条数：`ed-mf` 54/51、`ef-mf` 41/34、`en-mf` 36/40、`ed-mn` 33/29、`en-mn` 9/14。中位数与条数明细见 `source/firstother-v2-20261105/report.json`。
+
+`ts_asr_nearfar@firstother-v3-20261105`（`scripts/ts_real/first_speaker_crowded.py`，AmphionEval `open-audio-llm/ts-asr-first-other@v3-20261105`）按 v2 错人输出的挖掘结果重新取样：错人主要出现在目标被重叠多、说得少、注册匹配弱的时候（重叠 ≥0.3 且 target_sim <0.5 时 27–30%；被重叠 <5% 或说话 >20 秒时为 0%），谁先开口影响小（6.2% 对 3.6%）。
+
+- 来源：AliMeeting Test 与 Eval（icefall `dev`，只在部分训练里作验证集，没进训练数据）、AISHELL-4 test，混合都是远场通道 0。窗口 25–45 秒、≥3 人、目标 ≥5 秒，不再要求开头有一句清晰语句。
+- 每个（窗口，目标）分层：`crowded` 指目标被重叠 ≥30% 且说话 <15 秒，`control` 指被重叠 <15% 且说话 ≥20 秒；`control` 在每个（语料，会议，人数）下不超过 `crowded` 的个数。同一目标在同一录音里的样本窗口重合不超过较短者的一半，不同目标可以用同一段。非目标先开口与目标先开口交替取，`labels.first_speaker` 尽量均衡。
+- 注册方式：AliMeeting 有 `ef`、`en`、`ed` 三种，AISHELL-4 只有 `ef`。正负配对、声纹核对和劣化做法同 v1；`target_sim` 等相似度标签同 v2，在远场混合上算。`crowded` 正样本里 target_sim <0.5 的另列 `crowded-lowsim-<语料>-<注册>-pos`（子集）。每条样本的混合只存一份，各注册方式和正负样本共用。
+- 结果：9,030 条。`crowded` 正样本 AliMeeting 每种注册 956 条（非目标先开口 629、目标先开口 327；目标先开口的候选不够，没能均衡），AISHELL-4 384 条；`control` 正样本 AliMeeting 176、AISHELL-4 246；`crowded-lowsim` 依次为 `ef` 236、`en` 261、`ed` 384、AISHELL-4 97。负样本条数与正样本相同。16 对样本因注册声纹核对换句后仍不过而剔除（都是 AISHELL-4），明细见 `source/firstother-v3-20261105/report.json`。

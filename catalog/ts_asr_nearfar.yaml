@@ -3365,3 +3365,432 @@
     - alimeeting:Test_Ali_near
     - ts_asr_benchmark/source/v4-20261022/noise/wham
     - ts_asr_nearfar@firstother-v1-20261104
+- schema_version: dataset-catalog/2.0
+  dataset_id: ts_asr_nearfar
+  version: firstother-v3-20261105
+  languages:
+  - zh
+  tasks:
+  - ts_asr
+  artifacts:
+  - name: audio-index
+    kind: audio-index
+    root_alias: ts_asr_nearfar
+    relative_path: versions/firstother-v3-20261105/audio-index.jsonl.gz
+    sha256: 1077077d24c69dde37683c3c4ab40a34d159bfefe3791c60e16c6a3eee4041c0
+    metadata:
+      record_count: 9814
+  - name: control-aishell4-ef-mf-neg-records
+    kind: audio-records
+    root_alias: ts_asr_nearfar
+    relative_path: versions/firstother-v3-20261105/records/control-aishell4-ef-mf-neg.jsonl.gz
+    sha256: a199a0bbb5aeca31370f3e2a0a167b228dbf8f85968dbd9374541f806926b883
+    metadata:
+      record_count: 246
+  - name: control-aishell4-ef-mf-pos-records
+    kind: audio-records
+    root_alias: ts_asr_nearfar
+    relative_path: versions/firstother-v3-20261105/records/control-aishell4-ef-mf-pos.jsonl.gz
+    sha256: bc65194bbf75490749dd8bacd2638f3d781a26851558db377dbfa84eec1f273c
+    metadata:
+      record_count: 246
+  - name: control-alimeeting-ed-mf-neg-records
+    kind: audio-records
+    root_alias: ts_asr_nearfar
+    relative_path: versions/firstother-v3-20261105/records/control-alimeeting-ed-mf-neg.jsonl.gz
+    sha256: 35111630fc1ca3568dc74e19381125576fbf64b1a432d30467c38eb495d41894
+    metadata:
+      record_count: 176
+  - name: control-alimeeting-ed-mf-pos-records
+    kind: audio-records
+    root_alias: ts_asr_nearfar
+    relative_path: versions/firstother-v3-20261105/records/control-alimeeting-ed-mf-pos.jsonl.gz
+    sha256: 011d9b2916d8cd51e266f81f8d3995ee765ae0f3177f80a396291e297ea86b8d
+    metadata:
+      record_count: 176
+  - name: control-alimeeting-ef-mf-neg-records
+    kind: audio-records
+    root_alias: ts_asr_nearfar
+    relative_path: versions/firstother-v3-20261105/records/control-alimeeting-ef-mf-neg.jsonl.gz
+    sha256: 277c1468c7265bc432142f632d2fdb11d94130d6ee4d9d884d8b0f5ff4ebb4ba
+    metadata:
+      record_count: 176
+  - name: control-alimeeting-ef-mf-pos-records
+    kind: audio-records
+    root_alias: ts_asr_nearfar
+    relative_path: versions/firstother-v3-20261105/records/control-alimeeting-ef-mf-pos.jsonl.gz
+    sha256: 7189f00f9b7d6a25d37a5077157ee914c2b3f8b2a301bf1907b51431be660e06
+    metadata:
+      record_count: 176
+  - name: control-alimeeting-en-mf-neg-records
+    kind: audio-records
+    root_alias: ts_asr_nearfar
+    relative_path: versions/firstother-v3-20261105/records/control-alimeeting-en-mf-neg.jsonl.gz
+    sha256: f905b9bcec5a5e20dda2f38c90c1a2f53d24a259d1980237ea054bb2181036fa
+    metadata:
+      record_count: 176
+  - name: control-alimeeting-en-mf-pos-records
+    kind: audio-records
+    root_alias: ts_asr_nearfar
+    relative_path: versions/firstother-v3-20261105/records/control-alimeeting-en-mf-pos.jsonl.gz
+    sha256: c7187395d40e7d6d51a218967143f7ef26d0280afd31a5a0cdaec411d01c0d45
+    metadata:
+      record_count: 176
+  - name: crowded-aishell4-ef-mf-neg-records
+    kind: audio-records
+    root_alias: ts_asr_nearfar
+    relative_path: versions/firstother-v3-20261105/records/crowded-aishell4-ef-mf-neg.jsonl.gz
+    sha256: b70b783d5aa00644853d3ce06753e7df403a6b310dda35244e8afeecc33cf5d9
+    metadata:
+      record_count: 384
+  - name: crowded-aishell4-ef-mf-pos-records
+    kind: audio-records
+    root_alias: ts_asr_nearfar
+    relative_path: versions/firstother-v3-20261105/records/crowded-aishell4-ef-mf-pos.jsonl.gz
+    sha256: 7fcfd80c3c2092789105d45b18b838d1eea7039e717353ca0614dddb23979f49
+    metadata:
+      record_count: 384
+  - name: crowded-alimeeting-ed-mf-neg-records
+    kind: audio-records
+    root_alias: ts_asr_nearfar
+    relative_path: versions/firstother-v3-20261105/records/crowded-alimeeting-ed-mf-neg.jsonl.gz
+    sha256: 1aea67c643961ed507089025ad5b1316e6c3795f14dbd1060152e66d8106de8e
+    metadata:
+      record_count: 956
+  - name: crowded-alimeeting-ed-mf-pos-records
+    kind: audio-records
+    root_alias: ts_asr_nearfar
+    relative_path: versions/firstother-v3-20261105/records/crowded-alimeeting-ed-mf-pos.jsonl.gz
+    sha256: 49a01d146bd103a0136c67864f56bcda7a639cfdadb1e7e6a4094c1326f7465e
+    metadata:
+      record_count: 956
+  - name: crowded-alimeeting-ef-mf-neg-records
+    kind: audio-records
+    root_alias: ts_asr_nearfar
+    relative_path: versions/firstother-v3-20261105/records/crowded-alimeeting-ef-mf-neg.jsonl.gz
+    sha256: 185be195f4baf1bc43a051eed929144050aa8fab12916e5271eafc4373c54c70
+    metadata:
+      record_count: 956
+  - name: crowded-alimeeting-ef-mf-pos-records
+    kind: audio-records
+    root_alias: ts_asr_nearfar
+    relative_path: versions/firstother-v3-20261105/records/crowded-alimeeting-ef-mf-pos.jsonl.gz
+    sha256: c7b571c263dff44dbe33db228b28137d911fd53589c791f3bca794f0400e1405
+    metadata:
+      record_count: 956
+  - name: crowded-alimeeting-en-mf-neg-records
+    kind: audio-records
+    root_alias: ts_asr_nearfar
+    relative_path: versions/firstother-v3-20261105/records/crowded-alimeeting-en-mf-neg.jsonl.gz
+    sha256: 47511f3c770b097b7443e1defcf3b581adba09df67585fdc33507d80287eb4ed
+    metadata:
+      record_count: 956
+  - name: crowded-alimeeting-en-mf-pos-records
+    kind: audio-records
+    root_alias: ts_asr_nearfar
+    relative_path: versions/firstother-v3-20261105/records/crowded-alimeeting-en-mf-pos.jsonl.gz
+    sha256: c1a7aacca2fa82521aa3186799a562a16cde7d0ccd5dcc2fc2854aad8767b6c5
+    metadata:
+      record_count: 956
+  - name: crowded-lowsim-aishell4-ef-mf-pos-records
+    kind: audio-records
+    root_alias: ts_asr_nearfar
+    relative_path: versions/firstother-v3-20261105/records/crowded-lowsim-aishell4-ef-mf-pos.jsonl.gz
+    sha256: 3b8ca1773bf6ee97cbfdf716158261084912be4f0ed8bd4c9f7b78170605c0e5
+    metadata:
+      record_count: 97
+  - name: crowded-lowsim-alimeeting-ed-mf-pos-records
+    kind: audio-records
+    root_alias: ts_asr_nearfar
+    relative_path: versions/firstother-v3-20261105/records/crowded-lowsim-alimeeting-ed-mf-pos.jsonl.gz
+    sha256: 25c1573a481b0a504d769f96f72d49f653b9a9dd354d535930f68c1f98d72edb
+    metadata:
+      record_count: 384
+  - name: crowded-lowsim-alimeeting-ef-mf-pos-records
+    kind: audio-records
+    root_alias: ts_asr_nearfar
+    relative_path: versions/firstother-v3-20261105/records/crowded-lowsim-alimeeting-ef-mf-pos.jsonl.gz
+    sha256: ef3e5bd9d958783984f770d9a46d1de26869669dfff65026e078faec92a5dafc
+    metadata:
+      record_count: 236
+  - name: crowded-lowsim-alimeeting-en-mf-pos-records
+    kind: audio-records
+    root_alias: ts_asr_nearfar
+    relative_path: versions/firstother-v3-20261105/records/crowded-lowsim-alimeeting-en-mf-pos.jsonl.gz
+    sha256: 5cbb75d55f6a0bc535b63531aa8f4ded55963ecd147c5c6039ee4bf1458c3d58
+    metadata:
+      record_count: 261
+  splits:
+    control-aishell4-ef-mf-neg:
+      artifacts:
+        records:
+        - control-aishell4-ef-mf-neg-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 246
+        duration_hours: 2.512
+        duration_basis: Mixture duration
+      provenance:
+        description: AISHELL-4 test 远场通道 0 的 25–45 秒窗口；对照：目标被重叠 <15%、目标说话 ≥20 秒；注册取远场通道 0；目标缺席
+    control-aishell4-ef-mf-pos:
+      artifacts:
+        records:
+        - control-aishell4-ef-mf-pos-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 246
+        duration_hours: 2.512
+        duration_basis: Mixture duration
+      provenance:
+        description: AISHELL-4 test 远场通道 0 的 25–45 秒窗口；对照：目标被重叠 <15%、目标说话 ≥20 秒；注册取远场通道 0；目标在场
+    control-alimeeting-ed-mf-neg:
+      artifacts:
+        records:
+        - control-alimeeting-ed-mf-neg-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 176
+        duration_hours: 1.8393
+        duration_basis: Mixture duration
+      provenance:
+        description: AliMeeting Test/Eval 远场通道 0 的 25–45 秒窗口；对照：目标被重叠 <15%、目标说话 ≥20 秒；注册取本人头戴麦并加噪、限带（劣化注册）；目标缺席
+    control-alimeeting-ed-mf-pos:
+      artifacts:
+        records:
+        - control-alimeeting-ed-mf-pos-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 176
+        duration_hours: 1.8393
+        duration_basis: Mixture duration
+      provenance:
+        description: AliMeeting Test/Eval 远场通道 0 的 25–45 秒窗口；对照：目标被重叠 <15%、目标说话 ≥20 秒；注册取本人头戴麦并加噪、限带（劣化注册）；目标在场
+    control-alimeeting-ef-mf-neg:
+      artifacts:
+        records:
+        - control-alimeeting-ef-mf-neg-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 176
+        duration_hours: 1.8393
+        duration_basis: Mixture duration
+      provenance:
+        description: AliMeeting Test/Eval 远场通道 0 的 25–45 秒窗口；对照：目标被重叠 <15%、目标说话 ≥20 秒；注册取远场通道 0；目标缺席
+    control-alimeeting-ef-mf-pos:
+      artifacts:
+        records:
+        - control-alimeeting-ef-mf-pos-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 176
+        duration_hours: 1.8393
+        duration_basis: Mixture duration
+      provenance:
+        description: AliMeeting Test/Eval 远场通道 0 的 25–45 秒窗口；对照：目标被重叠 <15%、目标说话 ≥20 秒；注册取远场通道 0；目标在场
+    control-alimeeting-en-mf-neg:
+      artifacts:
+        records:
+        - control-alimeeting-en-mf-neg-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 176
+        duration_hours: 1.8393
+        duration_basis: Mixture duration
+      provenance:
+        description: AliMeeting Test/Eval 远场通道 0 的 25–45 秒窗口；对照：目标被重叠 <15%、目标说话 ≥20 秒；注册取本人头戴麦（跨通道）；目标缺席
+    control-alimeeting-en-mf-pos:
+      artifacts:
+        records:
+        - control-alimeeting-en-mf-pos-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 176
+        duration_hours: 1.8393
+        duration_basis: Mixture duration
+      provenance:
+        description: AliMeeting Test/Eval 远场通道 0 的 25–45 秒窗口；对照：目标被重叠 <15%、目标说话 ≥20 秒；注册取本人头戴麦（跨通道）；目标在场
+    crowded-aishell4-ef-mf-neg:
+      artifacts:
+        records:
+        - crowded-aishell4-ef-mf-neg-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 384
+        duration_hours: 3.8479
+        duration_basis: Mixture duration
+      provenance:
+        description: AISHELL-4 test 远场通道 0 的 25–45 秒窗口；拥挤：目标语音被他人重叠 ≥30%、目标说话 <15 秒；注册取远场通道 0；目标缺席
+    crowded-aishell4-ef-mf-pos:
+      artifacts:
+        records:
+        - crowded-aishell4-ef-mf-pos-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 384
+        duration_hours: 3.8479
+        duration_basis: Mixture duration
+      provenance:
+        description: AISHELL-4 test 远场通道 0 的 25–45 秒窗口；拥挤：目标语音被他人重叠 ≥30%、目标说话 <15 秒；注册取远场通道 0；目标在场
+    crowded-alimeeting-ed-mf-neg:
+      artifacts:
+        records:
+        - crowded-alimeeting-ed-mf-neg-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 956
+        duration_hours: 9.6192
+        duration_basis: Mixture duration
+      provenance:
+        description: AliMeeting Test/Eval 远场通道 0 的 25–45 秒窗口；拥挤：目标语音被他人重叠 ≥30%、目标说话 <15 秒；注册取本人头戴麦并加噪、限带（劣化注册）；目标缺席
+    crowded-alimeeting-ed-mf-pos:
+      artifacts:
+        records:
+        - crowded-alimeeting-ed-mf-pos-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 956
+        duration_hours: 9.6192
+        duration_basis: Mixture duration
+      provenance:
+        description: AliMeeting Test/Eval 远场通道 0 的 25–45 秒窗口；拥挤：目标语音被他人重叠 ≥30%、目标说话 <15 秒；注册取本人头戴麦并加噪、限带（劣化注册）；目标在场
+    crowded-alimeeting-ef-mf-neg:
+      artifacts:
+        records:
+        - crowded-alimeeting-ef-mf-neg-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 956
+        duration_hours: 9.6192
+        duration_basis: Mixture duration
+      provenance:
+        description: AliMeeting Test/Eval 远场通道 0 的 25–45 秒窗口；拥挤：目标语音被他人重叠 ≥30%、目标说话 <15 秒；注册取远场通道 0；目标缺席
+    crowded-alimeeting-ef-mf-pos:
+      artifacts:
+        records:
+        - crowded-alimeeting-ef-mf-pos-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 956
+        duration_hours: 9.6192
+        duration_basis: Mixture duration
+      provenance:
+        description: AliMeeting Test/Eval 远场通道 0 的 25–45 秒窗口；拥挤：目标语音被他人重叠 ≥30%、目标说话 <15 秒；注册取远场通道 0；目标在场
+    crowded-alimeeting-en-mf-neg:
+      artifacts:
+        records:
+        - crowded-alimeeting-en-mf-neg-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 956
+        duration_hours: 9.6192
+        duration_basis: Mixture duration
+      provenance:
+        description: AliMeeting Test/Eval 远场通道 0 的 25–45 秒窗口；拥挤：目标语音被他人重叠 ≥30%、目标说话 <15 秒；注册取本人头戴麦（跨通道）；目标缺席
+    crowded-alimeeting-en-mf-pos:
+      artifacts:
+        records:
+        - crowded-alimeeting-en-mf-pos-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 956
+        duration_hours: 9.6192
+        duration_basis: Mixture duration
+      provenance:
+        description: AliMeeting Test/Eval 远场通道 0 的 25–45 秒窗口；拥挤：目标语音被他人重叠 ≥30%、目标说话 <15 秒；注册取本人头戴麦（跨通道）；目标在场
+    crowded-lowsim-aishell4-ef-mf-pos:
+      artifacts:
+        records:
+        - crowded-lowsim-aishell4-ef-mf-pos-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 97
+        duration_hours: 0.9752
+        duration_basis: Mixture duration
+      provenance:
+        description: AISHELL-4 test 远场通道 0 的 25–45 秒窗口；拥挤且注册与目标独自说话的 ECAPA 相似度 <0.5（拥挤划分的子集）；注册取远场通道 0；目标在场
+    crowded-lowsim-alimeeting-ed-mf-pos:
+      artifacts:
+        records:
+        - crowded-lowsim-alimeeting-ed-mf-pos-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 384
+        duration_hours: 3.8983
+        duration_basis: Mixture duration
+      provenance:
+        description: AliMeeting Test/Eval 远场通道 0 的 25–45 秒窗口；拥挤且注册与目标独自说话的 ECAPA 相似度 <0.5（拥挤划分的子集）；注册取本人头戴麦并加噪、限带（劣化注册）；目标在场
+    crowded-lowsim-alimeeting-ef-mf-pos:
+      artifacts:
+        records:
+        - crowded-lowsim-alimeeting-ef-mf-pos-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 236
+        duration_hours: 2.4194
+        duration_basis: Mixture duration
+      provenance:
+        description: AliMeeting Test/Eval 远场通道 0 的 25–45 秒窗口；拥挤且注册与目标独自说话的 ECAPA 相似度 <0.5（拥挤划分的子集）；注册取远场通道 0；目标在场
+    crowded-lowsim-alimeeting-en-mf-pos:
+      artifacts:
+        records:
+        - crowded-lowsim-alimeeting-en-mf-pos-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 261
+        duration_hours: 2.6606
+        duration_basis: Mixture duration
+      provenance:
+        description: AliMeeting Test/Eval 远场通道 0 的 25–45 秒窗口；拥挤且注册与目标独自说话的 ECAPA 相似度 <0.5（拥挤划分的子集）；注册取本人头戴麦（跨通道）；目标在场
+  provenance:
+    summary: 目标说话人评测：AliMeeting 近远场对照与谁先开口对照
+    status: complete
+    synthetic: partial
+    description: 复现内部返回的 TS-ASR badcase（模型整段转写了另一个说话人）的拥挤窗口版。对 firstother-v2 四个版本的错人输出（输出覆盖目标文本不到 60%、40% 以上不是目标说的）挖掘显示，主因不是谁先开口或注册链路，而是目标被重叠多、说得少、注册与目标匹配弱：目标被重叠 <5% 或说话 >20 秒时错人 0%，重叠 ≥0.3 时 12%，目标说话 <10 秒时 10%，target_sim <0.4 时 21%，重叠 ≥0.3 且 target_sim <0.5 时 27–30%（四个版本一致）；非目标先开口 6.2%、目标先开口 3.6%。本版按这些条件取样：AliMeeting Test 与 Eval、AISHELL-4 test 远场通道 0 的人工标注，按完整语句切 25–45 秒窗口（≥3 人、目标 ≥5 秒，不再要求开头有清晰的一句），每个（窗口，目标）分层：crowded 为目标被重叠 ≥30% 且说话 <15 秒，control 为重叠 <15% 且说话 ≥20 秒；同一目标在同一录音里的样本窗口重合不超过较短者的一半（不同目标可以用同一段），非目标先开口与目标先开口交替取以求均衡（labels.first_speaker），control
+      每个（语料，会议，人数）不超过 crowded 的个数。每个样本一对：目标在场，和目标缺席（同会议不在窗口里的人，没有则取同语料其他会议，labels.absent_source）。注册、声纹核对、-enrollmix 与 ed 劣化同 firstother-v1；AliMeeting 有 ef、en、ed 三种注册，AISHELL-4 没有头戴麦只有 ef，混合都是远场通道 0。每条有 labels.target_sim / impostor_sim / sim_margin / opener_sim（同 v2，在远场混合上算）和 target_overlap_ratio、target_seconds；crowded 正样本中 target_sim <0.5 的另列为 crowded-lowsim-<语料>-<注册>-pos（子集）。AliMeeting Eval（icefall dev）只在部分训练里作验证集，没有进训练数据。统计见 source/<版本>/report.json。生成脚本 scripts/ts_real/first_speaker_crowded.py。只用于评测，不进训练。
+    sources:
+    - alimeeting_sdm@icefall-20260908:test
+    - alimeeting_sdm@icefall-20260908:dev
+    - aishell4@icefall-20260908:test
+    - alimeeting:Test_Ali_near
+    - alimeeting:Eval_Ali_near
+    - ts_asr_benchmark/source/v4-20261022/noise/wham

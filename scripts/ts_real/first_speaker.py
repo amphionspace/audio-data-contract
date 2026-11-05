@@ -178,8 +178,8 @@ def match_windows(windows_by_recording, rng):
 # --- enrollment conditions -----------------------------------------------------
 
 
-def near_enrollment(recording, speaker, pieces):
-    path = near_far.NEAR_DIR / f"{recording}_N_SPK{speaker}.wav"
+def near_enrollment(recording, speaker, pieces, near_dir=near_far.NEAR_DIR):
+    path = near_dir / f"{recording}_N_SPK{speaker}.wav"
     return np.concatenate([near_far.cut_near(path, s, e) for s, e in pieces])[: int(real.ENROLL_STORE * SR)]
 
 
