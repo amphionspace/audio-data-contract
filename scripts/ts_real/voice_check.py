@@ -96,8 +96,10 @@ class VoiceCheck:
         mean = np.mean([self._utterance(recordings, recording, s, e) for s, e in chosen], axis=0)
         return mean / np.linalg.norm(mean), len(chosen)
 
-    def check(self, recordings, recording, speaker, pieces):
-        """{passed, audio, crop_own, crop_other, full_own, full_other, other_speaker, profile_utts}."""
+    def check(self, recordings, recording, speaker, pieces, audio=None):
+        """{passed, audio, crop_own, crop_other, full_own, full_other, other_speaker, profile_utts}.
+
+        ``audio`` checks that waveform of ``pieces`` instead of the cut (e.g. a degraded copy of the enrollment)."""
         own, count = self.profile(recordings, recording, speaker, pieces)
         verdict = {"passed": False, "audio": self.view(recordings[recording]), "profile_utts": count}
         if own is None:
@@ -108,7 +110,10 @@ class VoiceCheck:
             vector, _ = self.profile(recordings, recording, other)
             if vector is not None:
                 others[other] = vector
-        audio = np.concatenate([self.cut(recordings, recording, s, e) for s, e in pieces])[: int(self.store * SR)]
+        if audio is None:
+            audio = np.concatenate([self.cut(recordings, recording, s, e) for s, e in pieces])[: int(self.store * SR)]
+        else:
+            verdict["audio"] = "given"
         passed = True
         for part, w in (("crop", audio[: int(self.crop * SR)]), ("full", audio)):
             e = self.embed(w)

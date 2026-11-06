@@ -1515,18 +1515,24 @@ TAL 中文语音识别数据
 
 ### ts_asr_nearfar
 
-目标说话人评测：AliMeeting 近场与远场对照
+目标说话人评测：AliMeeting 近远场与谁先开口对照
 
 语言：zh · 任务：目标说话人语音识别
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
+| [ts_asr_nearfar@firstother-v1-20261104](../../catalog/ts_asr_nearfar.yaml#L2474) | 18.1 | 已登记 | 没有 |
+| [ts_asr_nearfar@firstother-v2-20261105](../../catalog/ts_asr_nearfar.yaml#L2741) | 33.6 | 已登记 | 没有 |
+| [ts_asr_nearfar@firstother-v3-20261105](../../catalog/ts_asr_nearfar.yaml#L3368) | 91.4 | 已登记 | 没有 |
 | [ts_asr_nearfar@listening-review-v1-20261022](../../catalog/listening_review.yaml#L491) | — | 未登记 | 没有 |
 | [ts_asr_nearfar@v1-20261014](../../catalog/ts_asr_nearfar.yaml#L1) | 6.0 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_nearfar/` |
 | [ts_asr_nearfar@v2-20261022](../../catalog/ts_asr_nearfar.yaml#L505) | 6.0 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_nearfar/` |
 | [ts_asr_nearfar@v3-20261022](../../catalog/ts_asr_nearfar.yaml#L1489) | 6.0 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_nearfar/` |
 | [ts_asr_nearfar@v3-hotword-labels-20261102](../../catalog/ts_benchmark_hotword_labels.yaml#L3034) | 6.0 | 已登记 | 没有 |
 
+- `ts_asr_nearfar@firstother-v1-20261104`：“谁先开口”对照：复现一条内部返回的 TS-ASR badcase（45 秒三人同屋交替说话，注册是另一次单独录的 5 秒声纹，会话开头是非目标说话人清晰发言，所有版本都整段转写了先开口的人；把那句挪到末尾或改用会话内语音注册都能认对），原因是两个因素叠加：注册与会话不同录音、匹配信号弱，以及混合开头先是非目标说话人。从 AliMeeting Test 远场通道 0 的人工标注里按完整语句切 25–45 秒窗口，窗口内至少 3 人说话、目标累计说话至少 5 秒，不做混合。firstother：窗口第一个开口的不是目标，且目标第一句之前已有非目标一整句不少于 1.2 秒、被他人重叠不超过 20% 的语句；firsttarget：同样规则下目标先开口，作对照，与 firstother 同一批会议、每个（会议，说话人数）取相同窗口数。每个窗口一对样本：目标在场，和目标缺席（注册取同会议不在窗口里说话的人，没有时取其他会议的人，labels.absent_source）。注册沿用 ts_asr_real@v4-20261022：窗外第一句，后接同一人窗外无他人重叠的语句共存 10 秒，客户端取前 5 秒，前 5 秒他人说话不少于 0.3 秒的在 -enrollmix 划分；注册和开头那句都过声纹核对（头戴麦之和建档），不过的换句或整窗隔离，见 source/<版本>/report.json。注册三种：ef 远场通道 0（同通道）、en 本人头戴麦同样片段（跨通道，接近单独录的声纹）、ed 为 en 加限带（3.5–5 kHz 低通或 4 kHz 以上 −6 dB 高架）后再加 WHAM! 测试集稳态噪声（SNR 15–25 dB），参数逐条记在 metadata.enroll_degradation，劣化后的声纹核对结果在 metadata.enroll_degraded_voice_check；混合一律远场通道 0（mf）。窗口长于 ts_asr_real 的 26 秒上限，评测需整段送入。实际：10 场会议、每类 149 个窗口（firstother 1 窗因开头那句声纹核对不过被隔离，余 148），平均 36–37 秒，3 人 / 4 人窗口约 2:1；窗口须 ≥3 人而会议只有 3–4 人，目标缺席样本绝大多数（285/297）只能取其他会议的人；所有注册的前 5 秒都无他人说话，没有 -enrollmix 划分；劣化注册全部仍通过声纹核对。只用于评测，不进训练。生成脚本 scripts/ts_real/first_speaker.py
+- `ts_asr_nearfar@firstother-v2-20261105`：ts_asr_nearfar@firstother-v1-20261104 的近场混合与声纹相似度版，窗口、注册、劣化参数和记录 ID 与 v1 相同，可逐条对照。内部返回的 TS-ASR badcase 的注册比会话更吵（会话是安静的近讲录音），而 v1 的混合是远场通道 0、带混响，所以新增 en-mn、ed-mn：注册同 en-mf、ed-mf，混合取窗口内各说话人头戴麦之和、电平对齐远场混合；mf 各划分不变。每条记录加 labels.target_sim / impostor_sim / sim_margin / opener_sim：ECAPA（WeSpeaker ECAPA-TDNN512-LM）计算注册前 5 秒与该条混合里各说话人独自说话部分（标注无他人、每段 ≥0.3 秒、合计 ≥1.0 秒）的余弦；impostor 取非目标中的最大值，sim_margin = target − impostor，目标缺席时 target 与 margin 为空。目标在场且 sim_margin ≤ 0.3 的另列入 <划分>-hard（子集，badcase 的 margin 为 0.25）。统计见 source/<版本>/report.json。生成脚本 scripts/ts_real/first_speaker_near.py。只用于评测，不进训练
+- `ts_asr_nearfar@firstother-v3-20261105`：复现内部返回的 TS-ASR badcase（模型整段转写了另一个说话人）的拥挤窗口版。对 firstother-v2 四个版本的错人输出（输出覆盖目标文本不到 60%、40% 以上不是目标说的）挖掘显示，主因不是谁先开口或注册链路，而是目标被重叠多、说得少、注册与目标匹配弱：目标被重叠 <5% 或说话 >20 秒时错人 0%，重叠 ≥0.3 时 12%，目标说话 <10 秒时 10%，target_sim <0.4 时 21%，重叠 ≥0.3 且 target_sim <0.5 时 27–30%（四个版本一致）；非目标先开口 6.2%、目标先开口 3.6%。本版按这些条件取样：AliMeeting Test 与 Eval、AISHELL-4 test 远场通道 0 的人工标注，按完整语句切 25–45 秒窗口（≥3 人、目标 ≥5 秒，不再要求开头有清晰的一句），每个（窗口，目标）分层：crowded 为目标被重叠 ≥30% 且说话 <15 秒，control 为重叠 <15% 且说话 ≥20 秒；同一目标在同一录音里的样本窗口重合不超过较短者的一半（不同目标可以用同一段），非目标先开口与目标先开口交替取以求均衡（labels.first_speaker），control 每个（语料，会议，人数）不超过 crowded 的个数。每个样本一对：目标在场，和目标缺席（同会议不在窗口里的人，没有则取同语料其他会议，labels.absent_source）。注册、声纹核对、-enrollmix 与 ed 劣化同 firstother-v1；AliMeeting 有 ef、en、ed 三种注册，AISHELL-4 没有头戴麦只有 ef，混合都是远场通道 0。每条有 labels.target_sim / impostor_sim / sim_margin / opener_sim（同 v2，在远场混合上算）和 target_overlap_ratio、target_seconds；crowded 正样本中 target_sim <0.5 的另列为 crowded-lowsim-<语料>-<注册>-pos（子集）。AliMeeting Eval（icefall dev）只在部分训练里作验证集，没有进训练数据。统计见 source/<版本>/report.json。生成脚本 scripts/ts_real/first_speaker_crowded.py。只用于评测，不进训练
 - `ts_asr_nearfar@listening-review-v1-20261022`：ts_asr_nearfar@v1-20261014 中被人工听审过的 8 条数据行（父版本数据行原样照抄，录音和音频索引沿用父版本），每行的 metadata.listening_review（Lhotse custom.listening_review）是关于这条记录的听审答案列表：问题、选项、回答、备注、回答日期、听审名称、片段起止和选项含义（resolved_to）。共 8 条答案（listen-1021-vs-1022 8 条），8 条已挂到数据行。证据文件 listening_review.jsonl.gz 含该版本全部答案。只含被听过的记录，不是完整数据版本，不用于训练。脚本 scripts/label_registration/register_listening_review.py
 - `ts_asr_nearfar@v1-20261014`：AliMeeting 测试集窗口的近场与远场对照：同一窗口、同一条注册语句，注册取远场或说话人的头戴麦，混合取远场通道 0 或各头戴麦之和（电平对齐远场混合）。基于 ts_asr_real@v2-20261013 的 AliMeeting 窗口。只用于评测，不进训练
 - `ts_asr_nearfar@v2-20261022`：ts_asr_nearfar@v1-20261014 的修正版，窗口和混合音频不变：每条记录加注册前 3 秒里他人说话的秒数（labels.enroll_others_s），不少于 0.3 秒的记为注册含他人声（enroll_condition = others_speech）并移入同名加 -enrollmix 的划分；生成脚本 scripts/ts_real/enroll_overlap.py
