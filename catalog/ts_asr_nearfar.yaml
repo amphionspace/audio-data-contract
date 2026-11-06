@@ -2728,7 +2728,7 @@
       provenance:
         description: 目标说话人第一个开口（对照）；注册取本人头戴麦（跨通道）；目标在场
   provenance:
-    summary: 目标说话人评测：AliMeeting 近远场对照与谁先开口对照
+    summary: 目标说话人评测：AliMeeting 近远场与谁先开口对照
     status: complete
     synthetic: partial
     description: “谁先开口”对照：复现一条内部返回的 TS-ASR badcase（45 秒三人同屋交替说话，注册是另一次单独录的 5 秒声纹，会话开头是非目标说话人清晰发言，所有版本都整段转写了先开口的人；把那句挪到末尾或改用会话内语音注册都能认对），原因是两个因素叠加：注册与会话不同录音、匹配信号弱，以及混合开头先是非目标说话人。从 AliMeeting Test 远场通道 0 的人工标注里按完整语句切 25–45 秒窗口，窗口内至少 3 人说话、目标累计说话至少 5 秒，不做混合。firstother：窗口第一个开口的不是目标，且目标第一句之前已有非目标一整句不少于 1.2 秒、被他人重叠不超过 20% 的语句；firsttarget：同样规则下目标先开口，作对照，与 firstother 同一批会议、每个（会议，说话人数）取相同窗口数。每个窗口一对样本：目标在场，和目标缺席（注册取同会议不在窗口里说话的人，没有时取其他会议的人，labels.absent_source）。注册沿用 ts_asr_real@v4-20261022：窗外第一句，后接同一人窗外无他人重叠的语句共存 10 秒，客户端取前
@@ -3355,7 +3355,7 @@
       provenance:
         description: 目标说话人第一个开口（对照）；注册取本人头戴麦（干净），混合取窗口内各说话人头戴麦之和（电平对齐远场混合）；目标在场；只含 sim_margin ≤ 0.3 的记录（同名划分的子集）
   provenance:
-    summary: 目标说话人评测：AliMeeting 近远场对照与谁先开口对照
+    summary: 目标说话人评测：AliMeeting 近远场与谁先开口对照
     status: complete
     synthetic: partial
     description: ts_asr_nearfar@firstother-v1-20261104 的近场混合与声纹相似度版，窗口、注册、劣化参数和记录 ID 与 v1 相同，可逐条对照。内部返回的 TS-ASR badcase 的注册比会话更吵（会话是安静的近讲录音），而 v1 的混合是远场通道 0、带混响，所以新增 en-mn、ed-mn：注册同 en-mf、ed-mf，混合取窗口内各说话人头戴麦之和、电平对齐远场混合；mf 各划分不变。每条记录加 labels.target_sim / impostor_sim / sim_margin / opener_sim：ECAPA（WeSpeaker ECAPA-TDNN512-LM）计算注册前 5 秒与该条混合里各说话人独自说话部分（标注无他人、每段 ≥0.3 秒、合计 ≥1.0 秒）的余弦；impostor 取非目标中的最大值，sim_margin = target − impostor，目标缺席时 target 与 margin 为空。目标在场且 sim_margin ≤ 0.3 的另列入 <划分>-hard（子集，badcase 的 margin
@@ -3782,7 +3782,7 @@
       provenance:
         description: AliMeeting Test/Eval 远场通道 0 的 25–45 秒窗口；拥挤且注册与目标独自说话的 ECAPA 相似度 <0.5（拥挤划分的子集）；注册取本人头戴麦（跨通道）；目标在场
   provenance:
-    summary: 目标说话人评测：AliMeeting 近远场对照与谁先开口对照
+    summary: 目标说话人评测：AliMeeting 近远场与谁先开口对照
     status: complete
     synthetic: partial
     description: 复现内部返回的 TS-ASR badcase（模型整段转写了另一个说话人）的拥挤窗口版。对 firstother-v2 四个版本的错人输出（输出覆盖目标文本不到 60%、40% 以上不是目标说的）挖掘显示，主因不是谁先开口或注册链路，而是目标被重叠多、说得少、注册与目标匹配弱：目标被重叠 <5% 或说话 >20 秒时错人 0%，重叠 ≥0.3 时 12%，目标说话 <10 秒时 10%，target_sim <0.4 时 21%，重叠 ≥0.3 且 target_sim <0.5 时 27–30%（四个版本一致）；非目标先开口 6.2%、目标先开口 3.6%。本版按这些条件取样：AliMeeting Test 与 Eval、AISHELL-4 test 远场通道 0 的人工标注，按完整语句切 25–45 秒窗口（≥3 人、目标 ≥5 秒，不再要求开头有清晰的一句），每个（窗口，目标）分层：crowded 为目标被重叠 ≥30% 且说话 <15 秒，control 为重叠 <15% 且说话 ≥20 秒；同一目标在同一录音里的样本窗口重合不超过较短者的一半（不同目标可以用同一段），非目标先开口与目标先开口交替取以求均衡（labels.first_speaker），control
