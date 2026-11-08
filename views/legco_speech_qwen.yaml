@@ -1,0 +1,83 @@
+  - schema_version: dataset-view/1.0
+    view_id: legco_speech/qwen3-asr-full
+    version: qwen3-asr-full-v1-20261103
+    source:
+      dataset_id: legco_speech
+      version: icefall-20260908
+    result:
+      dataset_id: legco_speech
+      version: qwen3-asr-full-v1-20261103
+    materialization: full
+    lineage_status: exact
+    transforms:
+      - name: transcribed-rows
+        version: v1
+        kind: filter
+        writes:
+          - $membership
+        parameters:
+          kept: rows with a Qwen transcript; corrupt Ogg files neither the service nor ffmpeg decode are left out
+          input_rows: 9445794
+          output_rows: 9445418
+      - name: qwen3-asr-transcript
+        version: v1-20261103
+        kind: annotate
+        writes:
+          - metadata.qwen_asr
+        parameters:
+          model: Qwen/Qwen3-ASR-1.7B (shared vLLM service)
+          request:
+            temperature: 0
+            max_tokens: 2048
+            repetition_penalty: 1.1
+            to_language: not sent (language auto)
+          audio: whole Ogg Opus segment file as sent; ffmpeg-decoded 16 kHz mono FLAC when the service cannot decode it
+          scoring:
+            text_normalization: speechio-textnorm-yue
+            unit: one token per CJK character, punctuation dropped
+          tool: scripts/legco_qwen/qwen_infer.py, scripts/legco_qwen/score.py, scripts/legco_qwen/rule_v2.py
+          label_inputs:
+            - file: qwen.jsonl
+              sha256: 3d8035bc9c9a913a34dfb369c11307140b6ed3124e3041f8b8cabbc55f90931b
+            - file: qwen-scored.jsonl
+              sha256: 868fde4a30c6ac6f6d75ef13fa29fb80b4424ff548c7985ade36bfe2a27f5032
+            - file: rule-v2.jsonl
+              sha256: 545f1f699060115ba8df1f970b0daeec7ae58fed6812f8d005e5246c95feda65
+          corpus_cer: 8.9
+          cer_share_rows:
+            '0': 1668853
+            (0,5): 1532895
+            '[5,10)': 2641262
+            '[10,20)': 2739402
+            '[20,30)': 552906
+            '[30,50)': 136836
+            '[50,100)': 65100
+            '>=100': 86681
+            label empty after TextNorm: 21483
+    provenance:
+      registered_at: '2026-11-08'
+  - schema_version: dataset-view/1.0
+    view_id: legco_speech/qwen3-asr-kept
+    version: qwen3-asr-v1-20261103
+    source:
+      dataset_id: legco_speech
+      version: qwen3-asr-full-v1-20261103
+    result:
+      dataset_id: legco_speech
+      version: qwen3-asr-v1-20261103
+    materialization: full
+    lineage_status: exact
+    transforms:
+      - name: keep-rule-v2
+        version: v1
+        kind: filter
+        writes:
+          - $membership
+        parameters:
+          rule: label non-empty after TextNorm and (duration < 2 s, not judged; or CER vs Qwen < 30 % after unifying 噉->咁 and 呢->咧 and not counting insertions at the start or end of the hypothesis)
+          tool: scripts/legco_qwen/rule_v2.py
+          listening_review: rejected rows read as text before and after the rule change (run README)
+          input_rows: 9445418
+          output_rows: 9379728
+    provenance:
+      registered_at: '2026-11-08'
