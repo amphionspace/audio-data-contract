@@ -1,4 +1,5 @@
 import importlib.util
+import io
 from pathlib import Path
 
 SCRIPTS = Path(__file__).resolve().parents[1] / "scripts"
@@ -87,3 +88,168 @@ def test_ledger_lists_only_versions_whose_directories_are_verified():
             "requires": ["T/ann/run1", "T/datasets/t/v0.1"],
         },
     }
+
+
+class FakeClient:
+    """In-memory COS: just the calls the mirror makes."""
+
+    def __init__(self):
+        self.objects, self.uploads = {}, {}
+
+    def create_multipart_upload(self, Bucket, Key):
+        self.uploads[Key] = {}
+        return {"UploadId": Key}
+
+    def upload_part(self, Bucket, Key, Body, PartNumber, UploadId, EnableMD5=False):
+        self.uploads[Key][PartNumber] = bytes(Body)
+        return {"ETag": str(PartNumber)}
+
+    def complete_multipart_upload(self, Bucket, Key, UploadId, MultipartUpload):
+        parts = self.uploads.pop(Key)
+        assert [p["PartNumber"] for p in MultipartUpload["Part"]] == sorted(parts)
+        self.objects[Key] = b"".join(parts[n] for n in sorted(parts))
+
+    def abort_multipart_upload(self, Bucket, Key, UploadId):
+        self.uploads.pop(Key, None)
+
+    def put_object(self, Bucket, Body, Key, EnableMD5=False):
+        self.objects[Key] = Body
+
+    def get_object(self, Bucket, Key):
+        class Body:
+            def get_raw_stream(self_inner):
+                return io.BytesIO(self.objects[Key])
+        return {"Body": Body()}
+
+    def list_objects(self, Bucket, Prefix, Marker="", MaxKeys=1000):
+        keys = sorted(k for k in self.objects if k.startswith(Prefix) and k > Marker)
+        return {"Contents": [{"Key": k, "Size": len(self.objects[k])} for k in keys],
+                "IsTruncated": "false"}
+
+
+def fake_mirror(client, **overrides):
+    import threading
+    from concurrent.futures import ThreadPoolExecutor
+    from types import SimpleNamespace
+
+    args = SimpleNamespace(pack_below=1000, shard_size=3000, part_size=1024, part_inflight=2,
+                           data_root="", **overrides)
+    backend = SimpleNamespace(client=client, remote=SimpleNamespace(bucket="b"),
+                              head=lambda key: SimpleNamespace(size=len(client.objects[key])))
+    m = object.__new__(mirror.Mirror)
+    m.args, m.backend = args, lambda: backend
+    m.remote = backend.remote
+    m.lock, m.uploaded, m.bytes = threading.Lock(), 0, 0
+    m.parts, m.shards, m.pool = (ThreadPoolExecutor(4) for _ in range(3))
+    m.shard_slots = threading.BoundedSemaphore(4)
+    m.slots = threading.BoundedSemaphore(4)
+    return m
+
+
+def test_small_files_are_streamed_into_tar_shards_once(tmp_path):
+    import gzip
+    import io
+    import json
+    import tarfile
+
+    for i in range(10):
+        (tmp_path / "d" / f"s{i % 2}").mkdir(parents=True, exist_ok=True)
+        (tmp_path / "d" / f"s{i % 2}" / f"{i}.wav").write_bytes(bytes([i]) * 700)
+    (tmp_path / "d" / "big.bin").write_bytes(b"x" * 2000)  # not small: uploaded alone
+    client = FakeClient()
+    m = fake_mirror(client)
+    pushed = []
+    def push(path, key):
+        pushed.append(key)
+        client.objects[key] = path.read_bytes()
+        return "uploaded", None
+
+    m.push = push
+    m.args.data_root = str(tmp_path)
+
+    first = m.unit("d", "p/d/", [])
+    second = m.unit("d", "p/d/", [])
+
+    assert pushed == ["p/d/big.bin"]
+    assert first["ok"] and first["packed"] == 10 and first["shards"] == 2
+    assert second["ok"] and second["packed"] == 0 and second["present"] == 11
+    tars = sorted(k for k in client.objects if k.endswith(".tar"))
+    assert len(tars) == first["shards"]
+    seen = {}
+    for name in tars:
+        index = json.loads(gzip.decompress(client.objects[name[:-4] + ".json.gz"]))
+        with tarfile.open(fileobj=io.BytesIO(client.objects[name])) as tar:
+            assert [m_.name for m_ in tar.getmembers()] == [k for k, _ in index["members"]]
+            seen.update({m_.name: tar.extractfile(m_).read() for m_ in tar.getmembers()})
+        assert index["size"] == len(client.objects[name])
+    assert seen == {f"s{i % 2}/{i}.wav": bytes([i]) * 700 for i in range(10)}
+    assert not any("p/d/s" in k for k in client.objects)  # nothing small went up on its own
+
+
+def test_failed_shard_is_aborted_and_counted(tmp_path, monkeypatch):
+    (tmp_path / "d").mkdir()
+    (tmp_path / "d" / "a.wav").write_bytes(b"a" * 100)
+    client = FakeClient()
+    client.upload_part = lambda **kw: (_ for _ in ()).throw(OSError("network"))
+    m = fake_mirror(client)
+    m.args.data_root = str(tmp_path)
+    monkeypatch.setattr(mirror.time, "sleep", lambda s: None)
+
+    counts = m.unit("d", "p/d/", [])
+
+    assert not counts["ok"] and counts["failed"] == 1 and "network" in counts["errors"][0]
+    assert not client.uploads and not client.objects
+
+
+def test_unpack_streams_shards_back_and_skips_files_already_there(tmp_path):
+    src = tmp_path / "src" / "d"
+    for i in range(6):
+        (src / f"s{i % 2}").mkdir(parents=True, exist_ok=True)
+        (src / f"s{i % 2}" / f"{i}.wav").write_bytes(bytes([i]) * 700)
+    client = FakeClient()
+    m = fake_mirror(client)
+    m.args.data_root = str(tmp_path / "src")
+    assert m.unit("d", "p/d/", [])["packed"] == 6
+    client.get_object_raw = client.get_object
+    backend = m.backend()
+    out = tmp_path / "out"
+    (out / "s0").mkdir(parents=True)
+    (out / "s0" / "0.wav").write_bytes(bytes([0]) * 700)  # already restored: left alone
+    marker = (out / "s0" / "0.wav").stat().st_mtime_ns
+
+    files, errors = mirror.unpack_shards(backend, "p/d/", out, workers=2)
+
+    assert (files, errors) == (6, [])
+    assert {p.relative_to(out).as_posix(): p.read_bytes() for p in out.rglob("*.wav")} == {
+        f"s{i % 2}/{i}.wav": bytes([i]) * 700 for i in range(6)}
+    assert (out / "s0" / "0.wav").stat().st_mtime_ns == marker
+    only, problems = mirror.unpack_shards(backend, "p/d/", tmp_path / "part", only=["s1/"])
+    assert problems == []
+    assert only == 3 and sorted(p.name for p in (tmp_path / "part").rglob("*.wav")) == ["1.wav", "3.wav", "5.wav"]
+
+
+def test_unpack_reports_a_shard_that_disagrees_with_its_index(tmp_path):
+    (tmp_path / "d").mkdir()
+    (tmp_path / "d" / "a.wav").write_bytes(b"a" * 100)
+    client = FakeClient()
+    m = fake_mirror(client)
+    m.args.data_root = str(tmp_path)
+    m.unit("d", "p/d/", [])
+    tar_key = next(k for k in client.objects if k.endswith(".tar"))
+    index_key = tar_key[:-4] + ".json.gz"
+    import gzip
+    import json
+    index = json.loads(gzip.decompress(client.objects[index_key]))
+    index["members"].append(["missing.wav", 5])
+    client.objects[index_key] = gzip.compress(json.dumps(index).encode())
+
+    files, errors = mirror.unpack_shards(m.backend(), "p/d/", tmp_path / "out")
+
+    assert files == 1 and "1 of 2" in errors[0]
+
+
+def test_pushing_small_files_one_by_one_needs_an_explicit_override(capsys):
+    args = mirror.argparse.Namespace(pack_below=0, allow_small_files=False)
+
+    assert mirror.push(args) == 2
+    assert "tar shards" in capsys.readouterr().err

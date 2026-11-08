@@ -27,6 +27,12 @@ amphion-audio-backup-1373259071:audio-data-contract/<本机 /workspace/data/ 下
 
 每轮结束后隔一天再开始下一轮，新登记的数据在下一轮补传。已登记版本的文件不会原地修改，所以路径和大小都相同的文件不再读取内容比对。
 
+### 小文件先打包再上传
+
+小于 8 MiB 的文件不逐个上传：逐个请求会让带宽用不满，yodas 一类上百万个 100 KB 左右的 wav 只有约 25 MiB/s。`push` 把 COS 上缺的小文件按路径顺序流式写成约 4 GiB 的 tar，边写边用 COS 分片上传（每片 32 MiB，只在内存里），不在本机落盘。每个分片在 `<目录>.packed/` 下有 `<id>.tar` 和 `<id>.json.gz`，后者列出成员路径和大小，在 tar 传完后才写入；成员以索引为准判断是否已在 COS 上，所以重跑不会重复打包。大于 8 MiB 的文件照旧单独上传。
+
+`--pack-below 0` 会被拒绝，需要同时加 `--allow-small-files`。2026-11-07 之前已逐个上传的目录（yodas_de、yodas_es、yodas_ko 等）保持原样，不重传。
+
 首轮从小目录开始传。本机上传到 COS（广州）约 60 MiB/s，2026-11-04 实测增加并发也没有更快，因此首轮要传两周左右。上传会占满出口带宽，需要时用 `WORKERS` 调低并发。
 
 ## 记录与日志
@@ -55,8 +61,18 @@ setsid nohup bash /workspace/data/cos-mirror/mirror.sh \
 
 ## 拉取
 
+单独上传的文件用 ab 拉取：
+
 ```bash
 ab pull amphion-audio-backup-1373259071:audio-data-contract/datasets/emilia2/ /data/datasets/emilia2/
 ```
+
+打包的小文件用 `unpack` 流式读取分片并解压，不先把 tar 存到本机；已有同名同大小的文件会跳过，分片和索引不一致时返回非零：
+
+```bash
+$AB_PY scripts/cos_mirror.py unpack datasets/emilia2 --target /data/datasets/emilia2
+```
+
+一个目录里可能两种都有，两条命令都要跑。完整规则和命令见 [skills/cos-pack-sync/SKILL.md](../../skills/cos-pack-sync/SKILL.md)。
 
 拉到 `<目标>/` 下保持同样的相对路径后，目录结构和本机 `/workspace/data/` 一致。Lhotse 清单和音频索引里写的是本机绝对路径（`/workspace/data/...`），换机器使用时把这个前缀换成 `<目标>/`；`roots.json` 中的根目录同样替换。

@@ -1,22 +1,36 @@
 #!/usr/bin/env python3
 """Keep a COS copy of every registered data directory, and record what is verified.
 
-  plan  (audio-data-contract env): registered directories -> plan.json
-  push  (AmphionBucket venv):      compare each directory with COS by path and
-        size, upload what is missing with ab's own push_one (never overwrites),
-        then write the ledger of verified directories and dataset versions.
+  plan   (audio-data-contract env): registered directories -> plan.json
+  push   (AmphionBucket venv):      compare each directory with COS by path and
+         size, upload what is missing with ab's own push_one (never overwrites),
+         then write the ledger of verified directories and dataset versions.
+  unpack (AmphionBucket venv):      stream a directory's tar shards back from COS
+         and extract them (the counterpart of the packing below).
 
 COS keys mirror paths under the data root, e.g. /workspace/data/datasets/x/a.wav
 -> <prefix>datasets/x/a.wav. Registered versions are immutable, so a file that
 already exists with the same size is not read again; ab compares content only
 when it uploads. Nothing on COS is deleted or overwritten.
+
+Files smaller than --pack-below are not uploaded one by one (millions of tiny
+requests): the missing ones are streamed into tar shards of about --shard-size
+and uploaded as a COS multipart upload, cut into --part-size parts held in
+memory. Nothing is staged on disk. A shard <dest minus "/">.packed/<id>.tar is
+listed by <id>.json.gz (member keys and sizes), which is written after the
+tar is complete; a member counts as present when an index lists it. To restore,
+read the index, then extract the tar (tar x) into the directory.
 """
 
 import argparse
+import gzip
+import hashlib
+import io
 import json
 import os
 import re
 import sys
+import tarfile
 import threading
 import time
 from concurrent.futures import ThreadPoolExecutor
@@ -153,6 +167,165 @@ def merge(local, remote):
         other = next(remote, None)
 
 
+# -------------------------------------------------------------------- packing
+
+
+def packed_prefix(dest):
+    """COS directory of the tar shards of a mirrored directory (a sibling of it)."""
+    return dest.rstrip("/") + ".packed/"
+
+
+def load_packed(backend, dest):
+    """{key relative to dest: size} of every file already inside a shard."""
+    prefix, members, marker = packed_prefix(dest), {}, ""
+    while True:
+        response = backend.client.list_objects(
+            Bucket=backend.remote.bucket, Prefix=prefix, Marker=marker, MaxKeys=1000)
+        for item in response.get("Contents", []):
+            if item["Key"].endswith(".json.gz"):
+                body = backend.client.get_object(Bucket=backend.remote.bucket, Key=item["Key"])
+                index = json.loads(gzip.decompress(body["Body"].get_raw_stream().read()))
+                members.update((key, size) for key, size in index["members"])
+        if str(response.get("IsTruncated", "false")).lower() != "true":
+            return members
+        marker = response["NextMarker"]
+
+
+class PartWriter(io.RawIOBase):
+    """Write-only file that uploads what is written as a COS multipart upload.
+
+    Data is kept in memory in parts of part_size; at most `inflight` parts are
+    held or uploading at once. finish() completes the object and checks its size.
+    """
+
+    def __init__(self, mirror, key):
+        self.mirror, self.key = mirror, key
+        self.backend = mirror.backend()
+        self.bucket = self.backend.remote.bucket
+        self.upload_id = self.backend.client.create_multipart_upload(
+            Bucket=self.bucket, Key=key)["UploadId"]
+        self.buffer, self.size, self.parts = bytearray(), 0, []
+        self.inflight = threading.BoundedSemaphore(mirror.args.part_inflight)
+
+    def writable(self):
+        return True
+
+    def write(self, data):
+        self.buffer += data
+        self.size += len(data)
+        while len(self.buffer) >= self.mirror.args.part_size:
+            self.send(self.mirror.args.part_size)
+        return len(data)
+
+    def send(self, length):
+        body = bytes(self.buffer[:length])
+        del self.buffer[:length]
+        number = len(self.parts) + 1
+        self.inflight.acquire()
+        future = self.mirror.parts.submit(self.upload_part, number, body)
+        future.add_done_callback(lambda _: self.inflight.release())
+        self.parts.append(future)
+
+    def upload_part(self, number, body):
+        for attempt in range(3):
+            try:
+                response = self.mirror.backend().client.upload_part(
+                    Bucket=self.bucket, Key=self.key, Body=body, PartNumber=number,
+                    UploadId=self.upload_id, EnableMD5=True)
+                return {"PartNumber": number, "ETag": response["ETag"]}
+            except Exception:
+                if attempt == 2:
+                    raise
+                time.sleep(5 * (attempt + 1))
+
+    def finish(self):
+        if self.buffer or not self.parts:
+            self.send(len(self.buffer))
+        done = [future.result() for future in self.parts]
+        self.backend.client.complete_multipart_upload(
+            Bucket=self.bucket, Key=self.key, UploadId=self.upload_id,
+            MultipartUpload={"Part": done})
+        info = self.backend.head(self.key)
+        if info is None or info.size != self.size:
+            raise RuntimeError(f"{self.key}: COS size {info and info.size} != written {self.size}")
+
+    def abort(self):
+        for future in self.parts:
+            future.cancel()
+        try:
+            self.backend.client.abort_multipart_upload(
+                Bucket=self.bucket, Key=self.key, UploadId=self.upload_id)
+        except Exception as exc:  # noqa: BLE001 - the shard already failed; do not mask that
+            print(f"could not abort multipart upload {self.key} ({self.upload_id}): {exc}",
+                  file=sys.stderr, flush=True)
+
+
+def shard_name(dest, first):
+    return f"{packed_prefix(dest)}{hashlib.sha1(first.encode()).hexdigest()[:12]}"
+
+
+def connect(args):
+    from amphion_bucket.cli import make_backend
+    from amphion_bucket.config import load_remotes
+
+    return make_backend(load_remotes()[args.bucket])
+
+
+def unpack_shards(backend, dest, target, workers=8, only=()):
+    """Stream every tar shard of a mirrored directory into target; return (files, errors).
+
+    Nothing is staged on disk: each shard is read from COS as a stream and
+    extracted member by member. Files already in target with the right size are
+    skipped; every member is checked against the shard's index.
+    """
+    bucket = backend.remote.bucket
+    prefix, indexes, marker = packed_prefix(dest), [], ""
+    while True:
+        response = backend.client.list_objects(Bucket=bucket, Prefix=prefix, Marker=marker, MaxKeys=1000)
+        indexes += [i["Key"] for i in response.get("Contents", []) if i["Key"].endswith(".json.gz")]
+        if str(response.get("IsTruncated", "false")).lower() != "true":
+            break
+        marker = response["NextMarker"]
+    target = os.path.abspath(target)
+
+    def one(index_key):
+        body = backend.client.get_object(Bucket=bucket, Key=index_key)["Body"].get_raw_stream()
+        index = json.loads(gzip.decompress(body.read()))
+        wanted = {key: size for key, size in index["members"]
+                  if not only or any(key.startswith(sub) for sub in only)}
+        if not wanted:
+            return 0, None
+        stream = backend.client.get_object(
+            Bucket=bucket, Key=index_key.rsplit("/", 1)[0] + "/" + index["tar"])["Body"].get_raw_stream()
+        got = 0
+        try:
+            with tarfile.open(fileobj=stream, mode="r|") as tar:
+                for member in tar:
+                    if member.name not in wanted:
+                        continue
+                    if member.size != wanted[member.name]:
+                        raise RuntimeError(f"{member.name}: size {member.size} != index {wanted[member.name]}")
+                    path = os.path.join(target, member.name)
+                    if not (os.path.isfile(path) and os.path.getsize(path) == member.size):
+                        # tarfile creates parents without exist_ok: shards racing in one directory fail
+                        os.makedirs(os.path.dirname(path), exist_ok=True)
+                        tar.extract(member, target, filter="data")
+                    got += 1
+        except Exception as exc:  # noqa: BLE001 - report the shard, keep the others going
+            return got, f"{index['tar']}: {type(exc).__name__}: {exc}"
+        if got != len(wanted):
+            return got, f"{index['tar']}: {got} of {len(wanted)} indexed files found"
+        return got, None
+
+    files, errors = 0, []
+    with ThreadPoolExecutor(workers) as pool:
+        for got, error in pool.map(one, sorted(indexes)):
+            files += got
+            if error:
+                errors.append(error)
+    return files, errors
+
+
 class Mirror:
     def __init__(self, args):
         from amphion_bucket import transfer
@@ -177,6 +350,9 @@ class Mirror:
         self.slots = threading.BoundedSemaphore(args.workers * 8)  # queued uploads
         self.lock = threading.Lock()
         self.uploaded = self.bytes = 0
+        self.parts = ThreadPoolExecutor(args.part_workers)  # multipart parts of all shards
+        self.shards = ThreadPoolExecutor(args.packers)
+        self.shard_slots = threading.BoundedSemaphore(args.packers * 2)  # queued shards
 
     def backend(self):
         if not hasattr(self.local, "backend"):
@@ -207,6 +383,36 @@ class Mirror:
                 pass
             return ("same" if action == "相同，跳过" else "uploaded"), None
 
+    def pack_shard(self, dest, members):
+        """Stream files into one tar shard on COS; return (bytes sent, error or None)."""
+        name = shard_name(dest, members[0][0])
+        writer = PartWriter(self, name + ".tar")
+        try:
+            with tarfile.open(fileobj=writer, mode="w|", format=tarfile.PAX_FORMAT) as tar:
+                for key, size, path in members:
+                    info = tar.gettarinfo(path, arcname=key)
+                    info.uid = info.gid = 0
+                    info.uname = info.gname = ""
+                    if info.size != size:
+                        raise RuntimeError(f"{path} changed size while scanning")
+                    with open(path, "rb") as handle:
+                        tar.addfile(info, handle)
+            writer.finish()
+        except Exception as exc:  # noqa: BLE001 - one bad shard is reported, not fatal
+            writer.abort()
+            return 0, f"{name}.tar: {type(exc).__name__}: {exc}"
+        # The index goes last: a tar without one is not trusted and is packed again.
+        index = gzip.compress(json.dumps(
+            {"tar": name.rsplit("/", 1)[1] + ".tar", "size": writer.size,
+             "members": [[key, size] for key, size, _ in members]},
+            ensure_ascii=False).encode())
+        try:
+            self.backend().client.put_object(
+                Bucket=self.remote.bucket, Body=index, Key=name + ".json.gz", EnableMD5=True)
+        except Exception as exc:  # noqa: BLE001
+            return 0, f"{name}.json.gz: {type(exc).__name__}: {exc}"
+        return writer.size, None
+
     def unit(self, rel, dest, only):
         """Compare one directory with COS; upload missing files; return its summary."""
         root = os.path.join(self.args.data_root, rel)
@@ -230,9 +436,38 @@ class Mirror:
                 pending[0] -= 1
                 done.notify_all()
 
+        def finish_shard(future, members):
+            sent, error = future.result()
+            self.shard_slots.release()
+            with done:
+                if error:
+                    counts["failed"] += len(members)
+                    if len(errors) < 20:
+                        errors.append(error)
+                else:
+                    counts["packed"] += len(members)
+                    counts["shards"] += 1
+                    with self.lock:
+                        self.uploaded += len(members)
+                        self.bytes += sent
+                pending[0] -= 1
+                done.notify_all()
+
+        def submit_shard(members):
+            self.shard_slots.acquire()
+            with done:
+                pending[0] += 1
+            future = self.shards.submit(self.pack_shard, dest, members)
+            future.add_done_callback(lambda f, m=members: finish_shard(f, m))
+
+        small = self.args.pack_below
+        packed = load_packed(self.backend(), dest) if small else {}
+        counts.update(packed=0, shards=0)
+        members, member_bytes = [], 0
         prefixes = [f"{dest}{sub}" for sub in only] if only else [dest]
         roots = [os.path.join(root, sub.rstrip("/")) for sub in only] if only else [root]
         for prefix, base in zip(prefixes, roots):
+            offset = prefix[len(dest):]  # shard members are named relative to dest
             pairs = merge(local_files(base, skipped), remote_files(self.backend(), prefix))
             for key, size, path, remote_size in pairs:
                 if path is None:
@@ -243,11 +478,23 @@ class Mirror:
                 if remote_size == size:
                     counts["present"] += 1
                     continue
+                if remote_size is None and size < small:
+                    if packed.get(offset + key) == size:
+                        counts["present"] += 1
+                        continue
+                    members.append((offset + key, size, path))
+                    member_bytes += size
+                    if member_bytes >= self.args.shard_size:
+                        submit_shard(members)
+                        members, member_bytes = [], 0
+                    continue
                 self.slots.acquire()
                 with done:
                     pending[0] += 1
                 future = self.pool.submit(self.push, Path(path), prefix + key)
                 future.add_done_callback(lambda f, s=size: finish(f, s))
+        if members:
+            submit_shard(members)
         with done:
             done.wait_for(lambda: not pending[0])
         counts["symlinks"] = len(skipped)
@@ -317,6 +564,8 @@ class Mirror:
             list(scanners.map(one, units))
         stop.set()
         self.pool.shutdown()
+        self.shards.shutdown()
+        self.parts.shutdown()
 
 
 def destination(plan, rel, prefix):
@@ -360,6 +609,10 @@ def ledger(plan, state, bucket, prefix):
 
 
 def push(args):
+    if args.pack_below <= 0 and not args.allow_small_files:
+        print("refusing --pack-below 0: small files must be packed into tar shards, "
+              "not uploaded one by one (--allow-small-files overrides)", file=sys.stderr)
+        return 2
     plan_data = json.loads(Path(args.plan).read_text(encoding="utf-8"))
     args.data_root = plan_data["data_root"]
     state = json.loads(Path(args.state).read_text()) if Path(args.state).exists() else {}
@@ -369,6 +622,18 @@ def push(args):
            or any(not part["ok"] for part in entry.get("parts", {}).values())]
     print(f"{time.strftime('%F %T')} done; {len(bad)} directories with problems", flush=True)
     return 1 if bad else 0
+
+
+def unpack(args):
+    dest = args.dest or f"{args.prefix}{args.rel.strip('/')}/"
+    target = args.target or os.path.join(args.data_root, args.rel.strip("/"))
+    only = [o if o.endswith("/") else o + "/" for o in args.only]
+    files, errors = unpack_shards(connect(args), dest, target, args.workers, only)
+    print(f"{time.strftime('%F %T')} unpacked {files} files into {target}; {len(errors)} shard errors",
+          flush=True)
+    for error in errors[:20]:
+        print(f"  {error}", file=sys.stderr)
+    return 1 if errors else 0
 
 
 def main(argv=None):
@@ -392,9 +657,29 @@ def main(argv=None):
                    help="limit to these paths under the data root")
     p.add_argument("--workers", type=int, default=128, help="parallel file uploads")
     p.add_argument("--scanners", type=int, default=8, help="directories compared at once")
+    p.add_argument("--pack-below", type=int, default=8 * 2**20,
+                   help="missing files smaller than this many bytes go into tar shards (0: never)")
+    p.add_argument("--shard-size", type=int, default=4 * 2**30, help="bytes of files per tar shard")
+    p.add_argument("--part-size", type=int, default=32 * 2**20, help="multipart part size")
+    p.add_argument("--part-inflight", type=int, default=4, help="parts held in memory per shard")
+    p.add_argument("--packers", type=int, default=16, help="tar shards streamed at once")
+    p.add_argument("--part-workers", type=int, default=64, help="parallel part uploads")
+    p.add_argument("--allow-small-files", action="store_true",
+                   help="with --pack-below 0: upload small files one by one (almost never right)")
+    p = sub.add_parser("unpack", help="stream a directory's tar shards from COS and extract them")
+    p.add_argument("rel", help="directory under the data root, e.g. datasets/yodas_es/source")
+    p.add_argument("--target", help="extract here (default: <data root>/<rel>)")
+    p.add_argument("--dest", help="COS directory when it is not <prefix><rel>/ (known mirrors)")
+    p.add_argument("--only", action="append", default=[], help="only files under these subdirectories")
+    p.add_argument("--data-root", default="/workspace/data")
+    p.add_argument("--bucket", default="amphion-audio-backup-1373259071")
+    p.add_argument("--prefix", default="audio-data-contract/")
+    p.add_argument("--workers", type=int, default=8, help="shards streamed at once")
     args = parser.parse_args(argv)
     if args.command == "plan":
         return plan(args)
+    if args.command == "unpack":
+        return unpack(args)
     return push(args)
 
 
