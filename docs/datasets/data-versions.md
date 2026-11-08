@@ -1131,9 +1131,11 @@ GRPO 热词挖掘候选（未背过的中文热词提示，含近音易混词）
 |---|---:|---|---|
 | [legco_speech@icefall-20260908](../../catalog/icefall_runtime.yaml#L2266) | 20,227.2 | 已登记 | 快照 20260914 |
 | [legco_speech@legacy-20260804](../../catalog/icefall_base.yaml#L1866) | 20,227.2 | 已登记 | 快照 20260914 |
-| [legco_speech@qwen3-asr-v1-20261103](../../catalog/legco_speech_qwen.yaml#L2) | — | 未登记 | 没有 |
+| [legco_speech@qwen3-asr-full-v1-20261103](../../catalog/legco_speech_qwen.yaml#L72) | 20,226.4 | 已登记 | 没有 |
+| [legco_speech@qwen3-asr-v1-20261103](../../catalog/legco_speech_qwen.yaml#L1) | 20,153.0 | 已登记 | 没有 |
 
-- `legco_speech@qwen3-asr-v1-20261103`：LegCo-Speech（香港立法会）粤语训练集（9,445,794 段 / 20,227.2 h），原标注是繁体口语粤语、带语气词，看起来是机器转写。 用共享的 Qwen3-ASR-1.7B 逐段转写整段音频文件，按粤语版 SpeechIO TextNorm 算与原标注的字错误率；试跑 2,000 条整体 8.62%。 注意：清单里每条 supervision 的 start 都是 0，但语音在文件里偏后，只截 [0, duration] 转写时 CER 升到 11.75%（开头混进前一句、结尾被截掉），按 supervision 截音频训练会有同样的错位。 目前只记录转写和错误率，不删数据；保留规则在看过被拒样本后再定
+- `legco_speech@qwen3-asr-full-v1-20261103`：legco_speech@icefall-20260908 里 LegCo-Speech（香港立法会）粤语训练集的全部可转写条目（9,445,418 条 / 20226.4 h），原标注（繁体口语粤语，像机器转写）一字不改；每条加 custom.qwen_asr：共享的 Qwen3-ASR-1.7B 对整段文件的转写（hypothesis）、语种（language）、与原标注的字错误率（SpeechIO TextNorm，ref_tokens / hyp_tokens / errors / cer 百分数），以及保留规则 v2 的调整后错误数 errors_v2 和判定 keep_reason。整体 CER 8.90 %，Qwen 在 WSYue-ASR-eval short 上自身 CER 为 6.2。源 9,445,794 条里 376 条（0.8 h）是解不开的坏 Ogg 文件，没有转写，不在本版本内。清单里每条 supervision 的 start 都是 0，但段文件比 duration 长 0–1 s、语音偏后：Qwen 转写整段文件，按 supervision 截音频训练会有错位。同声传译段的原标注是中文译文、音频是英文，这类段多被规则丢弃。录音沿用父版本，不复制音频。脚本 scripts/legco_qwen/
+- `legco_speech@qwen3-asr-v1-20261103`：LegCo-Speech 粤语训练集（legco_speech@icefall-20260908）用 Qwen3-ASR-1.7B 逐条核对后保留的部分：9,379,728 条 / 20153.0 h（占可转写时长的 99.6 %）。规则 v2（被拒样本抽查后定）：两边统一 噉/咁、呢/咧，Qwen 开头结尾多出的邻段字不计，不到 2 s 的段不判、保留，其余调整后 CER < 30 % 保留；原标注规范化后为空的纯语气词段不保留。原标注不改，不拿 Qwen 的文字替换。每行的 custom.qwen_asr 与 legco_speech@qwen3-asr-full-v1-20261103 中相同；被去掉的条目和全部转写见该版本。清单里每条 supervision 的 start 都是 0，但段文件比 duration 长 0–1 s、语音偏后：Qwen 转写整段文件，按 supervision 截音频训练会有错位。同声传译段的原标注是中文译文、音频是英文，这类段多被规则丢弃。录音沿用父版本，不复制音频。脚本 scripts/legco_qwen/
 - 含派生版本（与源数据可能重叠）
 
 ### m3ed_ser
