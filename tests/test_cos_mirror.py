@@ -115,7 +115,11 @@ class FakeClient:
     def put_object(self, Bucket, Body, Key, EnableMD5=False):
         self.objects[Key] = Body
 
+    get_calls = 0
+
     def get_object(self, Bucket, Key):
+        self.get_calls += 1
+
         class Body:
             def get_raw_stream(self_inner):
                 return io.BytesIO(self.objects[Key])
@@ -215,14 +219,16 @@ def test_unpack_streams_shards_back_and_skips_files_already_there(tmp_path):
     out = tmp_path / "out"
     (out / "s0").mkdir(parents=True)
     (out / "s0" / "0.wav").write_bytes(bytes([0]) * 700)  # already restored: left alone
-    marker = (out / "s0" / "0.wav").stat().st_mtime_ns
 
     files, errors = mirror.unpack_shards(backend, "p/d/", out, workers=2)
 
     assert (files, errors) == (6, [])
     assert {p.relative_to(out).as_posix(): p.read_bytes() for p in out.rglob("*.wav")} == {
         f"s{i % 2}/{i}.wav": bytes([i]) * 700 for i in range(6)}
-    assert (out / "s0" / "0.wav").stat().st_mtime_ns == marker
+    reads = client.get_calls
+    again = mirror.unpack_shards(backend, "p/d/", out, workers=2)
+    assert again == (6, []) and client.get_calls - reads == len(
+        [k for k in client.objects if k.endswith(".json.gz")])  # indexes only: no shard is downloaded again
     only, problems = mirror.unpack_shards(backend, "p/d/", tmp_path / "part", only=["s1/"])
     assert problems == []
     assert only == 3 and sorted(p.name for p in (tmp_path / "part").rglob("*.wav")) == ["1.wav", "3.wav", "5.wav"]
@@ -245,7 +251,7 @@ def test_unpack_reports_a_shard_that_disagrees_with_its_index(tmp_path):
 
     files, errors = mirror.unpack_shards(m.backend(), "p/d/", tmp_path / "out")
 
-    assert files == 1 and "1 of 2" in errors[0]
+    assert files == 1 and "missing" in errors[0]
 
 
 def test_pushing_small_files_one_by_one_needs_an_explicit_override(capsys):

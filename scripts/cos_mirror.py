@@ -25,12 +25,11 @@ read the index, then extract the tar (tar x) into the directory.
 import argparse
 import gzip
 import hashlib
-import io
 import json
 import os
 import re
+import subprocess
 import sys
-import tarfile
 import threading
 import time
 from concurrent.futures import ThreadPoolExecutor
@@ -191,11 +190,11 @@ def load_packed(backend, dest):
         marker = response["NextMarker"]
 
 
-class PartWriter(io.RawIOBase):
-    """Write-only file that uploads what is written as a COS multipart upload.
+class PartWriter:
+    """Uploads the bytes handed to put() as one COS multipart upload.
 
-    Data is kept in memory in parts of part_size; at most `inflight` parts are
-    held or uploading at once. finish() completes the object and checks its size.
+    Parts are held in memory (part_size each); at most `inflight` are held or
+    uploading at once. finish() completes the object and checks its size.
     """
 
     def __init__(self, mirror, key):
@@ -204,27 +203,21 @@ class PartWriter(io.RawIOBase):
         self.bucket = self.backend.remote.bucket
         self.upload_id = self.backend.client.create_multipart_upload(
             Bucket=self.bucket, Key=key)["UploadId"]
-        self.buffer, self.size, self.parts = bytearray(), 0, []
+        self.size, self.parts = 0, []
         self.inflight = threading.BoundedSemaphore(mirror.args.part_inflight)
 
-    def writable(self):
-        return True
-
-    def write(self, data):
-        self.buffer += data
-        self.size += len(data)
-        while len(self.buffer) >= self.mirror.args.part_size:
-            self.send(self.mirror.args.part_size)
-        return len(data)
-
-    def send(self, length):
-        body = bytes(self.buffer[:length])
-        del self.buffer[:length]
+    def put(self, body):
+        self.size += len(body)
         number = len(self.parts) + 1
         self.inflight.acquire()
         future = self.mirror.parts.submit(self.upload_part, number, body)
         future.add_done_callback(lambda _: self.inflight.release())
         self.parts.append(future)
+
+    def copy_from(self, stream):
+        """Read stream to the end in part_size pieces (tar's stdout)."""
+        while body := stream.read(self.mirror.args.part_size):
+            self.put(body)
 
     def upload_part(self, number, body):
         for attempt in range(3):
@@ -239,8 +232,6 @@ class PartWriter(io.RawIOBase):
                 time.sleep(5 * (attempt + 1))
 
     def finish(self):
-        if self.buffer or not self.parts:
-            self.send(len(self.buffer))
         done = [future.result() for future in self.parts]
         self.backend.client.complete_multipart_upload(
             Bucket=self.bucket, Key=self.key, UploadId=self.upload_id,
@@ -274,9 +265,9 @@ def connect(args):
 def unpack_shards(backend, dest, target, workers=8, only=()):
     """Stream every tar shard of a mirrored directory into target; return (files, errors).
 
-    Nothing is staged on disk: each shard is read from COS as a stream and
-    extracted member by member. Files already in target with the right size are
-    skipped; every member is checked against the shard's index.
+    Nothing is staged on disk: each shard is read from COS as a stream into GNU
+    tar. A shard whose files are all in target with the right size is not
+    downloaded; afterwards every member is checked against the shard's index.
     """
     bucket = backend.remote.bucket
     prefix, indexes, marker = packed_prefix(dest), [], ""
@@ -293,29 +284,40 @@ def unpack_shards(backend, dest, target, workers=8, only=()):
         index = json.loads(gzip.decompress(body.read()))
         wanted = {key: size for key, size in index["members"]
                   if not only or any(key.startswith(sub) for sub in only)}
-        if not wanted:
-            return 0, None
+
+        def missing():
+            return [key for key, size in wanted.items()
+                    if not (os.path.isfile(os.path.join(target, key))
+                            and os.path.getsize(os.path.join(target, key)) == size)]
+
+        if not missing():  # everything of this shard is already there: do not even download it
+            return len(wanted), None
         stream = backend.client.get_object(
             Bucket=bucket, Key=index_key.rsplit("/", 1)[0] + "/" + index["tar"])["Body"].get_raw_stream()
-        got = 0
+        command = ["tar", "--extract", "--file=-", "--overwrite", "--no-same-owner",
+                   "--no-same-permissions", f"--directory={target}"]
+        if only:  # tar picks the members out of the stream
+            command += ["--wildcards", *[f"{sub}*" for sub in only]]
         try:
-            with tarfile.open(fileobj=stream, mode="r|") as tar:
-                for member in tar:
-                    if member.name not in wanted:
-                        continue
-                    if member.size != wanted[member.name]:
-                        raise RuntimeError(f"{member.name}: size {member.size} != index {wanted[member.name]}")
-                    path = os.path.join(target, member.name)
-                    if not (os.path.isfile(path) and os.path.getsize(path) == member.size):
-                        # tarfile creates parents without exist_ok: shards racing in one directory fail
-                        os.makedirs(os.path.dirname(path), exist_ok=True)
-                        tar.extract(member, target, filter="data")
-                    got += 1
+            os.makedirs(target, exist_ok=True)
+            proc = subprocess.Popen(command, stdin=subprocess.PIPE, stderr=subprocess.PIPE)
+            errors = []
+            reader = threading.Thread(target=lambda: errors.append(proc.stderr.read()))
+            reader.start()
+            try:
+                while chunk := stream.read(1 << 24):
+                    proc.stdin.write(chunk)
+            finally:
+                proc.stdin.close()
+                reader.join()
+            if proc.wait():
+                raise RuntimeError(f"tar exited {proc.returncode}: {errors[0].decode(errors='replace')[:300]}")
         except Exception as exc:  # noqa: BLE001 - report the shard, keep the others going
-            return got, f"{index['tar']}: {type(exc).__name__}: {exc}"
-        if got != len(wanted):
-            return got, f"{index['tar']}: {got} of {len(wanted)} indexed files found"
-        return got, None
+            return 0, f"{index['tar']}: {type(exc).__name__}: {exc}"
+        bad = missing()
+        if bad:
+            return len(wanted) - len(bad), f"{index['tar']}: {len(bad)} of {len(wanted)} indexed files missing or wrong size"
+        return len(wanted), None
 
     files, errors = 0, []
     with ThreadPoolExecutor(workers) as pool:
@@ -383,22 +385,36 @@ class Mirror:
                 pass
             return ("same" if action == "相同，跳过" else "uploaded"), None
 
-    def pack_shard(self, dest, members):
-        """Stream files into one tar shard on COS; return (bytes sent, error or None)."""
+    def pack_shard(self, root, dest, members):
+        """Stream files through GNU tar into one shard on COS; return (bytes sent, error).
+
+        tar (not Python) does the packing: Python only moves its output to COS.
+        """
         name = shard_name(dest, members[0][0])
         writer = PartWriter(self, name + ".tar")
+        proc = None
         try:
-            with tarfile.open(fileobj=writer, mode="w|", format=tarfile.PAX_FORMAT) as tar:
-                for key, size, path in members:
-                    info = tar.gettarinfo(path, arcname=key)
-                    info.uid = info.gid = 0
-                    info.uname = info.gname = ""
-                    if info.size != size:
-                        raise RuntimeError(f"{path} changed size while scanning")
-                    with open(path, "rb") as handle:
-                        tar.addfile(info, handle)
+            proc = subprocess.Popen(
+                ["tar", "--create", "--file=-", "--format=posix", "--owner=0", "--group=0",
+                 "--numeric-owner", "--no-recursion", "--null", f"--directory={root}",
+                 "--files-from=-"],
+                stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+            names = b"".join(key.encode("utf-8", "surrogateescape") + b"\0" for key, _, _ in members)
+            errors = []
+            # tar reads its list from stdin while we read its output: feed it from a thread
+            feeder = threading.Thread(target=lambda: (proc.stdin.write(names), proc.stdin.close()))
+            reader = threading.Thread(target=lambda: errors.append(proc.stderr.read()))
+            feeder.start()
+            reader.start()
+            writer.copy_from(proc.stdout)
+            feeder.join()
+            reader.join()
+            if proc.wait():
+                raise RuntimeError(f"tar exited {proc.returncode}: {errors[0].decode(errors='replace')[:300]}")
             writer.finish()
         except Exception as exc:  # noqa: BLE001 - one bad shard is reported, not fatal
+            if proc and proc.poll() is None:
+                proc.kill()
             writer.abort()
             return 0, f"{name}.tar: {type(exc).__name__}: {exc}"
         # The index goes last: a tar without one is not trusted and is packed again.
@@ -457,7 +473,7 @@ class Mirror:
             self.shard_slots.acquire()
             with done:
                 pending[0] += 1
-            future = self.shards.submit(self.pack_shard, dest, members)
+            future = self.shards.submit(self.pack_shard, root, dest, members)
             future.add_done_callback(lambda f, m=members: finish_shard(f, m))
 
         small = self.args.pack_below
