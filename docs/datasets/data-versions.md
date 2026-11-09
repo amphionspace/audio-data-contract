@@ -1698,8 +1698,10 @@ WenetSpeech L 中的播客部分
 | [wenetspeech_wu@icefall-20260908](../../catalog/icefall_runtime.yaml#L958) | 8,740.7 | 已登记 | 快照 20260914 |
 | [wenetspeech_wu@legacy-20260804](../../catalog/icefall_base.yaml#L650) | 8,740.7 | 已登记 | 快照 20260914 |
 | [wenetspeech_wu@qwen3-asr-pilot-v1-20261025](../../catalog/wenetspeech_wu_qwen.yaml#L1) | 4.1 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/wenetspeech_wu/` |
+| [wenetspeech_wu@stepaudio2-wu-asr-v1-20261109](../../catalog/wenetspeech_wu_qwen.yaml#L55) | — | 未登记 | 没有 |
 
 - `wenetspeech_wu@qwen3-asr-pilot-v1-20261025`：wenetspeech_wu@icefall-20260908 里WenetSpeech-Wu 吴语训练集的随机抽样（2,000 条 / 4.1 h），原标注（吴语写法的机器标注，带置信度和普通话译文）一字不改；每条加 custom.qwen_asr：共享的 Qwen3-ASR-1.7B 的转写（hypothesis）、Qwen 报告的语种（language）和与原标注的字错误率（SpeechIO TextNorm，按字，ref_tokens / hyp_tokens / errors / cer 百分数；原标注规范化后为空时 cer 为空）。整体 CER 35.84 %，Qwen 在 WenetSpeech-Wu-Bench 上自身 CER 为 24.2；Qwen 空输出 0 条。试跑：从 wenetspeech_wu@icefall-20260908 训练集按种子 42 随机抽 2000 条，不是全量，整体 CER 35.8 %，不可用于训练。两边文字都很乱，核对价值低。录音沿用父版本，不复制音频。脚本 scripts/wenetspeech_qwen/
+- `wenetspeech_wu@stepaudio2-wu-asr-v1-20261109`：WenetSpeech-Wu 吴语训练集（4,241,226 条 / 8,740.7 h，吴语写法的机器标注）用 Step-Audio2-Wu-ASR（ASLP-lab 在 Step-Audio-2-mini 上微调的吴语 ASR）逐条转写，按 SpeechIO TextNorm 算与原标注的字错误率。 在 WenetSpeech-Wu-Bench 抽样 1,000 条上它的 CER 为 12.3%（Qwen3-ASR 24.2%）；训练集试跑 2,000 条与原标注整体 15.6%（同一批 Qwen 35.8%）。 该模型在 WenetSpeech-Wu 上训练过，与原标注的一致程度可能偏高。目前只记录转写和错误率，不删数据；保留规则在看过被拒样本后再定
 - 含派生版本（与源数据可能重叠）
 
 ### wenetspeech_youtube
