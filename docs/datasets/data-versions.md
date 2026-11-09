@@ -2837,7 +2837,7 @@ AudioSet 道路交通噪声
 | [common_voice_es@legacy](../../catalog/legacy_multilingual.yaml#L951) | 568.5 | 已登记 | 快照 20260914 |
 
 - `common_voice_es@americas-v1-20261103`：从现有 Common Voice 西语（CV 24.0）里按说话人自填口音选出美洲六个预设口音的录音，不复制音频，音频仍读原版本。没填口音的录音（约占六成）无法判断地区，没有收入
-- `common_voice_es@es-train-v1-20261108`：Common Voice 西班牙语 train 的训练版本：Qwen3-ASR-1.7B + whisper-large-v3 双引擎清洗（默认规则 consensus-v7），保留 356,706 句 / 513.98 h（源 357,397 句）；文本是原文（带标点、大小写的书面句子），未改写；custom.hotwords 是 Qwen3.8-27B 标的热词。只含清洗通过的行，录音清单沿用 legacy。也是西语 TS 场景池的句子来源。试跑、被拒样本和误杀率见 run_dir README
+- `common_voice_es@es-train-v1-20261108`：Common Voice 西班牙语 train 的训练版本：Qwen3-ASR-1.7B + whisper-large-v3 双引擎清洗（默认规则 consensus-v7），保留 356,706 句 / 513.98 h（源 357,397 句）；文本用原文的词和标点（书面句子），只规整了 10,562 句的标点前后空格、首字母大写和缺失的句末句号；custom.hotwords 是 Qwen3.8-27B 标的热词。只含清洗通过的行，录音清单沿用 legacy。也是西语 TS 场景池的句子来源。试跑、被拒样本和误杀率见 run_dir README
 - 有含标点版本
 - 含派生版本（与源数据可能重叠）
 
