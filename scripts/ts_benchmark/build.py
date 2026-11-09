@@ -333,7 +333,7 @@ def describe(plan, split, index):
         "target_present": kind == "pos", "enroll_condition": params.get("enroll", "clean"),
         "duration_s": plan["total"], "n_interferers": len(interferers),
     }
-    for key in ("schedule", "interferer_schedule", "hard", "pair", "handover"):
+    for key in ("schedule", "interferer_schedule", "hard", "pair", "handover", "enroll_pool"):
         if key in params:
             labels[key] = params[key]
     if "handover" in plan:
