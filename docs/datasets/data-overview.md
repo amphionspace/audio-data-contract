@@ -125,7 +125,7 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [wenetspeech_diarize](data-versions.md#wenetspeech_diarize) | zh | diarization、带说话人标注的语音识别 | — | WenetSpeech 长音频的说话人日志伪标签 | 部分版本：`备份桶:audio-data-contract/datasets/wenetspeech_diarize/` |
 | [wenetspeech_disfluency](data-versions.md#wenetspeech_disfluency) | zh | 语音识别 | 182.5 | WenetSpeech L 保留口语不流利词的转写 | 快照 20260914、`备份桶:audio-data-contract/datasets/wenetspeech/`、`备份桶:audio-data-contract/datasets/wenetspeech_disfluency/` |
 | [wenetspeech_podcast](data-versions.md#wenetspeech_podcast) | zh | 语音识别 | 3,892.3 | WenetSpeech L 中的播客部分 | 没有 |
-| [wenetspeech_wu](data-versions.md#wenetspeech_wu) | zh | 语音识别 | 8,740.7 | 吴语网络语音（WenetSpeech-Wu） | 快照 20260914、`备份桶:audio-data-contract/datasets/wenetspeech_wu/` |
+| [wenetspeech_wu](data-versions.md#wenetspeech_wu) | zh | 语音识别 | 8,740.7 | 吴语网络语音（WenetSpeech-Wu） | 部分版本：快照 20260914、`备份桶:audio-data-contract/datasets/wenetspeech_wu/` |
 | [wenetspeech_youtube](data-versions.md#wenetspeech_youtube) | zh | 语音识别 | 6,113.1 | WenetSpeech L 中的 YouTube 部分 | 没有 |
 | [wenetspeech_yue_all](data-versions.md#wenetspeech_yue_all) | yue | 语音识别 | 17,373.9 | 粤语网络语音（WenetSpeech-Yue）；含清洗版 | 部分版本：快照 20260914、`备份桶:audio-data-contract/datasets/wenetspeech_yue/` |
 
