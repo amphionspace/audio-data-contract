@@ -2223,17 +2223,17 @@ AISHELL-1、LibriSpeech 合成的多人对话
 
 ### ts_asr_crosslingual
 
-跨语言注册 TS-ASR 评测（英文混合段）
+—
 
 语言：en、zh · 任务：目标说话人语音识别
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
-| [ts_asr_crosslingual@en-v1-20261109](../../catalog/ts_asr_crosslingual.yaml#L33) | — | 未登记 | 没有 |
-| [ts_asr_crosslingual@zh-v1-20261109](../../catalog/ts_asr_crosslingual.yaml#L2) | — | 未登记 | 没有 |
+| [ts_asr_crosslingual@en-v1-20261109](../../catalog/ts_asr_crosslingual.yaml#L427) | 6.2 | 已登记 | 没有 |
+| [ts_asr_crosslingual@zh-v1-20261109](../../catalog/ts_asr_crosslingual.yaml#L1) | 6.2 | 已登记 | 没有 |
 
-- `ts_asr_crosslingual@en-v1-20261109`：与 zh-v1-20261109 同一批说话人与场景配方，混合段为英文，注册为同一说话人的英文（对照）或中文（跨语言）。只用于评测，不进训练
-- `ts_asr_crosslingual@zh-v1-20261109`：目标说话人 ASR 的跨语言注册评测：混合段为中文，注册音频为同一说话人的中文（同语言对照）或英文（跨语言），两者共用同一批场景，只换注册。 说话人来自 Common Voice 中同一账号既录中文又录英文、且从未作为 TS 训练目标的 79 人，另有 Qwen3-TTS 跨语言克隆的合成说话人。 场景：单人、1 个与 2 个干扰人（目标在场），1 个与 2 个干扰人（目标缺席）。只用于评测，不进训练
+- `ts_asr_crosslingual@en-v1-20261109`：跨语言注册 TS-ASR 评测集（混合段英文）：Common Voice 同一账号既录中文又录英文、从未作为 TS 训练目标的 78 人，以及 Qwen3-TTS-12Hz-1.7B-Base 跨语言克隆的 50 个合成音色（注册与混合段都是合成音）；每个场景配同语言与跨语言两种注册。只用于评测，不进训练。配方见 scripts/ts_benchmark/recipe-crosslingual-en.yaml
+- `ts_asr_crosslingual@zh-v1-20261109`：跨语言注册 TS-ASR 评测集（混合段中文）：Common Voice 同一账号既录中文又录英文、从未作为 TS 训练目标的 78 人，以及 Qwen3-TTS-12Hz-1.7B-Base 跨语言克隆的 50 个合成音色（注册与混合段都是合成音）；每个场景配同语言与跨语言两种注册。只用于评测，不进训练。配方见 scripts/ts_benchmark/recipe-crosslingual-zh.yaml
 
 ### ts_asr_farfield
 

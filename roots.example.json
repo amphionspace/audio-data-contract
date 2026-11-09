@@ -77,5 +77,6 @@
   "nurc_sp_corpus_minimo": "/workspace/data/datasets/nurc_sp_corpus_minimo",
   "tarsila_asr": "/workspace/data/datasets/tarsila_asr",
   "coraa": "/workspace/data/datasets/coraa",
-  "coraa_nurc_sp": "/workspace/data/datasets/coraa_nurc_sp"
+  "coraa_nurc_sp": "/workspace/data/datasets/coraa_nurc_sp",
+  "ts_asr_crosslingual": "/workspace/data/datasets/ts_asr_crosslingual"
 }
