@@ -184,13 +184,11 @@
         preparation_state:
         - preparation_state
       provenance:
-        preparation_status: building
+        preparation_status: prepared
   provenance:
-    preparation_status: building
+    preparation_status: prepared
     owner: mingdong
-    description: 西班牙语 TS 场景池，按英文同款配方和规模生成 near / alt-twins / hard / handover / solo 各版本（目标取 Common Voice es 带口音的说话人， 他人一半同批、一半
-      MLS es；相近声音取 ERes2NetV2 近邻），再出带标点和热词的 punchw 版本。完成后按版本分别正式登记。
+    description: 西班牙语 TS 场景池的开工占位，已完成：按版本正式登记在 catalog/ts_scene_pool_es.yaml（es-near / es-alt-twins / es-hard / es-handover / es-solo-20261109 及各自的 -punchw-20261109）。目标与他人都取 Common Voice es（他人一半无口音标注的 CV es 说话人）；MLS es 没有 ≤8 s 的句子，不进场景。
     sources:
     - common_voice_es@es-train-v1-20261108
-    - mls_es@es-train-v1-20261108
     run_dir: /workspace/workspace/mingdong/data/amphiondata/es-data-20261108
