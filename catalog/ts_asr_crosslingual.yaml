@@ -1,0 +1,61 @@
+# 占位登记：跨语言注册的目标说话人 ASR 评测集（注册与混合段语言不同），构建中，进度见各版本状态文件。
+- schema_version: dataset-catalog/2.0
+  dataset_id: ts_asr_crosslingual
+  version: zh-v1-20261109
+  languages:
+    - zh
+    - en
+  tasks:
+    - ts_asr
+  aliases: []
+  artifacts:
+    - name: preparation_state
+      kind: dataset-state
+      root_alias: aidc_data
+      relative_path: datasets/ts_asr_crosslingual/versions/zh-v1-20261109/state.json
+  splits:
+    all:
+      artifacts:
+        preparation_state:
+          - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    summary: 跨语言注册 TS-ASR 评测（中文混合段）
+    description: >-
+      目标说话人 ASR 的跨语言注册评测：混合段为中文，注册音频为同一说话人的中文（同语言对照）或英文（跨语言），两者共用同一批场景，只换注册。
+      说话人来自 Common Voice 中同一账号既录中文又录英文、且从未作为 TS 训练目标的 79 人，另有 Qwen3-TTS 跨语言克隆的合成说话人。
+      场景：单人、1 个与 2 个干扰人（目标在场），1 个与 2 个干扰人（目标缺席）。只用于评测，不进训练。
+    source: common_voice_zh@legacy-20260804, common_voice_en@legacy-20260804, Qwen3-TTS-12Hz-1.7B-Base
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/ts-asr-crosslingual-20261109
+- schema_version: dataset-catalog/2.0
+  dataset_id: ts_asr_crosslingual
+  version: en-v1-20261109
+  languages:
+    - en
+    - zh
+  tasks:
+    - ts_asr
+  aliases: []
+  artifacts:
+    - name: preparation_state
+      kind: dataset-state
+      root_alias: aidc_data
+      relative_path: datasets/ts_asr_crosslingual/versions/en-v1-20261109/state.json
+  splits:
+    all:
+      artifacts:
+        preparation_state:
+          - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    summary: 跨语言注册 TS-ASR 评测（英文混合段）
+    description: >-
+      与 zh-v1-20261109 同一批说话人与场景配方，混合段为英文，注册为同一说话人的英文（对照）或中文（跨语言）。只用于评测，不进训练。
+    source: common_voice_zh@legacy-20260804, common_voice_en@legacy-20260804, Qwen3-TTS-12Hz-1.7B-Base
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/ts-asr-crosslingual-20261109
