@@ -108,8 +108,8 @@ def main():
     rng = random.Random(args.seed)
     voices = references("zh", args.zh_voices, rng) + references("en", args.en_voices, rng)
     texts = {lang: sentences(lang) for lang in ("zh", "en")}
-    for lang in texts:
-        rng.shuffle(texts[lang])
+    for items in texts.values():
+        rng.shuffle(items)
     need = len(voices) * args.per_voice
     if any(len(t) < need for t in texts.values()):
         raise SystemExit(f"not enough sentences: {[(k, len(v)) for k, v in texts.items()]} < {need}")
@@ -129,8 +129,9 @@ def main():
                 for i, (text, wav) in enumerate(zip(batch, wavs)):
                     wav = np.asarray(wav, dtype=np.float32)
                     if sr != SR:
-                        from scipy.signal import resample_poly
                         from math import gcd
+
+                        from scipy.signal import resample_poly
                         g = gcd(SR, sr)
                         wav = resample_poly(wav, SR // g, sr // g).astype(np.float32)
                     if not 0.8 <= len(wav) / SR <= args.max_seconds:
