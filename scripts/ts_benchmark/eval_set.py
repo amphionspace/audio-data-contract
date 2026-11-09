@@ -166,8 +166,28 @@ NAMED = {
 }
 
 
+CROSSLINGUAL_SOURCES = {"cv": "真人（Common Voice 双语说话人）", "tts": "合成（Qwen3-TTS 跨语言克隆）"}
+CROSSLINGUAL_SCENES = {"solo": "单人", "k1": "1 个干扰人", "k2": "2 个干扰人", "abs1": "目标缺席 · 1 个干扰人",
+                       "abs2": "目标缺席 · 2 个干扰人"}
+CROSSLINGUAL_ENROLL = {"same": "同语言注册", "cross": "跨语言注册"}
+
+
+def crosslingual_display(name, recipe):
+    source, scene, cond = name.split("-")
+    other = {"zh": "英文", "en": "中文"}[recipe["language"]]
+    mix = {"zh": "中文", "en": "英文"}[recipe["language"]]
+    enroll = f"注册为同一说话人的{mix}" if cond == "same" else f"注册为同一说话人的{other}"
+    return (f"{CROSSLINGUAL_SOURCES[source].split('（')[0]} · {CROSSLINGUAL_SCENES[scene]} · {CROSSLINGUAL_ENROLL[cond]}",
+            f"混合段{mix}，{enroll}；与另一种注册共用同一批场景（{CROSSLINGUAL_SOURCES[source]}）")
+
+
 def entry(split, recipe):
     name, params = split["name"], split["params"]
+    if recipe["dataset_id"] == "ts_asr_crosslingual":
+        display, description = crosslingual_display(name, recipe)
+        return {"dataset_id": recipe["dataset_id"], "version": recipe["version"], "split": name, "task": "ts_asr",
+                "label": name, "tags": [recipe["language"], "target-speaker"], "display": display,
+                "description": description}
     if name.split("-")[0] in NOISES:
         label, description = NOISES[name.split("-")[0]]
         display = f"{label} · {KINDS[params['kind']][0]}"
@@ -209,6 +229,18 @@ def main():
         return [s["name"] for s in splits
                 if s["name"].startswith(prefix) and s["params"]["kind"] in kinds and not is_extreme(s["name"])]
 
+    if recipe["dataset_id"] == "ts_asr_crosslingual":
+        groups = []
+        for source, source_title in CROSSLINGUAL_SOURCES.items():
+            for scene, scene_title in CROSSLINGUAL_SCENES.items():
+                groups.append({"name": f"{source_title.split('（')[0]} · {scene_title}", "section": source_title,
+                               "labels": [f"{source}-{scene}-same", f"{source}-{scene}-cross"],
+                               "description": "同一批场景，只换注册：同语言（对照）与跨语言；两者之差就是语言错配的影响"})
+        for cond, cond_title in CROSSLINGUAL_ENROLL.items():
+            groups.append({"name": f"全部 · {cond_title}", "section": "汇总",
+                           "labels": [s["name"] for s in splits if s["name"].endswith(f"-{cond}")],
+                           "description": f"所有场景的{cond_title}（目标在场看字错率与漏识，缺席看误输出）"})
+        return emit(recipe, splits, groups)
     if recipe["dataset_id"] == "ts_asr_farfield":
         groups = []
         for title, key, prefixes, text in (
@@ -299,7 +331,7 @@ def emit(recipe, splits, groups):
         raise SystemExit(f"splits not in any group: {missing}")
     config = {
         "sampling_rate": recipe["sample_rate"],
-        "tags": ["zh", "target-speaker"],
+        "tags": [recipe["language"] if recipe["dataset_id"] == "ts_asr_crosslingual" else "zh", "target-speaker"],
         "groups": groups,
         "evaluation": [entry(s, recipe) for s in splits],
     }

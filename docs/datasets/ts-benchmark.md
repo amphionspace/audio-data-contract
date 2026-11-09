@@ -142,6 +142,28 @@ python scripts/ts_benchmark/build.py --recipe scripts/ts_benchmark/recipe-en.yam
     --rir-cache /workspace/data/datasets/ts_asr_benchmark/source/v4-20261022/rir   # 其余 recipe-*-en.yaml 同理
 ```
 
+## 跨语言注册补充集（ts_asr_crosslingual）
+
+问题来源：业务录音里，注册音频是目标说话人说中文，混合段里他说英文。模型在混合段里只能认出同语言注册的那个人，换成中文注册就几乎全判"目标不在场"。
+
+- **版本**：`zh-v1-20261109`（混合段中文）和 `en-v1-20261109`（混合段英文），配方为 `scripts/ts_benchmark/recipe-crosslingual-{zh,en}.yaml`。
+- **成对设计**：每个场景出两份，`-same` 的注册是同一说话人同语言的另一句（对照），`-cross` 的注册是另一种语言的一句。两份共用 `pair`，场景逐条相同、只换注册。
+  - 构建器新增 `enroll_pool`：注册从同一说话人在另一个池里的语句中取。
+  - 全量里 98% 的配对混合段完全相同（中文 cv 590/600、tts 496/500；英文 cv 600/600、tts 484/500）。其余是某一侧抽样失败后重抽，比较时只用相同的那些。
+- **说话人**：
+  - **真人（cv-）**：Common Voice 里同一账号（`client_id`）既录 zh-CN 又录 en、每种语言至少 5 句的 125 人，去掉作为 TS 训练目标出现过的 47 人，剩 78 人（`export_bilingual_pool.py`）。干扰人取 Common Voice 中文 test/dev、英文 test 的其他说话人（已去掉双语目标）。同一人中英文之间的 ECAPA 余弦平均 0.673，最低 0.356，不同人平均 0.172（每人数值见 `source/pools/cv-bilingual-ecapa.json`）。
+  - **合成（tts-）**：50 个音色，参考音频取 AISHELL-1 test 的 20 人和 LibriSpeech test-clean 的 30 人，用 Qwen3-TTS-12Hz-1.7B-Base 克隆后各说 10 句中文、10 句英文（`tts_crosslingual_pool.py`）。注册和混合段都是合成音，两种注册之间只有语言不同。
+    - 质检（`qc_tts_pool.py`）：用候选包的普通 ASR 转写，错误率超过 30% 的 61 句去掉；31 句因生成停不下来去掉。保留中文 423 句、英文 485 句。
+    - 同一音色中英文之间的 ECAPA 余弦平均 0.835，最低 0.65，不同音色平均 0.157，没有音色被去掉。
+- **场景**（每种来源 × 每种注册各一个划分）：
+  - 单人（solo）；
+  - 1 个、2 个干扰人，目标在场（k1、k2，SIR −3～3 dB）；
+  - 1 个、2 个干扰人，目标缺席（abs1、abs2）。
+
+  真人每划分 120 条，合成每划分 100 条，两个版本各 2,200 条。底噪与房间响应缓存同 `ts_asr_benchmark` v4。
+- **评测集**：`ts-asr-crosslingual@v1-20261109`（中文混合段）、`ts-asr-crosslingual-en@v1-20261109`（英文混合段）。看同一组里 `-cross` 与 `-same` 的差：目标在场看字错率与漏识率，缺席看误输出率。
+- **不能说明的**：只测语言不同，不测注册与混合段录音设备不同（Common Voice 同一账号的两种语言多为同一设备）。只用于评测，不进训练。
+
 ## 开发集（ts_asr_dev）
 
 `ts_asr_dev@v1-20261017`：3,240 条、54 个场景，配方 `scripts/ts_benchmark/recipe-pvad-dev.yaml`。用与 v3 相同的场景定义，换成各语料 dev 划分的说话人（KeSpeech、MagicData、AISHELL-1 dev，共 159 位，与 train、test 都不重叠）和新种子，用来选模型和阈值（`amphion-tse/pvad-dev@v1-20261017` 的合成部分），**不进训练，也不作最终评测**。

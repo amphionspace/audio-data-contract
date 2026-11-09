@@ -416,8 +416,13 @@ def plan_scene(rng, params, pools, similarity=None):
 
     if "enroll_file" not in plan:
         used = {u.id for t in plan["tracks"] for u, _ in t.items}
-        plan["enroll_utt"] = _enroll_utt(enroll, target_pool["speakers"][target], used)
-        _plan_enrollment(enroll, params, pools, target_pool, plan, target)
+        # enroll_pool: the same speaker's utterances in another pool (e.g. the other language); the scene stream is
+        # untouched, so a split pairs with its same-pool twin on identical scenes.
+        enroll_pool = pools[params["enroll_pool"]] if params.get("enroll_pool") else target_pool
+        if target not in enroll_pool["speakers"]:
+            raise PlanError(f"{target} has no utterances in enroll_pool {params.get('enroll_pool')}")
+        plan["enroll_utt"] = _enroll_utt(enroll, enroll_pool["speakers"][target], used)
+        _plan_enrollment(enroll, params, pools, enroll_pool, plan, target)
     if isinstance(params.get("rir"), dict):
         _plan_role_rirs(background, params["rir"], plan, pools)
     elif params.get("rir"):
