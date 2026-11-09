@@ -178,7 +178,7 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [ts_interference_pool](data-versions.md#ts_interference_pool) | en、zh | ts_asr_interference | 656.6 | 在线混合用的干扰人语音素材池 | 没有 |
 | [ts_nonspeech_pool](data-versions.md#ts_nonspeech_pool) | en、zh | 语音识别 | 65.7 | 非人声与背景人声的空输出训练片段 | 没有 |
 | [ts_real_train](data-versions.md#ts_real_train) | en、zh | 目标说话人语音识别 | 123.6 | 真实会议切出的目标说话人训练窗口 | 没有 |
-| [ts_scene_pool](data-versions.md#ts_scene_pool) | en、zh | 目标说话人语音识别 | 386.2 | 目标说话人难例场景素材（相近声音、交接） | 没有 |
+| [ts_scene_pool](data-versions.md#ts_scene_pool) | en、es、zh | 目标说话人语音识别 | 386.2 | 目标说话人难例场景素材（相近声音、交接） | 没有 |
 | [vitw](data-versions.md#vitw) | en、zh | 语音识别 | 1,085.4 | 真实场景中英语音（VITW）；含回声、远场等评测 | 部分版本：快照 20260914 |
 | [waxal-asr](data-versions.md#waxal-asr) | ach、aka、am、dag、dga、ee、ff、kpo、lg、ln、mas、mg、nyn、om、sid、sn、sog、ti、wal | 语音识别 | — | 19 种非洲语言语音（WAXAL） | 快照 20260914 |
 | [wutheringwaves](data-versions.md#wutheringwaves) | en、ja、ko、zh | 语音合成 | 134.8 | 《鸣潮》多语配音，TTS 用 | `TTS 桶:WutheringWaves-2.2/`（原始数据） |
@@ -231,7 +231,7 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [mgb2](data-versions.md#mgb2) | ar | 语音识别 | 1,215.5 | 半岛电视台阿拉伯语广播（MGB-2） | 快照 20260914 |
 | [mit_ir_survey](data-versions.md#mit_ir_survey) | und | rir | 0.0 | MIT 日常环境实测冲激响应（270 条） | `备份桶:audio-data-contract/datasets/mit_ir_survey/` |
 | [mls_de](data-versions.md#mls_de) | de | 语音识别 | 1,995.1 | 德语有声书朗读（MLS） | 快照 20260914 |
-| [mls_es](data-versions.md#mls_es) | es | 语音识别 | 937.7 | 西班牙语有声书朗读（MLS） | 快照 20260914 |
+| [mls_es](data-versions.md#mls_es) | es | 语音识别 | 937.7 | 西班牙语有声书朗读（MLS） | 部分版本：快照 20260914 |
 | [mls_fr](data-versions.md#mls_fr) | fr | 语音识别 | 1,096.7 | 法语有声书朗读（MLS） | 快照 20260914 |
 | [mls_pt](data-versions.md#mls_pt) | pt | 语音识别 | 168.3 | MLS 葡语有声书朗读 | 快照 20260914 |
 | [musan](data-versions.md#musan) | und | noise | — | 噪声与音乐素材（MUSAN） | 快照 20260914、`备份桶:audio-data-contract/datasets/musan/` |
