@@ -1,93 +1,196 @@
-# 占位登记：西班牙语训练数据（和中英同一套：双引擎清洗、书面化标点、热词、TS 场景池），进行中，进度见各版本状态文件。
+# 西班牙语训练数据：CV es / MLS es 正式版本（清洗 + 书面化标点 + 热词）；TS 场景池仍是占位。
 - schema_version: dataset-catalog/2.0
   dataset_id: common_voice_es
   version: es-train-v1-20261108
   languages:
-    - es
+  - es
   tasks:
-    - asr
+  - asr
   aliases: []
+  derived_from: common_voice_es@legacy
   artifacts:
-    - name: preparation_state
-      kind: dataset-state
-      root_alias: aidc_data
-      relative_path: datasets/common_voice_es/versions/es-train-v1-20261108/state.json
+  - name: train_recordings
+    kind: lhotse-recordings
+    root_alias: aidc_data
+    relative_path: datasets/common_voice_es/versions/legacy/manifests/cv-es_recordings_train.jsonl.gz
+    expected_bytes: 4216271
+    sha256: 2c9c934c822991b5e1374f2cf21036fa5472bd72c7cfb1c358258ed603fa57dd
+    metadata:
+      shared_with: common_voice_es@legacy
+  - name: train_supervisions
+    kind: lhotse-supervisions
+    root_alias: aidc_data
+    relative_path: datasets/common_voice_es/versions/es-train-v1-20261108/cv-es_supervisions_train.jsonl.gz
+    expected_bytes: 25330539
+    sha256: b52063eae704fa5697b429a266cc4c2f8080d2b95be8cf31434bc6bea4b6b1a8
+    metadata:
+      record_count: 356706
+      pass_count: 356706
+      rows_with_hotwords: 165693
+      punctuated: true
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/common_voice_es/versions/es-train-v1-20261108/state.json
   splits:
     train:
       artifacts:
+        recordings:
+        - train_recordings
+        supervisions:
+        - train_supervisions
         preparation_state:
-          - preparation_state
+        - preparation_state
       statistics:
+        records: 356706
+        duration_hours: 513.98
+        duration_basis: sum of supervision durations of the kept rows
         source_records: 357397
-        source_hours: 514.65
-      provenance:
-        preparation_status: building
+        dropped_records:
+          bad_annotation: 342
+          ambiguous: 330
+          insufficient_engines: 6
+          no_valid_engine: 2
+          implausible_char_rate: 11
+        rows_with_hotwords: 165693
+  recipe_parameters:
+    filter_rules: consensus-v7
+    rewrite_rules: wenetspeech-faithful-v5 (no row rewritten)
+    engines:
+    - Qwen3-ASR-1.7B
+    - whisper-large-v3
+    clean_pass_only: true
+    hotwords: Qwen3.8-27B, amphiondata extract_hotword prompt, 12 rows per request, no review; kept only when the word occurs
+      in the text as a whole word (case-insensitive); custom.hotwords
+    text: original Common Voice sentence
   provenance:
-    preparation_status: building
+    preparation_status: prepared
     owner: mingdong
-    description: >-
-      Common Voice 西班牙语 train（357,397 句 / 514.65 h）的训练版本：Qwen3-ASR-1.7B + whisper-large-v3 双引擎清洗（先试跑、看被拒样本再定规则），
-      原文本身是带标点和大小写的书面句子，保留原样；再用 Qwen3.8-27B 标热词。也是西语 TS 场景池的目标说话人来源（按口音抽取）。
+    description: Common Voice 西班牙语 train 的训练版本：Qwen3-ASR-1.7B + whisper-large-v3 双引擎清洗（默认规则 consensus-v7），保留 356,706 句 / 513.98
+      h（源 357,397 句）；文本是原文（带标点、大小写的书面句子），未改写；custom.hotwords 是 Qwen3.8-27B 标的热词。只含清洗通过的行，录音清单沿用 legacy。也是西语 TS 场景池的句子来源。试跑、被拒样本和误杀率见
+      run_dir README。
     source: common_voice_es@legacy
     run_dir: /workspace/workspace/mingdong/data/amphiondata/es-data-20261108
+    scripts:
+    - /workspace/workspace/mingdong/data/amphiondata/es-data-20261108/scripts/clean.sh
+    - /workspace/workspace/mingdong/data/amphiondata/es-data-20261108/scripts/punc_hotwords.sh
+    - /workspace/workspace/mingdong/data/amphiondata/es-data-20261108/scripts/finalize.py
 - schema_version: dataset-catalog/2.0
   dataset_id: mls_es
   version: es-train-v1-20261108
   languages:
-    - es
+  - es
   tasks:
-    - asr
+  - asr
   aliases: []
+  derived_from: mls_es@legacy
   artifacts:
-    - name: preparation_state
-      kind: dataset-state
-      root_alias: aidc_data
-      relative_path: datasets/mls_es/versions/es-train-v1-20261108/state.json
+  - name: train_recordings
+    kind: lhotse-recordings
+    root_alias: aidc_data
+    relative_path: datasets/mls_es/versions/legacy/manifests/mls-spanish_recordings_train.jsonl.gz
+    expected_bytes: 2851934
+    sha256: b138bf0d4092f96533a156248b69e3802e348b43e0b95e8572ad92e0fcd6f08f
+    metadata:
+      shared_with: mls_es@legacy
+  - name: train_supervisions
+    kind: lhotse-supervisions
+    root_alias: aidc_data
+    relative_path: datasets/mls_es/versions/es-train-v1-20261108/mls-spanish_supervisions_train.jsonl.gz
+    expected_bytes: 29106714
+    sha256: 771947df129f02758954e11e1e4756d8436c263f2b03182891a19ec787a62767
+    metadata:
+      record_count: 208356
+      pass_count: 208356
+      rows_with_hotwords: 110501
+      punctuated: true
+  - name: train_punc_all
+    kind: lhotse-supervisions
+    root_alias: aidc_data
+    relative_path: datasets/mls_es/versions/es-train-v1-20261108/mls-spanish_supervisions_train_punc_written.jsonl.gz
+    expected_bytes: 21817661
+    sha256: 604f9571e3b41ac9aafb66512314e2bd9ee6a1595140ea576bf7e2faee17d19b
+    metadata:
+      record_count: 220701
+      note: es-v1 punctuated text of every legacy train row, before cleaning
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/mls_es/versions/es-train-v1-20261108/state.json
   splits:
     train:
       artifacts:
+        recordings:
+        - train_recordings
+        supervisions:
+        - train_supervisions
         preparation_state:
-          - preparation_state
+        - preparation_state
+        punc_all:
+        - train_punc_all
       statistics:
+        records: 208356
+        duration_hours: 866.15
+        duration_basis: sum of supervision durations of the kept rows
         source_records: 220701
-        source_hours: 917.68
-      provenance:
-        preparation_status: building
+        dropped_records:
+          label_mismatch_consensus: 10653
+          bad_annotation: 731
+          ambiguous: 81
+          label_footer: 677
+          insufficient_engines: 95
+          no_valid_engine: 108
+        rows_with_hotwords: 110501
+  recipe_parameters:
+    filter_rules: consensus-v7
+    rewrite_rules: wenetspeech-faithful-v5 (no row rewritten)
+    engines:
+    - Qwen3-ASR-1.7B
+    - whisper-large-v3
+    clean_pass_only: true
+    hotwords: Qwen3.8-27B, amphiondata extract_hotword prompt, 12 rows per request, no review; kept only when the word occurs
+      in the text as a whole word (case-insensitive); custom.hotwords
+    extra_filters: 'label_mismatch_consensus: both engines >= 20 WER from the label and <= 10 WER from each other (lowercase,
+      no accents or marks); label_footer: Google Books footer'
+    text: written-punctuation es-v1 (amphiondata written_punctuation_es, Qwen3.8-27B teacher)
   provenance:
-    preparation_status: building
+    preparation_status: prepared
     owner: mingdong
-    description: >-
-      MLS 西班牙语 train（220,701 句 / 917.68 h，有声书）的训练版本：双引擎清洗；原标注全小写、无 ¿¡，用 Qwen3.8-27B 按西语书面化规范
-      加标点并恢复大小写（只插标点、改大小写，去标点转小写后须与原标注逐词一致）；再标热词。在西语 TS 场景池里担任 LibriSpeech 的角色（其他说话人）。
+    description: MLS 西班牙语 train（有声书）的训练版本：双引擎清洗（consensus-v7），另丢弃两个引擎彼此一致却都与原标注不符的行（label_mismatch_consensus）和含 Google Books
+      页脚的行（label_footer），保留 208,356 句 / 866.15 h（源 220,701 句）。原标注全小写无标点，文本换成 Qwen3.8-27B 按 es-v1 规范加的书面化标点和大小写（只插标点、改大小写、补重音；改了词的退回原标注加句号，约
+      15%）；custom.hotwords 是热词。只含清洗通过的行，录音清单沿用 legacy。规则、抽样核对和误杀率见 run_dir README。
     source: mls_es@legacy
     run_dir: /workspace/workspace/mingdong/data/amphiondata/es-data-20261108
+    scripts:
+    - /workspace/workspace/mingdong/data/amphiondata/es-data-20261108/scripts/clean.sh
+    - /workspace/workspace/mingdong/data/amphiondata/es-data-20261108/scripts/punc_hotwords.sh
+    - /workspace/workspace/mingdong/data/amphiondata/es-data-20261108/scripts/finalize.py
 - schema_version: dataset-catalog/2.0
   dataset_id: ts_scene_pool
   version: es-v1-20261108
   languages:
-    - es
+  - es
   tasks:
-    - ts_asr
+  - ts_asr
   aliases: []
   artifacts:
-    - name: preparation_state
-      kind: dataset-state
-      root_alias: aidc_data
-      relative_path: datasets/ts_scene_pool/versions/es-v1-20261108/state.json
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/es-v1-20261108/state.json
   splits:
     es:
       artifacts:
         preparation_state:
-          - preparation_state
+        - preparation_state
       provenance:
         preparation_status: building
   provenance:
     preparation_status: building
     owner: mingdong
-    description: >-
-      西班牙语 TS 场景池，按英文同款配方和规模生成 near / alt-twins / hard / handover / solo 各版本（目标取 Common Voice es 带口音的说话人，
-      他人一半同批、一半 MLS es；相近声音取 ERes2NetV2 近邻），再出带标点和热词的 punchw 版本。完成后按版本分别正式登记。
+    description: 西班牙语 TS 场景池，按英文同款配方和规模生成 near / alt-twins / hard / handover / solo 各版本（目标取 Common Voice es 带口音的说话人， 他人一半同批、一半
+      MLS es；相近声音取 ERes2NetV2 近邻），再出带标点和热词的 punchw 版本。完成后按版本分别正式登记。
     sources:
-      - common_voice_es@es-train-v1-20261108
-      - mls_es@es-train-v1-20261108
+    - common_voice_es@es-train-v1-20261108
+    - mls_es@es-train-v1-20261108
     run_dir: /workspace/workspace/mingdong/data/amphiondata/es-data-20261108

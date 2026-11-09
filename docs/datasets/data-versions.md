@@ -2515,7 +2515,7 @@ AISHELL-1、LibriSpeech 合成的多人对话
 | [ts_scene_pool@cvaccent-solo-20261101](../../catalog/ts_scene_pool.yaml#L1824) | 44.7 | 已登记 | 没有 |
 | [ts_scene_pool@cvaccent-solo-20261101-punchw-20261102](../../catalog/train_punc_v1_pools.yaml#L631) | 44.7 | 已登记 | 没有 |
 | [ts_scene_pool@cvaccent-solo-20261101-punchw2-20261102](../../catalog/train_punc_v1_pools_en.yaml#L602) | 44.7 | 已登记 | 没有 |
-| [ts_scene_pool@es-v1-20261108](../../catalog/es_train_v1.yaml#L64) | — | 未登记 | 没有 |
+| [ts_scene_pool@es-v1-20261108](../../catalog/es_train_v1.yaml#L168) | — | 未登记 | 没有 |
 | [ts_scene_pool@handover-20261021](../../catalog/ts_scene_pool.yaml#L515) | 62.9 | 已登记 | 没有 |
 | [ts_scene_pool@handover-20261021-punchw-20261102](../../catalog/train_punc_v1_pools.yaml#L691) | 62.9 | 已登记 | 没有 |
 | [ts_scene_pool@handover-20261021-punchw2-20261102](../../catalog/train_punc_v1_pools_en.yaml#L662) | 18.0 | 已登记 | 没有 |
@@ -2833,11 +2833,11 @@ AudioSet 道路交通噪声
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
 | [common_voice_es@americas-v1-20261103](../../catalog/common_voice_es_americas.yaml#L1) | 261.2 | 已登记 | 没有 |
-| [common_voice_es@es-train-v1-20261108](../../catalog/es_train_v1.yaml#L2) | — | 未登记 | 没有 |
+| [common_voice_es@es-train-v1-20261108](../../catalog/es_train_v1.yaml#L2) | 514.0 | 已登记 | 没有 |
 | [common_voice_es@legacy](../../catalog/legacy_multilingual.yaml#L951) | 568.5 | 已登记 | 快照 20260914 |
 
 - `common_voice_es@americas-v1-20261103`：从现有 Common Voice 西语（CV 24.0）里按说话人自填口音选出美洲六个预设口音的录音，不复制音频，音频仍读原版本。没填口音的录音（约占六成）无法判断地区，没有收入
-- `common_voice_es@es-train-v1-20261108`：Common Voice 西班牙语 train（357,397 句 / 514.65 h）的训练版本：Qwen3-ASR-1.7B + whisper-large-v3 双引擎清洗（先试跑、看被拒样本再定规则）， 原文本身是带标点和大小写的书面句子，保留原样；再用 Qwen3.8-27B 标热词。也是西语 TS 场景池的目标说话人来源（按口音抽取）
+- `common_voice_es@es-train-v1-20261108`：Common Voice 西班牙语 train 的训练版本：Qwen3-ASR-1.7B + whisper-large-v3 双引擎清洗（默认规则 consensus-v7），保留 356,706 句 / 513.98 h（源 357,397 句）；文本是原文（带标点、大小写的书面句子），未改写；custom.hotwords 是 Qwen3.8-27B 标的热词。只含清洗通过的行，录音清单沿用 legacy。也是西语 TS 场景池的句子来源。试跑、被拒样本和误杀率见 run_dir README
 - 有含标点版本
 - 含派生版本（与源数据可能重叠）
 
@@ -3252,11 +3252,12 @@ MIT 日常环境实测冲激响应（270 条）
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
-| [mls_es@es-train-v1-20261108](../../catalog/es_train_v1.yaml#L33) | — | 未登记 | 没有 |
+| [mls_es@es-train-v1-20261108](../../catalog/es_train_v1.yaml#L78) | 866.1 | 已登记 | 没有 |
 | [mls_es@legacy](../../catalog/legacy_multilingual.yaml#L1091) | 937.7 | 已登记 | 快照 20260914 |
 
-- `mls_es@es-train-v1-20261108`：MLS 西班牙语 train（220,701 句 / 917.68 h，有声书）的训练版本：双引擎清洗；原标注全小写、无 ¿¡，用 Qwen3.8-27B 按西语书面化规范 加标点并恢复大小写（只插标点、改大小写，去标点转小写后须与原标注逐词一致）；再标热词。在西语 TS 场景池里担任 LibriSpeech 的角色（其他说话人）
+- `mls_es@es-train-v1-20261108`：MLS 西班牙语 train（有声书）的训练版本：双引擎清洗（consensus-v7），另丢弃两个引擎彼此一致却都与原标注不符的行（label_mismatch_consensus）和含 Google Books 页脚的行（label_footer），保留 208,356 句 / 866.15 h（源 220,701 句）。原标注全小写无标点，文本换成 Qwen3.8-27B 按 es-v1 规范加的书面化标点和大小写（只插标点、改大小写、补重音；改了词的退回原标注加句号，约 15%）；custom.hotwords 是热词。只含清洗通过的行，录音清单沿用 legacy。规则、抽样核对和误杀率见 run_dir README
 - 有无标点版本
+- 含派生版本（与源数据可能重叠）
 
 ### mls_fr
 
