@@ -219,9 +219,10 @@ CORPORA = {
     "en": [("librispeech", "legacy-20260804", "train", 0.5, True), ("common_voice_en", "legacy-20260804", "train", 0.5, False)],
 }
 MODES = {"zh": (("alternate", 0.35), ("burst", 0.35), ("short", 0.30)),
-         "en": (("alternate", 0.40), ("burst", 0.40), ("short", 0.20))}
-UTTERANCE_SECONDS = {"zh": (1.0, 12.0), "en": (1.0, 8.0)}
-SHORT_TARGET_SECONDS = {"zh": (0.8, 2.5), "en": (1.0, 3.5)}
+         "en": (("alternate", 0.40), ("burst", 0.40), ("short", 0.20)),
+         "es": (("alternate", 0.40), ("burst", 0.40), ("short", 0.20))}
+UTTERANCE_SECONDS = {"zh": (1.0, 12.0), "en": (1.0, 8.0), "es": (1.0, 8.0)}
+SHORT_TARGET_SECONDS = {"zh": (0.8, 2.5), "en": (1.0, 3.5), "es": (1.0, 3.5)}
 ENROLLMENT_SECONDS = (2.5, 8.0)
 # --xsession: targets are KeSpeech speakers with both sessions (phase1 Mandarin, phase2 dialect, the directory names).
 XSESSION_CORPORA = [("aishell2", "legacy-20260804", "train", 0.5, False), ("kespeech", "legacy-20260804", "train", 0.5, True)]
@@ -240,6 +241,10 @@ HELD_OUT_TEXT = {"magicdata": "test"}
 CV_ACCENT_CORPORA = [("librispeech", "legacy-20260804", "train", 0.5, False), ("common_voice_en", "legacy-20260804", "train", 0.5, True)]
 # --cs-dialogue: targets are CS-Dialogue English speakers; other speakers half them, a quarter each LibriSpeech and the
 # accent-labelled Common Voice speakers.
+# --es: Spanish pools, all from Common Voice es (MLS es has no utterance of 8 s or less): accent-labelled speakers are the
+# targets, drawn by accent group as in --cv-accents, and half of the other speakers; speakers without an accent answer
+# are the other half (the non-target corpus keeps only them, so the two corpora share no speaker).
+ES_CORPORA = [("common_voice_es", "legacy", "train", 0.5, False), ("common_voice_es", "legacy", "train", 0.5, True)]
 CS_DIALOGUE_CORPORA = [("librispeech", "legacy-20260804", "train", 0.25, False),
                        ("common_voice_en", "legacy-20260804", "train", 0.25, False),
                        ("cs_dialogue_en", "legacy-20260804", "train", 0.5, True)]
@@ -247,16 +252,18 @@ CS_DIALOGUE_CORPORA = [("librispeech", "legacy-20260804", "train", 0.25, False),
 # ts-asr-benchmark-en targets; the train splits share no speaker ID with these splits (checked 2026-11-01).
 HELD_OUT_SPEAKERS = {"librispeech": ("legacy-20260804", ("dev", "test_clean", "test_other")),
                      "common_voice_en": ("legacy-20260804", ("dev", "test")),
-                     "cs_dialogue_en": ("legacy-20260804", ("dev", "test"))}
+                     "cs_dialogue_en": ("legacy-20260804", ("dev", "test")),
+                     "common_voice_es": ("legacy", ("dev", "test"))}
 # Common Voice text, clean-pass mark and accent answer of the accent pools: (version, split, artifact role).
-CV_CLEAN = ("icefall-20260908", "train", "clean_supervisions")
+CV_CLEAN = {"common_voice_en": ("icefall-20260908", "train", "clean_supervisions"),
+            "common_voice_es": ("es-train-v1-20261108", "train", "supervisions")}
 # CS-Dialogue marks: <NPS/> someone else talking, ** not intelligible (skipped); other tags (<FIL/>, <SPK/>) are removed.
 SKIP_TEXT = {"cs_dialogue_en": re.compile(r"<NPS/>|\*\*")}
 TAGGED_TEXT = {"cs_dialogue_en"}
 # The enrollment and up to five target turns; ts-asr-benchmark-en's min_utterances_per_speaker.
 MIN_SPEAKER_UTTERANCES = 6
 # Common Voice accent answers: the site's preset choices, and the free-text answers (exact) whose region is clear.
-ACCENT_PRESETS = {
+ACCENT_PRESETS = {"common_voice_en": {
     "United States English": "us", "England English": "england", "Scottish English": "scotland",
     "Irish English": "ireland", "Welsh English": "wales", "Canadian English": "canada",
     "Australian English": "aus_nz", "New Zealand English": "aus_nz",
@@ -265,10 +272,20 @@ ACCENT_PRESETS = {
     "West Indies and Bermuda (Bahamas, Bermuda, Jamaica, Trinidad)": "caribbean",
     "Filipino": "southeast_asia", "Malaysian English": "southeast_asia", "Singaporean English": "southeast_asia",
     "Hong Kong English": "hong_kong",
-}
-FREE_TEXT_ACCENTS = {"Northern Irish": "ireland", "Nigerian English": "africa", "Kenyan": "africa",
-                     "Kenyan English": "africa", "West African": "africa", "Indonesian English": "southeast_asia",
-                     "Bangladeshi": "south_asia", "bangladesh": "south_asia"}
+}, "common_voice_es": {
+    "México": "mexico", "Ciudad de México": "mexico", "América central": "central_america",
+    "Caribe: Cuba, Venezuela, Puerto Rico, República Dominicana, Panamá, Colombia caribeña, México caribeño, Costa del golfo de México": "caribbean",
+    "Andino-Pacífico: Colombia, Perú, Ecuador, oeste de Bolivia y Venezuela andina": "andean",
+    "Rioplatense: Argentina, Uruguay, este de Bolivia, Paraguay": "rioplatense", "Chileno: Chile, Cuyo": "chile",
+    "España: Norte peninsular (Asturias, Castilla y León, Cantabria, País Vasco, Navarra, Aragón, La Rioja, Guadalajara, Cuenca)": "spain_north",
+    "España: Centro-Sur peninsular (Madrid, Toledo, Castilla-La Mancha)": "spain_centre_south",
+    "España: Sur peninsular (Andalucia, Extremadura, Murcia)": "spain_south", "España: Islas Canarias": "canary",
+    "Español de Filipinas": "philippines",
+}}
+FREE_TEXT_ACCENTS = {"common_voice_en": {
+    "Northern Irish": "ireland", "Nigerian English": "africa", "Kenyan": "africa", "Kenyan English": "africa",
+    "West African": "africa", "Indonesian English": "southeast_asia", "Bangladeshi": "south_asia", "bangladesh": "south_asia"},
+    "common_voice_es": {}}
 # Draw share of an accent group: speakers ** ACCENT_EXPONENT (a square root, as in multilingual data sampling), capped
 # at MAX_ACCENT_SHARE: plain speaker counts give United States 52% and England 16%, already the LibriSpeech pools' voice.
 ACCENT_EXPONENT = 0.5
@@ -346,16 +363,17 @@ def tagless(text):
     return re.sub(r" ([.,!?;:])", r"\1", " ".join(re.sub(r"<[^>]*>", " ", text).split()))
 
 
-def accent_group(answer):
+def accent_group(answer, dataset="common_voice_en"):
     """The accent group of a Common Voice ``accents`` answer: None when unanswered or naming two groups, "other" for
     free text alone (mostly second-language speakers: German, Russian, Polish ...)."""
     rest, groups = answer or "", set()
-    for preset, group in ACCENT_PRESETS.items():
+    # longest first: "Ciudad de México" before "México"
+    for preset, group in sorted(ACCENT_PRESETS[dataset].items(), key=lambda item: -len(item[0])):
         if preset in rest:
             groups.add(group)
             rest = rest.replace(preset, "")
     free = [part.strip() for part in rest.split(",") if part.strip()]
-    groups |= {FREE_TEXT_ACCENTS[part] for part in free if part in FREE_TEXT_ACCENTS}
+    groups |= {FREE_TEXT_ACCENTS[dataset][part] for part in free if part in FREE_TEXT_ACCENTS[dataset]}
     if len(groups) > 1:
         return None
     return groups.pop() if groups else "other" if free else None
@@ -397,16 +415,23 @@ class Corpus:
         else:
             table = lhotse_table(entry, split)
         accent_of = {}
-        if accents and dataset == "common_voice_en":
+        if accents and dataset in CV_CLEAN:
             # The clean manifest's text (original case and punctuation), its pass mark and the speaker's accent answer.
-            clean = {row["id"]: row for row in lhotse_rows(catalog_entry(dataset, CV_CLEAN[0]), *CV_CLEAN[1:])}
+            version, *where = CV_CLEAN[dataset]
+            clean = {row["id"]: row for row in lhotse_rows(catalog_entry(dataset, version), *where)}
             rows = [clean.get(i) for i in table["id"].to_pylist()]
             passed = [r is not None and (r.get("custom", {}).get("clean") or {}).get("pass") is True for r in rows]
-            groups = [accent_group(r.get("custom", {}).get("accents")) if r else None for r in rows]
+            groups = [accent_group(r.get("custom", {}).get("accents"), dataset) if r else None for r in rows]
+            # A speaker's group is the one of their utterances; the --es other-speaker corpus keeps the unlabelled ones.
             accent_of = {r["speaker"]: g for r, g in zip(rows, groups) if g}
-            print(dataset, "clean-pass utterances", sum(passed), "with an accent group",
-                  sum(p and g is not None for p, g in zip(passed, groups)), flush=True)
-            table = table.filter(pa.array([p and g is not None for p, g in zip(passed, groups)]))
+            unlabelled = dataset == "common_voice_es" and not target
+            wanted = [p and (r["speaker"] not in accent_of if unlabelled else g is not None)
+                      for p, r, g in zip(passed, rows, groups)]
+            if unlabelled:
+                accent_of = {}
+            print(dataset, "clean-pass utterances", sum(passed), "without an accent group" if unlabelled else "with an accent group",
+                  sum(wanted), flush=True)
+            table = table.filter(pa.array(wanted))
             table = table.set_column(table.schema.get_field_index("text"), "text",
                                      pa.array([clean[i]["text"] for i in table["id"].to_pylist()], pa.large_string()))
         duration = table["duration"].to_numpy(zero_copy_only=False)
@@ -496,10 +521,12 @@ class Builder:
     def __init__(self, language, rng, neighbors=None, hard_rank=10, xsession=False, magicdata=False, ramc=False, same_voice=None,
                  cv_accents=False, cs_dialogue=False):
         self.language, self.rng, self.xsession = language, rng, xsession
+        spanish = language == "es"
         corpora = XSESSION_CORPORA if xsession else MAGICDATA_CORPORA if magicdata else RAMC_CORPORA if ramc \
-            else CV_ACCENT_CORPORA if cv_accents else CS_DIALOGUE_CORPORA if cs_dialogue else CORPORA[language]
+            else CV_ACCENT_CORPORA if cv_accents else CS_DIALOGUE_CORPORA if cs_dialogue else ES_CORPORA if spanish \
+            else CORPORA[language]
         drop = {n.split(":", 1)[1] for n in (same_voice or {}).get("drop", {})}
-        self.corpora = [Corpus(*c, language, sessions=xsession and c[4], accents=cv_accents or cs_dialogue,
+        self.corpora = [Corpus(*c, language, sessions=xsession and c[4], accents=cv_accents or cs_dialogue or spanish,
                                drop=drop if c[0] == "magicdata_ramc" else ())
                         for c in corpora]
         self.targets = [c for c in self.corpora if c.target]
@@ -815,6 +842,7 @@ def main():
     parser.add_argument("--output-dir", type=Path, required=True)
     parser.add_argument("--zh", type=int, default=150000)
     parser.add_argument("--en", type=int, default=100000)
+    parser.add_argument("--es", type=int, default=0, help="Spanish records (Common Voice es, by accent); pass --zh 0 --en 0")
     parser.add_argument("--version", default=VERSION)
     parser.add_argument("--neighbors", type=Path, help="neighbors.json: build the hard (similar voice) version")
     parser.add_argument("--hard-rank", type=int, default=10)
@@ -843,6 +871,8 @@ def main():
         parser.error("--ramc needs --same-voice, and --same-voice is for --ramc")
     if english and args.zh:
         parser.error("--cv-accents and --cs-dialogue build en pools: pass --zh 0")
+    if args.es and (args.zh or args.en or args.xsession or args.magicdata or args.ramc or english):
+        parser.error("--es builds the Spanish pools alone: pass --zh 0 --en 0, without a zh/en target option")
     if sum((args.xsession, args.magicdata, args.ramc, args.cv_accents, args.cs_dialogue)) > 1:
         parser.error("--xsession, --magicdata, --ramc, --cv-accents and --cs-dialogue take their targets from different corpora; pick one")
     twinned = args.multi or args.solo or args.handover or args.alt_twins or args.hard_twins
@@ -853,8 +883,8 @@ def main():
     neighbors = json.loads(args.neighbors.read_text()) if args.neighbors else None
     same_voice = json.loads(args.same_voice.read_text()) if args.same_voice else None
     report = {}
-    for language, count in (("zh", args.zh), ("en", args.en)):
-        if (args.xsession or args.magicdata or args.ramc or english) and not count:
+    for language, count in (("zh", args.zh), ("en", args.en), ("es", args.es)):
+        if (args.xsession or args.magicdata or args.ramc or english or args.es or language == "es") and not count:
             continue
         builder = Builder(language, random.Random(f"{SEED}:{language}:{args.version}"),
                           neighbors and neighbors[language], args.hard_rank, args.xsession, args.magicdata, args.ramc, same_voice,
