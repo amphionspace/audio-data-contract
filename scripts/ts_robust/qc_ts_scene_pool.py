@@ -49,9 +49,9 @@ def held_out(dataset):
 
 def source_texts(dataset, ids):
     """Source text of the utterances ``ids`` of a corpus, as the builder reads it."""
-    if dataset == "common_voice_en":
-        entry = catalog_entry(dataset, CV_CLEAN[0])
-        return {row["id"]: row["text"] for row in lhotse_rows(entry, *CV_CLEAN[1:]) if row["id"] in ids}
+    if dataset in CV_CLEAN:
+        version, *where = CV_CLEAN[dataset]
+        return {row["id"]: row["text"] for row in lhotse_rows(catalog_entry(dataset, version), *where) if row["id"] in ids}
     entry = catalog_entry(dataset, "legacy-20260804")
     if "records_lance" not in entry["splits"]["train"]["artifacts"]:
         clean = tagless if dataset in TAGGED_TEXT else str
