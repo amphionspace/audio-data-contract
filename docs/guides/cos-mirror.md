@@ -57,6 +57,16 @@ setsid nohup bash /workspace/data/cos-mirror/mirror.sh \
   >> /workspace/data/cos-mirror/mirror.log 2>&1 < /dev/null &
 ```
 
+再启动看门狗 [deploy/cos-mirror-watch.sh](../../deploy/cos-mirror-watch.sh)，它保证 `mirror.sh` 一直在运行：进程不在了就重新启动；某一轮崩溃（`round exit` 非 0，且该轮没有打印正常结束的 `done;` 行）就等 10 分钟后重启，`push` 幂等，只补传缺的部分。`push` 正常跑完但有冲突或失败的目录不触发重启，下一轮照常隔一天再跑。
+
+```bash
+install -D deploy/cos-mirror-watch.sh /workspace/data/cos-mirror/watch.sh
+setsid nohup bash /workspace/data/cos-mirror/watch.sh \
+  >> /workspace/data/cos-mirror/watch.log 2>&1 < /dev/null &
+```
+
+看门狗也是容器里的进程，容器重启后需要重新启动这两个脚本。
+
 检查是否在运行：`ps -eo pid,cmd | grep "[c]os-mirror/mirror.sh"`。
 
 ## 拉取
