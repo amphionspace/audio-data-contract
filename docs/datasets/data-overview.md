@@ -1,6 +1,6 @@
 # 数据总览
 
-当前登记 **220 个数据集**；另有 **15 个下载来源声明**和 **1 个训练混合配方**。登记不代表本机文件已齐备。
+当前登记 **221 个数据集**；另有 **15 个下载来源声明**和 **1 个训练混合配方**。登记不代表本机文件已齐备。
 
 时长取单个版本的最大值，不跨版本相加；≈ 为参考表或估算值，— 为暂无完整时长。各版本的时长、说明、COS 地址和质量证据见[版本明细](data-versions.md)。
 
@@ -166,6 +166,7 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [starrail_voice](data-versions.md#starrail_voice) | en、ja、ko、zh-CN | 语音合成 | 692.6 | 《崩坏：星穹铁道》多语配音，TTS 用 | `TTS 桶:starrail-voice/`（原始数据） |
 | [talcs](data-versions.md#talcs) | en、zh | 语音识别、热词增强语音识别 | 587.6 | 中英语码转换课堂语音（TALCS）；含热词和加噪版 | 部分版本：快照 20260914 |
 | [ts_asr_benchmark](data-versions.md#ts_asr_benchmark) | en、zh | 目标说话人语音识别 | 46.5 | 合成的中文目标说话人 ASR 评测集 | 部分版本：`备份桶:audio-data-contract/datasets/ts_asr_benchmark/` |
+| [ts_asr_crosslingual](data-versions.md#ts_asr_crosslingual) | en、zh | 目标说话人语音识别 | — | 跨语言注册 TS-ASR 评测（英文混合段） | 没有 |
 | [ts_asr_farfield](data-versions.md#ts_asr_farfield) | en、zh | 目标说话人语音识别 | 5.1 | 目标说话人评测：远场与混响 | 部分版本：`备份桶:audio-data-contract/datasets/ts_asr_farfield/` |
 | [ts_asr_handover](data-versions.md#ts_asr_handover) | en、zh | 目标说话人语音识别 | 3.8 | 目标说话人评测：与他人交替说话 | 部分版本：`备份桶:audio-data-contract/datasets/ts_asr_handover/` |
 | [ts_asr_hotwords](data-versions.md#ts_asr_hotwords) | en、zh | 目标说话人语音识别 | — | — | 没有 |

@@ -2221,6 +2221,20 @@ AISHELL-1、LibriSpeech 合成的多人对话
 - `ts_asr_benchmark@v1-20261013`、`ts_asr_benchmark@v2-20261013`、`ts_asr_benchmark@v3-20261013`、`ts_asr_benchmark@v4-20261022`：目标说话人 ASR 评测集：由 AISHELL-3、KeSpeech、MagicData、AISHELL-2、AISHELL-1 的官方 test 划分合成，覆盖注册音频劣化、目标说话人进场离场与缺席、纯噪声、环境与设备。只用于评测，不进训练。场景见 scripts/ts_benchmark/recipe.yaml
 - `ts_asr_benchmark@v4-hotword-labels-20261102`：ts_asr_benchmark@v4-20261022 的全部记录，附目标转写和其他说话人转写的热词标注（metadata.hotword_labels：target 为目标转写的标注，others 按顺序对应合成记录的 metadata.interferers[*].utts[*] 或真实记录 metadata.window_utts 里非目标说话人的段落；每条含文本、最终热词、模型抽取、复核结果）。这些标注是评测集 ts_asr_hotwords@v1-20261102 的来源。只是标注载体：除 metadata.hotword_labels 外记录不变，音频索引沿用源版本；评测集仍固定引用源版本。脚本 scripts/ts_hotwords/register_eval_hotword_labels.py
 
+### ts_asr_crosslingual
+
+跨语言注册 TS-ASR 评测（英文混合段）
+
+语言：en、zh · 任务：目标说话人语音识别
+
+| 版本 | 时长（小时） | 口径 | COS |
+|---|---:|---|---|
+| [ts_asr_crosslingual@en-v1-20261109](../../catalog/ts_asr_crosslingual.yaml#L33) | — | 未登记 | 没有 |
+| [ts_asr_crosslingual@zh-v1-20261109](../../catalog/ts_asr_crosslingual.yaml#L2) | — | 未登记 | 没有 |
+
+- `ts_asr_crosslingual@en-v1-20261109`：与 zh-v1-20261109 同一批说话人与场景配方，混合段为英文，注册为同一说话人的英文（对照）或中文（跨语言）。只用于评测，不进训练
+- `ts_asr_crosslingual@zh-v1-20261109`：目标说话人 ASR 的跨语言注册评测：混合段为中文，注册音频为同一说话人的中文（同语言对照）或英文（跨语言），两者共用同一批场景，只换注册。 说话人来自 Common Voice 中同一账号既录中文又录英文、且从未作为 TS 训练目标的 79 人，另有 Qwen3-TTS 跨语言克隆的合成说话人。 场景：单人、1 个与 2 个干扰人（目标在场），1 个与 2 个干扰人（目标缺席）。只用于评测，不进训练
+
 ### ts_asr_farfield
 
 目标说话人评测：远场与混响
