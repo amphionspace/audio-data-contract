@@ -21,8 +21,8 @@
     kind: lhotse-supervisions
     root_alias: aidc_data
     relative_path: datasets/common_voice_es/versions/es-train-v1-20261108/cv-es_supervisions_train.jsonl.gz
-    expected_bytes: 25330539
-    sha256: b52063eae704fa5697b429a266cc4c2f8080d2b95be8cf31434bc6bea4b6b1a8
+    expected_bytes: 25343600
+    sha256: fa8aebf3ca973ebdfb3c7e8c1e38163c19acabf24d0122270b7ea754a265dfe2
     metadata:
       record_count: 356706
       pass_count: 356706
@@ -62,13 +62,13 @@
     clean_pass_only: true
     hotwords: Qwen3.8-27B, amphiondata extract_hotword prompt, 12 rows per request, no review; kept only when the word occurs
       in the text as a whole word (case-insensitive); custom.hotwords
-    text: original Common Voice sentence
+    text: original Common Voice sentence; spacing around marks, first letter and final mark tidied (finalize.py tidy_cv)
   provenance:
     preparation_status: prepared
     owner: mingdong
     description: Common Voice 西班牙语 train 的训练版本：Qwen3-ASR-1.7B + whisper-large-v3 双引擎清洗（默认规则 consensus-v7），保留 356,706 句 / 513.98
-      h（源 357,397 句）；文本是原文（带标点、大小写的书面句子），未改写；custom.hotwords 是 Qwen3.8-27B 标的热词。只含清洗通过的行，录音清单沿用 legacy。也是西语 TS 场景池的句子来源。试跑、被拒样本和误杀率见
-      run_dir README。
+      h（源 357,397 句）；文本用原文的词和标点（书面句子），只规整了 10,562 句的标点前后空格、首字母大写和缺失的句末句号；custom.hotwords 是 Qwen3.8-27B 标的热词。只含清洗通过的行，录音清单沿用
+      legacy。也是西语 TS 场景池的句子来源。试跑、被拒样本和误杀率见 run_dir README。
     source: common_voice_es@legacy
     run_dir: /workspace/workspace/mingdong/data/amphiondata/es-data-20261108
     scripts:
@@ -98,7 +98,7 @@
     root_alias: aidc_data
     relative_path: datasets/mls_es/versions/es-train-v1-20261108/mls-spanish_supervisions_train.jsonl.gz
     expected_bytes: 29106714
-    sha256: 771947df129f02758954e11e1e4756d8436c263f2b03182891a19ec787a62767
+    sha256: 3b7846bdb9244b163a318699f026c3626f4fb30744ff3430324fc2a993c7523c
     metadata:
       record_count: 208356
       pass_count: 208356
