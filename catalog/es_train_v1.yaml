@@ -1,0 +1,93 @@
+# 占位登记：西班牙语训练数据（和中英同一套：双引擎清洗、书面化标点、热词、TS 场景池），进行中，进度见各版本状态文件。
+- schema_version: dataset-catalog/2.0
+  dataset_id: common_voice_es
+  version: es-train-v1-20261108
+  languages:
+    - es
+  tasks:
+    - asr
+  aliases: []
+  artifacts:
+    - name: preparation_state
+      kind: dataset-state
+      root_alias: aidc_data
+      relative_path: datasets/common_voice_es/versions/es-train-v1-20261108/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+          - preparation_state
+      statistics:
+        source_records: 357397
+        source_hours: 514.65
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: >-
+      Common Voice 西班牙语 train（357,397 句 / 514.65 h）的训练版本：Qwen3-ASR-1.7B + whisper-large-v3 双引擎清洗（先试跑、看被拒样本再定规则），
+      原文本身是带标点和大小写的书面句子，保留原样；再用 Qwen3.8-27B 标热词。也是西语 TS 场景池的目标说话人来源（按口音抽取）。
+    source: common_voice_es@legacy
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/es-data-20261108
+- schema_version: dataset-catalog/2.0
+  dataset_id: mls_es
+  version: es-train-v1-20261108
+  languages:
+    - es
+  tasks:
+    - asr
+  aliases: []
+  artifacts:
+    - name: preparation_state
+      kind: dataset-state
+      root_alias: aidc_data
+      relative_path: datasets/mls_es/versions/es-train-v1-20261108/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+          - preparation_state
+      statistics:
+        source_records: 220701
+        source_hours: 917.68
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: >-
+      MLS 西班牙语 train（220,701 句 / 917.68 h，有声书）的训练版本：双引擎清洗；原标注全小写、无 ¿¡，用 Qwen3.8-27B 按西语书面化规范
+      加标点并恢复大小写（只插标点、改大小写，去标点转小写后须与原标注逐词一致）；再标热词。在西语 TS 场景池里担任 LibriSpeech 的角色（其他说话人）。
+    source: mls_es@legacy
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/es-data-20261108
+- schema_version: dataset-catalog/2.0
+  dataset_id: ts_scene_pool
+  version: es-v1-20261108
+  languages:
+    - es
+  tasks:
+    - ts_asr
+  aliases: []
+  artifacts:
+    - name: preparation_state
+      kind: dataset-state
+      root_alias: aidc_data
+      relative_path: datasets/ts_scene_pool/versions/es-v1-20261108/state.json
+  splits:
+    es:
+      artifacts:
+        preparation_state:
+          - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: >-
+      西班牙语 TS 场景池，按英文同款配方和规模生成 near / alt-twins / hard / handover / solo 各版本（目标取 Common Voice es 带口音的说话人，
+      他人一半同批、一半 MLS es；相近声音取 ERes2NetV2 近邻），再出带标点和热词的 punchw 版本。完成后按版本分别正式登记。
+    sources:
+      - common_voice_es@es-train-v1-20261108
+      - mls_es@es-train-v1-20261108
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/es-data-20261108

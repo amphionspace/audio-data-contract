@@ -2464,7 +2464,7 @@ AISHELL-1、LibriSpeech 合成的多人对话
 
 目标说话人难例场景素材（相近声音、交接）
 
-语言：en、zh · 任务：目标说话人语音识别
+语言：en、es、zh · 任务：目标说话人语音识别
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
@@ -2501,6 +2501,7 @@ AISHELL-1、LibriSpeech 合成的多人对话
 | [ts_scene_pool@cvaccent-solo-20261101](../../catalog/ts_scene_pool.yaml#L1824) | 44.7 | 已登记 | 没有 |
 | [ts_scene_pool@cvaccent-solo-20261101-punchw-20261102](../../catalog/train_punc_v1_pools.yaml#L631) | 44.7 | 已登记 | 没有 |
 | [ts_scene_pool@cvaccent-solo-20261101-punchw2-20261102](../../catalog/train_punc_v1_pools_en.yaml#L602) | 44.7 | 已登记 | 没有 |
+| [ts_scene_pool@es-v1-20261108](../../catalog/es_train_v1.yaml#L64) | — | 未登记 | 没有 |
 | [ts_scene_pool@handover-20261021](../../catalog/ts_scene_pool.yaml#L515) | 62.9 | 已登记 | 没有 |
 | [ts_scene_pool@handover-20261021-punchw-20261102](../../catalog/train_punc_v1_pools.yaml#L691) | 62.9 | 已登记 | 没有 |
 | [ts_scene_pool@handover-20261021-punchw2-20261102](../../catalog/train_punc_v1_pools_en.yaml#L662) | 18.0 | 已登记 | 没有 |
@@ -2577,6 +2578,7 @@ AISHELL-1、LibriSpeech 合成的多人对话
 - `ts_scene_pool@cvaccent-solo-20261101`：cvaccent-solo-20261101：短句单人场景：目标单独说一句 1–3.5 秒的话，没有其他说话人，约 30% 缺席孪生（一半近邻注册）。Common Voice 英文 train 带口音标注的目标说话人（至少 6 句 1–8 秒，按口音组抽取：每组占比为说话人数平方根、单组不超过 15%；文本、清洗通过标记与口音取自 common_voice_en@icefall-20260908 的双引擎清洗清单，未通过的句子不用），他人一半同批口音说话人、一半 LibriSpeech train；随机孪生注册人按同样口音占比抽取，近邻孪生取近邻（美式口音注册人约一半缺席，其他口音 21–28%），labels.accent 记注册人口音组；近邻表 speaker-neighbors-en-accents-20261101（ERes2NetV2）。剔除三份语料 dev/test 说话人，不含 VCTK。起因：10.28 版本在 ts-asr-benchmark-en 上 VCTK 口音目标 13.8% 判为缺席（苏格兰、爱尔兰、加拿大约 20%，短目标 27%），LibriSpeech 目标 1.8%；训练英文目标 63% 是 LibriSpeech
 - `ts_scene_pool@cvaccent-solo-20261101-punchw-20261102`：ts_scene_pool@cvaccent-solo-20261101 的 en，供 TS + 热词训练：每条目标句按片段 ID 换成带书面化标点的写法（中文 punc-written-v1，英文 en-v1 加标点并恢复大小写；去掉标点和空格、转小写后与原目标一致才替换，源语料本身带标点的保留原样），hotwords 为目标所说的热词，metadata.interferer_hotwords 为干扰者所说、目标没说的热词（标签：Qwen3.8-27B + amphiondata 热词提示词，已有的 hw_sft 标签复用）。其余字段、场景与音频同源版本（记录仍引用源版本音频）。en：30000 条，目标改写 0，带目标热词 5494，带干扰者热词 2446
 - `ts_scene_pool@cvaccent-solo-20261101-punchw2-20261102`：ts_scene_pool@cvaccent-solo-20261101 的 en，供 TS + 热词训练：每条目标句按片段 ID 换成带书面化标点的写法（中文 punc-written-v1，英文 en-v1 加标点并恢复大小写；去掉标点和空格、转小写后与原目标一致才替换，源语料本身带标点的保留原样），hotwords 为目标所说的热词，metadata.interferer_hotwords 为干扰者所说、目标没说的热词（标签：Qwen3.8-27B + amphiondata 热词提示词，已有的 hw_sft 标签复用；英文按整词匹配，所有格算同一个词，干扰者热词按其所在句的大小写还原写法）。其余字段、场景与音频同源版本（记录仍引用源版本音频）。en：30000 条，目标改写 0，带目标热词 5567，带干扰者热词 2446
+- `ts_scene_pool@es-v1-20261108`：西班牙语 TS 场景池，按英文同款配方和规模生成 near / alt-twins / hard / handover / solo 各版本（目标取 Common Voice es 带口音的说话人， 他人一半同批、一半 MLS es；相近声音取 ERes2NetV2 近邻），再出带标点和热词的 punchw 版本。完成后按版本分别正式登记
 - `ts_scene_pool@handover-20261021`：交接场景：目标说一句、另一个说话人说一句，前后不重叠、先后随机（alternate，同一注册与转写口径），每句 1–6 秒，注册取同一说话人另一句 2.5–8 秒；另一个说话人一半取目标的近邻声音（speaker-neighbors-20261016，ERes2NetV2 前 10 名，labels.hard_cosine），一半随机。约 30% 是缺席孪生：同两句话，注册人换成另一个人（一半取目标近邻，labels.twin_enrollment），两句都成为干扰人、转写为空，同一对共用 labels.pair。用来补其他场景池缺的“目标 + 仅 1 个他人”轮流场景（alternate 至少 2 个他人，solo 没有他人）：ts-asr-benchmark@v9 的 handover-* 子集里模型约 15% 整条不出字
 - `ts_scene_pool@handover-20261021-punchw-20261102`：ts_scene_pool@handover-20261021 的 en, zh，供 TS + 热词训练：每条目标句按片段 ID 换成带书面化标点的写法（中文 punc-written-v1，英文 en-v1 加标点并恢复大小写；去掉标点和空格、转小写后与原目标一致才替换，源语料本身带标点的保留原样），hotwords 为目标所说的热词，metadata.interferer_hotwords 为干扰者所说、目标没说的热词（标签：Qwen3.8-27B + amphiondata 热词提示词，已有的 hw_sft 标签复用）。其余字段、场景与音频同源版本（记录仍引用源版本音频）。en：12000 条，目标改写 8473，带目标热词 2152，带干扰者热词 4411；zh：40000 条，目标改写 28079，带目标热词 10044，带干扰者热词 16029
 - `ts_scene_pool@handover-20261021-punchw2-20261102`：ts_scene_pool@handover-20261021 的 en，供 TS + 热词训练：每条目标句按片段 ID 换成带书面化标点的写法（中文 punc-written-v1，英文 en-v1 加标点并恢复大小写；去掉标点和空格、转小写后与原目标一致才替换，源语料本身带标点的保留原样），hotwords 为目标所说的热词，metadata.interferer_hotwords 为干扰者所说、目标没说的热词（标签：Qwen3.8-27B + amphiondata 热词提示词，已有的 hw_sft 标签复用；英文按整词匹配，所有格算同一个词，干扰者热词按其所在句的大小写还原写法）。其余字段、场景与音频同源版本（记录仍引用源版本音频）。en：12000 条，目标改写 8473，带目标热词 2231，带干扰者热词 4411
@@ -2817,9 +2819,11 @@ AudioSet 道路交通噪声
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
 | [common_voice_es@americas-v1-20261103](../../catalog/common_voice_es_americas.yaml#L1) | 261.2 | 已登记 | 没有 |
+| [common_voice_es@es-train-v1-20261108](../../catalog/es_train_v1.yaml#L2) | — | 未登记 | 没有 |
 | [common_voice_es@legacy](../../catalog/legacy_multilingual.yaml#L951) | 568.5 | 已登记 | 快照 20260914 |
 
 - `common_voice_es@americas-v1-20261103`：从现有 Common Voice 西语（CV 24.0）里按说话人自填口音选出美洲六个预设口音的录音，不复制音频，音频仍读原版本。没填口音的录音（约占六成）无法判断地区，没有收入
+- `common_voice_es@es-train-v1-20261108`：Common Voice 西班牙语 train（357,397 句 / 514.65 h）的训练版本：Qwen3-ASR-1.7B + whisper-large-v3 双引擎清洗（先试跑、看被拒样本再定规则）， 原文本身是带标点和大小写的书面句子，保留原样；再用 Qwen3.8-27B 标热词。也是西语 TS 场景池的目标说话人来源（按口音抽取）
 - 有含标点版本
 - 含派生版本（与源数据可能重叠）
 
@@ -3234,8 +3238,10 @@ MIT 日常环境实测冲激响应（270 条）
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
+| [mls_es@es-train-v1-20261108](../../catalog/es_train_v1.yaml#L33) | — | 未登记 | 没有 |
 | [mls_es@legacy](../../catalog/legacy_multilingual.yaml#L1091) | 937.7 | 已登记 | 快照 20260914 |
 
+- `mls_es@es-train-v1-20261108`：MLS 西班牙语 train（220,701 句 / 917.68 h，有声书）的训练版本：双引擎清洗；原标注全小写、无 ¿¡，用 Qwen3.8-27B 按西语书面化规范 加标点并恢复大小写（只插标点、改大小写，去标点转小写后须与原标注逐词一致）；再标热词。在西语 TS 场景池里担任 LibriSpeech 的角色（其他说话人）
 - 有无标点版本
 
 ### mls_fr
