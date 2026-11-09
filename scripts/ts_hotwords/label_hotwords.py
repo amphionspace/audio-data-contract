@@ -9,6 +9,10 @@ IN rows: {id, text, language}. OUT rows: {id, text, language, extracted, hotword
 already in OUT). Extraction = amphiondata PROMPTS["extract_hotword"] (the prompt `amphion-data hotwords` uses);
 a word must occur verbatim in the text. Review = a second request that keeps only words matching the same
 definition. Thinking is off (Qwen3.x chat template), temperature 0.
+Serving: Qwen3.8-27B is a hybrid (linear + full attention) model, for which vLLM 0.18 leaves prefix caching off, so
+every request re-runs the ~1,600-token extraction prompt. Start each server with --enable-prefix-caching (vLLM picks
+mamba cache mode "align") and --max-num-seqs 128, and pass --workers 128 x servers: on one A800, 12 texts a request,
+12.6 -> 39.5 texts/s, 98% of outputs identical to the uncached run (es-data-20261108 README, 2026-11-09).
 """
 import argparse
 import importlib.util

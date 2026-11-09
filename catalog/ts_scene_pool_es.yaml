@@ -1,0 +1,586 @@
+# 西班牙语 TS 场景池（2026-11-09）：五种场景及其带标点 + 热词（punchw）版本，目标与他人均取 Common Voice es。
+- schema_version: dataset-catalog/2.0
+  dataset_id: ts_scene_pool
+  version: es-near-20261109
+  languages:
+  - es
+  tasks:
+  - ts_asr
+  aliases: []
+  artifacts:
+  - name: es-records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/es-near-20261109/records_es.jsonl.gz
+    expected_bytes: 24028389
+    sha256: 78958e33c8b87c770049210978bf2a86fe5da1aa4ddee4c7c7a7d698e12097df
+    metadata:
+      record_count: 60000
+  - name: es-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/es-near-20261109/audio_index_es.jsonl.gz
+    expected_bytes: 1228054
+    sha256: f51482c2258f3d12c74defa67b69c5c6ebe31b3dbf26dea92cce73fcef999f74
+    metadata:
+      record_count: 101327
+  - name: record_index
+    kind: lance-record-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/es-near-20261109/record_index/index.json
+    expected_bytes: 730
+    sha256: f9a0f2bc4d260c363ea81ac27641d1541f8734bc4f7feafe4a0a5d5491ca52d5
+    metadata:
+      snapshot_version: 13
+      rows: 60000
+      schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
+  splits:
+    es:
+      artifacts:
+        records:
+        - es-records
+        audio_index:
+        - es-audio-index
+        records_lance:
+        - record_index
+      task: ts_asr
+      statistics:
+        records: 60000
+        duration_hours: 87.76
+        duration_basis: clip duration (segment span, or the whole file)
+  provenance:
+    status: complete
+    synthetic: none
+    snapshot_date: '2026-11-09'
+    description: es-near-20261109：多句场景（目标说 2–5 句，1–4 个他人各一条轨道），约 30% 缺席孪生（同一场景换人注册，一半取目标近邻，转写为空）。Common Voice 西语 train 带口音标注的目标说话人（至少 6 句 1–8 秒，按 11 个口音组抽取：每组占比为说话人数平方根、单组不超过 15%），他人一半同批口音说话人、一半无口音标注的CV es 说话人（MLS es 没有 ≤8 s 的句子，不进场景）；文本、清洗通过标记取自 common_voice_es@es-train-v1-20261108（未通过的句子不用），labels.accent 记注册人口音组；近邻表 speaker-neighbors-es-accents-20261109（ERes2NetV2）；剔除 CV es dev/test 说话人。规模、模式同英文 cvaccent-*-20261101。 QC 见版本目录 qc.json（通过）。
+    sources:
+    - common_voice_es:legacy
+    - common_voice_es:es-train-v1-20261108
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/es-data-20261108
+- schema_version: dataset-catalog/2.0
+  dataset_id: ts_scene_pool
+  version: es-near-20261109-punchw-20261109
+  languages:
+  - es
+  tasks:
+  - ts_asr
+  aliases: []
+  derived_from: ts_scene_pool@es-near-20261109
+  artifacts:
+  - name: es-records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/es-near-20261109-punchw-20261109/records_es.jsonl.gz
+    expected_bytes: 26334270
+    sha256: 22fb23758615536244ebca552297cfd282e8dcebb6030aaa0b948d6e3ef2dcb3
+    metadata:
+      record_count: 60000
+  - name: es-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/es-near-20261109/audio_index_es.jsonl.gz
+    expected_bytes: 1228054
+    sha256: f51482c2258f3d12c74defa67b69c5c6ebe31b3dbf26dea92cce73fcef999f74
+    metadata:
+      record_count: 101327
+  - name: record_index
+    kind: lance-record-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/es-near-20261109-punchw-20261109/record_index/index.json
+    expected_bytes: 746
+    sha256: e5db967126804803b361c6e900a7c71553ee645095d6c03c36b49509deebea66
+    metadata:
+      snapshot_version: 13
+      rows: 60000
+      schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
+  splits:
+    es:
+      artifacts:
+        records:
+        - es-records
+        audio_index:
+        - es-audio-index
+        records_lance:
+        - record_index
+      task: ts_asr
+      statistics:
+        records: 60000
+        duration_hours: 87.76
+        duration_basis: clip duration (segment span, or the whole file)
+  provenance:
+    status: complete
+    synthetic: none
+    snapshot_date: '2026-11-09'
+    description: ts_scene_pool@es-near-20261109 的带标点 + 热词版本，供 TS + 热词训练：目标文本本身是 CV es 的书面句子（带标点、大小写），不改；hotwords 为目标所说的热词，metadata.interferer_hotwords 为他人所说、目标没说的热词（Qwen3.8-27B + amphiondata 热词提示词，整词匹配，写法同所在句）。其余字段、场景与音频同源版本（记录引用源版本音频）。60000 条，带目标热词 30865，带他人热词 55993。
+    sources:
+    - ts_scene_pool:es-near-20261109
+    - common_voice_es:es-train-v1-20261108
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/es-data-20261108
+- schema_version: dataset-catalog/2.0
+  dataset_id: ts_scene_pool
+  version: es-alt-twins-20261109
+  languages:
+  - es
+  tasks:
+  - ts_asr
+  aliases: []
+  artifacts:
+  - name: es-records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/es-alt-twins-20261109/records_es.jsonl.gz
+    expected_bytes: 14862769
+    sha256: 45b3be89bedf9b597b5471790b3eafc7a19c17c7ff87413859378cd2a1d27b42
+    metadata:
+      record_count: 40000
+  - name: es-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/es-alt-twins-20261109/audio_index_es.jsonl.gz
+    expected_bytes: 975435
+    sha256: a696c8379411d7a660757d0633b485252ee7d43b9da22a4a5b8d865d8719526d
+    metadata:
+      record_count: 79999
+  - name: record_index
+    kind: lance-record-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/es-alt-twins-20261109/record_index/index.json
+    expected_bytes: 735
+    sha256: c0199e687e22dad74c3a67ff4104669a3acab32777dc39fe9442e85cca5f9d15
+    metadata:
+      snapshot_version: 13
+      rows: 40000
+      schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
+  splits:
+    es:
+      artifacts:
+        records:
+        - es-records
+        audio_index:
+        - es-audio-index
+        records_lance:
+        - record_index
+      task: ts_asr
+      statistics:
+        records: 40000
+        duration_hours: 54.59
+        duration_basis: clip duration (segment span, or the whole file)
+  provenance:
+    status: complete
+    synthetic: none
+    snapshot_date: '2026-11-09'
+    description: es-alt-twins-20261109：alternate/burst/short 轮流与插话场景，约 30% 缺席孪生（一半近邻注册）。Common Voice 西语 train 带口音标注的目标说话人（至少 6 句 1–8 秒，按 11 个口音组抽取：每组占比为说话人数平方根、单组不超过 15%），他人一半同批口音说话人、一半无口音标注的CV es 说话人（MLS es 没有 ≤8 s 的句子，不进场景）；文本、清洗通过标记取自 common_voice_es@es-train-v1-20261108（未通过的句子不用），labels.accent 记注册人口音组；近邻表 speaker-neighbors-es-accents-20261109（ERes2NetV2）；剔除 CV es dev/test 说话人。规模、模式同英文 cvaccent-*-20261101。 QC 见版本目录 qc.json（通过）。
+    sources:
+    - common_voice_es:legacy
+    - common_voice_es:es-train-v1-20261108
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/es-data-20261108
+- schema_version: dataset-catalog/2.0
+  dataset_id: ts_scene_pool
+  version: es-alt-twins-20261109-punchw-20261109
+  languages:
+  - es
+  tasks:
+  - ts_asr
+  aliases: []
+  derived_from: ts_scene_pool@es-alt-twins-20261109
+  artifacts:
+  - name: es-records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/es-alt-twins-20261109-punchw-20261109/records_es.jsonl.gz
+    expected_bytes: 16146810
+    sha256: cee00f005ed7c0c2055a58a652ef9886d31d4296d746d0755f2bde713a86ea0c
+    metadata:
+      record_count: 40000
+  - name: es-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/es-alt-twins-20261109/audio_index_es.jsonl.gz
+    expected_bytes: 975435
+    sha256: a696c8379411d7a660757d0633b485252ee7d43b9da22a4a5b8d865d8719526d
+    metadata:
+      record_count: 79999
+  - name: record_index
+    kind: lance-record-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/es-alt-twins-20261109-punchw-20261109/record_index/index.json
+    expected_bytes: 751
+    sha256: 90250d35d8ead5f0963ef626574e2ac25e716f6e0a455aafcdf7a3a9cf102dc2
+    metadata:
+      snapshot_version: 13
+      rows: 40000
+      schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
+  splits:
+    es:
+      artifacts:
+        records:
+        - es-records
+        audio_index:
+        - es-audio-index
+        records_lance:
+        - record_index
+      task: ts_asr
+      statistics:
+        records: 40000
+        duration_hours: 54.59
+        duration_basis: clip duration (segment span, or the whole file)
+  provenance:
+    status: complete
+    synthetic: none
+    snapshot_date: '2026-11-09'
+    description: ts_scene_pool@es-alt-twins-20261109 的带标点 + 热词版本，供 TS + 热词训练：目标文本本身是 CV es 的书面句子（带标点、大小写），不改；hotwords 为目标所说的热词，metadata.interferer_hotwords 为他人所说、目标没说的热词（Qwen3.8-27B + amphiondata 热词提示词，整词匹配，写法同所在句）。其余字段、场景与音频同源版本（记录引用源版本音频）。40000 条，带目标热词 12327，带他人热词 35085。
+    sources:
+    - ts_scene_pool:es-alt-twins-20261109
+    - common_voice_es:es-train-v1-20261108
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/es-data-20261108
+- schema_version: dataset-catalog/2.0
+  dataset_id: ts_scene_pool
+  version: es-hard-20261109
+  languages:
+  - es
+  tasks:
+  - ts_asr
+  aliases: []
+  artifacts:
+  - name: es-records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/es-hard-20261109/records_es.jsonl.gz
+    expected_bytes: 11367368
+    sha256: 97ac203a0c508b89560d89e96a6d732829f1efaaac029680c1f0ff90b5aa8a8b
+    metadata:
+      record_count: 25000
+  - name: es-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/es-hard-20261109/audio_index_es.jsonl.gz
+    expected_bytes: 919073
+    sha256: c3b5cb0fb95788bc306d0d9d3321a494376dd63ca71f0d4a22e49a60bfbfb3fd
+    metadata:
+      record_count: 75301
+  - name: record_index
+    kind: lance-record-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/es-hard-20261109/record_index/index.json
+    expected_bytes: 730
+    sha256: 101917c28a760dbc9ebbb13e77340af2774786bfa2e6fe83da3db383d10edb79
+    metadata:
+      snapshot_version: 13
+      rows: 25000
+      schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
+  splits:
+    es:
+      artifacts:
+        records:
+        - es-records
+        audio_index:
+        - es-audio-index
+        records_lance:
+        - record_index
+      task: ts_asr
+      statistics:
+        records: 25000
+        duration_hours: 35.4
+        duration_basis: clip duration (segment span, or the whole file)
+  provenance:
+    status: complete
+    synthetic: none
+    snapshot_date: '2026-11-09'
+    description: es-hard-20261109：相近声音场景：他人之一是目标 ERes2NetV2 最近邻前 10 名之一，约 55% 目标缺席（转写为空）。Common Voice 西语 train 带口音标注的目标说话人（至少 6 句 1–8 秒，按 11 个口音组抽取：每组占比为说话人数平方根、单组不超过 15%），他人一半同批口音说话人、一半无口音标注的CV es 说话人（MLS es 没有 ≤8 s 的句子，不进场景）；文本、清洗通过标记取自 common_voice_es@es-train-v1-20261108（未通过的句子不用），labels.accent 记注册人口音组；近邻表 speaker-neighbors-es-accents-20261109（ERes2NetV2）；剔除 CV es dev/test 说话人。规模、模式同英文 cvaccent-*-20261101。 QC 见版本目录 qc.json（通过）。
+    sources:
+    - common_voice_es:legacy
+    - common_voice_es:es-train-v1-20261108
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/es-data-20261108
+- schema_version: dataset-catalog/2.0
+  dataset_id: ts_scene_pool
+  version: es-hard-20261109-punchw-20261109
+  languages:
+  - es
+  tasks:
+  - ts_asr
+  aliases: []
+  derived_from: ts_scene_pool@es-hard-20261109
+  artifacts:
+  - name: es-records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/es-hard-20261109-punchw-20261109/records_es.jsonl.gz
+    expected_bytes: 12514297
+    sha256: ae3f6fbb1a932cc9b4add001fd18a7aaeaca51dbf3ca09dff882b31e9fa8d7f2
+    metadata:
+      record_count: 25000
+  - name: es-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/es-hard-20261109/audio_index_es.jsonl.gz
+    expected_bytes: 919073
+    sha256: c3b5cb0fb95788bc306d0d9d3321a494376dd63ca71f0d4a22e49a60bfbfb3fd
+    metadata:
+      record_count: 75301
+  - name: record_index
+    kind: lance-record-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/es-hard-20261109-punchw-20261109/record_index/index.json
+    expected_bytes: 746
+    sha256: 241ad2f9164517b1a48415e2b369975c498b7ff46b1574880126fc132cf0adcd
+    metadata:
+      snapshot_version: 13
+      rows: 25000
+      schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
+  splits:
+    es:
+      artifacts:
+        records:
+        - es-records
+        audio_index:
+        - es-audio-index
+        records_lance:
+        - record_index
+      task: ts_asr
+      statistics:
+        records: 25000
+        duration_hours: 35.4
+        duration_basis: clip duration (segment span, or the whole file)
+  provenance:
+    status: complete
+    synthetic: none
+    snapshot_date: '2026-11-09'
+    description: ts_scene_pool@es-hard-20261109 的带标点 + 热词版本，供 TS + 热词训练：目标文本本身是 CV es 的书面句子（带标点、大小写），不改；hotwords 为目标所说的热词，metadata.interferer_hotwords 为他人所说、目标没说的热词（Qwen3.8-27B + amphiondata 热词提示词，整词匹配，写法同所在句）。其余字段、场景与音频同源版本（记录引用源版本音频）。25000 条，带目标热词 5030，带他人热词 22151。
+    sources:
+    - ts_scene_pool:es-hard-20261109
+    - common_voice_es:es-train-v1-20261108
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/es-data-20261108
+- schema_version: dataset-catalog/2.0
+  dataset_id: ts_scene_pool
+  version: es-handover-20261109
+  languages:
+  - es
+  tasks:
+  - ts_asr
+  aliases: []
+  artifacts:
+  - name: es-records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/es-handover-20261109/records_es.jsonl.gz
+    expected_bytes: 4660353
+    sha256: 89536fb3aff5fc76b1a694064131e92f3d1aa7eb8b65820b5d7be292e91e6e1a
+    metadata:
+      record_count: 20000
+  - name: es-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/es-handover-20261109/audio_index_es.jsonl.gz
+    expected_bytes: 369614
+    sha256: 8859a5b44836713823fc539608e4e9fc930662476e49c19b97568fd86d8e7f06
+    metadata:
+      record_count: 30175
+  - name: record_index
+    kind: lance-record-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/es-handover-20261109/record_index/index.json
+    expected_bytes: 734
+    sha256: 42f9e6689df22c07f7de9357edcf321d8c534490cf314a512707393d90504578
+    metadata:
+      snapshot_version: 13
+      rows: 20000
+      schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
+  splits:
+    es:
+      artifacts:
+        records:
+        - es-records
+        audio_index:
+        - es-audio-index
+        records_lance:
+        - record_index
+      task: ts_asr
+      statistics:
+        records: 20000
+        duration_hours: 26.21
+        duration_basis: clip duration (segment span, or the whole file)
+  provenance:
+    status: complete
+    synthetic: none
+    snapshot_date: '2026-11-09'
+    description: es-handover-20261109：交接场景：目标与另一人各说一句、先后不重叠（一半另一人取目标近邻），约 30% 缺席孪生。Common Voice 西语 train 带口音标注的目标说话人（至少 6 句 1–8 秒，按 11 个口音组抽取：每组占比为说话人数平方根、单组不超过 15%），他人一半同批口音说话人、一半无口音标注的CV es 说话人（MLS es 没有 ≤8 s 的句子，不进场景）；文本、清洗通过标记取自 common_voice_es@es-train-v1-20261108（未通过的句子不用），labels.accent 记注册人口音组；近邻表 speaker-neighbors-es-accents-20261109（ERes2NetV2）；剔除 CV es dev/test 说话人。规模、模式同英文 cvaccent-*-20261101。 QC 见版本目录 qc.json（通过）。
+    sources:
+    - common_voice_es:legacy
+    - common_voice_es:es-train-v1-20261108
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/es-data-20261108
+- schema_version: dataset-catalog/2.0
+  dataset_id: ts_scene_pool
+  version: es-handover-20261109-punchw-20261109
+  languages:
+  - es
+  tasks:
+  - ts_asr
+  aliases: []
+  derived_from: ts_scene_pool@es-handover-20261109
+  artifacts:
+  - name: es-records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/es-handover-20261109-punchw-20261109/records_es.jsonl.gz
+    expected_bytes: 4832895
+    sha256: b8f6fa1e2ad0ac659d4b822b17ba037d314a9b024ab7752e43fe02bdce9d6cfa
+    metadata:
+      record_count: 20000
+  - name: es-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/es-handover-20261109/audio_index_es.jsonl.gz
+    expected_bytes: 369614
+    sha256: 8859a5b44836713823fc539608e4e9fc930662476e49c19b97568fd86d8e7f06
+    metadata:
+      record_count: 30175
+  - name: record_index
+    kind: lance-record-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/es-handover-20261109-punchw-20261109/record_index/index.json
+    expected_bytes: 750
+    sha256: 3faa8f6b7cdc0914b2ff82662b20ba0f3a05c59cd69d871c38497f2fe3c3b372
+    metadata:
+      snapshot_version: 13
+      rows: 20000
+      schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
+  splits:
+    es:
+      artifacts:
+        records:
+        - es-records
+        audio_index:
+        - es-audio-index
+        records_lance:
+        - record_index
+      task: ts_asr
+      statistics:
+        records: 20000
+        duration_hours: 26.21
+        duration_basis: clip duration (segment span, or the whole file)
+  provenance:
+    status: complete
+    synthetic: none
+    snapshot_date: '2026-11-09'
+    description: ts_scene_pool@es-handover-20261109 的带标点 + 热词版本，供 TS + 热词训练：目标文本本身是 CV es 的书面句子（带标点、大小写），不改；hotwords 为目标所说的热词，metadata.interferer_hotwords 为他人所说、目标没说的热词（Qwen3.8-27B + amphiondata 热词提示词，整词匹配，写法同所在句）。其余字段、场景与音频同源版本（记录引用源版本音频）。20000 条，带目标热词 5736，带他人热词 10049。
+    sources:
+    - ts_scene_pool:es-handover-20261109
+    - common_voice_es:es-train-v1-20261108
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/es-data-20261108
+- schema_version: dataset-catalog/2.0
+  dataset_id: ts_scene_pool
+  version: es-solo-20261109
+  languages:
+  - es
+  tasks:
+  - ts_asr
+  aliases: []
+  artifacts:
+  - name: es-records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/es-solo-20261109/records_es.jsonl.gz
+    expected_bytes: 4463914
+    sha256: 676b4b11ddf4b0381e6e8e32361e43d7944e89ba9e05bbe4e8049f45e8171585
+    metadata:
+      record_count: 30000
+  - name: es-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/es-solo-20261109/audio_index_es.jsonl.gz
+    expected_bytes: 321513
+    sha256: 79680fd44b30acc1b0ae74a4d31539a76144e854d55fb28332d54b5de82b2755
+    metadata:
+      record_count: 25311
+  - name: record_index
+    kind: lance-record-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/es-solo-20261109/record_index/index.json
+    expected_bytes: 730
+    sha256: 33c7562f9fa74b8b1557b5c7abc8d203fb0815020c8abb5870c236857562ef58
+    metadata:
+      snapshot_version: 13
+      rows: 30000
+      schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
+  splits:
+    es:
+      artifacts:
+        records:
+        - es-records
+        audio_index:
+        - es-audio-index
+        records_lance:
+        - record_index
+      task: ts_asr
+      statistics:
+        records: 30000
+        duration_hours: 25.79
+        duration_basis: clip duration (segment span, or the whole file)
+  provenance:
+    status: complete
+    synthetic: none
+    snapshot_date: '2026-11-09'
+    description: es-solo-20261109：短句单人场景：目标单独说一句 1–3.5 秒的话，没有其他说话人，约 30% 缺席孪生（一半近邻注册）。Common Voice 西语 train 带口音标注的目标说话人（至少 6 句 1–8 秒，按 11 个口音组抽取：每组占比为说话人数平方根、单组不超过 15%），他人一半同批口音说话人、一半无口音标注的CV es 说话人（MLS es 没有 ≤8 s 的句子，不进场景）；文本、清洗通过标记取自 common_voice_es@es-train-v1-20261108（未通过的句子不用），labels.accent 记注册人口音组；近邻表 speaker-neighbors-es-accents-20261109（ERes2NetV2）；剔除 CV es dev/test 说话人。规模、模式同英文 cvaccent-*-20261101。 QC 见版本目录 qc.json（通过）。
+    sources:
+    - common_voice_es:legacy
+    - common_voice_es:es-train-v1-20261108
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/es-data-20261108
+- schema_version: dataset-catalog/2.0
+  dataset_id: ts_scene_pool
+  version: es-solo-20261109-punchw-20261109
+  languages:
+  - es
+  tasks:
+  - ts_asr
+  aliases: []
+  derived_from: ts_scene_pool@es-solo-20261109
+  artifacts:
+  - name: es-records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/es-solo-20261109-punchw-20261109/records_es.jsonl.gz
+    expected_bytes: 4536464
+    sha256: bc50c3106b193a319fb0c710cea1d3bb40e5f8eaa3625417267338a1a1c02cb5
+    metadata:
+      record_count: 30000
+  - name: es-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/es-solo-20261109/audio_index_es.jsonl.gz
+    expected_bytes: 321513
+    sha256: 79680fd44b30acc1b0ae74a4d31539a76144e854d55fb28332d54b5de82b2755
+    metadata:
+      record_count: 25311
+  - name: record_index
+    kind: lance-record-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/es-solo-20261109-punchw-20261109/record_index/index.json
+    expected_bytes: 746
+    sha256: e26b260bb2ce665a30a7588c8e83c1363ef31ec5e7c2bf61ae89814b4e942867
+    metadata:
+      snapshot_version: 13
+      rows: 30000
+      schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
+  splits:
+    es:
+      artifacts:
+        records:
+        - es-records
+        audio_index:
+        - es-audio-index
+        records_lance:
+        - record_index
+      task: ts_asr
+      statistics:
+        records: 30000
+        duration_hours: 25.79
+        duration_basis: clip duration (segment span, or the whole file)
+  provenance:
+    status: complete
+    synthetic: none
+    snapshot_date: '2026-11-09'
+    description: ts_scene_pool@es-solo-20261109 的带标点 + 热词版本，供 TS + 热词训练：目标文本本身是 CV es 的书面句子（带标点、大小写），不改；hotwords 为目标所说的热词，metadata.interferer_hotwords 为他人所说、目标没说的热词（Qwen3.8-27B + amphiondata 热词提示词，整词匹配，写法同所在句）。其余字段、场景与音频同源版本（记录引用源版本音频）。30000 条，带目标热词 7053，带他人热词 3033。
+    sources:
+    - ts_scene_pool:es-solo-20261109
+    - common_voice_es:es-train-v1-20261108
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/es-data-20261108

@@ -140,4 +140,14 @@ def test_neighbour_candidates_of_the_accent_pools_are_the_corpora_they_draw_from
     for mode, corpora in (("cv", pool["CV_ACCENT_CORPORA"]), ("csd", pool["CS_DIALOGUE_CORPORA"])):
         target = next(c[0] for c in corpora if c[4])
         assert neighbors["POOL_PEERS"][target] == {c[0] for c in corpora}, mode
-    assert {c[0] for c in neighbors["EN_ACCENT_CORPORA"]["en"]} == set(pool["HELD_OUT_SPEAKERS"])
+    assert {c[0] for c in neighbors["EN_ACCENT_CORPORA"]["en"]} == set(pool["HELD_OUT_SPEAKERS"]) - {"common_voice_es"}
+    assert neighbors["POOL_PEERS"]["common_voice_es"] == {c[0] for c in pool["ES_CORPORA"]}
+    assert [c[:3] for c in neighbors["ES_ACCENT_CORPORA"]["es"]] == [c[:3] for c in pool["ES_CORPORA"]]
+
+
+@pytest.mark.parametrize("answer, group", [
+    ("México", "mexico"), ("Ciudad de México", "mexico"), ("España: Islas Canarias", "canary"),
+    ("Chileno: Chile, Cuyo,neutral", "chile"), ("Cuban", "other"), ("México,Chileno: Chile, Cuyo", None), ("", None),
+])
+def test_spanish_accent_groups_come_from_the_cv_es_answers(answer, group):
+    assert pool["accent_group"](answer, "common_voice_es") == group
