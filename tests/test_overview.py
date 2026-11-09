@@ -281,3 +281,12 @@ def test_cos_cell_marks_missing_and_partial_coverage():
     assert _cos_cell([first], locations) == "快照 20260914"
     assert _cos_cell([first, second], locations) == "部分版本：快照 20260914"
     assert _cos_cell([second], locations) == "没有"
+
+    # Three or more mirrored directories show as their parent and a count.
+    locations["a@v2"] = [
+        ("files", "amphion-audio-backup-1373259071", f"audio-data-contract/datasets/a_{n}/")
+        for n in range(3)
+    ]
+    assert _cos_cell([first, second], locations) == (
+        "快照 20260914、`备份桶:audio-data-contract/datasets/` 下 3 个目录"
+    )

@@ -163,6 +163,14 @@
     "real_rir_slr28": {
       "local": "/workspace/data/datasets/real_rir_slr28/"
     },
+    "realman": {
+      "local": "/workspace/data/datasets/realman/",
+      "only": [
+        "source/hf-aishell-20261025/extracted/test_raw/ma_noise/",
+        "source/hf-aishell-20261025/extracted/train/ma_noise/",
+        "source/hf-aishell-20261025/extracted/val_raw/ma_noise/"
+      ]
+    },
     "sim_rir_slr26": {
       "local": "/workspace/data/datasets/sim_rir_slr26/"
     },
