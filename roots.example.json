@@ -44,6 +44,7 @@
   "police_scene_bench": "/workspace/data/datasets/police_scene_bench",
   "tdtech_customer_bench": "/workspace/data/datasets/tdtech_customer_bench",
   "tdtech_badcase": "/workspace/data/datasets/tdtech_badcase",
+  "speech_deepfake_bench": "/workspace/data/datasets/speech_deepfake_bench",
   "mir1k": "/workspace/data/datasets/mir1k",
   "chime4": "/workspace/data/datasets/chime4",
   "dipco": "/workspace/data/datasets/dipco",
