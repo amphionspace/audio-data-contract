@@ -45,6 +45,10 @@
       "alias": "multilingual_asr_bench",
       "synced": "2026-11-10"
     },
+    "multilingual_asr_bench@v2-20261110": {
+      "alias": "multilingual_asr_bench",
+      "synced": "2026-11-10"
+    },
     "police_scene_bench@external-v1-20261029": {
       "alias": "police_scene_bench",
       "synced": "2026-10-30"
