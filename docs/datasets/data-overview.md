@@ -1,6 +1,6 @@
 # 数据总览
 
-当前登记 **223 个数据集**；另有 **15 个下载来源声明**和 **1 个训练混合配方**。登记不代表本机文件已齐备。
+当前登记 **229 个数据集**；另有 **16 个下载来源声明**和 **1 个训练混合配方**。登记不代表本机文件已齐备。
 
 时长取单个版本的最大值，不跨版本相加；≈ 为参考表或估算值，— 为暂无完整时长。各版本的时长、说明、COS 地址和质量证据见[版本明细](data-versions.md)。
 
@@ -33,7 +33,7 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [dipco](data-versions.md#dipco) | en | 语音识别、带说话人标注的语音识别、说话人分段与归属 | 6.5 | 家庭晚宴英文对话，近讲与远场阵列（DiPCo） | 没有 |
 | [emilia_en](data-versions.md#emilia_en) | en | 语音识别 | 43,624.0 | Emilia 英语野外语音（已清洗） | 快照 20260914 |
 | [emotion1200_en](data-versions.md#emotion1200_en) | en | 说话人情感分类、情感与说话风格描述、语音情感识别 | 5.2 | 英文情感识别与描述评测（Emotion1200） | 快照 20260914 |
-| [fleurs_en](data-versions.md#fleurs_en) | en | 语音识别 | 10.3 | 多语朗读英语部分（FLEURS） | 快照 20260914 |
+| [fleurs_en](data-versions.md#fleurs_en) | en | 语音识别 | 10.3 | 多语朗读英语部分（FLEURS） | 部分版本：快照 20260914 |
 | [gigaspeech](data-versions.md#gigaspeech) | en | 语音识别、diarization、带说话人标注的语音识别 | 10,050.7 | 有声书、播客和 YouTube 英语（GigaSpeech） | 部分版本：快照 20260914 |
 | [hifitts](data-versions.md#hifitts) | en | 语音识别、语音合成 | 291.7 | 英文有声书高保真朗读（Hi-Fi TTS） | `TTS 桶:HiFiTTS/`（原始数据） |
 | [hifitts2](data-versions.md#hifitts2) | en | 语音识别、语音合成 | 35,932.7 | 英文有声书高保真朗读（Hi-Fi TTS 2） | 没有 |
@@ -89,7 +89,7 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [emilia2_zh_overlap_farsim](data-versions.md#emilia2_zh_overlap_farsim) | zh | 带说话人标注的语音识别 | — | Emilia2 中文对话重排的重叠远场多人数据 | 没有 |
 | [emilia_zh](data-versions.md#emilia_zh) | zh | 语音识别 | 40,848.4 | Emilia 中文野外语音（已清洗） | 部分版本：快照 20260914 |
 | [emotion1200_zh](data-versions.md#emotion1200_zh) | zh | 说话人情感分类、情感与说话风格描述、语音情感识别 | 4.9 | 中文情感识别与描述评测（Emotion1200） | 快照 20260914 |
-| [fleurs_zh](data-versions.md#fleurs_zh) | zh | 语音识别 | 14.1 | 多语朗读中文部分（FLEURS） | 快照 20260914 |
+| [fleurs_zh](data-versions.md#fleurs_zh) | zh | 语音识别 | 14.1 | 多语朗读中文部分（FLEURS） | 部分版本：快照 20260914 |
 | [hi_mia](data-versions.md#hi_mia) | zh | 说话人身份识别、声纹验证 | 533.6 | 固定中文唤醒词的远场声纹验证（HI-MIA） | 快照 20260914 |
 | [hw_grpo_candidates](data-versions.md#hw_grpo_candidates) | zh | 热词增强语音识别 | 62.1 | GRPO 热词挖掘候选（未背过的中文热词提示，含近音易混词） | `备份桶:audio-data-contract/datasets/hw_grpo_candidates/` |
 | [kespeech](data-versions.md#kespeech) | zh | 语音识别、热词增强语音识别 | 1,434.8 | 普通话与 8 种次方言（KeSpeech）；含清洗和热词版 | 部分版本：快照 20260914、`备份桶:audio-data-contract/datasets/kespeech_hotwords/` |
@@ -160,6 +160,7 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [mls_sidon](data-versions.md#mls_sidon) | de、en、es、fr、it、nl、pl、pt | 语音识别、语音合成 | 50,834.3 | 8 种语言有声书，音频经 Sidon 修复（MLS） | 没有 |
 | [mtedx](data-versions.md#mtedx) | es、pt | 语音识别 | 334.1 | TEDx 西语/葡语演讲（mTEDx，非商用） | 没有 |
 | [multi-talker-sd](data-versions.md#multi-talker-sd) | en、zh | 语音识别、语码转换语音识别、连续语音分离、重叠语音检测、带说话人标注的语音识别、说话人分段与归属 | — | AISHELL-1、LibriSpeech 合成的多人对话 | 快照 20260914 |
+| [multilingual_asr_bench](data-versions.md#multilingual_asr_bench) | ar、de、en、es、fr、hi、id、ja、ko、pt、ru、zh | 语音识别 | — | 十二种语言公开 ASR 测试集（只用于评测） | 没有 |
 | [opendatalab_multilingual](data-versions.md#opendatalab_multilingual) | ar、cs、hu、ko、ru、sr、th、vi | 语音识别 | 8,588.2 | 8 个语种的语音识别数据（OpenDataLab） | `备份桶:computer-2/audio/`（原始数据）、`备份桶:opendatalab-multilingual/`（原始数据） |
 | [sot_many_speaker_word_zh_en](data-versions.md#sot_many_speaker_word_zh_en) | en、zh | 带说话人标注的语音识别 | 2,128.0 | — | 没有 |
 | [sot_multispeaker_zh_en](data-versions.md#sot_multispeaker_zh_en) | en、zh、zh-en | 带说话人标注的语音识别 | 7,664.4 | 1–5 人中英合成混音，按人完整转写 | 没有 |
@@ -194,18 +195,21 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 |---|---|---|---:|---|---|
 | [audioset_road_traffic](data-versions.md#audioset_road_traffic) | und | noise | — | AudioSet 道路交通噪声 | 快照 20260914、`备份桶:audio-data-contract/datasets/audioset_road_traffic/` |
 | [banspeech_bn](data-versions.md#banspeech_bn) | bn | 语音识别 | 6.5 | 孟加拉语语音识别数据（BanSpeech） | 快照 20260914 |
+| [casablanca](data-versions.md#casablanca) | ar | 语音识别 | — | Casablanca 八种阿拉伯语方言 | 没有 |
 | [cbtts_bn](data-versions.md#cbtts_bn) | bn | 语音识别 | 20.1 | 孟加拉语语音识别数据（CBTTS） | 快照 20260914 |
 | [ciempiess](data-versions.md#ciempiess) | es | 语音识别 | 18.4 | 墨西哥西班牙语广播语音（CIEMPIESS LIGHT） | 部分版本：快照 20260914、`备份桶:audio-data-contract/datasets/ciempiess_complementary/`、`备份桶:audio-data-contract/datasets/ciempiess_test/` |
 | [cml_tts_fr](data-versions.md#cml_tts_fr) | fr | 语音识别 | 316.0 | 法语有声书朗读（CML-TTS） | 快照 20260914 |
-| [common_voice_ar](data-versions.md#common_voice_ar) | ar | 语音识别 | 58.2 | 众包朗读阿拉伯语（Common Voice） | 快照 20260914 |
+| [common_voice_ar](data-versions.md#common_voice_ar) | ar | 语音识别 | 58.2 | 众包朗读阿拉伯语（Common Voice） | 部分版本：快照 20260914 |
 | [common_voice_bn](data-versions.md#common_voice_bn) | bn | 语音识别 | 67.4 | 众包朗读孟加拉语（Common Voice） | 快照 20260914 |
-| [common_voice_de](data-versions.md#common_voice_de) | de | 语音识别 | 1,034.8 | 众包朗读德语（Common Voice） | 快照 20260914 |
+| [common_voice_de](data-versions.md#common_voice_de) | de | 语音识别 | 1,034.8 | 众包朗读德语（Common Voice） | 部分版本：快照 20260914 |
 | [common_voice_es](data-versions.md#common_voice_es) | es | 语音识别 | 568.5 | 众包朗读西班牙语（Common Voice） | 部分版本：快照 20260914 |
-| [common_voice_fr](data-versions.md#common_voice_fr) | fr | 语音识别 | 924.1 | 众包朗读法语（Common Voice） | 快照 20260914 |
-| [common_voice_ja](data-versions.md#common_voice_ja) | ja | 语音识别 | 48.2 | 众包朗读日语（Common Voice） | 快照 20260914 |
-| [common_voice_ko](data-versions.md#common_voice_ko) | ko | 语音识别 | 2.6 | 众包朗读韩语（Common Voice） | 快照 20260914、`备份桶:audio-data-contract/datasets/common_voice_ko/` |
+| [common_voice_fr](data-versions.md#common_voice_fr) | fr | 语音识别 | 924.1 | 众包朗读法语（Common Voice） | 部分版本：快照 20260914 |
+| [common_voice_hi](data-versions.md#common_voice_hi) | hi | 语音识别 | 7.6 | Common Voice 17 印地语朗读 | 没有 |
+| [common_voice_id](data-versions.md#common_voice_id) | id | 语音识别 | 8.0 | Common Voice 17 印尼语朗读 | 没有 |
+| [common_voice_ja](data-versions.md#common_voice_ja) | ja | 语音识别 | 48.2 | 众包朗读日语（Common Voice） | 部分版本：快照 20260914 |
+| [common_voice_ko](data-versions.md#common_voice_ko) | ko | 语音识别 | 2.6 | 众包朗读韩语（Common Voice） | 部分版本：快照 20260914、`备份桶:audio-data-contract/datasets/common_voice_ko/` |
 | [common_voice_pt](data-versions.md#common_voice_pt) | pt | 语音识别 | 184.3 | Common Voice 17 葡语朗读 | 没有 |
-| [common_voice_ru](data-versions.md#common_voice_ru) | ru | 语音识别 | 69.9 | 众包朗读俄语（Common Voice） | 快照 20260914 |
+| [common_voice_ru](data-versions.md#common_voice_ru) | ru | 语音识别 | 69.9 | 众包朗读俄语（Common Voice） | 部分版本：快照 20260914 |
 | [coraa](data-versions.md#coraa) | pt | 语音识别 | 290.5 | 巴西葡语多来源语音（CORAA v1.1） | 没有 |
 | [coraa_mupe](data-versions.md#coraa_mupe) | pt | 语音识别 | 365.2 | 巴西葡语生活访谈（CORAA MUPE） | 快照 20260914 |
 | [coraa_nurc_sp](data-versions.md#coraa_nurc_sp) | pt | 语音识别 | 239.3 | 圣保罗口音葡语自发语音（NURC-SP） | 没有 |
@@ -214,18 +218,20 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [dns5_noise_train](data-versions.md#dns5_noise_train) | und | noise、rir | 252.6 | 训练用 DNS5 噪声与模拟房间响应 | `备份桶:audio-data-contract/datasets/dns5_noise_train/` |
 | [emilia_ja](data-versions.md#emilia_ja) | ja | 语音识别 | 1,715.5 | Emilia 日语野外语音 | 快照 20260914 |
 | [emilia_ko](data-versions.md#emilia_ko) | ko | 语音识别 | 217.2 | Emilia 韩语野外语音 | 快照 20260914 |
-| [fleurs_ar](data-versions.md#fleurs_ar) | ar | 语音识别 | 8.2 | 多语朗读阿拉伯语部分（FLEURS） | 快照 20260914、`备份桶:audio-data-contract/datasets/fleurs_ar/` |
+| [fleurs_ar](data-versions.md#fleurs_ar) | ar | 语音识别 | 8.2 | 多语朗读阿拉伯语部分（FLEURS） | 部分版本：快照 20260914、`备份桶:audio-data-contract/datasets/fleurs_ar/` |
 | [fleurs_bn](data-versions.md#fleurs_bn) | bn | 语音识别 | 15.6 | 多语朗读孟加拉语部分（FLEURS） | 快照 20260914 |
-| [fleurs_de](data-versions.md#fleurs_de) | de | 语音识别 | 13.4 | 多语朗读德语部分（FLEURS） | 快照 20260914 |
-| [fleurs_es](data-versions.md#fleurs_es) | es | 语音识别 | 13.2 | 多语朗读西班牙语部分（FLEURS） | 快照 20260914 |
-| [fleurs_fr](data-versions.md#fleurs_fr) | fr | 语音识别 | 13.1 | 多语朗读法语部分（FLEURS） | 快照 20260914 |
-| [fleurs_ja](data-versions.md#fleurs_ja) | ja | 语音识别 | 10.7 | 多语朗读日语部分（FLEURS） | 快照 20260914 |
-| [fleurs_ko](data-versions.md#fleurs_ko) | ko | 语音识别 | 10.1 | 多语朗读韩语部分（FLEURS） | 快照 20260914 |
+| [fleurs_de](data-versions.md#fleurs_de) | de | 语音识别 | 13.4 | 多语朗读德语部分（FLEURS） | 部分版本：快照 20260914 |
+| [fleurs_es](data-versions.md#fleurs_es) | es | 语音识别 | 13.2 | 多语朗读西班牙语部分（FLEURS） | 部分版本：快照 20260914 |
+| [fleurs_fr](data-versions.md#fleurs_fr) | fr | 语音识别 | 13.1 | 多语朗读法语部分（FLEURS） | 部分版本：快照 20260914 |
+| [fleurs_hi](data-versions.md#fleurs_hi) | hi | 语音识别 | 2.1 | FLEURS 印地语朗读 | 没有 |
+| [fleurs_id](data-versions.md#fleurs_id) | id | 语音识别 | 3.5 | FLEURS 印尼语朗读 | 没有 |
+| [fleurs_ja](data-versions.md#fleurs_ja) | ja | 语音识别 | 10.7 | 多语朗读日语部分（FLEURS） | 部分版本：快照 20260914 |
+| [fleurs_ko](data-versions.md#fleurs_ko) | ko | 语音识别 | 10.1 | 多语朗读韩语部分（FLEURS） | 部分版本：快照 20260914 |
 | [fleurs_pt](data-versions.md#fleurs_pt) | pt | 语音识别 | 14.7 | FLEURS 巴西葡语朗读 | 没有 |
-| [fleurs_ru](data-versions.md#fleurs_ru) | ru | 语音识别 | 11.6 | 多语朗读俄语部分（FLEURS） | 快照 20260914 |
+| [fleurs_ru](data-versions.md#fleurs_ru) | ru | 语音识别 | 11.6 | 多语朗读俄语部分（FLEURS） | 部分版本：快照 20260914 |
 | [fsd50k](data-versions.md#fsd50k) | und | noise、sound_event | 108.6 | 200 类声音事件（FSD50K） | `备份桶:audio-data-contract/datasets/noise_open/` |
 | [galgame](data-versions.md#galgame) | ja | 语音合成 | 10,173.7 | 日语视觉小说配音，TTS 用 | `TTS 桶:Galgame-VisualNovel-Reupload/`（原始数据） |
-| [gigaspeech2_id](data-versions.md#gigaspeech2_id) | id | 语音识别、热词增强语音识别 | 1,980.1 | 印尼语网络语音（GigaSpeech 2）；含热词版 | 快照 20260914 |
+| [gigaspeech2_id](data-versions.md#gigaspeech2_id) | id | 语音识别、热词增强语音识别 | 1,980.1 | 印尼语网络语音（GigaSpeech 2）；含热词版 | 部分版本：快照 20260914 |
 | [google_latam](data-versions.md#google_latam) | es | 语音识别 | 38.0 | 拉美六国西语朗读（Google 众包） | 快照 20260914 |
 | [heroico](data-versions.md#heroico) | es | 语音识别 | 14.9 | 墨西哥军校西语朗读与问答（Heroico） | 没有 |
 | [koreaspeech](data-versions.md#koreaspeech) | ko | 语音识别 | 3,828.3 | 韩语语音识别数据（KoreaSpeech） | 快照 20260914 |
@@ -279,6 +285,7 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [common_voice_zh_hk](../../catalog/download_queue.yaml#L113) | 26.0 | yue | 语音识别 |
 | [gigaspeech2](../../catalog/download_queue.yaml#L165) | hf-8dc0d0e502b7 | id、th、vi | 语音识别 |
 | [granary](../../catalog/download_queue.yaml#L200) | hf-0fe23a860e35 | multi | 语音识别、语音翻译 |
+| [kathbath](../../catalog/download_queue.yaml#L299) | ai4bharat-20250409 | hi | 语音识别 |
 | [lemas](../../catalog/download_queue.yaml#L250) | hf-91f0c1b9a29f | multi | 语音识别 |
 | [loquacious_set](../../catalog/loquacious_set.yaml#L1) | hf-0e84cdb9e4b8 | en | 语音识别 |
 | [omnilingual-asr-corpus](../../catalog/download_queue.yaml#L225) | hf-8648ba894637 | multi | 语音识别 |

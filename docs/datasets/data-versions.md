@@ -81,6 +81,7 @@ Common Voice 英语众包朗读；含清洗、热词、加噪版
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
+| [common_voice_en@hf-8262c16bf297](../../catalog/multilingual_asr_sources.yaml#L200) | 27.0 | 已登记 | 没有 |
 | [common_voice_en@hotwords-v1-20261102](../../catalog/hotwords_v1_20261102.yaml#L184) | 469.7 | 已登记 | 没有 |
 | [common_voice_en@icefall-20260908](../../catalog/icefall_runtime.yaml#L311) | 1,862.7 | 已登记 | 快照 20260914 |
 | [common_voice_en@legacy-20260804](../../catalog/icefall_base.yaml#L263) | 1,862.7 | 已登记 | 快照 20260914 |
@@ -115,6 +116,7 @@ Common Voice 英语众包朗读；含清洗、热词、加噪版
 | [cv_en_rir_slr28_sim_hotwords@eval-20260804](../../catalog/open_audio_eval.yaml#L2166) | 27.2 | 已登记 | 快照 20260914 |
 | [common_voice_en@legacy-20260804](../../catalog/icefall_base.yaml#L263) | 1,854.0 | [参考表](https://ccnuebbmik1f.feishu.cn/wiki/CEXFwEjPoi2bIukVjk9c5FdOn12?sheet=3d4d23) | 快照 20260914 |
 
+- `common_voice_en@hf-8262c16bf297`：Common Voice 17.0 en 的非官方 HF 镜像（官方 Mozilla 仓库需要授权），只下载了 test，与 common_voice_pt@hf-8262c16bf297 同一修订
 - `common_voice_en@hotwords-v1-20261102`：common_voice_en@train-punc-v1-20261102 中被 TS 场景池（open-audio-llm 训练配方 train-data-v7set30）用作目标或干扰语音的句子，带热词标注：custom.hotwords 是这句里说到的热词，按本行文本的写法（英文按整词匹配、不分大小写，所有格算同一个词；本行文本里找不到的词去掉）；custom.hotword_labeling 记标注来源、标注时看到的文本和模型原始抽取。314807 句里 144126 句有热词，其中 137676 句复用 hw_sft@hw-20261014 的已有标注。只含标过的句子，文本与父版本相同；录音沿用父版本，不复制音频。脚本 scripts/ts_hotwords/register_hotwords.py，标注工具 scripts/ts_hotwords/label_hotwords.py
 - `common_voice_en@punc-teacher-v1-20261102`：common_voice_en@legacy-20260804 的 train 监督片段里的 Qwen3.8-27B 老师给 25000 句加的英文标点（24624 句去掉标点后与输入一致，ok=true）：custom.punctuation_teacher 记输出 text、ok 和模型看到的无标点输入 input。这批句子用来微调 Qwen3-4B 学生，抽样见 amphiondata scripts/punctuation/build_teacher_set_en.py。只含这些句子，text 与父版本相同，不是标点后的文本；录音沿用父版本，不复制音频。中间产物，供复现和比较学生，不直接用于训练。脚本 scripts/punctuation/register_punc_intermediates.py
 - `common_voice_en@punc-written-en-v1-20261102`：common_voice_en@legacy-20260804 训练集原标注加英文书面化标点并恢复大小写（规范 en-v1，amphiondata written_punctuation_en）：Qwen3.8-27B 给 10 万条加标点，蒸馏到 Qwen3-4B 学生（LoRA）跑全量，不带听音提示。只插 , . ? ! ; : 和改大小写，转小写去标点后与原标注逐词一致；模型改了词的条目退回原标注只加句号；代词 I 统一大写，首字母大写，每条以 . ? ! 结尾。文件与源 supervisions 条数、顺序相同，只换 text；导出后逐条回读核对
@@ -186,8 +188,10 @@ Emilia 英语野外语音（已清洗）
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
+| [fleurs_en@hf-70bb2e84b976](../../catalog/multilingual_asr_sources.yaml#L137) | 1.8 | 已登记 | 没有 |
 | [fleurs_en@legacy](../../catalog/legacy_multilingual.yaml#L841) | 10.3 | 已登记 | 快照 20260914 |
 
+- `fleurs_en@hf-70bb2e84b976`：Google FLEURS 的 en_us 子集（音频归档和 TSV 转写），只下载了 test，与 fleurs_pt 同一修订
 - 有含标点版本
 
 ### gigaspeech
@@ -906,6 +910,7 @@ Common Voice 中文众包朗读；含清洗、热词、加噪版
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
 | [common_voice_zh@clean-dual-qwen-moss-v1-20261009](../../catalog/zh_source_clean_20261009.yaml#L338) | 41.8 | 已登记 | 没有 |
+| [common_voice_zh@hf-8262c16bf297](../../catalog/multilingual_asr_sources.yaml#L64) | 17.5 | 已登记 | 没有 |
 | [common_voice_zh@icefall-20260908](../../catalog/icefall_runtime.yaml#L1685) | 76.1 | 已登记 | 快照 20260914 |
 | [common_voice_zh@legacy-20260804](../../catalog/icefall_base.yaml#L1311) | 76.1 | 已登记 | 快照 20260914 |
 | [common_voice_zh@punc-written-v1-20261102](../../catalog/zh_punc_written_v1_gaps.yaml#L66) | 42.6 | 已登记 | 没有 |
@@ -939,6 +944,7 @@ Common Voice 中文众包朗读；含清洗、热词、加噪版
 | [common_voice_zh@legacy-20260804](../../catalog/icefall_base.yaml#L1311) | 43.0 | [参考表](https://ccnuebbmik1f.feishu.cn/wiki/CEXFwEjPoi2bIukVjk9c5FdOn12?sheet=3d4d23) | 快照 20260914 |
 
 - `common_voice_zh@clean-dual-qwen-moss-v1-20261009`：common_voice_zh@icefall-20260908 的 train 监督片段，经 Qwen3-ASR-1.7B 与 MOSS-Transcribe-Diarize 双引擎一致性清洗（与 2026-10-08 的 primewords、aishell3、aidatatang、magicdata、magicdata_ramc 同一流程）；逐条写入 custom.clean（pass、reason、action、engine_status、两引擎各自和互相的 CER、MOSS 说话人段），不删除记录，读取时按 require_clean_pass 过滤。音频沿用源版本，不复制。规则 consensus-v6 / wenetspeech-faithful-v5：29560 条中 pass 28448、reject 1112。少于 2 个字的 too_short 共 0 条按规则不经引擎直接 pass。restore_disfluency 改写了 1 条的 text（原文留在 custom.original_text）；无标点清单另把 192 条的标点和撇号去掉。引擎原始结果和复核清单在 evidence/。脚本 scripts/zh_source_clean/register_clean_dual.py
+- `common_voice_zh@hf-8262c16bf297`：Common Voice 17.0 zh-CN 的非官方 HF 镜像（官方 Mozilla 仓库需要授权），只下载了 test，与 common_voice_pt@hf-8262c16bf297 同一修订
 - `common_voice_zh@punc-written-v1-20261102`：common_voice_zh@legacy-20260804 训练集原标注加书面化标点，方法与 punc-written-v1-20261029 相同（amphiondata docs/written-punctuation.md：GB/T 15834、逗号从紧；Qwen3-4B 学生 punc-student-v1 以 Qwen3-ASR-1.7B 听音频得到的带标点转写作语气提示，只往原标注里插标点）。模型改动原文的条目按字对齐把标点搬回原标注；每条以 。？！ 结尾；没有汉字的条目和空标注原样保留。文件与源 supervisions 条数、顺序相同，只换 text
 - `common_voice_zh@train-punc-v1-20261102`：common_voice_zh@legacy-20260804 的 train 训练版本，目标文本换成带标点的写法（按 id 取自 datasets/common_voice_zh/versions/punc-written-v1-20261102/cv-zh-CN_supervisions_train_punc_written.jsonl.gz；去掉标点和空格、转小写后与原文一致才替换，否则保留原文）。其余字段与源版本相同，录音引用源版本
 - 含派生版本（与源数据可能重叠）
@@ -1062,10 +1068,12 @@ Emilia 中文野外语音（已清洗）
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
+| [fleurs_zh@hf-70bb2e84b976](../../catalog/multilingual_asr_sources.yaml#L1) | 3.1 | 已登记 | 没有 |
 | [fleurs_zh@icefall-20260908](../../catalog/icefall_runtime.yaml#L1895) | 14.1 | 已登记 | 快照 20260914 |
 | [fleurs_zh@legacy](../../catalog/legacy_multilingual.yaml#L2305) | 14.1 | 已登记 | 快照 20260914 |
 | [fleurs_zh@legacy-20260804](../../catalog/icefall_base.yaml#L1498) | 14.1 | 已登记 | 快照 20260914 |
 
+- `fleurs_zh@hf-70bb2e84b976`：Google FLEURS 的 cmn_hans_cn 子集（音频归档和 TSV 转写），只下载了 test，与 fleurs_pt 同一修订
 - 有含标点版本
 - 含派生版本（与源数据可能重叠）
 
@@ -2127,6 +2135,18 @@ AISHELL-1、LibriSpeech 合成的多人对话
 |---|---:|---|---|
 | [multi-talker-sd@hf-be2d372003fd](../../catalog/multilingual_multispeaker.yaml#L220) | — | 未登记 | 快照 20260914 |
 
+### multilingual_asr_bench
+
+十二种语言公开 ASR 测试集（只用于评测）
+
+语言：ar、de、en、es、fr、hi、id、ja、ko、pt、ru、zh · 任务：语音识别
+
+| 版本 | 时长（小时） | 口径 | COS |
+|---|---:|---|---|
+| [multilingual_asr_bench@v1-20261110](../../catalog/multilingual_asr_bench.yaml#L1) | — | 未登记 | 没有 |
+
+- `multilingual_asr_bench@v1-20261110`：FLEURS 与 Common Voice 17.0 的 test 划分覆盖中、英、阿、西、法、德、葡、日、韩、印地、俄、印尼十二种语言，另有 GigaSpeech 2 印尼语 test（YouTube）与 Casablanca 八种阿拉伯语方言 test（电视剧）。音频从各自登记的上游快照原样取出，不重编码；转写取上游原文（FLEURS 用 raw transcription）。只用于评测，不进训练
+
 ### opendatalab_multilingual
 
 8 个语种的语音识别数据（OpenDataLab）
@@ -2812,6 +2832,18 @@ AudioSet 道路交通噪声
 
 - 有无标点版本
 
+### casablanca
+
+Casablanca 八种阿拉伯语方言
+
+语言：ar · 任务：语音识别
+
+| 版本 | 时长（小时） | 口径 | COS |
+|---|---:|---|---|
+| [casablanca@hf-8951b1b88e28](../../catalog/multilingual_asr_sources.yaml#L1687) | — | 未登记 | 没有 |
+
+- `casablanca@hf-8951b1b88e28`：UBC-NLP Casablanca 的 test 划分（阿尔及利亚、埃及、约旦、毛里塔尼亚、摩洛哥、巴勒斯坦、阿联酋、也门），音频以 wav 字节存在 parquet 内；validation 未下载。仅限非商业用途
+
 ### cbtts_bn
 
 孟加拉语语音识别数据（CBTTS）
@@ -2864,8 +2896,10 @@ AudioSet 道路交通噪声
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
+| [common_voice_ar@hf-8262c16bf297](../../catalog/multilingual_asr_sources.yaml#L336) | 12.7 | 已登记 | 没有 |
 | [common_voice_ar@legacy](../../catalog/legacy_multilingual.yaml#L1) | 58.2 | 已登记 | 快照 20260914 |
 
+- `common_voice_ar@hf-8262c16bf297`：Common Voice 17.0 ar 的非官方 HF 镜像（官方 Mozilla 仓库需要授权），只下载了 test，与 common_voice_pt@hf-8262c16bf297 同一修订
 - 有含标点版本
 
 ### common_voice_bn
@@ -2888,8 +2922,10 @@ AudioSet 道路交通噪声
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
+| [common_voice_de@hf-8262c16bf297](../../catalog/multilingual_asr_sources.yaml#L744) | 27.4 | 已登记 | 没有 |
 | [common_voice_de@legacy](../../catalog/legacy_multilingual.yaml#L555) | 1,034.8 | 已登记 | 快照 20260914 |
 
+- `common_voice_de@hf-8262c16bf297`：Common Voice 17.0 de 的非官方 HF 镜像（官方 Mozilla 仓库需要授权），只下载了 test，与 common_voice_pt@hf-8262c16bf297 同一修订
 - 有含标点版本
 
 ### common_voice_es
@@ -2902,11 +2938,13 @@ AudioSet 道路交通噪声
 |---|---:|---|---|
 | [common_voice_es@americas-v1-20261103](../../catalog/common_voice_es_americas.yaml#L1) | 261.2 | 已登记 | 没有 |
 | [common_voice_es@es-train-v1-20261108](../../catalog/es_train_v1.yaml#L2) | 514.0 | 已登记 | 没有 |
+| [common_voice_es@hf-8262c16bf297](../../catalog/multilingual_asr_sources.yaml#L472) | 26.9 | 已登记 | 没有 |
 | [common_voice_es@legacy](../../catalog/legacy_multilingual.yaml#L951) | 568.5 | 已登记 | 快照 20260914 |
 | [common_voice_es@mdc-27.0](../../catalog/common_voice_27.yaml#L2) | — | 未登记 | 没有 |
 
 - `common_voice_es@americas-v1-20261103`：从现有 Common Voice 西语（CV 24.0）里按说话人自填口音选出美洲六个预设口音的录音，不复制音频，音频仍读原版本。没填口音的录音（约占六成）无法判断地区，没有收入
 - `common_voice_es@es-train-v1-20261108`：Common Voice 西班牙语 train 的训练版本：Qwen3-ASR-1.7B + whisper-large-v3 双引擎清洗（默认规则 consensus-v7），保留 356,706 句 / 513.98 h（源 357,397 句）；文本用原文的词和标点（书面句子），只规整了 10,562 句的标点前后空格、首字母大写和缺失的句末句号；custom.hotwords 是 Qwen3.8-27B 标的热词。只含清洗通过的行，录音清单沿用 legacy。也是西语 TS 场景池的句子来源。试跑、被拒样本和误杀率见 run_dir README
+- `common_voice_es@hf-8262c16bf297`：Common Voice 17.0 es 的非官方 HF 镜像（官方 Mozilla 仓库需要授权），只下载了 test，与 common_voice_pt@hf-8262c16bf297 同一修订
 - `common_voice_es@mdc-27.0`：Common Voice Scripted Speech 27.0 西语完整版（Mozilla Data Collective cmu5kitx700pemi073feoiqqu，压缩包 51.9 GB），正在下载； 下完按平台给的 sha256 校验，再与 common_voice_es@legacy（CV 24.0）按句子去重，新增部分走 consensus-v7 双引擎清洗
 - 有含标点版本
 - 含派生版本（与源数据可能重叠）
@@ -2919,9 +2957,35 @@ AudioSet 道路交通噪声
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
+| [common_voice_fr@hf-8262c16bf297](../../catalog/multilingual_asr_sources.yaml#L608) | 26.1 | 已登记 | 没有 |
 | [common_voice_fr@legacy](../../catalog/legacy_multilingual.yaml#L1307) | 924.1 | 已登记 | 快照 20260914 |
 
+- `common_voice_fr@hf-8262c16bf297`：Common Voice 17.0 fr 的非官方 HF 镜像（官方 Mozilla 仓库需要授权），只下载了 test，与 common_voice_pt@hf-8262c16bf297 同一修订
 - 有含标点版本
+
+### common_voice_hi
+
+Common Voice 17 印地语朗读
+
+语言：hi · 任务：语音识别
+
+| 版本 | 时长（小时） | 口径 | COS |
+|---|---:|---|---|
+| [common_voice_hi@hf-8262c16bf297](../../catalog/multilingual_asr_sources.yaml#L1177) | 7.6 | 已登记 | 没有 |
+
+- `common_voice_hi@hf-8262c16bf297`：Common Voice 17.0 hi 的非官方 HF 镜像（官方 Mozilla 仓库需要授权），只下载了 dev/test，与 common_voice_pt@hf-8262c16bf297 同一修订
+
+### common_voice_id
+
+Common Voice 17 印尼语朗读
+
+语言：id · 任务：语音识别
+
+| 版本 | 时长（小时） | 口径 | COS |
+|---|---:|---|---|
+| [common_voice_id@hf-8262c16bf297](../../catalog/multilingual_asr_sources.yaml#L1502) | 8.0 | 已登记 | 没有 |
+
+- `common_voice_id@hf-8262c16bf297`：Common Voice 17.0 id 的非官方 HF 镜像（官方 Mozilla 仓库需要授权），只下载了 dev/test，与 common_voice_pt@hf-8262c16bf297 同一修订
 
 ### common_voice_ja
 
@@ -2931,8 +2995,10 @@ AudioSet 道路交通噪声
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
+| [common_voice_ja@hf-8262c16bf297](../../catalog/multilingual_asr_sources.yaml#L880) | 8.9 | 已登记 | 没有 |
 | [common_voice_ja@legacy](../../catalog/legacy_multilingual.yaml#L1593) | 48.2 | 已登记 | 快照 20260914 |
 
+- `common_voice_ja@hf-8262c16bf297`：Common Voice 17.0 ja 的非官方 HF 镜像（官方 Mozilla 仓库需要授权），只下载了 test，与 common_voice_pt@hf-8262c16bf297 同一修订
 - 有含标点版本
 
 ### common_voice_ko
@@ -2943,8 +3009,10 @@ AudioSet 道路交通噪声
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
+| [common_voice_ko@hf-8262c16bf297](../../catalog/multilingual_asr_sources.yaml#L1016) | 0.5 | 已登记 | 没有 |
 | [common_voice_ko@legacy](../../catalog/legacy_multilingual.yaml#L1801) | 2.6 | 已登记 | 快照 20260914、`amphion-audio-backup-1373259071:audio-data-contract/datasets/common_voice_ko/` |
 
+- `common_voice_ko@hf-8262c16bf297`：Common Voice 17.0 ko 的非官方 HF 镜像（官方 Mozilla 仓库需要授权），只下载了 test，与 common_voice_pt@hf-8262c16bf297 同一修订
 - 有含标点版本
 
 ### common_voice_pt
@@ -2969,8 +3037,10 @@ Common Voice 17 葡语朗读
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
+| [common_voice_ru@hf-8262c16bf297](../../catalog/multilingual_asr_sources.yaml#L1341) | 15.9 | 已登记 | 没有 |
 | [common_voice_ru@legacy](../../catalog/legacy_multilingual.yaml#L2061) | 69.9 | 已登记 | 快照 20260914 |
 
+- `common_voice_ru@hf-8262c16bf297`：Common Voice 17.0 ru 的非官方 HF 镜像（官方 Mozilla 仓库需要授权），只下载了 test，与 common_voice_pt@hf-8262c16bf297 同一修订
 - 有含标点版本
 
 ### coraa
@@ -3081,8 +3151,10 @@ Emilia 韩语野外语音
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
+| [fleurs_ar@hf-70bb2e84b976](../../catalog/multilingual_asr_sources.yaml#L273) | 1.3 | 已登记 | 没有 |
 | [fleurs_ar@legacy](../../catalog/legacy_multilingual.yaml#L71) | 8.2 | 已登记 | 快照 20260914、`amphion-audio-backup-1373259071:audio-data-contract/datasets/fleurs_ar/` |
 
+- `fleurs_ar@hf-70bb2e84b976`：Google FLEURS 的 ar_eg 子集（音频归档和 TSV 转写），只下载了 test，与 fleurs_pt 同一修订
 - 有含标点版本
 
 ### fleurs_bn
@@ -3105,8 +3177,10 @@ Emilia 韩语野外语音
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
+| [fleurs_de@hf-70bb2e84b976](../../catalog/multilingual_asr_sources.yaml#L681) | 3.2 | 已登记 | 没有 |
 | [fleurs_de@legacy](../../catalog/legacy_multilingual.yaml#L625) | 13.4 | 已登记 | 快照 20260914 |
 
+- `fleurs_de@hf-70bb2e84b976`：Google FLEURS 的 de_de 子集（音频归档和 TSV 转写），只下载了 test，与 fleurs_pt 同一修订
 - 有含标点版本
 
 ### fleurs_es
@@ -3117,8 +3191,10 @@ Emilia 韩语野外语音
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
+| [fleurs_es@hf-70bb2e84b976](../../catalog/multilingual_asr_sources.yaml#L409) | 3.1 | 已登记 | 没有 |
 | [fleurs_es@legacy](../../catalog/legacy_multilingual.yaml#L1021) | 13.2 | 已登记 | 快照 20260914 |
 
+- `fleurs_es@hf-70bb2e84b976`：Google FLEURS 的 es_419 子集（音频归档和 TSV 转写），只下载了 test，与 fleurs_pt 同一修订
 - 有含标点版本
 
 ### fleurs_fr
@@ -3129,9 +3205,35 @@ Emilia 韩语野外语音
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
+| [fleurs_fr@hf-70bb2e84b976](../../catalog/multilingual_asr_sources.yaml#L545) | 2.0 | 已登记 | 没有 |
 | [fleurs_fr@legacy](../../catalog/legacy_multilingual.yaml#L1377) | 13.1 | 已登记 | 快照 20260914 |
 
+- `fleurs_fr@hf-70bb2e84b976`：Google FLEURS 的 fr_fr 子集（音频归档和 TSV 转写），只下载了 test，与 fleurs_pt 同一修订
 - 有含标点版本
+
+### fleurs_hi
+
+FLEURS 印地语朗读
+
+语言：hi · 任务：语音识别
+
+| 版本 | 时长（小时） | 口径 | COS |
+|---|---:|---|---|
+| [fleurs_hi@hf-70bb2e84b976](../../catalog/multilingual_asr_sources.yaml#L1089) | 2.1 | 已登记 | 没有 |
+
+- `fleurs_hi@hf-70bb2e84b976`：Google FLEURS 的 hi_in 子集（音频归档和 TSV 转写），只下载了 dev/test，与 fleurs_pt 同一修订
+
+### fleurs_id
+
+FLEURS 印尼语朗读
+
+语言：id · 任务：语音识别
+
+| 版本 | 时长（小时） | 口径 | COS |
+|---|---:|---|---|
+| [fleurs_id@hf-70bb2e84b976](../../catalog/multilingual_asr_sources.yaml#L1414) | 3.5 | 已登记 | 没有 |
+
+- `fleurs_id@hf-70bb2e84b976`：Google FLEURS 的 id_id 子集（音频归档和 TSV 转写），只下载了 dev/test，与 fleurs_pt 同一修订
 
 ### fleurs_ja
 
@@ -3141,8 +3243,10 @@ Emilia 韩语野外语音
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
+| [fleurs_ja@hf-70bb2e84b976](../../catalog/multilingual_asr_sources.yaml#L817) | 2.4 | 已登记 | 没有 |
 | [fleurs_ja@legacy](../../catalog/legacy_multilingual.yaml#L1697) | 10.7 | 已登记 | 快照 20260914 |
 
+- `fleurs_ja@hf-70bb2e84b976`：Google FLEURS 的 ja_jp 子集（音频归档和 TSV 转写），只下载了 test，与 fleurs_pt 同一修订
 - 有含标点版本
 
 ### fleurs_ko
@@ -3153,8 +3257,10 @@ Emilia 韩语野外语音
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
+| [fleurs_ko@hf-70bb2e84b976](../../catalog/multilingual_asr_sources.yaml#L953) | 1.3 | 已登记 | 没有 |
 | [fleurs_ko@legacy](../../catalog/legacy_multilingual.yaml#L1905) | 10.1 | 已登记 | 快照 20260914 |
 
+- `fleurs_ko@hf-70bb2e84b976`：Google FLEURS 的 ko_kr 子集（音频归档和 TSV 转写），只下载了 test，与 fleurs_pt 同一修订
 - 有含标点版本
 
 ### fleurs_pt
@@ -3177,8 +3283,10 @@ FLEURS 巴西葡语朗读
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
+| [fleurs_ru@hf-70bb2e84b976](../../catalog/multilingual_asr_sources.yaml#L1278) | 2.5 | 已登记 | 没有 |
 | [fleurs_ru@legacy](../../catalog/legacy_multilingual.yaml#L2131) | 11.6 | 已登记 | 快照 20260914 |
 
+- `fleurs_ru@hf-70bb2e84b976`：Google FLEURS 的 ru_ru 子集（音频归档和 TSV 转写），只下载了 test，与 fleurs_pt 同一修订
 - 有含标点版本
 
 ### fsd50k
@@ -3213,9 +3321,11 @@ FLEURS 巴西葡语朗读
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
+| [gigaspeech2_id@hf-8dc0d0e502b7](../../catalog/multilingual_asr_sources.yaml#L1603) | — | 未登记 | 没有 |
 | [gigaspeech2_id@local-20260805](../../catalog/local_lhotse_derived.yaml#L1) | 1,980.1 | 已登记 | 快照 20260914 |
 | [gigaspeech2_id_hotwords@hotwords-v1-20260805](../../catalog/local_lhotse_derived.yaml#L41) | 214.9 | 已登记 | 快照 20260914 |
 
+- `gigaspeech2_id@hf-8dc0d0e502b7`：GigaSpeech 2 印尼语 dev/test（YouTube 音频，人工标注，大写无标点）。HF 仓库需同意条款，用团队已获授权的令牌下载；train 见 gigaspeech2_id@local-20260805
 - 含派生版本（与源数据可能重叠）
 
 ### google_latam
