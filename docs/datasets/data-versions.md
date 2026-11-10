@@ -2144,8 +2144,10 @@ AISHELL-1、LibriSpeech 合成的多人对话
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
 | [multilingual_asr_bench@v1-20261110](../../catalog/multilingual_asr_bench.yaml#L1) | — | 未登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/multilingual_asr_bench/` |
+| [multilingual_asr_bench@v2-20261110](../../catalog/multilingual_asr_bench.yaml#L759) | — | 未登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/multilingual_asr_bench/` |
 
 - `multilingual_asr_bench@v1-20261110`：FLEURS 与 Common Voice 17.0 的 test 划分覆盖中、英、阿、西、法、德、葡、日、韩、印地、俄、印尼十二种语言，另有 GigaSpeech 2 印尼语 test（YouTube）与 Casablanca 八种阿拉伯语方言 test（电视剧）。音频从各自登记的上游快照原样取出，不重编码；转写取上游原文（FLEURS 用 raw transcription）。只用于评测，不进训练
+- `multilingual_asr_bench@v2-20261110`：FLEURS 与 Common Voice 17.0 的 test 划分覆盖中、英、阿、西、法、德、葡、日、韩、印地、俄、印尼十二种语言，另有 GigaSpeech 2 印尼语 test（YouTube）、Casablanca 八种阿拉伯语方言 test（电视剧）、Kathbath 印地语 test（手机朗读，已知/未知说话人）、VoxPopuli 法语和德语 test（欧洲议会发言）与 Golos 俄语 test（语音助手指令，众包/远场）。音频从各自登记的上游快照原样取出，只有 Kathbath 的 m4a 解码为 FLAC；转写取上游原文（FLEURS 用 raw transcription，VoxPopuli 用 raw_text）。v1-20261110 是不含 Kathbath、VoxPopuli、Golos 的前一版，两版共用 source/ 下的音频。只用于评测，不进训练
 
 ### opendatalab_multilingual
 
@@ -3328,6 +3330,18 @@ FLEURS 巴西葡语朗读
 - `gigaspeech2_id@hf-8dc0d0e502b7`：GigaSpeech 2 印尼语 dev/test（YouTube 音频，人工标注，大写无标点）。HF 仓库需同意条款，用团队已获授权的令牌下载；train 见 gigaspeech2_id@local-20260805
 - 含派生版本（与源数据可能重叠）
 
+### golos
+
+Golos 俄语语音助手指令评测划分
+
+语言：ru · 任务：语音识别
+
+| 版本 | 时长（小时） | 口径 | COS |
+|---|---:|---|---|
+| [golos@sberdevices-20250324](../../catalog/multilingual_asr_sources.yaml#L2049) | — | 未登记 | 没有 |
+
+- `golos@sberdevices-20250324`：SberDevices Golos 的 test.tar（WAV，16 kHz 单声道），含 crowd 和 farfield 两个测试集。CDN 的 HTTPS 证书已过期，用 HTTP 下载，按 salute-developers/golos 仓库 golos/md5sum.txt 公布的 md5 校验
+
 ### google_latam
 
 拉美六国西语朗读（Google 众包）
@@ -3351,6 +3365,18 @@ FLEURS 巴西葡语朗读
 | [heroico@openslr-39](../../catalog/heroico.yaml#L1) | 14.9 | 已登记 | 没有 |
 
 - `heroico@openslr-39`：West Point Heroico Spanish Speech（LDC2006S37，OpenSLR 39 转发）。主体是 2001 年在墨西哥军校录的朗读和自由问答，墨西哥口音；另有西点军校的小部分录音，含母语者和美国非母语学员，usma_nonnative 不是母语口音，训练美洲口音时应排除。部分西点录音同时录了喉麦（文件名以 t 开头），已从统计中剔除。22.05 kHz 16-bit；部分西点文件头写的是 20050 Hz，按文件头计时长。转写文本是 Latin-1 编码；heroico_answers 有 1 条音频没有转写
+
+### kathbath
+
+Kathbath 印地语手机朗读评测划分
+
+语言：hi · 任务：语音识别
+
+| 版本 | 时长（小时） | 口径 | COS |
+|---|---:|---|---|
+| [kathbath@ai4bharat-20250409](../../catalog/multilingual_asr_sources.yaml#L1972) | — | 未登记 | 没有 |
+
+- `kathbath@ai4bharat-20250409`：AI4Bharat Kathbath clean 版的 test-known、test-unknown 音频包（m4a，含 12 种印度语言）和 n2w 转写包，只登记印地语两个划分。上游没有发布文件哈希：三个文件按服务器给出的大小下载，再按 16 MiB 分片算出 S3 分片 ETag，与对象存储的 ETag 一致；sha256 为本地计算。转写与音频逐条对齐
 
 ### koreaspeech
 
@@ -3627,6 +3653,30 @@ VoxForge 西语朗读（多为西班牙）
 | [voxforge_spanish@hf-1ce6b6f9701d](../../catalog/voxforge_spanish.yaml#L1) | 49.7 | 已登记 | 没有 |
 
 - `voxforge_spanish@hf-1ce6b6f9701d`：VoxForge 西语朗读。约 37.0 h 为西班牙口音，阿根廷、拉美、墨西哥、智利共约 11.6 h；可按 country 字段筛选美洲部分。许可为 GPL-3.0
+
+### voxpopuli_de
+
+VoxPopuli 德语欧洲议会发言
+
+语言：de · 任务：语音识别
+
+| 版本 | 时长（小时） | 口径 | COS |
+|---|---:|---|---|
+| [voxpopuli_de@hf-42f01879c780](../../catalog/multilingual_asr_sources.yaml#L1917) | — | 未登记 | 没有 |
+
+- `voxpopuli_de@hf-42f01879c780`：VoxPopuli 人工转写 ASR 数据的 de test（HF parquet 转换版，音频以 wav 字节存在 parquet 内）；train/validation 未下载
+
+### voxpopuli_fr
+
+VoxPopuli 法语欧洲议会发言
+
+语言：fr · 任务：语音识别
+
+| 版本 | 时长（小时） | 口径 | COS |
+|---|---:|---|---|
+| [voxpopuli_fr@hf-42f01879c780](../../catalog/multilingual_asr_sources.yaml#L1862) | — | 未登记 | 没有 |
+
+- `voxpopuli_fr@hf-42f01879c780`：VoxPopuli 人工转写 ASR 数据的 fr test（HF parquet 转换版，音频以 wav 字节存在 parquet 内）；train/validation 未下载
 
 ### wham
 
