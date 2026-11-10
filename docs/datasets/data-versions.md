@@ -433,8 +433,10 @@ LibriSpeech 混合的目标说话人数据
 | [mls@eval-20260804](../../catalog/open_audio_eval.yaml#L249) | 15.5 | 已登记 | 快照 20260914 |
 | [mls@icefall-20260908](../../catalog/icefall_runtime.yaml#L147) | 44,691.0 | 已登记 | 快照 20260914 |
 | [mls@legacy-20260804](../../catalog/icefall_base.yaml#L117) | 44,691.0 | 已登记 | 快照 20260914 |
+| [mls@punc-written-en-v1-20261109](../../catalog/punc_written_mls_emilia.yaml#L2) | — | 未登记 | 没有 |
 | [mls@legacy-20260804](../../catalog/icefall_base.yaml#L117) | 44,500.0 | [参考表](https://ccnuebbmik1f.feishu.cn/wiki/CEXFwEjPoi2bIukVjk9c5FdOn12?sheet=3d4d23) | 快照 20260914 |
 
+- `mls@punc-written-en-v1-20261109`：mls@legacy-20260804 训练集原标注（全小写、无标点）加英文书面化标点并恢复大小写（规范 en-v1，amphiondata written_punctuation_en）， 学生 student-en-v1（与 punc-written-en-v1-20261102 同一模型）跑全量，不带听音提示。只插 , . ? ! ; : 和改大小写，转小写去标点后与原标注逐词一致。 只在连字符和空格上不同的输出（约 3.7%，如 story-hour 写成 story hour）把标点和大小写搬回原标注，原标注的词和连字符不变； 模型改了词的条目（约 1.7%，多为原标注粘词或 OCR 错字）退回原标注只加句号。代词 I 统一大写，首字母大写，每条以 . ? ! 结尾。 文件与源 supervisions 条数、顺序相同，只换 text；导出后逐条回读核对，0 个问题
 - 含派生版本（与源数据可能重叠）
 
 ### msp_podcast_ser
@@ -1029,10 +1031,12 @@ Emilia 中文野外语音（已清洗）
 | [emilia_zh@icefall-20260908](../../catalog/icefall_runtime.yaml#L982) | 23,956.0 | 已登记 | 快照 20260914 |
 | [emilia_zh@legacy](../../catalog/legacy_multilingual.yaml#L2375) | 40,848.4 | 已登记 | 快照 20260914 |
 | [emilia_zh@legacy-20260804](../../catalog/icefall_base.yaml#L676) | 23,956.0 | 已登记 | 快照 20260914 |
+| [emilia_zh@punc-written-v1-20261109](../../catalog/punc_written_mls_emilia.yaml#L59) | 23,956.0 | 已登记 | 没有 |
 | [emilia_zh@legacy-20260804](../../catalog/icefall_base.yaml#L676) | 23,956.0 | [参考表](https://ccnuebbmik1f.feishu.cn/wiki/CEXFwEjPoi2bIukVjk9c5FdOn12?sheet=3d4d23) | 快照 20260914 |
 
 - `emilia_zh@clean-dual-qwen-moss-v1-20261009`：占位，不可训练。emilia_zh@icefall-20260908 的 9824236 条监督片段做 Qwen3-ASR-1.7B 与 MOSS 双引擎清洗，运行在 Qwen 4419122 条、MOSS 4487099 条处中断（2026-10-10），没有写出任何 custom.clean 判决，也没有 pass / reject 结果。这里只登记两个引擎已完成部分的原始输出（evidence/engine_results_partial_*.jsonl.gz，每行 id、raw、language、hypothesis，id 即源监督片段 id），其余约一半片段没有输出。使用前须续跑引擎并出判决，再另立新版本；任务和配方不得引用本版本。脚本 scripts/zh_source_clean/register_clean_dual.py
 - `emilia_zh@legacy`：参考表注明 clean2604，Whisper + Qwen3ASR 转录、已有清洗；本次未复核实际样本
+- `emilia_zh@punc-written-v1-20261109`：emilia_zh@legacy-20260804 训练集 cuts（原标注无标点）加书面化标点（amphiondata docs/written-punctuation.md，普通话规范 v1）， 学生 student-v1（与 punc-written-v1-20261029 同一模型），不带 Qwen3-ASR 听音提示（试点上 markF1 比带提示低约 2–3 点）。只往原标注里插标点； 模型改动原文的条目按字对齐把标点搬回原标注；每条以 。？！ 结尾。文件与源 cuts 条数、顺序相同，只换每个 cut 里 supervision 的 text；导出后完整回读，0 个问题。 icefall-20260908 快照里登记的 emilia_zh_cuts_all_cleaned_punc.jsonl.gz 在磁盘上不存在，与本版本无关
 - 有含标点版本
 - 含派生版本（与源数据可能重叠）
 
