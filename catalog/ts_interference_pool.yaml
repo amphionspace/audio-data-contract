@@ -204,3 +204,49 @@
     - wenetspeech_podcast@l-20261014:train
     - common_voice_en@legacy-20260804:train
     - gigaspeech@legacy-20260804:train
+- schema_version: dataset-catalog/2.0
+  dataset_id: ts_interference_pool
+  version: es-v1-20261110
+  languages:
+  - es
+  tasks:
+  - ts_asr_interference
+  aliases: []
+  artifacts:
+  - name: es-records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/ts_interference_pool/versions/es-v1-20261110/records_es.jsonl.gz
+    sha256: a6c6c9176064c5adcd2d934978340864b4f1e7d0613aeb7d799f3b594e672ab5
+    metadata:
+      record_count: 112000
+  - name: es-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_interference_pool/versions/es-v1-20261110/audio_index_es.jsonl.gz
+    sha256: fd8bd255a97c950b41d75b177400f998a20fbf849e9e26adc0409759161a774f
+    metadata:
+      record_count: 112000
+  splits:
+    es:
+      artifacts:
+        records:
+        - es-records
+        audio_index:
+        - es-audio-index
+      task: ts_asr_interference
+      statistics:
+        records: 112000
+        duration_hours: 176.63
+        duration_basis: clip duration (segment span, or the whole file)
+  provenance:
+    status: complete
+    synthetic: none
+    snapshot_date: '2026-11-10'
+    description: 西班牙语干扰人素材池（只有 es 划分，与 zh/en 的 v3-20261018 并列使用）：YODAS es（YouTube 句子，每视频最多 10 条，100,000 条 / 134.8 h / 23,605
+      个视频）与 MLS es train（有声书，按说话人每人最多 400 条，12,000 条 / 41.8 h / 81 人），1–15 秒，质量门槛同 v2（有声比例 ≥ 0.5、响度 ≥ −50 dBFS）。Common Voice
+      es 不进池：西语 TS 目标（ts_scene_pool es-*）都来自它，同 LibriSpeech / AISHELL-2 不进 zh/en 池的原因。生成脚本 scripts/ts_robust/build_interference_pool.py
+      --languages es --version es-v1-20261110。
+    sources:
+    - yodas_es@legacy:all
+    - mls_es@legacy:train

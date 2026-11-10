@@ -56,7 +56,10 @@ from audio_data_contract.types import DatasetSpec
 
 SR = mixer.SAMPLE_RATE
 GENERATOR_VERSION = "2"
-TEXT = {"zh": re.compile(r"^[一-鿿]+$"), "en": re.compile(r"^[a-z']+( [a-z']+)*$")}
+TEXT = {"zh": re.compile(r"^[一-鿿]+$"), "en": re.compile(r"^[a-z']+( [a-z']+)*$"),
+        "es": re.compile(r"^[a-záéíóúüñ]+( [a-záéíóúüñ]+)*$")}
+# Spanish sources (Common Voice es) are written sentences: marks are dropped before the plain-words check.
+ES_MARKS = re.compile(r"[¿¡.,;:!?\"«»()]")
 G = {}  # worker-global state, set before the pool forks
 FORK = multiprocessing.get_context("fork")  # Python 3.14 defaults to forkserver, which would not see G
 
@@ -73,6 +76,8 @@ def load_utterances(source, language, catalog, roots):
     for row in (row for path in paths["supervisions"] for row in ts_build._rows(path)):
         text = " ".join((row.get("text") or "").split())
         text = text.replace(" ", "") if language == "zh" else text.lower()
+        if language == "es":
+            text = " ".join(ES_MARKS.sub(" ", text).split())
         if not TEXT[language].match(text) or row.get("start", 0) != 0 or row["recording_id"] not in audio:
             continue
         speaker = f"{source['dataset']}:{row['speaker']}"

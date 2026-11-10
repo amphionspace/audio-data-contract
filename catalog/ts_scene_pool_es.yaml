@@ -584,3 +584,47 @@
     - ts_scene_pool:es-solo-20261109
     - common_voice_es:es-train-v1-20261108
     run_dir: /workspace/workspace/mingdong/data/amphiondata/es-data-20261108
+- schema_version: dataset-catalog/2.0
+  dataset_id: ts_scene_pool
+  version: es-1spk-20261110
+  languages:
+  - es
+  tasks:
+  - ts_asr
+  aliases: []
+  artifacts:
+  - name: es-records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/es-1spk-20261110/records_es.jsonl.gz
+    sha256: fab1fc3b32f5bb4c3c2084f61bb49491617889a8619d55acb614ed39c6b536ce
+    metadata:
+      record_count: 356576
+  - name: es-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/es-1spk-20261110/audio_index_es.jsonl.gz
+    sha256: 179c9c476a5eadd48a77edd1259a557b0c2e7c5a53aa7d2654400ec1f2097d73
+    metadata:
+      record_count: 356576
+  splits:
+    es:
+      artifacts:
+        records:
+        - es-records
+        audio_index:
+        - es-audio-index
+      task: ts_asr
+      statistics:
+        records: 356576
+        duration_hours: 513.8
+        duration_basis: duration of the target (mixture slot) files
+  provenance:
+    status: complete
+    synthetic: none
+    snapshot_date: '2026-11-10'
+    description: 西班牙语单人 TS-ASR 记录（对应 aishellmix / librimix 的 train_1spk），供训练时在线混音（online_mix：干扰人、目标缺席、无人声窗口、进场与前后留白、注册劣化）：目标是
+      common_voice_es@es-train-v1-20261108 train 的一句（只含清洗通过的行，书面化文本与热词），注册是同一说话人的另一句（≥ 1.5 秒，固定种子抽取）；只有一句的 130 个说话人不用。356,576
+      条、4,848 个目标说话人、目标 513.8 h，165,633 条带热词。dev / test 说话人不在 train。生成脚本 scripts/ts_robust/build_ts_1spk_es.py。
+    sources:
+    - common_voice_es@es-train-v1-20261108:train

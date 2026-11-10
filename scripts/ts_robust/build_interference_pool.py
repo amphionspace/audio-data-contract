@@ -20,6 +20,10 @@ speakers and the AISHELLMix targets are all AISHELL-2 speakers, so those corpora
 put a target's own voice into the interference.
 
     python build_interference_pool_v2.py --output-dir DIR [--scale 0.01] [--workers 12]
+
+Spanish (``--languages es --version es-v1-20261110``) is its own version with one split, ``es``: YODAS es
+(YouTube sentences, one file each, grouped by video) and MLS es (audiobooks, real speaker labels). Common Voice es
+is left out for the same reason as LibriSpeech: it holds every Spanish TS-ASR target (ts_scene_pool es-*).
 """
 
 import argparse
@@ -71,6 +75,9 @@ SOURCES = [
     {"language": "en", "kind": "audio_index", "dataset": "emilia2_short", "version": "short-20261014", "split": "train_en", "count": 100000, "cap": 15, "speaker": False, "measure": False},
     {"language": "en", "kind": "recordings", "dataset": "common_voice_en", "version": "legacy-20260804", "split": "train", "count": 50000, "cap": 20, "speaker": True, "measure": True},
     {"language": "en", "kind": "segments", "dataset": "gigaspeech", "version": "legacy-20260804", "split": "train", "count": 50000, "cap": 10, "speaker": False, "measure": True},
+    # videos = one file per sentence with no speaker label, grouped by the video it was cut from.
+    {"language": "es", "kind": "videos", "dataset": "yodas_es", "version": "legacy", "split": "all", "count": 100000, "cap": 10, "speaker": False, "measure": True},
+    {"language": "es", "kind": "recordings", "dataset": "mls_es", "version": "legacy", "split": "train", "count": 12000, "cap": 400, "speaker": True, "measure": True},
 ]
 
 
@@ -128,6 +135,22 @@ def utterance_candidates(catalog, roots, source):
                                   f"{source['dataset']}:{speaker}"))
     if missing:
         print(f"  {source['dataset']}: {missing} recordings without a speaker label were skipped", flush=True)
+    return rows
+
+
+def video_candidates(catalog, roots, source):
+    """Sentence files cut from videos (YODAS ids ``<video>-<n>-<start>-<end>``), grouped by video, transcript non-empty."""
+    texted = set()
+    for path in resolve_split(catalog, source["dataset"], source["version"], source["split"], "supervisions", roots):
+        texted.update(sup["recording_id"] for sup in lines(path) if (sup.get("text") or "").strip())
+    rows = []
+    for path in resolve_split(catalog, source["dataset"], source["version"], source["split"], "recordings", roots):
+        for rec in lines(path):
+            if rec["id"] not in texted or not MIN_SECONDS <= rec["duration"] <= MAX_SECONDS:
+                continue
+            rows.append(candidate(source, rec["id"], rec["id"], rec["sources"][0]["source"], rec["sampling_rate"],
+                                  rec["num_samples"], rec["duration"], len(rec["channel_ids"]),
+                                  f"{source['dataset']}:{rec['id'].rsplit('-', 3)[0]}"))
     return rows
 
 
@@ -258,6 +281,8 @@ def main():
     parser.add_argument("--output-dir", type=Path, required=True)
     parser.add_argument("--scale", type=float, default=1.0, help="fraction of each source count (smoke tests)")
     parser.add_argument("--workers", type=int, default=12)
+    parser.add_argument("--languages", nargs="+", default=["zh", "en"])
+    parser.add_argument("--version", default=VERSION)
     args = parser.parse_args()
     catalog, roots = load_catalog(CATALOG), load_roots(ROOTS)
     root = str(roots[ROOT_ALIAS])
@@ -265,12 +290,14 @@ def main():
     args.output_dir.mkdir(parents=True, exist_ok=True)
     records, indexes, report = defaultdict(list), defaultdict(dict), {}
     checked_dirs = set()
-    for source in SOURCES:
+    for source in (s for s in SOURCES if s["language"] in args.languages):
         name = f"{source['dataset']}:{source['split']}"
         count = max(1, int(source["count"] * args.scale))
         rng = random.Random(f"{SEED}:{name}")
         if source["kind"] == "segments":
             rows = segment_candidates(catalog, roots, source, rng)
+        elif source["kind"] == "videos":
+            rows = video_candidates(catalog, roots, source)
         elif source["kind"] == "audio_index":
             rows = emilia_candidates(catalog, roots, source, held_out)
         else:
@@ -288,7 +315,7 @@ def main():
             raise ValueError(f"{name}: wanted {count}, only {len(passed)} passed the gates")
         language = source["language"]
         for row, quality_columns in passed:
-            ref = {"dataset_id": DATASET_ID, "version": VERSION, "split": language, "cut_id": row["file"]}
+            ref = {"dataset_id": DATASET_ID, "version": args.version, "split": language, "cut_id": row["file"]}
             if row["start"] is not None:
                 ref.update(start=row["start"], duration=row["span"])
             metadata = {"source_dataset": source["dataset"], "source_group": row["group"], **quality_columns}
