@@ -1,0 +1,71 @@
+# 书面化标点补充批次（2026-11-09，占位）：MLS 英文和 Emilia 中文训练集原标注没有标点，用现成学生模型补标点（英文同时恢复大小写），只插标点、不改字；在 ACP 一台 8 卡节点上跑，进度见状态文件。
+- schema_version: dataset-catalog/2.0
+  dataset_id: mls
+  version: punc-written-en-v1-20261109
+  languages:
+  - en
+  tasks:
+  - asr
+  aliases: []
+  derived_from: mls@legacy-20260804
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/mls/versions/punc-written-en-v1-20261109/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      statistics:
+        source_hours: 44659.7
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: >-
+      MLS 英文训练集（mls@legacy-20260804，44,659.7 h，原标注全小写、无标点）按规范 en-v1 加标点并恢复大小写，词不变：
+      学生 student-en-v1（Qwen3-4B LoRA，与 librispeech/gigaspeech/common_voice_en 的 punc-written-en-v1-20261102 同一模型），不带听音提示；
+      转小写去标点后与原标注逐词不一致的输出不用，改成原标注加句号。进行中。
+    source: mls@legacy-20260804
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/punc-mls-emilia-20261109
+  recipe_parameters:
+    spec: written-punctuation-en-v1
+    model: student-en-v1
+- schema_version: dataset-catalog/2.0
+  dataset_id: emilia_zh
+  version: punc-written-v1-20261109
+  languages:
+  - zh
+  tasks:
+  - asr
+  aliases: []
+  derived_from: emilia_zh@legacy-20260804
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/emilia_zh/versions/punc-written-v1-20261109/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      statistics:
+        source_hours: 23956.0
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: >-
+      Emilia 中文训练集（emilia_zh@legacy-20260804，23,956.0 h，cuts，原标注无标点）按普通话书面化标点规范 v1 只插标点、不改字：
+      学生 student-v1（Qwen3-4B LoRA，与 punc-written-v1-20261029 同一模型），不带 Qwen3-ASR 听音提示（试点上 markF1 比带提示低约 2–3 点）；
+      导出时只换每个 cut 里 supervision 的 text。进行中。
+    source: emilia_zh@legacy-20260804
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/punc-mls-emilia-20261109
+  recipe_parameters:
+    spec: written-punctuation-zh-v1
+    model: student-v1

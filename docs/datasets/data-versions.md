@@ -433,8 +433,10 @@ LibriSpeech 混合的目标说话人数据
 | [mls@eval-20260804](../../catalog/open_audio_eval.yaml#L249) | 15.5 | 已登记 | 快照 20260914 |
 | [mls@icefall-20260908](../../catalog/icefall_runtime.yaml#L147) | 44,691.0 | 已登记 | 快照 20260914 |
 | [mls@legacy-20260804](../../catalog/icefall_base.yaml#L117) | 44,691.0 | 已登记 | 快照 20260914 |
+| [mls@punc-written-en-v1-20261109](../../catalog/punc_written_mls_emilia.yaml#L2) | — | 未登记 | 没有 |
 | [mls@legacy-20260804](../../catalog/icefall_base.yaml#L117) | 44,500.0 | [参考表](https://ccnuebbmik1f.feishu.cn/wiki/CEXFwEjPoi2bIukVjk9c5FdOn12?sheet=3d4d23) | 快照 20260914 |
 
+- `mls@punc-written-en-v1-20261109`：MLS 英文训练集（mls@legacy-20260804，44,659.7 h，原标注全小写、无标点）按规范 en-v1 加标点并恢复大小写，词不变： 学生 student-en-v1（Qwen3-4B LoRA，与 librispeech/gigaspeech/common_voice_en 的 punc-written-en-v1-20261102 同一模型），不带听音提示； 转小写去标点后与原标注逐词不一致的输出不用，改成原标注加句号。进行中
 - 含派生版本（与源数据可能重叠）
 
 ### msp_podcast_ser
@@ -1029,10 +1031,12 @@ Emilia 中文野外语音（已清洗）
 | [emilia_zh@icefall-20260908](../../catalog/icefall_runtime.yaml#L982) | 23,956.0 | 已登记 | 快照 20260914 |
 | [emilia_zh@legacy](../../catalog/legacy_multilingual.yaml#L2375) | 40,848.4 | 已登记 | 快照 20260914 |
 | [emilia_zh@legacy-20260804](../../catalog/icefall_base.yaml#L676) | 23,956.0 | 已登记 | 快照 20260914 |
+| [emilia_zh@punc-written-v1-20261109](../../catalog/punc_written_mls_emilia.yaml#L37) | — | 未登记 | 没有 |
 | [emilia_zh@legacy-20260804](../../catalog/icefall_base.yaml#L676) | 23,956.0 | [参考表](https://ccnuebbmik1f.feishu.cn/wiki/CEXFwEjPoi2bIukVjk9c5FdOn12?sheet=3d4d23) | 快照 20260914 |
 
 - `emilia_zh@clean-dual-qwen-moss-v1-20261009`：占位，不可训练。emilia_zh@icefall-20260908 的 9824236 条监督片段做 Qwen3-ASR-1.7B 与 MOSS 双引擎清洗，运行在 Qwen 4419122 条、MOSS 4487099 条处中断（2026-10-10），没有写出任何 custom.clean 判决，也没有 pass / reject 结果。这里只登记两个引擎已完成部分的原始输出（evidence/engine_results_partial_*.jsonl.gz，每行 id、raw、language、hypothesis，id 即源监督片段 id），其余约一半片段没有输出。使用前须续跑引擎并出判决，再另立新版本；任务和配方不得引用本版本。脚本 scripts/zh_source_clean/register_clean_dual.py
 - `emilia_zh@legacy`：参考表注明 clean2604，Whisper + Qwen3ASR 转录、已有清洗；本次未复核实际样本
+- `emilia_zh@punc-written-v1-20261109`：Emilia 中文训练集（emilia_zh@legacy-20260804，23,956.0 h，cuts，原标注无标点）按普通话书面化标点规范 v1 只插标点、不改字： 学生 student-v1（Qwen3-4B LoRA，与 punc-written-v1-20261029 同一模型），不带 Qwen3-ASR 听音提示（试点上 markF1 比带提示低约 2–3 点）； 导出时只换每个 cut 里 supervision 的 text。进行中
 - 有含标点版本
 - 含派生版本（与源数据可能重叠）
 
