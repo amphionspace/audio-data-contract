@@ -1846,13 +1846,15 @@ WenetSpeech L 中的 YouTube 部分
 
 训练用合成背景人声噪声（中英）
 
-语言：en、zh · 任务：noise
+语言：en、es、zh · 任务：noise
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
+| [babble_noise_train@es-v1-20261110](../../catalog/babble_noise_train.yaml#L106) | 25.0 | 已登记 | 没有 |
 | [babble_noise_train@v1-20261017](../../catalog/babble_noise_train.yaml#L1) | 43.3 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/babble_noise_train/` |
 | [babble_noise_train@v2-20261024](../../catalog/babble_noise_train.yaml#L51) | 50.0 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/babble_noise_train/` |
 
+- `babble_noise_train@es-v1-20261110`：训练用西班牙语房间背景人声（babble）：与 v2-20261024 同一渲染函数与参数（30 秒、16–24 人同时说话、SLR28 中/大模拟房间），说话人取自 Common Voice es（es-train-v1-20261108）与 MLS es train。只有 es 划分；用作普通 ASR 空目标片段（ts_nonspeech_pool babble）和背景人声语音池（asr_babble_speech_pool）的来源。脚本 scripts/ts_robust/build_babble_noise_room.py --languages es
 - `babble_noise_train@v1-20261017`：训练用合成背景人声（babble）：babble_noise_synth 的 zh、en 训练划分（每种语言 2,600 条，30 秒，5–20 位说话人同时说，16 kHz 单声道 FLAC），按 Lhotse 录音清单登记，可作为 noise_sources 或空目标的 nonspeech_sources。评测的 babble 用 dev/test 说话人，与训练说话人互不重叠。脚本 scripts/ts_robust/register_babble_noise.py
 - `babble_noise_train@v2-20261024`：训练用房间背景人声（babble）：按 asr_babble_bench@v2-20261023 的合成方法（同一个渲染函数）用训练划分的说话人生成，每段 30 秒、16–24 人同时连续说话、每人站在 SLR28 中/大模拟房间的不同位置，听不出某一个人说的内容；中文说话人取自 AISHELL-2、KeSpeech train，英文取自 LibriSpeech train，与评测的背景人声和目标说话人互不重叠。按 Lhotse 录音清单登记，可作为 noise_sources、nonspeech_sources 或普通 ASR 空目标片段的来源。v1-20261017 是 5–20 人、无混响，可能听得清某句话。脚本 scripts/ts_robust/build_babble_noise_room.py
 
@@ -2420,14 +2422,16 @@ AISHELL-1、LibriSpeech 合成的多人对话
 
 在线混合用的干扰人语音素材池
 
-语言：en、zh · 任务：ts_asr_interference
+语言：en、es、zh · 任务：ts_asr_interference
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
+| [ts_interference_pool@es-v1-20261110](../../catalog/ts_interference_pool.yaml#L207) | 176.6 | 已登记 | 没有 |
 | [ts_interference_pool@v1-20261015](../../catalog/ts_interference_pool.yaml#L1) | — | 未登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_interference_pool/` |
 | [ts_interference_pool@v2-20261016](../../catalog/ts_interference_pool.yaml#L38) | 656.6 | 已登记 | 没有 |
 | [ts_interference_pool@v3-20261018](../../catalog/ts_interference_pool.yaml#L130) | 656.6 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_interference_pool/` |
 
+- `ts_interference_pool@es-v1-20261110`：西班牙语干扰人素材池（只有 es 划分，与 zh/en 的 v3-20261018 并列使用）：YODAS es（YouTube 句子，每视频最多 10 条，100,000 条 / 134.8 h / 23,605 个视频）与 MLS es train（有声书，按说话人每人最多 400 条，12,000 条 / 41.8 h / 81 人），1–15 秒，质量门槛同 v2（有声比例 ≥ 0.5、响度 ≥ −50 dBFS）。Common Voice es 不进池：西语 TS 目标（ts_scene_pool es-*）都来自它，同 LibriSpeech / AISHELL-2 不进 zh/en 池的原因。生成脚本 scripts/ts_robust/build_interference_pool.py --languages es --version es-v1-20261110
 - `ts_interference_pool@v2-20261016`：在线混合 TS 数据的干扰人素材池 v2：单人语音片段 1–15 s，每说话人或每来源视频限量；片段按偏移取自源文件，不复制音频。已排除 AISHELL-2 与 LibriSpeech（AISHELLMix、LibriMix 的目标说话人来源）。质量列 loudness_dbfs、clip_ratio、voiced_ratio 写在 metadata（Emilia2 未测量）
 - `ts_interference_pool@v3-20261018`：干扰人素材池 v3：与 v2-20261016 相同的记录与记录 ID，其中 Emilia2 short 片段（zh 149,999、en 100,000）改为读 emilia2@tts-unified-v0.1 Lance 表内同一条 m4a-128k standalone short（按上游 short ID 与文件名对应，同一 FFmpeg 完整解码存为 FLAC，抽查 40 条与 m4a 解码 SNR ≥ 66.7 dB），训练不再为干扰人启动 ffmpeg；其余来源沿用 v2 的音频索引。Lance 中缺失的 1 条 zh 片段已去掉。生成脚本 scripts/ts_robust/build_interference_pool_v3.py；读取 Lance 片段需要 open-audio-llm 的干扰人池支持指向 Lance 发布的记录（feat/lance-interference-clips）
 
@@ -2529,6 +2533,7 @@ AISHELL-1、LibriSpeech 合成的多人对话
 | [ts_scene_pool@cvaccent-solo-20261101](../../catalog/ts_scene_pool.yaml#L1824) | 44.7 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_scene_pool/` |
 | [ts_scene_pool@cvaccent-solo-20261101-punchw-20261102](../../catalog/train_punc_v1_pools.yaml#L631) | 44.7 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_scene_pool/` |
 | [ts_scene_pool@cvaccent-solo-20261101-punchw2-20261102](../../catalog/train_punc_v1_pools_en.yaml#L602) | 44.7 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_scene_pool/` |
+| [ts_scene_pool@es-1spk-20261110](../../catalog/ts_scene_pool_es.yaml#L587) | 513.8 | 已登记 | 没有 |
 | [ts_scene_pool@es-alt-twins-20261109](../../catalog/ts_scene_pool_es.yaml#L119) | 54.6 | 已登记 | 没有 |
 | [ts_scene_pool@es-alt-twins-20261109-punchw-20261109](../../catalog/ts_scene_pool_es.yaml#L177) | 54.6 | 已登记 | 没有 |
 | [ts_scene_pool@es-handover-20261109](../../catalog/ts_scene_pool_es.yaml#L353) | 26.2 | 已登记 | 没有 |
@@ -2616,6 +2621,7 @@ AISHELL-1、LibriSpeech 合成的多人对话
 - `ts_scene_pool@cvaccent-solo-20261101`：cvaccent-solo-20261101：短句单人场景：目标单独说一句 1–3.5 秒的话，没有其他说话人，约 30% 缺席孪生（一半近邻注册）。Common Voice 英文 train 带口音标注的目标说话人（至少 6 句 1–8 秒，按口音组抽取：每组占比为说话人数平方根、单组不超过 15%；文本、清洗通过标记与口音取自 common_voice_en@icefall-20260908 的双引擎清洗清单，未通过的句子不用），他人一半同批口音说话人、一半 LibriSpeech train；随机孪生注册人按同样口音占比抽取，近邻孪生取近邻（美式口音注册人约一半缺席，其他口音 21–28%），labels.accent 记注册人口音组；近邻表 speaker-neighbors-en-accents-20261101（ERes2NetV2）。剔除三份语料 dev/test 说话人，不含 VCTK。起因：10.28 版本在 ts-asr-benchmark-en 上 VCTK 口音目标 13.8% 判为缺席（苏格兰、爱尔兰、加拿大约 20%，短目标 27%），LibriSpeech 目标 1.8%；训练英文目标 63% 是 LibriSpeech
 - `ts_scene_pool@cvaccent-solo-20261101-punchw-20261102`：ts_scene_pool@cvaccent-solo-20261101 的 en，供 TS + 热词训练：每条目标句按片段 ID 换成带书面化标点的写法（中文 punc-written-v1，英文 en-v1 加标点并恢复大小写；去掉标点和空格、转小写后与原目标一致才替换，源语料本身带标点的保留原样），hotwords 为目标所说的热词，metadata.interferer_hotwords 为干扰者所说、目标没说的热词（标签：Qwen3.8-27B + amphiondata 热词提示词，已有的 hw_sft 标签复用）。其余字段、场景与音频同源版本（记录仍引用源版本音频）。en：30000 条，目标改写 0，带目标热词 5494，带干扰者热词 2446
 - `ts_scene_pool@cvaccent-solo-20261101-punchw2-20261102`：ts_scene_pool@cvaccent-solo-20261101 的 en，供 TS + 热词训练：每条目标句按片段 ID 换成带书面化标点的写法（中文 punc-written-v1，英文 en-v1 加标点并恢复大小写；去掉标点和空格、转小写后与原目标一致才替换，源语料本身带标点的保留原样），hotwords 为目标所说的热词，metadata.interferer_hotwords 为干扰者所说、目标没说的热词（标签：Qwen3.8-27B + amphiondata 热词提示词，已有的 hw_sft 标签复用；英文按整词匹配，所有格算同一个词，干扰者热词按其所在句的大小写还原写法）。其余字段、场景与音频同源版本（记录仍引用源版本音频）。en：30000 条，目标改写 0，带目标热词 5567，带干扰者热词 2446
+- `ts_scene_pool@es-1spk-20261110`：西班牙语单人 TS-ASR 记录（对应 aishellmix / librimix 的 train_1spk），供训练时在线混音（online_mix：干扰人、目标缺席、无人声窗口、进场与前后留白、注册劣化）：目标是 common_voice_es@es-train-v1-20261108 train 的一句（只含清洗通过的行，书面化文本与热词），注册是同一说话人的另一句（≥ 1.5 秒，固定种子抽取）；只有一句的 130 个说话人不用。356,576 条、4,848 个目标说话人、目标 513.8 h，165,633 条带热词。dev / test 说话人不在 train。生成脚本 scripts/ts_robust/build_ts_1spk_es.py
 - `ts_scene_pool@es-alt-twins-20261109`：es-alt-twins-20261109：alternate/burst/short 轮流与插话场景，约 30% 缺席孪生（一半近邻注册）。Common Voice 西语 train 带口音标注的目标说话人（至少 6 句 1–8 秒，按 11 个口音组抽取：每组占比为说话人数平方根、单组不超过 15%），他人一半同批口音说话人、一半无口音标注的CV es 说话人（MLS es 没有 ≤8 s 的句子，不进场景）；文本、清洗通过标记取自 common_voice_es@es-train-v1-20261108（未通过的句子不用），labels.accent 记注册人口音组；近邻表 speaker-neighbors-es-accents-20261109（ERes2NetV2）；剔除 CV es dev/test 说话人。规模、模式同英文 cvaccent-*-20261101。 QC 见版本目录 qc.json（通过）
 - `ts_scene_pool@es-alt-twins-20261109-punchw-20261109`：ts_scene_pool@es-alt-twins-20261109 的带标点 + 热词版本，供 TS + 热词训练：目标文本本身是 CV es 的书面句子（带标点、大小写），不改；hotwords 为目标所说的热词，metadata.interferer_hotwords 为他人所说、目标没说的热词（Qwen3.8-27B + amphiondata 热词提示词，整词匹配，写法同所在句）。其余字段、场景与音频同源版本（记录引用源版本音频）。40000 条，带目标热词 12327，带他人热词 35085
 - `ts_scene_pool@es-handover-20261109`：es-handover-20261109：交接场景：目标与另一人各说一句、先后不重叠（一半另一人取目标近邻），约 30% 缺席孪生。Common Voice 西语 train 带口音标注的目标说话人（至少 6 句 1–8 秒，按 11 个口音组抽取：每组占比为说话人数平方根、单组不超过 15%），他人一半同批口音说话人、一半无口音标注的CV es 说话人（MLS es 没有 ≤8 s 的句子，不进场景）；文本、清洗通过标记取自 common_voice_es@es-train-v1-20261108（未通过的句子不用），labels.accent 记注册人口音组；近邻表 speaker-neighbors-es-accents-20261109（ERes2NetV2）；剔除 CV es dev/test 说话人。规模、模式同英文 cvaccent-*-20261101。 QC 见版本目录 qc.json（通过）

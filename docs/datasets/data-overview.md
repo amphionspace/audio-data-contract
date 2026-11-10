@@ -139,7 +139,7 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [asr_babble_speech_pool](data-versions.md#asr_babble_speech_pool) | en、zh | 语音识别 | 85.5 | 带房间背景人声的中英 ASR 训练句 | 没有 |
 | [asr_distant_talk_pool](data-versions.md#asr_distant_talk_pool) | en、zh | 语音识别 | 55.2 | — | 没有 |
 | [babble_noise_synth](data-versions.md#babble_noise_synth) | en、zh | noise | 50.0 | 合成中英背景人声噪声（5–20 人叠加） | `备份桶:audio-data-contract/datasets/noise_open/` |
-| [babble_noise_train](data-versions.md#babble_noise_train) | en、zh | noise | 50.0 | 训练用合成背景人声噪声（中英） | `备份桶:audio-data-contract/datasets/babble_noise_train/` |
+| [babble_noise_train](data-versions.md#babble_noise_train) | en、es、zh | noise | 50.0 | 训练用合成背景人声噪声（中英） | 部分版本：`备份桶:audio-data-contract/datasets/babble_noise_train/` |
 | [cs_dialogue_meeting_sot](data-versions.md#cs_dialogue_meeting_sot) | zh、zh-en | 带说话人标注的语音识别 | — | CS-Dialogue 中英对话切窗的按人转写数据 | `备份桶:audio-data-contract/datasets/cs_dialogue_meeting_sot/` |
 | [cs_dialogue_mix](data-versions.md#cs_dialogue_mix) | en、zh | 语音识别 | 31.0 | CS-Dialogue 对话中的中英混说语句 | 部分版本：快照 20260914 |
 | [cumix2017](data-versions.md#cumix2017) | en、yue | 语音识别 | 10.9 | 粤英语码转换语音（CUMIX2017） | 快照 20260914 |
@@ -177,10 +177,10 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [ts_asr_shortseg](data-versions.md#ts_asr_shortseg) | en、zh | 目标说话人语音识别 | 0.8 | 目标说话人评测：他人说话的 1–6 秒短片段 | 部分版本：`备份桶:audio-data-contract/datasets/ts_asr_shortseg/` |
 | [ts_asr_singing](data-versions.md#ts_asr_singing) | en、zh | 目标说话人语音识别 | 0.3 | 目标说话人评测：歌声干扰 | `备份桶:audio-data-contract/datasets/ts_asr_singing/` |
 | [ts_hw_test](data-versions.md#ts_hw_test) | en、zh | 目标说话人语音识别 | 7.7 | 目标说话人加热词评测（LibriSpeech 风格） | 快照 20260914 |
-| [ts_interference_pool](data-versions.md#ts_interference_pool) | en、zh | ts_asr_interference | 656.6 | 在线混合用的干扰人语音素材池 | 部分版本：`备份桶:audio-data-contract/datasets/ts_interference_pool/` |
+| [ts_interference_pool](data-versions.md#ts_interference_pool) | en、es、zh | ts_asr_interference | 656.6 | 在线混合用的干扰人语音素材池 | 部分版本：`备份桶:audio-data-contract/datasets/ts_interference_pool/` |
 | [ts_nonspeech_pool](data-versions.md#ts_nonspeech_pool) | en、zh | 语音识别 | 65.7 | 非人声与背景人声的空输出训练片段 | `备份桶:audio-data-contract/datasets/ts_nonspeech_pool/` |
 | [ts_real_train](data-versions.md#ts_real_train) | en、zh | 目标说话人语音识别 | 123.6 | 真实会议切出的目标说话人训练窗口 | 没有 |
-| [ts_scene_pool](data-versions.md#ts_scene_pool) | en、es、zh | 目标说话人语音识别 | 386.2 | 目标说话人难例场景素材（相近声音、交接） | 部分版本：`备份桶:audio-data-contract/datasets/ts_scene_pool/` |
+| [ts_scene_pool](data-versions.md#ts_scene_pool) | en、es、zh | 目标说话人语音识别 | 513.8 | 目标说话人难例场景素材（相近声音、交接） | 部分版本：`备份桶:audio-data-contract/datasets/ts_scene_pool/` |
 | [tts_crosslingual_enroll](data-versions.md#tts_crosslingual_enroll) | en、zh | 目标说话人语音识别 | — | TS-ASR 训练用跨语言 TTS 注册音频 | 没有 |
 | [vitw](data-versions.md#vitw) | en、zh | 语音识别 | 1,085.4 | 真实场景中英语音（VITW）；含回声、远场等评测 | 部分版本：快照 20260914、`备份桶:audio-data-contract/datasets/` 下 17 个目录 |
 | [waxal-asr](data-versions.md#waxal-asr) | ach、aka、am、dag、dga、ee、ff、kpo、lg、ln、mas、mg、nyn、om、sid、sn、sog、ti、wal | 语音识别 | — | 19 种非洲语言语音（WAXAL） | 快照 20260914 |

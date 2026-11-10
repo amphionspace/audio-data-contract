@@ -47,6 +47,9 @@ TALKERS = {
     "zh": [{"dataset": "aishell2", "version": "legacy-20260804", "split": "train"},
            {"dataset": "kespeech", "version": "legacy-20260804", "split": "train"}],
     "en": [{"dataset": "librispeech", "version": "legacy-20260804", "split": "train"}],
+    # Spanish (2026-11-10, version es-v1-20261110 with --languages es): the Spanish training corpora.
+    "es": [{"dataset": "common_voice_es", "version": "es-train-v1-20261108", "split": "train"},
+           {"dataset": "mls_es", "version": "legacy", "split": "train"}],
 }
 DESCRIPTION = (
     "训练用房间背景人声（babble）：按 asr_babble_bench@v2-20261023 的合成方法（同一个渲染函数）用训练划分的说话人生成，"
@@ -63,14 +66,17 @@ def main():
     parser.add_argument("--version", required=True)
     parser.add_argument("--clips", type=int, default=3000, help="clips per language")
     parser.add_argument("--workers", type=int, default=24)
+    parser.add_argument("--languages", nargs="+", default=["zh", "en"])
+    parser.add_argument("--description", default=DESCRIPTION)
     args = parser.parse_args()
+    languages = {language: TALKERS[language] for language in args.languages}
     import yaml
     recipe = {**yaml.safe_load(BENCH_RECIPE.read_text()), "seed": SEED}
     catalog, roots = load_catalog(str(DATA / "registry/catalog")), load_roots(str(DATA / "registry/roots.json"))
     held = {t["speaker"] for line in BENCH_MANIFEST.read_text().splitlines() if line.strip()
             for t in json.loads(line)["talkers"]}
     talkers = {}
-    for language, sources in TALKERS.items():
+    for language, sources in languages.items():
         speakers = {}
         for source in sources:
             speakers.update(bench.load_utterances(source, language, catalog, roots))
@@ -81,7 +87,7 @@ def main():
         print(language, "talkers", len(talkers[language]), flush=True)
     bench.G.update(recipe=recipe, talkers=talkers, rooms=bench.babble_rooms(recipe, catalog, roots))
     args.output_dir.mkdir(parents=True, exist_ok=True)
-    jobs = [(language, index, args.output_dir) for language in TALKERS for index in range(args.clips)]
+    jobs = [(language, index, args.output_dir) for language in languages for index in range(args.clips)]
     with ProcessPoolExecutor(args.workers, mp_context=bench.FORK) as pool:
         clips = list(pool.map(bench.render_babble, jobs, chunksize=8))
     for clip in clips:  # the renderer names clips like the benchmark's; keep the training ones apart
@@ -92,7 +98,7 @@ def main():
     (args.output_dir / "recordings").mkdir(exist_ok=True)
     rate = bench.SR
     artifacts, splits = [], {}
-    for language in TALKERS:
+    for language in languages:
         rows = [c for c in clips if c["language"] == language]
         recordings = [Recording(id=c["id"], sources=[AudioSource("file", [0], str(args.output_dir / c["path"]))],
                                 sampling_rate=rate, num_samples=round(c["duration"] * rate), duration=c["duration"])
@@ -109,10 +115,10 @@ def main():
                                            "talkers_in_pool": len(talkers[language])}}
         print(language, len(recordings), round(hours, 2), flush=True)
     entry = {"schema_version": "dataset-catalog/2.0", "dataset_id": "babble_noise_train", "version": args.version,
-             "languages": ["zh", "en"], "tasks": ["noise"], "aliases": [], "artifacts": artifacts, "splits": splits,
+             "languages": list(languages), "tasks": ["noise"], "aliases": [], "artifacts": artifacts, "splits": splits,
              "provenance": {"status": "complete", "synthetic": "full", "snapshot_date": args.version.split("-")[-1],
-                            "sources": [f"{s['dataset']}@{s['version']}:{s['split']}" for ss in TALKERS.values() for s in ss]
-                            + ["sim_rir_slr28@legacy-20260804:all"], "description": DESCRIPTION}}
+                            "sources": [f"{s['dataset']}@{s['version']}:{s['split']}" for ss in languages.values() for s in ss]
+                            + ["sim_rir_slr28@legacy-20260804:all"], "description": args.description}}
     yaml_rt = YAML()
     yaml_rt.allow_unicode = True
     yaml_rt.width = 4096
