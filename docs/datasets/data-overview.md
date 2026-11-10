@@ -166,7 +166,7 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [speech_deepfake_bench](data-versions.md#speech_deepfake_bench) | ar、de、en、es、ro、ru、zh | deepfake_detection | 3,463.7 | 伪造语音检测评测集（SpoofRadar、DF-Arena） | `备份桶:audio-data-contract/datasets/speech_deepfake_bench/` |
 | [starrail_voice](data-versions.md#starrail_voice) | en、ja、ko、zh-CN | 语音合成 | 692.6 | 《崩坏：星穹铁道》多语配音，TTS 用 | `TTS 桶:starrail-voice/`（原始数据） |
 | [talcs](data-versions.md#talcs) | en、zh | 语音识别、热词增强语音识别 | 587.6 | 中英语码转换课堂语音（TALCS）；含热词和加噪版 | 部分版本：快照 20260914、`备份桶:audio-data-contract/datasets/` 下 5 个目录 |
-| [ts_asr_benchmark](data-versions.md#ts_asr_benchmark) | en、zh | 目标说话人语音识别 | 46.5 | 合成的中文目标说话人 ASR 评测集 | 部分版本：`备份桶:audio-data-contract/datasets/ts_asr_benchmark/` |
+| [ts_asr_benchmark](data-versions.md#ts_asr_benchmark) | en、es、zh | 目标说话人语音识别 | 46.5 | 合成的中文目标说话人 ASR 评测集 | 部分版本：`备份桶:audio-data-contract/datasets/ts_asr_benchmark/` |
 | [ts_asr_crosslingual](data-versions.md#ts_asr_crosslingual) | en、zh | 目标说话人语音识别 | 6.2 | — | 没有 |
 | [ts_asr_farfield](data-versions.md#ts_asr_farfield) | en、zh | 目标说话人语音识别 | 5.1 | 目标说话人评测：远场与混响 | 部分版本：`备份桶:audio-data-contract/datasets/ts_asr_farfield/` |
 | [ts_asr_handover](data-versions.md#ts_asr_handover) | en、zh | 目标说话人语音识别 | 3.8 | 目标说话人评测：与他人交替说话 | 部分版本：`备份桶:audio-data-contract/datasets/ts_asr_handover/` |
