@@ -9,6 +9,8 @@
 #     >> /workspace/data/cos-mirror/mirror.log 2>&1 < /dev/null &
 # ADC_SRC 是计算登记目录时使用的 audio-data-contract 源码目录，默认为主仓库。
 set -u
+# 上传必须直连 COS，不经过会话的本机代理（它会让分片上传卡住超时）。
+unset https_proxy HTTPS_PROXY http_proxy HTTP_PROXY all_proxy ALL_PROXY
 export TZ=Asia/Shanghai
 WORK=/workspace/data/cos-mirror
 ADC_SRC=${ADC_SRC:-/workspace/data/audio-data-contract/src}

@@ -7,6 +7,8 @@
 #   install -D deploy/cos-mirror-watch.sh /workspace/data/cos-mirror/watch.sh
 #   setsid nohup bash /workspace/data/cos-mirror/watch.sh >> /workspace/data/cos-mirror/watch.log 2>&1 < /dev/null &
 set -u
+# 上传必须直连 COS，不经过会话的本机代理（它会让分片上传卡住超时）。
+unset https_proxy HTTPS_PROXY http_proxy HTTP_PROXY all_proxy ALL_PROXY
 WORK=${WORK:-/workspace/data/cos-mirror}
 BACKOFF=${BACKOFF:-600}
 INTERVAL=${INTERVAL:-60}
