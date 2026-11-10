@@ -1,13 +1,19 @@
+# ruff: noqa: SIM115  # archived copy of the script that ran; one-shot reads, kept as run
 """Per-utterance CER between the WenetSpeech-Wu label and an ASR hypothesis (Qwen or Step-Audio2-Wu) (SpeechIO TextNorm zh tokens, same
 rules as ming-asr-tiny-eval-20261019/scripts/score_dialect.py).
 
 usage: score.py CUTS RESULTS.jsonl OUT.jsonl   -> rows {id, duration, ref, hyp, ref_tokens, errors}; prints a summary
 """
-import gzip, json, re, sys
+import gzip
+import json
+import re
+import sys
 from collections import Counter
+
 sys.path.insert(0, '/workspace/workspace/mingdong/repo/icefall/egs/amphion/shared_amphion/zipformer')
 from rapidfuzz.distance import Levenshtein
 from scoring_norm import _speechio_zh
+
 CJK = re.compile(r'([㐀-䶿一-鿿豈-﫿])')
 PUNC = re.compile(r"[^\w\s']|_", re.UNICODE)
 

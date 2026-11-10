@@ -24,7 +24,14 @@ from collections import Counter
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "wenetspeech_qwen"))
-from register_qwen_transcripts import GzipOut, artifact_entry, breakdown, cer_bucket, finish_state, sha256
+from register_qwen_transcripts import (
+    GzipOut,
+    artifact_entry,
+    breakdown,
+    cer_bucket,
+    finish_state,
+    sha256,
+)
 
 from audio_data_contract import load_catalog
 from audio_data_contract.catalog import resolve_artifact, verify_artifact_file

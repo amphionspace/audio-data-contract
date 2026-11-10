@@ -1,3 +1,4 @@
+# ruff: noqa: SIM115  # archived copy of the script that ran; one-shot reads, kept as run
 """Transcribe Wu audio with Step-Audio2-Wu-ASR (ASLP-lab LoRA on Step-Audio-2-mini), HF transformers, one GPU.
 
 The released HF modeling code returns no KV cache, so generate() re-encodes the audio and the whole prefix at
@@ -11,7 +12,14 @@ OUT; rerunning skips ids already done.
 
 usage: step_infer.py INPUT OUT [--label wu] [--sample N] [--shard I/N] [--batch-seconds 400] [--max-batch 64]
 """
-import argparse, gzip, io, json, os, random, re, sys, time
+import argparse
+import gzip
+import io
+import json
+import os
+import random
+import re
+import time
 
 import librosa
 import numpy as np
@@ -169,7 +177,7 @@ with open(args.out, 'a') as sink:
     for batch in batches():
         try:
             rows = transcribe(batch)
-        except Exception as e:  # noqa: BLE001  one bad file should not stop the run; retried on rerun
+        except Exception:  # noqa: BLE001  one bad file should not stop the run; retried on rerun
             torch.cuda.empty_cache()
             rows = []
             for t in batch:
