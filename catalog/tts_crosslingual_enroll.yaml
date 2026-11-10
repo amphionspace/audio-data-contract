@@ -1,0 +1,32 @@
+# 占位登记：TS-ASR 训练用的跨语言 TTS 注册音频（训练目标说话人的音色说另一种语言），生成中，进度见状态文件。
+- schema_version: dataset-catalog/2.0
+  dataset_id: tts_crosslingual_enroll
+  version: v1-20261110
+  languages:
+    - zh
+    - en
+  tasks:
+    - ts_asr
+  aliases: []
+  artifacts:
+    - name: preparation_state
+      kind: dataset-state
+      root_alias: aidc_data
+      relative_path: datasets/tts_crosslingual_enroll/versions/v1-20261110/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+          - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    summary: TS-ASR 训练用跨语言 TTS 注册音频
+    description: >-
+      aishellmix 与 librimix train_1spk 各 1000 个训练目标说话人，以其一段真实注册音频为音色（Qwen3-TTS-12Hz-1.7B-Base，x-vector 模式），
+      各合成 2 句另一种语言、2 句本语言，用作 TS-ASR 训练时的注册音频（目标在场与缺席都用，两种语言都有，使"合成"本身不成为线索）。
+      起因：ts_asr_crosslingual 上注册语言与混合段不同时真人漏识 18–39%。脚本 scripts/ts_benchmark/tts_training_enrollments.py。
+    source: aishellmix@pack3-current-audio-record-20260910, librimix@960-current-audio-record-20260910, Qwen3-TTS-12Hz-1.7B-Base
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/ts-asr-crosslingual-20261109
