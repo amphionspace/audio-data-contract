@@ -1,0 +1,109 @@
+  - schema_version: dataset-catalog/2.0
+    dataset_id: wenetspeech_wu
+    version: stepaudio2-wu-asr-v1-20261109
+    languages:
+      - zh
+    tasks:
+      - asr
+    aliases: []
+    artifacts:
+      - name: preparation_state
+        kind: dataset-state
+        root_alias: aidc_data
+        relative_path: datasets/wenetspeech_wu/versions/stepaudio2-wu-asr-v1-20261109/state.json
+      - name: train_cuts_clean_0
+        kind: lhotse-cuts
+        root_alias: aidc_data
+        relative_path: datasets/wenetspeech_wu/versions/stepaudio2-wu-asr-v1-20261109/wenetspeech_wu_cuts_train_stepaudio2_cer_lt30.jsonl.gz
+        expected_bytes: 886815285
+        sha256: 2f4ee648d9b86b08adc5559c89896028a653c879db20189246f5d16a97cf63ea
+        metadata:
+          record_count: 3281389
+          step_field: supervisions[0].custom.step_audio2_asr
+    splits:
+      train:
+        artifacts:
+          cuts:
+            - train_cuts_clean_0
+          preparation_state:
+            - preparation_state
+        statistics:
+          records: 3281389
+          duration_hours: 6804.4686
+          duration_basis: sum of row durations
+          records_before_filter: 4241226
+          hours_before_filter: 8740.7
+    recipe_parameters:
+      adds:
+        - custom.step_audio2_asr
+      check_model: Step-Audio2-Wu-ASR
+      check_unit: utterance
+      text_normalization: speechio-textnorm-zh
+      keep_rule: label non-empty after TextNorm, generation not truncated, and per-utterance CER vs Step-Audio2-Wu-ASR < 30 %
+    provenance:
+      preparation_status: prepared
+      lineage_status: exact
+      materialization: full
+      source: wenetspeech_wu@stepaudio2-wu-asr-full-v1-20261109
+      description: WenetSpeech-Wu 吴语训练集（wenetspeech_wu@icefall-20260908）用 Step-Audio2-Wu-ASR 逐条核对后保留的部分：原标注规范化后非空、生成未截断且字错误率 < 30 % 的 3,281,389 条 / 6804.5 h（占全部时长的 77.8 %）。原标注不改，不拿 Step 的文字替换。每行的 custom.step_audio2_asr 与 wenetspeech_wu@stepaudio2-wu-asr-full-v1-20261109 中相同；被去掉的条目和全部转写见该版本。Step-Audio2-Wu-ASR 在 WenetSpeech-Wu 上训练过，与原标注的一致程度可能偏高。误杀按 Wu-Bench 人工标注估计：Wu-Bench 上 Step 自身落到 CER ≥ 30 % 的时长占 8.4 %，训练集为 22.2 %，据此被丢的部分约 38 % 其实标注是对的（偏粗，可能高估）；分歧集中在原标注低置信度的条目。录音沿用父版本，不复制音频。脚本 
+        scripts/wenetspeech_wu_step/。
+      facts:
+        source rows: 4241226
+        rows: 4241226
+        ref tokens: 102429814
+        token errors: 16593774
+        step empty: 5292
+        truncated: 5121
+        kept rows: 3281389
+        corpus CER: 16.2
+      summary: 吴语（WenetSpeech-Wu）；Step 核对版
+      owner: mingdong
+  - schema_version: dataset-catalog/2.0
+    dataset_id: wenetspeech_wu
+    version: stepaudio2-wu-asr-full-v1-20261109
+    languages:
+      - zh
+    tasks:
+      - asr
+    aliases: []
+    artifacts:
+      - name: train_cuts_stepaudio2_0
+        kind: lhotse-cuts
+        root_alias: aidc_data
+        relative_path: datasets/wenetspeech_wu/versions/stepaudio2-wu-asr-full-v1-20261109/wenetspeech_wu_cuts_train_stepaudio2.jsonl.gz
+        expected_bytes: 1154087654
+        sha256: 86f7cee8b462c523e663d0c583e8da62e8bd4766218cd46a01df9b4694e58958
+        metadata:
+          record_count: 4241226
+          step_field: supervisions[0].custom.step_audio2_asr
+    splits:
+      train:
+        artifacts:
+          cuts:
+            - train_cuts_stepaudio2_0
+        statistics:
+          records: 4241226
+          duration_hours: 8740.6979
+          duration_basis: sum of row durations
+    recipe_parameters:
+      adds:
+        - custom.step_audio2_asr
+      check_model: Step-Audio2-Wu-ASR
+      check_unit: utterance
+      text_normalization: speechio-textnorm-zh
+    provenance:
+      preparation_status: prepared
+      lineage_status: exact
+      materialization: full
+      source: wenetspeech_wu@icefall-20260908
+      description: wenetspeech_wu@icefall-20260908 里 WenetSpeech-Wu 吴语训练集的全部条目（4,241,226 条 / 8740.7 h），原标注（吴语写法的机器标注，带置信度和普通话译文）一字不改；每条 supervision 加 custom.step_audio2_asr：Step-Audio2-Wu-ASR（ASLP-lab 在 Step-Audio-2-mini 上微调的吴语 ASR，贪心解码）的转写（hypothesis）、是否达到生成上限被截断（truncated，多为重复输出）和与原标注的字错误率（SpeechIO TextNorm，按字，ref_tokens / hyp_tokens / errors / cer 百分数；原标注规范化后为空时 cer 为空）。整体 CER 16.20 %，Step 在 WenetSpeech-Wu-Bench 抽样 1,000 条上自身 CER 为 12.3（Qwen3-ASR 24.2）；空输出 5,292 条，截断 5,121 条。Step-Audio2-Wu-ASR 在 
+        WenetSpeech-Wu 上训练过，与原标注的一致程度可能偏高。误杀按 Wu-Bench 人工标注估计：Wu-Bench 上 Step 自身落到 CER ≥ 30 % 的时长占 8.4 %，训练集为 22.2 %，据此被丢的部分约 38 % 其实标注是对的（偏粗，可能高估）；分歧集中在原标注低置信度的条目。录音沿用父版本，不复制音频。脚本 scripts/wenetspeech_wu_step/。
+      facts:
+        source rows: 4241226
+        rows: 4241226
+        ref tokens: 102429814
+        token errors: 16593774
+        step empty: 5292
+        truncated: 5121
+        kept rows: 3281389
+        corpus CER: 16.2
