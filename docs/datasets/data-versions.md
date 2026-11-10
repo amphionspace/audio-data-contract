@@ -1525,7 +1525,7 @@ TAL 中文语音识别数据
 |---|---:|---|---|
 | [ts_asr_nearfar@firstother-v1-20261104](../../catalog/ts_asr_nearfar.yaml#L2474) | 18.1 | 已登记 | 没有 |
 | [ts_asr_nearfar@firstother-v2-20261105](../../catalog/ts_asr_nearfar.yaml#L2741) | 33.6 | 已登记 | 没有 |
-| [ts_asr_nearfar@firstother-v3-20261105](../../catalog/ts_asr_nearfar.yaml#L3368) | 91.4 | 已登记 | 没有 |
+| [ts_asr_nearfar@firstother-v3-20261105](../../catalog/ts_asr_nearfar.yaml#L3368) | 91.4 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_nearfar/` |
 | [ts_asr_nearfar@listening-review-v1-20261022](../../catalog/listening_review.yaml#L491) | — | 未登记 | 没有 |
 | [ts_asr_nearfar@v1-20261014](../../catalog/ts_asr_nearfar.yaml#L1) | 6.0 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_nearfar/` |
 | [ts_asr_nearfar@v2-20261022](../../catalog/ts_asr_nearfar.yaml#L505) | 6.0 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_nearfar/` |
