@@ -2671,6 +2671,18 @@ AISHELL-1、LibriSpeech 合成的多人对话
 - `ts_scene_pool@xsession-near-20261023-punchw-20261102`：ts_scene_pool@xsession-near-20261023 的 zh，供 TS + 热词训练：每条目标句按片段 ID 换成带书面化标点的写法（中文 punc-written-v1，英文 en-v1 加标点并恢复大小写；去掉标点和空格、转小写后与原目标一致才替换，源语料本身带标点的保留原样），hotwords 为目标所说的热词，metadata.interferer_hotwords 为干扰者所说、目标没说的热词（标签：Qwen3.8-27B + amphiondata 热词提示词，已有的 hw_sft 标签复用）。其余字段、场景与音频同源版本（记录仍引用源版本音频）。zh：80000 条，目标改写 56041，带目标热词 29215，带干扰者热词 70033
 - 含派生版本（与源数据可能重叠）
 
+### tts_crosslingual_enroll
+
+TS-ASR 训练用跨语言 TTS 注册音频
+
+语言：en、zh · 任务：目标说话人语音识别
+
+| 版本 | 时长（小时） | 口径 | COS |
+|---|---:|---|---|
+| [tts_crosslingual_enroll@v1-20261110](../../catalog/tts_crosslingual_enroll.yaml#L2) | — | 未登记 | 没有 |
+
+- `tts_crosslingual_enroll@v1-20261110`：aishellmix 与 librimix train_1spk 各 1000 个训练目标说话人，以其一段真实注册音频为音色（Qwen3-TTS-12Hz-1.7B-Base，x-vector 模式）， 各合成 2 句另一种语言、2 句本语言，用作 TS-ASR 训练时的注册音频（目标在场与缺席都用，两种语言都有，使"合成"本身不成为线索）。 起因：ts_asr_crosslingual 上注册语言与混合段不同时真人漏识 18–39%。脚本 scripts/ts_benchmark/tts_training_enrollments.py
+
 ### vitw
 
 真实场景中英语音（VITW）；含回声、远场等评测
