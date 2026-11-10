@@ -628,3 +628,47 @@
       条、4,848 个目标说话人、目标 513.8 h，165,633 条带热词。dev / test 说话人不在 train。生成脚本 scripts/ts_robust/build_ts_1spk_es.py。
     sources:
     - common_voice_es@es-train-v1-20261108:train
+- schema_version: dataset-catalog/2.0
+  dataset_id: ts_scene_pool
+  version: es-1spk-v2-20261110
+  languages:
+  - es
+  tasks:
+  - ts_asr
+  aliases: []
+  artifacts:
+  - name: es-records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/es-1spk-v2-20261110/records_es.jsonl.gz
+    sha256: 341c01dd734880a7a021f0c42f032a9ef90442b42a68040d99af61f014bcd079
+    metadata:
+      record_count: 262978
+  - name: es-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/es-1spk-v2-20261110/audio_index_es.jsonl.gz
+    sha256: f5a5a122aa1cfd28421dbeeae135e7abed08e43efef5a94a749c43dd28fa01b1
+    metadata:
+      record_count: 262978
+  splits:
+    es:
+      artifacts:
+        records:
+        - es-records
+        audio_index:
+        - es-audio-index
+      task: ts_asr
+      statistics:
+        records: 262978
+        duration_hours: 374.0
+        duration_basis: duration of the target (mixture slot) files
+  provenance:
+    status: complete
+    synthetic: none
+    snapshot_date: '2026-11-10'
+    description: 西班牙语单人 TS-ASR 记录 v2：同 es-1spk-20261110，但目标只取有口音标注的 Common Voice es 说话人（同西语场景池的目标）；没有口音标注的 2,735 人改作干扰人
+      （ts_interference_pool@es-v2-20261110），所以目标不会和干扰人是同一人，CV 的声音也不再永远是目标。262,978 条、2,209 个目标说话人、目标 374.0 h，121,222 条带热词；只有一句的 34
+      个说话人不用。dev / test 说话人不在 train。生成脚本 scripts/ts_robust/build_ts_1spk_es.py。
+    sources:
+    - common_voice_es@es-train-v1-20261108:train

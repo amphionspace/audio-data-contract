@@ -24,6 +24,11 @@ put a target's own voice into the interference.
 Spanish (``--languages es --version es-v1-20261110``) is its own version with one split, ``es``: YODAS es
 (YouTube sentences, one file each, grouped by video) and MLS es (audiobooks, real speaker labels). Common Voice es
 is left out for the same reason as LibriSpeech: it holds every Spanish TS-ASR target (ts_scene_pool es-*).
+
+``--version es-v2-20261110`` adds the Common Voice es train speakers without an accent answer. The Spanish TS-ASR
+targets are the accent-labelled speakers (the es scene pools; ts_scene_pool@es-1spk-v2-20261110), so these share no
+speaker with a target, and without them a Common Voice voice was only ever the target: v70 (es-v1) tripled the false
+alarms of ts-asr-benchmark-es, whose other speakers are Common Voice es dev speakers (enroll-*-neg 0.04-0.13 -> 0.21-0.39).
 """
 
 import argparse
@@ -35,6 +40,7 @@ from concurrent.futures import ProcessPoolExecutor
 from pathlib import Path
 
 import numpy as np
+from build_ts_scene_pool import accent_group
 
 from audio_data_contract import load_catalog, resolve_split
 from audio_data_contract.roots import load_roots
@@ -78,6 +84,9 @@ SOURCES = [
     # videos = one file per sentence with no speaker label, grouped by the video it was cut from.
     {"language": "es", "kind": "videos", "dataset": "yodas_es", "version": "legacy", "split": "all", "count": 100000, "cap": 10, "speaker": False, "measure": True},
     {"language": "es", "kind": "recordings", "dataset": "mls_es", "version": "legacy", "split": "train", "count": 12000, "cap": 400, "speaker": True, "measure": True},
+    # unlabelled_accent: only speakers none of whose utterances has an accent group; 2,735 speakers, 33,209 utterances
+    # under the cap. Versions before es-v2-20261110 do not have it.
+    {"language": "es", "kind": "recordings", "dataset": "common_voice_es", "version": "es-train-v1-20261108", "split": "train", "count": 30000, "cap": 20, "speaker": True, "measure": True, "unlabelled_accent": True, "since": "es-v2-20261110"},
 ]
 
 
@@ -115,12 +124,17 @@ def emilia_candidates(catalog, roots, source, held_out):
 
 
 def utterance_candidates(catalog, roots, source):
-    speakers = {}
+    speakers, labelled = {}, set()
     for path in resolve_split(catalog, source["dataset"], source["version"], source["split"], "supervisions", roots):
         for sup in lines(path):
             speaker = sup.get("speaker")
             if speaker and speaker != "N/A":
                 speakers[sup["recording_id"]] = speaker
+                if source.get("unlabelled_accent") and accent_group((sup.get("custom") or {}).get("accents"), source["dataset"]):
+                    labelled.add(speaker)
+    if labelled:
+        speakers = {rec: spk for rec, spk in speakers.items() if spk not in labelled}
+        print(f"  {source['dataset']}: {len(labelled)} accent-labelled (target) speakers left out", flush=True)
     rows, missing = [], 0
     for path in resolve_split(catalog, source["dataset"], source["version"], source["split"], "recordings", roots):
         for rec in lines(path):
@@ -290,7 +304,8 @@ def main():
     args.output_dir.mkdir(parents=True, exist_ok=True)
     records, indexes, report = defaultdict(list), defaultdict(dict), {}
     checked_dirs = set()
-    for source in (s for s in SOURCES if s["language"] in args.languages):
+    # "since": the first version holding the source (versions of one language sort by their number).
+    for source in (s for s in SOURCES if s["language"] in args.languages and args.version >= s.get("since", "")):
         name = f"{source['dataset']}:{source['split']}"
         count = max(1, int(source["count"] * args.scale))
         rng = random.Random(f"{SEED}:{name}")
