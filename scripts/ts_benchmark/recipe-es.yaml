@@ -1,0 +1,163 @@
+# 西班牙语目标说话人 ASR 评测集（ts_asr_benchmark）的场景配方：与英文版（recipe-en.yaml）同一场景、随机种子与噪声，说话人换成 Common Voice es dev。
+# 每个 split 是一个场景；split 名是评测表里的行名。数值范围是 [最小, 最大]，每条样本在范围内均匀抽取。
+version: es-v1-20261110
+enroll_store_seconds: 10
+dataset_id: ts_asr_benchmark
+language: es
+description: 西班牙语目标说话人 ASR 评测集（ts_asr_benchmark）：与英文版 en-v1-20261031 同一配方与随机种子，说话人换成 Common Voice es dev（众包朗读、多口音、各自设备）；没有英文版的手机对话（CS-Dialogue）与录音棚（VCTK）两组设备场景，西语没有对应语料。只用于评测，不进训练。场景见 scripts/ts_benchmark/recipe-es.yaml。
+seed: 20261013
+sample_rate: 16000
+
+# 说话人来自训练没有用过的划分：Common Voice es dev（训练只用 train；CV 各划分说话人不重叠）。CV es test 每人平均 2.5 句，凑不够每人 6 句，所以用 dev。
+pools:
+  read:
+    description: Common Voice es dev，众包朗读、多口音，至少 6 句 1.5–9 秒的说话人
+    sources:
+      - {dataset: common_voice_es, version: legacy, split: dev}
+  mixed:
+    description: 与 read 相同（只有一个池）
+    union: [read]
+utterance_seconds: [1.5, 9.0]     # 干扰人与目标人完整语句的长度范围
+short_utterance_seconds: [0.5, 1.6]   # 「目标人只说一两个字」场景使用
+min_utterances_per_speaker: 6
+
+# 背景声音：MUSAN 噪声与音乐、AudioSet 道路交通；quiet 为生成的极低电平高斯噪声。
+noise:
+  musan_noise: {dataset: musan, version: legacy-20260804, split: noise}
+  musan_music: {dataset: musan, version: legacy-20260804, split: music}
+  traffic: {dataset: audioset_road_traffic, version: legacy-20260804, split: all}
+rir:
+  archive: /workspace/data/DATA-TTS/dns5/datasets_fullband.impulse_responses_000.tar.bz2
+  count: 300
+
+default_n: 120
+
+# v3：噪声底改用真实录音。真实录音总有噪声底，v1 的发言间隙是精确的 0（数字静音），对比实验表明模型对噪声底
+# 很敏感，v1 低估了误输出。底噪池：WHAM! 真实环境噪声（咖啡馆、餐厅、街道等）、DNS5 的 AudioSet 与 Freesound
+# 噪声（只取电平稳定的片段）、白噪声和粉红噪声；底噪在场景之后抽取，所以场景与 v1、v2 逐条相同。
+# 电平为 RMS dBFS（说话约 −25 dBFS）。
+noise_floor:
+  dbfs: [-65, -35]
+  kinds: {white: 0.15, pink: 0.15, real: 0.70}
+  real_pools: [wham, dns5_audioset, dns5_freesound]
+
+splits:
+  # ---- A 注册音频劣化：同一批基础场景（目标说话 + 1–2 个干扰人），只改注册音频 ----
+  - group: enroll
+    expand:
+      template: "enroll-{cond}-{kind}"
+      over:
+        # v4：len2 / len3 / len4 是只录了 2 / 3 / 4 秒的注册（短于客户端长度时由客户端补零），与 clean 同一批场景
+        cond: [clean, short1, lead_silence, lp4k, noise10, reverb, contam10, contam0, quiet, len2, len3, len4]
+        kind: [pos, neg]
+    base:
+      pos: {kind: pos, schedule: full, k: [1, 2], duration: [6, 15], sir_db: [-3, 3]}
+      neg: {kind: neg, k: [1, 2], duration: [6, 15], sir_db: [-3, 3]}
+    n: 150
+
+  # ---- B 进场、离场与目标说话人缺席（干净注册音频）----
+  - {group: dynamics, name: dyn-solo, kind: pos, schedule: full, k: 0, duration: [6, 15]}
+  - {group: dynamics, name: dyn-full-k1, kind: pos, schedule: full, k: 1, duration: [8, 18]}
+  - {group: dynamics, name: dyn-full-k4, kind: pos, schedule: full, k: 4, duration: [8, 18]}
+  - {group: dynamics, name: dyn-burst-k1, kind: pos, schedule: burst, k: 1, duration: [10, 20]}
+  - {group: dynamics, name: dyn-burst-k2, kind: pos, schedule: burst, k: 2, duration: [10, 20]}
+  - {group: dynamics, name: dyn-burst-k4, kind: pos, schedule: burst, k: 4, duration: [10, 20]}
+  - {group: dynamics, name: dyn-enter-k2, kind: pos, schedule: enter, k: 2, duration: [10, 20]}
+  - {group: dynamics, name: dyn-leave-k2, kind: pos, schedule: leave, k: 2, duration: [10, 20]}
+  - {group: dynamics, name: dyn-alternate-k2, kind: pos, schedule: alternate, k: 2, duration: [10, 22]}
+  - {group: dynamics, name: dyn-alternate-k4, kind: pos, schedule: alternate, k: 4, duration: [12, 24]}
+  - {group: dynamics, name: dyn-overlap-k1, kind: pos, schedule: overlap, k: 1, duration: [6, 14]}
+  - {group: dynamics, name: dyn-overlap-k3, kind: pos, schedule: overlap, k: 3, duration: [6, 14]}
+  # 英文版的 dyn-short-k1 / dyn-short-k3（目标只说 0.5–1.6 秒）不建：CV es dev 的句子几乎都长于 3 秒（够 6 句的 226 人里没有一人有 2 句 2.5 秒以内）。
+  - {group: dynamics, name: dyn-target-quiet, kind: pos, schedule: full, k: 2, duration: [8, 18], sir_db: [-12, -6]}
+  - {group: dynamics, name: dyn-target-loud, kind: pos, schedule: full, k: 2, duration: [8, 18], sir_db: [6, 12]}
+  - {group: absent, name: abs-k1, kind: neg, k: 1, duration: [6, 18]}
+  - {group: absent, name: abs-k2, kind: neg, k: 2, duration: [6, 18], pair: abs2}
+  - {group: absent, name: abs-k4, kind: neg, k: 4, duration: [6, 18]}
+  - {group: absent, name: abs-hard, kind: neg, k: 2, duration: [6, 18], hard: true, pair: abs2}
+  - {group: absent, name: abs-long, kind: neg, k: 2, duration: [22, 26.5]}
+  - {group: absent, name: abs-short, kind: neg, k: 1, duration: [0.4, 1.2], interferer_start: [0.0, 0.1]}
+
+  # ---- C 没有任何说话声：期望输出为空 ----
+  - {group: nonspeech, name: nonspeech-noise, kind: nonspeech, duration: [1, 15], noise: {kind: musan_noise, level_dbfs: [-35, -20]}}
+  - {group: nonspeech, name: nonspeech-music, kind: nonspeech, duration: [1, 15], noise: {kind: musan_music, level_dbfs: [-35, -20]}}
+  - {group: nonspeech, name: nonspeech-traffic, kind: nonspeech, duration: [1, 15], noise: {kind: traffic, level_dbfs: [-35, -20]}}
+  - {group: nonspeech, name: nonspeech-quiet, kind: nonspeech, duration: [1, 15], noise: {kind: quiet, level_dbfs: [-60, -45]}}
+  - {group: nonspeech, name: nonspeech-short, kind: nonspeech, duration: [0.3, 1.0], noise: {kind: musan_noise, level_dbfs: [-35, -20]}}
+  - {group: nonspeech, name: nonspeech-long, kind: nonspeech, duration: [22, 26.5], noise: {kind: musan_noise, level_dbfs: [-35, -20]}}
+
+  # ---- D 环境与设备：混响、背景音乐或交通、手机与棚内录音 ----
+  - {group: domain, name: dom-clean-pos, kind: pos, schedule: full, k: [1, 2], duration: [8, 18], pair: dom-pos}
+  - {group: domain, name: dom-clean-neg, kind: neg, k: [1, 2], duration: [8, 18], pair: dom-neg}
+  - {group: domain, name: dom-reverb-noise-pos, pair: dom-pos, kind: pos, schedule: full, k: [1, 2], duration: [8, 18], rir: true, noise: {kind: musan_noise, snr_db: [5, 15]}}
+  - {group: domain, name: dom-reverb-noise-neg, pair: dom-neg, kind: neg, k: [1, 2], duration: [8, 18], rir: true, noise: {kind: musan_noise, snr_db: [5, 15]}}
+  - {group: domain, name: dom-music-pos, pair: dom-pos, kind: pos, schedule: full, k: [1, 2], duration: [8, 18], noise: {kind: musan_music, snr_db: [3, 10]}}
+  - {group: domain, name: dom-music-neg, pair: dom-neg, kind: neg, k: [1, 2], duration: [8, 18], noise: {kind: musan_music, snr_db: [3, 10]}}
+  - {group: domain, name: dom-traffic-pos, pair: dom-pos, kind: pos, schedule: full, k: [1, 2], duration: [8, 18], noise: {kind: traffic, snr_db: [0, 10]}}
+  - {group: domain, name: dom-traffic-neg, pair: dom-neg, kind: neg, k: [1, 2], duration: [8, 18], noise: {kind: traffic, snr_db: [0, 10]}}
+  - {group: domain, name: dom-solo-music, kind: pos, schedule: full, k: 0, duration: [6, 15], noise: {kind: musan_music, snr_db: [3, 10]}}
+  - {group: domain, name: dom-solo-traffic, kind: pos, schedule: full, k: 0, duration: [6, 15], noise: {kind: traffic, snr_db: [0, 10]}}
+
+  # ---- F 脆弱性面板：同一批基础场景（目标 + 1–2 个干扰人），逐个因素改变底噪、房间、录音链路 ----
+  # 基线与所有面板场景共用同一批场景，条件间是配对比较；每个因素的最坏条件就是模型的脆弱点。
+  - {group: panel, name: panel-base-pos, kind: pos, schedule: full, k: [1, 2], duration: [6, 15], sir_db: [-3, 3], pair: panel-pos, n: 120}
+  - {group: panel, name: panel-base-neg, kind: neg, k: [1, 2], duration: [6, 15], pair: panel-neg, n: 120}
+  - group: panel
+    n: 120
+    expand:
+      template: "floor-{cond}-{kind}"
+      over:
+        cond: [none, white50, pink50, wham60, wham50, wham40, wham30, dnsas50, dnsfs50]
+        kind: [pos, neg]
+      cond_params:
+        none: {noise_floor: null}
+        white50: {noise_floor: {dbfs: [-50, -50], kinds: [white]}}
+        pink50: {noise_floor: {dbfs: [-50, -50], kinds: [pink]}}
+        wham60: {noise_floor: {dbfs: [-60, -60], kinds: [wham]}}
+        wham50: {noise_floor: {dbfs: [-50, -50], kinds: [wham]}}
+        wham40: {noise_floor: {dbfs: [-40, -40], kinds: [wham]}}
+        wham30: {noise_floor: {dbfs: [-30, -30], kinds: [wham]}}
+        dnsas50: {noise_floor: {dbfs: [-50, -50], kinds: [dns5_audioset]}}
+        dnsfs50: {noise_floor: {dbfs: [-50, -50], kinds: [dns5_freesound]}}
+    base:
+      pos: {kind: pos, schedule: full, k: [1, 2], duration: [6, 15], sir_db: [-3, 3]}
+      neg: {kind: neg, k: [1, 2], duration: [6, 15]}
+  - group: panel
+    n: 120
+    expand:
+      template: "room-{cond}-{kind}"
+      over:
+        cond: [real, sim_small, sim_medium, sim_large, dns5_sim]
+        kind: [pos, neg]
+      cond_params:
+        real: {rir: real}
+        sim_small: {rir: sim_small}
+        sim_medium: {rir: sim_medium}
+        sim_large: {rir: sim_large}
+        dns5_sim: {rir: dns5_sim}
+    base:
+      pos: {kind: pos, schedule: full, k: [1, 2], duration: [6, 15], sir_db: [-3, 3]}
+      neg: {kind: neg, k: [1, 2], duration: [6, 15]}
+  - group: panel
+    n: 120
+    expand:
+      template: "level-{cond}-{kind}"
+      over:
+        cond: [q20, q10, loud10, clip, nb, mulaw]
+        kind: [pos, neg]
+      cond_params:
+        q20: {mix_gain_db: -20}
+        q10: {mix_gain_db: -10}
+        loud10: {mix_gain_db: 10}
+        clip: {mix_gain_db: 15, mix_effect: clip}
+        nb: {mix_effect: lp3400}
+        mulaw: {mix_effect: mulaw}
+    base:
+      pos: {kind: pos, schedule: full, k: [1, 2], duration: [6, 15], sir_db: [-3, 3]}
+      neg: {kind: neg, k: [1, 2], duration: [6, 15]}
+
+  # ---- G 组合压力：几种不利因素同时出现的真实情形，看模型在最坏情形下还剩多少 ----
+  - {group: stress, name: stress-outdoor-pos, kind: pos, schedule: full, k: [2, 4], duration: [8, 18], mix_effect: lp3400, mix_gain_db: -10, noise: {kind: traffic, snr_db: [0, 10]}, noise_floor: {dbfs: [-45, -35], kinds: [wham]}, n: 120}
+  - {group: stress, name: stress-outdoor-neg, kind: neg, k: [2, 4], duration: [8, 18], mix_effect: lp3400, mix_gain_db: -10, noise: {kind: traffic, snr_db: [0, 10]}, noise_floor: {dbfs: [-45, -35], kinds: [wham]}, n: 120}
+  - {group: stress, name: stress-office-pos, kind: pos, schedule: full, k: [2, 4], duration: [8, 18], rir: real, enroll: lead_silence, noise_floor: {dbfs: [-45, -35], kinds: [wham]}, n: 120}
+  - {group: stress, name: stress-office-neg, kind: neg, k: [2, 4], duration: [8, 18], rir: real, enroll: lead_silence, noise_floor: {dbfs: [-45, -35], kinds: [wham]}, n: 120}
