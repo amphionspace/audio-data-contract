@@ -756,3 +756,897 @@
     - 日语通常按字计分（CER）；当前 ts-asr 评测器（打分口径 v3）对中英文以外的语言按空格分词，日语里汉字一字一个单位、连续假名合成一个单位，日语错误率不能直接比较，需先改评测器。
     - Casablanca 音频多为 44.1/48 kHz 双声道（电视音轨），保持原样；评测器读取时取声道平均并重采样到 16 kHz。
     build_script: scripts/multilingual_asr_bench/build.py
+- schema_version: dataset-catalog/2.0
+  dataset_id: multilingual_asr_bench
+  version: v2-20261110
+  languages:
+  - ar
+  - de
+  - en
+  - es
+  - fr
+  - hi
+  - id
+  - ja
+  - ko
+  - pt
+  - ru
+  - zh
+  tasks:
+  - asr
+  aliases: []
+  artifacts:
+  - name: audio-index
+    kind: audio-index
+    root_alias: multilingual_asr_bench
+    relative_path: versions/v2-20261110/audio-index.jsonl.gz
+    sha256: fdd6efc81c4eab65d3f8ef99bbaebb474bec44799118dc294ddb74b7dceabbb2
+    metadata:
+      record_count: 171665
+  - name: fleurs-zh-records
+    kind: audio-records
+    root_alias: multilingual_asr_bench
+    relative_path: versions/v2-20261110/records/fleurs-zh.jsonl.gz
+    sha256: 5975747ea2caa00ef786f82cfc72969a5ba24813c6f623952f7aeb7ef4f26cfd
+    metadata:
+      record_count: 945
+  - name: cv-zh-records
+    kind: audio-records
+    root_alias: multilingual_asr_bench
+    relative_path: versions/v2-20261110/records/cv-zh.jsonl.gz
+    sha256: b624ca9108abb526110cdc490b387961721ee73b349261bc08614ec3d7b840e4
+    metadata:
+      record_count: 10626
+  - name: fleurs-en-records
+    kind: audio-records
+    root_alias: multilingual_asr_bench
+    relative_path: versions/v2-20261110/records/fleurs-en.jsonl.gz
+    sha256: eb697579b49fb7ef97345dd24402a54eea94f4b4223c980013c484400bc02825
+    metadata:
+      record_count: 647
+  - name: cv-en-records
+    kind: audio-records
+    root_alias: multilingual_asr_bench
+    relative_path: versions/v2-20261110/records/cv-en.jsonl.gz
+    sha256: 0babce00a5fd53d30cf7d4c67ed549d699aa7e8f40c0719c34940d5cbdd1788e
+    metadata:
+      record_count: 16393
+  - name: fleurs-ar-records
+    kind: audio-records
+    root_alias: multilingual_asr_bench
+    relative_path: versions/v2-20261110/records/fleurs-ar.jsonl.gz
+    sha256: bb267aad4a07c3d8235200721514b687295e9be7e0c7bd325e17c72ab19c2480
+    metadata:
+      record_count: 428
+  - name: cv-ar-records
+    kind: audio-records
+    root_alias: multilingual_asr_bench
+    relative_path: versions/v2-20261110/records/cv-ar.jsonl.gz
+    sha256: 2598ed1e2ca84a14c8ebc3e72bec0d0ae532b725173de6e4afc280e4e81c4981
+    metadata:
+      record_count: 10480
+  - name: fleurs-es-records
+    kind: audio-records
+    root_alias: multilingual_asr_bench
+    relative_path: versions/v2-20261110/records/fleurs-es.jsonl.gz
+    sha256: 9222735c1bc57e2eb77a6006b9f89dc895661f5958645c579736077894e43561
+    metadata:
+      record_count: 908
+  - name: cv-es-records
+    kind: audio-records
+    root_alias: multilingual_asr_bench
+    relative_path: versions/v2-20261110/records/cv-es.jsonl.gz
+    sha256: 056aec5e6d6a848324202a2fda86c204167f4c9e2ea4bc4eda4ba00ba080801b
+    metadata:
+      record_count: 15857
+  - name: fleurs-fr-records
+    kind: audio-records
+    root_alias: multilingual_asr_bench
+    relative_path: versions/v2-20261110/records/fleurs-fr.jsonl.gz
+    sha256: 83adc4781e68e2f6e0e9f3c34a0d4c0a0b6a4d53a7311694142a2d6fe045a102
+    metadata:
+      record_count: 676
+  - name: cv-fr-records
+    kind: audio-records
+    root_alias: multilingual_asr_bench
+    relative_path: versions/v2-20261110/records/cv-fr.jsonl.gz
+    sha256: c5761628b579934df76da48f28ed16b674b9a9ef4ea1f5bbc19493704b07ecec
+    metadata:
+      record_count: 16159
+  - name: fleurs-de-records
+    kind: audio-records
+    root_alias: multilingual_asr_bench
+    relative_path: versions/v2-20261110/records/fleurs-de.jsonl.gz
+    sha256: d3fd76420fbee0004db3c7f21ea86f291947f8b5e85a076f93f673aa7ec1817d
+    metadata:
+      record_count: 862
+  - name: cv-de-records
+    kind: audio-records
+    root_alias: multilingual_asr_bench
+    relative_path: versions/v2-20261110/records/cv-de.jsonl.gz
+    sha256: e77925e36ec50f9a7c4607b8e51a10f3587cc24b986563d2d5fca2214e3b379b
+    metadata:
+      record_count: 16183
+  - name: fleurs-pt-records
+    kind: audio-records
+    root_alias: multilingual_asr_bench
+    relative_path: versions/v2-20261110/records/fleurs-pt.jsonl.gz
+    sha256: 65c581e442b33e35bb5a822d70c1710f7fcc0eddab04b2347df0ddfc4415bf79
+    metadata:
+      record_count: 919
+  - name: cv-pt-records
+    kind: audio-records
+    root_alias: multilingual_asr_bench
+    relative_path: versions/v2-20261110/records/cv-pt.jsonl.gz
+    sha256: d989e0227e7c478e1869349cf5be625578c6084757ddcff6daf148168fd24911
+    metadata:
+      record_count: 9467
+  - name: fleurs-ja-records
+    kind: audio-records
+    root_alias: multilingual_asr_bench
+    relative_path: versions/v2-20261110/records/fleurs-ja.jsonl.gz
+    sha256: c7a43a6bcd43f439bf5f990e34f256888621bfef44629ed8363ef5e60a9a0f76
+    metadata:
+      record_count: 650
+  - name: cv-ja-records
+    kind: audio-records
+    root_alias: multilingual_asr_bench
+    relative_path: versions/v2-20261110/records/cv-ja.jsonl.gz
+    sha256: c998dbe4a28615e289a808f89466f5336e3e1b85da6009bae7a38f85e4445ab7
+    metadata:
+      record_count: 6261
+  - name: fleurs-ko-records
+    kind: audio-records
+    root_alias: multilingual_asr_bench
+    relative_path: versions/v2-20261110/records/fleurs-ko.jsonl.gz
+    sha256: 9723bbaa1427e4c48c72b2bdc68d7520602470b5fdce63d4e31d3a29ac0c9138
+    metadata:
+      record_count: 382
+  - name: cv-ko-records
+    kind: audio-records
+    root_alias: multilingual_asr_bench
+    relative_path: versions/v2-20261110/records/cv-ko.jsonl.gz
+    sha256: c64a069739279ec93c4c15845b9d66d4d5827571b5dce3f987cb419dfdeaa03c
+    metadata:
+      record_count: 339
+  - name: fleurs-hi-records
+    kind: audio-records
+    root_alias: multilingual_asr_bench
+    relative_path: versions/v2-20261110/records/fleurs-hi.jsonl.gz
+    sha256: 5b6f5ac742becbc50c4111165a1048270a1da3d349aa2bbade6d045ca8adfba3
+    metadata:
+      record_count: 418
+  - name: cv-hi-records
+    kind: audio-records
+    root_alias: multilingual_asr_bench
+    relative_path: versions/v2-20261110/records/cv-hi.jsonl.gz
+    sha256: 15f704baff75cd05b2953e36a0184c1a31f0a82b17a0c229c774e0e84ffad930
+    metadata:
+      record_count: 3154
+  - name: fleurs-ru-records
+    kind: audio-records
+    root_alias: multilingual_asr_bench
+    relative_path: versions/v2-20261110/records/fleurs-ru.jsonl.gz
+    sha256: eb62416b5220beccb38b21f2d94106f181c832188508aadc7ebf1463a1c5d500
+    metadata:
+      record_count: 775
+  - name: cv-ru-records
+    kind: audio-records
+    root_alias: multilingual_asr_bench
+    relative_path: versions/v2-20261110/records/cv-ru.jsonl.gz
+    sha256: 7e8ffeeefc9d091554ed46e5fb6783ca6ad7fa97ec30418c7b230d2c43ddc1e4
+    metadata:
+      record_count: 10203
+  - name: fleurs-id-records
+    kind: audio-records
+    root_alias: multilingual_asr_bench
+    relative_path: versions/v2-20261110/records/fleurs-id.jsonl.gz
+    sha256: 547ffe0a22aa2774ad82e8bff1e7c0e9ab38d29be044a022699028dc606e44e3
+    metadata:
+      record_count: 687
+  - name: cv-id-records
+    kind: audio-records
+    root_alias: multilingual_asr_bench
+    relative_path: versions/v2-20261110/records/cv-id.jsonl.gz
+    sha256: 6000b4443308c00bad3233ef70387f3fdb4bbdd1bcbf0571e70da6e73a345f28
+    metadata:
+      record_count: 3641
+  - name: gigaspeech2-id-records
+    kind: audio-records
+    root_alias: multilingual_asr_bench
+    relative_path: versions/v2-20261110/records/gigaspeech2-id.jsonl.gz
+    sha256: 045b29560606b290ba6941a183405b15d15b22280cab2067d394a63e24bd036d
+    metadata:
+      record_count: 17271
+  - name: casablanca-algeria-records
+    kind: audio-records
+    root_alias: multilingual_asr_bench
+    relative_path: versions/v2-20261110/records/casablanca-algeria.jsonl.gz
+    sha256: a3cf001977eaad23b31a6d4a4c2233c7ac600e94e7eefb5e8f5643026d2988aa
+    metadata:
+      record_count: 843
+  - name: casablanca-egypt-records
+    kind: audio-records
+    root_alias: multilingual_asr_bench
+    relative_path: versions/v2-20261110/records/casablanca-egypt.jsonl.gz
+    sha256: 7f5459ff495c98855cfa60b1aa85889c3b5148061bae3f537fa255ca2c004885
+    metadata:
+      record_count: 846
+  - name: casablanca-jordan-records
+    kind: audio-records
+    root_alias: multilingual_asr_bench
+    relative_path: versions/v2-20261110/records/casablanca-jordan.jsonl.gz
+    sha256: 9459b58813ca744e382ac564fb2fef48adc0e08ed4950ee6e3fe0f51b9b60da9
+    metadata:
+      record_count: 848
+  - name: casablanca-mauritania-records
+    kind: audio-records
+    root_alias: multilingual_asr_bench
+    relative_path: versions/v2-20261110/records/casablanca-mauritania.jsonl.gz
+    sha256: b288b00f27d24b30c48fd260cbaca3820d7b4146b4b7b398faa4312c2be078da
+    metadata:
+      record_count: 953
+  - name: casablanca-morocco-records
+    kind: audio-records
+    root_alias: multilingual_asr_bench
+    relative_path: versions/v2-20261110/records/casablanca-morocco.jsonl.gz
+    sha256: 32e60cba40657fc150665dc39b54f4f889fadb21233f8d1330ac6f279cd171a7
+    metadata:
+      record_count: 1045
+  - name: casablanca-palestine-records
+    kind: audio-records
+    root_alias: multilingual_asr_bench
+    relative_path: versions/v2-20261110/records/casablanca-palestine.jsonl.gz
+    sha256: 87a59eda227e5847e8ed841edb6cacde9971c0c5822ba8916c50c7a2f5cca476
+    metadata:
+      record_count: 667
+  - name: casablanca-uae-records
+    kind: audio-records
+    root_alias: multilingual_asr_bench
+    relative_path: versions/v2-20261110/records/casablanca-uae.jsonl.gz
+    sha256: 2aa5c4463fc5ff9aac6342f895c53288616556195b602289fe8c505ef216583c
+    metadata:
+      record_count: 813
+  - name: casablanca-yemen-records
+    kind: audio-records
+    root_alias: multilingual_asr_bench
+    relative_path: versions/v2-20261110/records/casablanca-yemen.jsonl.gz
+    sha256: ac43c73a70691c0068f615a540e58909350e3998efc68f6ca8347579ad72195f
+    metadata:
+      record_count: 803
+  - name: kathbath-hi-known-records
+    kind: audio-records
+    root_alias: multilingual_asr_bench
+    relative_path: versions/v2-20261110/records/kathbath-hi-known.jsonl.gz
+    sha256: 9bad31ca10d85a2e166aa149c9bc0252fae7c3e7d8bb20b00322a9c2bbd5d66d
+    metadata:
+      record_count: 3130
+  - name: kathbath-hi-unknown-records
+    kind: audio-records
+    root_alias: multilingual_asr_bench
+    relative_path: versions/v2-20261110/records/kathbath-hi-unknown.jsonl.gz
+    sha256: 734aedc89143df9fba46b7886516284c1c87d17bcd7ef1470fe6bfd9253fb906
+    metadata:
+      record_count: 1929
+  - name: voxpopuli-fr-records
+    kind: audio-records
+    root_alias: multilingual_asr_bench
+    relative_path: versions/v2-20261110/records/voxpopuli-fr.jsonl.gz
+    sha256: fd01017622be4a2d2f82dc2e601b07d8c9a3a854f6ff082b2d16fb35f6631cf6
+    metadata:
+      record_count: 1680
+  - name: voxpopuli-de-records
+    kind: audio-records
+    root_alias: multilingual_asr_bench
+    relative_path: versions/v2-20261110/records/voxpopuli-de.jsonl.gz
+    sha256: a46784ca0b790ef890efc62f1d73b925f1e5e1b93657362d4d25708dcc0492d0
+    metadata:
+      record_count: 1966
+  - name: golos-crowd-records
+    kind: audio-records
+    root_alias: multilingual_asr_bench
+    relative_path: versions/v2-20261110/records/golos-crowd.jsonl.gz
+    sha256: a783ee8edf393e4f3495d26cc6f9f6c408b195dc212cf7f18e8089bc0e753c74
+    metadata:
+      record_count: 9896
+  - name: golos-farfield-records
+    kind: audio-records
+    root_alias: multilingual_asr_bench
+    relative_path: versions/v2-20261110/records/golos-farfield.jsonl.gz
+    sha256: 096dd826c64a8db221aa80af611c777654e6ea14b3661004a81d4a0509e673f8
+    metadata:
+      record_count: 1915
+  splits:
+    fleurs-zh:
+      artifacts:
+        records:
+        - fleurs-zh-records
+        audio_index:
+        - audio-index
+      group: test
+      task: asr
+      statistics:
+        records: 945
+        duration_hours: 3.0737
+        duration_basis: sum of Lhotse recording durations
+      provenance:
+        description: FLEURS cmn_hans_cn test：中文朗读维基百科句子，同一句由多位说话人各读一遍。
+    cv-zh:
+      artifacts:
+        records:
+        - cv-zh-records
+        audio_index:
+        - audio-index
+      group: test
+      task: asr
+      statistics:
+        records: 10626
+        duration_hours: 17.47
+        duration_basis: sum of Lhotse recording durations
+      provenance:
+        description: Common Voice 17.0 zh-CN test：中文众包朗读，录音设备和环境各异。
+    fleurs-en:
+      artifacts:
+        records:
+        - fleurs-en-records
+        audio_index:
+        - audio-index
+      group: test
+      task: asr
+      statistics:
+        records: 647
+        duration_hours: 1.7744
+        duration_basis: sum of Lhotse recording durations
+      provenance:
+        description: FLEURS en_us test：英语朗读维基百科句子，同一句由多位说话人各读一遍。
+    cv-en:
+      artifacts:
+        records:
+        - cv-en-records
+        audio_index:
+        - audio-index
+      group: test
+      task: asr
+      statistics:
+        records: 16393
+        duration_hours: 26.9974
+        duration_basis: sum of Lhotse recording durations
+      provenance:
+        description: Common Voice 17.0 en test：英语众包朗读，录音设备和环境各异。
+    fleurs-ar:
+      artifacts:
+        records:
+        - fleurs-ar-records
+        audio_index:
+        - audio-index
+      group: test
+      task: asr
+      statistics:
+        records: 428
+        duration_hours: 1.3015
+        duration_basis: sum of Lhotse recording durations
+      provenance:
+        description: FLEURS ar_eg test：阿拉伯语朗读维基百科句子，同一句由多位说话人各读一遍。
+    cv-ar:
+      artifacts:
+        records:
+        - cv-ar-records
+        audio_index:
+        - audio-index
+      group: test
+      task: asr
+      statistics:
+        records: 10480
+        duration_hours: 12.6879
+        duration_basis: sum of Lhotse recording durations
+      provenance:
+        description: Common Voice 17.0 ar test：阿拉伯语众包朗读，录音设备和环境各异。
+    fleurs-es:
+      artifacts:
+        records:
+        - fleurs-es-records
+        audio_index:
+        - audio-index
+      group: test
+      task: asr
+      statistics:
+        records: 908
+        duration_hours: 3.0906
+        duration_basis: sum of Lhotse recording durations
+      provenance:
+        description: FLEURS es_419 test：西班牙语朗读维基百科句子，同一句由多位说话人各读一遍。
+    cv-es:
+      artifacts:
+        records:
+        - cv-es-records
+        audio_index:
+        - audio-index
+      group: test
+      task: asr
+      statistics:
+        records: 15857
+        duration_hours: 26.9763
+        duration_basis: sum of Lhotse recording durations
+      provenance:
+        description: Common Voice 17.0 es test：西班牙语众包朗读，录音设备和环境各异。
+    fleurs-fr:
+      artifacts:
+        records:
+        - fleurs-fr-records
+        audio_index:
+        - audio-index
+      group: test
+      task: asr
+      statistics:
+        records: 676
+        duration_hours: 1.9511
+        duration_basis: sum of Lhotse recording durations
+      provenance:
+        description: FLEURS fr_fr test：法语朗读维基百科句子，同一句由多位说话人各读一遍。
+    cv-fr:
+      artifacts:
+        records:
+        - cv-fr-records
+        audio_index:
+        - audio-index
+      group: test
+      task: asr
+      statistics:
+        records: 16159
+        duration_hours: 26.149
+        duration_basis: sum of Lhotse recording durations
+      provenance:
+        description: Common Voice 17.0 fr test：法语众包朗读，录音设备和环境各异。
+    fleurs-de:
+      artifacts:
+        records:
+        - fleurs-de-records
+        audio_index:
+        - audio-index
+      group: test
+      task: asr
+      statistics:
+        records: 862
+        duration_hours: 3.1526
+        duration_basis: sum of Lhotse recording durations
+      provenance:
+        description: FLEURS de_de test：德语朗读维基百科句子，同一句由多位说话人各读一遍。
+    cv-de:
+      artifacts:
+        records:
+        - cv-de-records
+        audio_index:
+        - audio-index
+      group: test
+      task: asr
+      statistics:
+        records: 16183
+        duration_hours: 27.4729
+        duration_basis: sum of Lhotse recording durations
+      provenance:
+        description: Common Voice 17.0 de test：德语众包朗读，录音设备和环境各异。
+    fleurs-pt:
+      artifacts:
+        records:
+        - fleurs-pt-records
+        audio_index:
+        - audio-index
+      group: test
+      task: asr
+      statistics:
+        records: 919
+        duration_hours: 3.2389
+        duration_basis: sum of Lhotse recording durations
+      provenance:
+        description: FLEURS pt_br test：葡萄牙语朗读维基百科句子，同一句由多位说话人各读一遍。
+    cv-pt:
+      artifacts:
+        records:
+        - cv-pt-records
+        audio_index:
+        - audio-index
+      group: test
+      task: asr
+      statistics:
+        records: 9467
+        duration_hours: 12.5926
+        duration_basis: sum of Lhotse recording durations
+      provenance:
+        description: Common Voice 17.0 pt test：葡萄牙语众包朗读，录音设备和环境各异。
+    fleurs-ja:
+      artifacts:
+        records:
+        - fleurs-ja-records
+        audio_index:
+        - audio-index
+      group: test
+      task: asr
+      statistics:
+        records: 650
+        duration_hours: 2.3642
+        duration_basis: sum of Lhotse recording durations
+      provenance:
+        description: FLEURS ja_jp test：日语朗读维基百科句子，同一句由多位说话人各读一遍。
+    cv-ja:
+      artifacts:
+        records:
+        - cv-ja-records
+        audio_index:
+        - audio-index
+      group: test
+      task: asr
+      statistics:
+        records: 6261
+        duration_hours: 8.8803
+        duration_basis: sum of Lhotse recording durations
+      provenance:
+        description: Common Voice 17.0 ja test：日语众包朗读，录音设备和环境各异。
+    fleurs-ko:
+      artifacts:
+        records:
+        - fleurs-ko-records
+        audio_index:
+        - audio-index
+      group: test
+      task: asr
+      statistics:
+        records: 382
+        duration_hours: 1.3347
+        duration_basis: sum of Lhotse recording durations
+      provenance:
+        description: FLEURS ko_kr test：韩语朗读维基百科句子，同一句由多位说话人各读一遍。
+    cv-ko:
+      artifacts:
+        records:
+        - cv-ko-records
+        audio_index:
+        - audio-index
+      group: test
+      task: asr
+      statistics:
+        records: 339
+        duration_hours: 0.4992
+        duration_basis: sum of Lhotse recording durations
+      provenance:
+        description: Common Voice 17.0 ko test：韩语众包朗读，录音设备和环境各异。
+    fleurs-hi:
+      artifacts:
+        records:
+        - fleurs-hi-records
+        audio_index:
+        - audio-index
+      group: test
+      task: asr
+      statistics:
+        records: 418
+        duration_hours: 1.3423
+        duration_basis: sum of Lhotse recording durations
+      provenance:
+        description: FLEURS hi_in test：印地语朗读维基百科句子，同一句由多位说话人各读一遍。
+    cv-hi:
+      artifacts:
+        records:
+        - cv-hi-records
+        audio_index:
+        - audio-index
+      group: test
+      task: asr
+      statistics:
+        records: 3154
+        duration_hours: 4.4367
+        duration_basis: sum of Lhotse recording durations
+      provenance:
+        description: Common Voice 17.0 hi test：印地语众包朗读，录音设备和环境各异。
+    fleurs-ru:
+      artifacts:
+        records:
+        - fleurs-ru-records
+        audio_index:
+        - audio-index
+      group: test
+      task: asr
+      statistics:
+        records: 775
+        duration_hours: 2.4983
+        duration_basis: sum of Lhotse recording durations
+      provenance:
+        description: FLEURS ru_ru test：俄语朗读维基百科句子，同一句由多位说话人各读一遍。
+    cv-ru:
+      artifacts:
+        records:
+        - cv-ru-records
+        audio_index:
+        - audio-index
+      group: test
+      task: asr
+      statistics:
+        records: 10203
+        duration_hours: 15.8952
+        duration_basis: sum of Lhotse recording durations
+      provenance:
+        description: Common Voice 17.0 ru test：俄语众包朗读，录音设备和环境各异。
+    fleurs-id:
+      artifacts:
+        records:
+        - fleurs-id-records
+        audio_index:
+        - audio-index
+      group: test
+      task: asr
+      statistics:
+        records: 687
+        duration_hours: 2.3654
+        duration_basis: sum of Lhotse recording durations
+      provenance:
+        description: FLEURS id_id test：印尼语朗读维基百科句子，同一句由多位说话人各读一遍。
+    cv-id:
+      artifacts:
+        records:
+        - cv-id-records
+        audio_index:
+        - audio-index
+      group: test
+      task: asr
+      statistics:
+        records: 3641
+        duration_hours: 4.1616
+        duration_basis: sum of Lhotse recording durations
+      provenance:
+        description: Common Voice 17.0 id test：印尼语众包朗读，录音设备和环境各异。
+    gigaspeech2-id:
+      artifacts:
+        records:
+        - gigaspeech2-id-records
+        audio_index:
+        - audio-index
+      group: test
+      task: asr
+      statistics:
+        records: 17271
+        duration_hours: 24.2086
+        duration_basis: sum of Lhotse recording durations
+        dropped_empty_transcripts: 2
+      provenance:
+        description: GigaSpeech 2 印尼语 test：YouTube 真实视频（访谈、vlog 等），人工标注，大写无标点；去掉 2 条空转写。
+    casablanca-algeria:
+      artifacts:
+        records:
+        - casablanca-algeria-records
+        audio_index:
+        - audio-index
+      group: test
+      task: asr
+      statistics:
+        records: 843
+        duration_hours: 0.9371
+        duration_basis: sum of Lhotse recording durations
+      provenance:
+        description: Casablanca 阿尔及利亚阿拉伯语方言 test：电视剧片段，人工转写，含与法语/英语的语码转换。CC BY-NC-ND 4.0，仅限非商业用途。
+    casablanca-egypt:
+      artifacts:
+        records:
+        - casablanca-egypt-records
+        audio_index:
+        - audio-index
+      group: test
+      task: asr
+      statistics:
+        records: 846
+        duration_hours: 1.0246
+        duration_basis: sum of Lhotse recording durations
+      provenance:
+        description: Casablanca 埃及阿拉伯语方言 test：电视剧片段，人工转写，含与法语/英语的语码转换。CC BY-NC-ND 4.0，仅限非商业用途。
+    casablanca-jordan:
+      artifacts:
+        records:
+        - casablanca-jordan-records
+        audio_index:
+        - audio-index
+      group: test
+      task: asr
+      statistics:
+        records: 848
+        duration_hours: 0.9819
+        duration_basis: sum of Lhotse recording durations
+      provenance:
+        description: Casablanca 约旦阿拉伯语方言 test：电视剧片段，人工转写，含与法语/英语的语码转换。CC BY-NC-ND 4.0，仅限非商业用途。
+    casablanca-mauritania:
+      artifacts:
+        records:
+        - casablanca-mauritania-records
+        audio_index:
+        - audio-index
+      group: test
+      task: asr
+      statistics:
+        records: 953
+        duration_hours: 0.9486
+        duration_basis: sum of Lhotse recording durations
+      provenance:
+        description: Casablanca 毛里塔尼亚阿拉伯语方言 test：电视剧片段，人工转写，含与法语/英语的语码转换。CC BY-NC-ND 4.0，仅限非商业用途。
+    casablanca-morocco:
+      artifacts:
+        records:
+        - casablanca-morocco-records
+        audio_index:
+        - audio-index
+      group: test
+      task: asr
+      statistics:
+        records: 1045
+        duration_hours: 1.0064
+        duration_basis: sum of Lhotse recording durations
+      provenance:
+        description: Casablanca 摩洛哥阿拉伯语方言 test：电视剧片段，人工转写，含与法语/英语的语码转换。CC BY-NC-ND 4.0，仅限非商业用途。
+    casablanca-palestine:
+      artifacts:
+        records:
+        - casablanca-palestine-records
+        audio_index:
+        - audio-index
+      group: test
+      task: asr
+      statistics:
+        records: 667
+        duration_hours: 0.9755
+        duration_basis: sum of Lhotse recording durations
+      provenance:
+        description: Casablanca 巴勒斯坦阿拉伯语方言 test：电视剧片段，人工转写，含与法语/英语的语码转换。CC BY-NC-ND 4.0，仅限非商业用途。
+    casablanca-uae:
+      artifacts:
+        records:
+        - casablanca-uae-records
+        audio_index:
+        - audio-index
+      group: test
+      task: asr
+      statistics:
+        records: 813
+        duration_hours: 0.9332
+        duration_basis: sum of Lhotse recording durations
+      provenance:
+        description: Casablanca 阿联酋阿拉伯语方言 test：电视剧片段，人工转写，含与法语/英语的语码转换。CC BY-NC-ND 4.0，仅限非商业用途。
+    casablanca-yemen:
+      artifacts:
+        records:
+        - casablanca-yemen-records
+        audio_index:
+        - audio-index
+      group: test
+      task: asr
+      statistics:
+        records: 803
+        duration_hours: 1.0418
+        duration_basis: sum of Lhotse recording durations
+      provenance:
+        description: Casablanca 也门阿拉伯语方言 test：电视剧片段，人工转写，含与法语/英语的语码转换。CC BY-NC-ND 4.0，仅限非商业用途。
+    kathbath-hi-known:
+      artifacts:
+        records:
+        - kathbath-hi-known-records
+        audio_index:
+        - audio-index
+      group: test
+      task: asr
+      statistics:
+        records: 3130
+        duration_hours: 5.0126
+        duration_basis: sum of Lhotse recording durations
+      provenance:
+        description: Kathbath 印地语 test-known：众包手机朗读（clean 版）；已知说话人（说话人也出现在 Kathbath 训练集）。转写为数字转写成词的版本（n2w）。音频由 m4a（AAC）解码为 FLAC。
+    kathbath-hi-unknown:
+      artifacts:
+        records:
+        - kathbath-hi-unknown-records
+        audio_index:
+        - audio-index
+      group: test
+      task: asr
+      statistics:
+        records: 1929
+        duration_hours: 2.9985
+        duration_basis: sum of Lhotse recording durations
+      provenance:
+        description: Kathbath 印地语 test-unknown：众包手机朗读（clean 版）；未知说话人（说话人不在 Kathbath 训练集）。转写为数字转写成词的版本（n2w）。音频由 m4a（AAC）解码为 FLAC。
+    voxpopuli-fr:
+      artifacts:
+        records:
+        - voxpopuli-fr-records
+        audio_index:
+        - audio-index
+      group: test
+      task: asr
+      statistics:
+        records: 1680
+        duration_hours: 4.6541
+        duration_basis: sum of Lhotse recording durations
+        dropped_empty_transcripts: 62
+      provenance:
+        description: VoxPopuli fr test：欧洲议会法语现场发言录音（2009–2020）；转写取 raw_text（带大小写和标点）。
+    voxpopuli-de:
+      artifacts:
+        records:
+        - voxpopuli-de-records
+        audio_index:
+        - audio-index
+      group: test
+      task: asr
+      statistics:
+        records: 1966
+        duration_hours: 4.9051
+        duration_basis: sum of Lhotse recording durations
+        dropped_empty_transcripts: 2
+      provenance:
+        description: VoxPopuli de test：欧洲议会德语现场发言录音（2009–2020）；转写取 raw_text（带大小写和标点）。
+    golos-crowd:
+      artifacts:
+        records:
+        - golos-crowd-records
+        audio_index:
+        - audio-index
+      group: test
+      task: asr
+      statistics:
+        records: 9896
+        duration_hours: 11.1139
+        duration_basis: sum of Lhotse recording durations
+        dropped_empty_transcripts: 98
+      provenance:
+        description: Golos crowd test：俄语，众包用户在手机上念语音助手指令；转写为小写、无标点。
+    golos-farfield:
+      artifacts:
+        records:
+        - golos-farfield-records
+        audio_index:
+        - audio-index
+      group: test
+      task: asr
+      statistics:
+        records: 1915
+        duration_hours: 1.408
+        duration_basis: sum of Lhotse recording durations
+        dropped_empty_transcripts: 1
+      provenance:
+        description: Golos farfield test：俄语，在房间里对智能音箱念指令，远场麦克风录音；转写为小写、无标点。
+  provenance:
+    summary: 十二种语言公开 ASR 测试集（只用于评测）
+    description: FLEURS 与 Common Voice 17.0 的 test 划分覆盖中、英、阿、西、法、德、葡、日、韩、印地、俄、印尼十二种语言，另有 GigaSpeech 2 印尼语 test（YouTube）、Casablanca 八种阿拉伯语方言 test（电视剧）、Kathbath 印地语 test（手机朗读，已知/未知说话人）、VoxPopuli 法语和德语 test（欧洲议会发言）与 Golos 俄语 test（语音助手指令，众包/远场）。音频从各自登记的上游快照原样取出，只有 Kathbath 的 m4a 解码为 FLAC；转写取上游原文（FLEURS 用 raw transcription，VoxPopuli 用 raw_text）。v1-20261110 是不含 Kathbath、VoxPopuli、Golos 的前一版，两版共用 source/ 下的音频。只用于评测，不进训练。
+    derived_from:
+    - casablanca@hf-8951b1b88e28
+    - common_voice_ar@hf-8262c16bf297
+    - common_voice_de@hf-8262c16bf297
+    - common_voice_en@hf-8262c16bf297
+    - common_voice_es@hf-8262c16bf297
+    - common_voice_fr@hf-8262c16bf297
+    - common_voice_hi@hf-8262c16bf297
+    - common_voice_id@hf-8262c16bf297
+    - common_voice_ja@hf-8262c16bf297
+    - common_voice_ko@hf-8262c16bf297
+    - common_voice_pt@hf-8262c16bf297
+    - common_voice_ru@hf-8262c16bf297
+    - common_voice_zh@hf-8262c16bf297
+    - fleurs_ar@hf-70bb2e84b976
+    - fleurs_de@hf-70bb2e84b976
+    - fleurs_en@hf-70bb2e84b976
+    - fleurs_es@hf-70bb2e84b976
+    - fleurs_fr@hf-70bb2e84b976
+    - fleurs_hi@hf-70bb2e84b976
+    - fleurs_id@hf-70bb2e84b976
+    - fleurs_ja@hf-70bb2e84b976
+    - fleurs_ko@hf-70bb2e84b976
+    - fleurs_pt@hf-70bb2e84b976
+    - fleurs_ru@hf-70bb2e84b976
+    - fleurs_zh@hf-70bb2e84b976
+    - gigaspeech2_id@hf-8dc0d0e502b7
+    - golos@sberdevices-20250324
+    - kathbath@ai4bharat-20250409
+    - voxpopuli_de@hf-42f01879c780
+    - voxpopuli_fr@hf-42f01879c780
+    license: 继承各上游：FLEURS CC BY 4.0；Common Voice CC0；GigaSpeech 2 Apache 2.0；Casablanca CC BY-NC-ND 4.0（仅限非商业用途，不得改编再分发）；Kathbath CC0；VoxPopuli CC0；Golos 为 SberDevices 署名-相同方式共享公共许可（允许商用，再分发须署名并沿用同类许可）
+    known_issues:
+    - Common Voice 17.0 来自非官方 HF 镜像 fsicoli/common_voice_17_0（官方 Mozilla 仓库需要授权），与 common_voice_pt@hf-8262c16bf297 相同。
+    - 日语按字计分（CER）需要 ts-asr 打分口径版本 4 及以上；版本 3 对日语按空格分词（汉字一字一个单位、连续假名合成一个单位），日语错误率不可比。
+    - Casablanca 音频多为 44.1/48 kHz 双声道（电视音轨），保持原样；评测器读取时取声道平均并重采样到 16 kHz。
+    - Kathbath 音频原为 44.1 kHz 单声道 m4a（AAC），用 ffmpeg 解码为 16 位 FLAC（采样率不变）；test-known 的说话人也出现在 Kathbath 训练集。
+    - Golos 转写为小写、无标点（与上游 manifest.jsonl 一致）；GigaSpeech 2 转写为大写、无标点。打分时会统一大小写和标点，但带标点的识别结果在其他评测器下可能吃亏。
+    build_script: scripts/multilingual_asr_bench/build.py

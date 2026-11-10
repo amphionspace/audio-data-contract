@@ -1859,3 +1859,255 @@
     expected_download_bytes: 4547480986
     integrity: verified
     used_by: multilingual_asr_bench@v1-20261110
+- schema_version: dataset-catalog/2.0
+  dataset_id: voxpopuli_fr
+  version: hf-42f01879c780
+  languages:
+  - fr
+  tasks:
+  - asr
+  aliases: []
+  artifacts:
+  - name: source
+    kind: hf-dataset-snapshot
+    root_alias: voxpopuli_fr
+    relative_path: source/hf-42f01879c780
+    metadata:
+      file_count: 2
+      expected_bytes: 957973962
+      tree_sha256: c95f87dc6e914414ac31738366a7c0bf38351775272cd947e3f2345d6e2dd686
+  - name: fr_parquet
+    kind: parquet-directory
+    root_alias: voxpopuli_fr
+    relative_path: source/hf-42f01879c780/fr
+    metadata:
+      file_count: 1
+      expected_bytes: 957942040
+      tree_sha256: e7e8f53ab145c771a9321d59a2df5132340b230ea5aea326c454b5806e8f2339
+  - name: download_state
+    kind: dataset-state
+    root_alias: voxpopuli_fr
+    relative_path: versions/hf-42f01879c780/download_state/state.json
+    expected_bytes: 932
+    sha256: d6219225c9cf1d21409c7c87defef6f0b71069fd50e0958ec6445b482636ef8b
+  splits:
+    test:
+      artifacts:
+        source:
+        - fr_parquet
+      statistics:
+        count: 1742
+        speakers: 144
+  provenance:
+    summary: VoxPopuli 法语欧洲议会发言
+    locale: fr
+    dataset_family: voxpopuli_fr
+    description: VoxPopuli 人工转写 ASR 数据的 fr test（HF parquet 转换版，音频以 wav 字节存在 parquet 内）；train/validation 未下载。
+    source: Hugging Face
+    source_id: facebook/voxpopuli
+    revision: 42f01879c780b4a2e90ec0b4f616c2ece526e4f1
+    url: https://huggingface.co/datasets/facebook/voxpopuli
+    download_mirror: https://hf-mirror.com
+    license: cc0-1.0
+    download_scope: VoxPopuli fr transcribed test parquet only (Hugging Face parquet conversion)
+    expected_download_files: 2
+    expected_download_bytes: 957973962
+    integrity: verified
+    used_by: multilingual_asr_bench@v2-20261110
+- schema_version: dataset-catalog/2.0
+  dataset_id: voxpopuli_de
+  version: hf-42f01879c780
+  languages:
+  - de
+  tasks:
+  - asr
+  aliases: []
+  artifacts:
+  - name: source
+    kind: hf-dataset-snapshot
+    root_alias: voxpopuli_de
+    relative_path: source/hf-42f01879c780
+    metadata:
+      file_count: 2
+      expected_bytes: 936087884
+      tree_sha256: 5ca80aa4348cde9e6ca006bc454e6abdcefba0bf60961ce4b2019452727bcf8c
+  - name: de_parquet
+    kind: parquet-directory
+    root_alias: voxpopuli_de
+    relative_path: source/hf-42f01879c780/de
+    metadata:
+      file_count: 1
+      expected_bytes: 936055962
+      tree_sha256: e5d35d95c7db0cf06da45339b46ece2f0a5736fc7634078cf870da25755ae55c
+  - name: download_state
+    kind: dataset-state
+    root_alias: voxpopuli_de
+    relative_path: versions/hf-42f01879c780/download_state/state.json
+    expected_bytes: 932
+    sha256: b73b9ba98deabf126282c601f97856ee892821b7605a0e91a5decd166f1d42be
+  splits:
+    test:
+      artifacts:
+        source:
+        - de_parquet
+      statistics:
+        count: 1968
+        speakers: 123
+  provenance:
+    summary: VoxPopuli 德语欧洲议会发言
+    locale: de
+    dataset_family: voxpopuli_de
+    description: VoxPopuli 人工转写 ASR 数据的 de test（HF parquet 转换版，音频以 wav 字节存在 parquet 内）；train/validation 未下载。
+    source: Hugging Face
+    source_id: facebook/voxpopuli
+    revision: 42f01879c780b4a2e90ec0b4f616c2ece526e4f1
+    url: https://huggingface.co/datasets/facebook/voxpopuli
+    download_mirror: https://hf-mirror.com
+    license: cc0-1.0
+    download_scope: VoxPopuli de transcribed test parquet only (Hugging Face parquet conversion)
+    expected_download_files: 2
+    expected_download_bytes: 936087884
+    integrity: verified
+    used_by: multilingual_asr_bench@v2-20261110
+- schema_version: dataset-catalog/2.0
+  dataset_id: kathbath
+  version: ai4bharat-20250409
+  languages:
+  - hi
+  tasks:
+  - asr
+  aliases: []
+  artifacts:
+  - name: source
+    kind: source-directory
+    root_alias: kathbath
+    relative_path: source/ai4bharat-20250409
+    metadata:
+      file_count: 3
+      expected_bytes: 6004295680
+      tree_sha256: adf6c75dff27d8c5827cf13949c285f991939e97b7d5f01a1018343bf398eb56
+  - name: testkn_audio_tar
+    kind: source-archive
+    root_alias: kathbath
+    relative_path: source/ai4bharat-20250409/testkn_audio.tar
+    expected_bytes: 3587717120
+    sha256: 3e1d31a8d7385b27fe1968b66c439dbad2cb5c0ca2f08fd5742e247e45d51339
+  - name: transcripts_n2w_tar
+    kind: transcript-table
+    root_alias: kathbath
+    relative_path: source/ai4bharat-20250409/transcripts_n2w.tar
+    expected_bytes: 208998400
+    sha256: 29156057ebbc428146a7a851ebe3238cb19e1c9793000b60de45667c55e40d3e
+  - name: testunk_audio_tar
+    kind: source-archive
+    root_alias: kathbath
+    relative_path: source/ai4bharat-20250409/testunk_audio.tar
+    expected_bytes: 2207580160
+    sha256: 051dbd460a0f1773f0bd6839ddbdc55a27c6a3e41d86cc54309542c6edff4948
+  - name: download_state
+    kind: dataset-state
+    root_alias: kathbath
+    relative_path: versions/ai4bharat-20250409/download_state/state.json
+    expected_bytes: 923
+    sha256: 5caab6f627841511d7242dc284109de5b910a14fe7de51ec0055eba7b935837b
+  splits:
+    hindi_test_known:
+      artifacts:
+        source:
+        - source
+        audio_archive:
+        - testkn_audio_tar
+        transcripts:
+        - transcripts_n2w_tar
+      statistics:
+        count: 3130
+        speakers: 20
+    hindi_test_unknown:
+      artifacts:
+        source:
+        - source
+        audio_archive:
+        - testunk_audio_tar
+        transcripts:
+        - transcripts_n2w_tar
+      statistics:
+        count: 1929
+        speakers: 20
+  provenance:
+    summary: Kathbath 印地语手机朗读评测划分
+    dataset_family: kathbath
+    source: AI4Bharat object store (IndicSUPERB)
+    url: https://github.com/AI4Bharat/IndicSUPERB
+    download_url: https://objectstore.e2enetworks.net/indic-superb/kathbath/clean/
+    description: AI4Bharat Kathbath clean 版的 test-known、test-unknown 音频包（m4a，含 12 种印度语言）和 n2w 转写包，只登记印地语两个划分。上游没有发布文件哈希：三个文件按服务器给出的大小下载，再按 16 MiB 分片算出 S3 分片 ETag，与对象存储的 ETag 一致；sha256 为本地计算。转写与音频逐条对齐。
+    license: CC0-1.0 packaging (IndicSUPERB)
+    download_scope: Kathbath clean test-known/test-unknown audio and n2w transcripts (all 12 languages; Hindi registered)
+    expected_download_files: 3
+    expected_download_bytes: 6004295680
+    integrity: verified
+    used_by: multilingual_asr_bench@v2-20261110
+- schema_version: dataset-catalog/2.0
+  dataset_id: golos
+  version: sberdevices-20250324
+  languages:
+  - ru
+  tasks:
+  - asr
+  aliases: []
+  artifacts:
+  - name: source
+    kind: source-directory
+    root_alias: golos
+    relative_path: source/sberdevices-20250324
+    metadata:
+      file_count: 1
+      expected_bytes: 1632092160
+      tree_sha256: e39423377ada50b63a8460ec4f56c1a1ada8b0332c71641083d6903a303cde76
+  - name: test_tar
+    kind: source-archive
+    root_alias: golos
+    relative_path: source/sberdevices-20250324/test.tar
+    expected_bytes: 1632092160
+    sha256: af12fb75d88c05a641c4c4cf60ba4f0247136aa872a31c48012bfa0e6f36ed26
+  - name: download_state
+    kind: dataset-state
+    root_alias: golos
+    relative_path: versions/sberdevices-20250324/download_state/state.json
+    expected_bytes: 912
+    sha256: 922da4767275c5570be881e3f63368d292783c5467889459cd7aa5cb96778e45
+  splits:
+    test_crowd:
+      artifacts:
+        source:
+        - source
+        audio_archive:
+        - test_tar
+      statistics:
+        count: 9994
+        duration_hours: 11.2003
+        duration_basis: sum of test/crowd/manifest.jsonl duration; archive md5 matches the published golos/md5sum.txt
+      group: test
+    test_farfield:
+      artifacts:
+        source:
+        - source
+        audio_archive:
+        - test_tar
+      statistics:
+        count: 1916
+        duration_hours: 1.408
+        duration_basis: sum of test/farfield/manifest.jsonl duration; archive md5 matches the published golos/md5sum.txt
+      group: test
+  provenance:
+    summary: Golos 俄语语音助手指令评测划分
+    dataset_family: golos
+    source: SberDevices (salute-developers/golos)
+    url: https://github.com/salute-developers/golos
+    download_url: http://cdn.chatwm.opensmodel.sberdevices.ru/golos/test.tar
+    description: SberDevices Golos 的 test.tar（WAV，16 kHz 单声道），含 crowd 和 farfield 两个测试集。CDN 的 HTTPS 证书已过期，用 HTTP 下载，按 salute-developers/golos 仓库 golos/md5sum.txt 公布的 md5 校验。
+    license: SberDevices public license with attribution and conditions reserved (BY-SA style)
+    download_scope: Golos crowd and farfield test (test.tar, WAV)
+    expected_download_files: 1
+    expected_download_bytes: 1632092160
+    integrity: verified
+    used_by: multilingual_asr_bench@v2-20261110

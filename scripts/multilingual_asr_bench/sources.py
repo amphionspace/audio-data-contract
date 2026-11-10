@@ -3,7 +3,9 @@
 from pathlib import Path
 
 DATASET_ID = "multilingual_asr_bench"
-VERSION = "v1-20261110"
+# v2 adds Kathbath (hi), VoxPopuli (fr, de) and Golos (ru); v1 keeps its own records.
+VERSION = "v2-20261110"
+V1 = "v1-20261110"
 ROOT = Path("/workspace/data/datasets") / DATASET_ID
 DATA = Path("/workspace/data/datasets")
 
@@ -11,6 +13,9 @@ FLEURS_VERSION = "hf-70bb2e84b976"
 CV_VERSION = "hf-8262c16bf297"
 GIGASPEECH2_VERSION = "hf-8dc0d0e502b7"
 CASABLANCA_VERSION = "hf-8951b1b88e28"
+VOXPOPULI_VERSION = "hf-42f01879c780"
+GOLOS_VERSION = "sberdevices-20250324"
+KATHBATH_VERSION = "ai4bharat-20250409"
 
 # Bench language -> (FLEURS locale, Common Voice locale), in the priority order of the request.
 LANGUAGES = {
@@ -88,4 +93,49 @@ for dialect, label in CASABLANCA_DIALECTS.items():
         "derived_from": f"casablanca@{CASABLANCA_VERSION}",
         "parquet_dir": casablanca / dialect,
         "description": f"Casablanca {label}阿拉伯语方言 test：电视剧片段，人工转写，含与法语/英语的语码转换。CC BY-NC-ND 4.0，仅限非商业用途。",
+    })
+
+kathbath = DATA / "kathbath" / "source" / KATHBATH_VERSION
+for part, folder, archive, label in (
+    ("known", "test_known", "testkn_audio.tar", "已知说话人（说话人也出现在 Kathbath 训练集）"),
+    ("unknown", "test", "testunk_audio.tar", "未知说话人（说话人不在 Kathbath 训练集）"),
+):
+    SPLITS.append({
+        "name": f"kathbath-hi-{part}",
+        "kind": "kathbath",
+        "language": "hi",
+        "locale": "hindi",
+        "source": "Kathbath",
+        "derived_from": f"kathbath@{KATHBATH_VERSION}",
+        "folder": folder,
+        "archives": [kathbath / archive],
+        "transcripts": (kathbath / "transcripts_n2w.tar", f"kb_data_clean_m4a/hindi/{folder}/transcription_n2w.txt"),
+        "description": f"Kathbath 印地语 test-{part}：众包手机朗读（clean 版）；{label}。转写为数字转写成词的版本（n2w）。音频由 m4a（AAC）解码为 FLAC。",
+    })
+
+for lang in ("fr", "de"):
+    SPLITS.append({
+        "name": f"voxpopuli-{lang}",
+        "kind": "voxpopuli",
+        "language": lang,
+        "locale": lang,
+        "source": "VoxPopuli",
+        "derived_from": f"voxpopuli_{lang}@{VOXPOPULI_VERSION}",
+        "parquet_files": [DATA / f"voxpopuli_{lang}" / "source" / VOXPOPULI_VERSION / lang / "test-00000-of-00001.parquet"],
+        "description": f"VoxPopuli {lang} test：欧洲议会{NAMES[lang]}现场发言录音（2009–2020）；转写取 raw_text（带大小写和标点）。",
+    })
+
+golos = DATA / "golos" / "source" / GOLOS_VERSION / "test.tar"
+for part, label in (("crowd", "众包用户在手机上念语音助手指令"), ("farfield", "在房间里对智能音箱念指令，远场麦克风录音")):
+    SPLITS.append({
+        "name": f"golos-{part}",
+        "kind": "golos",
+        "language": "ru",
+        "locale": part,
+        "source": "Golos",
+        "derived_from": f"golos@{GOLOS_VERSION}",
+        "part": part,
+        "archives": [golos],
+        "transcripts": (golos, f"test/{part}/manifest.jsonl"),
+        "description": f"Golos {part} test：俄语，{label}；转写为小写、无标点。",
     })

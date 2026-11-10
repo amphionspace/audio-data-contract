@@ -24,11 +24,11 @@ from pathlib import Path
 import yaml
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from sources import CASABLANCA_DIALECTS, DATA, LANGUAGES, NAMES
+from sources import CASABLANCA_DIALECTS, DATA, LANGUAGES, NAMES, V1, VERSION
 
 REPOSITORY = Path(__file__).resolve().parents[2]
 CATALOG_FILE = REPOSITORY / "catalog" / "multilingual_asr_sources.yaml"
-PLANS = ("hf-plan.json", "hf-plan-base.json", "http-plan.json")
+PLANS = ("hf-plan.json", "hf-plan-base.json", "http-plan.json", "hf-plan-v2.json", "http-plan-v2.json")
 csv.field_size_limit(1 << 24)
 
 
@@ -146,10 +146,57 @@ def casablanca_splits(destination):
     return splits
 
 
+def kathbath_splits(destination):
+    splits = {}
+    for split, folder, archive in (("hindi_test_known", "test_known", "testkn_audio.tar"), ("hindi_test_unknown", "test", "testunk_audio.tar")):
+        with tarfile.open(destination / "transcripts_n2w.tar") as stream:
+            lines = stream.extractfile(f"kb_data_clean_m4a/hindi/{folder}/transcription_n2w.txt").read().decode().splitlines()
+        files = {line.split("\t")[0] for line in lines if line.strip()}
+        with tarfile.open(destination / archive) as stream:
+            members = {Path(m).name for m in stream.getnames() if m.startswith(f"kb_data_clean_m4a/hindi/{folder}/audio/")}
+        if files - members:
+            raise ValueError(f"{destination} {split}: transcripts without audio in {archive}")
+        splits[split] = {
+            "files": [archive, "transcripts_n2w.tar"],
+            "roles": {"audio_archive": archive, "transcripts": "transcripts_n2w.tar"},
+            "statistics": {"count": len(files), "speakers": len({f.rsplit("-", 2)[1] for f in files})},
+        }
+    return splits
+
+
+def voxpopuli_splits(destination, lang):
+    import pyarrow.parquet as pq
+
+    path = f"{lang}/test-00000-of-00001.parquet"
+    table = pq.read_table(destination / path, columns=["speaker_id"])
+    return {"test": {
+        "files": [path],
+        "roles": {"parquet_dir": lang},
+        "statistics": {"count": table.num_rows, "speakers": len(set(table["speaker_id"].to_pylist()))},
+    }}
+
+
+def golos_splits(destination):
+    splits = {}
+    with tarfile.open(destination / "test.tar") as stream:
+        for part in ("crowd", "farfield"):
+            rows = [json.loads(line) for line in stream.extractfile(f"test/{part}/manifest.jsonl").read().decode().splitlines()]
+            splits[f"test_{part}"] = {
+                "files": ["test.tar"],
+                "roles": {"audio_archive": "test.tar"},
+                "statistics": {
+                    "count": len(rows),
+                    "duration_hours": round(sum(r["duration"] for r in rows) / 3600, 4),
+                    "duration_basis": f"sum of test/{part}/manifest.jsonl duration; archive md5 matches the published golos/md5sum.txt",
+                },
+            }
+    return splits
+
+
 # --- catalog entries ------------------------------------------------------------------------------
 
 
-def entry(dataset_id, plan, splits, language, provenance, staging):
+def entry(dataset_id, plan, splits, language, provenance, staging, used_by=V1):
     version = plan["version"]
     destination = Path(plan["destination"])
     root = DATA / dataset_id
@@ -157,7 +204,7 @@ def entry(dataset_id, plan, splits, language, provenance, staging):
     relative_source = destination.relative_to(root).as_posix()
     artifacts = [{
         "name": "source",
-        "kind": "hf-dataset-snapshot",
+        "kind": "hf-dataset-snapshot" if plan.get("repo") else "source-directory",
         "root_alias": dataset_id,
         "relative_path": relative_source,
         "metadata": {"file_count": len(facts), "expected_bytes": sum(s for s, _ in facts.values()), "tree_sha256": tree_sha256(facts)},
@@ -231,7 +278,7 @@ def entry(dataset_id, plan, splits, language, provenance, staging):
             "expected_download_files": len(plan["files"]),
             "expected_download_bytes": sum(r["size"] for r in plan["files"]),
             "integrity": "verified",
-            "used_by": "multilingual_asr_bench@v1-20261110",
+            "used_by": f"multilingual_asr_bench@{used_by}",
         },
     }
 
@@ -276,6 +323,34 @@ def main():
         {"summary": "Casablanca 八种阿拉伯语方言", "dataset_family": "casablanca",
          "description": "UBC-NLP Casablanca 的 test 划分（阿尔及利亚、埃及、约旦、毛里塔尼亚、摩洛哥、巴勒斯坦、阿联酋、也门），音频以 wav 字节存在 parquet 内；validation 未下载。仅限非商业用途。"},
         args.staging,
+    ))
+    for lang in ("fr", "de"):
+        plan = plans[f"voxpopuli_{lang}"]
+        entries.append(entry(
+            f"voxpopuli_{lang}", plan, voxpopuli_splits(Path(plan["destination"]), lang), lang,
+            {"summary": f"VoxPopuli {NAMES[lang]}欧洲议会发言", "locale": lang, "dataset_family": f"voxpopuli_{lang}",
+             "description": f"VoxPopuli 人工转写 ASR 数据的 {lang} test（HF parquet 转换版，音频以 wav 字节存在 parquet 内）；train/validation 未下载。"},
+            args.staging, VERSION,
+        ))
+    plan = plans["kathbath"]
+    entries.append(entry(
+        "kathbath", plan, kathbath_splits(Path(plan["destination"])), "hi",
+        {"summary": "Kathbath 印地语手机朗读评测划分", "dataset_family": "kathbath",
+         "source": "AI4Bharat object store (IndicSUPERB)", "url": "https://github.com/AI4Bharat/IndicSUPERB",
+         "download_url": "https://objectstore.e2enetworks.net/indic-superb/kathbath/clean/",
+         "description": "AI4Bharat Kathbath clean 版的 test-known、test-unknown 音频包（m4a，含 12 种印度语言）和 n2w 转写包，只登记印地语两个划分。"
+                        "上游没有发布文件哈希：三个文件按服务器给出的大小下载，再按 16 MiB 分片算出 S3 分片 ETag，与对象存储的 ETag 一致；sha256 为本地计算。转写与音频逐条对齐。"},
+        args.staging, VERSION,
+    ))
+    plan = plans["golos"]
+    entries.append(entry(
+        "golos", plan, golos_splits(Path(plan["destination"])), "ru",
+        {"summary": "Golos 俄语语音助手指令评测划分", "dataset_family": "golos",
+         "source": "SberDevices (salute-developers/golos)", "url": "https://github.com/salute-developers/golos",
+         "download_url": "http://cdn.chatwm.opensmodel.sberdevices.ru/golos/test.tar",
+         "description": "SberDevices Golos 的 test.tar（WAV，16 kHz 单声道），含 crowd 和 farfield 两个测试集。CDN 的 HTTPS 证书已过期，用 HTTP 下载，"
+                        "按 salute-developers/golos 仓库 golos/md5sum.txt 公布的 md5 校验。"},
+        args.staging, VERSION,
     ))
     # The overview shows one summary per dataset; keep the one already registered for existing datasets.
     summarized = {
