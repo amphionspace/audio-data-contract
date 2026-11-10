@@ -1,0 +1,61 @@
+# Common Voice Scripted Speech 27.0 西语、葡语（2026-11-10 开工，占位）：Mozilla Data Collective 已授权；平台已下架 26.0 完整版，改下 27.0。下载、校验后与已有 Common Voice 版本去重再清洗。
+- schema_version: dataset-catalog/2.0
+  dataset_id: common_voice_es
+  version: mdc-27.0
+  languages:
+  - es
+  tasks:
+  - asr
+  aliases: []
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/common_voice_es/versions/mdc-27.0/state.json
+  splits:
+    all:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: >-
+      Common Voice Scripted Speech 27.0 西语完整版（Mozilla Data Collective cmu5kitx700pemi073feoiqqu，压缩包 51.9 GB），正在下载；
+      下完按平台给的 sha256 校验，再与 common_voice_es@legacy（CV 24.0）按句子去重，新增部分走 consensus-v7 双引擎清洗。
+    source: Mozilla Data Collective
+    source_id: cmu5kitx700pemi073feoiqqu
+    url: https://mozilladatacollective.com/datasets/cmu5kitx700pemi073feoiqqu
+    license: CC0-1.0
+- schema_version: dataset-catalog/2.0
+  dataset_id: common_voice_pt
+  version: mdc-27.0
+  languages:
+  - pt
+  tasks:
+  - asr
+  aliases: []
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/common_voice_pt/versions/mdc-27.0/state.json
+  splits:
+    all:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: >-
+      Common Voice Scripted Speech 27.0 葡语完整版（Mozilla Data Collective cmu5wui2w00e8nq07idithpm6，压缩包 5.2 GB），正在下载；
+      下完按平台给的 sha256 校验，再与 common_voice_pt@hf-8262c16bf297（CV 17.0 镜像）按句子去重。
+    source: Mozilla Data Collective
+    source_id: cmu5wui2w00e8nq07idithpm6
+    url: https://mozilladatacollective.com/datasets/cmu5wui2w00e8nq07idithpm6
+    license: CC0-1.0
