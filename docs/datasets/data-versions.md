@@ -2143,7 +2143,7 @@ AISHELL-1、LibriSpeech 合成的多人对话
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
-| [multilingual_asr_bench@v1-20261110](../../catalog/multilingual_asr_bench.yaml#L1) | — | 未登记 | 没有 |
+| [multilingual_asr_bench@v1-20261110](../../catalog/multilingual_asr_bench.yaml#L1) | — | 未登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/multilingual_asr_bench/` |
 
 - `multilingual_asr_bench@v1-20261110`：FLEURS 与 Common Voice 17.0 的 test 划分覆盖中、英、阿、西、法、德、葡、日、韩、印地、俄、印尼十二种语言，另有 GigaSpeech 2 印尼语 test（YouTube）与 Casablanca 八种阿拉伯语方言 test（电视剧）。音频从各自登记的上游快照原样取出，不重编码；转写取上游原文（FLEURS 用 raw transcription）。只用于评测，不进训练
 
