@@ -250,3 +250,50 @@
     sources:
     - yodas_es@legacy:all
     - mls_es@legacy:train
+- schema_version: dataset-catalog/2.0
+  dataset_id: ts_interference_pool
+  version: es-v2-20261110
+  languages:
+  - es
+  tasks:
+  - ts_asr_interference
+  aliases: []
+  artifacts:
+  - name: es-records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/ts_interference_pool/versions/es-v2-20261110/records_es.jsonl.gz
+    sha256: 705d1d1d039b48226977a807505c86e52b84ea742f0e5b627c7ba34d38014b74
+    metadata:
+      record_count: 142000
+  - name: es-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_interference_pool/versions/es-v2-20261110/audio_index_es.jsonl.gz
+    sha256: b836120a68be0687f4eb159760ef9a7a8135c6c8ca7c08fd0b982c0777e90bf0
+    metadata:
+      record_count: 142000
+  splits:
+    es:
+      artifacts:
+        records:
+        - es-records
+        audio_index:
+        - es-audio-index
+      task: ts_asr_interference
+      statistics:
+        records: 142000
+        duration_hours: 225.2
+        duration_basis: clip duration (segment span, or the whole file)
+  provenance:
+    status: complete
+    synthetic: none
+    snapshot_date: '2026-11-10'
+    description: 西班牙语干扰人素材池 v2 = es-v1-20261110 的全部 112,000 条（YODAS es + MLS es，不变）+ Common Voice es train 里没有口音标注的说话人（30,000 条 / 48.5 h /
+      2,702 人，每人最多 20 句，质量门槛同 v2）。西语 TS 目标是有口音标注的 CV es 说话人（西语场景池与 ts_scene_pool@es-1spk-v2-20261110），两者不共用说话人。es-v1 里没有 CV 的声音、CV
+      声音在训练里永远是目标，用它训练的 v70 西语 TS 误报 102 -> 587（ts-asr-benchmark-es 的他人是 CV es dev 说话人）。生成脚本 scripts/ts_robust/build_interference_pool.py
+      --languages es --version es-v2-20261110。
+    sources:
+    - yodas_es@legacy:all
+    - mls_es@legacy:train
+    - common_voice_es@es-train-v1-20261108:train

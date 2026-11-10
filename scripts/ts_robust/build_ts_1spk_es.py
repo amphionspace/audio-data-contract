@@ -7,14 +7,17 @@ absence, speech-free windows, entry, lead and trail. The Spanish scene pools (ts
 utterances and transcript, so training never blanks or re-mixes them. These records give Spanish the same online mix.
 
 Targets are Common Voice es train utterances of common_voice_es@es-train-v1-20261108 (clean-pass rows only, its
-written text and hotword labels); the enrollment is another utterance of the same speaker, drawn with a fixed seed.
-Speakers with a single utterance are left out. Common Voice es is not in the Spanish interference pool
-(ts_interference_pool@es-v1-20261110), so a target never interferes with itself; dev / test speakers are not in the
-train split.
+written text and hotword labels) of the accent-labelled speakers, the targets of the es scene pools; the enrollment is
+another utterance of the same speaker, drawn with a fixed seed. Speakers with a single utterance are left out; dev /
+test speakers are not in the train split.
 
-    python scripts/ts_robust/build_ts_1spk_es.py --output-dir /workspace/data/datasets/ts_scene_pool/versions/es-1spk-20261110
+The speakers without an accent answer are interferers (ts_interference_pool@es-v2-20261110), so a target never
+interferes with itself and a Common Voice voice is not always the target. es-1spk-20261110 took every speaker as a
+target and its pool (es-v1) had no Common Voice; v70 trained on it tripled the false alarms of ts-asr-benchmark-es.
+
+    python scripts/ts_robust/build_ts_1spk_es.py --output-dir /workspace/data/datasets/ts_scene_pool/versions/es-1spk-v2-20261110
     python scripts/ts_robust/register_records_pool.py --catalog catalog --yaml ts_scene_pool_es.yaml \
-        --dataset-id ts_scene_pool --version es-1spk-20261110 --task ts_asr --splits es --languages es ...
+        --dataset-id ts_scene_pool --version es-1spk-v2-20261110 --task ts_asr --splits es --languages es ...
 """
 
 import argparse
@@ -24,6 +27,8 @@ import random
 from collections import defaultdict
 from pathlib import Path
 
+from build_ts_scene_pool import accent_group
+
 from audio_data_contract import load_catalog, resolve_split
 from audio_data_contract.roots import load_roots
 
@@ -31,7 +36,7 @@ CATALOG = "/workspace/data/registry/catalog"
 ROOTS = "/workspace/data/registry/roots.json"
 ROOT_ALIAS = "aidc_data"
 SOURCE = ("common_voice_es", "es-train-v1-20261108", "train")
-DATASET_ID, VERSION, SPLIT = "ts_scene_pool", "es-1spk-20261110", "es"
+DATASET_ID, VERSION, SPLIT = "ts_scene_pool", "es-1spk-v2-20261110", "es"
 SEED = 20261110
 # The online mix crops the enrollment to 1-20 s; a shorter clip leaves almost nothing of the voice.
 MIN_ENROLL_SECONDS = 1.5
@@ -52,13 +57,19 @@ def main():
     for path in resolve_split(catalog, *SOURCE, "recordings", roots):
         for rec in lines(path):
             recordings[rec["id"]] = rec
-    by_speaker = defaultdict(list)
+    by_speaker, labelled = defaultdict(list), set()
     for path in resolve_split(catalog, *SOURCE, "supervisions", roots):
         for sup in lines(path):
-            if (sup.get("custom") or {}).get("clean", {}).get("pass") and sup["recording_id"] in recordings:
+            custom = sup.get("custom") or {}
+            if accent_group(custom.get("accents"), "common_voice_es"):
+                labelled.add(sup["speaker"])
+            if custom.get("clean", {}).get("pass") and sup["recording_id"] in recordings:
                 by_speaker[sup["speaker"]].append(sup)
+    unlabelled = set(by_speaker) - labelled
+    for speaker in unlabelled:
+        del by_speaker[speaker]
     rng = random.Random(SEED)
-    records, index, skipped = [], {}, {"single_utterance": 0, "no_enrollment": 0}
+    records, index, skipped = [], {}, {"single_utterance": 0, "no_enrollment": 0, "unlabelled_accent_speakers": len(unlabelled)}
     for speaker in sorted(by_speaker):
         sups = sorted(by_speaker[speaker], key=lambda s: s["id"])
         if len(sups) < 2:
