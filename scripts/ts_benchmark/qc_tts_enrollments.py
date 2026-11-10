@@ -6,6 +6,12 @@ ECAPA-TDNN512-LM) cosine between each clip and the real enrollment it was cloned
 clips of different speakers. Clips below ``--min-cos`` are dropped; the kept list is ``utterances-qc.jsonl.gz`` and
 the statistics ``qc.json`` (per kind and language). Needs ``onnxruntime``, ``torchaudio``.
 
+The check fails (exit 3, ``qc.json`` written, kept list not written) when the data as a whole is unreliable rather than a few
+clips being bad: ``--min-cos`` below the 99th percentile of the different-speaker cosine (the threshold would keep
+clips that sound like someone else), or a kind/language group keeping less than ``--min-kept-ratio`` of its clips
+(the synthesis for that group does not reproduce the voice; on v1-20261110 cross-zh kept 69%, mean cosine 0.49
+against 0.673 for real Common Voice speakers across languages, and training on it went ahead unnoticed).
+
     python scripts/ts_benchmark/qc_tts_enrollments.py --root <version dir> --workers 32
 """
 
@@ -53,7 +59,10 @@ def _embed(path):
 def main():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--root", type=Path, required=True)
-    parser.add_argument("--min-cos", type=float, default=0.45)
+    parser.add_argument("--min-cos", type=float, default=0.5,
+                        help="drop clips below this cosine; must not be below the different-speaker p99 (0.475 on v1)")
+    parser.add_argument("--min-kept-ratio", type=float, default=0.9,
+                        help="fail when a kind/language group keeps less than this share of its clips")
     parser.add_argument("--workers", type=int, default=32)
     args = parser.parse_args()
     with gzip.open(args.root / "utterances.jsonl.gz", "rt") as handle:
@@ -82,11 +91,22 @@ def main():
                     "clips": len(part), "mean_cos": round(float(np.mean(part)), 3),
                     "kept": sum(c >= args.min_cos for c in part)}
     stats["speakers_kept"] = len({r["speaker"] for r in kept})
+    failures = []
+    if args.min_cos < stats["different_speaker_cos"]["p99"]:
+        failures.append(f"--min-cos {args.min_cos} is below the different-speaker p99 "
+                        f"{stats['different_speaker_cos']['p99']}")
+    for group, part in stats["by_kind_language"].items():
+        if part["kept"] < args.min_kept_ratio * part["clips"]:
+            failures.append(f"{group} keeps {part['kept']}/{part['clips']} (mean cosine {part['mean_cos']}), "
+                            f"below --min-kept-ratio {args.min_kept_ratio}")
+    stats["failures"] = failures
+    (args.root / "qc.json").write_text(json.dumps(stats, indent=1))
+    print(json.dumps(stats, indent=1))
+    if failures:
+        raise SystemExit(3)
     with gzip.open(args.root / "utterances-qc.jsonl.gz", "wt") as handle:
         for row in kept:
             handle.write(json.dumps(row, ensure_ascii=False) + "\n")
-    (args.root / "qc.json").write_text(json.dumps(stats, indent=1))
-    print(json.dumps(stats, indent=1))
 
 
 if __name__ == "__main__":
