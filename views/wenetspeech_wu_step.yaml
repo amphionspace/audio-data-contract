@@ -1,0 +1,73 @@
+  - schema_version: dataset-view/1.0
+    view_id: wenetspeech_wu/stepaudio2-wu-asr-full
+    version: stepaudio2-wu-asr-full-v1-20261109
+    source:
+      dataset_id: wenetspeech_wu
+      version: icefall-20260908
+    result:
+      dataset_id: wenetspeech_wu
+      version: stepaudio2-wu-asr-full-v1-20261109
+    materialization: full
+    lineage_status: exact
+    transforms:
+      - name: stepaudio2-wu-asr-transcript
+        version: v1-20261109
+        kind: annotate
+        writes:
+          - metadata.step_audio2_asr
+        parameters:
+          model: ASLP-lab WenetSpeech-Wu-Speech-Understanding/stepaudio2-ASR (LoRA r=8) on stepfun-ai/Step-Audio-2-mini
+          decoding:
+            prompt: 语音说了什么
+            greedy: true
+            max_new_tokens: duration * 10 + 32
+          audio: 16 kHz PCM WAV read from the source tar at the cut's byte range
+          scoring:
+            text_normalization: speechio-textnorm-zh
+            unit: one token per CJK character, punctuation dropped
+            cer: 100 * errors / ref_tokens, null when ref_tokens is 0
+          tool: scripts/wenetspeech_wu_step/step_infer.py, scripts/wenetspeech_wu_step/score.py
+          label_inputs:
+            - file: full.jsonl
+              sha256: 8041492ff7ef4a17c2b06a629517c5cc1be6b81f9a074dd3d73bdb18e8d1856a
+            - file: full-scored.jsonl
+              sha256: 5b2245b73f7d43592bdbd545e9d1f89047f921dc64b26622810023daded4139b
+          corpus_cer: 16.2
+          cer_share_rows:
+            '0': 1171926
+            (0,5): 404305
+            '[5,10)': 531561
+            '[10,20)': 686590
+            '[20,30)': 487145
+            '[30,50)': 554994
+            '[50,100)': 354072
+            '>=100': 48345
+            label empty after TextNorm: 2288
+    provenance:
+      registered_at: '2026-11-10'
+  - schema_version: dataset-view/1.0
+    view_id: wenetspeech_wu/stepaudio2-wu-asr-kept
+    version: stepaudio2-wu-asr-v1-20261109
+    source:
+      dataset_id: wenetspeech_wu
+      version: stepaudio2-wu-asr-full-v1-20261109
+    result:
+      dataset_id: wenetspeech_wu
+      version: stepaudio2-wu-asr-v1-20261109
+    materialization: full
+    lineage_status: exact
+    transforms:
+      - name: cer-filter
+        version: v1
+        kind: filter
+        writes:
+          - $membership
+        parameters:
+          rule: label non-empty after TextNorm, generation not truncated, and per-utterance CER vs Step-Audio2-Wu-ASR < 30 %
+          false_reject_estimate: about 38 % of dropped hours, from Step's own CER >= 30 % share on human-labelled Wu-Bench (run README)
+          listening_review: none (reviewer does not understand Wu); estimate from Wu-Bench instead
+          input_rows: 4241226
+          output_rows: 3281389
+          tool: scripts/wenetspeech_wu_step/register_step_transcripts.py
+    provenance:
+      registered_at: '2026-11-10'
