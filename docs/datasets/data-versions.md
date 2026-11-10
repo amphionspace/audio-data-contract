@@ -1804,13 +1804,15 @@ WenetSpeech L 中的 YouTube 部分
 
 带房间背景人声的中英 ASR 训练句
 
-语言：en、zh · 任务：语音识别
+语言：en、es、zh · 任务：语音识别
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
+| [asr_babble_speech_pool@es-v1-20261110](../../catalog/asr_babble_speech_pool.yaml#L90) | 33.8 | 已登记 | 没有 |
 | [asr_babble_speech_pool@v1-20261024](../../catalog/asr_babble_speech_pool.yaml#L1) | 85.5 | 已登记 | 没有 |
 | [asr_babble_speech_pool@v1-20261024-punc-20261102](../../catalog/train_punc_v1_derived.yaml#L939) | — | 未登记 | 没有 |
 
+- `asr_babble_speech_pool@es-v1-20261110`：西班牙语普通 ASR 语句前后与下方叠加房间背景人声（对应 v1-20261024 的 zh / en，同一渲染参数）：目标是 common_voice_es@es-train-v1-20261108 train 的一句（1–15 s，书面化文本），前后各 0–5 s 背景人声、语句下方 0–20 dB SNR；80% 用西语背景人声（babble_noise_train@es-v1-20261110），20% 随机用中文或英文的（v2-20261024）。12,000 条 / 33.8 h。脚本 scripts/ts_robust/build_babble_speech_pool.py --languages es
 - `asr_babble_speech_pool@v1-20261024`：普通 ASR 语音前后和说话时都有房间背景人声（babble）：每条是一句训练划分的话（中文 AISHELL-2、KeSpeech train，英文 LibriSpeech train；1–15 秒，剔除与 asr_babble_bench 目标句同文本的句子），前后各 0–5 秒背景人声，说话时背景人声信噪比 0–20 dB（在说话区间内计算），语音电平 −35 到 −18 dBFS，加 −65 到 −55 dBFS 的白/粉红噪声底；背景人声取自 babble_noise_train@v2-20261024（80% 同语言，不用该说话人在其中说话的片段）。目标为该句原文。与 ts_nonspeech_pool@babble-20261024（只有背景人声、目标为空）配对使用，教模型背景人声中间的话照常转写。中英文各 12,000 条。脚本 scripts/ts_robust/build_babble_speech_pool.py
 - `asr_babble_speech_pool@v1-20261024-punc-20261102`：asr_babble_speech_pool@v1-20261024 的 en, zh，目标文本加书面化标点：中文用 amphiondata 的中文学生模型（punc-student-v1，不带听音提示），英文用英文规范 en-v1 的学生模型（加标点并恢复大小写）；标点按字 / 按词搬回原文，原文的字词不变，找不到输出的目标保留原样。其余字段与源版本相同，音频引用源版本
 - 含派生版本（与源数据可能重叠）
@@ -2439,16 +2441,18 @@ AISHELL-1、LibriSpeech 合成的多人对话
 
 非人声与背景人声的空输出训练片段
 
-语言：en、zh · 任务：语音识别
+语言：en、es、zh · 任务：语音识别
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
 | [ts_nonspeech_pool@babble-20261024](../../catalog/ts_nonspeech_pool.yaml#L57) | 38.7 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_nonspeech_pool/` |
 | [ts_nonspeech_pool@env-20261101](../../catalog/ts_nonspeech_pool.yaml#L116) | 22.6 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_nonspeech_pool/` |
+| [ts_nonspeech_pool@es-babble-20261110](../../catalog/ts_nonspeech_pool.yaml#L178) | 18.8 | 已登记 | 没有 |
 | [ts_nonspeech_pool@v1-20261016](../../catalog/ts_nonspeech_pool.yaml#L1) | 65.7 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_nonspeech_pool/` |
 
 - `ts_nonspeech_pool@babble-20261024`：普通 ASR 的背景人声空输出训练数据：babble_noise_train@v2-20261024 的房间背景人声（16–24 人同时说话、各站在模拟房间的不同位置，听不出某一个人说的内容）的片段（0.3–26 s，对数均匀），中英文各 12,000 条，目标为空；片段语言即背景人声的语言。电平在训练时按数据源配置随机。来源：在 asr_babble_bench@v2-20261023 上，普通 ASR 训练里没有只有背景人声、目标为空的样本（v1-20261016 只有 MUSAN 噪声与音乐），模型在只有背景人声时会编出文字。脚本 scripts/ts_robust/build_nonspeech_pool.py --source babble
 - `ts_nonspeech_pool@env-20261101`：GRPO 非人声挖掘候选：配方空输出池之外的环境声与音乐片段（0.3–26 s，对数均匀，受源文件长度限制），目标为空，电平在训练时按数据源配置随机。来源 FSD50K dev 的 train 部分（去人声标签）9,000、DNS5 AudioSet 5,000、DNS5 Freesound 2,500、RealMAN train 纯噪声（CH0）3,000、真实会议室底噪 1,000；不用评测集用的 FSD50K eval、DEMAND、audioset_road_traffic。所有片段过 Silero VAD 和 SenseVoiceSmall，检出语音或写出 2 个及以上字词的隔离。只是候选：挖掘阶段用 10.28 采样后只留会编字的片段。脚本 scripts/grpo_candidates/nonspeech.py
+- `ts_nonspeech_pool@es-babble-20261110`：西班牙语普通 ASR 的背景人声空输出训练数据（对应 babble-20261024 的 zh / en）：babble_noise_train@es-v1-20261110 的房间背景人声（16–24 人、听不出某一个人说的内容）片段 0.3–26 s（对数均匀），12,000 条，目标为空，语言 es。电平在训练时按数据源配置随机。脚本 scripts/ts_robust/build_nonspeech_pool.py --source babble-es
 - `ts_nonspeech_pool@v1-20261016`：普通 ASR 的非人声空输出训练数据：MUSAN 噪声与音乐的片段（0.3–26 s，对数均匀），目标为空。电平在训练时按数据源配置随机。不含 WHAM（咖啡馆底噪里可能有可懂的人声）
 
 ### ts_real_train

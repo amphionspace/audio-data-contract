@@ -136,7 +136,7 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [BAAI/CS-Dialogue long_wav (ModelScope master)](data-versions.md#baaics-dialogue-long_wav-modelscope-master) | en、zh、zh-en | 语音识别、带说话人标注的语音识别 | 98.3 | 中英语码转换双人对话（CS-Dialogue） | 部分版本：快照 20260914 |
 | [ami](data-versions.md#ami) | en、zh | 语音识别、说话人分段与归属、目标说话人语音识别 | 259.3 | 英文会议远场版（AMI SDM）；含轮流说话混合版 | 部分版本：快照 20260914 |
 | [asr_babble_bench](data-versions.md#asr_babble_bench) | en、zh | 语音识别 | 10.1 | 普通 ASR 背景人声评测集（中英），仅评测 | 部分版本：`备份桶:audio-data-contract/datasets/asr_babble_bench/` |
-| [asr_babble_speech_pool](data-versions.md#asr_babble_speech_pool) | en、zh | 语音识别 | 85.5 | 带房间背景人声的中英 ASR 训练句 | 没有 |
+| [asr_babble_speech_pool](data-versions.md#asr_babble_speech_pool) | en、es、zh | 语音识别 | 85.5 | 带房间背景人声的中英 ASR 训练句 | 没有 |
 | [asr_distant_talk_pool](data-versions.md#asr_distant_talk_pool) | en、zh | 语音识别 | 55.2 | — | 没有 |
 | [babble_noise_synth](data-versions.md#babble_noise_synth) | en、zh | noise | 50.0 | 合成中英背景人声噪声（5–20 人叠加） | `备份桶:audio-data-contract/datasets/noise_open/` |
 | [babble_noise_train](data-versions.md#babble_noise_train) | en、es、zh | noise | 50.0 | 训练用合成背景人声噪声（中英） | 部分版本：`备份桶:audio-data-contract/datasets/babble_noise_train/` |
@@ -178,7 +178,7 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [ts_asr_singing](data-versions.md#ts_asr_singing) | en、zh | 目标说话人语音识别 | 0.3 | 目标说话人评测：歌声干扰 | `备份桶:audio-data-contract/datasets/ts_asr_singing/` |
 | [ts_hw_test](data-versions.md#ts_hw_test) | en、zh | 目标说话人语音识别 | 7.7 | 目标说话人加热词评测（LibriSpeech 风格） | 快照 20260914 |
 | [ts_interference_pool](data-versions.md#ts_interference_pool) | en、es、zh | ts_asr_interference | 656.6 | 在线混合用的干扰人语音素材池 | 部分版本：`备份桶:audio-data-contract/datasets/ts_interference_pool/` |
-| [ts_nonspeech_pool](data-versions.md#ts_nonspeech_pool) | en、zh | 语音识别 | 65.7 | 非人声与背景人声的空输出训练片段 | `备份桶:audio-data-contract/datasets/ts_nonspeech_pool/` |
+| [ts_nonspeech_pool](data-versions.md#ts_nonspeech_pool) | en、es、zh | 语音识别 | 65.7 | 非人声与背景人声的空输出训练片段 | 部分版本：`备份桶:audio-data-contract/datasets/ts_nonspeech_pool/` |
 | [ts_real_train](data-versions.md#ts_real_train) | en、zh | 目标说话人语音识别 | 123.6 | 真实会议切出的目标说话人训练窗口 | 没有 |
 | [ts_scene_pool](data-versions.md#ts_scene_pool) | en、es、zh | 目标说话人语音识别 | 513.8 | 目标说话人难例场景素材（相近声音、交接） | 部分版本：`备份桶:audio-data-contract/datasets/ts_scene_pool/` |
 | [tts_crosslingual_enroll](data-versions.md#tts_crosslingual_enroll) | en、zh | 目标说话人语音识别 | — | TS-ASR 训练用跨语言 TTS 注册音频 | 没有 |

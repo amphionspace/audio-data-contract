@@ -87,3 +87,50 @@
     - librispeech@legacy-20260804:train
     - babble_noise_train@v2-20261024:zh
     - babble_noise_train@v2-20261024:en
+- schema_version: dataset-catalog/2.0
+  dataset_id: asr_babble_speech_pool
+  version: es-v1-20261110
+  languages:
+  - es
+  tasks:
+  - asr
+  aliases: []
+  artifacts:
+  - name: es-records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/asr_babble_speech_pool/versions/es-v1-20261110/records_es.jsonl.gz
+    sha256: 2060d480b4f0aff6de74d970e6f9942507b792d45e631d1f7dbb945626ff316c
+    metadata:
+      record_count: 12000
+  - name: es-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/asr_babble_speech_pool/versions/es-v1-20261110/audio_index_es.jsonl.gz
+    sha256: ceb6d0cf84be82d6445582a7a8e3c6b29fd2c9362e29d0c40129cf2f9acf7b7d
+    metadata:
+      record_count: 12000
+  splits:
+    es:
+      artifacts:
+        records:
+        - es-records
+        audio_index:
+        - es-audio-index
+      task: asr
+      statistics:
+        records: 12000
+        duration_hours: 33.82
+        duration_basis: clip duration (segment span, or the whole file)
+  provenance:
+    status: complete
+    synthetic: none
+    snapshot_date: '2026-11-10'
+    description: 西班牙语普通 ASR 语句前后与下方叠加房间背景人声（对应 v1-20261024 的 zh / en，同一渲染参数）：目标是 common_voice_es@es-train-v1-20261108 train
+      的一句（1–15 s，书面化文本），前后各 0–5 s 背景人声、语句下方 0–20 dB SNR；80% 用西语背景人声（babble_noise_train@es-v1-20261110），20% 随机用中文或英文的（v2-20261024）。12,000
+      条 / 33.8 h。脚本 scripts/ts_robust/build_babble_speech_pool.py --languages es。
+    sources:
+    - common_voice_es@es-train-v1-20261108:train
+    - babble_noise_train@es-v1-20261110:es
+    - babble_noise_train@v2-20261024:zh
+    - babble_noise_train@v2-20261024:en
