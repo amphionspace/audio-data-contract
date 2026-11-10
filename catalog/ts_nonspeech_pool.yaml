@@ -175,3 +175,46 @@
     - dns5_noise_train@v1-20261016:freesound
     - realman@hf-aishell-20261025:train
     - meeting_room_noise@v2-20261014:train
+- schema_version: dataset-catalog/2.0
+  dataset_id: ts_nonspeech_pool
+  version: es-babble-20261110
+  languages:
+  - es
+  tasks:
+  - asr
+  aliases: []
+  artifacts:
+  - name: all-records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/ts_nonspeech_pool/versions/es-babble-20261110/records_all.jsonl.gz
+    sha256: a527eb3ff5ae3f17ed0505b77053627c785f2266aa26d3b6c987329b21445b75
+    metadata:
+      record_count: 12000
+  - name: all-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_nonspeech_pool/versions/es-babble-20261110/audio_index_all.jsonl.gz
+    sha256: 94c2dc3fb59093bcfc7cd705731ef0a8fba7cf800d727d59e42667c1872fa001
+    metadata:
+      record_count: 3000
+  splits:
+    all:
+      artifacts:
+        records:
+        - all-records
+        audio_index:
+        - all-audio-index
+      task: asr
+      statistics:
+        records: 12000
+        duration_hours: 18.84
+        duration_basis: clip duration (segment span, or the whole file)
+  provenance:
+    status: complete
+    synthetic: none
+    snapshot_date: '2026-11-10'
+    description: 西班牙语普通 ASR 的背景人声空输出训练数据（对应 babble-20261024 的 zh / en）：babble_noise_train@es-v1-20261110 的房间背景人声（16–24 人、听不出某一个人说的内容）片段
+      0.3–26 s（对数均匀），12,000 条，目标为空，语言 es。电平在训练时按数据源配置随机。脚本 scripts/ts_robust/build_nonspeech_pool.py --source babble-es。
+    sources:
+    - babble_noise_train@es-v1-20261110:es

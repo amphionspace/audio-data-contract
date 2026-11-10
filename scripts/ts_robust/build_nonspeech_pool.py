@@ -49,6 +49,8 @@ SOURCES = {
     # 3,000 30-s clips per language
     "babble": [("babble_noise_train", "v2-20261024", "zh", 12000, 40),
                ("babble_noise_train", "v2-20261024", "en", 12000, 40)],
+    # Spanish (version es-babble-20261110): the same clip count from the Spanish training babble.
+    "babble-es": [("babble_noise_train", "es-v1-20261110", "es", 12000, 40)],
 }
 
 
@@ -115,7 +117,7 @@ def main():
             raise ValueError(f"{dataset}:{split}: wanted {count}, only {len(kept)} usable")
         for number, (rec, start, span) in kept:
             file_id = f"{dataset}:{split}:{rec['id']}"
-            language = split if args.source == "babble" else rng.choice(("zh", "en"))
+            language = split if args.source.startswith("babble") else rng.choice(("zh", "en"))
             records.append({
                 "schema_version": "audio-record/1.0", "id": f"{DATASET_ID}:{dataset}-{split}:{number:06d}",
                 "task": TASK, "target": "", "language": language, "labels": {"target_present": False},

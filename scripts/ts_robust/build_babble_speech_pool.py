@@ -20,6 +20,7 @@ register_records_pool.py.
 """
 
 import argparse
+import dataclasses
 import gzip
 import importlib.util
 import json
@@ -46,6 +47,10 @@ DATA = Path("/workspace/data")
 ROOT_ALIAS = "aidc_data"
 DATASET_ID = "asr_babble_speech_pool"
 BABBLE = DATA / "datasets/babble_noise_train/source/v2-20261024"
+# Spanish (version es-v1-20261110, --languages es): Spanish training babble, and Common Voice es targets with their
+# written text (the babble loader keeps only lowercase words).
+BABBLE_ES = DATA / "datasets/babble_noise_train/source/es-v1-20261110"
+WRITTEN_TEXT = {"common_voice_es": ("es-train-v1-20261108", "train")}
 BENCH_RECIPE = REPO / "scripts" / "asr_babble_bench" / "recipe.yaml"
 SEED = 20261025
 SR = bench.SR
@@ -53,6 +58,7 @@ TARGETS = {
     "zh": [{"dataset": "aishell2", "version": "legacy-20260804", "split": "train"},
            {"dataset": "kespeech", "version": "legacy-20260804", "split": "train"}],
     "en": [{"dataset": "librispeech", "version": "legacy-20260804", "split": "train"}],
+    "es": [{"dataset": "common_voice_es", "version": "es-train-v1-20261108", "split": "train"}],
 }
 SECONDS = (1.0, 15.0)
 PAD_SECONDS = (0.0, 5.0)  # the benchmark pads 1-5 s; 0 keeps the plain "babble under the speech" case too
@@ -62,11 +68,29 @@ SAME_LANGUAGE_PROB = 0.8
 G = {}
 
 
+_WRITTEN = {}
+
+
+def written(utt, catalog, roots):
+    """The utterance with its corpus's written text (Common Voice es), else as loaded."""
+    if utt.corpus not in WRITTEN_TEXT:
+        return utt
+    if utt.corpus not in _WRITTEN:
+        version, split = WRITTEN_TEXT[utt.corpus]
+        _WRITTEN[utt.corpus] = {f"{utt.corpus}:{row['id']}": row["text"] for path in
+                                bench.ts_build.resolve_split(catalog, utt.corpus, version, split, "supervisions", roots)
+                                for row in bench.ts_build._rows(path)}
+    return dataclasses.replace(utt, text=_WRITTEN[utt.corpus][utt.id])
+
+
 def plan(language, index, targets, clips):
     rng = random.Random(f"{SEED}:{language}:{index}")
     utt = targets[index]
     lead, trail = (round(rng.uniform(*PAD_SECONDS), 3) for _ in range(2))
-    babble_language = language if rng.random() < SAME_LANGUAGE_PROB else ("en" if language == "zh" else "zh")
+    if rng.random() < SAME_LANGUAGE_PROB:
+        babble_language = language
+    else:  # zh and en take each other's babble; Spanish takes either
+        babble_language = rng.choice(("zh", "en")) if language == "es" else ("en" if language == "zh" else "zh")
     while True:
         clip = rng.choice(clips[babble_language])
         if utt.speaker not in clip["speakers"]:
@@ -74,7 +98,7 @@ def plan(language, index, targets, clips):
     slack = clip["duration"] - (lead + utt.duration + trail) - 0.5
     floor = G["recipe"]["noise_floor"]
     return {"id": f"{DATASET_ID}:{language}:{index:06d}", "language": language, "utt": utt, "lead": lead,
-            "trail": trail, "clip": clip["id"], "clip_path": str(BABBLE / clip["path"]),
+            "trail": trail, "clip": clip["id"], "clip_path": str(clip["root"] / clip["path"]),
             "offset": round(rng.uniform(0.0, max(slack, 0.0)), 3), "snr_db": round(rng.uniform(*SNR_DB), 2),
             "speech_dbfs": round(rng.uniform(*SPEECH_DBFS), 2),
             "floor": {"kind": rng.choice(floor["kinds"]), "dbfs": round(rng.uniform(*floor["dbfs"]), 2),
@@ -109,23 +133,27 @@ def main():
     parser.add_argument("--version", required=True)
     parser.add_argument("--per-language", type=int, default=12000)
     parser.add_argument("--workers", type=int, default=24)
+    parser.add_argument("--languages", nargs="+", default=["zh", "en"])
     args = parser.parse_args()
     import yaml
     recipe = yaml.safe_load(BENCH_RECIPE.read_text())
     catalog, roots = load_catalog(str(DATA / "registry/catalog")), load_roots(str(DATA / "registry/roots.json"))
     held = {u.text for language, spec in recipe["targets"].items() for source in spec["sources"]
             for us in bench.load_utterances(source, language, catalog, roots).values() for u in us}
-    clips = {"zh": [], "en": []}
-    for line in (BABBLE / "manifest.jsonl").read_text().splitlines():
-        c = json.loads(line)
-        clips[c["language"]].append({"id": c["id"], "path": c["path"], "duration": c["duration"],
-                                     "speakers": {t["speaker"] for t in c["talkers"]}})
+    clips = {"zh": [], "en": [], "es": []}
+    for root in (BABBLE, BABBLE_ES) if "es" in args.languages else (BABBLE,):
+        for line in (root / "manifest.jsonl").read_text().splitlines():
+            c = json.loads(line)
+            clips[c["language"]].append({"id": c["id"], "path": c["path"], "duration": c["duration"], "root": root,
+                                         "speakers": {t["speaker"] for t in c["talkers"]}})
     G.update(recipe=recipe, version=args.version)
     jobs, report = [], {}
-    for language, sources in TARGETS.items():
+    for language in args.languages:
+        sources = TARGETS[language]
         pool = sorted((u for source in sources for us in bench.load_utterances(source, language, catalog, roots).values()
                        for u in us if SECONDS[0] <= u.duration <= SECONDS[1] and u.text not in held), key=lambda u: u.id)
         targets = random.Random(f"{SEED}:{language}:targets").sample(pool, args.per_language)
+        targets = [written(u, catalog, roots) for u in targets]
         jobs += [(plan(language, i, targets, clips), DATA) for i in range(args.per_language)]
         report[language] = {"pool_utterances": len(pool), "corpora": dict(Counter(u.corpus for u in targets))}
         print(language, report[language], flush=True)
@@ -133,7 +161,7 @@ def main():
         rendered = {i: rest for i, *rest in pool.map(render, jobs, chunksize=16)}
     out = DATA / "datasets" / DATASET_ID / "versions" / args.version
     out.mkdir(parents=True, exist_ok=True)
-    for language in TARGETS:
+    for language in args.languages:
         records, index = [], []
         for p, _ in (j for j in jobs if j[0]["language"] == language):
             relative, frames, speech_frames, peak = rendered[p["id"]]
