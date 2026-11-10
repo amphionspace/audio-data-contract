@@ -121,6 +121,10 @@
       "alias": "ts_asr_handover",
       "synced": "2026-10-27"
     },
+    "ts_asr_nearfar@firstother-v3-20261105": {
+      "alias": "ts_asr_nearfar",
+      "synced": "2026-11-10"
+    },
     "ts_asr_nearfar@v1-20261014": {
       "alias": "ts_asr_nearfar",
       "synced": "2026-10-27"
