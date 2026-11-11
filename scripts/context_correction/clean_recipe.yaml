@@ -7,6 +7,9 @@ run_dir: /workspace/workspace/mingdong/data/amphiondata/ctx-clean-zh-20261110
 # 改正后的训练数据：各来源的派生版本 <原版本>-<derived_suffix>，写在 data_root/datasets/<id>/versions/ 下
 data_root: /workspace/data
 derived_suffix: ctxclean-20261110
+# 音频核对读 Lance 发布时用的登记
+catalog: /workspace/data/registry/catalog
+roots: /workspace/data/registry/roots.json
 
 # 扫描单位：同一录音相邻分段拼窗，与 mine.py 相同（播客的窗口和 10 月扫描逐个相同，可直接复用扫描结果）
 window_seconds: 25.0
@@ -64,6 +67,7 @@ sources:
       train_zh: /workspace/data/datasets/emilia2_short/versions/short-20261014/records/train_zh.jsonl.gz
     audio_index: [/workspace/data/datasets/emilia2_short/versions/short-20261014/audio_index/audio-index.jsonl.gz]
     audio: primary
+    audio_records: emilia2_short@short-lance-20261023   # short 的 m4a 已不在盘上，音频核对按这个版本的记录读 Lance 里的同一段
     exclude_records: [/workspace/data/datasets/ts_asr_real/source/v2-20261013/excluded-records-emilia2_short-train_en.txt, /workspace/data/datasets/ts_asr_real/source/v2-20261013/excluded-records-emilia2_short-train_zh.txt]
     # 同样的记录 ID 和文本，音频改读 Lance；没有音频索引
     also_derive:
@@ -152,5 +156,6 @@ sources:
     dataset: vitw@2m-20261013
     split: train
     language: zh   # 中英混合，只扫中文
+    audio_check: false   # 音频是加了回声、噪声、丢帧的，Qwen3-ASR 识别不出（试跑 7 个音频不符约 6 个是 ASR 听错）；标注来自干净原音
     supervisions: /workspace/data/datasets/vitw/versions/2m-20261013/train_supervisions/vitw_2m_supervisions_train.jsonl.gz
     recordings: /workspace/data/datasets/vitw/versions/2m-20261013/train_recordings/vitw_2m_recordings_train.jsonl.gz

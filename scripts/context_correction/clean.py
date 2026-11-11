@@ -452,7 +452,7 @@ def cmd_decide(recipe, name, spec, root, args):
                 row["reasons"] = why + ["audio_pending"]
             else:
                 row["audio"] = {"hypothesis": audio[unit["unit_id"]]["hypothesis"],
-                                **audio_result(row, audio[unit["unit_id"]]["hypothesis"], recipe)}
+                                **audio_result(row, audio[unit["unit_id"]]["hypothesis"], recipe, spec.get("audio") == "mixture")}
                 if not row["audio"]["pass"]:
                     row["reasons"] = ["audio_mismatch", f"text decision: {decision}"]
                     decision = row["decision"] = "quarantine"
@@ -491,10 +491,23 @@ def evidence_spans(texts: list[str], explanations: list) -> list[range] | None:
     return spans
 
 
-def heard(text: str, spans: list[range], hypothesis: str, context: int, max_edits: int) -> dict:
+def label_misses(piece: list[str], hyp: list[str]) -> int:
+    """Fewest syllables of ``piece`` not heard, in order, anywhere in ``hyp``; heard syllables between them are free."""
+    prev = [0] * (len(hyp) + 1)
+    for i, a in enumerate(piece, 1):
+        cur = [i] + [0] * len(hyp)
+        for j, b in enumerate(hyp, 1):
+            cur[j] = min(prev[j] + 1, cur[j - 1], prev[j - 1] + (a != b))
+        prev = cur
+    return prev[-1]
+
+
+def heard(text: str, spans: list[range], hypothesis: str, context: int, max_edits: int, mixture: bool = False) -> dict:
     """Is each evidence span, with ``context`` syllables on both sides, in the ASR hypothesis with at most
     ``max_edits`` toneless-pinyin edits? Missing or extra words next to an explanation ("似舞蹈的舞" heard
-    as "似乎的似，舞蹈的舞") fail; homophone choices cannot."""
+    as "似乎的似，舞蹈的舞") fail; homophone choices cannot.
+    Mixture audio also holds the other speakers, whose words fall next to the target's: there only the label's
+    syllables that are not heard count (``label_misses``), and the span is matched wherever it is in the hypothesis."""
     from pypinyin import Style, lazy_pinyin
     from rapidfuzz.distance import Levenshtein
 
@@ -509,25 +522,28 @@ def heard(text: str, spans: list[range], hypothesis: str, context: int, max_edit
         if not own:
             continue
         lo, hi = max(0, own[0] - context), min(len(ref), own[-1] + 1 + context)
-        count = 0
-        for tag, i1, i2, j1, j2 in ops:
-            if tag == "insert":
-                count += (j2 - j1) if lo < i1 < hi else 0
-            elif tag != "equal":
-                count += max(0, min(i2, hi) - max(i1, lo))
+        if mixture:
+            count = label_misses(ref[lo:hi], hyp)
+        else:
+            count = 0
+            for tag, i1, i2, j1, j2 in ops:
+                if tag == "insert":
+                    count += (j2 - j1) if lo < i1 < hi else 0
+                elif tag != "equal":
+                    count += max(0, min(i2, hi) - max(i1, lo))
         if count > max_edits:
             failed.append(f"{text[span.start:span.stop]}: {count} edits")
     return {"pinyin_error": round(Levenshtein.distance(ref, hyp) / max(1, len(ref)), 4), "failed": failed}
 
 
-def audio_result(row: dict, hypothesis: str, recipe: dict) -> dict:
+def audio_result(row: dict, hypothesis: str, recipe: dict, mixture: bool = False) -> dict:
     """Passes when, for at least one judge, every evidence span is heard."""
     checks = {}
     for key, explanations in row["explanations"].items():
         spans = evidence_spans([row["text"], row["corrected"] or row["text"]], explanations)
         if spans is not None:
             checks[key] = heard(row["corrected"] or row["text"], spans, hypothesis,
-                                recipe["audio_context_syllables"], recipe["audio_max_edits"])
+                                recipe["audio_context_syllables"], recipe["audio_max_edits"], mixture)
     return {"checks": checks, "pass": any(not c["failed"] for c in checks.values())}
 
 
@@ -541,6 +557,42 @@ def ffmpeg_audio(path: Path, start: float, duration: float, channel: int | None)
     out = subprocess.run(["ffmpeg", "-nostdin", "-v", "error", "-ss", f"{start:.3f}", "-t", f"{duration:.3f}",
                           "-i", str(path), *pick, "-ar", "16000", "-f", "f32le", "-"], capture_output=True, check=True)
     return np.frombuffer(out.stdout, dtype=np.float32)
+
+
+def audio_file(path: Path) -> Path:
+    """Emilia2 dialog / long m4a were deleted for a same-name 16 kHz FLAC (emilia2@extracted-enzh-flac16k-20261012);
+    as open-audio-llm does, read the FLAC when the m4a is gone."""
+    flac = path.with_suffix(".flac")
+    return flac if path.suffix == ".m4a" and not path.exists() and flac.exists() else path
+
+
+def lance_clips(recipe, spec, record_ids: set[str]) -> dict:
+    """Record ID -> 16 kHz mono audio of its slot, read from the TTS Lance release that the ``audio_records``
+    version (same record IDs, e.g. emilia2_short short-lance) points to: the clips' own files are gone."""
+    import io
+
+    import soundfile as sf
+    import soxr
+
+    from audio_data_contract import tts_lance
+    from audio_data_contract.catalog import load_catalog
+
+    target = next(t for t in spec["also_derive"] if t["dataset"] == spec["audio_records"])
+    refs = {}
+    for path in target["records"].values():
+        for row in gz_rows(Path(path)):
+            if row["id"] in record_ids:
+                refs[row["id"]] = next(s["ref"] for s in row["audio_slots"] if s["purpose"] == spec["audio"])
+    catalog, roots = load_catalog(recipe["catalog"]), json.loads(Path(recipe["roots"]).read_text())
+    out = {}
+    for release_id in {(ref["dataset_id"], ref["version"]) for ref in refs.values()}:
+        release = tts_lance.open_release(catalog, *release_id, "samples", roots)
+        samples = {rid: ref["cut_id"] for rid, ref in refs.items() if (ref["dataset_id"], ref["version"]) == release_id}
+        audio = tts_lance.read_audio(release, list(samples.values()))
+        for rid, sample in samples.items():
+            wav, sr = sf.read(io.BytesIO(audio[sample]), dtype="float32", always_2d=True)
+            out[rid] = soxr.resample(wav.mean(axis=1), sr, 16000) if sr != 16000 else wav.mean(axis=1)
+    return out
 
 
 def mix_segments(spec, wanted: set[str]) -> dict[str, list[dict]]:
@@ -585,13 +637,16 @@ def cmd_audio(recipe, name, spec, root, args):
 
     if spec["kind"] == "records":
         clean = mix_segments(spec, {r["audio_ref"]["mix_id"] for r in rows if "mix_id" in r["audio_ref"]})
+        lance = lance_clips(recipe, spec, {r["record_id"] for r in rows}) if spec.get("audio_records") else {}
 
         def load(row):
             ref = row["audio_ref"]
+            if row["record_id"] in lance:
+                return lance[row["record_id"]]
             parts = []
             for clip in clean[ref["mix_id"]] if "mix_id" in ref else [ref]:
                 start = max(0.0, clip["start"] - pad)
-                parts += [ffmpeg_audio(Path(recipe["data_root"]) / clip["path"], start,
+                parts += [ffmpeg_audio(audio_file(Path(recipe["data_root"]) / clip["path"]), start,
                                        clip["start"] + clip["duration"] + pad - start, clip["channel"]),
                           np.zeros(int(pad * 16000), dtype=np.float32)]
             return np.concatenate(parts)
