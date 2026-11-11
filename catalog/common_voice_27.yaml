@@ -1,4 +1,4 @@
-# Common Voice Scripted Speech 27.0 西语、葡语（2026-11-10 开工，占位）：Mozilla Data Collective 已授权；平台已下架 26.0 完整版，改下 27.0。下载、校验后与已有 Common Voice 版本去重再清洗。
+# Common Voice Scripted Speech 27.0 西语、葡语（2026-11-10 开工）：Mozilla Data Collective 下载 27.0（平台已下架 26.0 完整版），与已有 Common Voice 版本去重后双引擎清洗。葡语已转正；西语仍是占位。
 - schema_version: dataset-catalog/2.0
   dataset_id: common_voice_es
   version: mdc-27.0
@@ -38,24 +38,74 @@
   - asr
   aliases: []
   artifacts:
+  - name: recordings
+    kind: lhotse-recordings
+    root_alias: aidc_data
+    relative_path: datasets/common_voice_pt/versions/mdc-27.0/manifests/cv27-pt_recordings.jsonl.gz
+    expected_bytes: 967444
+    sha256: 0bba9e9cc9b762465fa3293d8191ab102a71b8987c887fdb0deb74f76add9309
+    metadata:
+      record_count: 82417
+  - name: supervisions
+    kind: lhotse-supervisions
+    root_alias: aidc_data
+    relative_path: datasets/common_voice_pt/versions/mdc-27.0/manifests/cv27-pt_supervisions_clean.jsonl.gz
+    expected_bytes: 3638490
+    sha256: 01377bb97621cabf259efb2f1f53143c2855ed683ebf7184fd91aa8eecfb6b9c
+    metadata:
+      record_count: 81960
+      pass_count: 81960
   - name: preparation_state
     kind: dataset-state
     root_alias: aidc_data
     relative_path: datasets/common_voice_pt/versions/mdc-27.0/state.json
   splits:
-    all:
+    train:
       artifacts:
+        recordings:
+        - recordings
+        supervisions:
+        - supervisions
         preparation_state:
         - preparation_state
-      provenance:
-        preparation_status: building
+      statistics:
+        records: 81960
+        duration_hours: 93.82
+        duration_basis: sum of supervision durations of the kept rows
+        duration_hours_by_cv_split:
+          validated: 78.1
+          other: 15.72
+        source_records: 82417
+        dropped_records:
+          bad_annotation: 276
+          ambiguous: 132
+          insufficient_engines: 38
+          no_valid_engine: 5
+          implausible_char_rate: 6
+  recipe_parameters:
+    filter_rules: consensus-v7
+    rewrite_rules: wenetspeech-faithful-v5 (no row rewritten)
+    engines:
+    - Qwen3-ASR-1.7B
+    - whisper-large-v3
+    clean_pass_only: true
+    input: >-
+      validated.tsv + other.tsv of 27.0, minus speakers and sentences (lowercased, marks removed) of the 27.0 and
+      CV 17.0 (common_voice_pt@hf-8262c16bf297) dev/test splits, minus empty sentences
+    text: original Common Voice sentence; custom.cv_split, age, accents, variant, up_votes, down_votes kept
   provenance:
-    preparation_status: building
+    preparation_status: prepared
     owner: mingdong
     description: >-
-      Common Voice Scripted Speech 27.0 葡语完整版（Mozilla Data Collective cmu5wui2w00e8nq07idithpm6，压缩包 5.2 GB），正在下载；
-      下完按平台给的 sha256 校验，再与 common_voice_pt@hf-8262c16bf297（CV 17.0 镜像）按句子去重。
+      Common Voice Scripted Speech 27.0 葡语（Mozilla Data Collective cmu5wui2w00e8nq07idithpm6）训练版本：validated + other（未投票够的录音），
+      去掉 27.0 与 CV 17.0 dev/test 的说话人和句子后 82,417 句 / 94.34 h，经 Qwen3-ASR-1.7B + whisper-large-v3 双引擎清洗（consensus-v7）保留
+      81,960 句 / 93.82 h（validated 78.10 h、other 15.72 h）。包含 CV 17.0 镜像的全部 train 内容，可替代它用于训练。
+      试跑、被拒样本和误杀率见 run_dir README。
     source: Mozilla Data Collective
     source_id: cmu5wui2w00e8nq07idithpm6
     url: https://mozilladatacollective.com/datasets/cmu5wui2w00e8nq07idithpm6
     license: CC0-1.0
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/cv27-es-pt-20261111
+    scripts:
+    - /workspace/workspace/mingdong/data/amphiondata/cv27-es-pt-20261111/scripts/build_manifests.py
+    - /workspace/workspace/mingdong/data/amphiondata/cv27-es-pt-20261111/scripts/clean.sh
