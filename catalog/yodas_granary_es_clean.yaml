@@ -1,0 +1,31 @@
+# YODAS-Granary 西语人工字幕（es000）清洗（2026-11-11 开工，占位）：音频从 Parquet 解成 FLAC，再走 consensus-v7 双引擎清洗。
+- schema_version: dataset-catalog/2.0
+  dataset_id: yodas_granary_es_pt
+  version: es000-clean-v1-20261111
+  languages:
+  - es
+  tasks:
+  - asr
+  aliases: []
+  derived_from: yodas_granary_es_pt@hf-969944574ea3
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/yodas_granary_es_pt/versions/es000-clean-v1-20261111/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: >-
+      YODAS-Granary 西语人工字幕分区 es000（asr_only 65,839 句 / 78.5 h，ast 665,357 句 / 2,374.0 h）的清洗版本：
+      Parquet 里嵌的 16 kHz WAV 解成 FLAC 放在本版本目录，生成 lhotse 清单，再用 Qwen3-ASR-1.7B + whisper-large-v3
+      双引擎清洗（consensus-v7），先试跑、复核被拒样本再跑全量。es000 的视频 99% 也在 yodas_es@legacy 里，不要两者叠加。进行中。
+    source: yodas_granary_es_pt@hf-969944574ea3
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/yodas-granary-es-20261111
