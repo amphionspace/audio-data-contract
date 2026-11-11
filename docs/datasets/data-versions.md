@@ -3040,10 +3040,10 @@ Common Voice 17 葡语朗读
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
 | [common_voice_pt@hf-8262c16bf297](../../catalog/common_voice_pt.yaml#L31) | 184.3 | 已登记 | 没有 |
-| [common_voice_pt@mdc-27.0](../../catalog/common_voice_27.yaml#L32) | — | 未登记 | 没有 |
+| [common_voice_pt@mdc-27.0](../../catalog/common_voice_27.yaml#L32) | 93.8 | 已登记 | 没有 |
 
 - `common_voice_pt@hf-8262c16bf297`：Common Voice 17.0 葡语的非官方 HF 镜像（官方 Mozilla 仓库需要授权）。口音字段大多为空，填写的几乎都是巴西口音。镜像另含 validated / other / invalidated（172.6 / 29.0 / 9.4 h），未登记为划分
-- `common_voice_pt@mdc-27.0`：Common Voice Scripted Speech 27.0 葡语完整版（Mozilla Data Collective cmu5wui2w00e8nq07idithpm6，压缩包 5.2 GB），正在下载； 下完按平台给的 sha256 校验，再与 common_voice_pt@hf-8262c16bf297（CV 17.0 镜像）按句子去重
+- `common_voice_pt@mdc-27.0`：Common Voice Scripted Speech 27.0 葡语（Mozilla Data Collective cmu5wui2w00e8nq07idithpm6）训练版本：validated + other（未投票够的录音）， 去掉 27.0 与 CV 17.0 dev/test 的说话人和句子后 82,417 句 / 94.34 h，经 Qwen3-ASR-1.7B + whisper-large-v3 双引擎清洗（consensus-v7）保留 81,960 句 / 93.82 h（validated 78.10 h、other 15.72 h）。包含 CV 17.0 镜像的全部 train 内容，可替代它用于训练。 试跑、被拒样本和误杀率见 run_dir README
 
 ### common_voice_ru
 
