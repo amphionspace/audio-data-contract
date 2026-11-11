@@ -1,6 +1,6 @@
 # 数据总览
 
-当前登记 **229 个数据集**；另有 **16 个下载来源声明**和 **1 个训练混合配方**。登记不代表本机文件已齐备。
+当前登记 **233 个数据集**；另有 **15 个下载来源声明**和 **1 个训练混合配方**。登记不代表本机文件已齐备。
 
 时长取单个版本的最大值，不跨版本相加；≈ 为参考表或估算值，— 为暂无完整时长。各版本的时长、说明、COS 地址和质量证据见[版本明细](data-versions.md)。
 
@@ -232,8 +232,10 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [fsd50k](data-versions.md#fsd50k) | und | noise、sound_event | 108.6 | 200 类声音事件（FSD50K） | `备份桶:audio-data-contract/datasets/noise_open/` |
 | [galgame](data-versions.md#galgame) | ja | 语音合成 | 10,173.7 | 日语视觉小说配音，TTS 用 | `TTS 桶:Galgame-VisualNovel-Reupload/`（原始数据） |
 | [gigaspeech2_id](data-versions.md#gigaspeech2_id) | id | 语音识别、热词增强语音识别 | 1,980.1 | 印尼语网络语音（GigaSpeech 2）；含热词版 | 部分版本：快照 20260914 |
+| [golos](data-versions.md#golos) | ru | 语音识别 | — | Golos 俄语语音助手指令评测划分 | 没有 |
 | [google_latam](data-versions.md#google_latam) | es | 语音识别 | 38.0 | 拉美六国西语朗读（Google 众包） | 快照 20260914 |
 | [heroico](data-versions.md#heroico) | es | 语音识别 | 14.9 | 墨西哥军校西语朗读与问答（Heroico） | 没有 |
+| [kathbath](data-versions.md#kathbath) | hi | 语音识别 | — | Kathbath 印地语手机朗读评测划分 | 没有 |
 | [koreaspeech](data-versions.md#koreaspeech) | ko | 语音识别 | 3,828.3 | 韩语语音识别数据（KoreaSpeech） | 快照 20260914 |
 | [librivox_spanish](data-versions.md#librivox_spanish) | es | 语音识别 | 73.0 | LibriVox 西语有声书 | 没有 |
 | [meeting_room_noise](data-versions.md#meeting_room_noise) | und | noise | 2.5 | 真实会议室底噪（AliMeeting、AISHELL-4） | `备份桶:audio-data-contract/datasets/meeting_room_noise/` |
@@ -257,6 +259,8 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [voices_noise](data-versions.md#voices_noise) | und | noise | 128.3 | VOiCES 真实房间噪声与背景人声 | `备份桶:audio-data-contract/datasets/voices/` |
 | [voxconverse](data-versions.md#voxconverse) | und | 说话人分段与归属 | 43.5 | YouTube 视频说话人日志评测（VoxConverse） | 没有 |
 | [voxforge_spanish](data-versions.md#voxforge_spanish) | es | 语音识别 | 49.7 | VoxForge 西语朗读（多为西班牙） | 没有 |
+| [voxpopuli_de](data-versions.md#voxpopuli_de) | de | 语音识别 | — | VoxPopuli 德语欧洲议会发言 | 没有 |
+| [voxpopuli_fr](data-versions.md#voxpopuli_fr) | fr | 语音识别 | — | VoxPopuli 法语欧洲议会发言 | 没有 |
 | [wham](data-versions.md#wham) | und | noise | — | WHAM! 噪声训练划分 | `备份桶:audio-data-contract/datasets/wham/` |
 | [wham_noise](data-versions.md#wham_noise) | und | noise | 81.7 | 湾区餐厅、咖啡馆等真实环境噪声（WHAM!） | `备份桶:audio-data-contract/datasets/noise_open/` |
 | [wikipedia_spanish](data-versions.md#wikipedia_spanish) | es | 语音识别 | 25.6 | 西语维基百科条目朗读 | 没有 |
@@ -285,7 +289,6 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [common_voice_zh_hk](../../catalog/download_queue.yaml#L113) | 26.0 | yue | 语音识别 |
 | [gigaspeech2](../../catalog/download_queue.yaml#L165) | hf-8dc0d0e502b7 | id、th、vi | 语音识别 |
 | [granary](../../catalog/download_queue.yaml#L200) | hf-0fe23a860e35 | multi | 语音识别、语音翻译 |
-| [kathbath](../../catalog/download_queue.yaml#L299) | ai4bharat-20250409 | hi | 语音识别 |
 | [lemas](../../catalog/download_queue.yaml#L250) | hf-91f0c1b9a29f | multi | 语音识别 |
 | [loquacious_set](../../catalog/loquacious_set.yaml#L1) | hf-0e84cdb9e4b8 | en | 语音识别 |
 | [omnilingual-asr-corpus](../../catalog/download_queue.yaml#L225) | hf-8648ba894637 | multi | 语音识别 |

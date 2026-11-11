@@ -104,5 +104,8 @@
   "gigaspeech2_id": "/workspace/data/datasets/gigaspeech2_id",
   "casablanca": "/workspace/data/datasets/casablanca",
   "kathbath": "/workspace/data/datasets/kathbath",
-  "multilingual_asr_bench": "/workspace/data/datasets/multilingual_asr_bench"
+  "multilingual_asr_bench": "/workspace/data/datasets/multilingual_asr_bench",
+  "voxpopuli_fr": "/workspace/data/datasets/voxpopuli_fr",
+  "voxpopuli_de": "/workspace/data/datasets/voxpopuli_de",
+  "golos": "/workspace/data/datasets/golos"
 }
