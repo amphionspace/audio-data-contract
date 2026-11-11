@@ -2972,6 +2972,7 @@ Casablanca 八种阿拉伯语方言
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
 | [common_voice_es@americas-v1-20261103](../../catalog/common_voice_es_americas.yaml#L1) | 261.2 | 已登记 | 没有 |
+| [common_voice_es@cv27-train-v1-20261111](../../catalog/cv27_es_hotwords.yaml#L2) | — | 未登记 | 没有 |
 | [common_voice_es@es-train-hwconf-v1-20261111](../../catalog/es_train_v1.yaml#L195) | 247.6 | 已登记 | 没有 |
 | [common_voice_es@es-train-v1-20261108](../../catalog/es_train_v1.yaml#L2) | 514.0 | 已登记 | 没有 |
 | [common_voice_es@hf-8262c16bf297](../../catalog/multilingual_asr_sources.yaml#L472) | 26.9 | 已登记 | 没有 |
@@ -2979,6 +2980,7 @@ Casablanca 八种阿拉伯语方言
 | [common_voice_es@mdc-27.0](../../catalog/common_voice_27.yaml#L2) | 1,355.5 | 已登记 | 没有 |
 
 - `common_voice_es@americas-v1-20261103`：从现有 Common Voice 西语（CV 24.0）里按说话人自填口音选出美洲六个预设口音的录音，不复制音频，音频仍读原版本。没填口音的录音（约占六成）无法判断地区，没有收入
+- `common_voice_es@cv27-train-v1-20261111`：common_voice_es@mdc-27.0（980,450 句 / 1,355.54 h，CV 24.0 之外的增量）的热词训练版本：Qwen3.8-27B 按 amphiondata extract_hotword 提示词标热词（同 es-train-v1-20261108），再按 hotword_bench 西语读音键挖近音干扰词放进 metadata.confusable_hotwords （同 es-train-hwconf-v1-20261111，评测正确词不进词库）。进行中
 - `common_voice_es@es-train-hwconf-v1-20261111`：common_voice_es@es-train-v1-20261108 里有热词的行（165,693 条，全部 clean 通过）的热词训练版本：每行一条 asr_hotwords 记录，文本、热词与父版本相同，metadata.confusable_hotwords 为读音相近的真实西语热词，训练时按 hotword_confusable_prob 作为干扰词放进列表（同 police_terms_single_train@hotwords-confusable-v1-20261102）。近音词检索复用评测集 hotword_bench@es-v1-20261111 的西语读音键（拉美读法：seseo、yeísmo、b/v、h 不发音等）与编辑距离，每个热词最多 3 个，读音最近的优先；词库只用 CV es / MLS es 训练集的热词标注（34,441 个），去掉了评测集三个 split 的全部正确词。剔除两类候选：与本条热词只是同一个词不同写法的（读音键忽略空格、ñ/ny/gn 与 n、y 与 i 不区分后相同，如 Sara/Sarah、Cataluña/Catalunya、España/espana、Monte Verde/Monteverde，当负例会教模型拒绝与录音一致的写法），以及出现在本条文本里的。90,439 条（54.6%）有近音词，平均每条 2.943 个；近音词与评测正确词重叠 0。录音不复制，audio_index 指向 legacy 源文件。检索结果见 mined/confusables.jsonl.gz，质检与 20 条样例见 qc.yaml
 - `common_voice_es@es-train-v1-20261108`：Common Voice 西班牙语 train 的训练版本：Qwen3-ASR-1.7B + whisper-large-v3 双引擎清洗（默认规则 consensus-v7），保留 356,706 句 / 513.98 h（源 357,397 句）；文本用原文的词和标点（书面句子），只规整了 10,562 句的标点前后空格、首字母大写和缺失的句末句号；custom.hotwords 是 Qwen3.8-27B 标的热词。只含清洗通过的行，录音清单沿用 legacy。也是西语 TS 场景池的句子来源。试跑、被拒样本和误杀率见 run_dir README
 - `common_voice_es@hf-8262c16bf297`：Common Voice 17.0 es 的非官方 HF 镜像（官方 Mozilla 仓库需要授权），只下载了 test，与 common_voice_pt@hf-8262c16bf297 同一修订
