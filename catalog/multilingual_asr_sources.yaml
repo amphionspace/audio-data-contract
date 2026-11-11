@@ -1,0 +1,1861 @@
+- schema_version: dataset-catalog/2.0
+  dataset_id: fleurs_zh
+  version: hf-70bb2e84b976
+  languages:
+  - zh
+  tasks:
+  - asr
+  aliases: []
+  artifacts:
+  - name: source
+    kind: hf-dataset-snapshot
+    root_alias: fleurs_zh
+    relative_path: source/hf-70bb2e84b976
+    metadata:
+      file_count: 2
+      expected_bytes: 525837953
+      tree_sha256: c0074a52b6ae5f93676a0a6707e466fdcc6673b34f92fbf7d8185e49d26333f0
+  - name: data_cmn_hans_cn_audio_test_tar_gz
+    kind: source-archive
+    root_alias: fleurs_zh
+    relative_path: source/hf-70bb2e84b976/data/cmn_hans_cn/audio/test.tar.gz
+    expected_bytes: 525346466
+    sha256: 09d19ad18f5d7e91076880807e866cd16abd924c7052b55f71cdae91714fc166
+  - name: data_cmn_hans_cn_test_tsv
+    kind: transcript-table
+    root_alias: fleurs_zh
+    relative_path: source/hf-70bb2e84b976/data/cmn_hans_cn/test.tsv
+    expected_bytes: 491487
+    sha256: 5734461648f816181d7dab5fc79204b18c4b9bc2cd5138225b25c72d18385d21
+  - name: download_state
+    kind: dataset-state
+    root_alias: fleurs_zh
+    relative_path: versions/hf-70bb2e84b976/download_state/state.json
+    expected_bytes: 905
+    sha256: 6b901029143b1f6765eb602e7719813f38dbada7f6415d3d4d436964542ed817
+  splits:
+    test:
+      artifacts:
+        source:
+        - source
+        audio_archive:
+        - data_cmn_hans_cn_audio_test_tar_gz
+        transcripts:
+        - data_cmn_hans_cn_test_tsv
+      statistics:
+        count: 945
+        duration_hours: 3.0737
+        duration_basis: sum of TSV num_samples / 16000; pinned upstream file hashes verified
+  provenance:
+    locale: cmn_hans_cn
+    dataset_family: fleurs_zh
+    description: Google FLEURS 的 cmn_hans_cn 子集（音频归档和 TSV 转写），只下载了 test，与 fleurs_pt 同一修订。
+    source: Hugging Face
+    source_id: google/fleurs
+    revision: 70bb2e84b976b7e960aa89f1c648e09c59f894dd
+    url: https://huggingface.co/datasets/google/fleurs
+    download_mirror: https://hf-mirror.com
+    license: cc-by-4.0
+    download_scope: FLEURS cmn_hans_cn test audio archive and TSV transcript only
+    expected_download_files: 2
+    expected_download_bytes: 525837953
+    integrity: verified
+    used_by: multilingual_asr_bench@v1-20261110
+- schema_version: dataset-catalog/2.0
+  dataset_id: common_voice_zh
+  version: hf-8262c16bf297
+  languages:
+  - zh
+  tasks:
+  - asr
+  aliases: []
+  artifacts:
+  - name: source
+    kind: hf-dataset-snapshot
+    root_alias: common_voice_zh
+    relative_path: source/hf-8262c16bf297
+    metadata:
+      file_count: 4
+      expected_bytes: 540460757
+      tree_sha256: 0cf97f90af33de8fdfa7bef5285cee3d02fda6229cd61db3c17f5e0e9d434166
+  - name: audio_zh_CN_test_zh_CN_test_0_tar
+    kind: source-archive
+    root_alias: common_voice_zh
+    relative_path: source/hf-8262c16bf297/audio/zh-CN/test/zh-CN_test_0.tar
+    expected_bytes: 506185216
+    sha256: 4ca4b98b2c13d4152b407494bf61175a0e26b2cfbbafc16639b0f382591e3576
+  - name: transcript_zh_CN_test_tsv
+    kind: transcript-table
+    root_alias: common_voice_zh
+    relative_path: source/hf-8262c16bf297/transcript/zh-CN/test.tsv
+    expected_bytes: 3176127
+    sha256: 52f76e21956a2ff3efcb47b6e6a04dba2639c777f53d99c1df44cd781e9d1363
+  - name: transcript_zh_CN_clip_durations_tsv
+    kind: transcript-table
+    root_alias: common_voice_zh
+    relative_path: source/hf-8262c16bf297/transcript/zh-CN/clip_durations.tsv
+    expected_bytes: 31094942
+    sha256: a9ebd7ee4402d6ee8e9d255e754965d8827d29ddf4bad4a5b8dc71ec1abf90f3
+  - name: download_state
+    kind: dataset-state
+    root_alias: common_voice_zh
+    relative_path: versions/hf-8262c16bf297/download_state/state.json
+    expected_bytes: 967
+    sha256: 580571c9d443b18600da3a9d22e6b548c57cf4b6645dc8b9f9cd0d4c0094a510
+  splits:
+    test:
+      artifacts:
+        source:
+        - source
+        audio_archive:
+        - audio_zh_CN_test_zh_CN_test_0_tar
+        transcripts:
+        - transcript_zh_CN_test_tsv
+        clip_durations:
+        - transcript_zh_CN_clip_durations_tsv
+      statistics:
+        count: 10626
+        speakers: 2804
+        duration_hours: 17.4523
+        duration_basis: sum of clip_durations.tsv for the split TSV rows; every row has its clip in the split tar
+  provenance:
+    locale: zh-CN
+    release: Common Voice 17.0
+    dataset_family: common_voice_zh
+    description: Common Voice 17.0 zh-CN 的非官方 HF 镜像（官方 Mozilla 仓库需要授权），只下载了 test，与 common_voice_pt@hf-8262c16bf297 同一修订。
+    source: Hugging Face
+    source_id: fsicoli/common_voice_17_0
+    revision: 8262c16bf297c87a9cd88c51997c4758ed7a8ba2
+    url: https://huggingface.co/datasets/fsicoli/common_voice_17_0
+    download_mirror: https://hf-mirror.com
+    license: cc0-1.0
+    download_scope: 'Unofficial Common Voice 17.0 zh-CN mirror: test audio, test transcripts and clip durations only'
+    expected_download_files: 4
+    expected_download_bytes: 540460757
+    integrity: verified
+    used_by: multilingual_asr_bench@v1-20261110
+- schema_version: dataset-catalog/2.0
+  dataset_id: fleurs_en
+  version: hf-70bb2e84b976
+  languages:
+  - en
+  tasks:
+  - asr
+  aliases: []
+  artifacts:
+  - name: source
+    kind: hf-dataset-snapshot
+    root_alias: fleurs_en
+    relative_path: source/hf-70bb2e84b976
+    metadata:
+      file_count: 2
+      expected_bytes: 290219220
+      tree_sha256: 652a5e837aabce5de19e51de889fdae870c0472de31754b9cef925becc921a93
+  - name: data_en_us_audio_test_tar_gz
+    kind: source-archive
+    root_alias: fleurs_en
+    relative_path: source/hf-70bb2e84b976/data/en_us/audio/test.tar.gz
+    expected_bytes: 289851356
+    sha256: d9c2e37b41aacd41bc283554a0a82b5476b36887049774ecb2819dcaaa55a356
+  - name: data_en_us_test_tsv
+    kind: transcript-table
+    root_alias: fleurs_en
+    relative_path: source/hf-70bb2e84b976/data/en_us/test.tsv
+    expected_bytes: 367864
+    sha256: 74c046239374deeb60fa63f258f907388093a32bcaa3140965f70ef05c79f7ca
+  - name: download_state
+    kind: dataset-state
+    root_alias: fleurs_en
+    relative_path: versions/hf-70bb2e84b976/download_state/state.json
+    expected_bytes: 899
+    sha256: 79b675f9d9deab1f097205daa0820cb107e5116ff8a0c70fb5618fe59ba1f6fd
+  splits:
+    test:
+      artifacts:
+        source:
+        - source
+        audio_archive:
+        - data_en_us_audio_test_tar_gz
+        transcripts:
+        - data_en_us_test_tsv
+      statistics:
+        count: 647
+        duration_hours: 1.7744
+        duration_basis: sum of TSV num_samples / 16000; pinned upstream file hashes verified
+  provenance:
+    locale: en_us
+    dataset_family: fleurs_en
+    description: Google FLEURS 的 en_us 子集（音频归档和 TSV 转写），只下载了 test，与 fleurs_pt 同一修订。
+    source: Hugging Face
+    source_id: google/fleurs
+    revision: 70bb2e84b976b7e960aa89f1c648e09c59f894dd
+    url: https://huggingface.co/datasets/google/fleurs
+    download_mirror: https://hf-mirror.com
+    license: cc-by-4.0
+    download_scope: FLEURS en_us test audio archive and TSV transcript only
+    expected_download_files: 2
+    expected_download_bytes: 290219220
+    integrity: verified
+    used_by: multilingual_asr_bench@v1-20261110
+- schema_version: dataset-catalog/2.0
+  dataset_id: common_voice_en
+  version: hf-8262c16bf297
+  languages:
+  - en
+  tasks:
+  - asr
+  aliases: []
+  artifacts:
+  - name: source
+    kind: hf-dataset-snapshot
+    root_alias: common_voice_en
+    relative_path: source/hf-8262c16bf297
+    metadata:
+      file_count: 4
+      expected_bytes: 797093673
+      tree_sha256: 3666bfa0b9d9ef71647ba915bdf7a29d9871782472a61aafae0a85e1e28d23b4
+  - name: audio_en_test_en_test_0_tar
+    kind: source-archive
+    root_alias: common_voice_en
+    relative_path: source/hf-8262c16bf297/audio/en/test/en_test_0.tar
+    expected_bytes: 711150592
+    sha256: 47160ec67fb545f41eba8103b0c0d7035dbb4ca3924043974449c7052c6f4775
+  - name: transcript_en_test_tsv
+    kind: transcript-table
+    root_alias: common_voice_en
+    relative_path: source/hf-8262c16bf297/transcript/en/test.tsv
+    expected_bytes: 4887241
+    sha256: b4d4db369413fcacacebee7de48e94c96c4f63383d6582e18a9b0856c5c8461a
+  - name: transcript_en_clip_durations_tsv
+    kind: transcript-table
+    root_alias: common_voice_en
+    relative_path: source/hf-8262c16bf297/transcript/en/clip_durations.tsv
+    expected_bytes: 81051368
+    sha256: 693987b4fe15a6c90733639466509474f80da95d4413f123be9cf45ff41200a6
+  - name: download_state
+    kind: dataset-state
+    root_alias: common_voice_en
+    relative_path: versions/hf-8262c16bf297/download_state/state.json
+    expected_bytes: 964
+    sha256: 88982f0ca73528382b5ad2de83b0d6f656f9dbdc4cbd2ead1e375a478736555d
+  splits:
+    test:
+      artifacts:
+        source:
+        - source
+        audio_archive:
+        - audio_en_test_en_test_0_tar
+        transcripts:
+        - transcript_en_test_tsv
+        clip_durations:
+        - transcript_en_clip_durations_tsv
+      statistics:
+        count: 16393
+        speakers: 11828
+        duration_hours: 26.9632
+        duration_basis: sum of clip_durations.tsv for the split TSV rows; every row has its clip in the split tar
+  provenance:
+    locale: en
+    release: Common Voice 17.0
+    dataset_family: common_voice_en
+    description: Common Voice 17.0 en 的非官方 HF 镜像（官方 Mozilla 仓库需要授权），只下载了 test，与 common_voice_pt@hf-8262c16bf297 同一修订。
+    source: Hugging Face
+    source_id: fsicoli/common_voice_17_0
+    revision: 8262c16bf297c87a9cd88c51997c4758ed7a8ba2
+    url: https://huggingface.co/datasets/fsicoli/common_voice_17_0
+    download_mirror: https://hf-mirror.com
+    license: cc0-1.0
+    download_scope: 'Unofficial Common Voice 17.0 en mirror: test audio, test transcripts and clip durations only'
+    expected_download_files: 4
+    expected_download_bytes: 797093673
+    integrity: verified
+    used_by: multilingual_asr_bench@v1-20261110
+- schema_version: dataset-catalog/2.0
+  dataset_id: fleurs_ar
+  version: hf-70bb2e84b976
+  languages:
+  - ar
+  tasks:
+  - asr
+  aliases: []
+  artifacts:
+  - name: source
+    kind: hf-dataset-snapshot
+    root_alias: fleurs_ar
+    relative_path: source/hf-70bb2e84b976
+    metadata:
+      file_count: 2
+      expected_bytes: 243856763
+      tree_sha256: 7c3b11a24d1c01a450a26a8f1607a6519a036fffd4ce8f094239cedf2b1bec3a
+  - name: data_ar_eg_audio_test_tar_gz
+    kind: source-archive
+    root_alias: fleurs_ar
+    relative_path: source/hf-70bb2e84b976/data/ar_eg/audio/test.tar.gz
+    expected_bytes: 243532527
+    sha256: 787dc348725c0924ff58c8e379d4ef41a7e488dc2ab2990a0eba4a063856edb1
+  - name: data_ar_eg_test_tsv
+    kind: transcript-table
+    root_alias: fleurs_ar
+    relative_path: source/hf-70bb2e84b976/data/ar_eg/test.tsv
+    expected_bytes: 324236
+    sha256: af9b9aa3f99c39f90e7f8417f10f2f45a7f783441c6a27abfc2c1bededed4af1
+  - name: download_state
+    kind: dataset-state
+    root_alias: fleurs_ar
+    relative_path: versions/hf-70bb2e84b976/download_state/state.json
+    expected_bytes: 899
+    sha256: 40c872835e1a4811d7a381b398a6200177fd5d138999d8de87b2a17eb8e3c22d
+  splits:
+    test:
+      artifacts:
+        source:
+        - source
+        audio_archive:
+        - data_ar_eg_audio_test_tar_gz
+        transcripts:
+        - data_ar_eg_test_tsv
+      statistics:
+        count: 428
+        duration_hours: 1.3015
+        duration_basis: sum of TSV num_samples / 16000; pinned upstream file hashes verified
+  provenance:
+    locale: ar_eg
+    dataset_family: fleurs_ar
+    description: Google FLEURS 的 ar_eg 子集（音频归档和 TSV 转写），只下载了 test，与 fleurs_pt 同一修订。
+    source: Hugging Face
+    source_id: google/fleurs
+    revision: 70bb2e84b976b7e960aa89f1c648e09c59f894dd
+    url: https://huggingface.co/datasets/google/fleurs
+    download_mirror: https://hf-mirror.com
+    license: cc-by-4.0
+    download_scope: FLEURS ar_eg test audio archive and TSV transcript only
+    expected_download_files: 2
+    expected_download_bytes: 243856763
+    integrity: verified
+    used_by: multilingual_asr_bench@v1-20261110
+- schema_version: dataset-catalog/2.0
+  dataset_id: common_voice_ar
+  version: hf-8262c16bf297
+  languages:
+  - ar
+  tasks:
+  - asr
+  aliases: []
+  artifacts:
+  - name: source
+    kind: hf-dataset-snapshot
+    root_alias: common_voice_ar
+    relative_path: source/hf-8262c16bf297
+    metadata:
+      file_count: 4
+      expected_bytes: 320230717
+      tree_sha256: 82fb5344ff0793dfa5bca0a6fb2d9b0663a69c82c0213273c73295f605ccc6b5
+  - name: audio_ar_test_ar_test_0_tar
+    kind: source-archive
+    root_alias: common_voice_ar
+    relative_path: source/hf-8262c16bf297/audio/ar/test/ar_test_0.tar
+    expected_bytes: 312462336
+    sha256: ecdde84e7a72682eb8be1320a0141b4825fee2e94223ad4a157144c26bd4f304
+  - name: transcript_ar_test_tsv
+    kind: transcript-table
+    root_alias: common_voice_ar
+    relative_path: source/hf-8262c16bf297/transcript/ar/test.tsv
+    expected_bytes: 3177302
+    sha256: 2c156347d52d04f8132f41fbe7aaac50cd2a1d288a0a80b819d0f0397c4ebdb3
+  - name: transcript_ar_clip_durations_tsv
+    kind: transcript-table
+    root_alias: common_voice_ar
+    relative_path: source/hf-8262c16bf297/transcript/ar/clip_durations.tsv
+    expected_bytes: 4586607
+    sha256: 9fbab083dcbf24ba08fc98134c59c6f0c8686ef067e838b63987d7639576b53d
+  - name: download_state
+    kind: dataset-state
+    root_alias: common_voice_ar
+    relative_path: versions/hf-8262c16bf297/download_state/state.json
+    expected_bytes: 964
+    sha256: 485802fa47ac01858325307430c0e2151466aef6d25ecc5161f35ebad18f2105
+  splits:
+    test:
+      artifacts:
+        source:
+        - source
+        audio_archive:
+        - audio_ar_test_ar_test_0_tar
+        transcripts:
+        - transcript_ar_test_tsv
+        clip_durations:
+        - transcript_ar_clip_durations_tsv
+      statistics:
+        count: 10480
+        speakers: 970
+        duration_hours: 12.6656
+        duration_basis: sum of clip_durations.tsv for the split TSV rows; every row has its clip in the split tar
+  provenance:
+    locale: ar
+    release: Common Voice 17.0
+    dataset_family: common_voice_ar
+    description: Common Voice 17.0 ar 的非官方 HF 镜像（官方 Mozilla 仓库需要授权），只下载了 test，与 common_voice_pt@hf-8262c16bf297 同一修订。
+    source: Hugging Face
+    source_id: fsicoli/common_voice_17_0
+    revision: 8262c16bf297c87a9cd88c51997c4758ed7a8ba2
+    url: https://huggingface.co/datasets/fsicoli/common_voice_17_0
+    download_mirror: https://hf-mirror.com
+    license: cc0-1.0
+    download_scope: 'Unofficial Common Voice 17.0 ar mirror: test audio, test transcripts and clip durations only'
+    expected_download_files: 4
+    expected_download_bytes: 320230717
+    integrity: verified
+    used_by: multilingual_asr_bench@v1-20261110
+- schema_version: dataset-catalog/2.0
+  dataset_id: fleurs_es
+  version: hf-70bb2e84b976
+  languages:
+  - es
+  tasks:
+  - asr
+  aliases: []
+  artifacts:
+  - name: source
+    kind: hf-dataset-snapshot
+    root_alias: fleurs_es
+    relative_path: source/hf-70bb2e84b976
+    metadata:
+      file_count: 2
+      expected_bytes: 582712254
+      tree_sha256: b4670f13352be910fff0776103ff410002bbec4adb786d0f56dd2cfd4802a1a5
+  - name: data_es_419_audio_test_tar_gz
+    kind: source-archive
+    root_alias: fleurs_es
+    relative_path: source/hf-70bb2e84b976/data/es_419/audio/test.tar.gz
+    expected_bytes: 582112372
+    sha256: 981802f6c828fd214fcf8bfc1036d80c9184b6eeb5650b3f7882f8affec046c9
+  - name: data_es_419_test_tsv
+    kind: transcript-table
+    root_alias: fleurs_es
+    relative_path: source/hf-70bb2e84b976/data/es_419/test.tsv
+    expected_bytes: 599882
+    sha256: d107a93a4f54a18ac25cd470bb4cdadce14fb075b0c1d1542258e274d209ec09
+  - name: download_state
+    kind: dataset-state
+    root_alias: fleurs_es
+    relative_path: versions/hf-70bb2e84b976/download_state/state.json
+    expected_bytes: 900
+    sha256: 4dac8342b68c806913688eaf237b30f605688484265eec779a067dab42b15187
+  splits:
+    test:
+      artifacts:
+        source:
+        - source
+        audio_archive:
+        - data_es_419_audio_test_tar_gz
+        transcripts:
+        - data_es_419_test_tsv
+      statistics:
+        count: 908
+        duration_hours: 3.0906
+        duration_basis: sum of TSV num_samples / 16000; pinned upstream file hashes verified
+  provenance:
+    locale: es_419
+    dataset_family: fleurs_es
+    description: Google FLEURS 的 es_419 子集（音频归档和 TSV 转写），只下载了 test，与 fleurs_pt 同一修订。
+    source: Hugging Face
+    source_id: google/fleurs
+    revision: 70bb2e84b976b7e960aa89f1c648e09c59f894dd
+    url: https://huggingface.co/datasets/google/fleurs
+    download_mirror: https://hf-mirror.com
+    license: cc-by-4.0
+    download_scope: FLEURS es_419 test audio archive and TSV transcript only
+    expected_download_files: 2
+    expected_download_bytes: 582712254
+    integrity: verified
+    used_by: multilingual_asr_bench@v1-20261110
+- schema_version: dataset-catalog/2.0
+  dataset_id: common_voice_es
+  version: hf-8262c16bf297
+  languages:
+  - es
+  tasks:
+  - asr
+  aliases: []
+  artifacts:
+  - name: source
+    kind: hf-dataset-snapshot
+    root_alias: common_voice_es
+    relative_path: source/hf-8262c16bf297
+    metadata:
+      file_count: 4
+      expected_bytes: 810463846
+      tree_sha256: 0628e12a7b275d51179f7cfdc34f403e9ef97e57302257c4dfbc1b9372e1850b
+  - name: audio_es_test_es_test_0_tar
+    kind: source-archive
+    root_alias: common_voice_es
+    relative_path: source/hf-8262c16bf297/audio/es/test/es_test_0.tar
+    expected_bytes: 749712896
+    sha256: 16b33afe9c947ef4f1b0f55bcbc899e9024114484c7012cd1e0095df61788416
+  - name: transcript_es_test_tsv
+    kind: transcript-table
+    root_alias: common_voice_es
+    relative_path: source/hf-8262c16bf297/transcript/es/test.tsv
+    expected_bytes: 4982730
+    sha256: cb418f5c19b50982c2cb9d7ea266c90123c4b74c8e7cf4250638ab0897d1a4e9
+  - name: transcript_es_clip_durations_tsv
+    kind: transcript-table
+    root_alias: common_voice_es
+    relative_path: source/hf-8262c16bf297/transcript/es/clip_durations.tsv
+    expected_bytes: 55763748
+    sha256: 80b2756f729e465bc0a8a65261e49e4186c3ece05c177bd7bd9363dfa2451097
+  - name: download_state
+    kind: dataset-state
+    root_alias: common_voice_es
+    relative_path: versions/hf-8262c16bf297/download_state/state.json
+    expected_bytes: 964
+    sha256: 22d45ea970ba6e3c24bb6ece4457c6d34da912bd5608e444e1ad0b21087637b8
+  splits:
+    test:
+      artifacts:
+        source:
+        - source
+        audio_archive:
+        - audio_es_test_es_test_0_tar
+        transcripts:
+        - transcript_es_test_tsv
+        clip_durations:
+        - transcript_es_clip_durations_tsv
+      statistics:
+        count: 15857
+        speakers: 6451
+        duration_hours: 26.9476
+        duration_basis: sum of clip_durations.tsv for the split TSV rows; every row has its clip in the split tar
+  provenance:
+    locale: es
+    release: Common Voice 17.0
+    dataset_family: common_voice_es
+    description: Common Voice 17.0 es 的非官方 HF 镜像（官方 Mozilla 仓库需要授权），只下载了 test，与 common_voice_pt@hf-8262c16bf297 同一修订。
+    source: Hugging Face
+    source_id: fsicoli/common_voice_17_0
+    revision: 8262c16bf297c87a9cd88c51997c4758ed7a8ba2
+    url: https://huggingface.co/datasets/fsicoli/common_voice_17_0
+    download_mirror: https://hf-mirror.com
+    license: cc0-1.0
+    download_scope: 'Unofficial Common Voice 17.0 es mirror: test audio, test transcripts and clip durations only'
+    expected_download_files: 4
+    expected_download_bytes: 810463846
+    integrity: verified
+    used_by: multilingual_asr_bench@v1-20261110
+- schema_version: dataset-catalog/2.0
+  dataset_id: fleurs_fr
+  version: hf-70bb2e84b976
+  languages:
+  - fr
+  tasks:
+  - asr
+  aliases: []
+  artifacts:
+  - name: source
+    kind: hf-dataset-snapshot
+    root_alias: fleurs_fr
+    relative_path: source/hf-70bb2e84b976
+    metadata:
+      file_count: 2
+      expected_bytes: 349493027
+      tree_sha256: 25e57b2d1c4b2b803ceb1b3c4bc2e36c67521819c303060655e3da1e64918c1c
+  - name: data_fr_fr_audio_test_tar_gz
+    kind: source-archive
+    root_alias: fleurs_fr
+    relative_path: source/hf-70bb2e84b976/data/fr_fr/audio/test.tar.gz
+    expected_bytes: 349036055
+    sha256: d23690e102f373554d1b544cd2ff1e76e4fedeb04953c0b72751a1b7c518cfdd
+  - name: data_fr_fr_test_tsv
+    kind: transcript-table
+    root_alias: fleurs_fr
+    relative_path: source/hf-70bb2e84b976/data/fr_fr/test.tsv
+    expected_bytes: 456972
+    sha256: 5d06d338b242e00786fcf12c4c92008b9f399d5a5c872c91dca90572e7869c0d
+  - name: download_state
+    kind: dataset-state
+    root_alias: fleurs_fr
+    relative_path: versions/hf-70bb2e84b976/download_state/state.json
+    expected_bytes: 899
+    sha256: 41e5c84e9c5ef8eee643583ca9474c8c56aedb353eda8b50c3196e610dc437e0
+  splits:
+    test:
+      artifacts:
+        source:
+        - source
+        audio_archive:
+        - data_fr_fr_audio_test_tar_gz
+        transcripts:
+        - data_fr_fr_test_tsv
+      statistics:
+        count: 676
+        duration_hours: 1.9511
+        duration_basis: sum of TSV num_samples / 16000; pinned upstream file hashes verified
+  provenance:
+    locale: fr_fr
+    dataset_family: fleurs_fr
+    description: Google FLEURS 的 fr_fr 子集（音频归档和 TSV 转写），只下载了 test，与 fleurs_pt 同一修订。
+    source: Hugging Face
+    source_id: google/fleurs
+    revision: 70bb2e84b976b7e960aa89f1c648e09c59f894dd
+    url: https://huggingface.co/datasets/google/fleurs
+    download_mirror: https://hf-mirror.com
+    license: cc-by-4.0
+    download_scope: FLEURS fr_fr test audio archive and TSV transcript only
+    expected_download_files: 2
+    expected_download_bytes: 349493027
+    integrity: verified
+    used_by: multilingual_asr_bench@v1-20261110
+- schema_version: dataset-catalog/2.0
+  dataset_id: common_voice_fr
+  version: hf-8262c16bf297
+  languages:
+  - fr
+  tasks:
+  - asr
+  aliases: []
+  artifacts:
+  - name: source
+    kind: hf-dataset-snapshot
+    root_alias: common_voice_fr
+    relative_path: source/hf-8262c16bf297
+    metadata:
+      file_count: 4
+      expected_bytes: 719631009
+      tree_sha256: 19f1e867accf85b67eb4e568bf6ccba6c7d498e5d29a7dfefa4daef26e8b1c31
+  - name: audio_fr_test_fr_test_0_tar
+    kind: source-archive
+    root_alias: common_voice_fr
+    relative_path: source/hf-8262c16bf297/audio/fr/test/fr_test_0.tar
+    expected_bytes: 686716928
+    sha256: 3ed32623ca2a314170ff0d8fc499c0ed9edc4670d48d9d037072a1cdf6b43704
+  - name: transcript_fr_test_tsv
+    kind: transcript-table
+    root_alias: common_voice_fr
+    relative_path: source/hf-8262c16bf297/transcript/fr/test.tsv
+    expected_bytes: 4948345
+    sha256: 0f9c11632b82526641765ca41564d250b4a45b96032f5a5d5506abe1f709ccfb
+  - name: transcript_fr_clip_durations_tsv
+    kind: transcript-table
+    root_alias: common_voice_fr
+    relative_path: source/hf-8262c16bf297/transcript/fr/clip_durations.tsv
+    expected_bytes: 27961264
+    sha256: e118fdf2a0499ad4b132948fe13c6da90d89d725cc7d31377d589cec9de14a92
+  - name: download_state
+    kind: dataset-state
+    root_alias: common_voice_fr
+    relative_path: versions/hf-8262c16bf297/download_state/state.json
+    expected_bytes: 964
+    sha256: 57aa829141e70d1d040b098f3ef80510bf7134d8dceccb15104b7b99f8526ae8
+  splits:
+    test:
+      artifacts:
+        source:
+        - source
+        audio_archive:
+        - audio_fr_test_fr_test_0_tar
+        transcripts:
+        - transcript_fr_test_tsv
+        clip_durations:
+        - transcript_fr_clip_durations_tsv
+      statistics:
+        count: 16159
+        speakers: 5321
+        duration_hours: 26.1159
+        duration_basis: sum of clip_durations.tsv for the split TSV rows; every row has its clip in the split tar
+  provenance:
+    locale: fr
+    release: Common Voice 17.0
+    dataset_family: common_voice_fr
+    description: Common Voice 17.0 fr 的非官方 HF 镜像（官方 Mozilla 仓库需要授权），只下载了 test，与 common_voice_pt@hf-8262c16bf297 同一修订。
+    source: Hugging Face
+    source_id: fsicoli/common_voice_17_0
+    revision: 8262c16bf297c87a9cd88c51997c4758ed7a8ba2
+    url: https://huggingface.co/datasets/fsicoli/common_voice_17_0
+    download_mirror: https://hf-mirror.com
+    license: cc0-1.0
+    download_scope: 'Unofficial Common Voice 17.0 fr mirror: test audio, test transcripts and clip durations only'
+    expected_download_files: 4
+    expected_download_bytes: 719631009
+    integrity: verified
+    used_by: multilingual_asr_bench@v1-20261110
+- schema_version: dataset-catalog/2.0
+  dataset_id: fleurs_de
+  version: hf-70bb2e84b976
+  languages:
+  - de
+  tasks:
+  - asr
+  aliases: []
+  artifacts:
+  - name: source
+    kind: hf-dataset-snapshot
+    root_alias: fleurs_de
+    relative_path: source/hf-70bb2e84b976
+    metadata:
+      file_count: 2
+      expected_bytes: 569294101
+      tree_sha256: 9de91ca510eeecbf447dd0e5bf3644d4d885ba491ef31c2e8573c63a513b6edf
+  - name: data_de_de_audio_test_tar_gz
+    kind: source-archive
+    root_alias: fleurs_de
+    relative_path: source/hf-70bb2e84b976/data/de_de/audio/test.tar.gz
+    expected_bytes: 568734559
+    sha256: e86b42dfcdef749926cd92135045f87c25966c09e50d01c401adb04ee7d8628f
+  - name: data_de_de_test_tsv
+    kind: transcript-table
+    root_alias: fleurs_de
+    relative_path: source/hf-70bb2e84b976/data/de_de/test.tsv
+    expected_bytes: 559542
+    sha256: 82fab72c58a347345675c238f2492bb997105a4ab45d69e2a2b34ed29082fa97
+  - name: download_state
+    kind: dataset-state
+    root_alias: fleurs_de
+    relative_path: versions/hf-70bb2e84b976/download_state/state.json
+    expected_bytes: 899
+    sha256: 1ab6b33cff71727fbe2865323d7b19412b2d24be1cc6beec0d41e097af5d3532
+  splits:
+    test:
+      artifacts:
+        source:
+        - source
+        audio_archive:
+        - data_de_de_audio_test_tar_gz
+        transcripts:
+        - data_de_de_test_tsv
+      statistics:
+        count: 862
+        duration_hours: 3.1526
+        duration_basis: sum of TSV num_samples / 16000; pinned upstream file hashes verified
+  provenance:
+    locale: de_de
+    dataset_family: fleurs_de
+    description: Google FLEURS 的 de_de 子集（音频归档和 TSV 转写），只下载了 test，与 fleurs_pt 同一修订。
+    source: Hugging Face
+    source_id: google/fleurs
+    revision: 70bb2e84b976b7e960aa89f1c648e09c59f894dd
+    url: https://huggingface.co/datasets/google/fleurs
+    download_mirror: https://hf-mirror.com
+    license: cc-by-4.0
+    download_scope: FLEURS de_de test audio archive and TSV transcript only
+    expected_download_files: 2
+    expected_download_bytes: 569294101
+    integrity: verified
+    used_by: multilingual_asr_bench@v1-20261110
+- schema_version: dataset-catalog/2.0
+  dataset_id: common_voice_de
+  version: hf-8262c16bf297
+  languages:
+  - de
+  tasks:
+  - asr
+  aliases: []
+  artifacts:
+  - name: source
+    kind: hf-dataset-snapshot
+    root_alias: common_voice_de
+    relative_path: source/hf-8262c16bf297
+    metadata:
+      file_count: 4
+      expected_bytes: 755661818
+      tree_sha256: 7bb7b38710574d5b1020be8c29ec285991f9c71971213d9c070b9798ec5994da
+  - name: audio_de_test_de_test_0_tar
+    kind: source-archive
+    root_alias: common_voice_de
+    relative_path: source/hf-8262c16bf297/audio/de/test/de_test_0.tar
+    expected_bytes: 717382144
+    sha256: bbe6f9ff2631d9319be951893b3feda53e6ddd5131e1bdda0a45ab91f603e187
+  - name: transcript_de_test_tsv
+    kind: transcript-table
+    root_alias: common_voice_de
+    relative_path: source/hf-8262c16bf297/transcript/de/test.tsv
+    expected_bytes: 4974826
+    sha256: b1bb6e0a898a1d306c8642cbd667284f1c2a84e84a437c952a81f9ae9115d201
+  - name: transcript_de_clip_durations_tsv
+    kind: transcript-table
+    root_alias: common_voice_de
+    relative_path: source/hf-8262c16bf297/transcript/de/clip_durations.tsv
+    expected_bytes: 33300376
+    sha256: fd2a9a6e592fb4f4673502ce24ac724d67ecb0058ab7b2643782459ae04834e8
+  - name: download_state
+    kind: dataset-state
+    root_alias: common_voice_de
+    relative_path: versions/hf-8262c16bf297/download_state/state.json
+    expected_bytes: 964
+    sha256: e0eb0b6f5ec43548a3fa27859996d078fae68ec70463a287753fbd07f351f422
+  splits:
+    test:
+      artifacts:
+        source:
+        - source
+        audio_archive:
+        - audio_de_test_de_test_0_tar
+        transcripts:
+        - transcript_de_test_tsv
+        clip_durations:
+        - transcript_de_clip_durations_tsv
+      statistics:
+        count: 16183
+        speakers: 4853
+        duration_hours: 27.4369
+        duration_basis: sum of clip_durations.tsv for the split TSV rows; every row has its clip in the split tar
+  provenance:
+    locale: de
+    release: Common Voice 17.0
+    dataset_family: common_voice_de
+    description: Common Voice 17.0 de 的非官方 HF 镜像（官方 Mozilla 仓库需要授权），只下载了 test，与 common_voice_pt@hf-8262c16bf297 同一修订。
+    source: Hugging Face
+    source_id: fsicoli/common_voice_17_0
+    revision: 8262c16bf297c87a9cd88c51997c4758ed7a8ba2
+    url: https://huggingface.co/datasets/fsicoli/common_voice_17_0
+    download_mirror: https://hf-mirror.com
+    license: cc0-1.0
+    download_scope: 'Unofficial Common Voice 17.0 de mirror: test audio, test transcripts and clip durations only'
+    expected_download_files: 4
+    expected_download_bytes: 755661818
+    integrity: verified
+    used_by: multilingual_asr_bench@v1-20261110
+- schema_version: dataset-catalog/2.0
+  dataset_id: fleurs_ja
+  version: hf-70bb2e84b976
+  languages:
+  - ja
+  tasks:
+  - asr
+  aliases: []
+  artifacts:
+  - name: source
+    kind: hf-dataset-snapshot
+    root_alias: fleurs_ja
+    relative_path: source/hf-70bb2e84b976
+    metadata:
+      file_count: 2
+      expected_bytes: 449123565
+      tree_sha256: 5d4ea0acb8024c206369e2449d249ac4db091330a6d84c25ebb177e2a1e88f3b
+  - name: data_ja_jp_audio_test_tar_gz
+    kind: source-archive
+    root_alias: fleurs_ja
+    relative_path: source/hf-70bb2e84b976/data/ja_jp/audio/test.tar.gz
+    expected_bytes: 448762391
+    sha256: 5de465fa7aaafc4e2c13aba44771550b8cd2dd29bb9b265daeb6d92ca8e0c136
+  - name: data_ja_jp_test_tsv
+    kind: transcript-table
+    root_alias: fleurs_ja
+    relative_path: source/hf-70bb2e84b976/data/ja_jp/test.tsv
+    expected_bytes: 361174
+    sha256: 5dd9643511437414681ad3f23508596c621cdf78978724a09f1f06fefe9d300b
+  - name: download_state
+    kind: dataset-state
+    root_alias: fleurs_ja
+    relative_path: versions/hf-70bb2e84b976/download_state/state.json
+    expected_bytes: 899
+    sha256: 98ab66268634d8d6a975b1c8f5bd0fd5df216a03aa9739f8e60e63c335ad5d82
+  splits:
+    test:
+      artifacts:
+        source:
+        - source
+        audio_archive:
+        - data_ja_jp_audio_test_tar_gz
+        transcripts:
+        - data_ja_jp_test_tsv
+      statistics:
+        count: 650
+        duration_hours: 2.3642
+        duration_basis: sum of TSV num_samples / 16000; pinned upstream file hashes verified
+  provenance:
+    locale: ja_jp
+    dataset_family: fleurs_ja
+    description: Google FLEURS 的 ja_jp 子集（音频归档和 TSV 转写），只下载了 test，与 fleurs_pt 同一修订。
+    source: Hugging Face
+    source_id: google/fleurs
+    revision: 70bb2e84b976b7e960aa89f1c648e09c59f894dd
+    url: https://huggingface.co/datasets/google/fleurs
+    download_mirror: https://hf-mirror.com
+    license: cc-by-4.0
+    download_scope: FLEURS ja_jp test audio archive and TSV transcript only
+    expected_download_files: 2
+    expected_download_bytes: 449123565
+    integrity: verified
+    used_by: multilingual_asr_bench@v1-20261110
+- schema_version: dataset-catalog/2.0
+  dataset_id: common_voice_ja
+  version: hf-8262c16bf297
+  languages:
+  - ja
+  tasks:
+  - asr
+  aliases: []
+  artifacts:
+  - name: source
+    kind: hf-dataset-snapshot
+    root_alias: common_voice_ja
+    relative_path: source/hf-8262c16bf297
+    metadata:
+      file_count: 4
+      expected_bytes: 214066647
+      tree_sha256: 1c6e1a54574559fa16a95bb6549731432eeb79c47dc62080df5cfd75ca1e8e0c
+  - name: audio_ja_test_ja_test_0_tar
+    kind: source-archive
+    root_alias: common_voice_ja
+    relative_path: source/hf-8262c16bf297/audio/ja/test/ja_test_0.tar
+    expected_bytes: 199857664
+    sha256: 8fdaa419d510d4a9224a26de309e7b3dc2715eb06dde7e6879b06d937c8c33bd
+  - name: transcript_ja_test_tsv
+    kind: transcript-table
+    root_alias: common_voice_ja
+    relative_path: source/hf-8262c16bf297/transcript/ja/test.tsv
+    expected_bytes: 2061818
+    sha256: b327145d16be2a85cab49e386173a9648886c562f11111e64b4a73bdd789e0f9
+  - name: transcript_ja_clip_durations_tsv
+    kind: transcript-table
+    root_alias: common_voice_ja
+    relative_path: source/hf-8262c16bf297/transcript/ja/clip_durations.tsv
+    expected_bytes: 12142693
+    sha256: c3a93fad6c9a0e4a8533cd04d0c5c8f78d32acceeb74a366324668e8a9b16f3c
+  - name: download_state
+    kind: dataset-state
+    root_alias: common_voice_ja
+    relative_path: versions/hf-8262c16bf297/download_state/state.json
+    expected_bytes: 964
+    sha256: 5a57d04c33491bc7c6988c1154e2b8e93517d08c2ec3a79ee759116ff4652bd0
+  splits:
+    test:
+      artifacts:
+        source:
+        - source
+        audio_archive:
+        - audio_ja_test_ja_test_0_tar
+        transcripts:
+        - transcript_ja_test_tsv
+        clip_durations:
+        - transcript_ja_clip_durations_tsv
+      statistics:
+        count: 6261
+        speakers: 1972
+        duration_hours: 8.8588
+        duration_basis: sum of clip_durations.tsv for the split TSV rows; every row has its clip in the split tar
+  provenance:
+    locale: ja
+    release: Common Voice 17.0
+    dataset_family: common_voice_ja
+    description: Common Voice 17.0 ja 的非官方 HF 镜像（官方 Mozilla 仓库需要授权），只下载了 test，与 common_voice_pt@hf-8262c16bf297 同一修订。
+    source: Hugging Face
+    source_id: fsicoli/common_voice_17_0
+    revision: 8262c16bf297c87a9cd88c51997c4758ed7a8ba2
+    url: https://huggingface.co/datasets/fsicoli/common_voice_17_0
+    download_mirror: https://hf-mirror.com
+    license: cc0-1.0
+    download_scope: 'Unofficial Common Voice 17.0 ja mirror: test audio, test transcripts and clip durations only'
+    expected_download_files: 4
+    expected_download_bytes: 214066647
+    integrity: verified
+    used_by: multilingual_asr_bench@v1-20261110
+- schema_version: dataset-catalog/2.0
+  dataset_id: fleurs_ko
+  version: hf-70bb2e84b976
+  languages:
+  - ko
+  tasks:
+  - asr
+  aliases: []
+  artifacts:
+  - name: source
+    kind: hf-dataset-snapshot
+    root_alias: fleurs_ko
+    relative_path: source/hf-70bb2e84b976
+    metadata:
+      file_count: 2
+      expected_bytes: 214637402
+      tree_sha256: 49094893dc25c39bdf68e8abc7dfc673b4e7b2b4451cee41418cdf06cdc35aea
+  - name: data_ko_kr_audio_test_tar_gz
+    kind: source-archive
+    root_alias: fleurs_ko
+    relative_path: source/hf-70bb2e84b976/data/ko_kr/audio/test.tar.gz
+    expected_bytes: 214425558
+    sha256: 3489e529f2aad18d3357b746c5f955941d258b79dc60d8a102d5bced2a223184
+  - name: data_ko_kr_test_tsv
+    kind: transcript-table
+    root_alias: fleurs_ko
+    relative_path: source/hf-70bb2e84b976/data/ko_kr/test.tsv
+    expected_bytes: 211844
+    sha256: cf2f7c8765f6203e3c46ef620d5e936d3f331b6e8865455557777dd1347517f5
+  - name: download_state
+    kind: dataset-state
+    root_alias: fleurs_ko
+    relative_path: versions/hf-70bb2e84b976/download_state/state.json
+    expected_bytes: 899
+    sha256: d799b84210fd7b55b7cce6704b224e1094ca7e2d95c146d2763233cdfee6ed8f
+  splits:
+    test:
+      artifacts:
+        source:
+        - source
+        audio_archive:
+        - data_ko_kr_audio_test_tar_gz
+        transcripts:
+        - data_ko_kr_test_tsv
+      statistics:
+        count: 382
+        duration_hours: 1.3347
+        duration_basis: sum of TSV num_samples / 16000; pinned upstream file hashes verified
+  provenance:
+    locale: ko_kr
+    dataset_family: fleurs_ko
+    description: Google FLEURS 的 ko_kr 子集（音频归档和 TSV 转写），只下载了 test，与 fleurs_pt 同一修订。
+    source: Hugging Face
+    source_id: google/fleurs
+    revision: 70bb2e84b976b7e960aa89f1c648e09c59f894dd
+    url: https://huggingface.co/datasets/google/fleurs
+    download_mirror: https://hf-mirror.com
+    license: cc-by-4.0
+    download_scope: FLEURS ko_kr test audio archive and TSV transcript only
+    expected_download_files: 2
+    expected_download_bytes: 214637402
+    integrity: verified
+    used_by: multilingual_asr_bench@v1-20261110
+- schema_version: dataset-catalog/2.0
+  dataset_id: common_voice_ko
+  version: hf-8262c16bf297
+  languages:
+  - ko
+  tasks:
+  - asr
+  aliases: []
+  artifacts:
+  - name: source
+    kind: hf-dataset-snapshot
+    root_alias: common_voice_ko
+    relative_path: source/hf-8262c16bf297
+    metadata:
+      file_count: 4
+      expected_bytes: 11273903
+      tree_sha256: 63b1c6d0121018bbe40d6cb9899e1181aba99fd4477f5b38e63b3dd18f00f6c2
+  - name: audio_ko_test_ko_test_0_tar
+    kind: source-archive
+    root_alias: common_voice_ko
+    relative_path: source/hf-8262c16bf297/audio/ko/test/ko_test_0.tar
+    expected_bytes: 11042816
+    sha256: ecc511693bc764d6266846b8e99b5b7180956b5b3c5b817a3bd7e172cbcb7c67
+  - name: transcript_ko_test_tsv
+    kind: transcript-table
+    root_alias: common_voice_ko
+    relative_path: source/hf-8262c16bf297/transcript/ko/test.tsv
+    expected_bytes: 111773
+    sha256: 21a9d4c1d73da1f98a017493f85faf7ec1f64f4f8cb1010e192c6326741880cd
+  - name: transcript_ko_clip_durations_tsv
+    kind: transcript-table
+    root_alias: common_voice_ko
+    relative_path: source/hf-8262c16bf297/transcript/ko/clip_durations.tsv
+    expected_bytes: 114842
+    sha256: 2cb0849cfb0d9eb71c552e74b360f7951a555d28d966dfcddccd2a0c9007a255
+  - name: download_state
+    kind: dataset-state
+    root_alias: common_voice_ko
+    relative_path: versions/hf-8262c16bf297/download_state/state.json
+    expected_bytes: 962
+    sha256: 71ca6de6be6c3242ea16ffb84af6971f03466a0a38c424e590a44c9e3f1ddf5c
+  splits:
+    test:
+      artifacts:
+        source:
+        - source
+        audio_archive:
+        - audio_ko_test_ko_test_0_tar
+        transcripts:
+        - transcript_ko_test_tsv
+        clip_durations:
+        - transcript_ko_clip_durations_tsv
+      statistics:
+        count: 339
+        speakers: 44
+        duration_hours: 0.4984
+        duration_basis: sum of clip_durations.tsv for the split TSV rows; every row has its clip in the split tar
+  provenance:
+    locale: ko
+    release: Common Voice 17.0
+    dataset_family: common_voice_ko
+    description: Common Voice 17.0 ko 的非官方 HF 镜像（官方 Mozilla 仓库需要授权），只下载了 test，与 common_voice_pt@hf-8262c16bf297 同一修订。
+    source: Hugging Face
+    source_id: fsicoli/common_voice_17_0
+    revision: 8262c16bf297c87a9cd88c51997c4758ed7a8ba2
+    url: https://huggingface.co/datasets/fsicoli/common_voice_17_0
+    download_mirror: https://hf-mirror.com
+    license: cc0-1.0
+    download_scope: 'Unofficial Common Voice 17.0 ko mirror: test audio, test transcripts and clip durations only'
+    expected_download_files: 4
+    expected_download_bytes: 11273903
+    integrity: verified
+    used_by: multilingual_asr_bench@v1-20261110
+- schema_version: dataset-catalog/2.0
+  dataset_id: fleurs_hi
+  version: hf-70bb2e84b976
+  languages:
+  - hi
+  tasks:
+  - asr
+  aliases: []
+  artifacts:
+  - name: source
+    kind: hf-dataset-snapshot
+    root_alias: fleurs_hi
+    relative_path: source/hf-70bb2e84b976
+    metadata:
+      file_count: 4
+      expected_bytes: 381796276
+      tree_sha256: 67e7bb5901e2767c00375b9dfa83b67cd58092ccd8cebc7bc444c74abb072310
+  - name: data_hi_in_audio_dev_tar_gz
+    kind: source-archive
+    root_alias: fleurs_hi
+    relative_path: source/hf-70bb2e84b976/data/hi_in/audio/dev.tar.gz
+    expected_bytes: 131741732
+    sha256: 9adbca6d6fc70e40c121910941bcd7c8906eee60b402b6d21b4bd160e20030c7
+  - name: data_hi_in_dev_tsv
+    kind: transcript-table
+    root_alias: fleurs_hi
+    relative_path: source/hf-70bb2e84b976/data/hi_in/dev.tsv
+    expected_bytes: 249853
+    sha256: cea87c57a37a0d38ed0afce30e68a35ad7b3945414648430fee09a54ca7b72ba
+  - name: data_hi_in_audio_test_tar_gz
+    kind: source-archive
+    root_alias: fleurs_hi
+    relative_path: source/hf-70bb2e84b976/data/hi_in/audio/test.tar.gz
+    expected_bytes: 249331325
+    sha256: 47c238b9cf7016ba596639bb3038b0c89dc6e85759f16d09c4f58c6dfa25c65f
+  - name: data_hi_in_test_tsv
+    kind: transcript-table
+    root_alias: fleurs_hi
+    relative_path: source/hf-70bb2e84b976/data/hi_in/test.tsv
+    expected_bytes: 473366
+    sha256: 889e82e2875490f9533ff59ab67326fcfa01cf828fc4412758aaaa1f442a729f
+  - name: download_state
+    kind: dataset-state
+    root_alias: fleurs_hi
+    relative_path: versions/hf-70bb2e84b976/download_state/state.json
+    expected_bytes: 905
+    sha256: b5da13542624914bb27537889a772484464015ca00afabcca440f058f2ec5730
+  splits:
+    dev:
+      artifacts:
+        source:
+        - source
+        audio_archive:
+        - data_hi_in_audio_dev_tar_gz
+        transcripts:
+        - data_hi_in_dev_tsv
+      statistics:
+        count: 239
+        duration_hours: 0.7125
+        duration_basis: sum of TSV num_samples / 16000; pinned upstream file hashes verified
+    test:
+      artifacts:
+        source:
+        - source
+        audio_archive:
+        - data_hi_in_audio_test_tar_gz
+        transcripts:
+        - data_hi_in_test_tsv
+      statistics:
+        count: 418
+        duration_hours: 1.3423
+        duration_basis: sum of TSV num_samples / 16000; pinned upstream file hashes verified
+  provenance:
+    summary: FLEURS 印地语朗读
+    locale: hi_in
+    dataset_family: fleurs_hi
+    description: Google FLEURS 的 hi_in 子集（音频归档和 TSV 转写），只下载了 dev/test，与 fleurs_pt 同一修订。
+    source: Hugging Face
+    source_id: google/fleurs
+    revision: 70bb2e84b976b7e960aa89f1c648e09c59f894dd
+    url: https://huggingface.co/datasets/google/fleurs
+    download_mirror: https://hf-mirror.com
+    license: cc-by-4.0
+    download_scope: FLEURS hi_in dev/test audio archives and TSV transcripts only
+    expected_download_files: 4
+    expected_download_bytes: 381796276
+    integrity: verified
+    used_by: multilingual_asr_bench@v1-20261110
+- schema_version: dataset-catalog/2.0
+  dataset_id: common_voice_hi
+  version: hf-8262c16bf297
+  languages:
+  - hi
+  tasks:
+  - asr
+  aliases: []
+  artifacts:
+  - name: source
+    kind: hf-dataset-snapshot
+    root_alias: common_voice_hi
+    relative_path: source/hf-8262c16bf297
+    metadata:
+      file_count: 6
+      expected_bytes: 174617332
+      tree_sha256: 8dbb12e64efdce0383403fc5146fc15b216694e22d4dc2b14741ade33b35e1d8
+  - name: audio_hi_dev_hi_dev_0_tar
+    kind: source-archive
+    root_alias: common_voice_hi
+    relative_path: source/hf-8262c16bf297/audio/hi/dev/hi_dev_0.tar
+    expected_bytes: 70063616
+    sha256: a2a1d9723e63cb9a84fcf1ceec321aa6142a7b2e9aa9e5219bf77e873db2f4c7
+  - name: transcript_hi_dev_tsv
+    kind: transcript-table
+    root_alias: common_voice_hi
+    relative_path: source/hf-8262c16bf297/transcript/hi/dev.tsv
+    expected_bytes: 882092
+    sha256: f8568e5c9698b290b69d7164abc9b80ed500f7ac0067fb5c51556994653987be
+  - name: transcript_hi_clip_durations_tsv
+    kind: transcript-table
+    root_alias: common_voice_hi
+    relative_path: source/hf-8262c16bf297/transcript/hi/clip_durations.tsv
+    expected_bytes: 515094
+    sha256: d1d58a61d8aa3b3473efb08f1fcd1c2e0edc830e0100b875220af77d3ebef694
+  - name: audio_hi_test_hi_test_0_tar
+    kind: source-archive
+    root_alias: common_voice_hi
+    relative_path: source/hf-8262c16bf297/audio/hi/test/hi_test_0.tar
+    expected_bytes: 102017536
+    sha256: 875f43caeaef640f547b2840f69776d26b7dc666c0f859595e41e8ff16465f93
+  - name: transcript_hi_test_tsv
+    kind: transcript-table
+    root_alias: common_voice_hi
+    relative_path: source/hf-8262c16bf297/transcript/hi/test.tsv
+    expected_bytes: 1134522
+    sha256: f905233b55d0e899f53e932482c924a8dcef840bd339916913581ca3bf86eaf5
+  - name: download_state
+    kind: dataset-state
+    root_alias: common_voice_hi
+    relative_path: versions/hf-8262c16bf297/download_state/state.json
+    expected_bytes: 950
+    sha256: 80020362818a3210552b538b9a748ad139115f7720acd0174fbf39f874941a26
+  splits:
+    dev:
+      artifacts:
+        source:
+        - source
+        audio_archive:
+        - audio_hi_dev_hi_dev_0_tar
+        transcripts:
+        - transcript_hi_dev_tsv
+        clip_durations:
+        - transcript_hi_clip_durations_tsv
+      statistics:
+        count: 2428
+        speakers: 11
+        duration_hours: 3.1475
+        duration_basis: sum of clip_durations.tsv for the split TSV rows; every row has its clip in the split tar
+    test:
+      artifacts:
+        source:
+        - source
+        audio_archive:
+        - audio_hi_test_hi_test_0_tar
+        transcripts:
+        - transcript_hi_test_tsv
+        clip_durations:
+        - transcript_hi_clip_durations_tsv
+      statistics:
+        count: 3154
+        speakers: 294
+        duration_hours: 4.4277
+        duration_basis: sum of clip_durations.tsv for the split TSV rows; every row has its clip in the split tar
+  provenance:
+    summary: Common Voice 17 印地语朗读
+    locale: hi
+    release: Common Voice 17.0
+    dataset_family: common_voice_hi
+    description: Common Voice 17.0 hi 的非官方 HF 镜像（官方 Mozilla 仓库需要授权），只下载了 dev/test，与 common_voice_pt@hf-8262c16bf297 同一修订。
+    source: Hugging Face
+    source_id: fsicoli/common_voice_17_0
+    revision: 8262c16bf297c87a9cd88c51997c4758ed7a8ba2
+    url: https://huggingface.co/datasets/fsicoli/common_voice_17_0
+    download_mirror: https://hf-mirror.com
+    license: cc0-1.0
+    download_scope: 'Unofficial Common Voice 17.0 Hindi mirror: dev/test audio and transcripts only'
+    expected_download_files: 6
+    expected_download_bytes: 174617332
+    integrity: verified
+    used_by: multilingual_asr_bench@v1-20261110
+- schema_version: dataset-catalog/2.0
+  dataset_id: fleurs_ru
+  version: hf-70bb2e84b976
+  languages:
+  - ru
+  tasks:
+  - asr
+  aliases: []
+  artifacts:
+  - name: source
+    kind: hf-dataset-snapshot
+    root_alias: fleurs_ru
+    relative_path: source/hf-70bb2e84b976
+    metadata:
+      file_count: 2
+      expected_bytes: 433877892
+      tree_sha256: a285bf061876488ef8be4c975bff1f16ad65a845fd31e03fb51acaedd4b5a1a9
+  - name: data_ru_ru_audio_test_tar_gz
+    kind: source-archive
+    root_alias: fleurs_ru
+    relative_path: source/hf-70bb2e84b976/data/ru_ru/audio/test.tar.gz
+    expected_bytes: 433142634
+    sha256: 8a0d6a0d23c3421f50c575bcf65d875cd19dadae2f7cabb415024f81b65178b1
+  - name: data_ru_ru_test_tsv
+    kind: transcript-table
+    root_alias: fleurs_ru
+    relative_path: source/hf-70bb2e84b976/data/ru_ru/test.tsv
+    expected_bytes: 735258
+    sha256: cd54f261220f49afbb4c128633a737eca4a22f6c0a8233d3cc891478d06676e6
+  - name: download_state
+    kind: dataset-state
+    root_alias: fleurs_ru
+    relative_path: versions/hf-70bb2e84b976/download_state/state.json
+    expected_bytes: 899
+    sha256: b2cd37f627c0b1461b04979f396c393341a85e17d1838d468a56ece730bb2f79
+  splits:
+    test:
+      artifacts:
+        source:
+        - source
+        audio_archive:
+        - data_ru_ru_audio_test_tar_gz
+        transcripts:
+        - data_ru_ru_test_tsv
+      statistics:
+        count: 775
+        duration_hours: 2.4983
+        duration_basis: sum of TSV num_samples / 16000; pinned upstream file hashes verified
+  provenance:
+    locale: ru_ru
+    dataset_family: fleurs_ru
+    description: Google FLEURS 的 ru_ru 子集（音频归档和 TSV 转写），只下载了 test，与 fleurs_pt 同一修订。
+    source: Hugging Face
+    source_id: google/fleurs
+    revision: 70bb2e84b976b7e960aa89f1c648e09c59f894dd
+    url: https://huggingface.co/datasets/google/fleurs
+    download_mirror: https://hf-mirror.com
+    license: cc-by-4.0
+    download_scope: FLEURS ru_ru test audio archive and TSV transcript only
+    expected_download_files: 2
+    expected_download_bytes: 433877892
+    integrity: verified
+    used_by: multilingual_asr_bench@v1-20261110
+- schema_version: dataset-catalog/2.0
+  dataset_id: common_voice_ru
+  version: hf-8262c16bf297
+  languages:
+  - ru
+  tasks:
+  - asr
+  aliases: []
+  artifacts:
+  - name: source
+    kind: hf-dataset-snapshot
+    root_alias: common_voice_ru
+    relative_path: source/hf-8262c16bf297
+    metadata:
+      file_count: 4
+      expected_bytes: 406723706
+      tree_sha256: 2c0c5e0577af77b4686e26a7fafdcaf5b2b5c5b44df4b48ccf64db205043aadc
+  - name: audio_ru_test_ru_test_0_tar
+    kind: source-archive
+    root_alias: common_voice_ru
+    relative_path: source/hf-8262c16bf297/audio/ru/test/ru_test_0.tar
+    expected_bytes: 396584448
+    sha256: bd978611a35682952455bd0adaced31d2668a29d4fa4e71617c2d5de97eecb80
+  - name: transcript_ru_test_tsv
+    kind: transcript-table
+    root_alias: common_voice_ru
+    relative_path: source/hf-8262c16bf297/transcript/ru/test.tsv
+    expected_bytes: 3644643
+    sha256: 15162124bd657adea07695c22508b8bad174c282dcafe2302faaed05645cc59a
+  - name: transcript_ru_clip_durations_tsv
+    kind: transcript-table
+    root_alias: common_voice_ru
+    relative_path: source/hf-8262c16bf297/transcript/ru/clip_durations.tsv
+    expected_bytes: 6490143
+    sha256: 5892cb96e5a9ad4318f91b363fab7b84435577449d6bed8cfbb1a9f7d31bf735
+  - name: download_state
+    kind: dataset-state
+    root_alias: common_voice_ru
+    relative_path: versions/hf-8262c16bf297/download_state/state.json
+    expected_bytes: 964
+    sha256: 9d9665646319bc0f2469af112ff0f84018978dfc7ecf1dd234a210c6836e4504
+  splits:
+    test:
+      artifacts:
+        source:
+        - source
+        audio_archive:
+        - audio_ru_test_ru_test_0_tar
+        transcripts:
+        - transcript_ru_test_tsv
+        clip_durations:
+        - transcript_ru_clip_durations_tsv
+      statistics:
+        count: 10203
+        speakers: 1923
+        duration_hours: 15.8718
+        duration_basis: sum of clip_durations.tsv for the split TSV rows; every row has its clip in the split tar
+  provenance:
+    locale: ru
+    release: Common Voice 17.0
+    dataset_family: common_voice_ru
+    description: Common Voice 17.0 ru 的非官方 HF 镜像（官方 Mozilla 仓库需要授权），只下载了 test，与 common_voice_pt@hf-8262c16bf297 同一修订。
+    source: Hugging Face
+    source_id: fsicoli/common_voice_17_0
+    revision: 8262c16bf297c87a9cd88c51997c4758ed7a8ba2
+    url: https://huggingface.co/datasets/fsicoli/common_voice_17_0
+    download_mirror: https://hf-mirror.com
+    license: cc0-1.0
+    download_scope: 'Unofficial Common Voice 17.0 ru mirror: test audio, test transcripts and clip durations only'
+    expected_download_files: 4
+    expected_download_bytes: 406723706
+    integrity: verified
+    used_by: multilingual_asr_bench@v1-20261110
+- schema_version: dataset-catalog/2.0
+  dataset_id: fleurs_id
+  version: hf-70bb2e84b976
+  languages:
+  - id
+  tasks:
+  - asr
+  aliases: []
+  artifacts:
+  - name: source
+    kind: hf-dataset-snapshot
+    root_alias: fleurs_id
+    relative_path: source/hf-70bb2e84b976
+    metadata:
+      file_count: 4
+      expected_bytes: 672899406
+      tree_sha256: eac25d812c5fc6ecc86bff0a4772bf204844567cb2b5647c9b2bad7efed9df57
+  - name: data_id_id_audio_dev_tar_gz
+    kind: source-archive
+    root_alias: fleurs_id
+    relative_path: source/hf-70bb2e84b976/data/id_id/audio/dev.tar.gz
+    expected_bytes: 220586217
+    sha256: 74e5f1c8676a321dc4c34944b171846d40923dabe765a767d8dbc2f56cac3142
+  - name: data_id_id_dev_tsv
+    kind: transcript-table
+    root_alias: fleurs_id
+    relative_path: source/hf-70bb2e84b976/data/id_id/dev.tsv
+    expected_bytes: 200236
+    sha256: 8377bf6d8738491b7b0672de47e42123ce07b069a0db920ab6300e3ecce02c18
+  - name: data_id_id_audio_test_tar_gz
+    kind: source-archive
+    root_alias: fleurs_id
+    relative_path: source/hf-70bb2e84b976/data/id_id/audio/test.tar.gz
+    expected_bytes: 451704157
+    sha256: bf7e7f608f8834012d7f79a583b6b0dd5bb82e74e2f5fb6336fc99d3af7ffcf8
+  - name: data_id_id_test_tsv
+    kind: transcript-table
+    root_alias: fleurs_id
+    relative_path: source/hf-70bb2e84b976/data/id_id/test.tsv
+    expected_bytes: 408796
+    sha256: 824cad6367283d95f545911eec051c488c182baa13a63227c6330af3c8f80741
+  - name: download_state
+    kind: dataset-state
+    root_alias: fleurs_id
+    relative_path: versions/hf-70bb2e84b976/download_state/state.json
+    expected_bytes: 905
+    sha256: 3ad1c9c3ef1d2de82b0f1d8a782cba775dec7f02e6a9babb31bd6f618b5fe553
+  splits:
+    dev:
+      artifacts:
+        source:
+        - source
+        audio_archive:
+        - data_id_id_audio_dev_tar_gz
+        transcripts:
+        - data_id_id_dev_tsv
+      statistics:
+        count: 350
+        duration_hours: 1.1592
+        duration_basis: sum of TSV num_samples / 16000; pinned upstream file hashes verified
+    test:
+      artifacts:
+        source:
+        - source
+        audio_archive:
+        - data_id_id_audio_test_tar_gz
+        transcripts:
+        - data_id_id_test_tsv
+      statistics:
+        count: 687
+        duration_hours: 2.3654
+        duration_basis: sum of TSV num_samples / 16000; pinned upstream file hashes verified
+  provenance:
+    summary: FLEURS 印尼语朗读
+    locale: id_id
+    dataset_family: fleurs_id
+    description: Google FLEURS 的 id_id 子集（音频归档和 TSV 转写），只下载了 dev/test，与 fleurs_pt 同一修订。
+    source: Hugging Face
+    source_id: google/fleurs
+    revision: 70bb2e84b976b7e960aa89f1c648e09c59f894dd
+    url: https://huggingface.co/datasets/google/fleurs
+    download_mirror: https://hf-mirror.com
+    license: cc-by-4.0
+    download_scope: FLEURS id_id dev/test audio archives and TSV transcripts only
+    expected_download_files: 4
+    expected_download_bytes: 672899406
+    integrity: verified
+    used_by: multilingual_asr_bench@v1-20261110
+- schema_version: dataset-catalog/2.0
+  dataset_id: common_voice_id
+  version: hf-8262c16bf297
+  languages:
+  - id
+  tasks:
+  - asr
+  aliases: []
+  artifacts:
+  - name: source
+    kind: hf-dataset-snapshot
+    root_alias: common_voice_id
+    relative_path: source/hf-8262c16bf297
+    metadata:
+      file_count: 6
+      expected_bytes: 216595493
+      tree_sha256: ee4ca5287b6198022db7676d582d5161eff31250d96a6ec6e3db5c9f811d791c
+  - name: audio_id_dev_id_dev_0_tar
+    kind: source-archive
+    root_alias: common_voice_id
+    relative_path: source/hf-8262c16bf297/audio/id/dev/id_dev_0.tar
+    expected_bytes: 102229504
+    sha256: f670ce8abb3652a42e4f3c8e14681a867901be8b2f2d792f1c149ff7172b522a
+  - name: transcript_id_dev_tsv
+    kind: transcript-table
+    root_alias: common_voice_id
+    relative_path: source/hf-8262c16bf297/transcript/id/dev.tsv
+    expected_bytes: 1016964
+    sha256: ec0bdec150a00c96c398e850406838347abd25098190aa2c076ffcefd87ecabf
+  - name: transcript_id_clip_durations_tsv
+    kind: transcript-table
+    root_alias: common_voice_id
+    relative_path: source/hf-8262c16bf297/transcript/id/clip_durations.tsv
+    expected_bytes: 1979580
+    sha256: 167d7dfae0ae25e9592097cd059acb6acc7af5a10d55501736c1328ec983e972
+  - name: audio_id_test_id_test_0_tar
+    kind: source-archive
+    root_alias: common_voice_id
+    relative_path: source/hf-8262c16bf297/audio/id/test/id_test_0.tar
+    expected_bytes: 110312448
+    sha256: d45c7e477e94923e2fcb6ac37e4087a527e9a07aae1945a081b2ac73a0e2bdde
+  - name: transcript_id_test_tsv
+    kind: transcript-table
+    root_alias: common_voice_id
+    relative_path: source/hf-8262c16bf297/transcript/id/test.tsv
+    expected_bytes: 1052525
+    sha256: 389878a7fa1a58f7f391d97902f41376f2a99e47980b49c516400d81fc3875b7
+  - name: download_state
+    kind: dataset-state
+    root_alias: common_voice_id
+    relative_path: versions/hf-8262c16bf297/download_state/state.json
+    expected_bytes: 955
+    sha256: eb9bfa7bc9ed8b776cd1eb8d5528da8f25cf537ffb0e04ed3256406208ecc17d
+  splits:
+    dev:
+      artifacts:
+        source:
+        - source
+        audio_archive:
+        - audio_id_dev_id_dev_0_tar
+        transcripts:
+        - transcript_id_dev_tsv
+        clip_durations:
+        - transcript_id_clip_durations_tsv
+      statistics:
+        count: 3349
+        speakers: 31
+        duration_hours: 3.8625
+        duration_basis: sum of clip_durations.tsv for the split TSV rows; every row has its clip in the split tar
+    test:
+      artifacts:
+        source:
+        - source
+        audio_archive:
+        - audio_id_test_id_test_0_tar
+        transcripts:
+        - transcript_id_test_tsv
+        clip_durations:
+        - transcript_id_clip_durations_tsv
+      statistics:
+        count: 3641
+        speakers: 335
+        duration_hours: 4.1537
+        duration_basis: sum of clip_durations.tsv for the split TSV rows; every row has its clip in the split tar
+  provenance:
+    summary: Common Voice 17 印尼语朗读
+    locale: id
+    release: Common Voice 17.0
+    dataset_family: common_voice_id
+    description: Common Voice 17.0 id 的非官方 HF 镜像（官方 Mozilla 仓库需要授权），只下载了 dev/test，与 common_voice_pt@hf-8262c16bf297 同一修订。
+    source: Hugging Face
+    source_id: fsicoli/common_voice_17_0
+    revision: 8262c16bf297c87a9cd88c51997c4758ed7a8ba2
+    url: https://huggingface.co/datasets/fsicoli/common_voice_17_0
+    download_mirror: https://hf-mirror.com
+    license: cc0-1.0
+    download_scope: 'Unofficial Common Voice 17.0 Indonesian mirror: dev/test audio and transcripts only'
+    expected_download_files: 6
+    expected_download_bytes: 216595493
+    integrity: verified
+    used_by: multilingual_asr_bench@v1-20261110
+- schema_version: dataset-catalog/2.0
+  dataset_id: gigaspeech2_id
+  version: hf-8dc0d0e502b7
+  languages:
+  - id
+  tasks:
+  - asr
+  aliases: []
+  artifacts:
+  - name: source
+    kind: hf-dataset-snapshot
+    root_alias: gigaspeech2_id
+    relative_path: source/hf-8dc0d0e502b7
+    metadata:
+      file_count: 5
+      expected_bytes: 3463550240
+      tree_sha256: 61f54bea221e0da75ccdba30d9419c1261e798d7861eb96fd516000e5aa02e64
+  - name: data_id_dev_tar_gz
+    kind: source-archive
+    root_alias: gigaspeech2_id
+    relative_path: source/hf-8dc0d0e502b7/data/id/dev.tar.gz
+    expected_bytes: 943512670
+    sha256: 92867986c6ac4952b78cbea6731214635c6ec8a47c27b7fabd2948f53e6e7e5a
+  - name: data_id_dev_tsv
+    kind: transcript-table
+    root_alias: gigaspeech2_id
+    relative_path: source/hf-8dc0d0e502b7/data/id/dev.tsv
+    expected_bytes: 501987
+    sha256: 0e8b2e3b4f53484ac493c24aff6a5492c3fa4e07a7eb3d144928f43e754a88aa
+  - name: data_id_test_tar_gz
+    kind: source-archive
+    root_alias: gigaspeech2_id
+    relative_path: source/hf-8dc0d0e502b7/data/id/test.tar.gz
+    expected_bytes: 2518162052
+    sha256: 85daa145e8e18885a7b2e99c4a9566c1d6092b08e03c87d888b864ab5e9488bf
+  - name: data_id_test_tsv
+    kind: transcript-table
+    root_alias: gigaspeech2_id
+    relative_path: source/hf-8dc0d0e502b7/data/id/test.tsv
+    expected_bytes: 1361580
+    sha256: 3c4bdd4d311ab51a63f20f0e611db634f1589b3bf2a2d664dd721a3cb2e48275
+  - name: download_state
+    kind: dataset-state
+    root_alias: gigaspeech2_id
+    relative_path: versions/hf-8dc0d0e502b7/download_state/state.json
+    expected_bytes: 944
+    sha256: 2af2b4faca8007b9010bcaffbe7b59f10e297f6d6f45361a0dd71c860914127a
+  splits:
+    dev:
+      artifacts:
+        source:
+        - source
+        audio_archive:
+        - data_id_dev_tar_gz
+        transcripts:
+        - data_id_dev_tsv
+      statistics:
+        count: 6044
+        empty_transcripts: 0
+    test:
+      artifacts:
+        source:
+        - source
+        audio_archive:
+        - data_id_test_tar_gz
+        transcripts:
+        - data_id_test_tsv
+      statistics:
+        count: 17273
+        empty_transcripts: 2
+  provenance:
+    dataset_family: gigaspeech2_id
+    description: GigaSpeech 2 印尼语 dev/test（YouTube 音频，人工标注，大写无标点）。HF 仓库需同意条款，用团队已获授权的令牌下载；train 见 gigaspeech2_id@local-20260805。
+    source: Hugging Face
+    source_id: speechcolab/gigaspeech2
+    revision: 8dc0d0e502b7e6d5649a13cd4b677cf10c0b21e3
+    url: https://huggingface.co/datasets/speechcolab/gigaspeech2
+    download_mirror: https://hf-mirror.com
+    license: apache-2.0
+    download_scope: GigaSpeech 2 Indonesian dev/test audio archives and TSV transcripts only
+    expected_download_files: 5
+    expected_download_bytes: 3463550240
+    integrity: verified
+    used_by: multilingual_asr_bench@v1-20261110
+- schema_version: dataset-catalog/2.0
+  dataset_id: casablanca
+  version: hf-8951b1b88e28
+  languages:
+  - ar
+  tasks:
+  - asr
+  aliases: []
+  artifacts:
+  - name: source
+    kind: hf-dataset-snapshot
+    root_alias: casablanca
+    relative_path: source/hf-8951b1b88e28
+    metadata:
+      file_count: 16
+      expected_bytes: 4547480986
+      tree_sha256: dafe588b599c9038af5a438399dd54d6fa94f85178cefa7b9b07e7cbb7ff0d4f
+  - name: algeria_parquet
+    kind: parquet-directory
+    root_alias: casablanca
+    relative_path: source/hf-8951b1b88e28/Algeria
+    metadata:
+      file_count: 2
+      expected_bytes: 588188015
+      tree_sha256: de1ef858950c4a54148e40f8bb41804b197de37a629da195c0bd41ea1a70e909
+  - name: egypt_parquet
+    kind: parquet-directory
+    root_alias: casablanca
+    relative_path: source/hf-8951b1b88e28/Egypt
+    metadata:
+      file_count: 2
+      expected_bytes: 585279506
+      tree_sha256: 782f3bd28a877c9c780aebb019a6763aaeb82a317aea0386427cdb35858bf7b1
+  - name: jordan_parquet
+    kind: parquet-directory
+    root_alias: casablanca
+    relative_path: source/hf-8951b1b88e28/Jordan
+    metadata:
+      file_count: 1
+      expected_bytes: 395594062
+      tree_sha256: ca1e9e0416cbb27466fa459e2cb83f84c748d091c0761542e3bb4f7cb6036826
+  - name: mauritania_parquet
+    kind: parquet-directory
+    root_alias: casablanca
+    relative_path: source/hf-8951b1b88e28/Mauritania
+    metadata:
+      file_count: 2
+      expected_bytes: 583900965
+      tree_sha256: 9ae0d912cb4905f3699f5c2446eaddc6742198a25c4b6cb576e9aa981e07328a
+  - name: morocco_parquet
+    kind: parquet-directory
+    root_alias: casablanca
+    relative_path: source/hf-8951b1b88e28/Morocco
+    metadata:
+      file_count: 2
+      expected_bytes: 614395015
+      tree_sha256: 8e556682afe99d59909f8f6d37280af695037532f6c7fa63584daf0bc63903ef
+  - name: palestine_parquet
+    kind: parquet-directory
+    root_alias: casablanca
+    relative_path: source/hf-8951b1b88e28/Palestine
+    metadata:
+      file_count: 2
+      expected_bytes: 599347878
+      tree_sha256: 67c01ef4fbdad54f88d39a09937d0543a3970e352c5adeea11e0a362c337010a
+  - name: uae_parquet
+    kind: parquet-directory
+    root_alias: casablanca
+    relative_path: source/hf-8951b1b88e28/UAE
+    metadata:
+      file_count: 2
+      expected_bytes: 536248197
+      tree_sha256: 059c00475d7daaf172d7d5f149eb9406391699e4116a752712a00cd26b9734a6
+  - name: yemen_parquet
+    kind: parquet-directory
+    root_alias: casablanca
+    relative_path: source/hf-8951b1b88e28/Yemen
+    metadata:
+      file_count: 2
+      expected_bytes: 644520924
+      tree_sha256: afe05d5c6fd88a51702b778d160869a143a062ad4513c579e373049a17346ae5
+  - name: download_state
+    kind: dataset-state
+    root_alias: casablanca
+    relative_path: versions/hf-8951b1b88e28/download_state/state.json
+    expected_bytes: 917
+    sha256: 9c248c87556fcb2bea72feba3071469eaae9891a81a2a59168175e22e1fb6fbb
+  splits:
+    test_algeria:
+      artifacts:
+        source:
+        - algeria_parquet
+      statistics:
+        count: 843
+        duration_hours: 0.9371
+        duration_basis: sum of the parquet duration column
+      group: test
+    test_egypt:
+      artifacts:
+        source:
+        - egypt_parquet
+      statistics:
+        count: 846
+        duration_hours: 1.0246
+        duration_basis: sum of the parquet duration column
+      group: test
+    test_jordan:
+      artifacts:
+        source:
+        - jordan_parquet
+      statistics:
+        count: 848
+        duration_hours: 0.9819
+        duration_basis: sum of the parquet duration column
+      group: test
+    test_mauritania:
+      artifacts:
+        source:
+        - mauritania_parquet
+      statistics:
+        count: 953
+        duration_hours: 0.9486
+        duration_basis: sum of the parquet duration column
+      group: test
+    test_morocco:
+      artifacts:
+        source:
+        - morocco_parquet
+      statistics:
+        count: 1045
+        duration_hours: 1.0064
+        duration_basis: sum of the parquet duration column
+      group: test
+    test_palestine:
+      artifacts:
+        source:
+        - palestine_parquet
+      statistics:
+        count: 667
+        duration_hours: 0.9755
+        duration_basis: sum of the parquet duration column
+      group: test
+    test_uae:
+      artifacts:
+        source:
+        - uae_parquet
+      statistics:
+        count: 813
+        duration_hours: 0.9332
+        duration_basis: sum of the parquet duration column
+      group: test
+    test_yemen:
+      artifacts:
+        source:
+        - yemen_parquet
+      statistics:
+        count: 803
+        duration_hours: 1.0418
+        duration_basis: sum of the parquet duration column
+      group: test
+  provenance:
+    summary: Casablanca 八种阿拉伯语方言
+    dataset_family: casablanca
+    description: UBC-NLP Casablanca 的 test 划分（阿尔及利亚、埃及、约旦、毛里塔尼亚、摩洛哥、巴勒斯坦、阿联酋、也门），音频以 wav 字节存在 parquet 内；validation 未下载。仅限非商业用途。
+    source: Hugging Face
+    source_id: UBC-NLP/Casablanca
+    revision: 8951b1b88e28c1107142ced57967b8d16350951d
+    url: https://huggingface.co/datasets/UBC-NLP/Casablanca
+    download_mirror: https://hf-mirror.com
+    license: cc-by-nc-nd-4.0
+    download_scope: Casablanca eight-dialect Arabic test parquet files only
+    expected_download_files: 16
+    expected_download_bytes: 4547480986
+    integrity: verified
+    used_by: multilingual_asr_bench@v1-20261110

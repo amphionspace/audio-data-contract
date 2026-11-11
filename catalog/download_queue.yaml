@@ -296,3 +296,32 @@
       revision: 0df78f991f6afa051aacb7c63e3fe2b496c13c2c
       url: https://huggingface.co/datasets/reazon-research/reazonspeech
       inventory_status: download_planned
+  - schema_version: dataset-catalog/2.0
+    dataset_id: kathbath
+    version: ai4bharat-20250409
+    languages:
+      - hi
+    tasks:
+      - asr
+    aliases: []
+    artifacts:
+      - name: source
+        kind: source-directory
+        root_alias: kathbath
+        relative_path: source/ai4bharat-20250409
+    splits:
+      hindi_test_known:
+        artifacts:
+          source:
+            - source
+      hindi_test_unknown:
+        artifacts:
+          source:
+            - source
+    provenance:
+      source: AI4Bharat object store (IndicSUPERB)
+      url: https://github.com/AI4Bharat/IndicSUPERB
+      license: CC0-1.0 packaging (IndicSUPERB)
+      download_scope: Kathbath clean testkn_audio.tar, testunk_audio.tar and transcripts_n2w.tar (all 12 languages; Hindi splits to register)
+      description: 印地语真实场景测试集候选，计划并入 multilingual_asr_bench 的下一个版本。官方对象存储直链无需登录；2026-11-10 下载时服务器限速，未下完。下载计划和日志在 /workspace/data/staging/multilingual-asr-eval-20261110/（http-plan.json、kathbath.log），重跑同一下载命令续传。
+      inventory_status: download_planned
