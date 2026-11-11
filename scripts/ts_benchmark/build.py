@@ -37,6 +37,7 @@ import yaml
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import mixer
+import qc_gate
 
 from audio_data_contract import AudioRecord, load_catalog, resolve_split
 from audio_data_contract.catalog import validate_catalog
@@ -554,6 +555,8 @@ def main():
     parser.add_argument("--noise-cache", type=Path, help="output of prepare_noise.py (real noise and RIR pools)")
     parser.add_argument("--rir-cache", type=Path, help="reuse (or fill) extracted room impulse responses")
     parser.add_argument("--no-register", action="store_true", help="write audio and records but not the catalog")
+    parser.add_argument("--reference-version",
+                        help="gate every split against this version of the dataset (qc_gate.py) before registering")
     args = parser.parse_args()
 
     recipe = yaml.safe_load(args.recipe.read_text())
@@ -622,6 +625,9 @@ def main():
         import qc_crosslingual  # exits non-zero, before the catalog is written, when a pair group fails
 
         qc_crosslingual.check(recipe, data_root, roots, data_root / "versions" / version / "qc.json")
+    if args.reference_version and not qc_gate.report(qc_gate.check(
+            data_root, version, args.reference_version, {s["name"]: s["n"] for s in splits})):
+        sys.exit(f"quality gate failed against {args.reference_version}; {version} is not registered")
     if args.no_register:
         return
     path = REPO / "catalog" / f"{recipe['dataset_id']}.yaml"
