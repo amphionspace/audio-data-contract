@@ -170,12 +170,19 @@ CROSSLINGUAL_SOURCES = {"cv": "真人（Common Voice 双语说话人）", "tts":
 CROSSLINGUAL_SCENES = {"solo": "单人", "k1": "1 个干扰人", "k2": "2 个干扰人", "abs1": "目标缺席 · 1 个干扰人",
                        "abs2": "目标缺席 · 2 个干扰人"}
 CROSSLINGUAL_ENROLL = {"same": "同语言注册", "cross": "跨语言注册"}
+# Mixture language -> (its name, the cross enrollment's language).
+CROSSLINGUAL_LANGUAGES = {"zh": ("中文", "英文"), "en": ("英文", "中文"), "es": ("西班牙语", "英文")}
+# Tags an eval set may carry; Spanish has none, so an es set is tagged by task only.
+LANGUAGE_TAGS = {"zh", "en"}
+
+
+def crosslingual_tags(recipe):
+    return [recipe["language"]] * (recipe["language"] in LANGUAGE_TAGS) + ["target-speaker"]
 
 
 def crosslingual_display(name, recipe):
     source, scene, cond = name.split("-")
-    other = {"zh": "英文", "en": "中文"}[recipe["language"]]
-    mix = {"zh": "中文", "en": "英文"}[recipe["language"]]
+    mix, other = CROSSLINGUAL_LANGUAGES[recipe["language"]]
     enroll = f"注册为同一说话人的{mix}" if cond == "same" else f"注册为同一说话人的{other}"
     return (f"{CROSSLINGUAL_SOURCES[source].split('（')[0]} · {CROSSLINGUAL_SCENES[scene]} · {CROSSLINGUAL_ENROLL[cond]}",
             f"混合段{mix}，{enroll}；与另一种注册共用同一批场景（{CROSSLINGUAL_SOURCES[source]}）")
@@ -186,7 +193,7 @@ def entry(split, recipe):
     if recipe["dataset_id"] == "ts_asr_crosslingual":
         display, description = crosslingual_display(name, recipe)
         return {"dataset_id": recipe["dataset_id"], "version": recipe["version"], "split": name, "task": "ts_asr",
-                "label": name, "tags": [recipe["language"], "target-speaker"], "display": display,
+                "label": name, "tags": crosslingual_tags(recipe), "display": display,
                 "description": description}
     if name.split("-")[0] in NOISES:
         label, description = NOISES[name.split("-")[0]]
@@ -231,7 +238,10 @@ def main():
 
     if recipe["dataset_id"] == "ts_asr_crosslingual":
         groups = []
+        present = {s["name"].split("-")[0] for s in splits}
         for source, source_title in CROSSLINGUAL_SOURCES.items():
+            if source not in present:  # es has no synthetic voices
+                continue
             for scene, scene_title in CROSSLINGUAL_SCENES.items():
                 groups.append({"name": f"{source_title.split('（')[0]} · {scene_title}", "section": source_title,
                                "labels": [f"{source}-{scene}-same", f"{source}-{scene}-cross"],
@@ -331,7 +341,7 @@ def emit(recipe, splits, groups):
         raise SystemExit(f"splits not in any group: {missing}")
     config = {
         "sampling_rate": recipe["sample_rate"],
-        "tags": [recipe["language"] if recipe["dataset_id"] == "ts_asr_crosslingual" else "zh", "target-speaker"],
+        "tags": crosslingual_tags(recipe) if recipe["dataset_id"] == "ts_asr_crosslingual" else ["zh", "target-speaker"],
         "groups": groups,
         "evaluation": [entry(s, recipe) for s in splits],
     }

@@ -618,6 +618,10 @@ def main():
                 print(f"rendered {done}/{len(jobs)}", flush=True)
     partial.rename(final)
     declaration = register(recipe, splits, results, data_root, alias)
+    if recipe["dataset_id"] == "ts_asr_crosslingual" and not args.limit and not args.only:
+        import qc_crosslingual  # exits non-zero, before the catalog is written, when a pair group fails
+
+        qc_crosslingual.check(recipe, data_root, roots, data_root / "versions" / version / "qc.json")
     if args.no_register:
         return
     path = REPO / "catalog" / f"{recipe['dataset_id']}.yaml"
