@@ -1,0 +1,55 @@
+# 上下文纠偏清洗（context_correction_clean_zh）：训练数据里说话人讲字怎么写（组词、拆字、偏旁、否定对比）的句子，
+# 标注要按说明写。两个不同家族的 LLM 独立判定，代码只做机械校验（只改说明涉及的字、读音不变）；拿不准的隔离，不删除。
+version: v1-20261110
+dataset_id: context_correction_clean_zh
+out: /workspace/data/datasets/context_correction_clean_zh/versions/v1-20261110
+run_dir: /workspace/workspace/mingdong/data/amphiondata/ctx-clean-zh-20261110
+# 改正后的训练数据：各来源的派生版本 <原版本>-<derived_suffix>，写在 data_root/datasets/<id>/versions/ 下
+data_root: /workspace/data
+derived_suffix: ctxclean-20261110
+
+# 扫描单位：同一录音相邻分段拼窗，与 mine.py 相同（播客的窗口和 10 月扫描逐个相同，可直接复用扫描结果）
+window_seconds: 25.0
+max_gap_seconds: 2.0
+
+llm:
+  base_url: https://dashscope.aliyuncs.com/compatible-mode/v1
+  api_key_env: ALI_API_KEY          # amphionkeys aliyun-llm
+  # 全量扫描与 10 月播客扫描同一模型；规则候选用同一模型小批量复核
+  scan: {model: qwen3.6-27b, extra_body: {enable_thinking: false}, temperature: 0.0, max_tokens: 256}
+  scan_batch: 20
+  rescan_batch: 5
+  # 两个不同家族的判定模型，各自独立写出按说明修正后的转写
+  judges:
+    qwen: {model: qwen3.6-plus, extra_body: {enable_thinking: true}, max_tokens: 16000}
+    deepseek: {model: deepseek-v4-pro, temperature: 0.0, max_tokens: 16000}
+  workers: 16
+
+# 音频核对（Qwen3-ASR）：每段说明连同两侧各 audio_context_syllables 个音节，与识别结果的无调拼音编辑数不超过 audio_max_edits；
+# 说明旁边漏了或多了字（"似舞蹈的舞" 实为 "似乎的似，舞蹈的舞"）会失败，同音字的写法不影响
+audio_context_syllables: 3
+audio_max_edits: 2   # 漏掉一句 "Y的X" 至少 3 个音节；1–2 个多出的语气词（"哎呀"）不算
+
+# 评测集用过的源录音，不进训练
+exclude_recordings:
+  wenetspeech_podcast: /workspace/data/datasets/context_correction_zh/source/v1-20261018/excluded-recordings.txt
+# 抽检判错或存疑的窗口（unit_id<TAB>理由），同文本的窗口一起隔离；评审只能把窗口改判为隔离，不能新增改正
+review_rejected:
+  wenetspeech_podcast: /workspace/data/datasets/context_correction_clean_zh/versions/v1-20261110/wenetspeech_podcast/review-rejected.tsv
+
+sources:
+  wenetspeech_podcast:
+    kind: lhotse
+    dataset: wenetspeech_podcast@l-20261014
+    split: train
+    supervisions: /workspace/data/datasets/wenetspeech_podcast/versions/l-20261014/supervisions/train.jsonl.gz
+    recordings: /workspace/data/datasets/wenetspeech_podcast/versions/l-20261014/recordings/train.jsonl.gz
+    reuse_scan: /workspace/data/datasets/context_correction_zh/source/v1-20261018/mined/wenetspeech_podcast/scan.jsonl
+    reuse_windows: /workspace/data/datasets/context_correction_zh/source/v1-20261018/mined/wenetspeech_podcast/windows.jsonl.gz
+  wenetspeech_youtube:
+    kind: lhotse
+    dataset: wenetspeech_youtube@l-20261014
+    split: train
+    supervisions: /workspace/data/datasets/wenetspeech_youtube/versions/l-20261014/supervisions/train.jsonl.gz
+    recordings: /workspace/data/datasets/wenetspeech_youtube/versions/l-20261014/recordings/train.jsonl.gz
+    reuse_windows: /workspace/data/datasets/context_correction_zh/source/v1-20261018/mined/wenetspeech_youtube/windows.jsonl.gz

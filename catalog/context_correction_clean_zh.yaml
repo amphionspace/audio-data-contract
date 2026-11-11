@@ -1,6 +1,7 @@
-# 上下文纠偏清洗（2026-11-10，占位）：在 AmphionASR v4 配方的中文口语训练来源里，找出说话人讲字怎么写的句子
+# 上下文纠偏清洗（2026-11-10 起）：在 AmphionASR v4 配方的中文口语训练来源里，找出说话人讲字怎么写的句子
 # （组词、拆字、偏旁、"不是 X 是 Y"），核对标注是否与说明一致：一致的单列为正例，能可靠改正的改正，拿不准的隔离。
-# 改正结果最后以各来源的派生版本发布，旧版本不动；进度见状态文件。
+# context_correction_clean_zh 存逐窗口判定清单；改正结果以各来源的派生版本（<原版本>-ctxclean-20261110）发布，旧版本不动。
+# 已完成：wenetspeech_podcast。其余来源进行中，进度见状态文件。
 - schema_version: dataset-catalog/2.0
   dataset_id: context_correction_clean_zh
   version: v1-20261110
@@ -14,11 +15,55 @@
     kind: dataset-state
     root_alias: aidc_data
     relative_path: datasets/context_correction_clean_zh/versions/v1-20261110/state.json
+  - name: wenetspeech_podcast_decisions
+    kind: jsonl-metadata
+    root_alias: aidc_data
+    relative_path: datasets/context_correction_clean_zh/versions/v1-20261110/wenetspeech_podcast/decisions.jsonl
+    expected_bytes: 2825690
+    sha256: 337ce9b36c5603e181a1ab29f9c7b6096e918ae1d4ac22e32d02fd5f78b0f7b3
+    metadata:
+      record_count: 1449
+      description: wenetspeech_podcast@l-20261014 的逐窗口判定（not_hit / consistent / corrected / unchanged / quarantine），含原文、改后文本、逐字改动、两个判定模型的说明与理由、Qwen3-ASR 核对结果
+  - name: wenetspeech_podcast_positives
+    kind: jsonl-metadata
+    root_alias: aidc_data
+    relative_path: datasets/context_correction_clean_zh/versions/v1-20261110/wenetspeech_podcast/positives.jsonl
+    expected_bytes: 248507
+    sha256: ae310ce47ff85d3421600dfb973d71a5f35b9d5983051bd61c3eb57208a883a6
+    metadata:
+      record_count: 232
+      description: 真实正例：原标注已与说话人的写法说明一致的窗口（不含评测录音），附派生版本里的训练记录 ID
+  - name: wenetspeech_podcast_review_rejected
+    kind: metadata
+    root_alias: aidc_data
+    relative_path: datasets/context_correction_clean_zh/versions/v1-20261110/wenetspeech_podcast/review-rejected.tsv
+    expected_bytes: 822
+    sha256: 48940736fdd373bafc483ce430f504b468ca2621b9e7f50263225db50ab39681
+    metadata:
+      record_count: 6
+      description: 抽检判错或存疑、改判为隔离的改正窗口（unit_id 与理由）
+  - name: wenetspeech_podcast_exclude_records
+    kind: record-id-list
+    root_alias: aidc_data
+    relative_path: datasets/context_correction_clean_zh/versions/v1-20261110/wenetspeech_podcast/exclude-records-wenetspeech_podcast@l-20261014.txt
+    expected_bytes: 5691282
+    sha256: 621885a226cef5e8b3f560f0f79273316c7b11c43e945cac727e286d68d13b6b
+    metadata:
+      record_count: 87430
+      description: 继续用 wenetspeech_podcast@l-20261014 训练时的 exclude_records 名单：评测录音 83,220 段和隔离窗口 4,210 段（不含改正，改正要用派生版本）
   splits:
     train:
       artifacts:
         preparation_state:
         - preparation_state
+        decisions:
+        - wenetspeech_podcast_decisions
+        positives:
+        - wenetspeech_podcast_positives
+        review_rejected:
+        - wenetspeech_podcast_review_rejected
+        exclude_records:
+        - wenetspeech_podcast_exclude_records
       provenance:
         preparation_status: building
   provenance:
@@ -32,7 +77,8 @@
       找出说话人用组词、拆字、偏旁或否定对比说明字怎么写的句子，由两个不同家族的 LLM 独立判断标注是否与说明一致：
       一致的列为正例；两边改法完全相同、只改写法不改读音、说明部分读音经 Qwen3-ASR 核对的才改正；其余隔离、不进训练。
       本版本只存判定清单（逐条判定与依据、正例、隔离名单、统计），不是训练集；改正后的训练数据以各来源的派生版本另行登记。
-      context_correction_zh 评测用过的 190 条 WenetSpeech 播客录音（83,220 段、48.9 h）一并排除。进行中。
+      context_correction_zh 评测用过的 190 条 WenetSpeech 播客录音（83,220 段、48.9 h）一并排除。
+      wenetspeech_podcast 已完成（派生版本 wenetspeech_podcast@l-20261014-ctxclean-20261110），其余来源进行中。
     source: amphionasr_v4 recipe zh spontaneous sources
     run_dir: /workspace/workspace/mingdong/data/amphiondata/ctx-clean-zh-20261110
   recipe_parameters:
@@ -40,3 +86,76 @@
     judges: [qwen3.6-plus, deepseek-v4-pro]
     audio_check_model: Qwen3-ASR-1.7B
     excluded_eval_recordings: datasets/context_correction_zh/source/v1-20261018/excluded-recordings.txt
+    code: scripts/context_correction/clean.py, clean_recipe.yaml
+- schema_version: dataset-catalog/2.0
+  dataset_id: wenetspeech_podcast
+  version: l-20261014-ctxclean-20261110
+  languages:
+  - zh
+  tasks:
+  - asr
+  aliases: []
+  artifacts:
+  - name: train_recordings
+    kind: lhotse-recordings
+    root_alias: aidc_data
+    relative_path: datasets/wenetspeech_podcast/versions/l-20261014-ctxclean-20261110/recordings/train.jsonl.gz
+    expected_bytes: 783016
+    sha256: 303d6344bcd3247c29caef068aadaf9bd24220e6b7b646a89cc3ae3e0e03e85d
+    metadata:
+      record_count: 37129
+  - name: train_supervisions
+    kind: lhotse-supervisions
+    root_alias: aidc_data
+    relative_path: datasets/wenetspeech_podcast/versions/l-20261014-ctxclean-20261110/supervisions/train.jsonl.gz
+    expected_bytes: 184862596
+    sha256: 7a2d5a02d6f0b92bcc530e3691eb3670d95688595b6ac2d5214ac3b853c61e52
+    metadata:
+      record_count: 6247847
+  - name: record_index
+    kind: lance-record-index
+    root_alias: aidc_data
+    relative_path: datasets/wenetspeech_podcast/versions/l-20261014-ctxclean-20261110/record_index/index.json
+    expected_bytes: 777
+    sha256: 35ea0b2820db0bdf1d2bc067d4c8014e2c9661a406e1ac347e37f37bddb41eaa
+    metadata:
+      snapshot_version: 13
+      rows: 6247847
+      schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
+  splits:
+    train:
+      artifacts:
+        recordings:
+        - train_recordings
+        supervisions:
+        - train_supervisions
+        records_lance:
+        - record_index
+      statistics:
+        records: 6247847
+        recordings: 37129
+        duration_hours: 3840.847
+        corrected_records: 205
+        corrected_hours: 0.204
+        removed_eval_recording_records: 83220
+        removed_eval_recording_hours: 48.859
+        removed_quarantine_records: 4210
+        removed_quarantine_hours: 2.569
+        duration_basis: sum of supervision duration
+  derived_from: wenetspeech_podcast@l-20261014
+  recipe_parameters:
+    decisions: context_correction_clean_zh@v1-20261110 wenetspeech_podcast_decisions
+    corrected: 判为 corrected 的窗口里实际改动的分段换成改后文本，custom.context_correction 留原文、窗口编号和判定清单
+    removed: 隔离窗口的全部分段；context_correction_zh 评测用过的 190 条录音整条去掉（含录音清单）
+    unchanged: 其余分段、录音和音频路径与 l-20261014 逐字相同
+  provenance:
+    summary: WenetSpeech 播客，按说字写法改正并去掉评测录音
+    description: >-
+      在 wenetspeech_podcast@l-20261014 上做的上下文纠偏清洗：说话人讲字怎么写（组词、拆字、偏旁、否定对比）而标注写成同音别字的，
+      按说明改正；拿不准的窗口整窗去掉；context_correction_zh 评测用过的录音整条去掉。判定依据见 context_correction_clean_zh@v1-20261110。
+      改正抽检 45 段文本，明确改错 2 段、改后仍矛盾或存疑 4 段，均已改判为隔离；未抽到的改正估计约 4% 改错。
+    owner: mingdong
+    snapshot_date: '2026-11-11'
+    source: wenetspeech_podcast@l-20261014
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/ctx-clean-zh-20261110
+    quality_status: spelling_explanations_checked
