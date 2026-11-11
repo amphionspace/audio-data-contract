@@ -119,7 +119,7 @@ def babble_rooms(recipe, catalog, roots):
 
 def real_noise_files(recipe, roots):
     out = {}
-    for name, spec in recipe["real_noise"].items():
+    for name, spec in recipe.get("real_noise", {}).items():
         files = ts_build.fsd_files(spec, roots) if "fsd" in spec else sorted(
             str(p) for p in Path(roots[spec["alias"]]).glob(spec["glob"]))
         out[name] = [(f, sf.info(f).duration) for f in files]
@@ -247,6 +247,10 @@ def render_job(job):
         scale_db = 20.0 * np.log10(0.99 / peak)
         w = w * (0.99 / peak)
     name = split["name"]
+    # measured on the written signal for quality_check: whole clip, and the padding before the speech
+    measured = {"clip_dbfs": round(mixer.db(mixer.rms(w)), 2)}
+    if "utt" in plan and plan["lead"] >= 0.5:
+        measured["lead_dbfs"] = round(mixer.db(mixer.rms(w[:begin])), 2)
     relative = f"audio/{name}/{name}-{index:04d}.wav"
     ts_build.write_wav(out / relative, w)
     entry = {"cut_id": f"{name}-{index:04d}", "relative_path": relative, "num_frames": len(w),
@@ -277,7 +281,65 @@ def render_job(job):
     return {"split": name, "index": index, "target": plan["utt"].text if "utt" in plan else "",
             "language": split.get("language") or (spec["kind"].split("_")[1] if spec["kind"].startswith("babble_")
                                                    else "en"),
-            "labels": labels, "metadata": metadata, "entry": entry}
+            "labels": labels, "metadata": metadata, "entry": entry, "measured": measured}
+
+
+# --- quality check -----------------------------------------------------------------
+
+
+def quality_check(recipe, splits, results):
+    """Per-split gates of ``recipe['qc']``; returns (failures, report). Recipes without ``qc`` are not checked."""
+    gates = recipe.get("qc")
+    if not gates:
+        return [], {}
+    by_split = defaultdict(list)
+    for r in results:
+        by_split[r["split"]].append(r)
+    failures, report, utterances = [], {}, {}
+    for split in splits:
+        name, rows = split["name"], sorted(by_split[split["name"]], key=lambda r: r["index"])
+        durations = np.array([r["entry"]["duration"] for r in rows])
+        stats = {"records": len(rows), "hours": round(float(durations.sum()) / 3600, 3),
+                 "seconds_mean": round(float(durations.mean()), 2),
+                 "seconds_range": [round(float(durations.min()), 2), round(float(durations.max()), 2)]}
+        problems = [] if len(rows) == split["n"] else [f"records {len(rows)} != {split['n']}"]
+        if split["kind"] == "noise":
+            levels = np.array([r["measured"]["clip_dbfs"] for r in rows])
+            lo, hi = split["level_dbfs"]
+            stats["level_dbfs_range"] = [round(float(levels.min()), 2), round(float(levels.max()), 2)]
+            tolerance = gates["level_tolerance_db"]
+            if levels.min() < lo - tolerance or levels.max() > hi + tolerance:
+                problems.append(f"clip level {stats['level_dbfs_range']} outside {split['level_dbfs']} ± {tolerance} dB")
+            if any(r["target"] for r in rows):
+                problems.append("a babble-only record has a non-empty target")
+            if durations.min() < split["duration"][0] - 0.01 or durations.max() > split["duration"][1] + 0.01:
+                problems.append(f"durations {stats['seconds_range']} outside {split['duration']}")
+        else:
+            if any(not r["target"] for r in rows):
+                problems.append("a speech record has an empty target")
+            ids = [r["metadata"]["utterance"]["id"] for r in rows]
+            utterances.setdefault(split["pair"], ids)
+            if ids != utterances[split["pair"]]:
+                problems.append(f"utterances differ from the other splits of pair {split['pair']}")
+            leads = np.array([r["measured"]["lead_dbfs"] for r in rows if "lead_dbfs" in r["measured"]])
+            if split.get("tight"):
+                if len(leads):
+                    problems.append("a tight record has padding")
+            elif len(leads) < gates["min_measured_fraction"] * len(rows):
+                problems.append(f"only {len(leads)} records have ≥ 0.5 s of padding to measure")
+            elif "snr_db" in split:
+                # the padding holds babble only; its level is about speech_dbfs − snr (another window of the same clip)
+                expected = recipe["speech_dbfs"] - split["snr_db"]
+                stats["padding_dbfs_median"] = round(float(np.median(leads)), 2)
+                if abs(np.median(leads) - expected) > gates["padding_tolerance_db"]:
+                    problems.append(f"padding level median {stats['padding_dbfs_median']} dBFS, expected about {expected}")
+            else:
+                stats["padding_dbfs_max"] = round(float(leads.max()), 2)
+                if leads.max() > gates["clean_padding_max_dbfs"]:
+                    problems.append(f"clean padding up to {stats['padding_dbfs_max']} dBFS")
+        report[name] = stats
+        failures += [f"{name}: {p}" for p in problems]
+    return failures, report
 
 
 # --- registration ------------------------------------------------------------------
@@ -316,6 +378,9 @@ def register(recipe, splits, results, data_root, alias):
     bank = f"source/{version}/babble/manifest.jsonl"
     artifacts = [artifact("audio-index", "audio-index", f"versions/{version}/audio-index.jsonl.gz", len(index_rows)),
                  artifact("babble-manifest", "jsonl-metadata", bank, sum(1 for _ in (data_root / bank).open()))]
+    qc = f"source/{version}/qc.yaml"
+    if (data_root / qc).exists():
+        artifacts.append({**artifact("qc", "quality-report", qc, 0), "metadata": {"passed": True}})
     split_decl = {}
     for split in splits:
         name, records = split["name"], records_by_split[split["name"]]
@@ -339,11 +404,13 @@ def register(recipe, splits, results, data_root, alias):
         "languages": sorted(recipe["targets"]), "tasks": ["asr"], "artifacts": artifacts, "splits": split_decl,
         "provenance": {
             "status": "complete", "synthetic": "full",
-            "description": "普通 ASR 背景人声评测集：只有背景人声的片段（合成的中文、英文背景人声和真实录音的人群声，期望输出为空），"
-                           "以及一句话前后和说话时都有背景人声的片段（与无背景人声的对照逐条配对）。合成背景人声由不进训练、"
-                           "也不与目标语音重叠的 test/dev 说话人在模拟房间里混成。只用于评测，不进训练。配方 scripts/asr_babble_bench/recipe.yaml。",
+            "description": recipe.get("description") or (
+                "普通 ASR 背景人声评测集：只有背景人声的片段（合成的中文、英文背景人声和真实录音的人群声，期望输出为空），"
+                "以及一句话前后和说话时都有背景人声的片段（与无背景人声的对照逐条配对）。合成背景人声由不进训练、"
+                "也不与目标语音重叠的 test/dev 说话人在模拟房间里混成。只用于评测，不进训练。配方 scripts/asr_babble_bench/recipe.yaml。"),
             "sources": [*sources, f"{rir['dataset']}@{rir['version']}:{rir['split']}",
-                        "wham_noise@official-20261013:tt", "fsd50k@zenodo-4060432-20261013:eval"],
+                        *(["wham_noise@official-20261013:tt", "fsd50k@zenodo-4060432-20261013:eval"]
+                          if recipe.get("real_noise") else [])],
         },
     }
 
@@ -398,6 +465,13 @@ def main():
     print(f"{len(splits)} splits, {len(jobs)} samples", flush=True)
     with ProcessPoolExecutor(args.workers, mp_context=FORK) as pool:
         results = list(pool.map(render_job, jobs, chunksize=8))
+    failures, report = quality_check(recipe, splits, results)
+    if report:
+        print(yaml.safe_dump(report, allow_unicode=True, sort_keys=False), flush=True)
+        (partial / "qc.yaml").write_text(yaml.safe_dump({"passed": not failures, "failures": failures, "splits": report},
+                                                         allow_unicode=True, sort_keys=False), encoding="utf-8")
+    if failures:
+        sys.exit(f"QC failed, left in {partial}, not registered:\n  " + "\n  ".join(failures))
     partial.rename(final)
     declaration = register(recipe, splits, results, data_root, alias)
     if args.no_register:

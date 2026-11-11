@@ -1,0 +1,69 @@
+# 西语普通 ASR 背景人声评测集：对应中英 v2-20261023 的 *-babble-* / *-clean 切分（eval-set asr-babble-bench@v4-20261104），
+# 渲染函数和参数与 recipe.yaml 相同，只换语言。只建与语言有关的切分：真实人群声（crowd-wham / crowd-fsd）、
+# 空白与非人声（v3-20261104）与语言无关，评测集直接沿用中英版本的那几列。
+version: es-v1-20261111
+dataset_id: asr_babble_bench
+seed: 20261111
+sample_rate: 16000
+speech_dbfs: -25.0
+padding_seconds: [1.0, 5.0]
+description: >-
+  西班牙语普通 ASR 背景人声评测集（对应中英 v2-20261023 的背景人声切分，同一渲染函数与参数）：只有西语背景人声的片段（期望输出为空），
+  以及一句话前后和说话时都有西语背景人声的片段（与无背景人声的对照逐条配对）。目标语音是 Common Voice es test 的一句话；
+  背景人声由不进训练、也不与目标重叠的 Common Voice es dev（约 3,200 人）和 MLS es dev / test（40 人）说话人在模拟房间里混成
+  （训练用的西语背景人声 babble_noise_train@es-v1-20261110 取自 CV es / MLS es 的 train）。只用于评测，不进训练。
+  配方 scripts/asr_babble_bench/recipe-es.yaml。
+
+# 被转写的语音：test 划分，一条记录一句完整的话（文本小写、去标点后只剩西语字母和空格的句子）
+targets:
+  es:
+    sources:
+      - {dataset: common_voice_es, version: legacy, split: test}
+    seconds: [2.0, 12.0]
+
+# 背景人声说话人：训练只用了 CV es / MLS es 的 train（babble_noise_train@es-v1-20261110、ts_interference_pool@es-v2-20261110、
+# asr_babble_speech_pool@es-v1-20261110），这里取 dev / test 划分；CV 各划分说话人不重叠，build.py 另外检查与目标说话人不重叠
+babble:
+  es:
+    sources:
+      - {dataset: common_voice_es, version: legacy, split: dev}
+      - {dataset: mls_es, version: legacy, split: dev}
+      - {dataset: mls_es, version: legacy, split: test}
+    clips: 300
+babble_clip_seconds: 30.0
+babble_talkers: [16, 24]
+babble_gain_db: [-3.0, 3.0]
+babble_gap_seconds: [0.1, 0.8]
+babble_min_utterances: 3
+babble_rir: {dataset: sim_rir_slr28, version: legacy-20260804, split: all, rooms: [mediumroom, largeroom]}
+
+noise_floor: {dbfs: [-65, -55], kinds: [white, pink]}
+
+default_n: 200
+
+# 质检门槛（按切分）：不满足时非零退出、不登记
+qc:
+  # 只有背景人声的片段：整段电平应落在切分的 level_dbfs 内（噪声底比背景低 10 dB 以上，几乎不改变电平）
+  level_tolerance_db: 1.0
+  # 带背景人声的句子：前面的空白只有背景人声，电平约为 speech_dbfs − snr（同一段背景的另一窗口，人声起伏 ±几 dB）
+  padding_tolerance_db: 3.0
+  # 对照切分的前面空白只有噪声底（−65 到 −55 dBFS）
+  clean_padding_max_dbfs: -50.0
+  # 至少这么多条记录有 ≥ 0.5 s 的前空白可测（padding 1–5 s，应为全部）
+  min_measured_fraction: 0.95
+
+splits:
+  - {name: es-babble-far, kind: noise, pair: es-babble-only, noise: babble_es, level_dbfs: [-45, -38], duration: [2, 20],
+     display: 只有西语背景人声 · 远, description: "16–24 人在房间里同时说话的西语背景人声，电平 −45 到 −38 dBFS（正常说话约 −25 dBFS），2–20 秒；期望输出为空"}
+  - {name: es-babble-mid, kind: noise, pair: es-babble-only, noise: babble_es, level_dbfs: [-38, -31], duration: [2, 20],
+     display: 只有西语背景人声 · 中, description: "同一批片段，电平 −38 到 −31 dBFS；期望输出为空"}
+  - {name: es-clean, kind: speech, pair: es-speech, language: es,
+     display: 西语 · 无背景人声（对照）, description: "Common Voice es 测试集的一句话，前后各 1–5 秒只有很低的噪声底；下面几列与它逐条配对"}
+  - {name: es-babble20, kind: speech, pair: es-speech, language: es, noise: babble_es, snr_db: 20,
+     display: 西语 · 背景人声 20 dB, description: "同一句话、同样的前后时长，整段叠加西语背景人声，信噪比 20 dB（背景很远）；前后 1–5 秒只有背景人声"}
+  - {name: es-babble10, kind: speech, pair: es-speech, language: es, noise: babble_es, snr_db: 10,
+     display: 西语 · 背景人声 10 dB, description: "同上，信噪比 10 dB（身边有一群人在聊天）"}
+  - {name: es-babble5, kind: speech, pair: es-speech, language: es, noise: babble_es, snr_db: 5,
+     display: 西语 · 背景人声 5 dB, description: "同上，信噪比 5 dB（嘈杂的人群）"}
+  - {name: es-babble10-tight, kind: speech, pair: es-speech, language: es, tight: true, noise: babble_es, snr_db: 10,
+     display: 西语 · 背景人声 10 dB · 无前后空白, description: "与 es-babble10 同一句话、同一段背景，只是没有前后 1–5 秒；两列之差就是只有背景人声的那几秒带来的错误"}

@@ -1,0 +1,78 @@
+# 西语热词评测集 es-v1：对应中英 v3-20261020 里的 cv_zh / cv_en（本地已有热词标注的测试集）。脚本 build_es.py，只用 CPU。
+#
+# 每条记录存好固定的列表（metadata.bias_lists，顺序已打乱），评测器另跑不给列表的 none 条件：
+# - gold：只有正确词；
+# - k50：正确词 + 每个正确词最多 3 个近音/近形词 + 同 split 正确词池的随机词，补到 50 个；
+# - k50_no_gold：同一批干扰词去掉正确词再补满 50 个，测"说的词不在列表里"时的误触发。
+# 与中英的差异：近音词不是 LLM 生成 + 复核（v1 的中文做法），而是在约 12 万个西语热词（测试集正确词 + 训练集热词标注）里按西语读音键（seseo、
+# yeísmo、b/v、h 不发音等）的编辑距离检索出的真实词；没有西语现网词库，不做中文 v2 的 pool50；
+# v3 的 hotword_types 需要 LLM 标注，本版不含（见 PR 说明）。
+version: es-v1-20261111
+dataset_id: hotword_bench
+seed: 20261111
+sample_rate: 16000
+# 与中英 k50 / 部署 RAG Top-50 一致
+list_size: 50
+# 每个正确词进列表的近音词上限，与中英 v1 相同
+confusables_per_word: 3
+# 与中英本地热词集相同：每个来源按 sha256(id) 取前 N 条正例
+local_positive_cap: 2000
+min_seconds: 0.1
+max_seconds: 120.0
+
+# 西语热词标注（Qwen3.8-27B 抽取 + 复核，scripts/ts_hotwords/label_hotwords.py；与中英本地热词集同一 EXTRACT_HOTWORD 提示词）。
+# 每行 {id, text, source, source_id, hotwords, ...}；source_id 为 supervision id。FLEURS 同一句话有多个说话人，标注按文本去重，
+# 按 supervision id 找不到时按完全相同的文本取
+labels:
+  path: ts_asr_hotwords/versions/es-v1-20261111/hotword-labels.jsonl
+  sha256: 26bcf576afae69f40c1bee5d841bae63672374fb091aa684182d5b42a8cd645e
+
+# 路径相对 /workspace/data/datasets
+sources:
+  cv_es:
+    label_source: common_voice_es
+    dataset: common_voice_es@legacy:test
+    recordings: common_voice_es/versions/legacy/manifests/cv-es_recordings_test.jsonl.gz
+    supervisions: common_voice_es/versions/legacy/manifests/cv-es_supervisions_test.jsonl.gz
+    min_records: 2000
+  fleurs_es:
+    label_source: fleurs_es
+    dataset: fleurs_es@legacy:test
+    recordings: fleurs_es/versions/legacy/manifests/fleurs_es_recordings_test.jsonl.gz
+    supervisions: fleurs_es/versions/legacy/manifests/fleurs_es_supervisions_test.jsonl.gz
+    # 908 条录音里 362 条含热词（约 145 句不同的话）
+    min_records: 300
+  mls_es:
+    label_source: mls_es
+    dataset: mls_es@legacy:test
+    recordings: mls_es/versions/legacy/manifests/mls-spanish_recordings_test.jsonl.gz
+    # 与西语普通 ASR 评测同一份转写（原标注全小写无标点），热词标注也在这份文本上做
+    supervisions: mls_es/versions/legacy/manifests/mls-spanish_supervisions_test.jsonl.gz
+    min_records: 800
+
+# 近音词：候选词表 = 三个测试集的正确词 + 西语训练集已有的热词标注（只当干扰词用，不改训练数据）
+confusables:
+  vocabulary:
+    - common_voice_es/versions/es-train-v1-20261108/cv-es_supervisions_train.jsonl.gz
+    - mls_es/versions/es-train-v1-20261108/mls-spanish_supervisions_train.jsonl.gz
+  # 训练热词标注里首字母大写的专名都收；小写的词至少出现这么多次才收（只出现一次的小写词多为拼写错误，如 madagasear、alibe）
+  min_count: 2
+  # 读音键少于这么多个音的正确词不找近音词（太短的词近邻几乎都是无关词）
+  min_key_length: 4
+  # 读音键编辑距离上限：键长 ≤ 6 时 1，≤ 10 时 2，更长 3
+  max_distance: [[6, 1], [10, 2], [999, 3]]
+
+# 训练重叠：规范化文本与这些训练转写完全相同的条目在 labels.train_text_overlap 标出来源（不隔离）
+overlap:
+  supervisions:
+    - common_voice_es/versions/es-train-v1-20261108/cv-es_supervisions_train.jsonl.gz
+    - mls_es/versions/es-train-v1-20261108/mls-spanish_supervisions_train.jsonl.gz
+
+# 质检门槛（按 split）：不满足时非零退出、不登记
+qc:
+  max_quarantine_fraction: 0.02
+  # 至少这么多比例的正确词在 k50 里带上了近音词：检查挖掘没有整体失效（读音键或词表出错时接近 0）。
+  # 多词长专名（机构、作品名）在编辑距离 ≤ 3 内常常没有近邻，抽样 180 条约 0.5–0.9
+  min_gold_with_confusable: 0.3
+  # 物化的音频时长与 supervision 时长之差上限（秒）
+  max_duration_drift: 0.1

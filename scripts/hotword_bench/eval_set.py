@@ -4,6 +4,7 @@
     python scripts/hotword_bench/eval_set.py > data.yaml                                  # v1
     python scripts/hotword_bench/eval_set.py --recipe scripts/hotword_bench/recipe-v2.yaml > data.yaml  # v2
     python scripts/hotword_bench/eval_set.py --recipe scripts/hotword_bench/recipe-v3.yaml > data.yaml  # v3
+    python scripts/hotword_bench/eval_set.py --recipe scripts/hotword_bench/recipe-es-v1.yaml > data.yaml  # es-v1
     ae eval-sets publish data.yaml --project open-audio-llm --name hotword-bench --version <version>
 
 Run it with ``ae open-audio-llm after-training`` (evaluator ``hotwords``,
@@ -54,10 +55,36 @@ GROUP_NOTES = {
 GROUP_NOTES["v3"] = tuple(f"{note}；hotword_type 分项看各类热词的召回与误触发" for note in GROUP_NOTES["v2"])
 
 
+# es-v1 (recipe-es-v1.yaml): the Spanish splits; AmphionEval has no es tag, so sources carry only the shared ones
+ES_SOURCES = [
+    ("cv_es", "cv-es", "Common Voice 西语", "Common Voice es 测试集已有热词标注，2,000 条正例"),
+    ("fleurs_es", "fleurs-es", "FLEURS 西语", "FLEURS es 测试集已有热词标注，全部 362 条正例（约 145 句话，多个说话人）"),
+    ("mls_es", "mls-es", "MLS 西语", "MLS es 测试集（有声书，转写全小写无标点）已有热词标注，全部 907 条正例"),
+]
+ES_NOTE = ("主条件 k50（正确词 + 按西语读音键检索出的近音词 + 随机词共 50 个）看 B-WER 与 F1；"
+           "k50_no_gold 看误触发率与 WER 变化")
+
+
+def es_config(recipe):
+    return {
+        "task": "asr",
+        "tags": ["hotwords"],
+        "groups": [{"name": "热词 · 西语", "section": "西班牙语", "labels": [s[1] for s in ES_SOURCES],
+                    "aggregate": "macro", "description": ES_NOTE}],
+        "sampling_rate": recipe["sample_rate"],
+        "evaluation": [{"dataset_id": recipe["dataset_id"], "version": recipe["version"], "split": split,
+                        "task": "asr_hotwords", "label": label, "display": display, "description": description}
+                       for split, label, display, description in ES_SOURCES],
+    }
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--recipe", type=Path, default=HERE / "recipe.yaml")
     recipe = yaml.safe_load(parser.parse_args().recipe.read_text())
+    if recipe["version"].startswith("es-"):
+        print(yaml.safe_dump(es_config(recipe), allow_unicode=True, sort_keys=False, width=200), end="")
+        return
     zh_note, en_note = GROUP_NOTES[recipe["version"].split("-", 1)[0]]
 
     def source(split, label, tags, display, description):
