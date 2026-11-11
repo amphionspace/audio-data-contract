@@ -203,7 +203,7 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [common_voice_ar](data-versions.md#common_voice_ar) | ar | 语音识别 | 58.2 | 众包朗读阿拉伯语（Common Voice） | 部分版本：快照 20260914 |
 | [common_voice_bn](data-versions.md#common_voice_bn) | bn | 语音识别 | 67.4 | 众包朗读孟加拉语（Common Voice） | 快照 20260914 |
 | [common_voice_de](data-versions.md#common_voice_de) | de | 语音识别 | 1,034.8 | 众包朗读德语（Common Voice） | 部分版本：快照 20260914 |
-| [common_voice_es](data-versions.md#common_voice_es) | es | 语音识别 | 568.5 | 众包朗读西班牙语（Common Voice） | 部分版本：快照 20260914 |
+| [common_voice_es](data-versions.md#common_voice_es) | es | 语音识别 | 1,355.5 | 众包朗读西班牙语（Common Voice） | 部分版本：快照 20260914 |
 | [common_voice_fr](data-versions.md#common_voice_fr) | fr | 语音识别 | 924.1 | 众包朗读法语（Common Voice） | 部分版本：快照 20260914 |
 | [common_voice_hi](data-versions.md#common_voice_hi) | hi | 语音识别 | 7.6 | Common Voice 17 印地语朗读 | 没有 |
 | [common_voice_id](data-versions.md#common_voice_id) | id | 语音识别 | 8.0 | Common Voice 17 印尼语朗读 | 没有 |
