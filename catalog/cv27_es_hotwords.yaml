@@ -1,0 +1,32 @@
+# CV 27.0 西语热词与近音干扰词（2026-11-11 开工，占位）：给 common_voice_es@mdc-27.0 清洗通过的行标热词，再挖近音干扰词，做法同 es-train-v1 / es-train-hwconf-v1。
+- schema_version: dataset-catalog/2.0
+  dataset_id: common_voice_es
+  version: cv27-train-v1-20261111
+  languages:
+  - es
+  tasks:
+  - asr
+  - asr_hotwords
+  aliases: []
+  derived_from: common_voice_es@mdc-27.0
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/common_voice_es/versions/cv27-train-v1-20261111/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: >-
+      common_voice_es@mdc-27.0（980,450 句 / 1,355.54 h，CV 24.0 之外的增量）的热词训练版本：Qwen3.8-27B 按 amphiondata extract_hotword
+      提示词标热词（同 es-train-v1-20261108），再按 hotword_bench 西语读音键挖近音干扰词放进 metadata.confusable_hotwords
+      （同 es-train-hwconf-v1-20261111，评测正确词不进词库）。进行中。
+    source: common_voice_es@mdc-27.0
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/cv27-es-pt-20261111
