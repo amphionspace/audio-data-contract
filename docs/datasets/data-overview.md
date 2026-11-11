@@ -136,7 +136,7 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 |---|---|---|---:|---|---|
 | [BAAI/CS-Dialogue long_wav (ModelScope master)](data-versions.md#baaics-dialogue-long_wav-modelscope-master) | en、zh、zh-en | 语音识别、带说话人标注的语音识别 | 98.3 | 中英语码转换双人对话（CS-Dialogue） | 部分版本：快照 20260914 |
 | [ami](data-versions.md#ami) | en、zh | 语音识别、说话人分段与归属、目标说话人语音识别 | 259.3 | 英文会议远场版（AMI SDM）；含轮流说话混合版 | 部分版本：快照 20260914 |
-| [asr_babble_bench](data-versions.md#asr_babble_bench) | en、zh | 语音识别 | 10.1 | 普通 ASR 背景人声评测集（中英），仅评测 | 部分版本：`备份桶:audio-data-contract/datasets/asr_babble_bench/` |
+| [asr_babble_bench](data-versions.md#asr_babble_bench) | en、es、zh | 语音识别 | 10.1 | 普通 ASR 背景人声评测集（中英），仅评测 | 部分版本：`备份桶:audio-data-contract/datasets/asr_babble_bench/` |
 | [asr_babble_speech_pool](data-versions.md#asr_babble_speech_pool) | en、es、zh | 语音识别 | 85.5 | 带房间背景人声的中英 ASR 训练句 | 没有 |
 | [asr_distant_talk_pool](data-versions.md#asr_distant_talk_pool) | en、zh | 语音识别 | 55.2 | — | 没有 |
 | [babble_noise_synth](data-versions.md#babble_noise_synth) | en、zh | noise | 50.0 | 合成中英背景人声噪声（5–20 人叠加） | `备份桶:audio-data-contract/datasets/noise_open/` |
@@ -153,7 +153,7 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [farfield_speech_noise_1spk](data-versions.md#farfield_speech_noise_1spk) | en、zh | noise | 32.7 | 1–3 人远场人声噪声（Emilia 干声加混响） | `备份桶:audio-data-contract/datasets/` 下 3 个目录 |
 | [genshin_voice](data-versions.md#genshin_voice) | en-US、ja、ko、zh | 语音合成 | 1,039.7 | 《原神》多语配音，TTS 用 | `TTS 桶:genshin-voice/`（原始数据） |
 | [hard_hw_sft](data-versions.md#hard_hw_sft) | en、zh | 热词增强语音识别 | 109.4 | 热词难例 SFT 数据（ShareGPT 格式） | `备份桶:audio-data-contract/datasets/hard_hw_sft/` |
-| [hotword_bench](data-versions.md#hotword_bench) | en、zh | 热词增强语音识别 | — | 中英热词评测集，仅评测 | 没有 |
+| [hotword_bench](data-versions.md#hotword_bench) | en、es、zh | 热词增强语音识别 | — | 中英热词评测集，仅评测 | 没有 |
 | [hw_sft](data-versions.md#hw_sft) | en、zh | 语音识别、热词增强语音识别 | 2,636.5 | 热词 SFT 数据（ShareGPT 格式），含普通转写 | 没有 |
 | [indicvoices](data-versions.md#indicvoices) | as、bn、brx、doi、gu、hi、kn、kok、ks、mai、ml、mni、mr、ne、or、pa、sa、sat、sd、ta、te、ur | 语音识别 | — | 22 种印度语言自然语音（IndicVoices） | 快照 20260914 |
 | [meeting_benchmark](data-versions.md#meeting_benchmark) | en、zh、zh-en | 带说话人标注的语音识别 | 21.2 | 约 180 秒长度的中英会议转写评测集 | `备份桶:audio-data-contract/datasets/meeting_180s_benchmark/` |

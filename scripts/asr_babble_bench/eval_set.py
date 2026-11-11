@@ -3,6 +3,7 @@
 
     python scripts/asr_babble_bench/eval_set.py > data.yaml
     ae eval-sets publish data.yaml --project open-audio-llm --name asr-babble-bench --version v3-20261023
+    python scripts/asr_babble_bench/eval_set.py --recipe scripts/asr_babble_bench/recipe-es.yaml > data.yaml  # Spanish
 
 With ``--blank-recipe recipe-blank.yaml`` the config also lists the blank / non-speech splits of that recipe's
 version (v4-20261104 onwards); the babble splits keep pointing at ``recipe.yaml``'s version, so their results
@@ -18,6 +19,7 @@ from pathlib import Path
 import yaml
 
 HERE = Path(__file__).resolve().parent
+TAGGED_LANGUAGES = {"zh", "en", "yue"}
 
 
 def main():
@@ -32,13 +34,38 @@ def main():
         return [s["name"] for s in splits if s["kind"] == kind and s["name"].startswith(prefix)]
 
     def tags(split):
-        """Language and ``synthetic`` where they apply (not on the recorded crowds); ``noise`` unless a clean control."""
+        """Language and ``synthetic`` where they apply (not on the recorded crowds); ``noise`` unless a clean control.
+
+        AmphionEval's tag vocabulary has zh and en only, so other languages carry no language tag.
+        """
         noise = ["noise"] if split.get("noise") else []
         if split.get("language"):
-            return [split["language"], "synthetic", *noise]
-        if split["noise"].startswith("babble_"):
-            return [split["noise"].split("_")[1], "synthetic", *noise]
-        return noise
+            language = split["language"]
+        elif split["noise"].startswith("babble_"):
+            language = split["noise"].split("_")[1]
+        else:
+            return noise
+        return [*([language] if language in TAGGED_LANGUAGES else []), "synthetic", *noise]
+
+    if set(recipe["targets"]) == {"es"}:
+        config = {
+            "task": "asr",
+            "sampling_rate": recipe["sample_rate"],
+            "tags": ["synthetic", "noise"],
+            "groups": [
+                {"name": "只有西语背景人声", "section": "背景人声", "labels": names("noise"),
+                 "description": "没有人对着设备说话，只有西语背景人声；期望输出为空，指标为误输出率"},
+                {"name": "西语 · 一句话前后有背景人声", "section": "背景人声", "labels": names("speech", "es-"),
+                 "description": "同一批句子，只改背景人声的信噪比和前后是否留空；与对照之差是背景人声带来的错误"},
+            ],
+            "evaluation": [
+                {"dataset_id": recipe["dataset_id"], "version": recipe["version"], "split": s["name"], "task": "asr",
+                 "label": s["name"], "tags": tags(s), "display": s["display"], "description": s["description"]}
+                for s in splits
+            ],
+        }
+        print(yaml.safe_dump(config, allow_unicode=True, sort_keys=False, width=200), end="")
+        return
 
     config = {
         "task": "asr",

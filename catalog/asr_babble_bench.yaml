@@ -1016,3 +1016,183 @@
     known_risks:
     - DNS5 noise 的 freesound 部分已按内容哈希改名，无法按 freesound ID 与 FSD50K 去重；DNS5 只作训练时有字语音的背景噪声
     - 鼎桥空白只由三个说话人老师与 FSMN-VAD 自动判定，极轻的远处人声可能漏判
+- schema_version: dataset-catalog/2.0
+  dataset_id: asr_babble_bench
+  version: es-v1-20261111
+  languages:
+  - es
+  tasks:
+  - asr
+  artifacts:
+  - name: audio-index
+    kind: audio-index
+    root_alias: asr_babble_bench
+    relative_path: versions/es-v1-20261111/audio-index.jsonl.gz
+    sha256: 837e63cfdadabbd1294a123d3b99b7ffc664669ebb0e20dbbd8c34b935721cae
+    metadata:
+      record_count: 1400
+  - name: babble-manifest
+    kind: jsonl-metadata
+    root_alias: asr_babble_bench
+    relative_path: source/es-v1-20261111/babble/manifest.jsonl
+    sha256: bb5d2d801039ffce141d5eb5764722f338b1eee0b7086a5c911c996d386df3fd
+    metadata:
+      record_count: 300
+  - name: qc
+    kind: quality-report
+    root_alias: asr_babble_bench
+    relative_path: source/es-v1-20261111/qc.yaml
+    sha256: 44b6affb3521740afc901b987312102ce2a030b2110f5cb7192dd0ea577b9e9e
+    metadata:
+      passed: true
+  - name: es-babble-far-records
+    kind: audio-records
+    root_alias: asr_babble_bench
+    relative_path: versions/es-v1-20261111/records/es-babble-far.jsonl.gz
+    sha256: 4aa4a2ce606ee5775469fff5fd8301c4893032c81834ea4354d566ad5944eaf8
+    metadata:
+      record_count: 200
+  - name: es-babble-mid-records
+    kind: audio-records
+    root_alias: asr_babble_bench
+    relative_path: versions/es-v1-20261111/records/es-babble-mid.jsonl.gz
+    sha256: 6f14a65d5fc8c94a09e70e80cc921d1757a8078bee4cdf823985473de583968e
+    metadata:
+      record_count: 200
+  - name: es-clean-records
+    kind: audio-records
+    root_alias: asr_babble_bench
+    relative_path: versions/es-v1-20261111/records/es-clean.jsonl.gz
+    sha256: 70906726e9558c7c1db1efe9b4dc4338f9008b75e247ef1ed723ef2dac74cad4
+    metadata:
+      record_count: 200
+  - name: es-babble20-records
+    kind: audio-records
+    root_alias: asr_babble_bench
+    relative_path: versions/es-v1-20261111/records/es-babble20.jsonl.gz
+    sha256: 334867ee1dacc8310a86a26a9da2b7910737d2950bdf9184aa1a4c6fce30c99c
+    metadata:
+      record_count: 200
+  - name: es-babble10-records
+    kind: audio-records
+    root_alias: asr_babble_bench
+    relative_path: versions/es-v1-20261111/records/es-babble10.jsonl.gz
+    sha256: 1e683ef43cc417b6d646f916bf2bc7550565bd936e98e89ef3c20f9338b2a219
+    metadata:
+      record_count: 200
+  - name: es-babble5-records
+    kind: audio-records
+    root_alias: asr_babble_bench
+    relative_path: versions/es-v1-20261111/records/es-babble5.jsonl.gz
+    sha256: 66e9589dd2ba2ef31e4697823c72e32584ea3ebbcb0960dcbdfae4eb843715af
+    metadata:
+      record_count: 200
+  - name: es-babble10-tight-records
+    kind: audio-records
+    root_alias: asr_babble_bench
+    relative_path: versions/es-v1-20261111/records/es-babble10-tight.jsonl.gz
+    sha256: 942ce85981c56ed7efa781f422ac6f8aa0c3251855d1f0849df607c2d78c7886
+    metadata:
+      record_count: 200
+  splits:
+    es-babble-far:
+      artifacts:
+        records:
+        - es-babble-far-records
+        audio_index:
+        - audio-index
+      task: asr
+      statistics:
+        records: 200
+        duration_hours: 0.5923
+        duration_basis: clip duration
+      provenance:
+        description: '只有西语背景人声 · 远：16–24 人在房间里同时说话的西语背景人声，电平 −45 到 −38 dBFS（正常说话约 −25 dBFS），2–20 秒；期望输出为空。参数 {"kind": "noise", "pair": "es-babble-only", "noise": "babble_es", "level_dbfs": [-45, -38], "duration": [2, 20]}'
+    es-babble-mid:
+      artifacts:
+        records:
+        - es-babble-mid-records
+        audio_index:
+        - audio-index
+      task: asr
+      statistics:
+        records: 200
+        duration_hours: 0.5923
+        duration_basis: clip duration
+      provenance:
+        description: '只有西语背景人声 · 中：同一批片段，电平 −38 到 −31 dBFS；期望输出为空。参数 {"kind": "noise", "pair": "es-babble-only", "noise": "babble_es", "level_dbfs": [-38, -31], "duration": [2, 20]}'
+    es-clean:
+      artifacts:
+        records:
+        - es-clean-records
+        audio_index:
+        - audio-index
+      task: asr
+      statistics:
+        records: 200
+        duration_hours: 0.6707
+        duration_basis: clip duration
+      provenance:
+        description: '西语 · 无背景人声（对照）：Common Voice es 测试集的一句话，前后各 1–5 秒只有很低的噪声底；下面几列与它逐条配对。参数 {"kind": "speech", "pair": "es-speech", "language": "es"}'
+    es-babble20:
+      artifacts:
+        records:
+        - es-babble20-records
+        audio_index:
+        - audio-index
+      task: asr
+      statistics:
+        records: 200
+        duration_hours: 0.6707
+        duration_basis: clip duration
+      provenance:
+        description: '西语 · 背景人声 20 dB：同一句话、同样的前后时长，整段叠加西语背景人声，信噪比 20 dB（背景很远）；前后 1–5 秒只有背景人声。参数 {"kind": "speech", "pair": "es-speech", "language": "es", "noise": "babble_es", "snr_db": 20}'
+    es-babble10:
+      artifacts:
+        records:
+        - es-babble10-records
+        audio_index:
+        - audio-index
+      task: asr
+      statistics:
+        records: 200
+        duration_hours: 0.6707
+        duration_basis: clip duration
+      provenance:
+        description: '西语 · 背景人声 10 dB：同上，信噪比 10 dB（身边有一群人在聊天）。参数 {"kind": "speech", "pair": "es-speech", "language": "es", "noise": "babble_es", "snr_db": 10}'
+    es-babble5:
+      artifacts:
+        records:
+        - es-babble5-records
+        audio_index:
+        - audio-index
+      task: asr
+      statistics:
+        records: 200
+        duration_hours: 0.6707
+        duration_basis: clip duration
+      provenance:
+        description: '西语 · 背景人声 5 dB：同上，信噪比 5 dB（嘈杂的人群）。参数 {"kind": "speech", "pair": "es-speech", "language": "es", "noise": "babble_es", "snr_db": 5}'
+    es-babble10-tight:
+      artifacts:
+        records:
+        - es-babble10-tight-records
+        audio_index:
+        - audio-index
+      task: asr
+      statistics:
+        records: 200
+        duration_hours: 0.3442
+        duration_basis: clip duration
+      provenance:
+        description: '西语 · 背景人声 10 dB · 无前后空白：与 es-babble10 同一句话、同一段背景，只是没有前后 1–5 秒；两列之差就是只有背景人声的那几秒带来的错误。参数 {"kind": "speech", "pair": "es-speech", "language": "es", "tight": true, "noise": "babble_es", "snr_db": 10}'
+  provenance:
+    status: complete
+    synthetic: full
+    description: 西班牙语普通 ASR 背景人声评测集（对应中英 v2-20261023 的背景人声切分，同一渲染函数与参数）：只有西语背景人声的片段（期望输出为空）， 以及一句话前后和说话时都有西语背景人声的片段（与无背景人声的对照逐条配对）。目标语音是 Common Voice es test 的一句话； 背景人声由不进训练、也不与目标重叠的 Common Voice es dev（约 3,200 人）和 MLS es dev / test（40 人）说话人在模拟房间里混成 （训练用的西语背景人声 babble_noise_train@es-v1-20261110 取自 CV es / MLS es 的 train）。只用于评测，不进训练。 配方 scripts/asr_babble_bench/recipe-es.yaml。
+    sources:
+    - common_voice_es@legacy:test
+    - common_voice_es@legacy:dev
+    - mls_es@legacy:dev
+    - mls_es@legacy:test
+    - sim_rir_slr28@legacy-20260804:all

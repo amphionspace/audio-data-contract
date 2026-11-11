@@ -1814,14 +1814,16 @@ WenetSpeech L 中的 YouTube 部分
 
 普通 ASR 背景人声评测集（中英），仅评测
 
-语言：en、zh · 任务：语音识别
+语言：en、es、zh · 任务：语音识别
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
+| [asr_babble_bench@es-v1-20261111](../../catalog/asr_babble_bench.yaml#L1019) | 4.2 | 已登记 | 没有 |
 | [asr_babble_bench@v1-20261023](../../catalog/asr_babble_bench.yaml#L1) | 10.1 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/asr_babble_bench/` |
 | [asr_babble_bench@v2-20261023](../../catalog/asr_babble_bench.yaml#L399) | 8.8 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/asr_babble_bench/` |
 | [asr_babble_bench@v3-20261104](../../catalog/asr_babble_bench.yaml#L757) | 1.9 | 已登记 | 没有 |
 
+- `asr_babble_bench@es-v1-20261111`：西班牙语普通 ASR 背景人声评测集（对应中英 v2-20261023 的背景人声切分，同一渲染函数与参数）：只有西语背景人声的片段（期望输出为空）， 以及一句话前后和说话时都有西语背景人声的片段（与无背景人声的对照逐条配对）。目标语音是 Common Voice es test 的一句话； 背景人声由不进训练、也不与目标重叠的 Common Voice es dev（约 3,200 人）和 MLS es dev / test（40 人）说话人在模拟房间里混成 （训练用的西语背景人声 babble_noise_train@es-v1-20261110 取自 CV es / MLS es 的 train）。只用于评测，不进训练。 配方 scripts/asr_babble_bench/recipe-es.yaml
 - `asr_babble_bench@v1-20261023`：普通 ASR 背景人声评测集：只有背景人声的片段（合成的中文、英文背景人声和真实录音的人群声，期望输出为空），以及一句话前后和说话时都有背景人声的片段（与无背景人声的对照逐条配对）。合成背景人声由不进训练、也不与目标语音重叠的 test/dev 说话人混成。只用于评测，不进训练。配方 scripts/asr_babble_bench/recipe.yaml
 - `asr_babble_bench@v2-20261023`：普通 ASR 背景人声评测集：只有背景人声的片段（合成的中文、英文背景人声和真实录音的人群声，期望输出为空），以及一句话前后和说话时都有背景人声的片段（与无背景人声的对照逐条配对）。合成背景人声由不进训练、也不与目标语音重叠的 test/dev 说话人在模拟房间里混成。只用于评测，不进训练。配方 scripts/asr_babble_bench/recipe.yaml
 - `asr_babble_bench@v3-20261104`：普通 ASR 空白 / 非人声评测切分（参考全部为空，看误输出率）：鼎桥设备真实录音里三个说话人老师（local-moss, moss-pro, ali）都判为无人说话、FSMN-VAD 也未检出语音的区间（按时长分四档，原电平）；合成的近静音、底噪、50 Hz 电流嗡声；FSD50K 评测划分的稳态噪声、突发声、咳嗽呼吸（不含人声和音乐）；0.3–1.5 秒混合短片段。自动质检隔离 301 条（tdtech-quarantine），未发起人工听审。只用于评测，不进训练。配方 scripts/asr_babble_bench/recipe-blank.yaml；原 16 个背景人声切分仍在 v2-20261023
@@ -2055,14 +2057,16 @@ Emilia-YODAS 多语种 YouTube 语音
 
 中英热词评测集，仅评测
 
-语言：en、zh · 任务：热词增强语音识别
+语言：en、es、zh · 任务：热词增强语音识别
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
+| [hotword_bench@es-v1-20261111](../../catalog/hotword_bench.yaml#L1284) | — | 未登记 | 没有 |
 | [hotword_bench@v1-20261018](../../catalog/hotword_bench.yaml#L1) | — | 未登记 | 没有 |
 | [hotword_bench@v2-20261019](../../catalog/hotword_bench.yaml#L386) | — | 未登记 | 没有 |
 | [hotword_bench@v3-20261020](../../catalog/hotword_bench.yaml#L774) | — | 未登记 | 没有 |
 
+- `hotword_bench@es-v1-20261111`：西语热词评测集，对应中英 v3-20261020 的 cv_zh / cv_en，只用于评测，不进训练。三个西语测试集（Common Voice es、FLEURS es、MLS es）里含热词的句子，热词沿用已有标注（ts_asr_hotwords@es-v1-20261111 hotword-labels.jsonl，Qwen3.8-27B 抽取 + 复核）。每条记录存好固定的热词列表（metadata.bias_lists，已打乱顺序），评测器另跑不给列表的 none 条件：gold；k50 = 正确词 + 每个正确词最多 3 个近音词 + 同 split 正确词池随机词，补到 50 个；k50_no_gold 为同一批干扰词去掉正确词再补满。近音词是在 119,323 个西语热词（测试集正确词 + 西语训练集热词标注）里按西语读音键的编辑距离检索出的真实词（只用 CPU，不经 LLM），原始候选见 source/es-v1-20261111/mined/confusables.jsonl。生成脚本 scripts/hotword_bench/build_es.py，配方 recipe-es-v1.yaml
 - `hotword_bench@v1-20261018`：热词评测集，只用于评测，不进训练。每条记录存好固定的热词列表（metadata.bias_lists，已打乱顺序），评测器另跑不给列表的 none 条件。中文列表 = 正确词 + doubao-seed-2-1-pro-260915 生成、deepseek-v4-pro-ga-260813 复核的易混词 + 同 split 热词池随机词，补到 50 个；*_no_gold 为同一批干扰词去掉正确词。AISHELL1-NE、LibriSpeech 另含官方列表。生成脚本 scripts/hotword_bench/
 - `hotword_bench@v2-20261019`：热词评测集 v2，只用于评测，不进训练。记录、音频、正确词和其余条件与 v1-20261018 相同；中文切片的 k50 / k50_no_gold 换成从热词池检索的 pool50 / pool50_no_gold： 每个租户（约 200 句，按子集 / 领域语料分组）一个池 = 现网中文万词库（由现网 RAG 返回结果还原，8841 词）+ 租户句子的正确词及其复核易混词；以参考文本为查询，按 open-audio-llm 规则召回的打分公式取得分最高的 50 个（不设阈值）。pool50 = 正确词 + 检索出的干扰词，pool50_no_gold = 检索出的前 50 个干扰词；metadata.distractor_kinds 标出 confusable / tenant / base。各租户的池在 hotword-pools.jsonl.gz。生成脚本 scripts/hotword_bench/pool.py
 - `hotword_bench@v3-20261020`：热词评测集 v3，只用于评测，不进训练。记录、音频、正确词和全部列表与 v2-20261019 相同（请求逐条一致，总指标可与 v2-20261019 直接比较），另加两种标签： metadata.hotword_types 为每个正确词按所在句子的意思标的类型（person / place / organization / product / work / term / other / common），contextasr_speech_zh 的 labels.domain_group 把 ContextASR 自带的自由文本领域归到 13 个大类，自由文本领域本身从 labels.domain 移到 metadata.domain （评测器按每个字符串标签分项，3,957 种取值会让 summary 超过 W&B 的 10 MB 上限）。doubao-seed-2-0-lite-260215 标注，deepseek-v4-pro-ga-260813 看着标注复核并以复核为准（类型复核后不变的占 98.5%）。生成脚本 scripts/hotword_bench/annotate.py，类型定义见 prompts.py
