@@ -69,6 +69,7 @@ splits:
   - {group: dynamics, name: dyn-overlap-k1, kind: pos, schedule: overlap, k: 1, duration: [6, 14]}
   - {group: dynamics, name: dyn-overlap-k3, kind: pos, schedule: overlap, k: 3, duration: [6, 14]}
   # 英文版的 dyn-short-k1 / dyn-short-k3（目标只说 0.5–1.6 秒）不建：CV es dev 的句子几乎都长于 3 秒（够 6 句的 226 人里没有一人有 2 句 2.5 秒以内）。
+  # 同一原因，补充集 ts_asr_nearshort 没有西语版：它的每一列都要 0.5–1.6 秒的整句（干扰人或目标说一句极短的话）。
   - {group: dynamics, name: dyn-target-quiet, kind: pos, schedule: full, k: 2, duration: [8, 18], sir_db: [-12, -6]}
   - {group: dynamics, name: dyn-target-loud, kind: pos, schedule: full, k: 2, duration: [8, 18], sir_db: [6, 12]}
   - {group: absent, name: abs-k1, kind: neg, k: 1, duration: [6, 18]}
