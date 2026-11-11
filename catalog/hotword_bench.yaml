@@ -1281,3 +1281,133 @@
     sources:
     - hotword_bench@v2-20261019
     limitations: contextasr_speech_zh 为 TTS 合成音频；GigaSpeech 列表按 SALMONN-2 的描述重建，与其原表不完全相同；打分口径（规范化、B/U 归属）与各论文不完全一致，与公开数字只能近似对照；本地热词集与 real_zh 的 正确词来自 LLM 抽取。AISHELL-1/AISHELL-3 测试文本大量出现在 AISHELL-2 训练转写中，labels.train_text_overlap 标出与训练文本相同的条目，用过这些训练集的模型应看 none 子集。检索器是文本规则召回、以参考文本为查询，不是现网的音频双塔 RAG，正确词总能被召回，召回失败由 pool50_no_gold 单独衡量；基础词库为还原的约 88% 现网词库。类型和领域大类是 LLM 标签，未经人工核对；一个正确词只有一个类型，作品名里含人名等嵌套情况按整体归类。
+- schema_version: dataset-catalog/2.0
+  dataset_id: hotword_bench
+  version: es-v1-20261111
+  languages:
+  - es
+  tasks:
+  - asr_hotwords
+  artifacts:
+  - name: audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/hotword_bench/versions/es-v1-20261111/audio-index.jsonl.gz
+    sha256: 796f7fb7254f5da6fc89b3891bf58dcaf0988cee8f348ce58aa70ece3322993e
+    metadata:
+      record_count: 3269
+  - name: confusables
+    kind: jsonl-metadata
+    root_alias: aidc_data
+    relative_path: datasets/hotword_bench/source/es-v1-20261111/mined/confusables.jsonl
+    sha256: f3414fa6d0dd3687596c3c41cc0f068b1b881427d407cf196528b3117eddf6a5
+    metadata:
+      record_count: 3208
+  - name: qc
+    kind: quality-report
+    root_alias: aidc_data
+    relative_path: datasets/hotword_bench/versions/es-v1-20261111/qc.yaml
+    sha256: 3e1501f4c88c046834bfdbeebd40a570e89b0669960f01f71906ea6086da3e19
+    metadata:
+      passed: true
+  - name: cv_es-records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/hotword_bench/versions/es-v1-20261111/records/cv_es.jsonl.gz
+    sha256: 891636823f77ae0a31272037e48dd2b2a545fabbdbbe44347bc5e7d1d81e4cff
+    metadata:
+      record_count: 2000
+  - name: fleurs_es-records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/hotword_bench/versions/es-v1-20261111/records/fleurs_es.jsonl.gz
+    sha256: df5b9f08f978b2319c45829093a5f5b9afd8d6d307b4d0f91f200b9955c60d2e
+    metadata:
+      record_count: 362
+  - name: mls_es-records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/hotword_bench/versions/es-v1-20261111/records/mls_es.jsonl.gz
+    sha256: bcae29ffa4d55065b40e1224440d7ba1f6e3e8104a535dfd6e59593fd681e0ba
+    metadata:
+      record_count: 907
+  splits:
+    cv_es:
+      artifacts:
+        records:
+        - cv_es-records
+        audio_index:
+        - audio-index
+      group: test
+      task: asr_hotwords
+      statistics:
+        records: 2000
+        duration_hours: 3.509
+        duration_basis: recognized clip
+        records_with_hotwords: 2000
+        gold_words: 2668
+        conditions:
+          gold: 2000
+          k50: 2000
+          k50_no_gold: 2000
+        gold_with_confusable: 0.543
+        train_text_overlap: 11
+      provenance:
+        description: Common Voice es 测试集（众包朗读、多口音），沿用已有西语热词标注，按 sha256(id) 取前 N 条正例
+    fleurs_es:
+      artifacts:
+        records:
+        - fleurs_es-records
+        audio_index:
+        - audio-index
+      group: test
+      task: asr_hotwords
+      statistics:
+        records: 362
+        duration_hours: 1.3398
+        duration_basis: recognized clip
+        records_with_hotwords: 362
+        gold_words: 563
+        conditions:
+          gold: 362
+          k50: 362
+          k50_no_gold: 362
+        gold_with_confusable: 0.453
+        train_text_overlap: 0
+      provenance:
+        description: FLEURS es 测试集（朗读维基句子，同一句话有多个说话人），沿用已有西语热词标注，全部正例
+    mls_es:
+      artifacts:
+        records:
+        - mls_es-records
+        audio_index:
+        - audio-index
+      group: test
+      task: asr_hotwords
+      statistics:
+        records: 907
+        duration_hours: 3.9146
+        duration_basis: recognized clip
+        records_with_hotwords: 907
+        gold_words: 1460
+        conditions:
+          gold: 907
+          k50: 907
+          k50_no_gold: 907
+        gold_with_confusable: 0.871
+        train_text_overlap: 6
+      provenance:
+        description: MLS es 测试集（LibriVox 有声书，原标注全小写无标点），沿用已有西语热词标注，全部正例
+  provenance:
+    status: complete
+    synthetic: none
+    usage: evaluation_only
+    description: 西语热词评测集，对应中英 v3-20261020 的 cv_zh / cv_en，只用于评测，不进训练。三个西语测试集（Common Voice es、FLEURS es、MLS es）里含热词的句子，热词沿用已有标注（ts_asr_hotwords@es-v1-20261111 hotword-labels.jsonl，Qwen3.8-27B 抽取 + 复核）。每条记录存好固定的热词列表（metadata.bias_lists，已打乱顺序），评测器另跑不给列表的 none 条件：gold；k50 = 正确词 + 每个正确词最多 3 个近音词 + 同 split 正确词池随机词，补到 50 个；k50_no_gold 为同一批干扰词去掉正确词再补满。近音词是在 119,323 个西语热词（测试集正确词 + 西语训练集热词标注）里按西语读音键的编辑距离检索出的真实词（只用 CPU，不经 LLM），原始候选见 source/es-v1-20261111/mined/confusables.jsonl。生成脚本 scripts/hotword_bench/build_es.py，配方
+      recipe-es-v1.yaml。
+    sources:
+    - common_voice_es@legacy:test
+    - fleurs_es@legacy:test
+    - mls_es@legacy:test
+    - ts_asr_hotwords@es-v1-20261111 (hotword-labels.jsonl)
+    - common_voice_es@es-train-v1-20261108:train, mls_es@es-train-v1-20261108:train (confusable vocabulary, overlap check)
+    limitations: 热词来自 LLM 抽取与复核，未经人工核对；没有中文 v3 的 hotword_types（需要 LLM 标注）；没有西语现网词库，不做中文 v2 的 pool50 检索列表；近音词按拼写推出的读音键检索（拉美读法：seseo、yeísmo），不是声学相似度，也不覆盖英文专名的英语读法；FLEURS 同一句话有多个说话人，含热词的约 145 句话。MLS 转写全小写无标点，热词也是小写。
