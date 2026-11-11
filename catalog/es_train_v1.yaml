@@ -1,4 +1,4 @@
-# 西班牙语训练数据：CV es / MLS es 正式版本（清洗 + 书面化标点 + 热词）；TS 场景池仍是占位。
+# 西班牙语训练数据：CV es / MLS es 正式版本（清洗 + 书面化标点 + 热词）；es-train-hwconf-v1-20261111 为其中有热词行的 asr_hotwords 版本（带近音干扰词 metadata.confusable_hotwords）；TS 场景池仍是占位。
 - schema_version: dataset-catalog/2.0
   dataset_id: common_voice_es
   version: es-train-v1-20261108
@@ -192,3 +192,267 @@
     sources:
     - common_voice_es@es-train-v1-20261108
     run_dir: /workspace/workspace/mingdong/data/amphiondata/es-data-20261108
+- schema_version: dataset-catalog/2.0
+  dataset_id: common_voice_es
+  version: es-train-hwconf-v1-20261111
+  languages:
+  - es
+  tasks:
+  - asr_hotwords
+  aliases: []
+  derived_from: common_voice_es@es-train-v1-20261108
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/common_voice_es/versions/es-train-hwconf-v1-20261111/state.json
+    expected_bytes: 293
+    sha256: e19519be9311dc0ef2e2e78fef961e5a6b8223ade22f2630fe1c2ca1fface41a
+  - name: train
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/common_voice_es/versions/es-train-hwconf-v1-20261111/records/train.jsonl.gz
+    expected_bytes: 11282881
+    sha256: 260f8d2f01f34c17e85b7ac5d5c9a7cf34fd91bc9ac555d414c7e3cccf902303
+    metadata:
+      record_count: 165693
+  - name: audio_index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/common_voice_es/versions/es-train-hwconf-v1-20261111/audio_index/audio-index.jsonl.gz
+    expected_bytes: 1912857
+    sha256: 9518eb17a113c2f0ef3c739a72b0abe416b77394e4204abf8258ba88d9f4f8db
+    metadata:
+      record_count: 165693
+      audio: legacy source files of common_voice_es@legacy, not copied
+  - name: confusables
+    kind: jsonl-metadata
+    root_alias: aidc_data
+    relative_path: datasets/common_voice_es/versions/es-train-hwconf-v1-20261111/mined/confusables.jsonl.gz
+    expected_bytes: 1888062
+    sha256: a9f59965839a318b986bda3baee5608bb6a01b879b21c43887a92a6213e123f4
+  - name: qc
+    kind: quality-report
+    root_alias: aidc_data
+    relative_path: datasets/common_voice_es/versions/es-train-hwconf-v1-20261111/qc.yaml
+    expected_bytes: 5727
+    sha256: 2bfa0fee7697c85e5805f7772f92f33576860a42695332948c914b72ed9ac87f
+    metadata:
+      passed: true
+  - name: record_index
+    kind: lance-record-index
+    root_alias: aidc_data
+    relative_path: datasets/common_voice_es/versions/es-train-hwconf-v1-20261111/record_index/index.json
+    expected_bytes: 740
+    sha256: 13fb35600c31238ed03ab21beda279e62c45f137e3bfd847421439620ba68b20
+    metadata:
+      snapshot_version: 13
+      rows: 165693
+      schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
+  splits:
+    train:
+      artifacts:
+        records:
+        - train
+        audio_index:
+        - audio_index
+        preparation_state:
+        - preparation_state
+        records_lance:
+        - record_index
+      statistics:
+        records: 165693
+        duration_hours: 247.57
+        hotwords: 235150
+        records_with_confusables: 90439
+        records_with_confusables_fraction: 0.5458
+        confusables: 266153
+        mean_confusables_when_any: 2.943
+        confusables_per_hotword: 1.132
+        confusables_per_record:
+          '0': 75254
+          '1': 20479
+          '2': 12996
+          '3': 39821
+          '4': 4749
+          '5': 3353
+          '6': 5775
+          '7': 834
+          '8': 718
+          '9': 875
+          '10': 181
+          '11': 202
+          '12': 207
+          '13': 58
+          '14': 61
+          '15': 45
+          '16': 18
+          '17': 22
+          '18': 21
+          '19': 5
+          '20': 3
+          '21': 10
+          '22': 2
+          '23': 2
+          '26': 1
+          '31': 1
+        duration_basis: sum of supervision durations
+      provenance:
+        preparation_status: prepared
+  recipe_parameters:
+    confusables_per_word: 3
+    reading_key: scripts/hotword_bench/build_es.py reading_key (seseo, yeísmo, b/v, silent h, c/qu/k, g/j)
+    max_reading_distance: &id001
+    - - 6
+      - 1
+    - - 10
+      - 2
+    - - 999
+      - 3
+    min_key_length: 4
+    vocabulary: 34441 training hotword labels minus every gold word of hotword_bench@es-v1-20261111
+  provenance:
+    preparation_status: prepared
+    owner: mingdong
+    description: common_voice_es@es-train-v1-20261108 里有热词的行（165,693 条，全部 clean 通过）的热词训练版本：每行一条 asr_hotwords 记录，文本、热词与父版本相同，metadata.confusable_hotwords 为读音相近的真实西语热词，训练时按 hotword_confusable_prob 作为干扰词放进列表（同 police_terms_single_train@hotwords-confusable-v1-20261102）。近音词检索复用评测集 hotword_bench@es-v1-20261111 的西语读音键（拉美读法：seseo、yeísmo、b/v、h 不发音等）与编辑距离，每个热词最多 3 个，读音最近的优先；词库只用 CV es / MLS es 训练集的热词标注（34,441 个），去掉了评测集三个 split 的全部正确词。剔除两类候选：与本条热词只是同一个词不同写法的（读音键忽略空格、ñ/ny/gn 与 n、y 与 i 不区分后相同，如 Sara/Sarah、Cataluña/Catalunya、España/espana、Monte
+      Verde/Monteverde，当负例会教模型拒绝与录音一致的写法），以及出现在本条文本里的。90,439 条（54.6%）有近音词，平均每条 2.943 个；近音词与评测正确词重叠 0。录音不复制，audio_index 指向 legacy 源文件。检索结果见 mined/confusables.jsonl.gz，质检与 20 条样例见 qc.yaml。
+    sources:
+    - common_voice_es@es-train-v1-20261108
+    - hotword_bench@es-v1-20261111 (gold words excluded from the vocabulary)
+    scripts:
+    - scripts/hotword_bench/build_es_train_confusables.py
+    - scripts/hotword_bench/recipe-es-train-hwconf-v1.yaml
+    limitations: 近音词按拼写推出的读音键检索，不是声学相似度，也不覆盖英文专名的英语读法；词库只收标注里出现至少两次的词，仍有重复出现的 OCR / 拼写错误词（如 Ingalaterra、jesuchristo），也有同一人名的历史写法（Moctezuma/Montezuma），按规则分不出来；热词是 LLM 抽取、未经人工核对。
+- schema_version: dataset-catalog/2.0
+  dataset_id: mls_es
+  version: es-train-hwconf-v1-20261111
+  languages:
+  - es
+  tasks:
+  - asr_hotwords
+  aliases: []
+  derived_from: mls_es@es-train-v1-20261108
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/mls_es/versions/es-train-hwconf-v1-20261111/state.json
+    expected_bytes: 284
+    sha256: 50f235d9593c8886f9173acf9b9da950eb91f977d5c14e36a57648d999975de1
+  - name: train
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/mls_es/versions/es-train-hwconf-v1-20261111/records/train.jsonl.gz
+    expected_bytes: 13496018
+    sha256: 8db9783c5d29844c8d31bcec0a9234be081467dc42bf867c13b2e6b6f2053f21
+    metadata:
+      record_count: 110501
+  - name: audio_index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/mls_es/versions/es-train-hwconf-v1-20261111/audio_index/audio-index.jsonl.gz
+    expected_bytes: 1317624
+    sha256: 1372f7566977b51a6cd9b2c123e5bd0ae8268749c64007e0c14dbe2cc36b7230
+    metadata:
+      record_count: 110501
+      audio: legacy source files of mls_es@legacy, not copied
+  - name: confusables
+    kind: jsonl-metadata
+    root_alias: aidc_data
+    relative_path: datasets/mls_es/versions/es-train-hwconf-v1-20261111/mined/confusables.jsonl.gz
+    expected_bytes: 800224
+    sha256: c07e57e58a3cb8f7b3895ff81422353166640e0018bb40e7983366409dc77bbc
+  - name: qc
+    kind: quality-report
+    root_alias: aidc_data
+    relative_path: datasets/mls_es/versions/es-train-hwconf-v1-20261111/qc.yaml
+    expected_bytes: 8857
+    sha256: d8f3e37cfd3b62c7e07d0fbdafbea0d4cadee718810c35ef251a57f0bae8d86d
+    metadata:
+      passed: true
+  - name: record_index
+    kind: lance-record-index
+    root_alias: aidc_data
+    relative_path: datasets/mls_es/versions/es-train-hwconf-v1-20261111/record_index/index.json
+    expected_bytes: 731
+    sha256: 90c428d776d87967f0cc3ee270efae2242941b14ff7d8c73ee420e238d7269b3
+    metadata:
+      snapshot_version: 13
+      rows: 110501
+      schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
+  splits:
+    train:
+      artifacts:
+        records:
+        - train
+        audio_index:
+        - audio_index
+        preparation_state:
+        - preparation_state
+        records_lance:
+        - record_index
+      statistics:
+        records: 110501
+        duration_hours: 467.76
+        hotwords: 196527
+        records_with_confusables: 91888
+        records_with_confusables_fraction: 0.8316
+        confusables: 335990
+        mean_confusables_when_any: 3.657
+        confusables_per_hotword: 1.71
+        confusables_per_record:
+          '0': 18613
+          '1': 15063
+          '2': 11262
+          '3': 34852
+          '4': 7204
+          '5': 5439
+          '6': 9050
+          '7': 2443
+          '8': 1864
+          '9': 2081
+          '10': 729
+          '11': 555
+          '12': 508
+          '13': 233
+          '14': 150
+          '15': 125
+          '16': 83
+          '17': 62
+          '18': 54
+          '19': 17
+          '20': 29
+          '21': 17
+          '22': 18
+          '23': 13
+          '24': 6
+          '25': 11
+          '26': 4
+          '27': 6
+          '28': 2
+          '29': 2
+          '30': 2
+          '31': 1
+          '33': 2
+          '34': 1
+        duration_basis: sum of supervision durations
+      provenance:
+        preparation_status: prepared
+  recipe_parameters:
+    confusables_per_word: 3
+    reading_key: scripts/hotword_bench/build_es.py reading_key (seseo, yeísmo, b/v, silent h, c/qu/k, g/j)
+    max_reading_distance: *id001
+    min_key_length: 4
+    vocabulary: 34441 training hotword labels minus every gold word of hotword_bench@es-v1-20261111
+  provenance:
+    preparation_status: prepared
+    owner: mingdong
+    description: mls_es@es-train-v1-20261108 里有热词的行（110,501 条，全部 clean 通过）的热词训练版本：每行一条 asr_hotwords 记录，文本、热词与父版本相同，metadata.confusable_hotwords 为读音相近的真实西语热词，训练时按 hotword_confusable_prob 作为干扰词放进列表（同 police_terms_single_train@hotwords-confusable-v1-20261102）。近音词检索复用评测集 hotword_bench@es-v1-20261111 的西语读音键（拉美读法：seseo、yeísmo、b/v、h 不发音等）与编辑距离，每个热词最多 3 个，读音最近的优先；词库只用 CV es / MLS es 训练集的热词标注（34,441 个），去掉了评测集三个 split 的全部正确词。剔除两类候选：与本条热词只是同一个词不同写法的（读音键忽略空格、ñ/ny/gn 与 n、y 与 i 不区分后相同，如 Sara/Sarah、Cataluña/Catalunya、España/espana、Monte
+      Verde/Monteverde，当负例会教模型拒绝与录音一致的写法），以及出现在本条文本里的。91,888 条（83.2%）有近音词，平均每条 3.657 个；近音词与评测正确词重叠 0。录音不复制，audio_index 指向 legacy 源文件。检索结果见 mined/confusables.jsonl.gz，质检与 20 条样例见 qc.yaml。
+    sources:
+    - mls_es@es-train-v1-20261108
+    - hotword_bench@es-v1-20261111 (gold words excluded from the vocabulary)
+    scripts:
+    - scripts/hotword_bench/build_es_train_confusables.py
+    - scripts/hotword_bench/recipe-es-train-hwconf-v1.yaml
+    limitations: 近音词按拼写推出的读音键检索，不是声学相似度，也不覆盖英文专名的英语读法；词库只收标注里出现至少两次的词，仍有重复出现的 OCR / 拼写错误词（如 Ingalaterra、jesuchristo），也有同一人名的历史写法（Moctezuma/Montezuma），按规则分不出来；热词是 LLM 抽取、未经人工核对。

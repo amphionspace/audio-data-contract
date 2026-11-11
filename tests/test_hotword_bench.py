@@ -100,3 +100,21 @@ def test_annotation_context_and_reviewer_wins():
     assert stats == {"agreed": 1, "changed": 1, "reviewer_only": 1, "unreviewed": 1, "unlabeled": 1}
     with pytest.raises(ValueError):
         annotate["final"](labels, reviews[:2], lambda r: r["k"], "type")
+
+
+def test_es_train_confusables_skip_spellings_and_words_in_the_text():
+    script = run_script("build_es_train_confusables.py")
+    variant_key, pick = script["variant_key"], script["pick"]
+    assert variant_key("Cataluña") == variant_key("Catalunya")
+    assert variant_key("Monte Verde") == variant_key("Monteverde")
+    assert variant_key("Sara") == variant_key("Sarah")
+    assert variant_key("España") == variant_key("espana")
+    assert variant_key("Cuevas") != variant_key("Cueva")
+    mined = {
+        "Cataluña": [{"confusable": c} for c in ("Catalunya", "catalana", "Catalá", "Catalina")],
+        "Cuevas": [{"confusable": c} for c in ("Cueva", "Nuevas", "Cubas")],
+    }
+    drops = {"spelling_variant": 0, "in_text": 0, "spelling_variant_examples": []}
+    chosen = pick(["Cataluña", "Cuevas"], "En Cataluña viven los Cuevas y las nuevas.", mined, 2, "es", drops)
+    assert chosen == ["catalana", "Catalá", "Cueva", "Cubas"]
+    assert (drops["spelling_variant"], drops["in_text"]) == (1, 1)
