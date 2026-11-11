@@ -962,6 +962,18 @@ Common Voice 中文众包朗读；含清洗、热词、加噪版
 
 - 含派生版本（与源数据可能重叠）
 
+### context_correction_clean_zh
+
+中文训练数据里说字写法句子的核对与改正清单
+
+语言：zh · 任务：语音识别
+
+| 版本 | 时长（小时） | 口径 | COS |
+|---|---:|---|---|
+| [context_correction_clean_zh@v1-20261110](../../catalog/context_correction_clean_zh.yaml#L4) | — | 未登记 | 没有 |
+
+- `context_correction_clean_zh@v1-20261110`：清洗对象是 AmphionASR v4 配方里的中文真实口语来源：wenetspeech_podcast、wenetspeech_youtube（l-20261014）、 emilia2_short（short-20261014 与 short-lance-20261023）、emilia2_dialog、emilia2_mix、magicdata_ramc / aishell4 / alimeeting_sdm （asr-20261014 与 turn-taking-20261014）、vitw（2m-20261013）；朗读类（hw_sft 中文部分等）不扫。 找出说话人用组词、拆字、偏旁或否定对比说明字怎么写的句子，由两个不同家族的 LLM 独立判断标注是否与说明一致： 一致的列为正例；两边改法完全相同、只改写法不改读音、说明部分读音经 Qwen3-ASR 核对的才改正；其余隔离、不进训练。 本版本只存判定清单（逐条判定与依据、正例、隔离名单、统计），不是训练集；改正后的训练数据以各来源的派生版本另行登记。 context_correction_zh 评测用过的 190 条 WenetSpeech 播客录音（83,220 段、48.9 h）一并排除。进行中
+
 ### context_correction_zh
 
 中文上下文纠偏评测集，同音词按语境写

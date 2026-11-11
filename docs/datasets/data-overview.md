@@ -1,6 +1,6 @@
 # 数据总览
 
-当前登记 **233 个数据集**；另有 **15 个下载来源声明**和 **1 个训练混合配方**。登记不代表本机文件已齐备。
+当前登记 **234 个数据集**；另有 **15 个下载来源声明**和 **1 个训练混合配方**。登记不代表本机文件已齐备。
 
 时长取单个版本的最大值，不跨版本相加；≈ 为参考表或估算值，— 为暂无完整时长。各版本的时长、说明、COS 地址和质量证据见[版本明细](data-versions.md)。
 
@@ -83,6 +83,7 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [cnceleb2](data-versions.md#cnceleb2) | zh | 说话人身份识别、声纹验证 | 1,084.3 | 中文跨场景声纹训练数据（CN-Celeb2） | 快照 20260914 |
 | [common_voice_zh](data-versions.md#common_voice_zh) | zh | 语音识别、热词增强语音识别 | 76.1 | Common Voice 中文众包朗读；含清洗、热词、加噪版 | 部分版本：快照 20260914、`备份桶:audio-data-contract/datasets/commonvoice_zh_hotwords/` |
 | [common_voice_zh_hk](data-versions.md#common_voice_zh_hk) | yue | 语音识别 | 25.3 | 众包朗读粤语（Common Voice 香港） | 快照 20260914 |
+| [context_correction_clean_zh](data-versions.md#context_correction_clean_zh) | zh | 语音识别 | — | 中文训练数据里说字写法句子的核对与改正清单 | 没有 |
 | [context_correction_zh](data-versions.md#context_correction_zh) | zh | 语音识别、目标说话人语音识别 | 17.6 | 中文上下文纠偏评测集，同音词按语境写 | 没有 |
 | [csemotions](data-versions.md#csemotions) | zh | 语音合成 | 10.2 | 中文情感语音（CSEMOTIONS），TTS 用 | `TTS 桶:CSEMOTIONS/`（原始数据） |
 | [emilia2_zh_dialogue_diarize](data-versions.md#emilia2_zh_dialogue_diarize) | zh | 语音识别、diarization、带说话人标注的语音识别 | 3,167.4 | Emilia2 中文对话的说话人日志伪标签 | 部分版本：`备份桶:audio-data-contract/datasets/emilia2_zh_dialogue_diarize/` |
