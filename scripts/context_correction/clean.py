@@ -28,6 +28,7 @@ under ``<out>/<source>/`` (recipe ``clean_recipe.yaml``):
 from __future__ import annotations
 
 import argparse
+import glob
 import gzip
 import json
 import re
@@ -40,7 +41,7 @@ import yaml
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import prompts
-from common import LLM, JsonlAppender, parse_json_reply, read_jsonl, write_jsonl
+from common import LLM, JsonlAppender, parse_json_reply, read_jsonl, sha1, write_jsonl
 
 HERE = Path(__file__).resolve().parent
 VERDICTS = ("none", "consistent", "corrected", "unsure")
@@ -61,10 +62,12 @@ def gz_rows(path):
 
 def cmd_units(recipe, name, spec, root):
     """Windows of consecutive supervisions (the rule of ``mine.py windows``), keeping segment texts."""
+    if spec["kind"] == "records":
+        return cmd_units_records(recipe, name, spec, root)
     by_recording = defaultdict(list)
     for row in gz_rows(Path(spec["supervisions"])):
         text = (row.get("text") or "").strip()
-        if text:
+        if text and (not spec.get("language") or row.get("language") == spec["language"]):  # VITW mixes zh and en
             by_recording[row["recording_id"]].append((float(row["start"]), float(row["duration"]), row["id"], text))
     limit, gap = recipe["window_seconds"], recipe["max_gap_seconds"]
     windows = []
@@ -90,6 +93,37 @@ def cmd_units(recipe, name, spec, root):
         old = {w["window_id"]: w["text"] for w in gz_rows(Path(spec["reuse_windows"]))}
         new = {u["unit_id"]: u["text"] for u in gz_rows(out)}
         print(f"reuse_windows identical: {old == new} ({len(old)} vs {len(new)})")
+
+
+def record_audio(row: dict, mode: str) -> dict:
+    """Where the target speaker of an audio record can be heard: the ``primary`` or ``mixture`` slot
+    (path relative to the data root), or the mix whose clean target segments the mix protocol lists."""
+    meta = row["metadata"]
+    if mode == "mix_protocol":
+        return {"mix_id": meta["mix_id"]}
+    ref = next(s["ref"] for s in row["audio_slots"] if s["purpose"] == mode)
+    return {"path": meta["audio_path" if mode == "primary" else "mixture_path"], "start": ref.get("start") or 0.0,
+            "duration": ref["duration"], "channel": ref.get("channel")}
+
+
+def cmd_units_records(recipe, name, spec, root):
+    """Audio records (each one a training example): one unit per distinct zh target; identical targets share a decision."""
+    found = {}
+    for path in spec["records"].values():
+        for row in gz_rows(Path(path)):
+            text = (row.get("target") or "").strip()
+            if row.get("language") != "zh" or not text:
+                continue
+            if text in found:
+                found[text]["records"] += 1
+                continue
+            unit_id = f"{name}:{sha1(text)}"
+            found[text] = {"unit_id": unit_id, "recording_id": row["metadata"].get("recording_id"),
+                           "record_id": row["id"], "records": 1, "text": text,
+                           "segments": [{"id": unit_id, "text": text}], "audio_ref": record_audio(row, spec["audio"])}
+    out = root / "units.jsonl.gz"
+    write_jsonl(out, found.values())
+    print(f"{name}: {sum(u['records'] for u in found.values())} zh records -> {len(found)} units -> {out}")
 
 
 def units(root):
@@ -131,6 +165,15 @@ def scan_batches(client_spec, base_url, key_env, rows, batch_size, sink_path, lo
 def scan_flagged(spec, root) -> set[str]:
     path = Path(spec["reuse_scan"]) if spec.get("reuse_scan") else root / "scan.jsonl"
     return {u for row in read_jsonl(path) if "error" not in row for u in row["flagged"]}
+
+
+def unscanned(spec, root) -> set[str]:
+    """Units of scan batches that never got an answer (e.g. refused by content moderation): rescanned in small batches."""
+    if spec.get("reuse_scan"):
+        return set()
+    rows = read_jsonl(root / "scan.jsonl")
+    answered = {row["batch"] for row in rows if "error" not in row}
+    return {u for row in rows if "error" in row and row["batch"] not in answered for u in row["units"]}
 
 
 def cmd_scan(recipe, name, spec, root, args):
@@ -188,7 +231,7 @@ def cmd_regex(recipe, name, spec, root, args):
 
 def cmd_rescan(recipe, name, spec, root, args):
     llm = recipe["llm"]
-    todo = {r["unit_id"] for r in read_jsonl(root / "regex.jsonl") if not r["scan_flagged"]}
+    todo = {r["unit_id"] for r in read_jsonl(root / "regex.jsonl") if not r["scan_flagged"]} | unscanned(spec, root)
     rows = [u for u in units(root) if u["unit_id"] in todo]
     scan_batches(llm["scan"], args.base_url or llm["base_url"], llm["api_key_env"], rows, llm["rescan_batch"],
                  root / "rescan.jsonl", Path(recipe["run_dir"]) / "llm-log" / name / "rescan.jsonl",
@@ -396,14 +439,15 @@ def cmd_decide(recipe, name, spec, root, args):
         failed = [f"{k}: {a['error'][:200]}" for k, a in answers.items() if "error" in a]
         # A hit window no judge could answer (e.g. refused by content moderation) cannot be checked: quarantine.
         decision, why, corrected = ("quarantine", ["judge_failed", *failed], None) if failed else decide(unit["text"], answers)
-        row = {"unit_id": unit["unit_id"], "recording_id": unit["recording_id"], "start": unit["start"],
-               "end": unit["end"], "segments": unit["segments"], "text": unit["text"], "decision": decision,
+        row = {"unit_id": unit["unit_id"], "recording_id": unit["recording_id"],
+               **{k: unit[k] for k in ("start", "end", "record_id", "records", "audio_ref") if k in unit},
+               "segments": unit["segments"], "text": unit["text"], "decision": decision,
                "reasons": why, "corrected": corrected, "edits": [],
                "explanations": {k: a.get("explanations") for k, a in answers.items()},
                "judge_reasons": {k: a.get("reason") for k, a in answers.items()},
                "found_by": ["scan"] * (unit["unit_id"] in flagged) + ["regex:" + r for r in regex.get(unit["unit_id"], [])],
                "eval_excluded": unit["recording_id"] in excluded, "audio": None}
-        if decision in ("consistent", "corrected"):
+        if decision in ("consistent", "corrected") and spec.get("audio_check", True):  # human labels: no ASR check
             if unit["unit_id"] not in audio:
                 row["reasons"] = why + ["audio_pending"]
             else:
@@ -487,6 +531,39 @@ def audio_result(row: dict, hypothesis: str, recipe: dict) -> dict:
     return {"checks": checks, "pass": any(not c["failed"] for c in checks.values())}
 
 
+def ffmpeg_audio(path: Path, start: float, duration: float, channel: int | None):
+    """16 kHz mono float32 of [start, start + duration) seconds; one channel, or the mean of all."""
+    import subprocess
+
+    import numpy as np
+
+    pick = ["-af", f"pan=mono|c0=c{channel}"] if channel is not None else ["-ac", "1"]
+    out = subprocess.run(["ffmpeg", "-nostdin", "-v", "error", "-ss", f"{start:.3f}", "-t", f"{duration:.3f}",
+                          "-i", str(path), *pick, "-ar", "16000", "-f", "f32le", "-"], capture_output=True, check=True)
+    return np.frombuffer(out.stdout, dtype=np.float32)
+
+
+def mix_segments(spec, wanted: set[str]) -> dict[str, list[dict]]:
+    """Mix id -> the target speaker's clean source segments, in mix order (from the mix protocol)."""
+    found = {}
+    for path in sorted(glob.glob(spec["mix_protocol"])) if wanted else []:
+        with gzip.open(path, "rt", encoding="utf-8") as stream:
+            for line in stream:
+                if not line.startswith('{"mix_id":"'):
+                    raise ValueError(f"{path}: unexpected line {line[:60]}")
+                if line[11:line.index('"', 11)] not in wanted:
+                    continue
+                mix = json.loads(line)
+                target = next(s for s in mix["speakers"] if s["role"] == "target")
+                found[mix["mix_id"]] = [{"path": target["rel"], "start": s["src_start"], "channel": None,
+                                         "duration": s["src_end"] - s["src_start"]}
+                                        for s in sorted(target["segments"], key=lambda s: s["mix_start"])]
+    missing = wanted - set(found)
+    if missing:
+        raise ValueError(f"{len(missing)} mixes not in {spec['mix_protocol']}, e.g. {sorted(missing)[:3]}")
+    return found
+
+
 def cmd_audio(recipe, name, spec, root, args):
     """Qwen3-ASR transcribes each consistent or corrected window (``decide`` then checks the explanations)."""
     import base64
@@ -497,7 +574,6 @@ def cmd_audio(recipe, name, spec, root, args):
     import soxr
     from openai import OpenAI
 
-    paths = {r["id"]: r["sources"][0]["source"] for r in gz_rows(Path(spec["recordings"]))}
     rows = [d for d in read_jsonl(root / "decisions.jsonl")
             if d["decision"] in ("consistent", "corrected") or "audio_mismatch" in d["reasons"]]
     out_path = root / "audio.jsonl"
@@ -507,15 +583,32 @@ def cmd_audio(recipe, name, spec, root, args):
     sink = JsonlAppender(out_path)
     pad = 0.3
 
-    def run(row):
-        try:
+    if spec["kind"] == "records":
+        clean = mix_segments(spec, {r["audio_ref"]["mix_id"] for r in rows if "mix_id" in r["audio_ref"]})
+
+        def load(row):
+            ref = row["audio_ref"]
+            parts = []
+            for clip in clean[ref["mix_id"]] if "mix_id" in ref else [ref]:
+                start = max(0.0, clip["start"] - pad)
+                parts += [ffmpeg_audio(Path(recipe["data_root"]) / clip["path"], start,
+                                       clip["start"] + clip["duration"] + pad - start, clip["channel"]),
+                          np.zeros(int(pad * 16000), dtype=np.float32)]
+            return np.concatenate(parts)
+    else:
+        paths = {r["id"]: r["sources"][0]["source"] for r in gz_rows(Path(spec["recordings"]))}
+
+        def load(row):
             with sf.SoundFile(paths[row["recording_id"]]) as stream:
                 sr = stream.samplerate
                 start = max(0.0, row["start"] - pad)
                 stream.seek(int(start * sr))
                 wav = stream.read(int((row["end"] + pad - start) * sr), dtype="float32", always_2d=True).mean(axis=1)
-            if sr != 16000:
-                wav = soxr.resample(wav, sr, 16000)
+            return soxr.resample(wav, sr, 16000) if sr != 16000 else wav
+
+    def run(row):
+        try:
+            wav = load(row)
             buf = io.BytesIO()
             sf.write(buf, np.clip(wav, -1, 1), 16000, format="FLAC", subtype="PCM_16")
             url = "data:audio/flac;base64," + base64.b64encode(buf.getvalue()).decode()
@@ -557,6 +650,91 @@ def segment_fixes(decisions: list[dict]) -> tuple[dict, dict]:
     return fixes, dropped
 
 
+def main_duration(row: dict) -> float:
+    """Duration of the slot the target describes: the only slot, else ``primary``, else the TS ``mixture``."""
+    slots = row["audio_slots"]
+    slot = slots[0] if len(slots) == 1 else next(s for s in slots if s["purpose"] in ("primary", "mixture"))
+    return slot["ref"].get("duration") or 0.0
+
+
+def cmd_build_records(recipe, name, spec, root, decisions):
+    """Derived audio-record versions (the scanned one and ``also_derive``, which share its record IDs and
+    targets): corrected targets; records of quarantined targets and held-out records (``exclude_records``)
+    removed. Audio references and every other field stay as they are; the audio index is hard-linked."""
+    import os
+    import shutil
+
+    corrected = {d["text"]: d for d in decisions if d["decision"] == "corrected"}
+    quarantined = {d["text"] for d in decisions if d["decision"] == "quarantine"}
+    consistent = {d["text"]: d for d in decisions if d["decision"] == "consistent"}
+    holdout = {line.strip() for path in spec.get("exclude_records", [])
+               for line in Path(path).read_text().splitlines() if line.strip()}
+    targets = [{"dataset": spec["dataset"], "records": spec["records"], "audio_index": spec.get("audio_index", [])},
+               *spec.get("also_derive", [])]
+    summary = {}
+    for target in targets:
+        dataset, base = target["dataset"].split("@")
+        version = f"{base}-{recipe['derived_suffix']}"
+        out = Path(next(iter(target["records"].values()))).parents[2] / version
+        splits, removed, positive_ids = {}, [], defaultdict(list)
+        for split, path in target["records"].items():
+            stats, hours = Counter(), Counter()
+
+            def rows(path=path, stats=stats, hours=hours, removed=removed, positive_ids=positive_ids):
+                for row in gz_rows(Path(path)):
+                    duration = main_duration(row)
+                    text = (row.get("target") or "").strip() if row.get("language") == "zh" else None
+                    reason = "holdout" if row["id"] in holdout else "quarantine" if text in quarantined else None
+                    if reason:
+                        stats[f"removed_{reason}_records"] += 1
+                        hours[f"removed_{reason}_hours"] += duration
+                        removed.append(row["id"])
+                        continue
+                    if text in corrected:
+                        d = corrected[text]
+                        row = {**row, "target": d["corrected"], "metadata": {**row["metadata"], "context_correction": {
+                            "original_target": row["target"], "unit_id": d["unit_id"],
+                            "decisions": f"{recipe['dataset_id']}@{recipe['version']}"}}}
+                        stats["corrected_records"] += 1
+                        hours["corrected_hours"] += duration
+                    elif text in consistent:
+                        positive_ids[text].append(row["id"])
+                    stats["records"] += 1
+                    hours["duration_hours"] += duration
+                    yield row
+
+            write_jsonl(out / "records" / f"{split}.jsonl.gz", rows())
+            splits[split] = {**stats, **{k: round(v / 3600, 3) for k, v in hours.items()}}
+        scanned = {Path(p).name for p in target["records"].values()}
+        for path in sorted(Path(next(iter(target["records"].values()))).parent.glob("*.jsonl.gz")):
+            if path.name not in scanned:  # eval/test splits are not cleaned: hard-linked unchanged
+                link = out / "records" / path.name
+                if not link.exists():
+                    os.link(path, link)
+                splits[path.name.removesuffix(".jsonl.gz")] = "unchanged"
+        for path in target.get("audio_index", []):
+            link = out / "audio_index" / Path(path).name
+            link.parent.mkdir(parents=True, exist_ok=True)
+            if not link.exists():
+                os.link(path, link)
+        exclude_path = root / f"exclude-records-{target['dataset']}.txt"
+        exclude_path.write_text("".join(i + "\n" for i in removed))
+        derived = f"{dataset}@{version}"
+        if not removed and not any(isinstance(s, dict) and s.get("corrected_records") for s in splits.values()):
+            shutil.rmtree(out)  # nothing corrected or removed: the original version stays the one to train on
+            derived = None
+        summary[target["dataset"]] = {"derived": derived, "splits": splits,
+                                      "exclude_records": str(exclude_path), "exclude_record_count": len(removed)}
+        if target is targets[0]:  # real positives, with the training record IDs that carry them
+            positives = [{"unit_id": d["unit_id"], "text": d["text"], "explanations": d["explanations"],
+                          "dataset": derived or target["dataset"], "record_ids": positive_ids[text]}
+                         for text, d in consistent.items() if positive_ids[text]]
+            write_jsonl(root / "positives.jsonl", positives)
+            summary["positive_units"] = len(positives)
+    (root / "build.json").write_text(json.dumps(summary, ensure_ascii=False, indent=2))
+    print(json.dumps(summary, ensure_ascii=False, indent=2))
+
+
 def cmd_build(recipe, name, spec, root, args):
     """Derived lhotse version: corrected texts; quarantined windows and evaluation recordings removed.
     Also writes the training record IDs it removes, for use as ``exclude_records`` on the original version."""
@@ -564,6 +742,8 @@ def cmd_build(recipe, name, spec, root, args):
     pending = [d["unit_id"] for d in decisions if "audio_pending" in d["reasons"]]
     if pending:
         sys.exit(f"{len(pending)} windows still wait for the audio check, e.g. {pending[:3]}")
+    if spec["kind"] == "records":
+        return cmd_build_records(recipe, name, spec, root, decisions)
     fixes, dropped = segment_fixes(decisions)
     excluded = excluded_recordings(recipe, name)
     dataset, base = spec["dataset"].split("@")

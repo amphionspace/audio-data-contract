@@ -53,3 +53,104 @@ sources:
     supervisions: /workspace/data/datasets/wenetspeech_youtube/versions/l-20261014/supervisions/train.jsonl.gz
     recordings: /workspace/data/datasets/wenetspeech_youtube/versions/l-20261014/recordings/train.jsonl.gz
     reuse_windows: /workspace/data/datasets/context_correction_zh/source/v1-20261018/mined/wenetspeech_youtube/windows.jsonl.gz
+  # 音频记录来源：每条记录是一个训练样本，按目标文本判定（同文本的记录共用判定）；records 列出全部训练划分，派生版本照抄，只判中文
+  # audio：核对音频取哪里（primary 单人片段；mixture 混合窗口；mix_protocol 混音协议里目标说话人的干净源音频）
+  # exclude_records：ts_asr_real 留出的评测源录音，派生版本里一并去掉（记录 ID 不变，原名单照样可用）
+  emilia2_short:
+    kind: records
+    dataset: emilia2_short@short-20261014
+    records:
+      train_en: /workspace/data/datasets/emilia2_short/versions/short-20261014/records/train_en.jsonl.gz
+      train_zh: /workspace/data/datasets/emilia2_short/versions/short-20261014/records/train_zh.jsonl.gz
+    audio_index: [/workspace/data/datasets/emilia2_short/versions/short-20261014/audio_index/audio-index.jsonl.gz]
+    audio: primary
+    exclude_records: [/workspace/data/datasets/ts_asr_real/source/v2-20261013/excluded-records-emilia2_short-train_en.txt, /workspace/data/datasets/ts_asr_real/source/v2-20261013/excluded-records-emilia2_short-train_zh.txt]
+    # 同样的记录 ID 和文本，音频改读 Lance；没有音频索引
+    also_derive:
+    - dataset: emilia2_short@short-lance-20261023
+      records:
+        train_en: /workspace/data/datasets/emilia2_short/versions/short-lance-20261023/records/train_en.jsonl.gz
+        train_zh: /workspace/data/datasets/emilia2_short/versions/short-lance-20261023/records/train_zh.jsonl.gz
+  emilia2_dialog:
+    kind: records
+    dataset: emilia2_dialog@dialog-turn-taking-20261013-enroll
+    records:
+      train_2spk: /workspace/data/datasets/emilia2_dialog/versions/dialog-turn-taking-20261013-enroll/records/train_2spk.jsonl.gz
+      train_3spk: /workspace/data/datasets/emilia2_dialog/versions/dialog-turn-taking-20261013-enroll/records/train_3spk.jsonl.gz
+      train_neg: /workspace/data/datasets/emilia2_dialog/versions/dialog-turn-taking-20261013-enroll/records/train_neg.jsonl.gz
+    audio_index: [/workspace/data/datasets/emilia2_dialog/versions/dialog-turn-taking-20261013-enroll/audio_index/audio-index-flac.jsonl.gz]
+    audio: mixture
+    exclude_records: [/workspace/data/datasets/ts_asr_real/source/v2-20261013/excluded-records-emilia2_dialog-train_2spk.txt, /workspace/data/datasets/ts_asr_real/source/v2-20261013/excluded-records-emilia2_dialog-train_3spk.txt, /workspace/data/datasets/ts_asr_real/source/v2-20261013/excluded-records-emilia2_dialog-train_neg.txt]
+  emilia2_mix:
+    kind: records
+    dataset: emilia2_mix@mix-20261013
+    records:
+      train_2spk: /workspace/data/datasets/emilia2-mix/versions/mix-20261013/records/train_2spk.jsonl.gz
+      train_3spk: /workspace/data/datasets/emilia2-mix/versions/mix-20261013/records/train_3spk.jsonl.gz
+      train_neg: /workspace/data/datasets/emilia2-mix/versions/mix-20261013/records/train_neg.jsonl.gz
+    audio_index: [/workspace/data/datasets/emilia2-mix/versions/mix-20261013/audio_index/audio-index-flac.jsonl.gz]
+    audio: mix_protocol
+    mix_protocol: /workspace/data/datasets/emilia2-mix/versions/mix-20261013/supervision/protocol-*.jsonl.gz
+    exclude_records: [/workspace/data/datasets/ts_asr_real/source/v2-20261013/excluded-records-emilia2_mix-train_2spk.txt, /workspace/data/datasets/ts_asr_real/source/v2-20261013/excluded-records-emilia2_mix-train_3spk.txt, /workspace/data/datasets/ts_asr_real/source/v2-20261013/excluded-records-emilia2_mix-train_neg.txt]
+  # 会议（人工标注）：asr 与 turn-taking 两种版本文本不同，各自判定。
+  # audio_check: false：人工标注比 Qwen3-ASR 准，远场、电话和多人混合音频上 ASR 判不了（试跑 4 个音频不符全是 ASR 听错），不做音频核对
+  magicdata_ramc_asr:
+    kind: records
+    dataset: magicdata_ramc@asr-20261014
+    records:
+      train: /workspace/data/datasets/magicdata_ramc/versions/asr-20261014/records/train.jsonl.gz
+    audio_index: [/workspace/data/datasets/magicdata_ramc/versions/asr-20261014/audio_index/audio-index.jsonl.gz]
+    audio: primary
+    audio_check: false
+  aishell4_asr:
+    kind: records
+    dataset: aishell4@asr-20261014
+    records:
+      train: /workspace/data/datasets/aishell4/versions/asr-20261014/records/train.jsonl.gz
+    audio_index: [/workspace/data/datasets/aishell4/versions/asr-20261014/audio_index/audio-index.jsonl.gz]
+    audio: primary
+    audio_check: false
+  alimeeting_sdm_asr:
+    kind: records
+    dataset: alimeeting_sdm@asr-20261014
+    records:
+      train: /workspace/data/datasets/alimeeting_sdm/versions/asr-20261014/records/train.jsonl.gz
+    audio_index: [/workspace/data/datasets/alimeeting_sdm/versions/asr-20261014/audio_index/audio-index.jsonl.gz]
+    audio: primary
+    audio_check: false
+  magicdata_ramc_tt:
+    kind: records
+    dataset: magicdata_ramc@turn-taking-20261014
+    records:
+      train_2spk: /workspace/data/datasets/magicdata_ramc/versions/turn-taking-20261014/records/train_2spk.jsonl.gz
+      train_neg: /workspace/data/datasets/magicdata_ramc/versions/turn-taking-20261014/records/train_neg.jsonl.gz
+    audio_index: [/workspace/data/datasets/magicdata_ramc/versions/turn-taking-20261014/audio_index/audio-index.jsonl.gz]
+    audio: mixture
+    audio_check: false
+  aishell4_tt:
+    kind: records
+    dataset: aishell4@turn-taking-20261014
+    records:
+      train_2spk: /workspace/data/datasets/aishell4/versions/turn-taking-20261014/records/train_2spk.jsonl.gz
+      train_3spk: /workspace/data/datasets/aishell4/versions/turn-taking-20261014/records/train_3spk.jsonl.gz
+      train_neg: /workspace/data/datasets/aishell4/versions/turn-taking-20261014/records/train_neg.jsonl.gz
+    audio_index: [/workspace/data/datasets/aishell4/versions/turn-taking-20261014/audio_index/audio-index.jsonl.gz]
+    audio: mixture
+    audio_check: false
+  alimeeting_sdm_tt:
+    kind: records
+    dataset: alimeeting_sdm@turn-taking-20261014
+    records:
+      train_2spk: /workspace/data/datasets/alimeeting_sdm/versions/turn-taking-20261014/records/train_2spk.jsonl.gz
+      train_3spk: /workspace/data/datasets/alimeeting_sdm/versions/turn-taking-20261014/records/train_3spk.jsonl.gz
+      train_neg: /workspace/data/datasets/alimeeting_sdm/versions/turn-taking-20261014/records/train_neg.jsonl.gz
+    audio_index: [/workspace/data/datasets/alimeeting_sdm/versions/turn-taking-20261014/audio_index/audio-index.jsonl.gz]
+    audio: mixture
+    audio_check: false
+  vitw:
+    kind: lhotse
+    dataset: vitw@2m-20261013
+    split: train
+    language: zh   # 中英混合，只扫中文
+    supervisions: /workspace/data/datasets/vitw/versions/2m-20261013/train_supervisions/vitw_2m_supervisions_train.jsonl.gz
+    recordings: /workspace/data/datasets/vitw/versions/2m-20261013/train_recordings/vitw_2m_recordings_train.jsonl.gz

@@ -1,7 +1,8 @@
 # 上下文纠偏清洗（2026-11-10 起）：在 AmphionASR v4 配方的中文口语训练来源里，找出说话人讲字怎么写的句子
 # （组词、拆字、偏旁、"不是 X 是 Y"），核对标注是否与说明一致：一致的单列为正例，能可靠改正的改正，拿不准的隔离。
 # context_correction_clean_zh 存逐窗口判定清单；改正结果以各来源的派生版本（<原版本>-ctxclean-20261110）发布，旧版本不动。
-# 已完成：wenetspeech_podcast。其余来源进行中，进度见状态文件。
+# 已完成：wenetspeech_podcast；会议 magicdata_ramc / aishell4 / alimeeting_sdm（asr 与 turn-taking，alimeeting 无改动、不出派生版本）。
+# 其余来源进行中，进度见状态文件。
 - schema_version: dataset-catalog/2.0
   dataset_id: context_correction_clean_zh
   version: v1-20261110
@@ -51,6 +52,141 @@
     metadata:
       record_count: 87430
       description: 继续用 wenetspeech_podcast@l-20261014 训练时的 exclude_records 名单：评测录音 83,220 段和隔离窗口 4,210 段（不含改正，改正要用派生版本）
+  - name: magicdata_ramc_asr_decisions
+    kind: jsonl-metadata
+    root_alias: aidc_data
+    relative_path: datasets/context_correction_clean_zh/versions/v1-20261110/magicdata_ramc_asr/decisions.jsonl
+    expected_bytes: 26061
+    sha256: 08eafdbd5c3790832e7dda6b33c02b84e148607a23c79dd5e3a261435b21d82c
+    metadata:
+      record_count: 21
+      description: magicdata_ramc_asr 的逐段判定（按不同目标文本），含原文、改后文本、两个判定模型的说明与理由
+  - name: magicdata_ramc_asr_positives
+    kind: jsonl-metadata
+    root_alias: aidc_data
+    relative_path: datasets/context_correction_clean_zh/versions/v1-20261110/magicdata_ramc_asr/positives.jsonl
+    expected_bytes: 6475
+    sha256: 55f9dd82b5089376fdeee7fc5d64e3a72013e92f10e7775f033c0ab2524147af
+    metadata:
+      record_count: 13
+      description: 真实正例：原标注已与说话人的写法说明一致，附训练记录 ID
+  - name: magicdata_ramc_asr_exclude_records
+    kind: record-id-list
+    root_alias: aidc_data
+    relative_path: datasets/context_correction_clean_zh/versions/v1-20261110/magicdata_ramc_asr/exclude-records-magicdata_ramc@asr-20261014.txt
+    expected_bytes: 324
+    sha256: 6098b7c083f14bd57d72c467533896c4782557a539d45dc3fbf3ceda9828850e
+    metadata:
+      record_count: 6
+      description: 继续用 magicdata_ramc@asr-20261014 训练时的 exclude_records 名单：隔离文本的记录（不含改正，改正要用派生版本）
+  - name: aishell4_asr_decisions
+    kind: jsonl-metadata
+    root_alias: aidc_data
+    relative_path: datasets/context_correction_clean_zh/versions/v1-20261110/aishell4_asr/decisions.jsonl
+    expected_bytes: 5649
+    sha256: 01c7d97d196cc40fcec7b19f61c67f56f58fafac3a883b218623954ff7abb4fd
+    metadata:
+      record_count: 4
+      description: aishell4_asr 的逐段判定（按不同目标文本），含原文、改后文本、两个判定模型的说明与理由
+  - name: aishell4_asr_positives
+    kind: jsonl-metadata
+    root_alias: aidc_data
+    relative_path: datasets/context_correction_clean_zh/versions/v1-20261110/aishell4_asr/positives.jsonl
+    expected_bytes: 593
+    sha256: 3a8579e7c4373e4a31a02f266de88ef5a18cb12fad2ec44ff9aec4d344572f5a
+    metadata:
+      record_count: 1
+      description: 真实正例：原标注已与说话人的写法说明一致，附训练记录 ID
+  - name: aishell4_asr_exclude_records
+    kind: record-id-list
+    root_alias: aidc_data
+    relative_path: datasets/context_correction_clean_zh/versions/v1-20261110/aishell4_asr/exclude-records-aishell4@asr-20261014.txt
+    expected_bytes: 40
+    sha256: 6459aa2121893a8214f2ef48d6c88543c6874530b2bbd3b85ea3cb6dffee9c66
+    metadata:
+      record_count: 1
+      description: 继续用 aishell4@asr-20261014 训练时的 exclude_records 名单：隔离文本的记录（不含改正，改正要用派生版本）
+  - name: alimeeting_sdm_asr_decisions
+    kind: jsonl-metadata
+    root_alias: aidc_data
+    relative_path: datasets/context_correction_clean_zh/versions/v1-20261110/alimeeting_sdm_asr/decisions.jsonl
+    expected_bytes: 5141
+    sha256: 3deb6bfaca3e440707af4671bc9caa0d5b5a59df77912cd7d8a6b235bb5ab45b
+    metadata:
+      record_count: 4
+      description: alimeeting_sdm_asr 的逐段判定（按不同目标文本），含原文、改后文本、两个判定模型的说明与理由
+  - name: alimeeting_sdm_asr_positives
+    kind: jsonl-metadata
+    root_alias: aidc_data
+    relative_path: datasets/context_correction_clean_zh/versions/v1-20261110/alimeeting_sdm_asr/positives.jsonl
+    expected_bytes: 1863
+    sha256: 8fdc8627d098db0cc2d64d5340ce2e6afef64d1d2a903e3c4413d7018737c957
+    metadata:
+      record_count: 4
+      description: 真实正例：原标注已与说话人的写法说明一致，附训练记录 ID
+  - name: magicdata_ramc_tt_decisions
+    kind: jsonl-metadata
+    root_alias: aidc_data
+    relative_path: datasets/context_correction_clean_zh/versions/v1-20261110/magicdata_ramc_tt/decisions.jsonl
+    expected_bytes: 28465
+    sha256: 9251b4d68440455d911ad51dd463fb061a7b0ec3f4587b3138dcde05a767fd19
+    metadata:
+      record_count: 15
+      description: magicdata_ramc_tt 的逐段判定（按不同目标文本），含原文、改后文本、两个判定模型的说明与理由
+  - name: magicdata_ramc_tt_positives
+    kind: jsonl-metadata
+    root_alias: aidc_data
+    relative_path: datasets/context_correction_clean_zh/versions/v1-20261110/magicdata_ramc_tt/positives.jsonl
+    expected_bytes: 6348
+    sha256: f40d09dab4dacd78d253503b0c22f207780fb8f89ae9603fd4e2a04c3fad00e2
+    metadata:
+      record_count: 8
+      description: 真实正例：原标注已与说话人的写法说明一致，附训练记录 ID
+  - name: magicdata_ramc_tt_exclude_records
+    kind: record-id-list
+    root_alias: aidc_data
+    relative_path: datasets/context_correction_clean_zh/versions/v1-20261110/magicdata_ramc_tt/exclude-records-magicdata_ramc@turn-taking-20261014.txt
+    expected_bytes: 313
+    sha256: 8cea17883e8d9f467735d00a61ff632e4e81f78044eeed4b447daeea4a2fc1f8
+    metadata:
+      record_count: 4
+      description: 继续用 magicdata_ramc@turn-taking-20261014 训练时的 exclude_records 名单：隔离文本的记录（不含改正，改正要用派生版本）
+  - name: aishell4_tt_decisions
+    kind: jsonl-metadata
+    root_alias: aidc_data
+    relative_path: datasets/context_correction_clean_zh/versions/v1-20261110/aishell4_tt/decisions.jsonl
+    expected_bytes: 3075
+    sha256: 5119f222c6bf6bf232653d9ece2ad72d53a25a7922fbccd84c30a2ee9469b29c
+    metadata:
+      record_count: 2
+      description: aishell4_tt 的逐段判定（按不同目标文本），含原文、改后文本、两个判定模型的说明与理由
+  - name: aishell4_tt_exclude_records
+    kind: record-id-list
+    root_alias: aidc_data
+    relative_path: datasets/context_correction_clean_zh/versions/v1-20261110/aishell4_tt/exclude-records-aishell4@turn-taking-20261014.txt
+    expected_bytes: 114
+    sha256: 39213a040d12b1b4538044ff67032eaa10d3d628ca6f67f57c6b575c8c8ac2fc
+    metadata:
+      record_count: 2
+      description: 继续用 aishell4@turn-taking-20261014 训练时的 exclude_records 名单：隔离文本的记录（不含改正，改正要用派生版本）
+  - name: alimeeting_sdm_tt_decisions
+    kind: jsonl-metadata
+    root_alias: aidc_data
+    relative_path: datasets/context_correction_clean_zh/versions/v1-20261110/alimeeting_sdm_tt/decisions.jsonl
+    expected_bytes: 5424
+    sha256: 66b94c9e6e0c36f75b658af5f4592f5e3844132278528d690981dd858e2ed579
+    metadata:
+      record_count: 4
+      description: alimeeting_sdm_tt 的逐段判定（按不同目标文本），含原文、改后文本、两个判定模型的说明与理由
+  - name: alimeeting_sdm_tt_positives
+    kind: jsonl-metadata
+    root_alias: aidc_data
+    relative_path: datasets/context_correction_clean_zh/versions/v1-20261110/alimeeting_sdm_tt/positives.jsonl
+    expected_bytes: 1993
+    sha256: f1ff6c4bfce0fe17b72b9284a7f5f08235b601ebe82f5fde45dd99ba7fa3743c
+    metadata:
+      record_count: 4
+      description: 真实正例：原标注已与说话人的写法说明一致，附训练记录 ID
   splits:
     train:
       artifacts:
@@ -58,12 +194,27 @@
         - preparation_state
         decisions:
         - wenetspeech_podcast_decisions
+        - magicdata_ramc_asr_decisions
+        - aishell4_asr_decisions
+        - alimeeting_sdm_asr_decisions
+        - magicdata_ramc_tt_decisions
+        - aishell4_tt_decisions
+        - alimeeting_sdm_tt_decisions
         positives:
         - wenetspeech_podcast_positives
+        - magicdata_ramc_asr_positives
+        - aishell4_asr_positives
+        - alimeeting_sdm_asr_positives
+        - magicdata_ramc_tt_positives
+        - alimeeting_sdm_tt_positives
         review_rejected:
         - wenetspeech_podcast_review_rejected
         exclude_records:
         - wenetspeech_podcast_exclude_records
+        - magicdata_ramc_asr_exclude_records
+        - aishell4_asr_exclude_records
+        - magicdata_ramc_tt_exclude_records
+        - aishell4_tt_exclude_records
       provenance:
         preparation_status: building
   provenance:
@@ -78,7 +229,11 @@
       一致的列为正例；两边改法完全相同、只改写法不改读音、说明部分读音经 Qwen3-ASR 核对的才改正；其余隔离、不进训练。
       本版本只存判定清单（逐条判定与依据、正例、隔离名单、统计），不是训练集；改正后的训练数据以各来源的派生版本另行登记。
       context_correction_zh 评测用过的 190 条 WenetSpeech 播客录音（83,220 段、48.9 h）一并排除。
-      wenetspeech_podcast 已完成（派生版本 wenetspeech_podcast@l-20261014-ctxclean-20261110），其余来源进行中。
+      wenetspeech_podcast 已完成（派生版本 wenetspeech_podcast@l-20261014-ctxclean-20261110）。
+      会议来源（人工标注）已完成：不做 Qwen3-ASR 音频核对（远场、电话音频上 ASR 不如人工标注准，试跑 4 个音频不符全是 ASR 听错）；
+      派生版本 magicdata_ramc@asr-20261014-ctxclean-20261110、magicdata_ramc@turn-taking-20261014-ctxclean-20261110、
+      aishell4@asr-20261014-ctxclean-20261110、aishell4@turn-taking-20261014-ctxclean-20261110；alimeeting_sdm 两个版本没有改动或隔离，继续用原版本。
+      其余来源进行中。
     source: amphionasr_v4 recipe zh spontaneous sources
     run_dir: /workspace/workspace/mingdong/data/amphiondata/ctx-clean-zh-20261110
   recipe_parameters:
@@ -157,5 +312,585 @@
     owner: mingdong
     snapshot_date: '2026-11-11'
     source: wenetspeech_podcast@l-20261014
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/ctx-clean-zh-20261110
+    quality_status: spelling_explanations_checked
+- schema_version: dataset-catalog/2.0
+  dataset_id: magicdata_ramc
+  version: asr-20261014-ctxclean-20261110
+  languages:
+  - zh
+  tasks:
+  - asr
+  aliases: []
+  artifacts:
+  - name: train
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/magicdata_ramc/versions/asr-20261014-ctxclean-20261110/records/train.jsonl.gz
+    expected_bytes: 6741154
+    sha256: 7afaf43e8b1898bbae72f141f95b05a45325b091ba5cef84e4f3f5faa3807773
+    metadata:
+      record_count: 154189
+  - name: eval
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/magicdata_ramc/versions/asr-20261014-ctxclean-20261110/records/eval.jsonl.gz
+    expected_bytes: 497126
+    sha256: 7c7c3423495c4922c8945d29a2713f42c7f41d92219a85849411c56deb92fba7
+    metadata:
+      record_count: 9761
+  - name: test
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/magicdata_ramc/versions/asr-20261014-ctxclean-20261110/records/test.jsonl.gz
+    expected_bytes: 1069641
+    sha256: 550172f2e7a4a2e64ac6955498d50bcdcb68416f9fa9c6c0eb0eb3127c52c8c4
+    metadata:
+      record_count: 21386
+  - name: audio_index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/magicdata_ramc/versions/asr-20261014-ctxclean-20261110/audio_index/audio-index.jsonl.gz
+    expected_bytes: 20977
+    sha256: 24427d0c166f8e0c71a86aa13856d288d15038fdd3f5598716761aff45237e2d
+    metadata:
+      record_count: 351
+  - name: record_index
+    kind: lance-record-index
+    root_alias: aidc_data
+    relative_path: datasets/magicdata_ramc/versions/asr-20261014-ctxclean-20261110/record_index/index.json
+    expected_bytes: 1077
+    sha256: bae4b3375206938ae5bd2b03710a030f92781be309e32143881356595cf243dd
+    metadata:
+      snapshot_version: 13
+      rows: 185336
+      schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
+  splits:
+    train:
+      group: train
+      artifacts:
+        records:
+        - train
+        audio_index:
+        - audio_index
+        records_lance:
+        - record_index
+      statistics:
+        records: 154189
+        removed_quarantine_records: 6
+        corrected_records: 1
+        duration_hours: 123.987
+        removed_quarantine_hours: 0.005
+        corrected_hours: 0.001
+        duration_basis: sum of supervision duration on channel 0; overlapping speakers count once per supervision
+    eval:
+      group: eval
+      artifacts:
+        records:
+        - eval
+        audio_index:
+        - audio_index
+        records_lance:
+        - record_index
+      statistics:
+        records: 9761
+        duration_hours: 8.115837777777772
+        duration_basis: sum of supervision duration on channel 0; overlapping speakers count once per supervision
+        languages:
+          zh: 9761
+    test:
+      group: test
+      artifacts:
+        records:
+        - test
+        audio_index:
+        - audio_index
+        records_lance:
+        - record_index
+      statistics:
+        records: 21386
+        duration_hours: 16.882299722222232
+        duration_basis: sum of supervision duration on channel 0; overlapping speakers count once per supervision
+        languages:
+          zh: 21386
+  derived_from: magicdata_ramc@asr-20261014
+  recipe_parameters:
+    decisions: context_correction_clean_zh@v1-20261110 magicdata_ramc_asr_decisions
+    corrected: 判为 corrected 的中文目标文本换成改后文本，metadata.context_correction 留原文、判定编号和判定清单
+    removed: 隔离文本的全部记录
+    unchanged: 其余记录、音频引用和音频索引与原版本逐字相同；没清洗的 eval/test 划分原样硬链接
+  provenance:
+    summary: MagicData-RAMC，按说字写法改正
+    description: 在 magicdata_ramc@asr-20261014 上做的上下文纠偏清洗：说话人讲字怎么写（组词、拆字、偏旁、否定对比）而标注写成同音别字的，按说明改正；拿不准的整条去掉。判定依据见 context_correction_clean_zh@v1-20261110。
+    owner: mingdong
+    snapshot_date: '2026-11-11'
+    source: magicdata_ramc@asr-20261014
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/ctx-clean-zh-20261110
+    quality_status: spelling_explanations_checked
+- schema_version: dataset-catalog/2.0
+  dataset_id: aishell4
+  version: asr-20261014-ctxclean-20261110
+  languages:
+  - zh
+  tasks:
+  - asr
+  aliases: []
+  artifacts:
+  - name: train
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/aishell4/versions/asr-20261014-ctxclean-20261110/records/train.jsonl.gz
+    expected_bytes: 4563179
+    sha256: 41097d4b378ed3fd4b5f549dca68da1ede2bb24851370e0cf51ef92830796cae
+    metadata:
+      record_count: 96998
+  - name: test
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/aishell4/versions/asr-20261014-ctxclean-20261110/records/test.jsonl.gz
+    expected_bytes: 576689
+    sha256: a108b8cb76615ec6bf7cf3ce5da13cac9b33b82984bc18ed9d0b7987248edb72
+    metadata:
+      record_count: 10093
+  - name: audio_index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/aishell4/versions/asr-20261014-ctxclean-20261110/audio_index/audio-index.jsonl.gz
+    expected_bytes: 13978
+    sha256: 7740f79f34264edad30ceefa593cf078be42e3c6100384217d7d1ef37f5333f5
+    metadata:
+      record_count: 209
+  - name: record_index
+    kind: lance-record-index
+    root_alias: aidc_data
+    relative_path: datasets/aishell4/versions/asr-20261014-ctxclean-20261110/record_index/index.json
+    expected_bytes: 903
+    sha256: 138ca823d49461aaf45e158d2da670e2e0a7a61c111d683ea06746f217c66f8c
+    metadata:
+      snapshot_version: 13
+      rows: 107091
+      schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
+  splits:
+    train:
+      group: train
+      artifacts:
+        records:
+        - train
+        audio_index:
+        - audio_index
+        records_lance:
+        - record_index
+      statistics:
+        records: 96998
+        corrected_records: 1
+        removed_quarantine_records: 1
+        duration_hours: 105.359
+        corrected_hours: 0.003
+        removed_quarantine_hours: 0.002
+        duration_basis: sum of supervision duration on channel 0; overlapping speakers count once per supervision
+    test:
+      group: test
+      artifacts:
+        records:
+        - test
+        audio_index:
+        - audio_index
+        records_lance:
+        - record_index
+      statistics:
+        records: 10093
+        duration_hours: 12.052109694444427
+        duration_basis: sum of supervision duration on channel 0; overlapping speakers count once per supervision
+        languages:
+          zh: 10093
+  derived_from: aishell4@asr-20261014
+  recipe_parameters:
+    decisions: context_correction_clean_zh@v1-20261110 aishell4_asr_decisions
+    corrected: 判为 corrected 的中文目标文本换成改后文本，metadata.context_correction 留原文、判定编号和判定清单
+    removed: 隔离文本的全部记录
+    unchanged: 其余记录、音频引用和音频索引与原版本逐字相同；没清洗的 eval/test 划分原样硬链接
+  provenance:
+    summary: AISHELL-4 会议，按说字写法改正
+    description: 在 aishell4@asr-20261014 上做的上下文纠偏清洗：说话人讲字怎么写（组词、拆字、偏旁、否定对比）而标注写成同音别字的，按说明改正；拿不准的整条去掉。判定依据见 context_correction_clean_zh@v1-20261110。
+    owner: mingdong
+    snapshot_date: '2026-11-11'
+    source: aishell4@asr-20261014
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/ctx-clean-zh-20261110
+    quality_status: spelling_explanations_checked
+- schema_version: dataset-catalog/2.0
+  dataset_id: magicdata_ramc
+  version: turn-taking-20261014-ctxclean-20261110
+  languages:
+  - zh
+  tasks:
+  - ts_asr
+  aliases: []
+  artifacts:
+  - name: train_2spk
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/magicdata_ramc/versions/turn-taking-20261014-ctxclean-20261110/records/train_2spk.jsonl.gz
+    expected_bytes: 4173038
+    sha256: 9cb846e07631d570098e88b4bc0e848bc6a2ff67c597f10faf0bb37b50c623f7
+    metadata:
+      record_count: 29504
+  - name: train_neg
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/magicdata_ramc/versions/turn-taking-20261014-ctxclean-20261110/records/train_neg.jsonl.gz
+    expected_bytes: 1804995
+    sha256: f90aec20c744d01eef44aa2a533a16a4d25a88db3209804a56bf6202316ad3b2
+    metadata:
+      record_count: 15372
+  - name: eval_2spk
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/magicdata_ramc/versions/turn-taking-20261014-ctxclean-20261110/records/eval_2spk.jsonl.gz
+    expected_bytes: 309681
+    sha256: c456fd3ac70ab198b098160e557796fe3d14d10f260253711cc6d24857e978ee
+    metadata:
+      record_count: 1814
+  - name: eval_neg
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/magicdata_ramc/versions/turn-taking-20261014-ctxclean-20261110/records/eval_neg.jsonl.gz
+    expected_bytes: 107614
+    sha256: fd0e63d8929fc7469d8c5aba4b58ac9ad12d8617efb756e100abdfa0a7e10a3a
+    metadata:
+      record_count: 965
+  - name: test_2spk
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/magicdata_ramc/versions/turn-taking-20261014-ctxclean-20261110/records/test_2spk.jsonl.gz
+    expected_bytes: 689688
+    sha256: 18921058d4a88293c0c6334d73173f7a0bfca244689c0d116e03c92e6962a66b
+    metadata:
+      record_count: 4063
+  - name: test_neg
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/magicdata_ramc/versions/turn-taking-20261014-ctxclean-20261110/records/test_neg.jsonl.gz
+    expected_bytes: 264893
+    sha256: b1081e7cf2b900850e49051f6e88470c2465eecac97f6d5962ae222bdbf1c184
+    metadata:
+      record_count: 2123
+  - name: audio_index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/magicdata_ramc/versions/turn-taking-20261014-ctxclean-20261110/audio_index/audio-index.jsonl.gz
+    expected_bytes: 20977
+    sha256: 24427d0c166f8e0c71a86aa13856d288d15038fdd3f5598716761aff45237e2d
+    metadata:
+      record_count: 351
+  - name: record_index
+    kind: lance-record-index
+    root_alias: aidc_data
+    relative_path: datasets/magicdata_ramc/versions/turn-taking-20261014-ctxclean-20261110/record_index/index.json
+    expected_bytes: 1639
+    sha256: 2e13ba847a72baa20a3ec498cf628899bbcea83edaa3e69b7f7b8943ce6fcf0c
+    metadata:
+      snapshot_version: 13
+      rows: 53841
+      schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
+  splits:
+    train_2spk:
+      group: train
+      artifacts:
+        records:
+        - train_2spk
+        audio_index:
+        - audio_index
+        records_lance:
+        - record_index
+      statistics:
+        records: 29504
+        removed_quarantine_records: 4
+        corrected_records: 1
+        duration_hours: 221.853
+        removed_quarantine_hours: 0.031
+        corrected_hours: 0.008
+        duration_basis: sum of mixture duration per target example; excludes enrollment; repeated mixtures count once per example
+    train_neg:
+      group: train
+      artifacts:
+        records:
+        - train_neg
+        audio_index:
+        - audio_index
+        records_lance:
+        - record_index
+      statistics:
+        records: 15372
+        duration_hours: 115.208
+        duration_basis: sum of mixture duration per target example; excludes enrollment; repeated mixtures count once per example
+    eval_2spk:
+      group: eval
+      artifacts:
+        records:
+        - eval_2spk
+        audio_index:
+        - audio_index
+        records_lance:
+        - record_index
+      statistics:
+        records: 1814
+        negative_records: 0
+        duration_hours: 13.45221499999995
+        duration_basis: sum of mixture duration per target example; excludes enrollment; repeated mixtures count once per example
+        unique_mixture_count: 965
+        unique_mixture_duration_hours: 7.12348722222222
+        languages:
+          zh: 1814
+    eval_neg:
+      group: eval
+      artifacts:
+        records:
+        - eval_neg
+        audio_index:
+        - audio_index
+        records_lance:
+        - record_index
+      statistics:
+        records: 965
+        negative_records: 965
+        duration_hours: 7.12348722222222
+        duration_basis: sum of mixture duration per target example; excludes enrollment; repeated mixtures count once per example
+        unique_mixture_count: 965
+        unique_mixture_duration_hours: 7.12348722222222
+        languages:
+          zh: 965
+    test_2spk:
+      group: test
+      artifacts:
+        records:
+        - test_2spk
+        audio_index:
+        - audio_index
+        records_lance:
+        - record_index
+      statistics:
+        records: 4063
+        negative_records: 0
+        duration_hours: 30.17846083333336
+        duration_basis: sum of mixture duration per target example; excludes enrollment; repeated mixtures count once per example
+        unique_mixture_count: 2123
+        unique_mixture_duration_hours: 15.693224722222201
+        languages:
+          zh: 4063
+    test_neg:
+      group: test
+      artifacts:
+        records:
+        - test_neg
+        audio_index:
+        - audio_index
+        records_lance:
+        - record_index
+      statistics:
+        records: 2123
+        negative_records: 2123
+        duration_hours: 15.693224722222201
+        duration_basis: sum of mixture duration per target example; excludes enrollment; repeated mixtures count once per example
+        unique_mixture_count: 2123
+        unique_mixture_duration_hours: 15.693224722222201
+        languages:
+          zh: 2123
+  derived_from: magicdata_ramc@turn-taking-20261014
+  recipe_parameters:
+    decisions: context_correction_clean_zh@v1-20261110 magicdata_ramc_tt_decisions
+    corrected: 判为 corrected 的中文目标文本换成改后文本，metadata.context_correction 留原文、判定编号和判定清单
+    removed: 隔离文本的全部记录
+    unchanged: 其余记录、音频引用和音频索引与原版本逐字相同；没清洗的 eval/test 划分原样硬链接
+  provenance:
+    summary: RAMC 轮流说话，按说字写法改正
+    description: 在 magicdata_ramc@turn-taking-20261014 上做的上下文纠偏清洗：说话人讲字怎么写（组词、拆字、偏旁、否定对比）而标注写成同音别字的，按说明改正；拿不准的整条去掉。判定依据见 context_correction_clean_zh@v1-20261110。
+    owner: mingdong
+    snapshot_date: '2026-11-11'
+    source: magicdata_ramc@turn-taking-20261014
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/ctx-clean-zh-20261110
+    quality_status: spelling_explanations_checked
+- schema_version: dataset-catalog/2.0
+  dataset_id: aishell4
+  version: turn-taking-20261014-ctxclean-20261110
+  languages:
+  - zh
+  tasks:
+  - ts_asr
+  aliases: []
+  artifacts:
+  - name: train_2spk
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/aishell4/versions/turn-taking-20261014-ctxclean-20261110/records/train_2spk.jsonl.gz
+    expected_bytes: 1491357
+    sha256: 43ce4008c5a6b64c7529a9ebba2188ce3e8429d1cf51d012fd8603e7624fd97e
+    metadata:
+      record_count: 10506
+  - name: train_3spk
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/aishell4/versions/turn-taking-20261014-ctxclean-20261110/records/train_3spk.jsonl.gz
+    expected_bytes: 2336536
+    sha256: d3f9da1c674e0b3bcca601584650343c8ce62eadedfa606b53692b6f8b758836
+    metadata:
+      record_count: 21923
+  - name: train_neg
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/aishell4/versions/turn-taking-20261014-ctxclean-20261110/records/train_neg.jsonl.gz
+    expected_bytes: 1003920
+    sha256: fc6977965bf0862febc46ab5d083b9f655a5e1e68e0c7c13ae9b8ff07265dfea
+    metadata:
+      record_count: 14128
+  - name: test_2spk
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/aishell4/versions/turn-taking-20261014-ctxclean-20261110/records/test_2spk.jsonl.gz
+    expected_bytes: 150509
+    sha256: 6b0ba4b1af6bf760afd49ab0be4c95d27d6b5176e9c75423efb2aac0638f6dbe
+    metadata:
+      record_count: 857
+  - name: test_3spk
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/aishell4/versions/turn-taking-20261014-ctxclean-20261110/records/test_3spk.jsonl.gz
+    expected_bytes: 190545
+    sha256: e77a1bd674a19d4da8068ba2dcbb0fde62c2bff298bb9da75137829f01c0a3df
+    metadata:
+      record_count: 1367
+  - name: test_neg
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/aishell4/versions/turn-taking-20261014-ctxclean-20261110/records/test_neg.jsonl.gz
+    expected_bytes: 93058
+    sha256: ccfdea92616068305962d03ab608c0d81740b1d851ff2d85186276830a46a351
+    metadata:
+      record_count: 1002
+  - name: audio_index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/aishell4/versions/turn-taking-20261014-ctxclean-20261110/audio_index/audio-index.jsonl.gz
+    expected_bytes: 13978
+    sha256: 7740f79f34264edad30ceefa593cf078be42e3c6100384217d7d1ef37f5333f5
+    metadata:
+      record_count: 209
+  - name: record_index
+    kind: lance-record-index
+    root_alias: aidc_data
+    relative_path: datasets/aishell4/versions/turn-taking-20261014-ctxclean-20261110/record_index/index.json
+    expected_bytes: 1638
+    sha256: 3e75e972aea7fab6dc85dcac9d79738a18df2570fe32996d60e12fbdf56d59b4
+    metadata:
+      snapshot_version: 13
+      rows: 49783
+      schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
+  splits:
+    train_2spk:
+      group: train
+      artifacts:
+        records:
+        - train_2spk
+        audio_index:
+        - audio_index
+        records_lance:
+        - record_index
+      statistics:
+        records: 10506
+        duration_hours: 73.879
+        duration_basis: sum of mixture duration per target example; excludes enrollment; repeated mixtures count once per example
+    train_3spk:
+      group: train
+      artifacts:
+        records:
+        - train_3spk
+        audio_index:
+        - audio_index
+        records_lance:
+        - record_index
+      statistics:
+        records: 21923
+        removed_quarantine_records: 2
+        duration_hours: 135.971
+        removed_quarantine_hours: 0.013
+        duration_basis: sum of mixture duration per target example; excludes enrollment; repeated mixtures count once per example
+    train_neg:
+      group: train
+      artifacts:
+        records:
+        - train_neg
+        audio_index:
+        - audio_index
+        records_lance:
+        - record_index
+      statistics:
+        records: 14128
+        duration_hours: 91.374
+        duration_basis: sum of mixture duration per target example; excludes enrollment; repeated mixtures count once per example
+    test_2spk:
+      group: test
+      artifacts:
+        records:
+        - test_2spk
+        audio_index:
+        - audio_index
+        records_lance:
+        - record_index
+      statistics:
+        records: 857
+        negative_records: 0
+        duration_hours: 6.07265794166667
+        duration_basis: sum of mixture duration per target example; excludes enrollment; repeated mixtures count once per example
+        unique_mixture_count: 466
+        unique_mixture_duration_hours: 3.2974292472222237
+        languages:
+          zh: 857
+    test_3spk:
+      group: test
+      artifacts:
+        records:
+        - test_3spk
+        audio_index:
+        - audio_index
+        records_lance:
+        - record_index
+      statistics:
+        records: 1367
+        negative_records: 0
+        duration_hours: 8.459919674999991
+        duration_basis: sum of mixture duration per target example; excludes enrollment; repeated mixtures count once per example
+        unique_mixture_count: 536
+        unique_mixture_duration_hours: 3.232495183333333
+        languages:
+          zh: 1367
+    test_neg:
+      group: test
+      artifacts:
+        records:
+        - test_neg
+        audio_index:
+        - audio_index
+        records_lance:
+        - record_index
+      statistics:
+        records: 1002
+        negative_records: 1002
+        duration_hours: 6.52992443055556
+        duration_basis: sum of mixture duration per target example; excludes enrollment; repeated mixtures count once per example
+        unique_mixture_count: 1002
+        unique_mixture_duration_hours: 6.52992443055556
+        languages:
+          zh: 1002
+  derived_from: aishell4@turn-taking-20261014
+  recipe_parameters:
+    decisions: context_correction_clean_zh@v1-20261110 aishell4_tt_decisions
+    corrected: 判为 corrected 的中文目标文本换成改后文本，metadata.context_correction 留原文、判定编号和判定清单
+    removed: 隔离文本的全部记录
+    unchanged: 其余记录、音频引用和音频索引与原版本逐字相同；没清洗的 eval/test 划分原样硬链接
+  provenance:
+    summary: AISHELL-4 轮流说话，去掉存疑说字句
+    description: 在 aishell4@turn-taking-20261014 上做的上下文纠偏清洗：说话人讲字怎么写（组词、拆字、偏旁、否定对比）而标注写成同音别字的，按说明改正；拿不准的整条去掉。判定依据见 context_correction_clean_zh@v1-20261110。
+    owner: mingdong
+    snapshot_date: '2026-11-11'
+    source: aishell4@turn-taking-20261014
     run_dir: /workspace/workspace/mingdong/data/amphiondata/ctx-clean-zh-20261110
     quality_status: spelling_explanations_checked
