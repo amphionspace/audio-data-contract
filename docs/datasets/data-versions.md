@@ -2303,12 +2303,14 @@ AISHELL-1、LibriSpeech 合成的多人对话
 
 —
 
-语言：en、zh · 任务：目标说话人语音识别
+语言：en、es、zh · 任务：目标说话人语音识别
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
+| [ts_asr_hotwords@es-v1-20261111](../../catalog/ts_asr_hotwords.yaml#L145) | — | 未登记 | 没有 |
 | [ts_asr_hotwords@v1-20261102](../../catalog/ts_asr_hotwords.yaml#L2) | — | 未登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_hotwords/` |
 
+- `ts_asr_hotwords@es-v1-20261111`：西班牙语 TS-ASR + 热词评测集：从 ts-asr-benchmark-es@v1-20261110（ts_asr_benchmark@es-v1-20261110，Common Voice es dev）派生，做法与 v1-20261102（中英）相同：沿用原音频与目标，记录 id 加 es 前缀；hotwords = 目标说话人转写里的热词；metadata.bias_lists：random = 正确词 + 随机词共 10 个，interferer = 正确词 + 其他说话人说出的热词 + 随机词共 20 个（只在有人说了热词时给）；抽样同 v1。热词由 amphiondata 的热词提取提示词经 Qwen3.8-27B 标注并复核（label_hotwords.py），词必须在原文里出现；原始标注随版本存为 hotword-labels.jsonl（另含 CV / FLEURS / MLS es test 的转写标注，供普通 ASR 热词评测）。一个 split：es-synthetic 5,360
 - `ts_asr_hotwords@v1-20261102`：TS-ASR + 热词评测集：从 ts-asr-benchmark@v12-20261022（中文）与 ts-asr-benchmark-en@v1-20261031（英文）的记录派生，沿用原音频（audio-index 指向源文件）与目标；记录 id 加语言前缀。hotwords = 目标说话人转写里的热词；metadata.bias_lists：random = 正确词 + 随机词共 10 个，interferer = 正确词 + 其他说话人说出的热词 + 随机词共 20 个（只在有人说了热词时给）；metadata.distractor_kinds 标出 interferer / random。抽样：含目标热词的记录全留，只有其他说话人热词的留 1/4，两者都没有的留 1/8。热词由 amphiondata 的热词提取提示词经 Qwen3.8-27B 标注并复核，词必须在原文里出现。四个 split：zh-synthetic 7,794、zh-real 243、en-synthetic 4,126、en-real 220
 
 ### ts_asr_nearshort

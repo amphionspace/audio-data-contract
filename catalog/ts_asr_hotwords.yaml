@@ -142,3 +142,66 @@
     interferer_list: 20
     keep_interferer_only: 1/4
     keep_plain: 1/8
+- schema_version: dataset-catalog/2.0
+  dataset_id: ts_asr_hotwords
+  version: es-v1-20261111
+  languages:
+  - es
+  tasks:
+  - ts_asr
+  aliases: []
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/ts_asr_hotwords/versions/es-v1-20261111/state.json
+  - name: audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_asr_hotwords/versions/es-v1-20261111/audio-index.jsonl.gz
+    sha256: 7b36d6dafb429338d73968e40b746709e8633b89ce366710292f47d4f25770e0
+    metadata:
+      record_count: 10720
+    expected_bytes: 556036
+  - name: es-synthetic-records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/ts_asr_hotwords/versions/es-v1-20261111/records/es-synthetic.jsonl.gz
+    sha256: 209c87a084abda040a4aa9545f6c9b67d54a63c37ce783b255497a13dc5faac7
+    metadata:
+      record_count: 5360
+    expected_bytes: 4667216
+  - name: hotword-labels
+    kind: metadata
+    root_alias: aidc_data
+    relative_path: datasets/ts_asr_hotwords/versions/es-v1-20261111/hotword-labels.jsonl
+    sha256: 26bcf576afae69f40c1bee5d841bae63672374fb091aa684182d5b42a8cd645e
+    expected_bytes: 5621004
+  splits:
+    es-synthetic:
+      artifacts:
+        records:
+        - es-synthetic-records
+        audio_index:
+        - audio-index
+      statistics:
+        records: 5360
+        hotword_case:
+          gold+interferer: 2463
+          interferer: 1794
+          gold: 786
+          none: 317
+      group: test
+      task: ts_asr
+      provenance:
+        preparation_status: prepared
+  provenance:
+    preparation_status: prepared
+    owner: mingdong
+    description: 西班牙语 TS-ASR + 热词评测集：从 ts-asr-benchmark-es@v1-20261110（ts_asr_benchmark@es-v1-20261110，Common Voice es dev）派生，做法与 v1-20261102（中英）相同：沿用原音频与目标，记录 id 加 es 前缀；hotwords = 目标说话人转写里的热词；metadata.bias_lists：random = 正确词 + 随机词共 10 个，interferer = 正确词 + 其他说话人说出的热词 + 随机词共 20 个（只在有人说了热词时给）；抽样同 v1。热词由 amphiondata 的热词提取提示词经 Qwen3.8-27B 标注并复核（label_hotwords.py），词必须在原文里出现；原始标注随版本存为 hotword-labels.jsonl（另含 CV / FLEURS / MLS es test 的转写标注，供普通 ASR 热词评测）。一个 split：es-synthetic 5,360。
+    source: ts_asr_benchmark@es-v1-20261110
+    audit: datasets/ts_asr_hotwords/versions/es-v1-20261111/state.json
+    known_issues: 没有真实会议部分（西语没有真实会议源数据）；CV 句子多来自维基百科，人名地名多，干扰人热词（interferer）比中英文多，none 只有 317 条。
+  recipe_parameters:
+    builder: scripts/ts_hotwords/build_eval_set.py --languages es --version es-v1-20261111
+    labeler: Qwen3.8-27B, amphiondata extract_hotword prompt + review pass

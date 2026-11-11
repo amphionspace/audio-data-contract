@@ -170,7 +170,7 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [ts_asr_crosslingual](data-versions.md#ts_asr_crosslingual) | en、zh | 目标说话人语音识别 | 6.2 | — | 没有 |
 | [ts_asr_farfield](data-versions.md#ts_asr_farfield) | en、zh | 目标说话人语音识别 | 5.1 | 目标说话人评测：远场与混响 | 部分版本：`备份桶:audio-data-contract/datasets/ts_asr_farfield/` |
 | [ts_asr_handover](data-versions.md#ts_asr_handover) | en、zh | 目标说话人语音识别 | 3.8 | 目标说话人评测：与他人交替说话 | 部分版本：`备份桶:audio-data-contract/datasets/ts_asr_handover/` |
-| [ts_asr_hotwords](data-versions.md#ts_asr_hotwords) | en、zh | 目标说话人语音识别 | — | — | `备份桶:audio-data-contract/datasets/ts_asr_hotwords/` |
+| [ts_asr_hotwords](data-versions.md#ts_asr_hotwords) | en、es、zh | 目标说话人语音识别 | — | — | 部分版本：`备份桶:audio-data-contract/datasets/ts_asr_hotwords/` |
 | [ts_asr_nearshort](data-versions.md#ts_asr_nearshort) | en、zh | 目标说话人语音识别 | 2.5 | 目标说话人评测：他人只说一句约 1 秒短话 | 部分版本：`备份桶:audio-data-contract/datasets/ts_asr_nearshort/` |
 | [ts_asr_noise](data-versions.md#ts_asr_noise) | en、zh | 目标说话人语音识别 | 5.9 | 目标说话人评测：噪声与背景人声 | 部分版本：`备份桶:audio-data-contract/datasets/ts_asr_noise/` |
 | [ts_asr_real](data-versions.md#ts_asr_real) | en、zh | 目标说话人语音识别 | 12.0 | 真实会议对话的目标说话人评测集 | 部分版本：`备份桶:audio-data-contract/datasets/ts_asr_real/` |
