@@ -1,0 +1,52 @@
+# 西语普通 ASR 热词训练记录 es-train-hwconf-v1：给 CV es / MLS es @es-train-v1-20261108 里有热词的行补近音干扰词
+# （metadata.confusable_hotwords，训练时 hotword_confusable_prob 决定放不放进列表）。脚本 build_es_train_confusables.py，只用 CPU。
+# 近音词检索复用评测集 build_es.py 的西语读音键（seseo、yeísmo 等）与编辑距离（mine / mine_one），参数与评测 recipe-es-v1.yaml 相同。
+version: es-train-hwconf-v1-20261111
+seed: 20261111
+language: es
+# 每个热词最多带几个近音词，与评测 confusables_per_word 相同
+confusables_per_word: 3
+
+# 父版本：只取 custom.hotwords 非空且 clean.pass 为 true 的行；录音沿用 legacy 清单里的源文件，不复制。路径相对 /workspace/data/datasets
+sources:
+  common_voice_es:
+    parent: es-train-v1-20261108
+    recordings: common_voice_es/versions/legacy/manifests/cv-es_recordings_train.jsonl.gz
+    supervisions: common_voice_es/versions/es-train-v1-20261108/cv-es_supervisions_train.jsonl.gz
+    # 父版本 catalog 登记的 rows_with_hotwords，记录数必须相等（全量覆盖）
+    rows_with_hotwords: 165693
+  mls_es:
+    parent: es-train-v1-20261108
+    recordings: mls_es/versions/legacy/manifests/mls-spanish_recordings_train.jsonl.gz
+    supervisions: mls_es/versions/es-train-v1-20261108/mls-spanish_supervisions_train.jsonl.gz
+    rows_with_hotwords: 110501
+
+# 检索词库：只用两份训练集的热词标注（规则同评测 vocabulary()：首字母大写的专名都收，小写词至少出现 min_count 次），
+# 再去掉评测集全部 split 的正确词（规范化后比较，也按去重音比较）
+confusables:
+  vocabulary:
+    - common_voice_es/versions/es-train-v1-20261108/cv-es_supervisions_train.jsonl.gz
+    - mls_es/versions/es-train-v1-20261108/mls-spanish_supervisions_train.jsonl.gz
+  min_count: 2
+  # 训练负例比评测更严：候选词（含首字母大写的专名）至少在这么多行的标注里出现。只出现一次的多为 OCR / 拼写错误
+  # （Montczuma、Sowernerry、Aigensola），当负例等于教模型拒绝同一个词的正确写法
+  min_candidate_count: 2
+  min_key_length: 4
+  max_distance: [[6, 1], [10, 2], [999, 3]]
+
+# 防泄漏：这些评测记录的 hotwords（正确词）不进词库
+heldout:
+  dataset: hotword_bench@es-v1-20261111
+  records:
+    - hotword_bench/versions/es-v1-20261111/records/cv_es.jsonl.gz
+    - hotword_bench/versions/es-v1-20261111/records/fleurs_es.jsonl.gz
+    - hotword_bench/versions/es-v1-20261111/records/mls_es.jsonl.gz
+
+# 质检门槛（按数据集）：不满足时非零退出、不登记
+qc:
+  # 有近音词的记录占比下限：检查检索没有整体失效（词库或读音键出错时接近 0）。试跑 CV 0.66、MLS 0.90
+  min_records_with_confusables: 0.4
+  # 平均每个热词的近音词数范围：低于下限说明候选被过滤掉大半；上限即每词上限 confusables_per_word。试跑 CV 1.47、MLS 2.09
+  confusables_per_hotword_range: [0.5, 3.0]
+  # 以下必须为 0：近音词等于评测正确词、等于本条热词、出现在本条文本里、与原词只差大小写/重音/空格/ñ 与 n、ny、gn/y 与 i 的写法
+  max_forbidden: 0

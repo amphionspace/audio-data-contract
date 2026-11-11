@@ -234,6 +234,15 @@ def vocabulary(recipe, items):
 
 def mine_confusables(recipe, items, workers):
     words = vocabulary(recipe, items)
+    gold = sorted({w for rows in items.values() for it in rows if not it["quarantine"] for w in it["gold"]})
+    mined = mine(words, gold, recipe["confusables"], recipe["seed"], workers)
+    print(f"confusables: vocabulary {len(words)}, gold {len(gold)}, "
+          f"with any {sum(1 for v in mined.values() if v)}", file=sys.stderr)
+    return words, mined
+
+
+def mine(words, queries, spec, seed, workers):
+    """{query: up to 8 candidates from ``words``, closest reading first} (``mine_one``)."""
     by_length = defaultdict(list)
     for word in words:
         key = reading_key(word)
@@ -243,14 +252,10 @@ def mine_confusables(recipe, items, workers):
     for length, rows in by_length.items():
         codes = np.array([[ord(c) for c in key] for _, key in rows], dtype=np.int32)
         buckets[length] = ([w for w, _ in rows], codes, np.full(len(rows), length))
-    G.update(spec=recipe["confusables"], buckets=buckets, seed=recipe["seed"])
-    gold = sorted({w for rows in items.values() for it in rows if not it["quarantine"] for w in it["gold"]})
+    G.update(spec=spec, buckets=buckets, seed=seed)
     ctx = __import__("multiprocessing").get_context("fork")
     with ProcessPoolExecutor(workers, mp_context=ctx) as pool:
-        mined = dict(pool.map(mine_one, gold, chunksize=16))
-    print(f"confusables: vocabulary {len(words)}, gold {len(gold)}, "
-          f"with any {sum(1 for v in mined.values() if v)}", file=sys.stderr)
-    return words, mined
+        return dict(pool.map(mine_one, queries, chunksize=16))
 
 
 # -------------------------------------------------------------- overlap ---
