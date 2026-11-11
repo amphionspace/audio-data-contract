@@ -2972,12 +2972,12 @@ Casablanca 八种阿拉伯语方言
 | [common_voice_es@es-train-v1-20261108](../../catalog/es_train_v1.yaml#L2) | 514.0 | 已登记 | 没有 |
 | [common_voice_es@hf-8262c16bf297](../../catalog/multilingual_asr_sources.yaml#L472) | 26.9 | 已登记 | 没有 |
 | [common_voice_es@legacy](../../catalog/legacy_multilingual.yaml#L951) | 568.5 | 已登记 | 快照 20260914 |
-| [common_voice_es@mdc-27.0](../../catalog/common_voice_27.yaml#L2) | — | 未登记 | 没有 |
+| [common_voice_es@mdc-27.0](../../catalog/common_voice_27.yaml#L2) | 1,355.5 | 已登记 | 没有 |
 
 - `common_voice_es@americas-v1-20261103`：从现有 Common Voice 西语（CV 24.0）里按说话人自填口音选出美洲六个预设口音的录音，不复制音频，音频仍读原版本。没填口音的录音（约占六成）无法判断地区，没有收入
 - `common_voice_es@es-train-v1-20261108`：Common Voice 西班牙语 train 的训练版本：Qwen3-ASR-1.7B + whisper-large-v3 双引擎清洗（默认规则 consensus-v7），保留 356,706 句 / 513.98 h（源 357,397 句）；文本用原文的词和标点（书面句子），只规整了 10,562 句的标点前后空格、首字母大写和缺失的句末句号；custom.hotwords 是 Qwen3.8-27B 标的热词。只含清洗通过的行，录音清单沿用 legacy。也是西语 TS 场景池的句子来源。试跑、被拒样本和误杀率见 run_dir README
 - `common_voice_es@hf-8262c16bf297`：Common Voice 17.0 es 的非官方 HF 镜像（官方 Mozilla 仓库需要授权），只下载了 test，与 common_voice_pt@hf-8262c16bf297 同一修订
-- `common_voice_es@mdc-27.0`：Common Voice Scripted Speech 27.0 西语完整版（Mozilla Data Collective cmu5kitx700pemi073feoiqqu，压缩包 51.9 GB），正在下载； 下完按平台给的 sha256 校验，再与 common_voice_es@legacy（CV 24.0）按句子去重，新增部分走 consensus-v7 双引擎清洗
+- `common_voice_es@mdc-27.0`：Common Voice Scripted Speech 27.0 西语（Mozilla Data Collective cmu5kitx700pemi073feoiqqu）相对 common_voice_es@legacy（CV 24.0）的增量： validated 新增 + other（未投票够的录音），去掉 24.0 已有录音和 27.0、24.0 dev/test 的说话人和句子后 1,046,251 句 / 1,408.59 h， 经 Qwen3-ASR-1.7B + whisper-large-v3 双引擎清洗（consensus-v7）保留 980,450 句 / 1,355.54 h（validated 27.37 h、other 1,328.17 h）。 与 common_voice_es@legacy / es-train-v1-20261108 没有重复录音，可叠加使用。被拒集中在少数批量上传空录音的说话人和 <2 s 录音； 试跑、被拒样本和误杀率见 run_dir README
 - 有含标点版本
 - 含派生版本（与源数据可能重叠）
 
@@ -3056,7 +3056,7 @@ Common Voice 17 葡语朗读
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
 | [common_voice_pt@hf-8262c16bf297](../../catalog/common_voice_pt.yaml#L31) | 184.3 | 已登记 | 没有 |
-| [common_voice_pt@mdc-27.0](../../catalog/common_voice_27.yaml#L32) | 93.8 | 已登记 | 没有 |
+| [common_voice_pt@mdc-27.0](../../catalog/common_voice_27.yaml#L83) | 93.8 | 已登记 | 没有 |
 
 - `common_voice_pt@hf-8262c16bf297`：Common Voice 17.0 葡语的非官方 HF 镜像（官方 Mozilla 仓库需要授权）。口音字段大多为空，填写的几乎都是巴西口音。镜像另含 validated / other / invalidated（172.6 / 29.0 / 9.4 h），未登记为划分
 - `common_voice_pt@mdc-27.0`：Common Voice Scripted Speech 27.0 葡语（Mozilla Data Collective cmu5wui2w00e8nq07idithpm6）训练版本：validated + other（未投票够的录音）， 去掉 27.0 与 CV 17.0 dev/test 的说话人和句子后 82,417 句 / 94.34 h，经 Qwen3-ASR-1.7B + whisper-large-v3 双引擎清洗（consensus-v7）保留 81,960 句 / 93.82 h（validated 78.10 h、other 15.72 h）。包含 CV 17.0 镜像的全部 train 内容，可替代它用于训练。 试跑、被拒样本和误杀率见 run_dir README
