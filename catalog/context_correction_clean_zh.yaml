@@ -1,0 +1,42 @@
+# 上下文纠偏清洗（2026-11-10，占位）：在 AmphionASR v4 配方的中文口语训练来源里，找出说话人讲字怎么写的句子
+# （组词、拆字、偏旁、"不是 X 是 Y"），核对标注是否与说明一致：一致的单列为正例，能可靠改正的改正，拿不准的隔离。
+# 改正结果最后以各来源的派生版本发布，旧版本不动；进度见状态文件。
+- schema_version: dataset-catalog/2.0
+  dataset_id: context_correction_clean_zh
+  version: v1-20261110
+  languages:
+  - zh
+  tasks:
+  - asr
+  aliases: []
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/context_correction_clean_zh/versions/v1-20261110/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    summary: 中文训练数据里说字写法句子的核对与改正清单
+    description: >-
+      清洗对象是 AmphionASR v4 配方里的中文真实口语来源：wenetspeech_podcast、wenetspeech_youtube（l-20261014）、
+      emilia2_short（short-20261014 与 short-lance-20261023）、emilia2_dialog、emilia2_mix、magicdata_ramc / aishell4 / alimeeting_sdm
+      （asr-20261014 与 turn-taking-20261014）、vitw（2m-20261013）；朗读类（hw_sft 中文部分等）不扫。
+      找出说话人用组词、拆字、偏旁或否定对比说明字怎么写的句子，由两个不同家族的 LLM 独立判断标注是否与说明一致：
+      一致的列为正例；两边改法完全相同、只改写法不改读音、说明部分读音经 Qwen3-ASR 核对的才改正；其余隔离、不进训练。
+      本版本只存判定清单（逐条判定与依据、正例、隔离名单、统计），不是训练集；改正后的训练数据以各来源的派生版本另行登记。
+      context_correction_zh 评测用过的 190 条 WenetSpeech 播客录音（83,220 段、48.9 h）一并排除。进行中。
+    source: amphionasr_v4 recipe zh spontaneous sources
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/ctx-clean-zh-20261110
+  recipe_parameters:
+    scan_model: Qwen3.6-27B
+    judges: [qwen3.6-plus, deepseek-v4-pro]
+    audio_check_model: Qwen3-ASR-1.7B
+    excluded_eval_recordings: datasets/context_correction_zh/source/v1-20261018/excluded-recordings.txt
