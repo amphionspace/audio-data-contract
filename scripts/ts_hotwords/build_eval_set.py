@@ -1,9 +1,12 @@
 #!/usr/bin/env python3
 """Build TS-ASR + hotword eval records from ts-asr-benchmark v12 (zh) and ts-asr-benchmark-en v1 (en).
 
-usage: build_eval_set.py OUT_DIR LABELS_JSONL [LABELS_JSONL ...]
-Built ts_asr_hotwords@v1-20261102 from the labels now registered as <dataset>@<v>-hotword-labels-20261102
-(metadata.hotword_labels; see register_eval_hotword_labels.py).
+usage: build_eval_set.py [--version V] [--languages zh,en] OUT_DIR LABELS_JSONL [LABELS_JSONL ...]
+Built ts_asr_hotwords@v1-20261102 (zh, en) from the labels now registered as <dataset>@<v>-hotword-labels-20261102
+(metadata.hotword_labels; see register_eval_hotword_labels.py), and ts_asr_hotwords@es-v1-20261111 (--languages es)
+from ts-asr-benchmark-es@v1-20261110 with labels of the same tool and settings (label_hotwords.py, Qwen3.8-27B, review
+on). Label rows that carry ``language`` give that language's random-word pool; rows without it are zh when the text
+has CJK ideographs, else en.
 Every source record whose mixture has words we can label keeps its audio refs, target, labels and metadata; it gains
 - ``hotwords``: hotwords of the enrolled speaker's transcript (empty when the target is absent);
 - ``metadata.bias_lists``: ``random`` = gold + random words to 10; ``interferer`` = gold + words the other speakers
@@ -15,22 +18,23 @@ Interferer text: synthetic records keep ``metadata.interferers[*].utts[*].text``
 language that occur in neither transcript. Records go to four splits, <lang>-synthetic and <lang>-real (ts_asr_real sources); labels.source_split keeps the
 source split (sampling: see KEEP_*). Writes OUT_DIR/records/<split>.jsonl.gz and OUT_DIR/manifest.json.
 """
+import argparse
 import ast
 import gzip
 import hashlib
 import json
 import random
-import sys
 from collections import Counter
 from pathlib import Path
 
 import yaml
 
 DATA = Path("/workspace/data/datasets")
-DATASET, VERSION = "ts_asr_hotwords", "v1-20261102"
+DATASET = "ts_asr_hotwords"
 SETS = {
     "zh": "/workspace/data/ae-state/eval-sets/open-audio-llm/ts-asr-benchmark@v12-20261022/eval-set.yaml",
     "en": "/workspace/data/ae-state/eval-sets/open-audio-llm/ts-asr-benchmark-en@v1-20261031/eval-set.yaml",
+    "es": "/workspace/data/ae-state/eval-sets/open-audio-llm/ts-asr-benchmark-es@v1-20261110/eval-set.yaml",
 }
 RANDOM_LIST = 10
 INTERFERER_LIST = 20
@@ -52,19 +56,27 @@ def other_texts(record):
 
 
 def main():
-    out = Path(sys.argv[1])
-    labels = {}
-    for path in sys.argv[2:]:
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--version", default="v1-20261102")
+    parser.add_argument("--languages", default="zh,en")
+    parser.add_argument("out", type=Path)
+    parser.add_argument("labels", nargs="+")
+    args = parser.parse_args()
+    out, version = args.out, args.version
+    sets = {lang: SETS[lang] for lang in args.languages.split(",")}
+    labels, language = {}, {}
+    for path in args.labels:
         with open(path) as stream:
             for line in stream:
                 row = json.loads(line)
                 labels[row["text"]] = row["hotwords"]
-    pools = {lang: sorted({w for t, ws in labels.items() for w in ws if (lang == "zh") == any("一" <= c <= "鿿" for c in t)})
-             for lang in SETS}
+                language[row["text"]] = row.get("language") or (
+                    "zh" if any("一" <= c <= "鿿" for c in row["text"]) else "en")
+    pools = {lang: sorted({w for t, ws in labels.items() for w in ws if language[t] == lang}) for lang in sets}
     (out / "records").mkdir(parents=True, exist_ok=True)
     manifest = {"sources": {}, "counts": {}}
     merged, audio_index = {}, {}
-    for lang, eval_set in SETS.items():
+    for lang, eval_set in sets.items():
         with open(eval_set) as stream:
             spec = yaml.safe_load(stream)
         for source in spec["evaluation"]:
@@ -133,7 +145,7 @@ def main():
                     # the index rows point at the source files, so no audio is copied
                     cut_id = f"{lang}:{ref['dataset_id']}:{ref['cut_id']}"
                     audio_index[cut_id] = {**found[ref["cut_id"]], "cut_id": cut_id}
-                    slot["ref"] = {**ref, "dataset_id": DATASET, "version": VERSION, "split": split, "cut_id": cut_id}
+                    slot["ref"] = {**ref, "dataset_id": DATASET, "version": version, "split": split, "cut_id": cut_id}
             merged.setdefault(split, []).extend(rows)
             manifest["sources"][f"{lang}:{source['label']}"] = {**{k: source[k] for k in ("dataset_id", "version", "split")},
                                                     "language": lang, "split": split, "records": len(rows),
