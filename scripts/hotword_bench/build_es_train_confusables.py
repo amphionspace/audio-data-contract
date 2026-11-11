@@ -19,7 +19,7 @@ that matches the audio is not a negative.
 
 Each dataset is checked (``qc`` in the recipe); the script exits non-zero
 without registering when one fails. It appends the declarations to this
-repository's ``catalog/es_train_v1.yaml``.
+repository's ``catalog/es_train_v1.yaml`` (or the recipe's ``catalog``).
 
     python scripts/hotword_bench/build_es_train_confusables.py --workers 64
     python scripts/hotword_bench/build_es_train_confusables.py --out <scratch dir>
@@ -56,7 +56,7 @@ from audio_data_contract.catalog import validate_catalog
 from audio_data_contract.types import DatasetSpec
 
 HERE = Path(__file__).resolve().parent
-CATALOG_FILE = REPO / "catalog" / "es_train_v1.yaml"
+CATALOG_FILE = "es_train_v1.yaml"  # recipe "catalog" overrides
 SAMPLES = 20
 
 
@@ -226,6 +226,7 @@ def main():
     parser.add_argument("--out", type=Path, help="write here instead of the version directories (no registration)")
     args = parser.parse_args()
     recipe = yaml.safe_load(args.recipe.read_text())
+    recipe["recipe_file"] = args.recipe.name
     version = recipe["version"]
     targets = {d: (args.out / d if args.out else DATASETS / d / "versions" / version) for d in recipe["sources"]}
     for path in targets.values():
@@ -282,12 +283,14 @@ def main():
     if failures:
         sys.exit("QC failed, not registered:\n  " + "\n  ".join(failures))
     if specs:
-        register(specs)
+        register(specs, REPO / "catalog" / recipe.get("catalog", CATALOG_FILE))
 
 
 def declaration(dataset_id, recipe, out, report, vocabulary_size):
     version, spec = recipe["version"], recipe["sources"][dataset_id]
     parent = f"{dataset_id}@{spec['parent']}"
+    audio = spec.get("audio_version", "legacy")
+    vocabulary_from = recipe["confusables"].get("vocabulary_label", "CV es / MLS es 训练集")
 
     def artifact(name, kind, path, metadata=None):
         row = {"name": name, "kind": kind, "root_alias": ROOT_ALIAS, "relative_path": str(path.relative_to(DATA_ROOT)),
@@ -306,7 +309,7 @@ def declaration(dataset_id, recipe, out, report, vocabulary_size):
             artifact("preparation_state", "dataset-state", out / "state.json"),
             artifact("train", "audio-records", out / "records" / "train.jsonl.gz", {"record_count": report["records"]}),
             artifact("audio_index", "audio-index", out / "audio_index" / "audio-index.jsonl.gz",
-                     {"record_count": report["records"], "audio": f"legacy source files of {dataset_id}@legacy, not copied"}),
+                     {"record_count": report["records"], "audio": f"{audio} source files of {dataset_id}@{audio}, not copied"}),
             artifact("confusables", "jsonl-metadata", out / "mined" / "confusables.jsonl.gz"),
             artifact("qc", "quality-report", out / "qc.yaml", {"passed": True}),
         ],
@@ -327,15 +330,15 @@ def declaration(dataset_id, recipe, out, report, vocabulary_size):
                 文本、热词与父版本相同，metadata.confusable_hotwords 为读音相近的真实西语热词，
                 训练时按 hotword_confusable_prob 作为干扰词放进列表（同 police_terms_single_train@hotwords-confusable-v1-20261102）。
                 近音词检索复用评测集 hotword_bench@es-v1-20261111 的西语读音键（拉美读法：seseo、yeísmo、b/v、h 不发音等）与编辑距离，
-                每个热词最多 {recipe['confusables_per_word']} 个，读音最近的优先；词库只用 CV es / MLS es 训练集的热词标注（{vocabulary_size:,} 个），
+                每个热词最多 {recipe['confusables_per_word']} 个，读音最近的优先；词库只用 {vocabulary_from}的热词标注（{vocabulary_size:,} 个），
                 去掉了评测集三个 split 的全部正确词。剔除两类候选：与本条热词只是同一个词不同写法的（读音键忽略空格、ñ/ny/gn 与 n、y 与 i 不区分后相同，
                 如 Sara/Sarah、Cataluña/Catalunya、España/espana、Monte Verde/Monteverde，当负例会教模型拒绝与录音一致的写法），以及出现在本条文本里的。
                 {report['records_with_confusables']:,} 条（{report['records_with_confusables_fraction']:.1%}）有近音词，平均每条
-                {report['mean_confusables_when_any']} 个；近音词与评测正确词重叠 0。录音不复制，audio_index 指向 legacy 源文件。
+                {report['mean_confusables_when_any']} 个；近音词与评测正确词重叠 0。录音不复制，audio_index 指向 {audio} 源文件。
                 检索结果见 mined/confusables.jsonl.gz，质检与 20 条样例见 qc.yaml。"""),
             "sources": [parent, f"{recipe['heldout']['dataset']} (gold words excluded from the vocabulary)"],
             "scripts": ["scripts/hotword_bench/build_es_train_confusables.py",
-                        "scripts/hotword_bench/recipe-es-train-hwconf-v1.yaml"],
+                        f"scripts/hotword_bench/{recipe['recipe_file']}"],
             "limitations": cjk_join("""近音词按拼写推出的读音键检索，不是声学相似度，也不覆盖英文专名的英语读法；
                 词库只收标注里出现至少两次的词，仍有重复出现的 OCR / 拼写错误词（如 Ingalaterra、jesuchristo），
                 也有同一人名的历史写法（Moctezuma/Montezuma），按规则分不出来；
@@ -344,8 +347,8 @@ def declaration(dataset_id, recipe, out, report, vocabulary_size):
     }
 
 
-def register(specs):
-    text = CATALOG_FILE.read_text(encoding="utf-8")
+def register(specs, catalog_file):
+    text = catalog_file.read_text(encoding="utf-8")
     existing = yaml.safe_load(text)
     for spec in specs:
         if any(r["dataset_id"] == spec["dataset_id"] and r["version"] == spec["version"] for r in existing):
@@ -353,7 +356,7 @@ def register(specs):
     validate_catalog([*load_catalog(REPO / "catalog"), *(DatasetSpec.from_dict(s) for s in specs)])
     # Appended, so the hand-written entries above stay byte for byte.
     addition = yaml.safe_dump(specs, allow_unicode=True, sort_keys=False, width=512)
-    CATALOG_FILE.write_text(text.rstrip("\n") + "\n" + addition, encoding="utf-8")
+    catalog_file.write_text(text.rstrip("\n") + "\n" + addition, encoding="utf-8")
     for spec in specs:
         print("registered", spec["dataset_id"], spec["version"], file=sys.stderr)
 
