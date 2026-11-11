@@ -2285,14 +2285,16 @@ AISHELL-1、LibriSpeech 合成的多人对话
 
 —
 
-语言：en、zh · 任务：目标说话人语音识别
+语言：en、es、zh · 任务：目标说话人语音识别
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
 | [ts_asr_crosslingual@en-v1-20261109](../../catalog/ts_asr_crosslingual.yaml#L427) | 6.2 | 已登记 | 没有 |
+| [ts_asr_crosslingual@es-v1-20261111](../../catalog/ts_asr_crosslingual.yaml#L853) | 3.5 | 已登记 | 没有 |
 | [ts_asr_crosslingual@zh-v1-20261109](../../catalog/ts_asr_crosslingual.yaml#L1) | 6.2 | 已登记 | 没有 |
 
 - `ts_asr_crosslingual@en-v1-20261109`：跨语言注册 TS-ASR 评测集（混合段英文）：Common Voice 同一账号既录中文又录英文、从未作为 TS 训练目标的 78 人，以及 Qwen3-TTS-12Hz-1.7B-Base 跨语言克隆的 50 个合成音色（注册与混合段都是合成音）；每个场景配同语言与跨语言两种注册。只用于评测，不进训练。配方见 scripts/ts_benchmark/recipe-crosslingual-en.yaml
+- `ts_asr_crosslingual@es-v1-20261111`：跨语言注册 TS-ASR 评测集（混合段西班牙语）：Common Voice 同一账号既录西语（dev/test）又录英文、从未作为 TS 训练目标、两种语言都核对过是同一人声（ECAPA，每种语言至少 5 句）的 35 人；每个场景配同语言（西语）与跨语言（英文）两种注册。没有合成音色部分（Common Voice 里没有同时录西语和中文的说话人）。只用于评测，不进训练。配方见 scripts/ts_benchmark/recipe-crosslingual-es.yaml
 - `ts_asr_crosslingual@zh-v1-20261109`：跨语言注册 TS-ASR 评测集（混合段中文）：Common Voice 同一账号既录中文又录英文、从未作为 TS 训练目标的 78 人，以及 Qwen3-TTS-12Hz-1.7B-Base 跨语言克隆的 50 个合成音色（注册与混合段都是合成音）；每个场景配同语言与跨语言两种注册。只用于评测，不进训练。配方见 scripts/ts_benchmark/recipe-crosslingual-zh.yaml
 
 ### ts_asr_farfield

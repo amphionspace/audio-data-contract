@@ -163,6 +163,13 @@ python scripts/ts_benchmark/build.py --recipe scripts/ts_benchmark/recipe-en.yam
   真人每划分 120 条，合成每划分 100 条，两个版本各 2,200 条。底噪与房间响应缓存同 `ts_asr_benchmark` v4。
 - **评测集**：`ts-asr-crosslingual@v1-20261109`（中文混合段）、`ts-asr-crosslingual-en@v1-20261109`（英文混合段）。看同一组里 `-cross` 与 `-same` 的差：目标在场看字错率与漏识率，缺席看误输出率。
 - **不能说明的**：只测语言不同，不测注册与混合段录音设备不同（Common Voice 同一账号的两种语言多为同一设备）。只用于评测，不进训练。
+- **西班牙语版 `es-v1-20261111`**（混合段西语，配方 `recipe-crosslingual-es.yaml`，评测集 `ts-asr-crosslingual-es@v1-20261111`）：
+  - **只有真人部分，跨语言注册只有英文**：Common Voice 里同一账号录西语（dev/test）又录英文、每种语言至少 5 句的 61 人，去掉作为 TS 训练目标出现过的 22 人（中英 TS 训练目标与西语 TS 场景池目标的并集，`source/pools/es-v1-20261111/ts-training-targets.json`），剩 39 人。同一账号录西语与中文的只有 3 人，且都不到 5 句，所以没有中文注册。
+  - **西语语句只取 dev/test**：西语训练用 `common_voice_es@es-train-v1-20261108` 的 train；导出时核对这些人不在 es train（`export_bilingual_pool.py --held-out es`，否则报错退出）。英文语句与中英版本一样取 en 全部划分（39 人的英文都在 en train）。
+  - **同一账号不一定是同一个人**：有的账号西语是一个人、英文是另一个人，或英文里混着别人的录音。`qc_bilingual_identity.py` 用 ECAPA 逐句核对：西语句与本人其他西语句、英文句与本人西语句的余弦都要 ≥ 0.5（其他人的 99.9 分位约 0.50），每种语言仍需至少 5 句。39 人里去掉 4 人，剩 35 人（西语 177 句、英文 534 句）。核对后同一人西语与英文之间平均 0.80、最低 0.70，不同人平均 0.14（逐句数值见 `source/pools/es-v1-20261111/cv-bilingual-identity.json`）。
+  - 干扰人取 Common Voice 西语 dev/test 的其他说话人（已去掉与英文同账号的人）。场景与中英版本的真人部分相同，每划分 120 条，共 10 个划分 1,200 条。
+  - **质检（`qc_crosslingual.py`，构建时在登记前自动运行，任一组不过即非零退出、不登记）**：每组 same/cross 都在且条数等于配方与中英版本（120）；在场划分全部有目标与非空参考、缺席划分全部为空；注册语句属于本人、来自该划分的 `enroll_pool`，且不与混合段重复；干扰人不是目标；混合段完全相同的配对不少于 90%。本版本 594/600 对混合段完全相同（solo 119、k1 118、k2 117、abs1 120、abs2 120），目标在场占 60%（与中英相同），报告在 `versions/es-v1-20261111/qc.json`。
+  - **缺口**：没有合成音色部分（中英版本有 50 个 Qwen3-TTS 音色），也没有西语混合段配中文注册。
 
 ## 开发集（ts_asr_dev）
 

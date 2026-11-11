@@ -28,20 +28,12 @@ MODEL = "/workspace/model/wespeaker-ecapa-tdnn512-LM/voxceleb_ECAPA512_LM.onnx"
 UTTERANCES_PER_SPEAKER = 3
 
 
-def main():
+def make_embedder():
+    """Unit-norm ECAPA embedding of a 16 kHz mono waveform (float32, [-1, 1])."""
     import onnxruntime as ort
     import torch
     from torchaudio.compliance import kaldi
 
-    parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--recipe", type=Path, default=Path(__file__).with_name("recipe.yaml"))
-    parser.add_argument("--roots", type=Path, required=True)
-    parser.add_argument("--catalog", type=Path, default=Path("/workspace/data/registry/catalog"))
-    parser.add_argument("--output", type=Path, required=True)
-    args = parser.parse_args()
-    recipe = yaml.safe_load(args.recipe.read_text())
-    roots = json.loads(args.roots.read_text())
-    pools = build.build_pools(recipe, load_catalog(args.catalog), roots)
     session = ort.InferenceSession(MODEL, providers=["CPUExecutionProvider"])
     name = session.get_inputs()[0].name
 
@@ -52,6 +44,21 @@ def main():
         feats = feats - feats.mean(0, keepdim=True)
         e = session.run(None, {name: feats.unsqueeze(0).numpy()})[0].reshape(-1)
         return e / np.linalg.norm(e)
+
+    return embed
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--recipe", type=Path, default=Path(__file__).with_name("recipe.yaml"))
+    parser.add_argument("--roots", type=Path, required=True)
+    parser.add_argument("--catalog", type=Path, default=Path("/workspace/data/registry/catalog"))
+    parser.add_argument("--output", type=Path, required=True)
+    args = parser.parse_args()
+    recipe = yaml.safe_load(args.recipe.read_text())
+    roots = json.loads(args.roots.read_text())
+    pools = build.build_pools(recipe, load_catalog(args.catalog), roots)
+    embed = make_embedder()
 
     rng = random.Random(recipe["seed"])
     keys, vectors = [], []

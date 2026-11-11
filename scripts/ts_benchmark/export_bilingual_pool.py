@@ -2,16 +2,23 @@
 """Export Common Voice utterance lists for the cross-lingual TS benchmark (ts_asr_crosslingual).
 
 Bilingual targets are the Common Voice accounts (``client_id``, the ``speaker`` of the Lhotse supervisions) that
-recorded both zh-CN and en; speakers already used as TS training targets (``--exclude-speakers``) are dropped.
-Their zh and en utterances go to two lists under one dataset name, so a speaker has the same id in both pools and a
-recipe can draw the enrollment from the other language (``enroll_pool``). Interferer lists are the other speakers
-of the given splits, bilingual ones removed so a target never appears as an interferer.
+recorded both languages of ``--languages`` (default zh-CN and en); speakers already used as TS training targets
+(``--exclude-speakers``) are dropped. Their utterances go to one list per language under one dataset name, so a
+speaker has the same id in both pools and a recipe can draw the enrollment from the other language
+(``enroll_pool``). Interferer lists are the other speakers of the given splits, bilingual ones removed so a target
+never appears as an interferer.
+
+A ``--held-out`` language (es: its train split is a training set) only contributes dev/test utterances, and the
+export fails if a target also appears in that language's train split.
 
 Each list is ``utterances.jsonl.gz`` (``id``, ``speaker``, ``text``, ``duration``, ``path``), read by a recipe pool
 source ``{manifest: {alias, path}, dataset, version, split}``; ``path`` is the Common Voice clip (absolute).
 
     python scripts/ts_benchmark/export_bilingual_pool.py --exclude-speakers used.json \
         --output /workspace/data/datasets/ts_asr_crosslingual/source/pools
+    python scripts/ts_benchmark/export_bilingual_pool.py --languages es en --held-out es \
+        --exclude-speakers ts-training-targets.json \
+        --output /workspace/data/datasets/ts_asr_crosslingual/source/pools/es-v1-20261111
 """
 
 import argparse
@@ -21,14 +28,19 @@ import json
 from collections import defaultdict
 from pathlib import Path
 
-LEGACY = "/workspace/data/datasets/common_voice_{lang}/versions/legacy-20260804"
-SUPERVISIONS = {"zh": "cv-zh-CN_supervisions_{split}*.jsonl.gz", "en": "cv-en_supervisions_{split}*.jsonl.gz"}
-RECORDINGS = {"zh": "cv-zh-CN_recordings_{split}*.jsonl.gz", "en": "cv-en_recordings_{split}*.jsonl.gz"}
+LEGACY = "/workspace/data/datasets/common_voice_{lang}/versions/legacy-20260804/{split}_{kind}_*"
+# Lhotse manifest globs per language; {kind} is sup or rec. Common Voice es keeps all splits in one directory.
+MANIFESTS = {
+    "zh": LEGACY.format(lang="zh", split="{split}", kind="{kind}") + "/cv-zh-CN_{name}_{split}*.jsonl.gz",
+    "en": LEGACY.format(lang="en", split="{split}", kind="{kind}") + "/cv-en_{name}_{split}*.jsonl.gz",
+    "es": "/workspace/data/datasets/common_voice_es/versions/legacy/manifests/cv-es_{name}_{split}.jsonl.gz",
+}
+INTERFERER_SPLITS = {"zh": ("dev", "test"), "en": ("test",), "es": ("dev", "test")}
 
 
 def rows(lang, split, kind):
-    pattern = (SUPERVISIONS if kind == "sup" else RECORDINGS)[lang].format(split=split)
-    for path in sorted(glob.glob(f"{LEGACY.format(lang=lang)}/{split}_{kind[:3]}_*/{pattern}")):
+    name = "supervisions" if kind == "sup" else "recordings"
+    for path in sorted(glob.glob(MANIFESTS[lang].format(split=split, kind=kind, name=name))):
         with gzip.open(path, "rt") as handle:
             for line in handle:
                 yield json.loads(line)
@@ -60,22 +72,34 @@ def write(path, by_speaker, keep):
 def main():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--languages", nargs=2, default=("zh", "en"), choices=sorted(MANIFESTS))
+    parser.add_argument("--held-out", choices=sorted(MANIFESTS),
+                        help="language whose train split is a training set: only its dev/test utterances are used")
     parser.add_argument("--exclude-speakers", type=Path, help="JSON list of client_ids used as TS training targets")
     parser.add_argument("--min-utterances", type=int, default=5, help="per language, for scenes and enrollments")
     parser.add_argument("--seconds", type=float, nargs=2, default=(1.5, 12.0))
     args = parser.parse_args()
     excluded = set(json.loads(args.exclude_speakers.read_text())) if args.exclude_speakers else set()
-    splits = ("train", "dev", "test")
-    zh, en = utterances("zh", splits, args.seconds), utterances("en", splits, args.seconds)
-    bilingual = {s for s in set(zh) & set(en) if len(zh[s]) >= args.min_utterances and len(en[s]) >= args.min_utterances}
+    a, b = args.languages
+    by_lang = {lang: utterances(lang, ("dev", "test") if lang == args.held_out else ("train", "dev", "test"),
+                                args.seconds) for lang in (a, b)}
+    both = set(by_lang[a]) & set(by_lang[b])
+    bilingual = {s for s in both if min(len(by_lang[lang][s]) for lang in (a, b)) >= args.min_utterances}
     targets = bilingual - excluded
-    stats = {"bilingual": len(bilingual), "excluded_ts_targets": len(bilingual & excluded), "targets": len(targets)}
-    stats["target_zh_utterances"] = write(args.output / "cv-bilingual-zh/utterances.jsonl.gz", zh, targets)
-    stats["target_en_utterances"] = write(args.output / "cv-bilingual-en/utterances.jsonl.gz", en, targets)
-    every = set(zh) | set(en)
-    for lang, by_speaker, interferer_splits in (("zh", zh, ("dev", "test")), ("en", en, ("test",))):
-        held = {s: [u for u in us if u["split"] in interferer_splits] for s, us in by_speaker.items()}
-        keep = {s for s, us in held.items() if len(us) >= 2 and s not in (set(zh) & set(en))}
+    stats = {"languages": [a, b], "held_out": args.held_out, "bilingual": len(bilingual),
+             "excluded_ts_targets": len(bilingual & excluded), "targets": len(targets)}
+    if args.held_out:
+        trained = {r["speaker"] for r in rows(args.held_out, "train", "sup")}
+        if targets & trained:
+            raise SystemExit(f"{len(targets & trained)} targets also speak in {args.held_out} train")
+        stats[f"targets_in_{args.held_out}_train"] = 0
+    for lang in (a, b):
+        stats[f"target_{lang}_utterances"] = write(args.output / f"cv-bilingual-{lang}/utterances.jsonl.gz",
+                                                   by_lang[lang], targets)
+    every = set(by_lang[a]) | set(by_lang[b])
+    for lang, by_speaker in by_lang.items():
+        held = {s: [u for u in us if u["split"] in INTERFERER_SPLITS[lang]] for s, us in by_speaker.items()}
+        keep = {s for s, us in held.items() if len(us) >= 2 and s not in both}
         stats[f"interferer_{lang}_speakers"] = len(keep)
         stats[f"interferer_{lang}_utterances"] = write(args.output / f"cv-interferer-{lang}/utterances.jsonl.gz", held, keep)
     stats["all_speakers_seen"] = len(every)

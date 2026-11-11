@@ -621,6 +621,10 @@ def main():
                 print(f"rendered {done}/{len(jobs)}", flush=True)
     partial.rename(final)
     declaration = register(recipe, splits, results, data_root, alias)
+    if recipe["dataset_id"] == "ts_asr_crosslingual" and not args.limit and not args.only:
+        import qc_crosslingual  # exits non-zero, before the catalog is written, when a pair group fails
+
+        qc_crosslingual.check(recipe, data_root, roots, data_root / "versions" / version / "qc.json")
     if args.reference_version and not qc_gate.report(qc_gate.check(
             data_root, version, args.reference_version, {s["name"]: s["n"] for s in splits})):
         sys.exit(f"quality gate failed against {args.reference_version}; {version} is not registered")
