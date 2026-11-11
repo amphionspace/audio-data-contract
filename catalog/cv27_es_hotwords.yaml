@@ -1,4 +1,4 @@
-# CV 27.0 西语热词与近音干扰词（2026-11-11 开工，占位）：给 common_voice_es@mdc-27.0 清洗通过的行标热词，再挖近音干扰词，做法同 es-train-v1 / es-train-hwconf-v1。
+# CV 27.0 西语热词与近音干扰词：common_voice_es@cv27-train-v1-20261111 为 mdc-27.0 清洗通过行加热词的 ASR 版本；cv27-train-hwconf-v1-20261111 为其中有热词行的 asr_hotwords 版本（带近音干扰词 metadata.confusable_hotwords），做法同 es-train-v1 / es-train-hwconf-v1。
 - schema_version: dataset-catalog/2.0
   dataset_id: common_voice_es
   version: cv27-train-v1-20261111
@@ -6,10 +6,27 @@
   - es
   tasks:
   - asr
-  - asr_hotwords
   aliases: []
   derived_from: common_voice_es@mdc-27.0
   artifacts:
+  - name: train_recordings
+    kind: lhotse-recordings
+    root_alias: aidc_data
+    relative_path: datasets/common_voice_es/versions/mdc-27.0/manifests/cv27-es_recordings.jsonl.gz
+    expected_bytes: 11913367
+    sha256: d40b6b3a66dc0f44a0b396ad90839624a78b89c8dd1dfd600544e4aae7747b72
+    metadata:
+      shared_with: common_voice_es@mdc-27.0
+  - name: train_supervisions
+    kind: lhotse-supervisions
+    root_alias: aidc_data
+    relative_path: datasets/common_voice_es/versions/cv27-train-v1-20261111/cv27-es_supervisions_train.jsonl.gz
+    expected_bytes: 67754311
+    sha256: b27a71e55216386bf85df28503163f09884523918291776ab83dcfd5e4740690
+    metadata:
+      record_count: 980450
+      pass_count: 980450
+      rows_with_hotwords: 469488
   - name: preparation_state
     kind: dataset-state
     root_alias: aidc_data
@@ -17,16 +34,155 @@
   splits:
     train:
       artifacts:
+        recordings:
+        - train_recordings
+        supervisions:
+        - train_supervisions
         preparation_state:
         - preparation_state
-      provenance:
-        preparation_status: building
+      statistics:
+        records: 980450
+        duration_hours: 1355.54
+        duration_basis: sum of supervision durations of the kept rows
+        rows_with_hotwords: 469488
+        hotwords: 668558
+        hotwords_dropped_not_whole_word: 1748
+  recipe_parameters:
+    clean_pass_only: true
+    hotwords: Qwen3.8-27B, amphiondata extract_hotword prompt, 12 rows per request, no review, prefix caching; kept only when
+      the word occurs in the text as a whole word (case-insensitive); custom.hotwords
+    text: unchanged from common_voice_es@mdc-27.0
   provenance:
-    preparation_status: building
+    preparation_status: prepared
     owner: mingdong
-    description: >-
-      common_voice_es@mdc-27.0（980,450 句 / 1,355.54 h，CV 24.0 之外的增量）的热词训练版本：Qwen3.8-27B 按 amphiondata extract_hotword
-      提示词标热词（同 es-train-v1-20261108），再按 hotword_bench 西语读音键挖近音干扰词放进 metadata.confusable_hotwords
-      （同 es-train-hwconf-v1-20261111，评测正确词不进词库）。进行中。
+    description: common_voice_es@mdc-27.0 清洗通过的 980,450 句 / 1,355.54 h（CV 24.0 之外的增量）加热词的训练版本：custom.hotwords 是 Qwen3.8-27B
+      按 amphiondata extract_hotword 提示词标的热词（同 es-train-v1-20261108），只留在文本里整词出现的（不分大小写）；469,488 句有热词。
+      丢掉的 1,748 个词都出现在 CV 原句删掉连字符后粘连的词里（如 Reino UnidoNueva Zelanda）。文本与录音清单沿用 mdc-27.0。
     source: common_voice_es@mdc-27.0
     run_dir: /workspace/workspace/mingdong/data/amphiondata/cv27-es-pt-20261111
+    scripts:
+    - /workspace/workspace/mingdong/data/amphiondata/cv27-es-pt-20261111/scripts/hotwords.sh
+    - /workspace/workspace/mingdong/data/amphiondata/cv27-es-pt-20261111/scripts/finalize_hotwords.py
+    limitations: 热词是 LLM 抽取、未经人工核对；文本未做书面化标点（CV 原句自带标点）。
+- schema_version: dataset-catalog/2.0
+  dataset_id: common_voice_es
+  version: cv27-train-hwconf-v1-20261111
+  languages:
+  - es
+  tasks:
+  - asr_hotwords
+  aliases: []
+  derived_from: common_voice_es@cv27-train-v1-20261111
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/common_voice_es/versions/cv27-train-hwconf-v1-20261111/state.json
+    expected_bytes: 296
+    sha256: e800fd95b125409cd4326184a2e7d7619000f69e9ac3a3893fae5401b7aedd99
+  - name: train
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/common_voice_es/versions/cv27-train-hwconf-v1-20261111/records/train.jsonl.gz
+    expected_bytes: 32469060
+    sha256: 88a11b2d5a6865a822b89d5a47792f9a7e0de400bf2354fce86f378e547d1657
+    metadata:
+      record_count: 469488
+  - name: audio_index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/common_voice_es/versions/cv27-train-hwconf-v1-20261111/audio_index/audio-index.jsonl.gz
+    expected_bytes: 5175042
+    sha256: ad59edd24ce23cad5c6e204c74015cedaf6590a438d6293651c6c42e5d03a5f0
+    metadata:
+      record_count: 469488
+      audio: mdc-27.0 source files of common_voice_es@mdc-27.0, not copied
+  - name: confusables
+    kind: jsonl-metadata
+    root_alias: aidc_data
+    relative_path: datasets/common_voice_es/versions/cv27-train-hwconf-v1-20261111/mined/confusables.jsonl.gz
+    expected_bytes: 4365936
+    sha256: 91fc2caf1276635a2c64a970321c09d7af4b9a9a41aacfe5a417d80a3b17cde1
+  - name: qc
+    kind: quality-report
+    root_alias: aidc_data
+    relative_path: datasets/common_voice_es/versions/cv27-train-hwconf-v1-20261111/qc.yaml
+    expected_bytes: 5576
+    sha256: 9b74e37de5b4fdcbfe57815a44df558a6a6dfd8e70c7aa81f3d3a7c10bd2849c
+    metadata:
+      passed: true
+  splits:
+    train:
+      artifacts:
+        records:
+        - train
+        audio_index:
+        - audio_index
+        preparation_state:
+        - preparation_state
+      statistics:
+        records: 469488
+        duration_hours: 674.71
+        hotwords: 668558
+        records_with_confusables: 310629
+        records_with_confusables_fraction: 0.6616
+        confusables: 994388
+        mean_confusables_when_any: 3.201
+        confusables_per_hotword: 1.487
+        confusables_per_record:
+          '0': 158859
+          '1': 56268
+          '2': 35316
+          '3': 149614
+          '4': 16576
+          '5': 11019
+          '6': 27997
+          '7': 3299
+          '8': 2296
+          '9': 4562
+          '10': 778
+          '11': 602
+          '12': 992
+          '13': 314
+          '14': 227
+          '15': 294
+          '16': 99
+          '17': 108
+          '18': 106
+          '19': 44
+          '20': 29
+          '21': 39
+          '22': 12
+          '23': 13
+          '24': 12
+          '26': 5
+          '27': 4
+          '29': 2
+          '30': 2
+        duration_basis: sum of supervision durations
+      provenance:
+        preparation_status: prepared
+  recipe_parameters:
+    confusables_per_word: 3
+    reading_key: scripts/hotword_bench/build_es.py reading_key (seseo, yeísmo, b/v, silent h, c/qu/k, g/j)
+    max_reading_distance:
+    - - 6
+      - 1
+    - - 10
+      - 2
+    - - 999
+      - 3
+    min_key_length: 4
+    vocabulary: 120633 training hotword labels minus every gold word of hotword_bench@es-v1-20261111
+  provenance:
+    preparation_status: prepared
+    owner: mingdong
+    description: common_voice_es@cv27-train-v1-20261111 里有热词的行（469,488 条，全部 clean 通过）的热词训练版本：每行一条 asr_hotwords 记录，文本、热词与父版本相同，metadata.confusable_hotwords 为读音相近的真实西语热词，训练时按 hotword_confusable_prob 作为干扰词放进列表（同 police_terms_single_train@hotwords-confusable-v1-20261102）。近音词检索复用评测集 hotword_bench@es-v1-20261111 的西语读音键（拉美读法：seseo、yeísmo、b/v、h 不发音等）与编辑距离，每个热词最多 3 个，读音最近的优先；词库只用 CV es / MLS es 训练集（es-train-v1）与 CV 27.0 增量的热词标注（120,633 个），去掉了评测集三个 split 的全部正确词。剔除两类候选：与本条热词只是同一个词不同写法的（读音键忽略空格、ñ/ny/gn 与 n、y 与 i 不区分后相同，如
+      Sara/Sarah、Cataluña/Catalunya、España/espana、Monte Verde/Monteverde，当负例会教模型拒绝与录音一致的写法），以及出现在本条文本里的。310,629 条（66.2%）有近音词，平均每条 3.201 个；近音词与评测正确词重叠 0。录音不复制，audio_index 指向 mdc-27.0 源文件。检索结果见 mined/confusables.jsonl.gz，质检与 20 条样例见 qc.yaml。
+    sources:
+    - common_voice_es@cv27-train-v1-20261111
+    - hotword_bench@es-v1-20261111 (gold words excluded from the vocabulary)
+    scripts:
+    - scripts/hotword_bench/build_es_train_confusables.py
+    - scripts/hotword_bench/recipe-cv27-es-train-hwconf-v1.yaml
+    limitations: 近音词按拼写推出的读音键检索，不是声学相似度，也不覆盖英文专名的英语读法；词库只收标注里出现至少两次的词，仍有重复出现的 OCR / 拼写错误词（如 Ingalaterra、jesuchristo），也有同一人名的历史写法（Moctezuma/Montezuma），按规则分不出来；热词是 LLM 抽取、未经人工核对。

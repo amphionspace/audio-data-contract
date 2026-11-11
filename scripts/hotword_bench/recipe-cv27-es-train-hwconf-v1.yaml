@@ -1,0 +1,42 @@
+# 西语普通 ASR 热词训练记录 cv27-train-hwconf-v1：给 common_voice_es@cv27-train-v1-20261111（CV 27.0 增量）里有热词的行补近音干扰词，
+# 方法与参数同 recipe-es-train-hwconf-v1.yaml。脚本 build_es_train_confusables.py，只用 CPU。
+version: cv27-train-hwconf-v1-20261111
+seed: 20261111
+language: es
+confusables_per_word: 3
+# 登记写进这个 catalog 文件（相对 catalog/）
+catalog: cv27_es_hotwords.yaml
+
+# 录音沿用 mdc-27.0 清单里的源文件，不复制。路径相对 /workspace/data/datasets
+sources:
+  common_voice_es:
+    parent: cv27-train-v1-20261111
+    audio_version: mdc-27.0
+    recordings: common_voice_es/versions/mdc-27.0/manifests/cv27-es_recordings.jsonl.gz
+    supervisions: common_voice_es/versions/cv27-train-v1-20261111/cv27-es_supervisions_train.jsonl.gz
+    rows_with_hotwords: 469488
+
+# 词库：es-train-v1 的 CV / MLS 训练集热词标注，加上 CV 27.0 增量的热词标注；其余规则同 es-train-hwconf-v1
+confusables:
+  vocabulary_label: CV es / MLS es 训练集（es-train-v1）与 CV 27.0 增量
+  vocabulary:
+    - common_voice_es/versions/es-train-v1-20261108/cv-es_supervisions_train.jsonl.gz
+    - mls_es/versions/es-train-v1-20261108/mls-spanish_supervisions_train.jsonl.gz
+    - common_voice_es/versions/cv27-train-v1-20261111/cv27-es_supervisions_train.jsonl.gz
+  min_count: 2
+  min_candidate_count: 2
+  min_key_length: 4
+  max_distance: [[6, 1], [10, 2], [999, 3]]
+
+heldout:
+  dataset: hotword_bench@es-v1-20261111
+  records:
+    - hotword_bench/versions/es-v1-20261111/records/cv_es.jsonl.gz
+    - hotword_bench/versions/es-v1-20261111/records/fleurs_es.jsonl.gz
+    - hotword_bench/versions/es-v1-20261111/records/mls_es.jsonl.gz
+
+# 质检门槛同 es-train-hwconf-v1（es-train-v1 CV 实测 0.66 / 1.47）
+qc:
+  min_records_with_confusables: 0.4
+  confusables_per_hotword_range: [0.5, 3.0]
+  max_forbidden: 0
