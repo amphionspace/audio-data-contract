@@ -21,8 +21,8 @@
     kind: jsonl-metadata
     root_alias: aidc_data
     relative_path: datasets/context_correction_clean_zh/versions/v1-20261110/wenetspeech_podcast/decisions.jsonl
-    expected_bytes: 2825690
-    sha256: 337ce9b36c5603e181a1ab29f9c7b6096e918ae1d4ac22e32d02fd5f78b0f7b3
+    expected_bytes: 3020951
+    sha256: 403237b7da3cade6ff6d3e5fde80092ec014bf8fd0d1c9ab4899012e7b4e4b80
     metadata:
       record_count: 1449
       description: wenetspeech_podcast@l-20261014 的逐窗口判定（not_hit / consistent / corrected / unchanged / quarantine），含原文、改后文本、逐字改动、两个判定模型的说明与理由、Qwen3-ASR 核对结果
@@ -39,26 +39,26 @@
     kind: metadata
     root_alias: aidc_data
     relative_path: datasets/context_correction_clean_zh/versions/v1-20261110/wenetspeech_podcast/review-rejected.tsv
-    expected_bytes: 822
-    sha256: 48940736fdd373bafc483ce430f504b468ca2621b9e7f50263225db50ab39681
+    expected_bytes: 1458
+    sha256: 31c385f9385467996000de23eed092d53ba37bd9208da297cc33708d196457f7
     metadata:
-      record_count: 6
-      description: 抽检判错或存疑、改判为隔离的改正窗口（unit_id 与理由）
+      record_count: 11
+      description: 抽检判错或存疑、改判为隔离的改正窗口，以及捞回后评审判错或存疑、仍然隔离的窗口（unit_id 与理由）
   - name: wenetspeech_podcast_exclude_records
     kind: record-id-list
     root_alias: aidc_data
     relative_path: datasets/context_correction_clean_zh/versions/v1-20261110/wenetspeech_podcast/exclude-records-wenetspeech_podcast@l-20261014.txt
-    expected_bytes: 5691282
-    sha256: 621885a226cef5e8b3f560f0f79273316c7b11c43e945cac727e286d68d13b6b
+    expected_bytes: 5688017
+    sha256: e0cf2d0c54f9cd338c65ce3025615015afa0e5369af74c3e0d250b0fbe346352
     metadata:
-      record_count: 87430
+      record_count: 87380
       description: 继续用 wenetspeech_podcast@l-20261014 训练时的 exclude_records 名单：评测录音 83,220 段和隔离窗口 4,210 段（不含改正，改正要用派生版本）
   - name: magicdata_ramc_asr_decisions
     kind: jsonl-metadata
     root_alias: aidc_data
     relative_path: datasets/context_correction_clean_zh/versions/v1-20261110/magicdata_ramc_asr/decisions.jsonl
-    expected_bytes: 26061
-    sha256: 08eafdbd5c3790832e7dda6b33c02b84e148607a23c79dd5e3a261435b21d82c
+    expected_bytes: 28098
+    sha256: f4031316e1915759ad57ad8101f20ecc3a5f9a4dd055b982d1ee575ead54c17e
     metadata:
       record_count: 21
       description: magicdata_ramc_asr 的逐段判定（按不同目标文本），含原文、改后文本、两个判定模型的说明与理由
@@ -75,17 +75,17 @@
     kind: record-id-list
     root_alias: aidc_data
     relative_path: datasets/context_correction_clean_zh/versions/v1-20261110/magicdata_ramc_asr/exclude-records-magicdata_ramc@asr-20261014.txt
-    expected_bytes: 324
-    sha256: 6098b7c083f14bd57d72c467533896c4782557a539d45dc3fbf3ceda9828850e
+    expected_bytes: 270
+    sha256: 0430fdb5a006ff243a056fff7c00498512c06f59d4e51d55b1a23ad594900de5
     metadata:
-      record_count: 6
+      record_count: 5
       description: 继续用 magicdata_ramc@asr-20261014 训练时的 exclude_records 名单：隔离文本的记录（不含改正，改正要用派生版本）
   - name: aishell4_asr_decisions
     kind: jsonl-metadata
     root_alias: aidc_data
     relative_path: datasets/context_correction_clean_zh/versions/v1-20261110/aishell4_asr/decisions.jsonl
-    expected_bytes: 5649
-    sha256: 01c7d97d196cc40fcec7b19f61c67f56f58fafac3a883b218623954ff7abb4fd
+    expected_bytes: 6269
+    sha256: cd9691d5d51705d3715737461d2673ea03812e0eb08df934ba52e042dccd6468
     metadata:
       record_count: 4
       description: aishell4_asr 的逐段判定（按不同目标文本），含原文、改后文本、两个判定模型的说明与理由
@@ -129,8 +129,8 @@
     kind: jsonl-metadata
     root_alias: aidc_data
     relative_path: datasets/context_correction_clean_zh/versions/v1-20261110/magicdata_ramc_tt/decisions.jsonl
-    expected_bytes: 28465
-    sha256: 9251b4d68440455d911ad51dd463fb061a7b0ec3f4587b3138dcde05a767fd19
+    expected_bytes: 29690
+    sha256: cbb826a9f2bc5ab198d1ed2309090f963fd32f9443719440b05dbc0e3863730d
     metadata:
       record_count: 15
       description: magicdata_ramc_tt 的逐段判定（按不同目标文本），含原文、改后文本、两个判定模型的说明与理由
@@ -156,8 +156,8 @@
     kind: jsonl-metadata
     root_alias: aidc_data
     relative_path: datasets/context_correction_clean_zh/versions/v1-20261110/aishell4_tt/decisions.jsonl
-    expected_bytes: 3075
-    sha256: 5119f222c6bf6bf232653d9ece2ad72d53a25a7922fbccd84c30a2ee9469b29c
+    expected_bytes: 3656
+    sha256: 77c1e0f5d26555a663143817164ab4bcf15e09039a2f4bafe73effe577d6b88b
     metadata:
       record_count: 2
       description: aishell4_tt 的逐段判定（按不同目标文本），含原文、改后文本、两个判定模型的说明与理由
@@ -192,8 +192,8 @@
     kind: jsonl-metadata
     root_alias: aidc_data
     relative_path: datasets/context_correction_clean_zh/versions/v1-20261110/vitw/decisions.jsonl
-    expected_bytes: 26538
-    sha256: e02510c51a1a6dca27ec52f3463dd6110475ad7ea8933ab69946895d7f13b66a
+    expected_bytes: 28449
+    sha256: c5a111919e852325b577463e4c319ed8f61262239a48f71ba28887903401c922
     metadata:
       record_count: 28
       description: vitw 的逐窗口判定，含原文、改后文本、两个判定模型的说明与理由
@@ -210,17 +210,17 @@
     kind: record-id-list
     root_alias: aidc_data
     relative_path: datasets/context_correction_clean_zh/versions/v1-20261110/vitw/exclude-records-vitw@2m-20261013.txt
-    expected_bytes: 310
-    sha256: bc0bf86878b0513445a8b974b9a5d3aa0d4542e526b61d61c44231d648d9e557
+    expected_bytes: 170
+    sha256: a133bf35fb52e7968eb9e1a02a38eb7e70d3cbab2fe6d4b8c5bc355a523a4264
     metadata:
-      record_count: 5
+      record_count: 3
       description: 继续用 vitw@2m-20261013 训练时的 exclude_records 名单：隔离窗口 5 段（不含改正，改正要用派生版本）
   - name: emilia2_dialog_decisions
     kind: jsonl-metadata
     root_alias: aidc_data
     relative_path: datasets/context_correction_clean_zh/versions/v1-20261110/emilia2_dialog/decisions.jsonl
-    expected_bytes: 1241878
-    sha256: 9a116adbd10b371eb8a28c9cb3610e548af1626d155cfc691dc0c079b6f2a0fd
+    expected_bytes: 1323042
+    sha256: 42a152218bc9e7a35ed05ee9b6c3db892c7412df328d40277f377ad75e07b590
     metadata:
       record_count: 712
       description: emilia2_dialog 的逐段判定（按不同目标文本），含原文、改后文本、两个判定模型的说明与理由
@@ -237,17 +237,17 @@
     kind: record-id-list
     root_alias: aidc_data
     relative_path: datasets/context_correction_clean_zh/versions/v1-20261110/emilia2_dialog/exclude-records-emilia2_dialog@dialog-turn-taking-20261013-enroll.txt
-    expected_bytes: 1887169
-    sha256: edf1a12c9728206e8e5a005650c1f307e9b37a2b7a8ae5e38724f9b6febf8116
+    expected_bytes: 1885935
+    sha256: c2406427717c923a8a283c583f1a58e19b5e821761ef1a7cfa0bdfcb94c5f91a
     metadata:
-      record_count: 23853
+      record_count: 23837
       description: 继续用 emilia2_dialog@dialog-turn-taking-20261013-enroll 训练时的 exclude_records 名单：隔离文本的记录和 ts_asr_real 留出的评测源录音记录（不含改正，改正要用派生版本）
   - name: wenetspeech_youtube_decisions
     kind: jsonl-metadata
     root_alias: aidc_data
     relative_path: datasets/context_correction_clean_zh/versions/v1-20261110/wenetspeech_youtube/decisions.jsonl
-    expected_bytes: 1313616
-    sha256: 028c7736a2cd97828d984457f48e04590d41118a2e7929df0a87d50fa8648a43
+    expected_bytes: 1391315
+    sha256: cd0db8b8ab02ee4dd4b6fc60073bc58fcafb2dd4dbc434ef2ba5ddf12666b28f
     metadata:
       record_count: 877
       description: wenetspeech_youtube 的逐窗口判定，含原文、改后文本、两个判定模型的说明与理由
@@ -264,17 +264,17 @@
     kind: record-id-list
     root_alias: aidc_data
     relative_path: datasets/context_correction_clean_zh/versions/v1-20261110/wenetspeech_youtube/exclude-records-wenetspeech_youtube@l-20261014.txt
-    expected_bytes: 48688
-    sha256: cfb2bc4e67c5e71a235f88e037ea20267d8de593e8f935cc5d6c5b158bbfd6a1
+    expected_bytes: 42840
+    sha256: 69eaaa1c5657be1103138f4f3dd703f726e4d5de452b417d7809061de882e6d0
     metadata:
-      record_count: 716
+      record_count: 630
       description: 继续用 wenetspeech_youtube@l-20261014 训练时的 exclude_records 名单：隔离窗口 716 段（不含改正，改正要用派生版本）
   - name: emilia2_short_decisions
     kind: jsonl-metadata
     root_alias: aidc_data
     relative_path: datasets/context_correction_clean_zh/versions/v1-20261110/emilia2_short/decisions.jsonl
-    expected_bytes: 965313
-    sha256: dd2a421f39ee116ddba816aa53f41856bc253e449a82cd2dbd178598d9c3f0d5
+    expected_bytes: 1048935
+    sha256: 221693be0028f5d03b130157a30f33896d0290581f6af1fdd9e16f0221cd7bb2
     metadata:
       record_count: 730
       description: emilia2_short 的逐段判定（按不同目标文本），含原文、改后文本、两个判定模型的说明与理由
@@ -291,26 +291,26 @@
     kind: record-id-list
     root_alias: aidc_data
     relative_path: datasets/context_correction_clean_zh/versions/v1-20261110/emilia2_short/exclude-records-emilia2_short@short-20261014.txt
-    expected_bytes: 168468
-    sha256: 56f128ddedd02bd26f11d5461e87dca1e71514cbd8ad1c4e8ac0782b74168a76
+    expected_bytes: 167786
+    sha256: 4eb7e7c1849b5ff4ef43322079cf38aca881af19ee8177a8e94b36aaa9705d55
     metadata:
-      record_count: 4897
+      record_count: 4877
       description: 继续用 emilia2_short@short-20261014 训练时的 exclude_records 名单：隔离文本的记录和 ts_asr_real 留出的评测源录音记录（不含改正；改正要用 emilia2_short@short-lance-20261023-ctxclean-20261110）
   - name: emilia2_short_short-lance-20261023_exclude_records
     kind: record-id-list
     root_alias: aidc_data
     relative_path: datasets/context_correction_clean_zh/versions/v1-20261110/emilia2_short/exclude-records-emilia2_short@short-lance-20261023.txt
-    expected_bytes: 168468
-    sha256: 56f128ddedd02bd26f11d5461e87dca1e71514cbd8ad1c4e8ac0782b74168a76
+    expected_bytes: 167786
+    sha256: 4eb7e7c1849b5ff4ef43322079cf38aca881af19ee8177a8e94b36aaa9705d55
     metadata:
-      record_count: 4897
+      record_count: 4877
       description: 继续用 emilia2_short@short-lance-20261023 训练时的 exclude_records 名单：隔离文本的记录和 ts_asr_real 留出的评测源录音记录（不含改正，改正要用派生版本）
   - name: emilia2_mix_decisions
     kind: jsonl-metadata
     root_alias: aidc_data
     relative_path: datasets/context_correction_clean_zh/versions/v1-20261110/emilia2_mix/decisions.jsonl
-    expected_bytes: 2464083
-    sha256: 6bde7490b11a79a74d107815d97234951af5c90a0045569e56d404c0f9fd33f8
+    expected_bytes: 2643845
+    sha256: 3c655bc579022605b11e16e8b946543cfc6453bf683219e9317ef96b1cfa1ebe
     metadata:
       record_count: 1469
       description: emilia2_mix 的逐段判定（按不同目标文本），含原文、改后文本、两个判定模型的说明与理由
@@ -327,20 +327,47 @@
     kind: record-id-list
     root_alias: aidc_data
     relative_path: datasets/context_correction_clean_zh/versions/v1-20261110/emilia2_mix/exclude-records-emilia2_mix@mix-20261013.txt
-    expected_bytes: 889652
-    sha256: 6c2e7070f480de0700a933708f149dd0acef327d1d19779febca664f003c0a9c
+    expected_bytes: 887675
+    sha256: 40138057b6e8d77023047204f9f06f4ede4566212df9706b830c18bd0e6ed314
     metadata:
-      record_count: 12746
+      record_count: 12709
       description: 继续用 emilia2_mix@mix-20261013 训练时的 exclude_records 名单：隔离文本的记录和 ts_asr_real 留出的评测源录音记录（不含改正，改正要用派生版本）
   - name: emilia2_mix_review_rejected
     kind: metadata
     root_alias: aidc_data
     relative_path: datasets/context_correction_clean_zh/versions/v1-20261110/emilia2_mix/review-rejected.tsv
-    expected_bytes: 985
-    sha256: 51445a3abbecefed95960315c1b1809d6a2a7ddd79079bad665920391ac4627c
+    expected_bytes: 1645
+    sha256: 804df286ee317dc577065ad40a3a1190efd7e0bf70e98c2549e5a67e45bfde49
     metadata:
-      record_count: 8
-      description: 抽检判错或多改、改判为隔离的改正文本（unit_id 与理由）
+      record_count: 15
+      description: 抽检判错或多改、改判为隔离的改正文本，以及捞回后评审判错或存疑、仍然隔离的文本（unit_id 与理由）
+  - name: wenetspeech_youtube_review_rejected
+    kind: metadata
+    root_alias: aidc_data
+    relative_path: datasets/context_correction_clean_zh/versions/v1-20261110/wenetspeech_youtube/review-rejected.tsv
+    expected_bytes: 109
+    sha256: ec75d868896f109662310750a03f987a7422770b49378ee80016a60347a29424
+    metadata:
+      record_count: 1
+      description: 捞回后评审判错或存疑、仍然隔离的文本（unit_id 与理由）
+  - name: emilia2_dialog_review_rejected
+    kind: metadata
+    root_alias: aidc_data
+    relative_path: datasets/context_correction_clean_zh/versions/v1-20261110/emilia2_dialog/review-rejected.tsv
+    expected_bytes: 60
+    sha256: d62aeca9c852f9647db394fa9ab4f44b371fd11700f6737a0b3f15c3015b20ff
+    metadata:
+      record_count: 1
+      description: 捞回后评审判错或存疑、仍然隔离的文本（unit_id 与理由）
+  - name: emilia2_short_review_rejected
+    kind: metadata
+    root_alias: aidc_data
+    relative_path: datasets/context_correction_clean_zh/versions/v1-20261110/emilia2_short/review-rejected.tsv
+    expected_bytes: 308
+    sha256: 5f134799446948a19584264b291df26a764f49f585dacbd06921ba428f1b830a
+    metadata:
+      record_count: 4
+      description: 捞回后评审判错或存疑、仍然隔离的文本（unit_id 与理由）
   splits:
     train:
       artifacts:
@@ -374,6 +401,9 @@
         review_rejected:
         - wenetspeech_podcast_review_rejected
         - emilia2_mix_review_rejected
+        - wenetspeech_youtube_review_rejected
+        - emilia2_dialog_review_rejected
+        - emilia2_short_review_rejected
         exclude_records:
         - wenetspeech_podcast_exclude_records
         - magicdata_ramc_asr_exclude_records
@@ -405,7 +435,7 @@
       派生版本 magicdata_ramc@asr-20261014-ctxclean-20261110、magicdata_ramc@turn-taking-20261014-ctxclean-20261110、
       aishell4@asr-20261014-ctxclean-20261110、aishell4@turn-taking-20261014-ctxclean-20261110；alimeeting_sdm 两个版本没有改动或隔离，继续用原版本。
       wenetspeech_youtube 已完成（派生版本 wenetspeech_youtube@l-20261014-ctxclean-20261110）。
-      vitw 已完成（派生版本 vitw@2m-20261013-ctxclean-20261110，只去掉 5 段存疑）：音频是加了回声、噪声、丢帧的劣化音频，
+      vitw 已完成（派生版本 vitw@2m-20261013-ctxclean-20261110，只去掉 3 段存疑，另 2 段已捞回）：音频是加了回声、噪声、丢帧的劣化音频，
       Qwen3-ASR 识别不出，不做音频核对。
       emilia2_dialog 已完成（派生版本 emilia2_dialog@dialog-turn-taking-20261013-enroll-ctxclean-20261110，同时去掉 ts_asr_real 留出的评测源录音）：
       混合音频里还有别人说话，音频核对改为在识别结果里找说明、只数标注里没被听到的音节。
@@ -413,6 +443,9 @@
       音频已删，不出派生版本，只登记它的 exclude_records 名单。
       emilia2_mix 已完成（派生版本 emilia2_mix@mix-20261013-ctxclean-20261110，同时去掉 ts_asr_real 留出的评测源录音）：
       音频核对读混音协议里目标说话人的干净原片段；抽检发现 8 段改错或多改，改判为隔离。
+      2026-11-12 捞回：因文本原因隔离、首轮没有模型提出改法的窗口，两个模型再判一次“原标注是否已照说明写对”，
+      两边都说对、机械检查和音频核对都通过的放回训练（原文不动，不进正例）；执行者逐条看过全部放回的 129 段文本，
+      判错 6 段、存疑 12 段写进各来源的 review_rejected 名单、仍然隔离，最终放回 111 段不同文本。
     source: amphionasr_v4 recipe zh spontaneous sources
     run_dir: /workspace/workspace/mingdong/data/amphiondata/ctx-clean-zh-20261110
   recipe_parameters:
@@ -435,26 +468,26 @@
     root_alias: aidc_data
     relative_path: datasets/wenetspeech_podcast/versions/l-20261014-ctxclean-20261110/recordings/train.jsonl.gz
     expected_bytes: 783016
-    sha256: 303d6344bcd3247c29caef068aadaf9bd24220e6b7b646a89cc3ae3e0e03e85d
+    sha256: 5920fc2e1b1595a511797716c66e6d0bd8105325027573b92eab3941298f386f
     metadata:
       record_count: 37129
   - name: train_supervisions
     kind: lhotse-supervisions
     root_alias: aidc_data
     relative_path: datasets/wenetspeech_podcast/versions/l-20261014-ctxclean-20261110/supervisions/train.jsonl.gz
-    expected_bytes: 184862596
-    sha256: 7a2d5a02d6f0b92bcc530e3691eb3670d95688595b6ac2d5214ac3b853c61e52
+    expected_bytes: 184864189
+    sha256: 7598853d4006c61c6035128cf396ed158a9581c46fd573b0f6e9dab91311f96d
     metadata:
-      record_count: 6247847
+      record_count: 6247897
   - name: record_index
     kind: lance-record-index
     root_alias: aidc_data
     relative_path: datasets/wenetspeech_podcast/versions/l-20261014-ctxclean-20261110/record_index/index.json
     expected_bytes: 777
-    sha256: 35ea0b2820db0bdf1d2bc067d4c8014e2c9661a406e1ac347e37f37bddb41eaa
+    sha256: 25ee5a472d0801b0976077229f97f694549c9fedff61848a80f8d1e3b417353d
     metadata:
       snapshot_version: 13
-      rows: 6247847
+      rows: 6247897
       schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
   splits:
     train:
@@ -466,15 +499,15 @@
         records_lance:
         - record_index
       statistics:
-        records: 6247847
+        records: 6247897
         recordings: 37129
-        duration_hours: 3840.847
+        duration_hours: 3840.881
         corrected_records: 205
         corrected_hours: 0.204
         removed_eval_recording_records: 83220
         removed_eval_recording_hours: 48.859
-        removed_quarantine_records: 4210
-        removed_quarantine_hours: 2.569
+        removed_quarantine_records: 4160
+        removed_quarantine_hours: 2.535
         duration_basis: sum of supervision duration
   derived_from: wenetspeech_podcast@l-20261014
   recipe_parameters:
@@ -506,10 +539,10 @@
     kind: audio-records
     root_alias: aidc_data
     relative_path: datasets/magicdata_ramc/versions/asr-20261014-ctxclean-20261110/records/train.jsonl.gz
-    expected_bytes: 6741154
-    sha256: 7afaf43e8b1898bbae72f141f95b05a45325b091ba5cef84e4f3f5faa3807773
+    expected_bytes: 6741193
+    sha256: abda7c7f5de75a002149ac0772f57196f4ac377b2bbedaa536a1d5204bc689b1
     metadata:
-      record_count: 154189
+      record_count: 154190
   - name: eval
     kind: audio-records
     root_alias: aidc_data
@@ -539,10 +572,10 @@
     root_alias: aidc_data
     relative_path: datasets/magicdata_ramc/versions/asr-20261014-ctxclean-20261110/record_index/index.json
     expected_bytes: 1077
-    sha256: bae4b3375206938ae5bd2b03710a030f92781be309e32143881356595cf243dd
+    sha256: 64743c3ff72e8d4e93d681dd6007a59ca60c0ebac829a3b16bf7efe22c893ed1
     metadata:
       snapshot_version: 13
-      rows: 185336
+      rows: 185337
       schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
   splits:
     train:
@@ -555,8 +588,8 @@
         records_lance:
         - record_index
       statistics:
-        records: 154189
-        removed_quarantine_records: 6
+        records: 154190
+        removed_quarantine_records: 5
         corrected_records: 1
         duration_hours: 123.987
         removed_quarantine_hours: 0.005
@@ -620,7 +653,7 @@
     root_alias: aidc_data
     relative_path: datasets/aishell4/versions/asr-20261014-ctxclean-20261110/records/train.jsonl.gz
     expected_bytes: 4563179
-    sha256: 41097d4b378ed3fd4b5f549dca68da1ede2bb24851370e0cf51ef92830796cae
+    sha256: c220933c399e4a776693597aade1d1d61fa5c1cbe64e38d4d474bf960f189196
     metadata:
       record_count: 96998
   - name: test
@@ -644,7 +677,7 @@
     root_alias: aidc_data
     relative_path: datasets/aishell4/versions/asr-20261014-ctxclean-20261110/record_index/index.json
     expected_bytes: 903
-    sha256: 138ca823d49461aaf45e158d2da670e2e0a7a61c111d683ea06746f217c66f8c
+    sha256: 10332b54896b2b1d81b2324a8bcd13c27d3138a156ea1b2bdbd13112264eb9a7
     metadata:
       snapshot_version: 13
       rows: 107091
@@ -710,7 +743,7 @@
     root_alias: aidc_data
     relative_path: datasets/magicdata_ramc/versions/turn-taking-20261014-ctxclean-20261110/records/train_2spk.jsonl.gz
     expected_bytes: 4173038
-    sha256: 9cb846e07631d570098e88b4bc0e848bc6a2ff67c597f10faf0bb37b50c623f7
+    sha256: d4fd0af3761cf0efcee481b38cd742ba4ba9a52aecafac885b4b6b545bec7b23
     metadata:
       record_count: 29504
   - name: train_neg
@@ -718,7 +751,7 @@
     root_alias: aidc_data
     relative_path: datasets/magicdata_ramc/versions/turn-taking-20261014-ctxclean-20261110/records/train_neg.jsonl.gz
     expected_bytes: 1804995
-    sha256: f90aec20c744d01eef44aa2a533a16a4d25a88db3209804a56bf6202316ad3b2
+    sha256: ea18551fcf5a37ec4b515064c9b0b83ddc47dbf5de9952fa7d938b23a73c653b
     metadata:
       record_count: 15372
   - name: eval_2spk
@@ -766,7 +799,7 @@
     root_alias: aidc_data
     relative_path: datasets/magicdata_ramc/versions/turn-taking-20261014-ctxclean-20261110/record_index/index.json
     expected_bytes: 1695
-    sha256: 00b256b94400fbc15bf09584901764e20b8edaae425aa0b83218ce58b4fea9d0
+    sha256: a521cb58a3f93655d5a7b48db8a5c90c710a75cebdac598f2c0f398607bce4ea
     metadata:
       snapshot_version: 13
       rows: 53841
@@ -949,7 +982,7 @@
     root_alias: aidc_data
     relative_path: datasets/aishell4/versions/turn-taking-20261014-ctxclean-20261110/records/train_2spk.jsonl.gz
     expected_bytes: 1491357
-    sha256: 43ce4008c5a6b64c7529a9ebba2188ce3e8429d1cf51d012fd8603e7624fd97e
+    sha256: 3004de5d270e769502bcd9e85a8853e82606bb9598e141a6e2f418b5184d3a02
     metadata:
       record_count: 10506
   - name: train_3spk
@@ -957,7 +990,7 @@
     root_alias: aidc_data
     relative_path: datasets/aishell4/versions/turn-taking-20261014-ctxclean-20261110/records/train_3spk.jsonl.gz
     expected_bytes: 2336536
-    sha256: d3f9da1c674e0b3bcca601584650343c8ce62eadedfa606b53692b6f8b758836
+    sha256: b3bc67e9e8ee43adb5c6e516a583fe0b6dcb065fd8866e29316e5cff250eae95
     metadata:
       record_count: 21923
   - name: train_neg
@@ -965,7 +998,7 @@
     root_alias: aidc_data
     relative_path: datasets/aishell4/versions/turn-taking-20261014-ctxclean-20261110/records/train_neg.jsonl.gz
     expected_bytes: 1003920
-    sha256: fc6977965bf0862febc46ab5d083b9f655a5e1e68e0c7c13ae9b8ff07265dfea
+    sha256: 991f8f2ec1238d4116c1e7261b79fbb310fa6ec036f1e9cc12c53a3419fd73a9
     metadata:
       record_count: 14128
   - name: test_2spk
@@ -1005,7 +1038,7 @@
     root_alias: aidc_data
     relative_path: datasets/aishell4/versions/turn-taking-20261014-ctxclean-20261110/record_index/index.json
     expected_bytes: 1676
-    sha256: 41a926bfc4ab5dcd196c13aa3c86c2b209e3412af81caa6a51d477e1de840012
+    sha256: 5b85497da5ac0f69682f29a34a5ea769c24ba05aae3626e7a9f3d34538a0c7de
     metadata:
       snapshot_version: 13
       rows: 49783
@@ -1167,26 +1200,26 @@
     root_alias: aidc_data
     relative_path: datasets/vitw/versions/2m-20261013-ctxclean-20261110/recordings/train.jsonl.gz
     expected_bytes: 9121775
-    sha256: 9d4f1ab8abbfe5b0f88fa457d6593dbcbe42de6fec32e9c0b81bc2d645123416
+    sha256: 9ac9ef7e5265df0a29f32241af3b65ec1cf960c3c062c6bf20b652ebd496edf4
     metadata:
       record_count: 556414
   - name: train_supervisions
     kind: lhotse-supervisions
     root_alias: aidc_data
     relative_path: datasets/vitw/versions/2m-20261013-ctxclean-20261110/supervisions/train.jsonl.gz
-    expected_bytes: 43569842
-    sha256: 526891edc8d5b8fc822f1e167bc5894d772ba4e3775db055178e938cbef6d91d
+    expected_bytes: 43569948
+    sha256: 967b66da50f38d64589061e614dcd7cc8446880b0b2c4eb0cff70dee355d86b3
     metadata:
-      record_count: 556409
+      record_count: 556411
   - name: record_index
     kind: lance-record-index
     root_alias: aidc_data
     relative_path: datasets/vitw/versions/2m-20261013-ctxclean-20261110/record_index/index.json
     expected_bytes: 761
-    sha256: b5a62e625f004a514be9d44ce9eec095a76918e75a5845a66f4bdc558ab2f42d
+    sha256: a165720e18be30e593ea67a5028d9168b88b3a12167aed9d2a600531f6b7ccab
     metadata:
       snapshot_version: 13
-      rows: 556409
+      rows: 556411
       schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
   splits:
     train:
@@ -1198,16 +1231,16 @@
         records_lance:
         - record_index
       statistics:
-        records: 556409
+        records: 556411
         recordings: 556414
-        recordings_with_supervisions: 556409
+        recordings_with_supervisions: 556411
         duration_hours: 1085.407
-        removed_quarantine_records: 5
-        removed_quarantine_hours: 0.004
-        duration_basis: sum of supervision duration
+        removed_quarantine_records: 3
+        removed_quarantine_hours: 0.003
         languages:
-          zh: 244490
+          zh: 244492
           en: 311919
+        duration_basis: sum of supervision duration
   derived_from: vitw@2m-20261013
   recipe_parameters:
     decisions: context_correction_clean_zh@v1-20261110 vitw_decisions
@@ -1215,8 +1248,8 @@
     removed: 隔离窗口的全部分段；录音清单不删（训练按分段切，没有分段的录音不进训练）
     unchanged: 其余分段、录音和音频路径与 vitw@2m-20261013 逐字相同
   provenance:
-    summary: VITW 中文说字写法核对，去掉 5 段存疑
-    description: 在 vitw@2m-20261013 上做的上下文纠偏清洗：说话人讲字怎么写（组词、拆字、偏旁、否定对比）而标注写成同音别字的，按说明改正；拿不准的窗口整窗去掉。判定依据见 context_correction_clean_zh@v1-20261110。VITW 音频加了回声、噪声和丢帧，Qwen3-ASR 在上面识别不准（试跑 7 个音频不符约 6 个是 ASR 听错），不做音频核对；标注来自干净原音。命中 28 段，隔离 5 段均为标注本来就对、判定模型拿不准的情况（约 0.004 h），没有改正。
+    summary: VITW 中文说字写法核对，去掉 3 段存疑
+    description: 在 vitw@2m-20261013 上做的上下文纠偏清洗：说话人讲字怎么写（组词、拆字、偏旁、否定对比）而标注写成同音别字的，按说明改正；拿不准的窗口整窗去掉。判定依据见 context_correction_clean_zh@v1-20261110。VITW 音频加了回声、噪声和丢帧，Qwen3-ASR 在上面识别不准（试跑 7 个音频不符约 6 个是 ASR 听错），不做音频核对；标注来自干净原音。命中 28 段，隔离 5 段均为标注本来就对、判定模型拿不准的情况，没有改正；2026-11-12 捞回 2 段（“木子”），仍去掉 3 段（约 0.003 h）。
     owner: mingdong
     snapshot_date: '2026-11-11'
     source: vitw@2m-20261013
@@ -1236,24 +1269,24 @@
     kind: audio-records
     root_alias: aidc_data
     relative_path: datasets/emilia2_dialog/versions/dialog-turn-taking-20261013-enroll-ctxclean-20261110/records/train_2spk.jsonl.gz
-    expected_bytes: 181063344
-    sha256: 6dc2aaa066ad82d591a516f94bf5c1c519c57363550c0b1b738c352b024e1ccd
+    expected_bytes: 181065156
+    sha256: 9858779d37edb80be16646cd31aa4e8f8f149327a11c3c613d008bf1dfb741b0
     metadata:
-      record_count: 1118807
+      record_count: 1118820
   - name: train_3spk
     kind: audio-records
     root_alias: aidc_data
     relative_path: datasets/emilia2_dialog/versions/dialog-turn-taking-20261013-enroll-ctxclean-20261110/records/train_3spk.jsonl.gz
-    expected_bytes: 61029362
-    sha256: afbc8a5ee5ae02adb7ea447d145d3da9ac9838fa67ed979e5c8e782fd4dd7852
+    expected_bytes: 61029700
+    sha256: 129d522cbe1539881f3594ff663e36791753e593a78274afacb2da1a411f9624
     metadata:
-      record_count: 436475
+      record_count: 436478
   - name: train_neg
     kind: audio-records
     root_alias: aidc_data
     relative_path: datasets/emilia2_dialog/versions/dialog-turn-taking-20261013-enroll-ctxclean-20261110/records/train_neg.jsonl.gz
     expected_bytes: 93753833
-    sha256: 1d2d986a2646705aeb0625335998fda0fac2e65980c667b2b37ba30b5d9043ff
+    sha256: 439825a816909b876fd65bce068cde8dc6f5a031b5676cef25e7e8987d51b9b7
     metadata:
       record_count: 879939
   - name: eval_2spk
@@ -1317,10 +1350,10 @@
     root_alias: aidc_data
     relative_path: datasets/emilia2_dialog/versions/dialog-turn-taking-20261013-enroll-ctxclean-20261110/record_index/index.json
     expected_bytes: 2258
-    sha256: 7fee1e010617fa8a5372dae5a0733f221241fd7291a109a131e34252d950972d
+    sha256: 727a03a0d3d582db2f3ed1738fe6267d0efe344ee4385410f22ba74be28649ae
     metadata:
       snapshot_version: 13
-      rows: 2533824
+      rows: 2533840
       schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
   splits:
     train_2spk:
@@ -1333,13 +1366,13 @@
         records_lance:
         - record_index
       statistics:
-        records: 1118807
+        records: 1118820
         corrected_records: 28
-        removed_quarantine_records: 167
+        removed_quarantine_records: 154
         removed_holdout_records: 10177
-        duration_hours: 6658.366
+        duration_hours: 6658.435
         corrected_hours: 0.187
-        removed_quarantine_hours: 1.023
+        removed_quarantine_hours: 0.954
         removed_holdout_hours: 60.398
         duration_basis: sum of mixture duration per target example; excludes enrollment; repeated mixtures count once per example
     train_3spk:
@@ -1352,12 +1385,12 @@
         records_lance:
         - record_index
       statistics:
-        records: 436475
-        removed_quarantine_records: 33
+        records: 436478
+        removed_quarantine_records: 30
         removed_holdout_records: 3075
         corrected_records: 10
-        duration_hours: 2671.91
-        removed_quarantine_hours: 0.212
+        duration_hours: 2671.929
+        removed_quarantine_hours: 0.193
         removed_holdout_hours: 19.039
         corrected_hours: 0.062
         duration_basis: sum of mixture duration per target example; excludes enrollment; repeated mixtures count once per example
@@ -1501,13 +1534,13 @@
         records_lance:
         - record_index
       statistics:
-        records: 2435221
+        records: 2435237
         corrected_records: 38
-        removed_quarantine_records: 200
+        removed_quarantine_records: 184
         removed_holdout_records: 23653
-        duration_hours: 14447.496
+        duration_hours: 14447.584
         corrected_hours: 0.249
-        removed_quarantine_hours: 1.235
+        removed_quarantine_hours: 1.147
         removed_holdout_hours: 140.617
         duration_basis: sum of mixture duration per target example; excludes enrollment; repeated mixtures count once per example
     eval:
@@ -1550,7 +1583,7 @@
     unchanged: 其余记录、音频引用和音频索引与原版本逐字相同；没清洗的 eval/test 划分原样硬链接
   provenance:
     summary: Emilia2 对话按说字写法改正，去掉存疑和留出录音
-    description: 在 emilia2_dialog@dialog-turn-taking-20261013-enroll 上做的上下文纠偏清洗：说话人讲字怎么写（组词、拆字、偏旁、否定对比）而标注写成同音别字的，按说明改正；拿不准的整条去掉。判定依据见 context_correction_clean_zh@v1-20261110。标注是机器转写。音频是多人混合，Qwen3-ASR 核对时只数标注里没被听到的音节（插话、笑声不算），音频读同名 16 kHz FLAC。改正 38 条记录（0.25 h）、隔离 200 条（1.24 h）；另去掉 ts_asr_real 留出的评测源录音 23,653 条（140.6 h）。
+    description: 在 emilia2_dialog@dialog-turn-taking-20261013-enroll 上做的上下文纠偏清洗：说话人讲字怎么写（组词、拆字、偏旁、否定对比）而标注写成同音别字的，按说明改正；拿不准的整条去掉。判定依据见 context_correction_clean_zh@v1-20261110。标注是机器转写。音频是多人混合，Qwen3-ASR 核对时只数标注里没被听到的音节（插话、笑声不算），音频读同名 16 kHz FLAC。改正 38 条记录（0.25 h）、隔离 184 条（1.15 h，2026-11-12 捞回 16 条）；另去掉 ts_asr_real 留出的评测源录音 23,653 条（140.6 h）。
     owner: mingdong
     snapshot_date: '2026-11-11'
     source: emilia2_dialog@dialog-turn-taking-20261013-enroll
@@ -1570,26 +1603,26 @@
     root_alias: aidc_data
     relative_path: datasets/wenetspeech_youtube/versions/l-20261014-ctxclean-20261110/recordings/train.jsonl.gz
     expected_bytes: 634236
-    sha256: 24ed68cfd9fce08c60f77c3b6f9839bbe15a24aace8a887a474198d5f27a4d06
+    sha256: 0eba83a9bd6557a2eadea2c5afed78ad543a69ad95ea56740aa64fafdb61688a
     metadata:
       record_count: 23808
   - name: train_supervisions
     kind: lhotse-supervisions
     root_alias: aidc_data
     relative_path: datasets/wenetspeech_youtube/versions/l-20261014-ctxclean-20261110/supervisions/train.jsonl.gz
-    expected_bytes: 239064632
-    sha256: 497b6cadbe4e29fab4d287701d664ffdb0fdb5bcd2bc2ef9cf16128306e1b1d8
+    expected_bytes: 239067396
+    sha256: 3ec9863271333ce1cddfdb77b05cafa9fb469ef424fb94d38256cbccaa3ecd58
     metadata:
-      record_count: 8289252
+      record_count: 8289338
   - name: record_index
     kind: lance-record-index
     root_alias: aidc_data
     relative_path: datasets/wenetspeech_youtube/versions/l-20261014-ctxclean-20261110/record_index/index.json
     expected_bytes: 777
-    sha256: add181ca492d71249c3d6514606d579dbc4b9a8a74afb2b084115ae57771f39b
+    sha256: fe0aa959f9200e00408f18b7044978f54b1c207f311f4dcfa58b9ab60f6b4638
     metadata:
       snapshot_version: 13
-      rows: 8289252
+      rows: 8289338
       schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
   splits:
     train:
@@ -1601,14 +1634,14 @@
         records_lance:
         - record_index
       statistics:
-        records: 8289252
+        records: 8289338
         recordings: 23808
         recordings_with_supervisions: 23808
-        duration_hours: 6112.59
+        duration_hours: 6112.647
         corrected_records: 11
         corrected_hours: 0.008
-        removed_quarantine_records: 716
-        removed_quarantine_hours: 0.546
+        removed_quarantine_records: 630
+        removed_quarantine_hours: 0.489
         duration_basis: sum of supervision duration
   derived_from: wenetspeech_youtube@l-20261014
   recipe_parameters:
@@ -1618,7 +1651,7 @@
     unchanged: 其余分段、录音和音频路径与 wenetspeech_youtube@l-20261014 逐字相同；只有 train 划分，其他划分继续用原版本
   provenance:
     summary: WenetSpeech YouTube，按说字写法改正
-    description: 在 wenetspeech_youtube@l-20261014 上做的上下文纠偏清洗：说话人讲字怎么写（组词、拆字、偏旁、否定对比）而标注写成同音别字的，按说明改正；拿不准的窗口整窗去掉。判定依据见 context_correction_clean_zh@v1-20261110。标注是机器转写；隔离里约 6 成是误杀（多为字谜和照实写的结构说明），总量 0.55 h。
+    description: 在 wenetspeech_youtube@l-20261014 上做的上下文纠偏清洗：说话人讲字怎么写（组词、拆字、偏旁、否定对比）而标注写成同音别字的，按说明改正；拿不准的窗口整窗去掉。判定依据见 context_correction_clean_zh@v1-20261110。标注是机器转写；隔离里约 6 成是误杀（多为字谜和照实写的结构说明），总量 0.55 h；2026-11-12 捞回 86 段，仍去掉 630 段（0.49 h）。
     owner: mingdong
     snapshot_date: '2026-11-11'
     source: wenetspeech_youtube@l-20261014
@@ -1639,17 +1672,17 @@
     root_alias: aidc_data
     relative_path: datasets/emilia2_short/versions/short-lance-20261023-ctxclean-20261110/records/train_en.jsonl.gz
     expected_bytes: 319475931
-    sha256: 6fa529ed6926a6108191b5a7dd7fc1f4c02de6201bb20f2ad585825051fa5123
+    sha256: d39f5175cc5a7b941db1d8723570319b5f86afe3815e8489da6238def2388bf0
     metadata:
       record_count: 2081213
   - name: train_zh
     kind: audio-records
     root_alias: aidc_data
     relative_path: datasets/emilia2_short/versions/short-lance-20261023-ctxclean-20261110/records/train_zh.jsonl.gz
-    expected_bytes: 299118876
-    sha256: 6fea6760706ece955fe11f7f2e7a8be26362475765a0b7d51eb3492da353b7b5
+    expected_bytes: 299124182
+    sha256: 3f63d629484ad403de4cf661131242e09a19389a97a4d57c9b07dfdc64ae4011
     metadata:
-      record_count: 1908784
+      record_count: 1908804
   splits:
     train_en:
       group: train
@@ -1668,12 +1701,12 @@
         records:
         - train_zh
       statistics:
-        records: 1908784
-        removed_quarantine_records: 185
+        records: 1908804
+        removed_quarantine_records: 165
         removed_holdout_records: 4636
         corrected_records: 11
-        duration_hours: 2356.626
-        removed_quarantine_hours: 0.336
+        duration_hours: 2356.643
+        removed_quarantine_hours: 0.319
         removed_holdout_hours: 5.767
         corrected_hours: 0.019
         duration_basis: sum of Lance sample duration; each sample is one ASR example
@@ -1683,13 +1716,13 @@
         - train_en
         - train_zh
       statistics:
-        records: 3989997
+        records: 3990017
         removed_holdout_records: 4712
-        duration_hours: 5096.636
+        duration_hours: 5096.653
         removed_holdout_hours: 5.906
-        removed_quarantine_records: 185
+        removed_quarantine_records: 165
         corrected_records: 11
-        removed_quarantine_hours: 0.336
+        removed_quarantine_hours: 0.319
         corrected_hours: 0.019
         duration_basis: sum of Lance sample duration; each sample is one ASR example
   derived_from: emilia2_short@short-lance-20261023
@@ -1720,24 +1753,24 @@
     kind: audio-records
     root_alias: aidc_data
     relative_path: datasets/emilia2-mix/versions/mix-20261013-ctxclean-20261110/records/train_2spk.jsonl.gz
-    expected_bytes: 594828538
-    sha256: 782e5009d6eaa0cfdedc105ad7587470f685e9991b9ceb74facc1cee411dcbc6
+    expected_bytes: 594833078
+    sha256: c978417c8d62caa5c2d9ec540b7040f72eeb2ed6362d998c09d81e0e161eb6fd
     metadata:
-      record_count: 2206815
+      record_count: 2206836
   - name: train_3spk
     kind: audio-records
     root_alias: aidc_data
     relative_path: datasets/emilia2-mix/versions/mix-20261013-ctxclean-20261110/records/train_3spk.jsonl.gz
-    expected_bytes: 621280940
-    sha256: 5c8282062b60d7621976ae7a25b3083cf428334e57a72f454e6d38c11cf49970
+    expected_bytes: 621287106
+    sha256: 4565c9f007b6922c23e846c3b8da59f2376dbde4866d4f9452d969c529e933eb
     metadata:
-      record_count: 2201581
+      record_count: 2201597
   - name: train_neg
     kind: audio-records
     root_alias: aidc_data
     relative_path: datasets/emilia2-mix/versions/mix-20261013-ctxclean-20261110/records/train_neg.jsonl.gz
     expected_bytes: 880353201
-    sha256: 804b9fba77bac93e52e4e363e4bec85844a4ccef540076879346df96b538b556
+    sha256: aef71ee59e6aee92c858d1e035a887f817695ee14ddffae0836bbff650d74c7e
     metadata:
       record_count: 4405348
   - name: eval_2spk
@@ -1801,10 +1834,10 @@
     root_alias: aidc_data
     relative_path: datasets/emilia2-mix/versions/mix-20261013-ctxclean-20261110/record_index/index.json
     expected_bytes: 2239
-    sha256: a062be1eed0a421246c825b20c042feea9903a715467c692017ad53428d7cc58
+    sha256: a51f4c8750e53c1229eccce44bea54b86f0a6f9d6c4556d999862983218f29b8
     metadata:
       snapshot_version: 13
-      rows: 9200496
+      rows: 9200533
       schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
   splits:
     train_2spk:
@@ -1817,12 +1850,12 @@
         records_lance:
         - record_index
       statistics:
-        records: 2206815
-        removed_quarantine_records: 219
+        records: 2206836
+        removed_quarantine_records: 198
         removed_holdout_records: 1822
         corrected_records: 27
-        duration_hours: 8557.26
-        removed_quarantine_hours: 1.288
+        duration_hours: 8557.364
+        removed_quarantine_hours: 1.184
         removed_holdout_hours: 7.45
         corrected_hours: 0.177
         duration_basis: sum of mixture duration per target example; excludes enrollment; repeated mixtures count once per example
@@ -1836,13 +1869,13 @@
         records_lance:
         - record_index
       statistics:
-        records: 2201581
+        records: 2201597
         removed_holdout_records: 2562
-        removed_quarantine_records: 230
+        removed_quarantine_records: 214
         corrected_records: 41
-        duration_hours: 8554.224
+        duration_hours: 8554.289
         removed_holdout_hours: 10.494
-        removed_quarantine_hours: 1.354
+        removed_quarantine_hours: 1.289
         corrected_hours: 0.271
         duration_basis: sum of mixture duration per target example; excludes enrollment; repeated mixtures count once per example
     train_neg:
@@ -1985,12 +2018,12 @@
         records_lance:
         - record_index
       statistics:
-        records: 8813744
-        removed_quarantine_records: 449
+        records: 8813781
+        removed_quarantine_records: 412
         removed_holdout_records: 12297
         corrected_records: 68
-        duration_hours: 34211.403
-        removed_quarantine_hours: 2.642
+        duration_hours: 34211.572
+        removed_quarantine_hours: 2.473
         removed_holdout_hours: 50.164
         corrected_hours: 0.448
         duration_basis: sum of mixture duration per target example; excludes enrollment; repeated mixtures count once per example

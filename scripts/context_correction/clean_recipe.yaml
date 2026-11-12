@@ -36,10 +36,13 @@ audio_max_edits: 2   # 漏掉一句 "Y的X" 至少 3 个音节；1–2 个多出
 # 评测集用过的源录音，不进训练
 exclude_recordings:
   wenetspeech_podcast: /workspace/data/datasets/context_correction_zh/source/v1-20261018/excluded-recordings.txt
-# 抽检判错或存疑的窗口（unit_id<TAB>理由），同文本的窗口一起隔离；评审只能把窗口改判为隔离，不能新增改正
+# 抽检判错或存疑的窗口（unit_id<TAB>理由），同文本的窗口一起隔离、也不再捞回；评审只能把窗口改判为隔离，不能新增改正
 review_rejected:
   wenetspeech_podcast: /workspace/data/datasets/context_correction_clean_zh/versions/v1-20261110/wenetspeech_podcast/review-rejected.tsv
   emilia2_mix: /workspace/data/datasets/context_correction_clean_zh/versions/v1-20261110/emilia2_mix/review-rejected.tsv
+  wenetspeech_youtube: /workspace/data/datasets/context_correction_clean_zh/versions/v1-20261110/wenetspeech_youtube/review-rejected.tsv
+  emilia2_dialog: /workspace/data/datasets/context_correction_clean_zh/versions/v1-20261110/emilia2_dialog/review-rejected.tsv
+  emilia2_short: /workspace/data/datasets/context_correction_clean_zh/versions/v1-20261110/emilia2_short/review-rejected.tsv
 
 sources:
   wenetspeech_podcast:

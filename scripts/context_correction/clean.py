@@ -18,11 +18,16 @@ under ``<out>/<source>/`` (recipe ``clean_recipe.yaml``):
 - ``decide``: mechanical checks (only explained characters change, every change keeps
   a shared reading, same length) and the two judges' agreement give one decision per
   window: ``not_hit``, ``unchanged``, ``consistent``, ``corrected`` or ``quarantine``.
+- ``rescue``: the same two LLMs look again at windows quarantined for a text reason and say only
+  whether the label already follows the explanation (prompt ``CLEAN_RESCUE_SYSTEM``); ``decide`` keeps
+  the label unchanged when both say so and the checks pass (reason ``rescued``), after the audio check.
 
     python clean.py units  --source wenetspeech_podcast
     load.sh aliyun-llm -- python clean.py rescan --source wenetspeech_podcast
     load.sh aliyun-llm -- python clean.py judge  --source wenetspeech_podcast
     python clean.py decide --source wenetspeech_podcast
+    load.sh aliyun-llm -- python clean.py rescue --source wenetspeech_podcast
+    python clean.py decide --source wenetspeech_podcast   # then audio, decide, build
 """
 
 from __future__ import annotations
@@ -45,6 +50,9 @@ from common import LLM, JsonlAppender, parse_json_reply, read_jsonl, sha1, write
 
 HERE = Path(__file__).resolve().parent
 VERDICTS = ("none", "consistent", "corrected", "unsure")
+# Quarantine reasons a text-only second look may undo; ``audio_mismatch`` needs the audio and is final.
+RESCUABLE = {"judge_unsure", "judges_disagree", "check_failed", "corrections_differ", "explanation_contradicts",
+             "unexplained_change", "review_rejected", "judge_failed"}
 
 
 def is_han(ch: str) -> bool:
@@ -283,6 +291,79 @@ def cmd_judge(recipe, name, spec, root, args):
                 print(f"[judge] {count}/{len(tasks)}", flush=True)
 
 
+def rescue_candidate(decision: dict, answers: dict[str, dict]) -> bool:
+    """A window quarantined for a text reason (or one an earlier ``decide`` already rescued) where no judge
+    proposed a correction: a proposed correction is evidence against the label, so a later "faithful" is a
+    disagreement and the window stays quarantined (trial on emilia2_mix: half of the wrong rescues had one)."""
+    reasons = decision["reasons"]
+    if any(a.get("verdict") == "corrected" for a in answers.values()):
+        return False
+    return ((decision["decision"] == "quarantine" and reasons[0] in RESCUABLE)
+            or "rescued" in reasons or "text decision: rescued" in reasons)
+
+
+def judged_answers(root) -> dict[str, dict[str, dict]]:
+    judged = defaultdict(dict)
+    for row in read_jsonl(root / "judge.jsonl"):
+        judged[row["text"]][row["judge"]] = row["answer"]  # the last answer of each judge wins
+    return judged
+
+
+def cmd_rescue(recipe, name, spec, root, args):
+    llm_cfg = recipe["llm"]
+    judged = judged_answers(root)
+    rows = [d for d in read_jsonl(root / "decisions.jsonl") if rescue_candidate(d, judged.get(d["text"], {}))]
+    log = JsonlAppender(Path(recipe["run_dir"]) / "llm-log" / name / "rescue.jsonl")
+    judges = {key: LLM(cfg, log, llm_cfg["base_url"], llm_cfg["api_key_env"]) for key, cfg in llm_cfg["judges"].items()}
+    path = root / "rescue.jsonl"
+    done = {(r["text"], r["judge"]) for r in read_jsonl(path) if "error" not in r["answer"]}
+    sink = JsonlAppender(path)
+    tasks, seen = [], set()
+    for row in rows:
+        for key in judges:
+            if (row["text"], key) not in done and (row["text"], key) not in seen:
+                tasks.append((row, key))
+                seen.add((row["text"], key))
+
+    def run(task):
+        row, key = task
+        messages = [{"role": "system", "content": prompts.CLEAN_RESCUE_SYSTEM},
+                    {"role": "user", "content": prompts.CLEAN_JUDGE_USER.format(text=row["text"])}]
+        try:
+            answer = parse_json_reply(judges[key].chat(messages, tag=f"rescue:{key}:{row['unit_id']}"))
+            if not isinstance(answer, dict):
+                raise TypeError(f"not an object: {answer!r}"[:200])
+        except (TypeError, ValueError, RuntimeError) as exc:
+            answer = {"error": str(exc)[:500]}
+        return {"unit_id": row["unit_id"], "text": row["text"], "judge": key, "model": judges[key].model,
+                "answer": answer}
+
+    with ThreadPoolExecutor(args.workers or llm_cfg["workers"]) as pool:
+        for count, future in enumerate(as_completed([pool.submit(run, t) for t in tasks]), 1):
+            sink.append(future.result())
+            if count % 50 == 0 or count == len(tasks):
+                print(f"[rescue] {count}/{len(tasks)}", flush=True)
+
+
+def rescue_issues(text: str, answers: dict[str, dict], keys: set[str]) -> list[str]:
+    """Why the label of a quarantined window cannot be kept as it is; empty when both judges say it
+    already follows the explanation, every evidence span is in the text and none contradicts itself."""
+    if set(answers) != keys:
+        return ["not rescued: answers missing"]
+    issues = []
+    for key, answer in sorted(answers.items()):
+        if "error" in answer or answer.get("verdict") != "faithful":
+            issues.append(f"{key}: {answer.get('verdict') or answer.get('error', '')[:80]}")
+            continue
+        explanations = answer.get("explanations") or []
+        spans = evidence_spans([text], explanations) if all(isinstance(e, dict) for e in explanations) else None
+        if not explanations or spans is None:
+            issues.append(f"{key}: evidence not found in the transcript")
+        else:
+            issues += [f"{key}: contradicts {c}" for c in contradictions(text, spans)]
+    return issues
+
+
 # ---------------------------------------------------------------- decide
 
 def readings(ch: str) -> set[str]:
@@ -413,15 +494,16 @@ def excluded_recordings(recipe, name) -> set[str]:
 
 
 def cmd_decide(recipe, name, spec, root, args):
-    judged = defaultdict(dict)
-    for row in read_jsonl(root / "judge.jsonl"):
-        judged[row["text"]][row["judge"]] = row["answer"]  # the last answer of each judge wins
+    judged = judged_answers(root)
     keys = set(recipe["llm"]["judges"])
     excluded = excluded_recordings(recipe, name)
     regex = {r["unit_id"]: r["rules"] for r in read_jsonl(root / "regex.jsonl")}
     audio = {r["unit_id"]: r for r in read_jsonl(root / "audio.jsonl") if "error" not in r}
     flagged = scan_flagged(spec, root)
     wanted = hits(spec, root)
+    rescue = defaultdict(dict)
+    for row in read_jsonl(root / "rescue.jsonl"):
+        rescue[row["text"]][row["judge"]] = row["answer"]
     # Windows a reviewer found wrong (unit_id <TAB> note); every window with the same text goes with it.
     rejected = {}
     if name in recipe.get("review_rejected", {}):
@@ -461,6 +543,28 @@ def cmd_decide(recipe, name, spec, root, args):
             row["reasons"] = ["review_rejected", rejected_texts[unit["text"]], f"text decision: {decision}"]
             decision = row["decision"] = "quarantine"
             row["corrected"] = None
+        if rescue_candidate(row, answers) and unit["text"] in rescue:
+            answers_r = rescue[unit["text"]]
+            row["rescue"] = {k: {f: a.get(f) for f in ("verdict", "explanations", "reason", "error") if f in a}
+                             for k, a in answers_r.items()}
+            if unit["text"] in rejected_texts:  # a reviewer read the label and found it wrong or doubtful
+                row["reasons"].append(f"rescue rejected in review: {rejected_texts[unit['text']]}")
+            elif not rescue_issues(unit["text"], answers_r, keys):
+                # both judges say the label already follows the explanation: keep it as it is
+                row["reasons"] = ["rescued", *row["reasons"]]
+                decision = row["decision"] = "unchanged"
+                if spec.get("audio_check", True):
+                    explained = {k: a.get("explanations") for k, a in answers_r.items()}
+                    if unit["unit_id"] not in audio:
+                        row["reasons"].append("audio_pending")
+                    else:
+                        row["audio"] = {"hypothesis": audio[unit["unit_id"]]["hypothesis"],
+                                        **audio_result({**row, "explanations": explained},
+                                                       audio[unit["unit_id"]]["hypothesis"], recipe,
+                                                       spec.get("audio") == "mixture")}
+                        if not row["audio"]["pass"]:
+                            row["reasons"] = ["audio_mismatch", "text decision: rescued", *row["reasons"][1:]]
+                            decision = row["decision"] = "quarantine"
         if row["decision"] == "corrected":
             row["edits"] = edits(unit["text"], corrected, unit["segments"])
         out.append(row)
@@ -617,7 +721,7 @@ def mix_segments(spec, wanted: set[str]) -> dict[str, list[dict]]:
 
 
 def cmd_audio(recipe, name, spec, root, args):
-    """Qwen3-ASR transcribes each consistent or corrected window (``decide`` then checks the explanations)."""
+    """Qwen3-ASR transcribes each consistent, corrected or rescued window (``decide`` then checks the explanations)."""
     import base64
     import io
 
@@ -627,7 +731,7 @@ def cmd_audio(recipe, name, spec, root, args):
     from openai import OpenAI
 
     rows = [d for d in read_jsonl(root / "decisions.jsonl")
-            if d["decision"] in ("consistent", "corrected") or "audio_mismatch" in d["reasons"]]
+            if d["decision"] in ("consistent", "corrected") or "audio_mismatch" in d["reasons"] or "rescued" in d["reasons"]]
     out_path = root / "audio.jsonl"
     done = {r["unit_id"] for r in read_jsonl(out_path) if "error" not in r}
     rows = [d for d in rows if d["unit_id"] not in done]
@@ -853,7 +957,7 @@ def cmd_build(recipe, name, spec, root, args):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    parser.add_argument("stage", choices=["units", "scan", "regex", "rescan", "judge", "decide", "audio", "build"])
+    parser.add_argument("stage", choices=["units", "scan", "regex", "rescan", "judge", "decide", "rescue", "audio", "build"])
     parser.add_argument("--recipe", type=Path, default=HERE / "clean_recipe.yaml")
     parser.add_argument("--source", required=True)
     parser.add_argument("--base-url", help="OpenAI-compatible server: scan/rescan (default recipe llm.base_url), audio (Qwen3-ASR)")
@@ -871,6 +975,7 @@ def main():
      "rescan": lambda: cmd_rescan(recipe, args.source, spec, root, args),
      "judge": lambda: cmd_judge(recipe, args.source, spec, root, args),
      "decide": lambda: cmd_decide(recipe, args.source, spec, root, args),
+     "rescue": lambda: cmd_rescue(recipe, args.source, spec, root, args),
      "audio": lambda: cmd_audio(recipe, args.source, spec, root, args),
      "build": lambda: cmd_build(recipe, args.source, spec, root, args)}[args.stage]()
 
