@@ -1,43 +1,115 @@
-# 占位登记：WenetSpeech L 长音频的说话人日志伪标签已停止打标（2026-10-14），不转正、不进训练，详见状态文件。
+# WenetSpeech L 长音频说话人日志伪标签：52 批全部打标并整窗核对（2026-11-12 转正）；2 人窗口为主数据，其余为低置信度划分。
 - schema_version: dataset-catalog/2.0
   dataset_id: wenetspeech_diarize
   version: moss-transcribe-diarize-0.9B
   languages:
     - zh
   tasks:
-    - diarization
     - speaker_attributed_asr
+    - diarization
   aliases: []
   artifacts:
     - name: preparation_state
       kind: dataset-state
       root_alias: aidc_data
       relative_path: datasets/wenetspeech_diarize/versions/moss-transcribe-diarize-0.9B/state.json
+    - name: train_120s-audio-index
+      kind: jsonl-metadata
+      root_alias: aidc_data
+      relative_path: datasets/wenetspeech_diarize/versions/moss-transcribe-diarize-0.9B/main/wenetspeech_l-train-audio-index.jsonl.gz
+      expected_bytes: 854390
+      sha256: ffee001b0b89563d02e3069b9541d6e271c4b1969dbfba6554e237550666b481
+      metadata:
+        record_count: 34032
+        description: cut_id → wenetspeech@legacy-20260804 train（L）原始 16 kHz opus（不复制）
+    - name: train_120s-records
+      kind: audio-records
+      root_alias: aidc_data
+      relative_path: datasets/wenetspeech_diarize/versions/moss-transcribe-diarize-0.9B/main/wenetspeech_l-train_120s.jsonl.gz
+      expected_bytes: 270050129
+      sha256: c841611728d2412005320c7752cbd9d796c96ac61452bda9b06a0b736ebef5f5
+      metadata:
+        record_count: 170418
+    - name: train_120s_lowconf-audio-index
+      kind: jsonl-metadata
+      root_alias: aidc_data
+      relative_path: datasets/wenetspeech_diarize/versions/moss-transcribe-diarize-0.9B/lowconf/wenetspeech_l-train-audio-index.jsonl.gz
+      expected_bytes: 887792
+      sha256: af5b2f45a8e8fd60c1d7a28397f301e9c438f5588aa5205c43707cfbb31015ca
+      metadata:
+        record_count: 35263
+        description: cut_id → wenetspeech@legacy-20260804 train（L）原始 16 kHz opus（不复制）
+    - name: train_120s_lowconf-records
+      kind: audio-records
+      root_alias: aidc_data
+      relative_path: datasets/wenetspeech_diarize/versions/moss-transcribe-diarize-0.9B/lowconf/wenetspeech_l-train_120s_lowconf.jsonl.gz
+      expected_bytes: 782832070
+      sha256: 4effe36100fd35e1697da65e3845c6379dde9e1c5036be7eb4f334fd8066eebe
+      metadata:
+        record_count: 436825
   splits:
-    train:
+    train_120s:
       artifacts:
+        records:
+          - train_120s-records
+        audio_index:
+          - train_120s-audio-index
         preparation_state:
           - preparation_state
+      group: train
       statistics:
-        source_recordings: 51358
-        source_hours: 22174
+        records: 170418
+        recordings: 34032
+        duration_hours: 4626.3
+        target_speech_hours: 2949.5
+        max_duration_seconds: 120.0
+        speaker_count_share_percent:
+          "2": 100.0
       provenance:
-        preparation_status: stopped
+        training_use: train
+    train_120s_lowconf:
+      artifacts:
+        records:
+          - train_120s_lowconf-records
+        audio_index:
+          - train_120s_lowconf-audio-index
+      group: train
+      statistics:
+        records: 436825
+        recordings: 35263
+        duration_hours: 12559.2
+        target_speech_hours: 7272.3
+        max_duration_seconds: 120.0
+        duration_hours_by_local_speakers:
+          "1": 2300.3
+          "3": 3502.1
+          "4+": 6756.8
+      provenance:
+        training_use: low_confidence
   provenance:
     summary: WenetSpeech 长音频的说话人日志伪标签
-    preparation_status: stopped
+    preparation_status: prepared
     owner: mingdong
     description: >-
-      WenetSpeech L 训练集原始长音频（≥120 秒，51,358 条 / 22,174 h）的说话人日志伪标签：
-      沿用 emilia2_zh_dialogue_diarize 的流程，本地 MOSS-Transcribe-Diarize 0.9B 整条打说话人和文本，
-      粗筛多人录音，在停顿处切 30–120 秒窗口，Qwen3-ASR 整窗核对；门槛先在试跑集上以 MOSS Pro 为参照重新确定。
-      2026-10-14 停止全量打标：保留 b000–b040 共 41 批（共 52 批）的整条打标与粗筛结果，
-      Qwen3-ASR 整窗核对只做到 30 批。不转正、不进训练，不发布为可用训练版本；
-      是否改为定向打标（声纹筛选音色相近的多人录音）看音色相近数据的效果再定。
+      WenetSpeech L 训练集原始长音频（≥120 秒，51,358 条 / 22,174 h）的说话人日志伪标签，流程同 emilia2_zh_dialogue_diarize：
+      本地 MOSS-Transcribe-Diarize 0.9B 整条打说话人和文本，粗筛多人录音（≥2 人且每人 ≥5 秒，保留 37,153 条 / 19,970.4 h），
+      在停顿处切 30–120 秒窗口，Qwen3-ASR 整窗识别，文字差异 ≤ 15% 的窗口整体保留（607,243 个 / 17,185.5 h，丢 2,754 h，主要是 text_check_mismatch 2,330.8 h）。
+      WenetSpeech 没有带说话人的上游标注，不做说话人检查。按试跑（以 MOSS Pro 为参照）与听审的方案 B 分两个划分：
+      train_120s 是本地 MOSS 判为 2 人的窗口（170,418 个 / 4,626.3 h，试跑好窗口约 91%），作为主数据；
+      train_120s_lowconf 是其余窗口（1 人 2,300.3 h、3 人 3,502.1 h、4 人以上 6,756.8 h；试跑好窗口 54–74%），不并入主数据，按需选用。
+      音频直接引用 wenetspeech@legacy-20260804 的原始 opus，记录按 cut_id + start/duration 引用。试跑、听审、被拒样本见 run_dir README。
     source: wenetspeech@legacy-20260804
+    annotation: moss-transcribe-diarize-0.9b+qwen3-asr-window-check(cer<=15)
+    window_rule: windows kept whole by the window text check; split by local MOSS speaker count
+    known_issues:
+      - 本地 MOSS 在 WenetSpeech 上主要会把同一人拆成几个编号（听审 5/5），4 人以上窗口 Pro 多认为是 2–3 人；低置信度划分慎用
+      - 窗口里有人说话只占约 60%（音乐、静音、片头片尾），漏标的歌词和背景广播多数已被文字核对挡掉
     run_dir: /workspace/workspace/mingdong/data/amphiondata/wenetspeech-l-diarize-20261012
   recipe_parameters:
     diarization_model: MOSS-Transcribe-Diarize-0.9B
-    text_check_model: Qwen3-ASR
-    text_check_unit: window
+    prescreen: at_least_2_speakers_each_5s
     window_seconds: [30, 120]
+    text_check_model: Qwen3-ASR-1.7B
+    text_check_unit: window
+    max_text_cer: 15
+    main_split_rule: local_moss_speaker_count == 2
