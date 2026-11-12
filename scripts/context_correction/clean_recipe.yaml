@@ -39,6 +39,7 @@ exclude_recordings:
 # 抽检判错或存疑的窗口（unit_id<TAB>理由），同文本的窗口一起隔离；评审只能把窗口改判为隔离，不能新增改正
 review_rejected:
   wenetspeech_podcast: /workspace/data/datasets/context_correction_clean_zh/versions/v1-20261110/wenetspeech_podcast/review-rejected.tsv
+  emilia2_mix: /workspace/data/datasets/context_correction_clean_zh/versions/v1-20261110/emilia2_mix/review-rejected.tsv
 
 sources:
   wenetspeech_podcast:

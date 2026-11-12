@@ -1,8 +1,8 @@
 # 上下文纠偏清洗（2026-11-10 起）：在 AmphionASR v4 配方的中文口语训练来源里，找出说话人讲字怎么写的句子
 # （组词、拆字、偏旁、"不是 X 是 Y"），核对标注是否与说明一致：一致的单列为正例，能可靠改正的改正，拿不准的隔离。
 # context_correction_clean_zh 存逐窗口判定清单；改正结果以各来源的派生版本（<原版本>-ctxclean-20261110）发布，旧版本不动。
-# 已完成：wenetspeech_podcast、wenetspeech_youtube、vitw、emilia2_dialog、emilia2_short；会议 magicdata_ramc / aishell4 / alimeeting_sdm
-# （asr 与 turn-taking，alimeeting 无改动、不出派生版本）。emilia2_mix 进行中，进度见状态文件。
+# 已完成：wenetspeech_podcast、wenetspeech_youtube、vitw、emilia2_dialog、emilia2_short、emilia2_mix；会议 magicdata_ramc / aishell4 / alimeeting_sdm
+# （asr 与 turn-taking，alimeeting 无改动、不出派生版本）。
 # 派生版本保留原版本的合并划分（如 train = train_2spk + train_3spk + train_neg）。
 - schema_version: dataset-catalog/2.0
   dataset_id: context_correction_clean_zh
@@ -305,6 +305,42 @@
     metadata:
       record_count: 4897
       description: 继续用 emilia2_short@short-lance-20261023 训练时的 exclude_records 名单：隔离文本的记录和 ts_asr_real 留出的评测源录音记录（不含改正，改正要用派生版本）
+  - name: emilia2_mix_decisions
+    kind: jsonl-metadata
+    root_alias: aidc_data
+    relative_path: datasets/context_correction_clean_zh/versions/v1-20261110/emilia2_mix/decisions.jsonl
+    expected_bytes: 2464083
+    sha256: 6bde7490b11a79a74d107815d97234951af5c90a0045569e56d404c0f9fd33f8
+    metadata:
+      record_count: 1469
+      description: emilia2_mix 的逐段判定（按不同目标文本），含原文、改后文本、两个判定模型的说明与理由
+  - name: emilia2_mix_positives
+    kind: jsonl-metadata
+    root_alias: aidc_data
+    relative_path: datasets/context_correction_clean_zh/versions/v1-20261110/emilia2_mix/positives.jsonl
+    expected_bytes: 383961
+    sha256: 93aebab657d78a45c814bd7a9f326a7c35e871021f2e8cf3381f4e9318da16a7
+    metadata:
+      record_count: 605
+      description: 真实正例：原标注已与说话人的写法说明一致，附训练记录 ID
+  - name: emilia2_mix_exclude_records
+    kind: record-id-list
+    root_alias: aidc_data
+    relative_path: datasets/context_correction_clean_zh/versions/v1-20261110/emilia2_mix/exclude-records-emilia2_mix@mix-20261013.txt
+    expected_bytes: 889652
+    sha256: 6c2e7070f480de0700a933708f149dd0acef327d1d19779febca664f003c0a9c
+    metadata:
+      record_count: 12746
+      description: 继续用 emilia2_mix@mix-20261013 训练时的 exclude_records 名单：隔离文本的记录和 ts_asr_real 留出的评测源录音记录（不含改正，改正要用派生版本）
+  - name: emilia2_mix_review_rejected
+    kind: metadata
+    root_alias: aidc_data
+    relative_path: datasets/context_correction_clean_zh/versions/v1-20261110/emilia2_mix/review-rejected.tsv
+    expected_bytes: 985
+    sha256: 51445a3abbecefed95960315c1b1809d6a2a7ddd79079bad665920391ac4627c
+    metadata:
+      record_count: 8
+      description: 抽检判错或多改、改判为隔离的改正文本（unit_id 与理由）
   splits:
     train:
       artifacts:
@@ -322,6 +358,7 @@
         - emilia2_dialog_decisions
         - wenetspeech_youtube_decisions
         - emilia2_short_decisions
+        - emilia2_mix_decisions
         positives:
         - wenetspeech_podcast_positives
         - magicdata_ramc_asr_positives
@@ -333,8 +370,10 @@
         - emilia2_dialog_positives
         - wenetspeech_youtube_positives
         - emilia2_short_positives
+        - emilia2_mix_positives
         review_rejected:
         - wenetspeech_podcast_review_rejected
+        - emilia2_mix_review_rejected
         exclude_records:
         - wenetspeech_podcast_exclude_records
         - magicdata_ramc_asr_exclude_records
@@ -346,10 +385,11 @@
         - wenetspeech_youtube_exclude_records
         - emilia2_short_short-20261014_exclude_records
         - emilia2_short_short-lance-20261023_exclude_records
+        - emilia2_mix_exclude_records
       provenance:
-        preparation_status: building
+        preparation_status: complete
   provenance:
-    preparation_status: building
+    preparation_status: complete
     owner: mingdong
     summary: 中文训练数据里说字写法句子的核对与改正清单
     description: >-
@@ -371,7 +411,8 @@
       混合音频里还有别人说话，音频核对改为在识别结果里找说明、只数标注里没被听到的音节。
       emilia2_short 已完成（派生版本 emilia2_short@short-lance-20261023-ctxclean-20261110，音频读 Lance）；m4a 版 short-20261014 已被取代、
       音频已删，不出派生版本，只登记它的 exclude_records 名单。
-      emilia2_mix 进行中。
+      emilia2_mix 已完成（派生版本 emilia2_mix@mix-20261013-ctxclean-20261110，同时去掉 ts_asr_real 留出的评测源录音）：
+      音频核对读混音协议里目标说话人的干净原片段；抽检发现 8 段改错或多改，改判为隔离。
     source: amphionasr_v4 recipe zh spontaneous sources
     run_dir: /workspace/workspace/mingdong/data/amphiondata/ctx-clean-zh-20261110
   recipe_parameters:
@@ -1663,5 +1704,339 @@
     owner: mingdong
     snapshot_date: '2026-11-11'
     source: emilia2_short@short-lance-20261023
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/ctx-clean-zh-20261110
+    quality_status: spelling_explanations_checked
+- schema_version: dataset-catalog/2.0
+  dataset_id: emilia2_mix
+  version: mix-20261013-ctxclean-20261110
+  languages:
+  - zh
+  - en
+  tasks:
+  - ts_asr
+  aliases: []
+  artifacts:
+  - name: train_2spk
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/emilia2-mix/versions/mix-20261013-ctxclean-20261110/records/train_2spk.jsonl.gz
+    expected_bytes: 594828538
+    sha256: 782e5009d6eaa0cfdedc105ad7587470f685e9991b9ceb74facc1cee411dcbc6
+    metadata:
+      record_count: 2206815
+  - name: train_3spk
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/emilia2-mix/versions/mix-20261013-ctxclean-20261110/records/train_3spk.jsonl.gz
+    expected_bytes: 621280940
+    sha256: 5c8282062b60d7621976ae7a25b3083cf428334e57a72f454e6d38c11cf49970
+    metadata:
+      record_count: 2201581
+  - name: train_neg
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/emilia2-mix/versions/mix-20261013-ctxclean-20261110/records/train_neg.jsonl.gz
+    expected_bytes: 880353201
+    sha256: 804b9fba77bac93e52e4e363e4bec85844a4ccef540076879346df96b538b556
+    metadata:
+      record_count: 4405348
+  - name: eval_2spk
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/emilia2-mix/versions/mix-20261013-ctxclean-20261110/records/eval_2spk.jsonl.gz
+    expected_bytes: 15405123
+    sha256: 834311e47b4103eb35f467abe4fe49432318b335f00f53102f063342439088a9
+    metadata:
+      record_count: 49139
+  - name: eval_3spk
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/emilia2-mix/versions/mix-20261013-ctxclean-20261110/records/eval_3spk.jsonl.gz
+    expected_bytes: 15982826
+    sha256: 6273b8477d8eee7d161cb2164a6407378ef138514d3dc0c6d21ad3299363c0ba
+    metadata:
+      record_count: 48206
+  - name: eval_neg
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/emilia2-mix/versions/mix-20261013-ctxclean-20261110/records/eval_neg.jsonl.gz
+    expected_bytes: 24463202
+    sha256: f57c1ca68af9e04960e112b3c24b65956380469387fcefccb81fb71e04ccc6dd
+    metadata:
+      record_count: 97345
+  - name: test_2spk
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/emilia2-mix/versions/mix-20261013-ctxclean-20261110/records/test_2spk.jsonl.gz
+    expected_bytes: 15163392
+    sha256: fb667a129c35d74489e4eeff4b867afbb4fbda2d9e66478a066e5a962e3c4ff1
+    metadata:
+      record_count: 48247
+  - name: test_3spk
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/emilia2-mix/versions/mix-20261013-ctxclean-20261110/records/test_3spk.jsonl.gz
+    expected_bytes: 15757662
+    sha256: eaa2f1a7a76e238a6ab62e83cbf53a6cce6817be3d737793b98ae1b73e4c22b5
+    metadata:
+      record_count: 47784
+  - name: test_neg
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/emilia2-mix/versions/mix-20261013-ctxclean-20261110/records/test_neg.jsonl.gz
+    expected_bytes: 24143578
+    sha256: 51848fed416fd6e8bf4d2aef27068ccc8737c4ad6be746fb90d5c556ae0a1178
+    metadata:
+      record_count: 96031
+  - name: audio_index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/emilia2-mix/versions/mix-20261013-ctxclean-20261110/audio_index/audio-index-flac.jsonl.gz
+    expected_bytes: 363872566
+    sha256: 1f72aaa1a2daa4afdc448e9bd4b4a9a81addd714143cbd79df15a6e51ea754ec
+    metadata:
+      record_count: 5588159
+  - name: record_index
+    kind: lance-record-index
+    root_alias: aidc_data
+    relative_path: datasets/emilia2-mix/versions/mix-20261013-ctxclean-20261110/record_index/index.json
+    expected_bytes: 2239
+    sha256: a062be1eed0a421246c825b20c042feea9903a715467c692017ad53428d7cc58
+    metadata:
+      snapshot_version: 13
+      rows: 9200496
+      schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
+  splits:
+    train_2spk:
+      group: train
+      artifacts:
+        records:
+        - train_2spk
+        audio_index:
+        - audio_index
+        records_lance:
+        - record_index
+      statistics:
+        records: 2206815
+        removed_quarantine_records: 219
+        removed_holdout_records: 1822
+        corrected_records: 27
+        duration_hours: 8557.26
+        removed_quarantine_hours: 1.288
+        removed_holdout_hours: 7.45
+        corrected_hours: 0.177
+        duration_basis: sum of mixture duration per target example; excludes enrollment; repeated mixtures count once per example
+    train_3spk:
+      group: train
+      artifacts:
+        records:
+        - train_3spk
+        audio_index:
+        - audio_index
+        records_lance:
+        - record_index
+      statistics:
+        records: 2201581
+        removed_holdout_records: 2562
+        removed_quarantine_records: 230
+        corrected_records: 41
+        duration_hours: 8554.224
+        removed_holdout_hours: 10.494
+        removed_quarantine_hours: 1.354
+        corrected_hours: 0.271
+        duration_basis: sum of mixture duration per target example; excludes enrollment; repeated mixtures count once per example
+    train_neg:
+      group: train
+      artifacts:
+        records:
+        - train_neg
+        audio_index:
+        - audio_index
+        records_lance:
+        - record_index
+      statistics:
+        records: 4405348
+        removed_holdout_records: 7913
+        duration_hours: 17099.919
+        removed_holdout_hours: 32.22
+        duration_basis: sum of mixture duration per target example; excludes enrollment; repeated mixtures count once per example
+    eval_2spk:
+      group: eval
+      artifacts:
+        records:
+        - eval_2spk
+        audio_index:
+        - audio_index
+        records_lance:
+        - record_index
+      statistics:
+        records: 49139
+        negative_records: 0
+        duration_hours: 185.94530737847174
+        duration_basis: sum of mixture duration per target example; excludes enrollment; repeated mixtures count once per example
+        unique_mixture_count: 49139
+        unique_mixture_duration_hours: 185.94530737847222
+        languages:
+          en: 25963
+          zh: 23176
+    eval_3spk:
+      group: eval
+      artifacts:
+        records:
+        - eval_3spk
+        audio_index:
+        - audio_index
+        records_lance:
+        - record_index
+      statistics:
+        records: 48206
+        negative_records: 0
+        duration_hours: 186.41546710069406
+        duration_basis: sum of mixture duration per target example; excludes enrollment; repeated mixtures count once per example
+        unique_mixture_count: 48206
+        unique_mixture_duration_hours: 186.41546710069443
+        languages:
+          en: 25707
+          zh: 22499
+    eval_neg:
+      group: eval
+      artifacts:
+        records:
+        - eval_neg
+        audio_index:
+        - audio_index
+        records_lance:
+        - record_index
+      statistics:
+        records: 97345
+        negative_records: 97345
+        duration_hours: 372.3607744791664
+        duration_basis: sum of mixture duration per target example; excludes enrollment; repeated mixtures count once per example
+        unique_mixture_count: 97345
+        unique_mixture_duration_hours: 372.36077447916665
+        languages:
+          en: 51670
+          zh: 45675
+    test_2spk:
+      group: test
+      artifacts:
+        records:
+        - test_2spk
+        audio_index:
+        - audio_index
+        records_lance:
+        - record_index
+      statistics:
+        records: 48247
+        negative_records: 0
+        duration_hours: 184.21496236111105
+        duration_basis: sum of mixture duration per target example; excludes enrollment; repeated mixtures count once per example
+        unique_mixture_count: 48247
+        unique_mixture_duration_hours: 184.2149623611111
+        languages:
+          en: 25834
+          zh: 22413
+    test_3spk:
+      group: test
+      artifacts:
+        records:
+        - test_3spk
+        audio_index:
+        - audio_index
+        records_lance:
+        - record_index
+      statistics:
+        records: 47784
+        negative_records: 0
+        duration_hours: 183.63783336805506
+        duration_basis: sum of mixture duration per target example; excludes enrollment; repeated mixtures count once per example
+        unique_mixture_count: 47784
+        unique_mixture_duration_hours: 183.63783336805554
+        languages:
+          en: 25685
+          zh: 22099
+    test_neg:
+      group: test
+      artifacts:
+        records:
+        - test_neg
+        audio_index:
+        - audio_index
+        records_lance:
+        - record_index
+      statistics:
+        records: 96031
+        negative_records: 96031
+        duration_hours: 367.8527957291624
+        duration_basis: sum of mixture duration per target example; excludes enrollment; repeated mixtures count once per example
+        unique_mixture_count: 96031
+        unique_mixture_duration_hours: 367.8527957291667
+        languages:
+          en: 51519
+          zh: 44512
+    train:
+      artifacts:
+        records:
+        - train_2spk
+        - train_3spk
+        - train_neg
+        audio_index:
+        - audio_index
+        records_lance:
+        - record_index
+      statistics:
+        records: 8813744
+        removed_quarantine_records: 449
+        removed_holdout_records: 12297
+        corrected_records: 68
+        duration_hours: 34211.403
+        removed_quarantine_hours: 2.642
+        removed_holdout_hours: 50.164
+        corrected_hours: 0.448
+        duration_basis: sum of mixture duration per target example; excludes enrollment; repeated mixtures count once per example
+    eval:
+      artifacts:
+        records:
+        - eval_2spk
+        - eval_3spk
+        - eval_neg
+        audio_index:
+        - audio_index
+        records_lance:
+        - record_index
+      statistics:
+        records: 194690
+        duration_hours: 744.7215489583322
+        duration_basis: sum of mixture duration per target example; excludes enrollment; repeated mixtures count once per example
+        unique_mixture_count: 97345
+        unique_mixture_duration_hours: 372.36077447916665
+    test:
+      artifacts:
+        records:
+        - test_2spk
+        - test_3spk
+        - test_neg
+        audio_index:
+        - audio_index
+        records_lance:
+        - record_index
+      statistics:
+        records: 192062
+        duration_hours: 735.7055914583285
+        duration_basis: sum of mixture duration per target example; excludes enrollment; repeated mixtures count once per example
+        unique_mixture_count: 96031
+        unique_mixture_duration_hours: 367.8527957291667
+  derived_from: emilia2_mix@mix-20261013
+  recipe_parameters:
+    decisions: context_correction_clean_zh@v1-20261110 emilia2_mix_decisions
+    corrected: 判为 corrected 的中文目标文本换成改后文本，metadata.context_correction 留原文、判定编号和判定清单
+    removed: 隔离文本的全部记录；ts_asr_real 留出的评测源录音记录
+    unchanged: 其余记录、音频引用和音频索引与原版本逐字相同；没清洗的 eval/test 划分原样硬链接
+  provenance:
+    summary: Emilia2 mix 按说字写法改正，去掉存疑和留出录音
+    description: 在 emilia2_mix@mix-20261013 上做的上下文纠偏清洗：说话人讲字怎么写（组词、拆字、偏旁、否定对比）而标注写成同音别字的，按说明改正；拿不准的整条去掉。判定依据见 context_correction_clean_zh@v1-20261110。音频核对读混音协议里目标说话人的干净原片段。
+    owner: mingdong
+    snapshot_date: '2026-11-11'
+    source: emilia2_mix@mix-20261013
     run_dir: /workspace/workspace/mingdong/data/amphiondata/ctx-clean-zh-20261110
     quality_status: spelling_explanations_checked
