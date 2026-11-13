@@ -46,6 +46,11 @@
     run_dir: /workspace/workspace/mingdong/data/amphiondata/emilia2-overlap-farsim-20261013
     code: amphiondata feat/emilia2-overlap-resim (2d7bfac), python -m amphiondata.multispeaker.overlap_resim
     report: datasets/emilia2_zh_overlap_farsim/versions/overlap-farsim-v1-20261013/report.json
+    source_keys:
+    - namespace: emilia2
+      fields:
+      - metadata.recording_id
+      pattern: '(?<![0-9a-f])[0-9a-f]{16}(?![0-9a-f])'
   recipe_parameters:
     seed: 20261013
     snr_db:

@@ -164,3 +164,9 @@
         'window_check_records: rows': 232534
         'window_check_records: kept': 209319
         'window_check_records: rejected': 23215
+      source_keys:
+        - namespace: emilia2
+          fields:
+            - id
+            - metadata.recording_id
+          pattern: '(?<![0-9a-f])[0-9a-f]{16}(?![0-9a-f])'

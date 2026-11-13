@@ -1589,6 +1589,12 @@
     source: emilia2_dialog@dialog-turn-taking-20261013-enroll
     run_dir: /workspace/workspace/mingdong/data/amphiondata/ctx-clean-zh-20261110
     quality_status: spelling_explanations_checked
+    source_keys:
+    - namespace: emilia2
+      fields:
+      - metadata.recording_id
+      - metadata.source_record_id
+      pattern: '(?<![0-9a-f])[0-9a-f]{16}(?![0-9a-f])'
 - schema_version: dataset-catalog/2.0
   dataset_id: wenetspeech_youtube
   version: l-20261014-ctxclean-20261110
@@ -1739,6 +1745,11 @@
     source: emilia2_short@short-lance-20261023
     run_dir: /workspace/workspace/mingdong/data/amphiondata/ctx-clean-zh-20261110
     quality_status: spelling_explanations_checked
+    source_keys:
+    - namespace: emilia2
+      fields:
+      - metadata.recording_id
+      pattern: '(?<![0-9a-f])[0-9a-f]{16}(?![0-9a-f])'
 - schema_version: dataset-catalog/2.0
   dataset_id: emilia2_mix
   version: mix-20261013-ctxclean-20261110
@@ -2073,3 +2084,9 @@
     source: emilia2_mix@mix-20261013
     run_dir: /workspace/workspace/mingdong/data/amphiondata/ctx-clean-zh-20261110
     quality_status: spelling_explanations_checked
+    source_keys:
+    - namespace: emilia2
+      fields:
+      - metadata.recording_id
+      - metadata.source_record_id
+      pattern: '(?<![0-9a-f])[0-9a-f]{16}(?![0-9a-f])'
