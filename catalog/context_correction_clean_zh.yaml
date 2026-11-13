@@ -4,7 +4,10 @@
 # 已完成：wenetspeech_podcast、wenetspeech_youtube、vitw、emilia2_dialog、emilia2_short、emilia2_mix；会议 magicdata_ramc / aishell4 / alimeeting_sdm
 # （asr 与 turn-taking，alimeeting 无改动、不出派生版本）。
 # 派生版本保留原版本的合并划分（如 train = train_2spk + train_3spk + train_neg）。
+# 2026-11-13 判定迁到交付配方 v7set34 实际训练的版本（clean.py transfer）：wenetspeech_clean@train-punc-v1-20261102、emilia2_mix@mix-20261013-utts、
+# magicdata_ramc / aishell4 的带标点 asr 与 turn-taking utts 版本，各出 <版本>-ctxclean-20261110；alimeeting_sdm 两个带标点版本无改动。
 # think-v1-20261112：清洗过的训练记录的 think 文本（说字写法 CoT），每个来源一个 think.jsonl.gz。
+# think-v2-20261113：交付配方 v7set34 实际训练的版本（带标点、utts、wenetspeech_clean）的 think 文本和上采样用的记录 ID 名单。
 - schema_version: dataset-catalog/2.0
   dataset_id: context_correction_clean_zh
   version: v1-20261110
@@ -369,6 +372,195 @@
     metadata:
       record_count: 4
       description: 捞回后评审判错或存疑、仍然隔离的文本（unit_id 与理由）
+  - name: wenetspeech_clean_decisions
+    kind: jsonl-metadata
+    root_alias: aidc_data
+    relative_path: datasets/context_correction_clean_zh/versions/v1-20261110/wenetspeech_clean/decisions.jsonl
+    expected_bytes: 4568405
+    sha256: b5d637b152e779067bb39443608b1b58f91d7daa65a610ea627265c7cb1fb883
+    metadata:
+      record_count: 2326
+      description: wenetspeech_clean 的逐窗口判定，含原文、改后文本、两个判定模型的说明与理由
+  - name: wenetspeech_clean_positives
+    kind: jsonl-metadata
+    root_alias: aidc_data
+    relative_path: datasets/context_correction_clean_zh/versions/v1-20261110/wenetspeech_clean/positives.jsonl
+    expected_bytes: 731725
+    sha256: 075909d8f25fcd767a70f354114578991d436fe5b81bae1a8d83f833ad59f237
+    metadata:
+      record_count: 738
+      description: 真实正例：原标注已与说话人的写法说明一致，附训练记录 ID
+  - name: wenetspeech_clean_exclude_records
+    kind: record-id-list
+    root_alias: aidc_data
+    relative_path: datasets/context_correction_clean_zh/versions/v1-20261110/wenetspeech_clean/exclude-records-wenetspeech_clean@train-punc-v1-20261102.txt
+    expected_bytes: 6603568
+    sha256: f1b5e7b03a260d02b34a72ee963c49866d99ba639176afd30aed7aaf1aaa1124
+    metadata:
+      record_count: 87912
+      description: 继续用 wenetspeech_clean@train-punc-v1-20261102 训练时的 exclude_records 名单：评测录音 83,140 段和隔离窗口 4,772 段（不含改正，改正要用派生版本）
+  - name: emilia2_mix_utts_decisions
+    kind: jsonl-metadata
+    root_alias: aidc_data
+    relative_path: datasets/context_correction_clean_zh/versions/v1-20261110/emilia2_mix_utts/decisions.jsonl
+    expected_bytes: 2620803
+    sha256: 843f6c23baee022a0653fe671732dd24c103eb51be267a1fbb68c24579155556
+    metadata:
+      record_count: 1471
+      description: emilia2_mix_utts 的逐段判定（按不同目标文本），含原文、改后文本、两个判定模型的说明与理由
+  - name: emilia2_mix_utts_positives
+    kind: jsonl-metadata
+    root_alias: aidc_data
+    relative_path: datasets/context_correction_clean_zh/versions/v1-20261110/emilia2_mix_utts/positives.jsonl
+    expected_bytes: 389685
+    sha256: e94bdc905695bd9455740581def20d2907dcb8702fc8b08761a8798470c56e42
+    metadata:
+      record_count: 606
+      description: 真实正例：原标注已与说话人的写法说明一致，附训练记录 ID
+  - name: emilia2_mix_utts_exclude_records
+    kind: record-id-list
+    root_alias: aidc_data
+    relative_path: datasets/context_correction_clean_zh/versions/v1-20261110/emilia2_mix_utts/exclude-records-emilia2_mix@mix-20261013-utts.txt
+    expected_bytes: 255551
+    sha256: fc4c5bfe32117267b36bbaddb8523dfa0cb07e393b891bf9511808185c02c85c
+    metadata:
+      record_count: 4796
+      description: 继续用 emilia2_mix@mix-20261013-utts 训练时的 exclude_records 名单：隔离文本的记录和 ts_asr_real 留出的评测源录音记录（不含改正，改正要用派生版本）
+  - name: magicdata_ramc_punc_decisions
+    kind: jsonl-metadata
+    root_alias: aidc_data
+    relative_path: datasets/context_correction_clean_zh/versions/v1-20261110/magicdata_ramc_punc/decisions.jsonl
+    expected_bytes: 31561
+    sha256: 2702ddf93ba4e9ab2dfb07d20d9adedad6c77a48e3cf1cc84d8bcb8fb984d4ef
+    metadata:
+      record_count: 21
+      description: magicdata_ramc_punc 的逐窗口判定，含原文、改后文本、两个判定模型的说明与理由
+  - name: magicdata_ramc_punc_positives
+    kind: jsonl-metadata
+    root_alias: aidc_data
+    relative_path: datasets/context_correction_clean_zh/versions/v1-20261110/magicdata_ramc_punc/positives.jsonl
+    expected_bytes: 8628
+    sha256: 85944fcbc73d62f3fc4757a71b5d778aaae241bbb66e5b2773fe712839d27a6f
+    metadata:
+      record_count: 13
+      description: 真实正例：原标注已与说话人的写法说明一致，附训练记录 ID
+  - name: magicdata_ramc_punc_exclude_records
+    kind: record-id-list
+    root_alias: aidc_data
+    relative_path: datasets/context_correction_clean_zh/versions/v1-20261110/magicdata_ramc_punc/exclude-records-magicdata_ramc@train-punc-v1-20261102.txt
+    expected_bytes: 460
+    sha256: 44413560ccbd21ead233dd42eb2ed49532b5fe54faf398a0f148409bcd84bd8d
+    metadata:
+      record_count: 5
+      description: 继续用 magicdata_ramc@train-punc-v1-20261102 训练时的 exclude_records 名单：隔离窗口 5 段（不含改正，改正要用派生版本）
+  - name: magicdata_ramc_tt_punc_decisions
+    kind: jsonl-metadata
+    root_alias: aidc_data
+    relative_path: datasets/context_correction_clean_zh/versions/v1-20261110/magicdata_ramc_tt_punc/decisions.jsonl
+    expected_bytes: 29063
+    sha256: 5f668c290ec93f1c533bdc68052d5240094875f1b6393502036be257e02520aa
+    metadata:
+      record_count: 15
+      description: magicdata_ramc_tt_punc 的逐段判定（按不同目标文本），含原文、改后文本、两个判定模型的说明与理由
+  - name: magicdata_ramc_tt_punc_positives
+    kind: jsonl-metadata
+    root_alias: aidc_data
+    relative_path: datasets/context_correction_clean_zh/versions/v1-20261110/magicdata_ramc_tt_punc/positives.jsonl
+    expected_bytes: 6636
+    sha256: 000a687e07a96c3129f8806a1a5a52bc433ad873d80548cbb7331058d344692b
+    metadata:
+      record_count: 8
+      description: 真实正例：原标注已与说话人的写法说明一致，附训练记录 ID
+  - name: magicdata_ramc_tt_punc_exclude_records
+    kind: record-id-list
+    root_alias: aidc_data
+    relative_path: datasets/context_correction_clean_zh/versions/v1-20261110/magicdata_ramc_tt_punc/exclude-records-magicdata_ramc@turn-taking-20261014-utts-punc-20261102.txt
+    expected_bytes: 313
+    sha256: 8cea17883e8d9f467735d00a61ff632e4e81f78044eeed4b447daeea4a2fc1f8
+    metadata:
+      record_count: 4
+      description: 继续用 magicdata_ramc@turn-taking-20261014-utts-punc-20261102 训练时的 exclude_records 名单：隔离文本的记录（不含改正，改正要用派生版本）
+  - name: aishell4_punc_decisions
+    kind: jsonl-metadata
+    root_alias: aidc_data
+    relative_path: datasets/context_correction_clean_zh/versions/v1-20261110/aishell4_punc/decisions.jsonl
+    expected_bytes: 6521
+    sha256: 462c6a381647a1da4ba04101f1b35fa4c02a53a3e49a973623af5a1709284b25
+    metadata:
+      record_count: 4
+      description: aishell4_punc 的逐段判定（按不同目标文本），含原文、改后文本、两个判定模型的说明与理由
+  - name: aishell4_punc_positives
+    kind: jsonl-metadata
+    root_alias: aidc_data
+    relative_path: datasets/context_correction_clean_zh/versions/v1-20261110/aishell4_punc/positives.jsonl
+    expected_bytes: 620
+    sha256: b846e5764a983e8a23dd7a57141d173291219fc34c10adb9294e03f86bbfc6bb
+    metadata:
+      record_count: 1
+      description: 真实正例：原标注已与说话人的写法说明一致，附训练记录 ID
+  - name: aishell4_punc_exclude_records
+    kind: record-id-list
+    root_alias: aidc_data
+    relative_path: datasets/context_correction_clean_zh/versions/v1-20261110/aishell4_punc/exclude-records-aishell4@asr-20261014-punc-20261102.txt
+    expected_bytes: 40
+    sha256: 6459aa2121893a8214f2ef48d6c88543c6874530b2bbd3b85ea3cb6dffee9c66
+    metadata:
+      record_count: 1
+      description: 继续用 aishell4@asr-20261014-punc-20261102 训练时的 exclude_records 名单：隔离文本的记录（不含改正，改正要用派生版本）
+  - name: aishell4_tt_punc_decisions
+    kind: jsonl-metadata
+    root_alias: aidc_data
+    relative_path: datasets/context_correction_clean_zh/versions/v1-20261110/aishell4_tt_punc/decisions.jsonl
+    expected_bytes: 3883
+    sha256: c95ac9daa035f80c2bcc608ea12b8ae20758e031f39923b84d7c2a036ba08b44
+    metadata:
+      record_count: 2
+      description: aishell4_tt_punc 的逐段判定（按不同目标文本），含原文、改后文本、两个判定模型的说明与理由
+  - name: aishell4_tt_punc_exclude_records
+    kind: record-id-list
+    root_alias: aidc_data
+    relative_path: datasets/context_correction_clean_zh/versions/v1-20261110/aishell4_tt_punc/exclude-records-aishell4@turn-taking-20261014-utts-punc-20261102.txt
+    expected_bytes: 114
+    sha256: 39213a040d12b1b4538044ff67032eaa10d3d628ca6f67f57c6b575c8c8ac2fc
+    metadata:
+      record_count: 2
+      description: 继续用 aishell4@turn-taking-20261014-utts-punc-20261102 训练时的 exclude_records 名单：隔离文本的记录（不含改正，改正要用派生版本）
+  - name: alimeeting_sdm_punc_decisions
+    kind: jsonl-metadata
+    root_alias: aidc_data
+    relative_path: datasets/context_correction_clean_zh/versions/v1-20261110/alimeeting_sdm_punc/decisions.jsonl
+    expected_bytes: 5167
+    sha256: ee5aff192e17876b86a2210ca95c8e882c54717708aa4fe80f045c7f840244b8
+    metadata:
+      record_count: 4
+      description: alimeeting_sdm_punc 的逐段判定（按不同目标文本），含原文、改后文本、两个判定模型的说明与理由
+  - name: alimeeting_sdm_punc_positives
+    kind: jsonl-metadata
+    root_alias: aidc_data
+    relative_path: datasets/context_correction_clean_zh/versions/v1-20261110/alimeeting_sdm_punc/positives.jsonl
+    expected_bytes: 1974
+    sha256: dc292fe8281af9463a81b1267a593d830983f8ffdcc3025590ab0fd466b16fc3
+    metadata:
+      record_count: 4
+      description: 真实正例：原标注已与说话人的写法说明一致，附训练记录 ID
+  - name: alimeeting_sdm_tt_punc_decisions
+    kind: jsonl-metadata
+    root_alias: aidc_data
+    relative_path: datasets/context_correction_clean_zh/versions/v1-20261110/alimeeting_sdm_tt_punc/decisions.jsonl
+    expected_bytes: 5469
+    sha256: a1b384aac8f1188a8240023827e74c455e6ee08cfbf6975107c00261a32a29a5
+    metadata:
+      record_count: 4
+      description: alimeeting_sdm_tt_punc 的逐段判定（按不同目标文本），含原文、改后文本、两个判定模型的说明与理由
+  - name: alimeeting_sdm_tt_punc_positives
+    kind: jsonl-metadata
+    root_alias: aidc_data
+    relative_path: datasets/context_correction_clean_zh/versions/v1-20261110/alimeeting_sdm_tt_punc/positives.jsonl
+    expected_bytes: 2149
+    sha256: 87ae87ba74b961ba5bc63a467a5965e1064888b2a819954e2afa31e7ea85a633
+    metadata:
+      record_count: 4
+      description: 真实正例：原标注已与说话人的写法说明一致，附训练记录 ID
   splits:
     train:
       artifacts:
@@ -387,6 +579,14 @@
         - wenetspeech_youtube_decisions
         - emilia2_short_decisions
         - emilia2_mix_decisions
+        - wenetspeech_clean_decisions
+        - emilia2_mix_utts_decisions
+        - magicdata_ramc_punc_decisions
+        - magicdata_ramc_tt_punc_decisions
+        - aishell4_punc_decisions
+        - aishell4_tt_punc_decisions
+        - alimeeting_sdm_punc_decisions
+        - alimeeting_sdm_tt_punc_decisions
         positives:
         - wenetspeech_podcast_positives
         - magicdata_ramc_asr_positives
@@ -399,6 +599,13 @@
         - wenetspeech_youtube_positives
         - emilia2_short_positives
         - emilia2_mix_positives
+        - wenetspeech_clean_positives
+        - emilia2_mix_utts_positives
+        - magicdata_ramc_punc_positives
+        - magicdata_ramc_tt_punc_positives
+        - aishell4_punc_positives
+        - alimeeting_sdm_punc_positives
+        - alimeeting_sdm_tt_punc_positives
         review_rejected:
         - wenetspeech_podcast_review_rejected
         - emilia2_mix_review_rejected
@@ -417,6 +624,12 @@
         - emilia2_short_short-20261014_exclude_records
         - emilia2_short_short-lance-20261023_exclude_records
         - emilia2_mix_exclude_records
+        - wenetspeech_clean_exclude_records
+        - emilia2_mix_utts_exclude_records
+        - magicdata_ramc_punc_exclude_records
+        - magicdata_ramc_tt_punc_exclude_records
+        - aishell4_punc_exclude_records
+        - aishell4_tt_punc_exclude_records
       provenance:
         preparation_status: complete
   provenance:
@@ -447,6 +660,7 @@
       2026-11-12 捞回：因文本原因隔离、首轮没有模型提出改法的窗口，两个模型再判一次“原标注是否已照说明写对”，
       两边都说对、机械检查和音频核对都通过的放回训练（原文不动，不进正例）；执行者逐条看过全部放回的 129 段文本，
       判错 6 段、存疑 12 段写进各来源的 review_rejected 名单、仍然隔离，最终放回 111 段不同文本。
+      2026-11-13 把判定迁到交付配方 v7set34 实际训练的版本（clean.py transfer，不重新判定）：wenetspeech_clean@train-punc-v1-20261102 按分段 ID、emilia2_mix@mix-20261013-utts 与会议带标点版本按去掉标点后的文本对应，改字按字对齐写进带标点的文本，文本对不上的改字窗口隔离；这些来源的判定清单（*_punc、emilia2_mix_utts、wenetspeech_clean）与派生版本一并登记，wenetspeech_clean 同样去掉评测录音。
     source: amphionasr_v4 recipe zh spontaneous sources
     run_dir: /workspace/workspace/mingdong/data/amphiondata/ctx-clean-zh-20261110
   recipe_parameters:
@@ -2301,6 +2515,853 @@
       WenetSpeech、VITW 按分段训练：原话整段落在哪个分段，该分段才有 think；原话被分段切开的，只有切开后仍是完整"X的X"的那段保留。
       执行者看过全部新增规则放出的样本和各只进 think 关原因的抽样，结论写在运行目录 README 的"CoT 生成"一节。
       还没有用于训练。
+    source: context_correction_clean_zh@v1-20261110
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/ctx-clean-zh-20261110
+  derived_from: context_correction_clean_zh@v1-20261110
+- schema_version: dataset-catalog/2.0
+  dataset_id: wenetspeech_clean
+  version: train-punc-v1-20261102-ctxclean-20261110
+  languages:
+  - zh
+  tasks:
+  - asr
+  aliases: []
+  artifacts:
+  - name: train_recordings
+    kind: lhotse-recordings
+    root_alias: aidc_data
+    relative_path: datasets/wenetspeech_clean/versions/train-punc-v1-20261102-ctxclean-20261110/recordings/train.jsonl.gz
+    expected_bytes: 1437000
+    sha256: 792596fc3a2d6b0992ae95f7dbad715d85fae66efc748c0d1249c202bac9acd4
+    metadata:
+      record_count: 60937
+  - name: train_supervisions_punc_0
+    kind: lhotse-supervisions
+    root_alias: aidc_data
+    relative_path: datasets/wenetspeech_clean/versions/train-punc-v1-20261102-ctxclean-20261110/supervisions/train.jsonl.gz
+    expected_bytes: 516649515
+    sha256: e0085de43f81bcb983585eccea2ee15d3e49ef6c06347b4c12a01e3471345979
+    metadata:
+      record_count: 14480879
+  - name: record_index
+    kind: lance-record-index
+    root_alias: aidc_data
+    relative_path: datasets/wenetspeech_clean/versions/train-punc-v1-20261102-ctxclean-20261110/record_index/index.json
+    expected_bytes: 796
+    sha256: 68696815efa957b6510a55039a135e1272716ee53f2783178a9f6485ca6b4d7f
+    metadata:
+      snapshot_version: 13
+      rows: 14480879
+      schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
+  splits:
+    train:
+      artifacts:
+        recordings:
+        - train_recordings
+        supervisions:
+        - train_supervisions_punc_0
+        records_lance:
+        - record_index
+      statistics:
+        records: 14480879
+        recordings: 60937
+        recordings_with_supervisions: 60928
+        duration_hours: 9919.264
+        corrected_records: 215
+        corrected_hours: 0.212
+        removed_eval_recording_records: 83140
+        removed_eval_recording_hours: 48.819
+        removed_quarantine_records: 4772
+        removed_quarantine_hours: 3.009
+        duration_basis: sum of supervision duration
+  derived_from: wenetspeech_clean@train-punc-v1-20261102
+  recipe_parameters:
+    decisions: context_correction_clean_zh@v1-20261110 wenetspeech_clean_decisions
+    corrected: 判为 corrected 的窗口里实际改动的分段换成改后文本，custom.context_correction 留原文、窗口编号和判定清单
+    removed: 隔离窗口的全部分段；录音清单不删（训练按分段切，没有分段的录音不进训练）
+    unchanged: 其余分段、录音和音频路径与 wenetspeech_clean@train-punc-v1-20261102 逐字相同
+  provenance:
+    summary: WenetSpeech 带标点版的说字写法清洗
+    description: 在 wenetspeech_clean@train-punc-v1-20261102 上做的上下文纠偏清洗：说话人讲字怎么写（组词、拆字、偏旁、否定对比）而标注写成同音别字的，按说明改正；拿不准的窗口整窗去掉。判定依据见 context_correction_clean_zh@v1-20261110。判定迁自本清洗对 wenetspeech_podcast / wenetspeech_youtube@l-20261014 的判定（clean.py transfer：按分段 ID 对应，去掉标点后文本相同才迁改字，改字窗口文本对不上的整窗隔离），并去掉 context_correction_zh 评测录音。
+    owner: mingdong
+    snapshot_date: '2026-11-13'
+    source: wenetspeech_clean@train-punc-v1-20261102
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/ctx-clean-zh-20261110
+    quality_status: spelling_explanations_checked
+- schema_version: dataset-catalog/2.0
+  dataset_id: emilia2_mix
+  version: mix-20261013-utts-ctxclean-20261110
+  languages:
+  - zh
+  - en
+  tasks:
+  - ts_asr
+  aliases: []
+  artifacts:
+  - name: train_2spk-records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/emilia2_mix/versions/mix-20261013-utts-ctxclean-20261110/records/train_2spk.jsonl.gz
+    expected_bytes: 930190509
+    sha256: e890fb08dacd13c7bf778dc64dd7aff8ee4bf878da84cc5aeadc9257ca4de744
+    metadata:
+      record_count: 2206836
+  - name: train_3spk-records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/emilia2_mix/versions/mix-20261013-utts-ctxclean-20261110/records/train_3spk.jsonl.gz
+    expected_bytes: 1117130011
+    sha256: 7ab072cb8615b7b4adee793f839e55aeaa876f6803d73a97fea38c083335ab20
+    metadata:
+      record_count: 2201597
+  - name: train_2spk-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/emilia2_mix/versions/mix-20261013-utts-ctxclean-20261110/audio_index/audio_index_train_2spk.jsonl.gz
+    sha256: 3324be60c75b501847a2394f56c051ade7940df2b7c32ae7cc41091dbec7b7ec
+    metadata:
+      record_count: 2814665
+    expected_bytes: 184202757
+  - name: train_3spk-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/emilia2_mix/versions/mix-20261013-utts-ctxclean-20261110/audio_index/audio_index_train_3spk.jsonl.gz
+    sha256: 919d303cea3cfec079588097c962bc9777c7205178ce13a6f966f5e52149dc15
+    metadata:
+      record_count: 2810451
+    expected_bytes: 183932154
+  - name: record_index
+    kind: lance-record-index
+    root_alias: aidc_data
+    relative_path: datasets/emilia2_mix/versions/mix-20261013-utts-ctxclean-20261110/record_index/index.json
+    expected_bytes: 1130
+    sha256: fbd03613ebd9ee710fd23d546347d9e874f8e1789ca484131c783f109ac432c5
+    metadata:
+      snapshot_version: 13
+      rows: 4408433
+      schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
+  splits:
+    train_2spk:
+      artifacts:
+        records:
+        - train_2spk-records
+        audio_index:
+        - train_2spk-audio-index
+        records_lance:
+        - record_index
+      task: ts_asr
+      statistics:
+        records: 2206836
+        removed_holdout_records: 1822
+        corrected_records: 27
+        removed_quarantine_records: 198
+        duration_hours: 8557.364
+        removed_holdout_hours: 7.45
+        corrected_hours: 0.177
+        removed_quarantine_hours: 1.184
+        duration_basis: clip duration (segment span, or the whole file)
+    train_3spk:
+      artifacts:
+        records:
+        - train_3spk-records
+        audio_index:
+        - train_3spk-audio-index
+        records_lance:
+        - record_index
+      task: ts_asr
+      statistics:
+        records: 2201597
+        removed_holdout_records: 2562
+        removed_quarantine_records: 214
+        corrected_records: 41
+        duration_hours: 8554.289
+        removed_holdout_hours: 10.494
+        removed_quarantine_hours: 1.289
+        corrected_hours: 0.271
+        duration_basis: clip duration (segment span, or the whole file)
+  derived_from: emilia2_mix@mix-20261013-utts
+  recipe_parameters:
+    decisions: context_correction_clean_zh@v1-20261110 emilia2_mix_utts_decisions
+    corrected: 判为 corrected 的中文目标文本换成改后文本，metadata.context_correction 留原文、判定编号和判定清单
+    removed: 隔离文本的全部记录；ts_asr_real 留出的评测源录音记录
+    unchanged: 其余记录、音频引用和音频索引与原版本逐字相同；没清洗的 eval/test 划分原样硬链接
+  provenance:
+    summary: Emilia2 mix utts 版的说字写法清洗
+    description: 在 emilia2_mix@mix-20261013-utts 上做的上下文纠偏清洗：说话人讲字怎么写（组词、拆字、偏旁、否定对比）而标注写成同音别字的，按说明改正；拿不准的整条去掉。判定依据见 context_correction_clean_zh@v1-20261110。判定迁自同一批记录在清洗时的判定（clean.py transfer：按去掉标点、空格后的文本对应，改字按字对齐写进带标点的文本）。
+    owner: mingdong
+    snapshot_date: '2026-11-13'
+    source: emilia2_mix@mix-20261013-utts
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/ctx-clean-zh-20261110
+    quality_status: spelling_explanations_checked
+- schema_version: dataset-catalog/2.0
+  dataset_id: magicdata_ramc
+  version: train-punc-v1-20261102-ctxclean-20261110
+  languages:
+  - zh
+  tasks:
+  - asr
+  aliases: []
+  artifacts:
+  - name: train_recordings
+    kind: lhotse-recordings
+    root_alias: aidc_data
+    relative_path: datasets/magicdata_ramc/versions/train-punc-v1-20261102-ctxclean-20261110/recordings/train.jsonl.gz
+    expected_bytes: 4533
+    sha256: c860c48b83ad7b67c340fc2cea2f699fd120fbe7cc947c0984110725e67f3470
+    metadata:
+      record_count: 289
+  - name: train_supervisions_punc_0
+    kind: lhotse-supervisions
+    root_alias: aidc_data
+    relative_path: datasets/magicdata_ramc/versions/train-punc-v1-20261102-ctxclean-20261110/supervisions/train.jsonl.gz
+    expected_bytes: 7515418
+    sha256: 66038b2140746aa477c555a2e6e69e0d01b86777a468461f333eddbe877fab45
+    metadata:
+      record_count: 168459
+  - name: record_index
+    kind: lance-record-index
+    root_alias: aidc_data
+    relative_path: datasets/magicdata_ramc/versions/train-punc-v1-20261102-ctxclean-20261110/record_index/index.json
+    expected_bytes: 789
+    sha256: fbe825e5106c99a5fdf0e654b02aa3890949594649b462f3090e82413b368458
+    metadata:
+      snapshot_version: 13
+      rows: 168459
+      schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
+  splits:
+    train:
+      artifacts:
+        recordings:
+        - train_recordings
+        supervisions:
+        - train_supervisions_punc_0
+        records_lance:
+        - record_index
+      statistics:
+        records: 168459
+        recordings: 289
+        recordings_with_supervisions: 289
+        duration_hours: 125.479
+        corrected_records: 1
+        corrected_hours: 0.001
+        removed_quarantine_records: 5
+        removed_quarantine_hours: 0.005
+        duration_basis: sum of supervision duration
+  derived_from: magicdata_ramc@train-punc-v1-20261102
+  recipe_parameters:
+    decisions: context_correction_clean_zh@v1-20261110 magicdata_ramc_punc_decisions
+    corrected: 判为 corrected 的窗口里实际改动的分段换成改后文本，custom.context_correction 留原文、窗口编号和判定清单
+    removed: 隔离窗口的全部分段；录音清单不删（训练按分段切，没有分段的录音不进训练）
+    unchanged: 其余分段、录音和音频路径与 magicdata_ramc@train-punc-v1-20261102 逐字相同
+  provenance:
+    summary: MagicData-RAMC 带标点版说字清洗
+    description: 在 magicdata_ramc@train-punc-v1-20261102 上做的上下文纠偏清洗：说话人讲字怎么写（组词、拆字、偏旁、否定对比）而标注写成同音别字的，按说明改正；拿不准的窗口整窗去掉。判定依据见 context_correction_clean_zh@v1-20261110。判定迁自同一批记录在清洗时的判定（clean.py transfer：按去掉标点、空格后的文本对应，改字按字对齐写进带标点的文本）。
+    owner: mingdong
+    snapshot_date: '2026-11-13'
+    source: magicdata_ramc@train-punc-v1-20261102
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/ctx-clean-zh-20261110
+    quality_status: spelling_explanations_checked
+- schema_version: dataset-catalog/2.0
+  dataset_id: magicdata_ramc
+  version: turn-taking-20261014-utts-punc-20261102-ctxclean-20261110
+  languages:
+  - zh
+  tasks:
+  - ts_asr
+  aliases: []
+  artifacts:
+  - name: train_2spk_records_punc
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/magicdata_ramc/versions/turn-taking-20261014-utts-punc-20261102-ctxclean-20261110/records/train_2spk.jsonl.gz
+    expected_bytes: 6785304
+    sha256: 7d048697040856c044ffdce183c2a0030bc1044138973fab107448ff776a1b36
+    metadata:
+      record_count: 29504
+  - name: train_neg_records_punc
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/magicdata_ramc/versions/turn-taking-20261014-utts-punc-20261102-ctxclean-20261110/records/train_neg.jsonl.gz
+    expected_bytes: 6178538
+    sha256: 66bf76c6cddab4f508038518fe04b743d9ea03961134e3344064f6c1a8117730
+    metadata:
+      record_count: 15372
+  - name: train_2spk-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/magicdata_ramc/versions/turn-taking-20261014-utts-punc-20261102-ctxclean-20261110/audio_index/audio_index_train_2spk.jsonl.gz
+    sha256: 3ed012e46aead910bb6e1f983ce157737e2f7c73481353b9f53c9094f53c83f2
+    metadata:
+      record_count: 289
+    expected_bytes: 15464
+  - name: train_neg-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/magicdata_ramc/versions/turn-taking-20261014-utts-punc-20261102-ctxclean-20261110/audio_index/audio_index_train_neg.jsonl.gz
+    sha256: 24461b9424fc48ed70e4c50b9cfd676b56e6bedc1a618bcf6e40fd00114dcd15
+    metadata:
+      record_count: 289
+    expected_bytes: 15463
+  - name: record_index
+    kind: lance-record-index
+    root_alias: aidc_data
+    relative_path: datasets/magicdata_ramc/versions/turn-taking-20261014-utts-punc-20261102-ctxclean-20261110/record_index/index.json
+    expected_bytes: 1156
+    sha256: 786fe00e55e60bcb43bdd56da8d1398b7130d26618413157e9e69dff39fd7999
+    metadata:
+      snapshot_version: 13
+      rows: 44876
+      schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
+  splits:
+    train_2spk:
+      task: ts_asr
+      artifacts:
+        records:
+        - train_2spk_records_punc
+        audio_index:
+        - train_2spk-audio-index
+        records_lance:
+        - record_index
+      statistics:
+        records: 29504
+        removed_quarantine_records: 4
+        corrected_records: 1
+        duration_hours: 221.853
+        removed_quarantine_hours: 0.031
+        corrected_hours: 0.008
+      provenance:
+        preparation_status: prepared
+    train_neg:
+      task: ts_asr
+      artifacts:
+        records:
+        - train_neg_records_punc
+        audio_index:
+        - train_neg-audio-index
+        records_lance:
+        - record_index
+      statistics:
+        records: 15372
+        duration_hours: 115.208
+      provenance:
+        preparation_status: prepared
+  derived_from: magicdata_ramc@turn-taking-20261014-utts-punc-20261102
+  recipe_parameters:
+    decisions: context_correction_clean_zh@v1-20261110 magicdata_ramc_tt_punc_decisions
+    corrected: 判为 corrected 的中文目标文本换成改后文本，metadata.context_correction 留原文、判定编号和判定清单
+    removed: 隔离文本的全部记录
+    unchanged: 其余记录、音频引用和音频索引与原版本逐字相同；没清洗的 eval/test 划分原样硬链接
+  provenance:
+    summary: RAMC 轮流说话带标点版说字清洗
+    description: 在 magicdata_ramc@turn-taking-20261014-utts-punc-20261102 上做的上下文纠偏清洗：说话人讲字怎么写（组词、拆字、偏旁、否定对比）而标注写成同音别字的，按说明改正；拿不准的整条去掉。判定依据见 context_correction_clean_zh@v1-20261110。判定迁自同一批记录在清洗时的判定（clean.py transfer：按去掉标点、空格后的文本对应，改字按字对齐写进带标点的文本）。
+    owner: mingdong
+    snapshot_date: '2026-11-13'
+    source: magicdata_ramc@turn-taking-20261014-utts-punc-20261102
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/ctx-clean-zh-20261110
+    quality_status: spelling_explanations_checked
+- schema_version: dataset-catalog/2.0
+  dataset_id: aishell4
+  version: asr-20261014-punc-20261102-ctxclean-20261110
+  languages:
+  - zh
+  tasks:
+  - asr
+  aliases: []
+  artifacts:
+  - name: train_records_punc
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/aishell4/versions/asr-20261014-punc-20261102-ctxclean-20261110/records/train.jsonl.gz
+    expected_bytes: 4666582
+    sha256: 91878b4e86f4461146a48d8b15dc8525f749ab8a60435474b35eb3d9f03eb2fd
+    metadata:
+      record_count: 96998
+  - name: audio_index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/aishell4/versions/asr-20261014-punc-20261102-ctxclean-20261110/audio_index/audio-index.jsonl.gz
+    expected_bytes: 13978
+    sha256: 7740f79f34264edad30ceefa593cf078be42e3c6100384217d7d1ef37f5333f5
+    metadata:
+      record_count: 209
+  - name: record_index
+    kind: lance-record-index
+    root_alias: aidc_data
+    relative_path: datasets/aishell4/versions/asr-20261014-punc-20261102-ctxclean-20261110/record_index/index.json
+    expected_bytes: 761
+    sha256: 94c00e6d7bf65ae1c1f2af8e28c0c111a71268804742eec8c43acf9645f2a8e7
+    metadata:
+      snapshot_version: 13
+      rows: 96998
+      schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
+  splits:
+    train:
+      group: train
+      artifacts:
+        records:
+        - train_records_punc
+        audio_index:
+        - audio_index
+        records_lance:
+        - record_index
+      statistics:
+        records: 96998
+        corrected_records: 1
+        removed_quarantine_records: 1
+        duration_hours: 105.359
+        corrected_hours: 0.003
+        removed_quarantine_hours: 0.002
+      provenance:
+        preparation_status: prepared
+  derived_from: aishell4@asr-20261014-punc-20261102
+  recipe_parameters:
+    decisions: context_correction_clean_zh@v1-20261110 aishell4_punc_decisions
+    corrected: 判为 corrected 的中文目标文本换成改后文本，metadata.context_correction 留原文、判定编号和判定清单
+    removed: 隔离文本的全部记录
+    unchanged: 其余记录、音频引用和音频索引与原版本逐字相同；没清洗的 eval/test 划分原样硬链接
+  provenance:
+    summary: AISHELL-4 带标点版的说字写法清洗
+    description: 在 aishell4@asr-20261014-punc-20261102 上做的上下文纠偏清洗：说话人讲字怎么写（组词、拆字、偏旁、否定对比）而标注写成同音别字的，按说明改正；拿不准的整条去掉。判定依据见 context_correction_clean_zh@v1-20261110。判定迁自同一批记录在清洗时的判定（clean.py transfer：按去掉标点、空格后的文本对应，改字按字对齐写进带标点的文本）。
+    owner: mingdong
+    snapshot_date: '2026-11-13'
+    source: aishell4@asr-20261014-punc-20261102
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/ctx-clean-zh-20261110
+    quality_status: spelling_explanations_checked
+- schema_version: dataset-catalog/2.0
+  dataset_id: aishell4
+  version: turn-taking-20261014-utts-punc-20261102-ctxclean-20261110
+  languages:
+  - zh
+  tasks:
+  - ts_asr
+  aliases: []
+  artifacts:
+  - name: train_2spk_records_punc
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/aishell4/versions/turn-taking-20261014-utts-punc-20261102-ctxclean-20261110/records/train_2spk.jsonl.gz
+    expected_bytes: 2306910
+    sha256: 4711ebcb3a4d2c0cf52d271353e00bd73054a63178f84f14bb01cbb5d4580833
+    metadata:
+      record_count: 10506
+  - name: train_3spk_records_punc
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/aishell4/versions/turn-taking-20261014-utts-punc-20261102-ctxclean-20261110/records/train_3spk.jsonl.gz
+    expected_bytes: 3742482
+    sha256: aa3f3851cf8e4a7eab0cb5f261588b7e69b0782ba44811f3c99b081e9ae64121
+    metadata:
+      record_count: 21923
+  - name: train_neg_records_punc
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/aishell4/versions/turn-taking-20261014-utts-punc-20261102-ctxclean-20261110/records/train_neg.jsonl.gz
+    expected_bytes: 3901502
+    sha256: cca94547f6b395342c6233ca502a6d36cc0391f0fedd59a39ac8c43b3a2267d4
+    metadata:
+      record_count: 14128
+  - name: train_2spk-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/aishell4/versions/turn-taking-20261014-utts-punc-20261102-ctxclean-20261110/audio_index/audio_index_train_2spk.jsonl.gz
+    sha256: 1fe6171ad0e2620923fe8557dfa293a7eb97ec5f19d3735862904e0f6c458851
+    metadata:
+      record_count: 189
+    expected_bytes: 10989
+  - name: train_3spk-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/aishell4/versions/turn-taking-20261014-utts-punc-20261102-ctxclean-20261110/audio_index/audio_index_train_3spk.jsonl.gz
+    sha256: ba3f767a1ad813be7b61c200dbfd116b37c7ffedcdfccc9330c00e66233d36ff
+    metadata:
+      record_count: 189
+    expected_bytes: 10989
+  - name: train_neg-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/aishell4/versions/turn-taking-20261014-utts-punc-20261102-ctxclean-20261110/audio_index/audio_index_train_neg.jsonl.gz
+    sha256: a3eaaa7d6855fae876dc08763e32232b0c10c1e7dc17692a05dd0919a17c438b
+    metadata:
+      record_count: 189
+    expected_bytes: 10988
+  - name: record_index
+    kind: lance-record-index
+    root_alias: aidc_data
+    relative_path: datasets/aishell4/versions/turn-taking-20261014-utts-punc-20261102-ctxclean-20261110/record_index/index.json
+    expected_bytes: 1508
+    sha256: aee71354a9b592331e18e395897cc7a1afd17e09d710837c034358001c176e9b
+    metadata:
+      snapshot_version: 13
+      rows: 46557
+      schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
+  splits:
+    train_2spk:
+      task: ts_asr
+      artifacts:
+        records:
+        - train_2spk_records_punc
+        audio_index:
+        - train_2spk-audio-index
+        records_lance:
+        - record_index
+      statistics:
+        records: 10506
+        duration_hours: 73.879
+      provenance:
+        preparation_status: prepared
+    train_3spk:
+      task: ts_asr
+      artifacts:
+        records:
+        - train_3spk_records_punc
+        audio_index:
+        - train_3spk-audio-index
+        records_lance:
+        - record_index
+      statistics:
+        records: 21923
+        removed_quarantine_records: 2
+        duration_hours: 135.971
+        removed_quarantine_hours: 0.013
+      provenance:
+        preparation_status: prepared
+    train_neg:
+      task: ts_asr
+      artifacts:
+        records:
+        - train_neg_records_punc
+        audio_index:
+        - train_neg-audio-index
+        records_lance:
+        - record_index
+      statistics:
+        records: 14128
+        duration_hours: 91.374
+      provenance:
+        preparation_status: prepared
+  derived_from: aishell4@turn-taking-20261014-utts-punc-20261102
+  recipe_parameters:
+    decisions: context_correction_clean_zh@v1-20261110 aishell4_tt_punc_decisions
+    corrected: 判为 corrected 的中文目标文本换成改后文本，metadata.context_correction 留原文、判定编号和判定清单
+    removed: 隔离文本的全部记录
+    unchanged: 其余记录、音频引用和音频索引与原版本逐字相同；没清洗的 eval/test 划分原样硬链接
+  provenance:
+    summary: AISHELL-4 轮流说话带标点版说字清洗
+    description: 在 aishell4@turn-taking-20261014-utts-punc-20261102 上做的上下文纠偏清洗：说话人讲字怎么写（组词、拆字、偏旁、否定对比）而标注写成同音别字的，按说明改正；拿不准的整条去掉。判定依据见 context_correction_clean_zh@v1-20261110。判定迁自同一批记录在清洗时的判定（clean.py transfer：按去掉标点、空格后的文本对应，改字按字对齐写进带标点的文本）。
+    owner: mingdong
+    snapshot_date: '2026-11-13'
+    source: aishell4@turn-taking-20261014-utts-punc-20261102
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/ctx-clean-zh-20261110
+    quality_status: spelling_explanations_checked
+- schema_version: dataset-catalog/2.0
+  dataset_id: context_correction_clean_zh
+  version: think-v2-20261113
+  languages:
+  - zh
+  tasks:
+  - asr
+  aliases: []
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/context_correction_clean_zh/versions/think-v2-20261113/state.json
+  - name: summary
+    kind: json-metadata
+    root_alias: aidc_data
+    relative_path: datasets/context_correction_clean_zh/versions/think-v2-20261113/summary.json
+    expected_bytes: 8172
+    sha256: 43fce8ab65e0f2f0397c28e5cafaa9d7e891a9a36e73c6afbd12df175515883e
+    metadata:
+      description: 各来源按类别和原因的记录数
+  - name: wenetspeech_clean_think
+    kind: jsonl-metadata
+    root_alias: aidc_data
+    relative_path: datasets/context_correction_clean_zh/versions/think-v2-20261113/wenetspeech_clean/think.jsonl.gz
+    expected_bytes: 228423
+    sha256: 8b958cfb99e800e951689a8ced09857670a1e83ec0fa6dc9a17d0c86b76fb670
+    metadata:
+      record_count: 26583
+      think_on_records: 923
+      training_datasets:
+      - wenetspeech_clean@train-punc-v1-20261102-ctxclean-20261110
+      description: 按训练记录（dataset + record_id）给出 think 文本；think_on=false 的只按 think 关训练，未列出的记录是普通样本
+  - name: wenetspeech_clean_train_include
+    kind: record-id-list
+    root_alias: aidc_data
+    relative_path: datasets/context_correction_clean_zh/versions/think-v2-20261113/wenetspeech_clean/include-wenetspeech_clean_train-punc-v1-20261102-ctxclean-20261110-train.txt
+    expected_bytes: 87504
+    sha256: b58a0882db2f5ee11a4a5fb0aa37ff6914374a3e438baf8e9799bc5336630de5
+    metadata:
+      record_count: 923
+      description: wenetspeech_clean@train-punc-v1-20261102-ctxclean-20261110 train 里带 think 的记录 ID，供训练来源的 include_records 单独上采样
+  - name: emilia2_mix_utts_think
+    kind: jsonl-metadata
+    root_alias: aidc_data
+    relative_path: datasets/context_correction_clean_zh/versions/think-v2-20261113/emilia2_mix_utts/think.jsonl.gz
+    expected_bytes: 129109
+    sha256: ad4d76fd049ea9bbafbd5bfe83f9a0c07d2bd36f7843ec6ed9a8df1886f5d8ea
+    metadata:
+      record_count: 3658
+      think_on_records: 642
+      training_datasets:
+      - emilia2_mix@mix-20261013-utts-ctxclean-20261110
+      description: 按训练记录（dataset + record_id）给出 think 文本；think_on=false 的只按 think 关训练，未列出的记录是普通样本
+  - name: emilia2_mix_utts_train_2spk_include
+    kind: record-id-list
+    root_alias: aidc_data
+    relative_path: datasets/context_correction_clean_zh/versions/think-v2-20261113/emilia2_mix_utts/include-emilia2_mix_mix-20261013-utts-ctxclean-20261110-train_2spk.txt
+    expected_bytes: 17411
+    sha256: a6570c2a002f970098cf1fb5c6060f4203a53b967ed8cfd5ed2760754218a479
+    metadata:
+      record_count: 326
+      description: emilia2_mix@mix-20261013-utts-ctxclean-20261110 train_2spk 里带 think 的记录 ID，供训练来源的 include_records 单独上采样
+  - name: emilia2_mix_utts_train_3spk_include
+    kind: record-id-list
+    root_alias: aidc_data
+    relative_path: datasets/context_correction_clean_zh/versions/think-v2-20261113/emilia2_mix_utts/include-emilia2_mix_mix-20261013-utts-ctxclean-20261110-train_3spk.txt
+    expected_bytes: 16897
+    sha256: 9b32423cfcc9c4bb4f7ba34dd27a7f2a12f4dad7af359a518b78da4210e84924
+    metadata:
+      record_count: 316
+      description: emilia2_mix@mix-20261013-utts-ctxclean-20261110 train_3spk 里带 think 的记录 ID，供训练来源的 include_records 单独上采样
+  - name: magicdata_ramc_punc_think
+    kind: jsonl-metadata
+    root_alias: aidc_data
+    relative_path: datasets/context_correction_clean_zh/versions/think-v2-20261113/magicdata_ramc_punc/think.jsonl.gz
+    expected_bytes: 2554
+    sha256: 2ae3ca0b94ffcc81abcbce9d92f8b2be4f6c2c28497c76644b02dfbbfbf3acfb
+    metadata:
+      record_count: 122
+      think_on_records: 14
+      training_datasets:
+      - magicdata_ramc@train-punc-v1-20261102-ctxclean-20261110
+      description: 按训练记录（dataset + record_id）给出 think 文本；think_on=false 的只按 think 关训练，未列出的记录是普通样本
+  - name: magicdata_ramc_punc_train_include
+    kind: record-id-list
+    root_alias: aidc_data
+    relative_path: datasets/context_correction_clean_zh/versions/think-v2-20261113/magicdata_ramc_punc/include-magicdata_ramc_train-punc-v1-20261102-ctxclean-20261110-train.txt
+    expected_bytes: 1543
+    sha256: 1249a39cf08f1ae040e29a4a45d59968d22c608db9064dcf4811959d88b7d2be
+    metadata:
+      record_count: 14
+      description: magicdata_ramc@train-punc-v1-20261102-ctxclean-20261110 train 里带 think 的记录 ID，供训练来源的 include_records 单独上采样
+  - name: magicdata_ramc_tt_punc_think
+    kind: jsonl-metadata
+    root_alias: aidc_data
+    relative_path: datasets/context_correction_clean_zh/versions/think-v2-20261113/magicdata_ramc_tt_punc/think.jsonl.gz
+    expected_bytes: 3701
+    sha256: 822d5cbbfc2e18ef763a6c7c5abaa2e2f8ea60c68199d9a21a8173b844cd963b
+    metadata:
+      record_count: 103
+      think_on_records: 9
+      training_datasets:
+      - magicdata_ramc@turn-taking-20261014-utts-punc-20261102-ctxclean-20261110
+      description: 按训练记录（dataset + record_id）给出 think 文本；think_on=false 的只按 think 关训练，未列出的记录是普通样本
+  - name: magicdata_ramc_tt_punc_train_2spk_include
+    kind: record-id-list
+    root_alias: aidc_data
+    relative_path: datasets/context_correction_clean_zh/versions/think-v2-20261113/magicdata_ramc_tt_punc/include-magicdata_ramc_turn-taking-20261014-utts-punc-20261102-ctxclean-20261110-train_2spk.txt
+    expected_bytes: 704
+    sha256: 2a8e51df0683dd2a449e0dac1eef57d1646898b2cc40aa7981e40c8444ca782e
+    metadata:
+      record_count: 9
+      description: magicdata_ramc@turn-taking-20261014-utts-punc-20261102-ctxclean-20261110 train_2spk 里带 think 的记录 ID，供训练来源的 include_records 单独上采样
+  - name: aishell4_punc_think
+    kind: jsonl-metadata
+    root_alias: aidc_data
+    relative_path: datasets/context_correction_clean_zh/versions/think-v2-20261113/aishell4_punc/think.jsonl.gz
+    expected_bytes: 1851
+    sha256: f8a7abf72e4b139ed516d7884b4eee816f54e89ad91f04712e9ba200b532f3dc
+    metadata:
+      record_count: 70
+      think_on_records: 2
+      training_datasets:
+      - aishell4@asr-20261014-punc-20261102-ctxclean-20261110
+      description: 按训练记录（dataset + record_id）给出 think 文本；think_on=false 的只按 think 关训练，未列出的记录是普通样本
+  - name: aishell4_punc_train_include
+    kind: record-id-list
+    root_alias: aidc_data
+    relative_path: datasets/context_correction_clean_zh/versions/think-v2-20261113/aishell4_punc/include-aishell4_asr-20261014-punc-20261102-ctxclean-20261110-train.txt
+    expected_bytes: 80
+    sha256: cf2403b2c861b7bd7f6713fcbfff81dab90271a8247b4b521b3878629b8e5094
+    metadata:
+      record_count: 2
+      description: aishell4@asr-20261014-punc-20261102-ctxclean-20261110 train 里带 think 的记录 ID，供训练来源的 include_records 单独上采样
+  - name: aishell4_tt_punc_think
+    kind: jsonl-metadata
+    root_alias: aidc_data
+    relative_path: datasets/context_correction_clean_zh/versions/think-v2-20261113/aishell4_tt_punc/think.jsonl.gz
+    expected_bytes: 1973
+    sha256: fc1c3a10f23ce7d94889e1ecc5e12108a1cdbc347a83745b7fd8e2ed01e7db36
+    metadata:
+      record_count: 59
+      think_on_records: 0
+      training_datasets:
+      - aishell4@turn-taking-20261014-utts-punc-20261102-ctxclean-20261110
+      description: 按训练记录（dataset + record_id）给出 think 文本；think_on=false 的只按 think 关训练，未列出的记录是普通样本
+  - name: alimeeting_sdm_punc_think
+    kind: jsonl-metadata
+    root_alias: aidc_data
+    relative_path: datasets/context_correction_clean_zh/versions/think-v2-20261113/alimeeting_sdm_punc/think.jsonl.gz
+    expected_bytes: 3397
+    sha256: 0db60845efe08698693d33d0986ab080b4718124ed0830e1b33216aba2f37644
+    metadata:
+      record_count: 154
+      think_on_records: 4
+      training_datasets:
+      - alimeeting_sdm@asr-20261014-punc-20261102
+      description: 按训练记录（dataset + record_id）给出 think 文本；think_on=false 的只按 think 关训练，未列出的记录是普通样本
+  - name: alimeeting_sdm_punc_train_include
+    kind: record-id-list
+    root_alias: aidc_data
+    relative_path: datasets/context_correction_clean_zh/versions/think-v2-20261113/alimeeting_sdm_punc/include-alimeeting_sdm_asr-20261014-punc-20261102-train.txt
+    expected_bytes: 107
+    sha256: 8dd144eb80cb8bf451212cc294834a42d697067a442c3c2564cef64852ef7698
+    metadata:
+      record_count: 4
+      description: alimeeting_sdm@asr-20261014-punc-20261102 train 里带 think 的记录 ID，供训练来源的 include_records 单独上采样
+  - name: alimeeting_sdm_tt_punc_think
+    kind: jsonl-metadata
+    root_alias: aidc_data
+    relative_path: datasets/context_correction_clean_zh/versions/think-v2-20261113/alimeeting_sdm_tt_punc/think.jsonl.gz
+    expected_bytes: 3970
+    sha256: 24a85de8ecdc14cd6a9143ad1110a79915c977c42235eee2925eddad63035d2c
+    metadata:
+      record_count: 132
+      think_on_records: 4
+      training_datasets:
+      - alimeeting_sdm@turn-taking-20261014-utts-punc-20261102
+      description: 按训练记录（dataset + record_id）给出 think 文本；think_on=false 的只按 think 关训练，未列出的记录是普通样本
+  - name: alimeeting_sdm_tt_punc_train_3spk_include
+    kind: record-id-list
+    root_alias: aidc_data
+    relative_path: datasets/context_correction_clean_zh/versions/think-v2-20261113/alimeeting_sdm_tt_punc/include-alimeeting_sdm_turn-taking-20261014-utts-punc-20261102-train_3spk.txt
+    expected_bytes: 176
+    sha256: b0ed88b90c9148f617c9abab499da3881a680f3f976dae4aef48f71dc1a0a657
+    metadata:
+      record_count: 4
+      description: alimeeting_sdm@turn-taking-20261014-utts-punc-20261102 train_3spk 里带 think 的记录 ID，供训练来源的 include_records 单独上采样
+  - name: emilia2_dialog_think
+    kind: jsonl-metadata
+    root_alias: aidc_data
+    relative_path: datasets/context_correction_clean_zh/versions/think-v2-20261113/emilia2_dialog/think.jsonl.gz
+    expected_bytes: 73048
+    sha256: cce866de2bce15fe381dfaca079473bd35ff211736faae7c3473060653da0d1b
+    metadata:
+      record_count: 1792
+      think_on_records: 289
+      training_datasets:
+      - emilia2_dialog@dialog-turn-taking-20261013-enroll-ctxclean-20261110
+      description: 按训练记录（dataset + record_id）给出 think 文本；think_on=false 的只按 think 关训练，未列出的记录是普通样本
+  - name: emilia2_dialog_train_2spk_include
+    kind: record-id-list
+    root_alias: aidc_data
+    relative_path: datasets/context_correction_clean_zh/versions/think-v2-20261113/emilia2_dialog/include-emilia2_dialog_dialog-turn-taking-20261013-enroll-ctxclean-20261110-train_2spk.txt
+    expected_bytes: 17584
+    sha256: cc33dfd65b7869757b2e769616a9bee6dbb19b1ab9a06a78a99351dfdef4f5cf
+    metadata:
+      record_count: 229
+      description: emilia2_dialog@dialog-turn-taking-20261013-enroll-ctxclean-20261110 train_2spk 里带 think 的记录 ID，供训练来源的 include_records 单独上采样
+  - name: emilia2_dialog_train_3spk_include
+    kind: record-id-list
+    root_alias: aidc_data
+    relative_path: datasets/context_correction_clean_zh/versions/think-v2-20261113/emilia2_dialog/include-emilia2_dialog_dialog-turn-taking-20261013-enroll-ctxclean-20261110-train_3spk.txt
+    expected_bytes: 4644
+    sha256: c414d99f606bcc0e6617036e234ce0ddc23d158f25de800dde68d03a6652dceb
+    metadata:
+      record_count: 60
+      description: emilia2_dialog@dialog-turn-taking-20261013-enroll-ctxclean-20261110 train_3spk 里带 think 的记录 ID，供训练来源的 include_records 单独上采样
+  - name: emilia2_short_think
+    kind: jsonl-metadata
+    root_alias: aidc_data
+    relative_path: datasets/context_correction_clean_zh/versions/think-v2-20261113/emilia2_short/think.jsonl.gz
+    expected_bytes: 54132
+    sha256: fa00bdac85eb38277c65b36eb553253f23f9f98b9ea1f1c905a7029a503c04c7
+    metadata:
+      record_count: 1802
+      think_on_records: 281
+      training_datasets:
+      - emilia2_short@short-lance-20261023-ctxclean-20261110
+      description: 按训练记录（dataset + record_id）给出 think 文本；think_on=false 的只按 think 关训练，未列出的记录是普通样本
+  - name: emilia2_short_train_zh_include
+    kind: record-id-list
+    root_alias: aidc_data
+    relative_path: datasets/context_correction_clean_zh/versions/think-v2-20261113/emilia2_short/include-emilia2_short_short-lance-20261023-ctxclean-20261110-train_zh.txt
+    expected_bytes: 9584
+    sha256: 305d02c39b89f9771972c3896ffb9dc474a5a761ef768db4c71a3537552bc798
+    metadata:
+      record_count: 281
+      description: emilia2_short@short-lance-20261023-ctxclean-20261110 train_zh 里带 think 的记录 ID，供训练来源的 include_records 单独上采样
+  - name: vitw_think
+    kind: jsonl-metadata
+    root_alias: aidc_data
+    relative_path: datasets/context_correction_clean_zh/versions/think-v2-20261113/vitw/think.jsonl.gz
+    expected_bytes: 1802
+    sha256: 47a6698caf3676c7c145b6048d694b871e6c51e30b3eb6cb5c1e1a34780e8592
+    metadata:
+      record_count: 58
+      think_on_records: 19
+      training_datasets:
+      - vitw@2m-20261013-ctxclean-20261110
+      description: 按训练记录（dataset + record_id）给出 think 文本；think_on=false 的只按 think 关训练，未列出的记录是普通样本
+  - name: vitw_train_include
+    kind: record-id-list
+    root_alias: aidc_data
+    relative_path: datasets/context_correction_clean_zh/versions/think-v2-20261113/vitw/include-vitw_2m-20261013-ctxclean-20261110-train.txt
+    expected_bytes: 1528
+    sha256: 2d034897919cdd684c6b6f2aa97e47813c1e87a23af239737c58098ac482c1a4
+    metadata:
+      record_count: 19
+      description: vitw@2m-20261013-ctxclean-20261110 train 里带 think 的记录 ID，供训练来源的 include_records 单独上采样
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+        summary:
+        - summary
+        think:
+        - wenetspeech_clean_think
+        - emilia2_mix_utts_think
+        - magicdata_ramc_punc_think
+        - magicdata_ramc_tt_punc_think
+        - aishell4_punc_think
+        - aishell4_tt_punc_think
+        - alimeeting_sdm_punc_think
+        - alimeeting_sdm_tt_punc_think
+        - emilia2_dialog_think
+        - emilia2_short_think
+        - vitw_think
+        include_records:
+        - wenetspeech_clean_train_include
+        - emilia2_mix_utts_train_2spk_include
+        - emilia2_mix_utts_train_3spk_include
+        - magicdata_ramc_punc_train_include
+        - magicdata_ramc_tt_punc_train_2spk_include
+        - aishell4_punc_train_include
+        - alimeeting_sdm_punc_train_include
+        - alimeeting_sdm_tt_punc_train_3spk_include
+        - emilia2_dialog_train_2spk_include
+        - emilia2_dialog_train_3spk_include
+        - emilia2_short_train_zh_include
+        - vitw_train_include
+      statistics:
+        record_count: 34533
+        think_on_records: 2187
+      provenance:
+        preparation_status: complete
+  recipe_parameters:
+    line_format: <无调拼音> 这个音，说话人说是「<原话>」，写作「<字>」。
+    no_explanation_sentence: 这段没有说明字怎么写。
+    max_quote_chars: 30
+    pinyin: pypinyin（无调，按原话上下文取读音）
+    code: scripts/context_correction/think.py, clean.py transfer, clean_recipe.yaml
+  provenance:
+    preparation_status: complete
+    owner: mingdong
+    summary: 交付配方版本的说字写法 think 文本
+    description: think-v1-20261112 的做法，换到交付配方 v7set34（open-audio-llm runs/ts-robust-acp-20261015）实际训练的版本上：wenetspeech_clean@train-punc-v1-20261102、emilia2_mix@mix-20261013-utts、magicdata_ramc / aishell4 / alimeeting_sdm 的带标点 asr 与 turn-taking utts 版本，以及与清洗时相同的 emilia2_dialog、emilia2_short、vitw。判定由 clean.py transfer 从 context_correction_clean_zh@v1-20261110 迁来（同一批记录按分段 ID 或去掉标点后的文本对应），训练记录对应各自的派生版本 <版本>-ctxclean-20261110（alimeeting_sdm 无改动，用原版本）。原话按带标点的文本截取，去掉边缘句读并补齐成对的引号；每个来源另有按 split 的 think 记录 ID 名单（include_records 上采样用）。执行者看过 v1→v2 有变化的样本和引号配对，结论在运行目录 README“迁到交付配方的版本”一节。还没有用于训练。
     source: context_correction_clean_zh@v1-20261110
     run_dir: /workspace/workspace/mingdong/data/amphiondata/ctx-clean-zh-20261110
   derived_from: context_correction_clean_zh@v1-20261110
