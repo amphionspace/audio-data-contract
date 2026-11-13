@@ -1329,6 +1329,19 @@ MagicData-RAMC 对话切窗的按人转写数据
 - 含派生版本（与源数据可能重叠）
 - 已并入的旧版本：`police_robust_monitor@icefall-20260908`（COS：快照 20260914、`amphion-audio-backup-1373259071:audio-data-contract/datasets/police_robust_monitor/`）、`police_synthetic_zh_accent@icefall-20260908`（COS：快照 20260914）、`police_synthetic_zh_accent@legacy-rebalance-100k-20260916`（COS：没有）、`police_synthetic_zh_accent@v1-20260817`（COS：快照 20260914）、`police_synthetic_zh_accent@v2-20260818`（COS：快照 20260914）、`police_synthetic_zh_accent@v3-20260820`（COS：快照 20260914）、`police_synthetic_zh_accent@v5-20260830-qc`（COS：快照 20260914）、`police_synthetic_zh_accent@v5-20260830-qwen75-cosy25`（COS：快照 20260914）、`police_terms_v5@icefall-20260908`（COS：快照 20260914）、`police_terms_v5_dev@icefall-20260908`（COS：快照 20260914）、`police_terms_v5_test@icefall-20260908`（COS：快照 20260914、`amphion-audio-backup-1373259071:audio-data-contract/datasets/police_terms_v5_test/`）、`police_v6_8h@icefall-20260908`（COS：没有）、`police_v6_8h@v6-8h-20260915`（COS：没有）、`police_v6_acceptance_205@icefall-20260908`（COS：快照 20260921、`amphion-audio-backup-1373259071:audio-data-contract/datasets/police_v6_acceptance_205/`）、`police_v6_acceptance_205@v6-acceptance-20260921`（COS：快照 20260921、`amphion-audio-backup-1373259071:audio-data-contract/datasets/police_v6_acceptance_205/`）、`police_v6_expanded@icefall-20260908`（COS：没有）、`police_v6_expanded@v6-expanded-20260915`（COS：没有）
 
+### police_robust_monitor
+
+警务合成测试语音的干净及 7 种退化版本，只用于评测
+
+语言：zh · 任务：语音识别
+
+| 版本 | 时长（小时） | 口径 | COS |
+|---|---:|---|---|
+| [police_robust_monitor@eval-20261113](../../catalog/police_robust_monitor.yaml#L1) | — | 未登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/police_robust_monitor/` |
+
+- `police_robust_monitor@eval-20261113`：警务合成语音鲁棒性监控集：60 条测试语音（police_synthetic_zh_accent@icefall-20260908 的 test、test_qwen3_tts、test_cosyvoice3 各 20 条）的干净版和 7 种退化版（foreground_snr5、foreground_snr0、local_gain_snr5、narrowband、eq_bandpass、rir、clipping），每个划分 60 条，共 480 条。内容与 icefall-20260908 逐条相同（文本、说话人、时长和音频文件都不变，音频不复制，索引指向数据集目录 source/ 下的原文件），只是改成 AudioRecord 并给每条换了不重复的 ID：<条件>-<子集>-audio-<hash>，子集为 test / test_qwen3_tts / test_cosyvoice3；原 cut ID 保留在 metadata.icefall_cut_id。icefall-20260908 的 cut ID 不含子集，每个划分 60 条只有 40 个不同 ID，按 ID 读取的评测器会报重复或丢样本。只用于评测，不进训练
+- 含派生版本（与源数据可能重叠）
+
 ### police_scene_bench
 
 鼎桥验收表各使用场景的模拟评测，仅评测

@@ -49,6 +49,10 @@
       "alias": "multilingual_asr_bench",
       "synced": "2026-11-10"
     },
+    "police_robust_monitor@eval-20261113": {
+      "alias": "police_robust_monitor",
+      "synced": "2026-11-13"
+    },
     "police_scene_bench@external-v1-20261029": {
       "alias": "police_scene_bench",
       "synced": "2026-10-30"

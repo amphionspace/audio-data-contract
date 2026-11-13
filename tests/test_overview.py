@@ -230,12 +230,13 @@ def test_superseded_versions_are_not_listed():
     rendered = render_data_overview(ROOT / "catalog", ROOT / "views")
     inventory = rendered.split("## 下载来源声明")[0]
 
-    # police_terms_single(_train) and police_scene_bench are separate sets, not superseded batches.
+    # police_terms_single(_train), police_scene_bench and police_robust_monitor's eval version
+    # are separate sets, not superseded batches.
+    separate = ("| [police_terms_single", "| [police_scene_bench", "| [police_robust_monitor]")
     police_rows = [
         line
         for line in inventory.splitlines()
-        if line.startswith("| [police")
-        and not line.startswith(("| [police_terms_single", "| [police_scene_bench"))
+        if line.startswith("| [police") and not line.startswith(separate)
     ]
     assert len(police_rows) == 1
     assert police_rows[0].startswith("| [police_asr_unified](")
