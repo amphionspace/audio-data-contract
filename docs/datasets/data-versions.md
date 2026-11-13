@@ -968,7 +968,7 @@ Common Voice 中文众包朗读；含清洗、热词、加噪版
 
 ### context_correction_clean_zh
 
-说字写法句子核对清单（v1-20261110）生成的 think 文本（CoT），供 think 开关训练
+说字写法句子的 think 文本（CoT）
 
 语言：zh · 任务：语音识别
 

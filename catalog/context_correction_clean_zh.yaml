@@ -2290,7 +2290,7 @@
   provenance:
     preparation_status: complete
     owner: mingdong
-    summary: 说字写法句子核对清单（v1-20261110）生成的 think 文本（CoT），供 think 开关训练
+    summary: 说字写法句子的 think 文本（CoT）
     description: >-
       从 context_correction_clean_zh@v1-20261110 的判定结果，给清洗过的各来源训练记录生成 think 文本：每个被说明的词一句，
       字和原话取两个判定模型的说明，两个模型给的字必须一致（改字窗口里一个模型写的是改前的字、或只多写了同一个词里的字的，对齐后算一致）；
