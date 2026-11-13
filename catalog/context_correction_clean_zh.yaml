@@ -2116,8 +2116,8 @@
     kind: jsonl-metadata
     root_alias: aidc_data
     relative_path: datasets/context_correction_clean_zh/versions/think-v1-20261112/wenetspeech_podcast/think.jsonl.gz
-    expected_bytes: 74864
-    sha256: 0961bddd4859733b9aa5e3cf443e63c82b3dd5bc58e67718d3ab63b1d75ff59a
+    expected_bytes: 90405
+    sha256: 9de36de828e8e81de941115e053da37b70dc3aa4e5786115a17c971627b4b9ad
     metadata:
       record_count: 13214
       think_on_records: 399
@@ -2128,8 +2128,8 @@
     kind: jsonl-metadata
     root_alias: aidc_data
     relative_path: datasets/context_correction_clean_zh/versions/think-v1-20261112/wenetspeech_youtube/think.jsonl.gz
-    expected_bytes: 124709
-    sha256: 9f45bfe71abd5e0aad56ef1f83388eb9ca1d5ccad8e676124ee25c2806cb3d2d
+    expected_bytes: 133772
+    sha256: 3336e4e3a715b36c2997bd6a80983135a83bec5da72d6fd75f35524f880b9c51
     metadata:
       record_count: 13470
       think_on_records: 536
@@ -2248,8 +2248,8 @@
     kind: jsonl-metadata
     root_alias: aidc_data
     relative_path: datasets/context_correction_clean_zh/versions/think-v1-20261112/vitw/think.jsonl.gz
-    expected_bytes: 1796
-    sha256: 9177165882b1c8b3ae72b8fdf3500296f9d288a8f3257554147b2713712658d2
+    expected_bytes: 1802
+    sha256: cf2b3ef39c60f96f68265f6edbbb7bcef69245a29cfd12c941490320f6430aa4
     metadata:
       record_count: 58
       think_on_records: 19
@@ -2295,7 +2295,8 @@
       从 context_correction_clean_zh@v1-20261110 的判定结果，给清洗过的各来源训练记录生成 think 文本：每个被说明的词一句，
       字和原话取两个判定模型的说明，两个模型给的字必须一致（改字窗口里一个模型写的是改前的字、或只多写了同一个词里的字的，对齐后算一致）；
       只在"不是…"里出现的字、只点名的偏旁不成句，否定对比并进相邻写法的原话；原话超过 30 字、说话人随后改口、写法不在文本里的，只进 think 关。
-      每行一条训练记录（dataset + record_id，对应各来源的派生版本；alimeeting_sdm 是原版本）：think_on=true 的给出 think，
+      每行一条训练记录（dataset + record_id，对应各来源的派生版本；alimeeting_sdm 是原版本；record_id 是 open-audio-llm 加载后的记录 ID，
+      WenetSpeech、VITW 为 <dataset>@<version>:train:<supervision id>）：think_on=true 的给出 think，
       think_on=false 的只能按 think 关训练（not_hit 和规则候选里仍有讲写法的，判定不一的也不确定），未列出的记录是普通样本，think 开时用固定句"这段没有说明字怎么写。"。
       WenetSpeech、VITW 按分段训练：原话整段落在哪个分段，该分段才有 think；原话被分段切开的，只有切开后仍是完整"X的X"的那段保留。
       执行者看过全部新增规则放出的样本和各只进 think 关原因的抽样，结论写在运行目录 README 的"CoT 生成"一节。

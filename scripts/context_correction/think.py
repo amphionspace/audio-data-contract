@@ -8,7 +8,7 @@ ordinary one (think off, or think on with the fixed sentence ``NO_EXPLANATION``)
 
 Audio-record sources: one decision per distinct target text, shared by its records. Lhotse sources (WenetSpeech, VITW):
 a decision covers a window of segments and each segment is a training record, so a line goes to the segment holding
-its whole quote.
+its whole quote; its record ID is ``<dataset>@<version>:<split>:<supervision id>``, as the training loader names it.
 
 Sources, paths and the cleaning version come from clean_recipe.yaml next to this script.
 
@@ -325,7 +325,9 @@ def lhotse_source(source: str, spec: dict, build: dict):
             continue
         assert found[sid] == text, (sid, found[sid], text)
         unit["records"] += 1
-        yield derived, sid, {**unit, "think": think, "think_on": think is not None, "reason": reason}
+        # The record ID the training loader gives a Lhotse supervision (as in positives.jsonl).
+        yield derived, f"{derived}:{spec['split']}:{sid}", {**unit, "think": think, "think_on": think is not None,
+                                                            "reason": reason}
     return units
 
 
