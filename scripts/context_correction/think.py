@@ -22,6 +22,7 @@ from collections import Counter, defaultdict
 from pathlib import Path
 
 import yaml
+from clean import derived_dir
 from pypinyin import Style, lazy_pinyin
 
 RECIPE = yaml.safe_load(Path(__file__).with_name("clean_recipe.yaml").read_text())
@@ -134,6 +135,35 @@ def agreed_chars(pairs: list[list[tuple[str, dict]]], final: str) -> set[str] | 
     return None
 
 
+EDGE = set("，。！？；：、,.!?;: ")
+PAIRS = (("“", "”"), ("‘", "’"), ("「", "」"), ("『", "』"), ("《", "》"), ("（", "）"), ("(", ")"))
+
+
+def tidy(text: str, start: int, end: int, lo: int = 0, hi: int | None = None) -> str:
+    """The quote ``text[start:end]`` without sentence punctuation at its edges and with the quote marks it opens
+    or closes (a quote cut at a word reads "“豢养”的“豢"), staying within ``text[lo:hi]``."""
+    hi = len(text) if hi is None else hi
+    while start < end and text[start] in EDGE:
+        start += 1
+    while end > start and text[end - 1] in EDGE:
+        end -= 1
+    for opening, closing in PAIRS:
+        leading = depth = 0  # closing marks before any opening one; opening marks left open
+        for ch in text[start:end]:
+            if ch == opening:
+                depth += 1
+            elif ch == closing:
+                if depth:
+                    depth -= 1
+                else:
+                    leading += 1
+        while leading and start > lo and text[start - 1] == opening:
+            start, leading = start - 1, leading - 1
+        while depth and end < hi and text[end] == closing:
+            end, depth = end + 1, depth - 1
+    return text[start:end]
+
+
 def render(quote: str, word: str, syllables: list[str]) -> str:
     return f"{' '.join(syllables)} 这个音，说话人说是「{quote}」，写作「{word}」。"
 
@@ -234,7 +264,7 @@ def candidates(source: str) -> set[str]:
 
 
 def think_of(lines, final: str) -> str | None:
-    return None if lines is None else "\n".join(render(final[s:e], w, py) for s, e, w, py in lines) or NO_EXPLANATION
+    return None if lines is None else "\n".join(render(tidy(final, s, e), w, py) for s, e, w, py in lines) or NO_EXPLANATION
 
 
 def records_source(source: str, spec: dict, build: dict):
@@ -256,18 +286,18 @@ def records_source(source: str, spec: dict, build: dict):
         derived = build[target["dataset"]]["derived"]
         if derived:
             version = derived.split("@")[1]
-            paths = {s: Path(p).parents[2] / version / "records" / Path(p).name for s, p in target["records"].items()}
+            paths = {s: derived_dir(Path(p), version) / "records" / f"{s}.jsonl.gz" for s, p in target["records"].items()}
         else:  # nothing changed: the original version is the one to train on
             derived, paths = target["dataset"], {s: Path(p) for s, p in target["records"].items()}
         if not all(p.exists() for p in paths.values()):
             print(f"{source}: {derived} has no records on disk, skipped")
             continue
-        for path in paths.values():
+        for split, path in paths.items():
             for row in gz_rows(path):
                 unit = units.get((row.get("target") or "").strip()) if row.get("language") == "zh" else None
                 if unit:
                     unit["records"] += 1
-                    yield derived, row["id"], unit
+                    yield derived, split, row["id"], unit
     return units
 
 
@@ -300,7 +330,7 @@ def lhotse_source(source: str, spec: dict, build: dict):
                 for s, e, w, py in lines:
                     if e <= begin or s >= end:
                         continue
-                    piece = final[max(s, begin):min(e, end)]
+                    piece = tidy(final, max(s, begin), min(e, end), begin, end)
                     # A quote cut by the segment boundary still serves when its piece here is a whole "X的X"
                     # ("不是忘记的忘" | "而是眺望的望"); otherwise this segment hears only part of the explanation.
                     if (begin <= s and e <= end) or re.search(f"{re.escape(w)}.*的{re.escape(w)}", piece):
@@ -326,8 +356,8 @@ def lhotse_source(source: str, spec: dict, build: dict):
         assert found[sid] == text, (sid, found[sid], text)
         unit["records"] += 1
         # The record ID the training loader gives a Lhotse supervision (as in positives.jsonl).
-        yield derived, f"{derived}:{spec['split']}:{sid}", {**unit, "think": think, "think_on": think is not None,
-                                                            "reason": reason}
+        yield derived, spec["split"], f"{derived}:{spec['split']}:{sid}", {
+            **unit, "think": think, "think_on": think is not None, "reason": reason}
     return units
 
 
@@ -360,18 +390,28 @@ def main():
         rows = records_source(source, spec, build) if spec["kind"] == "records" else lhotse_source(source, spec, build)
         (out / source).mkdir(parents=True, exist_ok=True)
         summary = {"records": Counter(), "datasets": Counter()}
+        explained = defaultdict(list)  # (dataset, split) -> think-on record IDs
         with gzip.open(out / source / "think.jsonl.gz", "wt") as f:
             while True:
                 try:
-                    dataset, record_id, u = next(rows)
+                    dataset, split, record_id, u = next(rows)
                 except StopIteration as stop:
                     units = stop.value
                     break
+                if u["think_on"]:
+                    explained[(dataset, split)].append(record_id)
                 f.write(json.dumps({"dataset": dataset, "record_id": record_id, "unit_id": u["unit_id"],
                                     "category": u["category"], "think_on": u["think_on"], "think": u["think"],
                                     "reason": u["reason"]}, ensure_ascii=False) + "\n")
                 summary["records"][f"{u['category']}:{u['reason']}"] += 1
                 summary["datasets"][dataset] += 1
+        # One ID list per split: a training source that keeps only these samples the explained records more often.
+        includes = {}
+        for (dataset, split), ids in sorted(explained.items()):
+            path = out / source / f"include-{dataset.replace('@', '_')}-{split}.txt"
+            path.write_text("".join(i + "\n" for i in ids))
+            includes[f"{dataset}|{split}"] = {"path": str(path.resolve()), "records": len(ids)}
+        (out / source / "includes.json").write_text(json.dumps(includes, ensure_ascii=False, indent=2))
         units = list(units.values())
         with open(out / source / "units.jsonl", "w") as f:
             for u in units:
