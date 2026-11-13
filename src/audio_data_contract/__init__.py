@@ -17,6 +17,13 @@ from .records import (
 )
 from .render import extract_audio_refs, render_example
 from .roots import load_roots
+from .source_keys import (
+    Holdouts,
+    holdout_overlap,
+    load_holdouts,
+    record_source_keys,
+    source_key_specs,
+)
 from .state import (
     DatasetState,
     DownloadState,
@@ -63,6 +70,7 @@ __all__ = [
     "DatasetViewCatalog",
     "DatasetViewSpec",
     "DownloadState",
+    "Holdouts",
     "Message",
     "PromptAudio",
     "PromptTemplate",
@@ -71,18 +79,22 @@ __all__ = [
     "TextContent",
     "TransformStep",
     "extract_audio_refs",
+    "holdout_overlap",
     "inspect_download",
     "load_catalog",
     "load_examples",
+    "load_holdouts",
     "load_records",
     "load_roots",
     "load_state",
     "load_view_catalog",
     "read_artifact",
+    "record_source_keys",
     "render_example",
     "resolve_artifact",
     "resolve_split",
     "resolve_view",
+    "source_key_specs",
     "validate_catalog",
     "validate_view_catalog",
     "verify_artifact_file",

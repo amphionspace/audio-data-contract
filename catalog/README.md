@@ -96,7 +96,36 @@
 | 时长范围标签 | `provenance.duration_label`，例如“单远场麦克风标注片段” |
 | 自动清洗证据 | `recipe_parameters` 中的引擎、规则；split 的通过/拒绝统计；`provenance` 中的报告位置和落地状态 |
 
-这些展示信息使用现有 `provenance` 扩展对象，不新增必填字段。协议不包含任何训练框架专用字段；选用哪个声道、是否建模标点等读取策略由各训练项目自己决定。
+这些展示信息使用现有 `provenance` 扩展对象，不新增必填字段。
+
+## 评测留出与来源键
+
+评测集从训练语料里切出来时（例如 `ts_asr_real@v2` 用了 Emilia2 对话的 260 段录音），训练必须避开这些录音。派生数据（窗口、混音、重仿真）会给记录换新 ID，原始录音只留在某个字段里，所以靠记录 ID 排除容易漏。两项声明让它可检查：
+
+- 评测数据集在顶层 `provenance.holdout` 声明留出的来源键。键清单登记成 `kind: source-keys` 的产物（一行一个 ID，带 `sha256`），`pattern` 可选，从每行取出要比较的部分：
+
+  ```yaml
+  provenance:
+    holdout:
+    - namespace: emilia2                    # 键所属的原始素材集合
+      artifact: emilia2-holdout-recordings  # kind: source-keys
+      pattern: '^[0-9a-f]{16}'              # 取 16 位来源 hash，同一来源的其他窗口一并留出
+  ```
+
+- 训练数据集在顶层（或某个 split 的）`provenance.source_keys` 声明记录的来源键在哪些字段。`fields` 是记录字段路径（`id`、`metadata.recording_id`、`audio_slots` 等）；不写 `pattern` 时字段值本身是键，写了则取字段文本里所有匹配，混音的每个音频槽都能读到。split 的声明整体替换数据集的声明：
+
+  ```yaml
+  provenance:
+    source_keys:
+    - namespace: emilia2
+      fields: [metadata.recording_id, audio_slots]
+      pattern: '(?<![0-9a-f])[0-9a-f]{16}(?![0-9a-f])'
+  ```
+
+  每条记录在每项声明下至少要取到一个键，取不到就报错，避免声明写错后检查静默失效。
+
+两边按 `<namespace>:<键>` 比较。`audio-data-contract check-holdout catalog <dataset_id> <version> <split> --roots roots.json` 统计一个划分里有多少记录用到留出键，有重叠时退出码为 1。Python 侧用 `load_holdouts(catalog, roots)` 和 `record_source_keys(record, source_key_specs(spec, split))`；open-audio-llm 训练读取时据此自动去掉这些记录，不再需要逐个配置排除清单。两项声明放在 `provenance` 里，是因为旧版读取器会拒绝未知的顶层字段，但接受任何 `provenance`。
+协议不包含任何训练框架专用字段；选用哪个声道、是否建模标点等读取策略由各训练项目自己决定。
 
 登记新版本时，在能访问数据的机器上运行 `audio-data-contract check-registration catalog <dataset_id> <version> --roots roots.json`。它检查：`audio-index` 中出现的每个 `root_alias` 都已在 `roots.json` 配置；每个索引按固定种子抽样 `--sample` 条（默认 20），确认文件存在且能读到头部；声明了 `sha256` 或 `metadata.tree_sha256` 的产物校验值一致。有问题时逐条列出并以非零状态退出。只检查当次新增的版本，必须指定数据集和版本。
 

@@ -13,6 +13,7 @@ from pathlib import Path
 from .declarations import declaration_files, read_declarations
 from .errors import ContractError, IntegrityError
 from .roots import resolve_root_path
+from .source_keys import validate_declarations
 from .types import ArtifactRef, DatasetSpec
 
 
@@ -36,6 +37,7 @@ class DatasetCatalog:
         for versions in self._versions.values():
             versions.sort(key=lambda item: item.version)
         for spec in self._by_key.values():
+            validate_declarations(spec)
             target = (retirement(spec) or {}).get("superseded_by")
             if target is not None and target not in self._by_key:
                 raise ContractError(
