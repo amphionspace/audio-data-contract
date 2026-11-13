@@ -107,5 +107,6 @@
   "multilingual_asr_bench": "/workspace/data/datasets/multilingual_asr_bench",
   "voxpopuli_fr": "/workspace/data/datasets/voxpopuli_fr",
   "voxpopuli_de": "/workspace/data/datasets/voxpopuli_de",
-  "golos": "/workspace/data/datasets/golos"
+  "golos": "/workspace/data/datasets/golos",
+  "police_robust_monitor": "/workspace/data/datasets/police_robust_monitor"
 }
