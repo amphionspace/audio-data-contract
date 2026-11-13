@@ -4,6 +4,7 @@
 # 已完成：wenetspeech_podcast、wenetspeech_youtube、vitw、emilia2_dialog、emilia2_short、emilia2_mix；会议 magicdata_ramc / aishell4 / alimeeting_sdm
 # （asr 与 turn-taking，alimeeting 无改动、不出派生版本）。
 # 派生版本保留原版本的合并划分（如 train = train_2spk + train_3spk + train_neg）。
+# think-v1-20261112：清洗过的训练记录的 think 文本（说字写法 CoT），每个来源一个 think.jsonl.gz。
 - schema_version: dataset-catalog/2.0
   dataset_id: context_correction_clean_zh
   version: v1-20261110
@@ -2090,3 +2091,215 @@
       - metadata.recording_id
       - metadata.source_record_id
       pattern: '(?<![0-9a-f])[0-9a-f]{16}(?![0-9a-f])'
+- schema_version: dataset-catalog/2.0
+  dataset_id: context_correction_clean_zh
+  version: think-v1-20261112
+  languages:
+  - zh
+  tasks:
+  - asr
+  aliases: []
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/context_correction_clean_zh/versions/think-v1-20261112/state.json
+  - name: summary
+    kind: json-metadata
+    root_alias: aidc_data
+    relative_path: datasets/context_correction_clean_zh/versions/think-v1-20261112/summary.json
+    expected_bytes: 9124
+    sha256: 1ab83c7b608440ed82287a931f609bd4e402ffa8c2100611d679f7ecf0f4abcc
+    metadata:
+      description: 各来源按类别和原因的记录数
+  - name: wenetspeech_podcast_think
+    kind: jsonl-metadata
+    root_alias: aidc_data
+    relative_path: datasets/context_correction_clean_zh/versions/think-v1-20261112/wenetspeech_podcast/think.jsonl.gz
+    expected_bytes: 74864
+    sha256: 0961bddd4859733b9aa5e3cf443e63c82b3dd5bc58e67718d3ab63b1d75ff59a
+    metadata:
+      record_count: 13214
+      think_on_records: 399
+      training_datasets:
+      - wenetspeech_podcast@l-20261014-ctxclean-20261110
+      description: 按训练记录（dataset + record_id）给出 think 文本；think_on=false 的只按 think 关训练，未列出的记录是普通样本
+  - name: wenetspeech_youtube_think
+    kind: jsonl-metadata
+    root_alias: aidc_data
+    relative_path: datasets/context_correction_clean_zh/versions/think-v1-20261112/wenetspeech_youtube/think.jsonl.gz
+    expected_bytes: 124709
+    sha256: 9f45bfe71abd5e0aad56ef1f83388eb9ca1d5ccad8e676124ee25c2806cb3d2d
+    metadata:
+      record_count: 13470
+      think_on_records: 536
+      training_datasets:
+      - wenetspeech_youtube@l-20261014-ctxclean-20261110
+      description: 按训练记录（dataset + record_id）给出 think 文本；think_on=false 的只按 think 关训练，未列出的记录是普通样本
+  - name: emilia2_short_think
+    kind: jsonl-metadata
+    root_alias: aidc_data
+    relative_path: datasets/context_correction_clean_zh/versions/think-v1-20261112/emilia2_short/think.jsonl.gz
+    expected_bytes: 54142
+    sha256: b2d860798eb29818f35e5c4f017ddbd98c1049aebf7ab6dd2e07afe99ce470f0
+    metadata:
+      record_count: 1802
+      think_on_records: 281
+      training_datasets:
+      - emilia2_short@short-lance-20261023-ctxclean-20261110
+      description: 按训练记录（dataset + record_id）给出 think 文本；think_on=false 的只按 think 关训练，未列出的记录是普通样本
+  - name: emilia2_dialog_think
+    kind: jsonl-metadata
+    root_alias: aidc_data
+    relative_path: datasets/context_correction_clean_zh/versions/think-v1-20261112/emilia2_dialog/think.jsonl.gz
+    expected_bytes: 73070
+    sha256: c8a30283efea0261ed1b8ffff19c827ce41dcabc7f3582a42b538a2b0e103824
+    metadata:
+      record_count: 1792
+      think_on_records: 289
+      training_datasets:
+      - emilia2_dialog@dialog-turn-taking-20261013-enroll-ctxclean-20261110
+      description: 按训练记录（dataset + record_id）给出 think 文本；think_on=false 的只按 think 关训练，未列出的记录是普通样本
+  - name: emilia2_mix_think
+    kind: jsonl-metadata
+    root_alias: aidc_data
+    relative_path: datasets/context_correction_clean_zh/versions/think-v1-20261112/emilia2_mix/think.jsonl.gz
+    expected_bytes: 129167
+    sha256: 79267e438e0f86c92a08dbe58067a36d5f21c0ac7b8d6a42757c7206914691ba
+    metadata:
+      record_count: 3657
+      think_on_records: 641
+      training_datasets:
+      - emilia2_mix@mix-20261013-ctxclean-20261110
+      description: 按训练记录（dataset + record_id）给出 think 文本；think_on=false 的只按 think 关训练，未列出的记录是普通样本
+  - name: magicdata_ramc_asr_think
+    kind: jsonl-metadata
+    root_alias: aidc_data
+    relative_path: datasets/context_correction_clean_zh/versions/think-v1-20261112/magicdata_ramc_asr/think.jsonl.gz
+    expected_bytes: 3133
+    sha256: 425a59693181285c49642aa55e576d291fb7ce337d21229c17e5b9d31c52ca24
+    metadata:
+      record_count: 122
+      think_on_records: 14
+      training_datasets:
+      - magicdata_ramc@asr-20261014-ctxclean-20261110
+      description: 按训练记录（dataset + record_id）给出 think 文本；think_on=false 的只按 think 关训练，未列出的记录是普通样本
+  - name: aishell4_asr_think
+    kind: jsonl-metadata
+    root_alias: aidc_data
+    relative_path: datasets/context_correction_clean_zh/versions/think-v1-20261112/aishell4_asr/think.jsonl.gz
+    expected_bytes: 1839
+    sha256: 8cc1efe74cee7e46dc2b5f16380adb1d9c50829a6885a7d5666f68ce9c519e67
+    metadata:
+      record_count: 70
+      think_on_records: 2
+      training_datasets:
+      - aishell4@asr-20261014-ctxclean-20261110
+      description: 按训练记录（dataset + record_id）给出 think 文本；think_on=false 的只按 think 关训练，未列出的记录是普通样本
+  - name: alimeeting_sdm_asr_think
+    kind: jsonl-metadata
+    root_alias: aidc_data
+    relative_path: datasets/context_correction_clean_zh/versions/think-v1-20261112/alimeeting_sdm_asr/think.jsonl.gz
+    expected_bytes: 3416
+    sha256: dfaad09f3e4e3fe94d0bcf6311546deb3d59a5fe176604fb48a233427f17783e
+    metadata:
+      record_count: 154
+      think_on_records: 4
+      training_datasets:
+      - alimeeting_sdm@asr-20261014
+      description: 按训练记录（dataset + record_id）给出 think 文本；think_on=false 的只按 think 关训练，未列出的记录是普通样本
+  - name: magicdata_ramc_tt_think
+    kind: jsonl-metadata
+    root_alias: aidc_data
+    relative_path: datasets/context_correction_clean_zh/versions/think-v1-20261112/magicdata_ramc_tt/think.jsonl.gz
+    expected_bytes: 3677
+    sha256: 5befbb1d94ed0c4f9904f2af3095f442442a1fd8381dfb407b94587956e4b6f6
+    metadata:
+      record_count: 103
+      think_on_records: 9
+      training_datasets:
+      - magicdata_ramc@turn-taking-20261014-ctxclean-20261110
+      description: 按训练记录（dataset + record_id）给出 think 文本；think_on=false 的只按 think 关训练，未列出的记录是普通样本
+  - name: aishell4_tt_think
+    kind: jsonl-metadata
+    root_alias: aidc_data
+    relative_path: datasets/context_correction_clean_zh/versions/think-v1-20261112/aishell4_tt/think.jsonl.gz
+    expected_bytes: 1947
+    sha256: 4b9a639dbacd5ff15a7b9182463aeee33b6d56c0a47a6722cf2124cf34d87b1f
+    metadata:
+      record_count: 59
+      think_on_records: 0
+      training_datasets:
+      - aishell4@turn-taking-20261014-ctxclean-20261110
+      description: 按训练记录（dataset + record_id）给出 think 文本；think_on=false 的只按 think 关训练，未列出的记录是普通样本
+  - name: alimeeting_sdm_tt_think
+    kind: jsonl-metadata
+    root_alias: aidc_data
+    relative_path: datasets/context_correction_clean_zh/versions/think-v1-20261112/alimeeting_sdm_tt/think.jsonl.gz
+    expected_bytes: 3949
+    sha256: f15b0adfe23991443f969f0edc486ee58e98efd4f22f85023d76cee316e20e87
+    metadata:
+      record_count: 132
+      think_on_records: 4
+      training_datasets:
+      - alimeeting_sdm@turn-taking-20261014
+      description: 按训练记录（dataset + record_id）给出 think 文本；think_on=false 的只按 think 关训练，未列出的记录是普通样本
+  - name: vitw_think
+    kind: jsonl-metadata
+    root_alias: aidc_data
+    relative_path: datasets/context_correction_clean_zh/versions/think-v1-20261112/vitw/think.jsonl.gz
+    expected_bytes: 1796
+    sha256: 9177165882b1c8b3ae72b8fdf3500296f9d288a8f3257554147b2713712658d2
+    metadata:
+      record_count: 58
+      think_on_records: 19
+      training_datasets:
+      - vitw@2m-20261013-ctxclean-20261110
+      description: 按训练记录（dataset + record_id）给出 think 文本；think_on=false 的只按 think 关训练，未列出的记录是普通样本
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+        summary:
+        - summary
+        think:
+        - wenetspeech_podcast_think
+        - wenetspeech_youtube_think
+        - emilia2_short_think
+        - emilia2_dialog_think
+        - emilia2_mix_think
+        - magicdata_ramc_asr_think
+        - aishell4_asr_think
+        - alimeeting_sdm_asr_think
+        - magicdata_ramc_tt_think
+        - aishell4_tt_think
+        - alimeeting_sdm_tt_think
+        - vitw_think
+      statistics:
+        record_count: 34633
+        think_on_records: 2198
+      provenance:
+        preparation_status: complete
+  recipe_parameters:
+    line_format: '<无调拼音> 这个音，说话人说是「<原话>」，写作「<字>」。'
+    no_explanation_sentence: 这段没有说明字怎么写。
+    max_quote_chars: 30
+    pinyin: pypinyin（无调，按原话上下文取读音）
+    code: scripts/context_correction/think.py, clean_recipe.yaml
+  provenance:
+    preparation_status: complete
+    owner: mingdong
+    summary: 说字写法句子核对清单（v1-20261110）生成的 think 文本（CoT），供 think 开关训练
+    description: >-
+      从 context_correction_clean_zh@v1-20261110 的判定结果，给清洗过的各来源训练记录生成 think 文本：每个被说明的词一句，
+      字和原话取两个判定模型的说明，两个模型给的字必须一致（改字窗口里一个模型写的是改前的字、或只多写了同一个词里的字的，对齐后算一致）；
+      只在"不是…"里出现的字、只点名的偏旁不成句，否定对比并进相邻写法的原话；原话超过 30 字、说话人随后改口、写法不在文本里的，只进 think 关。
+      每行一条训练记录（dataset + record_id，对应各来源的派生版本；alimeeting_sdm 是原版本）：think_on=true 的给出 think，
+      think_on=false 的只能按 think 关训练（not_hit 和规则候选里仍有讲写法的，判定不一的也不确定），未列出的记录是普通样本，think 开时用固定句"这段没有说明字怎么写。"。
+      WenetSpeech、VITW 按分段训练：原话整段落在哪个分段，该分段才有 think；原话被分段切开的，只有切开后仍是完整"X的X"的那段保留。
+      执行者看过全部新增规则放出的样本和各只进 think 关原因的抽样，结论写在运行目录 README 的"CoT 生成"一节。
+      还没有用于训练。
+    source: context_correction_clean_zh@v1-20261110
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/ctx-clean-zh-20261110
+  derived_from: context_correction_clean_zh@v1-20261110
