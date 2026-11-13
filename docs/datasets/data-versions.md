@@ -1010,11 +1010,11 @@ Emilia2 中文对话的说话人日志伪标签
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
-| [emilia2_zh_dialogue_diarize@hotwords-qwen3.8-flash-m4a64k-v1](../../catalog/emilia2_zh_dialogue_diarize.yaml#L392) | 3,167.4 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/emilia2_zh_dialogue_diarize/` |
-| [emilia2_zh_dialogue_diarize@listening-review-v1-20261014](../../catalog/listening_review.yaml#L61) | — | 未登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/emilia2_zh_dialogue_diarize/` |
+| [emilia2_zh_dialogue_diarize@hotwords-qwen3.8-flash-m4a64k-v1](../../catalog/emilia2_zh_dialogue_diarize.yaml#L416) | 3,167.4 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/emilia2_zh_dialogue_diarize/` |
+| [emilia2_zh_dialogue_diarize@listening-review-v1-20261014](../../catalog/listening_review.yaml#L67) | — | 未登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/emilia2_zh_dialogue_diarize/` |
 | [emilia2_zh_dialogue_diarize@listening-review-v1-20261016](../../catalog/listening_review.yaml#L2) | — | 未登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/emilia2_zh_dialogue_diarize/` |
-| [emilia2_zh_dialogue_diarize@moss-transcribe-diarize-0.9B-m4a64k](../../catalog/emilia2_zh_dialogue_diarize.yaml#L304) | — | 未登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/emilia2_zh_dialogue_diarize/` |
-| [emilia2_zh_dialogue_diarize@moss-transcribe-diarize-0.9B-pro4plus-sim06](../../catalog/emilia2_zh_dialogue_diarize.yaml#L201) | — | 未登记 | 没有 |
+| [emilia2_zh_dialogue_diarize@moss-transcribe-diarize-0.9B-m4a64k](../../catalog/emilia2_zh_dialogue_diarize.yaml#L322) | — | 未登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/emilia2_zh_dialogue_diarize/` |
+| [emilia2_zh_dialogue_diarize@moss-transcribe-diarize-0.9B-pro4plus-sim06](../../catalog/emilia2_zh_dialogue_diarize.yaml#L213) | — | 未登记 | 没有 |
 | [emilia2_zh_dialogue_diarize@similar-voice-v1-20261014](../../catalog/similar_voice.yaml#L696) | — | 未登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/emilia2_zh_dialogue_diarize/` |
 | [emilia2_zh_dialogue_diarize@teacher-labels-v1-20261010](../../catalog/diarization_raw_emilia2-128k.yaml#L2) | — | 未登记 | 没有 |
 | [emilia2_zh_dialogue_diarize@teacher-labels-v1-20261015](../../catalog/diarization_raw_emilia2-64k.yaml#L2) | — | 未登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/emilia2_zh_dialogue_diarize/` |
@@ -1213,7 +1213,7 @@ GRPO 热词挖掘候选（未背过的中文热词提示，含近音易混词）
 | [magicdata_ramc@alignment-v1-20261008](../../catalog/zh_source_alignment.yaml#L197) | 125.5 | 已登记 | 没有 |
 | [magicdata_ramc@allspk-asr-v1-20261103](../../catalog/allspk_asr_v1.yaml#L1) | — | 未登记 | 没有 |
 | [magicdata_ramc@allspk-ts-v1-20261104](../../catalog/allspk_ts_v1.yaml#L1) | — | 未登记 | 没有 |
-| [magicdata_ramc@asr-20261014](../../catalog/amphionasr_v4.yaml#L3140) | — | 未登记 | 没有 |
+| [magicdata_ramc@asr-20261014](../../catalog/amphionasr_v4.yaml#L3157) | — | 未登记 | 没有 |
 | [magicdata_ramc@asr-20261014-ctxclean-20261110](../../catalog/context_correction_clean_zh.yaml#L529) | — | 未登记 | 没有 |
 | [magicdata_ramc@clean-dual-pass-20261027](../../catalog/magicdata_ramc_clean_pass.yaml#L1) | 125.0 | 已登记 | 没有 |
 | [magicdata_ramc@clean-dual-qwen-moss-v1-20261008](../../catalog/zh_source_clean.yaml#L663) | 125.0 | 已登记 | 没有 |
@@ -1221,14 +1221,14 @@ GRPO 热词挖掘候选（未背过的中文热词提示，含近音易混词）
 | [magicdata_ramc@gap-labels-v1-20261009](../../catalog/diarization_raw_ramc-gap.yaml#L2) | — | 未登记 | 没有 |
 | [magicdata_ramc@icefall-20260908](../../catalog/icefall_runtime.yaml#L1437) | 150.7 | 已登记 | 快照 20260914 |
 | [magicdata_ramc@legacy-20260804](../../catalog/icefall_base.yaml#L1085) | 150.7 | 已登记 | 快照 20260914 |
-| [magicdata_ramc@listening-review-v1-20261027](../../catalog/listening_review.yaml#L122) | — | 未登记 | 没有 |
+| [magicdata_ramc@listening-review-v1-20261027](../../catalog/listening_review.yaml#L134) | — | 未登记 | 没有 |
 | [magicdata_ramc@punc-gold-v1-20261029](../../catalog/punc_teacher_v1.yaml#L785) | 0.0 | 已登记 | 没有 |
 | [magicdata_ramc@punc-teacher-v1-20261029](../../catalog/punc_teacher_v1.yaml#L497) | 2.3 | 已登记 | 没有 |
 | [magicdata_ramc@punc-written-v1-20261029](../../catalog/zh_punc_written_v1.yaml#L213) | 125.5 | 已登记 | 没有 |
 | [magicdata_ramc@speaker-identity-v1-20261028](../../catalog/ramc_speaker_identity.yaml#L2) | 125.0 | 已登记 | 没有 |
 | [magicdata_ramc@teacher-calibration-v1-20261009](../../catalog/diarization_raw_teacher-calibration.yaml#L2) | — | 未登记 | 没有 |
 | [magicdata_ramc@train-punc-v1-20261102](../../catalog/train_punc_v1.yaml#L143) | — | 未登记 | 没有 |
-| [magicdata_ramc@turn-taking-20261014](../../catalog/amphionasr_v4.yaml#L2867) | 403.5 | 已登记 | 没有 |
+| [magicdata_ramc@turn-taking-20261014](../../catalog/amphionasr_v4.yaml#L2884) | 403.5 | 已登记 | 没有 |
 | [magicdata_ramc@turn-taking-20261014-ctxclean-20261110](../../catalog/context_correction_clean_zh.yaml#L732) | 403.5 | 已登记 | 没有 |
 | [magicdata_ramc@turn-taking-20261014-utts](../../catalog/ts_window_utts.yaml#L341) | 41.5 | 已登记 | 没有 |
 | [magicdata_ramc@turn-taking-20261014-utts-punc-20261102](../../catalog/train_punc_v1_derived.yaml#L1161) | — | 未登记 | 没有 |
@@ -1351,7 +1351,7 @@ MagicData-RAMC 对话切窗的按人转写数据
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
-| [police_terms_single@listening-review-v1-20261022](../../catalog/listening_review.yaml#L179) | — | 未登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/police_terms_single/` |
+| [police_terms_single@listening-review-v1-20261022](../../catalog/listening_review.yaml#L191) | — | 未登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/police_terms_single/` |
 | [police_terms_single@qc-v1-20261022](../../catalog/police_terms_qc.yaml#L2) | 1.7 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/police_terms_single/` |
 | [police_terms_single@v1-20261022](../../catalog/police_terms_single.yaml#L2) | 1.7 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/police_terms_single/` |
 
@@ -1368,7 +1368,7 @@ MagicData-RAMC 对话切窗的按人转写数据
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
 | [police_terms_single_train@hotwords-confusable-v1-20261102](../../catalog/train_punc_v1.yaml#L393) | — | 未登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/police_terms_single_train/` |
-| [police_terms_single_train@listening-review-v1-20261024](../../catalog/listening_review.yaml#L235) | — | 未登记 | 没有 |
+| [police_terms_single_train@listening-review-v1-20261024](../../catalog/listening_review.yaml#L247) | — | 未登记 | 没有 |
 | [police_terms_single_train@punc-written-v1-20261102](../../catalog/zh_punc_written_v1_gaps.yaml#L130) | 11.7 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/police_terms_single_train/` |
 | [police_terms_single_train@qc-v1-20261023](../../catalog/police_terms_qc.yaml#L92) | 11.7 | 已登记 | 没有 |
 | [police_terms_single_train@train-punc-v1-20261102](../../catalog/train_punc_v1.yaml#L268) | — | 未登记 | 没有 |
@@ -1558,7 +1558,7 @@ TAL 中文语音识别数据
 | [ts_asr_nearfar@firstother-v1-20261104](../../catalog/ts_asr_nearfar.yaml#L2474) | 18.1 | 已登记 | 没有 |
 | [ts_asr_nearfar@firstother-v2-20261105](../../catalog/ts_asr_nearfar.yaml#L2741) | 33.6 | 已登记 | 没有 |
 | [ts_asr_nearfar@firstother-v3-20261105](../../catalog/ts_asr_nearfar.yaml#L3368) | 91.4 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_nearfar/` |
-| [ts_asr_nearfar@listening-review-v1-20261022](../../catalog/listening_review.yaml#L491) | — | 未登记 | 没有 |
+| [ts_asr_nearfar@listening-review-v1-20261022](../../catalog/listening_review.yaml#L503) | — | 未登记 | 没有 |
 | [ts_asr_nearfar@v1-20261014](../../catalog/ts_asr_nearfar.yaml#L1) | 6.0 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_nearfar/` |
 | [ts_asr_nearfar@v2-20261022](../../catalog/ts_asr_nearfar.yaml#L505) | 6.0 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_nearfar/` |
 | [ts_asr_nearfar@v3-20261022](../../catalog/ts_asr_nearfar.yaml#L1489) | 6.0 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_nearfar/` |
@@ -1668,7 +1668,7 @@ WenetSpeech 筛出的中文 TTS 语音
 | [wenetspeech_chuan@extracted-20261021](../../catalog/wenetspeech_chuan_extracted.yaml#L2) | 10,259.6 | 已登记 | 没有 |
 | [wenetspeech_chuan@icefall-20260908](../../catalog/icefall_runtime.yaml#L934) | 10,259.6 | 已登记 | 快照 20260914 |
 | [wenetspeech_chuan@legacy-20260804](../../catalog/icefall_base.yaml#L625) | 10,259.6 | 已登记 | 快照 20260914 |
-| [wenetspeech_chuan@listening-review-v1-20261026](../../catalog/listening_review.yaml#L893) | — | 未登记 | 没有 |
+| [wenetspeech_chuan@listening-review-v1-20261026](../../catalog/listening_review.yaml#L905) | — | 未登记 | 没有 |
 | [wenetspeech_chuan@qwen3-asr-full-v1-20261023](../../catalog/wenetspeech_chuan_qwen.yaml#L1) | 10,209.5 | 已登记 | 没有 |
 
 - `wenetspeech_chuan@clean-qwen3-asr-v1-20261023`：WenetSpeech-Chuan 训练集（4,938,701 条 / 10,259.6 h）是机器标注，不带置信度。 用共享的 Qwen3-ASR-1.7B 逐条转写，按 SpeechIO TextNorm 算与原标注的字错误率（Qwen 在 WSC-Eval 上自身 12.1 / 21.1）， 保留错误率 < 30% 的 3,277,696 条 / 7,075.7 h（69.3%），原标注不改，不拿 Qwen 的文字替换。 规则经 6 轮听审（60 条 1–10 秒片段，每类 20 条）确定：Qwen 空输出的 20 条中 17 条没有人声； Qwen 输出 ≥ 原标注 2 倍的 20 条原标注全不可用（多人只标一人、漏标语音、音乐、人声太轻太远）； 错误率 30–100% 的 20 条中原标注对的只有 3 条。 错误率 ≥ 100% 的其余条目（333.8 h）和原标注规范化后为空的（103.7 h）未听审，按用户决定一并不用；超过约 157 秒、服务拒收的 795 条 / 50.0 h 未核对，也不在本版本内。 问题集中在 cut id 前缀 01316 的子来源（5,383 h，保留 55.3%）；cq*、sc* 等其余来源保留 79–88%
@@ -1685,7 +1685,7 @@ WenetSpeech 长音频的说话人日志伪标签
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
-| [wenetspeech_diarize@listening-review-v1-20261012](../../catalog/listening_review.yaml#L945) | — | 未登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/wenetspeech_diarize/` |
+| [wenetspeech_diarize@listening-review-v1-20261012](../../catalog/listening_review.yaml#L957) | — | 未登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/wenetspeech_diarize/` |
 | [wenetspeech_diarize@moss-transcribe-diarize-0.9B](../../catalog/wenetspeech_diarize.yaml#L2) | — | 未登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/wenetspeech_diarize/` |
 | [wenetspeech_diarize@teacher-labels-v1-20261012](../../catalog/diarization_raw_wenetspeech-l.yaml#L2) | — | 未登记 | 没有 |
 
@@ -1715,7 +1715,7 @@ WenetSpeech L 中的播客部分
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
-| [wenetspeech_podcast@l-20261014](../../catalog/amphionasr_v4.yaml#L3705) | 3,892.3 | 已登记 | 没有 |
+| [wenetspeech_podcast@l-20261014](../../catalog/amphionasr_v4.yaml#L3722) | 3,892.3 | 已登记 | 没有 |
 | [wenetspeech_podcast@l-20261014-ctxclean-20261110](../../catalog/context_correction_clean_zh.yaml#L457) | 3,840.9 | 已登记 | 没有 |
 
 - `wenetspeech_podcast@l-20261014`：WenetSpeech L 集按录音路径分成 YouTube 或 podcast。这是全集，不是 replay 的 3000 小时抽样
@@ -1749,8 +1749,8 @@ WenetSpeech L 中的 YouTube 部分
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
-| [wenetspeech_youtube@l-20261014](../../catalog/amphionasr_v4.yaml#L3757) | 6,113.1 | 已登记 | 没有 |
-| [wenetspeech_youtube@l-20261014-ctxclean-20261110](../../catalog/context_correction_clean_zh.yaml#L1592) | 6,112.6 | 已登记 | 没有 |
+| [wenetspeech_youtube@l-20261014](../../catalog/amphionasr_v4.yaml#L3774) | 6,113.1 | 已登记 | 没有 |
+| [wenetspeech_youtube@l-20261014-ctxclean-20261110](../../catalog/context_correction_clean_zh.yaml#L1598) | 6,112.6 | 已登记 | 没有 |
 
 - `wenetspeech_youtube@l-20261014`：WenetSpeech L 集按录音路径分成 YouTube 或 podcast。这是全集，不是 replay 的 3000 小时抽样
 - `wenetspeech_youtube@l-20261014-ctxclean-20261110`：在 wenetspeech_youtube@l-20261014 上做的上下文纠偏清洗：说话人讲字怎么写（组词、拆字、偏旁、否定对比）而标注写成同音别字的，按说明改正；拿不准的窗口整窗去掉。判定依据见 context_correction_clean_zh@v1-20261110。标注是机器转写；隔离里约 6 成是误杀（多为字谜和照实写的结构说明），总量 0.55 h；2026-11-12 捞回 86 段，仍去掉 630 段（0.49 h）
@@ -1996,8 +1996,8 @@ Emilia2 长音频合成的 2/3 人目标说话人混合
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
-| [emilia2_mix@mix-20261013](../../catalog/amphionasr_v4.yaml#L2078) | 35,744.6 | 已登记 | 没有 |
-| [emilia2_mix@mix-20261013-ctxclean-20261110](../../catalog/context_correction_clean_zh.yaml#L1742) | 35,692.0 | 已登记 | 没有 |
+| [emilia2_mix@mix-20261013](../../catalog/amphionasr_v4.yaml#L2084) | 35,744.6 | 已登记 | 没有 |
+| [emilia2_mix@mix-20261013-ctxclean-20261110](../../catalog/context_correction_clean_zh.yaml#L1753) | 35,692.0 | 已登记 | 没有 |
 | [emilia2_mix@mix-20261013-utts](../../catalog/ts_window_utts.yaml#L428) | 24,358.4 | 已登记 | 没有 |
 
 - `emilia2_mix@mix-20261013`：Emilia2 long 合成的 2/3 人混合。目标可以晚开口、按 1～15 秒间隔断续，或在中间短插入。干扰人也可以断续。注册是同一录音上没用过的 1～30 秒片段
@@ -2013,9 +2013,9 @@ Emilia2 中英短音频普通转写
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
-| [emilia2_short@short-20261014](../../catalog/amphionasr_v4.yaml#L2445) | 5,102.9 | 已登记 | 没有 |
-| [emilia2_short@short-lance-20261023](../../catalog/amphionasr_v4.yaml#L3894) | 5,102.9 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/emilia2_short/` |
-| [emilia2_short@short-lance-20261023-ctxclean-20261110](../../catalog/context_correction_clean_zh.yaml#L1660) | 5,096.7 | 已登记 | 没有 |
+| [emilia2_short@short-20261014](../../catalog/amphionasr_v4.yaml#L2457) | 5,102.9 | 已登记 | 没有 |
+| [emilia2_short@short-lance-20261023](../../catalog/amphionasr_v4.yaml#L3911) | 5,102.9 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/emilia2_short/` |
+| [emilia2_short@short-lance-20261023-ctxclean-20261110](../../catalog/context_correction_clean_zh.yaml#L1666) | 5,096.7 | 已登记 | 没有 |
 
 - `emilia2_short@short-20261014`：Emilia2 已抽出的 m4a-128k short。每条短音频是一条普通转写，只保留语言标签为纯中文或纯英文、时长 0.5～30 秒的片段。不使用 m4a-64k 和 asmr
 - `emilia2_short@short-lance-20261023`：与 short-20261014 相同的记录与记录 ID，音频改读 emilia2@tts-unified-v0.1 Lance 发布里的同一条 m4a-128k standalone short（按上游 short ID 与 m4a 文件名对应；发布里存的是同一份完整解码的 FLAC），训练不再为这些片段启动 ffmpeg。音频引用写入 Lance 样本时长。Lance 中没有对应样本的 20 条（zh 11、en 9）已去掉。全部片段都在 Lance 里，没有音频索引，因此也没有 Lance 记录索引，训练端走 JSONL 记录缓存；读取需要 open-audio-llm 支持指向其他数据集 Lance 发布的音频引用（code-v14 起）。生成脚本 scripts/build_emilia2_short_lance.py
@@ -2042,9 +2042,9 @@ Emilia-YODAS 多语种 YouTube 语音
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
-| [farfield_speech_noise_1spk@20261014](../../catalog/amphionasr_v4.yaml#L3287) | 25.5 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/farfield_speech_noise_1spk/` |
-| [farfield_speech_noise_2spk@20261014](../../catalog/amphionasr_v4.yaml#L3416) | 30.4 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/farfield_speech_noise_2spk/` |
-| [farfield_speech_noise_3spk@20261014](../../catalog/amphionasr_v4.yaml#L3545) | 32.7 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/farfield_speech_noise_3spk/` |
+| [farfield_speech_noise_1spk@20261014](../../catalog/amphionasr_v4.yaml#L3304) | 25.5 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/farfield_speech_noise_1spk/` |
+| [farfield_speech_noise_2spk@20261014](../../catalog/amphionasr_v4.yaml#L3433) | 30.4 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/farfield_speech_noise_2spk/` |
+| [farfield_speech_noise_3spk@20261014](../../catalog/amphionasr_v4.yaml#L3562) | 32.7 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/farfield_speech_noise_3spk/` |
 
 - `farfield_speech_noise_1spk@20261014`：单人远场人声噪声。Emilia 中文或英文干声卷上一条远场房间冲激响应，16 kHz 单声道
 - `farfield_speech_noise_2spk@20261014`：两人远场人声噪声。由两条不同说话人的 1spk 音频错开开口时间后叠加
@@ -2071,7 +2071,7 @@ Emilia-YODAS 多语种 YouTube 语音
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
-| [hard_hw_sft@hard-20261014](../../catalog/amphionasr_v4.yaml#L2583) | 109.4 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/hard_hw_sft/` |
+| [hard_hw_sft@hard-20261014](../../catalog/amphionasr_v4.yaml#L2600) | 109.4 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/hard_hw_sft/` |
 
 - `hard_hw_sft@hard-20261014`：热词难例 ShareGPT。每条系统提示都带 Hotwords。音频指向已注册源文件
 
@@ -2101,7 +2101,7 @@ Emilia-YODAS 多语种 YouTube 语音
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
-| [hw_sft@hw-20261014](../../catalog/amphionasr_v4.yaml#L2702) | 2,636.5 | 已登记 | 没有 |
+| [hw_sft@hw-20261014](../../catalog/amphionasr_v4.yaml#L2719) | 2,636.5 | 已登记 | 没有 |
 
 - `hw_sft@hw-20261014`：阶段 3 热词 ShareGPT。带 Hotwords 的行是热词转写，系统提示为空的行是普通转写。音频指向已注册源文件
 
@@ -2293,7 +2293,7 @@ AISHELL-1、LibriSpeech 合成的多人对话
 | [ts_asr_benchmark@en-v1-20261031](../../catalog/ts_asr_benchmark.yaml#L7106) | 44.4 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_benchmark/` |
 | [ts_asr_benchmark@en-v1-hotword-labels-20261102](../../catalog/ts_benchmark_hotword_labels.yaml#L5793) | 44.4 | 已登记 | 没有 |
 | [ts_asr_benchmark@es-v1-20261110](../../catalog/ts_asr_benchmark.yaml#L9371) | 43.2 | 已登记 | 没有 |
-| [ts_asr_benchmark@listening-review-v1-20261026](../../catalog/listening_review.yaml#L291) | — | 未登记 | 没有 |
+| [ts_asr_benchmark@listening-review-v1-20261026](../../catalog/listening_review.yaml#L303) | — | 未登记 | 没有 |
 | [ts_asr_benchmark@v1-20261013](../../catalog/ts_asr_benchmark.yaml#L1) | 25.0 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_benchmark/` |
 | [ts_asr_benchmark@v2-20261013](../../catalog/ts_asr_benchmark.yaml#L1228) | 26.9 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_benchmark/` |
 | [ts_asr_benchmark@v3-20261013](../../catalog/ts_asr_benchmark.yaml#L2534) | 43.9 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_benchmark/` |
@@ -2428,16 +2428,16 @@ AISHELL-1、LibriSpeech 合成的多人对话
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
-| [ts_asr_real@dev-v1-20261017](../../catalog/ts_asr_real.yaml#L1073) | 6.2 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_real/` |
-| [ts_asr_real@en-v2-20261031](../../catalog/ts_asr_real.yaml#L2930) | 6.0 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_real/` |
+| [ts_asr_real@dev-v1-20261017](../../catalog/ts_asr_real.yaml#L1085) | 6.2 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_real/` |
+| [ts_asr_real@en-v2-20261031](../../catalog/ts_asr_real.yaml#L2942) | 6.0 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_real/` |
 | [ts_asr_real@en-v2-hotword-labels-20261102](../../catalog/ts_benchmark_hotword_labels.yaml#L9266) | 6.0 | 已登记 | 没有 |
-| [ts_asr_real@listening-review-v1-20261022](../../catalog/listening_review.yaml#L655) | — | 未登记 | 没有 |
-| [ts_asr_real@listening-review-v1-20261026](../../catalog/listening_review.yaml#L837) | — | 未登记 | 没有 |
-| [ts_asr_real@overlap-v1-20261017](../../catalog/ts_asr_real.yaml#L810) | 12.0 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_real/` |
+| [ts_asr_real@listening-review-v1-20261022](../../catalog/listening_review.yaml#L667) | — | 未登记 | 没有 |
+| [ts_asr_real@listening-review-v1-20261026](../../catalog/listening_review.yaml#L849) | — | 未登记 | 没有 |
+| [ts_asr_real@overlap-v1-20261017](../../catalog/ts_asr_real.yaml#L822) | 12.0 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_real/` |
 | [ts_asr_real@v1-20261013](../../catalog/ts_asr_real.yaml#L1) | 3.9 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_real/` |
 | [ts_asr_real@v2-20261013](../../catalog/ts_asr_real.yaml#L345) | 5.4 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_real/` |
-| [ts_asr_real@v3-20261022](../../catalog/ts_asr_real.yaml#L1297) | 5.4 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_real/` |
-| [ts_asr_real@v4-20261022](../../catalog/ts_asr_real.yaml#L2103) | 5.4 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_real/` |
+| [ts_asr_real@v3-20261022](../../catalog/ts_asr_real.yaml#L1309) | 5.4 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_real/` |
+| [ts_asr_real@v4-20261022](../../catalog/ts_asr_real.yaml#L2115) | 5.4 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_real/` |
 | [ts_asr_real@v4-hotword-labels-20261102](../../catalog/ts_benchmark_hotword_labels.yaml#L4744) | 5.4 | 已登记 | 没有 |
 
 - `ts_asr_real@dev-v1-20261017`：真实对话的目标说话人开发集（选模型和阈值用）：从 AliMeeting 远场、MagicData-RAMC 手机通话的人工标注 dev 划分里 以目标说话人为锚切窗口，按目标被重叠的比例分档（RAMC 标注没有重叠，只有 o0），去掉在 train 划分出现过的说话人所在的录音； 同一窗口配一条目标在场和一条目标缺席的样本。不进训练，也不作最终评测
@@ -2787,7 +2787,7 @@ TS-ASR 训练用跨语言 TTS 注册音频
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
-| [vitw@2m-20261013](../../catalog/amphionasr_v4.yaml#L3837) | 1,085.4 | 已登记 | 没有 |
+| [vitw@2m-20261013](../../catalog/amphionasr_v4.yaml#L3854) | 1,085.4 | 已登记 | 没有 |
 | [vitw@2m-20261013-ctxclean-20261110](../../catalog/context_correction_clean_zh.yaml#L1188) | 1,085.4 | 已登记 | 没有 |
 | [vitw@icefall-20260908](../../catalog/icefall_runtime.yaml#L2568) | 1,085.4 | 已登记 | 快照 20260914 |
 | [vitw@legacy-20260804](../../catalog/icefall_base.yaml#L2179) | 1,085.4 | 已登记 | 快照 20260914 |
@@ -3751,7 +3751,7 @@ WHAM! 噪声训练划分
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
-| [wham@tr-20261014](../../catalog/amphionasr_v4.yaml#L3674) | — | 未登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/wham/` |
+| [wham@tr-20261014](../../catalog/amphionasr_v4.yaml#L3691) | — | 未登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/wham/` |
 
 - `wham@tr-20261014`：WHAM training noise. Paths point at noise_open/wham_noise/extracted/wham_noise/tr.
 

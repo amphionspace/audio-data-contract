@@ -58,6 +58,12 @@
         reviews:
           emilia2-speaker-merge-20261014: 10
           emilia2-speaker-split-20261015: 24
+      source_keys:
+        - namespace: emilia2
+          fields:
+            - id
+            - metadata.recording_id
+          pattern: '(?<![0-9a-f])[0-9a-f]{16}(?![0-9a-f])'
   - schema_version: dataset-catalog/2.0
     dataset_id: emilia2_zh_dialogue_diarize
     version: listening-review-v1-20261014
@@ -119,6 +125,12 @@
           emilia2-pro-diff-20261014: 10
           emilia2-pro-overlap-20261014: 1
           listen-review-20261012: 1
+      source_keys:
+        - namespace: emilia2
+          fields:
+            - id
+            - metadata.recording_id
+          pattern: '(?<![0-9a-f])[0-9a-f]{16}(?![0-9a-f])'
   - schema_version: dataset-catalog/2.0
     dataset_id: magicdata_ramc
     version: listening-review-v1-20261027

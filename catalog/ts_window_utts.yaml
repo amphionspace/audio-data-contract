@@ -512,3 +512,9 @@
       report.json。
     sources:
     - emilia2_mix@mix-20261013
+    source_keys:
+    - namespace: emilia2
+      fields:
+      - metadata.recording_id
+      - metadata.source_record_id
+      pattern: '(?<![0-9a-f])[0-9a-f]{16}(?![0-9a-f])'

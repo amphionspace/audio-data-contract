@@ -161,6 +161,10 @@ result = resolve_view(views, datasets, "wenetspeech/clean", "v1-20260805")
 
 下游不得保存绝对路径、拼接 `_clean`/`_hotwords` 文件名，或自行解释变换顺序。
 
+评测集从训练语料切出时，评测数据集用 `provenance.holdout` 声明留出的来源键，训练数据集用
+`provenance.source_keys` 声明记录的来源键在哪些字段；训练读取方按两者自动去掉重叠记录，
+不靠记录 ID 清单。格式见[数据声明目录](../../catalog/README.md#评测留出与来源键)。
+
 ## 当前迁移策略
 
 1. 保留现有物理文件和兼容 Dataset ID；

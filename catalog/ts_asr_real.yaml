@@ -511,6 +511,14 @@
     sha256: 2f758bbdcce59fb256a7a0eb7c8a75e6daaa0a41c40bad2377e86baf1fedf66b
     metadata:
       record_count: 55
+  - name: emilia2-holdout-recordings
+    kind: source-keys
+    root_alias: ts_asr_real
+    relative_path: source/v2-20261013/excluded-recordings.txt
+    expected_bytes: 7126
+    sha256: 4adaffd54289657d93936ffa43aca1e73cfbc21909bd47b5984816b1eb34b3c4
+    metadata:
+      record_count: 260
   splits:
     real-alimeeting-1spk-pos:
       artifacts:
@@ -807,6 +815,10 @@
     - aishell4@icefall-20260908:test
     - magicdata_ramc@icefall-20260908:test
     - emilia2_zh_dialogue_diarize@moss-transcribe-diarize-0.9B:train_120s
+    holdout:
+    - namespace: emilia2
+      artifact: emilia2-holdout-recordings
+      pattern: '^[0-9a-f]{16}'
 - schema_version: dataset-catalog/2.0
   dataset_id: ts_asr_real
   version: overlap-v1-20261017

@@ -758,6 +758,12 @@
     known_issues:
     - 源版本的原始短句只覆盖约 47% 的语音，没有短句覆盖处的并人查不到，子集里仍可能有少量并人窗口
     run_dir: /workspace/workspace/mingdong/data/amphiondata/similar-voice-views-20261014
+    source_keys:
+    - namespace: emilia2
+      fields:
+      - id
+      - metadata.recording_id
+      pattern: '(?<![0-9a-f])[0-9a-f]{16}(?![0-9a-f])'
   recipe_parameters:
     speaker_model: ERes2NetV2
     window_score: max pairwise cosine

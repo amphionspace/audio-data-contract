@@ -51,7 +51,8 @@ v1/v2 的窗口要求“与窗口重叠的语句都完整”，重叠多的地�
 - 取样：只用 2–3 人、同时说话不超过 3 人、40–120 秒的窗口，每个录音取一个窗口，抽 260 个录音；再用同样的窗口规则（完整说话轮、8–22 秒）切成样本，音频是 44.1 kHz AAC 的 m4a，用 ffmpeg 解码到 16 kHz。
 - 标注是**伪标签**：`labels.annotation = "moss"`，参考文本可能带有错误（片段里同一人可能被拆成几个说话人，有声剧一人多角会按角色拆分）。目标在场的 CER 因此含有标签噪声，目标缺席的误输出率受影响较小。
 - **训练必须排除这些录音**：用到的 260 个 Emilia2 录音 id 写在 `source/<版本>/excluded-recordings.txt`，与 `emilia2@tts-unified-v0.1` 按 `recording_id` 对应，两边都要排除。
-  训练配置按记录 ID 排除（`exclude_records`），用 `scripts/ts_real/exclusion_records.py` 把录音清单换成某个训练划分的记录 ID。已生成的清单在 `source/v2-20261013/`：`excluded-records-emilia2_zh_dialogue_diarize-train_120s.txt`（1,030 条，225 个录音）和 `excluded-records-emilia2_zh_overlap_farsim-train_120s.txt`（380 条，166 个录音）。`exclude_records` 只接受一个文件，和已有的排除清单（例如 4 人以上）一起用时需要合并成一个文件。2026-10-14 正在运行的 `zh-overlap-farsim-acp-20261013` 在建数据时没有排除，约 0.5% 的训练记录来自这些录音。
+  这份清单已登记为 `ts_asr_real@v2-20261013` 的 `emilia2-holdout-recordings`（`provenance.holdout`，按 16 位来源 hash 比较，同一来源的其他对话窗口一并留出），Emilia2 训练数据集声明了 `provenance.source_keys`；open-audio-llm 读取训练数据时自动去掉重叠记录，可用 `audio-data-contract check-holdout` 检查任一划分（见[评测留出与来源键](../../catalog/README.md#评测留出与来源键)）。下面的 `exclude_records` 清单是此前的手工做法。
+  训练配置按记录 ID 排除（`exclude_records`），用 `scripts/ts_real/exclusion_records.py` 把录音清单换成某个训练划分的记录 ID。已生成的清单在 `source/v2-20261013/`：`excluded-records-emilia2_zh_dialogue_diarize-train_120s.txt`（1,030 条，225 个录音）和 `excluded-records-emilia2_zh_overlap_farsim-train_120s.txt`（380 条，166 个录音）。这两份清单生成时脚本的正则没匹配带 `_pN` 后缀的录音 ID（260 个里有 35 个），各漏了 106 条和 38 条；脚本已修正，清单本身未重新生成。`exclude_records` 只接受一个文件，和已有的排除清单（例如 4 人以上）一起用时需要合并成一个文件。2026-10-14 正在运行的 `zh-overlap-farsim-acp-20261013` 在建数据时没有排除，约 0.5% 的训练记录来自这些录音。
 - 污染说明：这批窗口来自 `train_120s`，34479 的原训练管线用过 Emilia2 对话，新的 SOT 训练轮用过整个 `train_120s`，所以对这些模型这是**可能见过的音频**，结果偏乐观；对以后排除了这些录音的训练才是干净的评测。
 
 ## 英文版（en-v2-20261031）

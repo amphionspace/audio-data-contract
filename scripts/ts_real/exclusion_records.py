@@ -22,7 +22,8 @@ from pathlib import Path
 
 from audio_data_contract import load_catalog, resolve_split
 
-RECORDING = re.compile(r"[0-9a-f]{16}_dlg_\d{5}")
+# Some recordings carry a part suffix (``<hash>_dlg_00006_p0``); without it in the match they were missed.
+RECORDING = re.compile(r"[0-9a-f]{16}_dlg_\d{5}(?:_p\d+)?")
 SOURCE = re.compile(r"(?<![0-9a-f])[0-9a-f]{16}(?![0-9a-f])")
 
 

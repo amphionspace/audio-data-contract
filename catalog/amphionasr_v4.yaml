@@ -2075,6 +2075,12 @@
     rules: /workspace/workspace/lx/emilia2_ckpt34479_cut_rules.md
     quality_status: source_annotations_preserved_not_reaudited
     registered_from: lx 私有登记 /workspace/workspace/lx/data/amphionasr（AmphionASR v4 配方，open-audio-llm feat/amphionasr-v4）；清单原样复制到 aidc_data，root_alias amphionasr→aidc_data；生成脚本快照 /workspace/data/migration/register-amphionasr-v4-20261015/scripts/ (2026-10-15 公共登记)
+    source_keys:
+    - namespace: emilia2
+      fields:
+      - metadata.recording_id
+      - metadata.source_record_id
+      pattern: '(?<![0-9a-f])[0-9a-f]{16}(?![0-9a-f])'
 - schema_version: dataset-catalog/2.0
   dataset_id: emilia2_mix
   version: mix-20261013
@@ -2442,6 +2448,12 @@
     rules: /workspace/workspace/lx/emilia2_mix_plan.md
     quality_status: synthesized_from_source_timestamps
     registered_from: lx 私有登记 /workspace/workspace/lx/data/amphionasr（AmphionASR v4 配方，open-audio-llm feat/amphionasr-v4）；清单原样复制到 aidc_data，root_alias amphionasr→aidc_data；生成脚本快照 /workspace/data/migration/register-amphionasr-v4-20261015/scripts/ (2026-10-15 公共登记)
+    source_keys:
+    - namespace: emilia2
+      fields:
+      - metadata.recording_id
+      - metadata.source_record_id
+      pattern: '(?<![0-9a-f])[0-9a-f]{16}(?![0-9a-f])'
 - schema_version: dataset-catalog/2.0
   dataset_id: emilia2_short
   version: short-20261014
@@ -2580,6 +2592,11 @@
     source: /workspace/data/datasets/emilia2
     quality_status: source_annotations_preserved_not_reaudited
     registered_from: lx 私有登记 /workspace/workspace/lx/data/amphionasr（AmphionASR v4 配方，open-audio-llm feat/amphionasr-v4）；清单原样复制到 aidc_data，root_alias amphionasr→aidc_data；生成脚本快照 /workspace/data/migration/register-amphionasr-v4-20261015/scripts/ (2026-10-15 公共登记)
+    source_keys:
+    - namespace: emilia2
+      fields:
+      - metadata.recording_id
+      pattern: '(?<![0-9a-f])[0-9a-f]{16}(?![0-9a-f])'
 - schema_version: dataset-catalog/2.0
   dataset_id: hard_hw_sft
   version: hard-20261014
@@ -3960,3 +3977,8 @@
     sources:
     - emilia2_short:short-20261014
     - emilia2:tts-unified-v0.1
+    source_keys:
+    - namespace: emilia2
+      fields:
+      - metadata.recording_id
+      pattern: '(?<![0-9a-f])[0-9a-f]{16}(?![0-9a-f])'

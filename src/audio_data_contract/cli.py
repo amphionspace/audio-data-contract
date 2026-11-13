@@ -12,6 +12,7 @@ from .catalog import (
     find_dependents,
     load_catalog,
     resolve_artifact,
+    resolve_split,
     verify_artifact_file,
 )
 from .overview import update_data_overview
@@ -77,6 +78,16 @@ def _parser() -> argparse.ArgumentParser:
         action="store_true",
         help="fail, instead of warn, when indexable splits have no record index",
     )
+
+    holdout = commands.add_parser(
+        "check-holdout",
+        help="count records of a split built from recordings evaluation holds out",
+    )
+    holdout.add_argument("catalog")
+    holdout.add_argument("dataset_id")
+    holdout.add_argument("version")
+    holdout.add_argument("split")
+    holdout.add_argument("--roots")
 
     dangling = commands.add_parser("check-dangling")
     dangling.add_argument("catalog")
@@ -257,6 +268,31 @@ def main(argv: list[str] | None = None) -> int:
             )
         )
         return 1 if problems else 0
+    if args.command == "check-holdout":
+        from .source_keys import holdout_overlap, load_holdouts, source_key_specs
+
+        catalog = load_catalog(args.catalog)
+        roots = load_roots(args.roots)
+        spec = catalog.get(args.dataset_id, args.version)
+        specs = source_key_specs(spec, args.split)
+        if not specs:
+            raise SystemExit(f"{spec.key}:{args.split} declares no provenance.source_keys")
+        paths = resolve_split(
+            catalog, spec.dataset_id, spec.version, args.split, "records", roots
+        )
+        if not paths:
+            raise SystemExit(f"{spec.key}:{args.split} has no records artifact to read")
+        holdouts = load_holdouts(catalog, roots)
+        result = holdout_overlap(
+            (record for path in paths for record in load_records(path)),
+            specs,
+            holdouts,
+        )
+        result.update(
+            dataset=spec.key, split=args.split, holdouts=list(holdouts.sources)
+        )
+        print(json.dumps(result, ensure_ascii=False, sort_keys=True))
+        return 1 if result["overlapping_records"] else 0
     if args.command == "check-dangling":
         broken = check_dangling(
             load_catalog(args.catalog),

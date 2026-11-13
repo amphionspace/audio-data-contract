@@ -91,6 +91,12 @@
       - 读取 m4a 需要 ffmpeg；训练环境没有 ffmpeg 时 lhotse 报 AudioLoadingError（NoBackendError）
     superseded_by: emilia2_zh_dialogue_diarize@moss-transcribe-diarize-0.9B-pro4plus
     run_dir: /workspace/workspace/mingdong/data/amphiondata/emilia2-zh-dialogue-diarize-20261010
+    source_keys:
+    - namespace: emilia2
+      fields:
+      - id
+      - metadata.recording_id
+      pattern: '(?<![0-9a-f])[0-9a-f]{16}(?![0-9a-f])'
   recipe_parameters:
     diarization_model: MOSS-Transcribe-Diarize-0.9B
     prescreen: at_least_2_speakers_each_5s
@@ -184,6 +190,12 @@
     audio_source: emilia2@extracted-enzh-flac16k-20261012
     superseded_by: emilia2_zh_dialogue_diarize@moss-transcribe-diarize-0.9B-pro4plus-sim06
     run_dir: /workspace/workspace/mingdong/data/amphiondata/emilia2-zh-dialogue-diarize-20261010
+    source_keys:
+    - namespace: emilia2
+      fields:
+      - id
+      - metadata.recording_id
+      pattern: '(?<![0-9a-f])[0-9a-f]{16}(?![0-9a-f])'
   recipe_parameters:
     diarization_model: MOSS-Transcribe-Diarize-0.9B
     relabel_model: moss-transcribe-diarize-pro
@@ -286,6 +298,12 @@
     audit: datasets/emilia2_zh_dialogue_diarize/versions/moss-transcribe-diarize-0.9B-pro4plus-sim06/audit.json
     audio_source: emilia2@extracted-enzh-flac16k-20261012
     run_dir: /workspace/workspace/mingdong/data/amphiondata/emilia2-zh-dialogue-diarize-20261010
+    source_keys:
+    - namespace: emilia2
+      fields:
+      - id
+      - metadata.recording_id
+      pattern: '(?<![0-9a-f])[0-9a-f]{16}(?![0-9a-f])'
   recipe_parameters:
     diarization_model: MOSS-Transcribe-Diarize-0.9B
     relabel_model: moss-transcribe-diarize-pro
@@ -377,6 +395,12 @@
     audit: datasets/emilia2_zh_dialogue_diarize/versions/moss-transcribe-diarize-0.9B-m4a64k/audit.json
     audio_source: emilia2@extracted-enzh-flac16k-20261012
     run_dir: /workspace/workspace/mingdong/data/amphiondata/emilia2-64k-zh-dialogue-diarize-20261015
+    source_keys:
+    - namespace: emilia2
+      fields:
+      - id
+      - metadata.recording_id
+      pattern: '(?<![0-9a-f])[0-9a-f]{16}(?![0-9a-f])'
   recipe_parameters:
     diarization_model: MOSS-Transcribe-Diarize-0.9B
     prescreen: at_least_2_speakers_each_5s
