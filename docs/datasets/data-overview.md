@@ -1,6 +1,6 @@
 # 数据总览
 
-当前登记 **253 个数据集**；另有 **30 个下载来源声明**和 **1 个训练混合配方**。登记不代表本机文件已齐备。
+当前登记 **254 个数据集**；另有 **31 个下载来源声明**和 **1 个训练混合配方**。登记不代表本机文件已齐备。
 
 时长取单个版本的最大值，不跨版本相加；≈ 为参考表或估算值，— 为暂无完整时长。各版本的时长、说明、COS 地址和质量证据见[版本明细](data-versions.md)。
 
@@ -232,6 +232,7 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [coraa_nurc_sp](data-versions.md#coraa_nurc_sp) | pt | 语音识别 | 239.3 | 圣保罗口音葡语自发语音（NURC-SP） | 没有 |
 | [dataset_et_amharic](data-versions.md#dataset_et_amharic) | am | 语音识别 | 51.5 | 众包阿姆哈拉语朗读（Dataset.ET） | 没有 |
 | [demand](data-versions.md#demand) | und | noise | 46.7 | 16 麦阵列录制的多环境噪声（DEMAND） | `备份桶:audio-data-contract/datasets/demand/` |
+| [dialogs_ru](data-versions.md#dialogs_ru) | ru | 语音合成 | 17.4 | 俄语演员情感对话 TTS 语料（Dialogs） | 没有 |
 | [dns5_noise_rir](data-versions.md#dns5_noise_rir) | und | rir、speech_enhancement | — | DNS Challenge 5 官方噪声与冲激响应包 | `备份桶:audio-data-contract/datasets/dns5_noise_rir/` |
 | [dns5_noise_train](data-versions.md#dns5_noise_train) | und | noise、rir | 252.6 | 训练用 DNS5 噪声与模拟房间响应 | `备份桶:audio-data-contract/datasets/dns5_noise_train/` |
 | [emilia_ja](data-versions.md#emilia_ja) | ja | 语音识别 | 1,715.5 | Emilia 日语野外语音 | 快照 20260914 |
@@ -307,6 +308,7 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [common_voice_yue](../../catalog/download_queue.yaml#L139) | 26.0 | yue | 语音识别 |
 | [common_voice_zh](../../catalog/download_queue.yaml#L86) | 26.0 | zh | 语音识别 |
 | [common_voice_zh_hk](../../catalog/download_queue.yaml#L113) | 26.0 | yue | 语音识别 |
+| [crows_multilingual](../../catalog/crows_multilingual.yaml#L1) | hf-44e5d3e28604 | ar、de、en、es、fr、hi、id、ja、ko、mr、pt、ru、tr、ur、vi、zh | 语音识别 |
 | [duplexconv](../../catalog/duplexconv.yaml#L1) | hf-0bb99da7ab7a | zh | 语音识别、说话人分段与归属、带说话人标注的语音识别 |
 | [eurospeech](../../catalog/eurospeech.yaml#L1) | hf-7a55bbcee393 | multi | 语音识别 |
 | [gigaspeech2](../../catalog/download_queue.yaml#L165) | hf-8dc0d0e502b7 | id、th、vi | 语音识别 |

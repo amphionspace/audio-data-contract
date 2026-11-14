@@ -1,0 +1,55 @@
+  - schema_version: dataset-catalog/2.0
+    dataset_id: crows_multilingual
+    version: hf-44e5d3e28604
+    languages:
+      - ar
+      - de
+      - en
+      - es
+      - fr
+      - hi
+      - id
+      - ja
+      - ko
+      - mr
+      - pt
+      - ru
+      - tr
+      - ur
+      - vi
+      - zh
+    tasks:
+      - asr
+    aliases:
+      - crows
+    artifacts:
+      - name: source
+        kind: hf-dataset-snapshot
+        root_alias: crows_multilingual
+        relative_path: source/hf-44e5d3e28604
+    splits:
+      all:
+        artifacts:
+          source:
+            - source
+    provenance:
+      summary: 16 语众包朗读（CROWS Multilingual）
+      source: Hugging Face
+      source_id: psdn-ai/CROWS-multilingual
+      revision: 44e5d3e28604b917fe3425682354f371cddedf61
+      url: https://huggingface.co/datasets/psdn-ai/CROWS-multilingual
+      release_date: '2026-10-29'
+      license:
+        - cc-by-nc-4.0
+      inventory_status: download_planned
+      description: >-
+        Poseidon AI 众包采集的 16 种语言单人朗读语音（v1.8）。主分区 812,464 条、8,123 小时、45,717 个说话人档案（按本仓库 metadata.csv
+        的 duration 统计，该文件已按上游 LFS sha256 校验）；英语 2,526 小时、印尼语 1,795 小时、越南语 760 小时、俄语 566 小时、
+        西班牙语 473 小时、乌尔都语 451 小时、印地语 340 小时、葡萄牙语 227 小时、中文 220 小时，其余语言各 3–184 小时。每条有朗读
+        提示句（scripts/ 下 51,885 条，非英语附英文回译）、Whisper-large 自动转写和英译、WER/CER、语义相似度和说话人一致性分数；
+        参考文本应以提示句为准，自动转写只作质量信号。另有两个疑似合成语音提交者的风险分区（8,897 条）单独存放，可用于鉴伪研究。
+        原始 WAV 未重采样，同一批录音同时以 TAR（archives/，约 931 GB）和 Parquet（data/，约 741 GB）两种形式发布，本声明只计
+        Parquet 一份及元数据、校验和脚本：4,719 个文件、约 750 GB，超过本轮自动下载上限，先登记来源。CC BY-NC 4.0。
+      download_scope: Main and synthetic-risk Parquet audio plus metadata, checksums, prompts and profiles; archives/ and synthetic_risk TAR files excluded
+      expected_download_files: 4719
+      expected_download_bytes: 750299476479
