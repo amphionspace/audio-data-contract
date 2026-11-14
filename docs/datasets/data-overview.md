@@ -1,6 +1,6 @@
 # 数据总览
 
-当前登记 **251 个数据集**；另有 **35 个下载来源声明**和 **1 个训练混合配方**。登记不代表本机文件已齐备。
+当前登记 **255 个数据集**；另有 **35 个下载来源声明**和 **1 个训练混合配方**。登记不代表本机文件已齐备。
 
 时长取单个版本的最大值，不跨版本相加；≈ 为参考表或估算值，— 为暂无完整时长。各版本的时长、说明、COS 地址和质量证据见[版本明细](data-versions.md)。
 
@@ -32,6 +32,9 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [common_voice_en](data-versions.md#common_voice_en) | en | 语音识别、热词增强语音识别 | 1,862.7 | Common Voice 英语众包朗读；含清洗、热词、加噪版 | 部分版本：快照 20260914、`备份桶:audio-data-contract/datasets/commonvoice_en_hotwords/` |
 | [cs_dialogue_en](data-versions.md#cs_dialogue_en) | en | 语音识别、热词增强语音识别 | 26.6 | CS-Dialogue 对话中的纯英文语句 | 部分版本：快照 20260914 |
 | [dipco](data-versions.md#dipco) | en | 语音识别、带说话人标注的语音识别、说话人分段与归属 | 6.5 | 家庭晚宴英文对话，近讲与远场阵列（DiPCo） | 没有 |
+| [earnings21](data-versions.md#earnings21) | en | 语音识别、带说话人标注的语音识别 | 39.3 | 英文上市公司财报电话会议（Earnings-21） | 没有 |
+| [earnings22](data-versions.md#earnings22) | en | 语音识别、带说话人标注的语音识别 | 119.9 | 多国口音英文财报电话会议（Earnings-22） | 没有 |
+| [edacc](data-versions.md#edacc) | en | 语音识别、带说话人标注的语音识别 | 35.6 | 多国口音英语自然对话（EdAcc） | 没有 |
 | [emilia_en](data-versions.md#emilia_en) | en | 语音识别 | 43,624.0 | Emilia 英语野外语音（已清洗） | 快照 20260914 |
 | [emotion1200_en](data-versions.md#emotion1200_en) | en | 说话人情感分类、情感与说话风格描述、语音情感识别 | 5.2 | 英文情感识别与描述评测（Emotion1200） | 快照 20260914 |
 | [fleurs_en](data-versions.md#fleurs_en) | en | 语音识别 | 10.3 | 多语朗读英语部分（FLEURS） | 部分版本：快照 20260914 |
@@ -146,6 +149,7 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 |---|---|---|---:|---|---|
 | [BAAI/CS-Dialogue long_wav (ModelScope master)](data-versions.md#baaics-dialogue-long_wav-modelscope-master) | en、zh、zh-en | 语音识别、带说话人标注的语音识别 | 98.3 | 中英语码转换双人对话（CS-Dialogue） | 部分版本：快照 20260914 |
 | [ami](data-versions.md#ami) | en、zh | 语音识别、说话人分段与归属、目标说话人语音识别 | 259.3 | 英文会议远场版（AMI SDM）；含轮流说话混合版 | 部分版本：快照 20260914 |
+| [ascend](data-versions.md#ascend) | en、zh | 语音识别、语码转换语音识别 | 10.6 | 香港中英混说自然对话（ASCEND） | 没有 |
 | [asr_babble_bench](data-versions.md#asr_babble_bench) | en、es、zh | 语音识别 | 10.1 | 普通 ASR 背景人声评测集（中英），仅评测 | 部分版本：`备份桶:audio-data-contract/datasets/asr_babble_bench/` |
 | [asr_babble_speech_pool](data-versions.md#asr_babble_speech_pool) | en、es、zh | 语音识别 | 85.5 | 带房间背景人声的中英 ASR 训练句 | 没有 |
 | [asr_distant_talk_pool](data-versions.md#asr_distant_talk_pool) | en、zh | 语音识别 | 55.2 | — | 没有 |

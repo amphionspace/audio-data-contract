@@ -1,0 +1,79 @@
+  - schema_version: dataset-catalog/2.0
+    dataset_id: ascend
+    version: hf-737e9800ae31
+    languages:
+      - zh
+      - en
+    tasks:
+      - asr
+      - code_switch_asr
+    aliases: []
+    artifacts:
+      - name: source
+        kind: hf-dataset-snapshot
+        root_alias: ascend
+        relative_path: source/hf-737e9800ae31
+        metadata:
+          file_count: 7
+          expected_bytes: 1223541793
+          tree_sha256: e52ab3bfd11a13fbcee4520881bac447bf0cf6af6f8ad8a5175e33cedcaf9509
+      - name: download_state
+        kind: dataset-state
+        root_alias: ascend
+        relative_path: versions/hf-737e9800ae31/download_state/state.json
+        expected_bytes: 878
+        sha256: 4f4c757563968ccc1886e62f88a2474182645c11a0d536123c92ddbbfee28d03
+    splits:
+      train:
+        artifacts:
+          source:
+            - source
+        statistics:
+          count: 9869
+          speakers: 18
+          duration_hours: 8.7749
+          duration_basis: soundfile header duration of every embedded WAV in main/train-*.parquet; pinned upstream file hashes verified
+          sample_formats:
+            1ch/16000Hz/PCM_16: 9869
+      validation:
+        artifacts:
+          source:
+            - source
+        statistics:
+          count: 1130
+          speakers: 3
+          duration_hours: 0.9232
+          duration_basis: soundfile header duration of every embedded WAV in main/validation-*.parquet; pinned upstream file hashes verified
+          sample_formats:
+            1ch/16000Hz/PCM_16: 1130
+      test:
+        artifacts:
+          source:
+            - source
+        statistics:
+          count: 1315
+          speakers: 2
+          duration_hours: 0.9175
+          duration_basis: soundfile header duration of every embedded WAV in main/test-*.parquet; pinned upstream file hashes verified
+          sample_formats:
+            1ch/16000Hz/PCM_16: 1315
+    provenance:
+      summary: 香港中英混说自然对话（ASCEND）
+      source: Hugging Face
+      source_id: CAiRE/ASCEND
+      revision: 737e9800ae31be9932ba8464c80366559bd28424
+      url: https://huggingface.co/datasets/CAiRE/ASCEND
+      paper: https://arxiv.org/abs/2112.06223
+      download_mirror: https://hf-mirror.com
+      release_date: '2022-03-02'
+      description: >-
+        CAiRE 在香港录制的中英语码转换自然多轮对话，共 12,314 句、10.6 小时，16 kHz 单声道，专家转写。
+        每句标出语言（中文 6,139、英文 2,850、中英混说 3,325 句）、说话人、话题（教育、科技、人设、体育等）。train/validation/test
+        的说话人互不重叠（18/3/2 人），测试集只有 2 位说话人，结果方差会比较大。适合评测普通话-英语混说的真实对话识别。CC BY-SA 4.0。
+      license:
+        - cc-by-sa-4.0
+      download_scope: Complete ASCEND release (Parquet shards and card)
+      expected_download_files: 7
+      expected_download_bytes: 1223541793
+      integrity: verified
+      local_scan_date: '2026-11-14'

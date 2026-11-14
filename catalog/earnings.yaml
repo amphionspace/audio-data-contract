@@ -1,0 +1,134 @@
+  - schema_version: dataset-catalog/2.0
+    dataset_id: earnings21
+    version: github-c05ab6fd8b4b
+    languages:
+      - en
+    tasks:
+      - asr
+      - speaker_attributed_asr
+    aliases:
+      - earnings-21
+    artifacts:
+      - name: source
+        kind: source-directory
+        root_alias: earnings21
+        relative_path: source/github-c05ab6fd8b4b
+        metadata:
+          file_count: 231
+          expected_bytes: 789210208
+          tree_sha256: 8ff8905c8c425160cfd227e4df320c88d1f1378fc8122a28a31d8a4bdac65287
+      - name: download_state
+        kind: dataset-state
+        root_alias: earnings21
+        relative_path: versions/github-c05ab6fd8b4b/download_state/state.json
+        expected_bytes: 906
+        sha256: e522dd1b008bfbc33fd93cdc3622ece466a4c90f1b434035276089f228a23421
+    splits:
+      test:
+        artifacts:
+          source:
+            - source
+        statistics:
+          count: 44
+          speakers: 466
+          duration_hours: 39.2714
+          duration_basis: soundfile header duration of every earnings21/media/*.mp3; speakers from speaker-metadata.csv; every file verified against the git blob sha1 of the pinned commit
+          sample_formats:
+            1ch/24000Hz/MPEG_LAYER_III: 21
+            2ch/16000Hz/MPEG_LAYER_III: 6
+            1ch/11025Hz/MPEG_LAYER_III: 5
+            2ch/44100Hz/MPEG_LAYER_III: 4
+            1ch/44100Hz/MPEG_LAYER_III: 3
+            2ch/22050Hz/MPEG_LAYER_III: 3
+            1ch/22050Hz/MPEG_LAYER_III: 2
+    provenance:
+      summary: 英文上市公司财报电话会议（Earnings-21）
+      source: GitHub
+      source_id: revdotcom/speech-datasets
+      revision: c05ab6fd8b4b627d123c922a22a39e993dd37635
+      url: https://github.com/revdotcom/speech-datasets/tree/main/earnings21
+      paper: https://arxiv.org/abs/2104.11348
+      release_date: '2021-04'
+      description: >-
+        Rev 发布的真实财报电话会议长音频评测集：44 场、39.3 小时，覆盖 9 个行业，共 466 位说话人（主持人、高管、分析师），带电话和会议软件
+        的各种采样率和压缩。transcripts/nlp_references 是逐词的人工转写，带说话人编号、标点、大小写和实体标签（数字、日期、机构名等），
+        另有归一化规则、wer_tags、说话人 RTTM 和实体偏置词表（bias_lists），可做长音频识别、带说话人的识别、数字和实体识别评测。
+        仓库里各家商用 ASR 的输出（earnings21/output）不属于数据本身，未下载。CC BY-SA 4.0。
+      license:
+        - cc-by-sa-4.0
+      download_scope: earnings21/ subtree of the pinned commit except output/ (vendor ASR outputs)
+      expected_download_files: 231
+      expected_download_bytes: 789210208
+      download_mirror: GitHub contents API (raw), via the configured proxy
+      integrity: verified
+      integrity_method: git blob sha1 of every file in the pinned tree
+      local_scan_date: '2026-11-14'
+  - schema_version: dataset-catalog/2.0
+    dataset_id: earnings22
+    version: github-c05ab6fd8b4b
+    languages:
+      - en
+    tasks:
+      - asr
+      - speaker_attributed_asr
+    aliases:
+      - earnings-22
+    artifacts:
+      - name: source
+        kind: source-directory
+        root_alias: earnings22
+        relative_path: source/github-c05ab6fd8b4b
+        metadata:
+          file_count: 527
+          expected_bytes: 1993169787
+          tree_sha256: 2f79334c8d752482a08be08c81a265cfa57b533a23bcd1cfb39b74f829eb8e5f
+      - name: download_state
+        kind: dataset-state
+        root_alias: earnings22
+        relative_path: versions/github-c05ab6fd8b4b/download_state/state.json
+        expected_bytes: 872
+        sha256: 884a9e1566ee63535b60096c023539cf33c2cbbfa52b3c6c9fa4f3d60f6b07db
+    splits:
+      test:
+        artifacts:
+          source:
+            - source
+        statistics:
+          count: 125
+          duration_hours: 119.9358
+          duration_basis: soundfile header duration of every earnings22/media/*.mp3; media are git-LFS objects verified against the pointer sha256, other files against the git blob sha1 of the pinned commit
+          sample_formats:
+            1ch/24000Hz/MPEG_LAYER_III: 63
+            2ch/16000Hz/MPEG_LAYER_III: 25
+            2ch/22050Hz/MPEG_LAYER_III: 11
+            1ch/22050Hz/MPEG_LAYER_III: 6
+            1ch/11025Hz/MPEG_LAYER_III: 5
+            2ch/44100Hz/MPEG_LAYER_III: 5
+            1ch/16000Hz/MPEG_LAYER_III: 4
+            1ch/44100Hz/MPEG_LAYER_III: 2
+            1ch/8000Hz/MPEG_LAYER_III: 1
+            2ch/24000Hz/MPEG_LAYER_III: 1
+            2ch/32000Hz/MPEG_LAYER_III: 1
+            2ch/48000Hz/MPEG_LAYER_III: 1
+    provenance:
+      summary: 多国口音英文财报电话会议（Earnings-22）
+      source: GitHub
+      source_id: revdotcom/speech-datasets
+      revision: c05ab6fd8b4b627d123c922a22a39e993dd37635
+      url: https://github.com/revdotcom/speech-datasets/tree/main/earnings22
+      paper: https://arxiv.org/abs/2203.15591
+      release_date: '2022-03'
+      description: >-
+        Rev 发布的带口音英文真实财报电话会议评测集：125 场、119.9 小时，公司来自 27 个国家，metadata.csv 按语言背景分组（西葡 31 场、
+        亚洲 28、英语 26、其他罗曼语 13、日耳曼语 12、斯拉夫语 10、非洲 5）。transcripts 下有逐词人工转写（带说话人编号、标点、大小写和
+        实体标签）、强制对齐版本和归一化规则；subset10 另给 10 场的非逐字转写，其余 subset10 条目是指向主目录的符号链接，未重复下载。
+        用于口音、长音频和实体识别的真实场景评测。CC BY-SA 4.0。
+      license:
+        - cc-by-sa-4.0
+      download_scope: earnings22/ subtree of the pinned commit (symlinks under subset10/ skipped)
+      expected_download_files: 527
+      expected_download_bytes: 1993169787
+      download_mirror: GitHub contents API (raw) and media.githubusercontent.com for git-LFS audio, via the configured proxy
+      integrity: verified
+      integrity_method: git blob sha1 for regular files and pointer sha256 for git-LFS media in the pinned tree
+      local_scan_date: '2026-11-14'
