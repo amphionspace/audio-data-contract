@@ -11,50 +11,11 @@
         kind: hf-dataset-snapshot
         root_alias: dataset_et_amharic
         relative_path: source/hf-4861d6445842
-        metadata:
-          file_count: 41
-          expected_bytes: 5850530702
-          tree_sha256: 4a5f2df2cf952e6646c82c8fd6b93e6f6a79e3e1f0e7b3696dbe05e8fec3eae5
-      - name: download_state
-        kind: dataset-state
-        root_alias: dataset_et_amharic
-        relative_path: versions/hf-4861d6445842/download_state/state.json
-        expected_bytes: 973
-        sha256: 7ac88b97f631923d184693f48f30e5a9aef6569a4d92e9e9b7109ee03740d704
     splits:
-      train:
+      all:
         artifacts:
           source:
             - source
-        statistics:
-          count: 13792
-          speakers: 360
-          duration_hours: 42.1258
-          duration_basis: soundfile header duration of every embedded FLAC in data/train-*.parquet; pinned upstream file hashes verified
-          sample_formats:
-            1ch/16000Hz/PCM_24: 13792
-      validation:
-        artifacts:
-          source:
-            - source
-        statistics:
-          count: 1526
-          speakers: 28
-          duration_hours: 4.6989
-          duration_basis: soundfile header duration of every embedded FLAC in data/validation-*.parquet; pinned upstream file hashes verified
-          sample_formats:
-            1ch/16000Hz/PCM_24: 1526
-      test:
-        artifacts:
-          source:
-            - source
-        statistics:
-          count: 1548
-          speakers: 105
-          duration_hours: 4.722
-          duration_basis: soundfile header duration of every embedded FLAC in data/test-*.parquet; pinned upstream file hashes verified
-          sample_formats:
-            1ch/16000Hz/PCM_24: 1548
     provenance:
       summary: 众包阿姆哈拉语朗读（Dataset.ET）
       source: Hugging Face
@@ -62,17 +23,16 @@
       revision: 4861d6445842ad365e8a3cd29025bb401b7b37e7
       url: https://huggingface.co/datasets/snapwre/amharic-speech
       project_page: https://dataset.et
-      download_mirror: https://hf-mirror.com
       release_date: '2026-08-31'
       description: >-
         埃塞俄比亚 Snapwre 公司的 Dataset.ET v0.2.0：志愿者通过 Telegram 机器人朗读给定句子，其他贡献者投票确认、再经声学筛选，
         只收全票通过的录音。16,866 条、51.5 小时、493 位说话人，16 kHz 单声道 FLAC（由 Opus 语音消息无损转出），转写就是朗读提示句。
         附性别、年龄段、地区（k=5 匿名化，null 可能是隐去）、语音起止时间和响度；音频没有裁掉首尾静音。train/validation/test
         说话人互不重叠；数据卡说提示句也不跨划分，实测 validation 与 test 有 45 个提示句相同。男声约占七成。CC BY 4.0。
+        2026-11-14 曾完整下载并按上游哈希校验（实测与数据卡一致），因不属于中英、西葡真实场景数据的采集重点，已删除本地副本，只保留来源登记。
       license:
         - cc-by-4.0
+      inventory_status: download_planned
       download_scope: Complete Dataset.ET Amharic Speech v0.2.0 release (Parquet shards, metadata.csv, manifest and card)
       expected_download_files: 41
       expected_download_bytes: 5850530702
-      integrity: verified
-      local_scan_date: '2026-11-14'

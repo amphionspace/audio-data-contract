@@ -1,6 +1,6 @@
 # 数据总览
 
-当前登记 **254 个数据集**；另有 **31 个下载来源声明**和 **1 个训练混合配方**。登记不代表本机文件已齐备。
+当前登记 **250 个数据集**；另有 **35 个下载来源声明**和 **1 个训练混合配方**。登记不代表本机文件已齐备。
 
 时长取单个版本的最大值，不跨版本相加；≈ 为参考表或估算值，— 为暂无完整时长。各版本的时长、说明、COS 地址和质量证据见[版本明细](data-versions.md)。
 
@@ -167,7 +167,6 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [hw_sft](data-versions.md#hw_sft) | en、zh | 语音识别、热词增强语音识别 | 2,636.5 | 热词 SFT 数据（ShareGPT 格式），含普通转写 | 没有 |
 | [indic_diarbench](data-versions.md#indic_diarbench) | as、bn、brx、doi、gu、hi、kn、kok、ks、mai、ml、mni、mr、ne、or、pa、sa、sat、sd、ta、te、ur | 语音识别、带说话人标注的语音识别、说话人分段与归属 | 107.7 | 22 种印度语言多人对话评测（DiarBench） | 没有 |
 | [indicvoices](data-versions.md#indicvoices) | as、bn、brx、doi、gu、hi、kn、kok、ks、mai、ml、mni、mr、ne、or、pa、sa、sat、sd、ta、te、ur | 语音识别 | — | 22 种印度语言自然语音（IndicVoices） | 快照 20260914 |
-| [kasaspeech](data-versions.md#kasaspeech) | en、tw | 语音识别、语码转换语音识别 | 95.6 | 英语-契维语语码转换朗读（KasaSpeech） | 没有 |
 | [meeting_benchmark](data-versions.md#meeting_benchmark) | en、zh、zh-en | 带说话人标注的语音识别 | 21.2 | 约 180 秒长度的中英会议转写评测集 | `备份桶:audio-data-contract/datasets/meeting_180s_benchmark/` |
 | [meeting_selection_panel](data-versions.md#meeting_selection_panel) | en、zh | 带说话人标注的语音识别 | 12.4 | 会议模型选模面板（中英真实会议） | `备份桶:audio-data-contract/datasets/meeting_selection_panel/` |
 | [mls_sidon](data-versions.md#mls_sidon) | de、en、es、fr、it、nl、pl、pt | 语音识别、语音合成 | 50,834.3 | 8 种语言有声书，音频经 Sidon 修复（MLS） | 没有 |
@@ -200,7 +199,6 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [tts_crosslingual_enroll](data-versions.md#tts_crosslingual_enroll) | en、zh | 目标说话人语音识别 | — | TS-ASR 训练用跨语言 TTS 注册音频 | 没有 |
 | [vitw](data-versions.md#vitw) | en、zh | 语音识别 | 1,085.4 | 真实场景中英语音（VITW）；含回声、远场等评测 | 部分版本：快照 20260914、`备份桶:audio-data-contract/datasets/` 下 17 个目录 |
 | [waxal-asr](data-versions.md#waxal-asr) | ach、aka、am、dag、dga、ee、ff、kpo、lg、ln、mas、mg、nyn、om、sid、sn、sog、ti、wal | 语音识别 | — | 19 种非洲语言语音（WAXAL） | 快照 20260914 |
-| [waxal_tts](data-versions.md#waxal_tts) | ach、bau、ewe、fat、ful、hau、ibo、kik、lug、luo、nyn、pcm、swa、twi、yor | 语音合成 | 264.1 | 15 种非洲语言朗读 TTS 数据（WAXAL） | 没有 |
 | [wutheringwaves](data-versions.md#wutheringwaves) | en、ja、ko、zh | 语音合成 | 134.8 | 《鸣潮》多语配音，TTS 用 | `TTS 桶:WutheringWaves-2.2/`（原始数据） |
 | [yodas_granary_es_pt](data-versions.md#yodas_granary_es_pt) | es、pt | 语音识别 | 3,658.5 | YouTube 西语/葡语人工字幕语音（YODAS） | 部分版本：快照 20260914 |
 | [zenless_voice](data-versions.md#zenless_voice) | en、ja、ko、zh | 语音合成 | 554.4 | 《绝区零》多语配音，TTS 用 | `TTS 桶:zenless-voice/`（原始数据） |
@@ -230,9 +228,7 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [coraa](data-versions.md#coraa) | pt | 语音识别 | 290.5 | 巴西葡语多来源语音（CORAA v1.1） | 没有 |
 | [coraa_mupe](data-versions.md#coraa_mupe) | pt | 语音识别 | 365.2 | 巴西葡语生活访谈（CORAA MUPE） | 快照 20260914 |
 | [coraa_nurc_sp](data-versions.md#coraa_nurc_sp) | pt | 语音识别 | 239.3 | 圣保罗口音葡语自发语音（NURC-SP） | 没有 |
-| [dataset_et_amharic](data-versions.md#dataset_et_amharic) | am | 语音识别 | 51.5 | 众包阿姆哈拉语朗读（Dataset.ET） | 没有 |
 | [demand](data-versions.md#demand) | und | noise | 46.7 | 16 麦阵列录制的多环境噪声（DEMAND） | `备份桶:audio-data-contract/datasets/demand/` |
-| [dialogs_ru](data-versions.md#dialogs_ru) | ru | 语音合成 | 17.4 | 俄语演员情感对话 TTS 语料（Dialogs） | 没有 |
 | [dns5_noise_rir](data-versions.md#dns5_noise_rir) | und | rir、speech_enhancement | — | DNS Challenge 5 官方噪声与冲激响应包 | `备份桶:audio-data-contract/datasets/dns5_noise_rir/` |
 | [dns5_noise_train](data-versions.md#dns5_noise_train) | und | noise、rir | 252.6 | 训练用 DNS5 噪声与模拟房间响应 | `备份桶:audio-data-contract/datasets/dns5_noise_train/` |
 | [emilia_ja](data-versions.md#emilia_ja) | ja | 语音识别 | 1,715.5 | Emilia 日语野外语音 | 快照 20260914 |
@@ -309,6 +305,8 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [common_voice_zh](../../catalog/download_queue.yaml#L86) | 26.0 | zh | 语音识别 |
 | [common_voice_zh_hk](../../catalog/download_queue.yaml#L113) | 26.0 | yue | 语音识别 |
 | [crows_multilingual](../../catalog/crows_multilingual.yaml#L1) | hf-44e5d3e28604 | ar、de、en、es、fr、hi、id、ja、ko、mr、pt、ru、tr、ur、vi、zh | 语音识别 |
+| [dataset_et_amharic](../../catalog/dataset_et_amharic.yaml#L1) | hf-4861d6445842 | am | 语音识别 |
+| [dialogs_ru](../../catalog/dialogs_ru.yaml#L1) | hf-a74ff44d8d27 | ru | 语音合成 |
 | [duplexconv](../../catalog/duplexconv.yaml#L1) | hf-0bb99da7ab7a | zh | 语音识别、说话人分段与归属、带说话人标注的语音识别 |
 | [eurospeech](../../catalog/eurospeech.yaml#L1) | hf-7a55bbcee393 | multi | 语音识别 |
 | [gigaspeech2](../../catalog/download_queue.yaml#L165) | hf-8dc0d0e502b7 | id、th、vi | 语音识别 |
@@ -316,6 +314,7 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [granary](../../catalog/download_queue.yaml#L200) | hf-0fe23a860e35 | multi | 语音识别、语音翻译 |
 | [granary](../../catalog/granary_v2.yaml#L1) | v2-hf-f835695fb5cc | multi | 语音识别、语音翻译 |
 | [iscslp2026_cot_tts](../../catalog/iscslp2026_cot_tts.yaml#L1) | hf-968bbb0e6244 | en、zh | 语音合成 |
+| [kasaspeech](../../catalog/kasaspeech.yaml#L1) | hf-4bbaf47a5a46 | en、tw | 语音识别、语码转换语音识别 |
 | [lemas](../../catalog/download_queue.yaml#L250) | hf-91f0c1b9a29f | multi | 语音识别 |
 | [loquacious_set](../../catalog/loquacious_set.yaml#L1) | hf-0e84cdb9e4b8 | en | 语音识别 |
 | [masc](../../catalog/masc.yaml#L1) | hf-cb7f1f0618bd | ar | 语音识别 |
@@ -327,6 +326,7 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [reazonspeech](../../catalog/download_queue.yaml#L274) | hf-0df78f991f6a | ja | 语音识别 |
 | [smiip_tv](../../catalog/smiip_tv.yaml#L1) | openslr-156 | zh | 声纹验证 |
 | [tagarela](../../catalog/tagarela.yaml#L1) | hf-a66648fc4938 | pt | 语音识别、语音合成 |
+| [waxal_tts](../../catalog/waxal_tts.yaml#L1) | hf-5f4d8ca24f2b | ach、bau、ewe、fat、ful、hau、ibo、kik、lug、luo、nyn、pcm、swa、twi、yor | 语音合成 |
 | [worldspeech](../../catalog/worldspeech.yaml#L1) | hf-b76b85395039 | multi | 语音识别 |
 | [yo_cpt_kk](../../catalog/yo_cpt.yaml#L41) | hf-a8c2d1a23de4 | kk | 语音合成、语音识别 |
 | [yo_cpt_ru](../../catalog/yo_cpt.yaml#L1) | hf-f2f92c5ecf6b | ru | 语音合成、语音识别 |
