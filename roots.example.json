@@ -143,5 +143,9 @@
   "meli": "/workspace/data/datasets/meli",
   "smiip_tv": "/workspace/data/datasets/smiip_tv",
   "dialogs_ru": "/workspace/data/datasets/dialogs_ru",
-  "crows_multilingual": "/workspace/data/datasets/crows_multilingual"
+  "crows_multilingual": "/workspace/data/datasets/crows_multilingual",
+  "ascend": "/workspace/data/datasets/ascend",
+  "earnings21": "/workspace/data/datasets/earnings21",
+  "earnings22": "/workspace/data/datasets/earnings22",
+  "edacc": "/workspace/data/datasets/edacc"
 }

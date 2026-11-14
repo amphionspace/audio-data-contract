@@ -165,6 +165,42 @@ CS-Dialogue 对话中的纯英文语句
 - `dipco@modelscope-benjamin-paine-20261023`：DiPCo 晚宴语料：每场 4 人在家庭餐桌边自然聊天，英文 16 kHz。每人一个近讲麦克风，另有 5 台 7 麦阵列设备（U01–U05）放在房间不同位置。dev、eval 各 5 场、16 个说话人，共 7078 句、6.5 小时语音。这一版按句切好：split-channel 每句存近讲 + 35 个远场通道（25.5 万行），mixed-channel 把每台设备 7 个通道取平均（4.2 万行）；每行带 会话、说话人、设备、通道、离设备距离、性别、母语和转写。parquet 的 train/test 就是官方 dev/eval，没有训练集。有重叠语音，远场通道互相之间也有重复，统计时长时只算一遍
 - `dipco@zenodo-8122551-20261023`：DiPCo 晚宴语料官方完整整场版：10 场，每场 4 个近讲麦克风 + 5 台设备 × 7 个通道 = 39 个单声道 16 kHz WAV，共 390 个文件，加官方 JSON 转写（每句带说话人、性别、母语、近讲和各设备上的起止时间）。dev、eval 各 5 场、16 个说话人，共 7078 句，会话总长 5.3 小时。用于长音频的说话人日志和多人 ASR；按句评测用已切好的 `dipco@modelscope-benjamin-paine-20261023`
 
+### earnings21
+
+英文上市公司财报电话会议（Earnings-21）
+
+语言：en · 任务：语音识别、带说话人标注的语音识别
+
+| 版本 | 时长（小时） | 口径 | COS |
+|---|---:|---|---|
+| [earnings21@github-c05ab6fd8b4b](../../catalog/earnings.yaml#L1) | 39.3 | 已登记 | 没有 |
+
+- `earnings21@github-c05ab6fd8b4b`：Rev 发布的真实财报电话会议长音频评测集：44 场、39.3 小时，覆盖 9 个行业，共 466 位说话人（主持人、高管、分析师），带电话和会议软件 的各种采样率和压缩。transcripts/nlp_references 是逐词的人工转写，带说话人编号、标点、大小写和实体标签（数字、日期、机构名等）， 另有归一化规则、wer_tags、说话人 RTTM 和实体偏置词表（bias_lists），可做长音频识别、带说话人的识别、数字和实体识别评测。 仓库里各家商用 ASR 的输出（earnings21/output）不属于数据本身，未下载。CC BY-SA 4.0
+
+### earnings22
+
+多国口音英文财报电话会议（Earnings-22）
+
+语言：en · 任务：语音识别、带说话人标注的语音识别
+
+| 版本 | 时长（小时） | 口径 | COS |
+|---|---:|---|---|
+| [earnings22@github-c05ab6fd8b4b](../../catalog/earnings.yaml#L66) | 119.9 | 已登记 | 没有 |
+
+- `earnings22@github-c05ab6fd8b4b`：Rev 发布的带口音英文真实财报电话会议评测集：125 场、119.9 小时，公司来自 27 个国家，metadata.csv 按语言背景分组（西葡 31 场、 亚洲 28、英语 26、其他罗曼语 13、日耳曼语 12、斯拉夫语 10、非洲 5）。transcripts 下有逐词人工转写（带说话人编号、标点、大小写和 实体标签）、强制对齐版本和归一化规则；subset10 另给 10 场的非逐字转写，其余 subset10 条目是指向主目录的符号链接，未重复下载。 用于口音、长音频和实体识别的真实场景评测。CC BY-SA 4.0
+
+### edacc
+
+多国口音英语自然对话（EdAcc）
+
+语言：en · 任务：语音识别、带说话人标注的语音识别
+
+| 版本 | 时长（小时） | 口径 | COS |
+|---|---:|---|---|
+| [edacc@datashare-v1.0](../../catalog/edacc.yaml#L1) | 35.6 | 已登记 | 没有 |
+
+- `edacc@datashare-v1.0`：爱丁堡大学的 Edinburgh International Accents of English Corpus V1.0：朋友之间的视频通话双人对话，共 122 位说话人，口音覆盖多种 一语和二语英语，76 个录音、35.6 小时，32 kHz 单声道。官方只划分 dev（36 个录音、62 人）和 test（40 个录音、60 人），用作评测； Kaldi 风格的 segments、text、utt2spk 和 stm（共 19,137 段人工转写，带 <laugh>、<overlap> 等标记），linguistic_background.csv 是每位说话人的语言背景。说话人还各朗读了一段控制文本，在 stm 里标为 IGNORE_TIME_SEGMENT_IN_SCORING，评分时要排除。 dev/conv.list 里的 EDACC-C33_P2 和 EDACC-C46 与实际文件不符（音频是 C33_P1、C46_P1、C46_P2），以 segments 引用的录音为准。 DataShare 上的旧记录（hdl 10283/4836）已标为被取代并撤回，本条取的是 2025-04 的 V1.0；HF 上 edinburghcstr/edacc 是更早的转存。 CC BY-SA 4.0
+
 ### emilia_en
 
 Emilia 英语野外语音（已清洗）
@@ -1958,6 +1994,18 @@ WenetSpeech L 中的 YouTube 部分
 - `ami_sdm@turn-taking-20261014-utts`：ami_sdm@turn-taking-20261014 的 train 划分（不含 eval/test），时间线取自 ami_sdm@icefall-20260908 的 train 人工标注。加 metadata.window_utts（窗口内每句的说话人与相对混合起点的起止，取自来源标注并截到窗口，截断的标 clipped）与同一命名空间的 metadata.target_speaker，供 open-audio-llm 帧级说话人活动标签（objective.ts_activity_weight）；其余字段不变，音频引用改指本版本，音频索引与原版逐行相同。正样本的目标语句与转写逐字一致（忽略空白和标点；窗口边缘截断的句子允许只转写一部分）才写时间线，负样本只有注册人确实不在窗口里说话才写；其余记录不写时间线（不出帧级标签）。负样本中注册人按标注其实在窗口内说话的记录 ID 列在 excluded-records-<split>.txt，训练配方用 exclude_records 排除。生成脚本 audio-data-contract scripts/ts_robust/add_window_utts.py，逐划分统计见 report.json
 - `ami_sdm@turn-taking-20261014-utts-punc-20261102`：ami_sdm@turn-taking-20261014-utts 的 train_2spk, train_3spk, train_neg，目标文本加书面化标点：中文用 amphiondata 的中文学生模型（punc-student-v1，不带听音提示），英文用英文规范 en-v1 的学生模型（加标点并恢复大小写）；标点按字 / 按词搬回原文，原文的字词不变，找不到输出的目标保留原样。其余字段与源版本相同，音频引用源版本
 - 含派生版本（与源数据可能重叠）
+
+### ascend
+
+香港中英混说自然对话（ASCEND）
+
+语言：en、zh · 任务：语音识别、语码转换语音识别
+
+| 版本 | 时长（小时） | 口径 | COS |
+|---|---:|---|---|
+| [ascend@hf-737e9800ae31](../../catalog/ascend.yaml#L1) | 10.6 | 已登记 | 没有 |
+
+- `ascend@hf-737e9800ae31`：CAiRE 在香港录制的中英语码转换自然多轮对话，共 12,314 句、10.6 小时，16 kHz 单声道，专家转写。 每句标出语言（中文 6,139、英文 2,850、中英混说 3,325 句）、说话人、话题（教育、科技、人设、体育等）。train/validation/test 的说话人互不重叠（18/3/2 人），测试集只有 2 位说话人，结果方差会比较大。适合评测普通话-英语混说的真实对话识别。CC BY-SA 4.0
 
 ### asr_babble_bench
 

@@ -1,0 +1,77 @@
+  - schema_version: dataset-catalog/2.0
+    dataset_id: edacc
+    version: datashare-v1.0
+    languages:
+      - en
+    tasks:
+      - asr
+      - speaker_attributed_asr
+    aliases:
+      - edinburgh_accents
+    artifacts:
+      - name: source
+        kind: source-directory
+        root_alias: edacc
+        relative_path: source/datashare-v1.0
+        metadata:
+          file_count: 3
+          expected_bytes: 5916753775
+          tree_sha256: 25439e886e086e93962012571e34e0d93caa9183da8088fb9a33034577950b65
+      - name: download_state
+        kind: dataset-state
+        root_alias: edacc
+        relative_path: versions/datashare-v1.0/download_state/state.json
+        expected_bytes: 874
+        sha256: 1f36087d150627a8cade59aadb680d56d8d4bed588f518ea30e7a27952af48d1
+    splits:
+      dev:
+        artifacts:
+          source:
+            - source
+        statistics:
+          count: 36
+          speakers: 62
+          duration_hours: 17.3589
+          duration_basis: WAV data size at 32 kHz 16-bit mono for the recordings referenced by dev/segments (consistent with streamed soundfile headers, 35.6016 h over all 76 WAVs); upstream MD5 verified
+          segments: 9848
+          segment_hours: 15.8093
+          sample_formats:
+            1ch/32000Hz/PCM_16: 36
+      test:
+        artifacts:
+          source:
+            - source
+        statistics:
+          count: 40
+          speakers: 60
+          duration_hours: 18.2427
+          duration_basis: soundfile header duration of the WAVs referenced by test/segments, read by streaming the archive; upstream MD5 verified
+          segments: 9289
+          segment_hours: 16.9355
+          sample_formats:
+            1ch/32000Hz/PCM_16: 40
+    provenance:
+      summary: 多国口音英语自然对话（EdAcc）
+      source: Edinburgh DataShare
+      source_id: doi:10.7488/DS/7914
+      url: https://doi.org/10.7488/DS/7914
+      paper: https://arxiv.org/abs/2303.18110
+      project_page: https://groups.inf.ed.ac.uk/edacc/
+      release_date: '2025-04-15'
+      description: >-
+        爱丁堡大学的 Edinburgh International Accents of English Corpus V1.0：朋友之间的视频通话双人对话，共 122 位说话人，口音覆盖多种
+        一语和二语英语，76 个录音、35.6 小时，32 kHz 单声道。官方只划分 dev（36 个录音、62 人）和 test（40 个录音、60 人），用作评测；
+        Kaldi 风格的 segments、text、utt2spk 和 stm（共 19,137 段人工转写，带 <laugh>、<overlap> 等标记），linguistic_background.csv
+        是每位说话人的语言背景。说话人还各朗读了一段控制文本，在 stm 里标为 IGNORE_TIME_SEGMENT_IN_SCORING，评分时要排除。
+        dev/conv.list 里的 EDACC-C33_P2 和 EDACC-C46 与实际文件不符（音频是 C33_P1、C46_P1、C46_P2），以 segments 引用的录音为准。
+        DataShare 上的旧记录（hdl 10283/4836）已标为被取代并撤回，本条取的是 2025-04 的 V1.0；HF 上 edinburghcstr/edacc 是更早的转存。
+        CC BY-SA 4.0。
+      license:
+        - cc-by-sa-4.0
+      download_scope: EdAcc V1.0 archive, README and license text from Edinburgh DataShare
+      expected_download_files: 3
+      expected_download_bytes: 5916753775
+      download_mirror: datashare.ed.ac.uk via the configured proxy
+      integrity: verified
+      integrity_method: MD5 of every file as published in the DataShare record
+      local_scan_date: '2026-11-14'
