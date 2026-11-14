@@ -1,0 +1,176 @@
+  - schema_version: dataset-catalog/2.0
+    dataset_id: gigaspeech_bench
+    version: hf-55ce5222f21f
+    languages:
+      - zh
+      - yue
+      - en
+      - ar
+      - id
+      - ja
+      - ko
+      - ms
+      - fil
+      - th
+      - vi
+    tasks:
+      - asr
+      - ast
+      - speaker_diarization
+      - speaker_attributed_asr
+    aliases:
+      - gigaspeechbench
+    artifacts:
+      - name: source
+        kind: hf-dataset-snapshot
+        root_alias: gigaspeech_bench
+        relative_path: source/hf-55ce5222f21f
+        metadata:
+          file_count: 207
+          expected_bytes: 106670580622
+          tree_sha256: cc966c018195b5b3fbf36c20bfeb2c47f6f79eb20d10a5f462141d388e16e041
+      - name: download_state
+        kind: dataset-state
+        root_alias: gigaspeech_bench
+        relative_path: versions/hf-55ce5222f21f/download_state/state.json
+        expected_bytes: 986
+        sha256: 1b0eb64e918d5c12013f01eaf998f7b14a0c456f2fce2c65100cc94879659d8e
+    splits:
+      ch_en_dialects:
+        artifacts:
+          source:
+            - source
+        statistics:
+          count: 30996
+          duration_hours: 147.7426
+          duration_basis: soundfile header duration of every WAV member in CH-EN-Dialects/data/*/test WebDataset shards; pinned upstream file hashes verified
+          segments: 99999
+          segment_hours: 122.747
+          configurations:
+            CHN-EN: {recordings: 71, hours: 13.844, segments: 6308, segment_hours: 9.4275}
+            GAN: {recordings: 205, hours: 10.411, segments: 6074, segment_hours: 7.2313}
+            IND-EN: {recordings: 182, hours: 13.2505, segments: 5503, segment_hours: 11.0789}
+            JIN: {recordings: 946, hours: 10.0192, segments: 6699, segment_hours: 8.9009}
+            JPN-EN: {recordings: 169, hours: 14.2055, segments: 9310, segment_hours: 9.7547}
+            MIN: {recordings: 14843, hours: 10.7544, segments: 14843, segment_hours: 10.7544}
+            PHL-EN: {recordings: 37, hours: 12.4156, segments: 8637, segment_hours: 10.7546}
+            SCT-EN: {recordings: 30, hours: 14.9557, segments: 12829, segment_hours: 11.2316}
+            SGP-EN: {recordings: 45, hours: 13.4229, segments: 9480, segment_hours: 10.7539}
+            WU: {recordings: 4851, hours: 9.748, segments: 4851, segment_hours: 9.748}
+            XIANG: {recordings: 810, hours: 13.3795, segments: 6658, segment_hours: 11.7748}
+            YUE: {recordings: 8807, hours: 11.3363, segments: 8807, segment_hours: 11.3364}
+          sample_formats:
+            1ch/16000Hz/PCM_16: 30996
+        provenance:
+          notes: 汉语方言（赣、晋、闽、吴、湘、粤）和中国、印度、日本、菲律宾、苏格兰、新加坡口音英语；WU 即 wenetspeech_wu_bench 的 ASR 子集，YUE 即 WSYue-ASR-eval（文本转成简体），MIN 的参考文本是普通话
+      low_resource_languages:
+        artifacts:
+          source:
+            - source
+        statistics:
+          count: 2498
+          duration_hours: 416.6583
+          duration_basis: soundfile header duration of every WAV member in Low-Resource-Languages/data/*/test WebDataset shards; pinned upstream file hashes verified
+          segments: 240691
+          segment_hours: 283.9947
+          configurations:
+            ARE: {recordings: 134, hours: 28.7029, segments: 18276, segment_hours: 19.3317}
+            DZA: {recordings: 653, hours: 42.6761, segments: 20060, segment_hours: 19.9611}
+            EGY: {recordings: 87, hours: 23.7996, segments: 17747, segment_hours: 20.1614}
+            IDN: {recordings: 122, hours: 28.2641, segments: 24177, segment_hours: 21.1764}
+            IRQ: {recordings: 102, hours: 25.9039, segments: 16406, segment_hours: 20.3653}
+            JPN: {recordings: 133, hours: 35.7812, segments: 14410, segment_hours: 20.0012}
+            KOR: {recordings: 257, hours: 33.7408, segments: 11880, segment_hours: 20.0005}
+            MAR: {recordings: 188, hours: 28.2054, segments: 15961, segment_hours: 19.9551}
+            MYS: {recordings: 114, hours: 29.6912, segments: 25844, segment_hours: 18.8992}
+            PHL: {recordings: 108, hours: 41.8936, segments: 18717, segment_hours: 21.4604}
+            SAU: {recordings: 139, hours: 25.1007, segments: 13286, segment_hours: 20.3006}
+            SYR: {recordings: 331, hours: 22.7031, segments: 8505, segment_hours: 20.229}
+            THA: {recordings: 65, hours: 23.5883, segments: 19426, segment_hours: 20.8853}
+            VNM: {recordings: 65, hours: 26.6074, segments: 15996, segment_hours: 21.2675}
+          sample_formats:
+            1ch/16000Hz/PCM_16: 2498
+        provenance:
+          notes: 七种阿拉伯语方言（阿联酋、阿尔及利亚、埃及、伊拉克、摩洛哥、沙特、叙利亚）及印尼、日、韩、马来、菲律宾、泰、越语；每段另有英文和中文译文
+      older_children:
+        artifacts:
+          source:
+            - source
+        statistics:
+          count: 1935
+          duration_hours: 64.1765
+          duration_basis: soundfile header duration of every WAV member in Older-Children/data/*/test WebDataset shards; pinned upstream file hashes verified
+          segments: 33528
+          segment_hours: 40.0573
+          configurations:
+            CHILD-CH: {recordings: 366, hours: 16.3397, segments: 8405, segment_hours: 9.8338}
+            CHILD-EN: {recordings: 1454, hours: 15.8965, segments: 10550, segment_hours: 9.9998}
+            OLD-CH: {recordings: 63, hours: 16.1876, segments: 8439, segment_hours: 10.0966}
+            OLD-EN: {recordings: 52, hours: 15.7527, segments: 6134, segment_hours: 10.1271}
+          sample_formats:
+            1ch/16000Hz/PCM_16: 1935
+        provenance:
+          notes: 中文和英文的老人、儿童语音（与 seniortalk 无重叠）
+      vertical_domain:
+        artifacts:
+          source:
+            - source
+        statistics:
+          count: 911
+          duration_hours: 275.0374
+          duration_basis: soundfile header duration of every WAV member in Vertical-Domain/data/*/test WebDataset shards; pinned upstream file hashes verified
+          segments: 124224
+          segment_hours: 244.776
+          configurations:
+            AGR-CH: {recordings: 128, hours: 8.0698, segments: 3379, segment_hours: 6.6937}
+            AGR-EN: {recordings: 40, hours: 11.8048, segments: 6665, segment_hours: 10.3185}
+            AIT-CH: {recordings: 17, hours: 12.9537, segments: 5539, segment_hours: 10.3243}
+            AIT-EN: {recordings: 15, hours: 10.9818, segments: 5468, segment_hours: 10.4579}
+            ART-CH: {recordings: 18, hours: 10.5826, segments: 3682, segment_hours: 9.852}
+            ART-EN: {recordings: 23, hours: 11.1244, segments: 5712, segment_hours: 10.1144}
+            BIO-CH: {recordings: 59, hours: 11.1531, segments: 4327, segment_hours: 10.2288}
+            BIO-EN: {recordings: 32, hours: 10.7906, segments: 5297, segment_hours: 10.5048}
+            ECM-CH: {recordings: 26, hours: 12.5625, segments: 6020, segment_hours: 10.2891}
+            ECM-EN: {recordings: 27, hours: 11.0108, segments: 5659, segment_hours: 10.5709}
+            ENG-CH: {recordings: 23, hours: 12.2995, segments: 4346, segment_hours: 10.758}
+            ENG-EN: {recordings: 31, hours: 12.6292, segments: 6648, segment_hours: 11.5984}
+            ENT-CH: {recordings: 30, hours: 11.1021, segments: 4603, segment_hours: 8.1351}
+            ENT-EN: {recordings: 28, hours: 11.7717, segments: 8583, segment_hours: 10.1175}
+            FIN-CH: {recordings: 49, hours: 11.687, segments: 3859, segment_hours: 10.6351}
+            FIN-EN: {recordings: 38, hours: 11.7742, segments: 6037, segment_hours: 11.4265}
+            HUM-CH: {recordings: 34, hours: 10.9065, segments: 3539, segment_hours: 10.2819}
+            HUM-EN: {recordings: 32, hours: 11.2878, segments: 4971, segment_hours: 10.0262}
+            LAW-CH: {recordings: 21, hours: 11.8348, segments: 4613, segment_hours: 10.162}
+            LAW-EN: {recordings: 19, hours: 13.5935, segments: 7273, segment_hours: 10.3213}
+            MED-CH: {recordings: 44, hours: 11.1758, segments: 3891, segment_hours: 10.1192}
+            MED-EN: {recordings: 62, hours: 11.3615, segments: 5168, segment_hours: 10.3083}
+            MIL-CH: {recordings: 75, hours: 11.0941, segments: 3721, segment_hours: 10.3294}
+            MIL-EN: {recordings: 40, hours: 11.4856, segments: 5224, segment_hours: 11.2027}
+          sample_formats:
+            1ch/16000Hz/PCM_16: 911
+        provenance:
+          notes: 农业、AI 与 IT、艺术、生物、电商、工程、娱乐、金融、人文、法律、医疗、军事 12 个领域，中英文各一组
+    provenance:
+      summary: 多方言多语种 ASR 评测（GigaSpeechBench）
+      source: Hugging Face
+      source_id: speechcolab/GigaSpeechBench
+      revision: 55ce5222f21f314759f5bfe8212eff34cd730aa2
+      url: https://huggingface.co/datasets/speechcolab/GigaSpeechBench
+      download_mirror: https://hf-mirror.com
+      release_date: '2026-06-26'
+      description: >-
+        SpeechColab 2026 年发布、2026-11-12 改为 WebDataset 打包的 ASR 评测集，只有 test，54 个配置、36,340 条录音、903.6 小时录音，
+        其中有标注的语音段 498,442 段、691.6 小时。四个模块：汉语方言与口音英语（12 组）、低资源语种（14 组）、老人与儿童（4 组）、
+        垂直领域（24 组，中英各 12 个领域）。录音保持原样不切分（16 kHz 单声道 WAV），同名 JSON 里给出整段的分段转写、起止时间，
+        多数配置还有说话人、性别、年龄段、情感；低资源语种每段另附英文和中文译文；部分英文转写用 (overlap) 标出重叠。
+        GigaSpeech 3 的数据卡称阿拉伯语方言部分为人工转写评测。与本项目已有评测的重叠：WU 配置的 4,851 段即 wenetspeech_wu_bench
+        的 ASR 子集（文本全部一致），YUE 配置的 8,807 段即 WSYue-ASR-eval（wenetspeech_yue 的 test_short/test_long，时长逐段对上 8,805 段，
+        文本转成了简体），横评时不要重复计入。各配置另附 Azure、Qwen3-ASR、Gemini 等十余个系统的转写结果（results/*.json）。
+        镜像对部分 JSON 返回了不实的 gzip 压缩头，这些文件用 curl 下载并按上游 git 哈希校验。CC BY 4.0。
+      license:
+        - cc-by-4.0
+      download_scope: Complete GigaSpeechBench release (54 test configurations as WebDataset shards plus published model results)
+      expected_download_files: 207
+      expected_download_bytes: 106670580622
+      integrity: verified
+      local_scan_date: '2026-11-14'

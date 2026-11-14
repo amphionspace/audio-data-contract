@@ -29,6 +29,18 @@ AMI 英文会议的近讲耳麦版
 
 - `ami_ihm@hf-edinburghcstr-20261023`：AMI 会议语料的近讲耳麦（IHM）版本：英文 16 kHz 单声道，按 Kaldi AMI s5 切句、文本大写归一化，带会议、说话人和耳麦编号。train / dev / test 分别 108502、13098、12643 句，共 95.5 小时，会议划分与 Kaldi full-corpus-ASR 一致。本机已有 AMI 单远场麦克风版 `ami_sdm`，可与这份近讲版对照近场和远场
 
+### apptek_callcenter
+
+英文多口音客服长对话评测（AppTek）
+
+语言：en · 任务：语音识别、带说话人标注的语音识别、说话人分段与归属
+
+| 版本 | 时长（小时） | 口径 | COS |
+|---|---:|---|---|
+| [apptek_callcenter@hf-b98967d9946f](../../catalog/apptek_callcenter.yaml#L1) | 151.1 | 已登记 | 没有 |
+
+- `apptek_callcenter@hf-b98967d9946f`：AppTek 2026 年发布的英文呼叫中心长对话评测集，873 通电话、合并后 151.1 小时（发布方统计语音 128.6 小时），每通 5–15 分钟， 14 个口音组（澳、加、中、英格兰、苏格兰、威尔士、爱尔兰、印度、墨西哥、新加坡、美国非裔、美国通用、美国南方、南非）， 16 个服务领域，坐席和客户两人对话，在受控条件下录制。两种配置：test 把每通电话拆成两条单声道音轨，各有一整段逐字参考文本 （保留 (um) 等语气词和 ~ 标出的断词），发布方建议用 Silero VAD 切段后按 Whisper 规范化算 WER，附 score.py； diarization 把双方合成一个文件，给出带说话人、角色、性别的时间戳分段（94,679 段），可评测说话人日志和带说话人的转写。 两种配置是同一批电话，test 登记为 diarization 的子划分，不重复计时。仓库中部分 metadata.jsonl 因镜像返回不实的 gzip 压缩头， 改用 curl 下载并按上游 git 哈希校验。CC BY-SA 4.0
+
 ### audioset_esc_test
 
 AudioSet 背景声场景描述评测集
@@ -1465,6 +1477,18 @@ RealMAN 远场中文转写训练数据
 |---|---:|---|---|
 | [realman_zh_far_asr@zh-far-replay-v1-20261009](../../catalog/zh_farfield.yaml#L337) | 64.0 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/zh_far_replay/` |
 
+### seniortalk
+
+75–85 岁老人普通话对话（SeniorTalk）
+
+语言：zh · 任务：语音识别、带说话人标注的语音识别、说话人分段与归属
+
+| 版本 | 时长（小时） | 口径 | COS |
+|---|---:|---|---|
+| [seniortalk@hf-d1ddfa691c4b](../../catalog/seniortalk.yaml#L1) | 55.5 | 已登记 | 没有 |
+
+- `seniortalk@hf-d1ddfa691c4b`：智源研究院与南开大学发布的超高龄老人中文对话语料：202 位 75–85 岁老人（来自 16 个省份，男女约 7:13），两两自由对话， 手机在安静室内录制，110 段、55.5 小时，16 kHz，以双声道 WAV 内嵌在 Parquet 中。dialogue_data 每段的 text 是逐行 TSV： 起止时间、说话人编号、性别、省份、口音轻重、转写，带 [NOISE]、[SONANT] 等事件标记，重叠处用 [+]…[+] 标出，可用于说话人日志 和带说话人的转写；少数说话人编号格式不规范（如 38、035搁），读取时要规整成三位数。sentence_data 是按句切出的 ASR 子集 （37.8 小时，60,029 句，平均 2.3 秒），音频取自同一批对话录音，但说话人划分和对话子集不同：抽查不少于 8 字的句子， sentence_test 里 2,735/3,287 句出现在 dialogue_train 的转写中，sentence_train 里 2,769/25,221 句出现在 dialogue_test 中， 两套划分不能混用。仓库根目录另有一个 0 字节的 test 空文件。CC BY-NC-SA 4.0，仅限学术和非商业研究，发布方条款还要求 不得再分发、参与者要求删除时须配合删除
+
 ### speechio
 
 SpeechIO 中文 ASR 排行榜评测集
@@ -2115,6 +2139,18 @@ Emilia-YODAS 多语种 YouTube 语音
 | [genshin_voice@tts-unified-v0.1](../../catalog/tts_unified.yaml#L410) | 1,039.7 | 已登记 | `amphion-tts-data-1373259071:genshin-voice/`（原始数据） |
 
 - `genshin_voice@tts-unified-v0.1`：音频编码字节存放在 Lance 表内；原始划分在 metadata_json.original_split，统一输出全部为 train。ASR 用 tts_lance.iter_asr_samples（tts-asr-rules/v1）读取，会排除原始 dev/test 等
+
+### gigaspeech_bench
+
+多方言多语种 ASR 评测（GigaSpeechBench）
+
+语言：ar、en、fil、id、ja、ko、ms、th、vi、yue、zh · 任务：语音识别、语音翻译、带说话人标注的语音识别、说话人分段与归属
+
+| 版本 | 时长（小时） | 口径 | COS |
+|---|---:|---|---|
+| [gigaspeech_bench@hf-55ce5222f21f](../../catalog/gigaspeech_bench.yaml#L1) | 903.6 | 已登记 | 没有 |
+
+- `gigaspeech_bench@hf-55ce5222f21f`：SpeechColab 2026 年发布、2026-11-12 改为 WebDataset 打包的 ASR 评测集，只有 test，54 个配置、36,340 条录音、903.6 小时录音， 其中有标注的语音段 498,442 段、691.6 小时。四个模块：汉语方言与口音英语（12 组）、低资源语种（14 组）、老人与儿童（4 组）、 垂直领域（24 组，中英各 12 个领域）。录音保持原样不切分（16 kHz 单声道 WAV），同名 JSON 里给出整段的分段转写、起止时间， 多数配置还有说话人、性别、年龄段、情感；低资源语种每段另附英文和中文译文；部分英文转写用 (overlap) 标出重叠。 GigaSpeech 3 的数据卡称阿拉伯语方言部分为人工转写评测。与本项目已有评测的重叠：WU 配置的 4,851 段即 wenetspeech_wu_bench 的 ASR 子集（文本全部一致），YUE 配置的 8,807 段即 WSYue-ASR-eval（wenetspeech_yue 的 test_short/test_long，时长逐段对上 8,805 段， 文本转成了简体），横评时不要重复计入。各配置另附 Azure、Qwen3-ASR、Gemini 等十余个系统的转写结果（results/*.json）。 镜像对部分 JSON 返回了不实的 gzip 压缩头，这些文件用 curl 下载并按上游 git 哈希校验。CC BY 4.0
 
 ### hard_hw_sft
 

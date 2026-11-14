@@ -1,6 +1,6 @@
 # 数据总览
 
-当前登记 **240 个数据集**；另有 **23 个下载来源声明**和 **1 个训练混合配方**。登记不代表本机文件已齐备。
+当前登记 **243 个数据集**；另有 **23 个下载来源声明**和 **1 个训练混合配方**。登记不代表本机文件已齐备。
 
 时长取单个版本的最大值，不跨版本相加；≈ 为参考表或估算值，— 为暂无完整时长。各版本的时长、说明、COS 地址和质量证据见[版本明细](data-versions.md)。
 
@@ -25,6 +25,7 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | 数据集 | 语言 | 任务 | 时长（小时） | 简介 | COS |
 |---|---|---|---:|---|---|
 | [ami_ihm](data-versions.md#ami_ihm) | en | 语音识别 | 95.5 | AMI 英文会议的近讲耳麦版 | 没有 |
+| [apptek_callcenter](data-versions.md#apptek_callcenter) | en | 语音识别、带说话人标注的语音识别、说话人分段与归属 | 151.1 | 英文多口音客服长对话评测（AppTek） | 没有 |
 | [audioset_esc_test](data-versions.md#audioset_esc_test) | en | 背景声场景描述 | 6.8 | AudioSet 背景声场景描述评测集 | 快照 20260914 |
 | [chime4](data-versions.md#chime4) | en | 语音识别 | 10.1 | 四种噪声环境的英文朗读评测集（CHiME-4） | 没有 |
 | [chime6](data-versions.md#chime6) | en | 语音识别、重叠语音检测、带说话人标注的语音识别、说话人分段与归属、目标说话人语音识别 | 174.5 | 家庭聚会英文对话，多通道远场重叠（CHiME-6） | 部分版本：快照 20260914 |
@@ -111,6 +112,7 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [primewords](data-versions.md#primewords) | zh | 语音识别 | 99.0 | 中文手机朗读（Primewords）；含清洗版 | 部分版本：快照 20260914 |
 | [realman](data-versions.md#realman) | zh | 语音识别、noise、sound_source_localization、speech_enhancement | 83.7 | 真实录制的中文多通道阵列语音（RealMAN） | 部分版本：快照 20260914 |
 | [realman_zh_far_asr](data-versions.md#realman_zh_far_asr) | zh | 语音识别 | 64.0 | RealMAN 远场中文转写训练数据 | `备份桶:audio-data-contract/datasets/zh_far_replay/` |
+| [seniortalk](data-versions.md#seniortalk) | zh | 语音识别、带说话人标注的语音识别、说话人分段与归属 | 55.5 | 75–85 岁老人普通话对话（SeniorTalk） | 没有 |
 | [speechio](data-versions.md#speechio) | zh | 语音识别 | 63.8 | SpeechIO 中文 ASR 排行榜评测集 | 部分版本：快照 20260914 |
 | [tal100_zh](data-versions.md#tal100_zh) | zh | 语音识别 | 5.5 | TAL 中文语音识别数据 | 快照 20260914 |
 | [tdtech_badcase](data-versions.md#tdtech_badcase) | zh | 热词增强语音识别 | 0.0 | 鼎桥反馈的识别回退样本（e警保 × 多种热词表），仅评测 | 没有 |
@@ -155,6 +157,7 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [emilia_yodas](data-versions.md#emilia_yodas) | de、en、fr、ja、ko、zh | 语音识别、语音合成 | 113,820.6 | Emilia-YODAS 多语种 YouTube 语音 | `TTS 桶:Emilia-YODAS/`（原始数据） |
 | [farfield_speech_noise_1spk](data-versions.md#farfield_speech_noise_1spk) | en、zh | noise | 32.7 | 1–3 人远场人声噪声（Emilia 干声加混响） | `备份桶:audio-data-contract/datasets/` 下 3 个目录 |
 | [genshin_voice](data-versions.md#genshin_voice) | en-US、ja、ko、zh | 语音合成 | 1,039.7 | 《原神》多语配音，TTS 用 | `TTS 桶:genshin-voice/`（原始数据） |
+| [gigaspeech_bench](data-versions.md#gigaspeech_bench) | ar、en、fil、id、ja、ko、ms、th、vi、yue、zh | 语音识别、语音翻译、带说话人标注的语音识别、说话人分段与归属 | 903.6 | 多方言多语种 ASR 评测（GigaSpeechBench） | 没有 |
 | [hard_hw_sft](data-versions.md#hard_hw_sft) | en、zh | 热词增强语音识别 | 109.4 | 热词难例 SFT 数据（ShareGPT 格式） | `备份桶:audio-data-contract/datasets/hard_hw_sft/` |
 | [hotword_bench](data-versions.md#hotword_bench) | en、es、zh | 热词增强语音识别 | — | 中英热词评测集，仅评测 | 没有 |
 | [hw_sft](data-versions.md#hw_sft) | en、zh | 语音识别、热词增强语音识别 | 2,636.5 | 热词 SFT 数据（ShareGPT 格式），含普通转写 | 没有 |
