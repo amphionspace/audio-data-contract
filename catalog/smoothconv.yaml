@@ -1,0 +1,96 @@
+  - schema_version: dataset-catalog/2.0
+    dataset_id: smoothconv
+    version: hf-cd74b4fca285
+    languages:
+      - zh
+    tasks:
+      - asr
+      - speaker_diarization
+      - speaker_attributed_asr
+    aliases: []
+    artifacts:
+      - name: source
+        kind: hf-dataset-snapshot
+        root_alias: smoothconv
+        relative_path: source/hf-cd74b4fca285
+        metadata:
+          file_count: 5008
+          expected_bytes: 85862864657
+          tree_sha256: 1a0a383df17523d24d87f0465cc87ec83245aefddc69c089afb1d6847a0a4d77
+      - name: download_state
+        kind: dataset-state
+        root_alias: smoothconv
+        relative_path: versions/hf-cd74b4fca285/download_state/state.json
+        expected_bytes: 960
+        sha256: 536ff3c6b41ae87ccb93f0f147f524b95af4faeff046652ad263807e88c5bc24
+    splits:
+      tutoring:
+        task: speaker_attributed_asr
+        artifacts:
+          source:
+            - source
+        statistics:
+          count: 678
+          duration_hours: 27.023
+          duration_basis: soundfile header duration of every clip WAV in the tutoring folders; pinned upstream file hashes verified
+          segments: 34548
+          segment_hours: 22.2254
+          folders:
+            edu_10_2ch: {clips: 168, hours: 7.2177, segments: 9129}
+            edu_10_3ch: {clips: 3, hours: 0.1523, segments: 235}
+            edu_10h_2ch: {clips: 170, hours: 6.2796, segments: 7978}
+            edu_10h_3ch: {clips: 3, hours: 0.0934, segments: 148}
+            edu_20h_2ch: {clips: 328, hours: 12.9354, segments: 16572}
+            edu_20h_3ch: {clips: 6, hours: 0.3446, segments: 486}
+          sample_formats:
+            2ch/48000Hz/PCM_16: 666
+            3ch/48000Hz/PCM_16: 12
+        provenance:
+          notes: 辅导课场景（文件夹以 edu 开头），老师与学生对话
+      social_chat:
+        task: speaker_attributed_asr
+        artifacts:
+          source:
+            - source
+        statistics:
+          count: 1825
+          duration_hours: 73.5048
+          duration_basis: soundfile header duration of every clip WAV in the social_chat folders; pinned upstream file hashes verified
+          segments: 95529
+          segment_hours: 103.4554
+          folders:
+            none_edu_20h_2ch: {clips: 488, hours: 16.6342, segments: 20299}
+            none_edu_20h_3ch: {clips: 211, hours: 8.5414, segments: 12494}
+            none_edu_20h_4ch: {clips: 78, hours: 3.4202, segments: 5134}
+            none_edu_70h_2ch: {clips: 484, hours: 20.3835, segments: 23651}
+            none_edu_70h_3ch: {clips: 403, hours: 17.876, segments: 23786}
+            none_edu_70h_4ch: {clips: 161, hours: 6.6495, segments: 10165}
+          sample_formats:
+            2ch/48000Hz/PCM_16: 972
+            3ch/48000Hz/PCM_16: 614
+            4ch/48000Hz/PCM_16: 239
+        provenance:
+          notes: 闲聊场景（文件夹以 none_edu 开头），2–4 人
+    provenance:
+      summary: 中文多人自然对话，多声道人工精标（SmoothConv）
+      source: Hugging Face
+      source_id: qualialabsAI/SmoothConv
+      revision: cd74b4fca285a66d6ac8c16228d0953ff1e0cda2
+      url: https://huggingface.co/datasets/qualialabsAI/SmoothConv
+      project_page: https://github.com/qualialabsAI/SmoothConv
+      download_mirror: https://hf-mirror.com
+      release_date: '2026-06'
+      description: >-
+        西工大 ASLP 与 QualiaLabs 2026-06 开源的中文全双工多人自然对话，2,503 段、100.5 小时（每段 60–635 秒），辅导课和闲聊两类场景。
+        每段一个 48 kHz 多声道 WAV（2–4 声道，每位说话人一个声道）和一个同名 JSON：instances 里每条带声道号、起止时间（毫秒级）、
+        说话人编号、轮次状态（complete、incomplete、backchannel、wait）、性别、年龄段、情感、笑声咳嗽等事件，以及人工转写；
+        有约两成条目缺轮次标签。共 130,077 个标注段、125.7 小时（重叠部分按每人分别计时）。可用于说话人日志、带说话人转写、
+        轮次判断和全双工对话建模。同源的 2,000 小时 LLM 辅助标注版见 duplexconv（待下载），ASLP-lab/FastTurn-Testset 也取自本数据，
+        用本数据做评测时要排除这两者中的重叠录音。CC BY-NC 4.0，仅限学术研究。
+      license:
+        - cc-by-nc-4.0
+      download_scope: Complete SmoothConv release (100 h expert-annotated multi-channel Chinese multi-party conversations)
+      expected_download_files: 5008
+      expected_download_bytes: 85862864657
+      integrity: verified
+      local_scan_date: '2026-11-14'

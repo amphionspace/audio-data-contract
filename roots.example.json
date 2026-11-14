@@ -124,5 +124,8 @@
   "indic_diarbench": "/workspace/data/datasets/indic_diarbench",
   "seniortalk": "/workspace/data/datasets/seniortalk",
   "gigaspeech_bench": "/workspace/data/datasets/gigaspeech_bench",
-  "apptek_callcenter": "/workspace/data/datasets/apptek_callcenter"
+  "apptek_callcenter": "/workspace/data/datasets/apptek_callcenter",
+  "masc": "/workspace/data/datasets/masc",
+  "smoothconv": "/workspace/data/datasets/smoothconv",
+  "svq": "/workspace/data/datasets/svq"
 }
