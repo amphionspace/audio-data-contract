@@ -129,5 +129,6 @@
   "smoothconv": "/workspace/data/datasets/smoothconv",
   "svq": "/workspace/data/datasets/svq",
   "sada": "/workspace/data/datasets/sada",
-  "wildelder": "/workspace/data/datasets/wildelder"
+  "wildelder": "/workspace/data/datasets/wildelder",
+  "childtalk": "/workspace/data/datasets/childtalk"
 }

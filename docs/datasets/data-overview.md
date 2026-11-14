@@ -1,6 +1,6 @@
 # 数据总览
 
-当前登记 **247 个数据集**；另有 **24 个下载来源声明**和 **1 个训练混合配方**。登记不代表本机文件已齐备。
+当前登记 **248 个数据集**；另有 **24 个下载来源声明**和 **1 个训练混合配方**。登记不代表本机文件已齐备。
 
 时长取单个版本的最大值，不跨版本相加；≈ 为参考表或估算值，— 为暂无完整时长。各版本的时长、说明、COS 地址和质量证据见[版本明细](data-versions.md)。
 
@@ -82,6 +82,7 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [biic_podcast_ser](data-versions.md#biic_podcast_ser) | zh | 语音情感识别 | 22.6 | 中文播客情感识别评测（BIIC-Podcast） | 快照 20260914 |
 | [business_feedback](data-versions.md#business_feedback) | zh | 目标说话人语音识别 | 0.1 | 业务反馈的目标说话人 bad case，仅评测 | `备份桶:audio-data-contract/datasets/business_feedback/` |
 | [childmandarin](data-versions.md#childmandarin) | zh | 语音识别 | 41.0 | 3–5 岁儿童普通话语音（ChildMandarin） | 快照 20260914 |
+| [childtalk](data-versions.md#childtalk) | zh | 语音识别、带说话人标注的语音识别 | 125.4 | 多方言儿童与看护人对话（ChildTalk） | 没有 |
 | [cnceleb1](data-versions.md#cnceleb1) | zh | 说话人身份识别、声纹验证 | 270.1 | 中文跨场景声纹数据（CN-Celeb1） | 快照 20260914 |
 | [cnceleb2](data-versions.md#cnceleb2) | zh | 说话人身份识别、声纹验证 | 1,084.3 | 中文跨场景声纹训练数据（CN-Celeb2） | 快照 20260914 |
 | [common_voice_zh](data-versions.md#common_voice_zh) | zh | 语音识别、热词增强语音识别 | 76.1 | Common Voice 中文众包朗读；含清洗、热词、加噪版 | 部分版本：快照 20260914、`备份桶:audio-data-contract/datasets/commonvoice_zh_hotwords/` |
