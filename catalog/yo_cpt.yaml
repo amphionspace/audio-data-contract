@@ -1,0 +1,77 @@
+  - schema_version: dataset-catalog/2.0
+    dataset_id: yo_cpt_ru
+    version: hf-f2f92c5ecf6b
+    languages:
+      - ru
+    tasks:
+      - tts
+      - asr
+    aliases: []
+    artifacts:
+      - name: source
+        kind: hf-dataset-snapshot
+        root_alias: yo_cpt_ru
+        relative_path: source/hf-f2f92c5ecf6b
+    splits:
+      all:
+        artifacts:
+          source:
+            - source
+    provenance:
+      summary: 俄语 TTS 级语音（YO-CPT-ru）
+      source: Hugging Face
+      source_id: NCSpeech/YO-CPT-ru
+      revision: f2f92c5ecf6b0323cf7e7f9599f0e4852f6c536b
+      url: https://huggingface.co/datasets/NCSpeech/YO-CPT-ru
+      release_date: '2026-08-04'
+      license:
+        - cc-by-4.0
+        - cc-by-3.0
+      inventory_status: download_planned
+      description: >-
+        NCSpeech 从 YODAS2 俄语部分（YouTube 上 CC 许可视频）精筛出的 TTS 预训练语料，数据卡称约 163 万条、6,052 小时，
+        单说话人片段，24 kHz 单声道，经降噪、响度归一和首尾检查。每条带三套 ASR 系统交叉确认的转写、加标点并标重音的文本、
+        词级强制对齐、视频内和跨视频说话人编号、MOS 质量分和说话人描述，音频内嵌在 Parquet 中，只有 train 一个划分。
+        转写由模型集成生成，不是人工标注。379 个 Parquet 分片，约 1.0 TB，超过本轮自动下载上限，先登记来源。
+        标注以 CC BY 4.0 发布，音频沿用 YODAS2 的 CC BY 3.0；跨视频说话人编号用的人脸模型权重仅限非商业研究，商用前要按 LICENSE.md
+        逐项核对。
+      download_scope: Complete YO-CPT-ru repository (Parquet shards, shard map, license and card)
+      expected_download_files: 384
+      expected_download_bytes: 1008879201440
+  - schema_version: dataset-catalog/2.0
+    dataset_id: yo_cpt_kk
+    version: hf-a8c2d1a23de4
+    languages:
+      - kk
+    tasks:
+      - tts
+      - asr
+    aliases: []
+    artifacts:
+      - name: source
+        kind: hf-dataset-snapshot
+        root_alias: yo_cpt_kk
+        relative_path: source/hf-a8c2d1a23de4
+    splits:
+      all:
+        artifacts:
+          source:
+            - source
+    provenance:
+      summary: 哈萨克语 TTS 级语音（YO-CPT-kk）
+      source: Hugging Face
+      source_id: NCSpeech/YO-CPT-kk
+      revision: a8c2d1a23de45c271d1ce5d458416f6bf11dd913
+      url: https://huggingface.co/datasets/NCSpeech/YO-CPT-kk
+      release_date: '2026-08-04'
+      license:
+        - cc-by-4.0
+      inventory_status: download_planned
+      description: >-
+        NCSpeech 自行抓取哈萨克语 YouTube 视频后精筛出的 TTS 预训练语料：从 8,053 个视频中得到 156,903 条、600 小时（数据卡数字），
+        单说话人片段，24 kHz 单声道，处理流程和附带字段与 yo_cpt_ru 相同（集成 ASR 转写、重音文本、词级对齐、说话人编号、MOS、
+        说话人描述），音频内嵌在 Parquet 中。40 个 Parquet 分片，约 100 GB；/workspace 已超过存储水位线，先登记来源。
+        CC BY 4.0 只覆盖作者的标注和整理；音频是普通 YouTube 视频，版权仍归原作者，数据卡不授予音频本身的权利。
+      download_scope: Complete YO-CPT-kk repository (Parquet shards, license and card)
+      expected_download_files: 45
+      expected_download_bytes: 99954430138

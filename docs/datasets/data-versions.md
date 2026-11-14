@@ -3322,6 +3322,18 @@ Common Voice 17 葡语朗读
 
 - `coraa_nurc_sp@hf-c02be121ec19`：CORAA NURC-SP：圣保罗城市口音的巴西葡语自发语音（对话、访谈、讲座），人工校对转写。只下了 filtered 这套 Parquet（已去掉空转写）和全部 CSV 元数据；original 这套 Parquet（同样的句子外加空转写行）和旧版 WAV tar.gz（与 Parquet 同一批音频）内容重复，到 HF 的链路只有约 2 MB/s，没有下载。speaker_id、num_speakers 由 WhisperX 自动生成，不一定准。test 就是 tarsila_asr 里的 NURC-SP 部分（10.23 h），不要一起累计；与 nurc_sp_corpus_minimo 的 21 段录音按录音编号核对没有重合。CC BY-NC-ND，仅限非商用
 
+### dataset_et_amharic
+
+众包阿姆哈拉语朗读（Dataset.ET）
+
+语言：am · 任务：语音识别
+
+| 版本 | 时长（小时） | 口径 | COS |
+|---|---:|---|---|
+| [dataset_et_amharic@hf-4861d6445842](../../catalog/dataset_et_amharic.yaml#L1) | 51.5 | 已登记 | 没有 |
+
+- `dataset_et_amharic@hf-4861d6445842`：埃塞俄比亚 Snapwre 公司的 Dataset.ET v0.2.0：志愿者通过 Telegram 机器人朗读给定句子，其他贡献者投票确认、再经声学筛选， 只收全票通过的录音。16,866 条、51.5 小时、493 位说话人，16 kHz 单声道 FLAC（由 Opus 语音消息无损转出），转写就是朗读提示句。 附性别、年龄段、地区（k=5 匿名化，null 可能是隐去）、语音起止时间和响度；音频没有裁掉首尾静音。train/validation/test 说话人互不重叠；数据卡说提示句也不跨划分，实测 validation 与 test 有 45 个提示句相同。男声约占七成。CC BY 4.0
+
 ### demand
 
 16 麦阵列录制的多环境噪声（DEMAND）
