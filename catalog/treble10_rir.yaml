@@ -1,0 +1,77 @@
+  - schema_version: dataset-catalog/2.0
+    dataset_id: treble10_rir
+    version: hf-5755ba8b59f6
+    languages:
+      - und
+    tasks:
+      - rir
+    aliases:
+      - treble10
+    artifacts:
+      - name: source
+        kind: hf-dataset-snapshot
+        root_alias: treble10_rir
+        relative_path: source/hf-5755ba8b59f6
+        metadata:
+          file_count: 17
+          expected_bytes: 4880512543
+          tree_sha256: 1011faa2f97b99ef12498bf753998605b9ce1e7cab9bd24659aea16d5d6e4d29
+      - name: download_state
+        kind: dataset-state
+        root_alias: treble10_rir
+        relative_path: versions/hf-5755ba8b59f6/download_state/state.json
+        expected_bytes: 1011
+        sha256: c68551aad5627b3fe42ca656b52f4b3fc669a09f71f098a46458cbfb2e1aa41a
+    splits:
+      rir_mono:
+        artifacts:
+          source:
+            - source
+        statistics:
+          count: 3085
+          rooms: 10
+          sources: 5
+          receivers: 137
+          duration_hours: 0.7561
+          duration_basis: soundfile header duration of every embedded RIR in data/rir_mono Parquet; pinned upstream file hashes verified
+          avg_t30_seconds_range: [0.165, 0.943]
+          sample_formats:
+            1ch/32000Hz/DOUBLE: 3085
+      rir_6ch:
+        artifacts:
+          source:
+            - source
+        statistics:
+          count: 3085
+          rooms: 10
+          sources: 5
+          receivers: 137
+          duration_hours: 0.7561
+          duration_basis: soundfile header duration of every embedded 6-channel RIR in data/rir_6ch Parquet; pinned upstream file hashes verified
+          avg_t30_seconds_range: [0.165, 0.943]
+          sample_formats:
+            6ch/32000Hz/DOUBLE: 3085
+        provenance:
+          notes: 与 rir_mono 同样的声源和接收点，接收端换成 6 麦圆柱形设备
+    provenance:
+      summary: 10 个带家具房间的模拟房间冲激响应（Treble10）
+      source: Hugging Face
+      source_id: treble-technologies/Treble10-RIR
+      revision: 5755ba8b59f648265f91bf73f58e88be43c220d0
+      url: https://huggingface.co/datasets/treble-technologies/Treble10-RIR
+      paper: https://arxiv.org/abs/2510.23141
+      download_mirror: https://hf-mirror.com
+      release_date: '2025-10-13'
+      description: >-
+        Treble Technologies 2025-10 发布，用 Treble SDK 对 10 个带家具的真实户型房间（浴室、卧室、带/不带走廊的客厅、会议室各 2 个，
+        14–46 m³）做混合仿真：5 kHz 以下用波动方程数值解（DG-FEM），以上用几何声学，覆盖 32 kHz 采样的全频带。每个房间 5 个声源、
+        共 137 个接收点，rir_mono 和 rir_6ch（6 麦圆柱形设备）各 3,085 条，每条带房间、声源/接收点坐标、直达距离、分频带 EDT/T30/C50
+        和吸声系数，平均 T30 0.17–0.94 秒。Parquet 内嵌 32 kHz 浮点 WAV，用于远场模拟前要重采样到 16 kHz。只下载了单声道和 6 声道部分，
+        没有下载 8 阶 Ambisonics 子集（rir_hoa8，56 GB）。另有 geometry/ 下的房间和设备示意图。CC BY-NC-SA 4.0，仅限非商用。
+      license:
+        - cc-by-nc-sa-4.0
+      download_scope: Treble10-RIR mono and 6-channel device RIR subsets plus room geometry images; the 8th-order ambisonics subset (rir_hoa8, 56 GB) is excluded
+      expected_download_files: 17
+      expected_download_bytes: 4880512543
+      integrity: verified
+      local_scan_date: '2026-11-13'
