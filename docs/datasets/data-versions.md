@@ -2320,9 +2320,11 @@ TEDx 西语/葡语演讲（mTEDx，非商用）
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
+| [mtedx@clean-v1-20261114](../../catalog/es_pt_spont_clean.yaml#L114) | — | 未登记 | 没有 |
 | [mtedx@hf-0b97ef40298d](../../catalog/mtedx.yaml#L1) | 334.1 | 已登记 | 没有 |
 | [mtedx@test-v1-20261114](../../catalog/mtedx_test.yaml#L2) | — | 未登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/mtedx/` |
 
+- `mtedx@clean-v1-20261114`：mTEDx 西语、葡语 train 划分（清单 mtedx_es、mtedx_pt）的清洗版本：音频解到本版本目录，生成 lhotse 清单，再用 Qwen3-ASR-1.7B + whisper-large-v3 双引擎清洗（consensus-v8：西/葡数字拼写、por que/porque 统一后再比较），试跑 4,499 句、被拒样本已全部复核。进行中
 - `mtedx@hf-0b97ef40298d`：Multilingual TEDx（OpenSLR 100）的 HF Parquet 转存，只下了西语和葡语的 ASR 部分；整段讲座按官方 segments 切成句子，未含 iwslt2021 划分。转存 README 称丢弃了短于 0.5 秒或长于 30 秒的句子，实测只去掉了短于 0.5 秒的，长于 30 秒的仍在（train 西语 639 句、葡语 511 句，最长约 284 秒）。条数比官方少 1–2%，时长比官方 statistics.txt 少约 17%，差异原因未核实；以本条统计为准。讲者口音未标注。CC BY-NC-ND，仅限非商用。OpenSLR 原包在国内镜像上太慢，改用此转存
 - `mtedx@test-v1-20261114`：mtedx@hf-0b97ef40298d 的 es、pt test 划分，转成评测用的 AudioRecord：TEDx 演讲，自发、半即兴，补朗读测试集（FLEURS、Common Voice）之外的自发语音。音频为上游 Parquet 里的 FLAC，原样写出；转写取上游 transcript。只用于评测，不进训练
 - 含派生版本（与源数据可能重叠）
@@ -3125,17 +3127,22 @@ Casablanca 八种阿拉伯语方言
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
+| [ciempiess_balance@clean-v1-20261114](../../catalog/es_pt_spont_clean.yaml#L2) | — | 未登记 | 没有 |
 | [ciempiess_balance@hf-e48eac011954](../../catalog/ciempiess_balance.yaml#L1) | 18.3 | 已登记 | 没有 |
 | [ciempiess_complementary@hf-3401a78c38d7](../../catalog/ciempiess_complementary.yaml#L1) | 0.9 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ciempiess_complementary/` |
+| [ciempiess_fem@clean-v1-20261114](../../catalog/es_pt_spont_clean.yaml#L30) | — | 未登记 | 没有 |
 | [ciempiess_fem@hf-e49f428d174b](../../catalog/ciempiess_fem.yaml#L1) | 13.9 | 已登记 | 没有 |
 | [ciempiess_light@hf-3d6afb2b3b8d](../../catalog/ciempiess_light.yaml#L1) | 18.4 | 已登记 | 快照 20260914 |
 | [ciempiess_test@hf-c134fff8e335](../../catalog/ciempiess_test.yaml#L1) | 8.1 | 已登记 | 快照 20260914、`amphion-audio-backup-1373259071:audio-data-contract/datasets/ciempiess_test/` |
 
+- `ciempiess_balance@clean-v1-20261114`：CIEMPIESS Balance 墨西哥西语广播访谈 18.3 h的清洗版本：音频解到本版本目录，生成 lhotse 清单，再用 Qwen3-ASR-1.7B + whisper-large-v3 双引擎清洗（consensus-v8：西/葡数字拼写、por que/porque 统一后再比较），试跑 4,499 句、被拒样本已全部复核。进行中
 - `ciempiess_balance@hf-e48eac011954`：墨西哥中部口音广播对话，男女时长均衡，官方完整版本
 - `ciempiess_complementary@hf-3401a78c38d7`：墨西哥中部口音的孤立词朗读，按音素均衡挑词，用来补足少见音素
+- `ciempiess_fem@clean-v1-20261114`：CIEMPIESS Fem 墨西哥西语女声广播 13.9 h的清洗版本：音频解到本版本目录，生成 lhotse 清单，再用 Qwen3-ASR-1.7B + whisper-large-v3 双引擎清洗（consensus-v8：西/葡数字拼写、por que/porque 统一后再比较），试跑 4,499 句、被拒样本已全部复核。进行中
 - `ciempiess_fem@hf-e49f428d174b`：女声广播语音，大部分为墨西哥口音（12.0 h），另有多米尼加、委内瑞拉、阿根廷、萨尔瓦多少量；按 country 字段可区分
 - `ciempiess_light@hf-3d6afb2b3b8d`：墨西哥西语 CIEMPIESS LIGHT 官方完整版本
 - `ciempiess_test@hf-c134fff8e335`：墨西哥西语独立测试集，只用于评测，不进训练
+- 含派生版本（与源数据可能重叠）
 
 ### cml_tts_fr
 
@@ -3318,9 +3325,12 @@ Common Voice 17 葡语朗读
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
+| [coraa@clean-v1-20261114](../../catalog/es_pt_spont_clean.yaml#L171) | — | 未登记 | 没有 |
 | [coraa@hf-719c91226a79](../../catalog/coraa.yaml#L1) | 290.5 | 已登记 | 没有 |
 
+- `coraa@clean-v1-20261114`：CORAA v1.1 巴西葡语 train（分卷 RAR 解出；源 WAV 为 32 位浮点，转 16 位 PCM）的清洗版本：音频解到本版本目录，生成 lhotse 清单，再用 Qwen3-ASR-1.7B + whisper-large-v3 双引擎清洗（consensus-v8：西/葡数字拼写、por que/porque 统一后再比较），试跑 4,499 句、被拒样本已全部复核。进行中
 - `coraa@hf-719c91226a79`：CORAA v1.1：NURC-Recife、ALIP、SP2010、C-ORAL-BRASIL、TEDx 葡语五个来源的人工校对语音，绝大多数为巴西葡语，少量葡萄牙葡语（metadata 的 variety=pt_pt）。train 是 5 个分卷 rar，需整体解压。CC BY-NC-ND，仅限非商用
+- 含派生版本（与源数据可能重叠）
 
 ### coraa_mupe
 
@@ -3330,9 +3340,12 @@ Common Voice 17 葡语朗读
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
+| [coraa_mupe@clean-v1-20261114](../../catalog/es_pt_spont_clean.yaml#L199) | — | 未登记 | 没有 |
 | [coraa_mupe@hf-437966f103b3](../../catalog/coraa_mupe.yaml#L1) | 365.2 | 已登记 | 快照 20260914 |
 
+- `coraa_mupe@clean-v1-20261114`：CORAA-MUPE 博物馆口述史访谈 train的清洗版本：音频解到本版本目录，生成 lhotse 清单，再用 Qwen3-ASR-1.7B + whisper-large-v3 双引擎清洗（consensus-v8：西/葡数字拼写、por que/porque 统一后再比较），试跑 4,499 句、被拒样本已全部复核。进行中
 - `coraa_mupe@hf-437966f103b3`：巴西葡语人生经历访谈（Museu da Pessoa），官方 train/validation/test 三个划分完整下载
+- 含派生版本（与源数据可能重叠）
 
 ### coraa_nurc_sp
 
@@ -3342,9 +3355,12 @@ Common Voice 17 葡语朗读
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
+| [coraa_nurc_sp@clean-v1-20261114](../../catalog/es_pt_spont_clean.yaml#L143) | — | 未登记 | 没有 |
 | [coraa_nurc_sp@hf-c02be121ec19](../../catalog/coraa_nurc_sp.yaml#L1) | 239.3 | 已登记 | 没有 |
 
+- `coraa_nurc_sp@clean-v1-20261114`：CORAA NURC-SP 圣保罗老录音访谈 filtered train 224.5 h的清洗版本：音频解到本版本目录，生成 lhotse 清单，再用 Qwen3-ASR-1.7B + whisper-large-v3 双引擎清洗（consensus-v8：西/葡数字拼写、por que/porque 统一后再比较），试跑 4,499 句、被拒样本已全部复核。进行中
 - `coraa_nurc_sp@hf-c02be121ec19`：CORAA NURC-SP：圣保罗城市口音的巴西葡语自发语音（对话、访谈、讲座），人工校对转写。只下了 filtered 这套 Parquet（已去掉空转写）和全部 CSV 元数据；original 这套 Parquet（同样的句子外加空转写行）和旧版 WAV tar.gz（与 Parquet 同一批音频）内容重复，到 HF 的链路只有约 2 MB/s，没有下载。speaker_id、num_speakers 由 WhisperX 自动生成，不一定准。test 就是 tarsila_asr 里的 NURC-SP 部分（10.23 h），不要一起累计；与 nurc_sp_corpus_minimo 的 21 段录音按录音编号核对没有重合。CC BY-NC-ND，仅限非商用
+- 含派生版本（与源数据可能重叠）
 
 ### demand
 
@@ -3890,9 +3906,12 @@ TEDx 西语演讲（仅限非商用）
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
+| [tedx_spanish@clean-v1-20261114](../../catalog/es_pt_spont_clean.yaml#L58) | — | 未登记 | 没有 |
 | [tedx_spanish@hf-469308f10c91](../../catalog/tedx_spanish.yaml#L1) | 24.5 | 已登记 | 没有 |
 
+- `tedx_spanish@clean-v1-20261114`：TEDx Spanish 演讲 24.5 h的清洗版本：音频解到本版本目录，生成 lhotse 清单，再用 Qwen3-ASR-1.7B + whisper-large-v3 双引擎清洗（consensus-v8：西/葡数字拼写、por que/porque 统一后再比较），试跑 4,499 句、被拒样本已全部复核。进行中
 - `tedx_spanish@hf-469308f10c91`：TEDx 西语演讲（OpenSLR 67 的 HF 版本），讲者口音未标注。许可为 CC BY-NC-ND，仅限非商用
+- 含派生版本（与源数据可能重叠）
 
 ### tele_con_ciencia
 
@@ -3902,9 +3921,12 @@ TEDx 西语演讲（仅限非商用）
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
+| [tele_con_ciencia@clean-v1-20261114](../../catalog/es_pt_spont_clean.yaml#L86) | — | 未登记 | 没有 |
 | [tele_con_ciencia@hf-d870d927f530](../../catalog/tele_con_ciencia.yaml#L1) | 28.3 | 已登记 | 没有 |
 
+- `tele_con_ciencia@clean-v1-20261114`：Tele con Ciencia 墨西哥科普电视 28.3 h的清洗版本：音频解到本版本目录，生成 lhotse 清单，再用 Qwen3-ASR-1.7B + whisper-large-v3 双引擎清洗（consensus-v8：西/葡数字拼写、por que/porque 统一后再比较），试跑 4,499 句、被拒样本已全部复核。进行中
 - `tele_con_ciencia@hf-d870d927f530`：墨西哥科普电视节目 TELEconCIENCIA 的语音，墨西哥口音
+- 含派生版本（与源数据可能重叠）
 
 ### treble10_rir
 
