@@ -1,6 +1,6 @@
 # 数据总览
 
-当前登记 **243 个数据集**；另有 **23 个下载来源声明**和 **1 个训练混合配方**。登记不代表本机文件已齐备。
+当前登记 **245 个数据集**；另有 **24 个下载来源声明**和 **1 个训练混合配方**。登记不代表本机文件已齐备。
 
 时长取单个版本的最大值，不跨版本相加；≈ 为参考表或估算值，— 为暂无完整时长。各版本的时长、说明、COS 地址和质量证据见[版本明细](data-versions.md)。
 
@@ -113,6 +113,7 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [realman](data-versions.md#realman) | zh | 语音识别、noise、sound_source_localization、speech_enhancement | 83.7 | 真实录制的中文多通道阵列语音（RealMAN） | 部分版本：快照 20260914 |
 | [realman_zh_far_asr](data-versions.md#realman_zh_far_asr) | zh | 语音识别 | 64.0 | RealMAN 远场中文转写训练数据 | `备份桶:audio-data-contract/datasets/zh_far_replay/` |
 | [seniortalk](data-versions.md#seniortalk) | zh | 语音识别、带说话人标注的语音识别、说话人分段与归属 | 55.5 | 75–85 岁老人普通话对话（SeniorTalk） | 没有 |
+| [smoothconv](data-versions.md#smoothconv) | zh | 语音识别、带说话人标注的语音识别、说话人分段与归属 | 100.5 | 中文多人自然对话，多声道人工精标（SmoothConv） | 没有 |
 | [speechio](data-versions.md#speechio) | zh | 语音识别 | 63.8 | SpeechIO 中文 ASR 排行榜评测集 | 部分版本：快照 20260914 |
 | [tal100_zh](data-versions.md#tal100_zh) | zh | 语音识别 | 5.5 | TAL 中文语音识别数据 | 快照 20260914 |
 | [tdtech_badcase](data-versions.md#tdtech_badcase) | zh | 热词增强语音识别 | 0.0 | 鼎桥反馈的识别回退样本（e警保 × 多种热词表），仅评测 | 没有 |
@@ -174,6 +175,7 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [sot_multispeaker_zh_en](data-versions.md#sot_multispeaker_zh_en) | en、zh、zh-en | 带说话人标注的语音识别 | 7,664.4 | 1–5 人中英合成混音，按人完整转写 | 没有 |
 | [speech_deepfake_bench](data-versions.md#speech_deepfake_bench) | ar、de、en、es、ro、ru、zh | deepfake_detection | 3,463.7 | 伪造语音检测评测集（SpoofRadar、DF-Arena） | `备份桶:audio-data-contract/datasets/speech_deepfake_bench/` |
 | [starrail_voice](data-versions.md#starrail_voice) | en、ja、ko、zh-CN | 语音合成 | 692.6 | 《崩坏：星穹铁道》多语配音，TTS 用 | `TTS 桶:starrail-voice/`（原始数据） |
+| [svq](data-versions.md#svq) | ar、bn、en、fi、gu、hi、id、ja、kn、ko、ml、mr、ru、sw、ta、te、ur | 语音识别 | 244.4 | 17 种语言四种环境下的手机语音问句（Google SVQ） | 没有 |
 | [talcs](data-versions.md#talcs) | en、zh | 语音识别、热词增强语音识别 | 587.6 | 中英语码转换课堂语音（TALCS）；含热词和加噪版 | 部分版本：快照 20260914、`备份桶:audio-data-contract/datasets/` 下 5 个目录 |
 | [ts_asr_benchmark](data-versions.md#ts_asr_benchmark) | en、es、zh | 目标说话人语音识别 | 46.5 | 合成的中文目标说话人 ASR 评测集 | 部分版本：`备份桶:audio-data-contract/datasets/ts_asr_benchmark/` |
 | [ts_asr_crosslingual](data-versions.md#ts_asr_crosslingual) | en、es、zh | 目标说话人语音识别 | 6.2 | — | 没有 |
@@ -306,6 +308,7 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [iscslp2026_cot_tts](../../catalog/iscslp2026_cot_tts.yaml#L1) | hf-968bbb0e6244 | en、zh | 语音合成 |
 | [lemas](../../catalog/download_queue.yaml#L250) | hf-91f0c1b9a29f | multi | 语音识别 |
 | [loquacious_set](../../catalog/loquacious_set.yaml#L1) | hf-0e84cdb9e4b8 | en | 语音识别 |
+| [masc](../../catalog/masc.yaml#L1) | hf-cb7f1f0618bd | ar | 语音识别 |
 | [omnilingual-asr-corpus](../../catalog/download_queue.yaml#L225) | hf-8648ba894637 | multi | 语音识别 |
 | [peoples_speech](../../catalog/peoples_speech.yaml#L1) | hf-f10597c5d3d3 | en | 语音识别 |
 | [reazonspeech](../../catalog/download_queue.yaml#L274) | hf-0df78f991f6a | ja | 语音识别 |

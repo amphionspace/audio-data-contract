@@ -1489,6 +1489,18 @@ RealMAN 远场中文转写训练数据
 
 - `seniortalk@hf-d1ddfa691c4b`：智源研究院与南开大学发布的超高龄老人中文对话语料：202 位 75–85 岁老人（来自 16 个省份，男女约 7:13），两两自由对话， 手机在安静室内录制，110 段、55.5 小时，16 kHz，以双声道 WAV 内嵌在 Parquet 中。dialogue_data 每段的 text 是逐行 TSV： 起止时间、说话人编号、性别、省份、口音轻重、转写，带 [NOISE]、[SONANT] 等事件标记，重叠处用 [+]…[+] 标出，可用于说话人日志 和带说话人的转写；少数说话人编号格式不规范（如 38、035搁），读取时要规整成三位数。sentence_data 是按句切出的 ASR 子集 （37.8 小时，60,029 句，平均 2.3 秒），音频取自同一批对话录音，但说话人划分和对话子集不同：抽查不少于 8 字的句子， sentence_test 里 2,735/3,287 句出现在 dialogue_train 的转写中，sentence_train 里 2,769/25,221 句出现在 dialogue_test 中， 两套划分不能混用。仓库根目录另有一个 0 字节的 test 空文件。CC BY-NC-SA 4.0，仅限学术和非商业研究，发布方条款还要求 不得再分发、参与者要求删除时须配合删除
 
+### smoothconv
+
+中文多人自然对话，多声道人工精标（SmoothConv）
+
+语言：zh · 任务：语音识别、带说话人标注的语音识别、说话人分段与归属
+
+| 版本 | 时长（小时） | 口径 | COS |
+|---|---:|---|---|
+| [smoothconv@hf-cd74b4fca285](../../catalog/smoothconv.yaml#L1) | 100.5 | 已登记 | 没有 |
+
+- `smoothconv@hf-cd74b4fca285`：西工大 ASLP 与 QualiaLabs 2026-06 开源的中文全双工多人自然对话，2,503 段、100.5 小时（每段 60–635 秒），辅导课和闲聊两类场景。 每段一个 48 kHz 多声道 WAV（2–4 声道，每位说话人一个声道）和一个同名 JSON：instances 里每条带声道号、起止时间（毫秒级）、 说话人编号、轮次状态（complete、incomplete、backchannel、wait）、性别、年龄段、情感、笑声咳嗽等事件，以及人工转写； 有约两成条目缺轮次标签。共 130,077 个标注段、125.7 小时（重叠部分按每人分别计时）。可用于说话人日志、带说话人转写、 轮次判断和全双工对话建模。同源的 2,000 小时 LLM 辅助标注版见 duplexconv（待下载），ASLP-lab/FastTurn-Testset 也取自本数据， 用本数据做评测时要排除这两者中的重叠录音。CC BY-NC 4.0，仅限学术研究
+
 ### speechio
 
 SpeechIO 中文 ASR 排行榜评测集
@@ -2352,6 +2364,18 @@ AISHELL-1、LibriSpeech 合成的多人对话
 | [starrail_voice@tts-unified-v0.1](../../catalog/tts_unified.yaml#L740) | 692.6 | 已登记 | `amphion-tts-data-1373259071:starrail-voice/`（原始数据） |
 
 - `starrail_voice@tts-unified-v0.1`：音频编码字节存放在 Lance 表内；原始划分在 metadata_json.original_split，统一输出全部为 train。ASR 用 tts_lance.iter_asr_samples（tts-asr-rules/v1）读取，会排除原始 dev/test 等
+
+### svq
+
+17 种语言四种环境下的手机语音问句（Google SVQ）
+
+语言：ar、bn、en、fi、gu、hi、id、ja、kn、ko、ml、mr、ru、sw、ta、te、ur · 任务：语音识别
+
+| 版本 | 时长（小时） | 口径 | COS |
+|---|---:|---|---|
+| [svq@hf-74f17ec92f06](../../catalog/svq.yaml#L1) | 244.4 | 已登记 | 没有 |
+
+- `svq@hf-74f17ec92f06`：Google 发布的 Simple Voice Questions（MSEB 声音嵌入评测的核心数据），2.0.0 版：17 种语言、26 个地区口音（阿拉伯语埃及/海湾/黎凡特/马格里布、 英语美/英/澳/印/菲、孟加拉、乌尔都等），759 位说话人（各地区分别去重后相加，发布方称约 700 位）用自己的手机朗读 XTREME-UP 问答数据里的短问句，171,434 条、244.4 小时。 录音环境大致均分四种：clean（安静）、background_speech（旁边设备播放播客/电台）、media_noise（播放音乐影视）、traffic_noise（乘车途中）， 登记为四个划分。每条带参考文本（transcript_truth）、说话人编号、性别、年龄，以及段落检索、关键词时间戳等检索任务字段。 发布方不分 train/test，整体作评测用；ASR 用途可评噪声与背景人声下的短句识别。只下载了 2.0.0 目录，1.0.0 的旧格式未下载。CC BY 4.0
 
 ### talcs
 

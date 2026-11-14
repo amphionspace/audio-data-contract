@@ -1,0 +1,38 @@
+  - schema_version: dataset-catalog/2.0
+    dataset_id: masc
+    version: hf-cb7f1f0618bd
+    languages:
+      - ar
+    tasks:
+      - asr
+    aliases:
+      - masc_arabic
+    artifacts:
+      - name: source
+        kind: hf-dataset-snapshot
+        root_alias: masc
+        relative_path: source/hf-cb7f1f0618bd
+    splits:
+      all:
+        artifacts:
+          source:
+            - source
+    provenance:
+      summary: 1,000 小时多方言阿拉伯语网络视频语音（MASC）
+      source: Hugging Face
+      source_id: MohamedRashad/MASC-Arabic
+      revision: cb7f1f0618bda0433c3dba55bda5d6e8283335ca
+      url: https://huggingface.co/datasets/MohamedRashad/MASC-Arabic
+      paper: https://ieeexplore.ieee.org/document/10022652
+      release_date: '2025-12-27'
+      license:
+        - cc-by-4.0
+      inventory_status: download_planned
+      description: >-
+        MASC（Massive Arabic Speech Corpus，原发布在 IEEE DataPort，开放获取）的 Hugging Face 转存：约 1,000 小时 16 kHz 阿拉伯语，
+        取自 700 多个 YouTube 频道，覆盖多个地区、方言和节目类型（数据卡未说明转写来源）。分 train（400 个分片，177 GB）、validation、test，
+        每条用 type 字段标出 clean 或 noisy。本项目已有的阿拉伯语训练数据是 MGB-2、YODAS、Common Voice，MASC 能补充方言覆盖。
+        体积 185 GB，超过本轮自动下载的单个上限，先登记来源。CC BY 4.0。
+      download_scope: Complete MASC Hugging Face re-upload (train, validation and test Parquet)
+      expected_download_files: 421
+      expected_download_bytes: 184871738243
