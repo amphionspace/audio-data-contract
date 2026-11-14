@@ -1,6 +1,6 @@
 # 数据总览
 
-当前登记 **249 个数据集**；另有 **24 个下载来源声明**和 **1 个训练混合配方**。登记不代表本机文件已齐备。
+当前登记 **249 个数据集**；另有 **26 个下载来源声明**和 **1 个训练混合配方**。登记不代表本机文件已齐备。
 
 时长取单个版本的最大值，不跨版本相加；≈ 为参考表或估算值，— 为暂无完整时长。各版本的时长、说明、COS 地址和质量证据见[版本明细](data-versions.md)。
 
@@ -313,6 +313,8 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [lemas](../../catalog/download_queue.yaml#L250) | hf-91f0c1b9a29f | multi | 语音识别 |
 | [loquacious_set](../../catalog/loquacious_set.yaml#L1) | hf-0e84cdb9e4b8 | en | 语音识别 |
 | [masc](../../catalog/masc.yaml#L1) | hf-cb7f1f0618bd | ar | 语音识别 |
+| [multitalk_ft](../../catalog/multitalk.yaml#L38) | hf-18038b5d4cdd | zh、en | 带说话人标注的语音识别 |
+| [multitalk_pt](../../catalog/multitalk.yaml#L1) | hf-8196ea3cadda | zh、en | 带说话人标注的语音识别 |
 | [omnilingual-asr-corpus](../../catalog/download_queue.yaml#L225) | hf-8648ba894637 | multi | 语音识别 |
 | [peoples_speech](../../catalog/peoples_speech.yaml#L1) | hf-f10597c5d3d3 | en | 语音识别 |
 | [reazonspeech](../../catalog/download_queue.yaml#L274) | hf-0df78f991f6a | ja | 语音识别 |

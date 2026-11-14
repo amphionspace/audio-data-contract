@@ -131,5 +131,7 @@
   "sada": "/workspace/data/datasets/sada",
   "wildelder": "/workspace/data/datasets/wildelder",
   "childtalk": "/workspace/data/datasets/childtalk",
-  "waxal_tts": "/workspace/data/datasets/waxal_tts"
+  "waxal_tts": "/workspace/data/datasets/waxal_tts",
+  "multitalk_pt": "/workspace/data/datasets/multitalk_pt",
+  "multitalk_ft": "/workspace/data/datasets/multitalk_ft"
 }
