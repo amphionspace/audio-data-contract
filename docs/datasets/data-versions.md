@@ -2285,8 +2285,11 @@ TEDx 西语/葡语演讲（mTEDx，非商用）
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
 | [mtedx@hf-0b97ef40298d](../../catalog/mtedx.yaml#L1) | 334.1 | 已登记 | 没有 |
+| [mtedx@test-v1-20261114](../../catalog/mtedx_test.yaml#L2) | — | 未登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/mtedx/` |
 
 - `mtedx@hf-0b97ef40298d`：Multilingual TEDx（OpenSLR 100）的 HF Parquet 转存，只下了西语和葡语的 ASR 部分；整段讲座按官方 segments 切成句子，未含 iwslt2021 划分。转存 README 称丢弃了短于 0.5 秒或长于 30 秒的句子，实测只去掉了短于 0.5 秒的，长于 30 秒的仍在（train 西语 639 句、葡语 511 句，最长约 284 秒）。条数比官方少 1–2%，时长比官方 statistics.txt 少约 17%，差异原因未核实；以本条统计为准。讲者口音未标注。CC BY-NC-ND，仅限非商用。OpenSLR 原包在国内镜像上太慢，改用此转存
+- `mtedx@test-v1-20261114`：mtedx@hf-0b97ef40298d 的 es、pt test 划分，转成评测用的 AudioRecord：TEDx 演讲，自发、半即兴，补朗读测试集（FLEURS、Common Voice）之外的自发语音。音频为上游 Parquet 里的 FLAC，原样写出；转写取上游 transcript。只用于评测，不进训练
+- 含派生版本（与源数据可能重叠）
 
 ### multi-talker-sd
 
@@ -2987,9 +2990,11 @@ YouTube 西语/葡语人工字幕语音（YODAS）
 |---|---:|---|---|
 | [yodas_granary_es_pt@es000-clean-v1-20261111](../../catalog/yodas_granary_es_clean.yaml#L2) | 2,442.9 | 已登记 | 没有 |
 | [yodas_granary_es_pt@hf-969944574ea3](../../catalog/yodas_granary_es_pt.yaml#L1) | 3,658.5 | 已登记 | 快照 20260914 |
+| [yodas_granary_es_pt@pt000-clean-v1-20261114](../../catalog/yodas_granary_pt_clean.yaml#L2) | 1,202.3 | 已登记 | 没有 |
 
 - `yodas_granary_es_pt@es000-clean-v1-20261111`：YODAS-Granary 西语人工字幕分区 es000 的清洗版本：Parquet 里嵌的 16 kHz WAV 解成 FLAC 放在本版本目录（约 157 GB）， 731,196 句 / 2,452.45 h 经 Qwen3-ASR-1.7B + whisper-large-v3 双引擎清洗（consensus-v7）保留 726,015 句 / 2,442.89 h （asr_only 75.91 h、ast 2,366.98 h；≥30 s 的长段 938.37 h）。丢弃 0.39% 时长，不集中在某类时长或某些视频； 试跑、被拒样本和误杀率见 run_dir README。es000 的视频 99% 也在 yodas_es@legacy 里，不要两者叠加
 - `yodas_granary_es_pt@hf-969944574ea3`：YODAS-Granary 里西语、葡语的人工字幕分区（es000、pt000），音频已切成句子；asr_only 与 ast 两个划分都带原文转写，ast 另有英文翻译。自动字幕分区（es100–108、pt100–103，约 4 TB）未下载。地区未区分。es000 的视频 99%（23,976/24,208 个）也在 yodas_es 里，是同一批 YouTube 音频、切分和转写不同，西语部分不要与 yodas_es 一起累计；葡语此前没有登记 YODAS
+- `yodas_granary_es_pt@pt000-clean-v1-20261114`：YODAS-Granary 葡语人工字幕分区 pt000 的清洗版本：Parquet 里嵌的 16 kHz WAV 解成 FLAC 放在本版本目录（约 79 GB）， 547,603 句 / 1,205.96 h 经 Qwen3-ASR-1.7B + whisper-large-v3 双引擎清洗（consensus-v7）保留 544,192 句 / 1,202.34 h （asr_only 18.29 h、ast 1,184.05 h；≥30 s 的长段 241.50 h）。丢弃 0.30% 时长， 主要是字幕只写了音频一部分或与音频不符；不集中在某类时长或某些视频（11,951 个视频里 8 个整段丢弃，丢弃最多的 20 个视频占全部丢弃 8.9%）
 - 含派生版本（与源数据可能重叠）
 
 ### zenless_voice
@@ -3562,9 +3567,12 @@ Golos 俄语语音助手指令评测划分
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
+| [google_latam@clean-v1-20261114](../../catalog/es_read_clean.yaml#L196) | 38.0 | 已登记 | 没有 |
 | [google_latam@openslr-20260911](../../catalog/google_latam.yaml#L1) | 38.0 | 已登记 | 快照 20260914 |
 
+- `google_latam@clean-v1-20261114`：Google 众包拉美六国朗读的清洗版本：24,617 句 / 37.97 h 经 Qwen3-ASR-1.7B + whisper-large-v3 双引擎清洗（consensus-v7）保留 24,612 句 / 37.95 h，丢弃 5 句 / 0.01 h（0.0% 时长）。几乎全部保留
 - `google_latam@openslr-20260911`：Google 众包录制的拉美西语朗读（阿根廷、智利、哥伦比亚、秘鲁、波多黎各、委内瑞拉），按国家各一个划分，48 kHz 录音棚质量。SLR61 包里另有一小份天气播报（weather_messages），其中 es-es 是西班牙口音，只作源文件保留，不要算进美洲口音
+- 含派生版本（与源数据可能重叠）
 
 ### heroico
 
@@ -3574,9 +3582,12 @@ Golos 俄语语音助手指令评测划分
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
+| [heroico@clean-v1-20261114](../../catalog/es_read_clean.yaml#L272) | 7.3 | 已登记 | 没有 |
 | [heroico@openslr-39](../../catalog/heroico.yaml#L1) | 14.9 | 已登记 | 没有 |
 
+- `heroico@clean-v1-20261114`：Heroico 朗读部分（heroico_recordings 与 usma_native；自由问答 heroico_answers、非母语 usma_nonnative、喉麦录音不在本版本）的清洗版本：7,187 句 / 7.54 h 经 Qwen3-ASR-1.7B + whisper-large-v3 双引擎清洗（consensus-v7）保留 6,923 句 / 7.34 h，丢弃 264 句 / 0.20 h（2.6% 时长）。丢弃主体是录音内容与提示句对不上（说话人在回答问题而非朗读）；"adónde" 与 "a dónde" 写法差异造成少量误杀
 - `heroico@openslr-39`：West Point Heroico Spanish Speech（LDC2006S37，OpenSLR 39 转发）。主体是 2001 年在墨西哥军校录的朗读和自由问答，墨西哥口音；另有西点军校的小部分录音，含母语者和美国非母语学员，usma_nonnative 不是母语口音，训练美洲口音时应排除。部分西点录音同时录了喉麦（文件名以 t 开头），已从统计中剔除。22.05 kHz 16-bit；部分西点文件头写的是 20050 Hz，按文件头计时长。转写文本是 Latin-1 编码；heroico_answers 有 1 条音频没有转写
+- 含派生版本（与源数据可能重叠）
 
 ### kathbath
 
@@ -3610,9 +3621,12 @@ LibriVox 西语有声书
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
+| [librivox_spanish@clean-v1-20261114](../../catalog/es_read_clean.yaml#L66) | 72.6 | 已登记 | 没有 |
 | [librivox_spanish@hf-ef936a31638d](../../catalog/librivox_spanish.yaml#L1) | 73.0 | 已登记 | 没有 |
 
+- `librivox_spanish@clean-v1-20261114`：LibriVox 有声书的清洗版本：36,338 句 / 73.03 h 经 Qwen3-ASR-1.7B + whisper-large-v3 双引擎清洗（consensus-v7）保留 36,126 句 / 72.60 h，丢弃 212 句 / 0.43 h（0.6% 时长）。丢弃多为参考文本拼错或漏词
 - `librivox_spanish@hf-ef936a31638d`：LibriVox 西语有声书人工切分转写（LDC2020S01 的 HF 版本），讲者口音未标注
+- 含派生版本（与源数据可能重叠）
 
 ### meeting_room_noise
 
@@ -3888,9 +3902,12 @@ VoxForge 西语朗读（多为西班牙）
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
+| [voxforge_spanish@clean-v1-20261114](../../catalog/es_read_clean.yaml#L131) | 49.5 | 已登记 | 没有 |
 | [voxforge_spanish@hf-1ce6b6f9701d](../../catalog/voxforge_spanish.yaml#L1) | 49.7 | 已登记 | 没有 |
 
+- `voxforge_spanish@clean-v1-20261114`：VoxForge 朗读的清洗版本：21,692 句 / 49.71 h 经 Qwen3-ASR-1.7B + whisper-large-v3 双引擎清洗（consensus-v7）保留 21,603 句 / 49.52 h，丢弃 89 句 / 0.19 h（0.4% 时长）。insufficient_engines 73 句多为整段满幅失真的录音（RMS 1.0），Qwen3-ASR 输出为空、whisper 输出 "Gracias por ver el video."，集中在少数说话人
 - `voxforge_spanish@hf-1ce6b6f9701d`：VoxForge 西语朗读。约 37.0 h 为西班牙口音，阿根廷、拉美、墨西哥、智利共约 11.6 h；可按 country 字段筛选美洲部分。许可为 GPL-3.0
+- 含派生版本（与源数据可能重叠）
 
 ### voxpopuli_de
 
@@ -3948,9 +3965,12 @@ WHAM! 噪声训练划分
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
+| [wikipedia_spanish@clean-v1-20261114](../../catalog/es_read_clean.yaml#L2) | 24.2 | 已登记 | 没有 |
 | [wikipedia_spanish@hf-0afbf012ed67](../../catalog/wikipedia_spanish.yaml#L1) | 25.6 | 已登记 | 没有 |
 
+- `wikipedia_spanish@clean-v1-20261114`：维基百科条目朗读的清洗版本：11,569 句 / 25.63 h 经 Qwen3-ASR-1.7B + whisper-large-v3 双引擎清洗（consensus-v7）保留 10,936 句 / 24.23 h，丢弃 633 句 / 1.40 h（5.5% 时长）。丢弃集中在把网址、数字、字母读法逐字写出的句子（"hache te te pe dos puntos…"，引擎写成 http://、7,08%）和参考文本拼错的句子；前者作为训练文本会教模型输出读法，丢掉不吃亏
 - `wikipedia_spanish@hf-0afbf012ed67`：西语维基百科有声条目（Wikipedia Grabada）朗读，LDC2021S07 的 HF 版本，讲者口音未标注
+- 含派生版本（与源数据可能重叠）
 
 ### yodas_ar
 
