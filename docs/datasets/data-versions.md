@@ -2273,8 +2273,11 @@ TEDx 西语/葡语演讲（mTEDx，非商用）
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
 | [mtedx@hf-0b97ef40298d](../../catalog/mtedx.yaml#L1) | 334.1 | 已登记 | 没有 |
+| [mtedx@test-v1-20261114](../../catalog/mtedx_test.yaml#L2) | — | 未登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/mtedx/` |
 
 - `mtedx@hf-0b97ef40298d`：Multilingual TEDx（OpenSLR 100）的 HF Parquet 转存，只下了西语和葡语的 ASR 部分；整段讲座按官方 segments 切成句子，未含 iwslt2021 划分。转存 README 称丢弃了短于 0.5 秒或长于 30 秒的句子，实测只去掉了短于 0.5 秒的，长于 30 秒的仍在（train 西语 639 句、葡语 511 句，最长约 284 秒）。条数比官方少 1–2%，时长比官方 statistics.txt 少约 17%，差异原因未核实；以本条统计为准。讲者口音未标注。CC BY-NC-ND，仅限非商用。OpenSLR 原包在国内镜像上太慢，改用此转存
+- `mtedx@test-v1-20261114`：mtedx@hf-0b97ef40298d 的 es、pt test 划分，转成评测用的 AudioRecord：TEDx 演讲，自发、半即兴，补朗读测试集（FLEURS、Common Voice）之外的自发语音。音频为上游 Parquet 里的 FLAC，原样写出；转写取上游 transcript。只用于评测，不进训练
+- 含派生版本（与源数据可能重叠）
 
 ### multi-talker-sd
 
