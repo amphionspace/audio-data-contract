@@ -1,0 +1,108 @@
+  - schema_version: dataset-catalog/2.0
+    dataset_id: real_t
+    version: hf-39ca3b88ffd4
+    languages:
+      - zh
+      - en
+    tasks:
+      - ts_asr
+    aliases:
+      - real-tse
+    artifacts:
+      - name: source
+        kind: hf-dataset-snapshot
+        root_alias: real_t
+        relative_path: source/hf-39ca3b88ffd4
+        metadata:
+          file_count: 4673
+          expected_bytes: 1913890410
+          tree_sha256: f268bb307821f6878a935a2ba41828cb27b78cd0062a767e0477c377d48f9351
+      - name: download_state
+        kind: dataset-state
+        root_alias: real_t
+        relative_path: versions/hf-39ca3b88ffd4/download_state/state.json
+        expected_bytes: 921
+        sha256: fc1cd96a3e439a7392a99d29f53e3dfa0b406f9d3d54b4f6c8747d53fda5b214
+    splits:
+      dev:
+        task: ts_asr
+        artifacts:
+          source:
+            - source
+        statistics:
+          count: 528
+          trials: 1991
+          target_speakers: 64
+          enrolment_files: 242
+          duration_hours: 2.6005
+          duration_basis: soundfile header duration of every WAV in REAL-T-dev/mixtures (enrolment clips, 0.67 h, not counted); pinned upstream file hashes verified
+          trials_by_language:
+            zh: 721
+            en: 1270
+          sample_formats:
+            1ch/16000Hz/PCM_16: 770
+        provenance:
+          notes: 混合片段切自 AISHELL-4、AliMeeting、AMI、CHiME-6、DiPCo 的真实会议和晚餐录音
+      eval1:
+        task: ts_asr
+        artifacts:
+          source:
+            - source
+        statistics:
+          count: 595
+          trials: 2000
+          target_speakers: 49
+          enrolment_files: 183
+          duration_hours: 2.9801
+          duration_basis: soundfile header duration of every WAV in REAL-T-eval1/mixtures (enrolment clips, 0.55 h, not counted); pinned upstream file hashes verified
+          trials_by_language:
+            zh: 298
+            en: 1702
+          excluded_trials: 70
+          sample_formats:
+            1ch/16000Hz/PCM_16: 778
+        provenance:
+          notes: 与 dev 同源但会话不重叠，不含 AISHELL-4；70 个试次受 AMI IB4002 声道映射错误影响，挑战赛排名已剔除（challenge_excluded_samples.csv）
+      eval2:
+        task: ts_asr
+        artifacts:
+          source:
+            - source
+        statistics:
+          count: 1186
+          trials: 3000
+          target_speakers: 77
+          enrolment_files: 1913
+          duration_hours: 5.6747
+          duration_basis: soundfile header duration of every WAV in REAL-T-eval2/mixtures (enrolment clips, 4.02 h, not counted); pinned upstream file hashes verified
+          trials_by_language:
+            zh: 1487
+            en: 1513
+          sample_formats:
+            1ch/16000Hz/PCM_16: 3099
+        provenance:
+          notes: 为本发布新录制的中英文会议对话，未见过的房间和设备（耳麦 H1、H2 和手机），含同信道和跨信道的混合-注册配对
+    provenance:
+      summary: 真实会议目标说话人提取评测（REAL-T）
+      source: Hugging Face
+      source_id: REAL-TSE/REAL-T
+      revision: 39ca3b88ffd4ce6078c1d045a3e8711fa2bd2f17
+      url: https://huggingface.co/datasets/REAL-TSE/REAL-T
+      project_page: https://real-tse.github.io/challenge/
+      download_mirror: https://hf-mirror.com
+      release_date: '2026-10-30'
+      description: >-
+        REAL-TSE 挑战赛（IEEE SLT 2026 卫星挑战赛）的目标说话人提取评测包：给定真实多人对话的混合片段和目标说话人的注册语音，
+        恢复目标说话人的语音；没有干净参考，用目标说话人的转写算识别错误率评估。每个试次是一对混合片段和注册片段，多个试次可共用
+        同一段混合音频；混合片段平均 17–18 秒，约一半时间有两人以上同时说话。dev 与 Interspeech 2025 论文的 PRIMARY 划分试次相同，
+        eval1 取自同一批公开语料但会话不重叠，eval2 是新录制的中英文会议。全部为 16 kHz 单声道 16 bit WAV，每个试次附目标说话人
+        转写（eval 的转写已按 Whisper large-v2 分词器重新规范化）和重叠时段 JSON。本发布 v1.0.1 只新增了挑战赛剔除样本表，音频和
+        元数据与 v1.0.0（2026-08-23）相同。CC BY-SA 4.0；dev 和 eval1 派生自 AISHELL-4、AliMeeting、CHiME-6（CC BY-SA 4.0）、
+        AMI（CC BY 4.0）、DiPCo（CDLA-Permissive-1.0），使用时需同时引用来源语料。
+      license:
+        - cc-by-sa-4.0
+      download_scope: Complete REAL-T release (DEV, EVAL1, EVAL2 mixtures, enrolments, metadata and card)
+      expected_download_files: 4673
+      expected_download_bytes: 1913890410
+      integrity: verified
+      local_scan_date: '2026-11-14'

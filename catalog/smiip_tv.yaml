@@ -1,0 +1,37 @@
+  - schema_version: dataset-catalog/2.0
+    dataset_id: smiip_tv
+    version: openslr-156
+    languages:
+      - zh
+    tasks:
+      - speaker_verification
+    aliases: []
+    artifacts:
+      - name: source
+        kind: source-archive
+        root_alias: smiip_tv
+        relative_path: source/openslr-156/SMIIP-TV_v2.0.tar.gz
+        metadata:
+          url: https://openslr.trmal.net/resources/156/SMIIP-TV_v2.0.tar.gz
+    splits:
+      all:
+        artifacts:
+          source:
+            - source
+    provenance:
+      summary: 90 天短时变化普通话声纹数据（SMIIP-TV）
+      source: OpenSLR
+      source_id: SLR156
+      url: https://www.openslr.org/156/
+      paper: https://doi.org/10.1109/TASLP.2024.3428910
+      license:
+        - cc-by-sa-3.0-us
+      inventory_status: download_planned
+      description: >-
+        SMIIP 实验室（Qin、Li 等，TASLP 2024）的短时时变声纹数据集 v2.0：373 位说话人用手机 App 连续 90 天、每天 5 个时段各录 3 句普通话
+        （文本相关和文本无关都有），附省份、年龄、手机型号，以及每次录音时自报的身体状态（7 类，如困倦、进食、嗓子痛、感冒）、
+        环境（16 类）和噪声程度。133 人录满 90 天，其中 58 人作测试集，其余 315 人作训练集。单个 49 GB 归档，OpenSLR 没有公布哈希；
+        各镜像（含跳转回 trmal 的国内镜像）从本机单连接约 15 KB/s，Google Drive 外链经代理不可达，先登记来源。CC BY-SA 3.0 US。
+      download_scope: SMIIP-TV v2.0 archive with meta information (OpenSLR 156)
+      expected_download_files: 1
+      expected_download_bytes: 49951256989

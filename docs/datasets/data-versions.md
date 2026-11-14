@@ -509,6 +509,18 @@ LibriSpeech 混合的目标说话人数据
 
 - `open_yap@hf-a08b1c80e501`：The Agentic Data Company 2026-09 发布的 Open Yap 1K 的公开样本：16 段、8.92 小时、8 位说话人的英文自然对话， 双方是朋友或家人，用自己的设备在真实环境里通话，每人一条 48 kHz 单声道 FLAC 音轨，保留重叠、附和、笑声。 每段一个 JSON：两侧词级时间戳转写、话题、轮次统计、说话人自报的年龄段/性别/口音、响度和底噪等测量值。 转写是 Deepgram Nova-3 自动生成，未经人工核对。仓库里 open-yap-1k-sample.tar 与 shard-00000/00001.tar 是同样的 16 段， 不要重复计数。样本为 CC BY 4.0（可商用），附带请求：不要识别说话人、不要克隆具体某人的声音。完整 1,000 小时语料需按 Open Yap 1K 数据使用协议向发布方申请，不在 Hugging Face 上
 
+### sbcsae
+
+美式英语自然口语对话（SBCSAE）
+
+语言：en · 任务：语音识别、带说话人标注的语音识别
+
+| 版本 | 时长（小时） | 口径 | COS |
+|---|---:|---|---|
+| [sbcsae@openslr-155](../../catalog/sbcsae.yaml#L1) | 23.3 | 已登记 | 没有 |
+
+- `sbcsae@openslr-155`：加州大学圣塔芭芭拉分校语言学系编纂的 Santa Barbara Corpus of Spoken American English（原由 LDC 分四部分发行，2000–2005）， OpenSLR 155 镜像的完整版：60 段各约 20 分钟、共 23.3 小时的自然口语互动，录于美国各地，说话人背景和对话场合多样， 22.05 kHz（56 段立体声、4 段单声道）。每段同时给出 WAV、MP3，以及带时间标记的 TRN 和 CHAT（.cha）两种格式转写，docs/ 下有说话人和片段信息表。只有一个归档文件、上游没有公布哈希，下载时做了完整的 gzip 流校验，sha256 是本地计算值。规模小、录音年代较早，主要用于自然对话 ASR 评测和对话分析。CC BY-ND 3.0 US （禁止演绎：可以使用和原样分发，但不得发布修改后的版本）
+
 ### singapore_english
 
 新加坡口音英语（Hugging Face 来源）
@@ -2252,6 +2264,18 @@ Emilia-YODAS 多语种 YouTube 语音
 |---|---:|---|---|
 | [indicvoices@hf-c96f9088f138](../../catalog/multilingual_multispeaker.yaml#L164) | — | 未登记 | 快照 20260914 |
 
+### kasaspeech
+
+英语-契维语语码转换朗读（KasaSpeech）
+
+语言：en、tw · 任务：语音识别、语码转换语音识别
+
+| 版本 | 时长（小时） | 口径 | COS |
+|---|---:|---|---|
+| [kasaspeech@hf-4bbaf47a5a46](../../catalog/kasaspeech.yaml#L1) | 95.6 | 已登记 | 没有 |
+
+- `kasaspeech@hf-4bbaf47a5a46`：加纳的英语-契维语（Twi）语码转换语音：志愿者在采集平台上朗读引导语码转换的提示句，人工按统一规范转写，共 54,855 条、95.6 小时， 112 位说话人，音频大多是 48 kHz 单声道 Opus（少量 16 kHz WAV/Vorbis），附性别、年龄段和提示集。train/validation/test 说话人互不重叠， 但句子高度重复：train 5 万条只有 1,544 种转写，test 的 829 种转写全部出现在 train 中，validation 949 种里 948 种也在 train 中， 所以这份 test 只能衡量对新说话人的泛化，不能衡量对新文本的泛化，语言模型也可能直接记住这些句子。另有一个同名、体积相同的更早仓库 Kennethdot/ Ghana_English-Twi_Code-switching_Speech（2026-08-05），未逐文件比对。Apache-2.0
+
 ### meeting_benchmark
 
 约 180 秒长度的中英会议转写评测集
@@ -2338,6 +2362,18 @@ AISHELL-1、LibriSpeech 合成的多人对话
 | [opendatalab_multilingual@computer-2-20261009](../../catalog/opendatalab_multilingual.yaml#L1) | 8,588.2 | 已登记 | `amphion-audio-backup-1373259071:computer-2/audio/`（原始数据）、`amphion-audio-backup-1373259071:opendatalab-multilingual/`（原始数据） |
 
 - `opendatalab_multilingual@computer-2-20261009`：OpenDataLab 多语言语音识别数据，8 个语种（ar 阿拉伯语、cs 捷克语、hu 匈牙利语、ko 韩语、ru 俄语、sr 塞尔维亚语、th 泰语、vi 越南语），每语种约 1000 小时。16 kHz 单声道 WAV 切片，每个语种一份 JSONL 清单（id、audio.path/duration/snr、text.content/lang、pjwk_cates 内容分类）。清单中 audio.path 相对于本版本目录。不分 train/dev/test
+
+### real_t
+
+真实会议目标说话人提取评测（REAL-T）
+
+语言：en、zh · 任务：目标说话人语音识别
+
+| 版本 | 时长（小时） | 口径 | COS |
+|---|---:|---|---|
+| [real_t@hf-39ca3b88ffd4](../../catalog/real_t.yaml#L1) | 11.3 | 已登记 | 没有 |
+
+- `real_t@hf-39ca3b88ffd4`：REAL-TSE 挑战赛（IEEE SLT 2026 卫星挑战赛）的目标说话人提取评测包：给定真实多人对话的混合片段和目标说话人的注册语音， 恢复目标说话人的语音；没有干净参考，用目标说话人的转写算识别错误率评估。每个试次是一对混合片段和注册片段，多个试次可共用 同一段混合音频；混合片段平均 17–18 秒，约一半时间有两人以上同时说话。dev 与 Interspeech 2025 论文的 PRIMARY 划分试次相同， eval1 取自同一批公开语料但会话不重叠，eval2 是新录制的中英文会议。全部为 16 kHz 单声道 16 bit WAV，每个试次附目标说话人 转写（eval 的转写已按 Whisper large-v2 分词器重新规范化）和重叠时段 JSON。本发布 v1.0.1 只新增了挑战赛剔除样本表，音频和 元数据与 v1.0.0（2026-08-23）相同。CC BY-SA 4.0；dev 和 eval1 派生自 AISHELL-4、AliMeeting、CHiME-6（CC BY-SA 4.0）、 AMI（CC BY 4.0）、DiPCo（CDLA-Permissive-1.0），使用时需同时引用来源语料
 
 ### sot_many_speaker_word_zh_en
 
