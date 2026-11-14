@@ -1,6 +1,6 @@
 # 数据总览
 
-当前登记 **249 个数据集**；另有 **26 个下载来源声明**和 **1 个训练混合配方**。登记不代表本机文件已齐备。
+当前登记 **250 个数据集**；另有 **28 个下载来源声明**和 **1 个训练混合配方**。登记不代表本机文件已齐备。
 
 时长取单个版本的最大值，不跨版本相加；≈ 为参考表或估算值，— 为暂无完整时长。各版本的时长、说明、COS 地址和质量证据见[版本明细](data-versions.md)。
 
@@ -227,6 +227,7 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [coraa](data-versions.md#coraa) | pt | 语音识别 | 290.5 | 巴西葡语多来源语音（CORAA v1.1） | 没有 |
 | [coraa_mupe](data-versions.md#coraa_mupe) | pt | 语音识别 | 365.2 | 巴西葡语生活访谈（CORAA MUPE） | 快照 20260914 |
 | [coraa_nurc_sp](data-versions.md#coraa_nurc_sp) | pt | 语音识别 | 239.3 | 圣保罗口音葡语自发语音（NURC-SP） | 没有 |
+| [dataset_et_amharic](data-versions.md#dataset_et_amharic) | am | 语音识别 | 51.5 | 众包阿姆哈拉语朗读（Dataset.ET） | 没有 |
 | [demand](data-versions.md#demand) | und | noise | 46.7 | 16 麦阵列录制的多环境噪声（DEMAND） | `备份桶:audio-data-contract/datasets/demand/` |
 | [dns5_noise_rir](data-versions.md#dns5_noise_rir) | und | rir、speech_enhancement | — | DNS Challenge 5 官方噪声与冲激响应包 | `备份桶:audio-data-contract/datasets/dns5_noise_rir/` |
 | [dns5_noise_train](data-versions.md#dns5_noise_train) | und | noise、rir | 252.6 | 训练用 DNS5 噪声与模拟房间响应 | `备份桶:audio-data-contract/datasets/dns5_noise_train/` |
@@ -320,6 +321,8 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [reazonspeech](../../catalog/download_queue.yaml#L274) | hf-0df78f991f6a | ja | 语音识别 |
 | [tagarela](../../catalog/tagarela.yaml#L1) | hf-a66648fc4938 | pt | 语音识别、语音合成 |
 | [worldspeech](../../catalog/worldspeech.yaml#L1) | hf-b76b85395039 | multi | 语音识别 |
+| [yo_cpt_kk](../../catalog/yo_cpt.yaml#L41) | hf-a8c2d1a23de4 | kk | 语音合成、语音识别 |
+| [yo_cpt_ru](../../catalog/yo_cpt.yaml#L1) | hf-f2f92c5ecf6b | ru | 语音合成、语音识别 |
 | [yodas3](../../catalog/yodas3.yaml#L1) | hf-81d802f45a1c | multi | 语音识别 |
 
 ## 训练混合配方

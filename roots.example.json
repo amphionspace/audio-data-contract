@@ -133,5 +133,8 @@
   "childtalk": "/workspace/data/datasets/childtalk",
   "waxal_tts": "/workspace/data/datasets/waxal_tts",
   "multitalk_pt": "/workspace/data/datasets/multitalk_pt",
-  "multitalk_ft": "/workspace/data/datasets/multitalk_ft"
+  "multitalk_ft": "/workspace/data/datasets/multitalk_ft",
+  "dataset_et_amharic": "/workspace/data/datasets/dataset_et_amharic",
+  "yo_cpt_ru": "/workspace/data/datasets/yo_cpt_ru",
+  "yo_cpt_kk": "/workspace/data/datasets/yo_cpt_kk"
 }
