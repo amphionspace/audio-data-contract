@@ -141,5 +141,7 @@
   "real_t": "/workspace/data/datasets/real_t",
   "sbcsae": "/workspace/data/datasets/sbcsae",
   "meli": "/workspace/data/datasets/meli",
-  "smiip_tv": "/workspace/data/datasets/smiip_tv"
+  "smiip_tv": "/workspace/data/datasets/smiip_tv",
+  "dialogs_ru": "/workspace/data/datasets/dialogs_ru",
+  "crows_multilingual": "/workspace/data/datasets/crows_multilingual"
 }
