@@ -229,7 +229,7 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [common_voice_pt](data-versions.md#common_voice_pt) | pt | 语音识别 | 184.3 | Common Voice 17 葡语朗读 | 没有 |
 | [common_voice_ru](data-versions.md#common_voice_ru) | ru | 语音识别 | 69.9 | 众包朗读俄语（Common Voice） | 部分版本：快照 20260914 |
 | [coraa](data-versions.md#coraa) | pt | 语音识别 | 290.5 | 巴西葡语多来源语音（CORAA v1.1） | 没有 |
-| [coraa_mupe](data-versions.md#coraa_mupe) | pt | 语音识别 | 365.2 | 巴西葡语生活访谈（CORAA MUPE） | 快照 20260914 |
+| [coraa_mupe](data-versions.md#coraa_mupe) | pt | 语音识别 | 365.2 | 巴西葡语生活访谈（CORAA MUPE） | 部分版本：快照 20260914 |
 | [coraa_nurc_sp](data-versions.md#coraa_nurc_sp) | pt | 语音识别 | 239.3 | 圣保罗口音葡语自发语音（NURC-SP） | 没有 |
 | [dataset_et_amharic](data-versions.md#dataset_et_amharic) | am | 语音识别 | 51.5 | 众包阿姆哈拉语朗读（Dataset.ET） | 没有 |
 | [demand](data-versions.md#demand) | und | noise | 46.7 | 16 麦阵列录制的多环境噪声（DEMAND） | `备份桶:audio-data-contract/datasets/demand/` |
