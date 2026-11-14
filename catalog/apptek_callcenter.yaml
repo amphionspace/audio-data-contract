@@ -1,0 +1,109 @@
+  - schema_version: dataset-catalog/2.0
+    dataset_id: apptek_callcenter
+    version: hf-b98967d9946f
+    languages:
+      - en
+    tasks:
+      - asr
+      - speaker_diarization
+      - speaker_attributed_asr
+    aliases:
+      - apptek_callcenter_dialogues
+    artifacts:
+      - name: source
+        kind: hf-dataset-snapshot
+        root_alias: apptek_callcenter
+        relative_path: source/hf-b98967d9946f
+        metadata:
+          file_count: 2651
+          expected_bytes: 52233231521
+          tree_sha256: 9ed870febdce090315dc7c32b2e0b0fa86ac2f144d9e46e4dba4e9bafcbe5590
+      - name: download_state
+        kind: dataset-state
+        root_alias: apptek_callcenter
+        relative_path: versions/hf-b98967d9946f/download_state/state.json
+        expected_bytes: 1008
+        sha256: f2b412a9b472e3645651a584aba7b6eb24aa3b1099f51a9c2b3e40a2b1bc8ac5
+    splits:
+      diarization:
+        task: speaker_attributed_asr
+        artifacts:
+          source:
+            - source
+        statistics:
+          count: 873
+          duration_hours: 151.0664
+          duration_basis: soundfile header duration of every merged-call WAV under diarization/*/audio; pinned upstream file hashes verified
+          segments: 94679
+          accents:
+            en-AU: {calls: 58, hours: 10.4709, segments: 5869, speakers: 10}
+            en-CA: {calls: 59, hours: 10.3004, segments: 6350, speakers: 10}
+            en-CN: {calls: 79, hours: 10.7634, segments: 5662, speakers: 11}
+            en-GB: {calls: 67, hours: 11.2293, segments: 7459, speakers: 10}
+            en-GB_SCT: {calls: 66, hours: 10.8216, segments: 8407, speakers: 12}
+            en-GB_WLS: {calls: 65, hours: 11.3304, segments: 8680, speakers: 10}
+            en-IE: {calls: 56, hours: 10.768, segments: 7038, speakers: 10}
+            en-IN: {calls: 73, hours: 12.0556, segments: 6554, speakers: 13}
+            en-MX: {calls: 61, hours: 10.4684, segments: 6146, speakers: 12}
+            en-SG: {calls: 57, hours: 10.0473, segments: 6402, speakers: 10}
+            en-US_Aave: {calls: 45, hours: 9.8248, segments: 7053, speakers: 10}
+            en-US_General: {calls: 67, hours: 11.2683, segments: 6546, speakers: 14}
+            en-US_Southern: {calls: 56, hours: 10.7036, segments: 6561, speakers: 10}
+            en-ZA: {calls: 64, hours: 11.0144, segments: 5952, speakers: 16}
+          sample_formats:
+            1ch/16000Hz/PCM_16: 873
+        provenance:
+          notes: 每通电话双方合成一个文件，分段带起止时间、说话人、角色（坐席/客户）和性别
+      test:
+        group: diarization
+        task: asr
+        artifacts:
+          source:
+            - source
+        statistics:
+          count: 1746
+          calls: 873
+          duration_hours: 302.1321
+          duration_basis: soundfile header duration of every split-channel WAV under test/*/audio (two tracks per call, so track-hours are about twice the call hours); pinned upstream file hashes verified
+          accents:
+            en-AU: {tracks: 116, hours: 20.9419}
+            en-CA: {tracks: 118, hours: 20.6008}
+            en-CN: {tracks: 158, hours: 21.5268}
+            en-GB: {tracks: 134, hours: 22.4585}
+            en-GB_SCT: {tracks: 132, hours: 21.6432}
+            en-GB_WLS: {tracks: 130, hours: 22.6608}
+            en-IE: {tracks: 112, hours: 21.5359}
+            en-IN: {tracks: 146, hours: 24.1111}
+            en-MX: {tracks: 122, hours: 20.9365}
+            en-SG: {tracks: 114, hours: 20.0946}
+            en-US_Aave: {tracks: 90, hours: 19.6496}
+            en-US_General: {tracks: 134, hours: 22.5365}
+            en-US_Southern: {tracks: 112, hours: 21.4071}
+            en-ZA: {tracks: 128, hours: 22.0288}
+          sample_formats:
+            1ch/16000Hz/PCM_16: 1746
+        provenance:
+          notes: 同一批电话按说话人拆成两条单声道音轨，每条音轨一整段参考文本，用于长音频 WER 评测
+    provenance:
+      summary: 英文多口音客服长对话评测（AppTek）
+      source: Hugging Face
+      source_id: apptek-com/apptek_callcenter_dialogues
+      revision: b98967d9946f7f59f58d08624a2a00fe98fe0219
+      url: https://huggingface.co/datasets/apptek-com/apptek_callcenter_dialogues
+      download_mirror: https://hf-mirror.com
+      release_date: '2026-04-23'
+      description: >-
+        AppTek 2026 年发布的英文呼叫中心长对话评测集，873 通电话、合并后 151.1 小时（发布方统计语音 128.6 小时），每通 5–15 分钟，
+        14 个口音组（澳、加、中、英格兰、苏格兰、威尔士、爱尔兰、印度、墨西哥、新加坡、美国非裔、美国通用、美国南方、南非），
+        16 个服务领域，坐席和客户两人对话，在受控条件下录制。两种配置：test 把每通电话拆成两条单声道音轨，各有一整段逐字参考文本
+        （保留 (um) 等语气词和 ~ 标出的断词），发布方建议用 Silero VAD 切段后按 Whisper 规范化算 WER，附 score.py；
+        diarization 把双方合成一个文件，给出带说话人、角色、性别的时间戳分段（94,679 段），可评测说话人日志和带说话人的转写。
+        两种配置是同一批电话，test 登记为 diarization 的子划分，不重复计时。仓库中部分 metadata.jsonl 因镜像返回不实的 gzip 压缩头，
+        改用 curl 下载并按上游 git 哈希校验。CC BY-SA 4.0。
+      license:
+        - cc-by-sa-4.0
+      download_scope: Complete AppTek Call-Center Dialogues release (split-channel test set and merged-call diarization configuration)
+      expected_download_files: 2651
+      expected_download_bytes: 52233231521
+      integrity: verified
+      local_scan_date: '2026-11-14'

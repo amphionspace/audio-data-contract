@@ -121,5 +121,8 @@
   "open_yap": "/workspace/data/datasets/open_yap",
   "wenetspeech_wu_bench": "/workspace/data/datasets/wenetspeech_wu_bench",
   "treble10_rir": "/workspace/data/datasets/treble10_rir",
-  "indic_diarbench": "/workspace/data/datasets/indic_diarbench"
+  "indic_diarbench": "/workspace/data/datasets/indic_diarbench",
+  "seniortalk": "/workspace/data/datasets/seniortalk",
+  "gigaspeech_bench": "/workspace/data/datasets/gigaspeech_bench",
+  "apptek_callcenter": "/workspace/data/datasets/apptek_callcenter"
 }
