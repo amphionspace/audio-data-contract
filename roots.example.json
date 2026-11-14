@@ -147,5 +147,8 @@
   "ascend": "/workspace/data/datasets/ascend",
   "earnings21": "/workspace/data/datasets/earnings21",
   "earnings22": "/workspace/data/datasets/earnings22",
-  "edacc": "/workspace/data/datasets/edacc"
+  "edacc": "/workspace/data/datasets/edacc",
+  "magicdata_multistream_zh": "/workspace/data/datasets/magicdata_multistream_zh",
+  "magicdata_multistream_en": "/workspace/data/datasets/magicdata_multistream_en",
+  "primock57": "/workspace/data/datasets/primock57"
 }

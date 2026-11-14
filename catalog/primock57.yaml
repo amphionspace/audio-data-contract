@@ -1,0 +1,59 @@
+  - schema_version: dataset-catalog/2.0
+    dataset_id: primock57
+    version: github-cd2ac707ad03
+    languages:
+      - en
+    tasks:
+      - asr
+      - speaker_attributed_asr
+    aliases: []
+    artifacts:
+      - name: source
+        kind: source-directory
+        root_alias: primock57
+        relative_path: source/github-cd2ac707ad03
+        metadata:
+          file_count: 330
+          expected_bytes: 2011867655
+          tree_sha256: 913329ba93dcbe6565c24633cba32a0483b589810caa93edaab4255b4044123b
+      - name: download_state
+        kind: dataset-state
+        root_alias: primock57
+        relative_path: versions/github-cd2ac707ad03/download_state/state.json
+        expected_bytes: 843
+        sha256: 0782539136e564573f5228a8830e300653e28ad4f0bfac1da02cd90bf663dd4a
+    splits:
+      all:
+        artifacts:
+          source:
+            - source
+        statistics:
+          count: 57
+          tracks: 114
+          duration_hours: 8.6351
+          duration_basis: soundfile header duration of each consultation (doctor and patient tracks have the same length; counted once, 17.27 h of track audio); every file verified against the pinned git tree (blob sha1, LFS pointer sha256)
+          segments: 7108
+          sample_formats:
+            1ch/16000Hz/PCM_16: 114
+    provenance:
+      summary: 英文全科医生模拟问诊分轨录音（PriMock57）
+      source: GitHub
+      source_id: babylonhealth/primock57
+      revision: cd2ac707ad03cb4d2531f4ec6b90c659bf4357c5
+      url: https://github.com/babylonhealth/primock57
+      paper: https://arxiv.org/abs/2204.00333
+      release_date: '2022-04'
+      description: >-
+        Babylon Health 的全科远程问诊模拟数据（ACL 2022）：7 位执业医生与 57 位扮演患者的员工按病例卡进行线上视频问诊，共 57 场、8.6 小时，
+        医生和患者分轨（16 kHz 16 bit WAV，源自 Opus 编码的视频流），transcripts/ 下是逐句人工转写的 Praat TextGrid（共 7,108 个非空区间），
+        另有医生写的问诊记录、病例清单和笔记生成的人工评测数据。对话内容是按病例卡即兴进行的，不是真实患者，但说话方式自然，适合
+        医疗场景对话识别、带说话人识别和医患对话评测。CC BY 4.0。
+      license:
+        - cc-by-4.0
+      download_scope: Whole primock57 repository at the pinned commit (audio via git-LFS, transcripts, notes, checklists, human evaluation data)
+      expected_download_files: 330
+      expected_download_bytes: 2011867655
+      download_mirror: GitHub contents API (raw) and media.githubusercontent.com for git-LFS audio, via the configured proxy
+      integrity: verified
+      integrity_method: git blob sha1 for regular files and pointer sha256 for git-LFS audio in the pinned tree
+      local_scan_date: '2026-11-14'

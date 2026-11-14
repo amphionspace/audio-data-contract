@@ -474,6 +474,18 @@ LibriSpeech 混合的目标说话人数据
 
 - `ljspeech@tts-unified-v0.1`：音频编码字节存放在 Lance 表内；原始划分在 metadata_json.original_split，统一输出全部为 train。ASR 用 tts_lance.iter_asr_samples（tts-asr-rules/v1）读取，会排除原始 dev/test 等
 
+### magicdata_multistream_en
+
+英文双人自然对话分轨录音（MagicData 样本）
+
+语言：en · 任务：语音识别、带说话人标注的语音识别
+
+| 版本 | 时长（小时） | 口径 | COS |
+|---|---:|---|---|
+| [magicdata_multistream_en@hf-6b3e11aea621](../../catalog/magicdata_multistream.yaml#L61) | 2.8 | 已登记 | 没有 |
+
+- `magicdata_multistream_en@hf-6b3e11aea621`：MagicData 多声道自然对话数据的英文开源样本：8 段两人手机自由对话（消费、人文、金融、娱乐、情感等话题），8 位美国说话人 （纽约和加州，5 男 3 女），每人一条独立音轨，16 kHz 单声道 WAV，逐句人工转写带起止时间和事件标记，格式与中文样本相同。 规模很小，适合作分轨对话和全双工流程的小样本检查。卡片正文限定仅供学术研究、不得商用（YAML 未写许可证）
+
 ### meld_ser
 
 美剧《老友记》对话情感识别评测（MELD）
@@ -544,6 +556,18 @@ LibriSpeech 混合的目标说话人数据
 | [open_yap@hf-a08b1c80e501](../../catalog/open_yap.yaml#L1) | 8.9 | 已登记 | 没有 |
 
 - `open_yap@hf-a08b1c80e501`：The Agentic Data Company 2026-09 发布的 Open Yap 1K 的公开样本：16 段、8.92 小时、8 位说话人的英文自然对话， 双方是朋友或家人，用自己的设备在真实环境里通话，每人一条 48 kHz 单声道 FLAC 音轨，保留重叠、附和、笑声。 每段一个 JSON：两侧词级时间戳转写、话题、轮次统计、说话人自报的年龄段/性别/口音、响度和底噪等测量值。 转写是 Deepgram Nova-3 自动生成，未经人工核对。仓库里 open-yap-1k-sample.tar 与 shard-00000/00001.tar 是同样的 16 段， 不要重复计数。样本为 CC BY 4.0（可商用），附带请求：不要识别说话人、不要克隆具体某人的声音。完整 1,000 小时语料需按 Open Yap 1K 数据使用协议向发布方申请，不在 Hugging Face 上
+
+### primock57
+
+英文全科医生模拟问诊分轨录音（PriMock57）
+
+语言：en · 任务：语音识别、带说话人标注的语音识别
+
+| 版本 | 时长（小时） | 口径 | COS |
+|---|---:|---|---|
+| [primock57@github-cd2ac707ad03](../../catalog/primock57.yaml#L1) | 8.6 | 已登记 | 没有 |
+
+- `primock57@github-cd2ac707ad03`：Babylon Health 的全科远程问诊模拟数据（ACL 2022）：7 位执业医生与 57 位扮演患者的员工按病例卡进行线上视频问诊，共 57 场、8.6 小时， 医生和患者分轨（16 kHz 16 bit WAV，源自 Opus 编码的视频流），transcripts/ 下是逐句人工转写的 Praat TextGrid（共 7,108 个非空区间）， 另有医生写的问诊记录、病例清单和笔记生成的人工评测数据。对话内容是按病例卡即兴进行的，不是真实患者，但说话方式自然，适合 医疗场景对话识别、带说话人识别和医患对话评测。CC BY 4.0
 
 ### sbcsae
 
@@ -1318,6 +1342,18 @@ GRPO 热词挖掘候选（未背过的中文热词提示，含近音易混词）
 - `magicdata@hotwords-v1-20261102`：magicdata@punc-written-v1-20261102 中被 TS 场景池（open-audio-llm 训练配方 train-data-v7set30）用作目标或干扰语音的句子，带热词标注：custom.hotwords 是这句里说到的热词，按本行文本的写法（中文按子串匹配；本行文本里找不到的词去掉）；custom.hotword_labeling 记标注来源、标注时看到的文本和模型原始抽取。391237 句里 83817 句有热词，其中 238826 句复用 hw_sft@hw-20261014 的已有标注。只含标过的句子，文本与父版本相同；录音沿用 magicdata@legacy-20260804，不复制音频。脚本 scripts/ts_hotwords/register_hotwords.py，标注工具 scripts/ts_hotwords/label_hotwords.py
 - `magicdata@punc-written-v1-20261102`：magicdata@legacy-20260804 训练集原标注加书面化标点，方法与 punc-written-v1-20261029 相同（amphiondata docs/written-punctuation.md：GB/T 15834、逗号从紧；Qwen3-4B 学生 punc-student-v1 以 Qwen3-ASR-1.7B 听音频得到的带标点转写作语气提示，只往原标注里插标点）。模型改动原文的条目按字对齐把标点搬回原标注；每条以 。？！ 结尾；没有汉字的条目和空标注原样保留。文件与源 supervisions 条数、顺序相同，只换 text。语音助手类指令多，书名号较密（每百字约 1.25 对）
 - 含派生版本（与源数据可能重叠）
+
+### magicdata_multistream_zh
+
+中文双人自然对话分轨录音（MagicData 样本）
+
+语言：zh · 任务：语音识别、带说话人标注的语音识别
+
+| 版本 | 时长（小时） | 口径 | COS |
+|---|---:|---|---|
+| [magicdata_multistream_zh@hf-156a68949f65](../../catalog/magicdata_multistream.yaml#L1) | 5.2 | 已登记 | 没有 |
+
+- `magicdata_multistream_zh@hf-156a68949f65`：MagicData 商用多声道自然对话数据的开源样本：27 段两人手机自由对话（教育、时事、文旅、就业等 9 个话题），每人一条独立音轨 （16 kHz 单声道 WAV），各自带起止时间的逐句人工转写，标出 [+] 重叠、[LAUGHTER]、[SONANT]、[ENS] 噪声和 [PII] 等，打断和抢话 在分轨里完整保留，适合全双工对话和带说话人识别的评测。规模小、说话人单一：只有 6 位 21–25 岁的辽宁籍男性，SPKINFO.txt 记录 各自的手机型号。HF 卡片 YAML 写 apache-2.0，但正文限定仅供学术研究、不得商用，以更严的条款为准；同一份数据在 MagicHub 组织下 另有一个副本
 
 ### magicdata_ramc
 
