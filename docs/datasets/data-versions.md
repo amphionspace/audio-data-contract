@@ -3555,10 +3555,10 @@ Golos 俄语语音助手指令评测划分
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
-| [google_latam@clean-v1-20261114](../../catalog/es_read_clean.yaml#L86) | — | 未登记 | 没有 |
+| [google_latam@clean-v1-20261114](../../catalog/es_read_clean.yaml#L196) | 38.0 | 已登记 | 没有 |
 | [google_latam@openslr-20260911](../../catalog/google_latam.yaml#L1) | 38.0 | 已登记 | 快照 20260914 |
 
-- `google_latam@clean-v1-20261114`：Google 众包拉美六国朗读 38.0 h的清洗版本：音频解到本版本目录，生成 lhotse 清单，再用 Qwen3-ASR-1.7B + whisper-large-v3 双引擎清洗（consensus-v7），先试跑、复核被拒样本再跑全量。进行中
+- `google_latam@clean-v1-20261114`：Google 众包拉美六国朗读的清洗版本：24,617 句 / 37.97 h 经 Qwen3-ASR-1.7B + whisper-large-v3 双引擎清洗（consensus-v7）保留 24,612 句 / 37.95 h，丢弃 5 句 / 0.01 h（0.0% 时长）。几乎全部保留
 - `google_latam@openslr-20260911`：Google 众包录制的拉美西语朗读（阿根廷、智利、哥伦比亚、秘鲁、波多黎各、委内瑞拉），按国家各一个划分，48 kHz 录音棚质量。SLR61 包里另有一小份天气播报（weather_messages），其中 es-es 是西班牙口音，只作源文件保留，不要算进美洲口音
 - 含派生版本（与源数据可能重叠）
 
@@ -3570,10 +3570,10 @@ Golos 俄语语音助手指令评测划分
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
-| [heroico@clean-v1-20261114](../../catalog/es_read_clean.yaml#L114) | — | 未登记 | 没有 |
+| [heroico@clean-v1-20261114](../../catalog/es_read_clean.yaml#L272) | 7.3 | 已登记 | 没有 |
 | [heroico@openslr-39](../../catalog/heroico.yaml#L1) | 14.9 | 已登记 | 没有 |
 
-- `heroico@clean-v1-20261114`：Heroico 朗读部分（heroico_recordings 6.5 h、usma_native 1.1 h；自由问答 heroico_answers 和非母语 usma_nonnative 不在本版本）的清洗版本：音频解到本版本目录，生成 lhotse 清单，再用 Qwen3-ASR-1.7B + whisper-large-v3 双引擎清洗（consensus-v7），先试跑、复核被拒样本再跑全量。进行中
+- `heroico@clean-v1-20261114`：Heroico 朗读部分（heroico_recordings 与 usma_native；自由问答 heroico_answers、非母语 usma_nonnative、喉麦录音不在本版本）的清洗版本：7,187 句 / 7.54 h 经 Qwen3-ASR-1.7B + whisper-large-v3 双引擎清洗（consensus-v7）保留 6,923 句 / 7.34 h，丢弃 264 句 / 0.20 h（2.6% 时长）。丢弃主体是录音内容与提示句对不上（说话人在回答问题而非朗读）；"adónde" 与 "a dónde" 写法差异造成少量误杀
 - `heroico@openslr-39`：West Point Heroico Spanish Speech（LDC2006S37，OpenSLR 39 转发）。主体是 2001 年在墨西哥军校录的朗读和自由问答，墨西哥口音；另有西点军校的小部分录音，含母语者和美国非母语学员，usma_nonnative 不是母语口音，训练美洲口音时应排除。部分西点录音同时录了喉麦（文件名以 t 开头），已从统计中剔除。22.05 kHz 16-bit；部分西点文件头写的是 20050 Hz，按文件头计时长。转写文本是 Latin-1 编码；heroico_answers 有 1 条音频没有转写
 - 含派生版本（与源数据可能重叠）
 
@@ -3609,10 +3609,10 @@ LibriVox 西语有声书
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
-| [librivox_spanish@clean-v1-20261114](../../catalog/es_read_clean.yaml#L30) | — | 未登记 | 没有 |
+| [librivox_spanish@clean-v1-20261114](../../catalog/es_read_clean.yaml#L66) | 72.6 | 已登记 | 没有 |
 | [librivox_spanish@hf-ef936a31638d](../../catalog/librivox_spanish.yaml#L1) | 73.0 | 已登记 | 没有 |
 
-- `librivox_spanish@clean-v1-20261114`：LibriVox 有声书 73.0 h的清洗版本：音频解到本版本目录，生成 lhotse 清单，再用 Qwen3-ASR-1.7B + whisper-large-v3 双引擎清洗（consensus-v7），先试跑、复核被拒样本再跑全量。进行中
+- `librivox_spanish@clean-v1-20261114`：LibriVox 有声书的清洗版本：36,338 句 / 73.03 h 经 Qwen3-ASR-1.7B + whisper-large-v3 双引擎清洗（consensus-v7）保留 36,126 句 / 72.60 h，丢弃 212 句 / 0.43 h（0.6% 时长）。丢弃多为参考文本拼错或漏词
 - `librivox_spanish@hf-ef936a31638d`：LibriVox 西语有声书人工切分转写（LDC2020S01 的 HF 版本），讲者口音未标注
 - 含派生版本（与源数据可能重叠）
 
@@ -3890,10 +3890,10 @@ VoxForge 西语朗读（多为西班牙）
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
-| [voxforge_spanish@clean-v1-20261114](../../catalog/es_read_clean.yaml#L58) | — | 未登记 | 没有 |
+| [voxforge_spanish@clean-v1-20261114](../../catalog/es_read_clean.yaml#L131) | 49.5 | 已登记 | 没有 |
 | [voxforge_spanish@hf-1ce6b6f9701d](../../catalog/voxforge_spanish.yaml#L1) | 49.7 | 已登记 | 没有 |
 
-- `voxforge_spanish@clean-v1-20261114`：VoxForge 朗读 49.7 h的清洗版本：音频解到本版本目录，生成 lhotse 清单，再用 Qwen3-ASR-1.7B + whisper-large-v3 双引擎清洗（consensus-v7），先试跑、复核被拒样本再跑全量。进行中
+- `voxforge_spanish@clean-v1-20261114`：VoxForge 朗读的清洗版本：21,692 句 / 49.71 h 经 Qwen3-ASR-1.7B + whisper-large-v3 双引擎清洗（consensus-v7）保留 21,603 句 / 49.52 h，丢弃 89 句 / 0.19 h（0.4% 时长）。insufficient_engines 73 句多为整段满幅失真的录音（RMS 1.0），Qwen3-ASR 输出为空、whisper 输出 "Gracias por ver el video."，集中在少数说话人
 - `voxforge_spanish@hf-1ce6b6f9701d`：VoxForge 西语朗读。约 37.0 h 为西班牙口音，阿根廷、拉美、墨西哥、智利共约 11.6 h；可按 country 字段筛选美洲部分。许可为 GPL-3.0
 - 含派生版本（与源数据可能重叠）
 
@@ -3953,10 +3953,10 @@ WHAM! 噪声训练划分
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
-| [wikipedia_spanish@clean-v1-20261114](../../catalog/es_read_clean.yaml#L2) | — | 未登记 | 没有 |
+| [wikipedia_spanish@clean-v1-20261114](../../catalog/es_read_clean.yaml#L2) | 24.2 | 已登记 | 没有 |
 | [wikipedia_spanish@hf-0afbf012ed67](../../catalog/wikipedia_spanish.yaml#L1) | 25.6 | 已登记 | 没有 |
 
-- `wikipedia_spanish@clean-v1-20261114`：维基百科条目朗读 25.6 h的清洗版本：音频解到本版本目录，生成 lhotse 清单，再用 Qwen3-ASR-1.7B + whisper-large-v3 双引擎清洗（consensus-v7），先试跑、复核被拒样本再跑全量。进行中
+- `wikipedia_spanish@clean-v1-20261114`：维基百科条目朗读的清洗版本：11,569 句 / 25.63 h 经 Qwen3-ASR-1.7B + whisper-large-v3 双引擎清洗（consensus-v7）保留 10,936 句 / 24.23 h，丢弃 633 句 / 1.40 h（5.5% 时长）。丢弃集中在把网址、数字、字母读法逐字写出的句子（"hache te te pe dos puntos…"，引擎写成 http://、7,08%）和参考文本拼错的句子；前者作为训练文本会教模型输出读法，丢掉不吃亏
 - `wikipedia_spanish@hf-0afbf012ed67`：西语维基百科有声条目（Wikipedia Grabada）朗读，LDC2021S07 的 HF 版本，讲者口音未标注
 - 含派生版本（与源数据可能重叠）
 
