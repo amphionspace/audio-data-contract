@@ -2158,6 +2158,18 @@ Emilia-YODAS 多语种 YouTube 语音
 
 - `hw_sft@hw-20261014`：阶段 3 热词 ShareGPT。带 Hotwords 的行是热词转写，系统提示为空的行是普通转写。音频指向已注册源文件
 
+### indic_diarbench
+
+22 种印度语言多人对话评测（DiarBench）
+
+语言：as、bn、brx、doi、gu、hi、kn、kok、ks、mai、ml、mni、mr、ne、or、pa、sa、sat、sd、ta、te、ur · 任务：语音识别、带说话人标注的语音识别、说话人分段与归属
+
+| 版本 | 时长（小时） | 口径 | COS |
+|---|---:|---|---|
+| [indic_diarbench@hf-92877bad8aab](../../catalog/indic_diarbench.yaml#L1) | 107.7 | 已登记 | 没有 |
+
+- `indic_diarbench@hf-92877bad8aab`：Sarvam AI 2026-07 发布（Interspeech 2026）的印度语言说话人日志加转写评测集，覆盖全部 22 种官方语言，1,164 段、107.7 小时， 98,545 个人工校正的带时间戳、带说话人的转写段，平均重叠约 12.8%。三种录音条件：near_field 约 53.3 小时（线上会议，每人一个近讲麦克风）， far_field 约 26.8 小时（远场麦克风，只有使用人数最多的 8 种语言），in_the_wild 约 27.7 小时（YouTube 视频，10 种语言）。 每种语言一个 test Parquet，内嵌 16 kHz 单声道 WAV，字段含 recording_id、dataset_type、num_speakers、annotated_transcript （speaker_id、start_time、end_time、transcript），转写里英语借词附括号原文，听不清处标 <unintelligible>。只有测试集。CC BY 4.0
+
 ### indicvoices
 
 22 种印度语言自然语音（IndicVoices）
@@ -3747,6 +3759,18 @@ TEDx 西语演讲（仅限非商用）
 | [tele_con_ciencia@hf-d870d927f530](../../catalog/tele_con_ciencia.yaml#L1) | 28.3 | 已登记 | 没有 |
 
 - `tele_con_ciencia@hf-d870d927f530`：墨西哥科普电视节目 TELEconCIENCIA 的语音，墨西哥口音
+
+### treble10_rir
+
+10 个带家具房间的模拟房间冲激响应（Treble10）
+
+语言：und · 任务：rir
+
+| 版本 | 时长（小时） | 口径 | COS |
+|---|---:|---|---|
+| [treble10_rir@hf-5755ba8b59f6](../../catalog/treble10_rir.yaml#L1) | 1.5 | 已登记 | 没有 |
+
+- `treble10_rir@hf-5755ba8b59f6`：Treble Technologies 2025-10 发布，用 Treble SDK 对 10 个带家具的真实户型房间（浴室、卧室、带/不带走廊的客厅、会议室各 2 个， 14–46 m³）做混合仿真：5 kHz 以下用波动方程数值解（DG-FEM），以上用几何声学，覆盖 32 kHz 采样的全频带。每个房间 5 个声源、 共 137 个接收点，rir_mono 和 rir_6ch（6 麦圆柱形设备）各 3,085 条，每条带房间、声源/接收点坐标、直达距离、分频带 EDT/T30/C50 和吸声系数，平均 T30 0.17–0.94 秒。Parquet 内嵌 32 kHz 浮点 WAV，用于远场模拟前要重采样到 16 kHz。只下载了单声道和 6 声道部分， 没有下载 8 阶 Ambisonics 子集（rir_hoa8，56 GB）。另有 geometry/ 下的房间和设备示意图。CC BY-NC-SA 4.0，仅限非商用
 
 ### voices_noise
 

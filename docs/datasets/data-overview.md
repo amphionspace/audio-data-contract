@@ -1,6 +1,6 @@
 # 数据总览
 
-当前登记 **238 个数据集**；另有 **23 个下载来源声明**和 **1 个训练混合配方**。登记不代表本机文件已齐备。
+当前登记 **240 个数据集**；另有 **23 个下载来源声明**和 **1 个训练混合配方**。登记不代表本机文件已齐备。
 
 时长取单个版本的最大值，不跨版本相加；≈ 为参考表或估算值，— 为暂无完整时长。各版本的时长、说明、COS 地址和质量证据见[版本明细](data-versions.md)。
 
@@ -158,6 +158,7 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [hard_hw_sft](data-versions.md#hard_hw_sft) | en、zh | 热词增强语音识别 | 109.4 | 热词难例 SFT 数据（ShareGPT 格式） | `备份桶:audio-data-contract/datasets/hard_hw_sft/` |
 | [hotword_bench](data-versions.md#hotword_bench) | en、es、zh | 热词增强语音识别 | — | 中英热词评测集，仅评测 | 没有 |
 | [hw_sft](data-versions.md#hw_sft) | en、zh | 语音识别、热词增强语音识别 | 2,636.5 | 热词 SFT 数据（ShareGPT 格式），含普通转写 | 没有 |
+| [indic_diarbench](data-versions.md#indic_diarbench) | as、bn、brx、doi、gu、hi、kn、kok、ks、mai、ml、mni、mr、ne、or、pa、sa、sat、sd、ta、te、ur | 语音识别、带说话人标注的语音识别、说话人分段与归属 | 107.7 | 22 种印度语言多人对话评测（DiarBench） | 没有 |
 | [indicvoices](data-versions.md#indicvoices) | as、bn、brx、doi、gu、hi、kn、kok、ks、mai、ml、mni、mr、ne、or、pa、sa、sat、sd、ta、te、ur | 语音识别 | — | 22 种印度语言自然语音（IndicVoices） | 快照 20260914 |
 | [meeting_benchmark](data-versions.md#meeting_benchmark) | en、zh、zh-en | 带说话人标注的语音识别 | 21.2 | 约 180 秒长度的中英会议转写评测集 | `备份桶:audio-data-contract/datasets/meeting_180s_benchmark/` |
 | [meeting_selection_panel](data-versions.md#meeting_selection_panel) | en、zh | 带说话人标注的语音识别 | 12.4 | 会议模型选模面板（中英真实会议） | `备份桶:audio-data-contract/datasets/meeting_selection_panel/` |
@@ -261,6 +262,7 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [tarsila_asr](data-versions.md#tarsila_asr) | pt | 语音识别 | 72.5 | 巴西葡语 ASR 合并测试集（TARSILA） | 没有 |
 | [tedx_spanish](data-versions.md#tedx_spanish) | es | 语音识别 | 24.5 | TEDx 西语演讲（仅限非商用） | 没有 |
 | [tele_con_ciencia](data-versions.md#tele_con_ciencia) | es | 语音识别 | 28.3 | 墨西哥西语科普电视节目 | 没有 |
+| [treble10_rir](data-versions.md#treble10_rir) | und | rir | 1.5 | 10 个带家具房间的模拟房间冲激响应（Treble10） | 没有 |
 | [voices_noise](data-versions.md#voices_noise) | und | noise | 128.3 | VOiCES 真实房间噪声与背景人声 | `备份桶:audio-data-contract/datasets/voices/` |
 | [voxconverse](data-versions.md#voxconverse) | und | 说话人分段与归属 | 43.5 | YouTube 视频说话人日志评测（VoxConverse） | 没有 |
 | [voxforge_spanish](data-versions.md#voxforge_spanish) | es | 语音识别 | 49.7 | VoxForge 西语朗读（多为西班牙） | 没有 |

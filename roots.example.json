@@ -119,5 +119,7 @@
   "krisp_voice_isolation": "/workspace/data/datasets/krisp_voice_isolation",
   "cetuc": "/workspace/data/datasets/cetuc",
   "open_yap": "/workspace/data/datasets/open_yap",
-  "wenetspeech_wu_bench": "/workspace/data/datasets/wenetspeech_wu_bench"
+  "wenetspeech_wu_bench": "/workspace/data/datasets/wenetspeech_wu_bench",
+  "treble10_rir": "/workspace/data/datasets/treble10_rir",
+  "indic_diarbench": "/workspace/data/datasets/indic_diarbench"
 }
