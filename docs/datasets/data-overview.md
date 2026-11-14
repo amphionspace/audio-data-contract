@@ -1,6 +1,6 @@
 # 数据总览
 
-当前登记 **248 个数据集**；另有 **24 个下载来源声明**和 **1 个训练混合配方**。登记不代表本机文件已齐备。
+当前登记 **249 个数据集**；另有 **26 个下载来源声明**和 **1 个训练混合配方**。登记不代表本机文件已齐备。
 
 时长取单个版本的最大值，不跨版本相加；≈ 为参考表或估算值，— 为暂无完整时长。各版本的时长、说明、COS 地址和质量证据见[版本明细](data-versions.md)。
 
@@ -197,6 +197,7 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [tts_crosslingual_enroll](data-versions.md#tts_crosslingual_enroll) | en、zh | 目标说话人语音识别 | — | TS-ASR 训练用跨语言 TTS 注册音频 | 没有 |
 | [vitw](data-versions.md#vitw) | en、zh | 语音识别 | 1,085.4 | 真实场景中英语音（VITW）；含回声、远场等评测 | 部分版本：快照 20260914、`备份桶:audio-data-contract/datasets/` 下 17 个目录 |
 | [waxal-asr](data-versions.md#waxal-asr) | ach、aka、am、dag、dga、ee、ff、kpo、lg、ln、mas、mg、nyn、om、sid、sn、sog、ti、wal | 语音识别 | — | 19 种非洲语言语音（WAXAL） | 快照 20260914 |
+| [waxal_tts](data-versions.md#waxal_tts) | ach、bau、ewe、fat、ful、hau、ibo、kik、lug、luo、nyn、pcm、swa、twi、yor | 语音合成 | 264.1 | 15 种非洲语言朗读 TTS 数据（WAXAL） | 没有 |
 | [wutheringwaves](data-versions.md#wutheringwaves) | en、ja、ko、zh | 语音合成 | 134.8 | 《鸣潮》多语配音，TTS 用 | `TTS 桶:WutheringWaves-2.2/`（原始数据） |
 | [yodas_granary_es_pt](data-versions.md#yodas_granary_es_pt) | es、pt | 语音识别 | 3,658.5 | YouTube 西语/葡语人工字幕语音（YODAS） | 部分版本：快照 20260914 |
 | [zenless_voice](data-versions.md#zenless_voice) | en、ja、ko、zh | 语音合成 | 554.4 | 《绝区零》多语配音，TTS 用 | `TTS 桶:zenless-voice/`（原始数据） |
@@ -312,6 +313,8 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [lemas](../../catalog/download_queue.yaml#L250) | hf-91f0c1b9a29f | multi | 语音识别 |
 | [loquacious_set](../../catalog/loquacious_set.yaml#L1) | hf-0e84cdb9e4b8 | en | 语音识别 |
 | [masc](../../catalog/masc.yaml#L1) | hf-cb7f1f0618bd | ar | 语音识别 |
+| [multitalk_ft](../../catalog/multitalk.yaml#L38) | hf-18038b5d4cdd | zh、en | 带说话人标注的语音识别 |
+| [multitalk_pt](../../catalog/multitalk.yaml#L1) | hf-8196ea3cadda | zh、en | 带说话人标注的语音识别 |
 | [omnilingual-asr-corpus](../../catalog/download_queue.yaml#L225) | hf-8648ba894637 | multi | 语音识别 |
 | [peoples_speech](../../catalog/peoples_speech.yaml#L1) | hf-f10597c5d3d3 | en | 语音识别 |
 | [reazonspeech](../../catalog/download_queue.yaml#L274) | hf-0df78f991f6a | ja | 语音识别 |

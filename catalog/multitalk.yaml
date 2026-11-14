@@ -1,0 +1,74 @@
+  - schema_version: dataset-catalog/2.0
+    dataset_id: multitalk_pt
+    version: hf-8196ea3cadda
+    languages:
+      - zh
+      - en
+    tasks:
+      - speaker_attributed_asr
+    aliases: []
+    artifacts:
+      - name: source
+        kind: hf-dataset-snapshot
+        root_alias: multitalk_pt
+        relative_path: source/hf-8196ea3cadda
+    splits:
+      all:
+        artifacts:
+          source:
+            - source
+    provenance:
+      summary: 合成中英两人长对话预训练语料（MultiTalkPT）
+      source: Hugging Face
+      source_id: MultiTalk/MultiTalkPT
+      revision: 8196ea3cadda6f968e84e088a800c85d9c25e6b2
+      url: https://huggingface.co/datasets/MultiTalk/MultiTalkPT
+      paper: https://openreview.net/forum?id=G9Adf8ZYoP
+      release_date: '2026-10-18'
+      license:
+        - cc-by-nc-4.0
+      inventory_status: download_planned
+      description: >-
+        MultiTalk（NeurIPS 2026 Evaluations and Datasets Track）发布的全双工语音对话预训练语料：用语音合成生成的中英文两人角色扮演长对话，
+        论文称 5.44 万小时。每条有对话音频、各说话人的音色提示音频、人设 system prompt，以及带说话人标签的词级时间对齐
+        （transcripts/*.parquet），清单是 data_en.jsonl（1.5 GB）和 data_zh.jsonl（0.13 GB），英文占绝大部分。音频是 audio/ 和 voices/
+        下的大量单个文件，HF 统计仓库占用约 7.3 TB，远超本轮自动下载上限，先登记来源；未逐个列出文件，下载前需重新列清单。
+        合成语音，适合全双工对话模型预训练，不宜当真人语音做 ASR 评测。CC BY-NC 4.0。
+      download_scope: Complete MultiTalkPT repository (audio, voice prompts, manifests and word-level transcripts)
+  - schema_version: dataset-catalog/2.0
+    dataset_id: multitalk_ft
+    version: hf-18038b5d4cdd
+    languages:
+      - zh
+      - en
+    tasks:
+      - speaker_attributed_asr
+    aliases: []
+    artifacts:
+      - name: source
+        kind: hf-dataset-snapshot
+        root_alias: multitalk_ft
+        relative_path: source/hf-18038b5d4cdd
+    splits:
+      all:
+        artifacts:
+          source:
+            - source
+    provenance:
+      summary: 合成中英多人对话微调语料（MultiTalkFT）
+      source: Hugging Face
+      source_id: MultiTalk/MultiTalkFT
+      revision: 18038b5d4cdd2bd30584449f4e6289274058bdca
+      url: https://huggingface.co/datasets/MultiTalk/MultiTalkFT
+      paper: https://openreview.net/forum?id=G9Adf8ZYoP
+      release_date: '2026-10-18'
+      license:
+        - cc-by-nc-4.0
+      inventory_status: download_planned
+      description: >-
+        MultiTalk 的全双工多人对话微调语料：用语音合成生成的中英文多人（论文称 2–9 人）角色扮演对话，论文称 3,200 小时。
+        分立体声和多声道两种版本（data_{zh,en}.jsonl 与 data_{zh,en}_multichannel.jsonl），每条有音频、音色提示、人设 system prompt，
+        transcripts/*.parquet 给出说话人到声道的映射和带说话人标签的词级时间对齐。音频是 audio/group_* 下的大量单个文件，HF 统计仓库
+        占用约 482 GB，超过本轮自动下载上限，先登记来源；未逐个列出文件，下载前需重新列清单。配套评测集 MultiTalkBench 的音频取自
+        AMI 和 AliMeeting（项目已有），未单独登记。合成语音，不宜当真人语音做 ASR 评测。CC BY-NC 4.0。
+      download_scope: Complete MultiTalkFT repository (audio, voice prompts, manifests and word-level transcripts)

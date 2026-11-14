@@ -2980,6 +2980,18 @@ TS-ASR 训练用跨语言 TTS 注册音频
 |---|---:|---|---|
 | [waxal-asr@hf-e91442a8989b](../../catalog/multilingual_multispeaker.yaml#L290) | — | 未登记 | 快照 20260914 |
 
+### waxal_tts
+
+15 种非洲语言朗读 TTS 数据（WAXAL）
+
+语言：ach、bau、ewe、fat、ful、hau、ibo、kik、lug、luo、nyn、pcm、swa、twi、yor · 任务：语音合成
+
+| 版本 | 时长（小时） | 口径 | COS |
+|---|---:|---|---|
+| [waxal_tts@hf-5f4d8ca24f2b](../../catalog/waxal_tts.yaml#L1) | 264.1 | 已登记 | 没有 |
+
+- `waxal_tts@hf-5f4d8ca24f2b`：Google 与 Makerere 大学、加纳大学、Media Trust、Loud and Clear 等合作采集的 WAXAL 语料中的 TTS 部分：按音素平衡脚本朗读的 录音室级语音，本次登记 15 种语言、27,369 条、264.1 小时，每种语言 4–8 位朗读人（数据卡说是单说话人，实际 speaker_id 有 4–8 个）， 每条有 text、speaker_id、gender。各语言自带 train/validation/test 划分。音频大多是 48 kHz MP3，Baoule、Ewe 是 48 kHz 浮点 WAV， Fula 是 44.1/48 kHz PCM WAV。同一仓库的 ASR 部分已作为 waxal-asr 登记（该版本 ASR 部分的文件数和总字节数与已登记版本相同）。 仓库 data/TTS 下还有 bam、fuf、wol 三种语言，但数据卡把它们的配置和语言声明都注释掉了，本次未下载。已知问题：yor 目录里 yor_tts-* 分片与 yor-* 逐行重复，统计只算一次；ful 有 1,829 行的音频是 macOS 的 ._ 元数据文件而不是音频，读取时要按音频头过滤。 许可证按提供方区分：加纳大学提供的 Fante、Twi、Baoule、Ewe 为 CC BY 4.0，其余为 CC BY-SA 4.0
+
 ### wutheringwaves
 
 《鸣潮》多语配音，TTS 用

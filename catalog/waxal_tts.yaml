@@ -1,0 +1,325 @@
+  - schema_version: dataset-catalog/2.0
+    dataset_id: waxal_tts
+    version: hf-5f4d8ca24f2b
+    languages:
+      - ach
+      - bau
+      - ewe
+      - fat
+      - ful
+      - hau
+      - ibo
+      - kik
+      - lug
+      - luo
+      - nyn
+      - pcm
+      - swa
+      - twi
+      - yor
+    tasks:
+      - tts
+    aliases:
+      - waxal-tts
+    artifacts:
+      - name: source
+        kind: hf-dataset-snapshot
+        root_alias: waxal_tts
+        relative_path: source/hf-5f4d8ca24f2b
+        metadata:
+          file_count: 185
+          expected_bytes: 32872885934
+          tree_sha256: c4ce7100d8e17a95e45717e9b9c7f483612ddb0db1eb7f7c6c0930182c2ebf8f
+      - name: download_state
+        kind: dataset-state
+        root_alias: waxal_tts
+        relative_path: versions/hf-5f4d8ca24f2b/download_state/state.json
+        expected_bytes: 975
+        sha256: 4124bda1118820e6e638dd503dbfa522a48440a8848c8657b97bb516ded61649
+    splits:
+      ach:
+        artifacts:
+          source:
+            - source
+        statistics:
+          count: 2031
+          speakers: 8
+          duration_hours: 23.9045
+          duration_basis: soundfile header duration of every embedded audio in data/TTS/ach Parquet; pinned upstream file hashes verified
+          rows_by_split:
+            train: 1621
+            validation: 218
+            test: 192
+          sample_formats:
+            1ch/48000Hz/MPEG_LAYER_III: 2031
+        provenance:
+          language_name: Acholi
+      bau:
+        artifacts:
+          source:
+            - source
+        statistics:
+          count: 1216
+          speakers: 4
+          duration_hours: 14.0547
+          duration_basis: soundfile header duration of every embedded audio in data/TTS/bau Parquet; pinned upstream file hashes verified
+          rows_by_split:
+            train: 972
+            validation: 122
+            test: 122
+          sample_formats:
+            1ch/48000Hz/FLOAT: 1216
+        provenance:
+          language_name: Baoule
+      ewe:
+        artifacts:
+          source:
+            - source
+        statistics:
+          count: 1519
+          speakers: 4
+          duration_hours: 11.6775
+          duration_basis: soundfile header duration of every embedded audio in data/TTS/ewe Parquet; pinned upstream file hashes verified
+          rows_by_split:
+            train: 1215
+            validation: 152
+            test: 152
+          sample_formats:
+            1ch/48000Hz/FLOAT: 1519
+        provenance:
+          language_name: Ewe
+      fat:
+        artifacts:
+          source:
+            - source
+        statistics:
+          count: 1171
+          speakers: 4
+          duration_hours: 11.2078
+          duration_basis: soundfile header duration of every embedded audio in data/TTS/fat Parquet; pinned upstream file hashes verified
+          rows_by_split:
+            train: 953
+            validation: 117
+            test: 101
+          sample_formats:
+            1ch/48000Hz/MPEG_LAYER_III: 1171
+        provenance:
+          language_name: Fante
+      ful:
+        artifacts:
+          source:
+            - source
+        statistics:
+          count: 2049
+          speakers: 8
+          duration_hours: 18.9158
+          duration_basis: soundfile header duration of every embedded audio in data/TTS/ful Parquet; pinned upstream file hashes verified; 1,829 rows whose audio is a macOS AppleDouble (._) stub are excluded
+          rows_by_split:
+            train: 1630
+            validation: 202
+            test: 217
+          sample_formats:
+            1ch/44100Hz/PCM_16: 1824
+            1ch/48000Hz/PCM_24: 198
+            1ch/48000Hz/FLOAT: 19
+            2ch/44100Hz/PCM_24: 7
+            2ch/44100Hz/FLOAT: 1
+        provenance:
+          language_name: Fula
+      hau:
+        artifacts:
+          source:
+            - source
+        statistics:
+          count: 1971
+          speakers: 8
+          duration_hours: 13.1153
+          duration_basis: soundfile header duration of every embedded audio in data/TTS/hau Parquet; pinned upstream file hashes verified
+          rows_by_split:
+            train: 1572
+            validation: 202
+            test: 197
+          sample_formats:
+            1ch/48000Hz/MPEG_LAYER_III: 1971
+        provenance:
+          language_name: Hausa
+      ibo:
+        artifacts:
+          source:
+            - source
+        statistics:
+          count: 1911
+          speakers: 8
+          duration_hours: 20.5768
+          duration_basis: soundfile header duration of every embedded audio in data/TTS/ibo Parquet; pinned upstream file hashes verified
+          rows_by_split:
+            train: 1552
+            validation: 159
+            test: 200
+          sample_formats:
+            1ch/48000Hz/MPEG_LAYER_III: 1911
+        provenance:
+          language_name: Igbo
+      kik:
+        artifacts:
+          source:
+            - source
+        statistics:
+          count: 2026
+          speakers: 8
+          duration_hours: 13.0209
+          duration_basis: soundfile header duration of every embedded audio in data/TTS/kik Parquet; pinned upstream file hashes verified
+          rows_by_split:
+            train: 1602
+            validation: 210
+            test: 214
+          sample_formats:
+            1ch/48000Hz/MPEG_LAYER_III: 2026
+        provenance:
+          language_name: Kikuyu
+      lug:
+        artifacts:
+          source:
+            - source
+        statistics:
+          count: 2024
+          speakers: 8
+          duration_hours: 26.7629
+          duration_basis: soundfile header duration of every embedded audio in data/TTS/lug Parquet; pinned upstream file hashes verified
+          rows_by_split:
+            train: 1608
+            validation: 211
+            test: 205
+          sample_formats:
+            1ch/48000Hz/MPEG_LAYER_III: 2024
+        provenance:
+          language_name: Luganda
+      luo:
+        artifacts:
+          source:
+            - source
+        statistics:
+          count: 1989
+          speakers: 8
+          duration_hours: 11.9526
+          duration_basis: soundfile header duration of every embedded audio in data/TTS/luo Parquet; pinned upstream file hashes verified
+          rows_by_split:
+            train: 1552
+            validation: 228
+            test: 209
+          sample_formats:
+            1ch/48000Hz/MPEG_LAYER_III: 1989
+        provenance:
+          language_name: Dholuo
+      nyn:
+        artifacts:
+          source:
+            - source
+        statistics:
+          count: 1987
+          speakers: 8
+          duration_hours: 28.1309
+          duration_basis: soundfile header duration of every embedded audio in data/TTS/nyn Parquet; pinned upstream file hashes verified
+          rows_by_split:
+            train: 1597
+            validation: 199
+            test: 191
+          sample_formats:
+            1ch/48000Hz/MPEG_LAYER_III: 1987
+        provenance:
+          language_name: Runyankole
+      pcm:
+        artifacts:
+          source:
+            - source
+        statistics:
+          count: 1993
+          speakers: 8
+          duration_hours: 13.3451
+          duration_basis: soundfile header duration of every embedded audio in data/TTS/pcm Parquet; pinned upstream file hashes verified
+          rows_by_split:
+            train: 1590
+            validation: 199
+            test: 204
+          sample_formats:
+            1ch/48000Hz/MPEG_LAYER_III: 1783
+            1ch/44100Hz/MPEG_LAYER_III: 210
+        provenance:
+          language_name: Nigerian Pidgin
+      swa:
+        artifacts:
+          source:
+            - source
+        statistics:
+          count: 1778
+          speakers: 7
+          duration_hours: 23.9985
+          duration_basis: soundfile header duration of every embedded audio in data/TTS/swa Parquet; pinned upstream file hashes verified
+          rows_by_split:
+            train: 1387
+            validation: 192
+            test: 199
+          sample_formats:
+            1ch/48000Hz/MPEG_LAYER_III: 1676
+            2ch/48000Hz/MPEG_LAYER_III: 102
+        provenance:
+          language_name: Swahili
+      twi:
+        artifacts:
+          source:
+            - source
+        statistics:
+          count: 1093
+          speakers: 4
+          duration_hours: 10.9342
+          duration_basis: soundfile header duration of every embedded audio in data/TTS/twi Parquet; pinned upstream file hashes verified
+          rows_by_split:
+            train: 872
+            validation: 117
+            test: 104
+          sample_formats:
+            1ch/48000Hz/MPEG_LAYER_III: 1093
+        provenance:
+          language_name: Twi
+      yor:
+        artifacts:
+          source:
+            - source
+        statistics:
+          count: 2611
+          speakers: 8
+          duration_hours: 22.5171
+          duration_basis: soundfile header duration of every embedded audio in data/TTS/yor Parquet; pinned upstream file hashes verified; the yor_tts-* shards duplicate yor-* row for row and are counted once
+          rows_by_split:
+            train: 2233
+            validation: 201
+            test: 177
+          sample_formats:
+            1ch/48000Hz/MPEG_LAYER_III: 2611
+        provenance:
+          language_name: Yoruba
+    provenance:
+      summary: 15 种非洲语言朗读 TTS 数据（WAXAL）
+      source: Hugging Face
+      source_id: google/WaxalNLP
+      revision: 5f4d8ca24f2b9d168b2ee545f1febaaff4b40580
+      url: https://huggingface.co/datasets/google/WaxalNLP
+      paper: https://arxiv.org/abs/2602.02734
+      download_mirror: https://hf-mirror.com
+      release_date: '2026-09-01'
+      description: >-
+        Google 与 Makerere 大学、加纳大学、Media Trust、Loud and Clear 等合作采集的 WAXAL 语料中的 TTS 部分：按音素平衡脚本朗读的
+        录音室级语音，本次登记 15 种语言、27,369 条、264.1 小时，每种语言 4–8 位朗读人（数据卡说是单说话人，实际 speaker_id 有 4–8 个），
+        每条有 text、speaker_id、gender。各语言自带 train/validation/test 划分。音频大多是 48 kHz MP3，Baoule、Ewe 是 48 kHz 浮点 WAV，
+        Fula 是 44.1/48 kHz PCM WAV。同一仓库的 ASR 部分已作为 waxal-asr 登记（该版本 ASR 部分的文件数和总字节数与已登记版本相同）。
+        仓库 data/TTS 下还有 bam、fuf、wol 三种语言，但数据卡把它们的配置和语言声明都注释掉了，本次未下载。已知问题：yor 目录里
+        yor_tts-* 分片与 yor-* 逐行重复，统计只算一次；ful 有 1,829 行的音频是 macOS 的 ._ 元数据文件而不是音频，读取时要按音频头过滤。
+        许可证按提供方区分：加纳大学提供的 Fante、Twi、Baoule、Ewe 为 CC BY 4.0，其余为 CC BY-SA 4.0。
+      license:
+        - cc-by-4.0
+        - cc-by-sa-4.0
+      download_scope: WAXAL TTS Parquet for the 15 languages enabled in the card configs (bam, fuf and wol excluded) plus the card
+      expected_download_files: 185
+      expected_download_bytes: 32872885934
+      integrity: verified
+      local_scan_date: '2026-11-14'
