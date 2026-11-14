@@ -1,4 +1,4 @@
-# 西/葡自发语音清洗（2026-11-14 开工，占位）：解出音频、生成 lhotse 清单，再走 consensus-v8 双引擎清洗。运行目录 es-pt-spont-clean-20261114。
+# 西/葡自发语音清洗：解出音频、生成 lhotse 清单，consensus-v8 双引擎清洗，2026-11-15 转正。运行目录 es-pt-spont-clean-20261114。
 - schema_version: dataset-catalog/2.0
   dataset_id: ciempiess_balance
   version: clean-v1-20261114
@@ -9,6 +9,24 @@
   aliases: []
   derived_from: ciempiess_balance@hf-e48eac011954
   artifacts:
+  - name: recordings
+    kind: lhotse-recordings
+    root_alias: aidc_data
+    relative_path: datasets/ciempiess_balance/versions/clean-v1-20261114/manifests/ciempiess_balance_recordings.jsonl.gz
+    expected_bytes: 122547
+    sha256: 48b1f55a62517a7645d2bc26ea87cac2fa5a06987f16e474dda2411a7d294148
+    metadata:
+      record_count: 8555
+      audio: FLAC (HF Parquet bytes as shipped) under datasets/ciempiess_balance/versions/clean-v1-20261114/audio/
+  - name: supervisions
+    kind: lhotse-supervisions
+    root_alias: aidc_data
+    relative_path: datasets/ciempiess_balance/versions/clean-v1-20261114/manifests/ciempiess_balance_supervisions_clean.jsonl.gz
+    expected_bytes: 641256
+    sha256: f83d6097cffb86278fe7d8781bb22c8d5ee4c689744197e0ffd88d801d1cf2e1
+    metadata:
+      record_count: 8524
+      pass_count: 8524
   - name: preparation_state
     kind: dataset-state
     root_alias: aidc_data
@@ -16,15 +34,35 @@
   splits:
     train:
       artifacts:
+        recordings:
+        - recordings
+        supervisions:
+        - supervisions
         preparation_state:
         - preparation_state
-      provenance:
-        preparation_status: building
+      statistics:
+        records: 8524
+        duration_hours: 18.29
+        duration_basis: sum of supervision durations of the kept rows
+        source_records: 8555
+        dropped_records:
+          bad_annotation: 30
+          ambiguous: 1
+        dropped_hours: 0.05
+        forced_language_rescued_records: 1
+  recipe_parameters:
+    filter_rules: consensus-v8
+    engines:
+    - Qwen3-ASR-1.7B
+    - whisper-large-v3
+    clean_pass_only: true
+    qwen_language: forced via to_language on the re-check of first-pass rejects (first pass auto-detected)
+    text: 'upstream normalized_text as shipped (lowercase)'
   provenance:
-    preparation_status: building
+    preparation_status: prepared
     owner: mingdong
     description: >-
-      CIEMPIESS Balance 墨西哥西语广播访谈 18.3 h的清洗版本：音频解到本版本目录，生成 lhotse 清单，再用 Qwen3-ASR-1.7B + whisper-large-v3 双引擎清洗（consensus-v8：西/葡数字拼写、por que/porque 统一后再比较），试跑 4,499 句、被拒样本已全部复核。进行中。
+      墨西哥西语广播访谈 CIEMPIESS Balance。8,555 句 / 18.34 h 经 Qwen3-ASR-1.7B + whisper-large-v3 双引擎清洗（consensus-v8：西/葡数字拼写、por que/porque 统一后比较）保留 8,524 句 / 18.29 h，丢弃 31 句 / 0.05 h（0.3% 时长）。首轮 Qwen 未固定语言，被拒句子用固定语言的 Qwen 复核后按同一规则重判。试跑、抽检和误杀估计见 run_dir README。
     source: ciempiess_balance@hf-e48eac011954
     run_dir: /workspace/workspace/mingdong/data/amphiondata/es-pt-spont-clean-20261114
 - schema_version: dataset-catalog/2.0
@@ -37,6 +75,24 @@
   aliases: []
   derived_from: ciempiess_fem@hf-e49f428d174b
   artifacts:
+  - name: recordings
+    kind: lhotse-recordings
+    root_alias: aidc_data
+    relative_path: datasets/ciempiess_fem/versions/clean-v1-20261114/manifests/ciempiess_fem_recordings.jsonl.gz
+    expected_bytes: 94176
+    sha256: 346c36a5e495bcdb5c5e851789df6e05176b9f72a5ef3aaaef34277f8a4a2388
+    metadata:
+      record_count: 6505
+      audio: FLAC (HF Parquet bytes as shipped) under datasets/ciempiess_fem/versions/clean-v1-20261114/audio/
+  - name: supervisions
+    kind: lhotse-supervisions
+    root_alias: aidc_data
+    relative_path: datasets/ciempiess_fem/versions/clean-v1-20261114/manifests/ciempiess_fem_supervisions_clean.jsonl.gz
+    expected_bytes: 507631
+    sha256: 2336328891ec38d8bf90b4f6a7108267ef8646a1fd680dc14e5cdf3028a4c128
+    metadata:
+      record_count: 6483
+      pass_count: 6483
   - name: preparation_state
     kind: dataset-state
     root_alias: aidc_data
@@ -44,15 +100,34 @@
   splits:
     train:
       artifacts:
+        recordings:
+        - recordings
+        supervisions:
+        - supervisions
         preparation_state:
         - preparation_state
-      provenance:
-        preparation_status: building
+      statistics:
+        records: 6483
+        duration_hours: 13.87
+        duration_basis: sum of supervision durations of the kept rows
+        source_records: 6505
+        dropped_records:
+          bad_annotation: 21
+          ambiguous: 1
+        dropped_hours: 0.05
+  recipe_parameters:
+    filter_rules: consensus-v8
+    engines:
+    - Qwen3-ASR-1.7B
+    - whisper-large-v3
+    clean_pass_only: true
+    qwen_language: forced via to_language on the re-check of first-pass rejects (first pass auto-detected)
+    text: 'upstream normalized_text as shipped (lowercase)'
   provenance:
-    preparation_status: building
+    preparation_status: prepared
     owner: mingdong
     description: >-
-      CIEMPIESS Fem 墨西哥西语女声广播 13.9 h的清洗版本：音频解到本版本目录，生成 lhotse 清单，再用 Qwen3-ASR-1.7B + whisper-large-v3 双引擎清洗（consensus-v8：西/葡数字拼写、por que/porque 统一后再比较），试跑 4,499 句、被拒样本已全部复核。进行中。
+      墨西哥西语女声广播 CIEMPIESS Fem。6,505 句 / 13.92 h 经 Qwen3-ASR-1.7B + whisper-large-v3 双引擎清洗（consensus-v8：西/葡数字拼写、por que/porque 统一后比较）保留 6,483 句 / 13.87 h，丢弃 22 句 / 0.05 h（0.3% 时长）。首轮 Qwen 未固定语言，被拒句子用固定语言的 Qwen 复核后按同一规则重判。试跑、抽检和误杀估计见 run_dir README。
     source: ciempiess_fem@hf-e49f428d174b
     run_dir: /workspace/workspace/mingdong/data/amphiondata/es-pt-spont-clean-20261114
 - schema_version: dataset-catalog/2.0
@@ -65,6 +140,24 @@
   aliases: []
   derived_from: tedx_spanish@hf-469308f10c91
   artifacts:
+  - name: recordings
+    kind: lhotse-recordings
+    root_alias: aidc_data
+    relative_path: datasets/tedx_spanish/versions/clean-v1-20261114/manifests/tedx_spanish_recordings.jsonl.gz
+    expected_bytes: 149255
+    sha256: 65e7188d320be29d50127bc6196f224675fc40292412d81e4f06ef0f0f778ef4
+    metadata:
+      record_count: 11243
+      audio: FLAC (HF Parquet bytes as shipped) under datasets/tedx_spanish/versions/clean-v1-20261114/audio/
+  - name: supervisions
+    kind: lhotse-supervisions
+    root_alias: aidc_data
+    relative_path: datasets/tedx_spanish/versions/clean-v1-20261114/manifests/tedx_spanish_supervisions_clean.jsonl.gz
+    expected_bytes: 855656
+    sha256: bdac2056b3413a6b64118395a2b72478288a42845c802e84434216d6a8a9e290
+    metadata:
+      record_count: 11212
+      pass_count: 11212
   - name: preparation_state
     kind: dataset-state
     root_alias: aidc_data
@@ -72,15 +165,33 @@
   splits:
     train:
       artifacts:
+        recordings:
+        - recordings
+        supervisions:
+        - supervisions
         preparation_state:
         - preparation_state
-      provenance:
-        preparation_status: building
+      statistics:
+        records: 11212
+        duration_hours: 24.43
+        duration_basis: sum of supervision durations of the kept rows
+        source_records: 11243
+        dropped_records:
+          bad_annotation: 31
+        dropped_hours: 0.06
+  recipe_parameters:
+    filter_rules: consensus-v8
+    engines:
+    - Qwen3-ASR-1.7B
+    - whisper-large-v3
+    clean_pass_only: true
+    qwen_language: forced via to_language on the re-check of first-pass rejects (first pass auto-detected)
+    text: 'upstream normalized_text as shipped (lowercase)'
   provenance:
-    preparation_status: building
+    preparation_status: prepared
     owner: mingdong
     description: >-
-      TEDx Spanish 演讲 24.5 h的清洗版本：音频解到本版本目录，生成 lhotse 清单，再用 Qwen3-ASR-1.7B + whisper-large-v3 双引擎清洗（consensus-v8：西/葡数字拼写、por que/porque 统一后再比较），试跑 4,499 句、被拒样本已全部复核。进行中。
+      TEDx Spanish 演讲。11,243 句 / 24.50 h 经 Qwen3-ASR-1.7B + whisper-large-v3 双引擎清洗（consensus-v8：西/葡数字拼写、por que/porque 统一后比较）保留 11,212 句 / 24.43 h，丢弃 31 句 / 0.06 h（0.2% 时长）。首轮 Qwen 未固定语言，被拒句子用固定语言的 Qwen 复核后按同一规则重判。试跑、抽检和误杀估计见 run_dir README。
     source: tedx_spanish@hf-469308f10c91
     run_dir: /workspace/workspace/mingdong/data/amphiondata/es-pt-spont-clean-20261114
 - schema_version: dataset-catalog/2.0
@@ -93,6 +204,24 @@
   aliases: []
   derived_from: tele_con_ciencia@hf-d870d927f530
   artifacts:
+  - name: recordings
+    kind: lhotse-recordings
+    root_alias: aidc_data
+    relative_path: datasets/tele_con_ciencia/versions/clean-v1-20261114/manifests/tele_con_ciencia_recordings.jsonl.gz
+    expected_bytes: 167379
+    sha256: c827fb8cd9e62d67e88687c1b77edab685a7a56252570a0c734ad57880dc6007
+    metadata:
+      record_count: 12072
+      audio: FLAC (HF Parquet bytes as shipped) under datasets/tele_con_ciencia/versions/clean-v1-20261114/audio/
+  - name: supervisions
+    kind: lhotse-supervisions
+    root_alias: aidc_data
+    relative_path: datasets/tele_con_ciencia/versions/clean-v1-20261114/manifests/tele_con_ciencia_supervisions_clean.jsonl.gz
+    expected_bytes: 909189
+    sha256: 121dc36367c7ffe163042eb23a9851b6740e343f77fd5ac9406f00fe6c6b8dca
+    metadata:
+      record_count: 11845
+      pass_count: 11845
   - name: preparation_state
     kind: dataset-state
     root_alias: aidc_data
@@ -100,15 +229,36 @@
   splits:
     train:
       artifacts:
+        recordings:
+        - recordings
+        supervisions:
+        - supervisions
         preparation_state:
         - preparation_state
-      provenance:
-        preparation_status: building
+      statistics:
+        records: 11845
+        duration_hours: 27.74
+        duration_basis: sum of supervision durations of the kept rows
+        source_records: 12072
+        dropped_records:
+          bad_annotation: 210
+          ambiguous: 10
+          no_valid_engine: 5
+          insufficient_engines: 2
+        dropped_hours: 0.54
+  recipe_parameters:
+    filter_rules: consensus-v8
+    engines:
+    - Qwen3-ASR-1.7B
+    - whisper-large-v3
+    clean_pass_only: true
+    qwen_language: forced via to_language on the re-check of first-pass rejects (first pass auto-detected)
+    text: 'upstream normalized_text as shipped (lowercase)'
   provenance:
-    preparation_status: building
+    preparation_status: prepared
     owner: mingdong
     description: >-
-      Tele con Ciencia 墨西哥科普电视 28.3 h的清洗版本：音频解到本版本目录，生成 lhotse 清单，再用 Qwen3-ASR-1.7B + whisper-large-v3 双引擎清洗（consensus-v8：西/葡数字拼写、por que/porque 统一后再比较），试跑 4,499 句、被拒样本已全部复核。进行中。
+      墨西哥科普电视 Tele con Ciencia（源里 1 句空音频剔除）。丢弃以标注截断、与音频错位和错别字为主。12,072 句 / 28.28 h 经 Qwen3-ASR-1.7B + whisper-large-v3 双引擎清洗（consensus-v8：西/葡数字拼写、por que/porque 统一后比较）保留 11,845 句 / 27.74 h，丢弃 227 句 / 0.54 h（1.9% 时长）。首轮 Qwen 未固定语言，被拒句子用固定语言的 Qwen 复核后按同一规则重判。试跑、抽检和误杀估计见 run_dir README。
     source: tele_con_ciencia@hf-d870d927f530
     run_dir: /workspace/workspace/mingdong/data/amphiondata/es-pt-spont-clean-20261114
 - schema_version: dataset-catalog/2.0
@@ -122,22 +272,102 @@
   aliases: []
   derived_from: mtedx@hf-0b97ef40298d
   artifacts:
+  - name: recordings_es
+    kind: lhotse-recordings
+    root_alias: aidc_data
+    relative_path: datasets/mtedx/versions/clean-v1-20261114/manifests/mtedx_es_recordings.jsonl.gz
+    expected_bytes: 1368327
+    sha256: 3adcb5f4dd603f59a9951e5628b2503bdfefce1d2b1c0b4d18bf04a3f7548954
+    metadata:
+      record_count: 100198
+      audio: FLAC (HF Parquet bytes as shipped) under datasets/mtedx/versions/clean-v1-20261114/audio/
+  - name: supervisions_es
+    kind: lhotse-supervisions
+    root_alias: aidc_data
+    relative_path: datasets/mtedx/versions/clean-v1-20261114/manifests/mtedx_es_supervisions_clean.jsonl.gz
+    expected_bytes: 6294048
+    sha256: 8cd7c745cac3d8337fef6fb922a62b34db82fbe08195af825ee60ebb5318d93a
+    metadata:
+      record_count: 97768
+      pass_count: 97768
+  - name: recordings_pt
+    kind: lhotse-recordings
+    root_alias: aidc_data
+    relative_path: datasets/mtedx/versions/clean-v1-20261114/manifests/mtedx_pt_recordings.jsonl.gz
+    expected_bytes: 1213776
+    sha256: 6c1721c682150b25a94e834a57170a846367647b2b3bbbd3c7ac9dbd68672ffe
+    metadata:
+      record_count: 88798
+      audio: FLAC (HF Parquet bytes as shipped) under datasets/mtedx/versions/clean-v1-20261114/audio/
+  - name: supervisions_pt
+    kind: lhotse-supervisions
+    root_alias: aidc_data
+    relative_path: datasets/mtedx/versions/clean-v1-20261114/manifests/mtedx_pt_supervisions_clean.jsonl.gz
+    expected_bytes: 5455265
+    sha256: 5f529204270d13aa1300a5e7e732073e4c2cad45b92da20d797b228c01919302
+    metadata:
+      record_count: 86685
+      pass_count: 86685
   - name: preparation_state
     kind: dataset-state
     root_alias: aidc_data
     relative_path: datasets/mtedx/versions/clean-v1-20261114/state.json
   splits:
-    train:
+    es_train:
       artifacts:
+        recordings:
+        - recordings_es
+        supervisions:
+        - supervisions_es
         preparation_state:
         - preparation_state
-      provenance:
-        preparation_status: building
+      statistics:
+        records: 97768
+        duration_hours: 171.21
+        duration_basis: sum of supervision durations of the kept rows
+        source_records: 100198
+        dropped_records:
+          bad_annotation: 1795
+          ambiguous: 466
+          implausible_char_rate: 102
+          insufficient_engines: 44
+          no_valid_engine: 23
+        dropped_hours: 4.21
+        forced_language_rescued_records: 91
+    pt_train:
+      artifacts:
+        recordings:
+        - recordings_pt
+        supervisions:
+        - supervisions_pt
+        preparation_state:
+        - preparation_state
+      statistics:
+        records: 86685
+        duration_hours: 148.77
+        duration_basis: sum of supervision durations of the kept rows
+        source_records: 88798
+        dropped_records:
+          bad_annotation: 1511
+          ambiguous: 481
+          implausible_char_rate: 85
+          insufficient_engines: 23
+          no_valid_engine: 13
+        dropped_hours: 3.31
+        forced_language_rescued_records: 172
+  recipe_parameters:
+    filter_rules: consensus-v8
+    engines:
+    - Qwen3-ASR-1.7B
+    - whisper-large-v3
+    clean_pass_only: true
+    qwen_language: forced via to_language on the re-check of first-pass rejects (first pass auto-detected)
+    text: 'mtedx_es: upstream transcript as shipped; mtedx_pt: upstream transcript as shipped'
   provenance:
-    preparation_status: building
+    preparation_status: prepared
     owner: mingdong
     description: >-
-      mTEDx 西语、葡语 train 划分（清单 mtedx_es、mtedx_pt）的清洗版本：音频解到本版本目录，生成 lhotse 清单，再用 Qwen3-ASR-1.7B + whisper-large-v3 双引擎清洗（consensus-v8：西/葡数字拼写、por que/porque 统一后再比较），试跑 4,499 句、被拒样本已全部复核。进行中。
+      mTEDx 西语、葡语 train 划分（清单 mtedx_es、mtedx_pt）。标注是字幕，丢弃以字幕式缩写改写、错位到邻句、掌声音乐标签为主；保留部分仍可能有轻度改写。mtedx_pt 有 60 个演讲也在 coraa@clean-v1-20261114 的 TEDx 子集里，两者不要重复累计。188,996 句 / 327.49 h 经 Qwen3-ASR-1.7B + whisper-large-v3 双引擎清洗（consensus-v8：西/葡数字拼写、por que/porque 统一后比较）保留 184,453 句 / 319.98 h，丢弃 4,543 句 / 7.51 h（2.3% 时长）。首轮 Qwen 未固定语言，被拒句子用固定语言的 Qwen 复核后按同一规则重判。试跑、抽检和误杀估计见 run_dir README。
     source: mtedx@hf-0b97ef40298d
     run_dir: /workspace/workspace/mingdong/data/amphiondata/es-pt-spont-clean-20261114
 - schema_version: dataset-catalog/2.0
@@ -150,6 +380,24 @@
   aliases: []
   derived_from: coraa_nurc_sp@hf-c02be121ec19
   artifacts:
+  - name: recordings
+    kind: lhotse-recordings
+    root_alias: aidc_data
+    relative_path: datasets/coraa_nurc_sp/versions/clean-v1-20261114/manifests/coraa_nurc_sp_recordings.jsonl.gz
+    expected_bytes: 4351581
+    sha256: 88801ff1190f9e5fd23f754564ead69511938ab245eeb3d7683b9ecb9265d5bd
+    metadata:
+      record_count: 166971
+      audio: FLAC (HF Parquet bytes as shipped) under datasets/coraa_nurc_sp/versions/clean-v1-20261114/audio/
+  - name: supervisions
+    kind: lhotse-supervisions
+    root_alias: aidc_data
+    relative_path: datasets/coraa_nurc_sp/versions/clean-v1-20261114/manifests/coraa_nurc_sp_supervisions_clean.jsonl.gz
+    expected_bytes: 11564337
+    sha256: 6f2609a8676561fa10f974e7c21ae303af4d190b9a3fcaff515eb9948693f28d
+    metadata:
+      record_count: 161652
+      pass_count: 161652
   - name: preparation_state
     kind: dataset-state
     root_alias: aidc_data
@@ -157,44 +405,39 @@
   splits:
     train:
       artifacts:
+        recordings:
+        - recordings
+        supervisions:
+        - supervisions
         preparation_state:
         - preparation_state
-      provenance:
-        preparation_status: building
+      statistics:
+        records: 161652
+        duration_hours: 219.78
+        duration_basis: sum of supervision durations of the kept rows
+        source_records: 166971
+        dropped_records:
+          ambiguous: 3505
+          bad_annotation: 1407
+          implausible_char_rate: 183
+          insufficient_engines: 144
+          no_valid_engine: 80
+        dropped_hours: 4.69
+        forced_language_rescued_records: 1081
+  recipe_parameters:
+    filter_rules: consensus-v8
+    engines:
+    - Qwen3-ASR-1.7B
+    - whisper-large-v3
+    clean_pass_only: true
+    qwen_language: forced via to_language on the re-check of first-pass rejects (first pass auto-detected)
+    text: 'upstream normalized_text as shipped (lowercase)'
   provenance:
-    preparation_status: building
+    preparation_status: prepared
     owner: mingdong
     description: >-
-      CORAA NURC-SP 圣保罗老录音访谈 filtered train 224.5 h的清洗版本：音频解到本版本目录，生成 lhotse 清单，再用 Qwen3-ASR-1.7B + whisper-large-v3 双引擎清洗（consensus-v8：西/葡数字拼写、por que/porque 统一后再比较），试跑 4,499 句、被拒样本已全部复核。进行中。
+      CORAA NURC-SP 圣保罗老录音（filtered train）。丢弃以老录音上两引擎都识别不出（ambiguous）为主。166,971 句 / 224.47 h 经 Qwen3-ASR-1.7B + whisper-large-v3 双引擎清洗（consensus-v8：西/葡数字拼写、por que/porque 统一后比较）保留 161,652 句 / 219.78 h，丢弃 5,319 句 / 4.69 h（2.1% 时长）。首轮 Qwen 未固定语言，被拒句子用固定语言的 Qwen 复核后按同一规则重判。试跑、抽检和误杀估计见 run_dir README。
     source: coraa_nurc_sp@hf-c02be121ec19
-    run_dir: /workspace/workspace/mingdong/data/amphiondata/es-pt-spont-clean-20261114
-- schema_version: dataset-catalog/2.0
-  dataset_id: coraa
-  version: clean-v1-20261114
-  languages:
-  - pt
-  tasks:
-  - asr
-  aliases: []
-  derived_from: coraa@hf-719c91226a79
-  artifacts:
-  - name: preparation_state
-    kind: dataset-state
-    root_alias: aidc_data
-    relative_path: datasets/coraa/versions/clean-v1-20261114/state.json
-  splits:
-    train:
-      artifacts:
-        preparation_state:
-        - preparation_state
-      provenance:
-        preparation_status: building
-  provenance:
-    preparation_status: building
-    owner: mingdong
-    description: >-
-      CORAA v1.1 巴西葡语 train（分卷 RAR 解出；源 WAV 为 32 位浮点，转 16 位 PCM）的清洗版本：音频解到本版本目录，生成 lhotse 清单，再用 Qwen3-ASR-1.7B + whisper-large-v3 双引擎清洗（consensus-v8：西/葡数字拼写、por que/porque 统一后再比较），试跑 4,499 句、被拒样本已全部复核。进行中。
-    source: coraa@hf-719c91226a79
     run_dir: /workspace/workspace/mingdong/data/amphiondata/es-pt-spont-clean-20261114
 - schema_version: dataset-catalog/2.0
   dataset_id: coraa_mupe
@@ -206,6 +449,24 @@
   aliases: []
   derived_from: coraa_mupe@hf-437966f103b3
   artifacts:
+  - name: recordings
+    kind: lhotse-recordings
+    root_alias: aidc_data
+    relative_path: datasets/coraa_mupe/versions/clean-v1-20261114/manifests/coraa_mupe_recordings.jsonl.gz
+    expected_bytes: 6092316
+    sha256: 344beb3766f7d1b66dc1a0f0feecc2c0a0735f609e88d2188c38c5d44a4ea023
+    metadata:
+      record_count: 276861
+      audio: WAV from train.tar.gz as shipped under datasets/coraa_mupe/versions/clean-v1-20261114/audio/
+  - name: supervisions
+    kind: lhotse-supervisions
+    root_alias: aidc_data
+    relative_path: datasets/coraa_mupe/versions/clean-v1-20261114/manifests/coraa_mupe_supervisions_clean.jsonl.gz
+    expected_bytes: 17678068
+    sha256: 15cf5f4e2ee6b3ca486bfa659dadcc34e9e0832faf32696c5838a7434955996b
+    metadata:
+      record_count: 273080
+      pass_count: 273080
   - name: preparation_state
     kind: dataset-state
     root_alias: aidc_data
@@ -213,14 +474,108 @@
   splits:
     train:
       artifacts:
+        recordings:
+        - recordings
+        supervisions:
+        - supervisions
         preparation_state:
         - preparation_state
-      provenance:
-        preparation_status: building
+      statistics:
+        records: 273080
+        duration_hours: 317.73
+        duration_basis: sum of supervision durations of the kept rows
+        source_records: 276861
+        dropped_records:
+          ambiguous: 1561
+          bad_annotation: 1552
+          implausible_char_rate: 504
+          no_valid_engine: 67
+          insufficient_engines: 63
+          malformed_text: 34
+        dropped_hours: 2.25
+        forced_language_rescued_records: 628
+  recipe_parameters:
+    filter_rules: consensus-v8
+    engines:
+    - Qwen3-ASR-1.7B
+    - whisper-large-v3
+    clean_pass_only: true
+    qwen_language: forced via to_language on the re-check of first-pass rejects (first pass auto-detected)
+    text: 'original_text (cased, punctuated) with transcription markup removed: tags in parentheses and truncated words marked < >; original kept in custom.original_text'
   provenance:
-    preparation_status: building
+    preparation_status: prepared
     owner: mingdong
     description: >-
-      CORAA-MUPE 博物馆口述史访谈 train的清洗版本：音频解到本版本目录，生成 lhotse 清单，再用 Qwen3-ASR-1.7B + whisper-large-v3 双引擎清洗（consensus-v8：西/葡数字拼写、por que/porque 统一后再比较），试跑 4,499 句、被拒样本已全部复核。进行中。
+      CORAA-MUPE 博物馆口述史访谈 train。文本用 original_text 并删掉转写标记（括号里的停顿、笑声等，带 < > 的截断词）；34 句源文本残缺丢弃。276,861 句 / 319.98 h 经 Qwen3-ASR-1.7B + whisper-large-v3 双引擎清洗（consensus-v8：西/葡数字拼写、por que/porque 统一后比较）保留 273,080 句 / 317.73 h，丢弃 3,781 句 / 2.25 h（0.7% 时长）。首轮 Qwen 未固定语言，被拒句子用固定语言的 Qwen 复核后按同一规则重判。试跑、抽检和误杀估计见 run_dir README。
     source: coraa_mupe@hf-437966f103b3
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/es-pt-spont-clean-20261114
+- schema_version: dataset-catalog/2.0
+  dataset_id: coraa
+  version: clean-v1-20261114
+  languages:
+  - pt
+  tasks:
+  - asr
+  aliases: []
+  derived_from: coraa@hf-719c91226a79
+  artifacts:
+  - name: recordings
+    kind: lhotse-recordings
+    root_alias: aidc_data
+    relative_path: datasets/coraa/versions/clean-v1-20261114/manifests/coraa_recordings.jsonl.gz
+    expected_bytes: 6998882
+    sha256: d0ebc6b7e93cf0b32c3695ce0674ac4657c1a967ac31077ad1698eb8554671b8
+    metadata:
+      record_count: 382258
+      audio: 16-bit PCM WAV (CORAA v1.1 train RAR extracted; source 32-bit float WAV converted) under datasets/coraa/versions/clean-v1-20261114/audio/
+  - name: supervisions
+    kind: lhotse-supervisions
+    root_alias: aidc_data
+    relative_path: datasets/coraa/versions/clean-v1-20261114/manifests/coraa_supervisions_clean.jsonl.gz
+    expected_bytes: 17284749
+    sha256: 6975ce450d312ef0477a497c27924058b2f19243af4b1c3bcd85711377febee0
+    metadata:
+      record_count: 371998
+      pass_count: 371998
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/coraa/versions/clean-v1-20261114/state.json
+  splits:
+    train:
+      artifacts:
+        recordings:
+        - recordings
+        supervisions:
+        - supervisions
+        preparation_state:
+        - preparation_state
+      statistics:
+        records: 371998
+        duration_hours: 268.52
+        duration_basis: sum of supervision durations of the kept rows
+        source_records: 382258
+        dropped_records:
+          ambiguous: 6109
+          bad_annotation: 3864
+          implausible_char_rate: 196
+          insufficient_engines: 83
+          no_valid_engine: 6
+          eval_overlap: 2
+        dropped_hours: 4.86
+        forced_language_rescued_records: 6052
+  recipe_parameters:
+    filter_rules: consensus-v8
+    engines:
+    - Qwen3-ASR-1.7B
+    - whisper-large-v3
+    clean_pass_only: true
+    qwen_language: forced via to_language on the re-check of first-pass rejects (first pass auto-detected)
+    text: 'upstream transcript as shipped (lowercase, no punctuation)'
+  provenance:
+    preparation_status: prepared
+    owner: mingdong
+    description: >-
+      CORAA v1.1 巴西葡语 train（ALIP、C-ORAL-BRASIL I、NURC-Recife、SP2010、TEDx）。源音频为 32 位浮点 WAV，已转 16 位 PCM。与 mTEDx pt 测试集重叠的演讲 h5mWwJJ2drU（2 句）已去掉；TEDx 子集有 60 个演讲也在 mtedx@clean-v1-20261114 的 pt 部分，不要重复累计。382,258 句 / 273.38 h 经 Qwen3-ASR-1.7B + whisper-large-v3 双引擎清洗（consensus-v8：西/葡数字拼写、por que/porque 统一后比较）保留 371,998 句 / 268.52 h，丢弃 10,260 句 / 4.86 h（1.8% 时长）。首轮 Qwen 未固定语言，被拒句子用固定语言的 Qwen 复核后按同一规则重判。试跑、抽检和误杀估计见 run_dir README。
+    source: coraa@hf-719c91226a79
     run_dir: /workspace/workspace/mingdong/data/amphiondata/es-pt-spont-clean-20261114
