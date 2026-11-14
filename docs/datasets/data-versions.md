@@ -1866,6 +1866,18 @@ WenetSpeech L 中的 YouTube 部分
 - `wenetspeech_yue@nonclean-qwen3-asr-v1-20261025`：WenetSpeech-Yue 粤语训练集里 clean 以外的部分（wenetspeech_yue_all@icefall-20260908）用 Qwen3-ASR-1.7B 逐条核对后保留的部分：原标注规范化后非空且与 Qwen 的字错误率 < 30 % 的 5,049,806 条 / 15909.1 h（占可转写 5,592,487 条的 90.3 %），规则同 wenetspeech_chuan@clean-qwen3-asr-v1-20261023；原标注不改，不拿 Qwen 的文字替换。每行保留 custom.qwen_asr（Qwen 转写、语种、CER），与 wenetspeech_yue@nonclean-qwen3-asr-full-v1-20261025 中的相同；被去掉的条目和全部转写见 wenetspeech_yue@nonclean-qwen3-asr-full-v1-20261025。粤语保留规则沿用川渝（CER < 30 %），未单独听审。录音沿用父版本，不复制音频。脚本 scripts/wenetspeech_qwen/
 - 含派生版本（与源数据可能重叠）
 
+### wildelder
+
+真实场景中文老年人语音（WildElder）
+
+语言：zh · 任务：语音识别
+
+| 版本 | 时长（小时） | 口径 | COS |
+|---|---:|---|---|
+| [wildelder@hf-643c4fb5c6e2](../../catalog/wildelder.yaml#L1) | 33.7 | 已登记 | 没有 |
+
+- `wildelder@hf-643c4fb5c6e2`：南开大学（NKU-HLT）发布的中文老年人真实场景语音：从网络视频（9 个视频博主频道和 7 组 YouTube 视频，目录名有养老院、北京、上海知青、 华侨等主题）中切出老人说话片段并人工转写，共 23,700 句、33.7 小时，16 kHz 单声道 WAV，平均约 5 秒。train/dev/test 按视频划分， 三者之间没有重复视频，但 dev 和 test 只来自 9 个博主频道和两组养老院视频，这 11 个来源在 train 里也都有，同一位老人可能出现在 不同划分中。data_split 下是 Kaldi 风格 wav.scp 和 text（wav.scp 路径带 WildElder/ 前缀，读取时要去掉）；每个 WAV 旁有同名 txt 转写，根目录 train/validation/test.csv 是给 HF 预览用的同一份清单。test/wav.scp 比 text 多一条没有转写的条目。 许可证标为 CC BY-NC-SA 4.0；数据卡同时说明音频取自第三方平台，版权归原权利人，只供学术研究和内部测试，不授权再分发或商用
+
 ## 混合语言及多语数据
 
 ### BAAI/CS-Dialogue long_wav (ModelScope master)

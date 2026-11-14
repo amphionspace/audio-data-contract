@@ -1,6 +1,6 @@
 # 数据总览
 
-当前登记 **246 个数据集**；另有 **24 个下载来源声明**和 **1 个训练混合配方**。登记不代表本机文件已齐备。
+当前登记 **247 个数据集**；另有 **24 个下载来源声明**和 **1 个训练混合配方**。登记不代表本机文件已齐备。
 
 时长取单个版本的最大值，不跨版本相加；≈ 为参考表或估算值，— 为暂无完整时长。各版本的时长、说明、COS 地址和质量证据见[版本明细](data-versions.md)。
 
@@ -135,6 +135,7 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [wenetspeech_wu_bench](data-versions.md#wenetspeech_wu_bench) | zh | 语音识别、语音翻译、语音情感识别、语音合成 | 9.8 | 吴语多任务评测集（WenetSpeech-Wu-Bench） | 没有 |
 | [wenetspeech_youtube](data-versions.md#wenetspeech_youtube) | zh | 语音识别 | 6,113.1 | WenetSpeech L 中的 YouTube 部分 | 没有 |
 | [wenetspeech_yue_all](data-versions.md#wenetspeech_yue_all) | yue | 语音识别 | 17,373.9 | 粤语网络语音（WenetSpeech-Yue）；含清洗版 | 部分版本：快照 20260914、`备份桶:audio-data-contract/datasets/wenetspeech_yue/` |
+| [wildelder](data-versions.md#wildelder) | zh | 语音识别 | 33.7 | 真实场景中文老年人语音（WildElder） | 没有 |
 
 ## 混合语言及多语数据
 
