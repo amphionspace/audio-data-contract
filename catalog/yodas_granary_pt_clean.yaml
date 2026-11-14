@@ -1,4 +1,4 @@
-# YODAS-Granary 葡语人工字幕（pt000）清洗（2026-11-14 开工，占位）：音频从 Parquet 解成 FLAC，再走 consensus-v7 双引擎清洗。
+# YODAS-Granary 葡语人工字幕（pt000）清洗：音频从 Parquet 解成 FLAC，consensus-v7 双引擎清洗，2026-11-14 转正。
 - schema_version: dataset-catalog/2.0
   dataset_id: yodas_granary_es_pt
   version: pt000-clean-v1-20261114
@@ -9,6 +9,24 @@
   aliases: []
   derived_from: yodas_granary_es_pt@hf-969944574ea3
   artifacts:
+  - name: recordings
+    kind: lhotse-recordings
+    root_alias: aidc_data
+    relative_path: datasets/yodas_granary_es_pt/versions/pt000-clean-v1-20261114/manifests/yodas-granary-pt_recordings.jsonl.gz
+    expected_bytes: 10120084
+    sha256: d450e3aad038d7dc471d94a4973e5d522cd295a61e0622dae7f91c2bdf276d44
+    metadata:
+      record_count: 547603
+      audio: FLAC under datasets/yodas_granary_es_pt/versions/pt000-clean-v1-20261114/audio/<split>/<shard>/, 16 kHz mono, about 79 GB
+  - name: supervisions
+    kind: lhotse-supervisions
+    root_alias: aidc_data
+    relative_path: datasets/yodas_granary_es_pt/versions/pt000-clean-v1-20261114/yodas-granary-pt_supervisions_clean.jsonl.gz
+    expected_bytes: 71559405
+    sha256: a0a53ea1bd51e44089d234ac35cf0b6bac92455fd041c9be791c7986423ea4ed
+    metadata:
+      record_count: 544192
+      pass_count: 544192
   - name: preparation_state
     kind: dataset-state
     root_alias: aidc_data
@@ -16,14 +34,43 @@
   splits:
     train:
       artifacts:
+        recordings:
+        - recordings
+        supervisions:
+        - supervisions
         preparation_state:
         - preparation_state
-      provenance:
-        preparation_status: building
+      statistics:
+        records: 544192
+        duration_hours: 1202.34
+        duration_basis: sum of supervision durations of the kept rows
+        duration_hours_by_granary_split:
+          asr_only: 18.29
+          ast: 1184.05
+        duration_hours_segments_30s_or_longer: 241.50
+        source_records: 547603
+        dropped_records:
+          ambiguous: 1416
+          bad_annotation: 1348
+          implausible_char_rate: 433
+          insufficient_engines: 150
+          no_valid_engine: 64
+        dropped_hours: 3.62
+  recipe_parameters:
+    filter_rules: consensus-v7
+    engines:
+    - Qwen3-ASR-1.7B
+    - whisper-large-v3
+    clean_pass_only: true
+    input: pt000 asr_only + ast Parquet of yodas_granary_es_pt@hf-969944574ea3, embedded WAV decoded to FLAC, empty texts skipped
+    text: original Granary text; custom.granary_split, original_audio_id, original_audio_offset, translation_en kept
   provenance:
-    preparation_status: building
+    preparation_status: prepared
     owner: mingdong
     description: >-
-      YODAS-Granary 葡语人工字幕分区 pt000（asr_only 49,667 句 / 18.9 h，ast 497,936 句 / 1,187.1 h）的清洗版本：Parquet 里嵌的 16 kHz WAV 解成 FLAC 放在本版本目录，生成 lhotse 清单，再用 Qwen3-ASR-1.7B + whisper-large-v3 双引擎清洗（consensus-v7），先试跑、复核被拒样本再跑全量。进行中。
+      YODAS-Granary 葡语人工字幕分区 pt000 的清洗版本：Parquet 里嵌的 16 kHz WAV 解成 FLAC 放在本版本目录（约 79 GB），
+      547,603 句 / 1,205.96 h 经 Qwen3-ASR-1.7B + whisper-large-v3 双引擎清洗（consensus-v7）保留 544,192 句 / 1,202.34 h
+      （asr_only 18.29 h、ast 1,184.05 h；≥30 s 的长段 241.50 h）。丢弃 0.30% 时长，
+      主要是字幕只写了音频一部分或与音频不符；不集中在某类时长或某些视频（11,951 个视频里 8 个整段丢弃，丢弃最多的 20 个视频占全部丢弃 8.9%）。
     source: yodas_granary_es_pt@hf-969944574ea3
     run_dir: /workspace/workspace/mingdong/data/amphiondata/yodas-granary-pt-20261114
