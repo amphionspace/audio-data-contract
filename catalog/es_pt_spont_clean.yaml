@@ -1,0 +1,226 @@
+# 西/葡自发语音清洗（2026-11-14 开工，占位）：解出音频、生成 lhotse 清单，再走 consensus-v8 双引擎清洗。运行目录 es-pt-spont-clean-20261114。
+- schema_version: dataset-catalog/2.0
+  dataset_id: ciempiess_balance
+  version: clean-v1-20261114
+  languages:
+  - es
+  tasks:
+  - asr
+  aliases: []
+  derived_from: ciempiess_balance@hf-e48eac011954
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/ciempiess_balance/versions/clean-v1-20261114/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: >-
+      CIEMPIESS Balance 墨西哥西语广播访谈 18.3 h的清洗版本：音频解到本版本目录，生成 lhotse 清单，再用 Qwen3-ASR-1.7B + whisper-large-v3 双引擎清洗（consensus-v8：西/葡数字拼写、por que/porque 统一后再比较），试跑 4,499 句、被拒样本已全部复核。进行中。
+    source: ciempiess_balance@hf-e48eac011954
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/es-pt-spont-clean-20261114
+- schema_version: dataset-catalog/2.0
+  dataset_id: ciempiess_fem
+  version: clean-v1-20261114
+  languages:
+  - es
+  tasks:
+  - asr
+  aliases: []
+  derived_from: ciempiess_fem@hf-e49f428d174b
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/ciempiess_fem/versions/clean-v1-20261114/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: >-
+      CIEMPIESS Fem 墨西哥西语女声广播 13.9 h的清洗版本：音频解到本版本目录，生成 lhotse 清单，再用 Qwen3-ASR-1.7B + whisper-large-v3 双引擎清洗（consensus-v8：西/葡数字拼写、por que/porque 统一后再比较），试跑 4,499 句、被拒样本已全部复核。进行中。
+    source: ciempiess_fem@hf-e49f428d174b
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/es-pt-spont-clean-20261114
+- schema_version: dataset-catalog/2.0
+  dataset_id: tedx_spanish
+  version: clean-v1-20261114
+  languages:
+  - es
+  tasks:
+  - asr
+  aliases: []
+  derived_from: tedx_spanish@hf-469308f10c91
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/tedx_spanish/versions/clean-v1-20261114/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: >-
+      TEDx Spanish 演讲 24.5 h的清洗版本：音频解到本版本目录，生成 lhotse 清单，再用 Qwen3-ASR-1.7B + whisper-large-v3 双引擎清洗（consensus-v8：西/葡数字拼写、por que/porque 统一后再比较），试跑 4,499 句、被拒样本已全部复核。进行中。
+    source: tedx_spanish@hf-469308f10c91
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/es-pt-spont-clean-20261114
+- schema_version: dataset-catalog/2.0
+  dataset_id: tele_con_ciencia
+  version: clean-v1-20261114
+  languages:
+  - es
+  tasks:
+  - asr
+  aliases: []
+  derived_from: tele_con_ciencia@hf-d870d927f530
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/tele_con_ciencia/versions/clean-v1-20261114/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: >-
+      Tele con Ciencia 墨西哥科普电视 28.3 h的清洗版本：音频解到本版本目录，生成 lhotse 清单，再用 Qwen3-ASR-1.7B + whisper-large-v3 双引擎清洗（consensus-v8：西/葡数字拼写、por que/porque 统一后再比较），试跑 4,499 句、被拒样本已全部复核。进行中。
+    source: tele_con_ciencia@hf-d870d927f530
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/es-pt-spont-clean-20261114
+- schema_version: dataset-catalog/2.0
+  dataset_id: mtedx
+  version: clean-v1-20261114
+  languages:
+  - es
+  - pt
+  tasks:
+  - asr
+  aliases: []
+  derived_from: mtedx@hf-0b97ef40298d
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/mtedx/versions/clean-v1-20261114/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: >-
+      mTEDx 西语、葡语 train 划分（清单 mtedx_es、mtedx_pt）的清洗版本：音频解到本版本目录，生成 lhotse 清单，再用 Qwen3-ASR-1.7B + whisper-large-v3 双引擎清洗（consensus-v8：西/葡数字拼写、por que/porque 统一后再比较），试跑 4,499 句、被拒样本已全部复核。进行中。
+    source: mtedx@hf-0b97ef40298d
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/es-pt-spont-clean-20261114
+- schema_version: dataset-catalog/2.0
+  dataset_id: coraa_nurc_sp
+  version: clean-v1-20261114
+  languages:
+  - pt
+  tasks:
+  - asr
+  aliases: []
+  derived_from: coraa_nurc_sp@hf-c02be121ec19
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/coraa_nurc_sp/versions/clean-v1-20261114/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: >-
+      CORAA NURC-SP 圣保罗老录音访谈 filtered train 224.5 h的清洗版本：音频解到本版本目录，生成 lhotse 清单，再用 Qwen3-ASR-1.7B + whisper-large-v3 双引擎清洗（consensus-v8：西/葡数字拼写、por que/porque 统一后再比较），试跑 4,499 句、被拒样本已全部复核。进行中。
+    source: coraa_nurc_sp@hf-c02be121ec19
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/es-pt-spont-clean-20261114
+- schema_version: dataset-catalog/2.0
+  dataset_id: coraa
+  version: clean-v1-20261114
+  languages:
+  - pt
+  tasks:
+  - asr
+  aliases: []
+  derived_from: coraa@hf-719c91226a79
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/coraa/versions/clean-v1-20261114/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: >-
+      CORAA v1.1 巴西葡语 train（分卷 RAR 解出；源 WAV 为 32 位浮点，转 16 位 PCM）的清洗版本：音频解到本版本目录，生成 lhotse 清单，再用 Qwen3-ASR-1.7B + whisper-large-v3 双引擎清洗（consensus-v8：西/葡数字拼写、por que/porque 统一后再比较），试跑 4,499 句、被拒样本已全部复核。进行中。
+    source: coraa@hf-719c91226a79
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/es-pt-spont-clean-20261114
+- schema_version: dataset-catalog/2.0
+  dataset_id: coraa_mupe
+  version: clean-v1-20261114
+  languages:
+  - pt
+  tasks:
+  - asr
+  aliases: []
+  derived_from: coraa_mupe@hf-437966f103b3
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/coraa_mupe/versions/clean-v1-20261114/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: >-
+      CORAA-MUPE 博物馆口述史访谈 train的清洗版本：音频解到本版本目录，生成 lhotse 清单，再用 Qwen3-ASR-1.7B + whisper-large-v3 双引擎清洗（consensus-v8：西/葡数字拼写、por que/porque 统一后再比较），试跑 4,499 句、被拒样本已全部复核。进行中。
+    source: coraa_mupe@hf-437966f103b3
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/es-pt-spont-clean-20261114
