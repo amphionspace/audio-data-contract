@@ -1,4 +1,4 @@
-# 西语朗读小数据集清洗（2026-11-14 开工，占位）：解出音频、生成 lhotse 清单，再走 consensus-v7 双引擎清洗。
+# 西语朗读小数据集清洗：解出音频、生成 lhotse 清单，consensus-v7 双引擎清洗，2026-11-14 转正。运行目录 es-read-clean-20261114。
 - schema_version: dataset-catalog/2.0
   dataset_id: wikipedia_spanish
   version: clean-v1-20261114
@@ -9,6 +9,24 @@
   aliases: []
   derived_from: wikipedia_spanish@hf-0afbf012ed67
   artifacts:
+  - name: recordings
+    kind: lhotse-recordings
+    root_alias: aidc_data
+    relative_path: datasets/wikipedia_spanish/versions/clean-v1-20261114/manifests/wikipedia_spanish_recordings.jsonl.gz
+    expected_bytes: 148849
+    sha256: 7ea5d1ba8f9cd5997f5e6a9cbc1c6df49fff86458fbd627fb3d401a8cd19058a
+    metadata:
+      record_count: 11569
+      audio: FLAC (HF Parquet bytes as shipped) under datasets/wikipedia_spanish/versions/clean-v1-20261114/audio/
+  - name: supervisions
+    kind: lhotse-supervisions
+    root_alias: aidc_data
+    relative_path: datasets/wikipedia_spanish/versions/clean-v1-20261114/manifests/wikipedia_spanish_supervisions_clean.jsonl.gz
+    expected_bytes: 854080
+    sha256: 8b4489b66f8f53ee8cd2919f1a9b8fd9d588154d3645aaa7419e7b91948e1695
+    metadata:
+      record_count: 10936
+      pass_count: 10936
   - name: preparation_state
     kind: dataset-state
     root_alias: aidc_data
@@ -16,15 +34,33 @@
   splits:
     train:
       artifacts:
+        recordings:
+        - recordings
+        supervisions:
+        - supervisions
         preparation_state:
         - preparation_state
-      provenance:
-        preparation_status: building
+      statistics:
+        records: 10936
+        duration_hours: 24.23
+        duration_basis: sum of supervision durations of the kept rows
+        source_records: 11569
+        dropped_records:
+          bad_annotation: 498
+          ambiguous: 135
+        dropped_hours: 1.4
+  recipe_parameters:
+    filter_rules: consensus-v7
+    engines:
+    - Qwen3-ASR-1.7B
+    - whisper-large-v3
+    clean_pass_only: true
+    text: upstream transcript as shipped, language es
   provenance:
-    preparation_status: building
+    preparation_status: prepared
     owner: mingdong
     description: >-
-      维基百科条目朗读 25.6 h的清洗版本：音频解到本版本目录，生成 lhotse 清单，再用 Qwen3-ASR-1.7B + whisper-large-v3 双引擎清洗（consensus-v7），先试跑、复核被拒样本再跑全量。进行中。
+      维基百科条目朗读的清洗版本：11,569 句 / 25.63 h 经 Qwen3-ASR-1.7B + whisper-large-v3 双引擎清洗（consensus-v7）保留 10,936 句 / 24.23 h，丢弃 633 句 / 1.40 h（5.5% 时长）。丢弃集中在把网址、数字、字母读法逐字写出的句子（"hache te te pe dos puntos…"，引擎写成 http://、7,08%）和参考文本拼错的句子；前者作为训练文本会教模型输出读法，丢掉不吃亏。
     source: wikipedia_spanish@hf-0afbf012ed67
     run_dir: /workspace/workspace/mingdong/data/amphiondata/es-read-clean-20261114
 - schema_version: dataset-catalog/2.0
@@ -37,6 +73,24 @@
   aliases: []
   derived_from: librivox_spanish@hf-ef936a31638d
   artifacts:
+  - name: recordings
+    kind: lhotse-recordings
+    root_alias: aidc_data
+    relative_path: datasets/librivox_spanish/versions/clean-v1-20261114/manifests/librivox_spanish_recordings.jsonl.gz
+    expected_bytes: 496996
+    sha256: 36f7b0b782af8a9f0db634a528b1a25f14e480c9bbffa10006f835de7dcd665e
+    metadata:
+      record_count: 36338
+      audio: FLAC (HF Parquet bytes as shipped) under datasets/librivox_spanish/versions/clean-v1-20261114/audio/
+  - name: supervisions
+    kind: lhotse-supervisions
+    root_alias: aidc_data
+    relative_path: datasets/librivox_spanish/versions/clean-v1-20261114/manifests/librivox_spanish_supervisions_clean.jsonl.gz
+    expected_bytes: 2636662
+    sha256: 0a1240de5ce6694b245389ae83c482636b758cdd4c8a754c44830a58cf0913ac
+    metadata:
+      record_count: 36126
+      pass_count: 36126
   - name: preparation_state
     kind: dataset-state
     root_alias: aidc_data
@@ -44,15 +98,34 @@
   splits:
     train:
       artifacts:
+        recordings:
+        - recordings
+        supervisions:
+        - supervisions
         preparation_state:
         - preparation_state
-      provenance:
-        preparation_status: building
+      statistics:
+        records: 36126
+        duration_hours: 72.6
+        duration_basis: sum of supervision durations of the kept rows
+        source_records: 36338
+        dropped_records:
+          bad_annotation: 192
+          ambiguous: 18
+          no_valid_engine: 2
+        dropped_hours: 0.43
+  recipe_parameters:
+    filter_rules: consensus-v7
+    engines:
+    - Qwen3-ASR-1.7B
+    - whisper-large-v3
+    clean_pass_only: true
+    text: upstream transcript as shipped, language es
   provenance:
-    preparation_status: building
+    preparation_status: prepared
     owner: mingdong
     description: >-
-      LibriVox 有声书 73.0 h的清洗版本：音频解到本版本目录，生成 lhotse 清单，再用 Qwen3-ASR-1.7B + whisper-large-v3 双引擎清洗（consensus-v7），先试跑、复核被拒样本再跑全量。进行中。
+      LibriVox 有声书的清洗版本：36,338 句 / 73.03 h 经 Qwen3-ASR-1.7B + whisper-large-v3 双引擎清洗（consensus-v7）保留 36,126 句 / 72.60 h，丢弃 212 句 / 0.43 h（0.6% 时长）。丢弃多为参考文本拼错或漏词。
     source: librivox_spanish@hf-ef936a31638d
     run_dir: /workspace/workspace/mingdong/data/amphiondata/es-read-clean-20261114
 - schema_version: dataset-catalog/2.0
@@ -65,6 +138,24 @@
   aliases: []
   derived_from: voxforge_spanish@hf-1ce6b6f9701d
   artifacts:
+  - name: recordings
+    kind: lhotse-recordings
+    root_alias: aidc_data
+    relative_path: datasets/voxforge_spanish/versions/clean-v1-20261114/manifests/voxforge_spanish_recordings.jsonl.gz
+    expected_bytes: 213290
+    sha256: 894fc3f88f7a042da3638b4ca8acd353bcb817d48e8dcecbb56899260900ee2d
+    metadata:
+      record_count: 21692
+      audio: FLAC (HF Parquet bytes as shipped) under datasets/voxforge_spanish/versions/clean-v1-20261114/audio/
+  - name: supervisions
+    kind: lhotse-supervisions
+    root_alias: aidc_data
+    relative_path: datasets/voxforge_spanish/versions/clean-v1-20261114/manifests/voxforge_spanish_supervisions_clean.jsonl.gz
+    expected_bytes: 781769
+    sha256: 6a6e52c47d48c49092bd80902591bace85ad778f74bc256d4484c5b69b4760d3
+    metadata:
+      record_count: 21603
+      pass_count: 21603
   - name: preparation_state
     kind: dataset-state
     root_alias: aidc_data
@@ -72,15 +163,34 @@
   splits:
     train:
       artifacts:
+        recordings:
+        - recordings
+        supervisions:
+        - supervisions
         preparation_state:
         - preparation_state
-      provenance:
-        preparation_status: building
+      statistics:
+        records: 21603
+        duration_hours: 49.52
+        duration_basis: sum of supervision durations of the kept rows
+        source_records: 21692
+        dropped_records:
+          insufficient_engines: 73
+          bad_annotation: 9
+          ambiguous: 7
+        dropped_hours: 0.19
+  recipe_parameters:
+    filter_rules: consensus-v7
+    engines:
+    - Qwen3-ASR-1.7B
+    - whisper-large-v3
+    clean_pass_only: true
+    text: upstream transcript as shipped, language es
   provenance:
-    preparation_status: building
+    preparation_status: prepared
     owner: mingdong
     description: >-
-      VoxForge 朗读 49.7 h的清洗版本：音频解到本版本目录，生成 lhotse 清单，再用 Qwen3-ASR-1.7B + whisper-large-v3 双引擎清洗（consensus-v7），先试跑、复核被拒样本再跑全量。进行中。
+      VoxForge 朗读的清洗版本：21,692 句 / 49.71 h 经 Qwen3-ASR-1.7B + whisper-large-v3 双引擎清洗（consensus-v7）保留 21,603 句 / 49.52 h，丢弃 89 句 / 0.19 h（0.4% 时长）。insufficient_engines 73 句多为整段满幅失真的录音（RMS 1.0），Qwen3-ASR 输出为空、whisper 输出 "Gracias por ver el video."，集中在少数说话人。
     source: voxforge_spanish@hf-1ce6b6f9701d
     run_dir: /workspace/workspace/mingdong/data/amphiondata/es-read-clean-20261114
 - schema_version: dataset-catalog/2.0
@@ -93,6 +203,24 @@
   aliases: []
   derived_from: google_latam@openslr-20260911
   artifacts:
+  - name: recordings
+    kind: lhotse-recordings
+    root_alias: aidc_data
+    relative_path: datasets/google_latam/versions/clean-v1-20261114/manifests/google_latam_recordings.jsonl.gz
+    expected_bytes: 349734
+    sha256: dd0693043a5826ac9db09fcf56ff465d8164ecf19101b9a55c2ee882e1c23f47
+    metadata:
+      record_count: 24617
+      audio: WAV extracted from the OpenSLR zips, under audio/<zip stem>/ under datasets/google_latam/versions/clean-v1-20261114/audio/
+  - name: supervisions
+    kind: lhotse-supervisions
+    root_alias: aidc_data
+    relative_path: datasets/google_latam/versions/clean-v1-20261114/manifests/google_latam_supervisions_clean.jsonl.gz
+    expected_bytes: 1176323
+    sha256: aa2a0a75f2be4d9762917d407e46165c036a85b5fd25ba23017fe3ce4244be3c
+    metadata:
+      record_count: 24612
+      pass_count: 24612
   - name: preparation_state
     kind: dataset-state
     root_alias: aidc_data
@@ -100,15 +228,45 @@
   splits:
     train:
       artifacts:
+        recordings:
+        - recordings
+        supervisions:
+        - supervisions
         preparation_state:
         - preparation_state
-      provenance:
-        preparation_status: building
+      statistics:
+        records: 24612
+        duration_hours: 37.95
+        duration_basis: sum of supervision durations of the kept rows
+        duration_hours_by_part:
+          es_ar_female: 5.61
+          es_ar_male: 2.42
+          es_cl_female: 2.83
+          es_cl_male: 4.31
+          es_co_female: 3.74
+          es_co_male: 3.84
+          es_pe_female: 4.34
+          es_pe_male: 4.87
+          es_pr_female: 1.0
+          es_ve_female: 2.41
+          es_ve_male: 2.4
+          es_weather_messages: 0.17
+        source_records: 24617
+        dropped_records:
+          bad_annotation: 5
+        dropped_hours: 0.01
+  recipe_parameters:
+    filter_rules: consensus-v7
+    engines:
+    - Qwen3-ASR-1.7B
+    - whisper-large-v3
+    clean_pass_only: true
+    text: upstream transcript as shipped, language es
   provenance:
-    preparation_status: building
+    preparation_status: prepared
     owner: mingdong
     description: >-
-      Google 众包拉美六国朗读 38.0 h的清洗版本：音频解到本版本目录，生成 lhotse 清单，再用 Qwen3-ASR-1.7B + whisper-large-v3 双引擎清洗（consensus-v7），先试跑、复核被拒样本再跑全量。进行中。
+      Google 众包拉美六国朗读的清洗版本：24,617 句 / 37.97 h 经 Qwen3-ASR-1.7B + whisper-large-v3 双引擎清洗（consensus-v7）保留 24,612 句 / 37.95 h，丢弃 5 句 / 0.01 h（0.0% 时长）。几乎全部保留。
     source: google_latam@openslr-20260911
     run_dir: /workspace/workspace/mingdong/data/amphiondata/es-read-clean-20261114
 - schema_version: dataset-catalog/2.0
@@ -121,6 +279,24 @@
   aliases: []
   derived_from: heroico@openslr-39
   artifacts:
+  - name: recordings
+    kind: lhotse-recordings
+    root_alias: aidc_data
+    relative_path: datasets/heroico/versions/clean-v1-20261114/manifests/heroico_recordings.jsonl.gz
+    expected_bytes: 107356
+    sha256: f0980765e7d71446a7d9d3ed9fe6db45dbd04dd2c173f09088a97d1d98e84172
+    metadata:
+      record_count: 7187
+      audio: WAV extracted from LDC2006S37.tar.gz, under audio/LDC2006S37/ under datasets/heroico/versions/clean-v1-20261114/audio/
+  - name: supervisions
+    kind: lhotse-supervisions
+    root_alias: aidc_data
+    relative_path: datasets/heroico/versions/clean-v1-20261114/manifests/heroico_supervisions_clean.jsonl.gz
+    expected_bytes: 316339
+    sha256: d55c0219fee3131377b7e568a4d95850a7eee30e3c987e24a7100dbbb9104f6e
+    metadata:
+      record_count: 6923
+      pass_count: 6923
   - name: preparation_state
     kind: dataset-state
     root_alias: aidc_data
@@ -128,14 +304,38 @@
   splits:
     train:
       artifacts:
+        recordings:
+        - recordings
+        supervisions:
+        - supervisions
         preparation_state:
         - preparation_state
-      provenance:
-        preparation_status: building
+      statistics:
+        records: 6923
+        duration_hours: 7.34
+        duration_basis: sum of supervision durations of the kept rows
+        duration_hours_by_part:
+          heroico_recordings: 6.21
+          usma_native: 1.13
+        source_records: 7187
+        dropped_records:
+          bad_annotation: 230
+          ambiguous: 14
+          implausible_char_rate: 14
+          insufficient_engines: 4
+          no_valid_engine: 2
+        dropped_hours: 0.2
+  recipe_parameters:
+    filter_rules: consensus-v7
+    engines:
+    - Qwen3-ASR-1.7B
+    - whisper-large-v3
+    clean_pass_only: true
+    text: upstream transcript as shipped, language es
   provenance:
-    preparation_status: building
+    preparation_status: prepared
     owner: mingdong
     description: >-
-      Heroico 朗读部分（heroico_recordings 6.5 h、usma_native 1.1 h；自由问答 heroico_answers 和非母语 usma_nonnative 不在本版本）的清洗版本：音频解到本版本目录，生成 lhotse 清单，再用 Qwen3-ASR-1.7B + whisper-large-v3 双引擎清洗（consensus-v7），先试跑、复核被拒样本再跑全量。进行中。
+      Heroico 朗读部分（heroico_recordings 与 usma_native；自由问答 heroico_answers、非母语 usma_nonnative、喉麦录音不在本版本）的清洗版本：7,187 句 / 7.54 h 经 Qwen3-ASR-1.7B + whisper-large-v3 双引擎清洗（consensus-v7）保留 6,923 句 / 7.34 h，丢弃 264 句 / 0.20 h（2.6% 时长）。丢弃主体是录音内容与提示句对不上（说话人在回答问题而非朗读）；"adónde" 与 "a dónde" 写法差异造成少量误杀。
     source: heroico@openslr-39
     run_dir: /workspace/workspace/mingdong/data/amphiondata/es-read-clean-20261114
