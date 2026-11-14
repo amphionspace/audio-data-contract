@@ -2975,9 +2975,11 @@ YouTube 西语/葡语人工字幕语音（YODAS）
 |---|---:|---|---|
 | [yodas_granary_es_pt@es000-clean-v1-20261111](../../catalog/yodas_granary_es_clean.yaml#L2) | 2,442.9 | 已登记 | 没有 |
 | [yodas_granary_es_pt@hf-969944574ea3](../../catalog/yodas_granary_es_pt.yaml#L1) | 3,658.5 | 已登记 | 快照 20260914 |
+| [yodas_granary_es_pt@pt000-clean-v1-20261114](../../catalog/yodas_granary_pt_clean.yaml#L2) | — | 未登记 | 没有 |
 
 - `yodas_granary_es_pt@es000-clean-v1-20261111`：YODAS-Granary 西语人工字幕分区 es000 的清洗版本：Parquet 里嵌的 16 kHz WAV 解成 FLAC 放在本版本目录（约 157 GB）， 731,196 句 / 2,452.45 h 经 Qwen3-ASR-1.7B + whisper-large-v3 双引擎清洗（consensus-v7）保留 726,015 句 / 2,442.89 h （asr_only 75.91 h、ast 2,366.98 h；≥30 s 的长段 938.37 h）。丢弃 0.39% 时长，不集中在某类时长或某些视频； 试跑、被拒样本和误杀率见 run_dir README。es000 的视频 99% 也在 yodas_es@legacy 里，不要两者叠加
 - `yodas_granary_es_pt@hf-969944574ea3`：YODAS-Granary 里西语、葡语的人工字幕分区（es000、pt000），音频已切成句子；asr_only 与 ast 两个划分都带原文转写，ast 另有英文翻译。自动字幕分区（es100–108、pt100–103，约 4 TB）未下载。地区未区分。es000 的视频 99%（23,976/24,208 个）也在 yodas_es 里，是同一批 YouTube 音频、切分和转写不同，西语部分不要与 yodas_es 一起累计；葡语此前没有登记 YODAS
+- `yodas_granary_es_pt@pt000-clean-v1-20261114`：YODAS-Granary 葡语人工字幕分区 pt000（asr_only 49,667 句 / 18.9 h，ast 497,936 句 / 1,187.1 h）的清洗版本：Parquet 里嵌的 16 kHz WAV 解成 FLAC 放在本版本目录，生成 lhotse 清单，再用 Qwen3-ASR-1.7B + whisper-large-v3 双引擎清洗（consensus-v7），先试跑、复核被拒样本再跑全量。进行中
 - 含派生版本（与源数据可能重叠）
 
 ### zenless_voice
@@ -3550,9 +3552,12 @@ Golos 俄语语音助手指令评测划分
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
+| [google_latam@clean-v1-20261114](../../catalog/es_read_clean.yaml#L86) | — | 未登记 | 没有 |
 | [google_latam@openslr-20260911](../../catalog/google_latam.yaml#L1) | 38.0 | 已登记 | 快照 20260914 |
 
+- `google_latam@clean-v1-20261114`：Google 众包拉美六国朗读 38.0 h的清洗版本：音频解到本版本目录，生成 lhotse 清单，再用 Qwen3-ASR-1.7B + whisper-large-v3 双引擎清洗（consensus-v7），先试跑、复核被拒样本再跑全量。进行中
 - `google_latam@openslr-20260911`：Google 众包录制的拉美西语朗读（阿根廷、智利、哥伦比亚、秘鲁、波多黎各、委内瑞拉），按国家各一个划分，48 kHz 录音棚质量。SLR61 包里另有一小份天气播报（weather_messages），其中 es-es 是西班牙口音，只作源文件保留，不要算进美洲口音
+- 含派生版本（与源数据可能重叠）
 
 ### heroico
 
@@ -3562,9 +3567,12 @@ Golos 俄语语音助手指令评测划分
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
+| [heroico@clean-v1-20261114](../../catalog/es_read_clean.yaml#L114) | — | 未登记 | 没有 |
 | [heroico@openslr-39](../../catalog/heroico.yaml#L1) | 14.9 | 已登记 | 没有 |
 
+- `heroico@clean-v1-20261114`：Heroico 朗读部分（heroico_recordings 6.5 h、usma_native 1.1 h；自由问答 heroico_answers 和非母语 usma_nonnative 不在本版本）的清洗版本：音频解到本版本目录，生成 lhotse 清单，再用 Qwen3-ASR-1.7B + whisper-large-v3 双引擎清洗（consensus-v7），先试跑、复核被拒样本再跑全量。进行中
 - `heroico@openslr-39`：West Point Heroico Spanish Speech（LDC2006S37，OpenSLR 39 转发）。主体是 2001 年在墨西哥军校录的朗读和自由问答，墨西哥口音；另有西点军校的小部分录音，含母语者和美国非母语学员，usma_nonnative 不是母语口音，训练美洲口音时应排除。部分西点录音同时录了喉麦（文件名以 t 开头），已从统计中剔除。22.05 kHz 16-bit；部分西点文件头写的是 20050 Hz，按文件头计时长。转写文本是 Latin-1 编码；heroico_answers 有 1 条音频没有转写
+- 含派生版本（与源数据可能重叠）
 
 ### kathbath
 
@@ -3598,9 +3606,12 @@ LibriVox 西语有声书
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
+| [librivox_spanish@clean-v1-20261114](../../catalog/es_read_clean.yaml#L30) | — | 未登记 | 没有 |
 | [librivox_spanish@hf-ef936a31638d](../../catalog/librivox_spanish.yaml#L1) | 73.0 | 已登记 | 没有 |
 
+- `librivox_spanish@clean-v1-20261114`：LibriVox 有声书 73.0 h的清洗版本：音频解到本版本目录，生成 lhotse 清单，再用 Qwen3-ASR-1.7B + whisper-large-v3 双引擎清洗（consensus-v7），先试跑、复核被拒样本再跑全量。进行中
 - `librivox_spanish@hf-ef936a31638d`：LibriVox 西语有声书人工切分转写（LDC2020S01 的 HF 版本），讲者口音未标注
+- 含派生版本（与源数据可能重叠）
 
 ### meeting_room_noise
 
@@ -3876,9 +3887,12 @@ VoxForge 西语朗读（多为西班牙）
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
+| [voxforge_spanish@clean-v1-20261114](../../catalog/es_read_clean.yaml#L58) | — | 未登记 | 没有 |
 | [voxforge_spanish@hf-1ce6b6f9701d](../../catalog/voxforge_spanish.yaml#L1) | 49.7 | 已登记 | 没有 |
 
+- `voxforge_spanish@clean-v1-20261114`：VoxForge 朗读 49.7 h的清洗版本：音频解到本版本目录，生成 lhotse 清单，再用 Qwen3-ASR-1.7B + whisper-large-v3 双引擎清洗（consensus-v7），先试跑、复核被拒样本再跑全量。进行中
 - `voxforge_spanish@hf-1ce6b6f9701d`：VoxForge 西语朗读。约 37.0 h 为西班牙口音，阿根廷、拉美、墨西哥、智利共约 11.6 h；可按 country 字段筛选美洲部分。许可为 GPL-3.0
+- 含派生版本（与源数据可能重叠）
 
 ### voxpopuli_de
 
@@ -3936,9 +3950,12 @@ WHAM! 噪声训练划分
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
+| [wikipedia_spanish@clean-v1-20261114](../../catalog/es_read_clean.yaml#L2) | — | 未登记 | 没有 |
 | [wikipedia_spanish@hf-0afbf012ed67](../../catalog/wikipedia_spanish.yaml#L1) | 25.6 | 已登记 | 没有 |
 
+- `wikipedia_spanish@clean-v1-20261114`：维基百科条目朗读 25.6 h的清洗版本：音频解到本版本目录，生成 lhotse 清单，再用 Qwen3-ASR-1.7B + whisper-large-v3 双引擎清洗（consensus-v7），先试跑、复核被拒样本再跑全量。进行中
 - `wikipedia_spanish@hf-0afbf012ed67`：西语维基百科有声条目（Wikipedia Grabada）朗读，LDC2021S07 的 HF 版本，讲者口音未标注
+- 含派生版本（与源数据可能重叠）
 
 ### yodas_ar
 

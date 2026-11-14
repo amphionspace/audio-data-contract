@@ -244,7 +244,7 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [galgame](data-versions.md#galgame) | ja | 语音合成 | 10,173.7 | 日语视觉小说配音，TTS 用 | `TTS 桶:Galgame-VisualNovel-Reupload/`（原始数据） |
 | [gigaspeech2_id](data-versions.md#gigaspeech2_id) | id | 语音识别、热词增强语音识别 | 1,980.1 | 印尼语网络语音（GigaSpeech 2）；含热词版 | 部分版本：快照 20260914 |
 | [golos](data-versions.md#golos) | ru | 语音识别 | — | Golos 俄语语音助手指令评测划分 | 没有 |
-| [google_latam](data-versions.md#google_latam) | es | 语音识别 | 38.0 | 拉美六国西语朗读（Google 众包） | 快照 20260914 |
+| [google_latam](data-versions.md#google_latam) | es | 语音识别 | 38.0 | 拉美六国西语朗读（Google 众包） | 部分版本：快照 20260914 |
 | [heroico](data-versions.md#heroico) | es | 语音识别 | 14.9 | 墨西哥军校西语朗读与问答（Heroico） | 没有 |
 | [kathbath](data-versions.md#kathbath) | hi | 语音识别 | — | Kathbath 印地语手机朗读评测划分 | 没有 |
 | [koreaspeech](data-versions.md#koreaspeech) | ko | 语音识别 | 3,828.3 | 韩语语音识别数据（KoreaSpeech） | 快照 20260914 |
