@@ -18,7 +18,7 @@
           source:
             - source
     provenance:
-      summary: YODAS2 精筛的俄语 TTS 级语音（YO-CPT-ru）
+      summary: 俄语 TTS 级语音（YO-CPT-ru）
       source: Hugging Face
       source_id: NCSpeech/YO-CPT-ru
       revision: f2f92c5ecf6b0323cf7e7f9599f0e4852f6c536b
@@ -58,7 +58,7 @@
           source:
             - source
     provenance:
-      summary: YouTube 精筛的哈萨克语 TTS 级语音（YO-CPT-kk）
+      summary: 哈萨克语 TTS 级语音（YO-CPT-kk）
       source: Hugging Face
       source_id: NCSpeech/YO-CPT-kk
       revision: a8c2d1a23de45c271d1ce5d458416f6bf11dd913
