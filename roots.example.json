@@ -127,5 +127,6 @@
   "apptek_callcenter": "/workspace/data/datasets/apptek_callcenter",
   "masc": "/workspace/data/datasets/masc",
   "smoothconv": "/workspace/data/datasets/smoothconv",
-  "svq": "/workspace/data/datasets/svq"
+  "svq": "/workspace/data/datasets/svq",
+  "sada": "/workspace/data/datasets/sada"
 }

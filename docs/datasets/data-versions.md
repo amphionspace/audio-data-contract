@@ -3752,6 +3752,18 @@ MLS 葡语有声书朗读
 
 - 有含标点版本
 
+### sada
+
+沙特电视节目阿拉伯语方言语音（SADA）
+
+语言：ar · 任务：语音识别
+
+| 版本 | 时长（小时） | 口径 | COS |
+|---|---:|---|---|
+| [sada@hf-094fe2c0fe4b](../../catalog/sada.yaml#L1) | 437.5 | 已登记 | 没有 |
+
+- `sada@hf-094fe2c0fe4b`：SADA（Saudi Audio Dataset for Arabic）的 Hugging Face 转存：沙特数据与人工智能局（SDAIA）国家人工智能中心对沙特广播局 57 个以上 电视节目的人工转写语音，以沙特方言为主（纳季德、汉志、海湾），也有标准阿拉伯语、埃及和黎凡特方言。每段带原始文本 text、 规范化文本 cleaned_text、说话人年龄段、性别、方言；约 21% 的段标为“多于一个说话人”，方言和性别对这些段不适用。 16 kHz 单声道 WAV 内嵌在 Parquet 中，分 train、validation、test。实测共 253,166 段、437.5 小时（train 417.6 小时）， 少于数据卡写的约 667 小时（train 约 647 小时），这份是第三方转存，差异原因未说明；另有 76 段文本为空。CC BY-NC-SA 4.0，仅限非商用
+
 ### sim_rir_slr26
 
 模拟房间冲激响应（OpenSLR 26）

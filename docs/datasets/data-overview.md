@@ -1,6 +1,6 @@
 # 数据总览
 
-当前登记 **245 个数据集**；另有 **24 个下载来源声明**和 **1 个训练混合配方**。登记不代表本机文件已齐备。
+当前登记 **246 个数据集**；另有 **24 个下载来源声明**和 **1 个训练混合配方**。登记不代表本机文件已齐备。
 
 时长取单个版本的最大值，不跨版本相加；≈ 为参考表或估算值，— 为暂无完整时长。各版本的时长、说明、COS 地址和质量证据见[版本明细](data-versions.md)。
 
@@ -261,6 +261,7 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [open_large_bn](data-versions.md#open_large_bn) | bn | 语音识别 | 5,045.8 | 孟加拉语大规模语音识别数据 | 快照 20260914 |
 | [real_rir_slr28](data-versions.md#real_rir_slr28) | und | 音频增强、rir | 0.1 | 真实房间冲激响应（OpenSLR 28） | 快照 20260914、`备份桶:audio-data-contract/datasets/real_rir_slr28/` |
 | [rulibrispeech_ru](data-versions.md#rulibrispeech_ru) | ru | 语音识别 | 98.2 | 俄语有声书朗读（Russian LibriSpeech） | 快照 20260914 |
+| [sada](data-versions.md#sada) | ar | 语音识别 | 437.5 | 沙特电视节目阿拉伯语方言语音（SADA） | 没有 |
 | [sim_rir_slr26](data-versions.md#sim_rir_slr26) | und | rir | — | 模拟房间冲激响应（OpenSLR 26） | 快照 20260914、`备份桶:audio-data-contract/datasets/sim_rir_slr26/` |
 | [sim_rir_slr28](data-versions.md#sim_rir_slr28) | und | rir | — | 模拟房间冲激响应（OpenSLR 28） | 快照 20260914、`备份桶:audio-data-contract/datasets/sim_rir_slr28/` |
 | [slr37_bn](data-versions.md#slr37_bn) | bn | 语音识别 | 5.0 | 孟加拉语高质量 TTS 朗读（OpenSLR 37） | 快照 20260914 |
