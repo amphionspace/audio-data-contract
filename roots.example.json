@@ -107,5 +107,13 @@
   "multilingual_asr_bench": "/workspace/data/datasets/multilingual_asr_bench",
   "voxpopuli_fr": "/workspace/data/datasets/voxpopuli_fr",
   "voxpopuli_de": "/workspace/data/datasets/voxpopuli_de",
-  "golos": "/workspace/data/datasets/golos"
+  "golos": "/workspace/data/datasets/golos",
+  "granary": "/workspace/data/datasets/granary",
+  "worldspeech": "/workspace/data/datasets/worldspeech",
+  "tagarela": "/workspace/data/datasets/tagarela",
+  "duplexconv": "/workspace/data/datasets/duplexconv",
+  "iscslp2026_cot_tts": "/workspace/data/datasets/iscslp2026_cot_tts",
+  "eurospeech": "/workspace/data/datasets/eurospeech",
+  "gigaspeech3": "/workspace/data/datasets/gigaspeech3",
+  "yodas3": "/workspace/data/datasets/yodas3"
 }

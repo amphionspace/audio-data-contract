@@ -1,0 +1,39 @@
+  - schema_version: dataset-catalog/2.0
+    dataset_id: worldspeech
+    version: hf-b76b85395039
+    languages:
+      - multi
+    tasks:
+      - asr
+    aliases: []
+    artifacts:
+      - name: source
+        kind: hf-dataset-snapshot
+        root_alias: worldspeech
+        relative_path: source/hf-b76b85395039
+    splits:
+      all:
+        artifacts:
+          source:
+            - source
+    provenance:
+      summary: 88 种语言议会与广播人工转写语音（WorldSpeech）
+      source: Hugging Face
+      source_id: disco-eth/WorldSpeech
+      revision: b76b85395039f50332fbc421f7c098ee2f2653d7
+      url: https://huggingface.co/datasets/disco-eth/WorldSpeech
+      paper: https://arxiv.org/abs/2605.09167
+      release_date: '2026-04-28'
+      license:
+        - cc-by-nc-4.0
+      inventory_status: download_planned
+      description: >-
+        ETH Zurich 2026 年发布（NeurIPS 2026），65,072 小时、88 种语言 127 个语言地区变体，来自各国议会、公共广播（VOA、RFA、
+        All India Radio 等）、LibriVox 有声书和联合国等机构，多为正式、事先准备的讲话。文本是人工转写，用 ASR 对齐切段，
+        每段带 CER、WADA-SNR、DNSMOS。与本项目相关语种约：zh（台湾）1,482 h、yue（香港）1,944 h、en 5,312 h、es 6,792 h、
+        pt（巴西）1,764 h、ja 1,387 h、ko 1,454 h、ar 约 1,001 h、de 1,907 h、fr 约 6,029 h（主要是加拿大法语）、ru 1,537 h、
+        hi 1,707 h。音频为 24 kHz OGG Opus，按 data/<语言_国家>/ 分 train、test。5 个 RFA 配置（含 vn_vi）只有元数据和
+        source_url，需自行下载。整体 CC BY-NC 4.0，各来源条款更严时以来源为准，不能商用。
+      download_scope: Complete WorldSpeech release (all 127 configurations, train and test Parquet)
+      expected_download_files: 14238
+      expected_download_bytes: 1716577687460
