@@ -1,0 +1,161 @@
+  - schema_version: dataset-catalog/2.0
+    dataset_id: coraal
+    version: uoregon-2023.06
+    languages:
+      - en
+    tasks:
+      - asr
+      - speaker_attributed_asr
+    aliases:
+      - corpus_of_regional_african_american_language
+    artifacts:
+      - name: source
+        kind: source-directory
+        root_alias: coraal
+        relative_path: source/uoregon-2023.06
+        metadata:
+          file_count: 87
+          expected_bytes: 32632549463
+          tree_sha256: 465fc87f55c48a4382d4fa77bc028d0bba9f3e4fd07b98caa8e9fded5d4b1a3c
+      - name: download_state
+        kind: dataset-state
+        root_alias: coraal
+        relative_path: versions/uoregon-2023.06/download_state/state.json
+        expected_bytes: 915
+        sha256: 09ce854cd12c1c8da3e82d5579b1b4e3773124d6c410c715adb96424acc7e8c0
+    splits:
+      atl:
+        artifacts:
+          source:
+            - source
+        statistics:
+          count: 14
+          speakers: 13
+          duration_hours: 8.6206
+          duration_basis: soundfile header duration of every WAV in atl/2020.05/*_audio_part*.tar.gz, read by streaming (macOS ._ members skipped); speakers are distinct CORAAL.Spkr in the component metadata
+          sample_formats:
+            1ch/44100Hz/PCM_16: 14
+        provenance:
+          component_version: '2020.05'
+          notes: Atlanta, GA; interviews 2017–2018
+      dca:
+        artifacts:
+          source:
+            - source
+        statistics:
+          count: 74
+          speakers: 68
+          duration_hours: 34.0421
+          duration_basis: soundfile header duration of every WAV in dca/2018.10.06/*_audio_part*.tar.gz, read by streaming (macOS ._ members skipped); speakers are distinct CORAAL.Spkr in the component metadata
+          sample_formats:
+            1ch/44100Hz/PCM_16: 74
+        provenance:
+          component_version: '2018.10.06'
+          notes: Washington, DC; interviews 1968–1969
+      dcb:
+        artifacts:
+          source:
+            - source
+        statistics:
+          count: 63
+          speakers: 51
+          duration_hours: 46.0591
+          duration_basis: soundfile header duration of every WAV in dcb/2018.10.06/*_audio_part*.tar.gz, read by streaming (macOS ._ members skipped); speakers are distinct CORAAL.Spkr in the component metadata
+          sample_formats:
+            1ch/44100Hz/PCM_16: 63
+        provenance:
+          component_version: '2018.10.06'
+          notes: Washington, DC; interviews 2014–2017
+      dta:
+        artifacts:
+          source:
+            - source
+        statistics:
+          count: 40
+          speakers: 40
+          duration_hours: 25.1441
+          duration_basis: soundfile header duration of every WAV in dta/2023.06/*_audio_part*.tar.gz, read by streaming (macOS ._ members skipped); speakers are distinct CORAAL.Spkr in the component metadata
+          sample_formats:
+            1ch/44100Hz/PCM_16: 40
+        provenance:
+          component_version: '2023.06'
+          notes: Detroit, MI (Detroit Dialect Study); interviews 1966
+      les:
+        artifacts:
+          source:
+            - source
+        statistics:
+          count: 15
+          speakers: 10
+          duration_hours: 8.4438
+          duration_basis: soundfile header duration of every WAV in les/2021.07/*_audio_part*.tar.gz, read by streaming (macOS ._ members skipped); speakers are distinct CORAAL.Spkr in the component metadata
+          sample_formats:
+            1ch/44100Hz/PCM_16: 15
+        provenance:
+          component_version: '2021.07'
+          notes: Lower East Side, New York, NY; interviews 2008–2009
+      prv:
+        artifacts:
+          source:
+            - source
+        statistics:
+          count: 32
+          speakers: 17
+          duration_hours: 13.9607
+          duration_basis: soundfile header duration of every WAV in prv/2018.10.06/*_audio_part*.tar.gz, read by streaming (macOS ._ members skipped); speakers are distinct CORAAL.Spkr in the component metadata
+          sample_formats:
+            1ch/44100Hz/PCM_16: 32
+        provenance:
+          component_version: '2018.10.06'
+          notes: Princeville, NC; interviews 2003–2004
+      roc:
+        artifacts:
+          source:
+            - source
+        statistics:
+          count: 19
+          speakers: 15
+          duration_hours: 13.186
+          duration_basis: soundfile header duration of every WAV in roc/2020.05/*_audio_part*.tar.gz, read by streaming (macOS ._ members skipped); speakers are distinct CORAAL.Spkr in the component metadata
+          sample_formats:
+            1ch/44100Hz/PCM_16: 19
+        provenance:
+          component_version: '2020.05'
+          notes: Rochester, NY; interviews 2016–2017
+      vld:
+        artifacts:
+          source:
+            - source
+        statistics:
+          count: 14
+          speakers: 12
+          duration_hours: 11.4828
+          duration_basis: soundfile header duration of every WAV in vld/2021.07/*_audio_part*.tar.gz, read by streaming (macOS ._ members skipped); speakers are distinct CORAAL.Spkr in the component metadata
+          sample_formats:
+            1ch/44100Hz/PCM_16: 14
+        provenance:
+          component_version: '2021.07'
+          notes: Valdosta, GA; interviews 2017–2019
+    provenance:
+      summary: 非裔美国英语社会语言学访谈（CORAAL）
+      source: University of Oregon (ORAAL)
+      source_id: CORAAL v2023.06
+      url: https://oraal.github.io/coraal
+      project_page: http://lingtools.uoregon.edu/coraal/
+      release_date: '2023-06'
+      description: >-
+        俄勒冈大学 Corpus of Regional African American Language v2023.06：8 个地区组件、271 段社会语言学访谈录音、160.9 小时、226 位说话人，
+        44.1 kHz 单声道 WAV，录音年代从 1966 到 2019 年。每段有带时间戳和说话人的人工逐句转写（textfiles、Praat TextGrid、ELAN 三种格式），
+        元数据表给出说话人性别、年龄组、出生年份、受教育程度、职业等社会背景。真实的长篇自然对话，包含方言语法和发音，是检验英语 ASR
+        在非标准口音和老旧录音上表现的常用长音频评测（Open ASR Leaderboard 的长音频项也用到它），也可用于训练。官方没有公布哈希，
+        下载时对每个压缩包做了完整 gzip 校验。官方文件清单里 LES、VLD 两个元数据文件的链接写错了版本号，已改用实际的
+        *_metadata_2021.07.txt；VLD 元数据里的 VLD_se0_ag2_f_01_2 实际音频名为 VLD_se0_ag3_f_01_2。CC BY-NC-SA 4.0。
+      license:
+        - cc-by-nc-sa-4.0
+      download_scope: Complete CORAAL v2023.06 (all eight components with audio, text, TextGrid, ELAN and metadata) plus the user guide
+      expected_download_files: 87
+      expected_download_bytes: 32632549463
+      download_mirror: lingtools.uoregon.edu via the configured proxy
+      integrity: verified
+      integrity_method: full gzip stream check of every tar.gz and size check of every file; the publisher posts no checksums
+      local_scan_date: '2026-11-14'
