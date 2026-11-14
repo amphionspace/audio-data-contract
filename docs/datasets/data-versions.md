@@ -1047,6 +1047,18 @@ Common Voice 中文众包朗读；含清洗、热词、加噪版
 - `context_correction_clean_zh@v1-20261110`：清洗对象是 AmphionASR v4 配方里的中文真实口语来源：wenetspeech_podcast、wenetspeech_youtube（l-20261014）、 emilia2_short（short-20261014 与 short-lance-20261023）、emilia2_dialog、emilia2_mix、magicdata_ramc / aishell4 / alimeeting_sdm （asr-20261014 与 turn-taking-20261014）、vitw（2m-20261013）；朗读类（hw_sft 中文部分等）不扫。 找出说话人用组词、拆字、偏旁或否定对比说明字怎么写的句子，由两个不同家族的 LLM 独立判断标注是否与说明一致： 一致的列为正例；两边改法完全相同、只改写法不改读音、说明部分读音经 Qwen3-ASR 核对的才改正；其余隔离、不进训练。 本版本只存判定清单（逐条判定与依据、正例、隔离名单、统计），不是训练集；改正后的训练数据以各来源的派生版本另行登记。 context_correction_zh 评测用过的 190 条 WenetSpeech 播客录音（83,220 段、48.9 h）一并排除。 wenetspeech_podcast 已完成（派生版本 wenetspeech_podcast@l-20261014-ctxclean-20261110）。 会议来源（人工标注）已完成：不做 Qwen3-ASR 音频核对（远场、电话音频上 ASR 不如人工标注准，试跑 4 个音频不符全是 ASR 听错）； 派生版本 magicdata_ramc@asr-20261014-ctxclean-20261110、magicdata_ramc@turn-taking-20261014-ctxclean-20261110、 aishell4@asr-20261014-ctxclean-20261110、aishell4@turn-taking-20261014-ctxclean-20261110；alimeeting_sdm 两个版本没有改动或隔离，继续用原版本。 wenetspeech_youtube 已完成（派生版本 wenetspeech_youtube@l-20261014-ctxclean-20261110）。 vitw 已完成（派生版本 vitw@2m-20261013-ctxclean-20261110，只去掉 3 段存疑，另 2 段已捞回）：音频是加了回声、噪声、丢帧的劣化音频， Qwen3-ASR 识别不出，不做音频核对。 emilia2_dialog 已完成（派生版本 emilia2_dialog@dialog-turn-taking-20261013-enroll-ctxclean-20261110，同时去掉 ts_asr_real 留出的评测源录音）： 混合音频里还有别人说话，音频核对改为在识别结果里找说明、只数标注里没被听到的音节。 emilia2_short 已完成（派生版本 emilia2_short@short-lance-20261023-ctxclean-20261110，音频读 Lance）；m4a 版 short-20261014 已被取代、 音频已删，不出派生版本，只登记它的 exclude_records 名单。 emilia2_mix 已完成（派生版本 emilia2_mix@mix-20261013-ctxclean-20261110，同时去掉 ts_asr_real 留出的评测源录音）： 音频核对读混音协议里目标说话人的干净原片段；抽检发现 8 段改错或多改，改判为隔离。 2026-11-12 捞回：因文本原因隔离、首轮没有模型提出改法的窗口，两个模型再判一次“原标注是否已照说明写对”， 两边都说对、机械检查和音频核对都通过的放回训练（原文不动，不进正例）；执行者逐条看过全部放回的 129 段文本， 判错 6 段、存疑 12 段写进各来源的 review_rejected 名单、仍然隔离，最终放回 111 段不同文本。 2026-11-13 把判定迁到交付配方 v7set34 实际训练的版本（clean.py transfer，不重新判定）：wenetspeech_clean@train-punc-v1-20261102 按分段 ID、emilia2_mix@mix-20261013-utts 与会议带标点版本按去掉标点后的文本对应，改字按字对齐写进带标点的文本，文本对不上的改字窗口隔离；这些来源的判定清单（*_punc、emilia2_mix_utts、wenetspeech_clean）与派生版本一并登记，wenetspeech_clean 同样去掉评测录音
 - 含派生版本（与源数据可能重叠）
 
+### context_correction_synth_zh
+
+说字写法合成训练数据（带 think）
+
+语言：zh · 任务：语音识别、目标说话人语音识别
+
+| 版本 | 时长（小时） | 口径 | COS |
+|---|---:|---|---|
+| [context_correction_synth_zh@train-v1-20261114](../../catalog/context_correction_synth_zh.yaml#L2) | — | 未登记 | 没有 |
+
+- `context_correction_synth_zh@train-v1-20261114`：说话人在一段话里用组词、拆字、偏旁结构或否定对比说明某个同音字怎么写（另含同名一致性），转写应按说明写字。 沿用 context_correction_zh@v1-20261018 的流程（LLM 出题、另一家族 LLM 复核、Qwen3-TTS 克隆音色朗读、拼音级质检）， 改用 aishell3、kespeech 训练划分的说话人，题目避开评测集的被测词；每条记录按 context_correction_clean_zh 的 think 格式写 think， 并另出带真实注册音频的 TS-ASR 版本。起因：open-audio-llm runs/zh-spelling-think-20261113 中 think 有效，但真实说明样本只有 2,187 条。 生成代码在 amphiondata scripts/context_correction/
+
 ### context_correction_zh
 
 中文上下文纠偏评测集，同音词按语境写
