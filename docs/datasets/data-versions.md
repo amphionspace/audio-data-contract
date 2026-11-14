@@ -2978,11 +2978,11 @@ YouTube 西语/葡语人工字幕语音（YODAS）
 |---|---:|---|---|
 | [yodas_granary_es_pt@es000-clean-v1-20261111](../../catalog/yodas_granary_es_clean.yaml#L2) | 2,442.9 | 已登记 | 没有 |
 | [yodas_granary_es_pt@hf-969944574ea3](../../catalog/yodas_granary_es_pt.yaml#L1) | 3,658.5 | 已登记 | 快照 20260914 |
-| [yodas_granary_es_pt@pt000-clean-v1-20261114](../../catalog/yodas_granary_pt_clean.yaml#L2) | — | 未登记 | 没有 |
+| [yodas_granary_es_pt@pt000-clean-v1-20261114](../../catalog/yodas_granary_pt_clean.yaml#L2) | 1,202.3 | 已登记 | 没有 |
 
 - `yodas_granary_es_pt@es000-clean-v1-20261111`：YODAS-Granary 西语人工字幕分区 es000 的清洗版本：Parquet 里嵌的 16 kHz WAV 解成 FLAC 放在本版本目录（约 157 GB）， 731,196 句 / 2,452.45 h 经 Qwen3-ASR-1.7B + whisper-large-v3 双引擎清洗（consensus-v7）保留 726,015 句 / 2,442.89 h （asr_only 75.91 h、ast 2,366.98 h；≥30 s 的长段 938.37 h）。丢弃 0.39% 时长，不集中在某类时长或某些视频； 试跑、被拒样本和误杀率见 run_dir README。es000 的视频 99% 也在 yodas_es@legacy 里，不要两者叠加
 - `yodas_granary_es_pt@hf-969944574ea3`：YODAS-Granary 里西语、葡语的人工字幕分区（es000、pt000），音频已切成句子；asr_only 与 ast 两个划分都带原文转写，ast 另有英文翻译。自动字幕分区（es100–108、pt100–103，约 4 TB）未下载。地区未区分。es000 的视频 99%（23,976/24,208 个）也在 yodas_es 里，是同一批 YouTube 音频、切分和转写不同，西语部分不要与 yodas_es 一起累计；葡语此前没有登记 YODAS
-- `yodas_granary_es_pt@pt000-clean-v1-20261114`：YODAS-Granary 葡语人工字幕分区 pt000（asr_only 49,667 句 / 18.9 h，ast 497,936 句 / 1,187.1 h）的清洗版本：Parquet 里嵌的 16 kHz WAV 解成 FLAC 放在本版本目录，生成 lhotse 清单，再用 Qwen3-ASR-1.7B + whisper-large-v3 双引擎清洗（consensus-v7），先试跑、复核被拒样本再跑全量。进行中
+- `yodas_granary_es_pt@pt000-clean-v1-20261114`：YODAS-Granary 葡语人工字幕分区 pt000 的清洗版本：Parquet 里嵌的 16 kHz WAV 解成 FLAC 放在本版本目录（约 79 GB）， 547,603 句 / 1,205.96 h 经 Qwen3-ASR-1.7B + whisper-large-v3 双引擎清洗（consensus-v7）保留 544,192 句 / 1,202.34 h （asr_only 18.29 h、ast 1,184.05 h；≥30 s 的长段 241.50 h）。丢弃 0.30% 时长， 主要是字幕只写了音频一部分或与音频不符；不集中在某类时长或某些视频（11,951 个视频里 8 个整段丢弃，丢弃最多的 20 个视频占全部丢弃 8.9%）
 - 含派生版本（与源数据可能重叠）
 
 ### zenless_voice
