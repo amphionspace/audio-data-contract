@@ -12,50 +12,11 @@
         kind: hf-dataset-snapshot
         root_alias: dialogs_ru
         relative_path: source/hf-a74ff44d8d27
-        metadata:
-          file_count: 10004
-          expected_bytes: 5571006663
-          tree_sha256: 1f8e602809ce3f465cf5d8850e516992ba0463e876134c6bf4af302df9069be3
-      - name: download_state
-        kind: dataset-state
-        root_alias: dialogs_ru
-        relative_path: versions/hf-a74ff44d8d27/download_state/state.json
-        expected_bytes: 976
-        sha256: 44bc4ec06959ca3de0b3851f907c4486608c76dc941fa4601f28f61b45727b74
     splits:
-      train:
+      all:
         artifacts:
           source:
             - source
-        statistics:
-          count: 9686
-          speakers: 3
-          duration_hours: 16.8617
-          duration_basis: soundfile header duration of the train.csv rows whose WAV exists in the pinned revision (1,742 of 11,428 rows point to missing files); pinned upstream file hashes verified
-          sample_formats:
-            1ch/44100Hz/PCM_16: 9686
-      val:
-        artifacts:
-          source:
-            - source
-        statistics:
-          count: 148
-          speakers: 3
-          duration_hours: 0.2461
-          duration_basis: soundfile header duration of the val.csv rows whose WAV exists in the pinned revision (32 of 180 rows point to missing files)
-          sample_formats:
-            1ch/44100Hz/PCM_16: 148
-      test:
-        artifacts:
-          source:
-            - source
-        statistics:
-          count: 162
-          speakers: 3
-          duration_hours: 0.3123
-          duration_basis: soundfile header duration of the test.csv rows whose WAV exists in the pinned revision (26 of 188 rows point to missing files)
-          sample_formats:
-            1ch/44100Hz/PCM_16: 162
     provenance:
       summary: 俄语演员情感对话 TTS 语料（Dialogs）
       source: Hugging Face
@@ -63,19 +24,18 @@
       revision: a74ff44d8d27ca3d21098ea3ed4d31a32923fbdd
       url: https://huggingface.co/datasets/langswap/dialogs-ru-emotional-conversations
       paper: https://arxiv.org/abs/2607.14310
-      download_mirror: https://hf-mirror.com
       release_date: '2026-10-12'
       description: >-
         Langswap 的俄语情感对话语料（Interspeech 2026）：3 位职业话剧演员（Masha、Sveta 女，Dima 男）面对面表演剧本对话，录音棚 44.1 kHz
         16 bit 单声道 WAV，12 种风格或情绪标签（中性、高兴、惊讶、悲伤、愤怒、耳语、绕口令、诗歌等），转写附重音标注版本，用于对话和情感 TTS。
         清单（metadata.csv 和 train/val/test.csv，竖线分隔）共 11,796 条、20.6 小时，但锁定版本里 wavs/ 只有 9,996 个文件，1,800 条
-        （3.18 小时，以 masha_sveta 第 9、10 部分最多）指向的 WAV 不存在，上游直接返回 404；实际可用 9,996 条、17.4 小时，统计只算存在的文件。
+        （3.18 小时，以 masha_sveta 第 9、10 部分最多）指向的 WAV 不存在，上游直接返回 404；实际可用 9,996 条、17.4 小时。
         许可证是 OpenRAIL：允许商用和再分发，但附带用途限制（不得用于违法、伤害未成年人、虚假信息、歧视、执法预测等），再分发时须
         随附同样的限制条款。
+        2026-11-14 曾完整下载并按上游哈希校验（实测可用 9,996 条、17.4 小时），因不属于中英、西葡真实场景数据的采集重点，已删除本地副本，只保留来源登记。
       license:
         - openrail
+      inventory_status: download_planned
       download_scope: Complete Dialogs repository (WAVs, split CSVs, preview Parquet, license and card)
       expected_download_files: 10004
       expected_download_bytes: 5571006663
-      integrity: verified
-      local_scan_date: '2026-11-14'

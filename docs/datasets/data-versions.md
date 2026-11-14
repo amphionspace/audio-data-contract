@@ -2276,18 +2276,6 @@ Emilia-YODAS 多语种 YouTube 语音
 |---|---:|---|---|
 | [indicvoices@hf-c96f9088f138](../../catalog/multilingual_multispeaker.yaml#L164) | — | 未登记 | 快照 20260914 |
 
-### kasaspeech
-
-英语-契维语语码转换朗读（KasaSpeech）
-
-语言：en、tw · 任务：语音识别、语码转换语音识别
-
-| 版本 | 时长（小时） | 口径 | COS |
-|---|---:|---|---|
-| [kasaspeech@hf-4bbaf47a5a46](../../catalog/kasaspeech.yaml#L1) | 95.6 | 已登记 | 没有 |
-
-- `kasaspeech@hf-4bbaf47a5a46`：加纳的英语-契维语（Twi）语码转换语音：志愿者在采集平台上朗读引导语码转换的提示句，人工按统一规范转写，共 54,855 条、95.6 小时， 112 位说话人，音频大多是 48 kHz 单声道 Opus（少量 16 kHz WAV/Vorbis），附性别、年龄段和提示集。train/validation/test 说话人互不重叠， 但句子高度重复：train 5 万条只有 1,544 种转写，test 的 829 种转写全部出现在 train 中，validation 949 种里 948 种也在 train 中， 所以这份 test 只能衡量对新说话人的泛化，不能衡量对新文本的泛化，语言模型也可能直接记住这些句子。另有一个同名、体积相同的更早仓库 Kennethdot/ Ghana_English-Twi_Code-switching_Speech（2026-08-05），未逐文件比对。Apache-2.0
-
 ### meeting_benchmark
 
 约 180 秒长度的中英会议转写评测集
@@ -3030,18 +3018,6 @@ TS-ASR 训练用跨语言 TTS 注册音频
 |---|---:|---|---|
 | [waxal-asr@hf-e91442a8989b](../../catalog/multilingual_multispeaker.yaml#L290) | — | 未登记 | 快照 20260914 |
 
-### waxal_tts
-
-15 种非洲语言朗读 TTS 数据（WAXAL）
-
-语言：ach、bau、ewe、fat、ful、hau、ibo、kik、lug、luo、nyn、pcm、swa、twi、yor · 任务：语音合成
-
-| 版本 | 时长（小时） | 口径 | COS |
-|---|---:|---|---|
-| [waxal_tts@hf-5f4d8ca24f2b](../../catalog/waxal_tts.yaml#L1) | 264.1 | 已登记 | 没有 |
-
-- `waxal_tts@hf-5f4d8ca24f2b`：Google 与 Makerere 大学、加纳大学、Media Trust、Loud and Clear 等合作采集的 WAXAL 语料中的 TTS 部分：按音素平衡脚本朗读的 录音室级语音，本次登记 15 种语言、27,369 条、264.1 小时，每种语言 4–8 位朗读人（数据卡说是单说话人，实际 speaker_id 有 4–8 个）， 每条有 text、speaker_id、gender。各语言自带 train/validation/test 划分。音频大多是 48 kHz MP3，Baoule、Ewe 是 48 kHz 浮点 WAV， Fula 是 44.1/48 kHz PCM WAV。同一仓库的 ASR 部分已作为 waxal-asr 登记（该版本 ASR 部分的文件数和总字节数与已登记版本相同）。 仓库 data/TTS 下还有 bam、fuf、wol 三种语言，但数据卡把它们的配置和语言声明都注释掉了，本次未下载。已知问题：yor 目录里 yor_tts-* 分片与 yor-* 逐行重复，统计只算一次；ful 有 1,829 行的音频是 macOS 的 ._ 元数据文件而不是音频，读取时要按音频头过滤。 许可证按提供方区分：加纳大学提供的 Fante、Twi、Baoule、Ewe 为 CC BY 4.0，其余为 CC BY-SA 4.0
-
 ### wutheringwaves
 
 《鸣潮》多语配音，TTS 用
@@ -3386,18 +3362,6 @@ Common Voice 17 葡语朗读
 - `coraa_nurc_sp@hf-c02be121ec19`：CORAA NURC-SP：圣保罗城市口音的巴西葡语自发语音（对话、访谈、讲座），人工校对转写。只下了 filtered 这套 Parquet（已去掉空转写）和全部 CSV 元数据；original 这套 Parquet（同样的句子外加空转写行）和旧版 WAV tar.gz（与 Parquet 同一批音频）内容重复，到 HF 的链路只有约 2 MB/s，没有下载。speaker_id、num_speakers 由 WhisperX 自动生成，不一定准。test 就是 tarsila_asr 里的 NURC-SP 部分（10.23 h），不要一起累计；与 nurc_sp_corpus_minimo 的 21 段录音按录音编号核对没有重合。CC BY-NC-ND，仅限非商用
 - 含派生版本（与源数据可能重叠）
 
-### dataset_et_amharic
-
-众包阿姆哈拉语朗读（Dataset.ET）
-
-语言：am · 任务：语音识别
-
-| 版本 | 时长（小时） | 口径 | COS |
-|---|---:|---|---|
-| [dataset_et_amharic@hf-4861d6445842](../../catalog/dataset_et_amharic.yaml#L1) | 51.5 | 已登记 | 没有 |
-
-- `dataset_et_amharic@hf-4861d6445842`：埃塞俄比亚 Snapwre 公司的 Dataset.ET v0.2.0：志愿者通过 Telegram 机器人朗读给定句子，其他贡献者投票确认、再经声学筛选， 只收全票通过的录音。16,866 条、51.5 小时、493 位说话人，16 kHz 单声道 FLAC（由 Opus 语音消息无损转出），转写就是朗读提示句。 附性别、年龄段、地区（k=5 匿名化，null 可能是隐去）、语音起止时间和响度；音频没有裁掉首尾静音。train/validation/test 说话人互不重叠；数据卡说提示句也不跨划分，实测 validation 与 test 有 45 个提示句相同。男声约占七成。CC BY 4.0
-
 ### demand
 
 16 麦阵列录制的多环境噪声（DEMAND）
@@ -3413,18 +3377,6 @@ Common Voice 17 葡语朗读
 - `demand@hf-voice-biomarkers-20261023`：DEMAND 多通道环境噪声：16 麦阵列在 18 种真实环境录的 5 分钟噪声（厨房、客厅、洗衣房、田野、公园、河边、走廊、会议室、办公室、食堂、餐馆、车站、广场、街道、咖啡馆、公交、轿车、地铁），每个通道一个单声道 WAV。这份 parquet 有 16 kHz（17 个环境，没有咖啡馆 SCAFE）和 48 kHz（18 个环境）两种采样率，共 560 个单通道文件、46.7 小时。可当加噪素材用，16 个通道彼此高度相关，混入时按录音取一个通道即可。这份镜像丢了环境名，要按环境挑噪声用 `demand@zenodo-1227121-16k-20261023`
 - `demand@zenodo-1227121-16k-20261023`：DEMAND 环境噪声 16 kHz 原版，带环境名：16 麦阵列在 17 种真实环境各录 5 分钟（D 家庭：厨房、客厅、洗衣房；N 户外：运动场、公园、小河边；O 办公：走廊、会议室、办公室；P 公共场所：食堂、餐馆、地铁站；S 街道：广场、路口；T 交通：公交、轿车、地铁），每个通道一个单声道 WAV，共 272 个文件、22.7 小时。咖啡馆 SCAFE 官方只有 48 kHz，见 48 kHz 原版。按环境挑噪声用这一版；16 个通道彼此高度相关，混入时按环境取一个通道即可
 - `demand@zenodo-1227121-48k-20261023`：DEMAND 环境噪声 48 kHz 原版，带环境名：16 麦阵列在 18 种真实环境各录 5 分钟（D 家庭：厨房、客厅、洗衣房；N 户外：运动场、公园、小河边；O 办公：走廊、会议室、办公室；P 公共场所：食堂、餐馆、地铁站；S 街道：广场、咖啡馆露台、路口；T 交通：公交、轿车、地铁），每个通道一个单声道 WAV，共 288 个文件、24 小时。比 16 kHz 原版多一个咖啡馆 SCAFE；要 16 kHz 时用 `demand@zenodo-1227121-16k-20261023` 或自行降采样。16 个通道彼此高度相关，混入时按环境取一个通道即可
-
-### dialogs_ru
-
-俄语演员情感对话 TTS 语料（Dialogs）
-
-语言：ru · 任务：语音合成
-
-| 版本 | 时长（小时） | 口径 | COS |
-|---|---:|---|---|
-| [dialogs_ru@hf-a74ff44d8d27](../../catalog/dialogs_ru.yaml#L1) | 17.4 | 已登记 | 没有 |
-
-- `dialogs_ru@hf-a74ff44d8d27`：Langswap 的俄语情感对话语料（Interspeech 2026）：3 位职业话剧演员（Masha、Sveta 女，Dima 男）面对面表演剧本对话，录音棚 44.1 kHz 16 bit 单声道 WAV，12 种风格或情绪标签（中性、高兴、惊讶、悲伤、愤怒、耳语、绕口令、诗歌等），转写附重音标注版本，用于对话和情感 TTS。 清单（metadata.csv 和 train/val/test.csv，竖线分隔）共 11,796 条、20.6 小时，但锁定版本里 wavs/ 只有 9,996 个文件，1,800 条 （3.18 小时，以 masha_sveta 第 9、10 部分最多）指向的 WAV 不存在，上游直接返回 404；实际可用 9,996 条、17.4 小时，统计只算存在的文件。 许可证是 OpenRAIL：允许商用和再分发，但附带用途限制（不得用于违法、伤害未成年人、虚假信息、歧视、执法预测等），再分发时须 随附同样的限制条款
 
 ### dns5_noise_rir
 
