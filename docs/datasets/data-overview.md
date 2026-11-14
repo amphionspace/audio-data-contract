@@ -1,6 +1,6 @@
 # 数据总览
 
-当前登记 **255 个数据集**；另有 **35 个下载来源声明**和 **1 个训练混合配方**。登记不代表本机文件已齐备。
+当前登记 **258 个数据集**；另有 **35 个下载来源声明**和 **1 个训练混合配方**。登记不代表本机文件已齐备。
 
 时长取单个版本的最大值，不跨版本相加；≈ 为参考表或估算值，— 为暂无完整时长。各版本的时长、说明、COS 地址和质量证据见[版本明细](data-versions.md)。
 
@@ -53,11 +53,13 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [librispeech](data-versions.md#librispeech) | en | 语音识别、热词增强语音识别 | 971.6 | 英文有声书朗读（LibriSpeech）；含热词和加噪版 | 部分版本：快照 20260914、`备份桶:audio-data-contract/datasets/` 下 5 个目录 |
 | [libritts_r](data-versions.md#libritts_r) | en | 语音识别、语音合成 | 583.1 | 英文有声书 TTS 语料，音频经修复（LibriTTS-R） | `TTS 桶:LibriTTS-R/`（原始数据） |
 | [ljspeech](data-versions.md#ljspeech) | en | 语音识别、语音合成 | 23.9 | 单人英文朗读（LJSpeech） | `TTS 桶:LJSpeech/`（原始数据） |
+| [magicdata_multistream_en](data-versions.md#magicdata_multistream_en) | en | 语音识别、带说话人标注的语音识别 | 2.8 | 英文双人自然对话分轨录音（MagicData 样本） | 没有 |
 | [meld_ser](data-versions.md#meld_ser) | en | 语音情感识别 | 2.3 | 美剧《老友记》对话情感识别评测（MELD） | 快照 20260914 |
 | [mls](data-versions.md#mls) | en | 语音识别 | 44,691.0 | 英文有声书朗读（MLS 英语） | 部分版本：快照 20260914 |
 | [msp_podcast_ser](data-versions.md#msp_podcast_ser) | en | 语音情感识别 | — | 英文播客情感识别评测（MSP-Podcast） | 快照 20260914 |
 | [notsofar](data-versions.md#notsofar) | en | 语音识别、连续语音分离、diarization、重叠语音检测、带说话人标注的语音识别、说话人分段与归属 | ≈200.0 | 微软英文远场会议，真实录制与模拟（NOTSOFAR） | 快照 20260914、`备份桶:audio-data-contract/datasets/notsofar_sdm/` |
 | [open_yap](data-versions.md#open_yap) | en | 语音识别、带说话人标注的语音识别 | 8.9 | 熟人之间的英文双声道自然对话样本（Open Yap 1K） | 没有 |
+| [primock57](data-versions.md#primock57) | en | 语音识别、带说话人标注的语音识别 | 8.6 | 英文全科医生模拟问诊分轨录音（PriMock57） | 没有 |
 | [sbcsae](data-versions.md#sbcsae) | en | 语音识别、带说话人标注的语音识别 | 23.3 | 美式英语自然口语对话（SBCSAE） | 没有 |
 | [singapore_english](data-versions.md#singapore_english) | en | 语音识别 | 3.9 | 新加坡口音英语（Hugging Face 来源） | 快照 20260914 |
 | [singaporean](data-versions.md#singaporean) | en | 语音识别 | ≈0.2 | 新加坡口音英语小样本 | 快照 20260914、`备份桶:audio-data-contract/datasets/singaporean/` |
@@ -106,6 +108,7 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [legco_speech](data-versions.md#legco_speech) | yue | 语音识别 | 20,227.2 | 香港立法会会议粤语 | 部分版本：快照 20260914 |
 | [m3ed_ser](data-versions.md#m3ed_ser) | zh | 语音情感识别 | 1.7 | 中文电视剧对话情感识别评测（M3ED） | 快照 20260914、`备份桶:audio-data-contract/datasets/m3ed_ser/` |
 | [magicdata](data-versions.md#magicdata) | zh | 语音识别、热词增强语音识别 | 754.7 | 中文手机朗读（MAGICDATA）；含清洗和热词版 | 部分版本：快照 20260914、`备份桶:audio-data-contract/datasets/magicdata_hotwords/` |
+| [magicdata_multistream_zh](data-versions.md#magicdata_multistream_zh) | zh | 语音识别、带说话人标注的语音识别 | 5.2 | 中文双人自然对话分轨录音（MagicData 样本） | 没有 |
 | [magicdata_ramc](data-versions.md#magicdata_ramc) | zh | 语音识别、diarization、带说话人标注的语音识别、说话人分段与归属、目标说话人语音识别 | 403.5 | 中文手机通话自然对话（MagicData-RAMC） | 部分版本：快照 20260914 |
 | [magicdata_ramc_farsim_meeting_sot](data-versions.md#magicdata_ramc_farsim_meeting_sot) | zh | 带说话人标注的语音识别 | 566.6 | RAMC 对话加混响噪声模拟远场的窗口 | 没有 |
 | [magicdata_ramc_meeting_sot](data-versions.md#magicdata_ramc_meeting_sot) | zh | 带说话人标注的语音识别 | — | MagicData-RAMC 对话切窗的按人转写数据 | `备份桶:audio-data-contract/datasets/magicdata_ramc_meeting_sot/` |
