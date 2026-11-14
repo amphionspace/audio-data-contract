@@ -1,6 +1,6 @@
 # 数据总览
 
-当前登记 **258 个数据集**；另有 **35 个下载来源声明**和 **1 个训练混合配方**。登记不代表本机文件已齐备。
+当前登记 **260 个数据集**；另有 **34 个下载来源声明**和 **1 个训练混合配方**。登记不代表本机文件已齐备。
 
 时长取单个版本的最大值，不跨版本相加；≈ 为参考表或估算值，— 为暂无完整时长。各版本的时长、说明、COS 地址和质量证据见[版本明细](data-versions.md)。
 
@@ -30,6 +30,7 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [chime4](data-versions.md#chime4) | en | 语音识别 | 10.1 | 四种噪声环境的英文朗读评测集（CHiME-4） | 没有 |
 | [chime6](data-versions.md#chime6) | en | 语音识别、重叠语音检测、带说话人标注的语音识别、说话人分段与归属、目标说话人语音识别 | 174.5 | 家庭聚会英文对话，多通道远场重叠（CHiME-6） | 部分版本：快照 20260914 |
 | [common_voice_en](data-versions.md#common_voice_en) | en | 语音识别、热词增强语音识别 | 1,862.7 | Common Voice 英语众包朗读；含清洗、热词、加噪版 | 部分版本：快照 20260914、`备份桶:audio-data-contract/datasets/commonvoice_en_hotwords/` |
+| [coraal](data-versions.md#coraal) | en | 语音识别、带说话人标注的语音识别 | 160.9 | 非裔美国英语社会语言学访谈（CORAAL） | 没有 |
 | [cs_dialogue_en](data-versions.md#cs_dialogue_en) | en | 语音识别、热词增强语音识别 | 26.6 | CS-Dialogue 对话中的纯英文语句 | 部分版本：快照 20260914 |
 | [dipco](data-versions.md#dipco) | en | 语音识别、带说话人标注的语音识别、说话人分段与归属 | 6.5 | 家庭晚宴英文对话，近讲与远场阵列（DiPCo） | 没有 |
 | [earnings21](data-versions.md#earnings21) | en | 语音识别、带说话人标注的语音识别 | 39.3 | 英文上市公司财报电话会议（Earnings-21） | 没有 |
@@ -177,6 +178,7 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [indicvoices](data-versions.md#indicvoices) | as、bn、brx、doi、gu、hi、kn、kok、ks、mai、ml、mni、mr、ne、or、pa、sa、sat、sd、ta、te、ur | 语音识别 | — | 22 种印度语言自然语音（IndicVoices） | 快照 20260914 |
 | [meeting_benchmark](data-versions.md#meeting_benchmark) | en、zh、zh-en | 带说话人标注的语音识别 | 21.2 | 约 180 秒长度的中英会议转写评测集 | `备份桶:audio-data-contract/datasets/meeting_180s_benchmark/` |
 | [meeting_selection_panel](data-versions.md#meeting_selection_panel) | en、zh | 带说话人标注的语音识别 | 12.4 | 会议模型选模面板（中英真实会议） | `备份桶:audio-data-contract/datasets/meeting_selection_panel/` |
+| [meli](data-versions.md#meli) | en、zh | 语音识别 | 42.5 | 普英双语者访谈与朗读（MELI） | 没有 |
 | [mls_sidon](data-versions.md#mls_sidon) | de、en、es、fr、it、nl、pl、pt | 语音识别、语音合成 | 50,834.3 | 8 种语言有声书，音频经 Sidon 修复（MLS） | 没有 |
 | [mtedx](data-versions.md#mtedx) | es、pt | 语音识别 | 334.1 | TEDx 西语/葡语演讲（mTEDx，非商用） | 部分版本：`备份桶:audio-data-contract/datasets/mtedx/` |
 | [multi-talker-sd](data-versions.md#multi-talker-sd) | en、zh | 语音识别、语码转换语音识别、连续语音分离、重叠语音检测、带说话人标注的语音识别、说话人分段与归属 | — | AISHELL-1、LibriSpeech 合成的多人对话 | 快照 20260914 |
@@ -326,7 +328,6 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [lemas](../../catalog/download_queue.yaml#L250) | hf-91f0c1b9a29f | multi | 语音识别 |
 | [loquacious_set](../../catalog/loquacious_set.yaml#L1) | hf-0e84cdb9e4b8 | en | 语音识别 |
 | [masc](../../catalog/masc.yaml#L1) | hf-cb7f1f0618bd | ar | 语音识别 |
-| [meli](../../catalog/meli.yaml#L1) | dataverse-v1.2 | zh、en | 语音识别 |
 | [multitalk_ft](../../catalog/multitalk.yaml#L38) | hf-18038b5d4cdd | zh、en | 带说话人标注的语音识别 |
 | [multitalk_pt](../../catalog/multitalk.yaml#L1) | hf-8196ea3cadda | zh、en | 带说话人标注的语音识别 |
 | [omnilingual-asr-corpus](../../catalog/download_queue.yaml#L225) | hf-8648ba894637 | multi | 语音识别 |

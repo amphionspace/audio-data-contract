@@ -12,11 +12,39 @@
         kind: source-directory
         root_alias: meli
         relative_path: source/dataverse-v1.2
+        metadata:
+          file_count: 275
+          expected_bytes: 27347552454
+          tree_sha256: fbb789beb40186648917cd49c80086d9a33f2d7c0f58867dafbc9bfbe87cafa4
+      - name: download_state
+        kind: dataset-state
+        root_alias: meli
+        relative_path: versions/dataverse-v1.2/download_state/state.json
+        expected_bytes: 903
+        sha256: 599d97dfeb9328054cd3d8c69f24e8d72f803c77094c05f958e21ec93b223cda
     splits:
-      all:
+      mandarin:
         artifacts:
           source:
             - source
+        statistics:
+          count: 51
+          speakers: 51
+          duration_hours: 21.8855
+          duration_basis: soundfile header duration of every mandarin/*.wav (whole session recordings, interviewer included); upstream MD5 verified
+          sample_formats:
+            2ch/44100Hz/PCM_16: 51
+      english:
+        artifacts:
+          source:
+            - source
+        statistics:
+          count: 51
+          speakers: 51
+          duration_hours: 20.6007
+          duration_basis: soundfile header duration of every english/*.wav (whole session recordings, interviewer included); upstream MD5 verified
+          sample_formats:
+            2ch/44100Hz/PCM_16: 51
     provenance:
       summary: 普英双语者访谈与朗读（MELI）
       source: Scholars Portal Dataverse (UBC Research Data Collection)
@@ -27,14 +55,17 @@
       release_date: '2026-10-07'
       license:
         - cc-by-nc-sa-4.0
-      inventory_status: download_planned
       description: >-
         UBC 语言学系 Speech in Context Lab 的 MELI（LREC 2026）：2024 年在温哥华录制的 51 位普通话-英语双语者，每人分别用普通话和英语
-        做一场社会语言学访谈并朗读句子，普通话场次另有画地图任务，共约 30 小时、102 个立体声 44.1 kHz 16 bit WAV（每人每种语言一个）。
-        每个 WAV 配 Praat TextGrid（任务、校正后的话语、词、音素四层，由 Montreal Forced Aligner 对齐），另有参与者语言背景表、地图扫描和文档。
-        Dataverse v1.2 共 275 个文件、27.3 GB，每个文件有 MD5。源站（borealisdata.ca 跳转到 Scholars Portal 存储）从本机单连接约 10 KB/s，
-        多连接下载频繁断开，2026-11-14 试下 80 分钟只得到约 1 GB，先登记来源；已下部分留在 /workspace/data/datasets/meli 供续传。
-        许可证以 Dataverse 记录为准写 CC BY-NC-SA 4.0；语料自带 readme 写 CC BY 4.0，论文写 CC BY-NC 4.0，三处不一致，使用前需向作者确认。
+        做一场社会语言学访谈并朗读句子，普通话场次另有画地图任务。每人每种语言一个 44.1 kHz 16 bit 立体声 WAV，录音总长 42.5 小时
+        （含采访者，论文称被试语音约 30 小时）。每个 WAV 配 Praat TextGrid（task、utterance-corrected、words、phones 四层，人工校正后
+        用 Montreal Forced Aligner 对齐；普通话 TextGrid 是 UTF-16 编码），另有参与者语言背景表、地图扫描和文档。同一批说话人的
+        中英两种语言都有，适合双语者、口音和中英语音对比研究。许可证以 Dataverse 记录为准写 CC BY-NC-SA 4.0；语料自带 readme 写
+        CC BY 4.0，论文写 CC BY-NC 4.0，三处不一致，使用前需向作者确认。2026-11-14 起初直连源站只有约 10 KB/s，改经代理后下完。
       download_scope: Complete MELI Dataverse record v1.2 (audio, TextGrids, maps, participant metadata, documentation)
       expected_download_files: 275
       expected_download_bytes: 27347552454
+      download_mirror: borealisdata.ca via the configured proxy
+      integrity: verified
+      integrity_method: MD5 of every file as published in the Dataverse record
+      local_scan_date: '2026-11-14'

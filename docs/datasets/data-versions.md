@@ -136,6 +136,18 @@ Common Voice 英语众包朗读；含清洗、热词、加噪版
 - `commonvoice_en_clean@clean-v1-20260805`：Qwen3-ASR-1.7B + whisper-large-v3 双引擎筛选；train 需过滤 1,127 条失败记录；test 清单尚未应用筛选结果
 - 含派生版本（与源数据可能重叠）
 
+### coraal
+
+非裔美国英语社会语言学访谈（CORAAL）
+
+语言：en · 任务：语音识别、带说话人标注的语音识别
+
+| 版本 | 时长（小时） | 口径 | COS |
+|---|---:|---|---|
+| [coraal@uoregon-2023.06](../../catalog/coraal.yaml#L1) | 160.9 | 已登记 | 没有 |
+
+- `coraal@uoregon-2023.06`：俄勒冈大学 Corpus of Regional African American Language v2023.06：8 个地区组件、271 段社会语言学访谈录音、160.9 小时、226 位说话人， 44.1 kHz 单声道 WAV，录音年代从 1966 到 2019 年。每段有带时间戳和说话人的人工逐句转写（textfiles、Praat TextGrid、ELAN 三种格式）， 元数据表给出说话人性别、年龄组、出生年份、受教育程度、职业等社会背景。真实的长篇自然对话，包含方言语法和发音，是检验英语 ASR 在非标准口音和老旧录音上表现的常用长音频评测（Open ASR Leaderboard 的长音频项也用到它），也可用于训练。官方没有公布哈希， 下载时对每个压缩包做了完整 gzip 校验。官方文件清单里 LES、VLD 两个元数据文件的链接写错了版本号，已改用实际的 *_metadata_2021.07.txt；VLD 元数据里的 VLD_se0_ag2_f_01_2 实际音频名为 VLD_se0_ag3_f_01_2。CC BY-NC-SA 4.0
+
 ### cs_dialogue_en
 
 CS-Dialogue 对话中的纯英文语句
@@ -2383,6 +2395,18 @@ Emilia-YODAS 多语种 YouTube 语音
 | [meeting_selection_panel@v1-20261008](../../catalog/meeting_selection_panel.yaml#L1) | 12.4 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/meeting_selection_panel/` |
 
 - `meeting_selection_panel@v1-20261008`：独立会议选模面板：AliMeeting 官方 Eval 8 场全部 120 秒窗口（中文）、NOTSOFAR 官方 dev 36 场每场一台设备的全部 120 秒窗口（英文 3–7 人）、CHiME-6 官方 dev 2 场全部 120 秒窗口（英文晚宴，仅报告）。不进训练，不按难度筛选
+
+### meli
+
+普英双语者访谈与朗读（MELI）
+
+语言：en、zh · 任务：语音识别
+
+| 版本 | 时长（小时） | 口径 | COS |
+|---|---:|---|---|
+| [meli@dataverse-v1.2](../../catalog/meli.yaml#L1) | 42.5 | 已登记 | 没有 |
+
+- `meli@dataverse-v1.2`：UBC 语言学系 Speech in Context Lab 的 MELI（LREC 2026）：2024 年在温哥华录制的 51 位普通话-英语双语者，每人分别用普通话和英语 做一场社会语言学访谈并朗读句子，普通话场次另有画地图任务。每人每种语言一个 44.1 kHz 16 bit 立体声 WAV，录音总长 42.5 小时 （含采访者，论文称被试语音约 30 小时）。每个 WAV 配 Praat TextGrid（task、utterance-corrected、words、phones 四层，人工校正后 用 Montreal Forced Aligner 对齐；普通话 TextGrid 是 UTF-16 编码），另有参与者语言背景表、地图扫描和文档。同一批说话人的 中英两种语言都有，适合双语者、口音和中英语音对比研究。许可证以 Dataverse 记录为准写 CC BY-NC-SA 4.0；语料自带 readme 写 CC BY 4.0，论文写 CC BY-NC 4.0，三处不一致，使用前需向作者确认。2026-11-14 起初直连源站只有约 10 KB/s，改经代理后下完
 
 ### mls_sidon
 
