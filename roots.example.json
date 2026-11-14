@@ -130,5 +130,6 @@
   "svq": "/workspace/data/datasets/svq",
   "sada": "/workspace/data/datasets/sada",
   "wildelder": "/workspace/data/datasets/wildelder",
-  "childtalk": "/workspace/data/datasets/childtalk"
+  "childtalk": "/workspace/data/datasets/childtalk",
+  "waxal_tts": "/workspace/data/datasets/waxal_tts"
 }
