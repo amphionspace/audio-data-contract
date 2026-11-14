@@ -1,0 +1,103 @@
+  - schema_version: dataset-catalog/2.0
+    dataset_id: krisp_voice_isolation
+    version: hf-626bac8ca07f
+    languages:
+      - en
+    tasks:
+      - asr
+    aliases: []
+    artifacts:
+      - name: source
+        kind: hf-dataset-snapshot
+        root_alias: krisp_voice_isolation
+        relative_path: source/hf-626bac8ca07f
+        metadata:
+          file_count: 270
+          expected_bytes: 1296449302
+          tree_sha256: 86497e2ad6487cbae5a544f9551232f45605f14c90f72d8ec93fe03dfe5b2f39
+      - name: download_state
+        kind: dataset-state
+        root_alias: krisp_voice_isolation
+        relative_path: versions/hf-626bac8ca07f/download_state/state.json
+        expected_bytes: 994
+        sha256: 4f79ac1b083964e3cb1b4e97fd59248918f2851202e581c67d60514750c42d3c
+    splits:
+      call_center:
+        artifacts:
+          source:
+            - source
+        statistics:
+          count: 106
+          speakers: 7
+          duration_hours: 2.7169
+          duration_basis: soundfile header duration of every call_center WAV; pinned upstream file hashes verified
+          segments: 411
+          segment_labels:
+            primary: 44
+            mix: 207
+            secondary: 156
+            noise: 4
+          sample_formats:
+            1ch/32000Hz/PCM_16: 106
+        provenance:
+          notes: 4 个真实呼叫中心，坐席戴耳麦，旁边同事说话作为第二人声；只录坐席一侧
+      work:
+        artifacts:
+          source:
+            - source
+        statistics:
+          count: 96
+          speakers: 29
+          duration_hours: 2.3301
+          duration_basis: soundfile header duration of every work WAV; pinned upstream file hashes verified
+          segments: 490
+          segment_labels:
+            primary: 95
+            mix: 188
+            secondary: 149
+            noise: 58
+          sample_formats:
+            1ch/32000Hz/PCM_16: 96
+        provenance:
+          notes: 办公室、开放工位、家中等工作场景，耳机或笔记本麦克风，第二人声在旁边说话
+      phone_calls:
+        artifacts:
+          source:
+            - source
+        statistics:
+          count: 63
+          speakers: 26
+          duration_hours: 0.5775
+          duration_basis: soundfile header duration of every phone_calls WAV; pinned upstream file hashes verified
+          segments: 83
+          segment_labels:
+            primary: 65
+            mix: 5
+            secondary: 13
+          sample_formats:
+            1ch/32000Hz/PCM_16: 63
+        provenance:
+          notes: 手机通话，多在车内，也有步行和商店；只有主说话人，背景是环境声和人群声
+    provenance:
+      summary: 旁边有人说话时的真实录音转写评测（Krisp）
+      source: Hugging Face
+      source_id: Krisp-AI/VoiceIsolation-Benchmark-Dataset
+      revision: 626bac8ca07fb9b4846d4f62d27c321753160b36
+      url: https://huggingface.co/datasets/Krisp-AI/VoiceIsolation-Benchmark-Dataset
+      download_mirror: https://hf-mirror.com
+      release_date: '2026-09-17'
+      description: >-
+        Krisp 2026-09 发布的英文真实录音评测集，265 条、5.6 小时，47 位说话人，32 kHz 单声道，没有人工混音。
+        call_center 和 work 两部分按固定脚本录：主说话人先说，第二个人加入同时说，主说话人停下只剩第二个人，主说话人再接上；
+        每段标 primary、mix、secondary、noise。参考文本只写主说话人（人工逐字转写，保留口误和重复），secondary 段参考为空，
+        用来测模型会不会把旁边的人声也转写出来，与本项目 asr_babble_bench、ts_asr_* 测的是同一类问题，但没有注册音频。
+        phone_calls 只有主说话人，测手机和车内信号失真。每个场景一个 metadata.jsonl（说话人、性别、设备、环境、分段文本）。
+        CC BY-NC 4.0，仅限非商用。
+      locale: en
+      license:
+        - cc-by-nc-4.0
+      download_scope: Complete Krisp Voice Isolation Benchmark release (265 real recordings, three scenarios)
+      expected_download_files: 270
+      expected_download_bytes: 1296449302
+      integrity: verified
+      local_scan_date: '2026-11-13'

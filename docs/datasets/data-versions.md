@@ -265,6 +265,18 @@ Emilia 英语野外语音（已清洗）
 
 - 当前仅登记评测入口
 
+### krisp_voice_isolation
+
+旁边有人说话时的真实录音转写评测（Krisp）
+
+语言：en · 任务：语音识别
+
+| 版本 | 时长（小时） | 口径 | COS |
+|---|---:|---|---|
+| [krisp_voice_isolation@hf-626bac8ca07f](../../catalog/krisp_voice_isolation.yaml#L1) | 5.6 | 已登记 | 没有 |
+
+- `krisp_voice_isolation@hf-626bac8ca07f`：Krisp 2026-09 发布的英文真实录音评测集，265 条、5.6 小时，47 位说话人，32 kHz 单声道，没有人工混音。 call_center 和 work 两部分按固定脚本录：主说话人先说，第二个人加入同时说，主说话人停下只剩第二个人，主说话人再接上； 每段标 primary、mix、secondary、noise。参考文本只写主说话人（人工逐字转写，保留口误和重复），secondary 段参考为空， 用来测模型会不会把旁边的人声也转写出来，与本项目 asr_babble_bench、ts_asr_* 测的是同一类问题，但没有注册音频。 phone_calls 只有主说话人，测手机和车内信号失真。每个场景一个 metadata.jsonl（说话人、性别、设备、环境、分段文本）。 CC BY-NC 4.0，仅限非商用
+
 ### legco_speech_en
 
 香港立法会会议英语
@@ -472,6 +484,18 @@ LibriSpeech 混合的目标说话人数据
 - `notsofar_sdm@icefall-20260908`：标注片段时长，重叠语音或多麦克风可能重复计时
 - `notsofar_sdm@meeting-windows-v1-20261008`：NOTSOFAR-1 真实会议（单通道 SC 设备 ch0，每个设备算一条录音，因为设备间采样不同步）的说话人归属 ASR 窗口（aligned_utterance_timestamps_v1）：人工标注的说话人和时间，转写为源清单文字，只去空白。按 30 / 120 / 300 / 600 s 切窗，每个 split 的 records 一行一个窗口，turns 在 metadata；train / dev / test 都有。音频由 audio-index 指向源数据集里的 ch0.wav，不复制。没有窗口被排除。脚本 scripts/diarization_raw_labels/register_raw_labels.py
 - `notsofar_sdm@teacher-calibration-v1-20261009`：说话人日志老师校准（2026-10-09）：在有人工标注的 NOTSOFAR train 单通道 ch0 39 场 / 4.02 h 上比较本机 MOSS 0.9B、MOSS Pro、百炼 qwen-audio-3.1-asr-flash 三个老师，并用 Qwen3-ASR 对本机 MOSS 的每个片段做文本校验；付费调用经用户批准，仅用于这次校准。每个 *_records 文件一个老师，每行一条录音，target 是按时间排序的 [说话人][起-止] 文本，教师返回的分块、说话人链接、身份断点留在 metadata.<老师>；teacher_agreement_records 每行一个人工标注片段，metadata.teacher_agreement 记各老师的说话人、边界和字错误率（analysis/segments.jsonl，用于确定多老师一致性过滤门槛）。NOTSOFAR 的 qwen3_asr_records 是第一版，误用 to_language=zh 把英文部分译成中文，已被 qwen3_asr_en_records 更正，保留原始输出。录音沿用 notsofar_sdm@icefall-20260908 train_rec_0（只用其中被抽中的录音），不复制音频。脚本 scripts/diarization_raw_labels/register_raw_labels.py
+
+### open_yap
+
+熟人之间的英文双声道自然对话样本（Open Yap 1K）
+
+语言：en · 任务：语音识别、带说话人标注的语音识别
+
+| 版本 | 时长（小时） | 口径 | COS |
+|---|---:|---|---|
+| [open_yap@hf-a08b1c80e501](../../catalog/open_yap.yaml#L1) | 8.9 | 已登记 | 没有 |
+
+- `open_yap@hf-a08b1c80e501`：The Agentic Data Company 2026-09 发布的 Open Yap 1K 的公开样本：16 段、8.92 小时、8 位说话人的英文自然对话， 双方是朋友或家人，用自己的设备在真实环境里通话，每人一条 48 kHz 单声道 FLAC 音轨，保留重叠、附和、笑声。 每段一个 JSON：两侧词级时间戳转写、话题、轮次统计、说话人自报的年龄段/性别/口音、响度和底噪等测量值。 转写是 Deepgram Nova-3 自动生成，未经人工核对。仓库里 open-yap-1k-sample.tar 与 shard-00000/00001.tar 是同样的 16 段， 不要重复计数。样本为 CC BY 4.0（可商用），附带请求：不要识别说话人、不要克隆具体某人的声音。完整 1,000 小时语料需按 Open Yap 1K 数据使用协议向发布方申请，不在 Hugging Face 上
 
 ### singapore_english
 
@@ -1756,6 +1780,18 @@ WenetSpeech L 中的播客部分
 - `wenetspeech_wu@stepaudio2-wu-asr-v1-20261109`：WenetSpeech-Wu 吴语训练集（wenetspeech_wu@icefall-20260908）用 Step-Audio2-Wu-ASR 逐条核对后保留的部分：原标注规范化后非空、生成未截断且字错误率 < 30 % 的 3,281,389 条 / 6804.5 h（占全部时长的 77.8 %）。原标注不改，不拿 Step 的文字替换。每行的 custom.step_audio2_asr 与 wenetspeech_wu@stepaudio2-wu-asr-full-v1-20261109 中相同；被去掉的条目和全部转写见该版本。Step-Audio2-Wu-ASR 在 WenetSpeech-Wu 上训练过，与原标注的一致程度可能偏高。误杀按 Wu-Bench 人工标注估计：Wu-Bench 上 Step 自身落到 CER ≥ 30 % 的时长占 8.4 %，训练集为 22.2 %，据此被丢的部分约 38 % 其实标注是对的（偏粗，可能高估）；分歧集中在原标注低置信度的条目。录音沿用父版本，不复制音频。脚本 scripts/wenetspeech_wu_step/
 - 含派生版本（与源数据可能重叠）
 
+### wenetspeech_wu_bench
+
+吴语多任务评测集（WenetSpeech-Wu-Bench）
+
+语言：zh · 任务：语音识别、语音翻译、语音情感识别、语音合成
+
+| 版本 | 时长（小时） | 口径 | COS |
+|---|---:|---|---|
+| [wenetspeech_wu_bench@hf-36f67e0276ce](../../catalog/wenetspeech_wu_bench.yaml#L1) | 9.8 | 已登记 | 没有 |
+
+- `wenetspeech_wu_bench@hf-36f67e0276ce`：西工大 ASLP 随 WenetSpeech-Wu 发布的人工整理吴语评测集（总时长只计 ASR 子集和 TTS 提示音频，其余子集的音频取自 ASR 子集，登记为它的子划分）：ASR 4,851 句 9.75 小时（上海话、苏州话及与普通话混说）， 吴语到普通话翻译 3,000 句，情感 1,000 句，性别 3,000 句，年龄 1,500 句，均为 16 kHz 单声道、Parquet 内嵌 WAV； 另有 TTS 与 instruct TTS 的测试文本和提示音频。翻译、情感、性别、年龄子集的源句全部取自 ASR 子集（部分再切成更短片段，ID 带 _seg 后缀），不是独立的录音。 与本项目 wenetspeech_wu 训练数据的关系：评测句本身不在训练集里，但 ASR 的 4,851 句来自 2,979 段长录音，其中 4,850 句 所在录音的其他片段在 wenetspeech_wu@stepaudio2-wu-asr-full-v1-20261109 的训练切片里（共 573,287 条、1,174.4 小时， 占训练 8,740.7 小时的 13%），说话人和话题与训练集重叠，用 WenetSpeech-Wu 训练过的模型在这里的成绩会偏乐观。 Apache-2.0
+
 ### wenetspeech_youtube
 
 WenetSpeech L 中的 YouTube 部分
@@ -2931,6 +2967,18 @@ Casablanca 八种阿拉伯语方言
 | [cbtts_bn@legacy](../../catalog/legacy_multilingual.yaml#L279) | 20.1 | 已登记 | 快照 20260914 |
 
 - 有含标点版本
+
+### cetuc
+
+巴西葡语朗读，101 人各约 1,000 句（CETUC）
+
+语言：pt · 任务：语音识别
+
+| 版本 | 时长（小时） | 口径 | COS |
+|---|---:|---|---|
+| [cetuc@hf-6dbc8081d35f](../../catalog/cetuc.yaml#L1) | 144.7 | 已登记 | 没有 |
+
+- `cetuc@hf-6dbc8081d35f`：CETUC 巴西葡语朗读语料（FalaBrasil 整理后 2025-07 上传 Hugging Face），101 位说话人、共 100,998 句、144.7 小时， 16 kHz 单声道 WAV，每句一个同名 txt 转写（小写、无标点、数字写成词）。按说话人划分 train 81 人、dev 10 人、test 10 人， 说话人不重叠，但所有人朗读的是同一份约 1,000 句的文本表（抽查 train、dev、test 共 11 位说话人，每人的句子集合都是同样的 997 句），dev/test 的文本 都在 train 里出现过，只能用来看说话人泛化，不能当作文本未见过的测试集。每位说话人一个 tar.gz，包里带 macOS 生成的 ._ 元数据文件，读取时要跳过
 
 ### ciempiess
 

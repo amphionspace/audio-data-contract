@@ -1,6 +1,6 @@
 # 数据总览
 
-当前登记 **234 个数据集**；另有 **23 个下载来源声明**和 **1 个训练混合配方**。登记不代表本机文件已齐备。
+当前登记 **238 个数据集**；另有 **23 个下载来源声明**和 **1 个训练混合配方**。登记不代表本机文件已齐备。
 
 时长取单个版本的最大值，不跨版本相加；≈ 为参考表或估算值，— 为暂无完整时长。各版本的时长、说明、COS 地址和质量证据见[版本明细](data-versions.md)。
 
@@ -39,6 +39,7 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [hifitts2](data-versions.md#hifitts2) | en | 语音识别、语音合成 | 35,932.7 | 英文有声书高保真朗读（Hi-Fi TTS 2） | 没有 |
 | [icsi](data-versions.md#icsi) | en | 语音识别、说话人分段与归属 | 71.7 | 伯克利 ICSI 英文工作会议（近讲混合音轨） | 没有 |
 | [iemocap_ser](data-versions.md#iemocap_ser) | en | 语音情感识别 | 1.5 | 英文双人表演对话情感识别评测（IEMOCAP） | 快照 20260914、`备份桶:audio-data-contract/datasets/iemocap_ser/` |
+| [krisp_voice_isolation](data-versions.md#krisp_voice_isolation) | en | 语音识别 | 5.6 | 旁边有人说话时的真实录音转写评测（Krisp） | 没有 |
 | [legco_speech_en](data-versions.md#legco_speech_en) | en | 语音识别 | 249.6 | 香港立法会会议英语 | 快照 20260914 |
 | [libri2mix](data-versions.md#libri2mix) | en | 目标说话人语音识别 | 11.2 | LibriMix 两人混合的目标说话人评测 | 快照 20260914 |
 | [libri3mix](data-versions.md#libri3mix) | en | 目标说话人语音识别 | 16.3 | LibriMix 三人混合的目标说话人评测 | 快照 20260914 |
@@ -52,6 +53,7 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [mls](data-versions.md#mls) | en | 语音识别 | 44,691.0 | 英文有声书朗读（MLS 英语） | 部分版本：快照 20260914 |
 | [msp_podcast_ser](data-versions.md#msp_podcast_ser) | en | 语音情感识别 | — | 英文播客情感识别评测（MSP-Podcast） | 快照 20260914 |
 | [notsofar](data-versions.md#notsofar) | en | 语音识别、连续语音分离、diarization、重叠语音检测、带说话人标注的语音识别、说话人分段与归属 | ≈200.0 | 微软英文远场会议，真实录制与模拟（NOTSOFAR） | 快照 20260914、`备份桶:audio-data-contract/datasets/notsofar_sdm/` |
+| [open_yap](data-versions.md#open_yap) | en | 语音识别、带说话人标注的语音识别 | 8.9 | 熟人之间的英文双声道自然对话样本（Open Yap 1K） | 没有 |
 | [singapore_english](data-versions.md#singapore_english) | en | 语音识别 | 3.9 | 新加坡口音英语（Hugging Face 来源） | 快照 20260914 |
 | [singaporean](data-versions.md#singaporean) | en | 语音识别 | ≈0.2 | 新加坡口音英语小样本 | 快照 20260914、`备份桶:audio-data-contract/datasets/singaporean/` |
 | [tal100_en](data-versions.md#tal100_en) | en | 语音识别 | 4.8 | TAL 英语语音识别数据 | 快照 20260914、`备份桶:audio-data-contract/datasets/tal100_en/` |
@@ -127,6 +129,7 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [wenetspeech_disfluency](data-versions.md#wenetspeech_disfluency) | zh | 语音识别 | 182.5 | WenetSpeech L 保留口语不流利词的转写 | 快照 20260914、`备份桶:audio-data-contract/datasets/wenetspeech/`、`备份桶:audio-data-contract/datasets/wenetspeech_disfluency/` |
 | [wenetspeech_podcast](data-versions.md#wenetspeech_podcast) | zh | 语音识别 | 3,892.3 | WenetSpeech L 中的播客部分 | 没有 |
 | [wenetspeech_wu](data-versions.md#wenetspeech_wu) | zh | 语音识别 | 8,740.7 | 吴语网络语音（WenetSpeech-Wu） | 部分版本：快照 20260914、`备份桶:audio-data-contract/datasets/wenetspeech_wu/` |
+| [wenetspeech_wu_bench](data-versions.md#wenetspeech_wu_bench) | zh | 语音识别、语音翻译、语音情感识别、语音合成 | 9.8 | 吴语多任务评测集（WenetSpeech-Wu-Bench） | 没有 |
 | [wenetspeech_youtube](data-versions.md#wenetspeech_youtube) | zh | 语音识别 | 6,113.1 | WenetSpeech L 中的 YouTube 部分 | 没有 |
 | [wenetspeech_yue_all](data-versions.md#wenetspeech_yue_all) | yue | 语音识别 | 17,373.9 | 粤语网络语音（WenetSpeech-Yue）；含清洗版 | 部分版本：快照 20260914、`备份桶:audio-data-contract/datasets/wenetspeech_yue/` |
 
@@ -198,6 +201,7 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [banspeech_bn](data-versions.md#banspeech_bn) | bn | 语音识别 | 6.5 | 孟加拉语语音识别数据（BanSpeech） | 快照 20260914 |
 | [casablanca](data-versions.md#casablanca) | ar | 语音识别 | — | Casablanca 八种阿拉伯语方言 | 没有 |
 | [cbtts_bn](data-versions.md#cbtts_bn) | bn | 语音识别 | 20.1 | 孟加拉语语音识别数据（CBTTS） | 快照 20260914 |
+| [cetuc](data-versions.md#cetuc) | pt | 语音识别 | 144.7 | 巴西葡语朗读，101 人各约 1,000 句（CETUC） | 没有 |
 | [ciempiess](data-versions.md#ciempiess) | es | 语音识别 | 18.4 | 墨西哥西班牙语广播语音（CIEMPIESS LIGHT） | 部分版本：快照 20260914、`备份桶:audio-data-contract/datasets/ciempiess_complementary/`、`备份桶:audio-data-contract/datasets/ciempiess_test/` |
 | [cml_tts_fr](data-versions.md#cml_tts_fr) | fr | 语音识别 | 316.0 | 法语有声书朗读（CML-TTS） | 快照 20260914 |
 | [common_voice_ar](data-versions.md#common_voice_ar) | ar | 语音识别 | 58.2 | 众包朗读阿拉伯语（Common Voice） | 部分版本：快照 20260914 |
