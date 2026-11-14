@@ -1,0 +1,141 @@
+# 西语朗读小数据集清洗（2026-11-14 开工，占位）：解出音频、生成 lhotse 清单，再走 consensus-v7 双引擎清洗。
+- schema_version: dataset-catalog/2.0
+  dataset_id: wikipedia_spanish
+  version: clean-v1-20261114
+  languages:
+  - es
+  tasks:
+  - asr
+  aliases: []
+  derived_from: wikipedia_spanish@hf-0afbf012ed67
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/wikipedia_spanish/versions/clean-v1-20261114/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: >-
+      维基百科条目朗读 25.6 h的清洗版本：音频解到本版本目录，生成 lhotse 清单，再用 Qwen3-ASR-1.7B + whisper-large-v3 双引擎清洗（consensus-v7），先试跑、复核被拒样本再跑全量。进行中。
+    source: wikipedia_spanish@hf-0afbf012ed67
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/es-read-clean-20261114
+- schema_version: dataset-catalog/2.0
+  dataset_id: librivox_spanish
+  version: clean-v1-20261114
+  languages:
+  - es
+  tasks:
+  - asr
+  aliases: []
+  derived_from: librivox_spanish@hf-ef936a31638d
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/librivox_spanish/versions/clean-v1-20261114/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: >-
+      LibriVox 有声书 73.0 h的清洗版本：音频解到本版本目录，生成 lhotse 清单，再用 Qwen3-ASR-1.7B + whisper-large-v3 双引擎清洗（consensus-v7），先试跑、复核被拒样本再跑全量。进行中。
+    source: librivox_spanish@hf-ef936a31638d
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/es-read-clean-20261114
+- schema_version: dataset-catalog/2.0
+  dataset_id: voxforge_spanish
+  version: clean-v1-20261114
+  languages:
+  - es
+  tasks:
+  - asr
+  aliases: []
+  derived_from: voxforge_spanish@hf-1ce6b6f9701d
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/voxforge_spanish/versions/clean-v1-20261114/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: >-
+      VoxForge 朗读 49.7 h的清洗版本：音频解到本版本目录，生成 lhotse 清单，再用 Qwen3-ASR-1.7B + whisper-large-v3 双引擎清洗（consensus-v7），先试跑、复核被拒样本再跑全量。进行中。
+    source: voxforge_spanish@hf-1ce6b6f9701d
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/es-read-clean-20261114
+- schema_version: dataset-catalog/2.0
+  dataset_id: google_latam
+  version: clean-v1-20261114
+  languages:
+  - es
+  tasks:
+  - asr
+  aliases: []
+  derived_from: google_latam@openslr-20260911
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/google_latam/versions/clean-v1-20261114/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: >-
+      Google 众包拉美六国朗读 38.0 h的清洗版本：音频解到本版本目录，生成 lhotse 清单，再用 Qwen3-ASR-1.7B + whisper-large-v3 双引擎清洗（consensus-v7），先试跑、复核被拒样本再跑全量。进行中。
+    source: google_latam@openslr-20260911
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/es-read-clean-20261114
+- schema_version: dataset-catalog/2.0
+  dataset_id: heroico
+  version: clean-v1-20261114
+  languages:
+  - es
+  tasks:
+  - asr
+  aliases: []
+  derived_from: heroico@openslr-39
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/heroico/versions/clean-v1-20261114/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: >-
+      Heroico 朗读部分（heroico_recordings 6.5 h、usma_native 1.1 h；自由问答 heroico_answers 和非母语 usma_nonnative 不在本版本）的清洗版本：音频解到本版本目录，生成 lhotse 清单，再用 Qwen3-ASR-1.7B + whisper-large-v3 双引擎清洗（consensus-v7），先试跑、复核被拒样本再跑全量。进行中。
+    source: heroico@openslr-39
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/es-read-clean-20261114
