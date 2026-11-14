@@ -1,6 +1,6 @@
 # 数据总览
 
-当前登记 **250 个数据集**；另有 **28 个下载来源声明**和 **1 个训练混合配方**。登记不代表本机文件已齐备。
+当前登记 **253 个数据集**；另有 **30 个下载来源声明**和 **1 个训练混合配方**。登记不代表本机文件已齐备。
 
 时长取单个版本的最大值，不跨版本相加；≈ 为参考表或估算值，— 为暂无完整时长。各版本的时长、说明、COS 地址和质量证据见[版本明细](data-versions.md)。
 
@@ -55,6 +55,7 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [msp_podcast_ser](data-versions.md#msp_podcast_ser) | en | 语音情感识别 | — | 英文播客情感识别评测（MSP-Podcast） | 快照 20260914 |
 | [notsofar](data-versions.md#notsofar) | en | 语音识别、连续语音分离、diarization、重叠语音检测、带说话人标注的语音识别、说话人分段与归属 | ≈200.0 | 微软英文远场会议，真实录制与模拟（NOTSOFAR） | 快照 20260914、`备份桶:audio-data-contract/datasets/notsofar_sdm/` |
 | [open_yap](data-versions.md#open_yap) | en | 语音识别、带说话人标注的语音识别 | 8.9 | 熟人之间的英文双声道自然对话样本（Open Yap 1K） | 没有 |
+| [sbcsae](data-versions.md#sbcsae) | en | 语音识别、带说话人标注的语音识别 | 23.3 | 美式英语自然口语对话（SBCSAE） | 没有 |
 | [singapore_english](data-versions.md#singapore_english) | en | 语音识别 | 3.9 | 新加坡口音英语（Hugging Face 来源） | 快照 20260914 |
 | [singaporean](data-versions.md#singaporean) | en | 语音识别 | ≈0.2 | 新加坡口音英语小样本 | 快照 20260914、`备份桶:audio-data-contract/datasets/singaporean/` |
 | [tal100_en](data-versions.md#tal100_en) | en | 语音识别 | 4.8 | TAL 英语语音识别数据 | 快照 20260914、`备份桶:audio-data-contract/datasets/tal100_en/` |
@@ -166,6 +167,7 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [hw_sft](data-versions.md#hw_sft) | en、zh | 语音识别、热词增强语音识别 | 2,636.5 | 热词 SFT 数据（ShareGPT 格式），含普通转写 | 没有 |
 | [indic_diarbench](data-versions.md#indic_diarbench) | as、bn、brx、doi、gu、hi、kn、kok、ks、mai、ml、mni、mr、ne、or、pa、sa、sat、sd、ta、te、ur | 语音识别、带说话人标注的语音识别、说话人分段与归属 | 107.7 | 22 种印度语言多人对话评测（DiarBench） | 没有 |
 | [indicvoices](data-versions.md#indicvoices) | as、bn、brx、doi、gu、hi、kn、kok、ks、mai、ml、mni、mr、ne、or、pa、sa、sat、sd、ta、te、ur | 语音识别 | — | 22 种印度语言自然语音（IndicVoices） | 快照 20260914 |
+| [kasaspeech](data-versions.md#kasaspeech) | en、tw | 语音识别、语码转换语音识别 | 95.6 | 英语-契维语语码转换朗读（KasaSpeech） | 没有 |
 | [meeting_benchmark](data-versions.md#meeting_benchmark) | en、zh、zh-en | 带说话人标注的语音识别 | 21.2 | 约 180 秒长度的中英会议转写评测集 | `备份桶:audio-data-contract/datasets/meeting_180s_benchmark/` |
 | [meeting_selection_panel](data-versions.md#meeting_selection_panel) | en、zh | 带说话人标注的语音识别 | 12.4 | 会议模型选模面板（中英真实会议） | `备份桶:audio-data-contract/datasets/meeting_selection_panel/` |
 | [mls_sidon](data-versions.md#mls_sidon) | de、en、es、fr、it、nl、pl、pt | 语音识别、语音合成 | 50,834.3 | 8 种语言有声书，音频经 Sidon 修复（MLS） | 没有 |
@@ -173,6 +175,7 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [multi-talker-sd](data-versions.md#multi-talker-sd) | en、zh | 语音识别、语码转换语音识别、连续语音分离、重叠语音检测、带说话人标注的语音识别、说话人分段与归属 | — | AISHELL-1、LibriSpeech 合成的多人对话 | 快照 20260914 |
 | [multilingual_asr_bench](data-versions.md#multilingual_asr_bench) | ar、de、en、es、fr、hi、id、ja、ko、pt、ru、zh | 语音识别 | — | 十二种语言公开 ASR 测试集（只用于评测） | `备份桶:audio-data-contract/datasets/multilingual_asr_bench/` |
 | [opendatalab_multilingual](data-versions.md#opendatalab_multilingual) | ar、cs、hu、ko、ru、sr、th、vi | 语音识别 | 8,588.2 | 8 个语种的语音识别数据（OpenDataLab） | `备份桶:computer-2/audio/`（原始数据）、`备份桶:opendatalab-multilingual/`（原始数据） |
+| [real_t](data-versions.md#real_t) | en、zh | 目标说话人语音识别 | 11.3 | 真实会议目标说话人提取评测（REAL-T） | 没有 |
 | [sot_many_speaker_word_zh_en](data-versions.md#sot_many_speaker_word_zh_en) | en、zh | 带说话人标注的语音识别 | 2,128.0 | — | 没有 |
 | [sot_multispeaker_zh_en](data-versions.md#sot_multispeaker_zh_en) | en、zh、zh-en | 带说话人标注的语音识别 | 7,664.4 | 1–5 人中英合成混音，按人完整转写 | 没有 |
 | [speech_deepfake_bench](data-versions.md#speech_deepfake_bench) | ar、de、en、es、ro、ru、zh | deepfake_detection | 3,463.7 | 伪造语音检测评测集（SpoofRadar、DF-Arena） | `备份桶:audio-data-contract/datasets/speech_deepfake_bench/` |
@@ -314,11 +317,13 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [lemas](../../catalog/download_queue.yaml#L250) | hf-91f0c1b9a29f | multi | 语音识别 |
 | [loquacious_set](../../catalog/loquacious_set.yaml#L1) | hf-0e84cdb9e4b8 | en | 语音识别 |
 | [masc](../../catalog/masc.yaml#L1) | hf-cb7f1f0618bd | ar | 语音识别 |
+| [meli](../../catalog/meli.yaml#L1) | dataverse-v1.2 | zh、en | 语音识别 |
 | [multitalk_ft](../../catalog/multitalk.yaml#L38) | hf-18038b5d4cdd | zh、en | 带说话人标注的语音识别 |
 | [multitalk_pt](../../catalog/multitalk.yaml#L1) | hf-8196ea3cadda | zh、en | 带说话人标注的语音识别 |
 | [omnilingual-asr-corpus](../../catalog/download_queue.yaml#L225) | hf-8648ba894637 | multi | 语音识别 |
 | [peoples_speech](../../catalog/peoples_speech.yaml#L1) | hf-f10597c5d3d3 | en | 语音识别 |
 | [reazonspeech](../../catalog/download_queue.yaml#L274) | hf-0df78f991f6a | ja | 语音识别 |
+| [smiip_tv](../../catalog/smiip_tv.yaml#L1) | openslr-156 | zh | 声纹验证 |
 | [tagarela](../../catalog/tagarela.yaml#L1) | hf-a66648fc4938 | pt | 语音识别、语音合成 |
 | [worldspeech](../../catalog/worldspeech.yaml#L1) | hf-b76b85395039 | multi | 语音识别 |
 | [yo_cpt_kk](../../catalog/yo_cpt.yaml#L41) | hf-a8c2d1a23de4 | kk | 语音合成、语音识别 |
