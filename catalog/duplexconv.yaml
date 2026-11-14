@@ -1,0 +1,39 @@
+  - schema_version: dataset-catalog/2.0
+    dataset_id: duplexconv
+    version: hf-0bb99da7ab7a
+    languages:
+      - zh
+    tasks:
+      - asr
+      - speaker_diarization
+      - speaker_attributed_asr
+    aliases: []
+    artifacts:
+      - name: source
+        kind: hf-dataset-snapshot
+        root_alias: duplexconv
+        relative_path: source/hf-0bb99da7ab7a
+    splits:
+      all:
+        artifacts:
+          source:
+            - source
+    provenance:
+      summary: 中文多人自然对话，LLM 辅助标注（DuplexConv）
+      source: Hugging Face
+      source_id: qualialabsAI/DuplexConv
+      revision: 0bb99da7ab7a2f6f86d6b23df92c9383e711d09a
+      url: https://huggingface.co/datasets/qualialabsAI/DuplexConv
+      project_page: https://github.com/qualialabsAI/SmoothConv
+      release_date: '2026-06'
+      license:
+        - cc-by-nc-4.0
+      inventory_status: download_planned
+      description: >-
+        西工大 ASLP 与 QualiaLabs 2026-06 开源，2,000.21 小时、93,709 个音频文件（每段 8–618 秒，平均 76.8 秒）的中文多人自然对话，
+        辅导（Edu/edu）和闲聊（none_Edu）两类场景，多声道，含重叠、附和、打断。转写、说话人结构和轮次信息由 LLM 辅助生成，
+        不是人工精标。与 smoothconv（100 小时人工精标）来自同一批对话来源，拿 smoothconv 做评测时要先排除重叠录音。
+        音频打包为约 8 GB 的 tar。CC BY-NC 4.0，仅限学术研究。
+      download_scope: Complete DuplexConv release (Edu, edu and none_Edu audio tar archives with annotations)
+      expected_download_files: 194
+      expected_download_bytes: 1640733137836

@@ -1,0 +1,38 @@
+  - schema_version: dataset-catalog/2.0
+    dataset_id: eurospeech
+    version: hf-7a55bbcee393
+    languages:
+      - multi
+    tasks:
+      - asr
+    aliases: []
+    artifacts:
+      - name: source
+        kind: hf-dataset-snapshot
+        root_alias: eurospeech
+        relative_path: source/hf-7a55bbcee393
+    splits:
+      all:
+        artifacts:
+          source:
+            - source
+    provenance:
+      summary: 22 个欧洲议会的对齐发言语音（EuroSpeech）
+      source: Hugging Face
+      source_id: disco-eth/EuroSpeech
+      revision: 7a55bbcee3933f5d9817bb2d4c37399d596f543d
+      url: https://huggingface.co/datasets/disco-eth/EuroSpeech
+      paper: https://arxiv.org/abs/2510.00514
+      release_date: '2025-05-10'
+      license:
+        - other (per-parliament terms)
+      inventory_status: download_planned
+      description: >-
+        ETH Zurich 发布（NeurIPS 2025 数据集），22 个欧洲国家议会的发言录音，VAD 切成 3–20 秒，用 ASR 把官方会议记录（非逐字）对齐到
+        语音段，共约 78,100 小时；HF 上提供 CER<20% 的部分（50,573 小时）。与本项目相关的语种：英语（英国议会）2,609 h、
+        葡语（葡萄牙）3,294 h、德语 2,184 h、法语 2,250 h（均为 CER<20% 部分）；没有中文、西语和亚洲语言。16 kHz Parquet，
+        按国家分配置，train/validation/test 按整场会议约 80/10/10 划分。许可按各国议会条款（如英国 OGL、意大利 CC BY 4.0、
+        挪威 NLOD），使用前逐国核对。
+      download_scope: Complete EuroSpeech release (22 country configurations, train/validation/test Parquet)
+      expected_download_files: 10934
+      expected_download_bytes: 5906377769177

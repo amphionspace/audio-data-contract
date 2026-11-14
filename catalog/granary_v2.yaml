@@ -1,0 +1,41 @@
+  - schema_version: dataset-catalog/2.0
+    dataset_id: granary
+    version: v2-hf-f835695fb5cc
+    languages:
+      - multi
+    tasks:
+      - asr
+      - ast
+    aliases: []
+    artifacts:
+      - name: source
+        kind: hf-dataset-snapshot
+        root_alias: granary
+        relative_path: source/v2-hf-f835695fb5cc
+    splits:
+      all:
+        artifacts:
+          source:
+            - source
+    provenance:
+      summary: NVIDIA 48 语种自动标注清单（Granary v2）
+      source: Hugging Face
+      source_id: nvidia/Granary-v2
+      revision: f835695fb5cc2d7e9feb0bf8c048bde1f0ccf877
+      url: https://huggingface.co/datasets/nvidia/Granary-v2
+      paper: https://research.nvidia.com/labs/nemotron/files/granary-v2.pdf
+      release_date: '2026-10-28'
+      license:
+        - openmdw-1.1
+        - cc-by-sa-4.0
+      inventory_status: download_planned
+      description: >-
+        Granary 第二版，只有标注清单（jsonl.gz），不含音频：给 16 个已有语料（VoxPopuli/MOSEL、LibriLight、People's Speech、MLS、
+        Common Voice 26.0、FLEURS、AMI、Golos 等）重新做的机器标注，48 种语言，ASR 共 419,974 小时（其中 154,961 小时标为
+        high_quality），另有 X→英 89,353 小时、英→X 39,317 小时翻译。每条带多种文本：带标点大小写、ITN、清洗版、代码转换、语境热词、
+        翻译等。使用时按 audio_filepath 后缀去各语料原发布方取音频，音频沿用各自许可证（Common Voice 26.0、NSC 需申请）。
+        2026-11 更新删除了 5,740,042 条（43,088 小时）误标语种的语句，旧文件在 revision 81402b75。没有 yue。
+        标注用 OpenMDW-1.1，People's Speech 部分用 CC BY-SA 4.0。v1 见 granary@hf-0fe23a860e35。
+      download_scope: Complete Granary v2 label manifests (no audio)
+      expected_download_files: 155
+      expected_download_bytes: 101862823174
