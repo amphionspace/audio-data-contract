@@ -128,5 +128,6 @@
   "masc": "/workspace/data/datasets/masc",
   "smoothconv": "/workspace/data/datasets/smoothconv",
   "svq": "/workspace/data/datasets/svq",
-  "sada": "/workspace/data/datasets/sada"
+  "sada": "/workspace/data/datasets/sada",
+  "wildelder": "/workspace/data/datasets/wildelder"
 }
