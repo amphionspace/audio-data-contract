@@ -115,5 +115,9 @@
   "iscslp2026_cot_tts": "/workspace/data/datasets/iscslp2026_cot_tts",
   "eurospeech": "/workspace/data/datasets/eurospeech",
   "gigaspeech3": "/workspace/data/datasets/gigaspeech3",
-  "yodas3": "/workspace/data/datasets/yodas3"
+  "yodas3": "/workspace/data/datasets/yodas3",
+  "krisp_voice_isolation": "/workspace/data/datasets/krisp_voice_isolation",
+  "cetuc": "/workspace/data/datasets/cetuc",
+  "open_yap": "/workspace/data/datasets/open_yap",
+  "wenetspeech_wu_bench": "/workspace/data/datasets/wenetspeech_wu_bench"
 }

@@ -1,0 +1,60 @@
+  - schema_version: dataset-catalog/2.0
+    dataset_id: open_yap
+    version: hf-a08b1c80e501
+    languages:
+      - en
+    tasks:
+      - asr
+      - speaker_attributed_asr
+    aliases:
+      - open_yap_1k
+    artifacts:
+      - name: source
+        kind: hf-dataset-snapshot
+        root_alias: open_yap
+        relative_path: source/hf-a08b1c80e501
+        metadata:
+          file_count: 25
+          expected_bytes: 4348178691
+          tree_sha256: d31d8ebcd62880f1c0846fa5325e9e6d7ad5cf0befca9910db25ad0c0874c7e5
+      - name: download_state
+        kind: dataset-state
+        root_alias: open_yap
+        relative_path: versions/hf-a08b1c80e501/download_state/state.json
+        expected_bytes: 998
+        sha256: 22c7b9c9bd33e4a97679a1e397ca920696c78bf429f56fa28069a43c308a8141
+    splits:
+      sample:
+        artifacts:
+          source:
+            - source
+        statistics:
+          count: 16
+          speakers: 8
+          duration_hours: 8.922
+          duration_basis: sum of upstream metadata.jsonl duration_seconds per conversation (each conversation has two 48 kHz mono FLAC tracks, 17.845 track-hours in total); pinned upstream file hashes verified
+          sample_formats:
+            1ch/48000Hz/PCM_16: 32
+    provenance:
+      summary: 熟人之间的英文双声道自然对话样本（Open Yap 1K）
+      source: Hugging Face
+      source_id: TheAgenticDataCompany/open-yap-1k
+      revision: a08b1c80e50159d462ddcbbabfdea5bf7ccfc626
+      url: https://huggingface.co/datasets/TheAgenticDataCompany/open-yap-1k
+      download_mirror: https://hf-mirror.com
+      release_date: '2026-09-02'
+      description: >-
+        The Agentic Data Company 2026-09 发布的 Open Yap 1K 的公开样本：16 段、8.92 小时、8 位说话人的英文自然对话，
+        双方是朋友或家人，用自己的设备在真实环境里通话，每人一条 48 kHz 单声道 FLAC 音轨，保留重叠、附和、笑声。
+        每段一个 JSON：两侧词级时间戳转写、话题、轮次统计、说话人自报的年龄段/性别/口音、响度和底噪等测量值。
+        转写是 Deepgram Nova-3 自动生成，未经人工核对。仓库里 open-yap-1k-sample.tar 与 shard-00000/00001.tar 是同样的 16 段，
+        不要重复计数。样本为 CC BY 4.0（可商用），附带请求：不要识别说话人、不要克隆具体某人的声音。完整 1,000 小时语料需按
+        Open Yap 1K 数据使用协议向发布方申请，不在 Hugging Face 上。
+      locale: en-US
+      license:
+        - cc-by-4.0
+      download_scope: Open Yap 1K public sample on Hugging Face (16 conversations); the full 1,000 h corpus is only available on request under its data use agreement
+      expected_download_files: 25
+      expected_download_bytes: 4348178691
+      integrity: verified
+      local_scan_date: '2026-11-13'
