@@ -213,6 +213,18 @@ CS-Dialogue 对话中的纯英文语句
 
 - `earnings22@github-c05ab6fd8b4b`：Rev 发布的带口音英文真实财报电话会议评测集：125 场、119.9 小时，公司来自 27 个国家，metadata.csv 按语言背景分组（西葡 31 场、 亚洲 28、英语 26、其他罗曼语 13、日耳曼语 12、斯拉夫语 10、非洲 5）。transcripts 下有逐词人工转写（带说话人编号、标点、大小写和 实体标签）、强制对齐版本和归一化规则；subset10 另给 10 场的非逐字转写，其余 subset10 条目是指向主目录的符号链接，未重复下载。 用于口音、长音频和实体识别的真实场景评测。CC BY-SA 4.0
 
+### earnings25
+
+美股财报电话会议英语（Earnings25）
+
+语言：en · 任务：语音识别、带说话人标注的语音识别
+
+| 版本 | 时长（小时） | 口径 | COS |
+|---|---:|---|---|
+| [earnings25@zenodo-18762168](../../catalog/earnings25.yaml#L1) | 543.8 | 已登记 | 没有 |
+
+- `earnings25@zenodo-18762168`：Bloomberg 发布的金融领域 ASR 评测集（Interspeech 2026），全部是真实的上市公司财报电话会议录音，包括高管陈述和分析师问答， 有大量财务术语和数字。testset-full 是 514 场完整会议（标普 500 成分公司，主要为 2025 年第四季度，482 场来自美国，其余来自 11 个国家，覆盖 284 个行业），共 497.9 小时，单声道 MP3，采样率 11.025–44.1 kHz 不等；每场带整场转写、说话人姓名和角色， 以及 563,646 个带说话人编号的时间片段。testset-segmented 是从 2025 年全年美国公司会议中按行业分层抽取的 290 段 5–10 分钟 片段，共 45.9 小时，16 kHz 单声道 MP3（README 写 WAV，实际是 MP3），只有段级转写；其中 14 段与 testset-full 出自同一场会议， 重叠很少，两部分都计入总时长。转写是财经编辑稿而非逐字稿，含 (Operator Instructions)、(Multiple Speakers)、 (Technical Difficulty) 等编辑标记，评测前需过滤；时间戳由 NeMo CTC 强制对齐得到，不是人工标注。转写、标注和元数据为 CC BY 4.0；论文说明再分发的音频仍受原内容提供方条款约束，使用者需自行确认
+
 ### edacc
 
 多国口音英语自然对话（EdAcc）
@@ -707,6 +719,18 @@ TAL 英语语音识别数据
 | [voices@hf-prummn-20261023](../../catalog/voices.yaml#L1) | 27.9 | 已登记 | 没有 |
 
 - `voices@hf-prummn-20261023`：VOiCES 远场评测子集：LibriSpeech 句子在 4 个真实房间里用扬声器外放、同时放干扰声（多人 babble、音乐、电视或无干扰），由近处（mc01）和远处（mc05）麦克风录下，英文 16 kHz 单声道。共 6400 条、27.9 小时、100 个说话人，每个“房间 × 干扰 × 麦克风”组合 200 条，带小写转写（metadata 的 answer 字段）。只是 devkit 测试集的抽样，不是全量。 句子来自 LibriSpeech，不要和 LibriSpeech 一起当训练数据
+
+### voxpopuli_en
+
+VoxPopuli 英语欧洲议会发言（评测划分）
+
+语言：en · 任务：语音识别
+
+| 版本 | 时长（小时） | 口径 | COS |
+|---|---:|---|---|
+| [voxpopuli_en@hf-42f01879c780](../../catalog/voxpopuli_en.yaml#L1) | 9.9 | 已登记 | 没有 |
+
+- `voxpopuli_en@hf-42f01879c780`：VoxPopuli 人工转写 ASR 数据的英语 test 和 validation（HF parquet 转换版，音频以 16 kHz WAV 字节存在 parquet 内）： 2009–2020 年欧洲议会全会的现场发言，不少议员以英语为外语，口音多样，以即席或半即席讲话为主，男声约占 73%。 test 1,842 条、286 人、4.9 小时；validation 1,753 条、71 人、5.0 小时；全部标为 gold transcript。raw_text 为空的 有 test 52 条、validation 58 条，这些行只有 normalized_text，评测时需回退到规范化文本。train（30 个 parquet、约 97 GB、 543 小时）未下载，Granary v2（已登记）也含这部分。与已有 voxpopuli_fr/de 取自同一 HF 修订。CC0
 
 ## 中文及粤语数据
 
