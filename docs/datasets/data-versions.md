@@ -1127,9 +1127,9 @@ Common Voice 中文众包朗读；含清洗、热词、加噪版
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
-| [context_correction_synth_zh@train-v1-20261114](../../catalog/context_correction_synth_zh.yaml#L2) | — | 未登记 | 没有 |
+| [context_correction_synth_zh@train-v1-20261114](../../catalog/context_correction_synth_zh.yaml#L3) | 29.8 | 已登记 | 没有 |
 
-- `context_correction_synth_zh@train-v1-20261114`：说话人在一段话里用组词、拆字、偏旁结构或否定对比说明某个同音字怎么写（另含同名一致性），转写应按说明写字。 沿用 context_correction_zh@v1-20261018 的流程（LLM 出题、另一家族 LLM 复核、Qwen3-TTS 克隆音色朗读、拼音级质检）， 改用 aishell3、kespeech 训练划分的说话人，题目避开评测集的被测词；每条记录按 context_correction_clean_zh 的 think 格式写 think， 并另出带真实注册音频的 TS-ASR 版本。起因：open-audio-llm runs/zh-spelling-think-20261113 中 think 有效，但真实说明样本只有 2,187 条。 生成代码在 amphiondata scripts/context_correction/
+- `context_correction_synth_zh@train-v1-20261114`：说话人在一段话里用组词、拆字、偏旁结构或否定对比说明某个同音字怎么写（另含同名一致性），转写应按说明写字。 沿用 context_correction_zh@v1-20261018 的流程：qwen3.6-plus 出题、deepseek-v4-pro 复核（6 项全过）、Qwen3-TTS 克隆音色朗读、 SenseVoiceSmall 与 Qwen3-ASR-1.7B 拼音级质检（任一通过即可，按多音字全部读音比较）。音色取 aishell3、kespeech 训练划分的语句， 排除评测集克隆过的说话人；题目避开评测集的被测词，与评测集写法对或朗读文本相同的进隔离区。每条 train / train_ts 记录在 think.jsonl.gz 里有一行 think（context_correction_clean_zh 的 think 格式）。抽查：说明写错约 2–3%，只靠一个 ASR 通过的条目未见误收。 起因：open-audio-llm runs/zh-spelling-think-20261113 中 think 有效，但真实说明样本只有 2,187 条
 
 ### context_correction_zh
 
