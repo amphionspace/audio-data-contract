@@ -151,5 +151,8 @@
   "magicdata_multistream_zh": "/workspace/data/datasets/magicdata_multistream_zh",
   "magicdata_multistream_en": "/workspace/data/datasets/magicdata_multistream_en",
   "primock57": "/workspace/data/datasets/primock57",
-  "coraal": "/workspace/data/datasets/coraal"
+  "coraal": "/workspace/data/datasets/coraal",
+  "afrispeech_dialog": "/workspace/data/datasets/afrispeech_dialog",
+  "uwb_atcc": "/workspace/data/datasets/uwb_atcc",
+  "open_clinical_conversations": "/workspace/data/datasets/open_clinical_conversations"
 }

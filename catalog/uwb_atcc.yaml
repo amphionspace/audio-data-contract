@@ -1,0 +1,70 @@
+- schema_version: dataset-catalog/2.0
+  dataset_id: uwb_atcc
+  version: hf-1e8270beb8c1
+  languages:
+    - en
+  tasks:
+    - asr
+  aliases: []
+  artifacts:
+    - name: source
+      kind: hf-dataset-snapshot
+      root_alias: uwb_atcc
+      relative_path: source/hf-1e8270beb8c1
+      metadata:
+        file_count: 6
+        expected_bytes: 711483939
+        tree_sha256: 95c049cb993d0eaa17e1b4f6234b227fba860214731c81b6db8f82179effac0e
+    - name: download_state
+      kind: dataset-state
+      root_alias: uwb_atcc
+      relative_path: versions/hf-1e8270beb8c1/download_state/state.json
+      expected_bytes: 943
+      sha256: 1f246ac93ed2a8acc8ed09cf63a98ab79c3769c948d288f8acb4177b4d86eb8c
+  splits:
+    train:
+      artifacts:
+        source:
+          - source
+      statistics:
+        count: 11291
+        recordings: 1969
+        duration_hours: 10.5344
+        duration_basis: soundfile header duration of every embedded WAV in data/train-*.parquet; pinned upstream file hashes verified
+        sample_formats:
+          1ch/8000Hz/PCM_16: 11291
+    test:
+      artifacts:
+        source:
+          - source
+      statistics:
+        count: 2822
+        recordings: 677
+        duration_hours: 2.4337
+        duration_basis: soundfile header duration of every embedded WAV in data/test-*.parquet; pinned upstream file hashes verified
+        sample_formats:
+          1ch/8000Hz/PCM_16: 2822
+  provenance:
+    summary: 捷克空域真实空管通话英语（UWB-ATCC）
+    source: Hugging Face (Idiap packaging of the LINDAT UWB-ATCC corpus)
+    source_id: Jzuluaga/uwb_atcc
+    revision: 1e8270beb8c1643c8735dddb7229fffb0e399f74
+    url: https://huggingface.co/datasets/Jzuluaga/uwb_atcc
+    paper: https://link.springer.com/article/10.1007/s10579-019-09449-5
+    project_page: https://lindat.mff.cuni.cz/repository/xmlui/handle/11858/00-097C-0000-0001-CCA1-0
+    download_mirror: https://hf-mirror.com
+    release_date: '2022-12-05'
+    description: >-
+      西波希米亚大学的 UWB-ATCC：捷克空域真实的管制员与飞行员无线电通话，英语（非母语口音为主），人工转写并按说话人角色
+      标注。这里是 Idiap 为 ATC 语音识别基准整理上传到 HF 的版本：按说话人段切好，id 末尾 _AT 是管制员、_PI 是飞行员、
+      PIAT 是两者同段；文本已规范化。实测音频是 8 kHz 单声道 16 bit（卡片特征写 16 kHz，与实际不符），共 14,113 段、
+      13.0 小时，少于语料主页的 20 小时。划分不是随机的：test 全部是塔台（TWR）录音，train 是区域管制（ACCU）、进近（APP）
+      和少量塔台，两边有 1 条录音重叠。信道窄带、噪声和失真都很重，适合嘈杂无线电通话和专业术语场景的识别评测。
+      许可证按 LINDAT 原始语料写 CC BY-NC-SA 4.0；LINDAT 原站本机直连和走代理都连不上，暂时没有核对原始发布。
+    license:
+      - cc-by-nc-sa-4.0
+    download_scope: Complete Idiap Hugging Face packaging of UWB-ATCC (train and test Parquet with embedded audio, loader script, card)
+    expected_download_files: 6
+    expected_download_bytes: 711483939
+    integrity: verified
+    local_scan_date: '2026-11-14'
