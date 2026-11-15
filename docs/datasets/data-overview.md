@@ -1,6 +1,6 @@
 # 数据总览
 
-当前登记 **263 个数据集**；另有 **34 个下载来源声明**和 **1 个训练混合配方**。登记不代表本机文件已齐备。
+当前登记 **265 个数据集**；另有 **35 个下载来源声明**和 **1 个训练混合配方**。登记不代表本机文件已齐备。
 
 时长取单个版本的最大值，不跨版本相加；≈ 为参考表或估算值，— 为暂无完整时长。各版本的时长、说明、COS 地址和质量证据见[版本明细](data-versions.md)。
 
@@ -36,6 +36,7 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [dipco](data-versions.md#dipco) | en | 语音识别、带说话人标注的语音识别、说话人分段与归属 | 6.5 | 家庭晚宴英文对话，近讲与远场阵列（DiPCo） | 没有 |
 | [earnings21](data-versions.md#earnings21) | en | 语音识别、带说话人标注的语音识别 | 39.3 | 英文上市公司财报电话会议（Earnings-21） | 没有 |
 | [earnings22](data-versions.md#earnings22) | en | 语音识别、带说话人标注的语音识别 | 119.9 | 多国口音英文财报电话会议（Earnings-22） | 没有 |
+| [earnings25](data-versions.md#earnings25) | en | 语音识别、带说话人标注的语音识别 | 543.8 | 美股财报电话会议英语（Earnings25） | 没有 |
 | [edacc](data-versions.md#edacc) | en | 语音识别、带说话人标注的语音识别 | 35.6 | 多国口音英语自然对话（EdAcc） | 没有 |
 | [emilia_en](data-versions.md#emilia_en) | en | 语音识别 | 43,624.0 | Emilia 英语野外语音（已清洗） | 快照 20260914 |
 | [emotion1200_en](data-versions.md#emotion1200_en) | en | 说话人情感分类、情感与说话风格描述、语音情感识别 | 5.2 | 英文情感识别与描述评测（Emotion1200） | 快照 20260914 |
@@ -71,6 +72,7 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [vctk](data-versions.md#vctk) | en | 语音识别、语音合成 | 82.7 | 多口音英语朗读（VCTK） | `TTS 桶:VCTK/`（原始数据） |
 | [voicebank_demand](data-versions.md#voicebank_demand) | en | speech_enhancement | 10.0 | 语音增强标准集（VoiceBank-DEMAND） | 没有 |
 | [voices](data-versions.md#voices) | en | 语音识别 | 27.9 | 真实房间外放的英文远场评测（VOiCES） | 没有 |
+| [voxpopuli_en](data-versions.md#voxpopuli_en) | en | 语音识别 | 9.9 | VoxPopuli 英语欧洲议会发言（评测划分） | 没有 |
 
 ## 中文及粤语数据
 
@@ -321,6 +323,7 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [dataset_et_amharic](../../catalog/dataset_et_amharic.yaml#L1) | hf-4861d6445842 | am | 语音识别 |
 | [dialogs_ru](../../catalog/dialogs_ru.yaml#L1) | hf-a74ff44d8d27 | ru | 语音合成 |
 | [duplexconv](../../catalog/duplexconv.yaml#L1) | hf-0bb99da7ab7a | zh | 语音识别、说话人分段与归属、带说话人标注的语音识别 |
+| [easycom](../../catalog/easycom.yaml#L1) | github-v1.0.0 | en | 语音识别、带说话人标注的语音识别 |
 | [eurospeech](../../catalog/eurospeech.yaml#L1) | hf-7a55bbcee393 | multi | 语音识别 |
 | [gigaspeech2](../../catalog/download_queue.yaml#L165) | hf-8dc0d0e502b7 | id、th、vi | 语音识别 |
 | [gigaspeech3](../../catalog/gigaspeech3.yaml#L1) | hf-4e7b87a9df60 | ar | 语音识别 |

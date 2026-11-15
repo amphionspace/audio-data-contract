@@ -1,0 +1,68 @@
+- schema_version: dataset-catalog/2.0
+  dataset_id: voxpopuli_en
+  version: hf-42f01879c780
+  languages:
+    - en
+  tasks:
+    - asr
+  aliases: []
+  artifacts:
+    - name: source
+      kind: hf-dataset-snapshot
+      root_alias: voxpopuli_en
+      relative_path: source/hf-42f01879c780
+      metadata:
+        file_count: 4
+        expected_bytes: 1864851362
+        tree_sha256: 9f70505df9e63726f6589918b5efd1521a27ec25d74a034bf220893eace7a814
+    - name: download_state
+      kind: dataset-state
+      root_alias: voxpopuli_en
+      relative_path: versions/hf-42f01879c780/download_state/state.json
+      expected_bytes: 939
+      sha256: af69c806c40519dd7f0913062b2861f727404f0be819a5562e05143088fb1355
+  splits:
+    test:
+      artifacts:
+        source:
+          - source
+      statistics:
+        count: 1842
+        speakers: 286
+        duration_hours: 4.9299
+        duration_basis: soundfile header duration of every embedded WAV in en/test-00000-of-00001.parquet; pinned upstream file hashes verified
+        sample_formats:
+          1ch/16000Hz/FLOAT: 1842
+    validation:
+      artifacts:
+        source:
+          - source
+      statistics:
+        count: 1753
+        speakers: 71
+        duration_hours: 4.9756
+        duration_basis: soundfile header duration of every embedded WAV in en/validation-00000-of-00001.parquet; pinned upstream file hashes verified
+        sample_formats:
+          1ch/16000Hz/FLOAT: 1753
+  provenance:
+    summary: VoxPopuli 英语欧洲议会发言（评测划分）
+    source: Hugging Face
+    source_id: facebook/voxpopuli
+    revision: 42f01879c780b4a2e90ec0b4f616c2ece526e4f1
+    url: https://huggingface.co/datasets/facebook/voxpopuli
+    paper: https://arxiv.org/abs/2101.00390
+    download_mirror: https://hf-mirror.com
+    release_date: '2021-01'
+    description: >-
+      VoxPopuli 人工转写 ASR 数据的英语 test 和 validation（HF parquet 转换版，音频以 16 kHz WAV 字节存在 parquet 内）：
+      2009–2020 年欧洲议会全会的现场发言，不少议员以英语为外语，口音多样，以即席或半即席讲话为主，男声约占 73%。
+      test 1,842 条、286 人、4.9 小时；validation 1,753 条、71 人、5.0 小时；全部标为 gold transcript。raw_text 为空的
+      有 test 52 条、validation 58 条，这些行只有 normalized_text，评测时需回退到规范化文本。train（30 个 parquet、约 97 GB、
+      543 小时）未下载，Granary v2（已登记）也含这部分。与已有 voxpopuli_fr/de 取自同一 HF 修订。CC0。
+    license:
+      - cc0-1.0
+    download_scope: VoxPopuli en transcribed test and validation parquet only (Hugging Face parquet conversion)
+    expected_download_files: 4
+    expected_download_bytes: 1864851362
+    integrity: verified
+    local_scan_date: '2026-11-14'
