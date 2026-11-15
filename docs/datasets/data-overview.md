@@ -1,6 +1,6 @@
 # 数据总览
 
-当前登记 **260 个数据集**；另有 **34 个下载来源声明**和 **1 个训练混合配方**。登记不代表本机文件已齐备。
+当前登记 **263 个数据集**；另有 **34 个下载来源声明**和 **1 个训练混合配方**。登记不代表本机文件已齐备。
 
 时长取单个版本的最大值，不跨版本相加；≈ 为参考表或估算值，— 为暂无完整时长。各版本的时长、说明、COS 地址和质量证据见[版本明细](data-versions.md)。
 
@@ -24,6 +24,7 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 
 | 数据集 | 语言 | 任务 | 时长（小时） | 简介 | COS |
 |---|---|---|---:|---|---|
+| [afrispeech_dialog](data-versions.md#afrispeech_dialog) | en | 语音识别 | 7.0 | 非洲口音英语双人对话（含模拟问诊） | 没有 |
 | [ami_ihm](data-versions.md#ami_ihm) | en | 语音识别 | 95.5 | AMI 英文会议的近讲耳麦版 | 没有 |
 | [apptek_callcenter](data-versions.md#apptek_callcenter) | en | 语音识别、带说话人标注的语音识别、说话人分段与归属 | 151.1 | 英文多口音客服长对话评测（AppTek） | 没有 |
 | [audioset_esc_test](data-versions.md#audioset_esc_test) | en | 背景声场景描述 | 6.8 | AudioSet 背景声场景描述评测集 | 快照 20260914 |
@@ -59,12 +60,14 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [mls](data-versions.md#mls) | en | 语音识别 | 44,691.0 | 英文有声书朗读（MLS 英语） | 部分版本：快照 20260914 |
 | [msp_podcast_ser](data-versions.md#msp_podcast_ser) | en | 语音情感识别 | — | 英文播客情感识别评测（MSP-Podcast） | 快照 20260914 |
 | [notsofar](data-versions.md#notsofar) | en | 语音识别、连续语音分离、diarization、重叠语音检测、带说话人标注的语音识别、说话人分段与归属 | ≈200.0 | 微软英文远场会议，真实录制与模拟（NOTSOFAR） | 快照 20260914、`备份桶:audio-data-contract/datasets/notsofar_sdm/` |
+| [open_clinical_conversations](data-versions.md#open_clinical_conversations) | en | 语音识别 | 51.9 | 英文模拟问诊录音合集（含 OSCE 272 场） | 没有 |
 | [open_yap](data-versions.md#open_yap) | en | 语音识别、带说话人标注的语音识别 | 8.9 | 熟人之间的英文双声道自然对话样本（Open Yap 1K） | 没有 |
 | [primock57](data-versions.md#primock57) | en | 语音识别、带说话人标注的语音识别 | 8.6 | 英文全科医生模拟问诊分轨录音（PriMock57） | 没有 |
 | [sbcsae](data-versions.md#sbcsae) | en | 语音识别、带说话人标注的语音识别 | 23.3 | 美式英语自然口语对话（SBCSAE） | 没有 |
 | [singapore_english](data-versions.md#singapore_english) | en | 语音识别 | 3.9 | 新加坡口音英语（Hugging Face 来源） | 快照 20260914 |
 | [singaporean](data-versions.md#singaporean) | en | 语音识别 | ≈0.2 | 新加坡口音英语小样本 | 快照 20260914、`备份桶:audio-data-contract/datasets/singaporean/` |
 | [tal100_en](data-versions.md#tal100_en) | en | 语音识别 | 4.8 | TAL 英语语音识别数据 | 快照 20260914、`备份桶:audio-data-contract/datasets/tal100_en/` |
+| [uwb_atcc](data-versions.md#uwb_atcc) | en | 语音识别 | 13.0 | 捷克空域真实空管通话英语（UWB-ATCC） | 没有 |
 | [vctk](data-versions.md#vctk) | en | 语音识别、语音合成 | 82.7 | 多口音英语朗读（VCTK） | `TTS 桶:VCTK/`（原始数据） |
 | [voicebank_demand](data-versions.md#voicebank_demand) | en | speech_enhancement | 10.0 | 语音增强标准集（VoiceBank-DEMAND） | 没有 |
 | [voices](data-versions.md#voices) | en | 语音识别 | 27.9 | 真实房间外放的英文远场评测（VOiCES） | 没有 |

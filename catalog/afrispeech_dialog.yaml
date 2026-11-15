@@ -1,0 +1,68 @@
+- schema_version: dataset-catalog/2.0
+  dataset_id: afrispeech_dialog
+  version: hf-1beaa0501f76
+  languages:
+    - en
+  tasks:
+    - asr
+  aliases: []
+  artifacts:
+    - name: source
+      kind: hf-dataset-snapshot
+      root_alias: afrispeech_dialog
+      relative_path: source/hf-1beaa0501f76
+      metadata:
+        file_count: 52
+        expected_bytes: 2224238059
+        tree_sha256: 6fd1bd0b640e3104654526510ee2f63b9dd485ffba6bcf7536969b7ddd1a700f
+    - name: download_state
+      kind: dataset-state
+      root_alias: afrispeech_dialog
+      relative_path: versions/hf-1beaa0501f76/download_state/state.json
+      expected_bytes: 997
+      sha256: e7bad5eb9cf95cfeed3131f3b2476f07ab1088a885c5b5a02e3ea95eed5c9991
+  splits:
+    medical:
+      artifacts:
+        source:
+          - source
+      statistics:
+        count: 20
+        turns: 1568
+        duration_hours: 2.0747
+        duration_basis: soundfile header duration of each medical conversation WAV listed in metadata.csv (equals the metadata duration column); pinned upstream file hashes verified
+        sample_formats:
+          1ch/44100Hz/PCM_16: 20
+    general:
+      artifacts:
+        source:
+          - source
+      statistics:
+        count: 29
+        turns: 883
+        duration_hours: 4.9291
+        duration_basis: soundfile header duration of each general-topic conversation WAV listed in metadata.csv (equals the metadata duration column); pinned upstream file hashes verified
+        sample_formats:
+          1ch/44100Hz/PCM_16: 29
+  provenance:
+    summary: 非洲口音英语双人对话（含模拟问诊）
+    source: Hugging Face
+    source_id: intronhealth/afrispeech-dialog
+    revision: 1beaa0501f76d355da0333de332c75968d67bd9f
+    url: https://huggingface.co/datasets/intronhealth/afrispeech-dialog
+    paper: https://arxiv.org/abs/2502.03945
+    download_mirror: https://hf-mirror.com
+    release_date: '2024-10-28'
+    description: >-
+      Intron Health 的 AfriSpeech-Dialog v1（NAACL 2025）：尼日利亚、肯尼亚和南非说话人的英语双人自由对话，20 段模拟医患问诊、
+      29 段一般话题讨论，共 49 段、7.0 小时（卡片写 50 段，仓库实际 49 段）。远程录制，环境各异，44.1 kHz 单声道 WAV；
+      口音覆盖豪萨、斯瓦希里、伊索科、约鲁巴、塞索托等 11 种母语背景，说话人多为 19–40 岁。metadata.csv 里每段是一整篇
+      按 Speaker 1/2 分轮次的人工转写（医疗 1,568 轮、一般话题 883 轮），大多穿插 hh:mm:ss 时间点，但没有逐句起止时间，
+      做 ASR 训练或带说话人识别评测前需要先强制对齐。适合非洲口音英语对话识别和医疗问诊场景评测。CC BY-NC-SA 4.0。
+    license:
+      - cc-by-nc-sa-4.0
+    download_scope: Complete AfriSpeech-Dialog v1 repository (49 conversation WAVs, metadata.csv with speaker-turn transcripts, card)
+    expected_download_files: 52
+    expected_download_bytes: 2224238059
+    integrity: verified
+    local_scan_date: '2026-11-14'

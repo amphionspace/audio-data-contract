@@ -17,6 +17,18 @@ COS 列：
 
 ## 英文数据
 
+### afrispeech_dialog
+
+非洲口音英语双人对话（含模拟问诊）
+
+语言：en · 任务：语音识别
+
+| 版本 | 时长（小时） | 口径 | COS |
+|---|---:|---|---|
+| [afrispeech_dialog@hf-1beaa0501f76](../../catalog/afrispeech_dialog.yaml#L1) | 7.0 | 已登记 | 没有 |
+
+- `afrispeech_dialog@hf-1beaa0501f76`：Intron Health 的 AfriSpeech-Dialog v1（NAACL 2025）：尼日利亚、肯尼亚和南非说话人的英语双人自由对话，20 段模拟医患问诊、 29 段一般话题讨论，共 49 段、7.0 小时（卡片写 50 段，仓库实际 49 段）。远程录制，环境各异，44.1 kHz 单声道 WAV； 口音覆盖豪萨、斯瓦希里、伊索科、约鲁巴、塞索托等 11 种母语背景，说话人多为 19–40 岁。metadata.csv 里每段是一整篇 按 Speaker 1/2 分轮次的人工转写（医疗 1,568 轮、一般话题 883 轮），大多穿插 hh:mm:ss 时间点，但没有逐句起止时间， 做 ASR 训练或带说话人识别评测前需要先强制对齐。适合非洲口音英语对话识别和医疗问诊场景评测。CC BY-NC-SA 4.0
+
 ### ami_ihm
 
 AMI 英文会议的近讲耳麦版
@@ -557,6 +569,18 @@ LibriSpeech 混合的目标说话人数据
 - `notsofar_sdm@meeting-windows-v1-20261008`：NOTSOFAR-1 真实会议（单通道 SC 设备 ch0，每个设备算一条录音，因为设备间采样不同步）的说话人归属 ASR 窗口（aligned_utterance_timestamps_v1）：人工标注的说话人和时间，转写为源清单文字，只去空白。按 30 / 120 / 300 / 600 s 切窗，每个 split 的 records 一行一个窗口，turns 在 metadata；train / dev / test 都有。音频由 audio-index 指向源数据集里的 ch0.wav，不复制。没有窗口被排除。脚本 scripts/diarization_raw_labels/register_raw_labels.py
 - `notsofar_sdm@teacher-calibration-v1-20261009`：说话人日志老师校准（2026-10-09）：在有人工标注的 NOTSOFAR train 单通道 ch0 39 场 / 4.02 h 上比较本机 MOSS 0.9B、MOSS Pro、百炼 qwen-audio-3.1-asr-flash 三个老师，并用 Qwen3-ASR 对本机 MOSS 的每个片段做文本校验；付费调用经用户批准，仅用于这次校准。每个 *_records 文件一个老师，每行一条录音，target 是按时间排序的 [说话人][起-止] 文本，教师返回的分块、说话人链接、身份断点留在 metadata.<老师>；teacher_agreement_records 每行一个人工标注片段，metadata.teacher_agreement 记各老师的说话人、边界和字错误率（analysis/segments.jsonl，用于确定多老师一致性过滤门槛）。NOTSOFAR 的 qwen3_asr_records 是第一版，误用 to_language=zh 把英文部分译成中文，已被 qwen3_asr_en_records 更正，保留原始输出。录音沿用 notsofar_sdm@icefall-20260908 train_rec_0（只用其中被抽中的录音），不复制音频。脚本 scripts/diarization_raw_labels/register_raw_labels.py
 
+### open_clinical_conversations
+
+英文模拟问诊录音合集（含 OSCE 272 场）
+
+语言：en · 任务：语音识别
+
+| 版本 | 时长（小时） | 口径 | COS |
+|---|---:|---|---|
+| [open_clinical_conversations@hf-06053cd9be2e](../../catalog/open_clinical_conversations.yaml#L1) | 51.9 | 已登记 | 没有 |
+
+- `open_clinical_conversations@hf-06053cd9be2e`：Sully.ai 把四个公开的医患对话数据整理成统一格式（2026-11 发布）。有音频的部分：272 场 Fareez 等人（Scientific Data 2022）的 加拿大 OSCE 问诊录音，医生与扮演患者按病例卡即兴问诊，以呼吸科为主（呼吸 213、肌骨 46、消化 6、心血管 5、皮肤和综合各 1）， 共 51.9 小时，原始数据在 figshare 上以 CC0 发布（本机访问 figshare 返回 403，所以从这份整理版获取）；另 57 场 PriMock57， 医生和患者两轨被混成单声道，与本项目已有的 primock57 是同一批问诊，所以这一划分加了 group，不计入总时长。音频统一转成 16 kHz 单声道 MP3，转写按 Clinician/Patient/Family member 分轮次（OSCE 26,572 轮），连续同一说话人的轮次已合并，没有逐句时间。 卡片称全部是角色扮演、人工转写，原论文的转写流程未核对。encounters.jsonl 另含 207 场 ACI-Bench 和 MTS-Dialog 1,701 段 对话文本（无音频），可用于对话转病历的文本评测。整体按 CC BY 4.0 分发，每行带来源许可证
+
 ### open_yap
 
 熟人之间的英文双声道自然对话样本（Open Yap 1K）
@@ -635,6 +659,18 @@ TAL 英语语音识别数据
 | [tal100_en@legacy-20260804](../../catalog/icefall_base.yaml#L432) | 4.8 | 已登记 | 快照 20260914、`amphion-audio-backup-1373259071:audio-data-contract/datasets/tal100_en/` |
 
 - 含派生版本（与源数据可能重叠）
+
+### uwb_atcc
+
+捷克空域真实空管通话英语（UWB-ATCC）
+
+语言：en · 任务：语音识别
+
+| 版本 | 时长（小时） | 口径 | COS |
+|---|---:|---|---|
+| [uwb_atcc@hf-1e8270beb8c1](../../catalog/uwb_atcc.yaml#L1) | 13.0 | 已登记 | 没有 |
+
+- `uwb_atcc@hf-1e8270beb8c1`：西波希米亚大学的 UWB-ATCC：捷克空域真实的管制员与飞行员无线电通话，英语（非母语口音为主），人工转写并按说话人角色 标注。这里是 Idiap 为 ATC 语音识别基准整理上传到 HF 的版本：按说话人段切好，id 末尾 _AT 是管制员、_PI 是飞行员、 PIAT 是两者同段；文本已规范化。实测音频是 8 kHz 单声道 16 bit（卡片特征写 16 kHz，与实际不符），共 14,113 段、 13.0 小时，少于语料主页的 20 小时。划分不是随机的：test 全部是塔台（TWR）录音，train 是区域管制（ACCU）、进近（APP） 和少量塔台，两边有 1 条录音重叠。信道窄带、噪声和失真都很重，适合嘈杂无线电通话和专业术语场景的识别评测。 许可证按 LINDAT 原始语料写 CC BY-NC-SA 4.0；LINDAT 原站本机直连和走代理都连不上，暂时没有核对原始发布
 
 ### vctk
 
