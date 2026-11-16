@@ -222,12 +222,16 @@ def main():
 
     # mined real recordings; their source recordings must stay out of any training set
     held_out = set()
+    excluded = dict(recipe.get("excluded_mined") or {})  # item id -> why the spot check found it wrong
     for corpus in recipe.get("mined_corpora") or recipe["mining"]["corpora"]:
         root = source / "mined" / corpus
         mined_clips = {c["id"]: c for c in read_jsonl(root / "clips.jsonl")}
         mined_qc = {r["id"]: r for r in read_jsonl(root / "qc.jsonl")}
         for item in read_jsonl(root / "items.jsonl"):
             check = mined_qc.get(item["id"])
+            if item["id"] in excluded:
+                check = {**(check or {}), "pass": False,
+                         "issues": [*(check or {}).get("issues", []), f"spot check: {excluded.pop(item['id'])}"]}
             split = "mined_real" if check and check["pass"] else "quarantine"
             held_out.add(f"{corpus}:{item['source_recording']}")
             make(item, mined_clips[item["id"]], check, split, "asr", f"mined:{corpus}",
@@ -235,6 +239,8 @@ def main():
                   "source_start": item["source_start"], "corpus_transcript": item["corpus_transcript"],
                   "corpus_transcript_correct": item["corpus_transcript_correct"]},
                  overlap_of(item["segments"], blob) if blob is not None else None)
+    if excluded:
+        raise ValueError(f"excluded_mined names items that were not mined: {sorted(excluded)}")
 
     for split, rows in by_split.items():
         write_jsonl(version_dir / "records" / f"{split}.jsonl.gz", rows)

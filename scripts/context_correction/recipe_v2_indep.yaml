@@ -116,3 +116,9 @@ qc:
 excluded_pairs:
   explicit-拆字-0009-4: 常用和少见写法给反了（读 xīn yuán 时“新源”才常用）
   implicit-隐式语义-0099-3: confirm 的“法制讲座”写成“法治讲座”同样成立，答案不唯一
+
+# 真实录音抽检（每组随机 20 条，source/v2-20261116/mined/spotcheck-emilia-sample.json）认定参考答案不可靠的条目，组装时隔离
+excluded_mined:
+  mined-emilia_zh-ZH_B00013_S02331-W000115: 改成“杂鱼”没有依据，“砸鱼”可能是别的叫法，答案不唯一
+  mined-emilia_zh-ZH_B00025_S02761-W000004: “吃吃”本身就是笑声的规范写法，说明“吃的去掉口字旁”指向“乞”，答案不唯一
+  mined-emilia_zh-ZH_B00042_S05552-W000014: “专场”与“专厂”只凭“也不能去骂你”分不出，答案不唯一
