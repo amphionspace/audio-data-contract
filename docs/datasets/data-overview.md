@@ -72,7 +72,7 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [vctk](data-versions.md#vctk) | en | 语音识别、语音合成 | 82.7 | 多口音英语朗读（VCTK） | `TTS 桶:VCTK/`（原始数据） |
 | [voicebank_demand](data-versions.md#voicebank_demand) | en | speech_enhancement | 10.0 | 语音增强标准集（VoiceBank-DEMAND） | 没有 |
 | [voices](data-versions.md#voices) | en | 语音识别 | 27.9 | 真实房间外放的英文远场评测（VOiCES） | 没有 |
-| [voxpopuli_en](data-versions.md#voxpopuli_en) | en | 语音识别 | 9.9 | VoxPopuli 英语欧洲议会发言（评测划分） | 没有 |
+| [voxpopuli_en](data-versions.md#voxpopuli_en) | en | 语音识别 | 532.5 | VoxPopuli 英语欧洲议会发言 | 没有 |
 
 ## 中文及粤语数据
 

@@ -12,16 +12,27 @@
       root_alias: voxpopuli_en
       relative_path: source/hf-42f01879c780
       metadata:
-        file_count: 4
-        expected_bytes: 1864851362
-        tree_sha256: 9f70505df9e63726f6589918b5efd1521a27ec25d74a034bf220893eace7a814
+        file_count: 34
+        expected_bytes: 98803093213
+        tree_sha256: 684235e83c26c5978bc0f0ba1498bdde12e348b207815ec95953ce2f6ddfbcb9
     - name: download_state
       kind: dataset-state
       root_alias: voxpopuli_en
       relative_path: versions/hf-42f01879c780/download_state/state.json
-      expected_bytes: 939
-      sha256: af69c806c40519dd7f0913062b2861f727404f0be819a5562e05143088fb1355
+      expected_bytes: 945
+      sha256: 0ce0fccf1bb6f610231904e94391f007a59d960967923d0bb6a35d5b43d81823
   splits:
+    train:
+      artifacts:
+        source:
+          - source
+      statistics:
+        count: 182482
+        speakers: 639
+        duration_hours: 522.6031
+        duration_basis: soundfile header duration of every embedded WAV in en/train-*.parquet (30 files); pinned upstream file hashes verified
+        sample_formats:
+          1ch/16000Hz/FLOAT: 182482
     test:
       artifacts:
         source:
@@ -45,7 +56,7 @@
         sample_formats:
           1ch/16000Hz/FLOAT: 1753
   provenance:
-    summary: VoxPopuli 英语欧洲议会发言（评测划分）
+    summary: VoxPopuli 英语欧洲议会发言
     source: Hugging Face
     source_id: facebook/voxpopuli
     revision: 42f01879c780b4a2e90ec0b4f616c2ece526e4f1
@@ -54,15 +65,15 @@
     download_mirror: https://hf-mirror.com
     release_date: '2021-01'
     description: >-
-      VoxPopuli 人工转写 ASR 数据的英语 test 和 validation（HF parquet 转换版，音频以 16 kHz WAV 字节存在 parquet 内）：
-      2009–2020 年欧洲议会全会的现场发言，不少议员以英语为外语，口音多样，以即席或半即席讲话为主，男声约占 73%。
-      test 1,842 条、286 人、4.9 小时；validation 1,753 条、71 人、5.0 小时；全部标为 gold transcript。raw_text 为空的
-      有 test 52 条、validation 58 条，这些行只有 normalized_text，评测时需回退到规范化文本。train（30 个 parquet、约 97 GB、
-      543 小时）未下载，Granary v2（已登记）也含这部分。与已有 voxpopuli_fr/de 取自同一 HF 修订。CC0。
+      VoxPopuli 人工转写 ASR 数据的英语全部划分（HF parquet 转换版，音频以 16 kHz WAV 字节存在 parquet 内）：
+      2009–2020 年欧洲议会全会的现场发言，不少议员以英语为外语，口音多样，以即席或半即席讲话为主，train 中男声约占 57%（按条数）。
+      train 182,482 条、639 人、522.6 小时；test 1,842 条、286 人、4.9 小时；validation 1,753 条、71 人、5.0 小时；全部标为
+      gold transcript。raw_text 为空的有 train 5,463 条、test 52 条、validation 58 条，这些行只有 normalized_text，使用时需回退到
+      规范化文本。Granary v2（已登记）也含 train 这部分。与已有 voxpopuli_fr/de 取自同一 HF 修订。CC0。
     license:
       - cc0-1.0
-    download_scope: VoxPopuli en transcribed test and validation parquet only (Hugging Face parquet conversion)
-    expected_download_files: 4
-    expected_download_bytes: 1864851362
+    download_scope: VoxPopuli en transcribed train, test and validation parquet (Hugging Face parquet conversion)
+    expected_download_files: 34
+    expected_download_bytes: 98803093213
     integrity: verified
-    local_scan_date: '2026-11-14'
+    local_scan_date: '2026-11-15'
