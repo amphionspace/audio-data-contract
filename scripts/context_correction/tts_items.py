@@ -1,33 +1,46 @@
 #!/usr/bin/env python3
-"""tts-items.jsonl: per subtype, the first ceil(target * MARGIN) accepted pairs in items.jsonl order (generation order),
-both items of each pair. build.py takes each subtype's first ``target`` pairs whose audio passes QC, so later pairs
-are only needed when QC drops more than the margin; they are synthesized in a top-up round in the same order.
+"""Pick the synthetic pairs to synthesize: per subtype, the first ceil(target * MARGIN) accepted pairs in
+items.jsonl order (generation order), both items of each pair, written to ``<source>/tts-items.jsonl``.
 
-    python scripts/context_correction/tts_items.py <recipe> <source dir>
+build.py takes each subtype's first ``target`` pairs whose audio passes QC, so later pairs are only needed when
+QC drops more than the margin; they are synthesized in a top-up round in the same order.
+
+    python scripts/context_correction/tts_items.py --recipe <recipe> --source <source dir>
 """
-import json
+
+import argparse
 import math
 import sys
 from collections import Counter, defaultdict
+from pathlib import Path
 
 import yaml
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from common import read_jsonl, write_jsonl  # noqa: E402
+
 MARGIN = 1.5  # v1 QC passed ~89% of items, so ~79% of pairs (both items must pass): 1.5 x 0.79 ≈ 1.19 x target
-recipe = yaml.safe_load(open(sys.argv[1]))
-source = sys.argv[2]
-targets = {sub: n for entry in recipe["categories"].values() for sub, n in entry["subtypes"].items()}
-items = [json.loads(l) for l in open(f"{source}/items.jsonl")]
-order, members = [], defaultdict(list)
-for item in items:
-    if item["pair_id"] not in members:
-        order.append(item["pair_id"])
-    members[item["pair_id"]].append(item)
-taken, out = Counter(), []
-for pair_id in order:
-    sub = members[pair_id][0]["subtype"]
-    if taken[sub] < math.ceil(targets[sub] * MARGIN):
-        taken[sub] += 1
-        out += members[pair_id]
-with open(f"{source}/tts-items.jsonl", "w") as f:
-    f.writelines(json.dumps(i, ensure_ascii=False) + "\n" for i in out)
-print("pairs", dict(taken), "items", len(out))
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    parser.add_argument("--recipe", type=Path, required=True)
+    parser.add_argument("--source", type=Path, required=True)
+    args = parser.parse_args()
+    recipe = yaml.safe_load(args.recipe.read_text())
+    targets = {sub: n for entry in recipe["categories"].values() for sub, n in entry["subtypes"].items()}
+    members = defaultdict(list)  # insertion order = items.jsonl order
+    for item in read_jsonl(args.source / "items.jsonl"):
+        members[item["pair_id"]].append(item)
+    taken, chosen = Counter(), []
+    for pair in members.values():
+        subtype = pair[0]["subtype"]
+        if taken[subtype] < math.ceil(targets[subtype] * MARGIN):
+            taken[subtype] += 1
+            chosen += pair
+    write_jsonl(args.source / "tts-items.jsonl", chosen)
+    print("pairs", dict(taken), "items", len(chosen))
+
+
+if __name__ == "__main__":
+    main()
