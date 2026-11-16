@@ -1550,9 +1550,11 @@ MagicData-RAMC 对话切窗的按人转写数据
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
+| [police_asr_unified@icefall-20260908](../../catalog/police_asr_unified.yaml#L265) | 805.6 | 已登记 | 没有 |
 | [police_asr_unified@train-punc-v1-20261102](../../catalog/train_punc_v1_more.yaml#L221) | — | 未登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/police_asr_unified/` |
 | [police_asr_unified@v1-20261009](../../catalog/police_asr_unified.yaml#L1) | 805.6 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/police_asr_unified/` |
 
+- `police_asr_unified@icefall-20260908`：Icefall consumption view of the V1-V6 merged release; the train/dev/test manifests, splits and text are those of v1-20261009.
 - `police_asr_unified@train-punc-v1-20261102`：police_asr_unified@v1-20261009 的 train 训练版本，目标文本换成带标点的写法（按 id 取自 ，及中文学生模型给派生文本加的标点（按去标点文本匹配）；去掉标点和空格、转小写后与原文一致才替换，否则保留原文）。其余字段与源版本相同，录音引用源版本
 - `police_asr_unified@v1-20261009`：警务合成语音统合版：V1-V6 全部批次合并为 train/dev/test 三个集合，不复制音频
 - 含派生版本（与源数据可能重叠）
