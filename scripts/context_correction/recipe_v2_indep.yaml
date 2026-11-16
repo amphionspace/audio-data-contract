@@ -18,7 +18,8 @@ prompts: v2
 llm:
   base_url: https://ark.cn-beijing.volces.com/api/v3
   api_key_env: ARK_API_KEY
-  generator: {model: kimi-k3-1-pro-261024, temperature: 1.0}
+  # kimi 在方舟上思考很长：16,000 token 上限时 87/540 次调用被截断或回复为空，上限调到 65,536 后重出这些调用
+  generator: {model: kimi-k3-1-pro-261024, temperature: 1.0, max_tokens: 65536}
   reviewers:   # 依次复核：豆包只看通过机械校验和 deepseek 的对（两家都要通过，结果不变）
     - {model: deepseek-v4-pro-ga-260813, temperature: 0.0}
     - {model: doubao-seed-2-1-pro-260915, temperature: 0.0, max_tokens: 32768}
