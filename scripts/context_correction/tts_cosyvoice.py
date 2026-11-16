@@ -29,7 +29,7 @@ import yaml
 
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
-from tts import SR, assign_voices, read_jsonl, stable_int  # noqa: E402
+from tts import SR, assign_voices, read_jsonl, stable_int
 
 PROMPT_PREFIX = "You are a helpful assistant.<|endofprompt|>"  # CosyVoice3's zero-shot prompt format
 TURN_PAUSE_SECONDS = 0.4
