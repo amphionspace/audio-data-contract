@@ -722,15 +722,15 @@ TAL 英语语音识别数据
 
 ### voxpopuli_en
 
-VoxPopuli 英语欧洲议会发言（评测划分）
+VoxPopuli 英语欧洲议会发言
 
 语言：en · 任务：语音识别
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
-| [voxpopuli_en@hf-42f01879c780](../../catalog/voxpopuli_en.yaml#L1) | 9.9 | 已登记 | 没有 |
+| [voxpopuli_en@hf-42f01879c780](../../catalog/voxpopuli_en.yaml#L1) | 532.5 | 已登记 | 没有 |
 
-- `voxpopuli_en@hf-42f01879c780`：VoxPopuli 人工转写 ASR 数据的英语 test 和 validation（HF parquet 转换版，音频以 16 kHz WAV 字节存在 parquet 内）： 2009–2020 年欧洲议会全会的现场发言，不少议员以英语为外语，口音多样，以即席或半即席讲话为主，男声约占 73%。 test 1,842 条、286 人、4.9 小时；validation 1,753 条、71 人、5.0 小时；全部标为 gold transcript。raw_text 为空的 有 test 52 条、validation 58 条，这些行只有 normalized_text，评测时需回退到规范化文本。train（30 个 parquet、约 97 GB、 543 小时）未下载，Granary v2（已登记）也含这部分。与已有 voxpopuli_fr/de 取自同一 HF 修订。CC0
+- `voxpopuli_en@hf-42f01879c780`：VoxPopuli 人工转写 ASR 数据的英语全部划分（HF parquet 转换版，音频以 16 kHz WAV 字节存在 parquet 内）： 2009–2020 年欧洲议会全会的现场发言，不少议员以英语为外语，口音多样，以即席或半即席讲话为主，train 中男声约占 57%（按条数）。 train 182,482 条、639 人、522.6 小时；test 1,842 条、286 人、4.9 小时；validation 1,753 条、71 人、5.0 小时；全部标为 gold transcript。raw_text 为空的有 train 5,463 条、test 52 条、validation 58 条，这些行只有 normalized_text，使用时需回退到 规范化文本。Granary v2（已登记）也含 train 这部分。与已有 voxpopuli_fr/de 取自同一 HF 修订。CC0
 
 ## 中文及粤语数据
 
