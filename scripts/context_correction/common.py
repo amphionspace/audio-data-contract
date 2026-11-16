@@ -166,6 +166,5 @@ def parse_json_reply(text: str):
     starts = [i for i in (body.find("["), body.find("{")) if i >= 0]
     if not starts:
         raise ValueError(f"no JSON in reply: {text[:120]}")
-    start = min(starts)
-    end = max(body.rfind("]"), body.rfind("}"))
-    return json.loads(body[start:end + 1])
+    # the first complete JSON value; some models append remarks (which may contain brackets) after it
+    return json.JSONDecoder().raw_decode(body, min(starts))[0]

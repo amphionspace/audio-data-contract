@@ -1,0 +1,74 @@
+# 上下文纠偏评测集 v2 · 合成独立组（context_correction_zh@v2-20261116，split synthetic_indep / synthetic_indep_ts）。
+# 与训练数据（context_correction_synth_zh@train-v1-20261114）和 v1 合成题刻意错开：
+# - 出题 kimi-k3.1-pro、复核 glm-5.3 + deepseek-v4-pro（两家都要通过）、盲解 qwen3.6-plus（不参与出题和复核），
+#   训练数据是 qwen3.6-plus 出题、deepseek-v4-pro 复核；
+# - 出题提示 v2（prompts.GENERATOR_SYSTEM_V2）重写，例句不用训练提示里的说法；
+# - 新增训练里没有的题型（专名指代、字义说明、逐字说明、对话问答），隐式语义训练里也没有；
+# - 场景换成训练没用过的（三分之一是客户相关的警务、政务场景，换新说法）；
+# - CosyVoice3 朗读（训练是 Qwen3-TTS），音色来自训练没用过的说话人。
+# 成对设计、标记格式、机械校验和音频质检同 v1（recipe.yaml），打分不变（AmphionEval context_correction）。
+version: v2-20261116
+dataset_id: context_correction_zh
+seed: 20261116
+sample_rate: 16000
+prompts: v2
+
+llm:
+  base_url: https://dashscope.aliyuncs.com/compatible-mode/v1
+  api_key_env: ALI_API_KEY          # amphionkeys aliyun-llm
+  generator: {model: kimi-k3.1-pro, temperature: 1.0}
+  reviewers:   # 依次复核：glm 只看通过机械校验和 deepseek 的对（两家都要通过，结果不变；glm 每次约 2 分钟、8.7k token）
+    - {model: deepseek-v4-pro, temperature: 0.0}
+    - {model: glm-5.3, temperature: 0.0, max_tokens: 65536}   # 试跑时 80 次里 18 次思考用完 16000 token
+  # 开思考：试跑时不开思考的解题模型常忽略已经说清的说明（"健用健康的那个健"仍写"建"），会误杀好题
+  solver: {model: qwen3.6-plus, extra_body: {enable_thinking: true}, temperature: 0.0}
+  workers: 32
+
+han_chars: [30, 140]
+max_seconds: 29.5
+ts_max_seconds: 26.5
+pairs_per_call: 5
+# 试跑（20 次调用、100 对）文本收录 63%，音频质检按 v1 的 89% 估，2 倍够用；隐式 53%，取 2.5 倍。不够时按 v1 的办法补出。
+overprovision: 2.0
+
+# 前 6 个是客户相关的警务、政务场景（训练用的是 警务笔录 / 报警电话 / 派出所户籍窗口），其余是训练没用过的场景。均匀抽样，约三分之一是前者。
+scenarios: [交通事故现场询问, 社区民警入户走访, 出入境证件办理, 法院立案窗口, 消防安全检查登记, 警情回访电话,
+            电台点歌节目, 直播带货, 课堂点名, 导游讲解, 婚礼主持, 求职面试, 酒店前台入住, 新闻采访, 社区广播通知,
+            车载语音导航, 餐厅订座电话, 体检中心登记]
+entity_types: {人名: 0.5, 地名或路名: 0.2, 单位或店名: 0.15, 商品或品牌: 0.15}
+positions: {after: 0.8, before: 0.2}
+distances: {adjacent: 0.4, near: 0.35, far: 0.25}
+
+categories:
+  explicit:
+    description: 显式说明。前四个是训练有的机制（换说法），后四个是训练没有的题型
+    subtypes: {组词: 100, 拆字: 100, 偏旁结构: 100, 否定对比: 100, 专名指代: 150, 字义说明: 150, 逐字说明: 150, 对话问答: 150}
+    protected_rate: 0.3
+  consistency:
+    description: 同名一致性
+    subtypes: {同名一致性: 100}
+    protected_rate: 0.3
+  implicit:
+    description: 隐式语义（训练里没有这一类）
+    subtypes: {隐式语义: 200}
+    protected_rate: 0.0
+    overprovision: 2.5
+
+# 训练没用过的说话人：aidatatang 整套不在 AmphionASR 配方里；其余取测试划分（训练只用这些语料的训练划分）。
+# 每人两句：一句做 CosyVoice3 克隆提示，一句做 TS 注册音频。
+voices:
+  prompt_seconds: [4.0, 10.0]
+  prompt_min_chars: 12
+  sources:
+    - {dataset: aidatatang, version: legacy-20260804, split: train, n: 50}      # 手机朗读
+    - {dataset: aishell, version: legacy-20260804, split: test, n: 20}          # 棚内朗读
+    - {dataset: magicdata, version: legacy-20260804, split: test, n: 20}        # 手机朗读
+    - {dataset: thchs30, version: legacy-20260804, split: test, n: 10}          # 棚内朗读（MagicData-RAMC 是长对话录音，voices.py 只收整句录音，取不到提示句）
+tts:
+  backend: cosyvoice3
+  model: /workspace/model/Fun-CosyVoice3-0.5B-2512
+  code: /workspace/workspace/mingdong/repo/CosyVoice    # FunAudioLLM/CosyVoice @ 074ca6d
+  language: Chinese
+qc:
+  model: /workspace/model/SenseVoiceSmall     # 不参与评测的质检 ASR；不用 Qwen3-ASR（与被测模型同底座）
+  max_pinyin_error: 0.10
