@@ -100,3 +100,8 @@ tts:
 qc:
   model: /workspace/model/SenseVoiceSmall     # 不参与评测的质检 ASR；不用 Qwen3-ASR（与被测模型同底座）
   max_pinyin_error: 0.10
+
+# 抽检（每个子类随机 20 对，source/v2-20261116/spotcheck/）确认有错的对，选题时隔离
+excluded_pairs:
+  explicit-拆字-0009-4: 常用和少见写法给反了（读 xīn yuán 时“新源”才常用）
+  implicit-隐式语义-0099-3: confirm 的“法制讲座”写成“法治讲座”同样成立，答案不唯一

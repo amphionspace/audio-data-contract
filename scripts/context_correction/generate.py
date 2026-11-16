@@ -341,6 +341,8 @@ def cmd_select(recipe: dict, out: Path) -> None:
     items, quarantine = [], []
     for pair in pairs:
         issues = mechanical_issues(pair, recipe) + review_issues(pair, reviews.get(pair["pair_id"], {}), models)
+        if pair["pair_id"] in recipe.get("excluded_pairs", {}):  # confirmed wrong by the spot check
+            issues.append(f"spot check: {recipe['excluded_pairs'][pair['pair_id']]}")
         for kind in ("correct", "confirm"):
             result = solved.get(f"{pair['pair_id']}-{kind}")
             if pair["category"] != "implicit":
