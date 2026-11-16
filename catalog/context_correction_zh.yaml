@@ -105,3 +105,111 @@
     - aishell3@legacy-20260804 test voices
     - kespeech@legacy-20260804 test voices
     - wenetspeech_podcast@l-20261014 (mined)
+- schema_version: dataset-catalog/2.0
+  dataset_id: context_correction_zh
+  version: v2-20261116
+  languages:
+  - zh
+  tasks:
+  - asr
+  - ts_asr
+  artifacts:
+  - name: audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/context_correction_zh/versions/v2-20261116/audio-index.jsonl.gz
+    sha256: 24df95ce7f0b60b9c5213eda2e6f887e99a0a38a5d2a30422f9e89ac54da63c6
+    metadata:
+      record_count: 5715
+  - name: mined_real-records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/context_correction_zh/versions/v2-20261116/records/mined_real.jsonl.gz
+    sha256: 9a17b80293533d95c6c92e8d04f1590d25072fae65979370eb790811ad8c1b40
+    metadata:
+      record_count: 1903
+  - name: quarantine-records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/context_correction_zh/versions/v2-20261116/records/quarantine.jsonl.gz
+    sha256: f52e5fe8c69911531311eadc0714f26e87db328d67e42d92f764a4b9239dd832
+    metadata:
+      record_count: 1112
+  - name: synthetic_indep-records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/context_correction_zh/versions/v2-20261116/records/synthetic_indep.jsonl.gz
+    sha256: 0561ed1471948717fadbb58a4a0be4dca0c5e5f3be1ad5344c2a567ab8595370
+    metadata:
+      record_count: 2600
+  - name: synthetic_indep_ts-records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/context_correction_zh/versions/v2-20261116/records/synthetic_indep_ts.jsonl.gz
+    sha256: 6f22ebc4c68386808cdeda27b74659c100198bf129acd9ac72ef26d7ca717af5
+    metadata:
+      record_count: 2140
+  splits:
+    mined_real:
+      artifacts:
+        records:
+        - mined_real-records
+        audio_index:
+        - audio-index
+      task: asr
+      statistics:
+        records: 1903
+        duration_hours: 10.6859
+        duration_basis: recognized clip (mixture for ts_asr)
+      provenance:
+        description: 从真实语料挖掘的录音：LLM 扫描、两个 LLM 各自写出按上下文修正的转写且一致、只改写法不改读音
+    quarantine:
+      artifacts:
+        records:
+        - quarantine-records
+        audio_index:
+        - audio-index
+      task: asr
+      statistics:
+        records: 1112
+        duration_hours: 7.0206
+        duration_basis: recognized clip (mixture for ts_asr)
+      provenance:
+        description: 有音频但未通过质检（读错、说明没听清、超长）或抽检认定答案不可靠的条目，保留原因，不参与打分
+    synthetic_indep:
+      artifacts:
+        records:
+        - synthetic_indep-records
+        audio_index:
+        - audio-index
+      task: asr
+      statistics:
+        records: 2600
+        duration_hours: 12.82
+        duration_basis: recognized clip (mixture for ts_asr)
+      provenance:
+        description: 独立合成题：出题和复核模型、说法、题型、场景、TTS、音色都不与训练数据重合；成对，两条都通过质检才收录
+    synthetic_indep_ts:
+      artifacts:
+        records:
+        - synthetic_indep_ts-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 2140
+        duration_hours: 9.9241
+        duration_basis: recognized clip (mixture for ts_asr)
+      provenance:
+        description: 同一批独立合成题中不超过 TS 时长上限的单人题，配被克隆说话人的另一条真实语句作注册音频
+  provenance:
+    status: complete
+    synthetic: partial
+    description: 上下文纠偏评测集 v2 的新增部分，只用于评测，不进训练；与 v1（v1-20261018）的拆分一起组成评测集。 synthetic_indep：kimi-k3.1-pro 出题，deepseek-v4-pro 和 doubao-seed-2.1-pro 依次复核（都通过才收录）， glm-5.2 只看文字盲解隐式题；出题提示、题型（新增专名指代、字义说明、逐字说明、对话问答）、场景、 TTS（CosyVoice3）和音色（aidatatang 及 AISHELL-1、MAGICDATA、THCHS-30 测试划分）都不与训练数据重合。 mined_real：从原版 Emilia-ZH 挖掘的真实录音，本地 Qwen3.6-27B 扫描和预筛，doubao-seed-2.1-pro 与 deepseek-v4-pro 各自标注且一致才收录。两组都用 SenseVoiceSmall 与 FireRedASR2-AED 做拼音级质检（任一家全对即过）， 抽检认定答案不可靠的条目隔离。每条带与训练数据重合的 seen / unseen 标记。 生成脚本 scripts/context_correction/。
+    sources:
+    - LLM-generated scripts (Volcengine Ark)
+    - aidatatang@legacy-20260804 voices
+    - aishell@legacy-20260804 test voices
+    - magicdata@legacy-20260804 test voices
+    - thchs30@legacy-20260804 test voices
+    - emilia_zh@punc-written-v1-20261109 (mined)
