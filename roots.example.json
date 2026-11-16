@@ -159,5 +159,6 @@
   "voxpopuli_en": "/workspace/data/datasets/voxpopuli_en",
   "earnings25": "/workspace/data/datasets/earnings25",
   "easycom": "/workspace/data/datasets/easycom",
-  "police_robust_monitor": "/workspace/data/datasets/police_robust_monitor"
+  "police_robust_monitor": "/workspace/data/datasets/police_robust_monitor",
+  "spgispeech2": "/workspace/data/datasets/spgispeech2"
 }

@@ -2,7 +2,8 @@
     dataset_id: worldspeech
     version: hf-b76b85395039
     languages:
-      - multi
+      - zh
+      - en
     tasks:
       - asr
     aliases: []
@@ -11,29 +12,225 @@
         kind: hf-dataset-snapshot
         root_alias: worldspeech
         relative_path: source/hf-b76b85395039
+        metadata:
+          file_count: 1133
+          expected_bytes: 195607375777
+          tree_sha256: cc0f4b9590631abf349e0ecc3f27582b97d9e52fbbf919604e26e2ec369ad3d1
+      - name: download_state
+        kind: dataset-state
+        root_alias: worldspeech
+        relative_path: versions/hf-b76b85395039/download_state/state.json
+        expected_bytes: 1011
+        sha256: 258bb22d01fb5a244d28974276879a1c7af2b43007b2cdcb23fe1e6d35343e83
     splits:
-      all:
+      zh_tw_train:
         artifacts:
           source:
             - source
+        statistics:
+          count: 333283
+          duration_hours: 1370.1853
+          duration_basis: soundfile header duration of every embedded Ogg Opus clip in data/zh_tw/train-*.parquet; 350 truncated clips that do not decode are counted but carry no duration; includes 31791 exact duplicate rows (135.1139 h, identical audio and text); pinned upstream file hashes verified
+          sample_formats:
+            1ch/24000Hz/OPUS: 178770
+            2ch/24000Hz/OPUS: 154163
+      zh_tw_test:
+        artifacts:
+          source:
+            - source
+        statistics:
+          count: 17921
+          duration_hours: 73.6855
+          duration_basis: soundfile header duration of every embedded Ogg Opus clip in data/zh_tw/test-*.parquet; 17 truncated clips that do not decode are counted but carry no duration; includes 1674 exact duplicate rows (7.097 h, identical audio and text); pinned upstream file hashes verified
+          sample_formats:
+            1ch/24000Hz/OPUS: 9786
+            2ch/24000Hz/OPUS: 8118
+      en_us_train:
+        artifacts:
+          source:
+            - source
+        statistics:
+          count: 666718
+          duration_hours: 3525.4702
+          duration_basis: soundfile header duration of every embedded Ogg Opus clip in data/en_us/train-*.parquet; pinned upstream file hashes verified
+          sample_formats:
+            1ch/24000Hz/OPUS: 666718
+      en_us_test:
+        artifacts:
+          source:
+            - source
+        statistics:
+          count: 35336
+          duration_hours: 186.6389
+          duration_basis: soundfile header duration of every embedded Ogg Opus clip in data/en_us/test-*.parquet; pinned upstream file hashes verified
+          sample_formats:
+            1ch/24000Hz/OPUS: 35336
+      en_au_train:
+        artifacts:
+          source:
+            - source
+        statistics:
+          count: 73840
+          duration_hours: 540.0058
+          duration_basis: soundfile header duration of every embedded Ogg Opus clip in data/en_au/train-*.parquet; pinned upstream file hashes verified
+          sample_formats:
+            2ch/24000Hz/OPUS: 73840
+      en_au_test:
+        artifacts:
+          source:
+            - source
+        statistics:
+          count: 3880
+          duration_hours: 28.3772
+          duration_basis: soundfile header duration of every embedded Ogg Opus clip in data/en_au/test-*.parquet; pinned upstream file hashes verified
+          sample_formats:
+            2ch/24000Hz/OPUS: 3880
+      en_nz_train:
+        artifacts:
+          source:
+            - source
+        statistics:
+          count: 57992
+          duration_hours: 413.7337
+          duration_basis: soundfile header duration of every embedded Ogg Opus clip in data/en_nz/train-*.parquet; pinned upstream file hashes verified
+          sample_formats:
+            2ch/24000Hz/OPUS: 57992
+      en_nz_test:
+        artifacts:
+          source:
+            - source
+        statistics:
+          count: 3074
+          duration_hours: 22.0106
+          duration_basis: soundfile header duration of every embedded Ogg Opus clip in data/en_nz/test-*.parquet; pinned upstream file hashes verified
+          sample_formats:
+            2ch/24000Hz/OPUS: 3074
+      en_zm_train:
+        artifacts:
+          source:
+            - source
+        statistics:
+          count: 67068
+          duration_hours: 276.8171
+          duration_basis: soundfile header duration of every embedded Ogg Opus clip in data/en_zm/train-*.parquet; 4 truncated clips that do not decode are counted but carry no duration; pinned upstream file hashes verified
+          sample_formats:
+            2ch/24000Hz/OPUS: 67064
+      en_zm_test:
+        artifacts:
+          source:
+            - source
+        statistics:
+          count: 3527
+          duration_hours: 14.5077
+          duration_basis: soundfile header duration of every embedded Ogg Opus clip in data/en_zm/test-*.parquet; pinned upstream file hashes verified
+          sample_formats:
+            2ch/24000Hz/OPUS: 3527
+      en_ke_train:
+        artifacts:
+          source:
+            - source
+        statistics:
+          count: 39324
+          duration_hours: 162.342
+          duration_basis: soundfile header duration of every embedded Ogg Opus clip in data/en_ke/train-*.parquet; pinned upstream file hashes verified
+          sample_formats:
+            2ch/24000Hz/OPUS: 39324
+      en_ke_test:
+        artifacts:
+          source:
+            - source
+        statistics:
+          count: 1822
+          duration_hours: 7.5459
+          duration_basis: soundfile header duration of every embedded Ogg Opus clip in data/en_ke/test-*.parquet; pinned upstream file hashes verified
+          sample_formats:
+            2ch/24000Hz/OPUS: 1822
+      en_sl_train:
+        artifacts:
+          source:
+            - source
+        statistics:
+          count: 23547
+          duration_hours: 97.2463
+          duration_basis: soundfile header duration of every embedded Ogg Opus clip in data/en_sl/train-*.parquet; 2 truncated clips that do not decode are counted but carry no duration; pinned upstream file hashes verified
+          sample_formats:
+            2ch/24000Hz/OPUS: 23545
+      en_sl_test:
+        artifacts:
+          source:
+            - source
+        statistics:
+          count: 1239
+          duration_hours: 5.0853
+          duration_basis: soundfile header duration of every embedded Ogg Opus clip in data/en_sl/test-*.parquet; pinned upstream file hashes verified
+          sample_formats:
+            2ch/24000Hz/OPUS: 1239
+      en_jm_train:
+        artifacts:
+          source:
+            - source
+        statistics:
+          count: 2211
+          duration_hours: 9.0904
+          duration_basis: soundfile header duration of every embedded Ogg Opus clip in data/en_jm/train-*.parquet; 1 truncated clips that do not decode are counted but carry no duration; pinned upstream file hashes verified
+          sample_formats:
+            2ch/24000Hz/OPUS: 2210
+      en_jm_test:
+        artifacts:
+          source:
+            - source
+        statistics:
+          count: 117
+          duration_hours: 0.4816
+          duration_basis: soundfile header duration of every embedded Ogg Opus clip in data/en_jm/test-*.parquet; pinned upstream file hashes verified
+          sample_formats:
+            2ch/24000Hz/OPUS: 117
+      en_pk_train:
+        artifacts:
+          source:
+            - source
+        statistics:
+          count: 4486
+          duration_hours: 8.0509
+          duration_basis: soundfile header duration of every embedded Ogg Opus clip in data/en_pk/train-*.parquet; pinned upstream file hashes verified
+          sample_formats:
+            1ch/24000Hz/OPUS: 4486
+      en_pk_test:
+        artifacts:
+          source:
+            - source
+        statistics:
+          count: 237
+          duration_hours: 0.3954
+          duration_basis: soundfile header duration of every embedded Ogg Opus clip in data/en_pk/test-*.parquet; pinned upstream file hashes verified
+          sample_formats:
+            1ch/24000Hz/OPUS: 237
     provenance:
-      summary: 88 种语言议会与广播人工转写语音（WorldSpeech）
+      summary: 台湾立法院与英语国家议会语音（WorldSpeech）
       source: Hugging Face
       source_id: disco-eth/WorldSpeech
       revision: b76b85395039f50332fbc421f7c098ee2f2653d7
       url: https://huggingface.co/datasets/disco-eth/WorldSpeech
       paper: https://arxiv.org/abs/2605.09167
+      download_mirror: https://hf-mirror.com
       release_date: '2026-04-28'
       license:
         - cc-by-nc-4.0
-      inventory_status: download_planned
       description: >-
-        ETH Zurich 2026 年发布（NeurIPS 2026），65,072 小时、88 种语言 127 个语言地区变体，来自各国议会、公共广播（VOA、RFA、
-        All India Radio 等）、LibriVox 有声书和联合国等机构，多为正式、事先准备的讲话。文本是人工转写，用 ASR 对齐切段，
-        每段带 CER、WADA-SNR、DNSMOS。与本项目相关语种约：zh（台湾）1,482 h、yue（香港）1,944 h、en 5,312 h、es 6,792 h、
-        pt（巴西）1,764 h、ja 1,387 h、ko 1,454 h、ar 约 1,001 h、de 1,907 h、fr 约 6,029 h（主要是加拿大法语）、ru 1,537 h、
-        hi 1,707 h。音频为 24 kHz OGG Opus，按 data/<语言_国家>/ 分 train、test。5 个 RFA 配置（含 vn_vi）只有元数据和
-        source_url，需自行下载。整体 CC BY-NC 4.0，各来源条款更严时以来源为准，不能商用。
-      download_scope: Complete WorldSpeech release (all 127 configurations, train and test Parquet)
-      expected_download_files: 14238
-      expected_download_bytes: 1716577687460
+        ETH Zurich 2026 年发布（NeurIPS 2026），全集 65,072 小时、88 种语言，来自各国议会、公共广播等机构的正式讲话；文本取自
+        人工转写的会议记录，用 ASR 对齐切段，每段带 CER（对 ASR 结果）、WADA-SNR、DNSMOS，发布时已滤到 CER ≤ 0.30。本地只下了
+        与本项目相关的 9 个配置，共 6,741.7 小时：zh_tw 台湾立法院 IVOD 1,443.9 h；英语 8 个议会 5,297.7 h，即美国众议院
+        3,712.1 h、澳大利亚 568.4 h、新西兰 435.7 h、赞比亚 291.3 h、肯尼亚 169.9 h、塞拉利昂 102.3 h、牙买加 9.6 h、
+        巴基斯坦旁遮普省 8.4 h。24 kHz Ogg Opus，en_us 和 en_pk 为单声道，其余英语为双声道，zh_tw 两者约各半。没有说话人标签。
+        CER 中位数：美澳新牙约 0.06–0.07，塞拉利昂、赞比亚、肯尼亚 0.14–0.18，巴基斯坦 0.21，zh_tw 0.22，后几者文本与语音
+        出入较大。已知问题：zh_tw 有完全重复的行（音频和文本都相同），train 31,791 行（135.1 h）、test 1,674 行（7.1 h），
+        language 字段混用 zh 和 Mandarin Chinese (Taiwan) 两种写法；zh_tw 367 行、英语 7 行音频被截断（标称 20 s，实际只有
+        1–8 KB，无法解码），统计时长时不计；en_au、en_nz 的 segment_id 不唯一（不同音频共用编号）。各配置 test 的源录音
+        几乎都也出现在 train 中（zh_tw 9,406 个中有 9,196 个），是按片段而不是按会话划分，不能当独立评测集。yue_hk 与已登记的
+        legco_speech 同源，没有下载；es、pt 由另一条工作线处理，其余语种不在范围内。CC BY-NC 4.0，不能商用，各来源条款更严时
+        以来源为准。
+      download_scope: WorldSpeech zh_tw and the eight English configurations (en_us, en_au, en_nz, en_zm, en_ke, en_sl, en_jm, en_pk), train and test Parquet, plus README
+      expected_download_files: 1133
+      expected_download_bytes: 195607375777
+      integrity: verified
+      local_scan_date: '2026-11-16'

@@ -1,6 +1,6 @@
 # 数据总览
 
-当前登记 **267 个数据集**；另有 **35 个下载来源声明**和 **1 个训练混合配方**。登记不代表本机文件已齐备。
+当前登记 **270 个数据集**；另有 **33 个下载来源声明**和 **1 个训练混合配方**。登记不代表本机文件已齐备。
 
 时长取单个版本的最大值，不跨版本相加；≈ 为参考表或估算值，— 为暂无完整时长。各版本的时长、说明、COS 地址和质量证据见[版本明细](data-versions.md)。
 
@@ -38,6 +38,7 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [earnings21](data-versions.md#earnings21) | en | 语音识别、带说话人标注的语音识别 | 39.3 | 英文上市公司财报电话会议（Earnings-21） | 没有 |
 | [earnings22](data-versions.md#earnings22) | en | 语音识别、带说话人标注的语音识别 | 119.9 | 多国口音英文财报电话会议（Earnings-22） | 没有 |
 | [earnings25](data-versions.md#earnings25) | en | 语音识别、带说话人标注的语音识别 | 543.8 | 美股财报电话会议英语（Earnings25） | 没有 |
+| [easycom](data-versions.md#easycom) | en | 语音识别、带说话人标注的语音识别 | 6.6 | AR 眼镜嘈杂餐厅多人对话（EasyCom） | 没有 |
 | [edacc](data-versions.md#edacc) | en | 语音识别、带说话人标注的语音识别 | 35.6 | 多国口音英语自然对话（EdAcc） | 没有 |
 | [emilia_en](data-versions.md#emilia_en) | en | 语音识别 | 43,624.0 | Emilia 英语野外语音（已清洗） | 快照 20260914 |
 | [emotion1200_en](data-versions.md#emotion1200_en) | en | 说话人情感分类、情感与说话风格描述、语音情感识别 | 5.2 | 英文情感识别与描述评测（Emotion1200） | 快照 20260914 |
@@ -68,6 +69,7 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [sbcsae](data-versions.md#sbcsae) | en | 语音识别、带说话人标注的语音识别 | 23.3 | 美式英语自然口语对话（SBCSAE） | 没有 |
 | [singapore_english](data-versions.md#singapore_english) | en | 语音识别 | 3.9 | 新加坡口音英语（Hugging Face 来源） | 快照 20260914 |
 | [singaporean](data-versions.md#singaporean) | en | 语音识别 | ≈0.2 | 新加坡口音英语小样本 | 快照 20260914、`备份桶:audio-data-contract/datasets/singaporean/` |
+| [spgispeech2](data-versions.md#spgispeech2) | en | 语音识别、带说话人标注的语音识别 | 3,649.2 | 财报电话会议多说话人英语（SPGISpeech 2.0） | 没有 |
 | [tal100_en](data-versions.md#tal100_en) | en | 语音识别 | 4.8 | TAL 英语语音识别数据 | 快照 20260914、`备份桶:audio-data-contract/datasets/tal100_en/` |
 | [uwb_atcc](data-versions.md#uwb_atcc) | en | 语音识别 | 13.0 | 捷克空域真实空管通话英语（UWB-ATCC） | 没有 |
 | [vctk](data-versions.md#vctk) | en | 语音识别、语音合成 | 82.7 | 多口音英语朗读（VCTK） | `TTS 桶:VCTK/`（原始数据） |
@@ -217,6 +219,7 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [tts_crosslingual_enroll](data-versions.md#tts_crosslingual_enroll) | en、zh | 目标说话人语音识别 | — | TS-ASR 训练用跨语言 TTS 注册音频 | 没有 |
 | [vitw](data-versions.md#vitw) | en、zh | 语音识别 | 1,085.4 | 真实场景中英语音（VITW）；含回声、远场等评测 | 部分版本：快照 20260914、`备份桶:audio-data-contract/datasets/` 下 17 个目录 |
 | [waxal-asr](data-versions.md#waxal-asr) | ach、aka、am、dag、dga、ee、ff、kpo、lg、ln、mas、mg、nyn、om、sid、sn、sog、ti、wal | 语音识别 | — | 19 种非洲语言语音（WAXAL） | 快照 20260914 |
+| [worldspeech](data-versions.md#worldspeech) | en、zh | 语音识别 | 6,741.7 | 台湾立法院与英语国家议会语音（WorldSpeech） | 没有 |
 | [wutheringwaves](data-versions.md#wutheringwaves) | en、ja、ko、zh | 语音合成 | 134.8 | 《鸣潮》多语配音，TTS 用 | `TTS 桶:WutheringWaves-2.2/`（原始数据） |
 | [yodas_granary_es_pt](data-versions.md#yodas_granary_es_pt) | es、pt | 语音识别 | 3,658.5 | YouTube 西语/葡语人工字幕语音（YODAS） | 部分版本：快照 20260914 |
 | [zenless_voice](data-versions.md#zenless_voice) | en、ja、ko、zh | 语音合成 | 554.4 | 《绝区零》多语配音，TTS 用 | `TTS 桶:zenless-voice/`（原始数据） |
@@ -326,7 +329,6 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [dataset_et_amharic](../../catalog/dataset_et_amharic.yaml#L1) | hf-4861d6445842 | am | 语音识别 |
 | [dialogs_ru](../../catalog/dialogs_ru.yaml#L1) | hf-a74ff44d8d27 | ru | 语音合成 |
 | [duplexconv](../../catalog/duplexconv.yaml#L1) | hf-0bb99da7ab7a | zh | 语音识别、说话人分段与归属、带说话人标注的语音识别 |
-| [easycom](../../catalog/easycom.yaml#L1) | github-v1.0.0 | en | 语音识别、带说话人标注的语音识别 |
 | [eurospeech](../../catalog/eurospeech.yaml#L1) | hf-7a55bbcee393 | multi | 语音识别 |
 | [gigaspeech2](../../catalog/download_queue.yaml#L165) | hf-8dc0d0e502b7 | id、th、vi | 语音识别 |
 | [gigaspeech3](../../catalog/gigaspeech3.yaml#L1) | hf-4e7b87a9df60 | ar | 语音识别 |
@@ -345,7 +347,6 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [smiip_tv](../../catalog/smiip_tv.yaml#L1) | openslr-156 | zh | 声纹验证 |
 | [tagarela](../../catalog/tagarela.yaml#L1) | hf-a66648fc4938 | pt | 语音识别、语音合成 |
 | [waxal_tts](../../catalog/waxal_tts.yaml#L1) | hf-5f4d8ca24f2b | ach、bau、ewe、fat、ful、hau、ibo、kik、lug、luo、nyn、pcm、swa、twi、yor | 语音合成 |
-| [worldspeech](../../catalog/worldspeech.yaml#L1) | hf-b76b85395039 | multi | 语音识别 |
 | [yo_cpt_kk](../../catalog/yo_cpt.yaml#L41) | hf-a8c2d1a23de4 | kk | 语音合成、语音识别 |
 | [yo_cpt_ru](../../catalog/yo_cpt.yaml#L1) | hf-f2f92c5ecf6b | ru | 语音合成、语音识别 |
 | [yodas3](../../catalog/yodas3.yaml#L1) | hf-81d802f45a1c | multi | 语音识别 |

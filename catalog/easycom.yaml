@@ -12,11 +12,40 @@
       kind: source-directory
       root_alias: easycom
       relative_path: source/github-v1.0.0
+      metadata:
+        file_count: 33
+        expected_bytes: 70804612309
+        tree_sha256: a26cfc0f3056159e5e9f22efe59c1d678ccc448161bee5805ff48619f723e3b9
+    - name: download_state
+      kind: dataset-state
+      root_alias: easycom
+      relative_path: versions/github-v1.0.0/download_state/state.json
+      expected_bytes: 930
+      sha256: 330085f91fe2111f65b9b3fee0bc42b1f8717702c5d68f41314858870c2aa5b1
   splits:
-    all:
+    main:
       artifacts:
         source:
           - source
+      statistics:
+        count: 323
+        segments: 6981
+        duration_hours: 5.3032
+        duration_basis: WAV header duration of the 323 one-minute Main/Glasses_Microphone_Array_Audio files across 12 sessions, read by streaming the concatenated archive; the 753 Main/Close_Microphone_Audio files (one per participant headset) add 12.38 h of parallel channels; segments are transcribed utterances
+        sample_formats:
+          6ch/48000Hz/PCM_32: 323
+          1ch/48000Hz/FLOAT: 753
+    extra:
+      artifacts:
+        source:
+          - source
+      statistics:
+        count: 77
+        duration_hours: 1.2771
+        duration_basis: WAV header duration of the 77 Extra/Glasses_Microphone_Array_Audio files across 3 sessions; the 183 Extra/Close_Microphone_Audio files add 3.03 h of parallel channels; no transcriptions
+        sample_formats:
+          6ch/48000Hz/PCM_32: 77
+          1ch/48000Hz/FLOAT: 183
   provenance:
     summary: AR 眼镜嘈杂餐厅多人对话（EasyCom）
     source: GitHub release
@@ -27,14 +56,19 @@
     release_date: '2021-06-24'
     license:
       - cc-by-nc-4.0
-    inventory_status: download_planned
     description: >-
-      Meta Reality Labs 的 EasyCom：嘈杂餐厅环境下围桌进行的英语自然对话（自我介绍、点餐、游戏等任务），每场约 30 分钟，一人佩戴
-      带 6 麦克风阵列和广角摄像头的 AR 眼镜，其余参与者各戴近讲麦克风，周围有扬声器播放餐厅噪声。提供眼镜阵列多通道音频、
-      近讲音频、人工转写（带说话人和起止时间）、语音活动、头部位姿和人脸框，高质量部分共 5 小时 18 分。官方 v1.0.0 发布是
-      33 个分卷 tar.gz（约 70.8 GB，含视频，未公布哈希）；HF 上另有第三方镜像 TerryShenty/easycom-original-media-mirror，按文件
-      带 LFS sha256，只取近讲和眼镜阵列音频约 38 GB，转写在官方 Git 仓库里。时长少、体积大，先登记来源，需要远场多人对话评测时
-      再下载。CC BY-NC 4.0。
+      Meta Reality Labs 的 EasyCom：嘈杂餐厅环境下围桌进行的英语自然对话（自我介绍、点餐、游戏等任务），一人佩戴带 6 麦克风
+      阵列和广角摄像头的 AR 眼镜，其余参与者各戴近讲麦克风，周围扬声器播放餐厅噪声，有一名服务员参与。Main 是 12 场会话、
+      323 个 1 分钟片段，眼镜阵列音频共 5.30 小时（6 通道 48 kHz 32 位整型，含 2 个入耳双耳麦），近讲音频按参与者分文件
+      （753 个，单通道 48 kHz 32 位浮点，实际采样率约 48,008.6 Hz，各会话略有差异）；人工转写 6,981 句，带说话人编号
+      （每场 1–7 号，按角色或座位分配，不能跨会话当作同一人，共 52 个会话-参与者组合）、起止时间（按 20 fps 视频帧计）和说话对象，
+      转写含 [L] 笑声、[H] 犹豫、[U] 听不清等标记；另有头部位姿、人脸框、视频和参与者照片。Extra 是 3 场有小问题的会话、
+      77 个片段、1.28 小时，没有转写。官方 v1.0.0 发布是 33 个分卷 tar.gz，使用前需按顺序拼接后解压（约 70.8 GB，其中视频
+      45 GB）。15 个转写 JSON 不是合法 UTF-8，读取时需按 Latin-1 或 cp1252 解码。CC BY-NC 4.0。
     download_scope: Official v1.0.0 release (33 split tar.gz parts with audio, video, transcripts and annotations)
     expected_download_files: 33
     expected_download_bytes: 70804612309
+    download_mirror: gh-proxy.com mirror of the GitHub release assets, through the configured proxy
+    integrity: verified
+    integrity_method: no upstream hash; sizes match the GitHub release API, the first, middle and last 64 KiB of every part match the official asset, and the concatenated parts (sha256 aeed1f1219a281720506400b559d8f76aece664ead472acbc5897167e37350dc) pass a full gzip and tar read
+    local_scan_date: '2026-11-16'
