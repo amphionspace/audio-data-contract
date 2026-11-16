@@ -31,7 +31,8 @@ catalog:
     glm-5.2 只看文字盲解隐式题；出题提示、题型（新增专名指代、字义说明、逐字说明、对话问答）、场景、
     TTS（CosyVoice3）和音色（aidatatang 及 AISHELL-1、MAGICDATA、THCHS-30 测试划分）都不与训练数据重合。
     mined_real：从原版 Emilia-ZH 挖掘的真实录音，本地 Qwen3.6-27B 扫描和预筛，doubao-seed-2.1-pro 与
-    deepseek-v4-pro 各自标注且一致才收录。SenseVoiceSmall 拼音级质检。每条带与训练数据重合的 seen / unseen 标记。
+    deepseek-v4-pro 各自标注且一致才收录。两组都用 SenseVoiceSmall 与 FireRedASR2-AED 做拼音级质检（任一家全对即过），
+    抽检认定答案不可靠的条目隔离。每条带与训练数据重合的 seen / unseen 标记。
     生成脚本 scripts/context_correction/。
   sources: ["LLM-generated scripts (Volcengine Ark)", "aidatatang@legacy-20260804 voices",
             "aishell@legacy-20260804 test voices", "magicdata@legacy-20260804 test voices",

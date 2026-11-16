@@ -56,7 +56,7 @@ SPLITS = {
     "synthetic_indep": ("asr", "独立合成题：出题和复核模型、说法、题型、场景、TTS、音色都不与训练数据重合；成对，两条都通过质检才收录"),
     "synthetic_indep_ts": ("ts_asr", "同一批独立合成题中不超过 TS 时长上限的单人题，配被克隆说话人的另一条真实语句作注册音频"),
     "mined_real": ("asr", "从真实语料挖掘的录音：LLM 扫描、两个 LLM 各自写出按上下文修正的转写且一致、只改写法不改读音"),
-    "quarantine": ("asr", "有音频但未通过质检的条目（读错、说明没听清、超长），保留原因，不参与打分"),
+    "quarantine": ("asr", "有音频但未通过质检（读错、说明没听清、超长）或抽检认定答案不可靠的条目，保留原因，不参与打分"),
 }
 
 
@@ -123,7 +123,8 @@ def main():
     recipe = yaml.safe_load(args.recipe.read_text())
     version, dataset_id = recipe["version"], recipe["dataset_id"]
     version_dir = DATA_ROOT / "datasets" / dataset_id / "versions" / version
-    if version_dir.exists():
+    # the placeholder state.json written when the version is opened may already be there
+    if version_dir.exists() and any(p.name != "state.json" for p in version_dir.iterdir()):
         raise FileExistsError(f"refusing to replace registered version: {version_dir}")
     source = args.source
     synthetic = recipe.get("synthetic_split", "synthetic")
