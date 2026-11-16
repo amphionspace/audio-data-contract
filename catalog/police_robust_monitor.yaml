@@ -1,0 +1,177 @@
+- schema_version: dataset-catalog/2.0
+  dataset_id: police_robust_monitor
+  version: eval-20261113
+  languages:
+  - zh
+  tasks:
+  - asr
+  aliases: []
+  derived_from: police_robust_monitor@icefall-20260908
+  artifacts:
+  - name: audio-index
+    kind: audio-index
+    root_alias: police_robust_monitor
+    relative_path: versions/eval-20261113/audio-index.jsonl.gz
+    sha256: f89715903e0a44099170274946319988e0a766f353d8f3eb1f1aaaa09baa6a33
+    metadata:
+      record_count: 480
+  - name: clean-records
+    kind: audio-records
+    root_alias: police_robust_monitor
+    relative_path: versions/eval-20261113/records/clean.jsonl.gz
+    sha256: c52a16734335eac17ac9d22dbeed37bc9f6a4ac62852df3717efc0776fbf1b3f
+    metadata:
+      record_count: 60
+  - name: foreground_snr5-records
+    kind: audio-records
+    root_alias: police_robust_monitor
+    relative_path: versions/eval-20261113/records/foreground_snr5.jsonl.gz
+    sha256: 794d0ea8bc1603148ca51d0f92c89700ad2ef77221b511ef306fd4367498c47b
+    metadata:
+      record_count: 60
+  - name: foreground_snr0-records
+    kind: audio-records
+    root_alias: police_robust_monitor
+    relative_path: versions/eval-20261113/records/foreground_snr0.jsonl.gz
+    sha256: a91036d76406627d6b025fe9a3095abd92a7895a312fe3fb4f1d53670ae011fc
+    metadata:
+      record_count: 60
+  - name: local_gain_snr5-records
+    kind: audio-records
+    root_alias: police_robust_monitor
+    relative_path: versions/eval-20261113/records/local_gain_snr5.jsonl.gz
+    sha256: 604720cc11abf08f7801b5d76cb97a93dd9268a96564b0ff0c9347037e4a8071
+    metadata:
+      record_count: 60
+  - name: narrowband-records
+    kind: audio-records
+    root_alias: police_robust_monitor
+    relative_path: versions/eval-20261113/records/narrowband.jsonl.gz
+    sha256: 38d6c812b302b3b08dadc1a66fd80bd1c33d59958d71248efebdf625096cd36f
+    metadata:
+      record_count: 60
+  - name: eq_bandpass-records
+    kind: audio-records
+    root_alias: police_robust_monitor
+    relative_path: versions/eval-20261113/records/eq_bandpass.jsonl.gz
+    sha256: ac06004246835fa0d2bb9ff8faa735d3d71341f833889c21d998dfb076df4e8d
+    metadata:
+      record_count: 60
+  - name: rir-records
+    kind: audio-records
+    root_alias: police_robust_monitor
+    relative_path: versions/eval-20261113/records/rir.jsonl.gz
+    sha256: 96f0e5278042759d7b2a368a37d38f4c32060c1217eefc7f1d52f04a38466ef4
+    metadata:
+      record_count: 60
+  - name: clipping-records
+    kind: audio-records
+    root_alias: police_robust_monitor
+    relative_path: versions/eval-20261113/records/clipping.jsonl.gz
+    sha256: ef5b552a0c159ea17321890f1018005ed72ed11c9c75f334951e307c33aaae24
+    metadata:
+      record_count: 60
+  splits:
+    clean:
+      artifacts:
+        records:
+        - clean-records
+        audio_index:
+        - audio-index
+      group: test
+      task: asr
+      statistics:
+        records: 60
+        duration_hours: 0.2125
+        duration_basis: sum of recording durations
+    foreground_snr5:
+      artifacts:
+        records:
+        - foreground_snr5-records
+        audio_index:
+        - audio-index
+      group: test
+      task: asr
+      statistics:
+        records: 60
+        duration_hours: 0.2125
+        duration_basis: sum of recording durations
+    foreground_snr0:
+      artifacts:
+        records:
+        - foreground_snr0-records
+        audio_index:
+        - audio-index
+      group: test
+      task: asr
+      statistics:
+        records: 60
+        duration_hours: 0.2125
+        duration_basis: sum of recording durations
+    local_gain_snr5:
+      artifacts:
+        records:
+        - local_gain_snr5-records
+        audio_index:
+        - audio-index
+      group: test
+      task: asr
+      statistics:
+        records: 60
+        duration_hours: 0.2125
+        duration_basis: sum of recording durations
+    narrowband:
+      artifacts:
+        records:
+        - narrowband-records
+        audio_index:
+        - audio-index
+      group: test
+      task: asr
+      statistics:
+        records: 60
+        duration_hours: 0.2125
+        duration_basis: sum of recording durations
+    eq_bandpass:
+      artifacts:
+        records:
+        - eq_bandpass-records
+        audio_index:
+        - audio-index
+      group: test
+      task: asr
+      statistics:
+        records: 60
+        duration_hours: 0.2125
+        duration_basis: sum of recording durations
+    rir:
+      artifacts:
+        records:
+        - rir-records
+        audio_index:
+        - audio-index
+      group: test
+      task: asr
+      statistics:
+        records: 60
+        duration_hours: 0.2125
+        duration_basis: sum of recording durations
+    clipping:
+      artifacts:
+        records:
+        - clipping-records
+        audio_index:
+        - audio-index
+      group: test
+      task: asr
+      statistics:
+        records: 60
+        duration_hours: 0.2125
+        duration_basis: sum of recording durations
+  provenance:
+    summary: 警务合成测试语音的干净及 7 种退化版本，只用于评测
+    description: 警务合成语音鲁棒性监控集：60 条测试语音（police_synthetic_zh_accent@icefall-20260908 的 test、test_qwen3_tts、test_cosyvoice3 各 20 条）的干净版和 7 种退化版（foreground_snr5、foreground_snr0、local_gain_snr5、narrowband、eq_bandpass、rir、clipping），每个划分 60 条，共 480 条。内容与 icefall-20260908 逐条相同（文本、说话人、时长和音频文件都不变，音频不复制，索引指向数据集目录 source/ 下的原文件），只是改成 AudioRecord 并给每条换了不重复的 ID：<条件>-<子集>-audio-<hash>，子集为 test / test_qwen3_tts / test_cosyvoice3；原 cut ID 保留在 metadata.icefall_cut_id。icefall-20260908 的 cut ID 不含子集，每个划分 60 条只有 40 个不同 ID，按 ID 读取的评测器会报重复或丢样本。只用于评测，不进训练。
+    known_issues:
+    - 同一 hash 在 test 与 test_qwen3_tts（11 对）、test 与 test_cosyvoice3（9 对）中各出现一次：文本和说话人相同，音频不同。两条都保留，不要按 hash 或 metadata.icefall_cut_id 去重。
+    - 全部为合成语音，只经过自动质检，没有人工听审。
+    build_script: scripts/build_police_robust_monitor.py

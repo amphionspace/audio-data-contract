@@ -26,7 +26,7 @@
 
 | 内容 | 原因 |
 |---|---|
-| `police_robust_monitor` | 是 60 条 v2 test 的加噪副本，只用于监控 |
+| `police_robust_monitor` | 是 60 条 v2 test 的加噪副本，只用于监控。评测用 `eval-20261113`：内容和音频与 `icefall-20260908` 相同，每条 ID 带子集名，不再重复 |
 | 按 TTS 拆分的子集 | 与合并后的集合重复 |
 | `v5-20260830-qwen75-cosy25` | 是 v5-qc 的子集 |
 | icefall 消费版本 | 与源版本是同一批文件 |

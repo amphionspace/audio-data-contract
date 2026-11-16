@@ -157,5 +157,6 @@
   "open_clinical_conversations": "/workspace/data/datasets/open_clinical_conversations",
   "voxpopuli_en": "/workspace/data/datasets/voxpopuli_en",
   "earnings25": "/workspace/data/datasets/earnings25",
-  "easycom": "/workspace/data/datasets/easycom"
+  "easycom": "/workspace/data/datasets/easycom",
+  "police_robust_monitor": "/workspace/data/datasets/police_robust_monitor"
 }
