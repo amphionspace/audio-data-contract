@@ -28,6 +28,12 @@ under ``<out>/<source>/`` (recipe ``clean_recipe.yaml``):
     python clean.py decide --source wenetspeech_podcast
     load.sh aliyun-llm -- python clean.py rescue --source wenetspeech_podcast
     python clean.py decide --source wenetspeech_podcast   # then audio, decide, build
+
+- ``transfer``: a source with ``transfer_from`` is another version of cleaned sources (same records with
+  punctuation added, utterance metadata, a re-cleaned copy): it takes their decisions instead of a scan, with
+  texts, corrections and quotes mapped onto its own text, then goes through ``build``.
+
+    python clean.py transfer --source wenetspeech_clean   # then build
 """
 
 from __future__ import annotations
@@ -816,6 +822,12 @@ def main_duration(row: dict) -> float:
     return slot["ref"].get("duration") or 0.0
 
 
+def derived_dir(records_path: Path, version: str) -> Path:
+    """``<dataset>/versions/<version>`` beside the version holding ``records_path``, which is either
+    ``records/<split>.jsonl.gz`` or ``records_<split>.jsonl.gz`` in the version directory itself."""
+    return next(p for p in records_path.parents if p.name == "versions") / version
+
+
 def cmd_build_records(recipe, name, spec, root, decisions):
     """Derived audio-record versions (the scanned one and ``also_derive``, which share its record IDs and
     targets): corrected targets; records of quarantined targets and held-out records (``exclude_records``)
@@ -834,7 +846,7 @@ def cmd_build_records(recipe, name, spec, root, decisions):
     for target in targets:
         dataset, base = target["dataset"].split("@")
         version = f"{base}-{recipe['derived_suffix']}"
-        out = Path(next(iter(target["records"].values()))).parents[2] / version
+        out = derived_dir(Path(next(iter(target["records"].values()))), version)
         splits, removed, positive_ids = {}, [], defaultdict(list)
         for split, path in target["records"].items():
             stats, hours = Counter(), Counter()
@@ -865,7 +877,9 @@ def cmd_build_records(recipe, name, spec, root, decisions):
             write_jsonl(out / "records" / f"{split}.jsonl.gz", rows())
             splits[split] = {**stats, **{k: round(v / 3600, 3) for k, v in hours.items()}}
         scanned = {Path(p).name for p in target["records"].values()}
-        for path in sorted(Path(next(iter(target["records"].values()))).parent.glob("*.jsonl.gz")):
+        folder = Path(next(iter(target["records"].values()))).parent
+        # Only a records/ folder holds nothing but record files; a version folder also holds its audio indexes.
+        for path in sorted(folder.glob("*.jsonl.gz") if folder.name == "records" else []):
             if path.name not in scanned:  # eval/test splits are not cleaned: hard-linked unchanged
                 link = out / "records" / path.name
                 if not link.exists():
@@ -955,9 +969,233 @@ def cmd_build(recipe, name, spec, root, args):
     print(summary)
 
 
+# ---------------------------------------------------------------- transfer
+
+def kept(text: str) -> list[tuple[int, str]]:
+    """Positions and lowercased characters of ``text`` without punctuation and spaces."""
+    return [(i, ch.lower()) for i, ch in enumerate(text) if ch.isalnum()]
+
+
+def plain(text: str) -> str:
+    return "".join(ch for _, ch in kept(text or ""))
+
+
+def alignment(source: str, target: str) -> dict[int, int] | None:
+    """Character positions of ``source`` in ``target`` when the two differ only in punctuation, spaces and case."""
+    a, b = kept(source), kept(target)
+    if [ch for _, ch in a] != [ch for _, ch in b]:
+        return None
+    return {i: j for (i, _), (j, _) in zip(a, b)}
+
+
+def mapped_span(start: int, end: int, mapping: dict[int, int]) -> tuple[int, int] | None:
+    inside = [mapping[i] for i in range(start, end) if i in mapping]
+    return (inside[0], inside[-1] + 1) if inside else None
+
+
+def mapped_quote(quote: str, texts: tuple[str, ...], target: str, mapping: dict[int, int]) -> str:
+    """The quote as the target text reads it: its first occurrence in the source text (or in its corrected form,
+    which has the same length) mapped onto the target, punctuation inside the quote included."""
+    for text in texts:
+        at = text.find(quote) if text else -1
+        span = mapped_span(at, at + len(quote), mapping) if at >= 0 else None
+        if span:
+            return target[span[0]:span[1]]
+    return quote  # not found: the think stage then leaves this window think-off
+
+
+def mapped_explanations(row: dict, texts: tuple[str, ...], target: str, mapping: dict[int, int]) -> tuple[dict, dict]:
+    explanations = {k: [{**e, "evidence": mapped_quote(e["evidence"], texts, target, mapping)}
+                        if isinstance(e, dict) and e.get("evidence") else e for e in v] if v is not None else v
+                    for k, v in (row.get("explanations") or {}).items()}  # None: the judge gave no answer
+    rescue = {k: {**a, "explanations": [{**e, "evidence": mapped_quote(e["evidence"], texts, target, mapping)}
+                                        if isinstance(e, dict) and e.get("evidence") else e
+                                        for e in a.get("explanations") or []]} if isinstance(a, dict) else a
+              for k, a in (row.get("rescue") or {}).items()}
+    return explanations, rescue
+
+
+def corrected_text(source: str, corrected: str, target: str, mapping: dict[int, int]) -> str | None:
+    """The target with the source's character substitutions; None if a substituted character is not there."""
+    chars = list(target)
+    for i, (old, new) in enumerate(zip(source, corrected)):
+        if old != new:
+            if i not in mapping or chars[mapping[i]].lower() != old.lower():
+                return None
+            chars[mapping[i]] = new
+    return "".join(chars)
+
+
+def untransferable(row: dict, why: str) -> dict:
+    """A window whose text no longer matches: a correction cannot be applied, so it is quarantined; any other
+    decision keeps the label and leaves the explanation uncertain (think off)."""
+    if row["decision"] in ("corrected", "quarantine"):
+        return {**row, "decision": "quarantine", "corrected": None, "edits": [],
+                "reasons": [why] if row["decision"] == "corrected" else row["reasons"]}
+    if row["decision"] == "not_hit":
+        return row
+    return {**row, "decision": "unchanged", "corrected": None, "edits": [], "reasons": [why, *row["reasons"]]}
+
+
+def transfer_window(row: dict, segments: list[dict]) -> dict:
+    """A decided window of Lhotse segments, read from another version that names the segments alike."""
+    texts = {s["id"]: s["text"] for s in segments}
+    present = [s for s in row["segments"] if s["id"] in texts]
+    target_segments = [{"id": s["id"], "text": texts[s["id"]]} for s in present]
+    base = {**row, "segments": target_segments, "text": "，".join(s["text"] for s in target_segments),
+            "transfer": {"unit_id": row["unit_id"]}}
+    if not present:
+        return {**base, "decision": "quarantine" if row["decision"] == "quarantine" else "not_hit"}
+    maps = [alignment(s["text"], texts[s["id"]]) for s in present]
+    partial = len(present) < len(row["segments"]) or any(m is None for m in maps)
+    if partial and row["decision"] in ("corrected", "quarantine"):
+        # A correction needs every segment as judged; a quarantined window goes whole either way.
+        return untransferable(base, "transfer_text_differs")
+    # Positions of the segments that read the same (another version may have dropped or reworded a segment
+    # beside the explanation); a quote in any other segment is not found and leaves the window think-off.
+    window = {}  # source window position -> target window position
+    starts, at = {}, 0
+    for s in row["segments"]:
+        starts[s["id"]] = at
+        at += len(s["text"]) + 1
+    offset_target = 0
+    for s, m in zip(present, maps):
+        if m is not None:
+            window.update({starts[s["id"]] + i: offset_target + j for i, j in m.items()})
+        offset_target += len(texts[s["id"]]) + 1
+    target = base["text"]
+    corrected = None
+    edits = []
+    if row["decision"] == "corrected":
+        corrected = corrected_text(row["text"], row["corrected"], target, window)
+        if corrected is None:
+            return untransferable(base, "transfer_text_differs")
+        starts, at = {}, 0
+        for s in target_segments:
+            starts[s["id"]] = at
+            at += len(s["text"]) + 1
+        by_segment = dict(zip([s["id"] for s in present], maps))
+        for e in row["edits"]:
+            offset = by_segment[e["segment"]][e["offset"]]
+            edits.append({**e, "offset": offset, "pos": starts[e["segment"]] + offset})
+    explanations, rescue = mapped_explanations(row, (row["text"], row.get("corrected") or ""), target, window)
+    if partial:
+        base["reasons"] = [*row["reasons"], "transfer_partial"]
+    return {**base, "corrected": corrected, "edits": edits, "explanations": explanations,
+            **({"rescue": rescue} if "rescue" in row else {})}
+
+
+def transfer_text(row: dict, unit_id: str, target: str, segment_id: str) -> dict:
+    """A decided text (one record) read as another text that differs only in punctuation, spaces and case."""
+    mapping = alignment(row["text"], target)
+    base = {**row, "unit_id": unit_id, "text": target, "segments": [{"id": segment_id, "text": target}],
+            "transfer": {"unit_id": row["unit_id"]}}
+    corrected, edits = None, []
+    if row["decision"] == "corrected":
+        corrected = corrected_text(row["text"], row["corrected"], target, mapping)
+        if corrected is None:
+            return untransferable(base, "transfer_text_differs")
+        edits = [{**e, "segment": segment_id, "offset": mapping[e["pos"]], "pos": mapping[e["pos"]]}
+                 for e in row["edits"]]
+    explanations, rescue = mapped_explanations(row, (row["text"], row.get("corrected") or ""), target, mapping)
+    return {**base, "corrected": corrected, "edits": edits, "explanations": explanations,
+            **({"rescue": rescue} if "rescue" in row else {})}
+
+
+def target_rows(spec):
+    """(unit kind, rows): records of a records source, or supervisions of a Lhotse one, of the scanned language."""
+    if spec["kind"] == "records":
+        return (row for path in spec["records"].values() for row in gz_rows(Path(path))
+                if row.get("language") == "zh" and (row.get("target") or "").strip())
+    return (row for row in gz_rows(Path(spec["supervisions"]))
+            if (row.get("text") or "").strip() and (not spec.get("language") or row.get("language") == spec["language"]))
+
+
+def cmd_transfer(recipe, name, spec, root, args):
+    """Decisions of ``spec["transfer_from"]`` read on this version: decisions.jsonl, units.jsonl.gz and regex.jsonl
+    in the layout of a cleaned source, so that ``build`` and the think stage run unchanged."""
+    out = Path(recipe["out"])
+    by_segment = spec["kind"] == "lhotse" and all(recipe["sources"][s]["kind"] == "lhotse" for s in spec["transfer_from"])
+    decisions, candidates = [], []
+    counts = Counter()
+    excluded = excluded_recordings(recipe, name)
+    if by_segment:
+        # Windows of Lhotse sources: the same segment IDs, texts compared without punctuation.
+        segments = {}
+        wanted = set()
+        sources = []
+        for source in spec["transfer_from"]:
+            rows = read_jsonl(out / source / "decisions.jsonl")
+            regex = {r["unit_id"] for r in read_jsonl(out / source / "regex.jsonl")} - {r["unit_id"] for r in rows}
+            loose = [u for u in units(out / source) if u["unit_id"] in regex]
+            sources.append((source, rows, loose))
+            wanted |= {s["id"] for r in rows for s in r["segments"]} | {s["id"] for u in loose for s in u["segments"]}
+        for row in target_rows(spec):
+            if row["id"] in wanted:
+                segments[row["id"]] = {"id": row["id"], "text": row["text"].strip(), "recording_id": row["recording_id"]}
+        for source, rows, loose in sources:
+            for row in rows:
+                present = [segments[s["id"]] for s in row["segments"] if s["id"] in segments]
+                moved = transfer_window(row, present)
+                moved["unit_id"] = f"{name}:{row['unit_id'].split(':', 1)[1]}"
+                moved["eval_excluded"] = row["recording_id"] in excluded
+                decisions.append(moved)
+                counts[f"{row['decision']}->{moved['decision']}"] += 1
+            for unit in loose:
+                present = [{"id": s["id"], "text": segments[s["id"]]["text"]} for s in unit["segments"] if s["id"] in segments]
+                if present:
+                    candidates.append({**unit, "unit_id": f"{name}:{unit['unit_id'].split(':', 1)[1]}",
+                                       "segments": present, "text": "，".join(s["text"] for s in present)})
+    else:
+        # Decisions per distinct text: matched on the text without punctuation, spaces and case.
+        decided, loose = defaultdict(list), {}
+        for source in spec["transfer_from"]:
+            rows = read_jsonl(out / source / "decisions.jsonl")
+            for row in rows:
+                decided[plain(row["text"])].append(row)
+            regex = {r["unit_id"] for r in read_jsonl(out / source / "regex.jsonl")} - {r["unit_id"] for r in rows}
+            loose.update({plain(u["text"]): u for u in units(out / source) if u["unit_id"] in regex})
+        seen = set()
+        for row in target_rows(spec):
+            text = (row.get("target") if spec["kind"] == "records" else row.get("text")).strip()
+            if spec["kind"] == "records":  # records with the same target share one decision; supervisions do not
+                if text in seen:
+                    continue
+                seen.add(text)
+            key = plain(text)
+            if spec["kind"] == "records":
+                unit_id, segment_id = f"{name}:{sha1(text)}", f"{name}:{sha1(text)}"
+            else:  # one supervision is one record: a window of one segment
+                unit_id, segment_id = f"{name}:{row['recording_id']}:{row['id']}", row["id"]
+            if key in decided:
+                choices = decided[key]
+                if len({(c["decision"], plain(c.get("corrected") or "")) for c in choices}) > 1:
+                    moved = untransferable(transfer_text(choices[0], unit_id, text, segment_id), "transfer_conflict")
+                    if choices[0]["decision"] != "quarantine" and any(c["decision"] == "quarantine" for c in choices):
+                        moved = {**moved, "decision": "quarantine", "corrected": None, "edits": []}
+                else:
+                    moved = transfer_text(choices[0], unit_id, text, segment_id)
+                moved["recording_id"] = row.get("recording_id") or (row.get("metadata") or {}).get("recording_id")
+                moved["eval_excluded"] = moved["recording_id"] in excluded
+                if spec["kind"] == "lhotse":
+                    moved.update(start=row["start"], end=round(row["start"] + row["duration"], 3))
+                decisions.append(moved)
+                counts[f"{choices[0]['decision']}->{moved['decision']}"] += 1
+            elif key in loose:
+                candidates.append({"unit_id": unit_id, "text": text, "segments": [{"id": segment_id, "text": text}],
+                                   "recording_id": row.get("recording_id")})
+    write_jsonl(root / "decisions.jsonl", decisions)
+    write_jsonl(root / "units.jsonl.gz", candidates)
+    write_jsonl(root / "regex.jsonl", [{"unit_id": u["unit_id"], "rules": ["transfer"], "scan_flagged": False}
+                                      for u in candidates])
+    print(json.dumps({"decisions": len(decisions), "candidates": len(candidates), **dict(sorted(counts.items()))},
+                     ensure_ascii=False))
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    parser.add_argument("stage", choices=["units", "scan", "regex", "rescan", "judge", "decide", "rescue", "audio", "build"])
+    parser.add_argument("stage", choices=["units", "scan", "regex", "rescan", "judge", "decide", "rescue", "audio", "build",
+                                          "transfer"])
     parser.add_argument("--recipe", type=Path, default=HERE / "clean_recipe.yaml")
     parser.add_argument("--source", required=True)
     parser.add_argument("--base-url", help="OpenAI-compatible server: scan/rescan (default recipe llm.base_url), audio (Qwen3-ASR)")
@@ -977,7 +1215,8 @@ def main():
      "decide": lambda: cmd_decide(recipe, args.source, spec, root, args),
      "rescue": lambda: cmd_rescue(recipe, args.source, spec, root, args),
      "audio": lambda: cmd_audio(recipe, args.source, spec, root, args),
-     "build": lambda: cmd_build(recipe, args.source, spec, root, args)}[args.stage]()
+     "build": lambda: cmd_build(recipe, args.source, spec, root, args),
+     "transfer": lambda: cmd_transfer(recipe, args.source, spec, root, args)}[args.stage]()
 
 
 if __name__ == "__main__":

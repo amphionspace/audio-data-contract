@@ -1,0 +1,41 @@
+  - schema_version: dataset-catalog/2.0
+    dataset_id: dialogs_ru
+    version: hf-a74ff44d8d27
+    languages:
+      - ru
+    tasks:
+      - tts
+    aliases:
+      - langswap_dialogs
+    artifacts:
+      - name: source
+        kind: hf-dataset-snapshot
+        root_alias: dialogs_ru
+        relative_path: source/hf-a74ff44d8d27
+    splits:
+      all:
+        artifacts:
+          source:
+            - source
+    provenance:
+      summary: 俄语演员情感对话 TTS 语料（Dialogs）
+      source: Hugging Face
+      source_id: langswap/dialogs-ru-emotional-conversations
+      revision: a74ff44d8d27ca3d21098ea3ed4d31a32923fbdd
+      url: https://huggingface.co/datasets/langswap/dialogs-ru-emotional-conversations
+      paper: https://arxiv.org/abs/2607.14310
+      release_date: '2026-10-12'
+      description: >-
+        Langswap 的俄语情感对话语料（Interspeech 2026）：3 位职业话剧演员（Masha、Sveta 女，Dima 男）面对面表演剧本对话，录音棚 44.1 kHz
+        16 bit 单声道 WAV，12 种风格或情绪标签（中性、高兴、惊讶、悲伤、愤怒、耳语、绕口令、诗歌等），转写附重音标注版本，用于对话和情感 TTS。
+        清单（metadata.csv 和 train/val/test.csv，竖线分隔）共 11,796 条、20.6 小时，但锁定版本里 wavs/ 只有 9,996 个文件，1,800 条
+        （3.18 小时，以 masha_sveta 第 9、10 部分最多）指向的 WAV 不存在，上游直接返回 404；实际可用 9,996 条、17.4 小时。
+        许可证是 OpenRAIL：允许商用和再分发，但附带用途限制（不得用于违法、伤害未成年人、虚假信息、歧视、执法预测等），再分发时须
+        随附同样的限制条款。
+        2026-11-14 曾完整下载并按上游哈希校验（实测可用 9,996 条、17.4 小时），因不属于中英、西葡真实场景数据的采集重点，已删除本地副本，只保留来源登记。
+      license:
+        - openrail
+      inventory_status: download_planned
+      download_scope: Complete Dialogs repository (WAVs, split CSVs, preview Parquet, license and card)
+      expected_download_files: 10004
+      expected_download_bytes: 5571006663

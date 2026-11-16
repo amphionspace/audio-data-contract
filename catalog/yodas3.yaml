@@ -1,0 +1,40 @@
+  - schema_version: dataset-catalog/2.0
+    dataset_id: yodas3
+    version: hf-81d802f45a1c
+    languages:
+      - multi
+    tasks:
+      - asr
+    aliases: []
+    artifacts:
+      - name: source
+        kind: hf-dataset-snapshot
+        root_alias: yodas3
+        relative_path: source/hf-81d802f45a1c
+    splits:
+      all:
+        artifacts:
+          source:
+            - source
+    provenance:
+      summary: 百万小时多语种网络视频长音频（YODAS v3）
+      source: Hugging Face
+      source_id: espnet/yodas3
+      revision: 81d802f45a1c1e1f5331260484dacf1fbea81981
+      url: https://huggingface.co/datasets/espnet/yodas3
+      paper: https://www.isca-archive.org/interspeech_2026/chen26d_interspeech.html
+      release_date: '2026-06-19'
+      license:
+        - cc-by-3.0
+      inventory_status: download_planned
+      description: >-
+        ESPnet 发布的 YODAS 第三版（Interspeech 2026），超过 110 万小时、102 种语言加 unk，视频集合与 YODAS v1/v2 不重叠。
+        整段长音频（平均约 16 分钟），WebM/Opus，99.8% 为立体声，九成以上有效带宽不低于 32 kHz；约 75% 有字幕轨，
+        文本是上传者字幕或平台自动字幕，未经人工核对，带段级时间戳，约 95% 有词级时间戳；语种按字幕轨判定，可能不准。
+        仓库按 data/<语言>/audio/NNNN.tar（每个约 8 GB）和 data/<语言>/metadata/NNNN.parquet 存放，只有 train。
+        各语种音频体积：en 17.5 TB、unk 13.1 TB、es 3.6 TB、hi 3.6 TB、fr 2.0 TB、pt 1.9 TB、ar 1.8 TB、ru 1.6 TB、
+        id 1.5 TB、de 1.1 TB、ja 0.9 TB、vi 0.7 TB、ko 0.5 TB、th 0.3 TB；zh、yue 各只有 3 个分片（约 10 GB）。
+        可只下载元数据（全部约 50 GB）后按语种挑选分片。CC BY 3.0。
+      download_scope: Complete YODAS v3 release (all language audio shards and metadata)
+      expected_download_files: 13373
+      expected_download_bytes: 55654792929062

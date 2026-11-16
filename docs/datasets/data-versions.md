@@ -17,6 +17,18 @@ COS 列：
 
 ## 英文数据
 
+### afrispeech_dialog
+
+非洲口音英语双人对话（含模拟问诊）
+
+语言：en · 任务：语音识别
+
+| 版本 | 时长（小时） | 口径 | COS |
+|---|---:|---|---|
+| [afrispeech_dialog@hf-1beaa0501f76](../../catalog/afrispeech_dialog.yaml#L1) | 7.0 | 已登记 | 没有 |
+
+- `afrispeech_dialog@hf-1beaa0501f76`：Intron Health 的 AfriSpeech-Dialog v1（NAACL 2025）：尼日利亚、肯尼亚和南非说话人的英语双人自由对话，20 段模拟医患问诊、 29 段一般话题讨论，共 49 段、7.0 小时（卡片写 50 段，仓库实际 49 段）。远程录制，环境各异，44.1 kHz 单声道 WAV； 口音覆盖豪萨、斯瓦希里、伊索科、约鲁巴、塞索托等 11 种母语背景，说话人多为 19–40 岁。metadata.csv 里每段是一整篇 按 Speaker 1/2 分轮次的人工转写（医疗 1,568 轮、一般话题 883 轮），大多穿插 hh:mm:ss 时间点，但没有逐句起止时间， 做 ASR 训练或带说话人识别评测前需要先强制对齐。适合非洲口音英语对话识别和医疗问诊场景评测。CC BY-NC-SA 4.0
+
 ### ami_ihm
 
 AMI 英文会议的近讲耳麦版
@@ -28,6 +40,18 @@ AMI 英文会议的近讲耳麦版
 | [ami_ihm@hf-edinburghcstr-20261023](../../catalog/ami_ihm.yaml#L1) | 95.5 | 已登记 | 没有 |
 
 - `ami_ihm@hf-edinburghcstr-20261023`：AMI 会议语料的近讲耳麦（IHM）版本：英文 16 kHz 单声道，按 Kaldi AMI s5 切句、文本大写归一化，带会议、说话人和耳麦编号。train / dev / test 分别 108502、13098、12643 句，共 95.5 小时，会议划分与 Kaldi full-corpus-ASR 一致。本机已有 AMI 单远场麦克风版 `ami_sdm`，可与这份近讲版对照近场和远场
+
+### apptek_callcenter
+
+英文多口音客服长对话评测（AppTek）
+
+语言：en · 任务：语音识别、带说话人标注的语音识别、说话人分段与归属
+
+| 版本 | 时长（小时） | 口径 | COS |
+|---|---:|---|---|
+| [apptek_callcenter@hf-b98967d9946f](../../catalog/apptek_callcenter.yaml#L1) | 151.1 | 已登记 | 没有 |
+
+- `apptek_callcenter@hf-b98967d9946f`：AppTek 2026 年发布的英文呼叫中心长对话评测集，873 通电话、合并后 151.1 小时（发布方统计语音 128.6 小时），每通 5–15 分钟， 14 个口音组（澳、加、中、英格兰、苏格兰、威尔士、爱尔兰、印度、墨西哥、新加坡、美国非裔、美国通用、美国南方、南非）， 16 个服务领域，坐席和客户两人对话，在受控条件下录制。两种配置：test 把每通电话拆成两条单声道音轨，各有一整段逐字参考文本 （保留 (um) 等语气词和 ~ 标出的断词），发布方建议用 Silero VAD 切段后按 Whisper 规范化算 WER，附 score.py； diarization 把双方合成一个文件，给出带说话人、角色、性别的时间戳分段（94,679 段），可评测说话人日志和带说话人的转写。 两种配置是同一批电话，test 登记为 diarization 的子划分，不重复计时。仓库中部分 metadata.jsonl 因镜像返回不实的 gzip 压缩头， 改用 curl 下载并按上游 git 哈希校验。CC BY-SA 4.0
 
 ### audioset_esc_test
 
@@ -124,6 +148,18 @@ Common Voice 英语众包朗读；含清洗、热词、加噪版
 - `commonvoice_en_clean@clean-v1-20260805`：Qwen3-ASR-1.7B + whisper-large-v3 双引擎筛选；train 需过滤 1,127 条失败记录；test 清单尚未应用筛选结果
 - 含派生版本（与源数据可能重叠）
 
+### coraal
+
+非裔美国英语社会语言学访谈（CORAAL）
+
+语言：en · 任务：语音识别、带说话人标注的语音识别
+
+| 版本 | 时长（小时） | 口径 | COS |
+|---|---:|---|---|
+| [coraal@uoregon-2023.06](../../catalog/coraal.yaml#L1) | 160.9 | 已登记 | 没有 |
+
+- `coraal@uoregon-2023.06`：俄勒冈大学 Corpus of Regional African American Language v2023.06：8 个地区组件、271 段社会语言学访谈录音、160.9 小时、226 位说话人， 44.1 kHz 单声道 WAV，录音年代从 1966 到 2019 年。每段有带时间戳和说话人的人工逐句转写（textfiles、Praat TextGrid、ELAN 三种格式）， 元数据表给出说话人性别、年龄组、出生年份、受教育程度、职业等社会背景。真实的长篇自然对话，包含方言语法和发音，是检验英语 ASR 在非标准口音和老旧录音上表现的常用长音频评测（Open ASR Leaderboard 的长音频项也用到它），也可用于训练。官方没有公布哈希， 下载时对每个压缩包做了完整 gzip 校验。官方文件清单里 LES、VLD 两个元数据文件的链接写错了版本号，已改用实际的 *_metadata_2021.07.txt；VLD 元数据里的 VLD_se0_ag2_f_01_2 实际音频名为 VLD_se0_ag3_f_01_2。CC BY-NC-SA 4.0
+
 ### cs_dialogue_en
 
 CS-Dialogue 对话中的纯英文语句
@@ -152,6 +188,54 @@ CS-Dialogue 对话中的纯英文语句
 
 - `dipco@modelscope-benjamin-paine-20261023`：DiPCo 晚宴语料：每场 4 人在家庭餐桌边自然聊天，英文 16 kHz。每人一个近讲麦克风，另有 5 台 7 麦阵列设备（U01–U05）放在房间不同位置。dev、eval 各 5 场、16 个说话人，共 7078 句、6.5 小时语音。这一版按句切好：split-channel 每句存近讲 + 35 个远场通道（25.5 万行），mixed-channel 把每台设备 7 个通道取平均（4.2 万行）；每行带 会话、说话人、设备、通道、离设备距离、性别、母语和转写。parquet 的 train/test 就是官方 dev/eval，没有训练集。有重叠语音，远场通道互相之间也有重复，统计时长时只算一遍
 - `dipco@zenodo-8122551-20261023`：DiPCo 晚宴语料官方完整整场版：10 场，每场 4 个近讲麦克风 + 5 台设备 × 7 个通道 = 39 个单声道 16 kHz WAV，共 390 个文件，加官方 JSON 转写（每句带说话人、性别、母语、近讲和各设备上的起止时间）。dev、eval 各 5 场、16 个说话人，共 7078 句，会话总长 5.3 小时。用于长音频的说话人日志和多人 ASR；按句评测用已切好的 `dipco@modelscope-benjamin-paine-20261023`
+
+### earnings21
+
+英文上市公司财报电话会议（Earnings-21）
+
+语言：en · 任务：语音识别、带说话人标注的语音识别
+
+| 版本 | 时长（小时） | 口径 | COS |
+|---|---:|---|---|
+| [earnings21@github-c05ab6fd8b4b](../../catalog/earnings.yaml#L1) | 39.3 | 已登记 | 没有 |
+
+- `earnings21@github-c05ab6fd8b4b`：Rev 发布的真实财报电话会议长音频评测集：44 场、39.3 小时，覆盖 9 个行业，共 466 位说话人（主持人、高管、分析师），带电话和会议软件 的各种采样率和压缩。transcripts/nlp_references 是逐词的人工转写，带说话人编号、标点、大小写和实体标签（数字、日期、机构名等）， 另有归一化规则、wer_tags、说话人 RTTM 和实体偏置词表（bias_lists），可做长音频识别、带说话人的识别、数字和实体识别评测。 仓库里各家商用 ASR 的输出（earnings21/output）不属于数据本身，未下载。CC BY-SA 4.0
+
+### earnings22
+
+多国口音英文财报电话会议（Earnings-22）
+
+语言：en · 任务：语音识别、带说话人标注的语音识别
+
+| 版本 | 时长（小时） | 口径 | COS |
+|---|---:|---|---|
+| [earnings22@github-c05ab6fd8b4b](../../catalog/earnings.yaml#L66) | 119.9 | 已登记 | 没有 |
+
+- `earnings22@github-c05ab6fd8b4b`：Rev 发布的带口音英文真实财报电话会议评测集：125 场、119.9 小时，公司来自 27 个国家，metadata.csv 按语言背景分组（西葡 31 场、 亚洲 28、英语 26、其他罗曼语 13、日耳曼语 12、斯拉夫语 10、非洲 5）。transcripts 下有逐词人工转写（带说话人编号、标点、大小写和 实体标签）、强制对齐版本和归一化规则；subset10 另给 10 场的非逐字转写，其余 subset10 条目是指向主目录的符号链接，未重复下载。 用于口音、长音频和实体识别的真实场景评测。CC BY-SA 4.0
+
+### earnings25
+
+美股财报电话会议英语（Earnings25）
+
+语言：en · 任务：语音识别、带说话人标注的语音识别
+
+| 版本 | 时长（小时） | 口径 | COS |
+|---|---:|---|---|
+| [earnings25@zenodo-18762168](../../catalog/earnings25.yaml#L1) | 543.8 | 已登记 | 没有 |
+
+- `earnings25@zenodo-18762168`：Bloomberg 发布的金融领域 ASR 评测集（Interspeech 2026），全部是真实的上市公司财报电话会议录音，包括高管陈述和分析师问答， 有大量财务术语和数字。testset-full 是 514 场完整会议（标普 500 成分公司，主要为 2025 年第四季度，482 场来自美国，其余来自 11 个国家，覆盖 284 个行业），共 497.9 小时，单声道 MP3，采样率 11.025–44.1 kHz 不等；每场带整场转写、说话人姓名和角色， 以及 563,646 个带说话人编号的时间片段。testset-segmented 是从 2025 年全年美国公司会议中按行业分层抽取的 290 段 5–10 分钟 片段，共 45.9 小时，16 kHz 单声道 MP3（README 写 WAV，实际是 MP3），只有段级转写；其中 14 段与 testset-full 出自同一场会议， 重叠很少，两部分都计入总时长。转写是财经编辑稿而非逐字稿，含 (Operator Instructions)、(Multiple Speakers)、 (Technical Difficulty) 等编辑标记，评测前需过滤；时间戳由 NeMo CTC 强制对齐得到，不是人工标注。转写、标注和元数据为 CC BY 4.0；论文说明再分发的音频仍受原内容提供方条款约束，使用者需自行确认
+
+### edacc
+
+多国口音英语自然对话（EdAcc）
+
+语言：en · 任务：语音识别、带说话人标注的语音识别
+
+| 版本 | 时长（小时） | 口径 | COS |
+|---|---:|---|---|
+| [edacc@datashare-v1.0](../../catalog/edacc.yaml#L1) | 35.6 | 已登记 | 没有 |
+
+- `edacc@datashare-v1.0`：爱丁堡大学的 Edinburgh International Accents of English Corpus V1.0：朋友之间的视频通话双人对话，共 122 位说话人，口音覆盖多种 一语和二语英语，76 个录音、35.6 小时，32 kHz 单声道。官方只划分 dev（36 个录音、62 人）和 test（40 个录音、60 人），用作评测； Kaldi 风格的 segments、text、utt2spk 和 stm（共 19,137 段人工转写，带 <laugh>、<overlap> 等标记），linguistic_background.csv 是每位说话人的语言背景。说话人还各朗读了一段控制文本，在 stm 里标为 IGNORE_TIME_SEGMENT_IN_SCORING，评分时要排除。 dev/conv.list 里的 EDACC-C33_P2 和 EDACC-C46 与实际文件不符（音频是 C33_P1、C46_P1、C46_P2），以 segments 引用的录音为准。 DataShare 上的旧记录（hdl 10283/4836）已标为被取代并撤回，本条取的是 2025-04 的 V1.0；HF 上 edinburghcstr/edacc 是更早的转存。 CC BY-SA 4.0
 
 ### emilia_en
 
@@ -264,6 +348,18 @@ Emilia 英语野外语音（已清洗）
 | [iemocap_ser@eval-20260804](../../catalog/open_audio_eval.yaml#L895) | 1.5 | 已登记 | 快照 20260914、`amphion-audio-backup-1373259071:audio-data-contract/datasets/iemocap_ser/` |
 
 - 当前仅登记评测入口
+
+### krisp_voice_isolation
+
+旁边有人说话时的真实录音转写评测（Krisp）
+
+语言：en · 任务：语音识别
+
+| 版本 | 时长（小时） | 口径 | COS |
+|---|---:|---|---|
+| [krisp_voice_isolation@hf-626bac8ca07f](../../catalog/krisp_voice_isolation.yaml#L1) | 5.6 | 已登记 | 没有 |
+
+- `krisp_voice_isolation@hf-626bac8ca07f`：Krisp 2026-09 发布的英文真实录音评测集，265 条、5.6 小时，47 位说话人，32 kHz 单声道，没有人工混音。 call_center 和 work 两部分按固定脚本录：主说话人先说，第二个人加入同时说，主说话人停下只剩第二个人，主说话人再接上； 每段标 primary、mix、secondary、noise。参考文本只写主说话人（人工逐字转写，保留口误和重复），secondary 段参考为空， 用来测模型会不会把旁边的人声也转写出来，与本项目 asr_babble_bench、ts_asr_* 测的是同一类问题，但没有注册音频。 phone_calls 只有主说话人，测手机和车内信号失真。每个场景一个 metadata.jsonl（说话人、性别、设备、环境、分段文本）。 CC BY-NC 4.0，仅限非商用
 
 ### legco_speech_en
 
@@ -414,6 +510,18 @@ LibriSpeech 混合的目标说话人数据
 
 - `ljspeech@tts-unified-v0.1`：音频编码字节存放在 Lance 表内；原始划分在 metadata_json.original_split，统一输出全部为 train。ASR 用 tts_lance.iter_asr_samples（tts-asr-rules/v1）读取，会排除原始 dev/test 等
 
+### magicdata_multistream_en
+
+英文双人自然对话分轨录音（MagicData 样本）
+
+语言：en · 任务：语音识别、带说话人标注的语音识别
+
+| 版本 | 时长（小时） | 口径 | COS |
+|---|---:|---|---|
+| [magicdata_multistream_en@hf-6b3e11aea621](../../catalog/magicdata_multistream.yaml#L61) | 2.8 | 已登记 | 没有 |
+
+- `magicdata_multistream_en@hf-6b3e11aea621`：MagicData 多声道自然对话数据的英文开源样本：8 段两人手机自由对话（消费、人文、金融、娱乐、情感等话题），8 位美国说话人 （纽约和加州，5 男 3 女），每人一条独立音轨，16 kHz 单声道 WAV，逐句人工转写带起止时间和事件标记，格式与中文样本相同。 规模很小，适合作分轨对话和全双工流程的小样本检查。卡片正文限定仅供学术研究、不得商用（YAML 未写许可证）
+
 ### meld_ser
 
 美剧《老友记》对话情感识别评测（MELD）
@@ -473,6 +581,54 @@ LibriSpeech 混合的目标说话人数据
 - `notsofar_sdm@meeting-windows-v1-20261008`：NOTSOFAR-1 真实会议（单通道 SC 设备 ch0，每个设备算一条录音，因为设备间采样不同步）的说话人归属 ASR 窗口（aligned_utterance_timestamps_v1）：人工标注的说话人和时间，转写为源清单文字，只去空白。按 30 / 120 / 300 / 600 s 切窗，每个 split 的 records 一行一个窗口，turns 在 metadata；train / dev / test 都有。音频由 audio-index 指向源数据集里的 ch0.wav，不复制。没有窗口被排除。脚本 scripts/diarization_raw_labels/register_raw_labels.py
 - `notsofar_sdm@teacher-calibration-v1-20261009`：说话人日志老师校准（2026-10-09）：在有人工标注的 NOTSOFAR train 单通道 ch0 39 场 / 4.02 h 上比较本机 MOSS 0.9B、MOSS Pro、百炼 qwen-audio-3.1-asr-flash 三个老师，并用 Qwen3-ASR 对本机 MOSS 的每个片段做文本校验；付费调用经用户批准，仅用于这次校准。每个 *_records 文件一个老师，每行一条录音，target 是按时间排序的 [说话人][起-止] 文本，教师返回的分块、说话人链接、身份断点留在 metadata.<老师>；teacher_agreement_records 每行一个人工标注片段，metadata.teacher_agreement 记各老师的说话人、边界和字错误率（analysis/segments.jsonl，用于确定多老师一致性过滤门槛）。NOTSOFAR 的 qwen3_asr_records 是第一版，误用 to_language=zh 把英文部分译成中文，已被 qwen3_asr_en_records 更正，保留原始输出。录音沿用 notsofar_sdm@icefall-20260908 train_rec_0（只用其中被抽中的录音），不复制音频。脚本 scripts/diarization_raw_labels/register_raw_labels.py
 
+### open_clinical_conversations
+
+英文模拟问诊录音合集（含 OSCE 272 场）
+
+语言：en · 任务：语音识别
+
+| 版本 | 时长（小时） | 口径 | COS |
+|---|---:|---|---|
+| [open_clinical_conversations@hf-06053cd9be2e](../../catalog/open_clinical_conversations.yaml#L1) | 51.9 | 已登记 | 没有 |
+
+- `open_clinical_conversations@hf-06053cd9be2e`：Sully.ai 把四个公开的医患对话数据整理成统一格式（2026-11 发布）。有音频的部分：272 场 Fareez 等人（Scientific Data 2022）的 加拿大 OSCE 问诊录音，医生与扮演患者按病例卡即兴问诊，以呼吸科为主（呼吸 213、肌骨 46、消化 6、心血管 5、皮肤和综合各 1）， 共 51.9 小时，原始数据在 figshare 上以 CC0 发布（本机访问 figshare 返回 403，所以从这份整理版获取）；另 57 场 PriMock57， 医生和患者两轨被混成单声道，与本项目已有的 primock57 是同一批问诊，所以这一划分加了 group，不计入总时长。音频统一转成 16 kHz 单声道 MP3，转写按 Clinician/Patient/Family member 分轮次（OSCE 26,572 轮），连续同一说话人的轮次已合并，没有逐句时间。 卡片称全部是角色扮演、人工转写，原论文的转写流程未核对。encounters.jsonl 另含 207 场 ACI-Bench 和 MTS-Dialog 1,701 段 对话文本（无音频），可用于对话转病历的文本评测。整体按 CC BY 4.0 分发，每行带来源许可证
+
+### open_yap
+
+熟人之间的英文双声道自然对话样本（Open Yap 1K）
+
+语言：en · 任务：语音识别、带说话人标注的语音识别
+
+| 版本 | 时长（小时） | 口径 | COS |
+|---|---:|---|---|
+| [open_yap@hf-a08b1c80e501](../../catalog/open_yap.yaml#L1) | 8.9 | 已登记 | 没有 |
+
+- `open_yap@hf-a08b1c80e501`：The Agentic Data Company 2026-09 发布的 Open Yap 1K 的公开样本：16 段、8.92 小时、8 位说话人的英文自然对话， 双方是朋友或家人，用自己的设备在真实环境里通话，每人一条 48 kHz 单声道 FLAC 音轨，保留重叠、附和、笑声。 每段一个 JSON：两侧词级时间戳转写、话题、轮次统计、说话人自报的年龄段/性别/口音、响度和底噪等测量值。 转写是 Deepgram Nova-3 自动生成，未经人工核对。仓库里 open-yap-1k-sample.tar 与 shard-00000/00001.tar 是同样的 16 段， 不要重复计数。样本为 CC BY 4.0（可商用），附带请求：不要识别说话人、不要克隆具体某人的声音。完整 1,000 小时语料需按 Open Yap 1K 数据使用协议向发布方申请，不在 Hugging Face 上
+
+### primock57
+
+英文全科医生模拟问诊分轨录音（PriMock57）
+
+语言：en · 任务：语音识别、带说话人标注的语音识别
+
+| 版本 | 时长（小时） | 口径 | COS |
+|---|---:|---|---|
+| [primock57@github-cd2ac707ad03](../../catalog/primock57.yaml#L1) | 8.6 | 已登记 | 没有 |
+
+- `primock57@github-cd2ac707ad03`：Babylon Health 的全科远程问诊模拟数据（ACL 2022）：7 位执业医生与 57 位扮演患者的员工按病例卡进行线上视频问诊，共 57 场、8.6 小时， 医生和患者分轨（16 kHz 16 bit WAV，源自 Opus 编码的视频流），transcripts/ 下是逐句人工转写的 Praat TextGrid（共 7,108 个非空区间）， 另有医生写的问诊记录、病例清单和笔记生成的人工评测数据。对话内容是按病例卡即兴进行的，不是真实患者，但说话方式自然，适合 医疗场景对话识别、带说话人识别和医患对话评测。CC BY 4.0
+
+### sbcsae
+
+美式英语自然口语对话（SBCSAE）
+
+语言：en · 任务：语音识别、带说话人标注的语音识别
+
+| 版本 | 时长（小时） | 口径 | COS |
+|---|---:|---|---|
+| [sbcsae@openslr-155](../../catalog/sbcsae.yaml#L1) | 23.3 | 已登记 | 没有 |
+
+- `sbcsae@openslr-155`：加州大学圣塔芭芭拉分校语言学系编纂的 Santa Barbara Corpus of Spoken American English（原由 LDC 分四部分发行，2000–2005）， OpenSLR 155 镜像的完整版：60 段各约 20 分钟、共 23.3 小时的自然口语互动，录于美国各地，说话人背景和对话场合多样， 22.05 kHz（56 段立体声、4 段单声道）。每段同时给出 WAV、MP3，以及带时间标记的 TRN 和 CHAT（.cha）两种格式转写，docs/ 下有说话人和片段信息表。只有一个归档文件、上游没有公布哈希，下载时做了完整的 gzip 流校验，sha256 是本地计算值。规模小、录音年代较早，主要用于自然对话 ASR 评测和对话分析。CC BY-ND 3.0 US （禁止演绎：可以使用和原样分发，但不得发布修改后的版本）
+
 ### singapore_english
 
 新加坡口音英语（Hugging Face 来源）
@@ -516,6 +672,18 @@ TAL 英语语音识别数据
 
 - 含派生版本（与源数据可能重叠）
 
+### uwb_atcc
+
+捷克空域真实空管通话英语（UWB-ATCC）
+
+语言：en · 任务：语音识别
+
+| 版本 | 时长（小时） | 口径 | COS |
+|---|---:|---|---|
+| [uwb_atcc@hf-1e8270beb8c1](../../catalog/uwb_atcc.yaml#L1) | 13.0 | 已登记 | 没有 |
+
+- `uwb_atcc@hf-1e8270beb8c1`：西波希米亚大学的 UWB-ATCC：捷克空域真实的管制员与飞行员无线电通话，英语（非母语口音为主），人工转写并按说话人角色 标注。这里是 Idiap 为 ATC 语音识别基准整理上传到 HF 的版本：按说话人段切好，id 末尾 _AT 是管制员、_PI 是飞行员、 PIAT 是两者同段；文本已规范化。实测音频是 8 kHz 单声道 16 bit（卡片特征写 16 kHz，与实际不符），共 14,113 段、 13.0 小时，少于语料主页的 20 小时。划分不是随机的：test 全部是塔台（TWR）录音，train 是区域管制（ACCU）、进近（APP） 和少量塔台，两边有 1 条录音重叠。信道窄带、噪声和失真都很重，适合嘈杂无线电通话和专业术语场景的识别评测。 许可证按 LINDAT 原始语料写 CC BY-NC-SA 4.0；LINDAT 原站本机直连和走代理都连不上，暂时没有核对原始发布
+
 ### vctk
 
 多口音英语朗读（VCTK）
@@ -551,6 +719,18 @@ TAL 英语语音识别数据
 | [voices@hf-prummn-20261023](../../catalog/voices.yaml#L1) | 27.9 | 已登记 | 没有 |
 
 - `voices@hf-prummn-20261023`：VOiCES 远场评测子集：LibriSpeech 句子在 4 个真实房间里用扬声器外放、同时放干扰声（多人 babble、音乐、电视或无干扰），由近处（mc01）和远处（mc05）麦克风录下，英文 16 kHz 单声道。共 6400 条、27.9 小时、100 个说话人，每个“房间 × 干扰 × 麦克风”组合 200 条，带小写转写（metadata 的 answer 字段）。只是 devkit 测试集的抽样，不是全量。 句子来自 LibriSpeech，不要和 LibriSpeech 一起当训练数据
+
+### voxpopuli_en
+
+VoxPopuli 英语欧洲议会发言（评测划分）
+
+语言：en · 任务：语音识别
+
+| 版本 | 时长（小时） | 口径 | COS |
+|---|---:|---|---|
+| [voxpopuli_en@hf-42f01879c780](../../catalog/voxpopuli_en.yaml#L1) | 9.9 | 已登记 | 没有 |
+
+- `voxpopuli_en@hf-42f01879c780`：VoxPopuli 人工转写 ASR 数据的英语 test 和 validation（HF parquet 转换版，音频以 16 kHz WAV 字节存在 parquet 内）： 2009–2020 年欧洲议会全会的现场发言，不少议员以英语为外语，口音多样，以即席或半即席讲话为主，男声约占 73%。 test 1,842 条、286 人、4.9 小时；validation 1,753 条、71 人、5.0 小时；全部标为 gold transcript。raw_text 为空的 有 test 52 条、validation 58 条，这些行只有 normalized_text，评测时需回退到规范化文本。train（30 个 parquet、约 97 GB、 543 小时）未下载，Granary v2（已登记）也含这部分。与已有 voxpopuli_fr/de 取自同一 HF 修订。CC0
 
 ## 中文及粤语数据
 
@@ -687,8 +867,9 @@ TAL 英语语音识别数据
 | [aishell4@allspk-asr-v1-20261103](../../catalog/allspk_asr_v1.yaml#L67) | — | 未登记 | 没有 |
 | [aishell4@allspk-ts-v1-20261104](../../catalog/allspk_ts_v1.yaml#L90) | — | 未登记 | 没有 |
 | [aishell4@asr-20261014](../../catalog/amphionasr_v4.yaml#L262) | — | 未登记 | 没有 |
-| [aishell4@asr-20261014-ctxclean-20261110](../../catalog/context_correction_clean_zh.yaml#L642) | — | 未登记 | 没有 |
+| [aishell4@asr-20261014-ctxclean-20261110](../../catalog/context_correction_clean_zh.yaml#L857) | — | 未登记 | 没有 |
 | [aishell4@asr-20261014-punc-20261102](../../catalog/train_punc_v1_derived.yaml#L423) | — | 未登记 | 没有 |
+| [aishell4@asr-20261014-punc-20261102-ctxclean-20261110](../../catalog/context_correction_clean_zh.yaml#L2862) | — | 未登记 | 没有 |
 | [aishell4@diarization-benchmark-v1-20261021](../../catalog/diarization_benchmark.yaml#L1) | 12.7 | 已登记 | 没有 |
 | [aishell4@icefall-20260908](../../catalog/icefall_runtime.yaml#L1206) | 119.5 | 已登记 | 快照 20260914 |
 | [aishell4@legacy-20260804](../../catalog/icefall_base.yaml#L892) | 28.4 | 已登记 | 快照 20260914 |
@@ -696,15 +877,17 @@ TAL 英语语音识别数据
 | [aishell4@punc-written-v1-20261029](../../catalog/zh_punc_written_v1.yaml#L130) | 107.4 | 已登记 | 没有 |
 | [aishell4@teacher-review-v1-20261010](../../catalog/diarization_raw_zh-meeting-review.yaml#L2) | — | 未登记 | 没有 |
 | [aishell4@turn-taking-20261014](../../catalog/amphionasr_v4.yaml#L1) | 322.3 | 已登记 | 没有 |
-| [aishell4@turn-taking-20261014-ctxclean-20261110](../../catalog/context_correction_clean_zh.yaml#L971) | 322.3 | 已登记 | 没有 |
+| [aishell4@turn-taking-20261014-ctxclean-20261110](../../catalog/context_correction_clean_zh.yaml#L1186) | 322.3 | 已登记 | 没有 |
 | [aishell4@turn-taking-20261014-utts](../../catalog/ts_window_utts.yaml#L115) | 66.9 | 已登记 | 没有 |
 | [aishell4@turn-taking-20261014-utts-punc-20261102](../../catalog/train_punc_v1_derived.yaml#L486) | — | 未登记 | 没有 |
+| [aishell4@turn-taking-20261014-utts-punc-20261102-ctxclean-20261110](../../catalog/context_correction_clean_zh.yaml#L2930) | 301.2 | 已登记 | 没有 |
 
 - `aishell4@allspk-asr-v1-20261103`：AISHELL-4 训练集的普通 ASR 多人窗口：按 aishell4@icefall-20260908 训练集标注，在每段录音上依次切出不重叠的窗口，每个窗口长度在 10–90 秒间均匀抽取，只在没人说话（前后静音至少 0.2 秒）处下刀；目标文本是窗口内所有说话人每句话的书面化标点文本（aishell4@punc-written-v1-20261029，同一 ID）按开始时间顺序拼接，不区分说话人。重叠语音超过窗口时长 10% 的窗口丢弃（普通转写的字序不确定），有任一句缺标点文本的窗口丢弃。音频引用 aishell4@asr-20261014 训练集（只取第 0 路），不复制。用途：普通 ASR 模式下多人轮流说话时转写每个人、长录音不提前结束（此前普通 ASR 训练数据每条只转写一个说话人）。保留 4267 个窗口，丢弃：重叠 1957、缺标点 0、短于 5 秒 92；说话人数分布 {'1': 512, '2': 1551, '3': 1278, '4+': 926}
 - `aishell4@allspk-ts-v1-20261104`：AISHELL-4 训练集的目标说话人（TS）多人窗口，与 aishell4@allspk-asr-v1-20261103 用同一批窗口、同一段音频：普通 ASR 版本转写窗口里所有人，这里只转写注册的那个人，让模型在同一段音频上靠提示区分两种任务（只训普通 ASR 版本时，TS 模式在多人轮流说话的音频上会把别人的话也写进来）。train：每个窗口选一个在窗口里说话的人作目标（在有注册音的说话人里均匀抽），目标文本是此人在窗口内各句的书面化标点文本（aishell4@punc-written-v1-20261029）按开始时间顺序拼接；train_neg：每个窗口选一个同一录音里、窗口内没说话的人（有的话），目标为空。注册音取同一录音里此人在窗口外的一句话，长 3–10 秒（没有则放宽到 2–15 秒），且没有其他句子与之重叠。两个音频位都引用 aishell4@asr-20261014 训练集（与窗口同一路），不复制。正样本 4267 条（0 个窗口没有可用注册音），负样本 3511 条（756 个窗口没有不在场的说话人）；正样本窗口的说话人数分布 {'1': 512, '2': 1551, '3': 1278, '4+': 926}
 - `aishell4@asr-20261014`：会议普通转写。每条 supervision 一条，时长 0.5～30 秒，文本非空。多通道只取第 0 路
 - `aishell4@asr-20261014-ctxclean-20261110`：在 aishell4@asr-20261014 上做的上下文纠偏清洗：说话人讲字怎么写（组词、拆字、偏旁、否定对比）而标注写成同音别字的，按说明改正；拿不准的整条去掉。判定依据见 context_correction_clean_zh@v1-20261110
 - `aishell4@asr-20261014-punc-20261102`：aishell4@asr-20261014 的 train，目标文本加书面化标点：中文用 amphiondata 的中文学生模型（punc-student-v1，不带听音提示），英文用英文规范 en-v1 的学生模型（加标点并恢复大小写）；标点按字 / 按词搬回原文，原文的字词不变，找不到输出的目标保留原样。其余字段与源版本相同，音频引用源版本
+- `aishell4@asr-20261014-punc-20261102-ctxclean-20261110`：在 aishell4@asr-20261014-punc-20261102 上做的上下文纠偏清洗：说话人讲字怎么写（组词、拆字、偏旁、否定对比）而标注写成同音别字的，按说明改正；拿不准的整条去掉。判定依据见 context_correction_clean_zh@v1-20261110。判定迁自同一批记录在清洗时的判定（clean.py transfer：按去掉标点、空格后的文本对应，改字按字对齐写进带标点的文本）
 - `aishell4@diarization-benchmark-v1-20261021`：Frozen local evaluation slice; audio and RTTM bytes copied unchanged. Not a claim of official release equivalence or training disjointness.
 - `aishell4@punc-teacher-v1-20261029`：aishell4@icefall-20260908 的 train 监督片段里的 Qwen3.8-27B 老师给 3000 句加的书面化标点（2765 句去掉标点后与输入一致，ok=true）：custom.punctuation_teacher 记输出 text、ok 和模型看到的无标点输入 input；custom.punctuation_hint.qwen 是提示用的 Qwen3-ASR 转写；其中 53 句是留出的评测句，另带学生 v1 的输出 custom.punctuation_student。这批句子用来微调 Qwen3-4B 学生，抽样见 amphiondata scripts/punctuation/build_teacher_set.py。只含这些句子，text 与父版本相同，不是标点后的文本；录音沿用父版本，不复制音频。中间产物，供复现和比较学生，不直接用于训练。脚本 scripts/punctuation/register_punc_intermediates.py
 - `aishell4@punc-written-v1-20261029`：aishell4@icefall-20260908 训练集原标注加书面化标点（GB/T 15834，逗号从紧）：微调后的 Qwen3-4B（Qwen3.8-27B 的 9.6 万条输出蒸馏）以 Qwen3-ASR-1.7B 听音频得到的带标点转写作语气提示，只往原标注里插标点。模型改动了原文的条目，把模型输出的标点按字对齐搬回原标注；每条以 。？！ 结尾；原标注的字、空格（首尾除外）和大小写不变。没有汉字的条目（英文句子、拼读字母）和标注为空的条目原样保留。文件与源 supervisions 条数、顺序相同，只换 text。试点 200 条人工参照上：WenetSpeech markF1 92.4、其他来源 88.9（老师 93.2 / 88.2，原 FireRedPunc 79.8）
@@ -713,6 +896,7 @@ TAL 英语语音识别数据
 - `aishell4@turn-taking-20261014-ctxclean-20261110`：在 aishell4@turn-taking-20261014 上做的上下文纠偏清洗：说话人讲字怎么写（组词、拆字、偏旁、否定对比）而标注写成同音别字的，按说明改正；拿不准的整条去掉。判定依据见 context_correction_clean_zh@v1-20261110
 - `aishell4@turn-taking-20261014-utts`：aishell4@turn-taking-20261014 的 train 划分（不含 eval/test），时间线取自 aishell4@icefall-20260908 的 train 人工标注。加 metadata.window_utts（窗口内每句的说话人与相对混合起点的起止，取自来源标注并截到窗口，截断的标 clipped）与同一命名空间的 metadata.target_speaker，供 open-audio-llm 帧级说话人活动标签（objective.ts_activity_weight）；其余字段不变，音频引用改指本版本，音频索引与原版逐行相同。正样本的目标语句与转写逐字一致（忽略空白和标点；窗口边缘截断的句子允许只转写一部分）才写时间线，负样本只有注册人确实不在窗口里说话才写；其余记录不写时间线（不出帧级标签）。负样本中注册人按标注其实在窗口内说话的记录 ID 列在 excluded-records-<split>.txt，训练配方用 exclude_records 排除。生成脚本 audio-data-contract scripts/ts_robust/add_window_utts.py，逐划分统计见 report.json
 - `aishell4@turn-taking-20261014-utts-punc-20261102`：aishell4@turn-taking-20261014-utts 的 train_2spk, train_3spk, train_neg，目标文本加书面化标点：中文用 amphiondata 的中文学生模型（punc-student-v1，不带听音提示），英文用英文规范 en-v1 的学生模型（加标点并恢复大小写）；标点按字 / 按词搬回原文，原文的字词不变，找不到输出的目标保留原样。其余字段与源版本相同，音频引用源版本
+- `aishell4@turn-taking-20261014-utts-punc-20261102-ctxclean-20261110`：在 aishell4@turn-taking-20261014-utts-punc-20261102 上做的上下文纠偏清洗：说话人讲字怎么写（组词、拆字、偏旁、否定对比）而标注写成同音别字的，按说明改正；拿不准的整条去掉。判定依据见 context_correction_clean_zh@v1-20261110。判定迁自同一批记录在清洗时的判定（clean.py transfer：按去掉标点、空格后的文本对应，改字按字对齐写进带标点的文本）
 - 含派生版本（与源数据可能重叠）
 
 ### aishell4_meeting_sot
@@ -877,6 +1061,18 @@ AliMeeting 远场会议切窗的多人按人转写数据
 
 - 含派生版本（与源数据可能重叠）
 
+### childtalk
+
+多方言儿童与看护人对话（ChildTalk）
+
+语言：zh · 任务：语音识别、带说话人标注的语音识别
+
+| 版本 | 时长（小时） | 口径 | COS |
+|---|---:|---|---|
+| [childtalk@hf-85136f74007a](../../catalog/childtalk.yaml#L1) | 125.4 | 已登记 | 没有 |
+
+- `childtalk@hf-85136f74007a`：南开大学（NKU-HLT）发布的中文儿童对话语料（ACL 2026 Findings）：500 位 2.5–8 岁儿童各与一位看护人（多为父母）对话， 共 504 段、125.4 小时，16 kHz 单声道 WAV。覆盖普通话（38.4 小时）、西南官话（35.2 小时）、胶辽、中原、东北、兰银、冀鲁、 江淮、北京官话，以及晋语和闽南语。short/ 是按句切出的 88,943 条（112.5 小时，其中儿童 51,075 条、84.1 小时，其余是看护人）， long/ 是整段录音，information/long 下每段一个带起止时间和说话人编号的 TSV 转写。train/dev/test 按对话划分，儿童和看护人在 三个划分之间都不重叠。转写标出 <NON/>、<UNK/>、<BREATH/>、<LAUGH/> 等事件和 <OVERLAP> 重叠。数据以 23 个 1 GB 分卷的 childtalk.tar.gz 发布，需先拼接再解压。U4xxx_U5xxx 系列的 104 段长对话转写里 wav_id 列与文件名和短句编号不一致 （如 U4024_U5024_S0.txt 里写成 U1024_U2024_S0_1_none），按文件名和行序对应。CC BY-NC-SA 4.0，仅限非商业学术研究， 数据卡还要求使用者遵守数据使用协议、不得尝试识别参与者身份
+
 ### cnceleb1
 
 中文跨场景声纹数据（CN-Celeb1）
@@ -968,15 +1164,32 @@ Common Voice 中文众包朗读；含清洗、热词、加噪版
 
 ### context_correction_clean_zh
 
-中文训练数据里说字写法句子的核对与改正清单
+说字写法句子的 think 文本（CoT）
 
 语言：zh · 任务：语音识别
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
-| [context_correction_clean_zh@v1-20261110](../../catalog/context_correction_clean_zh.yaml#L7) | — | 未登记 | 没有 |
+| [context_correction_clean_zh@think-v1-20261112](../../catalog/context_correction_clean_zh.yaml#L2308) | — | 未登记 | 没有 |
+| [context_correction_clean_zh@think-v2-20261113](../../catalog/context_correction_clean_zh.yaml#L3056) | — | 未登记 | 没有 |
+| [context_correction_clean_zh@v1-20261110](../../catalog/context_correction_clean_zh.yaml#L11) | — | 未登记 | 没有 |
 
-- `context_correction_clean_zh@v1-20261110`：清洗对象是 AmphionASR v4 配方里的中文真实口语来源：wenetspeech_podcast、wenetspeech_youtube（l-20261014）、 emilia2_short（short-20261014 与 short-lance-20261023）、emilia2_dialog、emilia2_mix、magicdata_ramc / aishell4 / alimeeting_sdm （asr-20261014 与 turn-taking-20261014）、vitw（2m-20261013）；朗读类（hw_sft 中文部分等）不扫。 找出说话人用组词、拆字、偏旁或否定对比说明字怎么写的句子，由两个不同家族的 LLM 独立判断标注是否与说明一致： 一致的列为正例；两边改法完全相同、只改写法不改读音、说明部分读音经 Qwen3-ASR 核对的才改正；其余隔离、不进训练。 本版本只存判定清单（逐条判定与依据、正例、隔离名单、统计），不是训练集；改正后的训练数据以各来源的派生版本另行登记。 context_correction_zh 评测用过的 190 条 WenetSpeech 播客录音（83,220 段、48.9 h）一并排除。 wenetspeech_podcast 已完成（派生版本 wenetspeech_podcast@l-20261014-ctxclean-20261110）。 会议来源（人工标注）已完成：不做 Qwen3-ASR 音频核对（远场、电话音频上 ASR 不如人工标注准，试跑 4 个音频不符全是 ASR 听错）； 派生版本 magicdata_ramc@asr-20261014-ctxclean-20261110、magicdata_ramc@turn-taking-20261014-ctxclean-20261110、 aishell4@asr-20261014-ctxclean-20261110、aishell4@turn-taking-20261014-ctxclean-20261110；alimeeting_sdm 两个版本没有改动或隔离，继续用原版本。 wenetspeech_youtube 已完成（派生版本 wenetspeech_youtube@l-20261014-ctxclean-20261110）。 vitw 已完成（派生版本 vitw@2m-20261013-ctxclean-20261110，只去掉 3 段存疑，另 2 段已捞回）：音频是加了回声、噪声、丢帧的劣化音频， Qwen3-ASR 识别不出，不做音频核对。 emilia2_dialog 已完成（派生版本 emilia2_dialog@dialog-turn-taking-20261013-enroll-ctxclean-20261110，同时去掉 ts_asr_real 留出的评测源录音）： 混合音频里还有别人说话，音频核对改为在识别结果里找说明、只数标注里没被听到的音节。 emilia2_short 已完成（派生版本 emilia2_short@short-lance-20261023-ctxclean-20261110，音频读 Lance）；m4a 版 short-20261014 已被取代、 音频已删，不出派生版本，只登记它的 exclude_records 名单。 emilia2_mix 已完成（派生版本 emilia2_mix@mix-20261013-ctxclean-20261110，同时去掉 ts_asr_real 留出的评测源录音）： 音频核对读混音协议里目标说话人的干净原片段；抽检发现 8 段改错或多改，改判为隔离。 2026-11-12 捞回：因文本原因隔离、首轮没有模型提出改法的窗口，两个模型再判一次“原标注是否已照说明写对”， 两边都说对、机械检查和音频核对都通过的放回训练（原文不动，不进正例）；执行者逐条看过全部放回的 129 段文本， 判错 6 段、存疑 12 段写进各来源的 review_rejected 名单、仍然隔离，最终放回 111 段不同文本
+- `context_correction_clean_zh@think-v1-20261112`：从 context_correction_clean_zh@v1-20261110 的判定结果，给清洗过的各来源训练记录生成 think 文本：每个被说明的词一句， 字和原话取两个判定模型的说明，两个模型给的字必须一致（改字窗口里一个模型写的是改前的字、或只多写了同一个词里的字的，对齐后算一致）； 只在"不是…"里出现的字、只点名的偏旁不成句，否定对比并进相邻写法的原话；原话超过 30 字、说话人随后改口、写法不在文本里的，只进 think 关。 每行一条训练记录（dataset + record_id，对应各来源的派生版本；alimeeting_sdm 是原版本；record_id 是 open-audio-llm 加载后的记录 ID， WenetSpeech、VITW 为 <dataset>@<version>:train:<supervision id>）：think_on=true 的给出 think， think_on=false 的只能按 think 关训练（not_hit 和规则候选里仍有讲写法的，判定不一的也不确定），未列出的记录是普通样本，think 开时用固定句"这段没有说明字怎么写。"。 WenetSpeech、VITW 按分段训练：原话整段落在哪个分段，该分段才有 think；原话被分段切开的，只有切开后仍是完整"X的X"的那段保留。 执行者看过全部新增规则放出的样本和各只进 think 关原因的抽样，结论写在运行目录 README 的"CoT 生成"一节。 还没有用于训练
+- `context_correction_clean_zh@think-v2-20261113`：think-v1-20261112 的做法，换到交付配方 v7set34（open-audio-llm runs/ts-robust-acp-20261015）实际训练的版本上：wenetspeech_clean@train-punc-v1-20261102、emilia2_mix@mix-20261013-utts、magicdata_ramc / aishell4 / alimeeting_sdm 的带标点 asr 与 turn-taking utts 版本，以及与清洗时相同的 emilia2_dialog、emilia2_short、vitw。判定由 clean.py transfer 从 context_correction_clean_zh@v1-20261110 迁来（同一批记录按分段 ID 或去掉标点后的文本对应），训练记录对应各自的派生版本 <版本>-ctxclean-20261110（alimeeting_sdm 无改动，用原版本）。原话按带标点的文本截取，去掉边缘句读并补齐成对的引号；每个来源另有按 split 的 think 记录 ID 名单（include_records 上采样用）。执行者看过 v1→v2 有变化的样本和引号配对，结论在运行目录 README“迁到交付配方的版本”一节。还没有用于训练
+- `context_correction_clean_zh@v1-20261110`：清洗对象是 AmphionASR v4 配方里的中文真实口语来源：wenetspeech_podcast、wenetspeech_youtube（l-20261014）、 emilia2_short（short-20261014 与 short-lance-20261023）、emilia2_dialog、emilia2_mix、magicdata_ramc / aishell4 / alimeeting_sdm （asr-20261014 与 turn-taking-20261014）、vitw（2m-20261013）；朗读类（hw_sft 中文部分等）不扫。 找出说话人用组词、拆字、偏旁或否定对比说明字怎么写的句子，由两个不同家族的 LLM 独立判断标注是否与说明一致： 一致的列为正例；两边改法完全相同、只改写法不改读音、说明部分读音经 Qwen3-ASR 核对的才改正；其余隔离、不进训练。 本版本只存判定清单（逐条判定与依据、正例、隔离名单、统计），不是训练集；改正后的训练数据以各来源的派生版本另行登记。 context_correction_zh 评测用过的 190 条 WenetSpeech 播客录音（83,220 段、48.9 h）一并排除。 wenetspeech_podcast 已完成（派生版本 wenetspeech_podcast@l-20261014-ctxclean-20261110）。 会议来源（人工标注）已完成：不做 Qwen3-ASR 音频核对（远场、电话音频上 ASR 不如人工标注准，试跑 4 个音频不符全是 ASR 听错）； 派生版本 magicdata_ramc@asr-20261014-ctxclean-20261110、magicdata_ramc@turn-taking-20261014-ctxclean-20261110、 aishell4@asr-20261014-ctxclean-20261110、aishell4@turn-taking-20261014-ctxclean-20261110；alimeeting_sdm 两个版本没有改动或隔离，继续用原版本。 wenetspeech_youtube 已完成（派生版本 wenetspeech_youtube@l-20261014-ctxclean-20261110）。 vitw 已完成（派生版本 vitw@2m-20261013-ctxclean-20261110，只去掉 3 段存疑，另 2 段已捞回）：音频是加了回声、噪声、丢帧的劣化音频， Qwen3-ASR 识别不出，不做音频核对。 emilia2_dialog 已完成（派生版本 emilia2_dialog@dialog-turn-taking-20261013-enroll-ctxclean-20261110，同时去掉 ts_asr_real 留出的评测源录音）： 混合音频里还有别人说话，音频核对改为在识别结果里找说明、只数标注里没被听到的音节。 emilia2_short 已完成（派生版本 emilia2_short@short-lance-20261023-ctxclean-20261110，音频读 Lance）；m4a 版 short-20261014 已被取代、 音频已删，不出派生版本，只登记它的 exclude_records 名单。 emilia2_mix 已完成（派生版本 emilia2_mix@mix-20261013-ctxclean-20261110，同时去掉 ts_asr_real 留出的评测源录音）： 音频核对读混音协议里目标说话人的干净原片段；抽检发现 8 段改错或多改，改判为隔离。 2026-11-12 捞回：因文本原因隔离、首轮没有模型提出改法的窗口，两个模型再判一次“原标注是否已照说明写对”， 两边都说对、机械检查和音频核对都通过的放回训练（原文不动，不进正例）；执行者逐条看过全部放回的 129 段文本， 判错 6 段、存疑 12 段写进各来源的 review_rejected 名单、仍然隔离，最终放回 111 段不同文本。 2026-11-13 把判定迁到交付配方 v7set34 实际训练的版本（clean.py transfer，不重新判定）：wenetspeech_clean@train-punc-v1-20261102 按分段 ID、emilia2_mix@mix-20261013-utts 与会议带标点版本按去掉标点后的文本对应，改字按字对齐写进带标点的文本，文本对不上的改字窗口隔离；这些来源的判定清单（*_punc、emilia2_mix_utts、wenetspeech_clean）与派生版本一并登记，wenetspeech_clean 同样去掉评测录音
+- 含派生版本（与源数据可能重叠）
+
+### context_correction_synth_zh
+
+说字写法合成训练数据（带 think）
+
+语言：zh · 任务：语音识别、目标说话人语音识别
+
+| 版本 | 时长（小时） | 口径 | COS |
+|---|---:|---|---|
+| [context_correction_synth_zh@train-v1-20261114](../../catalog/context_correction_synth_zh.yaml#L3) | 29.8 | 已登记 | 没有 |
+
+- `context_correction_synth_zh@train-v1-20261114`：说话人在一段话里用组词、拆字、偏旁结构或否定对比说明某个同音字怎么写（另含同名一致性），转写应按说明写字。 沿用 context_correction_zh@v1-20261018 的流程：qwen3.6-plus 出题、deepseek-v4-pro 复核（6 项全过）、Qwen3-TTS 克隆音色朗读、 SenseVoiceSmall 与 Qwen3-ASR-1.7B 拼音级质检（任一通过即可，按多音字全部读音比较）。音色取 aishell3、kespeech 训练划分的语句， 排除评测集克隆过的说话人；题目避开评测集的被测词，与评测集写法对或朗读文本相同的进隔离区。每条 train / train_ts 记录在 think.jsonl.gz 里有一行 think（context_correction_clean_zh 的 think 格式）。抽查：说明写错约 2–3%，只靠一个 ASR 通过的条目未见误收。 起因：open-audio-llm runs/zh-spelling-think-20261113 中 think 有效，但真实说明样本只有 2,187 条
 
 ### context_correction_zh
 
@@ -1202,6 +1415,18 @@ GRPO 热词挖掘候选（未背过的中文热词提示，含近音易混词）
 - `magicdata@punc-written-v1-20261102`：magicdata@legacy-20260804 训练集原标注加书面化标点，方法与 punc-written-v1-20261029 相同（amphiondata docs/written-punctuation.md：GB/T 15834、逗号从紧；Qwen3-4B 学生 punc-student-v1 以 Qwen3-ASR-1.7B 听音频得到的带标点转写作语气提示，只往原标注里插标点）。模型改动原文的条目按字对齐把标点搬回原标注；每条以 。？！ 结尾；没有汉字的条目和空标注原样保留。文件与源 supervisions 条数、顺序相同，只换 text。语音助手类指令多，书名号较密（每百字约 1.25 对）
 - 含派生版本（与源数据可能重叠）
 
+### magicdata_multistream_zh
+
+中文双人自然对话分轨录音（MagicData 样本）
+
+语言：zh · 任务：语音识别、带说话人标注的语音识别
+
+| 版本 | 时长（小时） | 口径 | COS |
+|---|---:|---|---|
+| [magicdata_multistream_zh@hf-156a68949f65](../../catalog/magicdata_multistream.yaml#L1) | 5.2 | 已登记 | 没有 |
+
+- `magicdata_multistream_zh@hf-156a68949f65`：MagicData 商用多声道自然对话数据的开源样本：27 段两人手机自由对话（教育、时事、文旅、就业等 9 个话题），每人一条独立音轨 （16 kHz 单声道 WAV），各自带起止时间的逐句人工转写，标出 [+] 重叠、[LAUGHTER]、[SONANT]、[ENS] 噪声和 [PII] 等，打断和抢话 在分轨里完整保留，适合全双工对话和带说话人识别的评测。规模小、说话人单一：只有 6 位 21–25 岁的辽宁籍男性，SPKINFO.txt 记录 各自的手机型号。HF 卡片 YAML 写 apache-2.0，但正文限定仅供学术研究、不得商用，以更严的条款为准；同一份数据在 MagicHub 组织下 另有一个副本
+
 ### magicdata_ramc
 
 中文手机通话自然对话（MagicData-RAMC）
@@ -1214,7 +1439,7 @@ GRPO 热词挖掘候选（未背过的中文热词提示，含近音易混词）
 | [magicdata_ramc@allspk-asr-v1-20261103](../../catalog/allspk_asr_v1.yaml#L1) | — | 未登记 | 没有 |
 | [magicdata_ramc@allspk-ts-v1-20261104](../../catalog/allspk_ts_v1.yaml#L1) | — | 未登记 | 没有 |
 | [magicdata_ramc@asr-20261014](../../catalog/amphionasr_v4.yaml#L3157) | — | 未登记 | 没有 |
-| [magicdata_ramc@asr-20261014-ctxclean-20261110](../../catalog/context_correction_clean_zh.yaml#L529) | — | 未登记 | 没有 |
+| [magicdata_ramc@asr-20261014-ctxclean-20261110](../../catalog/context_correction_clean_zh.yaml#L744) | — | 未登记 | 没有 |
 | [magicdata_ramc@clean-dual-pass-20261027](../../catalog/magicdata_ramc_clean_pass.yaml#L1) | 125.0 | 已登记 | 没有 |
 | [magicdata_ramc@clean-dual-qwen-moss-v1-20261008](../../catalog/zh_source_clean.yaml#L663) | 125.0 | 已登记 | 没有 |
 | [magicdata_ramc@diarization-benchmark-v1-20261021](../../catalog/diarization_benchmark.yaml#L275) | 20.6 | 已登记 | 没有 |
@@ -1228,10 +1453,12 @@ GRPO 热词挖掘候选（未背过的中文热词提示，含近音易混词）
 | [magicdata_ramc@speaker-identity-v1-20261028](../../catalog/ramc_speaker_identity.yaml#L2) | 125.0 | 已登记 | 没有 |
 | [magicdata_ramc@teacher-calibration-v1-20261009](../../catalog/diarization_raw_teacher-calibration.yaml#L2) | — | 未登记 | 没有 |
 | [magicdata_ramc@train-punc-v1-20261102](../../catalog/train_punc_v1.yaml#L143) | — | 未登记 | 没有 |
+| [magicdata_ramc@train-punc-v1-20261102-ctxclean-20261110](../../catalog/context_correction_clean_zh.yaml#L2696) | 125.5 | 已登记 | 没有 |
 | [magicdata_ramc@turn-taking-20261014](../../catalog/amphionasr_v4.yaml#L2884) | 403.5 | 已登记 | 没有 |
-| [magicdata_ramc@turn-taking-20261014-ctxclean-20261110](../../catalog/context_correction_clean_zh.yaml#L732) | 403.5 | 已登记 | 没有 |
+| [magicdata_ramc@turn-taking-20261014-ctxclean-20261110](../../catalog/context_correction_clean_zh.yaml#L947) | 403.5 | 已登记 | 没有 |
 | [magicdata_ramc@turn-taking-20261014-utts](../../catalog/ts_window_utts.yaml#L341) | 41.5 | 已登记 | 没有 |
 | [magicdata_ramc@turn-taking-20261014-utts-punc-20261102](../../catalog/train_punc_v1_derived.yaml#L1161) | — | 未登记 | 没有 |
+| [magicdata_ramc@turn-taking-20261014-utts-punc-20261102-ctxclean-20261110](../../catalog/context_correction_clean_zh.yaml#L2764) | 337.1 | 已登记 | 没有 |
 
 - `magicdata_ramc@alignment-v1-20261008`：magicdata_ramc@icefall-20260908 train 全部 168464 句的词级强制对齐（2026-10-08，Qwen3-ForcedAligner-0.6B，amphiondata main 6daabaf）。custom.alignment 含 status（aligned 109797 句 / needs_review 58667 句，后者有零时长或越界的词）、items（每个字或词的文本和起止秒，从该句开头算起）、issues、time_reference、unit、audio_duration。文本是对齐时所用的原标注文本；录音沿用 magicdata_ramc@clean-dual-qwen-moss-v1-20261008 的 train 录音，不复制音频。脚本 scripts/label_registration/register_alignments.py
 - `magicdata_ramc@allspk-asr-v1-20261103`：MagicData-RAMC 训练集的普通 ASR 多人窗口：按 magicdata_ramc@icefall-20260908 训练集标注，在每段录音上依次切出不重叠的窗口，每个窗口长度在 10–90 秒间均匀抽取，只在没人说话（前后静音至少 0.2 秒）处下刀；目标文本是窗口内所有说话人每句话的书面化标点文本（magicdata_ramc@punc-written-v1-20261029，同一 ID）按开始时间顺序拼接，不区分说话人。重叠语音超过窗口时长 10% 的窗口丢弃（普通转写的字序不确定），有任一句缺标点文本的窗口丢弃，有任一句未通过 magicdata_ramc@clean-dual-qwen-moss-v1-20261008 清洗（custom.clean.pass 为 false）的窗口丢弃。音频引用 magicdata_ramc@asr-20261014 训练集（只取第 0 路），不复制。用途：普通 ASR 模式下多人轮流说话时转写每个人、长录音不提前结束（此前普通 ASR 训练数据每条只转写一个说话人）。保留 9902 个窗口，丢弃：重叠 0、缺标点 0、短于 5 秒 72、未过清洗 1388；说话人数分布 {'1': 1767, '2': 8135}
@@ -1249,10 +1476,12 @@ GRPO 热词挖掘候选（未背过的中文热词提示，含近音易混词）
 - `magicdata_ramc@speaker-identity-v1-20261028`：magicdata_ramc@clean-dual-pass-20261027 全部 166711 条训练分段，文本等字段与父版本相同，新增 custom.speaker_identity：MagicData-RAMC 每段对话给说话人发新编号，同一个人会挂在几个编号下，部分 train 编号的声纹也与 dev/test 说话人相同。same_voice 列出与本编号声纹相似度 ≥ 0.60 的其他编号（298 对，涉及 383 个编号），heldout_match 记与本编号声纹相同的 dev/test 单元（113 个 train 编号），没有则为 null。identities.json / report.json 是生成器输出，suspects.json（同编号与不同编号的相似度分布、跨录音疑似同人对）和heldout_match.json（各阈值下与 dev/test 匹配的 train 编号）是阈值依据。声纹单元嵌入（.npz）是特征不是标注，不登记。录音沿用父版本，不复制音频。脚本 scripts/label_registration/register_ramc_identity.py，生成器 scripts/ts_robust/ramc_voice_identities.py
 - `magicdata_ramc@teacher-calibration-v1-20261009`：说话人日志老师校准（2026-10-09）：在有人工标注的 RAMC train 6 条 / 3.17 h 上比较本机 MOSS 0.9B、MOSS Pro、百炼 qwen-audio-3.1-asr-flash 三个老师，并用 Qwen3-ASR 对本机 MOSS 的每个片段做文本校验；付费调用经用户批准，仅用于这次校准。每个 *_records 文件一个老师，每行一条录音，target 是按时间排序的 [说话人][起-止] 文本，教师返回的分块、说话人链接、身份断点留在 metadata.<老师>；teacher_agreement_records 每行一个人工标注片段，metadata.teacher_agreement 记各老师的说话人、边界和字错误率（analysis/segments.jsonl，用于确定多老师一致性过滤门槛）。录音沿用 magicdata_ramc@legacy-20260804 train_rec_0（只用其中被抽中的录音），不复制音频。脚本 scripts/diarization_raw_labels/register_raw_labels.py
 - `magicdata_ramc@train-punc-v1-20261102`：magicdata_ramc@clean-dual-qwen-moss-v1-20261008 的 train 训练版本，目标文本换成带标点的写法（按 id 取自 datasets/magicdata_ramc/versions/punc-written-v1-20261029/magicdata_ramc_supervisions_train_punc_written.jsonl.gz；去掉标点和空格、转小写后与原文一致才替换，否则保留原文）。其余字段与源版本相同，录音引用源版本
+- `magicdata_ramc@train-punc-v1-20261102-ctxclean-20261110`：在 magicdata_ramc@train-punc-v1-20261102 上做的上下文纠偏清洗：说话人讲字怎么写（组词、拆字、偏旁、否定对比）而标注写成同音别字的，按说明改正；拿不准的窗口整窗去掉。判定依据见 context_correction_clean_zh@v1-20261110。判定迁自同一批记录在清洗时的判定（clean.py transfer：按去掉标点、空格后的文本对应，改字按字对齐写进带标点的文本）
 - `magicdata_ramc@turn-taking-20261014`：会议 turn-taking。整句拼成 2/3 人混合窗，时长 0.5～30 秒。注册音是窗外另一句，1～30 秒。有近场时远场:近场 = 3:1
 - `magicdata_ramc@turn-taking-20261014-ctxclean-20261110`：在 magicdata_ramc@turn-taking-20261014 上做的上下文纠偏清洗：说话人讲字怎么写（组词、拆字、偏旁、否定对比）而标注写成同音别字的，按说明改正；拿不准的整条去掉。判定依据见 context_correction_clean_zh@v1-20261110
 - `magicdata_ramc@turn-taking-20261014-utts`：magicdata_ramc@turn-taking-20261014 的 train 划分（不含 eval/test），时间线取自 magicdata_ramc@icefall-20260908 的 train 人工标注。加 metadata.window_utts（窗口内每句的说话人与相对混合起点的起止，取自来源标注并截到窗口，截断的标 clipped）与同一命名空间的 metadata.target_speaker，供 open-audio-llm 帧级说话人活动标签（objective.ts_activity_weight）；其余字段不变，音频引用改指本版本，音频索引与原版逐行相同。正样本的目标语句与转写逐字一致（忽略空白和标点；窗口边缘截断的句子允许只转写一部分）才写时间线，负样本只有注册人确实不在窗口里说话才写；其余记录不写时间线（不出帧级标签）。负样本中注册人按标注其实在窗口内说话的记录 ID 列在 excluded-records-<split>.txt，训练配方用 exclude_records 排除。生成脚本 audio-data-contract scripts/ts_robust/add_window_utts.py，逐划分统计见 report.json
 - `magicdata_ramc@turn-taking-20261014-utts-punc-20261102`：magicdata_ramc@turn-taking-20261014-utts 的 train_2spk, train_neg，目标文本加书面化标点：中文用 amphiondata 的中文学生模型（punc-student-v1，不带听音提示），英文用英文规范 en-v1 的学生模型（加标点并恢复大小写）；标点按字 / 按词搬回原文，原文的字词不变，找不到输出的目标保留原样。其余字段与源版本相同，音频引用源版本
+- `magicdata_ramc@turn-taking-20261014-utts-punc-20261102-ctxclean-20261110`：在 magicdata_ramc@turn-taking-20261014-utts-punc-20261102 上做的上下文纠偏清洗：说话人讲字怎么写（组词、拆字、偏旁、否定对比）而标注写成同音别字的，按说明改正；拿不准的整条去掉。判定依据见 context_correction_clean_zh@v1-20261110。判定迁自同一批记录在清洗时的判定（clean.py transfer：按去掉标点、空格后的文本对应，改字按字对齐写进带标点的文本）
 - 含派生版本（与源数据可能重叠）
 
 ### magicdata_ramc_farsim_meeting_sot
@@ -1440,6 +1669,30 @@ RealMAN 远场中文转写训练数据
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
 | [realman_zh_far_asr@zh-far-replay-v1-20261009](../../catalog/zh_farfield.yaml#L337) | 64.0 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/zh_far_replay/` |
+
+### seniortalk
+
+75–85 岁老人普通话对话（SeniorTalk）
+
+语言：zh · 任务：语音识别、带说话人标注的语音识别、说话人分段与归属
+
+| 版本 | 时长（小时） | 口径 | COS |
+|---|---:|---|---|
+| [seniortalk@hf-d1ddfa691c4b](../../catalog/seniortalk.yaml#L1) | 55.5 | 已登记 | 没有 |
+
+- `seniortalk@hf-d1ddfa691c4b`：智源研究院与南开大学发布的超高龄老人中文对话语料：202 位 75–85 岁老人（来自 16 个省份，男女约 7:13），两两自由对话， 手机在安静室内录制，110 段、55.5 小时，16 kHz，以双声道 WAV 内嵌在 Parquet 中。dialogue_data 每段的 text 是逐行 TSV： 起止时间、说话人编号、性别、省份、口音轻重、转写，带 [NOISE]、[SONANT] 等事件标记，重叠处用 [+]…[+] 标出，可用于说话人日志 和带说话人的转写；少数说话人编号格式不规范（如 38、035搁），读取时要规整成三位数。sentence_data 是按句切出的 ASR 子集 （37.8 小时，60,029 句，平均 2.3 秒），音频取自同一批对话录音，但说话人划分和对话子集不同：抽查不少于 8 字的句子， sentence_test 里 2,735/3,287 句出现在 dialogue_train 的转写中，sentence_train 里 2,769/25,221 句出现在 dialogue_test 中， 两套划分不能混用。仓库根目录另有一个 0 字节的 test 空文件。CC BY-NC-SA 4.0，仅限学术和非商业研究，发布方条款还要求 不得再分发、参与者要求删除时须配合删除
+
+### smoothconv
+
+中文多人自然对话，多声道人工精标（SmoothConv）
+
+语言：zh · 任务：语音识别、带说话人标注的语音识别、说话人分段与归属
+
+| 版本 | 时长（小时） | 口径 | COS |
+|---|---:|---|---|
+| [smoothconv@hf-cd74b4fca285](../../catalog/smoothconv.yaml#L1) | 100.5 | 已登记 | 没有 |
+
+- `smoothconv@hf-cd74b4fca285`：西工大 ASLP 与 QualiaLabs 2026-06 开源的中文全双工多人自然对话，2,503 段、100.5 小时（每段 60–635 秒），辅导课和闲聊两类场景。 每段一个 48 kHz 多声道 WAV（2–4 声道，每位说话人一个声道）和一个同名 JSON：instances 里每条带声道号、起止时间（毫秒级）、 说话人编号、轮次状态（complete、incomplete、backchannel、wait）、性别、年龄段、情感、笑声咳嗽等事件，以及人工转写； 有约两成条目缺轮次标签。共 130,077 个标注段、125.7 小时（重叠部分按每人分别计时）。可用于说话人日志、带说话人转写、 轮次判断和全双工对话建模。同源的 2,000 小时 LLM 辅助标注版见 duplexconv（待下载），ASLP-lab/FastTurn-Testset 也取自本数据， 用本数据做评测时要排除这两者中的重叠录音。CC BY-NC 4.0，仅限学术研究
 
 ### speechio
 
@@ -1630,6 +1883,7 @@ VITW 中文远场转写训练数据
 | [wenetspeech_clean@punc-teacher-v1-20261029](../../catalog/punc_teacher_v1.yaml#L2) | 44.7 | 已登记 | 没有 |
 | [wenetspeech_clean@punc-written-v1-20261029](../../catalog/zh_punc_written_v1.yaml#L792) | 9,971.1 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/wenetspeech_clean/` |
 | [wenetspeech_clean@train-punc-v1-20261102](../../catalog/train_punc_v1_wenetspeech.yaml#L2) | — | 未登记 | 没有 |
+| [wenetspeech_clean@train-punc-v1-20261102-ctxclean-20261110](../../catalog/context_correction_clean_zh.yaml#L2521) | 9,919.3 | 已登记 | 没有 |
 | [wenetspeech_test_meeting@eval-20260804](../../catalog/open_audio_eval.yaml#L764) | 15.2 | 已登记 | 快照 20260914、`amphion-audio-backup-1373259071:audio-data-contract/datasets/wenetspeech/` |
 | [wenetspeech_test_net@eval-20260804](../../catalog/open_audio_eval.yaml#L729) | 23.1 | 已登记 | 快照 20260914、`amphion-audio-backup-1373259071:audio-data-contract/datasets/wenetspeech/` |
 | [wenetspeech_traffic_snr0@icefall-20260908](../../catalog/icefall_runtime.yaml#L3900) | — | 未登记 | 快照 20260914、`amphion-audio-backup-1373259071:audio-data-contract/datasets/wenetspeech/` |
@@ -1650,6 +1904,7 @@ VITW 中文远场转写训练数据
 - `wenetspeech_clean@punc-teacher-v1-20261029`：wenetspeech_clean@clean-v3-pass-20261027 的 train 监督片段里的 Qwen3.8-27B 老师给 65000 句加的书面化标点（64406 句去掉标点后与输入一致，ok=true）：custom.punctuation_teacher 记输出 text、ok 和模型看到的无标点输入 input；custom.punctuation_hint.qwen 是提示用的 Qwen3-ASR 转写；其中 1309 句是留出的评测句，另带学生 v1 的输出 custom.punctuation_student。这批句子用来微调 Qwen3-4B 学生，抽样见 amphiondata scripts/punctuation/build_teacher_set.py。只含这些句子，text 与父版本相同，不是标点后的文本；录音沿用父版本，不复制音频。中间产物，供复现和比较学生，不直接用于训练。脚本 scripts/punctuation/register_punc_intermediates.py
 - `wenetspeech_clean@punc-written-v1-20261029`：wenetspeech_clean@clean-v3-20260828 训练集原标注加书面化标点（GB/T 15834，逗号从紧）：微调后的 Qwen3-4B（Qwen3.8-27B 的 9.6 万条输出蒸馏）以 Qwen3-ASR-1.7B 听音频得到的带标点转写作语气提示，只往原标注里插标点。模型改动了原文的条目，把模型输出的标点按字对齐搬回原标注；每条以 。？！ 结尾；原标注的字、空格（首尾除外）和大小写不变。没有汉字的条目（英文句子、拼读字母）和标注为空的条目原样保留。文件与源 supervisions 条数、顺序相同，只换 text。试点 200 条人工参照上：WenetSpeech markF1 92.4、其他来源 88.9（老师 93.2 / 88.2，原 FireRedPunc 79.8）。本数据的条目与 wenetspeech（原始 L 标注）同序，标注不同的 244,507 条即 wenetspeech_disfluency，标点取自这两者的结果
 - `wenetspeech_clean@train-punc-v1-20261102`：wenetspeech_clean@clean-v3-pass-20261027 的 train 训练版本，目标文本换成带标点的写法（按 id 取自 datasets/wenetspeech_clean/versions/punc-written-v1-20261029/wenetspeech_supervisions_L_clean_punc_written.jsonl.gz；去掉标点和空格、转小写后与原文一致才替换，否则保留原文）。其余字段与源版本相同，录音引用源版本
+- `wenetspeech_clean@train-punc-v1-20261102-ctxclean-20261110`：在 wenetspeech_clean@train-punc-v1-20261102 上做的上下文纠偏清洗：说话人讲字怎么写（组词、拆字、偏旁、否定对比）而标注写成同音别字的，按说明改正；拿不准的窗口整窗去掉。判定依据见 context_correction_clean_zh@v1-20261110。判定迁自本清洗对 wenetspeech_podcast / wenetspeech_youtube@l-20261014 的判定（clean.py transfer：按分段 ID 对应，去掉标点后文本相同才迁改字，改字窗口文本对不上的整窗隔离），并去掉 context_correction_zh 评测录音
 - 含派生版本（与源数据可能重叠）
 
 ### wenetspeech4tts
@@ -1729,7 +1984,7 @@ WenetSpeech L 中的播客部分
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
 | [wenetspeech_podcast@l-20261014](../../catalog/amphionasr_v4.yaml#L3722) | 3,892.3 | 已登记 | 没有 |
-| [wenetspeech_podcast@l-20261014-ctxclean-20261110](../../catalog/context_correction_clean_zh.yaml#L457) | 3,840.9 | 已登记 | 没有 |
+| [wenetspeech_podcast@l-20261014-ctxclean-20261110](../../catalog/context_correction_clean_zh.yaml#L672) | 3,840.9 | 已登记 | 没有 |
 
 - `wenetspeech_podcast@l-20261014`：WenetSpeech L 集按录音路径分成 YouTube 或 podcast。这是全集，不是 replay 的 3000 小时抽样
 - `wenetspeech_podcast@l-20261014-ctxclean-20261110`：在 wenetspeech_podcast@l-20261014 上做的上下文纠偏清洗：说话人讲字怎么写（组词、拆字、偏旁、否定对比）而标注写成同音别字的， 按说明改正；拿不准的窗口整窗去掉；context_correction_zh 评测用过的录音整条去掉。判定依据见 context_correction_clean_zh@v1-20261110。 改正抽检 45 段文本，明确改错 2 段、改后仍矛盾或存疑 4 段，均已改判为隔离；未抽到的改正估计约 4% 改错
@@ -1754,6 +2009,18 @@ WenetSpeech L 中的播客部分
 - `wenetspeech_wu@stepaudio2-wu-asr-v1-20261109`：WenetSpeech-Wu 吴语训练集（wenetspeech_wu@icefall-20260908）用 Step-Audio2-Wu-ASR 逐条核对后保留的部分：原标注规范化后非空、生成未截断且字错误率 < 30 % 的 3,281,389 条 / 6804.5 h（占全部时长的 77.8 %）。原标注不改，不拿 Step 的文字替换。每行的 custom.step_audio2_asr 与 wenetspeech_wu@stepaudio2-wu-asr-full-v1-20261109 中相同；被去掉的条目和全部转写见该版本。Step-Audio2-Wu-ASR 在 WenetSpeech-Wu 上训练过，与原标注的一致程度可能偏高。误杀按 Wu-Bench 人工标注估计：Wu-Bench 上 Step 自身落到 CER ≥ 30 % 的时长占 8.4 %，训练集为 22.2 %，据此被丢的部分约 38 % 其实标注是对的（偏粗，可能高估）；分歧集中在原标注低置信度的条目。录音沿用父版本，不复制音频。脚本 scripts/wenetspeech_wu_step/
 - 含派生版本（与源数据可能重叠）
 
+### wenetspeech_wu_bench
+
+吴语多任务评测集（WenetSpeech-Wu-Bench）
+
+语言：zh · 任务：语音识别、语音翻译、语音情感识别、语音合成
+
+| 版本 | 时长（小时） | 口径 | COS |
+|---|---:|---|---|
+| [wenetspeech_wu_bench@hf-36f67e0276ce](../../catalog/wenetspeech_wu_bench.yaml#L1) | 9.8 | 已登记 | 没有 |
+
+- `wenetspeech_wu_bench@hf-36f67e0276ce`：西工大 ASLP 随 WenetSpeech-Wu 发布的人工整理吴语评测集（总时长只计 ASR 子集和 TTS 提示音频，其余子集的音频取自 ASR 子集，登记为它的子划分）：ASR 4,851 句 9.75 小时（上海话、苏州话及与普通话混说）， 吴语到普通话翻译 3,000 句，情感 1,000 句，性别 3,000 句，年龄 1,500 句，均为 16 kHz 单声道、Parquet 内嵌 WAV； 另有 TTS 与 instruct TTS 的测试文本和提示音频。翻译、情感、性别、年龄子集的源句全部取自 ASR 子集（部分再切成更短片段，ID 带 _seg 后缀），不是独立的录音。 与本项目 wenetspeech_wu 训练数据的关系：评测句本身不在训练集里，但 ASR 的 4,851 句来自 2,979 段长录音，其中 4,850 句 所在录音的其他片段在 wenetspeech_wu@stepaudio2-wu-asr-full-v1-20261109 的训练切片里（共 573,287 条、1,174.4 小时， 占训练 8,740.7 小时的 13%），说话人和话题与训练集重叠，用 WenetSpeech-Wu 训练过的模型在这里的成绩会偏乐观。 Apache-2.0
+
 ### wenetspeech_youtube
 
 WenetSpeech L 中的 YouTube 部分
@@ -1763,7 +2030,7 @@ WenetSpeech L 中的 YouTube 部分
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
 | [wenetspeech_youtube@l-20261014](../../catalog/amphionasr_v4.yaml#L3774) | 6,113.1 | 已登记 | 没有 |
-| [wenetspeech_youtube@l-20261014-ctxclean-20261110](../../catalog/context_correction_clean_zh.yaml#L1598) | 6,112.6 | 已登记 | 没有 |
+| [wenetspeech_youtube@l-20261014-ctxclean-20261110](../../catalog/context_correction_clean_zh.yaml#L1813) | 6,112.6 | 已登记 | 没有 |
 
 - `wenetspeech_youtube@l-20261014`：WenetSpeech L 集按录音路径分成 YouTube 或 podcast。这是全集，不是 replay 的 3000 小时抽样
 - `wenetspeech_youtube@l-20261014-ctxclean-20261110`：在 wenetspeech_youtube@l-20261014 上做的上下文纠偏清洗：说话人讲字怎么写（组词、拆字、偏旁、否定对比）而标注写成同音别字的，按说明改正；拿不准的窗口整窗去掉。判定依据见 context_correction_clean_zh@v1-20261110。标注是机器转写；隔离里约 6 成是误杀（多为字谜和照实写的结构说明），总量 0.55 h；2026-11-12 捞回 86 段，仍去掉 630 段（0.49 h）
@@ -1791,6 +2058,18 @@ WenetSpeech L 中的 YouTube 部分
 - `wenetspeech_yue@nonclean-qwen3-asr-full-v1-20261025`：wenetspeech_yue_all@icefall-20260908 里WenetSpeech-Yue 粤语训练集里 clean 以外的部分的全部可转写条目（5,592,487 条 / 17373.9 h），原标注（发布方多系统融合（ROVER）的机器标注，置信度 0.6–1.0）一字不改；每条加 custom.qwen_asr：共享的 Qwen3-ASR-1.7B 的转写（hypothesis）、Qwen 报告的语种（language）和与原标注的字错误率（SpeechIO TextNorm，按字，ref_tokens / hyp_tokens / errors / cer 百分数；原标注规范化后为空时 cer 为空）。整体 CER 13.49 %，Qwen 在 WSYue-ASR-eval short 上自身 CER 为 6.2；试跑 2,000 条整体 13.2%，置信度越低差异越大；Qwen 空输出 2,582 条。粤语保留规则沿用川渝（CER < 30 %），未单独听审。录音沿用父版本，不复制音频。脚本 scripts/wenetspeech_qwen/
 - `wenetspeech_yue@nonclean-qwen3-asr-v1-20261025`：WenetSpeech-Yue 粤语训练集里 clean 以外的部分（wenetspeech_yue_all@icefall-20260908）用 Qwen3-ASR-1.7B 逐条核对后保留的部分：原标注规范化后非空且与 Qwen 的字错误率 < 30 % 的 5,049,806 条 / 15909.1 h（占可转写 5,592,487 条的 90.3 %），规则同 wenetspeech_chuan@clean-qwen3-asr-v1-20261023；原标注不改，不拿 Qwen 的文字替换。每行保留 custom.qwen_asr（Qwen 转写、语种、CER），与 wenetspeech_yue@nonclean-qwen3-asr-full-v1-20261025 中的相同；被去掉的条目和全部转写见 wenetspeech_yue@nonclean-qwen3-asr-full-v1-20261025。粤语保留规则沿用川渝（CER < 30 %），未单独听审。录音沿用父版本，不复制音频。脚本 scripts/wenetspeech_qwen/
 - 含派生版本（与源数据可能重叠）
+
+### wildelder
+
+真实场景中文老年人语音（WildElder）
+
+语言：zh · 任务：语音识别
+
+| 版本 | 时长（小时） | 口径 | COS |
+|---|---:|---|---|
+| [wildelder@hf-643c4fb5c6e2](../../catalog/wildelder.yaml#L1) | 33.7 | 已登记 | 没有 |
+
+- `wildelder@hf-643c4fb5c6e2`：南开大学（NKU-HLT）发布的中文老年人真实场景语音：从网络视频（9 个视频博主频道和 7 组 YouTube 视频，目录名有养老院、北京、上海知青、 华侨等主题）中切出老人说话片段并人工转写，共 23,700 句、33.7 小时，16 kHz 单声道 WAV，平均约 5 秒。train/dev/test 按视频划分， 三者之间没有重复视频，但 dev 和 test 只来自 9 个博主频道和两组养老院视频，这 11 个来源在 train 里也都有，同一位老人可能出现在 不同划分中。data_split 下是 Kaldi 风格 wav.scp 和 text（wav.scp 路径带 WildElder/ 前缀，读取时要去掉）；每个 WAV 旁有同名 txt 转写，根目录 train/validation/test.csv 是给 HF 预览用的同一份清单。test/wav.scp 比 text 多一条没有转写的条目。 许可证标为 CC BY-NC-SA 4.0；数据卡同时说明音频取自第三方平台，版权归原权利人，只供学术研究和内部测试，不授权再分发或商用
 
 ## 混合语言及多语数据
 
@@ -1836,6 +2115,18 @@ WenetSpeech L 中的 YouTube 部分
 - `ami_sdm@turn-taking-20261014-utts`：ami_sdm@turn-taking-20261014 的 train 划分（不含 eval/test），时间线取自 ami_sdm@icefall-20260908 的 train 人工标注。加 metadata.window_utts（窗口内每句的说话人与相对混合起点的起止，取自来源标注并截到窗口，截断的标 clipped）与同一命名空间的 metadata.target_speaker，供 open-audio-llm 帧级说话人活动标签（objective.ts_activity_weight）；其余字段不变，音频引用改指本版本，音频索引与原版逐行相同。正样本的目标语句与转写逐字一致（忽略空白和标点；窗口边缘截断的句子允许只转写一部分）才写时间线，负样本只有注册人确实不在窗口里说话才写；其余记录不写时间线（不出帧级标签）。负样本中注册人按标注其实在窗口内说话的记录 ID 列在 excluded-records-<split>.txt，训练配方用 exclude_records 排除。生成脚本 audio-data-contract scripts/ts_robust/add_window_utts.py，逐划分统计见 report.json
 - `ami_sdm@turn-taking-20261014-utts-punc-20261102`：ami_sdm@turn-taking-20261014-utts 的 train_2spk, train_3spk, train_neg，目标文本加书面化标点：中文用 amphiondata 的中文学生模型（punc-student-v1，不带听音提示），英文用英文规范 en-v1 的学生模型（加标点并恢复大小写）；标点按字 / 按词搬回原文，原文的字词不变，找不到输出的目标保留原样。其余字段与源版本相同，音频引用源版本
 - 含派生版本（与源数据可能重叠）
+
+### ascend
+
+香港中英混说自然对话（ASCEND）
+
+语言：en、zh · 任务：语音识别、语码转换语音识别
+
+| 版本 | 时长（小时） | 口径 | COS |
+|---|---:|---|---|
+| [ascend@hf-737e9800ae31](../../catalog/ascend.yaml#L1) | 10.6 | 已登记 | 没有 |
+
+- `ascend@hf-737e9800ae31`：CAiRE 在香港录制的中英语码转换自然多轮对话，共 12,314 句、10.6 小时，16 kHz 单声道，专家转写。 每句标出语言（中文 6,139、英文 2,850、中英混说 3,325 句）、说话人、话题（教育、科技、人设、体育等）。train/validation/test 的说话人互不重叠（18/3/2 人），测试集只有 2 位说话人，结果方差会比较大。适合评测普通话-英语混说的真实对话识别。CC BY-SA 4.0
 
 ### asr_babble_bench
 
@@ -1995,7 +2286,7 @@ Emilia2 中英对话的轮流说话目标说话人数据
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
 | [emilia2_dialog@dialog-turn-taking-20261013-enroll](../../catalog/amphionasr_v4.yaml#L1713) | 15,172.8 | 已登记 | 没有 |
-| [emilia2_dialog@dialog-turn-taking-20261013-enroll-ctxclean-20261110](../../catalog/context_correction_clean_zh.yaml#L1258) | 15,031.0 | 已登记 | 没有 |
+| [emilia2_dialog@dialog-turn-taking-20261013-enroll-ctxclean-20261110](../../catalog/context_correction_clean_zh.yaml#L1473) | 15,031.0 | 已登记 | 没有 |
 
 - `emilia2_dialog@dialog-turn-taking-20261013-enroll`：Emilia2 对话 turn-taking。turn 时间戳来自 dialog tar，音频用 m4a-128k。只保留纯中文或纯英文。混合窗 1～30 秒。注册是同一说话人的连续整句，1～30 秒，按 5 秒分档抽取，正负样本分开保留
 - `emilia2_dialog@dialog-turn-taking-20261013-enroll-ctxclean-20261110`：在 emilia2_dialog@dialog-turn-taking-20261013-enroll 上做的上下文纠偏清洗：说话人讲字怎么写（组词、拆字、偏旁、否定对比）而标注写成同音别字的，按说明改正；拿不准的整条去掉。判定依据见 context_correction_clean_zh@v1-20261110。标注是机器转写。音频是多人混合，Qwen3-ASR 核对时只数标注里没被听到的音节（插话、笑声不算），音频读同名 16 kHz FLAC。改正 38 条记录（0.25 h）、隔离 184 条（1.15 h，2026-11-12 捞回 16 条）；另去掉 ts_asr_real 留出的评测源录音 23,653 条（140.6 h）
@@ -2010,12 +2301,14 @@ Emilia2 长音频合成的 2/3 人目标说话人混合
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
 | [emilia2_mix@mix-20261013](../../catalog/amphionasr_v4.yaml#L2084) | 35,744.6 | 已登记 | 没有 |
-| [emilia2_mix@mix-20261013-ctxclean-20261110](../../catalog/context_correction_clean_zh.yaml#L1753) | 35,692.0 | 已登记 | 没有 |
+| [emilia2_mix@mix-20261013-ctxclean-20261110](../../catalog/context_correction_clean_zh.yaml#L1968) | 35,692.0 | 已登记 | 没有 |
 | [emilia2_mix@mix-20261013-utts](../../catalog/ts_window_utts.yaml#L428) | 24,358.4 | 已登记 | 没有 |
+| [emilia2_mix@mix-20261013-utts-ctxclean-20261110](../../catalog/context_correction_clean_zh.yaml#L2591) | 17,111.7 | 已登记 | 没有 |
 
 - `emilia2_mix@mix-20261013`：Emilia2 long 合成的 2/3 人混合。目标可以晚开口、按 1～15 秒间隔断续，或在中间短插入。干扰人也可以断续。注册是同一录音上没用过的 1～30 秒片段
 - `emilia2_mix@mix-20261013-ctxclean-20261110`：在 emilia2_mix@mix-20261013 上做的上下文纠偏清洗：说话人讲字怎么写（组词、拆字、偏旁、否定对比）而标注写成同音别字的，按说明改正；拿不准的整条去掉。判定依据见 context_correction_clean_zh@v1-20261110。音频核对读混音协议里目标说话人的干净原片段
 - `emilia2_mix@mix-20261013-utts`：emilia2_mix@mix-20261013 的 train_2spk / train_3spk（不含 eval/test/train_neg），时间线取自混音协议 datasets/emilia2-mix/versions/mix-20261013/supervision/protocol-*.jsonl.gz（每个说话人每段在混音中的起点与时长）。加 metadata.window_utts（窗口内每句的说话人与相对混合起点的起止，取自来源标注并截到窗口，截断的标 clipped）与同一命名空间的 metadata.target_speaker，供 open-audio-llm 帧级说话人活动标签（objective.ts_activity_weight）；其余字段不变，音频引用改指本版本，音频索引与原版逐行相同。正样本的目标语句与转写逐字一致（忽略空白和标点；窗口边缘截断的句子允许只转写一部分）才写时间线，负样本只有注册人确实不在窗口里说话才写；其余记录不写时间线（不出帧级标签）。负样本中注册人按标注其实在窗口内说话的记录 ID 列在 excluded-records-<split>.txt，训练配方用 exclude_records 排除。生成脚本 audio-data-contract scripts/ts_robust/add_window_utts.py，逐划分统计见 report.json
+- `emilia2_mix@mix-20261013-utts-ctxclean-20261110`：在 emilia2_mix@mix-20261013-utts 上做的上下文纠偏清洗：说话人讲字怎么写（组词、拆字、偏旁、否定对比）而标注写成同音别字的，按说明改正；拿不准的整条去掉。判定依据见 context_correction_clean_zh@v1-20261110。判定迁自同一批记录在清洗时的判定（clean.py transfer：按去掉标点、空格后的文本对应，改字按字对齐写进带标点的文本）
 - 含派生版本（与源数据可能重叠）
 
 ### emilia2_short
@@ -2028,7 +2321,7 @@ Emilia2 中英短音频普通转写
 |---|---:|---|---|
 | [emilia2_short@short-20261014](../../catalog/amphionasr_v4.yaml#L2457) | 5,102.9 | 已登记 | 没有 |
 | [emilia2_short@short-lance-20261023](../../catalog/amphionasr_v4.yaml#L3911) | 5,102.9 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/emilia2_short/` |
-| [emilia2_short@short-lance-20261023-ctxclean-20261110](../../catalog/context_correction_clean_zh.yaml#L1666) | 5,096.7 | 已登记 | 没有 |
+| [emilia2_short@short-lance-20261023-ctxclean-20261110](../../catalog/context_correction_clean_zh.yaml#L1881) | 5,096.7 | 已登记 | 没有 |
 
 - `emilia2_short@short-20261014`：Emilia2 已抽出的 m4a-128k short。每条短音频是一条普通转写，只保留语言标签为纯中文或纯英文、时长 0.5～30 秒的片段。不使用 m4a-64k 和 asmr
 - `emilia2_short@short-lance-20261023`：与 short-20261014 相同的记录与记录 ID，音频改读 emilia2@tts-unified-v0.1 Lance 发布里的同一条 m4a-128k standalone short（按上游 short ID 与 m4a 文件名对应；发布里存的是同一份完整解码的 FLAC），训练不再为这些片段启动 ffmpeg。音频引用写入 Lance 样本时长。Lance 中没有对应样本的 20 条（zh 11、en 9）已去掉。全部片段都在 Lance 里，没有音频索引，因此也没有 Lance 记录索引，训练端走 JSONL 记录缓存；读取需要 open-audio-llm 支持指向其他数据集 Lance 发布的音频引用（code-v14 起）。生成脚本 scripts/build_emilia2_short_lance.py
@@ -2076,6 +2369,18 @@ Emilia-YODAS 多语种 YouTube 语音
 
 - `genshin_voice@tts-unified-v0.1`：音频编码字节存放在 Lance 表内；原始划分在 metadata_json.original_split，统一输出全部为 train。ASR 用 tts_lance.iter_asr_samples（tts-asr-rules/v1）读取，会排除原始 dev/test 等
 
+### gigaspeech_bench
+
+多方言多语种 ASR 评测（GigaSpeechBench）
+
+语言：ar、en、fil、id、ja、ko、ms、th、vi、yue、zh · 任务：语音识别、语音翻译、带说话人标注的语音识别、说话人分段与归属
+
+| 版本 | 时长（小时） | 口径 | COS |
+|---|---:|---|---|
+| [gigaspeech_bench@hf-55ce5222f21f](../../catalog/gigaspeech_bench.yaml#L1) | 903.6 | 已登记 | 没有 |
+
+- `gigaspeech_bench@hf-55ce5222f21f`：SpeechColab 2026 年发布、2026-11-12 改为 WebDataset 打包的 ASR 评测集，只有 test，54 个配置、36,340 条录音、903.6 小时录音， 其中有标注的语音段 498,442 段、691.6 小时。四个模块：汉语方言与口音英语（12 组）、低资源语种（14 组）、老人与儿童（4 组）、 垂直领域（24 组，中英各 12 个领域）。录音保持原样不切分（16 kHz 单声道 WAV），同名 JSON 里给出整段的分段转写、起止时间， 多数配置还有说话人、性别、年龄段、情感；低资源语种每段另附英文和中文译文；部分英文转写用 (overlap) 标出重叠。 GigaSpeech 3 的数据卡称阿拉伯语方言部分为人工转写评测。与本项目已有评测的重叠：WU 配置的 4,851 段即 wenetspeech_wu_bench 的 ASR 子集（文本全部一致），YUE 配置的 8,807 段即 WSYue-ASR-eval（wenetspeech_yue 的 test_short/test_long，时长逐段对上 8,805 段， 文本转成了简体），横评时不要重复计入。各配置另附 Azure、Qwen3-ASR、Gemini 等十余个系统的转写结果（results/*.json）。 镜像对部分 JSON 返回了不实的 gzip 压缩头，这些文件用 curl 下载并按上游 git 哈希校验。CC BY 4.0
+
 ### hard_hw_sft
 
 热词难例 SFT 数据（ShareGPT 格式）
@@ -2118,6 +2423,18 @@ Emilia-YODAS 多语种 YouTube 语音
 
 - `hw_sft@hw-20261014`：阶段 3 热词 ShareGPT。带 Hotwords 的行是热词转写，系统提示为空的行是普通转写。音频指向已注册源文件
 
+### indic_diarbench
+
+22 种印度语言多人对话评测（DiarBench）
+
+语言：as、bn、brx、doi、gu、hi、kn、kok、ks、mai、ml、mni、mr、ne、or、pa、sa、sat、sd、ta、te、ur · 任务：语音识别、带说话人标注的语音识别、说话人分段与归属
+
+| 版本 | 时长（小时） | 口径 | COS |
+|---|---:|---|---|
+| [indic_diarbench@hf-92877bad8aab](../../catalog/indic_diarbench.yaml#L1) | 107.7 | 已登记 | 没有 |
+
+- `indic_diarbench@hf-92877bad8aab`：Sarvam AI 2026-07 发布（Interspeech 2026）的印度语言说话人日志加转写评测集，覆盖全部 22 种官方语言，1,164 段、107.7 小时， 98,545 个人工校正的带时间戳、带说话人的转写段，平均重叠约 12.8%。三种录音条件：near_field 约 53.3 小时（线上会议，每人一个近讲麦克风）， far_field 约 26.8 小时（远场麦克风，只有使用人数最多的 8 种语言），in_the_wild 约 27.7 小时（YouTube 视频，10 种语言）。 每种语言一个 test Parquet，内嵌 16 kHz 单声道 WAV，字段含 recording_id、dataset_type、num_speakers、annotated_transcript （speaker_id、start_time、end_time、transcript），转写里英语借词附括号原文，听不清处标 <unintelligible>。只有测试集。CC BY 4.0
+
 ### indicvoices
 
 22 种印度语言自然语音（IndicVoices）
@@ -2152,6 +2469,18 @@ Emilia-YODAS 多语种 YouTube 语音
 
 - `meeting_selection_panel@v1-20261008`：独立会议选模面板：AliMeeting 官方 Eval 8 场全部 120 秒窗口（中文）、NOTSOFAR 官方 dev 36 场每场一台设备的全部 120 秒窗口（英文 3–7 人）、CHiME-6 官方 dev 2 场全部 120 秒窗口（英文晚宴，仅报告）。不进训练，不按难度筛选
 
+### meli
+
+普英双语者访谈与朗读（MELI）
+
+语言：en、zh · 任务：语音识别
+
+| 版本 | 时长（小时） | 口径 | COS |
+|---|---:|---|---|
+| [meli@dataverse-v1.2](../../catalog/meli.yaml#L1) | 42.5 | 已登记 | 没有 |
+
+- `meli@dataverse-v1.2`：UBC 语言学系 Speech in Context Lab 的 MELI（LREC 2026）：2024 年在温哥华录制的 51 位普通话-英语双语者，每人分别用普通话和英语 做一场社会语言学访谈并朗读句子，普通话场次另有画地图任务。每人每种语言一个 44.1 kHz 16 bit 立体声 WAV，录音总长 42.5 小时 （含采访者，论文称被试语音约 30 小时）。每个 WAV 配 Praat TextGrid（task、utterance-corrected、words、phones 四层，人工校正后 用 Montreal Forced Aligner 对齐；普通话 TextGrid 是 UTF-16 编码），另有参与者语言背景表、地图扫描和文档。同一批说话人的 中英两种语言都有，适合双语者、口音和中英语音对比研究。许可证以 Dataverse 记录为准写 CC BY-NC-SA 4.0；语料自带 readme 写 CC BY 4.0，论文写 CC BY-NC 4.0，三处不一致，使用前需向作者确认。2026-11-14 起初直连源站只有约 10 KB/s，改经代理后下完
+
 ### mls_sidon
 
 8 种语言有声书，音频经 Sidon 修复（MLS）
@@ -2172,9 +2501,14 @@ TEDx 西语/葡语演讲（mTEDx，非商用）
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
+| [mtedx@clean-v1-20261114](../../catalog/es_pt_spont_clean.yaml#L264) | 320.0 | 已登记 | 没有 |
 | [mtedx@hf-0b97ef40298d](../../catalog/mtedx.yaml#L1) | 334.1 | 已登记 | 没有 |
+| [mtedx@test-v1-20261114](../../catalog/mtedx_test.yaml#L2) | — | 未登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/mtedx/` |
 
+- `mtedx@clean-v1-20261114`：mTEDx 西语、葡语 train 划分（清单 mtedx_es、mtedx_pt）。标注是字幕，丢弃以字幕式缩写改写、错位到邻句、掌声音乐标签为主；保留部分仍可能有轻度改写。mtedx_pt 有 60 个演讲也在 coraa@clean-v1-20261114 的 TEDx 子集里，两者不要重复累计。188,996 句 / 327.49 h 经 Qwen3-ASR-1.7B + whisper-large-v3 双引擎清洗（consensus-v8：西/葡数字拼写、por que/porque 统一后比较）保留 184,453 句 / 319.98 h，丢弃 4,543 句 / 7.51 h（2.3% 时长）。首轮 Qwen 未固定语言，被拒句子用固定语言的 Qwen 复核后按同一规则重判。试跑、抽检和误杀估计见 run_dir README
 - `mtedx@hf-0b97ef40298d`：Multilingual TEDx（OpenSLR 100）的 HF Parquet 转存，只下了西语和葡语的 ASR 部分；整段讲座按官方 segments 切成句子，未含 iwslt2021 划分。转存 README 称丢弃了短于 0.5 秒或长于 30 秒的句子，实测只去掉了短于 0.5 秒的，长于 30 秒的仍在（train 西语 639 句、葡语 511 句，最长约 284 秒）。条数比官方少 1–2%，时长比官方 statistics.txt 少约 17%，差异原因未核实；以本条统计为准。讲者口音未标注。CC BY-NC-ND，仅限非商用。OpenSLR 原包在国内镜像上太慢，改用此转存
+- `mtedx@test-v1-20261114`：mtedx@hf-0b97ef40298d 的 es、pt test 划分，转成评测用的 AudioRecord：TEDx 演讲，自发、半即兴，补朗读测试集（FLEURS、Common Voice）之外的自发语音。音频为上游 Parquet 里的 FLAC，原样写出；转写取上游 transcript。只用于评测，不进训练
+- 含派生版本（与源数据可能重叠）
 
 ### multi-talker-sd
 
@@ -2211,6 +2545,18 @@ AISHELL-1、LibriSpeech 合成的多人对话
 | [opendatalab_multilingual@computer-2-20261009](../../catalog/opendatalab_multilingual.yaml#L1) | 8,588.2 | 已登记 | `amphion-audio-backup-1373259071:computer-2/audio/`（原始数据）、`amphion-audio-backup-1373259071:opendatalab-multilingual/`（原始数据） |
 
 - `opendatalab_multilingual@computer-2-20261009`：OpenDataLab 多语言语音识别数据，8 个语种（ar 阿拉伯语、cs 捷克语、hu 匈牙利语、ko 韩语、ru 俄语、sr 塞尔维亚语、th 泰语、vi 越南语），每语种约 1000 小时。16 kHz 单声道 WAV 切片，每个语种一份 JSONL 清单（id、audio.path/duration/snr、text.content/lang、pjwk_cates 内容分类）。清单中 audio.path 相对于本版本目录。不分 train/dev/test
+
+### real_t
+
+真实会议目标说话人提取评测（REAL-T）
+
+语言：en、zh · 任务：目标说话人语音识别
+
+| 版本 | 时长（小时） | 口径 | COS |
+|---|---:|---|---|
+| [real_t@hf-39ca3b88ffd4](../../catalog/real_t.yaml#L1) | 11.3 | 已登记 | 没有 |
+
+- `real_t@hf-39ca3b88ffd4`：REAL-TSE 挑战赛（IEEE SLT 2026 卫星挑战赛）的目标说话人提取评测包：给定真实多人对话的混合片段和目标说话人的注册语音， 恢复目标说话人的语音；没有干净参考，用目标说话人的转写算识别错误率评估。每个试次是一对混合片段和注册片段，多个试次可共用 同一段混合音频；混合片段平均 17–18 秒，约一半时间有两人以上同时说话。dev 与 Interspeech 2025 论文的 PRIMARY 划分试次相同， eval1 取自同一批公开语料但会话不重叠，eval2 是新录制的中英文会议。全部为 16 kHz 单声道 16 bit WAV，每个试次附目标说话人 转写（eval 的转写已按 Whisper large-v2 分词器重新规范化）和重叠时段 JSON。本发布 v1.0.1 只新增了挑战赛剔除样本表，音频和 元数据与 v1.0.0（2026-08-23）相同。CC BY-SA 4.0；dev 和 eval1 派生自 AISHELL-4、AliMeeting、CHiME-6（CC BY-SA 4.0）、 AMI（CC BY 4.0）、DiPCo（CDLA-Permissive-1.0），使用时需同时引用来源语料
 
 ### sot_many_speaker_word_zh_en
 
@@ -2264,6 +2610,18 @@ AISHELL-1、LibriSpeech 合成的多人对话
 | [starrail_voice@tts-unified-v0.1](../../catalog/tts_unified.yaml#L740) | 692.6 | 已登记 | `amphion-tts-data-1373259071:starrail-voice/`（原始数据） |
 
 - `starrail_voice@tts-unified-v0.1`：音频编码字节存放在 Lance 表内；原始划分在 metadata_json.original_split，统一输出全部为 train。ASR 用 tts_lance.iter_asr_samples（tts-asr-rules/v1）读取，会排除原始 dev/test 等
+
+### svq
+
+17 种语言四种环境下的手机语音问句（Google SVQ）
+
+语言：ar、bn、en、fi、gu、hi、id、ja、kn、ko、ml、mr、ru、sw、ta、te、ur · 任务：语音识别
+
+| 版本 | 时长（小时） | 口径 | COS |
+|---|---:|---|---|
+| [svq@hf-74f17ec92f06](../../catalog/svq.yaml#L1) | 244.4 | 已登记 | 没有 |
+
+- `svq@hf-74f17ec92f06`：Google 发布的 Simple Voice Questions（MSEB 声音嵌入评测的核心数据），2.0.0 版：17 种语言、26 个地区口音（阿拉伯语埃及/海湾/黎凡特/马格里布、 英语美/英/澳/印/菲、孟加拉、乌尔都等），759 位说话人（各地区分别去重后相加，发布方称约 700 位）用自己的手机朗读 XTREME-UP 问答数据里的短问句，171,434 条、244.4 小时。 录音环境大致均分四种：clean（安静）、background_speech（旁边设备播放播客/电台）、media_noise（播放音乐影视）、traffic_noise（乘车途中）， 登记为四个划分。每条带参考文本（transcript_truth）、说话人编号、性别、年龄，以及段落检索、关键词时间戳等检索任务字段。 发布方不分 train/test，整体作评测用；ASR 用途可评噪声与背景人声下的短句识别。只下载了 2.0.0 目录，1.0.0 的旧格式未下载。CC BY 4.0
 
 ### talcs
 
@@ -2801,7 +3159,7 @@ TS-ASR 训练用跨语言 TTS 注册音频
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
 | [vitw@2m-20261013](../../catalog/amphionasr_v4.yaml#L3854) | 1,085.4 | 已登记 | 没有 |
-| [vitw@2m-20261013-ctxclean-20261110](../../catalog/context_correction_clean_zh.yaml#L1188) | 1,085.4 | 已登记 | 没有 |
+| [vitw@2m-20261013-ctxclean-20261110](../../catalog/context_correction_clean_zh.yaml#L1403) | 1,085.4 | 已登记 | 没有 |
 | [vitw@icefall-20260908](../../catalog/icefall_runtime.yaml#L2568) | 1,085.4 | 已登记 | 快照 20260914 |
 | [vitw@legacy-20260804](../../catalog/icefall_base.yaml#L2179) | 1,085.4 | 已登记 | 快照 20260914 |
 | [vitw_far_field@icefall-20260908](../../catalog/icefall_runtime.yaml#L3075) | 77.3 | 已登记：远场子集 | 快照 20260914、`amphion-audio-backup-1373259071:audio-data-contract/datasets/vitw_far_field/` |
@@ -2863,9 +3221,11 @@ YouTube 西语/葡语人工字幕语音（YODAS）
 |---|---:|---|---|
 | [yodas_granary_es_pt@es000-clean-v1-20261111](../../catalog/yodas_granary_es_clean.yaml#L2) | 2,442.9 | 已登记 | 没有 |
 | [yodas_granary_es_pt@hf-969944574ea3](../../catalog/yodas_granary_es_pt.yaml#L1) | 3,658.5 | 已登记 | 快照 20260914 |
+| [yodas_granary_es_pt@pt000-clean-v1-20261114](../../catalog/yodas_granary_pt_clean.yaml#L2) | 1,202.3 | 已登记 | 没有 |
 
 - `yodas_granary_es_pt@es000-clean-v1-20261111`：YODAS-Granary 西语人工字幕分区 es000 的清洗版本：Parquet 里嵌的 16 kHz WAV 解成 FLAC 放在本版本目录（约 157 GB）， 731,196 句 / 2,452.45 h 经 Qwen3-ASR-1.7B + whisper-large-v3 双引擎清洗（consensus-v7）保留 726,015 句 / 2,442.89 h （asr_only 75.91 h、ast 2,366.98 h；≥30 s 的长段 938.37 h）。丢弃 0.39% 时长，不集中在某类时长或某些视频； 试跑、被拒样本和误杀率见 run_dir README。es000 的视频 99% 也在 yodas_es@legacy 里，不要两者叠加
 - `yodas_granary_es_pt@hf-969944574ea3`：YODAS-Granary 里西语、葡语的人工字幕分区（es000、pt000），音频已切成句子；asr_only 与 ast 两个划分都带原文转写，ast 另有英文翻译。自动字幕分区（es100–108、pt100–103，约 4 TB）未下载。地区未区分。es000 的视频 99%（23,976/24,208 个）也在 yodas_es 里，是同一批 YouTube 音频、切分和转写不同，西语部分不要与 yodas_es 一起累计；葡语此前没有登记 YODAS
+- `yodas_granary_es_pt@pt000-clean-v1-20261114`：YODAS-Granary 葡语人工字幕分区 pt000 的清洗版本：Parquet 里嵌的 16 kHz WAV 解成 FLAC 放在本版本目录（约 79 GB）， 547,603 句 / 1,205.96 h 经 Qwen3-ASR-1.7B + whisper-large-v3 双引擎清洗（consensus-v7）保留 544,192 句 / 1,202.34 h （asr_only 18.29 h、ast 1,184.05 h；≥30 s 的长段 241.50 h）。丢弃 0.30% 时长， 主要是字幕只写了音频一部分或与音频不符；不集中在某类时长或某些视频（11,951 个视频里 8 个整段丢弃，丢弃最多的 20 个视频占全部丢弃 8.9%）
 - 含派生版本（与源数据可能重叠）
 
 ### zenless_voice
@@ -2928,6 +3288,18 @@ Casablanca 八种阿拉伯语方言
 
 - 有含标点版本
 
+### cetuc
+
+巴西葡语朗读，101 人各约 1,000 句（CETUC）
+
+语言：pt · 任务：语音识别
+
+| 版本 | 时长（小时） | 口径 | COS |
+|---|---:|---|---|
+| [cetuc@hf-6dbc8081d35f](../../catalog/cetuc.yaml#L1) | 144.7 | 已登记 | 没有 |
+
+- `cetuc@hf-6dbc8081d35f`：CETUC 巴西葡语朗读语料（FalaBrasil 整理后 2025-07 上传 Hugging Face），101 位说话人、共 100,998 句、144.7 小时， 16 kHz 单声道 WAV，每句一个同名 txt 转写（小写、无标点、数字写成词）。按说话人划分 train 81 人、dev 10 人、test 10 人， 说话人不重叠，但所有人朗读的是同一份约 1,000 句的文本表（抽查 train、dev、test 共 11 位说话人，每人的句子集合都是同样的 997 句），dev/test 的文本 都在 train 里出现过，只能用来看说话人泛化，不能当作文本未见过的测试集。每位说话人一个 tar.gz，包里带 macOS 生成的 ._ 元数据文件，读取时要跳过
+
 ### ciempiess
 
 墨西哥西班牙语广播语音（CIEMPIESS LIGHT）
@@ -2936,17 +3308,22 @@ Casablanca 八种阿拉伯语方言
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
+| [ciempiess_balance@clean-v1-20261114](../../catalog/es_pt_spont_clean.yaml#L2) | 18.3 | 已登记 | 没有 |
 | [ciempiess_balance@hf-e48eac011954](../../catalog/ciempiess_balance.yaml#L1) | 18.3 | 已登记 | 没有 |
 | [ciempiess_complementary@hf-3401a78c38d7](../../catalog/ciempiess_complementary.yaml#L1) | 0.9 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ciempiess_complementary/` |
+| [ciempiess_fem@clean-v1-20261114](../../catalog/es_pt_spont_clean.yaml#L68) | 13.9 | 已登记 | 没有 |
 | [ciempiess_fem@hf-e49f428d174b](../../catalog/ciempiess_fem.yaml#L1) | 13.9 | 已登记 | 没有 |
 | [ciempiess_light@hf-3d6afb2b3b8d](../../catalog/ciempiess_light.yaml#L1) | 18.4 | 已登记 | 快照 20260914 |
 | [ciempiess_test@hf-c134fff8e335](../../catalog/ciempiess_test.yaml#L1) | 8.1 | 已登记 | 快照 20260914、`amphion-audio-backup-1373259071:audio-data-contract/datasets/ciempiess_test/` |
 
+- `ciempiess_balance@clean-v1-20261114`：墨西哥西语广播访谈 CIEMPIESS Balance。8,555 句 / 18.34 h 经 Qwen3-ASR-1.7B + whisper-large-v3 双引擎清洗（consensus-v8：西/葡数字拼写、por que/porque 统一后比较）保留 8,524 句 / 18.29 h，丢弃 31 句 / 0.05 h（0.3% 时长）。首轮 Qwen 未固定语言，被拒句子用固定语言的 Qwen 复核后按同一规则重判。试跑、抽检和误杀估计见 run_dir README
 - `ciempiess_balance@hf-e48eac011954`：墨西哥中部口音广播对话，男女时长均衡，官方完整版本
 - `ciempiess_complementary@hf-3401a78c38d7`：墨西哥中部口音的孤立词朗读，按音素均衡挑词，用来补足少见音素
+- `ciempiess_fem@clean-v1-20261114`：墨西哥西语女声广播 CIEMPIESS Fem。6,505 句 / 13.92 h 经 Qwen3-ASR-1.7B + whisper-large-v3 双引擎清洗（consensus-v8：西/葡数字拼写、por que/porque 统一后比较）保留 6,483 句 / 13.87 h，丢弃 22 句 / 0.05 h（0.3% 时长）。首轮 Qwen 未固定语言，被拒句子用固定语言的 Qwen 复核后按同一规则重判。试跑、抽检和误杀估计见 run_dir README
 - `ciempiess_fem@hf-e49f428d174b`：女声广播语音，大部分为墨西哥口音（12.0 h），另有多米尼加、委内瑞拉、阿根廷、萨尔瓦多少量；按 country 字段可区分
 - `ciempiess_light@hf-3d6afb2b3b8d`：墨西哥西语 CIEMPIESS LIGHT 官方完整版本
 - `ciempiess_test@hf-c134fff8e335`：墨西哥西语独立测试集，只用于评测，不进训练
+- 含派生版本（与源数据可能重叠）
 
 ### cml_tts_fr
 
@@ -3129,9 +3506,12 @@ Common Voice 17 葡语朗读
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
+| [coraa@clean-v1-20261114](../../catalog/es_pt_spont_clean.yaml#L512) | 268.5 | 已登记 | 没有 |
 | [coraa@hf-719c91226a79](../../catalog/coraa.yaml#L1) | 290.5 | 已登记 | 没有 |
 
+- `coraa@clean-v1-20261114`：CORAA v1.1 巴西葡语 train（ALIP、C-ORAL-BRASIL I、NURC-Recife、SP2010、TEDx）。源音频为 32 位浮点 WAV，已转 16 位 PCM。与 mTEDx pt 测试集重叠的演讲 h5mWwJJ2drU（2 句）已去掉；TEDx 子集有 60 个演讲也在 mtedx@clean-v1-20261114 的 pt 部分，不要重复累计。382,258 句 / 273.38 h 经 Qwen3-ASR-1.7B + whisper-large-v3 双引擎清洗（consensus-v8：西/葡数字拼写、por que/porque 统一后比较）保留 371,998 句 / 268.52 h，丢弃 10,260 句 / 4.86 h（1.8% 时长）。首轮 Qwen 未固定语言，被拒句子用固定语言的 Qwen 复核后按同一规则重判。试跑、抽检和误杀估计见 run_dir README
 - `coraa@hf-719c91226a79`：CORAA v1.1：NURC-Recife、ALIP、SP2010、C-ORAL-BRASIL、TEDx 葡语五个来源的人工校对语音，绝大多数为巴西葡语，少量葡萄牙葡语（metadata 的 variety=pt_pt）。train 是 5 个分卷 rar，需整体解压。CC BY-NC-ND，仅限非商用
+- 含派生版本（与源数据可能重叠）
 
 ### coraa_mupe
 
@@ -3141,9 +3521,12 @@ Common Voice 17 葡语朗读
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
+| [coraa_mupe@clean-v1-20261114](../../catalog/es_pt_spont_clean.yaml#L442) | 317.7 | 已登记 | 没有 |
 | [coraa_mupe@hf-437966f103b3](../../catalog/coraa_mupe.yaml#L1) | 365.2 | 已登记 | 快照 20260914 |
 
+- `coraa_mupe@clean-v1-20261114`：CORAA-MUPE 博物馆口述史访谈 train。文本用 original_text 并删掉转写标记（括号里的停顿、笑声等，带 < > 的截断词）；34 句源文本残缺丢弃。276,861 句 / 319.98 h 经 Qwen3-ASR-1.7B + whisper-large-v3 双引擎清洗（consensus-v8：西/葡数字拼写、por que/porque 统一后比较）保留 273,080 句 / 317.73 h，丢弃 3,781 句 / 2.25 h（0.7% 时长）。首轮 Qwen 未固定语言，被拒句子用固定语言的 Qwen 复核后按同一规则重判。试跑、抽检和误杀估计见 run_dir README
 - `coraa_mupe@hf-437966f103b3`：巴西葡语人生经历访谈（Museu da Pessoa），官方 train/validation/test 三个划分完整下载
+- 含派生版本（与源数据可能重叠）
 
 ### coraa_nurc_sp
 
@@ -3153,9 +3536,12 @@ Common Voice 17 葡语朗读
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
+| [coraa_nurc_sp@clean-v1-20261114](../../catalog/es_pt_spont_clean.yaml#L373) | 219.8 | 已登记 | 没有 |
 | [coraa_nurc_sp@hf-c02be121ec19](../../catalog/coraa_nurc_sp.yaml#L1) | 239.3 | 已登记 | 没有 |
 
+- `coraa_nurc_sp@clean-v1-20261114`：CORAA NURC-SP 圣保罗老录音（filtered train）。丢弃以老录音上两引擎都识别不出（ambiguous）为主。166,971 句 / 224.47 h 经 Qwen3-ASR-1.7B + whisper-large-v3 双引擎清洗（consensus-v8：西/葡数字拼写、por que/porque 统一后比较）保留 161,652 句 / 219.78 h，丢弃 5,319 句 / 4.69 h（2.1% 时长）。首轮 Qwen 未固定语言，被拒句子用固定语言的 Qwen 复核后按同一规则重判。试跑、抽检和误杀估计见 run_dir README
 - `coraa_nurc_sp@hf-c02be121ec19`：CORAA NURC-SP：圣保罗城市口音的巴西葡语自发语音（对话、访谈、讲座），人工校对转写。只下了 filtered 这套 Parquet（已去掉空转写）和全部 CSV 元数据；original 这套 Parquet（同样的句子外加空转写行）和旧版 WAV tar.gz（与 Parquet 同一批音频）内容重复，到 HF 的链路只有约 2 MB/s，没有下载。speaker_id、num_speakers 由 WhisperX 自动生成，不一定准。test 就是 tarsila_asr 里的 NURC-SP 部分（10.23 h），不要一起累计；与 nurc_sp_corpus_minimo 的 21 段录音按录音编号核对没有重合。CC BY-NC-ND，仅限非商用
+- 含派生版本（与源数据可能重叠）
 
 ### demand
 
@@ -3426,9 +3812,12 @@ Golos 俄语语音助手指令评测划分
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
+| [google_latam@clean-v1-20261114](../../catalog/es_read_clean.yaml#L196) | 38.0 | 已登记 | 没有 |
 | [google_latam@openslr-20260911](../../catalog/google_latam.yaml#L1) | 38.0 | 已登记 | 快照 20260914 |
 
+- `google_latam@clean-v1-20261114`：Google 众包拉美六国朗读的清洗版本：24,617 句 / 37.97 h 经 Qwen3-ASR-1.7B + whisper-large-v3 双引擎清洗（consensus-v7）保留 24,612 句 / 37.95 h，丢弃 5 句 / 0.01 h（0.0% 时长）。几乎全部保留
 - `google_latam@openslr-20260911`：Google 众包录制的拉美西语朗读（阿根廷、智利、哥伦比亚、秘鲁、波多黎各、委内瑞拉），按国家各一个划分，48 kHz 录音棚质量。SLR61 包里另有一小份天气播报（weather_messages），其中 es-es 是西班牙口音，只作源文件保留，不要算进美洲口音
+- 含派生版本（与源数据可能重叠）
 
 ### heroico
 
@@ -3438,9 +3827,12 @@ Golos 俄语语音助手指令评测划分
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
+| [heroico@clean-v1-20261114](../../catalog/es_read_clean.yaml#L272) | 7.3 | 已登记 | 没有 |
 | [heroico@openslr-39](../../catalog/heroico.yaml#L1) | 14.9 | 已登记 | 没有 |
 
+- `heroico@clean-v1-20261114`：Heroico 朗读部分（heroico_recordings 与 usma_native；自由问答 heroico_answers、非母语 usma_nonnative、喉麦录音不在本版本）的清洗版本：7,187 句 / 7.54 h 经 Qwen3-ASR-1.7B + whisper-large-v3 双引擎清洗（consensus-v7）保留 6,923 句 / 7.34 h，丢弃 264 句 / 0.20 h（2.6% 时长）。丢弃主体是录音内容与提示句对不上（说话人在回答问题而非朗读）；"adónde" 与 "a dónde" 写法差异造成少量误杀
 - `heroico@openslr-39`：West Point Heroico Spanish Speech（LDC2006S37，OpenSLR 39 转发）。主体是 2001 年在墨西哥军校录的朗读和自由问答，墨西哥口音；另有西点军校的小部分录音，含母语者和美国非母语学员，usma_nonnative 不是母语口音，训练美洲口音时应排除。部分西点录音同时录了喉麦（文件名以 t 开头），已从统计中剔除。22.05 kHz 16-bit；部分西点文件头写的是 20050 Hz，按文件头计时长。转写文本是 Latin-1 编码；heroico_answers 有 1 条音频没有转写
+- 含派生版本（与源数据可能重叠）
 
 ### kathbath
 
@@ -3474,9 +3866,12 @@ LibriVox 西语有声书
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
+| [librivox_spanish@clean-v1-20261114](../../catalog/es_read_clean.yaml#L66) | 72.6 | 已登记 | 没有 |
 | [librivox_spanish@hf-ef936a31638d](../../catalog/librivox_spanish.yaml#L1) | 73.0 | 已登记 | 没有 |
 
+- `librivox_spanish@clean-v1-20261114`：LibriVox 有声书的清洗版本：36,338 句 / 73.03 h 经 Qwen3-ASR-1.7B + whisper-large-v3 双引擎清洗（consensus-v7）保留 36,126 句 / 72.60 h，丢弃 212 句 / 0.43 h（0.6% 时长）。丢弃多为参考文本拼错或漏词
 - `librivox_spanish@hf-ef936a31638d`：LibriVox 西语有声书人工切分转写（LDC2020S01 的 HF 版本），讲者口音未标注
+- 含派生版本（与源数据可能重叠）
 
 ### meeting_room_noise
 
@@ -3628,6 +4023,18 @@ MLS 葡语有声书朗读
 
 - 有含标点版本
 
+### sada
+
+沙特电视节目阿拉伯语方言语音（SADA）
+
+语言：ar · 任务：语音识别
+
+| 版本 | 时长（小时） | 口径 | COS |
+|---|---:|---|---|
+| [sada@hf-094fe2c0fe4b](../../catalog/sada.yaml#L1) | 437.5 | 已登记 | 没有 |
+
+- `sada@hf-094fe2c0fe4b`：SADA（Saudi Audio Dataset for Arabic）的 Hugging Face 转存：沙特数据与人工智能局（SDAIA）国家人工智能中心对沙特广播局 57 个以上 电视节目的人工转写语音，以沙特方言为主（纳季德、汉志、海湾），也有标准阿拉伯语、埃及和黎凡特方言。每段带原始文本 text、 规范化文本 cleaned_text、说话人年龄段、性别、方言；约 21% 的段标为“多于一个说话人”，方言和性别对这些段不适用。 16 kHz 单声道 WAV 内嵌在 Parquet 中，分 train、validation、test。实测共 253,166 段、437.5 小时（train 417.6 小时）， 少于数据卡写的约 667 小时（train 约 647 小时），这份是第三方转存，差异原因未说明；另有 76 段文本为空。CC BY-NC-SA 4.0，仅限非商用
+
 ### sim_rir_slr26
 
 模拟房间冲激响应（OpenSLR 26）
@@ -3680,9 +4087,12 @@ TEDx 西语演讲（仅限非商用）
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
+| [tedx_spanish@clean-v1-20261114](../../catalog/es_pt_spont_clean.yaml#L133) | 24.4 | 已登记 | 没有 |
 | [tedx_spanish@hf-469308f10c91](../../catalog/tedx_spanish.yaml#L1) | 24.5 | 已登记 | 没有 |
 
+- `tedx_spanish@clean-v1-20261114`：TEDx Spanish 演讲。11,243 句 / 24.50 h 经 Qwen3-ASR-1.7B + whisper-large-v3 双引擎清洗（consensus-v8：西/葡数字拼写、por que/porque 统一后比较）保留 11,212 句 / 24.43 h，丢弃 31 句 / 0.06 h（0.2% 时长）。首轮 Qwen 未固定语言，被拒句子用固定语言的 Qwen 复核后按同一规则重判。试跑、抽检和误杀估计见 run_dir README
 - `tedx_spanish@hf-469308f10c91`：TEDx 西语演讲（OpenSLR 67 的 HF 版本），讲者口音未标注。许可为 CC BY-NC-ND，仅限非商用
+- 含派生版本（与源数据可能重叠）
 
 ### tele_con_ciencia
 
@@ -3692,9 +4102,24 @@ TEDx 西语演讲（仅限非商用）
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
+| [tele_con_ciencia@clean-v1-20261114](../../catalog/es_pt_spont_clean.yaml#L197) | 27.7 | 已登记 | 没有 |
 | [tele_con_ciencia@hf-d870d927f530](../../catalog/tele_con_ciencia.yaml#L1) | 28.3 | 已登记 | 没有 |
 
+- `tele_con_ciencia@clean-v1-20261114`：墨西哥科普电视 Tele con Ciencia（源里 1 句空音频剔除）。丢弃以标注截断、与音频错位和错别字为主。12,072 句 / 28.28 h 经 Qwen3-ASR-1.7B + whisper-large-v3 双引擎清洗（consensus-v8：西/葡数字拼写、por que/porque 统一后比较）保留 11,845 句 / 27.74 h，丢弃 227 句 / 0.54 h（1.9% 时长）。首轮 Qwen 未固定语言，被拒句子用固定语言的 Qwen 复核后按同一规则重判。试跑、抽检和误杀估计见 run_dir README
 - `tele_con_ciencia@hf-d870d927f530`：墨西哥科普电视节目 TELEconCIENCIA 的语音，墨西哥口音
+- 含派生版本（与源数据可能重叠）
+
+### treble10_rir
+
+10 个带家具房间的模拟房间冲激响应（Treble10）
+
+语言：und · 任务：rir
+
+| 版本 | 时长（小时） | 口径 | COS |
+|---|---:|---|---|
+| [treble10_rir@hf-5755ba8b59f6](../../catalog/treble10_rir.yaml#L1) | 1.5 | 已登记 | 没有 |
+
+- `treble10_rir@hf-5755ba8b59f6`：Treble Technologies 2025-10 发布，用 Treble SDK 对 10 个带家具的真实户型房间（浴室、卧室、带/不带走廊的客厅、会议室各 2 个， 14–46 m³）做混合仿真：5 kHz 以下用波动方程数值解（DG-FEM），以上用几何声学，覆盖 32 kHz 采样的全频带。每个房间 5 个声源、 共 137 个接收点，rir_mono 和 rir_6ch（6 麦圆柱形设备）各 3,085 条，每条带房间、声源/接收点坐标、直达距离、分频带 EDT/T30/C50 和吸声系数，平均 T30 0.17–0.94 秒。Parquet 内嵌 32 kHz 浮点 WAV，用于远场模拟前要重采样到 16 kHz。只下载了单声道和 6 声道部分， 没有下载 8 阶 Ambisonics 子集（rir_hoa8，56 GB）。另有 geometry/ 下的房间和设备示意图。CC BY-NC-SA 4.0，仅限非商用
 
 ### voices_noise
 
@@ -3728,9 +4153,12 @@ VoxForge 西语朗读（多为西班牙）
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
+| [voxforge_spanish@clean-v1-20261114](../../catalog/es_read_clean.yaml#L131) | 49.5 | 已登记 | 没有 |
 | [voxforge_spanish@hf-1ce6b6f9701d](../../catalog/voxforge_spanish.yaml#L1) | 49.7 | 已登记 | 没有 |
 
+- `voxforge_spanish@clean-v1-20261114`：VoxForge 朗读的清洗版本：21,692 句 / 49.71 h 经 Qwen3-ASR-1.7B + whisper-large-v3 双引擎清洗（consensus-v7）保留 21,603 句 / 49.52 h，丢弃 89 句 / 0.19 h（0.4% 时长）。insufficient_engines 73 句多为整段满幅失真的录音（RMS 1.0），Qwen3-ASR 输出为空、whisper 输出 "Gracias por ver el video."，集中在少数说话人
 - `voxforge_spanish@hf-1ce6b6f9701d`：VoxForge 西语朗读。约 37.0 h 为西班牙口音，阿根廷、拉美、墨西哥、智利共约 11.6 h；可按 country 字段筛选美洲部分。许可为 GPL-3.0
+- 含派生版本（与源数据可能重叠）
 
 ### voxpopuli_de
 
@@ -3788,9 +4216,12 @@ WHAM! 噪声训练划分
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
+| [wikipedia_spanish@clean-v1-20261114](../../catalog/es_read_clean.yaml#L2) | 24.2 | 已登记 | 没有 |
 | [wikipedia_spanish@hf-0afbf012ed67](../../catalog/wikipedia_spanish.yaml#L1) | 25.6 | 已登记 | 没有 |
 
+- `wikipedia_spanish@clean-v1-20261114`：维基百科条目朗读的清洗版本：11,569 句 / 25.63 h 经 Qwen3-ASR-1.7B + whisper-large-v3 双引擎清洗（consensus-v7）保留 10,936 句 / 24.23 h，丢弃 633 句 / 1.40 h（5.5% 时长）。丢弃集中在把网址、数字、字母读法逐字写出的句子（"hache te te pe dos puntos…"，引擎写成 http://、7,08%）和参考文本拼错的句子；前者作为训练文本会教模型输出读法，丢掉不吃亏
 - `wikipedia_spanish@hf-0afbf012ed67`：西语维基百科有声条目（Wikipedia Grabada）朗读，LDC2021S07 的 HF 版本，讲者口音未标注
+- 含派生版本（与源数据可能重叠）
 
 ### yodas_ar
 

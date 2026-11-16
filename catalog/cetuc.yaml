@@ -1,0 +1,79 @@
+  - schema_version: dataset-catalog/2.0
+    dataset_id: cetuc
+    version: hf-6dbc8081d35f
+    languages:
+      - pt
+    tasks:
+      - asr
+    aliases: []
+    artifacts:
+      - name: source
+        kind: hf-dataset-snapshot
+        root_alias: cetuc
+        relative_path: source/hf-6dbc8081d35f
+        metadata:
+          file_count: 104
+          expected_bytes: 12835360339
+          tree_sha256: cd25a324118a2432d71c574bae58680f37bfdc771101fcf5e52f037051bbb00a
+      - name: download_state
+        kind: dataset-state
+        root_alias: cetuc
+        relative_path: versions/hf-6dbc8081d35f/download_state/state.json
+        expected_bytes: 903
+        sha256: bb2159c08b6afdd0d6392258c077f4b0c6373ec96fe0b5664a35fc5bea896447
+    splits:
+      train:
+        artifacts:
+          source:
+            - source
+        statistics:
+          count: 80998
+          speakers: 81
+          duration_hours: 116.4813
+          duration_basis: soundfile header duration of every WAV member in the per-speaker train archives (AppleDouble ._ members skipped); pinned upstream file hashes verified
+          sample_formats:
+            1ch/16000Hz/PCM_16: 80998
+      dev:
+        artifacts:
+          source:
+            - source
+        statistics:
+          count: 10000
+          speakers: 10
+          duration_hours: 13.7248
+          duration_basis: soundfile header duration of every WAV member in the per-speaker dev archives (AppleDouble ._ members skipped); pinned upstream file hashes verified
+          sample_formats:
+            1ch/16000Hz/PCM_16: 10000
+      test:
+        artifacts:
+          source:
+            - source
+        statistics:
+          count: 10000
+          speakers: 10
+          duration_hours: 14.451
+          duration_basis: soundfile header duration of every WAV member in the per-speaker test archives (AppleDouble ._ members skipped); pinned upstream file hashes verified
+          sample_formats:
+            1ch/16000Hz/PCM_16: 10000
+    provenance:
+      summary: 巴西葡语朗读，101 人各约 1,000 句（CETUC）
+      source: Hugging Face
+      source_id: falabrasil/cetuc
+      revision: 6dbc8081d35fff5bdd133d8a12b8a11f91959b01
+      url: https://huggingface.co/datasets/falabrasil/cetuc
+      download_mirror: https://hf-mirror.com
+      release_date: '2025-07-22'
+      description: >-
+        CETUC 巴西葡语朗读语料（FalaBrasil 整理后 2025-07 上传 Hugging Face），101 位说话人、共 100,998 句、144.7 小时，
+        16 kHz 单声道 WAV，每句一个同名 txt 转写（小写、无标点、数字写成词）。按说话人划分 train 81 人、dev 10 人、test 10 人，
+        说话人不重叠，但所有人朗读的是同一份约 1,000 句的文本表（抽查 train、dev、test 共 11 位说话人，每人的句子集合都是同样的 997 句），dev/test 的文本
+        都在 train 里出现过，只能用来看说话人泛化，不能当作文本未见过的测试集。每位说话人一个 tar.gz，包里带 macOS 生成的
+        ._ 元数据文件，读取时要跳过。
+      locale: pt-BR
+      license:
+        - mit
+      download_scope: Complete CETUC release from FalaBrasil (train/dev/test per-speaker archives)
+      expected_download_files: 104
+      expected_download_bytes: 12835360339
+      integrity: verified
+      local_scan_date: '2026-11-13'

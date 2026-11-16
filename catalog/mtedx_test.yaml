@@ -1,0 +1,69 @@
+# mTEDx 西语、葡语 test 评测记录（scripts/mtedx_test/build.py 生成）。
+- schema_version: dataset-catalog/2.0
+  dataset_id: mtedx
+  version: test-v1-20261114
+  languages:
+  - es
+  - pt
+  tasks:
+  - asr
+  aliases: []
+  derived_from: mtedx@hf-0b97ef40298d
+  artifacts:
+  - name: audio-index
+    kind: audio-index
+    root_alias: mtedx
+    relative_path: versions/test-v1-20261114/audio-index.jsonl.gz
+    sha256: 412a960d094e01da372e3721ae3057810deac6c2bb0e30f67eaba318a04249cb
+    metadata:
+      record_count: 2009
+  - name: mtedx-es-records
+    kind: audio-records
+    root_alias: mtedx
+    relative_path: versions/test-v1-20261114/records/mtedx-es.jsonl.gz
+    sha256: 9c9ffa64cd3a9ed96d690efa25c3ef2da82b31fd3a059db55e34fbcb2cc97427
+    metadata:
+      record_count: 1003
+  - name: mtedx-pt-records
+    kind: audio-records
+    root_alias: mtedx
+    relative_path: versions/test-v1-20261114/records/mtedx-pt.jsonl.gz
+    sha256: 446c35df18940827fb5a1e391868df69904a6a286b83142f77c135e39fcdffee
+    metadata:
+      record_count: 1006
+  splits:
+    mtedx-es:
+      artifacts:
+        records:
+        - mtedx-es-records
+        audio_index:
+        - audio-index
+      group: test
+      task: asr
+      statistics:
+        records: 1003
+        duration_hours: 1.7281
+        duration_basis: sum of Lhotse recording durations
+      provenance:
+        description: mTEDx es test：西班牙语 TEDx 演讲（自发、半即兴），人工转写，带大小写和标点。
+    mtedx-pt:
+      artifacts:
+        records:
+        - mtedx-pt-records
+        audio_index:
+        - audio-index
+      group: test
+      task: asr
+      statistics:
+        records: 1006
+        duration_hours: 1.8193
+        duration_basis: sum of Lhotse recording durations
+      provenance:
+        description: mTEDx pt test：葡萄牙语 TEDx 演讲（自发、半即兴），人工转写，带大小写和标点。
+  provenance:
+    summary: mTEDx 西语、葡语 test（只用于评测）
+    description: mtedx@hf-0b97ef40298d 的 es、pt test 划分，转成评测用的 AudioRecord：TEDx 演讲，自发、半即兴，补朗读测试集（FLEURS、Common Voice）之外的自发语音。音频为上游 Parquet 里的 FLAC，原样写出；转写取上游 transcript。只用于评测，不进训练。
+    license: CC BY-NC-ND 4.0（仅限非商业用途）
+    known_issues:
+    - HF 快照比官方 test 少几条（es 1,003/1,012，pt 1,006/1,013），与 mtedx@hf-0b97ef40298d 的统计一致。
+    build_script: scripts/mtedx_test/build.py

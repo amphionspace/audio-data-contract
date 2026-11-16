@@ -1,6 +1,6 @@
 # 数据总览
 
-当前登记 **235 个数据集**；另有 **15 个下载来源声明**和 **1 个训练混合配方**。登记不代表本机文件已齐备。
+当前登记 **266 个数据集**；另有 **35 个下载来源声明**和 **1 个训练混合配方**。登记不代表本机文件已齐备。
 
 时长取单个版本的最大值，不跨版本相加；≈ 为参考表或估算值，— 为暂无完整时长。各版本的时长、说明、COS 地址和质量证据见[版本明细](data-versions.md)。
 
@@ -24,13 +24,20 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 
 | 数据集 | 语言 | 任务 | 时长（小时） | 简介 | COS |
 |---|---|---|---:|---|---|
+| [afrispeech_dialog](data-versions.md#afrispeech_dialog) | en | 语音识别 | 7.0 | 非洲口音英语双人对话（含模拟问诊） | 没有 |
 | [ami_ihm](data-versions.md#ami_ihm) | en | 语音识别 | 95.5 | AMI 英文会议的近讲耳麦版 | 没有 |
+| [apptek_callcenter](data-versions.md#apptek_callcenter) | en | 语音识别、带说话人标注的语音识别、说话人分段与归属 | 151.1 | 英文多口音客服长对话评测（AppTek） | 没有 |
 | [audioset_esc_test](data-versions.md#audioset_esc_test) | en | 背景声场景描述 | 6.8 | AudioSet 背景声场景描述评测集 | 快照 20260914 |
 | [chime4](data-versions.md#chime4) | en | 语音识别 | 10.1 | 四种噪声环境的英文朗读评测集（CHiME-4） | 没有 |
 | [chime6](data-versions.md#chime6) | en | 语音识别、重叠语音检测、带说话人标注的语音识别、说话人分段与归属、目标说话人语音识别 | 174.5 | 家庭聚会英文对话，多通道远场重叠（CHiME-6） | 部分版本：快照 20260914 |
 | [common_voice_en](data-versions.md#common_voice_en) | en | 语音识别、热词增强语音识别 | 1,862.7 | Common Voice 英语众包朗读；含清洗、热词、加噪版 | 部分版本：快照 20260914、`备份桶:audio-data-contract/datasets/commonvoice_en_hotwords/` |
+| [coraal](data-versions.md#coraal) | en | 语音识别、带说话人标注的语音识别 | 160.9 | 非裔美国英语社会语言学访谈（CORAAL） | 没有 |
 | [cs_dialogue_en](data-versions.md#cs_dialogue_en) | en | 语音识别、热词增强语音识别 | 26.6 | CS-Dialogue 对话中的纯英文语句 | 部分版本：快照 20260914 |
 | [dipco](data-versions.md#dipco) | en | 语音识别、带说话人标注的语音识别、说话人分段与归属 | 6.5 | 家庭晚宴英文对话，近讲与远场阵列（DiPCo） | 没有 |
+| [earnings21](data-versions.md#earnings21) | en | 语音识别、带说话人标注的语音识别 | 39.3 | 英文上市公司财报电话会议（Earnings-21） | 没有 |
+| [earnings22](data-versions.md#earnings22) | en | 语音识别、带说话人标注的语音识别 | 119.9 | 多国口音英文财报电话会议（Earnings-22） | 没有 |
+| [earnings25](data-versions.md#earnings25) | en | 语音识别、带说话人标注的语音识别 | 543.8 | 美股财报电话会议英语（Earnings25） | 没有 |
+| [edacc](data-versions.md#edacc) | en | 语音识别、带说话人标注的语音识别 | 35.6 | 多国口音英语自然对话（EdAcc） | 没有 |
 | [emilia_en](data-versions.md#emilia_en) | en | 语音识别 | 43,624.0 | Emilia 英语野外语音（已清洗） | 快照 20260914 |
 | [emotion1200_en](data-versions.md#emotion1200_en) | en | 说话人情感分类、情感与说话风格描述、语音情感识别 | 5.2 | 英文情感识别与描述评测（Emotion1200） | 快照 20260914 |
 | [fleurs_en](data-versions.md#fleurs_en) | en | 语音识别 | 10.3 | 多语朗读英语部分（FLEURS） | 部分版本：快照 20260914 |
@@ -39,6 +46,7 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [hifitts2](data-versions.md#hifitts2) | en | 语音识别、语音合成 | 35,932.7 | 英文有声书高保真朗读（Hi-Fi TTS 2） | 没有 |
 | [icsi](data-versions.md#icsi) | en | 语音识别、说话人分段与归属 | 71.7 | 伯克利 ICSI 英文工作会议（近讲混合音轨） | 没有 |
 | [iemocap_ser](data-versions.md#iemocap_ser) | en | 语音情感识别 | 1.5 | 英文双人表演对话情感识别评测（IEMOCAP） | 快照 20260914、`备份桶:audio-data-contract/datasets/iemocap_ser/` |
+| [krisp_voice_isolation](data-versions.md#krisp_voice_isolation) | en | 语音识别 | 5.6 | 旁边有人说话时的真实录音转写评测（Krisp） | 没有 |
 | [legco_speech_en](data-versions.md#legco_speech_en) | en | 语音识别 | 249.6 | 香港立法会会议英语 | 快照 20260914 |
 | [libri2mix](data-versions.md#libri2mix) | en | 目标说话人语音识别 | 11.2 | LibriMix 两人混合的目标说话人评测 | 快照 20260914 |
 | [libri3mix](data-versions.md#libri3mix) | en | 目标说话人语音识别 | 16.3 | LibriMix 三人混合的目标说话人评测 | 快照 20260914 |
@@ -48,16 +56,23 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [librispeech](data-versions.md#librispeech) | en | 语音识别、热词增强语音识别 | 971.6 | 英文有声书朗读（LibriSpeech）；含热词和加噪版 | 部分版本：快照 20260914、`备份桶:audio-data-contract/datasets/` 下 5 个目录 |
 | [libritts_r](data-versions.md#libritts_r) | en | 语音识别、语音合成 | 583.1 | 英文有声书 TTS 语料，音频经修复（LibriTTS-R） | `TTS 桶:LibriTTS-R/`（原始数据） |
 | [ljspeech](data-versions.md#ljspeech) | en | 语音识别、语音合成 | 23.9 | 单人英文朗读（LJSpeech） | `TTS 桶:LJSpeech/`（原始数据） |
+| [magicdata_multistream_en](data-versions.md#magicdata_multistream_en) | en | 语音识别、带说话人标注的语音识别 | 2.8 | 英文双人自然对话分轨录音（MagicData 样本） | 没有 |
 | [meld_ser](data-versions.md#meld_ser) | en | 语音情感识别 | 2.3 | 美剧《老友记》对话情感识别评测（MELD） | 快照 20260914 |
 | [mls](data-versions.md#mls) | en | 语音识别 | 44,691.0 | 英文有声书朗读（MLS 英语） | 部分版本：快照 20260914 |
 | [msp_podcast_ser](data-versions.md#msp_podcast_ser) | en | 语音情感识别 | — | 英文播客情感识别评测（MSP-Podcast） | 快照 20260914 |
 | [notsofar](data-versions.md#notsofar) | en | 语音识别、连续语音分离、diarization、重叠语音检测、带说话人标注的语音识别、说话人分段与归属 | ≈200.0 | 微软英文远场会议，真实录制与模拟（NOTSOFAR） | 快照 20260914、`备份桶:audio-data-contract/datasets/notsofar_sdm/` |
+| [open_clinical_conversations](data-versions.md#open_clinical_conversations) | en | 语音识别 | 51.9 | 英文模拟问诊录音合集（含 OSCE 272 场） | 没有 |
+| [open_yap](data-versions.md#open_yap) | en | 语音识别、带说话人标注的语音识别 | 8.9 | 熟人之间的英文双声道自然对话样本（Open Yap 1K） | 没有 |
+| [primock57](data-versions.md#primock57) | en | 语音识别、带说话人标注的语音识别 | 8.6 | 英文全科医生模拟问诊分轨录音（PriMock57） | 没有 |
+| [sbcsae](data-versions.md#sbcsae) | en | 语音识别、带说话人标注的语音识别 | 23.3 | 美式英语自然口语对话（SBCSAE） | 没有 |
 | [singapore_english](data-versions.md#singapore_english) | en | 语音识别 | 3.9 | 新加坡口音英语（Hugging Face 来源） | 快照 20260914 |
 | [singaporean](data-versions.md#singaporean) | en | 语音识别 | ≈0.2 | 新加坡口音英语小样本 | 快照 20260914、`备份桶:audio-data-contract/datasets/singaporean/` |
 | [tal100_en](data-versions.md#tal100_en) | en | 语音识别 | 4.8 | TAL 英语语音识别数据 | 快照 20260914、`备份桶:audio-data-contract/datasets/tal100_en/` |
+| [uwb_atcc](data-versions.md#uwb_atcc) | en | 语音识别 | 13.0 | 捷克空域真实空管通话英语（UWB-ATCC） | 没有 |
 | [vctk](data-versions.md#vctk) | en | 语音识别、语音合成 | 82.7 | 多口音英语朗读（VCTK） | `TTS 桶:VCTK/`（原始数据） |
 | [voicebank_demand](data-versions.md#voicebank_demand) | en | speech_enhancement | 10.0 | 语音增强标准集（VoiceBank-DEMAND） | 没有 |
 | [voices](data-versions.md#voices) | en | 语音识别 | 27.9 | 真实房间外放的英文远场评测（VOiCES） | 没有 |
+| [voxpopuli_en](data-versions.md#voxpopuli_en) | en | 语音识别 | 9.9 | VoxPopuli 英语欧洲议会发言（评测划分） | 没有 |
 
 ## 中文及粤语数据
 
@@ -79,11 +94,13 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [biic_podcast_ser](data-versions.md#biic_podcast_ser) | zh | 语音情感识别 | 22.6 | 中文播客情感识别评测（BIIC-Podcast） | 快照 20260914 |
 | [business_feedback](data-versions.md#business_feedback) | zh | 目标说话人语音识别 | 0.1 | 业务反馈的目标说话人 bad case，仅评测 | `备份桶:audio-data-contract/datasets/business_feedback/` |
 | [childmandarin](data-versions.md#childmandarin) | zh | 语音识别 | 41.0 | 3–5 岁儿童普通话语音（ChildMandarin） | 快照 20260914 |
+| [childtalk](data-versions.md#childtalk) | zh | 语音识别、带说话人标注的语音识别 | 125.4 | 多方言儿童与看护人对话（ChildTalk） | 没有 |
 | [cnceleb1](data-versions.md#cnceleb1) | zh | 说话人身份识别、声纹验证 | 270.1 | 中文跨场景声纹数据（CN-Celeb1） | 快照 20260914 |
 | [cnceleb2](data-versions.md#cnceleb2) | zh | 说话人身份识别、声纹验证 | 1,084.3 | 中文跨场景声纹训练数据（CN-Celeb2） | 快照 20260914 |
 | [common_voice_zh](data-versions.md#common_voice_zh) | zh | 语音识别、热词增强语音识别 | 76.1 | Common Voice 中文众包朗读；含清洗、热词、加噪版 | 部分版本：快照 20260914、`备份桶:audio-data-contract/datasets/commonvoice_zh_hotwords/` |
 | [common_voice_zh_hk](data-versions.md#common_voice_zh_hk) | yue | 语音识别 | 25.3 | 众包朗读粤语（Common Voice 香港） | 快照 20260914 |
-| [context_correction_clean_zh](data-versions.md#context_correction_clean_zh) | zh | 语音识别 | — | 中文训练数据里说字写法句子的核对与改正清单 | 没有 |
+| [context_correction_clean_zh](data-versions.md#context_correction_clean_zh) | zh | 语音识别 | — | 说字写法句子的 think 文本（CoT） | 没有 |
+| [context_correction_synth_zh](data-versions.md#context_correction_synth_zh) | zh | 语音识别、目标说话人语音识别 | 29.8 | 说字写法合成训练数据（带 think） | 没有 |
 | [context_correction_zh](data-versions.md#context_correction_zh) | zh | 语音识别、目标说话人语音识别 | 17.6 | 中文上下文纠偏评测集，同音词按语境写 | 没有 |
 | [csemotions](data-versions.md#csemotions) | zh | 语音合成 | 10.2 | 中文情感语音（CSEMOTIONS），TTS 用 | `TTS 桶:CSEMOTIONS/`（原始数据） |
 | [emilia2_zh_dialogue_diarize](data-versions.md#emilia2_zh_dialogue_diarize) | zh | 语音识别、diarization、带说话人标注的语音识别 | 3,167.4 | Emilia2 中文对话的说话人日志伪标签 | 部分版本：`备份桶:audio-data-contract/datasets/emilia2_zh_dialogue_diarize/` |
@@ -97,6 +114,7 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [legco_speech](data-versions.md#legco_speech) | yue | 语音识别 | 20,227.2 | 香港立法会会议粤语 | 部分版本：快照 20260914 |
 | [m3ed_ser](data-versions.md#m3ed_ser) | zh | 语音情感识别 | 1.7 | 中文电视剧对话情感识别评测（M3ED） | 快照 20260914、`备份桶:audio-data-contract/datasets/m3ed_ser/` |
 | [magicdata](data-versions.md#magicdata) | zh | 语音识别、热词增强语音识别 | 754.7 | 中文手机朗读（MAGICDATA）；含清洗和热词版 | 部分版本：快照 20260914、`备份桶:audio-data-contract/datasets/magicdata_hotwords/` |
+| [magicdata_multistream_zh](data-versions.md#magicdata_multistream_zh) | zh | 语音识别、带说话人标注的语音识别 | 5.2 | 中文双人自然对话分轨录音（MagicData 样本） | 没有 |
 | [magicdata_ramc](data-versions.md#magicdata_ramc) | zh | 语音识别、diarization、带说话人标注的语音识别、说话人分段与归属、目标说话人语音识别 | 403.5 | 中文手机通话自然对话（MagicData-RAMC） | 部分版本：快照 20260914 |
 | [magicdata_ramc_farsim_meeting_sot](data-versions.md#magicdata_ramc_farsim_meeting_sot) | zh | 带说话人标注的语音识别 | 566.6 | RAMC 对话加混响噪声模拟远场的窗口 | 没有 |
 | [magicdata_ramc_meeting_sot](data-versions.md#magicdata_ramc_meeting_sot) | zh | 带说话人标注的语音识别 | — | MagicData-RAMC 对话切窗的按人转写数据 | `备份桶:audio-data-contract/datasets/magicdata_ramc_meeting_sot/` |
@@ -110,6 +128,8 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [primewords](data-versions.md#primewords) | zh | 语音识别 | 99.0 | 中文手机朗读（Primewords）；含清洗版 | 部分版本：快照 20260914 |
 | [realman](data-versions.md#realman) | zh | 语音识别、noise、sound_source_localization、speech_enhancement | 83.7 | 真实录制的中文多通道阵列语音（RealMAN） | 部分版本：快照 20260914 |
 | [realman_zh_far_asr](data-versions.md#realman_zh_far_asr) | zh | 语音识别 | 64.0 | RealMAN 远场中文转写训练数据 | `备份桶:audio-data-contract/datasets/zh_far_replay/` |
+| [seniortalk](data-versions.md#seniortalk) | zh | 语音识别、带说话人标注的语音识别、说话人分段与归属 | 55.5 | 75–85 岁老人普通话对话（SeniorTalk） | 没有 |
+| [smoothconv](data-versions.md#smoothconv) | zh | 语音识别、带说话人标注的语音识别、说话人分段与归属 | 100.5 | 中文多人自然对话，多声道人工精标（SmoothConv） | 没有 |
 | [speechio](data-versions.md#speechio) | zh | 语音识别 | 63.8 | SpeechIO 中文 ASR 排行榜评测集 | 部分版本：快照 20260914 |
 | [tal100_zh](data-versions.md#tal100_zh) | zh | 语音识别 | 5.5 | TAL 中文语音识别数据 | 快照 20260914 |
 | [tdtech_badcase](data-versions.md#tdtech_badcase) | zh | 热词增强语音识别 | 0.0 | 鼎桥反馈的识别回退样本（e警保 × 多种热词表），仅评测 | 没有 |
@@ -128,8 +148,10 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [wenetspeech_disfluency](data-versions.md#wenetspeech_disfluency) | zh | 语音识别 | 182.5 | WenetSpeech L 保留口语不流利词的转写 | 快照 20260914、`备份桶:audio-data-contract/datasets/wenetspeech/`、`备份桶:audio-data-contract/datasets/wenetspeech_disfluency/` |
 | [wenetspeech_podcast](data-versions.md#wenetspeech_podcast) | zh | 语音识别 | 3,892.3 | WenetSpeech L 中的播客部分 | 没有 |
 | [wenetspeech_wu](data-versions.md#wenetspeech_wu) | zh | 语音识别 | 8,740.7 | 吴语网络语音（WenetSpeech-Wu） | 部分版本：快照 20260914、`备份桶:audio-data-contract/datasets/wenetspeech_wu/` |
+| [wenetspeech_wu_bench](data-versions.md#wenetspeech_wu_bench) | zh | 语音识别、语音翻译、语音情感识别、语音合成 | 9.8 | 吴语多任务评测集（WenetSpeech-Wu-Bench） | 没有 |
 | [wenetspeech_youtube](data-versions.md#wenetspeech_youtube) | zh | 语音识别 | 6,113.1 | WenetSpeech L 中的 YouTube 部分 | 没有 |
 | [wenetspeech_yue_all](data-versions.md#wenetspeech_yue_all) | yue | 语音识别 | 17,373.9 | 粤语网络语音（WenetSpeech-Yue）；含清洗版 | 部分版本：快照 20260914、`备份桶:audio-data-contract/datasets/wenetspeech_yue/` |
+| [wildelder](data-versions.md#wildelder) | zh | 语音识别 | 33.7 | 真实场景中文老年人语音（WildElder） | 没有 |
 
 ## 混合语言及多语数据
 
@@ -137,6 +159,7 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 |---|---|---|---:|---|---|
 | [BAAI/CS-Dialogue long_wav (ModelScope master)](data-versions.md#baaics-dialogue-long_wav-modelscope-master) | en、zh、zh-en | 语音识别、带说话人标注的语音识别 | 98.3 | 中英语码转换双人对话（CS-Dialogue） | 部分版本：快照 20260914 |
 | [ami](data-versions.md#ami) | en、zh | 语音识别、说话人分段与归属、目标说话人语音识别 | 259.3 | 英文会议远场版（AMI SDM）；含轮流说话混合版 | 部分版本：快照 20260914 |
+| [ascend](data-versions.md#ascend) | en、zh | 语音识别、语码转换语音识别 | 10.6 | 香港中英混说自然对话（ASCEND） | 没有 |
 | [asr_babble_bench](data-versions.md#asr_babble_bench) | en、es、zh | 语音识别 | 10.1 | 普通 ASR 背景人声评测集（中英），仅评测 | 部分版本：`备份桶:audio-data-contract/datasets/asr_babble_bench/` |
 | [asr_babble_speech_pool](data-versions.md#asr_babble_speech_pool) | en、es、zh | 语音识别 | 85.5 | 带房间背景人声的中英 ASR 训练句 | 没有 |
 | [asr_distant_talk_pool](data-versions.md#asr_distant_talk_pool) | en、zh | 语音识别 | 55.2 | — | 没有 |
@@ -153,21 +176,26 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [emilia_yodas](data-versions.md#emilia_yodas) | de、en、fr、ja、ko、zh | 语音识别、语音合成 | 113,820.6 | Emilia-YODAS 多语种 YouTube 语音 | `TTS 桶:Emilia-YODAS/`（原始数据） |
 | [farfield_speech_noise_1spk](data-versions.md#farfield_speech_noise_1spk) | en、zh | noise | 32.7 | 1–3 人远场人声噪声（Emilia 干声加混响） | `备份桶:audio-data-contract/datasets/` 下 3 个目录 |
 | [genshin_voice](data-versions.md#genshin_voice) | en-US、ja、ko、zh | 语音合成 | 1,039.7 | 《原神》多语配音，TTS 用 | `TTS 桶:genshin-voice/`（原始数据） |
+| [gigaspeech_bench](data-versions.md#gigaspeech_bench) | ar、en、fil、id、ja、ko、ms、th、vi、yue、zh | 语音识别、语音翻译、带说话人标注的语音识别、说话人分段与归属 | 903.6 | 多方言多语种 ASR 评测（GigaSpeechBench） | 没有 |
 | [hard_hw_sft](data-versions.md#hard_hw_sft) | en、zh | 热词增强语音识别 | 109.4 | 热词难例 SFT 数据（ShareGPT 格式） | `备份桶:audio-data-contract/datasets/hard_hw_sft/` |
 | [hotword_bench](data-versions.md#hotword_bench) | en、es、zh | 热词增强语音识别 | — | 中英热词评测集，仅评测 | 没有 |
 | [hw_sft](data-versions.md#hw_sft) | en、zh | 语音识别、热词增强语音识别 | 2,636.5 | 热词 SFT 数据（ShareGPT 格式），含普通转写 | 没有 |
+| [indic_diarbench](data-versions.md#indic_diarbench) | as、bn、brx、doi、gu、hi、kn、kok、ks、mai、ml、mni、mr、ne、or、pa、sa、sat、sd、ta、te、ur | 语音识别、带说话人标注的语音识别、说话人分段与归属 | 107.7 | 22 种印度语言多人对话评测（DiarBench） | 没有 |
 | [indicvoices](data-versions.md#indicvoices) | as、bn、brx、doi、gu、hi、kn、kok、ks、mai、ml、mni、mr、ne、or、pa、sa、sat、sd、ta、te、ur | 语音识别 | — | 22 种印度语言自然语音（IndicVoices） | 快照 20260914 |
 | [meeting_benchmark](data-versions.md#meeting_benchmark) | en、zh、zh-en | 带说话人标注的语音识别 | 21.2 | 约 180 秒长度的中英会议转写评测集 | `备份桶:audio-data-contract/datasets/meeting_180s_benchmark/` |
 | [meeting_selection_panel](data-versions.md#meeting_selection_panel) | en、zh | 带说话人标注的语音识别 | 12.4 | 会议模型选模面板（中英真实会议） | `备份桶:audio-data-contract/datasets/meeting_selection_panel/` |
+| [meli](data-versions.md#meli) | en、zh | 语音识别 | 42.5 | 普英双语者访谈与朗读（MELI） | 没有 |
 | [mls_sidon](data-versions.md#mls_sidon) | de、en、es、fr、it、nl、pl、pt | 语音识别、语音合成 | 50,834.3 | 8 种语言有声书，音频经 Sidon 修复（MLS） | 没有 |
-| [mtedx](data-versions.md#mtedx) | es、pt | 语音识别 | 334.1 | TEDx 西语/葡语演讲（mTEDx，非商用） | 没有 |
+| [mtedx](data-versions.md#mtedx) | es、pt | 语音识别 | 334.1 | TEDx 西语/葡语演讲（mTEDx，非商用） | 部分版本：`备份桶:audio-data-contract/datasets/mtedx/` |
 | [multi-talker-sd](data-versions.md#multi-talker-sd) | en、zh | 语音识别、语码转换语音识别、连续语音分离、重叠语音检测、带说话人标注的语音识别、说话人分段与归属 | — | AISHELL-1、LibriSpeech 合成的多人对话 | 快照 20260914 |
 | [multilingual_asr_bench](data-versions.md#multilingual_asr_bench) | ar、de、en、es、fr、hi、id、ja、ko、pt、ru、zh | 语音识别 | — | 十二种语言公开 ASR 测试集（只用于评测） | `备份桶:audio-data-contract/datasets/multilingual_asr_bench/` |
 | [opendatalab_multilingual](data-versions.md#opendatalab_multilingual) | ar、cs、hu、ko、ru、sr、th、vi | 语音识别 | 8,588.2 | 8 个语种的语音识别数据（OpenDataLab） | `备份桶:computer-2/audio/`（原始数据）、`备份桶:opendatalab-multilingual/`（原始数据） |
+| [real_t](data-versions.md#real_t) | en、zh | 目标说话人语音识别 | 11.3 | 真实会议目标说话人提取评测（REAL-T） | 没有 |
 | [sot_many_speaker_word_zh_en](data-versions.md#sot_many_speaker_word_zh_en) | en、zh | 带说话人标注的语音识别 | 2,128.0 | — | 没有 |
 | [sot_multispeaker_zh_en](data-versions.md#sot_multispeaker_zh_en) | en、zh、zh-en | 带说话人标注的语音识别 | 7,664.4 | 1–5 人中英合成混音，按人完整转写 | 没有 |
 | [speech_deepfake_bench](data-versions.md#speech_deepfake_bench) | ar、de、en、es、ro、ru、zh | deepfake_detection | 3,463.7 | 伪造语音检测评测集（SpoofRadar、DF-Arena） | `备份桶:audio-data-contract/datasets/speech_deepfake_bench/` |
 | [starrail_voice](data-versions.md#starrail_voice) | en、ja、ko、zh-CN | 语音合成 | 692.6 | 《崩坏：星穹铁道》多语配音，TTS 用 | `TTS 桶:starrail-voice/`（原始数据） |
+| [svq](data-versions.md#svq) | ar、bn、en、fi、gu、hi、id、ja、kn、ko、ml、mr、ru、sw、ta、te、ur | 语音识别 | 244.4 | 17 种语言四种环境下的手机语音问句（Google SVQ） | 没有 |
 | [talcs](data-versions.md#talcs) | en、zh | 语音识别、热词增强语音识别 | 587.6 | 中英语码转换课堂语音（TALCS）；含热词和加噪版 | 部分版本：快照 20260914、`备份桶:audio-data-contract/datasets/` 下 5 个目录 |
 | [ts_asr_benchmark](data-versions.md#ts_asr_benchmark) | en、es、zh | 目标说话人语音识别 | 46.5 | 合成的中文目标说话人 ASR 评测集 | 部分版本：`备份桶:audio-data-contract/datasets/ts_asr_benchmark/` |
 | [ts_asr_crosslingual](data-versions.md#ts_asr_crosslingual) | en、es、zh | 目标说话人语音识别 | 6.2 | — | 没有 |
@@ -199,6 +227,7 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [banspeech_bn](data-versions.md#banspeech_bn) | bn | 语音识别 | 6.5 | 孟加拉语语音识别数据（BanSpeech） | 快照 20260914 |
 | [casablanca](data-versions.md#casablanca) | ar | 语音识别 | — | Casablanca 八种阿拉伯语方言 | 没有 |
 | [cbtts_bn](data-versions.md#cbtts_bn) | bn | 语音识别 | 20.1 | 孟加拉语语音识别数据（CBTTS） | 快照 20260914 |
+| [cetuc](data-versions.md#cetuc) | pt | 语音识别 | 144.7 | 巴西葡语朗读，101 人各约 1,000 句（CETUC） | 没有 |
 | [ciempiess](data-versions.md#ciempiess) | es | 语音识别 | 18.4 | 墨西哥西班牙语广播语音（CIEMPIESS LIGHT） | 部分版本：快照 20260914、`备份桶:audio-data-contract/datasets/ciempiess_complementary/`、`备份桶:audio-data-contract/datasets/ciempiess_test/` |
 | [cml_tts_fr](data-versions.md#cml_tts_fr) | fr | 语音识别 | 316.0 | 法语有声书朗读（CML-TTS） | 快照 20260914 |
 | [common_voice_ar](data-versions.md#common_voice_ar) | ar | 语音识别 | 58.2 | 众包朗读阿拉伯语（Common Voice） | 部分版本：快照 20260914 |
@@ -213,7 +242,7 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [common_voice_pt](data-versions.md#common_voice_pt) | pt | 语音识别 | 184.3 | Common Voice 17 葡语朗读 | 没有 |
 | [common_voice_ru](data-versions.md#common_voice_ru) | ru | 语音识别 | 69.9 | 众包朗读俄语（Common Voice） | 部分版本：快照 20260914 |
 | [coraa](data-versions.md#coraa) | pt | 语音识别 | 290.5 | 巴西葡语多来源语音（CORAA v1.1） | 没有 |
-| [coraa_mupe](data-versions.md#coraa_mupe) | pt | 语音识别 | 365.2 | 巴西葡语生活访谈（CORAA MUPE） | 快照 20260914 |
+| [coraa_mupe](data-versions.md#coraa_mupe) | pt | 语音识别 | 365.2 | 巴西葡语生活访谈（CORAA MUPE） | 部分版本：快照 20260914 |
 | [coraa_nurc_sp](data-versions.md#coraa_nurc_sp) | pt | 语音识别 | 239.3 | 圣保罗口音葡语自发语音（NURC-SP） | 没有 |
 | [demand](data-versions.md#demand) | und | noise | 46.7 | 16 麦阵列录制的多环境噪声（DEMAND） | `备份桶:audio-data-contract/datasets/demand/` |
 | [dns5_noise_rir](data-versions.md#dns5_noise_rir) | und | rir、speech_enhancement | — | DNS Challenge 5 官方噪声与冲激响应包 | `备份桶:audio-data-contract/datasets/dns5_noise_rir/` |
@@ -235,7 +264,7 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [galgame](data-versions.md#galgame) | ja | 语音合成 | 10,173.7 | 日语视觉小说配音，TTS 用 | `TTS 桶:Galgame-VisualNovel-Reupload/`（原始数据） |
 | [gigaspeech2_id](data-versions.md#gigaspeech2_id) | id | 语音识别、热词增强语音识别 | 1,980.1 | 印尼语网络语音（GigaSpeech 2）；含热词版 | 部分版本：快照 20260914 |
 | [golos](data-versions.md#golos) | ru | 语音识别 | — | Golos 俄语语音助手指令评测划分 | 没有 |
-| [google_latam](data-versions.md#google_latam) | es | 语音识别 | 38.0 | 拉美六国西语朗读（Google 众包） | 快照 20260914 |
+| [google_latam](data-versions.md#google_latam) | es | 语音识别 | 38.0 | 拉美六国西语朗读（Google 众包） | 部分版本：快照 20260914 |
 | [heroico](data-versions.md#heroico) | es | 语音识别 | 14.9 | 墨西哥军校西语朗读与问答（Heroico） | 没有 |
 | [kathbath](data-versions.md#kathbath) | hi | 语音识别 | — | Kathbath 印地语手机朗读评测划分 | 没有 |
 | [koreaspeech](data-versions.md#koreaspeech) | ko | 语音识别 | 3,828.3 | 韩语语音识别数据（KoreaSpeech） | 快照 20260914 |
@@ -252,12 +281,14 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [open_large_bn](data-versions.md#open_large_bn) | bn | 语音识别 | 5,045.8 | 孟加拉语大规模语音识别数据 | 快照 20260914 |
 | [real_rir_slr28](data-versions.md#real_rir_slr28) | und | 音频增强、rir | 0.1 | 真实房间冲激响应（OpenSLR 28） | 快照 20260914、`备份桶:audio-data-contract/datasets/real_rir_slr28/` |
 | [rulibrispeech_ru](data-versions.md#rulibrispeech_ru) | ru | 语音识别 | 98.2 | 俄语有声书朗读（Russian LibriSpeech） | 快照 20260914 |
+| [sada](data-versions.md#sada) | ar | 语音识别 | 437.5 | 沙特电视节目阿拉伯语方言语音（SADA） | 没有 |
 | [sim_rir_slr26](data-versions.md#sim_rir_slr26) | und | rir | — | 模拟房间冲激响应（OpenSLR 26） | 快照 20260914、`备份桶:audio-data-contract/datasets/sim_rir_slr26/` |
 | [sim_rir_slr28](data-versions.md#sim_rir_slr28) | und | rir | — | 模拟房间冲激响应（OpenSLR 28） | 快照 20260914、`备份桶:audio-data-contract/datasets/sim_rir_slr28/` |
 | [slr37_bn](data-versions.md#slr37_bn) | bn | 语音识别 | 5.0 | 孟加拉语高质量 TTS 朗读（OpenSLR 37） | 快照 20260914 |
 | [tarsila_asr](data-versions.md#tarsila_asr) | pt | 语音识别 | 72.5 | 巴西葡语 ASR 合并测试集（TARSILA） | 没有 |
 | [tedx_spanish](data-versions.md#tedx_spanish) | es | 语音识别 | 24.5 | TEDx 西语演讲（仅限非商用） | 没有 |
 | [tele_con_ciencia](data-versions.md#tele_con_ciencia) | es | 语音识别 | 28.3 | 墨西哥西语科普电视节目 | 没有 |
+| [treble10_rir](data-versions.md#treble10_rir) | und | rir | 1.5 | 10 个带家具房间的模拟房间冲激响应（Treble10） | 没有 |
 | [voices_noise](data-versions.md#voices_noise) | und | noise | 128.3 | VOiCES 真实房间噪声与背景人声 | `备份桶:audio-data-contract/datasets/voices/` |
 | [voxconverse](data-versions.md#voxconverse) | und | 说话人分段与归属 | 43.5 | YouTube 视频说话人日志评测（VoxConverse） | 没有 |
 | [voxforge_spanish](data-versions.md#voxforge_spanish) | es | 语音识别 | 49.7 | VoxForge 西语朗读（多为西班牙） | 没有 |
@@ -289,13 +320,33 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [common_voice_yue](../../catalog/download_queue.yaml#L139) | 26.0 | yue | 语音识别 |
 | [common_voice_zh](../../catalog/download_queue.yaml#L86) | 26.0 | zh | 语音识别 |
 | [common_voice_zh_hk](../../catalog/download_queue.yaml#L113) | 26.0 | yue | 语音识别 |
+| [crows_multilingual](../../catalog/crows_multilingual.yaml#L1) | hf-44e5d3e28604 | ar、de、en、es、fr、hi、id、ja、ko、mr、pt、ru、tr、ur、vi、zh | 语音识别 |
+| [dataset_et_amharic](../../catalog/dataset_et_amharic.yaml#L1) | hf-4861d6445842 | am | 语音识别 |
+| [dialogs_ru](../../catalog/dialogs_ru.yaml#L1) | hf-a74ff44d8d27 | ru | 语音合成 |
+| [duplexconv](../../catalog/duplexconv.yaml#L1) | hf-0bb99da7ab7a | zh | 语音识别、说话人分段与归属、带说话人标注的语音识别 |
+| [easycom](../../catalog/easycom.yaml#L1) | github-v1.0.0 | en | 语音识别、带说话人标注的语音识别 |
+| [eurospeech](../../catalog/eurospeech.yaml#L1) | hf-7a55bbcee393 | multi | 语音识别 |
 | [gigaspeech2](../../catalog/download_queue.yaml#L165) | hf-8dc0d0e502b7 | id、th、vi | 语音识别 |
+| [gigaspeech3](../../catalog/gigaspeech3.yaml#L1) | hf-4e7b87a9df60 | ar | 语音识别 |
 | [granary](../../catalog/download_queue.yaml#L200) | hf-0fe23a860e35 | multi | 语音识别、语音翻译 |
+| [granary](../../catalog/granary_v2.yaml#L1) | v2-hf-f835695fb5cc | multi | 语音识别、语音翻译 |
+| [iscslp2026_cot_tts](../../catalog/iscslp2026_cot_tts.yaml#L1) | hf-968bbb0e6244 | en、zh | 语音合成 |
+| [kasaspeech](../../catalog/kasaspeech.yaml#L1) | hf-4bbaf47a5a46 | en、tw | 语音识别、语码转换语音识别 |
 | [lemas](../../catalog/download_queue.yaml#L250) | hf-91f0c1b9a29f | multi | 语音识别 |
 | [loquacious_set](../../catalog/loquacious_set.yaml#L1) | hf-0e84cdb9e4b8 | en | 语音识别 |
+| [masc](../../catalog/masc.yaml#L1) | hf-cb7f1f0618bd | ar | 语音识别 |
+| [multitalk_ft](../../catalog/multitalk.yaml#L38) | hf-18038b5d4cdd | zh、en | 带说话人标注的语音识别 |
+| [multitalk_pt](../../catalog/multitalk.yaml#L1) | hf-8196ea3cadda | zh、en | 带说话人标注的语音识别 |
 | [omnilingual-asr-corpus](../../catalog/download_queue.yaml#L225) | hf-8648ba894637 | multi | 语音识别 |
 | [peoples_speech](../../catalog/peoples_speech.yaml#L1) | hf-f10597c5d3d3 | en | 语音识别 |
 | [reazonspeech](../../catalog/download_queue.yaml#L274) | hf-0df78f991f6a | ja | 语音识别 |
+| [smiip_tv](../../catalog/smiip_tv.yaml#L1) | openslr-156 | zh | 声纹验证 |
+| [tagarela](../../catalog/tagarela.yaml#L1) | hf-a66648fc4938 | pt | 语音识别、语音合成 |
+| [waxal_tts](../../catalog/waxal_tts.yaml#L1) | hf-5f4d8ca24f2b | ach、bau、ewe、fat、ful、hau、ibo、kik、lug、luo、nyn、pcm、swa、twi、yor | 语音合成 |
+| [worldspeech](../../catalog/worldspeech.yaml#L1) | hf-b76b85395039 | multi | 语音识别 |
+| [yo_cpt_kk](../../catalog/yo_cpt.yaml#L41) | hf-a8c2d1a23de4 | kk | 语音合成、语音识别 |
+| [yo_cpt_ru](../../catalog/yo_cpt.yaml#L1) | hf-f2f92c5ecf6b | ru | 语音合成、语音识别 |
+| [yodas3](../../catalog/yodas3.yaml#L1) | hf-81d802f45a1c | multi | 语音识别 |
 
 ## 训练混合配方
 

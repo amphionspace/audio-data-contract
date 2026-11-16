@@ -1,0 +1,40 @@
+- schema_version: dataset-catalog/2.0
+  dataset_id: easycom
+  version: github-v1.0.0
+  languages:
+    - en
+  tasks:
+    - asr
+    - speaker_attributed_asr
+  aliases: []
+  artifacts:
+    - name: source
+      kind: source-directory
+      root_alias: easycom
+      relative_path: source/github-v1.0.0
+  splits:
+    all:
+      artifacts:
+        source:
+          - source
+  provenance:
+    summary: AR 眼镜嘈杂餐厅多人对话（EasyCom）
+    source: GitHub release
+    source_id: facebookresearch/EasyComDataset
+    revision: v1.0.0
+    url: https://github.com/facebookresearch/EasyComDataset
+    paper: https://arxiv.org/abs/2107.04174
+    release_date: '2021-06-24'
+    license:
+      - cc-by-nc-4.0
+    inventory_status: download_planned
+    description: >-
+      Meta Reality Labs 的 EasyCom：嘈杂餐厅环境下围桌进行的英语自然对话（自我介绍、点餐、游戏等任务），每场约 30 分钟，一人佩戴
+      带 6 麦克风阵列和广角摄像头的 AR 眼镜，其余参与者各戴近讲麦克风，周围有扬声器播放餐厅噪声。提供眼镜阵列多通道音频、
+      近讲音频、人工转写（带说话人和起止时间）、语音活动、头部位姿和人脸框，高质量部分共 5 小时 18 分。官方 v1.0.0 发布是
+      33 个分卷 tar.gz（约 70.8 GB，含视频，未公布哈希）；HF 上另有第三方镜像 TerryShenty/easycom-original-media-mirror，按文件
+      带 LFS sha256，只取近讲和眼镜阵列音频约 38 GB，转写在官方 Git 仓库里。时长少、体积大，先登记来源，需要远场多人对话评测时
+      再下载。CC BY-NC 4.0。
+    download_scope: Official v1.0.0 release (33 split tar.gz parts with audio, video, transcripts and annotations)
+    expected_download_files: 33
+    expected_download_bytes: 70804612309

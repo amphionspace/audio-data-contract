@@ -1,0 +1,57 @@
+  - schema_version: dataset-catalog/2.0
+    dataset_id: waxal_tts
+    version: hf-5f4d8ca24f2b
+    languages:
+      - ach
+      - bau
+      - ewe
+      - fat
+      - ful
+      - hau
+      - ibo
+      - kik
+      - lug
+      - luo
+      - nyn
+      - pcm
+      - swa
+      - twi
+      - yor
+    tasks:
+      - tts
+    aliases:
+      - waxal-tts
+    artifacts:
+      - name: source
+        kind: hf-dataset-snapshot
+        root_alias: waxal_tts
+        relative_path: source/hf-5f4d8ca24f2b
+    splits:
+      all:
+        artifacts:
+          source:
+            - source
+    provenance:
+      summary: 15 种非洲语言朗读 TTS 数据（WAXAL）
+      source: Hugging Face
+      source_id: google/WaxalNLP
+      revision: 5f4d8ca24f2b9d168b2ee545f1febaaff4b40580
+      url: https://huggingface.co/datasets/google/WaxalNLP
+      paper: https://arxiv.org/abs/2602.02734
+      release_date: '2026-09-01'
+      description: >-
+        Google 与 Makerere 大学、加纳大学、Media Trust、Loud and Clear 等合作采集的 WAXAL 语料中的 TTS 部分：按音素平衡脚本朗读的
+        录音室级语音，本次登记 15 种语言、27,369 条、264.1 小时，每种语言 4–8 位朗读人（数据卡说是单说话人，实际 speaker_id 有 4–8 个），
+        每条有 text、speaker_id、gender。各语言自带 train/validation/test 划分。音频大多是 48 kHz MP3，Baoule、Ewe 是 48 kHz 浮点 WAV，
+        Fula 是 44.1/48 kHz PCM WAV。同一仓库的 ASR 部分已作为 waxal-asr 登记（该版本 ASR 部分的文件数和总字节数与已登记版本相同）。
+        仓库 data/TTS 下还有 bam、fuf、wol 三种语言，但数据卡把它们的配置和语言声明都注释掉了，本次未下载。已知问题：yor 目录里
+        yor_tts-* 分片与 yor-* 逐行重复，只需取一份；ful 有 1,829 行的音频是 macOS 的 ._ 元数据文件而不是音频，读取时要按音频头过滤。
+        许可证按提供方区分：加纳大学提供的 Fante、Twi、Baoule、Ewe 为 CC BY 4.0，其余为 CC BY-SA 4.0。
+        2026-11-14 曾完整下载并按上游哈希校验（按 15 种语言统计为 27,369 条、264.1 小时），因不属于中英、西葡真实场景数据的采集重点，已删除本地副本，只保留来源登记。
+      license:
+        - cc-by-4.0
+        - cc-by-sa-4.0
+      inventory_status: download_planned
+      download_scope: WAXAL TTS Parquet for the 15 languages enabled in the card configs (bam, fuf and wol excluded) plus the card
+      expected_download_files: 185
+      expected_download_bytes: 32872885934

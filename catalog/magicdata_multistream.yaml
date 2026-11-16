@@ -1,0 +1,118 @@
+  - schema_version: dataset-catalog/2.0
+    dataset_id: magicdata_multistream_zh
+    version: hf-156a68949f65
+    languages:
+      - zh
+    tasks:
+      - asr
+      - speaker_attributed_asr
+    aliases: []
+    artifacts:
+      - name: source
+        kind: hf-dataset-snapshot
+        root_alias: magicdata_multistream_zh
+        relative_path: source/hf-156a68949f65
+        metadata:
+          file_count: 113
+          expected_bytes: 1208996397
+          tree_sha256: 58b7dfc672680e2b4f9a9c88390990a4bbb644a2bc5b82305f08fbc39d3fffbd
+      - name: download_state
+        kind: dataset-state
+        root_alias: magicdata_multistream_zh
+        relative_path: versions/hf-156a68949f65/download_state/state.json
+        expected_bytes: 1107
+        sha256: d8b99303113f93bca1e28e774fa3bff73af3c5acf5a15de08760154fb8bb500b
+    splits:
+      all:
+        artifacts:
+          source:
+            - source
+        statistics:
+          count: 27
+          tracks: 54
+          speakers: 6
+          duration_hours: 5.2446
+          duration_basis: soundfile header duration of each conversation (both per-speaker WAV tracks have the same length; counted once per conversation, 10.49 h of track audio); pinned upstream file hashes verified
+          segments: 2830
+          segment_hours: 5.16
+          sample_formats:
+            1ch/16000Hz/PCM_16: 54
+    provenance:
+      summary: 中文双人自然对话分轨录音（MagicData 样本）
+      source: Hugging Face
+      source_id: MagicDataTech/multi-stream-spontaneous-conversation-training-datasets_chinese
+      revision: 156a68949f65c084ea04710825d21dbdb4ae6519
+      url: https://huggingface.co/datasets/MagicDataTech/multi-stream-spontaneous-conversation-training-datasets_chinese
+      download_mirror: https://hf-mirror.com
+      release_date: '2026-06-10'
+      description: >-
+        MagicData 商用多声道自然对话数据的开源样本：27 段两人手机自由对话（教育、时事、文旅、就业等 9 个话题），每人一条独立音轨
+        （16 kHz 单声道 WAV），各自带起止时间的逐句人工转写，标出 [+] 重叠、[LAUGHTER]、[SONANT]、[ENS] 噪声和 [PII] 等，打断和抢话
+        在分轨里完整保留，适合全双工对话和带说话人识别的评测。规模小、说话人单一：只有 6 位 21–25 岁的辽宁籍男性，SPKINFO.txt 记录
+        各自的手机型号。HF 卡片 YAML 写 apache-2.0，但正文限定仅供学术研究、不得商用，以更严的条款为准；同一份数据在 MagicHub 组织下
+        另有一个副本。
+      license:
+        - academic-research-only
+      download_scope: Complete Chinese multi-stream conversation sample (WAV, TXT, speaker and utterance info, card)
+      expected_download_files: 113
+      expected_download_bytes: 1208996397
+      integrity: verified
+      local_scan_date: '2026-11-14'
+  - schema_version: dataset-catalog/2.0
+    dataset_id: magicdata_multistream_en
+    version: hf-6b3e11aea621
+    languages:
+      - en
+    tasks:
+      - asr
+      - speaker_attributed_asr
+    aliases: []
+    artifacts:
+      - name: source
+        kind: hf-dataset-snapshot
+        root_alias: magicdata_multistream_en
+        relative_path: source/hf-6b3e11aea621
+        metadata:
+          file_count: 37
+          expected_bytes: 637607506
+          tree_sha256: c01bcf6b8a70246ee88a401d8b43326d0a7b599f3563facf7ae0dfc06319305e
+      - name: download_state
+        kind: dataset-state
+        root_alias: magicdata_multistream_en
+        relative_path: versions/hf-6b3e11aea621/download_state/state.json
+        expected_bytes: 1076
+        sha256: 69e6ee4c5682ca57cb7a2db818b51470af063384d8edd5a7afefe8f59e39beb6
+    splits:
+      all:
+        artifacts:
+          source:
+            - source
+        statistics:
+          count: 8
+          tracks: 16
+          speakers: 8
+          duration_hours: 2.7661
+          duration_basis: soundfile header duration of each conversation (both per-speaker WAV tracks have the same length; counted once per conversation, 5.53 h of track audio); pinned upstream file hashes verified
+          segments: 4669
+          segment_hours: 2.57
+          sample_formats:
+            1ch/16000Hz/PCM_16: 16
+    provenance:
+      summary: 英文双人自然对话分轨录音（MagicData 样本）
+      source: Hugging Face
+      source_id: MagicHub/multi-stream-spontaneous-conversation-training-datasets_english
+      revision: 6b3e11aea62156a9a0e947b6b6c139eb7b9586f0
+      url: https://huggingface.co/datasets/MagicHub/multi-stream-spontaneous-conversation-training-datasets_english
+      download_mirror: https://hf-mirror.com
+      release_date: '2026-06-15'
+      description: >-
+        MagicData 多声道自然对话数据的英文开源样本：8 段两人手机自由对话（消费、人文、金融、娱乐、情感等话题），8 位美国说话人
+        （纽约和加州，5 男 3 女），每人一条独立音轨，16 kHz 单声道 WAV，逐句人工转写带起止时间和事件标记，格式与中文样本相同。
+        规模很小，适合作分轨对话和全双工流程的小样本检查。卡片正文限定仅供学术研究、不得商用（YAML 未写许可证）。
+      license:
+        - academic-research-only
+      download_scope: Complete English multi-stream conversation sample (WAV, TXT, speaker and utterance info, card)
+      expected_download_files: 37
+      expected_download_bytes: 637607506
+      integrity: verified
+      local_scan_date: '2026-11-14'

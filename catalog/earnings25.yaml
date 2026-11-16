@@ -1,0 +1,75 @@
+- schema_version: dataset-catalog/2.0
+  dataset_id: earnings25
+  version: zenodo-18762168
+  languages:
+    - en
+  tasks:
+    - asr
+    - speaker_attributed_asr
+  aliases: []
+  artifacts:
+    - name: source
+      kind: source-archive
+      root_alias: earnings25
+      relative_path: source/zenodo-18762168/earnings25.zip
+      expected_bytes: 12044542618
+      sha256: 1fbdc5af36dde0db63e763ac3d51106af0e13baaf14a10de3b759d73366f05c0
+      metadata:
+        url: https://zenodo.org/records/18762168/files/earnings25.zip
+    - name: download_state
+      kind: dataset-state
+      root_alias: earnings25
+      relative_path: versions/zenodo-18762168/download_state/state.json
+      expected_bytes: 923
+      sha256: 310184d89ba3755b697716533e656430f2d235b2e1ff03838ae21dfa3eae3e9d
+  splits:
+    testset_full:
+      artifacts:
+        source:
+          - source
+      statistics:
+        count: 514
+        speakers: 3567
+        segments: 563646
+        duration_hours: 497.9471
+        duration_basis: soundfile header duration of every earnings-25/testset-full/audio/*.mp3 read from the archive (within 0.11 s of data.jsonl per file); speakers are distinct participant names excluding Operator; upstream MD5 verified
+        sample_formats:
+          1ch/44100Hz/MPEG_LAYER_III: 281
+          1ch/16000Hz/MPEG_LAYER_III: 216
+          1ch/11025Hz/MPEG_LAYER_III: 16
+          1ch/22050Hz/MPEG_LAYER_III: 1
+    testset_segmented:
+      artifacts:
+        source:
+          - source
+      statistics:
+        count: 290
+        duration_hours: 45.8997
+        duration_basis: soundfile header duration of every earnings-25/testset-segmented/audio/*.mp3 read from the archive (within 0.11 s of data.jsonl per file); upstream MD5 verified
+        sample_formats:
+          1ch/16000Hz/MPEG_LAYER_III: 290
+  provenance:
+    summary: 美股财报电话会议英语（Earnings25）
+    source: Zenodo
+    source_id: '18762168'
+    url: https://doi.org/10.5281/zenodo.18762168
+    paper: https://arxiv.org/abs/2607.23813
+    release_date: '2026-06-19'
+    license:
+      - cc-by-4.0
+    description: >-
+      Bloomberg 发布的金融领域 ASR 评测集（Interspeech 2026），全部是真实的上市公司财报电话会议录音，包括高管陈述和分析师问答，
+      有大量财务术语和数字。testset-full 是 514 场完整会议（标普 500 成分公司，主要为 2025 年第四季度，482 场来自美国，其余来自
+      11 个国家，覆盖 284 个行业），共 497.9 小时，单声道 MP3，采样率 11.025–44.1 kHz 不等；每场带整场转写、说话人姓名和角色，
+      以及 563,646 个带说话人编号的时间片段。testset-segmented 是从 2025 年全年美国公司会议中按行业分层抽取的 290 段 5–10 分钟
+      片段，共 45.9 小时，16 kHz 单声道 MP3（README 写 WAV，实际是 MP3），只有段级转写；其中 14 段与 testset-full 出自同一场会议，
+      重叠很少，两部分都计入总时长。转写是财经编辑稿而非逐字稿，含 (Operator Instructions)、(Multiple Speakers)、
+      (Technical Difficulty) 等编辑标记，评测前需过滤；时间戳由 NeMo CTC 强制对齐得到，不是人工标注。转写、标注和元数据为
+      CC BY 4.0；论文说明再分发的音频仍受原内容提供方条款约束，使用者需自行确认。
+    download_scope: Complete Earnings25 v1.0.0 Zenodo record (earnings25.zip with testset-full and testset-segmented audio, data.jsonl, dataset cards, README, LICENSE)
+    expected_download_files: 1
+    expected_download_bytes: 12044542618
+    download_mirror: zenodo.org via the configured proxy (16 connections)
+    integrity: verified
+    integrity_method: MD5 published in the Zenodo record; sha256 computed locally
+    local_scan_date: '2026-11-15'

@@ -1,0 +1,80 @@
+  - schema_version: dataset-catalog/2.0
+    dataset_id: sada
+    version: hf-094fe2c0fe4b
+    languages:
+      - ar
+    tasks:
+      - asr
+    aliases:
+      - sada22
+      - saudi_audio_dataset_for_arabic
+    artifacts:
+      - name: source
+        kind: hf-dataset-snapshot
+        root_alias: sada
+        relative_path: source/hf-094fe2c0fe4b
+        metadata:
+          file_count: 33
+          expected_bytes: 50401174432
+          tree_sha256: a31b14948c80815d31d5a20d5236412d266be38be5e06f39e2b06757726f8f8f
+      - name: download_state
+        kind: dataset-state
+        root_alias: sada
+        relative_path: versions/hf-094fe2c0fe4b/download_state/state.json
+        expected_bytes: 909
+        sha256: 44c823b0e5782748c2d7a921daa561f2cc18d0769fef0d89c89879492c99d7b3
+    splits:
+      train:
+        artifacts:
+          source:
+            - source
+        statistics:
+          count: 241834
+          duration_hours: 417.6279
+          duration_basis: soundfile header duration of every embedded WAV in data/train Parquet; pinned upstream file hashes verified
+          dialect_segments: Najdi 90657, multiple speakers 50133, Hijazi 34833, Unknown 29611, Khaliji 28491, MSA 4091, Egyptian 2031, Levantine 947
+          sample_formats:
+            1ch/16000Hz/PCM_16: 241834
+      validation:
+        artifacts:
+          source:
+            - source
+        statistics:
+          count: 5139
+          duration_hours: 9.1663
+          duration_basis: soundfile header duration of every embedded WAV in data/validation Parquet; pinned upstream file hashes verified
+          dialect_segments: Najdi 2250, multiple speakers 1048, Khaliji 679, Hijazi 528, Unknown 491, MSA 54, Egyptian 45, Yemeni 23
+          sample_formats:
+            1ch/16000Hz/PCM_16: 5139
+      test:
+        artifacts:
+          source:
+            - source
+        statistics:
+          count: 6193
+          duration_hours: 10.7511
+          duration_basis: soundfile header duration of every embedded WAV in data/test Parquet; pinned upstream file hashes verified
+          dialect_segments: Najdi 1704, multiple speakers 1320, Khaliji 1150, Hijazi 809, Unknown 765, not applicable 167, MSA 157, Egyptian 96
+          sample_formats:
+            1ch/16000Hz/PCM_16: 6193
+    provenance:
+      summary: 沙特电视节目阿拉伯语方言语音（SADA）
+      source: Hugging Face
+      source_id: MohamedRashad/SADA22
+      revision: 094fe2c0fe4b549a4f34349e6e0622e7c7273c2d
+      url: https://huggingface.co/datasets/MohamedRashad/SADA22
+      download_mirror: https://hf-mirror.com
+      release_date: '2025-05-02'
+      description: >-
+        SADA（Saudi Audio Dataset for Arabic）的 Hugging Face 转存：沙特数据与人工智能局（SDAIA）国家人工智能中心对沙特广播局 57 个以上
+        电视节目的人工转写语音，以沙特方言为主（纳季德、汉志、海湾），也有标准阿拉伯语、埃及和黎凡特方言。每段带原始文本 text、
+        规范化文本 cleaned_text、说话人年龄段、性别、方言；约 21% 的段标为“多于一个说话人”，方言和性别对这些段不适用。
+        16 kHz 单声道 WAV 内嵌在 Parquet 中，分 train、validation、test。实测共 253,166 段、437.5 小时（train 417.6 小时），
+        少于数据卡写的约 667 小时（train 约 647 小时），这份是第三方转存，差异原因未说明；另有 76 段文本为空。CC BY-NC-SA 4.0，仅限非商用。
+      license:
+        - cc-by-nc-sa-4.0
+      download_scope: Complete SADA 2022 Hugging Face re-upload (Parquet with embedded audio)
+      expected_download_files: 33
+      expected_download_bytes: 50401174432
+      integrity: verified
+      local_scan_date: '2026-11-14'

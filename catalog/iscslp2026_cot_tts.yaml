@@ -1,0 +1,38 @@
+  - schema_version: dataset-catalog/2.0
+    dataset_id: iscslp2026_cot_tts
+    version: hf-968bbb0e6244
+    languages:
+      - en
+      - zh
+    tasks:
+      - tts
+    aliases: []
+    artifacts:
+      - name: source
+        kind: hf-dataset-snapshot
+        root_alias: iscslp2026_cot_tts
+        relative_path: source/hf-968bbb0e6244
+    splits:
+      all:
+        artifacts:
+          source:
+            - source
+    provenance:
+      summary: 影视剧中英对话的上下文 TTS 数据（CoT-TTS）
+      source: Hugging Face
+      source_id: HKUSTAudio/ISCSLP2026-CoT-TTS
+      revision: 968bbb0e624413702a25fc1c5fd1327ed3b97783
+      url: https://huggingface.co/datasets/HKUSTAudio/ISCSLP2026-CoT-TTS
+      paper: https://arxiv.org/abs/2606.21933
+      release_date: '2026-06-16'
+      license:
+        - other (cot-tts-research-only)
+      inventory_status: download_planned
+      description: >-
+        ISCSLP 2026 CoT-TTS 挑战赛数据，约 16,000 小时、300 万段：英语约 8,600 小时，中文约 7,400 小时，取自电影、电视剧、广播剧和短剧，
+        经说话人分段切出。每条带前文对话、参考音频、自动说话人标签、时间戳、情感标签和思维链（CoT）文本，另有噪声与自然度打分。
+        FLAC，采样率和声道不统一。另含约 0.77 GB 的挑战赛评测集（eval-dataset/）。许可证为仅限非商业学术研究，
+        禁止商用训练、再分发、还原原片和识别演员，下载和使用前需确认用途符合条款。
+      download_scope: Complete ISCSLP 2026 CoT-TTS release (six movie folders and eval-dataset)
+      expected_download_files: 3567
+      expected_download_bytes: 2161603376715

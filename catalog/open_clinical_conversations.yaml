@@ -1,0 +1,72 @@
+- schema_version: dataset-catalog/2.0
+  dataset_id: open_clinical_conversations
+  version: hf-06053cd9be2e
+  languages:
+    - en
+  tasks:
+    - asr
+  aliases: []
+  artifacts:
+    - name: source
+      kind: hf-dataset-snapshot
+      root_alias: open_clinical_conversations
+      relative_path: source/hf-06053cd9be2e
+      metadata:
+        file_count: 336
+        expected_bytes: 1323573163
+        tree_sha256: 7baff0d7587a164f9834f800ed54340fc66a93993e887fb1e7166d23e3833df8
+    - name: download_state
+      kind: dataset-state
+      root_alias: open_clinical_conversations
+      relative_path: versions/hf-06053cd9be2e/download_state/state.json
+      expected_bytes: 1032
+      sha256: 007c552dc3d55ff75ea4a219c2854e6377145a246d34ebbc50f81a918bc2fef8
+  splits:
+    osce:
+      artifacts:
+        source:
+          - source
+      statistics:
+        count: 272
+        turns: 26572
+        duration_hours: 51.9038
+        duration_basis: soundfile header duration of every audio/osce-*.mp3 listed in audio/metadata.jsonl; pinned upstream file hashes verified
+        sample_formats:
+          1ch/16000Hz/MP3: 272
+    primock57_mix:
+      group: primock57_duplicate
+      artifacts:
+        source:
+          - source
+      statistics:
+        count: 57
+        turns: 5347
+        duration_hours: 8.6351
+        duration_basis: soundfile header duration of every audio/pm57-*.mp3 (doctor and patient tracks mixed to one channel; same consultations and hours as the registered primock57 dataset, so kept out of the totals)
+        sample_formats:
+          1ch/16000Hz/MP3: 57
+  provenance:
+    summary: 英文模拟问诊录音合集（含 OSCE 272 场）
+    source: Hugging Face
+    source_id: SullyHQ/open-clinical-conversations
+    revision: 06053cd9be2ea5fbfaefebb1db5be907b53a8c44
+    url: https://huggingface.co/datasets/SullyHQ/open-clinical-conversations
+    paper: https://doi.org/10.1038/s41597-022-01423-1
+    download_mirror: https://hf-mirror.com
+    release_date: '2026-11-11'
+    description: >-
+      Sully.ai 把四个公开的医患对话数据整理成统一格式（2026-11 发布）。有音频的部分：272 场 Fareez 等人（Scientific Data 2022）的
+      加拿大 OSCE 问诊录音，医生与扮演患者按病例卡即兴问诊，以呼吸科为主（呼吸 213、肌骨 46、消化 6、心血管 5、皮肤和综合各 1），
+      共 51.9 小时，原始数据在 figshare 上以 CC0 发布（本机访问 figshare 返回 403，所以从这份整理版获取）；另 57 场 PriMock57，
+      医生和患者两轨被混成单声道，与本项目已有的 primock57 是同一批问诊，所以这一划分加了 group，不计入总时长。音频统一转成
+      16 kHz 单声道 MP3，转写按 Clinician/Patient/Family member 分轮次（OSCE 26,572 轮），连续同一说话人的轮次已合并，没有逐句时间。
+      卡片称全部是角色扮演、人工转写，原论文的转写流程未核对。encounters.jsonl 另含 207 场 ACI-Bench 和 MTS-Dialog 1,701 段
+      对话文本（无音频），可用于对话转病历的文本评测。整体按 CC BY 4.0 分发，每行带来源许可证。
+    license:
+      - cc-by-4.0
+      - cc0-1.0
+    download_scope: Complete Open Clinical Conversations repository (329 encounter MP3s with transcripts, encounters and MTS-Dialog JSONL, attribution, citations, card)
+    expected_download_files: 336
+    expected_download_bytes: 1323573163
+    integrity: verified
+    local_scan_date: '2026-11-14'

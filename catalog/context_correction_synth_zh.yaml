@@ -1,0 +1,126 @@
+# 说字写法合成训练数据（带 think）：LLM 出题和复核、Qwen3-TTS 用训练划分的音色朗读、双 ASR 拼音级质检。
+# 运行记录见 provenance.run_dir 下的 README.md，生成代码在 amphiondata scripts/context_correction/。
+- schema_version: dataset-catalog/2.0
+  dataset_id: context_correction_synth_zh
+  version: train-v1-20261114
+  languages:
+  - zh
+  tasks:
+  - asr
+  - ts_asr
+  aliases: []
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/context_correction_synth_zh/versions/train-v1-20261114/state.json
+  - name: audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/context_correction_synth_zh/versions/train-v1-20261114/audio-index.jsonl.gz
+    expected_bytes: 197891
+    sha256: 917084124b00e032c5f9a25dfe1bffeddfc28894c6d9548718201b12d9a73638
+    metadata:
+      record_count: 3660
+  - name: train-records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/context_correction_synth_zh/versions/train-v1-20261114/records/train.jsonl.gz
+    expected_bytes: 785036
+    sha256: b20dd695bb12cf915fdaaf19858eabb62c72f02f76b0f9cc12481890db57bd55
+    metadata:
+      record_count: 2984
+  - name: train_ts-records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/context_correction_synth_zh/versions/train-v1-20261114/records/train_ts.jsonl.gz
+    expected_bytes: 808275
+    sha256: f0692db9f216c3a82e4399ea7e85af927c0b945932e12d9ec837d62ec14ad621
+    metadata:
+      record_count: 2917
+  - name: quarantine-records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/context_correction_synth_zh/versions/train-v1-20261114/records/quarantine.jsonl.gz
+    expected_bytes: 133858
+    sha256: 92847f648cf758eaac7554b403acce7a7c0875df08a3d5fd55fe100d7ec5dcc5
+    metadata:
+      record_count: 392
+  - name: think
+    kind: jsonl-metadata
+    root_alias: aidc_data
+    relative_path: datasets/context_correction_synth_zh/versions/train-v1-20261114/think.jsonl.gz
+    expected_bytes: 162697
+    sha256: 0dd7e740df39dfaf4d442bb052f50199182b5e8087aa441bfbc0efe1056f0c88
+    metadata:
+      record_count: 5901
+      think_on_records: 5862
+      training_datasets:
+      - context_correction_synth_zh@train-v1-20261114
+      description: 按训练记录（dataset + record_id）给出 think 文本，覆盖 train 和 train_ts 的每条记录；think_on=false 的是引用超过 30 字、只按 think 关训练的
+  - name: think-summary
+    kind: json-metadata
+    root_alias: aidc_data
+    relative_path: datasets/context_correction_synth_zh/versions/train-v1-20261114/think-summary.json
+    expected_bytes: 260
+    sha256: 7563ea3f1f3d7c67d29ae9777daeda2c8e4ebde12d6c92e9c00b5831a58d1626
+    metadata:
+      description: think 行按划分、条目类型和原因的计数
+  splits:
+    train:
+      artifacts:
+        records:
+        - train-records
+        audio_index:
+        - audio-index
+      task: asr
+      statistics:
+        records: 2984
+        duration_hours: 13.8277
+        duration_basis: recognized clip (mixture for ts_asr)
+      provenance:
+        description: 通过质检的合成条目（correct 指向少见写法，confirm 指向常用写法），每条单独收录，不要求成对通过
+    train_ts:
+      artifacts:
+        records:
+        - train_ts-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 2917
+        duration_hours: 13.3121
+        duration_basis: recognized clip (mixture for ts_asr)
+      provenance:
+        description: 同一批通过质检的条目中不超过 26.5 秒的部分，配被克隆说话人的另一条训练划分真实语句作注册音频
+    quarantine:
+      artifacts:
+        records:
+        - quarantine-records
+        audio_index:
+        - audio-index
+      task: asr
+      statistics:
+        records: 392
+        duration_hours: 2.666
+        duration_basis: recognized clip (mixture for ts_asr)
+      provenance:
+        description: 有音频但未通过质检的条目（超长、说明没听清、目标词读音不对），保留原因，不用于训练
+  provenance:
+    summary: 说字写法合成训练数据（带 think）
+    status: complete
+    synthetic: full
+    owner: mingdong
+    description: >-
+      说话人在一段话里用组词、拆字、偏旁结构或否定对比说明某个同音字怎么写（另含同名一致性），转写应按说明写字。
+      沿用 context_correction_zh@v1-20261018 的流程：qwen3.6-plus 出题、deepseek-v4-pro 复核（6 项全过）、Qwen3-TTS 克隆音色朗读、
+      SenseVoiceSmall 与 Qwen3-ASR-1.7B 拼音级质检（任一通过即可，按多音字全部读音比较）。音色取 aishell3、kespeech 训练划分的语句，
+      排除评测集克隆过的说话人；题目避开评测集的被测词，与评测集写法对或朗读文本相同的进隔离区。每条 train / train_ts 记录在 think.jsonl.gz
+      里有一行 think（context_correction_clean_zh 的 think 格式）。抽查：说明写错约 2–3%，只靠一个 ASR 通过的条目未见误收。
+      起因：open-audio-llm runs/zh-spelling-think-20261113 中 think 有效，但真实说明样本只有 2,187 条。
+    sources:
+    - LLM-generated scripts (Aliyun Bailian qwen3.6-plus, reviewed by deepseek-v4-pro)
+    - aishell3@legacy-20260804 train voices
+    - kespeech@legacy-20260804 train voices
+    - Qwen3-TTS-12Hz-1.7B-Base
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/spelling-synth-zh-20261114

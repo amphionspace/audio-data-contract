@@ -1,0 +1,60 @@
+  - schema_version: dataset-catalog/2.0
+    dataset_id: sbcsae
+    version: openslr-155
+    languages:
+      - en
+    tasks:
+      - asr
+      - speaker_attributed_asr
+    aliases:
+      - santa_barbara_corpus
+    artifacts:
+      - name: source
+        kind: source-archive
+        root_alias: sbcsae
+        relative_path: source/openslr-155/SBCSAE.tar.gz
+        expected_bytes: 6186324893
+        sha256: d587d08bcfdb6789fde201116c857ad5b6f2b423301d1144be2689655b9a2040
+        metadata:
+          url: https://openslr.trmal.net/resources/155/SBCSAE.tar.gz
+      - name: download_state
+        kind: dataset-state
+        root_alias: sbcsae
+        relative_path: versions/openslr-155/download_state/state.json
+        expected_bytes: 865
+        sha256: c87267eef5518180f079add15cdf1cddd0d56f131414a7d740e3a0ac4b5afb08
+    splits:
+      all:
+        artifacts:
+          source:
+            - source
+        statistics:
+          count: 60
+          speakers: 225
+          duration_hours: 23.3146
+          duration_basis: soundfile header duration of every WAV member, read by streaming the archive; speakers are distinct ids across the four docs/Part_*/speaker.tbl files
+          sample_formats:
+            2ch/22050Hz/PCM_16: 56
+            1ch/22050Hz/PCM_16: 4
+    provenance:
+      summary: 美式英语自然口语对话（SBCSAE）
+      source: OpenSLR
+      source_id: SLR155
+      url: https://www.openslr.org/155/
+      release_date: '2024-07-17'
+      license:
+        - cc-by-nd-3.0-us
+      description: >-
+        加州大学圣塔芭芭拉分校语言学系编纂的 Santa Barbara Corpus of Spoken American English（原由 LDC 分四部分发行，2000–2005），
+        OpenSLR 155 镜像的完整版：60 段各约 20 分钟、共 23.3 小时的自然口语互动，录于美国各地，说话人背景和对话场合多样，
+        22.05 kHz（56 段立体声、4 段单声道）。每段同时给出 WAV、MP3，以及带时间标记的 TRN
+        和 CHAT（.cha）两种格式转写，docs/ 下有说话人和片段信息表。只有一个归档文件、上游没有公布哈希，下载时做了完整的 gzip
+        流校验，sha256 是本地计算值。规模小、录音年代较早，主要用于自然对话 ASR 评测和对话分析。CC BY-ND 3.0 US
+        （禁止演绎：可以使用和原样分发，但不得发布修改后的版本）。
+      download_scope: Complete SBCSAE archive mirrored by OpenSLR 155
+      expected_download_files: 1
+      expected_download_bytes: 6186324893
+      download_mirror: https://openslr.trmal.net (with openslr.elda.org)
+      integrity: verified
+      integrity_method: full gzip stream check and archive listing; sha256 computed locally because OpenSLR publishes no checksum
+      local_scan_date: '2026-11-14'

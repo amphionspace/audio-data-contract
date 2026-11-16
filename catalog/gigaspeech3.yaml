@@ -1,0 +1,38 @@
+  - schema_version: dataset-catalog/2.0
+    dataset_id: gigaspeech3
+    version: hf-4e7b87a9df60
+    languages:
+      - ar
+    tasks:
+      - asr
+    aliases:
+      - gigaspeech_3
+    artifacts:
+      - name: source
+        kind: hf-dataset-snapshot
+        root_alias: gigaspeech3
+        relative_path: source/hf-4e7b87a9df60
+    splits:
+      all:
+        artifacts:
+          source:
+            - source
+    provenance:
+      summary: 五种阿拉伯语方言网络语音弱标注（GigaSpeech 3）
+      source: Hugging Face
+      source_id: speechcolab/gigaspeech3
+      revision: 4e7b87a9df6071fca74db5c04c7c8172e82ca881
+      url: https://huggingface.co/datasets/speechcolab/gigaspeech3
+      paper: https://arxiv.org/abs/2611.02476
+      release_date: '2026-10-25'
+      license:
+        - other (gigaspeech3-research-only)
+      inventory_status: download_planned
+      description: >-
+        SpeechColab 2026-10 发布，约 39,028 小时阿拉伯语方言网络音频、约 1,000 万段：阿尔及利亚 11,461 h、埃及 8,533 h、
+        伊拉克 10,162 h、沙特 4,512 h、叙利亚 4,361 h，不含标准阿拉伯语（MSA）。文本是各方言 Zipformer 自动转写的弱标签，
+        没有人工核对；方言标签按国家粗分，可能混有 MSA 和语码转换。WebDataset tar，16 kHz 单声道 WAV + JSON，只有 train；
+        人工转写的评测在 gigaspeech_bench 的 Low-Resource-Languages 部分。许可证仅限科研和评测，不能商用。
+      download_scope: Complete GigaSpeech 3 release (five dialect WebDataset train shards)
+      expected_download_files: 888
+      expected_download_bytes: 4827826974673

@@ -46,6 +46,15 @@ def main():
         from huggingface_hub.utils import HfHubHTTPError, disable_progress_bars
 
         download_errors += (HfHubHTTPError,)
+        try:
+            import httpx
+        except ImportError:  # huggingface_hub < 1.0 uses requests; its errors are OSError
+            pass
+        else:
+            # huggingface_hub >= 1.0 raises httpx timeouts and network errors,
+            # which are not OSError; without this one stalled connection stops
+            # the journal while the pool keeps downloading unrecorded files.
+            download_errors += (httpx.HTTPError,)
         disable_progress_bars()
     destination = Path(plan["destination"])
     destination.mkdir(parents=True, exist_ok=True)

@@ -1,0 +1,40 @@
+  - schema_version: dataset-catalog/2.0
+    dataset_id: kasaspeech
+    version: hf-4bbaf47a5a46
+    languages:
+      - en
+      - tw
+    tasks:
+      - asr
+      - code_switch_asr
+    aliases: []
+    artifacts:
+      - name: source
+        kind: hf-dataset-snapshot
+        root_alias: kasaspeech
+        relative_path: source/hf-4bbaf47a5a46
+    splits:
+      all:
+        artifacts:
+          source:
+            - source
+    provenance:
+      summary: 英语-契维语语码转换朗读（KasaSpeech）
+      source: Hugging Face
+      source_id: ghanaopenai/Ghana_English-Twi_Code-switching_Speech
+      revision: 4bbaf47a5a46e0e6a015eba504866744a7dc886c
+      url: https://huggingface.co/datasets/ghanaopenai/Ghana_English-Twi_Code-switching_Speech
+      release_date: '2026-09-13'
+      description: >-
+        加纳的英语-契维语（Twi）语码转换语音：志愿者在采集平台上朗读引导语码转换的提示句，人工按统一规范转写，共 54,855 条、95.6 小时，
+        112 位说话人，音频大多是 48 kHz 单声道 Opus（少量 16 kHz WAV/Vorbis），附性别、年龄段和提示集。train/validation/test 说话人互不重叠，
+        但句子高度重复：train 5 万条只有 1,544 种转写，test 的 829 种转写全部出现在 train 中，validation 949 种里 948 种也在 train 中，
+        所以这份 test 只能衡量对新说话人的泛化，不能衡量对新文本的泛化，语言模型也可能直接记住这些句子。另有一个同名、体积相同的更早仓库 Kennethdot/
+        Ghana_English-Twi_Code-switching_Speech（2026-08-05），未逐文件比对。Apache-2.0。
+        2026-11-14 曾完整下载并按上游哈希校验（实测与数据卡一致），因不属于中英、西葡真实场景数据的采集重点，已删除本地副本，只保留来源登记。
+      license:
+        - apache-2.0
+      inventory_status: download_planned
+      download_scope: Complete KasaSpeech release (Parquet shards and card)
+      expected_download_files: 11
+      expected_download_bytes: 3997562453

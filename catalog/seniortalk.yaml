@@ -1,0 +1,135 @@
+  - schema_version: dataset-catalog/2.0
+    dataset_id: seniortalk
+    version: hf-d1ddfa691c4b
+    languages:
+      - zh
+    tasks:
+      - asr
+      - speaker_diarization
+      - speaker_attributed_asr
+    aliases: []
+    artifacts:
+      - name: source
+        kind: hf-dataset-snapshot
+        root_alias: seniortalk
+        relative_path: source/hf-d1ddfa691c4b
+        metadata:
+          file_count: 50
+          expected_bytes: 20890629535
+          tree_sha256: e2709d804e5003dafedda40f37e43210221c8e5420bdd80eb3f8438550cadfb7
+      - name: download_state
+        kind: dataset-state
+        root_alias: seniortalk
+        relative_path: versions/hf-d1ddfa691c4b/download_state/state.json
+        expected_bytes: 927
+        sha256: 3b014a02b79903b18f47898ec3bdf9ee74e22440fe6dbab04ddb6d7e1cf45dc1
+    splits:
+      dialogue:
+        artifacts:
+          source:
+            - source
+        statistics:
+          count: 110
+          speakers: 202
+          duration_hours: 55.5053
+          duration_basis: soundfile header duration of every embedded dialogue WAV in dialogue_data train and test Parquet; pinned upstream file hashes verified; sentence_data is cut from these recordings and counted here only once
+        provenance:
+          notes: 两位老人之间的自由对话录音，整段 0.5 小时左右
+      dialogue_train:
+        group: dialogue
+        task: speaker_attributed_asr
+        artifacts:
+          source:
+            - source
+        statistics:
+          count: 100
+          speakers: 182
+          duration_hours: 49.8021
+          duration_basis: soundfile header duration of every embedded WAV in dialogue_data/train Parquet; speaker count from the upstream card
+          segments: 79704
+          segment_hours: 46.19
+          segments_with_overlap_marker: 19219
+          sample_formats:
+            2ch/16000Hz/PCM_16: 99
+            1ch/16000Hz/PCM_16: 1
+      dialogue_test:
+        group: dialogue
+        task: speaker_attributed_asr
+        artifacts:
+          source:
+            - source
+        statistics:
+          count: 10
+          speakers: 20
+          duration_hours: 5.7032
+          duration_basis: soundfile header duration of every embedded WAV in dialogue_data/test Parquet; speaker count from the upstream card
+          segments: 9494
+          segment_hours: 5.38
+          segments_with_overlap_marker: 2453
+          sample_formats:
+            2ch/16000Hz/PCM_16: 10
+      sentence_train:
+        group: dialogue
+        task: asr
+        artifacts:
+          source:
+            - source
+        statistics:
+          count: 47269
+          speakers: 162
+          duration_hours: 29.9475
+          duration_basis: soundfile header duration of every embedded WAV in sentence_data/train Parquet; speaker count from the upstream card
+          sample_formats:
+            2ch/16000Hz/PCM_16: 46894
+            1ch/16000Hz/PCM_16: 375
+      sentence_dev:
+        group: dialogue
+        task: asr
+        artifacts:
+          source:
+            - source
+        statistics:
+          count: 6891
+          speakers: 20
+          duration_hours: 4.0941
+          duration_basis: soundfile header duration of every embedded WAV in sentence_data/dev Parquet; speaker count from the upstream card
+          sample_formats:
+            2ch/16000Hz/PCM_16: 6891
+      sentence_test:
+        group: dialogue
+        task: asr
+        artifacts:
+          source:
+            - source
+        statistics:
+          count: 5869
+          speakers: 20
+          duration_hours: 3.7671
+          duration_basis: soundfile header duration of every embedded WAV in sentence_data/test Parquet; speaker count from the upstream card
+          sample_formats:
+            2ch/16000Hz/PCM_16: 5869
+    provenance:
+      summary: 75–85 岁老人普通话对话（SeniorTalk）
+      source: Hugging Face
+      source_id: BAAI/SeniorTalk
+      revision: d1ddfa691c4b9f434a5e6abb5103e68e1c7280cb
+      url: https://huggingface.co/datasets/BAAI/SeniorTalk
+      paper: https://arxiv.org/abs/2503.16578
+      download_mirror: https://hf-mirror.com
+      release_date: '2025-03-14'
+      description: >-
+        智源研究院与南开大学发布的超高龄老人中文对话语料：202 位 75–85 岁老人（来自 16 个省份，男女约 7:13），两两自由对话，
+        手机在安静室内录制，110 段、55.5 小时，16 kHz，以双声道 WAV 内嵌在 Parquet 中。dialogue_data 每段的 text 是逐行 TSV：
+        起止时间、说话人编号、性别、省份、口音轻重、转写，带 [NOISE]、[SONANT] 等事件标记，重叠处用 [+]…[+] 标出，可用于说话人日志
+        和带说话人的转写；少数说话人编号格式不规范（如 38、035搁），读取时要规整成三位数。sentence_data 是按句切出的 ASR 子集
+        （37.8 小时，60,029 句，平均 2.3 秒），音频取自同一批对话录音，但说话人划分和对话子集不同：抽查不少于 8 字的句子，
+        sentence_test 里 2,735/3,287 句出现在 dialogue_train 的转写中，sentence_train 里 2,769/25,221 句出现在 dialogue_test 中，
+        两套划分不能混用。仓库根目录另有一个 0 字节的 test 空文件。CC BY-NC-SA 4.0，仅限学术和非商业研究，发布方条款还要求
+        不得再分发、参与者要求删除时须配合删除。
+      license:
+        - cc-by-nc-sa-4.0
+      download_scope: Complete SeniorTalk release (dialogue_data and sentence_data Parquet shards)
+      expected_download_files: 50
+      expected_download_bytes: 20890629535
+      integrity: verified
+      local_scan_date: '2026-11-13'

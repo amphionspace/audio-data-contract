@@ -1,0 +1,439 @@
+  - schema_version: dataset-catalog/2.0
+    dataset_id: indic_diarbench
+    version: hf-92877bad8aab
+    languages:
+      - as
+      - bn
+      - brx
+      - doi
+      - gu
+      - hi
+      - kn
+      - kok
+      - ks
+      - mai
+      - ml
+      - mni
+      - mr
+      - ne
+      - or
+      - pa
+      - sa
+      - sat
+      - sd
+      - ta
+      - te
+      - ur
+    tasks:
+      - asr
+      - speaker_diarization
+      - speaker_attributed_asr
+    aliases: []
+    artifacts:
+      - name: source
+        kind: hf-dataset-snapshot
+        root_alias: indic_diarbench
+        relative_path: source/hf-92877bad8aab
+        metadata:
+          file_count: 24
+          expected_bytes: 12055899193
+          tree_sha256: 3f0e9902fec0c53c0d700899b83570f189c4d3657e7b5a901ae78768e28f91ad
+      - name: download_state
+        kind: dataset-state
+        root_alias: indic_diarbench
+        relative_path: versions/hf-92877bad8aab/download_state/state.json
+        expected_bytes: 997
+        sha256: 42d96db1b3a65f232d49488d0e90401006966eb06722da4179c14df90cd6fab5
+    splits:
+      as:
+        task: speaker_attributed_asr
+        artifacts:
+          source:
+            - source
+        statistics:
+          count: 27
+          duration_hours: 1.4669
+          duration_basis: soundfile header duration of every embedded WAV in Assamese/test Parquet; pinned upstream file hashes verified
+          segments: 1431
+          recordings_by_condition:
+            near_field: 27
+          sample_formats:
+            1ch/16000Hz/PCM_16: 27
+        provenance:
+          language_name: Assamese
+      bn:
+        task: speaker_attributed_asr
+        artifacts:
+          source:
+            - source
+        statistics:
+          count: 104
+          duration_hours: 12.6269
+          duration_basis: soundfile header duration of every embedded WAV in Bengali/test Parquet; pinned upstream file hashes verified
+          segments: 9570
+          recordings_by_condition:
+            far_field: 23
+            in_the_wild: 28
+            near_field: 53
+          sample_formats:
+            1ch/16000Hz/PCM_16: 104
+        provenance:
+          language_name: Bengali
+      brx:
+        task: speaker_attributed_asr
+        artifacts:
+          source:
+            - source
+        statistics:
+          count: 29
+          duration_hours: 1.5611
+          duration_basis: soundfile header duration of every embedded WAV in Bodo/test Parquet; pinned upstream file hashes verified
+          segments: 1700
+          recordings_by_condition:
+            near_field: 29
+          sample_formats:
+            1ch/16000Hz/PCM_16: 29
+        provenance:
+          language_name: Bodo
+      doi:
+        task: speaker_attributed_asr
+        artifacts:
+          source:
+            - source
+        statistics:
+          count: 26
+          duration_hours: 1.4365
+          duration_basis: soundfile header duration of every embedded WAV in Dogri/test Parquet; pinned upstream file hashes verified
+          segments: 1810
+          recordings_by_condition:
+            near_field: 26
+          sample_formats:
+            1ch/16000Hz/PCM_16: 26
+        provenance:
+          language_name: Dogri
+      gu:
+        task: speaker_attributed_asr
+        artifacts:
+          source:
+            - source
+        statistics:
+          count: 92
+          duration_hours: 11.1047
+          duration_basis: soundfile header duration of every embedded WAV in Gujarati/test Parquet; pinned upstream file hashes verified
+          segments: 6793
+          recordings_by_condition:
+            far_field: 23
+            in_the_wild: 21
+            near_field: 48
+          sample_formats:
+            1ch/16000Hz/PCM_16: 92
+        provenance:
+          language_name: Gujarati
+      hi:
+        task: speaker_attributed_asr
+        artifacts:
+          source:
+            - source
+        statistics:
+          count: 94
+          duration_hours: 10.7379
+          duration_basis: soundfile header duration of every embedded WAV in Hindi/test Parquet; pinned upstream file hashes verified
+          segments: 8665
+          recordings_by_condition:
+            far_field: 23
+            in_the_wild: 18
+            near_field: 53
+          sample_formats:
+            1ch/16000Hz/PCM_16: 94
+        provenance:
+          language_name: Hindi
+      kn:
+        task: speaker_attributed_asr
+        artifacts:
+          source:
+            - source
+        statistics:
+          count: 89
+          duration_hours: 8.5021
+          duration_basis: soundfile header duration of every embedded WAV in Kannada/test Parquet; pinned upstream file hashes verified
+          segments: 9069
+          recordings_by_condition:
+            far_field: 17
+            in_the_wild: 25
+            near_field: 47
+          sample_formats:
+            1ch/16000Hz/PCM_16: 89
+        provenance:
+          language_name: Kannada
+      ks:
+        task: speaker_attributed_asr
+        artifacts:
+          source:
+            - source
+        statistics:
+          count: 20
+          duration_hours: 1.0965
+          duration_basis: soundfile header duration of every embedded WAV in Kashmiri/test Parquet; pinned upstream file hashes verified
+          segments: 1300
+          recordings_by_condition:
+            near_field: 20
+          sample_formats:
+            1ch/16000Hz/PCM_16: 20
+        provenance:
+          language_name: Kashmiri
+      kok:
+        task: speaker_attributed_asr
+        artifacts:
+          source:
+            - source
+        statistics:
+          count: 30
+          duration_hours: 1.6097
+          duration_basis: soundfile header duration of every embedded WAV in Konkani/test Parquet; pinned upstream file hashes verified
+          segments: 1417
+          recordings_by_condition:
+            near_field: 30
+          sample_formats:
+            1ch/16000Hz/PCM_16: 30
+        provenance:
+          language_name: Konkani
+      mai:
+        task: speaker_attributed_asr
+        artifacts:
+          source:
+            - source
+        statistics:
+          count: 24
+          duration_hours: 1.3033
+          duration_basis: soundfile header duration of every embedded WAV in Maithili/test Parquet; pinned upstream file hashes verified
+          segments: 1577
+          recordings_by_condition:
+            near_field: 24
+          sample_formats:
+            1ch/16000Hz/PCM_16: 24
+        provenance:
+          language_name: Maithili
+      ml:
+        task: speaker_attributed_asr
+        artifacts:
+          source:
+            - source
+        statistics:
+          count: 42
+          duration_hours: 3.7537
+          duration_basis: soundfile header duration of every embedded WAV in Malayalam/test Parquet; pinned upstream file hashes verified
+          segments: 3557
+          recordings_by_condition:
+            in_the_wild: 18
+            near_field: 24
+          sample_formats:
+            1ch/16000Hz/PCM_16: 42
+        provenance:
+          language_name: Malayalam
+      mni:
+        task: speaker_attributed_asr
+        artifacts:
+          source:
+            - source
+        statistics:
+          count: 27
+          duration_hours: 1.4693
+          duration_basis: soundfile header duration of every embedded WAV in Manipuri/test Parquet; pinned upstream file hashes verified
+          segments: 1730
+          recordings_by_condition:
+            near_field: 27
+          sample_formats:
+            1ch/16000Hz/PCM_16: 27
+        provenance:
+          language_name: Manipuri
+      mr:
+        task: speaker_attributed_asr
+        artifacts:
+          source:
+            - source
+        statistics:
+          count: 94
+          duration_hours: 10.4034
+          duration_basis: soundfile header duration of every embedded WAV in Marathi/test Parquet; pinned upstream file hashes verified
+          segments: 9281
+          recordings_by_condition:
+            far_field: 22
+            in_the_wild: 21
+            near_field: 51
+          sample_formats:
+            1ch/16000Hz/PCM_16: 94
+        provenance:
+          language_name: Marathi
+      ne:
+        task: speaker_attributed_asr
+        artifacts:
+          source:
+            - source
+        statistics:
+          count: 25
+          duration_hours: 1.3136
+          duration_basis: soundfile header duration of every embedded WAV in Nepali/test Parquet; pinned upstream file hashes verified
+          segments: 1437
+          recordings_by_condition:
+            near_field: 25
+          sample_formats:
+            1ch/16000Hz/PCM_16: 25
+        provenance:
+          language_name: Nepali
+      or:
+        task: speaker_attributed_asr
+        artifacts:
+          source:
+            - source
+        statistics:
+          count: 48
+          duration_hours: 3.1158
+          duration_basis: soundfile header duration of every embedded WAV in Odia/test Parquet; pinned upstream file hashes verified
+          segments: 2788
+          recordings_by_condition:
+            in_the_wild: 18
+            near_field: 30
+          sample_formats:
+            1ch/16000Hz/PCM_16: 48
+        provenance:
+          language_name: Odia
+      pa:
+        task: speaker_attributed_asr
+        artifacts:
+          source:
+            - source
+        statistics:
+          count: 96
+          duration_hours: 10.6815
+          duration_basis: soundfile header duration of every embedded WAV in Punjabi/test Parquet; pinned upstream file hashes verified
+          segments: 8730
+          recordings_by_condition:
+            far_field: 23
+            in_the_wild: 20
+            near_field: 53
+          sample_formats:
+            1ch/16000Hz/PCM_16: 96
+        provenance:
+          language_name: Punjabi
+      sa:
+        task: speaker_attributed_asr
+        artifacts:
+          source:
+            - source
+        statistics:
+          count: 30
+          duration_hours: 1.5989
+          duration_basis: soundfile header duration of every embedded WAV in Sanskrit/test Parquet; pinned upstream file hashes verified
+          segments: 1680
+          recordings_by_condition:
+            near_field: 30
+          sample_formats:
+            1ch/16000Hz/PCM_16: 30
+        provenance:
+          language_name: Sanskrit
+      sat:
+        task: speaker_attributed_asr
+        artifacts:
+          source:
+            - source
+        statistics:
+          count: 29
+          duration_hours: 1.59
+          duration_basis: soundfile header duration of every embedded WAV in Santali/test Parquet; pinned upstream file hashes verified
+          segments: 829
+          recordings_by_condition:
+            near_field: 29
+          sample_formats:
+            1ch/16000Hz/PCM_16: 29
+        provenance:
+          language_name: Santali
+      sd:
+        task: speaker_attributed_asr
+        artifacts:
+          source:
+            - source
+        statistics:
+          count: 27
+          duration_hours: 1.4736
+          duration_basis: soundfile header duration of every embedded WAV in Sindhi/test Parquet; pinned upstream file hashes verified
+          segments: 955
+          recordings_by_condition:
+            near_field: 27
+          sample_formats:
+            1ch/16000Hz/PCM_16: 27
+        provenance:
+          language_name: Sindhi
+      ta:
+        task: speaker_attributed_asr
+        artifacts:
+          source:
+            - source
+        statistics:
+          count: 93
+          duration_hours: 9.9768
+          duration_basis: soundfile header duration of every embedded WAV in Tamil/test Parquet; pinned upstream file hashes verified
+          segments: 10474
+          recordings_by_condition:
+            far_field: 20
+            in_the_wild: 21
+            near_field: 52
+          sample_formats:
+            1ch/16000Hz/PCM_16: 93
+        provenance:
+          language_name: Tamil
+      te:
+        task: speaker_attributed_asr
+        artifacts:
+          source:
+            - source
+        statistics:
+          count: 88
+          duration_hours: 9.2862
+          duration_basis: soundfile header duration of every embedded WAV in Telugu/test Parquet; pinned upstream file hashes verified
+          segments: 12473
+          recordings_by_condition:
+            far_field: 22
+            in_the_wild: 20
+            near_field: 46
+          sample_formats:
+            1ch/16000Hz/PCM_16: 88
+        provenance:
+          language_name: Telugu
+      ur:
+        task: speaker_attributed_asr
+        artifacts:
+          source:
+            - source
+        statistics:
+          count: 30
+          duration_hours: 1.6308
+          duration_basis: soundfile header duration of every embedded WAV in Urdu/test Parquet; pinned upstream file hashes verified
+          segments: 1279
+          recordings_by_condition:
+            near_field: 30
+          sample_formats:
+            1ch/16000Hz/PCM_16: 30
+        provenance:
+          language_name: Urdu
+    provenance:
+      summary: 22 种印度语言多人对话评测（DiarBench）
+      source: Hugging Face
+      source_id: sarvamai/indic-diarbench
+      revision: 92877bad8aab6e598167d91c6ee02aa8ca6ede09
+      url: https://huggingface.co/datasets/sarvamai/indic-diarbench
+      paper: https://arxiv.org/abs/2607.23808
+      download_mirror: https://hf-mirror.com
+      release_date: '2026-07-25'
+      description: >-
+        Sarvam AI 2026-07 发布（Interspeech 2026）的印度语言说话人日志加转写评测集，覆盖全部 22 种官方语言，1,164 段、107.7 小时，
+        98,545 个人工校正的带时间戳、带说话人的转写段，平均重叠约 12.8%。三种录音条件：near_field 约 53.3 小时（线上会议，每人一个近讲麦克风），
+        far_field 约 26.8 小时（远场麦克风，只有使用人数最多的 8 种语言），in_the_wild 约 27.7 小时（YouTube 视频，10 种语言）。
+        每种语言一个 test Parquet，内嵌 16 kHz 单声道 WAV，字段含 recording_id、dataset_type、num_speakers、annotated_transcript
+        （speaker_id、start_time、end_time、transcript），转写里英语借词附括号原文，听不清处标 <unintelligible>。只有测试集。CC BY 4.0。
+      license:
+        - cc-by-4.0
+      download_scope: Complete Indic DiarBench release (22 scheduled Indian languages, near-field, far-field and in-the-wild multi-speaker recordings)
+      expected_download_files: 24
+      expected_download_bytes: 12055899193
+      integrity: verified
+      local_scan_date: '2026-11-13'

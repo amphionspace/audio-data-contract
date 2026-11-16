@@ -1,0 +1,214 @@
+  - schema_version: dataset-catalog/2.0
+    dataset_id: svq
+    version: hf-74f17ec92f06
+    languages:
+      - ar
+      - bn
+      - en
+      - fi
+      - gu
+      - hi
+      - id
+      - ja
+      - kn
+      - ko
+      - ml
+      - mr
+      - ru
+      - sw
+      - ta
+      - te
+      - ur
+    tasks:
+      - asr
+    aliases:
+      - simple_voice_questions
+    artifacts:
+      - name: source
+        kind: hf-dataset-snapshot
+        root_alias: svq
+        relative_path: source/hf-74f17ec92f06
+        metadata:
+          file_count: 120
+          expected_bytes: 27327832020
+          tree_sha256: 51398027ec7d36bbb651f3860cafe84339e41c4cc9dbda577eadac6ea541a476
+      - name: download_state
+        kind: dataset-state
+        root_alias: svq
+        relative_path: versions/hf-74f17ec92f06/download_state/state.json
+        expected_bytes: 965
+        sha256: d64c962aabde95070b826e0a2ae49486d538dc6983542e0482f60d69e57eb9e5
+    splits:
+      clean:
+        task: asr
+        artifacts:
+          source:
+            - source
+        statistics:
+          count: 43343
+          duration_hours: 60.4044
+          duration_basis: soundfile header duration of every embedded WAV in 2.0.0/utts_*_clean.parquet; pinned upstream file hashes verified
+          locales:
+            ar_eg: {utterances: 3453, hours: 4.0324}
+            ar_x_gulf: {utterances: 3435, hours: 4.466}
+            ar_x_levant: {utterances: 3163, hours: 3.8964}
+            ar_x_maghrebi: {utterances: 3092, hours: 3.8543}
+            bn_bd: {utterances: 1183, hours: 1.7382}
+            bn_in: {utterances: 1181, hours: 2.5278}
+            en_au: {utterances: 1392, hours: 2.1216}
+            en_gb: {utterances: 1404, hours: 1.9642}
+            en_in: {utterances: 1419, hours: 1.6777}
+            en_ph: {utterances: 1409, hours: 1.9655}
+            en_us: {utterances: 1402, hours: 1.7187}
+            fi_fi: {utterances: 2351, hours: 3.4391}
+            gu_in: {utterances: 921, hours: 1.1939}
+            hi_in: {utterances: 955, hours: 1.4724}
+            id_id: {utterances: 1709, hours: 2.192}
+            ja_jp: {utterances: 699, hours: 0.9797}
+            kn_in: {utterances: 926, hours: 1.3932}
+            ko_kr: {utterances: 1622, hours: 2.086}
+            ml_in: {utterances: 907, hours: 1.4162}
+            mr_in: {utterances: 928, hours: 1.1601}
+            ru_ru: {utterances: 2980, hours: 4.8399}
+            sw: {utterances: 1466, hours: 2.2976}
+            ta_in: {utterances: 929, hours: 1.2128}
+            te_in: {utterances: 2622, hours: 3.9431}
+            ur_in: {utterances: 918, hours: 1.6734}
+            ur_pk: {utterances: 877, hours: 1.1422}
+          sample_formats:
+            1ch/16000Hz/PCM_16: 43343
+      background_speech:
+        task: asr
+        artifacts:
+          source:
+            - source
+        statistics:
+          count: 41975
+          duration_hours: 61.2697
+          duration_basis: soundfile header duration of every embedded WAV in 2.0.0/utts_*_background_speech.parquet; pinned upstream file hashes verified
+          locales:
+            ar_eg: {utterances: 3465, hours: 5.236}
+            ar_x_gulf: {utterances: 3371, hours: 4.6317}
+            ar_x_levant: {utterances: 3144, hours: 3.4114}
+            ar_x_maghrebi: {utterances: 3275, hours: 4.186}
+            bn_bd: {utterances: 1202, hours: 2.0993}
+            bn_in: {utterances: 1197, hours: 2.2998}
+            en_au: {utterances: 1396, hours: 2.0497}
+            en_gb: {utterances: 1403, hours: 1.5865}
+            en_in: {utterances: 1401, hours: 1.7546}
+            en_ph: {utterances: 1416, hours: 1.886}
+            en_us: {utterances: 1411, hours: 1.8032}
+            fi_fi: {utterances: 1686, hours: 2.6274}
+            gu_in: {utterances: 923, hours: 1.2572}
+            hi_in: {utterances: 953, hours: 1.6424}
+            id_id: {utterances: 1115, hours: 1.6976}
+            ja_jp: {utterances: 716, hours: 1.005}
+            kn_in: {utterances: 916, hours: 1.8243}
+            ko_kr: {utterances: 1637, hours: 2.4286}
+            ml_in: {utterances: 827, hours: 1.2644}
+            mr_in: {utterances: 923, hours: 1.3493}
+            ru_ru: {utterances: 2984, hours: 4.4136}
+            sw: {utterances: 1471, hours: 2.6879}
+            ta_in: {utterances: 667, hours: 1.2509}
+            te_in: {utterances: 2671, hours: 3.9009}
+            ur_in: {utterances: 914, hours: 1.6881}
+            ur_pk: {utterances: 891, hours: 1.2879}
+          sample_formats:
+            1ch/16000Hz/PCM_16: 41975
+      media_noise:
+        task: asr
+        artifacts:
+          source:
+            - source
+        statistics:
+          count: 43000
+          duration_hours: 61.0375
+          duration_basis: soundfile header duration of every embedded WAV in 2.0.0/utts_*_media_noise.parquet; pinned upstream file hashes verified
+          locales:
+            ar_eg: {utterances: 3445, hours: 4.6606}
+            ar_x_gulf: {utterances: 3301, hours: 4.4869}
+            ar_x_levant: {utterances: 3423, hours: 3.9075}
+            ar_x_maghrebi: {utterances: 3060, hours: 4.5486}
+            bn_bd: {utterances: 841, hours: 1.166}
+            bn_in: {utterances: 1145, hours: 2.4529}
+            en_au: {utterances: 1339, hours: 1.529}
+            en_gb: {utterances: 1418, hours: 1.6681}
+            en_in: {utterances: 1407, hours: 1.9472}
+            en_ph: {utterances: 1412, hours: 2.0106}
+            en_us: {utterances: 1412, hours: 1.7134}
+            fi_fi: {utterances: 3165, hours: 4.7279}
+            gu_in: {utterances: 934, hours: 1.2332}
+            hi_in: {utterances: 953, hours: 1.5566}
+            id_id: {utterances: 1478, hours: 1.8749}
+            ja_jp: {utterances: 707, hours: 1.2862}
+            kn_in: {utterances: 698, hours: 1.0929}
+            ko_kr: {utterances: 1633, hours: 2.4398}
+            ml_in: {utterances: 708, hours: 1.0577}
+            mr_in: {utterances: 924, hours: 1.4925}
+            ru_ru: {utterances: 2980, hours: 4.6182}
+            sw: {utterances: 1467, hours: 1.8724}
+            ta_in: {utterances: 885, hours: 1.4686}
+            te_in: {utterances: 2483, hours: 3.5851}
+            ur_in: {utterances: 916, hours: 1.6495}
+            ur_pk: {utterances: 866, hours: 0.9912}
+          sample_formats:
+            1ch/16000Hz/PCM_16: 43000
+      traffic_noise:
+        task: asr
+        artifacts:
+          source:
+            - source
+        statistics:
+          count: 43116
+          duration_hours: 61.7054
+          duration_basis: soundfile header duration of every embedded WAV in 2.0.0/utts_*_traffic_noise.parquet; pinned upstream file hashes verified
+          locales:
+            ar_eg: {utterances: 3448, hours: 4.2982}
+            ar_x_gulf: {utterances: 3345, hours: 4.1924}
+            ar_x_levant: {utterances: 2870, hours: 2.915}
+            ar_x_maghrebi: {utterances: 3163, hours: 4.7969}
+            bn_bd: {utterances: 893, hours: 1.9397}
+            bn_in: {utterances: 1203, hours: 2.3908}
+            en_au: {utterances: 1379, hours: 1.7855}
+            en_gb: {utterances: 1361, hours: 1.716}
+            en_in: {utterances: 1405, hours: 1.7822}
+            en_ph: {utterances: 1410, hours: 1.9228}
+            en_us: {utterances: 1408, hours: 1.676}
+            fi_fi: {utterances: 3163, hours: 4.9004}
+            gu_in: {utterances: 911, hours: 1.5204}
+            hi_in: {utterances: 944, hours: 1.4732}
+            id_id: {utterances: 1424, hours: 1.9996}
+            ja_jp: {utterances: 711, hours: 0.9717}
+            kn_in: {utterances: 913, hours: 1.2687}
+            ko_kr: {utterances: 1628, hours: 2.3717}
+            ml_in: {utterances: 911, hours: 1.3135}
+            mr_in: {utterances: 924, hours: 1.4154}
+            ru_ru: {utterances: 2968, hours: 5.2406}
+            sw: {utterances: 1474, hours: 2.0653}
+            ta_in: {utterances: 827, hours: 1.4327}
+            te_in: {utterances: 2634, hours: 3.6053}
+            ur_in: {utterances: 940, hours: 1.3969}
+            ur_pk: {utterances: 859, hours: 1.3145}
+          sample_formats:
+            1ch/16000Hz/PCM_16: 43116
+    provenance:
+      summary: 17 种语言四种环境下的手机语音问句（Google SVQ）
+      source: Hugging Face
+      source_id: google/svq
+      revision: 74f17ec92f0654860c160029d3542199626f63ef
+      url: https://huggingface.co/datasets/google/svq
+      download_mirror: https://hf-mirror.com
+      release_date: '2025-05-12'
+      description: >-
+        Google 发布的 Simple Voice Questions（MSEB 声音嵌入评测的核心数据），2.0.0 版：17 种语言、26 个地区口音（阿拉伯语埃及/海湾/黎凡特/马格里布、
+        英语美/英/澳/印/菲、孟加拉、乌尔都等），759 位说话人（各地区分别去重后相加，发布方称约 700 位）用自己的手机朗读 XTREME-UP 问答数据里的短问句，171,434 条、244.4 小时。
+        录音环境大致均分四种：clean（安静）、background_speech（旁边设备播放播客/电台）、media_noise（播放音乐影视）、traffic_noise（乘车途中），
+        登记为四个划分。每条带参考文本（transcript_truth）、说话人编号、性别、年龄，以及段落检索、关键词时间戳等检索任务字段。
+        发布方不分 train/test，整体作评测用；ASR 用途可评噪声与背景人声下的短句识别。只下载了 2.0.0 目录，1.0.0 的旧格式未下载。CC BY 4.0。
+      license:
+        - cc-by-4.0
+      download_scope: Simple Voice Questions release 2.0.0 (utterance Parquet per locale and condition plus retrieval task tables); the older 1.0.0 layout is excluded
+      expected_download_files: 120
+      expected_download_bytes: 27327832020
+      integrity: verified
+      local_scan_date: '2026-11-14'

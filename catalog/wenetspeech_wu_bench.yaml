@@ -1,0 +1,129 @@
+  - schema_version: dataset-catalog/2.0
+    dataset_id: wenetspeech_wu_bench
+    version: hf-36f67e0276ce
+    languages:
+      - zh
+    tasks:
+      - asr
+      - ast
+      - ser
+      - tts
+    aliases: []
+    artifacts:
+      - name: source
+        kind: hf-dataset-snapshot
+        root_alias: wenetspeech_wu_bench
+        relative_path: source/hf-36f67e0276ce
+        metadata:
+          file_count: 41
+          expected_bytes: 2386959408
+          tree_sha256: 2949149a39ea29b239343ee2da2c7cb1b1ed925caeb2edddbde957a0d95c85c5
+      - name: download_state
+        kind: dataset-state
+        root_alias: wenetspeech_wu_bench
+        relative_path: versions/hf-36f67e0276ce/download_state/state.json
+        expected_bytes: 962
+        sha256: 63c723cc7871f7cda33e19ec10332c4dff50c1797a280744ca72797fd6fa8456
+    splits:
+      asr:
+        task: asr
+        artifacts:
+          source:
+            - source
+        statistics:
+          count: 4851
+          duration_hours: 9.748
+          duration_basis: soundfile header duration of every embedded WAV in understanding/asr.parquet; pinned upstream file hashes verified
+          source_recordings: 2979
+          sample_formats:
+            1ch/16000Hz/PCM_16: 4851
+        provenance:
+          notes: 吴语转写（上海话、苏州话及与普通话混说），按 CER 评测
+      ast:
+        group: asr
+        task: ast
+        artifacts:
+          source:
+            - source
+        statistics:
+          count: 3000
+          duration_hours: 4.4008
+          duration_basis: soundfile header duration of every embedded WAV in understanding/ast.parquet; pinned upstream file hashes verified
+          sample_formats:
+            1ch/16000Hz/PCM_16: 3000
+        provenance:
+          notes: 吴语语音译成普通话文本，按 BLEU 评测
+      emotion:
+        group: asr
+        task: ser
+        artifacts:
+          source:
+            - source
+        statistics:
+          count: 1000
+          duration_hours: 1.4145
+          duration_basis: soundfile header duration of every embedded WAV in understanding/emotion.parquet; pinned upstream file hashes verified
+          sample_formats:
+            1ch/16000Hz/PCM_16: 1000
+      gender:
+        group: asr
+        artifacts:
+          source:
+            - source
+        statistics:
+          count: 3000
+          duration_hours: 4.391
+          duration_basis: soundfile header duration of every embedded WAV in understanding/gender.parquet; pinned upstream file hashes verified
+          sample_formats:
+            1ch/16000Hz/PCM_16: 3000
+        provenance:
+          notes: 说话人性别分类
+      age:
+        group: asr
+        artifacts:
+          source:
+            - source
+        statistics:
+          count: 1500
+          duration_hours: 2.2151
+          duration_basis: soundfile header duration of every embedded WAV in understanding/age.parquet; pinned upstream file hashes verified
+          sample_formats:
+            1ch/16000Hz/PCM_16: 1500
+        provenance:
+          notes: 说话人年龄段分类
+      tts:
+        task: tts
+        artifacts:
+          source:
+            - source
+        statistics:
+          count: 242
+          prompt_wavs: 27
+          duration_hours: 0.0379
+          duration_basis: soundfile header duration of the 27 prompt WAVs under generating/ (12 TTS speaker prompts, 15 instruct prompts); the 242 TTS test items (tts_test_easy 144, tts_test_hard 98) are text only
+        provenance:
+          notes: 吴语 TTS，12 个说话人提示音频；另有 instruct TTS 文本（4 种情感各 50 句、韵律 20 句）和 15 个提示音频
+    provenance:
+      summary: 吴语多任务评测集（WenetSpeech-Wu-Bench）
+      source: Hugging Face
+      source_id: ASLP-lab/WenetSpeech-Wu-Bench
+      revision: 36f67e0276ce1bc2892ade713bdbb26f4fa58c75
+      url: https://huggingface.co/datasets/ASLP-lab/WenetSpeech-Wu-Bench
+      paper: https://arxiv.org/abs/2601.11027
+      download_mirror: https://hf-mirror.com
+      release_date: '2026-01-29'
+      description: >-
+        西工大 ASLP 随 WenetSpeech-Wu 发布的人工整理吴语评测集（总时长只计 ASR 子集和 TTS 提示音频，其余子集的音频取自 ASR 子集，登记为它的子划分）：ASR 4,851 句 9.75 小时（上海话、苏州话及与普通话混说），
+        吴语到普通话翻译 3,000 句，情感 1,000 句，性别 3,000 句，年龄 1,500 句，均为 16 kHz 单声道、Parquet 内嵌 WAV；
+        另有 TTS 与 instruct TTS 的测试文本和提示音频。翻译、情感、性别、年龄子集的源句全部取自 ASR 子集（部分再切成更短片段，ID 带 _seg 后缀），不是独立的录音。
+        与本项目 wenetspeech_wu 训练数据的关系：评测句本身不在训练集里，但 ASR 的 4,851 句来自 2,979 段长录音，其中 4,850 句
+        所在录音的其他片段在 wenetspeech_wu@stepaudio2-wu-asr-full-v1-20261109 的训练切片里（共 573,287 条、1,174.4 小时，
+        占训练 8,740.7 小时的 13%），说话人和话题与训练集重叠，用 WenetSpeech-Wu 训练过的模型在这里的成绩会偏乐观。
+        Apache-2.0。
+      license:
+        - apache-2.0
+      download_scope: Complete WenetSpeech-Wu-Bench release (understanding and generating tasks)
+      expected_download_files: 41
+      expected_download_bytes: 2386959408
+      integrity: verified
+      local_scan_date: '2026-11-13'

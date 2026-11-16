@@ -1,0 +1,38 @@
+  - schema_version: dataset-catalog/2.0
+    dataset_id: tagarela
+    version: hf-a66648fc4938
+    languages:
+      - pt
+    tasks:
+      - asr
+      - tts
+    aliases: []
+    artifacts:
+      - name: source
+        kind: hf-dataset-snapshot
+        root_alias: tagarela
+        relative_path: source/hf-a66648fc4938
+    splits:
+      all:
+        artifacts:
+          source:
+            - source
+    provenance:
+      summary: 葡语播客语音（TAGARELA），巴西为主
+      source: Hugging Face
+      source_id: freds0/TAGARELA
+      revision: a66648fc49383e4803d0c9b9fa4998c3bcc35dc7
+      url: https://huggingface.co/datasets/freds0/TAGARELA
+      paper: https://arxiv.org/abs/2603.15326
+      release_date: '2026-03-31'
+      license:
+        - cc-by-nc-sa-4.0
+      inventory_status: download_planned
+      description: >-
+        ICASSP 2026 发布的葡语播客语料，来自 Cem Mil Podcasts 的 16,806 集、2,094 个节目，8,972 小时、13,368 个说话人；
+        巴西葡语 8,130 小时，葡萄牙葡语 842 小时；平均每段约 9.3 秒。分 ASR 用的全量和约 2,800 小时的干净 TTS 子集。
+        Parquet 内嵌音频，data/ 下 1,764 个 train 分片、73 个 tts（干净子集）分片和 1 个 test 分片；仓库根目录另有 19 个与 data/ 重复的旧分片，不下载。
+        CC BY-NC-SA 4.0，不能商用。
+      download_scope: data/ Parquet shards (train, tts and test) plus README and .gitattributes; duplicate root-level shards excluded
+      expected_download_files: 1840
+      expected_download_bytes: 1402782664867
