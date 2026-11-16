@@ -1,6 +1,6 @@
 # 数据总览
 
-当前登记 **270 个数据集**；另有 **33 个下载来源声明**和 **1 个训练混合配方**。登记不代表本机文件已齐备。
+当前登记 **271 个数据集**；另有 **32 个下载来源声明**和 **1 个训练混合配方**。登记不代表本机文件已齐备。
 
 时长取单个版本的最大值，不跨版本相加；≈ 为参考表或估算值，— 为暂无完整时长。各版本的时长、说明、COS 地址和质量证据见[版本明细](data-versions.md)。
 
@@ -42,6 +42,7 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [edacc](data-versions.md#edacc) | en | 语音识别、带说话人标注的语音识别 | 35.6 | 多国口音英语自然对话（EdAcc） | 没有 |
 | [emilia_en](data-versions.md#emilia_en) | en | 语音识别 | 43,624.0 | Emilia 英语野外语音（已清洗） | 快照 20260914 |
 | [emotion1200_en](data-versions.md#emotion1200_en) | en | 说话人情感分类、情感与说话风格描述、语音情感识别 | 5.2 | 英文情感识别与描述评测（Emotion1200） | 快照 20260914 |
+| [eurospeech](data-versions.md#eurospeech) | en | 语音识别 | 3,788.3 | 英国议会发言语音（EuroSpeech） | 没有 |
 | [fleurs_en](data-versions.md#fleurs_en) | en | 语音识别 | 10.3 | 多语朗读英语部分（FLEURS） | 部分版本：快照 20260914 |
 | [gigaspeech](data-versions.md#gigaspeech) | en | 语音识别、diarization、带说话人标注的语音识别 | 10,050.7 | 有声书、播客和 YouTube 英语（GigaSpeech） | 部分版本：快照 20260914 |
 | [hifitts](data-versions.md#hifitts) | en | 语音识别、语音合成 | 291.7 | 英文有声书高保真朗读（Hi-Fi TTS） | `TTS 桶:HiFiTTS/`（原始数据） |
@@ -329,7 +330,6 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [dataset_et_amharic](../../catalog/dataset_et_amharic.yaml#L1) | hf-4861d6445842 | am | 语音识别 |
 | [dialogs_ru](../../catalog/dialogs_ru.yaml#L1) | hf-a74ff44d8d27 | ru | 语音合成 |
 | [duplexconv](../../catalog/duplexconv.yaml#L1) | hf-0bb99da7ab7a | zh | 语音识别、说话人分段与归属、带说话人标注的语音识别 |
-| [eurospeech](../../catalog/eurospeech.yaml#L1) | hf-7a55bbcee393 | multi | 语音识别 |
 | [gigaspeech2](../../catalog/download_queue.yaml#L165) | hf-8dc0d0e502b7 | id、th、vi | 语音识别 |
 | [gigaspeech3](../../catalog/gigaspeech3.yaml#L1) | hf-4e7b87a9df60 | ar | 语音识别 |
 | [granary](../../catalog/download_queue.yaml#L200) | hf-0fe23a860e35 | multi | 语音识别、语音翻译 |

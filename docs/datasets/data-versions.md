@@ -277,6 +277,18 @@ Emilia 英语野外语音（已清洗）
 
 - 当前仅登记评测入口
 
+### eurospeech
+
+英国议会发言语音（EuroSpeech）
+
+语言：en · 任务：语音识别
+
+| 版本 | 时长（小时） | 口径 | COS |
+|---|---:|---|---|
+| [eurospeech@hf-7a55bbcee393](../../catalog/eurospeech.yaml#L1) | 3,788.3 | 已登记 | 没有 |
+
+- `eurospeech@hf-7a55bbcee393`：ETH Zurich 发布（NeurIPS 2025 数据集），22 个欧洲国家议会的发言录音，VAD 切成 3–20 秒，再用 ASR 把官方会议记录对齐到 语音段。本地只下了英国议会（uk 配置，英语）：train 888,252 段 3,711.5 h（1,130 场会议）、validation 9,181 段 38.1 h （15 场）、test 9,268 段 38.7 h（12 场），共 3,788.3 h，16 kHz 单声道 WAV。按整场会议划分，三份之间没有共用的源录音。 HF 版实际滤到 CER ≤ 0.30（数据卡写的是 CER < 20%）。文本是 Hansard 编辑过的官方记录，不是逐字转写：human_transcript 与 ASR 结果（asr_transcript）的 CER 中位数约 0.15、WER 中位数约 0.29，训练前建议按 cer 字段再筛或重新清洗。没有说话人 标签。音频按英国议会 PRU 下载与分享条款使用（不是开放许可，使用前核对），文本为 Open Government Licence v3。 其余 21 国没有下载：葡萄牙语由另一条工作线处理，其他语种不在本项目范围内
+
 ### fleurs_en
 
 多语朗读英语部分（FLEURS）
