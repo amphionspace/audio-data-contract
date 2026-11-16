@@ -17,7 +17,7 @@ from pathlib import Path
 import yaml
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from common import read_jsonl, write_jsonl  # noqa: E402
+from common import read_jsonl, write_jsonl
 
 MARGIN = 1.5  # v1 QC passed ~89% of items, so ~79% of pairs (both items must pass): 1.5 x 0.79 ≈ 1.19 x target
 
