@@ -10,6 +10,7 @@
 COS 列：
 
 - 快照 20260914：`cos://amphion-audio-backup-1373259071/audio-data-contract/v1/full-catalog-20260914/`
+- 快照 20260918：`cos://amphion-audio-backup-1373259071/audio-data-contract/v1/batches/dingqiao-meeting-20260918/`
 - 快照 20260921：`cos://amphion-audio-backup-1373259071/audio-data-contract/v1/batches/police-v6-acceptance-205-20260921/`
 - 快照内的文件按内容去重分批存放，要用 [cos_restore.py](../guides/cos-restore.md) 按版本取回；快照只表示该版本纳入了这次同步，文件是否已上传以 `locate` 结果为准。
 - 其他地址是桶内目录，可直接 `ab pull`（备份桶 = `amphion-audio-backup-1373259071`、TTS 桶 = `amphion-tts-data-1373259071`）。标“原始数据”的是登记版本所依据的原始文件，取回后还要按来源说明处理。
@@ -1214,6 +1215,18 @@ Common Voice 中文众包朗读；含清洗、热词、加噪版
 | [csemotions@tts-unified-v0.1](../../catalog/tts_unified.yaml#L44) | 10.2 | 已登记 | `amphion-tts-data-1373259071:CSEMOTIONS/`（原始数据） |
 
 - `csemotions@tts-unified-v0.1`：音频编码字节存放在 Lance 表内；原始划分在 metadata_json.original_split，统一输出全部为 train。ASR 用 tts_lance.iter_asr_samples（tts-asr-rules/v1）读取，会排除原始 dev/test 等
+
+### dingqiao_meeting
+
+—
+
+语言：zh · 任务：说话人分段与归属
+
+| 版本 | 时长（小时） | 口径 | COS |
+|---|---:|---|---|
+| [dingqiao_meeting@acceptance-20260918](../../catalog/dingqiao_meeting.yaml#L7) | 0.3 | 已登记 | 快照 20260918 |
+
+- `dingqiao_meeting@acceptance-20260918`：Customer on-site acceptance recordings supplied 2026-09-18 for SDK replay. Audio bytes unchanged from the delivered WAVs and verified against samples.json sha256, frames, sample rate and channels.
 
 ### emilia2_zh_dialogue_diarize
 
