@@ -13,6 +13,30 @@ seed: 20261116
 sample_rate: 16000
 prompts: v2
 
+# build.py：合成题的拆分名（synthetic_indep / synthetic_indep_ts，与 v1 的 synthetic 区分）；
+# 真实录音取这些语料（挖掘设置在 recipe.yaml 的 mining.corpora，mine.py 用 recipe.yaml 跑）
+synthetic_split: synthetic_indep
+mined_corpora: [emilia_zh]
+# 每条题打 seen / unseen：被测写法（≥2 字）或说明（≥4 字）出现在下列训练数据带说明的转写里就记 seen。
+# 合成训练集全部记录；真实语料是说字清洗标出的全部说明记录（不论训练时开不开 think，转写都进了训练）
+train_overlap:
+  synthetic_records:
+    - /workspace/data/datasets/context_correction_synth_zh/versions/train-v1-20261114/records/train.jsonl.gz
+    - /workspace/data/datasets/context_correction_synth_zh/versions/train-v1-20261114/records/train_ts.jsonl.gz
+  clean: /workspace/data/datasets/context_correction_clean_zh/versions/v1-20261110
+catalog:
+  description: >-
+    上下文纠偏评测集 v2 的新增部分，只用于评测，不进训练；与 v1（v1-20261018）的拆分一起组成评测集。
+    synthetic_indep：kimi-k3.1-pro 出题，deepseek-v4-pro 和 doubao-seed-2.1-pro 依次复核（都通过才收录），
+    glm-5.2 只看文字盲解隐式题；出题提示、题型（新增专名指代、字义说明、逐字说明、对话问答）、场景、
+    TTS（CosyVoice3）和音色（aidatatang 及 AISHELL-1、MAGICDATA、THCHS-30 测试划分）都不与训练数据重合。
+    mined_real：从原版 Emilia-ZH 挖掘的真实录音，本地 Qwen3.6-27B 扫描和预筛，doubao-seed-2.1-pro 与
+    deepseek-v4-pro 各自标注且一致才收录。SenseVoiceSmall 拼音级质检。每条带与训练数据重合的 seen / unseen 标记。
+    生成脚本 scripts/context_correction/。
+  sources: ["LLM-generated scripts (Volcengine Ark)", "aidatatang@legacy-20260804 voices",
+            "aishell@legacy-20260804 test voices", "magicdata@legacy-20260804 test voices",
+            "thchs30@legacy-20260804 test voices", "emilia_zh@punc-written-v1-20261109 (mined)"]
+
 # 2026-11-16 百炼账户（aliyun-llm）欠费，全量从这里改用火山方舟（amphionkeys volcengine-ark）。
 # 全量的前 350 对由百炼上的 kimi-k3.1-pro 生成（同一模型），试跑（synthetic-indep-pilot）用的是百炼上的 deepseek-v4-pro + glm-5.3 复核、qwen3.6-plus 盲解。
 llm:
