@@ -1,6 +1,6 @@
 # 数据总览
 
-当前登记 **271 个数据集**；另有 **32 个下载来源声明**和 **1 个训练混合配方**。登记不代表本机文件已齐备。
+当前登记 **272 个数据集**；另有 **31 个下载来源声明**和 **1 个训练混合配方**。登记不代表本机文件已齐备。
 
 时长取单个版本的最大值，不跨版本相加；≈ 为参考表或估算值，— 为暂无完整时长。各版本的时长、说明、COS 地址和质量证据见[版本明细](data-versions.md)。
 
@@ -108,6 +108,7 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [context_correction_zh](data-versions.md#context_correction_zh) | zh | 语音识别、目标说话人语音识别 | 17.6 | 中文上下文纠偏评测集，同音词按语境写 | 没有 |
 | [csemotions](data-versions.md#csemotions) | zh | 语音合成 | 10.2 | 中文情感语音（CSEMOTIONS），TTS 用 | `TTS 桶:CSEMOTIONS/`（原始数据） |
 | [dingqiao_meeting](data-versions.md#dingqiao_meeting) | zh | 说话人分段与归属 | 0.3 | — | 快照 20260918 |
+| [duplexconv](data-versions.md#duplexconv) | zh | 语音识别、带说话人标注的语音识别、说话人分段与归属 | 2,000.2 | 中文多人自然对话，LLM 辅助标注（DuplexConv） | 没有 |
 | [emilia2_zh_dialogue_diarize](data-versions.md#emilia2_zh_dialogue_diarize) | zh | 语音识别、diarization、带说话人标注的语音识别 | 3,167.4 | Emilia2 中文对话的说话人日志伪标签 | 部分版本：`备份桶:audio-data-contract/datasets/emilia2_zh_dialogue_diarize/` |
 | [emilia2_zh_overlap_farsim](data-versions.md#emilia2_zh_overlap_farsim) | zh | 带说话人标注的语音识别 | — | Emilia2 中文对话重排的重叠远场多人数据 | 没有 |
 | [emilia_zh](data-versions.md#emilia_zh) | zh | 语音识别 | 40,848.4 | Emilia 中文野外语音（已清洗） | 部分版本：快照 20260914 |
@@ -329,7 +330,6 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [crows_multilingual](../../catalog/crows_multilingual.yaml#L1) | hf-44e5d3e28604 | ar、de、en、es、fr、hi、id、ja、ko、mr、pt、ru、tr、ur、vi、zh | 语音识别 |
 | [dataset_et_amharic](../../catalog/dataset_et_amharic.yaml#L1) | hf-4861d6445842 | am | 语音识别 |
 | [dialogs_ru](../../catalog/dialogs_ru.yaml#L1) | hf-a74ff44d8d27 | ru | 语音合成 |
-| [duplexconv](../../catalog/duplexconv.yaml#L1) | hf-0bb99da7ab7a | zh | 语音识别、说话人分段与归属、带说话人标注的语音识别 |
 | [gigaspeech2](../../catalog/download_queue.yaml#L165) | hf-8dc0d0e502b7 | id、th、vi | 语音识别 |
 | [gigaspeech3](../../catalog/gigaspeech3.yaml#L1) | hf-4e7b87a9df60 | ar | 语音识别 |
 | [granary](../../catalog/download_queue.yaml#L200) | hf-0fe23a860e35 | multi | 语音识别、语音翻译 |

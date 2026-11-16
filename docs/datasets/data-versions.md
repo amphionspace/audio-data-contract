@@ -1264,6 +1264,18 @@ Common Voice 中文众包朗读；含清洗、热词、加噪版
 
 - `dingqiao_meeting@acceptance-20260918`：Customer on-site acceptance recordings supplied 2026-09-18 for SDK replay. Audio bytes unchanged from the delivered WAVs and verified against samples.json sha256, frames, sample rate and channels.
 
+### duplexconv
+
+中文多人自然对话，LLM 辅助标注（DuplexConv）
+
+语言：zh · 任务：语音识别、带说话人标注的语音识别、说话人分段与归属
+
+| 版本 | 时长（小时） | 口径 | COS |
+|---|---:|---|---|
+| [duplexconv@hf-0bb99da7ab7a](../../catalog/duplexconv.yaml#L1) | 2,000.2 | 已登记 | 没有 |
+
+- `duplexconv@hf-0bb99da7ab7a`：西工大 ASLP 与 QualiaLabs 2026-06 开源，93,709 段、2,000.2 小时（每段 8–618 秒，平均 76.8 秒）的中文多人自然对话， 辅导课（Edu、edu，700.0 h）和闲聊（none_Edu，1,300.2 h）两类场景。每段一个 48 kHz 多声道 WAV（2–4 声道，标注按声道 分开），打包在约 8 GB 的 tar 里；标注在各文件夹的 jsons.tar.gz，每段一个同名 JSON，按声道列出语句：起止时间、语种、 LLM 打的性别/年龄/情感/口音/副语言标签和文本、轮次状态（complete、incomplete、backchannel、wait）、语句内的说话人分段、 SNR、MOS 和声音事件。共 1,749,177 条语句、2,486.8 小时（重叠部分按每人分别计时）。转写和各类标签都由 LLM 辅助流水线 生成，不是人工精标：6.6% 的语句没有文本，闲聊场景 41% 的语句没有轮次状态、20% 语种为 unknown；音频与标注一一对应。 团队计划用 AmphionData 重新清洗转写后再用于训练。同系列的 100 小时人工精标版见 smoothconv。按文件大小和前 1 MiB 内容比对，与 smoothconv 的 2,503 段没有完全相同的片段，但切分不同的同源录音无法据此排除。 CC BY-NC 4.0，仅限学术研究
+
 ### emilia2_zh_dialogue_diarize
 
 Emilia2 中文对话的说话人日志伪标签
@@ -1743,7 +1755,7 @@ RealMAN 远场中文转写训练数据
 |---|---:|---|---|
 | [smoothconv@hf-cd74b4fca285](../../catalog/smoothconv.yaml#L1) | 100.5 | 已登记 | 没有 |
 
-- `smoothconv@hf-cd74b4fca285`：西工大 ASLP 与 QualiaLabs 2026-06 开源的中文全双工多人自然对话，2,503 段、100.5 小时（每段 60–635 秒），辅导课和闲聊两类场景。 每段一个 48 kHz 多声道 WAV（2–4 声道，每位说话人一个声道）和一个同名 JSON：instances 里每条带声道号、起止时间（毫秒级）、 说话人编号、轮次状态（complete、incomplete、backchannel、wait）、性别、年龄段、情感、笑声咳嗽等事件，以及人工转写； 有约两成条目缺轮次标签。共 130,077 个标注段、125.7 小时（重叠部分按每人分别计时）。可用于说话人日志、带说话人转写、 轮次判断和全双工对话建模。同源的 2,000 小时 LLM 辅助标注版见 duplexconv（待下载），ASLP-lab/FastTurn-Testset 也取自本数据， 用本数据做评测时要排除这两者中的重叠录音。CC BY-NC 4.0，仅限学术研究
+- `smoothconv@hf-cd74b4fca285`：西工大 ASLP 与 QualiaLabs 2026-06 开源的中文全双工多人自然对话，2,503 段、100.5 小时（每段 60–635 秒），辅导课和闲聊两类场景。 每段一个 48 kHz 多声道 WAV（2–4 声道，每位说话人一个声道）和一个同名 JSON：instances 里每条带声道号、起止时间（毫秒级）、 说话人编号、轮次状态（complete、incomplete、backchannel、wait）、性别、年龄段、情感、笑声咳嗽等事件，以及人工转写； 有约两成条目缺轮次标签。共 130,077 个标注段、125.7 小时（重叠部分按每人分别计时）。可用于说话人日志、带说话人转写、 轮次判断和全双工对话建模。同源的 2,000 小时 LLM 辅助标注版见 duplexconv，ASLP-lab/FastTurn-Testset 也取自本数据， 用本数据做评测时要排除这两者中的重叠录音。CC BY-NC 4.0，仅限学术研究
 
 ### speechio
 
