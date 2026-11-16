@@ -1,0 +1,85 @@
+- schema_version: dataset-catalog/2.0
+  dataset_id: spgispeech2
+  version: hf-f4ce91de393c
+  languages:
+    - en
+  tasks:
+    - asr
+    - speaker_attributed_asr
+  aliases: []
+  artifacts:
+    - name: source
+      kind: hf-dataset-snapshot
+      root_alias: spgispeech2
+      relative_path: source/hf-f4ce91de393c
+      metadata:
+        file_count: 430
+        expected_bytes: 421051663642
+        tree_sha256: e3a2313975854ec9103bb930dc4ebf24b5cd369d1b004980ba9e7e26ab249da4
+    - name: download_state
+      kind: dataset-state
+      root_alias: spgispeech2
+      relative_path: versions/hf-f4ce91de393c/download_state/state.json
+      expected_bytes: 1035
+      sha256: d2392a8083114ca9ea7c5b366e4e95904a8b69921a3cbcac1b5a6b6bbf930db4
+  splits:
+    train:
+      artifacts:
+        source:
+          - source
+      statistics:
+        count: 156753
+        speakers: 39864
+        duration_hours: 3367.0176
+        duration_basis: soundfile header duration of every embedded WAV in data/train_part_*.parquet (392 files); speakers are distinct numeric IDs in the speakers column; pinned upstream file hashes verified
+        sample_formats:
+          1ch/16000Hz/PCM_16: 156753
+    dev:
+      artifacts:
+        source:
+          - source
+      statistics:
+        count: 6195
+        speakers: 4914
+        duration_hours: 133.2268
+        duration_basis: soundfile header duration of every embedded WAV in data/dev-*.parquet (16 files); speakers are distinct numeric IDs in the speakers column; pinned upstream file hashes verified
+        sample_formats:
+          1ch/16000Hz/PCM_16: 6195
+    test:
+      artifacts:
+        source:
+          - source
+      statistics:
+        count: 6932
+        speakers: 5371
+        duration_hours: 148.9971
+        duration_basis: soundfile header duration of every embedded WAV in data/test-*.parquet (18 files); speakers are distinct numeric IDs in the speakers column; pinned upstream file hashes verified
+        sample_formats:
+          1ch/16000Hz/PCM_16: 6932
+  provenance:
+    summary: 财报电话会议多说话人英语（SPGISpeech 2.0）
+    source: Hugging Face
+    source_id: kensho/SPGISpeech2.0
+    revision: f4ce91de393ca8693968d403ae618e3d54452b56
+    url: https://huggingface.co/datasets/kensho/SPGISpeech2.0
+    paper: https://arxiv.org/abs/2508.05554
+    download_mirror: https://hf-mirror.com
+    release_date: '2026-04-20'
+    license:
+      - other (Kensho research terms, July 2025)
+    description: >-
+      Kensho（S&P Global）发布的 SPGISpeech 多说话人版本（Interspeech 2025）：2021–2024 年上市公司财报电话会议录音，多取自
+      问答环节，切成 50–90 秒的片段，每段至少 2 位说话人（2 人约 83%、3 人约 16%，最多 6 人），口音覆盖母语和非母语商务英语。
+      转写是 S&P Global 的专业人工转写（官方称准确率 99% 以上），用“|”标出说话人切换，并附每段的数字说话人编号列表；
+      supplemental_data/alignment_files.tar.gz 是每段的对齐 JSON。本地共 3,649.2 小时（README 写 3,780 h，v1.0.0 因法律原因
+      删掉约 3% 的片段）：train 156,753 段、39,864 人、3,367.0 h；dev 6,195 段、4,914 人、133.2 h；test 6,932 段、5,371 人、
+      149.0 h；共 41,117 个说话人编号，16 kHz 单声道 PCM WAV 嵌在 parquet 中。三个划分没有共享会议（call_id 互斥），但有共享
+      说话人（train 与 test 共 4,702 人）。转写按编辑规范而非逐字：口吃、重复和部分寒暄会被删掉，长片段里残留较多。数据有
+      访问门控，已用用户的 HF 账号同意 Kensho 条款（2025 年 7 月版，上游 LICENSE 文件为空，条款以 README 门控文本为准）：
+      仅限内部非商业研究；用它训练的模型及其输出若对外提供，必须免费且条款不宽于本条款；不得用于与 Kensho 竞争的商用转写或
+      ASR 产品、声纹识别或验证、语音克隆、说话人画像；不得识别或联系说话人真实身份；不得再分发。
+    download_scope: Complete SPGISpeech 2.0 release (train parts 0-6, dev and test Parquet, supplemental alignment_files.tar.gz, README, empty LICENSE)
+    expected_download_files: 430
+    expected_download_bytes: 421051663642
+    integrity: verified
+    local_scan_date: '2026-11-16'
