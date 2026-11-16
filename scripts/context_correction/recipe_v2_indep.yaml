@@ -13,15 +13,17 @@ seed: 20261116
 sample_rate: 16000
 prompts: v2
 
+# 2026-11-16 百炼账户（aliyun-llm）欠费，全量从这里改用火山方舟（amphionkeys volcengine-ark）。
+# 全量的前 350 对由百炼上的 kimi-k3.1-pro 生成（同一模型），试跑（synthetic-indep-pilot）用的是百炼上的 deepseek-v4-pro + glm-5.3 复核、qwen3.6-plus 盲解。
 llm:
-  base_url: https://dashscope.aliyuncs.com/compatible-mode/v1
-  api_key_env: ALI_API_KEY          # amphionkeys aliyun-llm
-  generator: {model: kimi-k3.1-pro, temperature: 1.0}
-  reviewers:   # 依次复核：glm 只看通过机械校验和 deepseek 的对（两家都要通过，结果不变；glm 每次约 2 分钟、8.7k token）
-    - {model: deepseek-v4-pro, temperature: 0.0}
-    - {model: glm-5.3, temperature: 0.0, max_tokens: 65536}   # 试跑时 80 次里 18 次思考用完 16000 token
-  # 开思考：试跑时不开思考的解题模型常忽略已经说清的说明（"健用健康的那个健"仍写"建"），会误杀好题
-  solver: {model: qwen3.6-plus, extra_body: {enable_thinking: true}, temperature: 0.0}
+  base_url: https://ark.cn-beijing.volces.com/api/v3
+  api_key_env: ARK_API_KEY
+  generator: {model: kimi-k3-1-pro-261024, temperature: 1.0}
+  reviewers:   # 依次复核：豆包只看通过机械校验和 deepseek 的对（两家都要通过，结果不变）
+    - {model: deepseek-v4-pro-ga-260813, temperature: 0.0}
+    - {model: doubao-seed-2-1-pro-260915, temperature: 0.0, max_tokens: 32768}
+  # 盲解：不参与出题和复核的家族，默认开思考（试跑时不开思考的解题模型常忽略已经说清的说明）
+  solver: {model: glm-5-2-260617, temperature: 0.0, max_tokens: 32768}
   workers: 32
 
 han_chars: [30, 140]

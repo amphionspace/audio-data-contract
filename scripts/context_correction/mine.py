@@ -170,11 +170,15 @@ def label_system(recipe, corpus):
     return prompts.MINE_LABEL_SYSTEM_V2 if v2 else prompts.MINE_LABEL_SYSTEM
 
 
-def cmd_prefilter(recipe, source_dir, corpus, server, served_model, workers):
+def cmd_prefilter(recipe, source_dir, corpus, server, served_model, workers, thinking=False, within=None):
+    """``thinking`` needs a server started with a reasoning parser (the reply must not carry the thoughts);
+    ``within`` restricts a second, stricter pass to the windows an earlier pass kept."""
     from openai import OpenAI
 
     root = source_dir / "mined" / corpus
     flagged = {w for row in read_jsonl(root / "scan.jsonl") for w in row["flagged"]}
+    if within:
+        flagged &= {row["window_id"] for row in read_jsonl(Path(within)) if row.get("keep")}
     path = root / "prefilter.jsonl"
     done = {row["window_id"] for row in read_jsonl(path)}
     windows = [w for w in gz_rows(root / "windows.jsonl.gz") if w["window_id"] in flagged and w["window_id"] not in done]
@@ -189,8 +193,8 @@ def cmd_prefilter(recipe, source_dir, corpus, server, served_model, workers):
         for _ in range(3):
             try:
                 response = client.chat.completions.create(
-                    model=served_model, messages=messages, temperature=0.0, max_tokens=1024,
-                    extra_body={"chat_template_kwargs": {"enable_thinking": False}})
+                    model=served_model, messages=messages, temperature=0.0, max_tokens=6144 if thinking else 1024,
+                    extra_body={"chat_template_kwargs": {"enable_thinking": thinking}})
                 reply = response.choices[0].message.content or ""
                 try:
                     keep = parse_json_reply(reply).get("keep") is True
@@ -247,7 +251,8 @@ def _han(text: str) -> str:
 
 
 def cmd_label(recipe, source_dir, corpus):
-    llm_cfg = recipe["llm"]
+    # a corpus may name its own labelers (``mining.corpora.<corpus>.llm``), e.g. when the default provider is unavailable
+    llm_cfg = recipe["mining"]["corpora"][corpus].get("llm") or recipe["llm"]
     root = source_dir / "mined" / corpus
     flagged = {w for row in read_jsonl(root / "scan.jsonl") for w in row["flagged"]}
     if (root / "prefilter.jsonl").exists():
@@ -383,6 +388,8 @@ def main():
     parser.add_argument("--served-model", default="qwen3.6-27b")
     parser.add_argument("--limit", type=int, default=0, help="scan an evenly spaced sample of N windows (hit-rate and throughput test)")
     parser.add_argument("--workers", type=int, default=64)
+    parser.add_argument("--thinking", action="store_true", help="prefilter: let the local model think (server needs a reasoning parser)")
+    parser.add_argument("--within", type=Path, help="prefilter: only the windows an earlier prefilter pass kept")
     args = parser.parse_args()
     recipe = yaml.safe_load(args.recipe.read_text())
     if args.stage == "windows":
@@ -390,7 +397,8 @@ def main():
     elif args.stage == "scan":
         cmd_scan(recipe, args.source, args.corpus, args.server, args.served_model, args.limit, args.workers)
     elif args.stage == "prefilter":
-        cmd_prefilter(recipe, args.source, args.corpus, args.server, args.served_model, args.workers)
+        cmd_prefilter(recipe, args.source, args.corpus, args.server, args.served_model, args.workers,
+                      args.thinking, args.within)
     elif args.stage == "label":
         cmd_label(recipe, args.source, args.corpus)
     else:
