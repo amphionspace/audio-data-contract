@@ -243,7 +243,11 @@ def test_superseded_versions_are_not_listed():
     versions = render_data_versions(ROOT / "catalog", ROOT / "views")
     section = _section(versions, "police_asr_unified")
     version_rows = [line for line in section.splitlines() if line.startswith("| [")]
-    assert version_rows and all("icefall-20260908" not in line for line in version_rows)
+    # The merged release's own Icefall view is listed; the old batches' views are not.
+    own_view = "| [police_asr_unified@icefall-20260908]"
+    assert version_rows and all(
+        "icefall-20260908" not in line or line.startswith(own_view) for line in version_rows
+    )
     # Merged old versions are named only to show where their COS copies are.
     assert "- 已并入的旧版本：" in section
 
