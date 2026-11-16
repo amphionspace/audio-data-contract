@@ -75,3 +75,5 @@ mining:
     wenetspeech_youtube:   # 同上；比有声书为主的播客更口语
       recordings: /workspace/data/datasets/wenetspeech_youtube/versions/l-20261014/recordings/train.jsonl.gz
       supervisions: /workspace/data/datasets/wenetspeech_youtube/versions/l-20261014/supervisions/train.jsonl.gz
+    emilia_zh:   # 原版 Emilia-ZH，不在 AmphionASR v4 配方里（训练用的 Emilia2 是另一批录音）；逐句切好的片段，同一来源编号相邻的拼成窗口
+      cuts: /workspace/data/datasets/emilia_zh/versions/punc-written-v1-20261109/emilia_zh_cuts_all_cleaned_punc_written.jsonl.gz
