@@ -56,10 +56,39 @@ def gz_rows(path):
                 yield json.loads(line)
 
 
+def join_texts(texts):
+    """Join a window's segment texts with "，" unless a segment already ends in punctuation (punctuated corpora)."""
+    out = ""
+    for text in texts:
+        out += text if not out or out[-1] in "，。！？、；：,.!?;:" else "，" + text
+    return out
+
+
+def cut_segments(path):
+    """A Lhotse cut list of one-utterance clips cut from long sources (Emilia: ``<source>_W<index>``), as
+    supervisions on the source: clips with consecutive indices are laid end to end, a missing index (a clip the
+    corpus dropped) opens a gap so that no window spans it."""
+    by_source = defaultdict(list)
+    for cut in gz_rows(path):
+        text = "".join((s.get("text") or "") for s in cut["supervisions"]).strip()
+        source, index = cut["id"].rsplit("_W", 1)
+        if text:
+            by_source[source].append((int(index), float(cut["duration"]), cut["id"], text))
+    for source, clips in by_source.items():
+        clips.sort()
+        offset, previous = 0.0, None
+        for index, duration, cut_id, text in clips:
+            if previous is not None and index != previous + 1:
+                offset += 1e3  # far beyond max_gap_seconds
+            yield {"recording_id": source, "start": offset, "duration": duration, "id": cut_id, "text": text}
+            offset, previous = offset + duration, index
+
+
 def cmd_windows(recipe, source_dir, corpus):
     spec = recipe["mining"]["corpora"][corpus]
     by_recording = defaultdict(list)
-    for row in gz_rows(Path(spec["supervisions"])):
+    rows = cut_segments(Path(spec["cuts"])) if "cuts" in spec else gz_rows(Path(spec["supervisions"]))
+    for row in rows:
         text = (row.get("text") or "").strip()
         if text:
             by_recording[row["recording_id"]].append((float(row["start"]), float(row["duration"]), row["id"], text))
@@ -80,7 +109,7 @@ def cmd_windows(recipe, source_dir, corpus):
     write_jsonl(out, (
         {"window_id": f"{corpus}:{rec}:{segs[0][2].rsplit('_', 1)[-1]}", "corpus": corpus, "recording_id": rec,
          "start": round(segs[0][0], 3), "end": round(segs[-1][0] + segs[-1][1], 3),
-         "segments": [s[2] for s in segs], "text": "，".join(s[3] for s in segs)}
+         "segments": [s[2] for s in segs], "text": join_texts(s[3] for s in segs)}
         for rec, segs in windows))
     print(f"{corpus}: {len(by_recording)} recordings -> {len(windows)} windows -> {out}")
 
@@ -229,7 +258,12 @@ def cmd_extract(recipe, source_dir, corpus):
     root = source_dir / "mined" / corpus
     kept = [row for row in read_jsonl(root / "labels.jsonl") if not row["issues"]]
     windows = {w["window_id"]: w for w in gz_rows(root / "windows.jsonl.gz")}
-    paths = {r["id"]: r["sources"][0]["source"] for r in gz_rows(Path(spec["recordings"]))}
+    if "cuts" in spec:  # a window is consecutive clips of one source, read clip by clip and joined
+        wanted = {c for row in kept for c in windows[row["window_id"]]["segments"]}
+        paths = {cut["id"]: cut["recording"]["sources"][0]["source"] for cut in gz_rows(Path(spec["cuts"]))
+                 if cut["id"] in wanted}
+    else:
+        paths = {r["id"]: r["sources"][0]["source"] for r in gz_rows(Path(spec["recordings"]))}
     audio_dir = root / "audio"
     audio_dir.mkdir(parents=True, exist_ok=True)
     items, clips = [], []
@@ -243,13 +277,21 @@ def cmd_extract(recipe, source_dir, corpus):
         seen_spans.add(spans)
         window = windows[row["window_id"]]
         gen = row["answers"]["generator"]
-        with sf.SoundFile(paths[window["recording_id"]]) as stream:
-            sr = stream.samplerate
-            start = max(0.0, window["start"] - pad)
-            stream.seek(int(start * sr))
-            wav = stream.read(int((window["end"] + pad - start) * sr), dtype="float32", always_2d=True).mean(axis=1)
-        if sr != 16000:
-            wav = soxr.resample(wav, sr, 16000)
+        if "cuts" in spec:
+            start, parts = window["start"], []
+            for cut_id in window["segments"]:
+                part, sr = sf.read(paths[cut_id], dtype="float32", always_2d=True)
+                part = part.mean(axis=1)
+                parts.append(soxr.resample(part, sr, 16000) if sr != 16000 else part)
+            wav = np.concatenate(parts)
+        else:
+            with sf.SoundFile(paths[window["recording_id"]]) as stream:
+                sr = stream.samplerate
+                start = max(0.0, window["start"] - pad)
+                stream.seek(int(start * sr))
+                wav = stream.read(int((window["end"] + pad - start) * sr), dtype="float32", always_2d=True).mean(axis=1)
+            if sr != 16000:
+                wav = soxr.resample(wav, sr, 16000)
         item_id = "mined-" + window["window_id"].replace(":", "-")
         path = audio_dir / f"{item_id}.wav"
         sf.write(path, np.clip(wav, -1, 1), 16000, subtype="PCM_16")
