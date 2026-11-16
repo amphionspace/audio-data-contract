@@ -7,6 +7,16 @@ dataset_id: context_correction_zh
 seed: 20261018
 sample_rate: 16000
 
+# build.py 写进登记的说明和来源
+catalog:
+  description: >-
+    上下文纠偏评测集，只用于评测，不进训练。说话人在同一段话里用说明或语境确定了某个同音词的写法
+    (显式说字、同名一致性、隐式语义)，识别结果应按上下文写。题目由 qwen3.6-plus 生成、
+    deepseek-v4-pro 独立复核，Qwen3-TTS 用测试划分说话人的声音合成，SenseVoiceSmall 拼音级质检；
+    另有从 WenetSpeech 播客挖掘的真实录音。生成脚本 scripts/context_correction/。
+  sources: ["LLM-generated scripts (Aliyun Bailian)", "aishell3@legacy-20260804 test voices",
+            "kespeech@legacy-20260804 test voices", "wenetspeech_podcast@l-20261014 (mined)"]
+
 llm:
   base_url: https://dashscope.aliyuncs.com/compatible-mode/v1
   api_key_env: ALI_API_KEY          # amphionkeys aliyun-llm
