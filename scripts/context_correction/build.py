@@ -20,6 +20,9 @@ breakdown fields, CoT supervision) which ``ae open-audio-llm ts-asr`` scores. Wi
 the recipe it also carries ``train_overlap`` (seen / unseen): a tested spelling (2+ characters) or an
 explanation (4+ characters) that occurs in an explained training transcript makes the item seen.
 
+The new version is added to the repository's ``catalog/``; the published registry copy is synced from the merged
+pull request (it is not a mirror of ``catalog/``, so it is never overwritten wholesale).
+
     python scripts/context_correction/build.py --source <source dir>
 """
 
@@ -28,7 +31,6 @@ from __future__ import annotations
 import argparse
 import hashlib
 import re
-import shutil
 import sys
 from collections import Counter, defaultdict
 from pathlib import Path
@@ -288,7 +290,6 @@ def register(spec):
     current = load_catalog(REPO / "catalog")
     validate_catalog([*current, DatasetSpec.from_dict(spec)])
     path.write_text(yaml.safe_dump([*rows, spec], allow_unicode=True, sort_keys=False, width=512), encoding="utf-8")
-    shutil.copy(path, Path("/workspace/data/registry/catalog") / path.name)
 
 
 if __name__ == "__main__":
