@@ -2,7 +2,7 @@
     dataset_id: eurospeech
     version: hf-7a55bbcee393
     languages:
-      - multi
+      - en
     tasks:
       - asr
     aliases: []
@@ -11,28 +11,68 @@
         kind: hf-dataset-snapshot
         root_alias: eurospeech
         relative_path: source/hf-7a55bbcee393
+        metadata:
+          file_count: 573
+          expected_bytes: 372943654601
+          tree_sha256: d918d71268018137090562c6a531c3771197617c6da3da6f8c60e5f6f9e1acfe
+      - name: download_state
+        kind: dataset-state
+        root_alias: eurospeech
+        relative_path: versions/hf-7a55bbcee393/download_state/state.json
+        expected_bytes: 977
+        sha256: 45d16679885acefbac95c9dd57bc7dbe2cfcbcbf32b41d743f3e2bc9ee531228
     splits:
-      all:
+      train:
         artifacts:
           source:
             - source
+        statistics:
+          count: 888252
+          duration_hours: 3711.5035
+          duration_basis: soundfile header duration of every embedded WAV clip in uk/train-*.parquet; pinned upstream file hashes verified
+          sample_formats:
+            1ch/16000Hz/PCM_16: 888252
+      validation:
+        artifacts:
+          source:
+            - source
+        statistics:
+          count: 9181
+          duration_hours: 38.0933
+          duration_basis: soundfile header duration of every embedded WAV clip in uk/validation-*.parquet; pinned upstream file hashes verified
+          sample_formats:
+            1ch/16000Hz/PCM_16: 9181
+      test:
+        artifacts:
+          source:
+            - source
+        statistics:
+          count: 9268
+          duration_hours: 38.7243
+          duration_basis: soundfile header duration of every embedded WAV clip in uk/test-*.parquet; pinned upstream file hashes verified
+          sample_formats:
+            1ch/16000Hz/PCM_16: 9268
     provenance:
-      summary: 22 个欧洲议会的对齐发言语音（EuroSpeech）
+      summary: 英国议会发言语音（EuroSpeech）
       source: Hugging Face
       source_id: disco-eth/EuroSpeech
       revision: 7a55bbcee3933f5d9817bb2d4c37399d596f543d
       url: https://huggingface.co/datasets/disco-eth/EuroSpeech
       paper: https://arxiv.org/abs/2510.00514
+      download_mirror: https://hf-mirror.com
       release_date: '2025-05-10'
       license:
-        - other (per-parliament terms)
-      inventory_status: download_planned
+        - other (UK Parliament PRU audio terms; transcripts OGL v3)
       description: >-
-        ETH Zurich 发布（NeurIPS 2025 数据集），22 个欧洲国家议会的发言录音，VAD 切成 3–20 秒，用 ASR 把官方会议记录（非逐字）对齐到
-        语音段，共约 78,100 小时；HF 上提供 CER<20% 的部分（50,573 小时）。与本项目相关的语种：英语（英国议会）2,609 h、
-        葡语（葡萄牙）3,294 h、德语 2,184 h、法语 2,250 h（均为 CER<20% 部分）；没有中文、西语和亚洲语言。16 kHz Parquet，
-        按国家分配置，train/validation/test 按整场会议约 80/10/10 划分。许可按各国议会条款（如英国 OGL、意大利 CC BY 4.0、
-        挪威 NLOD），使用前逐国核对。
-      download_scope: Complete EuroSpeech release (22 country configurations, train/validation/test Parquet)
-      expected_download_files: 10934
-      expected_download_bytes: 5906377769177
+        ETH Zurich 发布（NeurIPS 2025 数据集），22 个欧洲国家议会的发言录音，VAD 切成 3–20 秒，再用 ASR 把官方会议记录对齐到
+        语音段。本地只下了英国议会（uk 配置，英语）：train 888,252 段 3,711.5 h（1,130 场会议）、validation 9,181 段 38.1 h
+        （15 场）、test 9,268 段 38.7 h（12 场），共 3,788.3 h，16 kHz 单声道 WAV。按整场会议划分，三份之间没有共用的源录音。
+        HF 版实际滤到 CER ≤ 0.30（数据卡写的是 CER < 20%）。文本是 Hansard 编辑过的官方记录，不是逐字转写：human_transcript
+        与 ASR 结果（asr_transcript）的 CER 中位数约 0.15、WER 中位数约 0.29，训练前建议按 cer 字段再筛或重新清洗。没有说话人
+        标签。音频按英国议会 PRU 下载与分享条款使用（不是开放许可，使用前核对），文本为 Open Government Licence v3。
+        其余 21 国没有下载：葡萄牙语由另一条工作线处理，其他语种不在本项目范围内。
+      download_scope: EuroSpeech uk configuration (United Kingdom Parliament, English), train/validation/test Parquet, plus README
+      expected_download_files: 573
+      expected_download_bytes: 372943654601
+      integrity: verified
+      local_scan_date: '2026-11-16'
