@@ -85,7 +85,7 @@
         每段一个 48 kHz 多声道 WAV（2–4 声道，每位说话人一个声道）和一个同名 JSON：instances 里每条带声道号、起止时间（毫秒级）、
         说话人编号、轮次状态（complete、incomplete、backchannel、wait）、性别、年龄段、情感、笑声咳嗽等事件，以及人工转写；
         有约两成条目缺轮次标签。共 130,077 个标注段、125.7 小时（重叠部分按每人分别计时）。可用于说话人日志、带说话人转写、
-        轮次判断和全双工对话建模。同源的 2,000 小时 LLM 辅助标注版见 duplexconv（待下载），ASLP-lab/FastTurn-Testset 也取自本数据，
+        轮次判断和全双工对话建模。同源的 2,000 小时 LLM 辅助标注版见 duplexconv，ASLP-lab/FastTurn-Testset 也取自本数据，
         用本数据做评测时要排除这两者中的重叠录音。CC BY-NC 4.0，仅限学术研究。
       license:
         - cc-by-nc-4.0

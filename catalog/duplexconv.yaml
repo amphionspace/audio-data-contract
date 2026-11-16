@@ -13,11 +13,56 @@
         kind: hf-dataset-snapshot
         root_alias: duplexconv
         relative_path: source/hf-0bb99da7ab7a
+        metadata:
+          file_count: 194
+          expected_bytes: 1640733137836
+          tree_sha256: 0f7d80f6cfbf02ca13607666e68ecddd9806c52bcd0be12e40ad5c85c60a9bc7
+      - name: download_state
+        kind: dataset-state
+        root_alias: duplexconv
+        relative_path: versions/hf-0bb99da7ab7a/download_state/state.json
+        expected_bytes: 949
+        sha256: 521dcd41af70938f9e0176c15681d49af9ffa8f8f8bdece581322ec6c3218657
     splits:
-      all:
+      tutoring:
+        task: speaker_attributed_asr
         artifacts:
           source:
             - source
+        statistics:
+          count: 31487
+          duration_hours: 700.0452
+          duration_basis: WAV header duration of every clip in the Edu/audios and edu/audios tar archives; pinned upstream file hashes verified
+          segments: 559814
+          segment_hours: 799.8934
+          folders:
+            Edu: {clips: 22050, hours: 495.9177, segments: 397192}
+            edu: {clips: 9437, hours: 204.1275, segments: 162622}
+          sample_formats:
+            2ch/48000Hz/PCM_16: 31073
+            3ch/48000Hz/PCM_16: 396
+            4ch/48000Hz/PCM_16: 18
+        provenance:
+          notes: 辅导课场景（Edu、edu 两个文件夹），老师与学生对话
+      social_chat:
+        task: speaker_attributed_asr
+        artifacts:
+          source:
+            - source
+        statistics:
+          count: 62222
+          duration_hours: 1300.1697
+          duration_basis: WAV header duration of every clip in the none_Edu/audios tar archives; pinned upstream file hashes verified
+          segments: 1189363
+          segment_hours: 1686.8813
+          folders:
+            none_Edu: {clips: 62222, hours: 1300.1697, segments: 1189363}
+          sample_formats:
+            2ch/48000Hz/PCM_16: 44582
+            3ch/48000Hz/PCM_16: 14070
+            4ch/48000Hz/PCM_16: 3570
+        provenance:
+          notes: 闲聊场景（none_Edu 文件夹），2–4 人
     provenance:
       summary: 中文多人自然对话，LLM 辅助标注（DuplexConv）
       source: Hugging Face
@@ -28,12 +73,19 @@
       release_date: '2026-06'
       license:
         - cc-by-nc-4.0
-      inventory_status: download_planned
+      download_mirror: https://hf-mirror.com
       description: >-
-        西工大 ASLP 与 QualiaLabs 2026-06 开源，2,000.21 小时、93,709 个音频文件（每段 8–618 秒，平均 76.8 秒）的中文多人自然对话，
-        辅导（Edu/edu）和闲聊（none_Edu）两类场景，多声道，含重叠、附和、打断。转写、说话人结构和轮次信息由 LLM 辅助生成，
-        不是人工精标。与 smoothconv（100 小时人工精标）来自同一批对话来源，拿 smoothconv 做评测时要先排除重叠录音。
-        音频打包为约 8 GB 的 tar。CC BY-NC 4.0，仅限学术研究。
+        西工大 ASLP 与 QualiaLabs 2026-06 开源，93,709 段、2,000.2 小时（每段 8–618 秒，平均 76.8 秒）的中文多人自然对话，
+        辅导课（Edu、edu，700.0 h）和闲聊（none_Edu，1,300.2 h）两类场景。每段一个 48 kHz 多声道 WAV（2–4 声道，标注按声道
+        分开），打包在约 8 GB 的 tar 里；标注在各文件夹的 jsons.tar.gz，每段一个同名 JSON，按声道列出语句：起止时间、语种、
+        LLM 打的性别/年龄/情感/口音/副语言标签和文本、轮次状态（complete、incomplete、backchannel、wait）、语句内的说话人分段、
+        SNR、MOS 和声音事件。共 1,749,177 条语句、2,486.8 小时（重叠部分按每人分别计时）。转写和各类标签都由 LLM 辅助流水线
+        生成，不是人工精标：6.6% 的语句没有文本，闲聊场景 41% 的语句没有轮次状态、20% 语种为 unknown；音频与标注一一对应。
+        团队计划用 AmphionData 重新清洗转写后再用于训练。同系列的 100 小时人工精标版见 smoothconv。按文件大小和前 1 MiB
+        内容比对，与 smoothconv 的 2,503 段没有完全相同的片段，但切分不同的同源录音无法据此排除。
+        CC BY-NC 4.0，仅限学术研究。
       download_scope: Complete DuplexConv release (Edu, edu and none_Edu audio tar archives with annotations)
       expected_download_files: 194
       expected_download_bytes: 1640733137836
+      integrity: verified
+      local_scan_date: '2026-11-16'
