@@ -337,8 +337,9 @@ def cmd_extract(recipe, source_dir, corpus):
     pad = recipe["mining"]["pad_seconds"]
     seen_spans = set()
     for row in kept:
-        # a show repeating its sign-off ("我是小溪，春晓的晓") yields the same question many times: keep one
-        spans = tuple((s["role"], s["text"]) for s in row["segments"] if s["role"] in ("target", "evidence"))
+        # a show repeating its sign-off ("我是小溪，春晓的晓") yields the same question many times: keep one;
+        # compared on Han characters only, since the corpus punctuates the same sign-off differently
+        spans = tuple((s["role"], _han(s["text"])) for s in row["segments"] if s["role"] in ("target", "evidence"))
         if spans in seen_spans:
             continue
         seen_spans.add(spans)
