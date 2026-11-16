@@ -3,17 +3,18 @@
 
     load.sh aliyun-llm -- python scripts/context_correction/generate.py text   --out <source dir>
     load.sh aliyun-llm -- python scripts/context_correction/generate.py review --out <source dir>
+    load.sh aliyun-llm -- python scripts/context_correction/generate.py solve --out <source dir>   # with llm.solver
     python scripts/context_correction/generate.py select --out <source dir>
-    load.sh aliyun-llm -- python scripts/context_correction/generate.py solve --out <source dir>   # optional, then select again
 
 ``text`` asks the generator LLM for minimal pairs (``pairs.jsonl``); ``review`` asks
 an LLM of another family to judge every pair (``reviews.jsonl``); ``select`` keeps
 pairs that pass the review and the mechanical checks, in generation order
 (``items.jsonl``; build.py takes each subtype's target among those whose audio passes
 QC). Everything else is written to ``quarantine.jsonl`` with its reasons. Every LLM call is archived in ``llm-log/``.
-``solve`` (recipe ``llm.solver``) gives each selected item to an LLM that took no part in writing or reviewing
-it, with the targets replaced by tone-marked pinyin; an item whose tested characters it does not recover from the
-text alone is not decided by its context, and the next ``select`` quarantines the pair. Only implicit pairs
+``solve`` (recipe ``llm.solver``) gives each item of the pairs that passed the checks and reviewers to an LLM that
+took no part in writing or reviewing it, with the targets replaced by tone-marked pinyin; an item whose tested
+characters it does not recover from the text alone is not decided by its context, and ``select`` quarantines the
+pair (and, with a solver configured, an implicit pair not solved yet). Only implicit pairs
 are filtered this way: their spelling rests on semantics, which a blind solve tests; an explicit pair's spelling is
 stated in the text and checked by the reviewers, and a solver misses there were its own slips (the pilot's solver
 reasoned "míng = 鸣" and still wrote 陈小明), so explicit items only record the result (``solve``).
@@ -320,10 +321,16 @@ def to_items(pair: dict) -> list[dict]:
     return items
 
 
-def cmd_select(recipe: dict, out: Path) -> None:
+def load_reviews(out: Path) -> dict[str, dict[str, dict]]:
+    """{pair_id: {reviewer model: review row}}"""
     reviews: dict[str, dict[str, dict]] = defaultdict(dict)
     for row in read_jsonl(out / "reviews.jsonl"):
         reviews[row["pair_id"]][row["reviewer"]] = row
+    return reviews
+
+
+def cmd_select(recipe: dict, out: Path) -> None:
+    reviews = load_reviews(out)
     models = [spec["model"] for spec in reviewer_specs(recipe["llm"])]
     solved = {row["item_id"]: row for row in read_jsonl(out / "solve.jsonl")}
     order = {c["call_id"]: i for i, c in enumerate(plan_calls(recipe))}
@@ -336,7 +343,13 @@ def cmd_select(recipe: dict, out: Path) -> None:
         issues = mechanical_issues(pair, recipe) + review_issues(pair, reviews.get(pair["pair_id"], {}), models)
         for kind in ("correct", "confirm"):
             result = solved.get(f"{pair['pair_id']}-{kind}")
-            if result is not None and not result["ok"] and pair["category"] == "implicit":
+            if pair["category"] != "implicit":
+                continue
+            if result is None:
+                # with a solver configured an implicit pair needs its blind solve; without one (v1) it has none
+                if "solver" in recipe["llm"]:
+                    issues.append(f"solve {kind} missing")
+            elif not result["ok"]:
                 issues.append(f"solve {kind}: {result['answer']} for {result['expected']}")
         key = sha1((pair.get("correct") or "") + "\x1f" + (pair.get("confirm") or ""))
         if key in seen_texts:
@@ -390,7 +403,13 @@ def cmd_solve(recipe: dict, out: Path) -> None:
                  llm_cfg["base_url"], llm_cfg["api_key_env"])
     solve_path = out / "solve.jsonl"
     done = {row["item_id"] for row in read_jsonl(solve_path)}
-    items = [i for i in read_jsonl(out / "items.jsonl") if i["id"] not in done]
+    # every item of a pair that passed the code checks and all reviewers; select then needs the solve of each
+    # implicit one, so solve runs between review and select
+    reviews = load_reviews(out)
+    models = [spec["model"] for spec in reviewer_specs(llm_cfg)]
+    pairs = [p for p in read_jsonl(out / "pairs.jsonl") if "pair_id" in p and not mechanical_issues(p, recipe)
+             and not review_issues(p, reviews.get(p["pair_id"], {}), models)]
+    items = [i for p in pairs for i in to_items(p) if i["id"] not in done]
     sink = JsonlAppender(solve_path)
 
     def run(item):
@@ -406,12 +425,19 @@ def cmd_solve(recipe: dict, out: Path) -> None:
         return {"item_id": item["id"], "solver": solver.model, "masked": text, "answer": answer,
                 "expected": [t["text"] for t in targets], "ok": ok}
 
-    with ThreadPoolExecutor(llm_cfg["workers"]) as pool:
+    failed = 0
+    with ThreadPoolExecutor(llm_cfg["solver"].get("workers", llm_cfg["workers"])) as pool:
         futures = [pool.submit(run, item) for item in items]
         for count, future in enumerate(as_completed(futures), 1):
-            sink.append(future.result())
+            try:
+                sink.append(future.result())
+            except RuntimeError as exc:  # failed after retries (e.g. rate limit): left for a resumed run
+                failed += 1
+                print(f"[solve] {exc}", flush=True)
             if count % 50 == 0 or count == len(items):
                 print(f"[solve] {count}/{len(items)}", flush=True)
+    if failed:
+        raise SystemExit(f"[solve] {failed} items failed; rerun to finish them")
 
 
 def main():
