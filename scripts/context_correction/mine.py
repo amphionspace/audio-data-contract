@@ -31,7 +31,7 @@ import gzip
 import json
 import sys
 from collections import defaultdict
-from concurrent.futures import ThreadPoolExecutor
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 
 import yaml
@@ -158,12 +158,18 @@ def cmd_scan(recipe, source_dir, corpus, server, served_model, limit, workers):
         return {"batch": index, "flagged": [], "error": error, "model": served_model}
 
     with ThreadPoolExecutor(workers) as pool:
-        for count, result in enumerate(pool.map(run, batches), 1):
+        for count, result in enumerate(as_done(pool, run, batches), 1):
             if "error" not in result:
                 sink.append(result)
             if count % 200 == 0 or count == len(batches):
                 print(f"[scan] {count}/{len(batches)} batches", flush=True)
 
+
+
+def as_done(pool, fn, items):
+    """Results in completion order: an interrupted run keeps everything already finished (resume skips it);
+    ``pool.map`` holds finished results back behind the slowest earlier request."""
+    return (future.result() for future in as_completed([pool.submit(fn, item) for item in items]))
 
 def label_system(recipe, corpus):
     v2 = recipe["mining"]["corpora"][corpus].get("prompts") == "v2"
@@ -206,7 +212,7 @@ def cmd_prefilter(recipe, source_dir, corpus, server, served_model, workers, thi
         return {"window_id": window["window_id"], "error": error}
 
     with ThreadPoolExecutor(workers) as pool:
-        for count, result in enumerate(pool.map(run, windows), 1):
+        for count, result in enumerate(as_done(pool, run, windows), 1):
             if "error" not in result:
                 sink.append(result)
             if count % 1000 == 0 or count == len(windows):
@@ -304,7 +310,7 @@ def cmd_label(recipe, source_dir, corpus):
             pending.append(window)
         seen_texts.add(window["text"])
     with ThreadPoolExecutor(llm_cfg["workers"]) as pool:
-        for count, result in enumerate(pool.map(run, pending), 1):
+        for count, result in enumerate(as_done(pool, run, pending), 1):
             sink.append(result)
             if count % 20 == 0 or count == len(pending):
                 print(f"[label] {count}/{len(pending)}", flush=True)
