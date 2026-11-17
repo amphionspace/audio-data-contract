@@ -53,3 +53,26 @@ def test_overlap_seconds_counts_time_with_two_or_more_speakers():
     utts = [(0.0, 5.0, "A", ""), (4.0, 9.0, "B", ""), (4.5, 6.0, "C", "")]
     assert meeting["overlap_seconds"](utts, 0.0, 9.0) == pytest.approx(2.0)
     assert meeting["overlap_seconds"](utts, 4.8, 9.0) == pytest.approx(1.2)
+
+
+quarantine = runpy.run_path(str(Path(__file__).resolve().parents[1] / "scripts" / "ts_real" / "meeting_quarantine.py"))
+
+
+def test_missing_run_counts_consecutive_transcript_characters_the_annotation_lacks():
+    run = quarantine["longest_missing_run"]
+    assert run("我们开始吧", "我们开始吧") == 0
+    assert run("我们吧", "我们现在开始吧") == 4
+    assert run("开会", "嗯开会呃好") == 2  # two separate runs of 1 and 2
+    assert quarantine["chars"]("好的，我们 开始吧。OK") == "好的我们开始吧OK"
+
+
+def test_segments_are_rejected_for_missing_speech_or_a_wrong_speaker_only_when_judgeable():
+    reasons = quarantine["reasons"]
+    alone = {"owner": "A", "utts": [{"speaker": "aishell4:A", "text": "我们吧"}]}
+    shared = {"owner": "A", "utts": [{"speaker": "aishell4:A", "text": "我们吧"}, {"speaker": "aishell4:B", "text": "对"}]}
+    fine = {"solo_s": 5.0, "owner_sim": 0.7, "best_other": "B", "best_other_sim": 0.65}
+    wrong = {"solo_s": 5.0, "owner_sim": 0.3, "best_other": "B", "best_other_sim": 0.6}
+    assert [r["reason"] for r in reasons(alone, "我们现在开始吧", fine)] == ["annotation_missing_speech"]
+    assert reasons(shared, "我们现在开始吧", fine) == []  # someone else is annotated: the text check does not apply
+    assert [r["reason"] for r in reasons(alone, "我们吧。", wrong)] == ["speaker_label"]
+    assert reasons(alone, "我们吧", {**wrong, "solo_s": 2.0}) == []  # too little solo speech to judge
