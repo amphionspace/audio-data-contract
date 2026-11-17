@@ -1,5 +1,5 @@
-# zh-en 写法规则修正（zhen-fix-v1，2026-11-17）：拆开的大写字母连写（K T V→KTV），只改 target / text。
-# 底版本是交付配方 v7set34 的来源，有 ctxclean-20261110 派生版的从派生版接着改。占位，构建中。
+# zh-en 写法规则修正（zhen-fix-v1，2026-11-17）：拆开的大写字母连写（K T V→KTV），只改 train 划分的 target / text。
+# 底版本是交付配方 v7set34 的来源，有 ctxclean-20261110 派生版的从派生版接着改。生成脚本 scripts/zhen_fix/build.py。
 - schema_version: dataset-catalog/2.0
   dataset_id: emilia2_mix
   version: mix-20261013-utts-ctxclean-20261110-zhenfix-20261117
@@ -9,27 +9,98 @@
   tasks:
   - ts_asr
   aliases: []
-  derived_from: emilia2_mix@mix-20261013-utts-ctxclean-20261110
   artifacts:
   - name: preparation_state
     kind: dataset-state
     root_alias: aidc_data
     relative_path: datasets/emilia2_mix/versions/mix-20261013-utts-ctxclean-20261110-zhenfix-20261117/state.json
+  - name: train_2spk-records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/emilia2_mix/versions/mix-20261013-utts-ctxclean-20261110-zhenfix-20261117/records/train_2spk.jsonl.gz
+    expected_bytes: 930916461
+    sha256: aee929735c540f57be178ff75e3b2c5c3f050bc8d139258d31577f469653db98
+    metadata:
+      record_count: 2206836
+  - name: train_3spk-records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/emilia2_mix/versions/mix-20261013-utts-ctxclean-20261110-zhenfix-20261117/records/train_3spk.jsonl.gz
+    expected_bytes: 1117853842
+    sha256: 1c4c475de3d38a5dd9851f1785111b068bf765a2bfb35c7d8153f6d1b5e3ecc3
+    metadata:
+      record_count: 2201597
+  - name: train_2spk-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/emilia2_mix/versions/mix-20261013-utts-ctxclean-20261110/audio_index/audio_index_train_2spk.jsonl.gz
+    sha256: 3324be60c75b501847a2394f56c051ade7940df2b7c32ae7cc41091dbec7b7ec
+    metadata:
+      record_count: 2814665
+    expected_bytes: 184202757
+  - name: train_3spk-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/emilia2_mix/versions/mix-20261013-utts-ctxclean-20261110/audio_index/audio_index_train_3spk.jsonl.gz
+    sha256: 919d303cea3cfec079588097c962bc9777c7205178ce13a6f966f5e52149dc15
+    metadata:
+      record_count: 2810451
+    expected_bytes: 183932154
+  - name: record_index
+    kind: lance-record-index
+    root_alias: aidc_data
+    relative_path: datasets/emilia2_mix/versions/mix-20261013-utts-ctxclean-20261110-zhenfix-20261117/record_index/index.json
+    expected_bytes: 1147
+    sha256: 067f3857d2bb9bdca703f227c98b86a1443a8018221701b4699b569dce33d952
+    metadata:
+      snapshot_version: 13
+      rows: 4408433
+      schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
   splits:
-    train:
+    train_2spk:
       artifacts:
-        preparation_state:
-        - preparation_state
-      provenance:
-        preparation_status: building
+        records:
+        - train_2spk-records
+        audio_index:
+        - train_2spk-audio-index
+        records_lance:
+        - record_index
+      task: ts_asr
+      statistics:
+        records: 2206836
+        duration_hours: 8557.364
+        duration_basis: clip duration (segment span, or the whole file)
+        zhen_fix_changed_records: 12399
+    train_3spk:
+      artifacts:
+        records:
+        - train_3spk-records
+        audio_index:
+        - train_3spk-audio-index
+        records_lance:
+        - record_index
+      task: ts_asr
+      statistics:
+        records: 2201597
+        duration_hours: 8554.289
+        duration_basis: clip duration (segment span, or the whole file)
+        zhen_fix_changed_records: 12188
+  derived_from: emilia2_mix@mix-20261013-utts-ctxclean-20261110
+  recipe_parameters:
+    rules: 'zhen-fix-v1: Chinese texts only; space-separated single uppercase letters joined (K T V -> KTV)'
+    changed: train 划分 target / text 里命中规则的记录；原文本在 metadata.zhen_fix.original_target 或 custom.zhen_fix.original_text
+    unchanged: 其余记录、字段、音频引用、音频索引和非 train 划分，引用底版本的产物
   provenance:
-    preparation_status: building
-    owner: mingdong
     summary: Emilia2 长音频合成的 2/3 人目标说话人混合
-    description: emilia2_mix@mix-20261013-utts-ctxclean-20261110（交付配方 v7set34 用的是 emilia2_mix@mix-20261013-utts）里中文文本的英文写法按 audio-data-contract docs/reference/zh-en-transcription.md 规则 2 修正：用空格隔开的单个大写字母连写（K T V→KTV、A P P→APP、N F C→NFC），原文本存进 metadata；小写或大小写混合的字母串（多是数学变量）和字母数字词里的汉字数字不改。其余字段、音频引用和没有改动的划分照旧。构建中。
+    description: emilia2_mix@mix-20261013-utts-ctxclean-20261110 的中文文本按 audio-data-contract docs/reference/zh-en-transcription.md 规则 2 修正：用空格隔开的单个大写字母连写（K T V→KTV、A P P→APP、N F C→NFC），原文本存进 metadata.zhen_fix / custom.zhen_fix。小写或大小写混合的字母串（多是数学变量）和字母数字词里的汉字数字不改。只改 train 划分的文本，共 24,587 条；其余字段、音频引用和其他划分照旧，引用底版本的产物。
+    owner: mingdong
+    snapshot_date: '2026-11-17'
     source: emilia2_mix@mix-20261013-utts-ctxclean-20261110
-    method: zhen-fix-v1
     run_dir: /workspace/workspace/mingdong/data/amphiondata/zhen-fix-20261117
+    method: zhen-fix-v1
+    rules: zhen-fix-v1
+    changed_records: 24587
+    build_script: scripts/zhen_fix/build.py
 - schema_version: dataset-catalog/2.0
   dataset_id: emilia2_short
   version: short-lance-20261023-ctxclean-20261110-zhenfix-20261117
@@ -39,27 +110,79 @@
   tasks:
   - asr
   aliases: []
-  derived_from: emilia2_short@short-lance-20261023-ctxclean-20261110
   artifacts:
   - name: preparation_state
     kind: dataset-state
     root_alias: aidc_data
     relative_path: datasets/emilia2_short/versions/short-lance-20261023-ctxclean-20261110-zhenfix-20261117/state.json
+  - name: train_en
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/emilia2_short/versions/short-lance-20261023-ctxclean-20261110-zhenfix-20261117/records/train_en.jsonl.gz
+    expected_bytes: 319487577
+    sha256: 956e032113cc0de7548ffc581fcfe292334460f0fb9b6164e1cf7da91afa7b85
+    metadata:
+      record_count: 2081213
+  - name: train_zh
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/emilia2_short/versions/short-lance-20261023-ctxclean-20261110-zhenfix-20261117/records/train_zh.jsonl.gz
+    expected_bytes: 299817705
+    sha256: 894ccf636df835060bdca55becdcf0c8a8ef0022272ddbb5dacacf2a4f441798
+    metadata:
+      record_count: 1908804
   splits:
+    train_en:
+      group: train
+      artifacts:
+        records:
+        - train_en
+      statistics:
+        records: 2081213
+        duration_hours: 2740.01
+        duration_basis: sum of Lance sample duration; each sample is one ASR example
+        zhen_fix_changed_records: 180
+    train_zh:
+      group: train
+      artifacts:
+        records:
+        - train_zh
+      statistics:
+        records: 1908804
+        duration_hours: 2356.643
+        duration_basis: sum of Lance sample duration; each sample is one ASR example
+        zhen_fix_changed_records: 15785
     train:
       artifacts:
-        preparation_state:
-        - preparation_state
-      provenance:
-        preparation_status: building
+        records:
+        - train_en
+        - train_zh
+      statistics:
+        records: 3990017
+        duration_hours: 5096.653
+        duration_basis: sum of Lance sample duration; each sample is one ASR example
+        zhen_fix_changed_records: 15965
+  derived_from: emilia2_short@short-lance-20261023-ctxclean-20261110
+  recipe_parameters:
+    rules: 'zhen-fix-v1: Chinese texts only; space-separated single uppercase letters joined (K T V -> KTV)'
+    changed: train 划分 target / text 里命中规则的记录；原文本在 metadata.zhen_fix.original_target 或 custom.zhen_fix.original_text
+    unchanged: 其余记录、字段、音频引用、音频索引和非 train 划分，引用底版本的产物
   provenance:
-    preparation_status: building
-    owner: mingdong
     summary: Emilia2 中英短音频普通转写
-    description: emilia2_short@short-lance-20261023-ctxclean-20261110（交付配方 v7set34 用的是 emilia2_short@short-lance-20261023）里中文文本的英文写法按 audio-data-contract docs/reference/zh-en-transcription.md 规则 2 修正：用空格隔开的单个大写字母连写（K T V→KTV、A P P→APP、N F C→NFC），原文本存进 metadata；小写或大小写混合的字母串（多是数学变量）和字母数字词里的汉字数字不改。其余字段、音频引用和没有改动的划分照旧。构建中。
+    description: emilia2_short@short-lance-20261023-ctxclean-20261110 的中文文本按 audio-data-contract docs/reference/zh-en-transcription.md 规则 2 修正：用空格隔开的单个大写字母连写（K T V→KTV、A P P→APP、N F C→NFC），原文本存进 metadata.zhen_fix / custom.zhen_fix。小写或大小写混合的字母串（多是数学变量）和字母数字词里的汉字数字不改。只改 train 划分的文本，共 15,965 条；其余字段、音频引用和其他划分照旧，引用底版本的产物。
+    owner: mingdong
+    snapshot_date: '2026-11-17'
     source: emilia2_short@short-lance-20261023-ctxclean-20261110
-    method: zhen-fix-v1
     run_dir: /workspace/workspace/mingdong/data/amphiondata/zhen-fix-20261117
+    source_keys:
+    - namespace: emilia2
+      fields:
+      - metadata.recording_id
+      pattern: (?<![0-9a-f])[0-9a-f]{16}(?![0-9a-f])
+    method: zhen-fix-v1
+    rules: zhen-fix-v1
+    changed_records: 15965
+    build_script: scripts/zhen_fix/build.py
 - schema_version: dataset-catalog/2.0
   dataset_id: emilia2_dialog
   version: dialog-turn-taking-20261013-enroll-ctxclean-20261110-zhenfix-20261117
@@ -69,27 +192,327 @@
   tasks:
   - ts_asr
   aliases: []
-  derived_from: emilia2_dialog@dialog-turn-taking-20261013-enroll-ctxclean-20261110
   artifacts:
   - name: preparation_state
     kind: dataset-state
     root_alias: aidc_data
     relative_path: datasets/emilia2_dialog/versions/dialog-turn-taking-20261013-enroll-ctxclean-20261110-zhenfix-20261117/state.json
+  - name: train_2spk
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/emilia2_dialog/versions/dialog-turn-taking-20261013-enroll-ctxclean-20261110-zhenfix-20261117/records/train_2spk.jsonl.gz
+    expected_bytes: 181488067
+    sha256: 0d6965c47d99e8300d9a7028d9f933681a31bf1bfa9e1786c979b566f53998e3
+    metadata:
+      record_count: 1118820
+  - name: train_3spk
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/emilia2_dialog/versions/dialog-turn-taking-20261013-enroll-ctxclean-20261110-zhenfix-20261117/records/train_3spk.jsonl.gz
+    expected_bytes: 61155648
+    sha256: 07e8ea22f4b77bfb716c57053cf8009f79927a2804ae551099c17388681f48fd
+    metadata:
+      record_count: 436478
+  - name: train_neg
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/emilia2_dialog/versions/dialog-turn-taking-20261013-enroll-ctxclean-20261110-zhenfix-20261117/records/train_neg.jsonl.gz
+    expected_bytes: 93753811
+    sha256: 3f2873526251879620c833a94f2e25d5bc16c063d33eb04b1597795120616202
+    metadata:
+      record_count: 879939
+  - name: eval_2spk
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/emilia2_dialog/versions/dialog-turn-taking-20261013-enroll-ctxclean-20261110/records/eval_2spk.jsonl.gz
+    expected_bytes: 4470312
+    sha256: 9ea1d9c206859e6e679f454d462ed1821dc3d7271494ddbba484f3f03ac537a8
+    metadata:
+      record_count: 22323
+  - name: eval_3spk
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/emilia2_dialog/versions/dialog-turn-taking-20261013-enroll-ctxclean-20261110/records/eval_3spk.jsonl.gz
+    expected_bytes: 1638416
+    sha256: 356508548d304005ba8a782b49b8616cffa8e7a3ac0d6475228b9b21dc72f8d3
+    metadata:
+      record_count: 9368
+  - name: eval_neg
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/emilia2_dialog/versions/dialog-turn-taking-20261013-enroll-ctxclean-20261110/records/eval_neg.jsonl.gz
+    expected_bytes: 2514611
+    sha256: ec827c22fd15fd6c23877585339c0e1adaa55ce82a433f80d0f60425a32b5f6c
+    metadata:
+      record_count: 18069
+  - name: test_2spk
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/emilia2_dialog/versions/dialog-turn-taking-20261013-enroll-ctxclean-20261110/records/test_2spk.jsonl.gz
+    expected_bytes: 4540681
+    sha256: 8c1aa182a8584a00a7dc05abbdf456b1922c5a269bbe2ce27ae606388073e8b7
+    metadata:
+      record_count: 22991
+  - name: test_3spk
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/emilia2_dialog/versions/dialog-turn-taking-20261013-enroll-ctxclean-20261110/records/test_3spk.jsonl.gz
+    expected_bytes: 1409736
+    sha256: 14dd47c258fc39212e51e98db49efe5af760ef0c578d25d2a6d57c3810ed3d70
+    metadata:
+      record_count: 8015
+  - name: test_neg
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/emilia2_dialog/versions/dialog-turn-taking-20261013-enroll-ctxclean-20261110/records/test_neg.jsonl.gz
+    expected_bytes: 2454502
+    sha256: 5f8cd7a3d1ea586295d9fa04af7bfb1001e7771d25532a8c1cef4aad8d8d8d40
+    metadata:
+      record_count: 17837
+  - name: audio_index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/emilia2_dialog/versions/dialog-turn-taking-20261013-enroll-ctxclean-20261110/audio_index/audio-index-flac.jsonl.gz
+    expected_bytes: 12437398
+    sha256: 33ae301b04e413c1b45cf2b769084c1bfa9e89805404b0a16f1acf4fff6ba499
+    metadata:
+      record_count: 189150
+  - name: record_index
+    kind: lance-record-index
+    root_alias: aidc_data
+    relative_path: datasets/emilia2_dialog/versions/dialog-turn-taking-20261013-enroll-ctxclean-20261110-zhenfix-20261117/record_index/index.json
+    expected_bytes: 2275
+    sha256: ccb5f6145f5768ff022e9c5f8f9bfba48b6f0d67710259de5e3fb53dc352ba77
+    metadata:
+      snapshot_version: 13
+      rows: 2533840
+      schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
   splits:
+    train_2spk:
+      group: train
+      artifacts:
+        records:
+        - train_2spk
+        audio_index:
+        - audio_index
+        records_lance:
+        - record_index
+      statistics:
+        records: 1118820
+        duration_hours: 6658.435
+        duration_basis: sum of mixture duration per target example; excludes enrollment; repeated mixtures count once per example
+        zhen_fix_changed_records: 9991
+    train_3spk:
+      group: train
+      artifacts:
+        records:
+        - train_3spk
+        audio_index:
+        - audio_index
+        records_lance:
+        - record_index
+      statistics:
+        records: 436478
+        duration_hours: 2671.929
+        duration_basis: sum of mixture duration per target example; excludes enrollment; repeated mixtures count once per example
+        zhen_fix_changed_records: 2864
+    train_neg:
+      group: train
+      artifacts:
+        records:
+        - train_neg
+        audio_index:
+        - audio_index
+        records_lance:
+        - record_index
+      statistics:
+        records: 879939
+        duration_hours: 5117.22
+        duration_basis: sum of mixture duration per target example; excludes enrollment; repeated mixtures count once per example
+        zhen_fix_changed_records: 0
+    eval_2spk:
+      group: eval
+      artifacts:
+        records:
+        - eval_2spk
+        audio_index:
+        - audio_index
+        records_lance:
+        - record_index
+      statistics:
+        records: 22323
+        negative_records: 0
+        duration_hours: 132.51531166666766
+        duration_basis: sum of mixture duration per target example; excludes enrollment; repeated mixtures count once per example
+        unique_mixture_count: 13258
+        unique_mixture_duration_hours: 77.06432805555556
+        languages:
+          zh: 11088
+          en: 11235
+    eval_3spk:
+      group: eval
+      artifacts:
+        records:
+        - eval_3spk
+        audio_index:
+        - audio_index
+        records_lance:
+        - record_index
+      statistics:
+        records: 9368
+        negative_records: 0
+        duration_hours: 56.64699611111105
+        duration_basis: sum of mixture duration per target example; excludes enrollment; repeated mixtures count once per example
+        unique_mixture_count: 4271
+        unique_mixture_duration_hours: 25.258053611111112
+        languages:
+          zh: 4174
+          en: 5194
+    eval_neg:
+      group: eval
+      artifacts:
+        records:
+        - eval_neg
+        audio_index:
+        - audio_index
+        records_lance:
+        - record_index
+      statistics:
+        records: 18069
+        negative_records: 18069
+        duration_hours: 104.47867916666682
+        duration_basis: sum of mixture duration per target example; excludes enrollment; repeated mixtures count once per example
+        unique_mixture_count: 18069
+        unique_mixture_duration_hours: 104.47867916666667
+        languages:
+          zh: 9135
+          en: 8934
+    test_2spk:
+      group: test
+      artifacts:
+        records:
+        - test_2spk
+        audio_index:
+        - audio_index
+        records_lance:
+        - record_index
+      statistics:
+        records: 22991
+        negative_records: 0
+        duration_hours: 137.49028000000055
+        duration_basis: sum of mixture duration per target example; excludes enrollment; repeated mixtures count once per example
+        unique_mixture_count: 13580
+        unique_mixture_duration_hours: 79.46416416666666
+        languages:
+          zh: 11703
+          en: 11288
+    test_3spk:
+      group: test
+      artifacts:
+        records:
+        - test_3spk
+        audio_index:
+        - audio_index
+        records_lance:
+        - record_index
+      statistics:
+        records: 8015
+        negative_records: 0
+        duration_hours: 48.71762166666698
+        duration_basis: sum of mixture duration per target example; excludes enrollment; repeated mixtures count once per example
+        unique_mixture_count: 3684
+        unique_mixture_duration_hours: 21.8247825
+        languages:
+          zh: 3481
+          en: 4534
+    test_neg:
+      group: test
+      artifacts:
+        records:
+        - test_neg
+        audio_index:
+        - audio_index
+        records_lance:
+        - record_index
+      statistics:
+        records: 17837
+        negative_records: 17837
+        duration_hours: 103.58737805555553
+        duration_basis: sum of mixture duration per target example; excludes enrollment; repeated mixtures count once per example
+        unique_mixture_count: 17837
+        unique_mixture_duration_hours: 103.58737805555555
+        languages:
+          zh: 9221
+          en: 8616
     train:
       artifacts:
-        preparation_state:
-        - preparation_state
-      provenance:
-        preparation_status: building
+        records:
+        - train_2spk
+        - train_3spk
+        - train_neg
+        audio_index:
+        - audio_index
+        records_lance:
+        - record_index
+      statistics:
+        records: 2435237
+        duration_hours: 14447.584
+        duration_basis: sum of mixture duration per target example; excludes enrollment; repeated mixtures count once per example
+        zhen_fix_changed_records: 12855
+    eval:
+      artifacts:
+        records:
+        - eval_2spk
+        - eval_3spk
+        - eval_neg
+        audio_index:
+        - audio_index
+        records_lance:
+        - record_index
+      statistics:
+        records: 49760
+        duration_hours: 293.6409869444455
+        duration_basis: sum of mixture duration per target example; excludes enrollment; repeated mixtures count once per example
+        unique_mixture_count: 18069
+        unique_mixture_duration_hours: 104.47867916666667
+    test:
+      artifacts:
+        records:
+        - test_2spk
+        - test_3spk
+        - test_neg
+        audio_index:
+        - audio_index
+        records_lance:
+        - record_index
+      statistics:
+        records: 48843
+        duration_hours: 289.7952797222231
+        duration_basis: sum of mixture duration per target example; excludes enrollment; repeated mixtures count once per example
+        unique_mixture_count: 17837
+        unique_mixture_duration_hours: 103.58737805555555
+  derived_from: emilia2_dialog@dialog-turn-taking-20261013-enroll-ctxclean-20261110
+  recipe_parameters:
+    rules: 'zhen-fix-v1: Chinese texts only; space-separated single uppercase letters joined (K T V -> KTV)'
+    changed: train 划分 target / text 里命中规则的记录；原文本在 metadata.zhen_fix.original_target 或 custom.zhen_fix.original_text
+    unchanged: 其余记录、字段、音频引用、音频索引和非 train 划分，引用底版本的产物
   provenance:
-    preparation_status: building
-    owner: mingdong
     summary: Emilia2 中英对话的轮流说话目标说话人数据
-    description: emilia2_dialog@dialog-turn-taking-20261013-enroll-ctxclean-20261110（交付配方 v7set34 用的是 emilia2_dialog@dialog-turn-taking-20261013-enroll）里中文文本的英文写法按 audio-data-contract docs/reference/zh-en-transcription.md 规则 2 修正：用空格隔开的单个大写字母连写（K T V→KTV、A P P→APP、N F C→NFC），原文本存进 metadata；小写或大小写混合的字母串（多是数学变量）和字母数字词里的汉字数字不改。其余字段、音频引用和没有改动的划分照旧。构建中。
+    description: emilia2_dialog@dialog-turn-taking-20261013-enroll-ctxclean-20261110 的中文文本按 audio-data-contract docs/reference/zh-en-transcription.md 规则 2 修正：用空格隔开的单个大写字母连写（K T V→KTV、A P P→APP、N F C→NFC），原文本存进 metadata.zhen_fix / custom.zhen_fix。小写或大小写混合的字母串（多是数学变量）和字母数字词里的汉字数字不改。只改 train 划分的文本，共 12,855 条；其余字段、音频引用和其他划分照旧，引用底版本的产物。
+    owner: mingdong
+    snapshot_date: '2026-11-17'
     source: emilia2_dialog@dialog-turn-taking-20261013-enroll-ctxclean-20261110
-    method: zhen-fix-v1
     run_dir: /workspace/workspace/mingdong/data/amphiondata/zhen-fix-20261117
+    source_keys:
+    - namespace: emilia2
+      fields:
+      - metadata.recording_id
+      - metadata.source_record_id
+      pattern: (?<![0-9a-f])[0-9a-f]{16}(?![0-9a-f])
+    method: zhen-fix-v1
+    rules: zhen-fix-v1
+    changed_records: 12855
+    build_script: scripts/zhen_fix/build.py
 - schema_version: dataset-catalog/2.0
   dataset_id: police_asr_unified
   version: train-punc-v1-20261102-zhenfix-20261117
@@ -104,21 +527,63 @@
     kind: dataset-state
     root_alias: aidc_data
     relative_path: datasets/police_asr_unified/versions/train-punc-v1-20261102-zhenfix-20261117/state.json
+  - name: train_recordings
+    kind: lhotse-recordings
+    root_alias: aidc_data
+    relative_path: datasets/police_asr_unified/versions/v1-20261009/manifests/police_asr_unified_recordings_train.jsonl.gz
+    expected_bytes: 6870628
+    sha256: 175f7162a1ad415adf61dd44902c8c8b7fed42e68eaceb5d6f784bc9f983b970
+    metadata:
+      record_count: 365341
+  - name: train_supervisions_punc_0
+    kind: lhotse-supervisions
+    root_alias: aidc_data
+    relative_path: datasets/police_asr_unified/versions/train-punc-v1-20261102-zhenfix-20261117/police_asr_unified_supervisions_train_punc.jsonl.gz
+    expected_bytes: 94318917
+    sha256: 1deacb717bc12f6ef2c441c8720f1098f3eba6cafae72f83d65c4b7ae88be3cf
+    metadata:
+      record_count: 365341
+      punctuated: true
+      source: datasets/police_asr_unified/versions/v1-20261009/manifests/police_asr_unified_supervisions_train.jsonl.gz
+  - name: record_index
+    kind: lance-record-index
+    root_alias: aidc_data
+    relative_path: datasets/police_asr_unified/versions/train-punc-v1-20261102-zhenfix-20261117/record_index/index.json
+    expected_bytes: 792
+    sha256: bf1b6651e9d3590792f253b39c5bef16d1f41a9940c777490a8d82820b5ee437
+    metadata:
+      snapshot_version: 13
+      rows: 365341
+      schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
   splits:
     train:
       artifacts:
-        preparation_state:
-        - preparation_state
-      provenance:
-        preparation_status: building
+        recordings:
+        - train_recordings
+        supervisions:
+        - train_supervisions_punc_0
+        records_lance:
+        - record_index
+      statistics:
+        records: 365341
+        records_punctuated: 365341
+        zhen_fix_changed_records: 12247
+      provenance: {}
   provenance:
-    preparation_status: building
     owner: mingdong
-    summary: 警务合成语音统合版（V1–V6 合并）
-    description: police_asr_unified@train-punc-v1-20261102（交付配方 v7set34 用的是 police_asr_unified@train-punc-v1-20261102）里中文文本的英文写法按 audio-data-contract docs/reference/zh-en-transcription.md 规则 2 修正：用空格隔开的单个大写字母连写（K T V→KTV、A P P→APP、N F C→NFC），原文本存进 metadata；小写或大小写混合的字母串（多是数学变量）和字母数字词里的汉字数字不改。其余字段、音频引用和没有改动的划分照旧。构建中。
+    description: police_asr_unified@train-punc-v1-20261102 的中文文本按 audio-data-contract docs/reference/zh-en-transcription.md 规则 2 修正：用空格隔开的单个大写字母连写（K T V→KTV、A P P→APP、N F C→NFC），原文本存进 metadata.zhen_fix / custom.zhen_fix。小写或大小写混合的字母串（多是数学变量）和字母数字词里的汉字数字不改。只改 train 划分的文本，共 12,247 条；其余字段、音频引用和其他划分照旧，引用底版本的产物。
     source: police_asr_unified@train-punc-v1-20261102
+    summary: 警务合成语音统合版（V1–V6 合并）
+    snapshot_date: '2026-11-17'
     method: zhen-fix-v1
+    rules: zhen-fix-v1
+    changed_records: 12247
     run_dir: /workspace/workspace/mingdong/data/amphiondata/zhen-fix-20261117
+    build_script: scripts/zhen_fix/build.py
+  recipe_parameters:
+    rules: 'zhen-fix-v1: Chinese texts only; space-separated single uppercase letters joined (K T V -> KTV)'
+    changed: train 划分 target / text 里命中规则的记录；原文本在 metadata.zhen_fix.original_target 或 custom.zhen_fix.original_text
+    unchanged: 其余记录、字段、音频引用、音频索引和非 train 划分，引用底版本的产物
 - schema_version: dataset-catalog/2.0
   dataset_id: magicdata_ramc
   version: train-punc-v1-20261102-ctxclean-20261110-zhenfix-20261117
@@ -127,27 +592,69 @@
   tasks:
   - asr
   aliases: []
-  derived_from: magicdata_ramc@train-punc-v1-20261102-ctxclean-20261110
   artifacts:
   - name: preparation_state
     kind: dataset-state
     root_alias: aidc_data
     relative_path: datasets/magicdata_ramc/versions/train-punc-v1-20261102-ctxclean-20261110-zhenfix-20261117/state.json
+  - name: train_recordings
+    kind: lhotse-recordings
+    root_alias: aidc_data
+    relative_path: datasets/magicdata_ramc/versions/train-punc-v1-20261102-ctxclean-20261110/recordings/train.jsonl.gz
+    expected_bytes: 4533
+    sha256: c860c48b83ad7b67c340fc2cea2f699fd120fbe7cc947c0984110725e67f3470
+    metadata:
+      record_count: 289
+  - name: train_supervisions_punc_0
+    kind: lhotse-supervisions
+    root_alias: aidc_data
+    relative_path: datasets/magicdata_ramc/versions/train-punc-v1-20261102-ctxclean-20261110-zhenfix-20261117/supervisions/train.jsonl.gz
+    expected_bytes: 7543536
+    sha256: e4330c82e90acd97ce6a231b613da79f46a13d417ae8dc7d0a85c8a5a4e0fd2a
+    metadata:
+      record_count: 168459
+  - name: record_index
+    kind: lance-record-index
+    root_alias: aidc_data
+    relative_path: datasets/magicdata_ramc/versions/train-punc-v1-20261102-ctxclean-20261110-zhenfix-20261117/record_index/index.json
+    expected_bytes: 806
+    sha256: 008b19bff65763d97cccda28b67eab103e281144211a051697c688db08dc0992
+    metadata:
+      snapshot_version: 13
+      rows: 168459
+      schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
   splits:
     train:
       artifacts:
-        preparation_state:
-        - preparation_state
-      provenance:
-        preparation_status: building
+        recordings:
+        - train_recordings
+        supervisions:
+        - train_supervisions_punc_0
+        records_lance:
+        - record_index
+      statistics:
+        records: 168459
+        recordings: 289
+        recordings_with_supervisions: 289
+        duration_hours: 125.479
+        duration_basis: sum of supervision duration
+        zhen_fix_changed_records: 1052
+  derived_from: magicdata_ramc@train-punc-v1-20261102-ctxclean-20261110
+  recipe_parameters:
+    rules: 'zhen-fix-v1: Chinese texts only; space-separated single uppercase letters joined (K T V -> KTV)'
+    changed: train 划分 target / text 里命中规则的记录；原文本在 metadata.zhen_fix.original_target 或 custom.zhen_fix.original_text
+    unchanged: 其余记录、字段、音频引用、音频索引和非 train 划分，引用底版本的产物
   provenance:
-    preparation_status: building
-    owner: mingdong
     summary: 中文手机通话自然对话（MagicData-RAMC）
-    description: magicdata_ramc@train-punc-v1-20261102-ctxclean-20261110（交付配方 v7set34 用的是 magicdata_ramc@train-punc-v1-20261102）里中文文本的英文写法按 audio-data-contract docs/reference/zh-en-transcription.md 规则 2 修正：用空格隔开的单个大写字母连写（K T V→KTV、A P P→APP、N F C→NFC），原文本存进 metadata；小写或大小写混合的字母串（多是数学变量）和字母数字词里的汉字数字不改。其余字段、音频引用和没有改动的划分照旧。构建中。
+    description: magicdata_ramc@train-punc-v1-20261102-ctxclean-20261110 的中文文本按 audio-data-contract docs/reference/zh-en-transcription.md 规则 2 修正：用空格隔开的单个大写字母连写（K T V→KTV、A P P→APP、N F C→NFC），原文本存进 metadata.zhen_fix / custom.zhen_fix。小写或大小写混合的字母串（多是数学变量）和字母数字词里的汉字数字不改。只改 train 划分的文本，共 1,052 条；其余字段、音频引用和其他划分照旧，引用底版本的产物。
+    owner: mingdong
+    snapshot_date: '2026-11-17'
     source: magicdata_ramc@train-punc-v1-20261102-ctxclean-20261110
-    method: zhen-fix-v1
     run_dir: /workspace/workspace/mingdong/data/amphiondata/zhen-fix-20261117
+    method: zhen-fix-v1
+    rules: zhen-fix-v1
+    changed_records: 1052
+    build_script: scripts/zhen_fix/build.py
 - schema_version: dataset-catalog/2.0
   dataset_id: magicdata_ramc
   version: turn-taking-20261014-utts-punc-20261102-ctxclean-20261110-zhenfix-20261117
@@ -156,27 +663,98 @@
   tasks:
   - ts_asr
   aliases: []
-  derived_from: magicdata_ramc@turn-taking-20261014-utts-punc-20261102-ctxclean-20261110
   artifacts:
   - name: preparation_state
     kind: dataset-state
     root_alias: aidc_data
     relative_path: datasets/magicdata_ramc/versions/turn-taking-20261014-utts-punc-20261102-ctxclean-20261110-zhenfix-20261117/state.json
+  - name: train_2spk_records_punc
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/magicdata_ramc/versions/turn-taking-20261014-utts-punc-20261102-ctxclean-20261110-zhenfix-20261117/records/train_2spk.jsonl.gz
+    expected_bytes: 6811649
+    sha256: 893a0e94fe0dd71275c6251f13471b113582cca073f2f2a7fd59151df61f28f0
+    metadata:
+      record_count: 29504
+  - name: train_neg_records_punc
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/magicdata_ramc/versions/turn-taking-20261014-utts-punc-20261102-ctxclean-20261110-zhenfix-20261117/records/train_neg.jsonl.gz
+    expected_bytes: 6178516
+    sha256: a6086288f6d5c1b475bce894b2182805dca0a4ae5fc54e01b195126af4e847f9
+    metadata:
+      record_count: 15372
+  - name: train_2spk-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/magicdata_ramc/versions/turn-taking-20261014-utts-punc-20261102-ctxclean-20261110/audio_index/audio_index_train_2spk.jsonl.gz
+    sha256: 3ed012e46aead910bb6e1f983ce157737e2f7c73481353b9f53c9094f53c83f2
+    metadata:
+      record_count: 289
+    expected_bytes: 15464
+  - name: train_neg-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/magicdata_ramc/versions/turn-taking-20261014-utts-punc-20261102-ctxclean-20261110/audio_index/audio_index_train_neg.jsonl.gz
+    sha256: 24461b9424fc48ed70e4c50b9cfd676b56e6bedc1a618bcf6e40fd00114dcd15
+    metadata:
+      record_count: 289
+    expected_bytes: 15463
+  - name: record_index
+    kind: lance-record-index
+    root_alias: aidc_data
+    relative_path: datasets/magicdata_ramc/versions/turn-taking-20261014-utts-punc-20261102-ctxclean-20261110-zhenfix-20261117/record_index/index.json
+    expected_bytes: 1173
+    sha256: b1750451086b9e6c9bfe8519ce35f2997c3f6d4198536b62c196c19a701dab80
+    metadata:
+      snapshot_version: 13
+      rows: 44876
+      schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
   splits:
-    train:
+    train_2spk:
+      task: ts_asr
       artifacts:
-        preparation_state:
-        - preparation_state
-      provenance:
-        preparation_status: building
+        records:
+        - train_2spk_records_punc
+        audio_index:
+        - train_2spk-audio-index
+        records_lance:
+        - record_index
+      statistics:
+        records: 29504
+        duration_hours: 221.853
+        zhen_fix_changed_records: 711
+      provenance: {}
+    train_neg:
+      task: ts_asr
+      artifacts:
+        records:
+        - train_neg_records_punc
+        audio_index:
+        - train_neg-audio-index
+        records_lance:
+        - record_index
+      statistics:
+        records: 15372
+        duration_hours: 115.208
+        zhen_fix_changed_records: 0
+      provenance: {}
+  derived_from: magicdata_ramc@turn-taking-20261014-utts-punc-20261102-ctxclean-20261110
+  recipe_parameters:
+    rules: 'zhen-fix-v1: Chinese texts only; space-separated single uppercase letters joined (K T V -> KTV)'
+    changed: train 划分 target / text 里命中规则的记录；原文本在 metadata.zhen_fix.original_target 或 custom.zhen_fix.original_text
+    unchanged: 其余记录、字段、音频引用、音频索引和非 train 划分，引用底版本的产物
   provenance:
-    preparation_status: building
-    owner: mingdong
     summary: 中文手机通话自然对话（MagicData-RAMC）
-    description: magicdata_ramc@turn-taking-20261014-utts-punc-20261102-ctxclean-20261110（交付配方 v7set34 用的是 magicdata_ramc@turn-taking-20261014-utts-punc-20261102）里中文文本的英文写法按 audio-data-contract docs/reference/zh-en-transcription.md 规则 2 修正：用空格隔开的单个大写字母连写（K T V→KTV、A P P→APP、N F C→NFC），原文本存进 metadata；小写或大小写混合的字母串（多是数学变量）和字母数字词里的汉字数字不改。其余字段、音频引用和没有改动的划分照旧。构建中。
+    description: magicdata_ramc@turn-taking-20261014-utts-punc-20261102-ctxclean-20261110 的中文文本按 audio-data-contract docs/reference/zh-en-transcription.md 规则 2 修正：用空格隔开的单个大写字母连写（K T V→KTV、A P P→APP、N F C→NFC），原文本存进 metadata.zhen_fix / custom.zhen_fix。小写或大小写混合的字母串（多是数学变量）和字母数字词里的汉字数字不改。只改 train 划分的文本，共 711 条；其余字段、音频引用和其他划分照旧，引用底版本的产物。
+    owner: mingdong
+    snapshot_date: '2026-11-17'
     source: magicdata_ramc@turn-taking-20261014-utts-punc-20261102-ctxclean-20261110
-    method: zhen-fix-v1
     run_dir: /workspace/workspace/mingdong/data/amphiondata/zhen-fix-20261117
+    method: zhen-fix-v1
+    rules: zhen-fix-v1
+    changed_records: 711
+    build_script: scripts/zhen_fix/build.py
 - schema_version: dataset-catalog/2.0
   dataset_id: magicdata_ramc
   version: allspk-asr-v1-20261103-zhenfix-20261117
@@ -185,27 +763,77 @@
   tasks:
   - asr
   aliases: []
-  derived_from: magicdata_ramc@allspk-asr-v1-20261103
   artifacts:
   - name: preparation_state
     kind: dataset-state
     root_alias: aidc_data
     relative_path: datasets/magicdata_ramc/versions/allspk-asr-v1-20261103-zhenfix-20261117/state.json
+  - name: train_records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/magicdata_ramc/versions/allspk-asr-v1-20261103-zhenfix-20261117/records_train.jsonl.gz
+    expected_bytes: 4676660
+    sha256: 1fe4763bbfb3623e199c654ce00a0ce152fcdab08cfbde6853b95386958c1d7c
+    metadata:
+      record_count: 9902
+      punctuated: true
+  - name: audio_index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/magicdata_ramc/versions/asr-20261014/audio_index/audio-index.jsonl.gz
+    expected_bytes: 20977
+    sha256: 24427d0c166f8e0c71a86aa13856d288d15038fdd3f5598716761aff45237e2d
+    metadata:
+      record_count: 351
+  - name: record_index
+    kind: lance-record-index
+    root_alias: aidc_data
+    relative_path: datasets/magicdata_ramc/versions/allspk-asr-v1-20261103-zhenfix-20261117/record_index/index.json
+    expected_bytes: 755
+    sha256: 3265362b1538e20b4683db15a0a0d10dd04694f6e6cb7c743420ab8769bdf35a
+    metadata:
+      snapshot_version: 13
+      rows: 9902
+      schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
   splits:
     train:
+      group: train
       artifacts:
-        preparation_state:
-        - preparation_state
-      provenance:
-        preparation_status: building
+        records:
+        - train_records
+        audio_index:
+        - audio_index
+        records_lance:
+        - record_index
+      task: asr
+      statistics:
+        records: 9902
+        duration_hours: 124.14
+        duration_basis: window duration (ref.duration)
+        zhen_fix_changed_records: 474
   provenance:
-    preparation_status: building
-    owner: mingdong
+    synthetic: none
+    snapshot_date: '2026-11-17'
+    description: magicdata_ramc@allspk-asr-v1-20261103 的中文文本按 audio-data-contract docs/reference/zh-en-transcription.md 规则 2 修正：用空格隔开的单个大写字母连写（K T V→KTV、A P P→APP、N F C→NFC），原文本存进 metadata.zhen_fix / custom.zhen_fix。小写或大小写混合的字母串（多是数学变量）和字母数字词里的汉字数字不改。只改 train 划分的文本，共 474 条；其余字段、音频引用和其他划分照旧，引用底版本的产物。
+    sources:
+    - magicdata_ramc@icefall-20260908
+    - magicdata_ramc@punc-written-v1-20261029
+    - magicdata_ramc@asr-20261014
+    - magicdata_ramc@clean-dual-qwen-moss-v1-20261008
+    audit: datasets/magicdata_ramc/versions/allspk-asr-v1-20261103/report.json
     summary: 中文手机通话自然对话（MagicData-RAMC）
-    description: magicdata_ramc@allspk-asr-v1-20261103（交付配方 v7set34 用的是 magicdata_ramc@allspk-asr-v1-20261103）里中文文本的英文写法按 audio-data-contract docs/reference/zh-en-transcription.md 规则 2 修正：用空格隔开的单个大写字母连写（K T V→KTV、A P P→APP、N F C→NFC），原文本存进 metadata；小写或大小写混合的字母串（多是数学变量）和字母数字词里的汉字数字不改。其余字段、音频引用和没有改动的划分照旧。构建中。
     source: magicdata_ramc@allspk-asr-v1-20261103
     method: zhen-fix-v1
+    rules: zhen-fix-v1
+    changed_records: 474
+    owner: mingdong
     run_dir: /workspace/workspace/mingdong/data/amphiondata/zhen-fix-20261117
+    build_script: scripts/zhen_fix/build.py
+  derived_from: magicdata_ramc@allspk-asr-v1-20261103
+  recipe_parameters:
+    rules: 'zhen-fix-v1: Chinese texts only; space-separated single uppercase letters joined (K T V -> KTV)'
+    changed: train 划分 target / text 里命中规则的记录；原文本在 metadata.zhen_fix.original_target 或 custom.zhen_fix.original_text
+    unchanged: 其余记录、字段、音频引用、音频索引和非 train 划分，引用底版本的产物
 - schema_version: dataset-catalog/2.0
   dataset_id: magicdata_ramc
   version: allspk-ts-v1-20261104-zhenfix-20261117
@@ -214,27 +842,102 @@
   tasks:
   - ts_asr
   aliases: []
-  derived_from: magicdata_ramc@allspk-ts-v1-20261104
   artifacts:
   - name: preparation_state
     kind: dataset-state
     root_alias: aidc_data
     relative_path: datasets/magicdata_ramc/versions/allspk-ts-v1-20261104-zhenfix-20261117/state.json
+  - name: train_records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/magicdata_ramc/versions/allspk-ts-v1-20261104-zhenfix-20261117/records_train.jsonl.gz
+    expected_bytes: 3854728
+    sha256: ff24777c253a9b98947cbab6bc4c18baec2b91cdfd471da668b7fb661ca43336
+    metadata:
+      record_count: 9902
+      punctuated: true
+  - name: train_neg_records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/magicdata_ramc/versions/allspk-ts-v1-20261104-zhenfix-20261117/records_train_neg.jsonl.gz
+    expected_bytes: 255563
+    sha256: 92b8f1f591b7bfce372021a92532818a2835556b516c8152a19490e625f2c64f
+    metadata:
+      record_count: 1767
+      punctuated: true
+  - name: audio_index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/magicdata_ramc/versions/asr-20261014/audio_index/audio-index.jsonl.gz
+    expected_bytes: 20977
+    sha256: 24427d0c166f8e0c71a86aa13856d288d15038fdd3f5598716761aff45237e2d
+    metadata:
+      record_count: 351
+  - name: record_index
+    kind: lance-record-index
+    root_alias: aidc_data
+    relative_path: datasets/magicdata_ramc/versions/allspk-ts-v1-20261104-zhenfix-20261117/record_index/index.json
+    expected_bytes: 940
+    sha256: 945f4d36052fa3049a44fd0dbbd7d1950a28c58546d984b56d18cfe770e5ce44
+    metadata:
+      snapshot_version: 13
+      rows: 11669
+      schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
   splits:
     train:
+      group: train
       artifacts:
-        preparation_state:
-        - preparation_state
-      provenance:
-        preparation_status: building
+        records:
+        - train_records
+        audio_index:
+        - audio_index
+        records_lance:
+        - record_index
+      task: ts_asr
+      statistics:
+        records: 9902
+        duration_hours: 124.14
+        duration_basis: mixture duration (ref.duration)
+        zhen_fix_changed_records: 283
+    train_neg:
+      group: train
+      artifacts:
+        records:
+        - train_neg_records
+        audio_index:
+        - audio_index
+        records_lance:
+        - record_index
+      task: ts_asr
+      statistics:
+        records: 1767
+        duration_hours: 16.95
+        duration_basis: mixture duration (ref.duration)
+        zhen_fix_changed_records: 0
   provenance:
-    preparation_status: building
-    owner: mingdong
+    synthetic: none
+    snapshot_date: '2026-11-17'
+    description: magicdata_ramc@allspk-ts-v1-20261104 的中文文本按 audio-data-contract docs/reference/zh-en-transcription.md 规则 2 修正：用空格隔开的单个大写字母连写（K T V→KTV、A P P→APP、N F C→NFC），原文本存进 metadata.zhen_fix / custom.zhen_fix。小写或大小写混合的字母串（多是数学变量）和字母数字词里的汉字数字不改。只改 train 划分的文本，共 283 条；其余字段、音频引用和其他划分照旧，引用底版本的产物。
+    sources:
+    - magicdata_ramc@allspk-asr-v1-20261103
+    - magicdata_ramc@icefall-20260908
+    - magicdata_ramc@punc-written-v1-20261029
+    - magicdata_ramc@asr-20261014
+    - magicdata_ramc@clean-dual-qwen-moss-v1-20261008
+    audit: datasets/magicdata_ramc/versions/allspk-ts-v1-20261104/report.json
     summary: 中文手机通话自然对话（MagicData-RAMC）
-    description: magicdata_ramc@allspk-ts-v1-20261104（交付配方 v7set34 用的是 magicdata_ramc@allspk-ts-v1-20261104）里中文文本的英文写法按 audio-data-contract docs/reference/zh-en-transcription.md 规则 2 修正：用空格隔开的单个大写字母连写（K T V→KTV、A P P→APP、N F C→NFC），原文本存进 metadata；小写或大小写混合的字母串（多是数学变量）和字母数字词里的汉字数字不改。其余字段、音频引用和没有改动的划分照旧。构建中。
     source: magicdata_ramc@allspk-ts-v1-20261104
     method: zhen-fix-v1
+    rules: zhen-fix-v1
+    changed_records: 283
+    owner: mingdong
     run_dir: /workspace/workspace/mingdong/data/amphiondata/zhen-fix-20261117
+    build_script: scripts/zhen_fix/build.py
+  derived_from: magicdata_ramc@allspk-ts-v1-20261104
+  recipe_parameters:
+    rules: 'zhen-fix-v1: Chinese texts only; space-separated single uppercase letters joined (K T V -> KTV)'
+    changed: train 划分 target / text 里命中规则的记录；原文本在 metadata.zhen_fix.original_target 或 custom.zhen_fix.original_text
+    unchanged: 其余记录、字段、音频引用、音频索引和非 train 划分，引用底版本的产物
 - schema_version: dataset-catalog/2.0
   dataset_id: aishell4
   version: asr-20261014-punc-20261102-ctxclean-20261110-zhenfix-20261117
@@ -243,27 +946,68 @@
   tasks:
   - asr
   aliases: []
-  derived_from: aishell4@asr-20261014-punc-20261102-ctxclean-20261110
   artifacts:
   - name: preparation_state
     kind: dataset-state
     root_alias: aidc_data
     relative_path: datasets/aishell4/versions/asr-20261014-punc-20261102-ctxclean-20261110-zhenfix-20261117/state.json
+  - name: train_records_punc
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/aishell4/versions/asr-20261014-punc-20261102-ctxclean-20261110-zhenfix-20261117/records/train.jsonl.gz
+    expected_bytes: 4679023
+    sha256: 554c0af8a9560e22f346a5d068f9964abf17bbdb7e2b43d613679857384cc14f
+    metadata:
+      record_count: 96998
+  - name: audio_index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/aishell4/versions/asr-20261014-punc-20261102-ctxclean-20261110/audio_index/audio-index.jsonl.gz
+    expected_bytes: 13978
+    sha256: 7740f79f34264edad30ceefa593cf078be42e3c6100384217d7d1ef37f5333f5
+    metadata:
+      record_count: 209
+  - name: record_index
+    kind: lance-record-index
+    root_alias: aidc_data
+    relative_path: datasets/aishell4/versions/asr-20261014-punc-20261102-ctxclean-20261110-zhenfix-20261117/record_index/index.json
+    expected_bytes: 778
+    sha256: 7513a7c788b27922ce4d60cedde7e750439c0d1c7dbb5bb8bd361236ac9e9024
+    metadata:
+      snapshot_version: 13
+      rows: 96998
+      schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
   splits:
     train:
+      group: train
       artifacts:
-        preparation_state:
-        - preparation_state
-      provenance:
-        preparation_status: building
+        records:
+        - train_records_punc
+        audio_index:
+        - audio_index
+        records_lance:
+        - record_index
+      statistics:
+        records: 96998
+        duration_hours: 105.359
+        zhen_fix_changed_records: 298
+      provenance: {}
+  derived_from: aishell4@asr-20261014-punc-20261102-ctxclean-20261110
+  recipe_parameters:
+    rules: 'zhen-fix-v1: Chinese texts only; space-separated single uppercase letters joined (K T V -> KTV)'
+    changed: train 划分 target / text 里命中规则的记录；原文本在 metadata.zhen_fix.original_target 或 custom.zhen_fix.original_text
+    unchanged: 其余记录、字段、音频引用、音频索引和非 train 划分，引用底版本的产物
   provenance:
-    preparation_status: building
-    owner: mingdong
     summary: 中文多人会议（AISHELL-4）；含轮流说话混合版
-    description: aishell4@asr-20261014-punc-20261102-ctxclean-20261110（交付配方 v7set34 用的是 aishell4@asr-20261014-punc-20261102）里中文文本的英文写法按 audio-data-contract docs/reference/zh-en-transcription.md 规则 2 修正：用空格隔开的单个大写字母连写（K T V→KTV、A P P→APP、N F C→NFC），原文本存进 metadata；小写或大小写混合的字母串（多是数学变量）和字母数字词里的汉字数字不改。其余字段、音频引用和没有改动的划分照旧。构建中。
+    description: aishell4@asr-20261014-punc-20261102-ctxclean-20261110 的中文文本按 audio-data-contract docs/reference/zh-en-transcription.md 规则 2 修正：用空格隔开的单个大写字母连写（K T V→KTV、A P P→APP、N F C→NFC），原文本存进 metadata.zhen_fix / custom.zhen_fix。小写或大小写混合的字母串（多是数学变量）和字母数字词里的汉字数字不改。只改 train 划分的文本，共 298 条；其余字段、音频引用和其他划分照旧，引用底版本的产物。
+    owner: mingdong
+    snapshot_date: '2026-11-17'
     source: aishell4@asr-20261014-punc-20261102-ctxclean-20261110
-    method: zhen-fix-v1
     run_dir: /workspace/workspace/mingdong/data/amphiondata/zhen-fix-20261117
+    method: zhen-fix-v1
+    rules: zhen-fix-v1
+    changed_records: 298
+    build_script: scripts/zhen_fix/build.py
 - schema_version: dataset-catalog/2.0
   dataset_id: aishell4
   version: turn-taking-20261014-utts-punc-20261102-ctxclean-20261110-zhenfix-20261117
@@ -272,24 +1016,125 @@
   tasks:
   - ts_asr
   aliases: []
-  derived_from: aishell4@turn-taking-20261014-utts-punc-20261102-ctxclean-20261110
   artifacts:
   - name: preparation_state
     kind: dataset-state
     root_alias: aidc_data
     relative_path: datasets/aishell4/versions/turn-taking-20261014-utts-punc-20261102-ctxclean-20261110-zhenfix-20261117/state.json
+  - name: train_2spk_records_punc
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/aishell4/versions/turn-taking-20261014-utts-punc-20261102-ctxclean-20261110-zhenfix-20261117/records/train_2spk.jsonl.gz
+    expected_bytes: 2311547
+    sha256: cc4f87e8ca13255203455e9702fb20e195bf07324b2722f6b0bf6d4289760ef0
+    metadata:
+      record_count: 10506
+  - name: train_3spk_records_punc
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/aishell4/versions/turn-taking-20261014-utts-punc-20261102-ctxclean-20261110-zhenfix-20261117/records/train_3spk.jsonl.gz
+    expected_bytes: 3750349
+    sha256: 020cb9a92d0aa60c63ff295b145a57c2a1a250f90ee25729ada2dffa7b84b4aa
+    metadata:
+      record_count: 21923
+  - name: train_neg_records_punc
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/aishell4/versions/turn-taking-20261014-utts-punc-20261102-ctxclean-20261110-zhenfix-20261117/records/train_neg.jsonl.gz
+    expected_bytes: 3901480
+    sha256: 878639f2d822c14183f1a80eeb3a2073c532c01945547ffedb8a1db1e759b96b
+    metadata:
+      record_count: 14128
+  - name: train_2spk-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/aishell4/versions/turn-taking-20261014-utts-punc-20261102-ctxclean-20261110/audio_index/audio_index_train_2spk.jsonl.gz
+    sha256: 1fe6171ad0e2620923fe8557dfa293a7eb97ec5f19d3735862904e0f6c458851
+    metadata:
+      record_count: 189
+    expected_bytes: 10989
+  - name: train_3spk-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/aishell4/versions/turn-taking-20261014-utts-punc-20261102-ctxclean-20261110/audio_index/audio_index_train_3spk.jsonl.gz
+    sha256: ba3f767a1ad813be7b61c200dbfd116b37c7ffedcdfccc9330c00e66233d36ff
+    metadata:
+      record_count: 189
+    expected_bytes: 10989
+  - name: train_neg-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/aishell4/versions/turn-taking-20261014-utts-punc-20261102-ctxclean-20261110/audio_index/audio_index_train_neg.jsonl.gz
+    sha256: a3eaaa7d6855fae876dc08763e32232b0c10c1e7dc17692a05dd0919a17c438b
+    metadata:
+      record_count: 189
+    expected_bytes: 10988
+  - name: record_index
+    kind: lance-record-index
+    root_alias: aidc_data
+    relative_path: datasets/aishell4/versions/turn-taking-20261014-utts-punc-20261102-ctxclean-20261110-zhenfix-20261117/record_index/index.json
+    expected_bytes: 1525
+    sha256: 0bd130353483ceb4dc2c34f1fb42b81e26e9e260c2ea4019c3978cb80fb70f0c
+    metadata:
+      snapshot_version: 13
+      rows: 46557
+      schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
   splits:
-    train:
+    train_2spk:
+      task: ts_asr
       artifacts:
-        preparation_state:
-        - preparation_state
-      provenance:
-        preparation_status: building
+        records:
+        - train_2spk_records_punc
+        audio_index:
+        - train_2spk-audio-index
+        records_lance:
+        - record_index
+      statistics:
+        records: 10506
+        duration_hours: 73.879
+        zhen_fix_changed_records: 93
+      provenance: {}
+    train_3spk:
+      task: ts_asr
+      artifacts:
+        records:
+        - train_3spk_records_punc
+        audio_index:
+        - train_3spk-audio-index
+        records_lance:
+        - record_index
+      statistics:
+        records: 21923
+        duration_hours: 135.971
+        zhen_fix_changed_records: 161
+      provenance: {}
+    train_neg:
+      task: ts_asr
+      artifacts:
+        records:
+        - train_neg_records_punc
+        audio_index:
+        - train_neg-audio-index
+        records_lance:
+        - record_index
+      statistics:
+        records: 14128
+        duration_hours: 91.374
+        zhen_fix_changed_records: 0
+      provenance: {}
+  derived_from: aishell4@turn-taking-20261014-utts-punc-20261102-ctxclean-20261110
+  recipe_parameters:
+    rules: 'zhen-fix-v1: Chinese texts only; space-separated single uppercase letters joined (K T V -> KTV)'
+    changed: train 划分 target / text 里命中规则的记录；原文本在 metadata.zhen_fix.original_target 或 custom.zhen_fix.original_text
+    unchanged: 其余记录、字段、音频引用、音频索引和非 train 划分，引用底版本的产物
   provenance:
-    preparation_status: building
-    owner: mingdong
     summary: 中文多人会议（AISHELL-4）；含轮流说话混合版
-    description: aishell4@turn-taking-20261014-utts-punc-20261102-ctxclean-20261110（交付配方 v7set34 用的是 aishell4@turn-taking-20261014-utts-punc-20261102）里中文文本的英文写法按 audio-data-contract docs/reference/zh-en-transcription.md 规则 2 修正：用空格隔开的单个大写字母连写（K T V→KTV、A P P→APP、N F C→NFC），原文本存进 metadata；小写或大小写混合的字母串（多是数学变量）和字母数字词里的汉字数字不改。其余字段、音频引用和没有改动的划分照旧。构建中。
+    description: aishell4@turn-taking-20261014-utts-punc-20261102-ctxclean-20261110 的中文文本按 audio-data-contract docs/reference/zh-en-transcription.md 规则 2 修正：用空格隔开的单个大写字母连写（K T V→KTV、A P P→APP、N F C→NFC），原文本存进 metadata.zhen_fix / custom.zhen_fix。小写或大小写混合的字母串（多是数学变量）和字母数字词里的汉字数字不改。只改 train 划分的文本，共 254 条；其余字段、音频引用和其他划分照旧，引用底版本的产物。
+    owner: mingdong
+    snapshot_date: '2026-11-17'
     source: aishell4@turn-taking-20261014-utts-punc-20261102-ctxclean-20261110
-    method: zhen-fix-v1
     run_dir: /workspace/workspace/mingdong/data/amphiondata/zhen-fix-20261117
+    method: zhen-fix-v1
+    rules: zhen-fix-v1
+    changed_records: 254
+    build_script: scripts/zhen_fix/build.py
