@@ -2189,10 +2189,10 @@ WenetSpeech L 中的 YouTube 部分
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
-| [ascend@clean-zhen-v1-20261117](../../catalog/zhen_cs_clean.yaml#L2) | — | 未登记 | 没有 |
+| [ascend@clean-zhen-v1-20261117](../../catalog/zhen_cs_clean.yaml#L2) | 8.2 | 已登记 | 没有 |
 | [ascend@hf-737e9800ae31](../../catalog/ascend.yaml#L1) | 10.6 | 已登记 | 没有 |
 
-- `ascend@clean-zhen-v1-20261117`：ASCEND 香港中英混说自然对话 train 8.8 h的清洗版本：音频解到本版本目录（float 或多声道 WAV 转 16 位单声道），生成 lhotse 清单；转写统一为 zhen-norm-v1 （繁转简，汉字之间和中英交界不留空格，英文单词之间一个空格，英文大小写保持原样，原文存 custom.original_text）；再用 Qwen3-ASR-1.7B 加第二个引擎做共识清洗，先试跑看被拒样本。进行中
+- `ascend@clean-zhen-v1-20261117`：ascend@hf-737e9800ae31 train 的中英混说清洗版本。音频解到本版本目录 audio/（16 kHz 单声道 PCM16，float 或多声道源转换），lhotse 清单在 manifests/；转写统一为 zhen-norm-v1（opencc 逐字繁转简，不做词汇替换；汉字之间、中英交界不留空格；英文单词之间一个空格；英文大小写保持源文本），原文存 custom.original_text。再用 Qwen3-ASR-1.7B 与 MOSS-Transcribe-Diarize 双引擎一致性清洗（与 TALCS、CS-Dialogue 的 clean-dual-qwen-moss-v1-20261009 同一组合和门槛），之后执行 zhen-post-v1 规则。逐条写入 custom.clean，不删除记录，读取时按 custom.clean.pass 过滤：9,869 句中 pass 9,340（8.1935 h）、reject 529。ASCEND 香港中英混说自然对话 train。post 规则丢弃 367 句含 [UNK] 的句子（标注员没听出的词，多为英文词，文本不完整）。英文多为小写。试跑抽检和规则依据见 run_dir 的 README
 - `ascend@hf-737e9800ae31`：CAiRE 在香港录制的中英语码转换自然多轮对话，共 12,314 句、10.6 小时，16 kHz 单声道，专家转写。 每句标出语言（中文 6,139、英文 2,850、中英混说 3,325 句）、说话人、话题（教育、科技、人设、体育等）。train/validation/test 的说话人互不重叠（18/3/2 人），测试集只有 2 位说话人，结果方差会比较大。适合评测普通话-英语混说的真实对话识别。CC BY-SA 4.0
 - 含派生版本（与源数据可能重叠）
 
@@ -2340,7 +2340,7 @@ CS-Dialogue 对话中的中英混说语句
 |---|---:|---|---|
 | [emilia2@extracted-enzh-flac16k-20261012](../../catalog/emilia2_extracted.yaml#L140) | — | 未登记 | 没有 |
 | [emilia2@tts-unified-v0.1](../../catalog/tts_unified.yaml#L178) | 146,325.0 | 已登记 | `amphion-tts-data-1373259071:Emilia2/`（原始数据） |
-| [emilia2_zhen@clean-zhen-v1-20261117](../../catalog/zhen_cs_clean.yaml#L98) | — | 未登记 | 没有 |
+| [emilia2_zhen@clean-zhen-v1-20261117](../../catalog/zhen_cs_clean.yaml#L637) | — | 未登记 | 没有 |
 
 - `emilia2@extracted-enzh-flac16k-20261012`：基于 extracted-enzh-20261012 的 dialog 和 long（standalone short 已在 emilia2@tts-unified-v0.1 中，不转）：每个 m4a 用与 DATA-TTS-UNIFIED Emilia2 接入相同的 FFmpeg 7.0.2 静态版完整解码（应用 edit list）， soxr 重采样到 16 kHz 单声道，按 round(gain*x*32768) 量化为 FLAC PCM16，峰值超出时整条降增益、不削波，写后逐样本回读核对。 目的：训练读取可随机跳转、不依赖 ffmpeg（原 m4a 读一个 120 秒窗口需 1–5 秒，16 kHz FLAC 约 0.03–0.3 秒）。 这份解包数据不用于 TTS（TTS 用 emilia2@tts-unified-v0.1）。 2026-10-17 转码完成：2,101,933 个文件、112,444 h 全部成功，FLAC 共 7.29 TB，20,240 个降了增益（最小 0.64）。 2026-10-18 删除原 m4a：逐个核对 FLAC 字节数与帧数后删除，保留 23 个仍被训练读取的 m4a（见 extracted-enzh-20261012 的 m4a_removed）。 emilia2_mix、emilia2_dialog、emilia2_zh_dialogue_diarize 的音频索引仍写 .m4a 路径，open-audio-llm（#63 起）读取时自动改读同名 .flac； 其他读取方需要自行把路径换成 .flac
 - `emilia2@tts-unified-v0.1`：音频编码字节存放在 Lance 表内；原始划分在 metadata_json.original_split，统一输出全部为 train。ASR 用 tts_lance.iter_asr_samples（tts-asr-rules/v1）读取，会排除原始 dev/test 等
@@ -2613,10 +2613,10 @@ AISHELL-1、LibriSpeech 合成的多人对话
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
-| [ntuml2021@clean-zhen-v1-20261117](../../catalog/zhen_cs_clean.yaml#L34) | — | 未登记 | 没有 |
+| [ntuml2021@clean-zhen-v1-20261117](../../catalog/zhen_cs_clean.yaml#L212) | 10.5 | 已登记 | 没有 |
 | [ntuml2021@hf-1e121cc419e8](../../catalog/ntuml2021.yaml#L1) | 21.5 | 已登记 | 没有 |
 
-- `ntuml2021@clean-zhen-v1-20261117`：台大 ML2021 中英混说讲课 train 10.8 h（20 讲）的清洗版本：音频解到本版本目录（float 或多声道 WAV 转 16 位单声道），生成 lhotse 清单；转写统一为 zhen-norm-v1 （繁转简，汉字之间和中英交界不留空格，英文单词之间一个空格，英文大小写保持原样，原文存 custom.original_text）；再用 Qwen3-ASR-1.7B 加第二个引擎做共识清洗，先试跑看被拒样本。进行中
+- `ntuml2021@clean-zhen-v1-20261117`：ntuml2021@hf-1e121cc419e8 train 的中英混说清洗版本。音频解到本版本目录 audio/（16 kHz 单声道 PCM16，float 或多声道源转换），lhotse 清单在 manifests/；转写统一为 zhen-norm-v1（opencc 逐字繁转简，不做词汇替换；汉字之间、中英交界不留空格；英文单词之间一个空格；英文大小写保持源文本），原文存 custom.original_text。再用 Qwen3-ASR-1.7B 与 MOSS-Transcribe-Diarize 双引擎一致性清洗（与 TALCS、CS-Dialogue 的 clean-dual-qwen-moss-v1-20261009 同一组合和门槛），之后执行 zhen-post-v1 规则。逐条写入 custom.clean，不删除记录，读取时按 custom.clean.pass 过滤：17,779 句中 pass 17,384（10.4773 h）、reject 395。李宏毅 2021 机器学习课程中文讲课（台湾华语夹英文术语）人工字幕。源文本英文全小写，保持原样。post 规则把两个引擎都认错英文术语、参考正确的 bad_annotation 句收回（中文句含英文词、无数字和数学符号、两个引擎长度都在参考的 0.7–1.4 倍），全量 37 句，抽看约 95% 正确。试跑抽检和规则依据见 run_dir 的 README
 - `ntuml2021@hf-1e121cc419e8`：台湾大学李宏毅 2021 年机器学习课的课堂录音（ICASSPW 2024 论文发布，作者含李宏毅），台湾普通话讲课，夹大量英文机器学习术语， 如 network、gradient、self-attention、discriminator、reward；每段带繁体中文转写和英文翻译，可做中英混说识别和语音翻译。 共 35,692 段、21.5 小时，几乎都是同一位讲者；转写里汉字之间以空格分隔，英文小写。约四成中文句子含英文词（train 39.6%、 test 39.0%）。train 20 讲、test 14 讲互不重叠；dev 的 2,997 段全部也在 test 里（同一批片段，不是独立划分），评测时只用 test 即可。音频是 16 kHz 双声道 float WAV。数据卡未说明转写方式。数据集信息标 MIT
 - 含派生版本（与源数据可能重叠）
 
@@ -3322,10 +3322,10 @@ YouTube 中英混说视频片段（YODAS 子集）
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
-| [yodas_zh_codeswitch@clean-zhen-v1-20261117](../../catalog/zhen_cs_clean.yaml#L66) | — | 未登记 | 没有 |
+| [yodas_zh_codeswitch@clean-zhen-v1-20261117](../../catalog/zhen_cs_clean.yaml#L424) | 24.6 | 已登记 | 没有 |
 | [yodas_zh_codeswitch@hf-6def75d98d50](../../catalog/yodas_zh_codeswitch.yaml#L1) | 29.1 | 已登记 | 没有 |
 
-- `yodas_zh_codeswitch@clean-zhen-v1-20261117`：YODAS 中英混说视频字幕片段 29.1 h的清洗版本：音频解到本版本目录（float 或多声道 WAV 转 16 位单声道），生成 lhotse 清单；转写统一为 zhen-norm-v1 （繁转简，汉字之间和中英交界不留空格，英文单词之间一个空格，英文大小写保持原样，原文存 custom.original_text）；再用 Qwen3-ASR-1.7B 加第二个引擎做共识清洗，先试跑看被拒样本。进行中
+- `yodas_zh_codeswitch@clean-zhen-v1-20261117`：yodas_zh_codeswitch@hf-6def75d98d50 train 的中英混说清洗版本。音频解到本版本目录 audio/（16 kHz 单声道 PCM16，float 或多声道源转换），lhotse 清单在 manifests/；转写统一为 zhen-norm-v1（opencc 逐字繁转简，不做词汇替换；汉字之间、中英交界不留空格；英文单词之间一个空格；英文大小写保持源文本），原文存 custom.original_text。再用 Qwen3-ASR-1.7B 与 MOSS-Transcribe-Diarize 双引擎一致性清洗（与 TALCS、CS-Dialogue 的 clean-dual-qwen-moss-v1-20261009 同一组合和门槛），之后执行 zhen-post-v1 规则。逐条写入 custom.clean，不删除记录，读取时按 custom.clean.pass 过滤：46,583 句中 pass 41,211（24.5548 h）、reject 5,372。YODAS 中英混说视频字幕片段。被拒的主要是英文/韩语音频配中文翻译字幕（no_valid_engine、insufficient_engines）、粤语音频配普通话字幕和字幕缩写（bad_annotation）；post 规则另丢弃 366 句两个引擎都听成粤语的保留句。试跑抽检和规则依据见 run_dir 的 README
 - `yodas_zh_codeswitch@hf-6def75d98d50`：从 espnet/yodas 的 zh000 子集里挑出有中英混说的 176 个 YouTube 视频，46,583 段、29.1 小时，16 kHz 单声道。内容以数码、 硬件、枪械等测评讲解为主，常见英文词有 GPU、CPU、Android、iPhone、pixel。19% 的中文句子含英文词；混说按视频筛选，不保证每段 都有英文。文本是视频字幕（简体为主，少量繁体），不是逐字转写。只下载了 default 配置（原始文本），没有下载上传者清洗过文本的 clean 配置（音频相同）；default 只有 train，不分评测集。CC BY 3.0（随 YODAS 的视频许可）
 - 含派生版本（与源数据可能重叠）
 
@@ -4418,6 +4418,7 @@ YouTube 多语语音俄语部分（YODAS）
 | [aishell2@clean-dual-qwen-moss-v1-20261009](../../catalog/zh_source_clean_20261009.yaml#L2) | 有自动筛选记录 | 自动筛选通过 1,006,205 条、拒绝 3,018 条，通过率 99.70% | 未登记人工抽检；筛选通过不等于转写完全正确 |
 | [aishell3@clean-dual-qwen-moss-v1-20261008](../../catalog/zh_source_clean.yaml#L167) | 有自动筛选记录 | 自动筛选通过 63,219 条、拒绝 43 条，通过率 99.93% | 未登记人工抽检；筛选通过不等于转写完全正确 |
 | [alimeeting@openslr-119-far-local-20260903](../../catalog/alimeeting_far_raw.yaml#L1) | 有已知标注问题 | 训练集 8 条标注越过音频边界；开发集 0 条；测试集 0 条 | 最大越界 269.375 秒，使用前应处理异常标注 |
+| [ascend@clean-zhen-v1-20261117](../../catalog/zhen_cs_clean.yaml#L2) | 有自动筛选记录 | 自动筛选通过 9,340 条、拒绝 529 条，通过率 94.64% | 未登记人工抽检；筛选通过不等于转写完全正确 |
 | [common_voice_zh@clean-dual-qwen-moss-v1-20261009](../../catalog/zh_source_clean_20261009.yaml#L338) | 有自动筛选记录 | 自动筛选通过 28,448 条、拒绝 1,112 条，通过率 96.24% | 未登记人工抽检；筛选通过不等于转写完全正确 |
 | [commonvoice_en_clean@clean-v1-20260805](../../catalog/local_lhotse_derived.yaml#L311) | 有自动筛选记录 | 自动筛选通过 1,142,149 条、拒绝 1,127 条，通过率 99.90% | 未登记人工抽检；筛选通过不等于转写完全正确 |
 | [cs_dialogue@clean-dual-qwen-moss-v1-20261009](../../catalog/zh_source_clean_20261009.yaml#L664) | 有自动筛选记录 | 自动筛选通过 13,948 条、拒绝 44 条，通过率 99.69% | 未登记人工抽检；筛选通过不等于转写完全正确 |
@@ -4425,8 +4426,10 @@ YouTube 多语语音俄语部分（YODAS）
 | [kespeech@clean-dual-qwen-moss-v1-20261009](../../catalog/zh_source_clean_20261009.yaml#L165) | 有自动筛选记录 | 自动筛选通过 882,365 条、拒绝 1,656 条，通过率 99.81% | 未登记人工抽检；筛选通过不等于转写完全正确 |
 | [magicdata@clean-dual-qwen-moss-v1-20261008](../../catalog/zh_source_clean.yaml#L499) | 有自动筛选记录 | 自动筛选通过 572,637 条、拒绝 841 条，通过率 99.85% | 未登记人工抽检；筛选通过不等于转写完全正确 |
 | [magicdata_ramc@clean-dual-qwen-moss-v1-20261008](../../catalog/zh_source_clean.yaml#L663) | 有自动筛选记录 | 自动筛选通过 166,711 条、拒绝 1,753 条，通过率 98.96% | 未登记人工抽检；筛选通过不等于转写完全正确 |
+| [ntuml2021@clean-zhen-v1-20261117](../../catalog/zhen_cs_clean.yaml#L212) | 有自动筛选记录 | 自动筛选通过 17,384 条、拒绝 395 条，通过率 97.78% | 未登记人工抽检；筛选通过不等于转写完全正确 |
 | [primewords@clean-dual-qwen-moss-v1-20261008](../../catalog/zh_source_clean.yaml#L1) | 有自动筛选记录 | 自动筛选通过 50,119 条、拒绝 265 条，通过率 99.47% | 未登记人工抽检；筛选通过不等于转写完全正确 |
 | [talcs@clean-dual-qwen-moss-v1-20261009](../../catalog/zh_source_clean_20261009.yaml#L500) | 有自动筛选记录 | 自动筛选通过 347,533 条、拒绝 2,467 条，通过率 99.30% | 未登记人工抽检；筛选通过不等于转写完全正确 |
 | [wenetspeech@clean-weak-v1-20260904](../../catalog/wenetspeech_weak.yaml#L49) | 有自动筛选和人工抽检记录 | 自动筛选通过 3,149,292 条、拒绝 73,468 条，通过率 97.72% | 人工抽检 10 条，其中确认 10 条；样本很小，不能代表整集准确率 |
+| [yodas_zh_codeswitch@clean-zhen-v1-20261117](../../catalog/zhen_cs_clean.yaml#L424) | 有自动筛选记录 | 自动筛选通过 41,211 条、拒绝 5,372 条，通过率 88.47% | 未登记人工抽检；筛选通过不等于转写完全正确 |
 
 CV EN 的 train/test 清单落地差异见 [CV EN 清洗说明](cv-en-cleaning.md)。

@@ -1,4 +1,4 @@
-# 中英混说训练数据清洗（2026-11-17 开工，占位）：统一转写写法（zhen-norm-v1），再走双引擎清洗。运行目录 zhen-cs-clean-20261117。
+# 中英混说训练数据清洗（2026-11-17）：统一转写写法（zhen-norm-v1），双引擎清洗后执行 zhen-post-v1。ascend、ntuml2021、yodas_zh_codeswitch 已转正，emilia2_zhen 为占位。运行目录 zhen-cs-clean-20261117。
 - schema_version: dataset-catalog/2.0
   dataset_id: ascend
   version: clean-zhen-v1-20261117
@@ -11,26 +11,204 @@
   aliases: []
   derived_from: ascend@hf-737e9800ae31
   artifacts:
+  - name: train_recordings
+    kind: lhotse-recordings
+    root_alias: aidc_data
+    relative_path: datasets/ascend/versions/clean-zhen-v1-20261117/manifests/ascend_recordings.jsonl.gz
+    expected_bytes: 206078
+    sha256: f81a9699a6600cf6c36031c584d0203fc9777cc3640d70fb562e72dabd9e0880
+    metadata:
+      record_count: 9869
+  - name: audio
+    kind: source-directory
+    root_alias: aidc_data
+    relative_path: datasets/ascend/versions/clean-zhen-v1-20261117/audio
+    metadata:
+      file_count: 9869
+      expected_bytes: 1011303772
+      tree_sha256: cccd059481e5fb495ff4d91b352569b7f5e87ae3885ad7bfc95671419688b02d
+      audio_count: 9869
+      audio_format:
+        channels: 1
+        sample_rate: 16000
+        sample_width_bits: 16
+  - name: train_supervisions
+    kind: lhotse-supervisions
+    root_alias: aidc_data
+    relative_path: datasets/ascend/versions/clean-zhen-v1-20261117/supervisions/ascend_supervisions_train.jsonl.gz
+    expected_bytes: 634472
+    sha256: d28b2e1e01c6ee768a742cc697ac2034ffd67d3c87777df7bd219cdd68456534
+    metadata:
+      record_count: 9869
+      pass_count: 9340
+      text: zhen-norm-v1 transcript with custom.clean; restored fillers may carry punctuation
+  - name: train_supervisions_no_punc
+    kind: lhotse-supervisions
+    root_alias: aidc_data
+    relative_path: datasets/ascend/versions/clean-zhen-v1-20261117/supervisions/ascend_supervisions_train_no_punc.jsonl.gz
+    expected_bytes: 633527
+    sha256: 86d5ecc66e613772df7f1c7b34b4ea5729b8ce9ee45d3a272401b36c0f2ea5f4
+    metadata:
+      record_count: 9869
+      pass_count: 9340
+      punctuated: false
+  - name: engine_results
+    kind: quality-report
+    root_alias: aidc_data
+    relative_path: datasets/ascend/versions/clean-zhen-v1-20261117/evidence/engine_results.jsonl.gz
+    expected_bytes: 872638
+    sha256: 488a43148ad98e7c96b4260e221ac197de934f27372c8c5424ec36efc54a6df9
+    metadata:
+      record_count: 9869
+  - name: rejected
+    kind: quality-report
+    root_alias: aidc_data
+    relative_path: datasets/ascend/versions/clean-zhen-v1-20261117/evidence/rejected.jsonl.gz
+    expected_bytes: 18785
+    sha256: 15a3b8abfec11bbc54926d899c742d3bcb903cd2c1ab7038bba3ec2a353449b4
+    metadata:
+      record_count: 162
+  - name: content_review
+    kind: quality-report
+    root_alias: aidc_data
+    relative_path: datasets/ascend/versions/clean-zhen-v1-20261117/evidence/content_review.jsonl.gz
+    expected_bytes: 148102
+    sha256: 662c787d37f9e7ef78008f7697c4c7203db50c219a6272901aaa43fa3a0ef8a1
+    metadata:
+      record_count: 1715
+  - name: replaced_review
+    kind: quality-report
+    root_alias: aidc_data
+    relative_path: datasets/ascend/versions/clean-zhen-v1-20261117/evidence/replaced_review.jsonl.gz
+    expected_bytes: 2067
+    sha256: 14229e2c2360945f82acd4072f6fe3945d7a54a925c1a474db63ede4d920f4b1
+    metadata:
+      record_count: 19
+  - name: post_changes
+    kind: quality-report
+    root_alias: aidc_data
+    relative_path: datasets/ascend/versions/clean-zhen-v1-20261117/evidence/post_changes.jsonl.gz
+    expected_bytes: 30842
+    sha256: a309b03ede4bb52b182d87faf606cbb7a24aafad4653ad1e6b9056c33abb50ae
+    metadata:
+      record_count: 367
+  - name: filter_report
+    kind: json-metadata
+    root_alias: aidc_data
+    relative_path: datasets/ascend/versions/clean-zhen-v1-20261117/evidence/filter_report.json
+    expected_bytes: 1091
+    sha256: d7ae834574b8d95e559598200a27e89058b7bb786a554d26abe6918b99714822
+  - name: post_summary
+    kind: json-metadata
+    root_alias: aidc_data
+    relative_path: datasets/ascend/versions/clean-zhen-v1-20261117/evidence/post_summary.json
+    expected_bytes: 563
+    sha256: 1cb2f054e140e8a158413d31571fcdda8b786a4a87d78661089e84c19efaccb4
+  - name: run_manifest
+    kind: json-metadata
+    root_alias: aidc_data
+    relative_path: datasets/ascend/versions/clean-zhen-v1-20261117/evidence/run_manifest.json
+    expected_bytes: 1481
+    sha256: 8d3cfbc758db2547b422e1b30110485ab0fb51adfebfea1109567ef7ed875706
   - name: preparation_state
     kind: dataset-state
     root_alias: aidc_data
     relative_path: datasets/ascend/versions/clean-zhen-v1-20261117/state.json
+    expected_bytes: 588
+    sha256: b20aa3cd8af2fe3a2678fa75e477ddd64c5e4d58a8ef8be8ae200cb795b7a678
   splits:
     train:
       artifacts:
-        preparation_state:
-        - preparation_state
-      provenance:
-        preparation_status: building
+        recordings:
+        - train_recordings
+        supervisions:
+        - train_supervisions
+        clean_no_punc_supervisions:
+        - train_supervisions_no_punc
+      statistics:
+        supervisions: 9869
+        pass: 9340
+        reject: 529
+        by_reason:
+          ok: 8278
+          too_short: 982
+          post:unk_token: 367
+          bad_annotation: 119
+          substitution: 80
+          insufficient_engines: 25
+          ambiguous: 12
+          no_valid_engine: 6
+        post_rules:
+          text_renormalized: 1
+          unk_token: 367
+        post_hours:
+          unk_token: 0.4935
+        hours_before_filter: 8.7749
+        duration_hours: 8.1935
+        duration_basis: sum of supervision durations with custom.clean.pass=true after zhen-post-v1
+        sample_formats:
+          1ch/16000Hz/PCM_16: 9869
+  recipe_parameters:
+    source_version: hf-737e9800ae31
+    source_split: train
+    text_convention: zhen-norm-v1
+    engines:
+    - name: Qwen3-ASR-1.7B
+      backend: vllm 0.18.0
+      request:
+        to_language: zh
+        temperature: 0.0
+        repetition_penalty: 1.1
+    - name: MOSS-Transcribe-Diarize
+      backend: vllm 0.23.1rc1.dev949+g68b4a1d58
+      request:
+        temperature: 0.0
+      prompt: vLLM default diarization prompt
+    filter_rules: consensus-v8
+    rewrite_rules: wenetspeech-faithful-v5
+    params:
+      threshold: 50.0
+      agree_threshold: 30.0
+      min_tokens: 2
+      replace_engine: Qwen3-ASR-1.7B
+      max_replace_ratio: 3.0
+      rewrite_agree_threshold: 10.0
+      max_hyp_ratio: 3.0
+    post_rules: zhen-post-v1 (scripts/post.py)
+    writes:
+    - text
+    - custom.clean
+    - custom.original_text
+    filters: custom.clean.pass=false
   provenance:
-    preparation_status: building
+    preparation_status: prepared
+    lineage_status: exact
+    materialization: full
     owner: mingdong
-    description: >-
-      ASCEND 香港中英混说自然对话 train 8.8 h的清洗版本：音频解到本版本目录（float 或多声道 WAV 转 16 位单声道），生成 lhotse 清单；转写统一为 zhen-norm-v1
-      （繁转简，汉字之间和中英交界不留空格，英文单词之间一个空格，英文大小写保持原样，原文存 custom.original_text）；再用
-      Qwen3-ASR-1.7B 加第二个引擎做共识清洗，先试跑看被拒样本。进行中。
     source: ascend@hf-737e9800ae31
+    description: ascend@hf-737e9800ae31 train 的中英混说清洗版本。音频解到本版本目录 audio/（16 kHz 单声道 PCM16，float 或多声道源转换），lhotse 清单在 manifests/；转写统一为 zhen-norm-v1（opencc
+      逐字繁转简，不做词汇替换；汉字之间、中英交界不留空格；英文单词之间一个空格；英文大小写保持源文本），原文存 custom.original_text。再用 Qwen3-ASR-1.7B 与 MOSS-Transcribe-Diarize 双引擎一致性清洗（与 TALCS、CS-Dialogue
+      的 clean-dual-qwen-moss-v1-20261009 同一组合和门槛），之后执行 zhen-post-v1 规则。逐条写入 custom.clean，不删除记录，读取时按 custom.clean.pass 过滤：9,869 句中 pass 9,340（8.1935 h）、reject
+      529。ASCEND 香港中英混说自然对话 train。post 规则丢弃 367 句含 [UNK] 的句子（标注员没听出的词，多为英文词，文本不完整）。英文多为小写。试跑抽检和规则依据见 run_dir 的 README。
     run_dir: /workspace/workspace/mingdong/data/amphiondata/zhen-cs-clean-20261117
+    facts:
+      rows: 9869
+      by_action:
+        keep_original: 8048
+        review_consensus: 1715
+        reject: 87
+        restore_disfluency: 19
+      engine_status:
+        MOSS-Transcribe-Diarize:
+          valid: 9473
+          script_mismatch: 384
+          overflow: 6
+          empty_output: 6
+        Qwen3-ASR-1.7B:
+          valid: 9854
+          overflow: 4
+          script_mismatch: 11
+      code: amphiondata 4645b05 (configs/experiments/zh-source-clean-qwen-moss.toml); run_dir scripts/
 - schema_version: dataset-catalog/2.0
   dataset_id: ntuml2021
   version: clean-zhen-v1-20261117
@@ -43,26 +221,206 @@
   aliases: []
   derived_from: ntuml2021@hf-1e121cc419e8
   artifacts:
+  - name: train_recordings
+    kind: lhotse-recordings
+    root_alias: aidc_data
+    relative_path: datasets/ntuml2021/versions/clean-zhen-v1-20261117/manifests/ntuml2021_recordings.jsonl.gz
+    expected_bytes: 200753
+    sha256: a99df7a44c930d2af40da8255129b7e13e8b23099f14221e51731bc39e4802d9
+    metadata:
+      record_count: 17779
+  - name: audio
+    kind: source-directory
+    root_alias: aidc_data
+    relative_path: datasets/ntuml2021/versions/clean-zhen-v1-20261117/audio
+    metadata:
+      file_count: 17779
+      expected_bytes: 1239775172
+      tree_sha256: 361bfa38ce603ccab12d48a97f7cb21d77e71f7f320f910787cf344d1af98fa8
+      audio_count: 17779
+      audio_format:
+        channels: 1
+        sample_rate: 16000
+        sample_width_bits: 16
+  - name: train_supervisions
+    kind: lhotse-supervisions
+    root_alias: aidc_data
+    relative_path: datasets/ntuml2021/versions/clean-zhen-v1-20261117/supervisions/ntuml2021_supervisions_train.jsonl.gz
+    expected_bytes: 1436005
+    sha256: 12f5020ffab37d1e945a54706c1b6cb1d50a671514fd2c0874e552d4d7e2a3ef
+    metadata:
+      record_count: 17779
+      pass_count: 17384
+      text: zhen-norm-v1 transcript with custom.clean; restored fillers may carry punctuation
+  - name: train_supervisions_no_punc
+    kind: lhotse-supervisions
+    root_alias: aidc_data
+    relative_path: datasets/ntuml2021/versions/clean-zhen-v1-20261117/supervisions/ntuml2021_supervisions_train_no_punc.jsonl.gz
+    expected_bytes: 1432637
+    sha256: a312ae5fa5191c8dc02500b05786acd50a5acba39565d65536887e89c4656f0e
+    metadata:
+      record_count: 17779
+      pass_count: 17384
+      punctuated: false
+  - name: engine_results
+    kind: quality-report
+    root_alias: aidc_data
+    relative_path: datasets/ntuml2021/versions/clean-zhen-v1-20261117/evidence/engine_results.jsonl.gz
+    expected_bytes: 1755528
+    sha256: 5698ebd7fb03fe0bfc033a2f430bd610f2f82826ba62b94f78ee73177f5406a5
+    metadata:
+      record_count: 17779
+  - name: rejected
+    kind: quality-report
+    root_alias: aidc_data
+    relative_path: datasets/ntuml2021/versions/clean-zhen-v1-20261117/evidence/rejected.jsonl.gz
+    expected_bytes: 62051
+    sha256: fa7e4531951cc9f09379eaccbe5323c9c338cbbd1a5dce97719e69fd55444f6e
+    metadata:
+      record_count: 432
+  - name: content_review
+    kind: quality-report
+    root_alias: aidc_data
+    relative_path: datasets/ntuml2021/versions/clean-zhen-v1-20261117/evidence/content_review.jsonl.gz
+    expected_bytes: 167010
+    sha256: df94f2b6e60b62e5468b53ef0046c50ba078349a5af3cf75ae6f502afbdf54e3
+    metadata:
+      record_count: 3339
+  - name: replaced_review
+    kind: quality-report
+    root_alias: aidc_data
+    relative_path: datasets/ntuml2021/versions/clean-zhen-v1-20261117/evidence/replaced_review.jsonl.gz
+    expected_bytes: 30590
+    sha256: 406d5e55ee15b72b4f77d78bcbe4b64ded7ef4f4efbc66401319cfd9b975112f
+    metadata:
+      record_count: 620
+  - name: post_changes
+    kind: quality-report
+    root_alias: aidc_data
+    relative_path: datasets/ntuml2021/versions/clean-zhen-v1-20261117/evidence/post_changes.jsonl.gz
+    expected_bytes: 1980
+    sha256: 80876ae9b8cb0e63d6b9bf3017a5da4bc20fae8b6c0392eb8dcadc527906aa5b
+    metadata:
+      record_count: 37
+  - name: filter_report
+    kind: json-metadata
+    root_alias: aidc_data
+    relative_path: datasets/ntuml2021/versions/clean-zhen-v1-20261117/evidence/filter_report.json
+    expected_bytes: 1137
+    sha256: a8eb29a46a9dd018024a4d917bed677b5d465bea066bf8a69a319c2d9ca15295
+  - name: post_summary
+    kind: json-metadata
+    root_alias: aidc_data
+    relative_path: datasets/ntuml2021/versions/clean-zhen-v1-20261117/evidence/post_summary.json
+    expected_bytes: 606
+    sha256: 5e551b58cf234b58d89adf4818445d5415237e0afd766d1929b53a11b1d6d0e9
+  - name: run_manifest
+    kind: json-metadata
+    root_alias: aidc_data
+    relative_path: datasets/ntuml2021/versions/clean-zhen-v1-20261117/evidence/run_manifest.json
+    expected_bytes: 1523
+    sha256: ed1aa4105a2bd99f9fa3c7ce561b1635b89d708d1eff56676030077e473496c2
   - name: preparation_state
     kind: dataset-state
     root_alias: aidc_data
     relative_path: datasets/ntuml2021/versions/clean-zhen-v1-20261117/state.json
+    expected_bytes: 598
+    sha256: 94d3c0c1f8c40d98defa606463f2a34b812e0bd37d27aea40e80780aa9788cd5
   splits:
     train:
       artifacts:
-        preparation_state:
-        - preparation_state
-      provenance:
-        preparation_status: building
+        recordings:
+        - train_recordings
+        supervisions:
+        - train_supervisions
+        clean_no_punc_supervisions:
+        - train_supervisions_no_punc
+      statistics:
+        supervisions: 17779
+        pass: 17384
+        reject: 395
+        by_reason:
+          ok: 17085
+          bad_annotation: 322
+          substitution: 237
+          post:en_term_rescue: 37
+          insufficient_engines: 35
+          too_short: 25
+          ambiguous: 18
+          no_valid_engine: 12
+          implausible_char_rate: 8
+        post_rules:
+          text_renormalized: 72
+          en_term_rescue: 37
+        post_hours:
+          en_term_rescue: 0.0163
+        hours_before_filter: 10.7551
+        duration_hours: 10.4773
+        duration_basis: sum of supervision durations with custom.clean.pass=true after zhen-post-v1
+        sample_formats:
+          1ch/16000Hz/PCM_16: 17779
+  recipe_parameters:
+    source_version: hf-1e121cc419e8
+    source_split: train
+    text_convention: zhen-norm-v1
+    engines:
+    - name: Qwen3-ASR-1.7B
+      backend: vllm 0.18.0
+      request:
+        to_language: zh
+        temperature: 0.0
+        repetition_penalty: 1.1
+    - name: MOSS-Transcribe-Diarize
+      backend: vllm 0.23.1rc1.dev949+g68b4a1d58
+      request:
+        temperature: 0.0
+      prompt: vLLM default diarization prompt
+    filter_rules: consensus-v8
+    rewrite_rules: wenetspeech-faithful-v5
+    params:
+      threshold: 50.0
+      agree_threshold: 30.0
+      min_tokens: 2
+      replace_engine: Qwen3-ASR-1.7B
+      max_replace_ratio: 3.0
+      rewrite_agree_threshold: 10.0
+      max_hyp_ratio: 3.0
+    post_rules: zhen-post-v1 (scripts/post.py)
+    writes:
+    - text
+    - custom.clean
+    - custom.original_text
+    filters: custom.clean.pass=false
   provenance:
-    preparation_status: building
+    preparation_status: prepared
+    lineage_status: exact
+    materialization: full
     owner: mingdong
-    description: >-
-      台大 ML2021 中英混说讲课 train 10.8 h（20 讲）的清洗版本：音频解到本版本目录（float 或多声道 WAV 转 16 位单声道），生成 lhotse 清单；转写统一为 zhen-norm-v1
-      （繁转简，汉字之间和中英交界不留空格，英文单词之间一个空格，英文大小写保持原样，原文存 custom.original_text）；再用
-      Qwen3-ASR-1.7B 加第二个引擎做共识清洗，先试跑看被拒样本。进行中。
     source: ntuml2021@hf-1e121cc419e8
+    description: ntuml2021@hf-1e121cc419e8 train 的中英混说清洗版本。音频解到本版本目录 audio/（16 kHz 单声道 PCM16，float 或多声道源转换），lhotse 清单在 manifests/；转写统一为 zhen-norm-v1（opencc
+      逐字繁转简，不做词汇替换；汉字之间、中英交界不留空格；英文单词之间一个空格；英文大小写保持源文本），原文存 custom.original_text。再用 Qwen3-ASR-1.7B 与 MOSS-Transcribe-Diarize 双引擎一致性清洗（与 TALCS、CS-Dialogue
+      的 clean-dual-qwen-moss-v1-20261009 同一组合和门槛），之后执行 zhen-post-v1 规则。逐条写入 custom.clean，不删除记录，读取时按 custom.clean.pass 过滤：17,779 句中 pass 17,384（10.4773 h）、reject
+      395。李宏毅 2021 机器学习课程中文讲课（台湾华语夹英文术语）人工字幕。源文本英文全小写，保持原样。post 规则把两个引擎都认错英文术语、参考正确的 bad_annotation 句收回（中文句含英文词、无数字和数学符号、两个引擎长度都在参考的 0.7–1.4 倍），全量 37 句，抽看约
+      95% 正确。试跑抽检和规则依据见 run_dir 的 README。
     run_dir: /workspace/workspace/mingdong/data/amphiondata/zhen-cs-clean-20261117
+    facts:
+      rows: 17779
+      by_action:
+        keep_original: 13548
+        review_consensus: 3339
+        restore_disfluency: 620
+        reject: 272
+      engine_status:
+        MOSS-Transcribe-Diarize:
+          valid: 17663
+          script_mismatch: 109
+          overflow: 6
+          empty_output: 1
+        Qwen3-ASR-1.7B:
+          valid: 17763
+          script_mismatch: 9
+          overflow: 7
+      code: amphiondata 4645b05 (configs/experiments/zh-source-clean-qwen-moss.toml); run_dir scripts/
 - schema_version: dataset-catalog/2.0
   dataset_id: yodas_zh_codeswitch
   version: clean-zhen-v1-20261117
@@ -75,26 +433,207 @@
   aliases: []
   derived_from: yodas_zh_codeswitch@hf-6def75d98d50
   artifacts:
+  - name: train_recordings
+    kind: lhotse-recordings
+    root_alias: aidc_data
+    relative_path: datasets/yodas_zh_codeswitch/versions/clean-zhen-v1-20261117/manifests/yodas_zh_codeswitch_recordings.jsonl.gz
+    expected_bytes: 813646
+    sha256: 5d22ae021eed33d37bde455d90ea6a6f1e00400375ff44e209a0a0c72d437062
+    metadata:
+      record_count: 46583
+  - name: audio
+    kind: source-directory
+    root_alias: aidc_data
+    relative_path: datasets/yodas_zh_codeswitch/versions/clean-zhen-v1-20261117/audio
+    metadata:
+      file_count: 46583
+      expected_bytes: 3349940370
+      tree_sha256: 423745dfb09f45e80a4ec39dd42b9c7c0003fefc198fc2b986dee16c33f6a45d
+      audio_count: 46583
+      audio_format:
+        channels: 1
+        sample_rate: 16000
+        sample_width_bits: 16
+  - name: train_supervisions
+    kind: lhotse-supervisions
+    root_alias: aidc_data
+    relative_path: datasets/yodas_zh_codeswitch/versions/clean-zhen-v1-20261117/supervisions/yodas_zh_codeswitch_supervisions_train.jsonl.gz
+    expected_bytes: 2618614
+    sha256: e4324427eac63f514dfbc2ea947d542f82d203b95ee65ae88703a49e565b1794
+    metadata:
+      record_count: 46583
+      pass_count: 41211
+      text: zhen-norm-v1 transcript with custom.clean; restored fillers may carry punctuation
+  - name: train_supervisions_no_punc
+    kind: lhotse-supervisions
+    root_alias: aidc_data
+    relative_path: datasets/yodas_zh_codeswitch/versions/clean-zhen-v1-20261117/supervisions/yodas_zh_codeswitch_supervisions_train_no_punc.jsonl.gz
+    expected_bytes: 2607549
+    sha256: 0ebf823f4b466a926f52ec66280425a2d17b58a92ac52427ef7fe77e0ae550f1
+    metadata:
+      record_count: 46583
+      pass_count: 41211
+      punctuated: false
+  - name: engine_results
+    kind: quality-report
+    root_alias: aidc_data
+    relative_path: datasets/yodas_zh_codeswitch/versions/clean-zhen-v1-20261117/evidence/engine_results.jsonl.gz
+    expected_bytes: 3756978
+    sha256: e8f83bce4b5841245658574104e67645f3f029372b8e768f6ddf5eebe10044c3
+    metadata:
+      record_count: 46583
+  - name: rejected
+    kind: quality-report
+    root_alias: aidc_data
+    relative_path: datasets/yodas_zh_codeswitch/versions/clean-zhen-v1-20261117/evidence/rejected.jsonl.gz
+    expected_bytes: 674381
+    sha256: 009c1df57d6d7396172c3da33774c0c97469a585302b126deb3fa2b0bff9399f
+    metadata:
+      record_count: 5006
+  - name: content_review
+    kind: quality-report
+    root_alias: aidc_data
+    relative_path: datasets/yodas_zh_codeswitch/versions/clean-zhen-v1-20261117/evidence/content_review.jsonl.gz
+    expected_bytes: 631450
+    sha256: a1616ebd64f95b8b59b47309afbbffb78e5c3a38fac8d0b7e9248b664ac3ad1d
+    metadata:
+      record_count: 9194
+  - name: replaced_review
+    kind: quality-report
+    root_alias: aidc_data
+    relative_path: datasets/yodas_zh_codeswitch/versions/clean-zhen-v1-20261117/evidence/replaced_review.jsonl.gz
+    expected_bytes: 75689
+    sha256: 48fed02a271d1a71c818c5023db045a4826879d4b5cb509750672c2f4f87cc24
+    metadata:
+      record_count: 1317
+  - name: post_changes
+    kind: quality-report
+    root_alias: aidc_data
+    relative_path: datasets/yodas_zh_codeswitch/versions/clean-zhen-v1-20261117/evidence/post_changes.jsonl.gz
+    expected_bytes: 28479
+    sha256: f835a4de315745d50c93e8c7c59c0a92c5dedd728ff86e3fa9388a7133fa3f9f
+    metadata:
+      record_count: 366
+  - name: filter_report
+    kind: json-metadata
+    root_alias: aidc_data
+    relative_path: datasets/yodas_zh_codeswitch/versions/clean-zhen-v1-20261117/evidence/filter_report.json
+    expected_bytes: 1203
+    sha256: 1a20a09769aa1f3d0bba4bab1a08309ea1e285aee496c428b97e89651f04346a
+  - name: post_summary
+    kind: json-metadata
+    root_alias: aidc_data
+    relative_path: datasets/yodas_zh_codeswitch/versions/clean-zhen-v1-20261117/evidence/post_summary.json
+    expected_bytes: 627
+    sha256: ef4d4c2ce32faa3adc96f0dfc8808aabf7db8bb8314b1d9356a0564f7937e63b
+  - name: run_manifest
+    kind: json-metadata
+    root_alias: aidc_data
+    relative_path: datasets/yodas_zh_codeswitch/versions/clean-zhen-v1-20261117/evidence/run_manifest.json
+    expected_bytes: 1663
+    sha256: ed95eddd526069eba65316ab91fc184abe2bec1449fec658875a9d3c283233bf
   - name: preparation_state
     kind: dataset-state
     root_alias: aidc_data
     relative_path: datasets/yodas_zh_codeswitch/versions/clean-zhen-v1-20261117/state.json
+    expected_bytes: 618
+    sha256: 90b46962127542d91bd86844e47e3be2832216db382197aeab1ce085a1a6d3d9
   splits:
     train:
       artifacts:
-        preparation_state:
-        - preparation_state
-      provenance:
-        preparation_status: building
+        recordings:
+        - train_recordings
+        supervisions:
+        - train_supervisions
+        clean_no_punc_supervisions:
+        - train_supervisions_no_punc
+      statistics:
+        supervisions: 46583
+        pass: 41211
+        reject: 5372
+        by_reason:
+          ok: 40156
+          bad_annotation: 2981
+          no_valid_engine: 1245
+          substitution: 663
+          insufficient_engines: 561
+          too_short: 386
+          post:cantonese_audio: 366
+          ambiguous: 167
+          implausible_char_rate: 58
+        post_rules:
+          text_renormalized: 16
+          cantonese_audio: 366
+        post_hours:
+          cantonese_audio: 0.3424
+        hours_before_filter: 29.0616
+        duration_hours: 24.5548
+        duration_basis: sum of supervision durations with custom.clean.pass=true after zhen-post-v1
+        sample_formats:
+          1ch/16000Hz/PCM_16: 46583
+  recipe_parameters:
+    source_version: hf-6def75d98d50
+    source_split: train
+    text_convention: zhen-norm-v1
+    engines:
+    - name: Qwen3-ASR-1.7B
+      backend: vllm 0.18.0
+      request:
+        to_language: zh
+        temperature: 0.0
+        repetition_penalty: 1.1
+    - name: MOSS-Transcribe-Diarize
+      backend: vllm 0.23.1rc1.dev949+g68b4a1d58
+      request:
+        temperature: 0.0
+      prompt: vLLM default diarization prompt
+    filter_rules: consensus-v8
+    rewrite_rules: wenetspeech-faithful-v5
+    params:
+      threshold: 50.0
+      agree_threshold: 30.0
+      min_tokens: 2
+      replace_engine: Qwen3-ASR-1.7B
+      max_replace_ratio: 3.0
+      rewrite_agree_threshold: 10.0
+      max_hyp_ratio: 3.0
+    post_rules: zhen-post-v1 (scripts/post.py)
+    writes:
+    - text
+    - custom.clean
+    - custom.original_text
+    filters: custom.clean.pass=false
   provenance:
-    preparation_status: building
+    preparation_status: prepared
+    lineage_status: exact
+    materialization: full
     owner: mingdong
-    description: >-
-      YODAS 中英混说视频字幕片段 29.1 h的清洗版本：音频解到本版本目录（float 或多声道 WAV 转 16 位单声道），生成 lhotse 清单；转写统一为 zhen-norm-v1
-      （繁转简，汉字之间和中英交界不留空格，英文单词之间一个空格，英文大小写保持原样，原文存 custom.original_text）；再用
-      Qwen3-ASR-1.7B 加第二个引擎做共识清洗，先试跑看被拒样本。进行中。
     source: yodas_zh_codeswitch@hf-6def75d98d50
+    description: yodas_zh_codeswitch@hf-6def75d98d50 train 的中英混说清洗版本。音频解到本版本目录 audio/（16 kHz 单声道 PCM16，float 或多声道源转换），lhotse 清单在 manifests/；转写统一为 zhen-norm-v1（opencc
+      逐字繁转简，不做词汇替换；汉字之间、中英交界不留空格；英文单词之间一个空格；英文大小写保持源文本），原文存 custom.original_text。再用 Qwen3-ASR-1.7B 与 MOSS-Transcribe-Diarize 双引擎一致性清洗（与 TALCS、CS-Dialogue
+      的 clean-dual-qwen-moss-v1-20261009 同一组合和门槛），之后执行 zhen-post-v1 规则。逐条写入 custom.clean，不删除记录，读取时按 custom.clean.pass 过滤：46,583 句中 pass 41,211（24.5548 h）、reject
+      5,372。YODAS 中英混说视频字幕片段。被拒的主要是英文/韩语音频配中文翻译字幕（no_valid_engine、insufficient_engines）、粤语音频配普通话字幕和字幕缩写（bad_annotation）；post 规则另丢弃 366 句两个引擎都听成粤语的保留句。试跑抽检和规则依据见
+      run_dir 的 README。
     run_dir: /workspace/workspace/mingdong/data/amphiondata/zhen-cs-clean-20261117
+    facts:
+      rows: 46583
+      by_action:
+        keep_original: 32521
+        review_consensus: 9194
+        reject: 3551
+        restore_disfluency: 1317
+      engine_status:
+        MOSS-Transcribe-Diarize:
+          valid: 44491
+          empty_output: 96
+          script_mismatch: 1950
+          overflow: 46
+        Qwen3-ASR-1.7B:
+          valid: 45293
+          overflow: 80
+          script_mismatch: 1208
+          inference_error: 2
+      code: amphiondata 4645b05 (configs/experiments/zh-source-clean-qwen-moss.toml); run_dir scripts/
 - schema_version: dataset-catalog/2.0
   dataset_id: emilia2_zhen
   version: clean-zhen-v1-20261117
@@ -122,10 +661,8 @@
     preparation_status: building
     owner: mingdong
     summary: Emilia2 中英混合录音里的中文夹英文句
-    description: >-
-      Emilia2 上游 languages 恰为 zh+en 的录音（2026-10-12 解包只取纯中文、纯英文，这部分从未解包，也不在 v4 训练配方里）中，
-      带英文单词的中文短句，按 emilia2@tts-unified-v0.1 统计 429,298 句 / 1,282.5 h，内容多是科技、编程、产品类视频。
-      文本是 Emilia 上游的机器转写。音频从 Lance 解成 16 kHz 单声道 WAV 放本版本目录，生成 lhotse 清单；转写统一为 zhen-norm-v1，
-      再用 Qwen3-ASR-1.7B + MOSS-Transcribe-Diarize 做共识清洗，先试跑看被拒样本。进行中。
+    description: Emilia2 上游 languages 恰为 zh+en 的录音（2026-10-12 解包只取纯中文、纯英文，这部分从未解包，也不在 v4 训练配方里）中， 带英文单词的中文短句，按 emilia2@tts-unified-v0.1 统计 429,298 句 / 1,282.5
+      h，内容多是科技、编程、产品类视频。 文本是 Emilia 上游的机器转写。音频从 Lance 解成 16 kHz 单声道 WAV 放本版本目录，生成 lhotse 清单；转写统一为 zhen-norm-v1， 再用 Qwen3-ASR-1.7B + MOSS-Transcribe-Diarize
+      做共识清洗，先试跑看被拒样本。进行中。
     source: emilia2@tts-unified-v0.1
     run_dir: /workspace/workspace/mingdong/data/amphiondata/zhen-cs-clean-20261117
