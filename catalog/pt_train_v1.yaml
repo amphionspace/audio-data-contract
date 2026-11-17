@@ -1,63 +1,198 @@
-# 占位登记：葡萄牙语训练数据（同西语 es_train_v1：双引擎清洗、书面化标点、热词），进行中，进度见各版本状态文件。
+# 葡萄牙语训练数据：CV pt / MLS pt 正式版本（清洗 + 书面化标点 + 热词），同西语 es_train_v1。
 - schema_version: dataset-catalog/2.0
   dataset_id: common_voice_pt
   version: pt-train-v1-20261117
   languages:
-    - pt
+  - pt
   tasks:
-    - asr
+  - asr
   aliases: []
+  derived_from: common_voice_pt@mdc-27.0
   artifacts:
-    - name: preparation_state
-      kind: dataset-state
-      root_alias: aidc_data
-      relative_path: datasets/common_voice_pt/versions/pt-train-v1-20261117/state.json
+  - name: train_recordings
+    kind: lhotse-recordings
+    root_alias: aidc_data
+    relative_path: datasets/common_voice_pt/versions/mdc-27.0/manifests/cv27-pt_recordings.jsonl.gz
+    expected_bytes: 967444
+    sha256: 0bba9e9cc9b762465fa3293d8191ab102a71b8987c887fdb0deb74f76add9309
+    metadata:
+      shared_with: common_voice_pt@mdc-27.0
+  - name: train_supervisions
+    kind: lhotse-supervisions
+    root_alias: aidc_data
+    relative_path: datasets/common_voice_pt/versions/pt-train-v1-20261117/cv27-pt_supervisions_train.jsonl.gz
+    expected_bytes: 4418857
+    sha256: 236be6b50cc71e64b8210dc4df51f99cf9daab1a4f03927e8b3ee686b8bfdf19
+    metadata:
+      record_count: 81960
+      pass_count: 81960
+      rows_with_hotwords: 24395
+      punctuated: true
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/common_voice_pt/versions/pt-train-v1-20261117/state.json
   splits:
     train:
       artifacts:
+        recordings:
+        - train_recordings
+        supervisions:
+        - train_supervisions
         preparation_state:
-          - preparation_state
+        - preparation_state
       statistics:
-        source_records: 81960
-        source_hours: 93.82
-      provenance:
-        preparation_status: building
+        records: 81960
+        duration_hours: 93.82
+        duration_basis: sum of supervision durations of the kept rows
+        source_records: 82417
+        source_hours: 94.34
+        dropped_records:
+          bad_annotation: 276
+          ambiguous: 132
+          insufficient_engines: 38
+          no_valid_engine: 5
+          implausible_char_rate: 6
+        rows_with_hotwords: 24395
+        hotwords: 36144
+  recipe_parameters:
+    filter_rules: consensus-v7
+    rewrite_rules: wenetspeech-faithful-v5 (no row rewritten)
+    engines:
+    - Qwen3-ASR-1.7B
+    - whisper-large-v3
+    clean_pass_only: true
+    hotwords: Qwen3.8-27B, amphiondata extract_hotword prompt, 12 rows per request, no review; kept only when the word occurs
+      in the text as a whole word (case-insensitive); custom.hotwords
+    text: original Common Voice sentence; spacing before marks, first letter and final mark tidied (finalize.py tidy_cv)
   provenance:
-    preparation_status: building
+    preparation_status: prepared
     owner: mingdong
-    description: >-
-      common_voice_pt@mdc-27.0 清洗通过的 81,960 句 / 93.82 h（已是 consensus-v7 双引擎清洗、已去掉 CV 27.0 与 17.0 dev/test 说话人和句子）的训练版本：
-      同 common_voice_es@es-train-v1-20261108，原文规整标点前后空格、首字母和句末标点，再用 Qwen3.8-27B 标热词。
-    source: common_voice_pt@mdc-27.0
+    description: Common Voice 葡语训练版本，同 common_voice_es@es-train-v1-20261108：取 common_voice_pt@mdc-27.0 的清洗结果（CV 27.0 validated
+      + other，已去掉 27.0 与 17.0 dev/test 的说话人和句子；Qwen3-ASR-1.7B + whisper-large-v3 双引擎，consensus-v7），保留 81,960 句 / 93.82 h（源
+      82,417 句）。文本用原文的词和标点（mdc-27.0 登记的是去标点版本），只规整了 38,361 句的标点前空格、首字母大写和缺失的句末句号；custom.hotwords 是 Qwen3.8-27B 标的热词（24,395
+      句有）。只含清洗通过的行，录音清单沿用 mdc-27.0。质检见 run_dir finalize.json。
+    source: common_voice_pt@mdc-27.0 (clean run cv27-es-pt-20261111/clean/full-pt)
     run_dir: /workspace/workspace/mingdong/data/amphiondata/pt-data-20261117
+    scripts:
+    - /workspace/workspace/mingdong/data/amphiondata/pt-data-20261117/scripts/build_mls_manifests.py
+    - /workspace/workspace/mingdong/data/amphiondata/pt-data-20261117/scripts/prepare_cv.py
+    - /workspace/workspace/mingdong/data/amphiondata/pt-data-20261117/scripts/sample_pilot.py
+    - /workspace/workspace/mingdong/data/amphiondata/pt-data-20261117/scripts/clean.sh
+    - /workspace/workspace/mingdong/data/amphiondata/pt-data-20261117/scripts/punc_hotwords.sh
+    - /workspace/workspace/mingdong/data/amphiondata/pt-data-20261117/scripts/hotwords_run2.sh
+    - /workspace/workspace/mingdong/data/amphiondata/pt-data-20261117/scripts/score_reference.py
+    - /workspace/workspace/mingdong/data/amphiondata/pt-data-20261117/scripts/finalize.py
+    - /workspace/workspace/mingdong/data/amphiondata/pt-data-20261117/scripts/register.py
 - schema_version: dataset-catalog/2.0
   dataset_id: mls_pt
   version: pt-train-v1-20261117
   languages:
-    - pt
+  - pt
   tasks:
-    - asr
+  - asr
   aliases: []
+  derived_from: mls_pt@openslr-94
   artifacts:
-    - name: preparation_state
-      kind: dataset-state
-      root_alias: aidc_data
-      relative_path: datasets/mls_pt/versions/pt-train-v1-20261117/state.json
+  - name: train_recordings
+    kind: lhotse-recordings
+    root_alias: aidc_data
+    relative_path: datasets/mls_pt/versions/pt-train-v1-20261117/manifests/mls-portuguese_recordings_train.jsonl.gz
+    expected_bytes: 454865
+    sha256: e8e5937b2110275a54a8d03cccce57cf5a43a3ac013d70f69a679ef6a177fbce
+    metadata:
+      record_count: 37533
+      audio: FLAC unpacked from mls_pt@openslr-94 under mls_pt/source/openslr-94/mls_portuguese
+  - name: train_supervisions
+    kind: lhotse-supervisions
+    root_alias: aidc_data
+    relative_path: datasets/mls_pt/versions/pt-train-v1-20261117/mls-portuguese_supervisions_train.jsonl.gz
+    expected_bytes: 4955909
+    sha256: 19638e94e595bb242d6779cbf1b514ee91904813766967e99e7e7af4ad8dff59
+    metadata:
+      record_count: 36140
+      pass_count: 36140
+      rows_with_hotwords: 17485
+      punctuated: true
+  - name: train_punc_all
+    kind: lhotse-supervisions
+    root_alias: aidc_data
+    relative_path: datasets/mls_pt/versions/pt-train-v1-20261117/mls-portuguese_supervisions_train_punc_written.jsonl.gz
+    expected_bytes: 3646792
+    sha256: 67ecd647f4606608004bf7169f9827cf84a5962339c4126a3868b4d90bafadcb
+    metadata:
+      record_count: 37533
+      note: pt-v1 punctuated text of every train row, before cleaning
+  - name: train_source_supervisions
+    kind: lhotse-supervisions
+    root_alias: aidc_data
+    relative_path: datasets/mls_pt/versions/pt-train-v1-20261117/manifests/mls-portuguese_supervisions_train.jsonl.gz
+    expected_bytes: 3446267
+    sha256: 8419d6210052a87a0e359096dee0fab10af645bde41a5e6cf910f77e6809943a
+    metadata:
+      record_count: 37533
+      note: upstream transcripts (lowercase, no marks) of every train row, before cleaning
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/mls_pt/versions/pt-train-v1-20261117/state.json
   splits:
     train:
       artifacts:
+        recordings:
+        - train_recordings
+        supervisions:
+        - train_supervisions
         preparation_state:
-          - preparation_state
+        - preparation_state
+        punc_all:
+        - train_punc_all
+        source_supervisions:
+        - train_source_supervisions
       statistics:
+        records: 36140
+        duration_hours: 154.86
+        duration_basis: sum of supervision durations of the kept rows
         source_records: 37533
         source_hours: 160.96
-      provenance:
-        preparation_status: building
+        dropped_records:
+          label_mismatch_consensus: 1177
+          no_valid_engine: 33
+          bad_annotation: 110
+          ambiguous: 5
+          insufficient_engines: 7
+          label_footer: 61
+        rows_with_hotwords: 17485
+        hotwords: 28743
+  recipe_parameters:
+    filter_rules: consensus-v7
+    rewrite_rules: wenetspeech-faithful-v5 (no row rewritten)
+    engines:
+    - Qwen3-ASR-1.7B
+    - whisper-large-v3
+    clean_pass_only: true
+    hotwords: Qwen3.8-27B, amphiondata extract_hotword prompt, 12 rows per request, no review; kept only when the word occurs
+      in the text as a whole word (case-insensitive); custom.hotwords
+    extra_filters: 'label_mismatch_consensus: both engines >= 20 WER from the label and <= 10 WER from each other (lowercase,
+      no accents or marks); label_footer: Google Books footer (MLS pt: OCR ''digiti zedby google'')'
+    text: written-punctuation pt-v1 (amphiondata written_punctuation_pt, MR !31; Qwen3.8-27B teacher; clitic hyphens the teacher
+      restores are kept)
   provenance:
-    preparation_status: building
+    preparation_status: prepared
     owner: mingdong
-    description: >-
-      MLS 葡语 train（37,533 句 / 160.96 h，有声书）的训练版本：解包 openslr-94 建清单（去掉 dev/test 说话人），同 mls_es@es-train-v1-20261108
-      双引擎清洗（Qwen3-ASR-1.7B + whisper-large-v3，先试跑看被拒样本），原标注全小写无标点，用 Qwen3.8-27B 加 pt-v1 书面化标点和大小写，再标热词。
+    description: MLS 葡语 train（LibriVox 有声书，42 人）的训练版本，同 mls_es@es-train-v1-20261108：解包 openslr-94 建 Lhotse 清单（dev/test 20
+      人与 train 无重合），双引擎清洗（consensus-v7），另丢弃两个引擎彼此一致却都与原标注不符的行（label_mismatch_consensus）和含 Google Books 页脚的行（label_footer），保留
+      36,140 句 / 154.86 h（源 37,533 句 / 160.96 h）。原标注全小写无标点（旧正字法），文本换成 Qwen3.8-27B 按 pt-v1 规范加的书面化标点和大小写（只插标点、改大小写、补重音；改了词的退回原标注加句号，约
+      5.9%）；custom.hotwords 是热词（17,485 句有）。只含清洗通过的行。规则、抽样核对和误杀率见 run_dir README。
     source: mls_pt@openslr-94
     run_dir: /workspace/workspace/mingdong/data/amphiondata/pt-data-20261117
+    scripts:
+    - /workspace/workspace/mingdong/data/amphiondata/pt-data-20261117/scripts/build_mls_manifests.py
+    - /workspace/workspace/mingdong/data/amphiondata/pt-data-20261117/scripts/prepare_cv.py
+    - /workspace/workspace/mingdong/data/amphiondata/pt-data-20261117/scripts/sample_pilot.py
+    - /workspace/workspace/mingdong/data/amphiondata/pt-data-20261117/scripts/clean.sh
+    - /workspace/workspace/mingdong/data/amphiondata/pt-data-20261117/scripts/punc_hotwords.sh
+    - /workspace/workspace/mingdong/data/amphiondata/pt-data-20261117/scripts/hotwords_run2.sh
+    - /workspace/workspace/mingdong/data/amphiondata/pt-data-20261117/scripts/score_reference.py
+    - /workspace/workspace/mingdong/data/amphiondata/pt-data-20261117/scripts/finalize.py
+    - /workspace/workspace/mingdong/data/amphiondata/pt-data-20261117/scripts/register.py
