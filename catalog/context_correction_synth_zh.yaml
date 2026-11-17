@@ -124,3 +124,37 @@
     - kespeech@legacy-20260804 train voices
     - Qwen3-TTS-12Hz-1.7B-Base
     run_dir: /workspace/workspace/mingdong/data/amphiondata/spelling-synth-zh-20261114
+# 占位登记：隐式语义的上下文纠偏训练数据（没有显式说明，同音词的写法由后文语义决定），生成中，进度见状态文件。
+- schema_version: dataset-catalog/2.0
+  dataset_id: context_correction_synth_zh
+  version: implicit-v1-20261117
+  languages:
+  - zh
+  tasks:
+  - asr
+  - ts_asr
+  aliases: []
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/context_correction_synth_zh/versions/implicit-v1-20261117/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    summary: 隐式语义的上下文纠偏合成训练数据
+    description: >-
+      train-v1-20261114 只有显式说字和同名一致性；这一版补隐式语义：同音的两个常见词（期中/期终、权利/权力），
+      写法由后文语义决定。沿用 train-v1 的流程和音色（amphiondata scripts/context_correction/），出题和复核改用火山方舟
+      （doubao-seed-2-1-pro 出题、deepseek-v4-pro 复核、glm-5-2 只看文字盲解），场景用与评测集 v1、v2 都不重合的话题 / 子话题种子，
+      评测集 v1、v2 的被测词进回避列表，写法对或朗读文本与评测集相同的进隔离区。每条记录带线索 + 目标写法的 think。
+      用于 open-audio-llm runs/zh-ctx-clue-target-20261117。
+    source: LLM-generated scripts (Volcengine Ark), aishell3@legacy-20260804 / kespeech@legacy-20260804 train voices, Qwen3-TTS-12Hz-1.7B-Base
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/ctx-implicit-zh-20261117
