@@ -1,0 +1,295 @@
+# zh-en 写法规则修正（zhen-fix-v1，2026-11-17）：拆开的大写字母连写（K T V→KTV），只改 target / text。
+# 底版本是交付配方 v7set34 的来源，有 ctxclean-20261110 派生版的从派生版接着改。占位，构建中。
+- schema_version: dataset-catalog/2.0
+  dataset_id: emilia2_mix
+  version: mix-20261013-utts-ctxclean-20261110-zhenfix-20261117
+  languages:
+  - zh
+  - en
+  tasks:
+  - ts_asr
+  aliases: []
+  derived_from: emilia2_mix@mix-20261013-utts-ctxclean-20261110
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/emilia2_mix/versions/mix-20261013-utts-ctxclean-20261110-zhenfix-20261117/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    summary: Emilia2 长音频合成的 2/3 人目标说话人混合
+    description: emilia2_mix@mix-20261013-utts-ctxclean-20261110（交付配方 v7set34 用的是 emilia2_mix@mix-20261013-utts）里中文文本的英文写法按 audio-data-contract docs/reference/zh-en-transcription.md 规则 2 修正：用空格隔开的单个大写字母连写（K T V→KTV、A P P→APP、N F C→NFC），原文本存进 metadata；小写或大小写混合的字母串（多是数学变量）和字母数字词里的汉字数字不改。其余字段、音频引用和没有改动的划分照旧。构建中。
+    source: emilia2_mix@mix-20261013-utts-ctxclean-20261110
+    method: zhen-fix-v1
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/zhen-fix-20261117
+- schema_version: dataset-catalog/2.0
+  dataset_id: emilia2_short
+  version: short-lance-20261023-ctxclean-20261110-zhenfix-20261117
+  languages:
+  - zh
+  - en
+  tasks:
+  - asr
+  aliases: []
+  derived_from: emilia2_short@short-lance-20261023-ctxclean-20261110
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/emilia2_short/versions/short-lance-20261023-ctxclean-20261110-zhenfix-20261117/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    summary: Emilia2 中英短音频普通转写
+    description: emilia2_short@short-lance-20261023-ctxclean-20261110（交付配方 v7set34 用的是 emilia2_short@short-lance-20261023）里中文文本的英文写法按 audio-data-contract docs/reference/zh-en-transcription.md 规则 2 修正：用空格隔开的单个大写字母连写（K T V→KTV、A P P→APP、N F C→NFC），原文本存进 metadata；小写或大小写混合的字母串（多是数学变量）和字母数字词里的汉字数字不改。其余字段、音频引用和没有改动的划分照旧。构建中。
+    source: emilia2_short@short-lance-20261023-ctxclean-20261110
+    method: zhen-fix-v1
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/zhen-fix-20261117
+- schema_version: dataset-catalog/2.0
+  dataset_id: emilia2_dialog
+  version: dialog-turn-taking-20261013-enroll-ctxclean-20261110-zhenfix-20261117
+  languages:
+  - zh
+  - en
+  tasks:
+  - ts_asr
+  aliases: []
+  derived_from: emilia2_dialog@dialog-turn-taking-20261013-enroll-ctxclean-20261110
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/emilia2_dialog/versions/dialog-turn-taking-20261013-enroll-ctxclean-20261110-zhenfix-20261117/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    summary: Emilia2 中英对话的轮流说话目标说话人数据
+    description: emilia2_dialog@dialog-turn-taking-20261013-enroll-ctxclean-20261110（交付配方 v7set34 用的是 emilia2_dialog@dialog-turn-taking-20261013-enroll）里中文文本的英文写法按 audio-data-contract docs/reference/zh-en-transcription.md 规则 2 修正：用空格隔开的单个大写字母连写（K T V→KTV、A P P→APP、N F C→NFC），原文本存进 metadata；小写或大小写混合的字母串（多是数学变量）和字母数字词里的汉字数字不改。其余字段、音频引用和没有改动的划分照旧。构建中。
+    source: emilia2_dialog@dialog-turn-taking-20261013-enroll-ctxclean-20261110
+    method: zhen-fix-v1
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/zhen-fix-20261117
+- schema_version: dataset-catalog/2.0
+  dataset_id: police_asr_unified
+  version: train-punc-v1-20261102-zhenfix-20261117
+  languages:
+  - zh
+  tasks:
+  - asr
+  aliases: []
+  derived_from: police_asr_unified@train-punc-v1-20261102
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/police_asr_unified/versions/train-punc-v1-20261102-zhenfix-20261117/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    summary: 警务合成语音统合版（V1–V6 合并）
+    description: police_asr_unified@train-punc-v1-20261102（交付配方 v7set34 用的是 police_asr_unified@train-punc-v1-20261102）里中文文本的英文写法按 audio-data-contract docs/reference/zh-en-transcription.md 规则 2 修正：用空格隔开的单个大写字母连写（K T V→KTV、A P P→APP、N F C→NFC），原文本存进 metadata；小写或大小写混合的字母串（多是数学变量）和字母数字词里的汉字数字不改。其余字段、音频引用和没有改动的划分照旧。构建中。
+    source: police_asr_unified@train-punc-v1-20261102
+    method: zhen-fix-v1
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/zhen-fix-20261117
+- schema_version: dataset-catalog/2.0
+  dataset_id: magicdata_ramc
+  version: train-punc-v1-20261102-ctxclean-20261110-zhenfix-20261117
+  languages:
+  - zh
+  tasks:
+  - asr
+  aliases: []
+  derived_from: magicdata_ramc@train-punc-v1-20261102-ctxclean-20261110
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/magicdata_ramc/versions/train-punc-v1-20261102-ctxclean-20261110-zhenfix-20261117/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    summary: 中文手机通话自然对话（MagicData-RAMC）
+    description: magicdata_ramc@train-punc-v1-20261102-ctxclean-20261110（交付配方 v7set34 用的是 magicdata_ramc@train-punc-v1-20261102）里中文文本的英文写法按 audio-data-contract docs/reference/zh-en-transcription.md 规则 2 修正：用空格隔开的单个大写字母连写（K T V→KTV、A P P→APP、N F C→NFC），原文本存进 metadata；小写或大小写混合的字母串（多是数学变量）和字母数字词里的汉字数字不改。其余字段、音频引用和没有改动的划分照旧。构建中。
+    source: magicdata_ramc@train-punc-v1-20261102-ctxclean-20261110
+    method: zhen-fix-v1
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/zhen-fix-20261117
+- schema_version: dataset-catalog/2.0
+  dataset_id: magicdata_ramc
+  version: turn-taking-20261014-utts-punc-20261102-ctxclean-20261110-zhenfix-20261117
+  languages:
+  - zh
+  tasks:
+  - ts_asr
+  aliases: []
+  derived_from: magicdata_ramc@turn-taking-20261014-utts-punc-20261102-ctxclean-20261110
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/magicdata_ramc/versions/turn-taking-20261014-utts-punc-20261102-ctxclean-20261110-zhenfix-20261117/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    summary: 中文手机通话自然对话（MagicData-RAMC）
+    description: magicdata_ramc@turn-taking-20261014-utts-punc-20261102-ctxclean-20261110（交付配方 v7set34 用的是 magicdata_ramc@turn-taking-20261014-utts-punc-20261102）里中文文本的英文写法按 audio-data-contract docs/reference/zh-en-transcription.md 规则 2 修正：用空格隔开的单个大写字母连写（K T V→KTV、A P P→APP、N F C→NFC），原文本存进 metadata；小写或大小写混合的字母串（多是数学变量）和字母数字词里的汉字数字不改。其余字段、音频引用和没有改动的划分照旧。构建中。
+    source: magicdata_ramc@turn-taking-20261014-utts-punc-20261102-ctxclean-20261110
+    method: zhen-fix-v1
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/zhen-fix-20261117
+- schema_version: dataset-catalog/2.0
+  dataset_id: magicdata_ramc
+  version: allspk-asr-v1-20261103-zhenfix-20261117
+  languages:
+  - zh
+  tasks:
+  - asr
+  aliases: []
+  derived_from: magicdata_ramc@allspk-asr-v1-20261103
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/magicdata_ramc/versions/allspk-asr-v1-20261103-zhenfix-20261117/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    summary: 中文手机通话自然对话（MagicData-RAMC）
+    description: magicdata_ramc@allspk-asr-v1-20261103（交付配方 v7set34 用的是 magicdata_ramc@allspk-asr-v1-20261103）里中文文本的英文写法按 audio-data-contract docs/reference/zh-en-transcription.md 规则 2 修正：用空格隔开的单个大写字母连写（K T V→KTV、A P P→APP、N F C→NFC），原文本存进 metadata；小写或大小写混合的字母串（多是数学变量）和字母数字词里的汉字数字不改。其余字段、音频引用和没有改动的划分照旧。构建中。
+    source: magicdata_ramc@allspk-asr-v1-20261103
+    method: zhen-fix-v1
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/zhen-fix-20261117
+- schema_version: dataset-catalog/2.0
+  dataset_id: magicdata_ramc
+  version: allspk-ts-v1-20261104-zhenfix-20261117
+  languages:
+  - zh
+  tasks:
+  - ts_asr
+  aliases: []
+  derived_from: magicdata_ramc@allspk-ts-v1-20261104
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/magicdata_ramc/versions/allspk-ts-v1-20261104-zhenfix-20261117/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    summary: 中文手机通话自然对话（MagicData-RAMC）
+    description: magicdata_ramc@allspk-ts-v1-20261104（交付配方 v7set34 用的是 magicdata_ramc@allspk-ts-v1-20261104）里中文文本的英文写法按 audio-data-contract docs/reference/zh-en-transcription.md 规则 2 修正：用空格隔开的单个大写字母连写（K T V→KTV、A P P→APP、N F C→NFC），原文本存进 metadata；小写或大小写混合的字母串（多是数学变量）和字母数字词里的汉字数字不改。其余字段、音频引用和没有改动的划分照旧。构建中。
+    source: magicdata_ramc@allspk-ts-v1-20261104
+    method: zhen-fix-v1
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/zhen-fix-20261117
+- schema_version: dataset-catalog/2.0
+  dataset_id: aishell4
+  version: asr-20261014-punc-20261102-ctxclean-20261110-zhenfix-20261117
+  languages:
+  - zh
+  tasks:
+  - asr
+  aliases: []
+  derived_from: aishell4@asr-20261014-punc-20261102-ctxclean-20261110
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/aishell4/versions/asr-20261014-punc-20261102-ctxclean-20261110-zhenfix-20261117/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    summary: 中文多人会议（AISHELL-4）；含轮流说话混合版
+    description: aishell4@asr-20261014-punc-20261102-ctxclean-20261110（交付配方 v7set34 用的是 aishell4@asr-20261014-punc-20261102）里中文文本的英文写法按 audio-data-contract docs/reference/zh-en-transcription.md 规则 2 修正：用空格隔开的单个大写字母连写（K T V→KTV、A P P→APP、N F C→NFC），原文本存进 metadata；小写或大小写混合的字母串（多是数学变量）和字母数字词里的汉字数字不改。其余字段、音频引用和没有改动的划分照旧。构建中。
+    source: aishell4@asr-20261014-punc-20261102-ctxclean-20261110
+    method: zhen-fix-v1
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/zhen-fix-20261117
+- schema_version: dataset-catalog/2.0
+  dataset_id: aishell4
+  version: turn-taking-20261014-utts-punc-20261102-ctxclean-20261110-zhenfix-20261117
+  languages:
+  - zh
+  tasks:
+  - ts_asr
+  aliases: []
+  derived_from: aishell4@turn-taking-20261014-utts-punc-20261102-ctxclean-20261110
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/aishell4/versions/turn-taking-20261014-utts-punc-20261102-ctxclean-20261110-zhenfix-20261117/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    summary: 中文多人会议（AISHELL-4）；含轮流说话混合版
+    description: aishell4@turn-taking-20261014-utts-punc-20261102-ctxclean-20261110（交付配方 v7set34 用的是 aishell4@turn-taking-20261014-utts-punc-20261102）里中文文本的英文写法按 audio-data-contract docs/reference/zh-en-transcription.md 规则 2 修正：用空格隔开的单个大写字母连写（K T V→KTV、A P P→APP、N F C→NFC），原文本存进 metadata；小写或大小写混合的字母串（多是数学变量）和字母数字词里的汉字数字不改。其余字段、音频引用和没有改动的划分照旧。构建中。
+    source: aishell4@turn-taking-20261014-utts-punc-20261102-ctxclean-20261110
+    method: zhen-fix-v1
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/zhen-fix-20261117
