@@ -160,5 +160,8 @@
   "earnings25": "/workspace/data/datasets/earnings25",
   "easycom": "/workspace/data/datasets/easycom",
   "police_robust_monitor": "/workspace/data/datasets/police_robust_monitor",
-  "spgispeech2": "/workspace/data/datasets/spgispeech2"
+  "spgispeech2": "/workspace/data/datasets/spgispeech2",
+  "ntuml2021": "/workspace/data/datasets/ntuml2021",
+  "hungyi_lee_lectures": "/workspace/data/datasets/hungyi_lee_lectures",
+  "yodas_zh_codeswitch": "/workspace/data/datasets/yodas_zh_codeswitch"
 }
