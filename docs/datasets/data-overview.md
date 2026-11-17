@@ -283,7 +283,7 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [mls_de](data-versions.md#mls_de) | de | 语音识别 | 1,995.1 | 德语有声书朗读（MLS） | 快照 20260914 |
 | [mls_es](data-versions.md#mls_es) | es | 语音识别、热词增强语音识别 | 937.7 | 西班牙语有声书朗读（MLS） | 部分版本：快照 20260914 |
 | [mls_fr](data-versions.md#mls_fr) | fr | 语音识别 | 1,096.7 | 法语有声书朗读（MLS） | 快照 20260914 |
-| [mls_pt](data-versions.md#mls_pt) | pt | 语音识别 | 168.3 | MLS 葡语有声书朗读 | 快照 20260914 |
+| [mls_pt](data-versions.md#mls_pt) | pt | 语音识别 | 168.3 | MLS 葡语有声书朗读 | 部分版本：快照 20260914 |
 | [musan](data-versions.md#musan) | und | noise | — | 噪声与音乐素材（MUSAN） | 快照 20260914、`备份桶:audio-data-contract/datasets/musan/` |
 | [nurc_sp](data-versions.md#nurc_sp) | pt | 语音识别 | 13.0 | 圣保罗葡语访谈精选（NURC-SP 最小集） | 没有 |
 | [open_large_bn](data-versions.md#open_large_bn) | bn | 语音识别 | 5,045.8 | 孟加拉语大规模语音识别数据 | 快照 20260914 |

@@ -1,0 +1,63 @@
+# 占位登记：葡萄牙语训练数据（同西语 es_train_v1：双引擎清洗、书面化标点、热词），进行中，进度见各版本状态文件。
+- schema_version: dataset-catalog/2.0
+  dataset_id: common_voice_pt
+  version: pt-train-v1-20261117
+  languages:
+    - pt
+  tasks:
+    - asr
+  aliases: []
+  artifacts:
+    - name: preparation_state
+      kind: dataset-state
+      root_alias: aidc_data
+      relative_path: datasets/common_voice_pt/versions/pt-train-v1-20261117/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+          - preparation_state
+      statistics:
+        source_records: 81960
+        source_hours: 93.82
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: >-
+      common_voice_pt@mdc-27.0 清洗通过的 81,960 句 / 93.82 h（已是 consensus-v7 双引擎清洗、已去掉 CV 27.0 与 17.0 dev/test 说话人和句子）的训练版本：
+      同 common_voice_es@es-train-v1-20261108，原文规整标点前后空格、首字母和句末标点，再用 Qwen3.8-27B 标热词。
+    source: common_voice_pt@mdc-27.0
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/pt-data-20261117
+- schema_version: dataset-catalog/2.0
+  dataset_id: mls_pt
+  version: pt-train-v1-20261117
+  languages:
+    - pt
+  tasks:
+    - asr
+  aliases: []
+  artifacts:
+    - name: preparation_state
+      kind: dataset-state
+      root_alias: aidc_data
+      relative_path: datasets/mls_pt/versions/pt-train-v1-20261117/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+          - preparation_state
+      statistics:
+        source_records: 37533
+        source_hours: 160.96
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: >-
+      MLS 葡语 train（37,533 句 / 160.96 h，有声书）的训练版本：解包 openslr-94 建清单（去掉 dev/test 说话人），同 mls_es@es-train-v1-20261108
+      双引擎清洗（Qwen3-ASR-1.7B + whisper-large-v3，先试跑看被拒样本），原标注全小写无标点，用 Qwen3.8-27B 加 pt-v1 书面化标点和大小写，再标热词。
+    source: mls_pt@openslr-94
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/pt-data-20261117
