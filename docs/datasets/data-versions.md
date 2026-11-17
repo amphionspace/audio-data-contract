@@ -3611,9 +3611,11 @@ Common Voice 17 葡语朗读
 |---|---:|---|---|
 | [common_voice_pt@hf-8262c16bf297](../../catalog/common_voice_pt.yaml#L31) | 184.3 | 已登记 | 没有 |
 | [common_voice_pt@mdc-27.0](../../catalog/common_voice_27.yaml#L83) | 93.8 | 已登记 | 没有 |
+| [common_voice_pt@pt-train-v1-20261117](../../catalog/pt_train_v1.yaml#L2) | — | 未登记 | 没有 |
 
 - `common_voice_pt@hf-8262c16bf297`：Common Voice 17.0 葡语的非官方 HF 镜像（官方 Mozilla 仓库需要授权）。口音字段大多为空，填写的几乎都是巴西口音。镜像另含 validated / other / invalidated（172.6 / 29.0 / 9.4 h），未登记为划分
 - `common_voice_pt@mdc-27.0`：Common Voice Scripted Speech 27.0 葡语（Mozilla Data Collective cmu5wui2w00e8nq07idithpm6）训练版本：validated + other（未投票够的录音）， 去掉 27.0 与 CV 17.0 dev/test 的说话人和句子后 82,417 句 / 94.34 h，经 Qwen3-ASR-1.7B + whisper-large-v3 双引擎清洗（consensus-v7）保留 81,960 句 / 93.82 h（validated 78.10 h、other 15.72 h）。包含 CV 17.0 镜像的全部 train 内容，可替代它用于训练。 试跑、被拒样本和误杀率见 run_dir README
+- `common_voice_pt@pt-train-v1-20261117`：common_voice_pt@mdc-27.0 清洗通过的 81,960 句 / 93.82 h（已是 consensus-v7 双引擎清洗、已去掉 CV 27.0 与 17.0 dev/test 说话人和句子）的训练版本： 同 common_voice_es@es-train-v1-20261108，原文规整标点前后空格、首字母和句末标点，再用 Qwen3.8-27B 标热词
 
 ### common_voice_ru
 
@@ -4092,8 +4094,10 @@ MLS 葡语有声书朗读
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
 | [mls_pt@openslr-94](../../catalog/mls_pt.yaml#L1) | 168.3 | 已登记 | 快照 20260914 |
+| [mls_pt@pt-train-v1-20261117](../../catalog/pt_train_v1.yaml#L33) | — | 未登记 | 没有 |
 
 - `mls_pt@openslr-94`：Multilingual LibriSpeech 葡语完整 FLAC 归档（含 train/dev/test），LibriVox 有声书；未按巴西/葡萄牙口音区分。OpenSLR 镜像没有这个文件，从官方地址直连下载
+- `mls_pt@pt-train-v1-20261117`：MLS 葡语 train（37,533 句 / 160.96 h，有声书）的训练版本：解包 openslr-94 建清单（去掉 dev/test 说话人），同 mls_es@es-train-v1-20261108 双引擎清洗（Qwen3-ASR-1.7B + whisper-large-v3，先试跑看被拒样本），原标注全小写无标点，用 Qwen3.8-27B 加 pt-v1 书面化标点和大小写，再标热词
 
 ### musan
 
