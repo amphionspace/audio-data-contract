@@ -149,7 +149,7 @@
   provenance:
     preparation_status: building
     owner: mingdong
-    summary: 隐式语义的上下文纠偏合成训练数据
+    summary: 上下文纠偏合成训练数据：隐式语义（生成中）
     description: >-
       train-v1-20261114 只有显式说字和同名一致性；这一版补隐式语义：同音的两个常见词（期中/期终、权利/权力），
       写法由后文语义决定。沿用 train-v1 的流程和音色（amphiondata scripts/context_correction/），出题和复核改用火山方舟
