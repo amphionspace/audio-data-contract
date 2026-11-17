@@ -2334,15 +2334,18 @@ CS-Dialogue 对话中的中英混说语句
 
 多语种视频野外语音（Emilia2）；含中英解包版
 
-语言：ar、as、bn、cs、da、de、el、en、es、fa、fi、fil、fr、gu、hi、hu、it、ja、kn、ko、mk、ml、mr、ne、nl、pa、pl、pt、ro、ru、sa、sd、sv、ta、te、th、tr、ur、vi、yue、zh · 任务：语音识别、diarization、语音合成
+语言：ar、as、bn、cs、da、de、el、en、es、fa、fi、fil、fr、gu、hi、hu、it、ja、kn、ko、mk、ml、mr、ne、nl、pa、pl、pt、ro、ru、sa、sd、sv、ta、te、th、tr、ur、vi、yue、zh · 任务：语音识别、语码转换语音识别、diarization、语音合成
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
 | [emilia2@extracted-enzh-flac16k-20261012](../../catalog/emilia2_extracted.yaml#L140) | — | 未登记 | 没有 |
 | [emilia2@tts-unified-v0.1](../../catalog/tts_unified.yaml#L178) | 146,325.0 | 已登记 | `amphion-tts-data-1373259071:Emilia2/`（原始数据） |
+| [emilia2_zhen@clean-zhen-v1-20261117](../../catalog/zhen_cs_clean.yaml#L98) | — | 未登记 | 没有 |
 
 - `emilia2@extracted-enzh-flac16k-20261012`：基于 extracted-enzh-20261012 的 dialog 和 long（standalone short 已在 emilia2@tts-unified-v0.1 中，不转）：每个 m4a 用与 DATA-TTS-UNIFIED Emilia2 接入相同的 FFmpeg 7.0.2 静态版完整解码（应用 edit list）， soxr 重采样到 16 kHz 单声道，按 round(gain*x*32768) 量化为 FLAC PCM16，峰值超出时整条降增益、不削波，写后逐样本回读核对。 目的：训练读取可随机跳转、不依赖 ffmpeg（原 m4a 读一个 120 秒窗口需 1–5 秒，16 kHz FLAC 约 0.03–0.3 秒）。 这份解包数据不用于 TTS（TTS 用 emilia2@tts-unified-v0.1）。 2026-10-17 转码完成：2,101,933 个文件、112,444 h 全部成功，FLAC 共 7.29 TB，20,240 个降了增益（最小 0.64）。 2026-10-18 删除原 m4a：逐个核对 FLAC 字节数与帧数后删除，保留 23 个仍被训练读取的 m4a（见 extracted-enzh-20261012 的 m4a_removed）。 emilia2_mix、emilia2_dialog、emilia2_zh_dialogue_diarize 的音频索引仍写 .m4a 路径，open-audio-llm（#63 起）读取时自动改读同名 .flac； 其他读取方需要自行把路径换成 .flac
 - `emilia2@tts-unified-v0.1`：音频编码字节存放在 Lance 表内；原始划分在 metadata_json.original_split，统一输出全部为 train。ASR 用 tts_lance.iter_asr_samples（tts-asr-rules/v1）读取，会排除原始 dev/test 等
+- `emilia2_zhen@clean-zhen-v1-20261117`：Emilia2 上游 languages 恰为 zh+en 的录音（2026-10-12 解包只取纯中文、纯英文，这部分从未解包，也不在 v4 训练配方里）中， 带英文单词的中文短句，按 emilia2@tts-unified-v0.1 统计 429,298 句 / 1,282.5 h，内容多是科技、编程、产品类视频。 文本是 Emilia 上游的机器转写。音频从 Lance 解成 16 kHz 单声道 WAV 放本版本目录，生成 lhotse 清单；转写统一为 zhen-norm-v1， 再用 Qwen3-ASR-1.7B + MOSS-Transcribe-Diarize 做共识清洗，先试跑看被拒样本。进行中
+- 含派生版本（与源数据可能重叠）
 - 已并入的旧版本：`emilia2@extracted-enzh-20261012`（COS：没有）
 
 ### emilia2_dialog
