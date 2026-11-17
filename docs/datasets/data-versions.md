@@ -2187,9 +2187,12 @@ WenetSpeech L 中的 YouTube 部分
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
+| [ascend@clean-zhen-v1-20261117](../../catalog/zhen_cs_clean.yaml#L2) | — | 未登记 | 没有 |
 | [ascend@hf-737e9800ae31](../../catalog/ascend.yaml#L1) | 10.6 | 已登记 | 没有 |
 
+- `ascend@clean-zhen-v1-20261117`：ASCEND 香港中英混说自然对话 train 8.8 h的清洗版本：音频解到本版本目录（float 或多声道 WAV 转 16 位单声道），生成 lhotse 清单；转写统一为 zhen-norm-v1 （繁转简，汉字之间和中英交界不留空格，英文单词之间一个空格，英文大小写保持原样，原文存 custom.original_text）；再用 Qwen3-ASR-1.7B 加第二个引擎做共识清洗，先试跑看被拒样本。进行中
 - `ascend@hf-737e9800ae31`：CAiRE 在香港录制的中英语码转换自然多轮对话，共 12,314 句、10.6 小时，16 kHz 单声道，专家转写。 每句标出语言（中文 6,139、英文 2,850、中英混说 3,325 句）、说话人、话题（教育、科技、人设、体育等）。train/validation/test 的说话人互不重叠（18/3/2 人），测试集只有 2 位说话人，结果方差会比较大。适合评测普通话-英语混说的真实对话识别。CC BY-SA 4.0
+- 含派生版本（与源数据可能重叠）
 
 ### asr_babble_bench
 
@@ -2605,9 +2608,12 @@ AISHELL-1、LibriSpeech 合成的多人对话
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
+| [ntuml2021@clean-zhen-v1-20261117](../../catalog/zhen_cs_clean.yaml#L34) | — | 未登记 | 没有 |
 | [ntuml2021@hf-1e121cc419e8](../../catalog/ntuml2021.yaml#L1) | 21.5 | 已登记 | 没有 |
 
+- `ntuml2021@clean-zhen-v1-20261117`：台大 ML2021 中英混说讲课 train 10.8 h（20 讲）的清洗版本：音频解到本版本目录（float 或多声道 WAV 转 16 位单声道），生成 lhotse 清单；转写统一为 zhen-norm-v1 （繁转简，汉字之间和中英交界不留空格，英文单词之间一个空格，英文大小写保持原样，原文存 custom.original_text）；再用 Qwen3-ASR-1.7B 加第二个引擎做共识清洗，先试跑看被拒样本。进行中
 - `ntuml2021@hf-1e121cc419e8`：台湾大学李宏毅 2021 年机器学习课的课堂录音（ICASSPW 2024 论文发布，作者含李宏毅），台湾普通话讲课，夹大量英文机器学习术语， 如 network、gradient、self-attention、discriminator、reward；每段带繁体中文转写和英文翻译，可做中英混说识别和语音翻译。 共 35,692 段、21.5 小时，几乎都是同一位讲者；转写里汉字之间以空格分隔，英文小写。约四成中文句子含英文词（train 39.6%、 test 39.0%）。train 20 讲、test 14 讲互不重叠；dev 的 2,997 段全部也在 test 里（同一批片段，不是独立划分），评测时只用 test 即可。音频是 16 kHz 双声道 float WAV。数据卡未说明转写方式。数据集信息标 MIT
+- 含派生版本（与源数据可能重叠）
 
 ### opendatalab_multilingual
 
@@ -3311,9 +3317,12 @@ YouTube 中英混说视频片段（YODAS 子集）
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
+| [yodas_zh_codeswitch@clean-zhen-v1-20261117](../../catalog/zhen_cs_clean.yaml#L66) | — | 未登记 | 没有 |
 | [yodas_zh_codeswitch@hf-6def75d98d50](../../catalog/yodas_zh_codeswitch.yaml#L1) | 29.1 | 已登记 | 没有 |
 
+- `yodas_zh_codeswitch@clean-zhen-v1-20261117`：YODAS 中英混说视频字幕片段 29.1 h的清洗版本：音频解到本版本目录（float 或多声道 WAV 转 16 位单声道），生成 lhotse 清单；转写统一为 zhen-norm-v1 （繁转简，汉字之间和中英交界不留空格，英文单词之间一个空格，英文大小写保持原样，原文存 custom.original_text）；再用 Qwen3-ASR-1.7B 加第二个引擎做共识清洗，先试跑看被拒样本。进行中
 - `yodas_zh_codeswitch@hf-6def75d98d50`：从 espnet/yodas 的 zh000 子集里挑出有中英混说的 176 个 YouTube 视频，46,583 段、29.1 小时，16 kHz 单声道。内容以数码、 硬件、枪械等测评讲解为主，常见英文词有 GPU、CPU、Android、iPhone、pixel。19% 的中文句子含英文词；混说按视频筛选，不保证每段 都有英文。文本是视频字幕（简体为主，少量繁体），不是逐字转写。只下载了 default 配置（原始文本），没有下载上传者清洗过文本的 clean 配置（音频相同）；default 只有 train，不分评测集。CC BY 3.0（随 YODAS 的视频许可）
+- 含派生版本（与源数据可能重叠）
 
 ### zenless_voice
 
