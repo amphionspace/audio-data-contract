@@ -2486,18 +2486,6 @@ Emilia-YODAS 多语种 YouTube 语音
 
 - `hw_sft@hw-20261014`：阶段 3 热词 ShareGPT。带 Hotwords 的行是热词转写，系统提示为空的行是普通转写。音频指向已注册源文件
 
-### indic_diarbench
-
-22 种印度语言多人对话评测（DiarBench）
-
-语言：as、bn、brx、doi、gu、hi、kn、kok、ks、mai、ml、mni、mr、ne、or、pa、sa、sat、sd、ta、te、ur · 任务：语音识别、带说话人标注的语音识别、说话人分段与归属
-
-| 版本 | 时长（小时） | 口径 | COS |
-|---|---:|---|---|
-| [indic_diarbench@hf-92877bad8aab](../../catalog/indic_diarbench.yaml#L1) | 107.7 | 已登记 | 没有 |
-
-- `indic_diarbench@hf-92877bad8aab`：Sarvam AI 2026-07 发布（Interspeech 2026）的印度语言说话人日志加转写评测集，覆盖全部 22 种官方语言，1,164 段、107.7 小时， 98,545 个人工校正的带时间戳、带说话人的转写段，平均重叠约 12.8%。三种录音条件：near_field 约 53.3 小时（线上会议，每人一个近讲麦克风）， far_field 约 26.8 小时（远场麦克风，只有使用人数最多的 8 种语言），in_the_wild 约 27.7 小时（YouTube 视频，10 种语言）。 每种语言一个 test Parquet，内嵌 16 kHz 单声道 WAV，字段含 recording_id、dataset_type、num_speakers、annotated_transcript （speaker_id、start_time、end_time、transcript），转写里英语借词附括号原文，听不清处标 <unintelligible>。只有测试集。CC BY 4.0
-
 ### indicvoices
 
 22 种印度语言自然语音（IndicVoices）
@@ -2673,18 +2661,6 @@ AISHELL-1、LibriSpeech 合成的多人对话
 | [starrail_voice@tts-unified-v0.1](../../catalog/tts_unified.yaml#L740) | 692.6 | 已登记 | `amphion-tts-data-1373259071:starrail-voice/`（原始数据） |
 
 - `starrail_voice@tts-unified-v0.1`：音频编码字节存放在 Lance 表内；原始划分在 metadata_json.original_split，统一输出全部为 train。ASR 用 tts_lance.iter_asr_samples（tts-asr-rules/v1）读取，会排除原始 dev/test 等
-
-### svq
-
-17 种语言四种环境下的手机语音问句（Google SVQ）
-
-语言：ar、bn、en、fi、gu、hi、id、ja、kn、ko、ml、mr、ru、sw、ta、te、ur · 任务：语音识别
-
-| 版本 | 时长（小时） | 口径 | COS |
-|---|---:|---|---|
-| [svq@hf-74f17ec92f06](../../catalog/svq.yaml#L1) | 244.4 | 已登记 | 没有 |
-
-- `svq@hf-74f17ec92f06`：Google 发布的 Simple Voice Questions（MSEB 声音嵌入评测的核心数据），2.0.0 版：17 种语言、26 个地区口音（阿拉伯语埃及/海湾/黎凡特/马格里布、 英语美/英/澳/印/菲、孟加拉、乌尔都等），759 位说话人（各地区分别去重后相加，发布方称约 700 位）用自己的手机朗读 XTREME-UP 问答数据里的短问句，171,434 条、244.4 小时。 录音环境大致均分四种：clean（安静）、background_speech（旁边设备播放播客/电台）、media_noise（播放音乐影视）、traffic_noise（乘车途中）， 登记为四个划分。每条带参考文本（transcript_truth）、说话人编号、性别、年龄，以及段落检索、关键词时间戳等检索任务字段。 发布方不分 train/test，整体作评测用；ASR 用途可评噪声与背景人声下的短句识别。只下载了 2.0.0 目录，1.0.0 的旧格式未下载。CC BY 4.0
 
 ### talcs
 
@@ -4097,18 +4073,6 @@ MLS 葡语有声书朗读
 | [rulibrispeech_ru@legacy](../../catalog/legacy_multilingual.yaml#L2201) | 98.2 | 已登记 | 快照 20260914 |
 
 - 有含标点版本
-
-### sada
-
-沙特电视节目阿拉伯语方言语音（SADA）
-
-语言：ar · 任务：语音识别
-
-| 版本 | 时长（小时） | 口径 | COS |
-|---|---:|---|---|
-| [sada@hf-094fe2c0fe4b](../../catalog/sada.yaml#L1) | 437.5 | 已登记 | 没有 |
-
-- `sada@hf-094fe2c0fe4b`：SADA（Saudi Audio Dataset for Arabic）的 Hugging Face 转存：沙特数据与人工智能局（SDAIA）国家人工智能中心对沙特广播局 57 个以上 电视节目的人工转写语音，以沙特方言为主（纳季德、汉志、海湾），也有标准阿拉伯语、埃及和黎凡特方言。每段带原始文本 text、 规范化文本 cleaned_text、说话人年龄段、性别、方言；约 21% 的段标为“多于一个说话人”，方言和性别对这些段不适用。 16 kHz 单声道 WAV 内嵌在 Parquet 中，分 train、validation、test。实测共 253,166 段、437.5 小时（train 417.6 小时）， 少于数据卡写的约 667 小时（train 约 647 小时），这份是第三方转存，差异原因未说明；另有 76 段文本为空。CC BY-NC-SA 4.0，仅限非商用
 
 ### sim_rir_slr26
 

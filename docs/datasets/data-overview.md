@@ -1,6 +1,6 @@
 # 数据总览
 
-当前登记 **272 个数据集**；另有 **31 个下载来源声明**和 **1 个训练混合配方**。登记不代表本机文件已齐备。
+当前登记 **269 个数据集**；另有 **34 个下载来源声明**和 **1 个训练混合配方**。登记不代表本机文件已齐备。
 
 时长取单个版本的最大值，不跨版本相加；≈ 为参考表或估算值，— 为暂无完整时长。各版本的时长、说明、COS 地址和质量证据见[版本明细](data-versions.md)。
 
@@ -186,7 +186,6 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [hard_hw_sft](data-versions.md#hard_hw_sft) | en、zh | 热词增强语音识别 | 109.4 | 热词难例 SFT 数据（ShareGPT 格式） | `备份桶:audio-data-contract/datasets/hard_hw_sft/` |
 | [hotword_bench](data-versions.md#hotword_bench) | en、es、zh | 热词增强语音识别 | — | 中英热词评测集，仅评测 | 没有 |
 | [hw_sft](data-versions.md#hw_sft) | en、zh | 语音识别、热词增强语音识别 | 2,636.5 | 热词 SFT 数据（ShareGPT 格式），含普通转写 | 没有 |
-| [indic_diarbench](data-versions.md#indic_diarbench) | as、bn、brx、doi、gu、hi、kn、kok、ks、mai、ml、mni、mr、ne、or、pa、sa、sat、sd、ta、te、ur | 语音识别、带说话人标注的语音识别、说话人分段与归属 | 107.7 | 22 种印度语言多人对话评测（DiarBench） | 没有 |
 | [indicvoices](data-versions.md#indicvoices) | as、bn、brx、doi、gu、hi、kn、kok、ks、mai、ml、mni、mr、ne、or、pa、sa、sat、sd、ta、te、ur | 语音识别 | — | 22 种印度语言自然语音（IndicVoices） | 快照 20260914 |
 | [meeting_benchmark](data-versions.md#meeting_benchmark) | en、zh、zh-en | 带说话人标注的语音识别 | 21.2 | 约 180 秒长度的中英会议转写评测集 | `备份桶:audio-data-contract/datasets/meeting_180s_benchmark/` |
 | [meeting_selection_panel](data-versions.md#meeting_selection_panel) | en、zh | 带说话人标注的语音识别 | 12.4 | 会议模型选模面板（中英真实会议） | `备份桶:audio-data-contract/datasets/meeting_selection_panel/` |
@@ -201,7 +200,6 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [sot_multispeaker_zh_en](data-versions.md#sot_multispeaker_zh_en) | en、zh、zh-en | 带说话人标注的语音识别 | 7,664.4 | 1–5 人中英合成混音，按人完整转写 | 没有 |
 | [speech_deepfake_bench](data-versions.md#speech_deepfake_bench) | ar、de、en、es、ro、ru、zh | deepfake_detection | 3,463.7 | 伪造语音检测评测集（SpoofRadar、DF-Arena） | `备份桶:audio-data-contract/datasets/speech_deepfake_bench/` |
 | [starrail_voice](data-versions.md#starrail_voice) | en、ja、ko、zh-CN | 语音合成 | 692.6 | 《崩坏：星穹铁道》多语配音，TTS 用 | `TTS 桶:starrail-voice/`（原始数据） |
-| [svq](data-versions.md#svq) | ar、bn、en、fi、gu、hi、id、ja、kn、ko、ml、mr、ru、sw、ta、te、ur | 语音识别 | 244.4 | 17 种语言四种环境下的手机语音问句（Google SVQ） | 没有 |
 | [talcs](data-versions.md#talcs) | en、zh | 语音识别、热词增强语音识别 | 587.6 | 中英语码转换课堂语音（TALCS）；含热词和加噪版 | 部分版本：快照 20260914、`备份桶:audio-data-contract/datasets/` 下 5 个目录 |
 | [ts_asr_benchmark](data-versions.md#ts_asr_benchmark) | en、es、zh | 目标说话人语音识别 | 46.5 | 合成的中文目标说话人 ASR 评测集 | 部分版本：`备份桶:audio-data-contract/datasets/ts_asr_benchmark/` |
 | [ts_asr_crosslingual](data-versions.md#ts_asr_crosslingual) | en、es、zh | 目标说话人语音识别 | 6.2 | — | 没有 |
@@ -288,7 +286,6 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [open_large_bn](data-versions.md#open_large_bn) | bn | 语音识别 | 5,045.8 | 孟加拉语大规模语音识别数据 | 快照 20260914 |
 | [real_rir_slr28](data-versions.md#real_rir_slr28) | und | 音频增强、rir | 0.1 | 真实房间冲激响应（OpenSLR 28） | 快照 20260914、`备份桶:audio-data-contract/datasets/real_rir_slr28/` |
 | [rulibrispeech_ru](data-versions.md#rulibrispeech_ru) | ru | 语音识别 | 98.2 | 俄语有声书朗读（Russian LibriSpeech） | 快照 20260914 |
-| [sada](data-versions.md#sada) | ar | 语音识别 | 437.5 | 沙特电视节目阿拉伯语方言语音（SADA） | 没有 |
 | [sim_rir_slr26](data-versions.md#sim_rir_slr26) | und | rir | — | 模拟房间冲激响应（OpenSLR 26） | 快照 20260914、`备份桶:audio-data-contract/datasets/sim_rir_slr26/` |
 | [sim_rir_slr28](data-versions.md#sim_rir_slr28) | und | rir | — | 模拟房间冲激响应（OpenSLR 28） | 快照 20260914、`备份桶:audio-data-contract/datasets/sim_rir_slr28/` |
 | [slr37_bn](data-versions.md#slr37_bn) | bn | 语音识别 | 5.0 | 孟加拉语高质量 TTS 朗读（OpenSLR 37） | 快照 20260914 |
@@ -334,6 +331,7 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [gigaspeech3](../../catalog/gigaspeech3.yaml#L1) | hf-4e7b87a9df60 | ar | 语音识别 |
 | [granary](../../catalog/download_queue.yaml#L200) | hf-0fe23a860e35 | multi | 语音识别、语音翻译 |
 | [granary](../../catalog/granary_v2.yaml#L1) | v2-hf-f835695fb5cc | multi | 语音识别、语音翻译 |
+| [indic_diarbench](../../catalog/indic_diarbench.yaml#L1) | hf-92877bad8aab | as、bn、brx、doi、gu、hi、kn、kok、ks、mai、ml、mni、mr、ne、or、pa、sa、sat、sd、ta、te、ur | 语音识别、说话人分段与归属、带说话人标注的语音识别 |
 | [iscslp2026_cot_tts](../../catalog/iscslp2026_cot_tts.yaml#L1) | hf-968bbb0e6244 | en、zh | 语音合成 |
 | [kasaspeech](../../catalog/kasaspeech.yaml#L1) | hf-4bbaf47a5a46 | en、tw | 语音识别、语码转换语音识别 |
 | [lemas](../../catalog/download_queue.yaml#L250) | hf-91f0c1b9a29f | multi | 语音识别 |
@@ -344,7 +342,9 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [omnilingual-asr-corpus](../../catalog/download_queue.yaml#L225) | hf-8648ba894637 | multi | 语音识别 |
 | [peoples_speech](../../catalog/peoples_speech.yaml#L1) | hf-f10597c5d3d3 | en | 语音识别 |
 | [reazonspeech](../../catalog/download_queue.yaml#L274) | hf-0df78f991f6a | ja | 语音识别 |
+| [sada](../../catalog/sada.yaml#L1) | hf-094fe2c0fe4b | ar | 语音识别 |
 | [smiip_tv](../../catalog/smiip_tv.yaml#L1) | openslr-156 | zh | 声纹验证 |
+| [svq](../../catalog/svq.yaml#L1) | hf-74f17ec92f06 | ar、bn、en、fi、gu、hi、id、ja、kn、ko、ml、mr、ru、sw、ta、te、ur | 语音识别 |
 | [tagarela](../../catalog/tagarela.yaml#L1) | hf-a66648fc4938 | pt | 语音识别、语音合成 |
 | [waxal_tts](../../catalog/waxal_tts.yaml#L1) | hf-5f4d8ca24f2b | ach、bau、ewe、fat、ful、hau、ibo、kik、lug、luo、nyn、pcm、swa、twi、yor | 语音合成 |
 | [yo_cpt_kk](../../catalog/yo_cpt.yaml#L41) | hf-a8c2d1a23de4 | kk | 语音合成、语音识别 |
