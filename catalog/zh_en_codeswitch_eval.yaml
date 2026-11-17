@@ -1,0 +1,252 @@
+# 中英混说评测版本 eval-zhen-v1-20261117：五个公开测试集的清洗版，供 AmphionEval 中英混说评测集使用，只用于评测。
+# 生成脚本 scripts/zh_en_codeswitch_eval/build.py，转写规范见 docs/reference/zh-en-transcription.md。
+- schema_version: dataset-catalog/2.0
+  dataset_id: talcs
+  version: eval-zhen-v1-20261117
+  languages:
+  - zh
+  - en
+  tasks:
+  - asr
+  aliases: []
+  derived_from: talcs@legacy-20260804
+  artifacts:
+  - kind: lhotse-recordings
+    name: test_recordings
+    relative_path: datasets/talcs/versions/eval-zhen-v1-20261117/test_recordings.jsonl.gz
+    root_alias: aidc_data
+    expected_bytes: 230587
+    sha256: bd6bfc037ad8962e6e8ae0ef4b07dc2c29830a7784e9b72f6052b5a0f7d6e43c
+  - kind: lhotse-supervisions
+    name: test_supervisions
+    relative_path: datasets/talcs/versions/eval-zhen-v1-20261117/test_supervisions.jsonl.gz
+    root_alias: aidc_data
+    expected_bytes: 784088
+    sha256: 804601b5d765bf2d9f929e5c5addbd3950efe922ad35bd6298d9244f596c78d0
+  splits:
+    test:
+      artifacts:
+        recordings:
+        - test_recordings
+        supervisions:
+        - test_supervisions
+      statistics:
+        records: 15000
+        duration_hours: 23.6227
+        duration_basis: sum of supervision durations
+        records_with_target_terms: 5462
+        target_terms: 8461
+  provenance:
+    summary: 中英语码转换课堂语音（TALCS）；含热词和加噪版
+    source: talcs@legacy-20260804 test（talcs_supervisions_test_cleaned），文本不改
+    transcript: 官方清洗版：英文小写、无标点
+    target_terms: custom.target_terms：参考文本中嵌在中文里的英文片段（1～3 个词、至少 2 个字母，去掉首尾的 uh/um 等语气词），AmphionEval 按术语命中率计分
+    language_label: 所有 supervision 的 language 统一写 zh，评测按字符计错（与 asr-benchmark 的 TALCS 一致）
+    build_script: scripts/zh_en_codeswitch_eval/build.py
+    usage: 只用于评测，不进训练
+    snapshot_date: '2026-11-17'
+- schema_version: dataset-catalog/2.0
+  dataset_id: cs_dialogue_mix
+  version: eval-zhen-v1-20261117
+  languages:
+  - zh
+  - en
+  tasks:
+  - asr
+  aliases: []
+  derived_from: cs_dialogue_mix@legacy-20260804
+  artifacts:
+  - kind: lhotse-recordings
+    name: test_recordings
+    relative_path: datasets/cs_dialogue_mix/versions/eval-zhen-v1-20261117/test_recordings.jsonl.gz
+    root_alias: aidc_data
+    expected_bytes: 13782
+    sha256: adc5722388da825841974ecf62a0711504d98aacf2b8bfd12701f65bc2002be4
+  - kind: lhotse-supervisions
+    name: test_supervisions
+    relative_path: datasets/cs_dialogue_mix/versions/eval-zhen-v1-20261117/test_supervisions.jsonl.gz
+    root_alias: aidc_data
+    expected_bytes: 81141
+    sha256: 8569b5406bbd296d9b1309d4cad4ec923f76e3ce4ddc95abde92d21c154307aa
+  splits:
+    test:
+      artifacts:
+        recordings:
+        - test_recordings
+        supervisions:
+        - test_supervisions
+      statistics:
+        records: 905
+        duration_hours: 3.2473
+        duration_basis: sum of supervision durations
+        records_with_target_terms: 782
+        target_terms: 1498
+  provenance:
+    summary: CS-Dialogue 对话中的中英混说语句
+    source: cs_dialogue_mix@legacy-20260804 test；去掉含 ** 的 31 条（听不清）和超过 30 秒的 98 条
+    transcript: 去掉 <FIL/>、<SPK/>、<NON/> 标记，其余照官方转写（带标点、英文保留大小写和语气词）
+    target_terms: custom.target_terms：参考文本中嵌在中文里的英文片段（1～3 个词、至少 2 个字母，去掉首尾的 uh/um 等语气词），AmphionEval 按术语命中率计分
+    language_label: 所有 supervision 的 language 统一写 zh，评测按字符计错（与 asr-benchmark 的 TALCS 一致）
+    build_script: scripts/zh_en_codeswitch_eval/build.py
+    usage: 只用于评测，不进训练
+    snapshot_date: '2026-11-17'
+- schema_version: dataset-catalog/2.0
+  dataset_id: ascend
+  version: eval-zhen-v1-20261117
+  languages:
+  - zh
+  - en
+  tasks:
+  - asr
+  - code_switch_asr
+  aliases: []
+  derived_from: ascend@hf-737e9800ae31
+  artifacts:
+  - kind: lhotse-recordings
+    name: test_mixed_recordings
+    relative_path: datasets/ascend/versions/eval-zhen-v1-20261117/test_mixed_recordings.jsonl.gz
+    root_alias: aidc_data
+    expected_bytes: 4865
+    sha256: 9a0ec41e7083052cec399ebc7924da88997e2d9e3cd79f4db9e9c2f736136b6e
+  - kind: lhotse-supervisions
+    name: test_mixed_supervisions
+    relative_path: datasets/ascend/versions/eval-zhen-v1-20261117/test_mixed_supervisions.jsonl.gz
+    root_alias: aidc_data
+    expected_bytes: 15785
+    sha256: c3fc776457f48a347b7adfdd81d5b7188e58b43a9ec5d1627a425ef59507de6e
+  splits:
+    test_mixed:
+      artifacts:
+        recordings:
+        - test_mixed_recordings
+        supervisions:
+        - test_mixed_supervisions
+      statistics:
+        records: 358
+        duration_hours: 0.4092
+        duration_basis: sum of supervision durations
+        records_with_target_terms: 338
+        target_terms: 457
+  provenance:
+    summary: 香港中英混说自然对话（ASCEND）
+    source: ascend@hf-737e9800ae31 test 中 language == mixed 的 373 条，去掉含 [UNK] 的 15 条；音频从 Parquet 解出，16 kHz 单声道 PCM_16
+    transcript: 官方转写（无标点，英文保留大小写）
+    target_terms: custom.target_terms：参考文本中嵌在中文里的英文片段（1～3 个词、至少 2 个字母，去掉首尾的 uh/um 等语气词），AmphionEval 按术语命中率计分
+    language_label: 所有 supervision 的 language 统一写 zh，评测按字符计错（与 asr-benchmark 的 TALCS 一致）
+    build_script: scripts/zh_en_codeswitch_eval/build.py
+    usage: 只用于评测，不进训练
+    snapshot_date: '2026-11-17'
+- schema_version: dataset-catalog/2.0
+  dataset_id: wenetspeech
+  version: eval-zhen-v1-20261117
+  languages:
+  - zh
+  tasks:
+  - asr
+  aliases: []
+  derived_from: wenetspeech@icefall-20260908
+  artifacts:
+  - kind: lhotse-recordings
+    name: test_net_recordings
+    relative_path: datasets/wenetspeech/versions/eval-zhen-v1-20261117/test_net_recordings.jsonl.gz
+    root_alias: aidc_data
+    expected_bytes: 1987
+    sha256: e5378966d8d23fdb962973de2fb369e2d6108910c4d93988305c693d46fee836
+  - kind: lhotse-supervisions
+    name: test_net_supervisions
+    relative_path: datasets/wenetspeech/versions/eval-zhen-v1-20261117/test_net_supervisions.jsonl.gz
+    root_alias: aidc_data
+    expected_bytes: 28016
+    sha256: 36eefeb856152a1fe5d7c346f5c11173f46e9557842529b080ddc2e05bf630aa
+  - kind: lhotse-recordings
+    name: test_meeting_recordings
+    relative_path: datasets/wenetspeech/versions/eval-zhen-v1-20261117/test_meeting_recordings.jsonl.gz
+    root_alias: aidc_data
+    expected_bytes: 681
+    sha256: 98efb6749c239e8e776ced62f5035aa8ca56eca5e44d46af70851c727edad51b
+  - kind: lhotse-supervisions
+    name: test_meeting_supervisions
+    relative_path: datasets/wenetspeech/versions/eval-zhen-v1-20261117/test_meeting_supervisions.jsonl.gz
+    root_alias: aidc_data
+    expected_bytes: 2028
+    sha256: 3636ade0f87b3d4981a549dd9d9b9cee8da63b7b7a9b470fa6ad25062036fe49
+  splits:
+    test_net:
+      artifacts:
+        recordings:
+        - test_net_recordings
+        supervisions:
+        - test_net_supervisions
+      statistics:
+        records: 362
+        duration_hours: 0.6093
+        duration_basis: sum of supervision durations
+        records_with_target_terms: 362
+        target_terms: 438
+    test_meeting:
+      artifacts:
+        recordings:
+        - test_meeting_recordings
+        supervisions:
+        - test_meeting_supervisions
+      statistics:
+        records: 25
+        duration_hours: 0.0525
+        duration_basis: sum of supervision durations
+        records_with_target_terms: 25
+        target_terms: 27
+  provenance:
+    summary: 中文网络语音万余小时（WenetSpeech）；含清洗版
+    source: wenetspeech@icefall-20260908 test_net / test_meeting 中含汉字、且含 2 个字母以上英文片段的句子，文本不改
+    transcript: 官方人工转写（无标点）
+    target_terms: custom.target_terms：参考文本中嵌在中文里的英文片段（1～3 个词、至少 2 个字母，去掉首尾的 uh/um 等语气词），AmphionEval 按术语命中率计分
+    language_label: 所有 supervision 的 language 统一写 zh，评测按字符计错（与 asr-benchmark 的 TALCS 一致）
+    build_script: scripts/zh_en_codeswitch_eval/build.py
+    usage: 只用于评测，不进训练
+    snapshot_date: '2026-11-17'
+- schema_version: dataset-catalog/2.0
+  dataset_id: ntuml2021
+  version: eval-zhen-v1-20261117
+  languages:
+  - zh
+  - en
+  tasks:
+  - asr
+  - code_switch_asr
+  aliases: []
+  derived_from: ntuml2021@hf-1e121cc419e8
+  artifacts:
+  - kind: lhotse-recordings
+    name: test_recordings
+    relative_path: datasets/ntuml2021/versions/eval-zhen-v1-20261117/test_recordings.jsonl.gz
+    root_alias: aidc_data
+    expected_bytes: 169173
+    sha256: 3b512a75fee178f46c8bd661cb007a55dc339dd14d1cd3d117748be929b7c0cb
+  - kind: lhotse-supervisions
+    name: test_supervisions
+    relative_path: datasets/ntuml2021/versions/eval-zhen-v1-20261117/test_supervisions.jsonl.gz
+    root_alias: aidc_data
+    expected_bytes: 422463
+    sha256: dfe5accf4407cff05e2000b766984b63de1c6687335998ed5e55e4b7583abf53
+  splits:
+    test:
+      artifacts:
+        recordings:
+        - test_recordings
+        supervisions:
+        - test_supervisions
+      statistics:
+        records: 14916
+        duration_hours: 8.9198
+        duration_basis: sum of supervision durations
+        records_with_target_terms: 5609
+        target_terms: 6710
+  provenance:
+    summary: 台大机器学习课中英混说讲课（ML2021）
+    source: ntuml2021@hf-1e121cc419e8 test 全部 14,916 段（14 讲，与 train 讲次不重叠）；音频从 Parquet 解出，双声道取平均转为 16 kHz 单声道 PCM_16
+    transcript: 官方繁体转写经 OpenCC t2s 转简体，去掉汉字两侧的空格；英文全小写（原样）
+    target_terms: custom.target_terms：参考文本中嵌在中文里的英文片段（1～3 个词、至少 2 个字母，去掉首尾的 uh/um 等语气词），AmphionEval 按术语命中率计分
+    language_label: 所有 supervision 的 language 统一写 zh，评测按字符计错（与 asr-benchmark 的 TALCS 一致）
+    build_script: scripts/zh_en_codeswitch_eval/build.py
+    usage: 只用于评测，不进训练
+    snapshot_date: '2026-11-17'

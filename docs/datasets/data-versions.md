@@ -1937,6 +1937,7 @@ VITW 中文远场转写训练数据
 | [wenetspeech@clean-weak-v1-20260904](../../catalog/wenetspeech_weak.yaml#L49) | 2,409.6 | 已登记 | 快照 20260914、`amphion-audio-backup-1373259071:audio-data-contract/datasets/wenetspeech/` |
 | [wenetspeech@eval-20260804](../../catalog/open_audio_eval.yaml#L618) | — | 未登记 | 快照 20260914、`amphion-audio-backup-1373259071:audio-data-contract/datasets/wenetspeech/` |
 | [wenetspeech@eval-20261011](../../catalog/zh_asr_eval.yaml#L1) | 38.2 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/wenetspeech/legacy_asr/`（原始数据） |
+| [wenetspeech@eval-zhen-v1-20261117](../../catalog/zh_en_codeswitch_eval.yaml#L139) | 0.7 | 已登记 | 没有 |
 | [wenetspeech@icefall-20260908](../../catalog/icefall_runtime.yaml#L570) | 10,025.4 | 已登记 | 快照 20260914、`amphion-audio-backup-1373259071:audio-data-contract/datasets/wenetspeech/` |
 | [wenetspeech@legacy-20260804](../../catalog/icefall_base.yaml#L498) | 10,025.4 | 已登记 | 快照 20260914、`amphion-audio-backup-1373259071:audio-data-contract/datasets/wenetspeech/` |
 | [wenetspeech@punc-written-v1-20261029](../../catalog/zh_punc_written_v1.yaml#L662) | 10,005.4 | 已登记 | 没有 |
@@ -2190,6 +2191,7 @@ WenetSpeech L 中的 YouTube 部分
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
 | [ascend@clean-zhen-v1-20261117](../../catalog/zhen_cs_clean.yaml#L2) | 8.2 | 已登记 | 没有 |
+| [ascend@eval-zhen-v1-20261117](../../catalog/zh_en_codeswitch_eval.yaml#L93) | 0.4 | 已登记 | 没有 |
 | [ascend@hf-737e9800ae31](../../catalog/ascend.yaml#L1) | 10.6 | 已登记 | 没有 |
 
 - `ascend@clean-zhen-v1-20261117`：ascend@hf-737e9800ae31 train 的中英混说清洗版本。音频解到本版本目录 audio/（16 kHz 单声道 PCM16，float 或多声道源转换），lhotse 清单在 manifests/；转写统一为 zhen-norm-v1（opencc 逐字繁转简，不做词汇替换；汉字之间、中英交界不留空格；英文单词之间一个空格；英文大小写保持源文本），原文存 custom.original_text。再用 Qwen3-ASR-1.7B 与 MOSS-Transcribe-Diarize 双引擎一致性清洗（与 TALCS、CS-Dialogue 的 clean-dual-qwen-moss-v1-20261009 同一组合和门槛），之后执行 zhen-post-v1 规则。逐条写入 custom.clean，不删除记录，读取时按 custom.clean.pass 过滤：9,869 句中 pass 9,340（8.1935 h）、reject 529。ASCEND 香港中英混说自然对话 train。post 规则丢弃 367 句含 [UNK] 的句子（标注员没听出的词，多为英文词，文本不完整）。英文多为小写。试跑抽检和规则依据见 run_dir 的 README
@@ -2296,6 +2298,7 @@ CS-Dialogue 对话中的中英混说语句
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
 | [cs_dialogue_mix@clean-dual-qwen-moss-v1-20261009](../../catalog/zh_source_clean_20261009.yaml#L824) | 20.9 | 已登记 | 没有 |
+| [cs_dialogue_mix@eval-zhen-v1-20261117](../../catalog/zh_en_codeswitch_eval.yaml#L48) | 3.2 | 已登记 | 没有 |
 | [cs_dialogue_mix@icefall-20260908](../../catalog/icefall_runtime.yaml#L2170) | 31.0 | 已登记 | 快照 20260914 |
 | [cs_dialogue_mix@legacy-20260804](../../catalog/icefall_base.yaml#L1768) | 31.0 | 已登记 | 快照 20260914 |
 
@@ -2614,6 +2617,7 @@ AISHELL-1、LibriSpeech 合成的多人对话
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
 | [ntuml2021@clean-zhen-v1-20261117](../../catalog/zhen_cs_clean.yaml#L212) | 10.5 | 已登记 | 没有 |
+| [ntuml2021@eval-zhen-v1-20261117](../../catalog/zh_en_codeswitch_eval.yaml#L207) | 8.9 | 已登记 | 没有 |
 | [ntuml2021@hf-1e121cc419e8](../../catalog/ntuml2021.yaml#L1) | 21.5 | 已登记 | 没有 |
 
 - `ntuml2021@clean-zhen-v1-20261117`：ntuml2021@hf-1e121cc419e8 train 的中英混说清洗版本。音频解到本版本目录 audio/（16 kHz 单声道 PCM16，float 或多声道源转换），lhotse 清单在 manifests/；转写统一为 zhen-norm-v1（opencc 逐字繁转简，不做词汇替换；汉字之间、中英交界不留空格；英文单词之间一个空格；英文大小写保持源文本），原文存 custom.original_text。再用 Qwen3-ASR-1.7B 与 MOSS-Transcribe-Diarize 双引擎一致性清洗（与 TALCS、CS-Dialogue 的 clean-dual-qwen-moss-v1-20261009 同一组合和门槛），之后执行 zhen-post-v1 规则。逐条写入 custom.clean，不删除记录，读取时按 custom.clean.pass 过滤：17,779 句中 pass 17,384（10.4773 h）、reject 395。李宏毅 2021 机器学习课程中文讲课（台湾华语夹英文术语）人工字幕。源文本英文全小写，保持原样。post 规则把两个引擎都认错英文术语、参考正确的 bad_annotation 句收回（中文句含英文词、无数字和数学符号、两个引擎长度都在参考的 0.7–1.4 倍），全量 37 句，抽看约 95% 正确。试跑抽检和规则依据见 run_dir 的 README
@@ -2707,6 +2711,7 @@ AISHELL-1、LibriSpeech 合成的多人对话
 |---|---:|---|---|
 | [talcs@clean-dual-qwen-moss-v1-20261009](../../catalog/zh_source_clean_20261009.yaml#L500) | 553.4 | 已登记 | 没有 |
 | [talcs@eval-20260804](../../catalog/open_audio_eval.yaml#L187) | 23.6 | 已登记 | 快照 20260914 |
+| [talcs@eval-zhen-v1-20261117](../../catalog/zh_en_codeswitch_eval.yaml#L3) | 23.6 | 已登记 | 没有 |
 | [talcs@icefall-20260908](../../catalog/icefall_runtime.yaml#L1959) | 587.6 | 已登记 | 快照 20260914 |
 | [talcs@legacy-20260804](../../catalog/icefall_base.yaml#L1563) | 587.6 | 已登记 | 快照 20260914 |
 | [talcs@punc-written-v1-20261029](../../catalog/zh_punc_written_v1.yaml#L348) | 555.9 | 已登记 | 没有 |
