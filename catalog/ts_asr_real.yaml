@@ -4165,3 +4165,67 @@
     - chime6@speaker-records-v1-20260912:test
     - dipco@zenodo-8122551-20261023:eval
     - icsi@modelscope-argmaxinc-20261025:test
+- schema_version: dataset-catalog/2.0
+  dataset_id: ts_asr_real
+  version: meeting-v1-20261117
+  languages:
+  - zh
+  tasks:
+  - ts_asr
+  artifacts:
+  - name: audio-index
+    kind: audio-index
+    root_alias: ts_asr_real
+    relative_path: versions/meeting-v1-20261117/audio-index.jsonl.gz
+    sha256: 59aa612a594c5a381b7da9c24b9d8c2d325eeadad0641e70bbee8144194943d3
+    metadata:
+      record_count: 6779
+  - name: meeting-aishell4-neg-records
+    kind: audio-records
+    root_alias: ts_asr_real
+    relative_path: versions/meeting-v1-20261117/records/meeting-aishell4-neg.jsonl.gz
+    sha256: 673f1b8127f3c114b67fbe77f09f287fe869b3fd00710f0e9f2284be7455ce91
+    metadata:
+      record_count: 27486
+  - name: meeting-aishell4-pos-records
+    kind: audio-records
+    root_alias: ts_asr_real
+    relative_path: versions/meeting-v1-20261117/records/meeting-aishell4-pos.jsonl.gz
+    sha256: 681695485dd8b569cf73fd906932235bb181c72d60be2890c0139fe1b5f3cf76
+    metadata:
+      record_count: 7129
+  splits:
+    meeting-aishell4-neg:
+      artifacts:
+        records:
+        - meeting-aishell4-neg-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 27486
+        duration_hours: 51.4625
+        duration_basis: Mixture duration
+      provenance:
+        description: AISHELL-4 test 20 场会议远场通道 0，按人工标注切的每一段发给会上每个注册人；目标缺席（本人在这段前后 0.5 秒内都没有说话）
+    meeting-aishell4-pos:
+      artifacts:
+        records:
+        - meeting-aishell4-pos-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 7129
+        duration_hours: 13.0496
+        duration_basis: Mixture duration
+      provenance:
+        description: AISHELL-4 test 20 场会议远场通道 0，按人工标注切的每一段发给会上每个注册人；目标在场（本人在这段里说话 ≥0.5 秒，且所说语句都完整落在段内）
+  provenance:
+    summary: 目标说话人评测：AISHELL-4 整场会议逐段发送
+    status: complete
+    synthetic: none
+    description: 复现下游 speaker-enroll 回放会议时的发送方式（badcase tsasr-cross-speaker-output-20261116：目标人不在场时，11.06 在 3.8% 的请求里输出了同场声音相近的人的话）。AISHELL-4 test 全部 20 场会议、远场通道 0、人工标注，不做混合。分段：同一人相邻语句间隔 ≤1 秒、中间没有别人开口、合并后不超过 10 秒时并成一段（更长的单句保持完整），保留 ≥1 秒的段，段长分布与下游的 MOSS 分段相当。注册：每人一份，取本人在会上最早一条可作注册的语句（≥3 秒、他人重叠 ≤20%、前 5 秒他人说话 <0.3 秒）的前 6 秒，后接本人之后无人重叠的语句，按时间顺序存到 10 秒，客户端取前 5 秒；过声纹核对（通道 0 上与本人在会上其他语句的平均声纹比和其他人更像），不过的换下一条，都不过的人不建框。请求：每个框收到从本人第一次说话的前一段起的每一段，跳过与本人注册片段重叠的段。目标缺席（-neg）：本人在段前后 0.5 秒内都没说话；目标在场（-pos）：本人在段内说话 ≥0.5 秒，且本人碰到这段的语句都完整在段内，参考文本为这些语句；其余不发送（统计见
+      source/<版本>/report.json）。同一段的音频由它的所有请求共用。labels.impostor_sim 为 5 秒注册与段内说话 ≥0.5 秒的其他人会上平均声纹（ECAPA）的最大余弦，impostor_speaker 为对应的人，owner_sim 为与这段的说话人的余弦，enroll_own_sim 为与本人的余弦；metadata.enroll_sims 为注册与会上每个人的余弦。只用于评测，不进训练。生成脚本 scripts/ts_real/meeting_segments.py。
+    sources:
+    - aishell4@icefall-20260908:test
