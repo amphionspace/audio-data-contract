@@ -1,0 +1,82 @@
+  - schema_version: dataset-catalog/2.0
+    dataset_id: ntuml2021
+    version: hf-1e121cc419e8
+    languages:
+      - zh
+      - en
+    tasks:
+      - asr
+      - code_switch_asr
+      - speech_translation
+    aliases:
+      - ml2021_asr_st
+    artifacts:
+      - name: source
+        kind: hf-dataset-snapshot
+        root_alias: ntuml2021
+        relative_path: source/hf-1e121cc419e8
+        metadata:
+          file_count: 26
+          expected_bytes: 8220604726
+          tree_sha256: 0835902eccffcaac2cd723540d3397159c70e972269d8b478f84575f0a766727
+      - name: download_state
+        kind: dataset-state
+        root_alias: ntuml2021
+        relative_path: versions/hf-1e121cc419e8/download_state/state.json
+        expected_bytes: 911
+        sha256: d8bd88133d6b46a49e0efd31e7ff47fc83d687057fb30e243ba58a1df9f648cf
+    splits:
+      train:
+        artifacts:
+          source:
+            - source
+        statistics:
+          count: 17779
+          speakers: 1
+          duration_hours: 10.7551
+          duration_basis: soundfile header duration of every embedded WAV in data/train-*.parquet; pinned upstream file hashes verified
+          sample_formats:
+            2ch/16000Hz/FLOAT: 17779
+      dev:
+        artifacts:
+          source:
+            - source
+        statistics:
+          count: 2997
+          speakers: 1
+          duration_hours: 1.8443
+          duration_basis: soundfile header duration of every embedded WAV in data/dev-*.parquet; pinned upstream file hashes verified
+          sample_formats:
+            2ch/16000Hz/FLOAT: 2997
+      test:
+        artifacts:
+          source:
+            - source
+        statistics:
+          count: 14916
+          speakers: 1
+          duration_hours: 8.9198
+          duration_basis: soundfile header duration of every embedded WAV in data/test-*.parquet; pinned upstream file hashes verified
+          sample_formats:
+            2ch/16000Hz/FLOAT: 14916
+    provenance:
+      summary: 台大机器学习课中英混说讲课（ML2021）
+      source: Hugging Face
+      source_id: ky552/ML2021_ASR_ST
+      revision: 1e121cc419e87eed7d4825400baa06f102931944
+      url: https://huggingface.co/datasets/ky552/ML2021_ASR_ST
+      download_mirror: https://hf-mirror.com
+      release_date: '2023-12-11'
+      description: >-
+        台湾大学李宏毅 2021 年机器学习课的课堂录音（ICASSPW 2024 论文发布，作者含李宏毅），台湾普通话讲课，夹大量英文机器学习术语，
+        如 network、gradient、self-attention、discriminator、reward；每段带繁体中文转写和英文翻译，可做中英混说识别和语音翻译。
+        共 35,692 段、21.5 小时，几乎都是同一位讲者；转写里汉字之间以空格分隔，英文小写。约四成中文句子含英文词（train 39.6%、
+        test 39.0%）。train 20 讲、test 14 讲互不重叠；dev 的 2,997 段全部也在 test 里（同一批片段，不是独立划分），评测时只用 test
+        即可。音频是 16 kHz 双声道 float WAV。数据卡未说明转写方式。数据集信息标 MIT。
+      license:
+        - mit
+      download_scope: Complete ML2021_ASR_ST release (train/dev/test Parquet and card)
+      expected_download_files: 26
+      expected_download_bytes: 8220604726
+      integrity: verified
+      local_scan_date: '2026-11-17'

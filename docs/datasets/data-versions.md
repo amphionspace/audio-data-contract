@@ -2474,6 +2474,18 @@ Emilia-YODAS 多语种 YouTube 语音
 - `hotword_bench@v2-20261019`：热词评测集 v2，只用于评测，不进训练。记录、音频、正确词和其余条件与 v1-20261018 相同；中文切片的 k50 / k50_no_gold 换成从热词池检索的 pool50 / pool50_no_gold： 每个租户（约 200 句，按子集 / 领域语料分组）一个池 = 现网中文万词库（由现网 RAG 返回结果还原，8841 词）+ 租户句子的正确词及其复核易混词；以参考文本为查询，按 open-audio-llm 规则召回的打分公式取得分最高的 50 个（不设阈值）。pool50 = 正确词 + 检索出的干扰词，pool50_no_gold = 检索出的前 50 个干扰词；metadata.distractor_kinds 标出 confusable / tenant / base。各租户的池在 hotword-pools.jsonl.gz。生成脚本 scripts/hotword_bench/pool.py
 - `hotword_bench@v3-20261020`：热词评测集 v3，只用于评测，不进训练。记录、音频、正确词和全部列表与 v2-20261019 相同（请求逐条一致，总指标可与 v2-20261019 直接比较），另加两种标签： metadata.hotword_types 为每个正确词按所在句子的意思标的类型（person / place / organization / product / work / term / other / common），contextasr_speech_zh 的 labels.domain_group 把 ContextASR 自带的自由文本领域归到 13 个大类，自由文本领域本身从 labels.domain 移到 metadata.domain （评测器按每个字符串标签分项，3,957 种取值会让 summary 超过 W&B 的 10 MB 上限）。doubao-seed-2-0-lite-260215 标注，deepseek-v4-pro-ga-260813 看着标注复核并以复核为准（类型复核后不变的占 98.5%）。生成脚本 scripts/hotword_bench/annotate.py，类型定义见 prompts.py
 
+### hungyi_lee_lectures
+
+李宏毅 2025–2026 课程中英混说讲课
+
+语言：en、zh · 任务：语音识别、语码转换语音识别
+
+| 版本 | 时长（小时） | 口径 | COS |
+|---|---:|---|---|
+| [hungyi_lee_lectures@hf-4f17d601b7fd](../../catalog/hungyi_lee_lectures.yaml#L1) | 16.9 | 已登记 | 没有 |
+
+- `hungyi_lee_lectures@hf-4f17d601b7fd`：李宏毅「機器學習2026」「生成式人工智慧與機器學習導論2025」两门课 15 个 YouTube 讲课视频，按配套的繁体中文字幕（VTT）切成 29,043 段、16.9 小时，单一讲者。内容是 AI Agent、上下文工程、注意力机制、大模型等，英文术语非常密集（token、agent、prompt、 context、embedding 等），34% 的中文句子含英文词，适合做“中文夹英文术语”的评测。字段带来源视频、标题、起止时间；文本就是视频 字幕，上传者说明字幕质量随来源、可能还需清洗。只有一个 train 划分。与 ntuml2021 是同一位讲者，不同年份、不同课程。 许可标 other 且没有写明条款，版权属课程方，仅用于内部研究评测
+
 ### hw_sft
 
 热词 SFT 数据（ShareGPT 格式），含普通转写
@@ -2584,6 +2596,18 @@ AISHELL-1、LibriSpeech 合成的多人对话
 
 - `multilingual_asr_bench@v1-20261110`：FLEURS 与 Common Voice 17.0 的 test 划分覆盖中、英、阿、西、法、德、葡、日、韩、印地、俄、印尼十二种语言，另有 GigaSpeech 2 印尼语 test（YouTube）与 Casablanca 八种阿拉伯语方言 test（电视剧）。音频从各自登记的上游快照原样取出，不重编码；转写取上游原文（FLEURS 用 raw transcription）。只用于评测，不进训练
 - `multilingual_asr_bench@v2-20261110`：FLEURS 与 Common Voice 17.0 的 test 划分覆盖中、英、阿、西、法、德、葡、日、韩、印地、俄、印尼十二种语言，另有 GigaSpeech 2 印尼语 test（YouTube）、Casablanca 八种阿拉伯语方言 test（电视剧）、Kathbath 印地语 test（手机朗读，已知/未知说话人）、VoxPopuli 法语和德语 test（欧洲议会发言）与 Golos 俄语 test（语音助手指令，众包/远场）。音频从各自登记的上游快照原样取出，只有 Kathbath 的 m4a 解码为 FLAC；转写取上游原文（FLEURS 用 raw transcription，VoxPopuli 用 raw_text）。v1-20261110 是不含 Kathbath、VoxPopuli、Golos 的前一版，两版共用 source/ 下的音频。只用于评测，不进训练
+
+### ntuml2021
+
+台大机器学习课中英混说讲课（ML2021）
+
+语言：en、zh · 任务：语音识别、语码转换语音识别、speech_translation
+
+| 版本 | 时长（小时） | 口径 | COS |
+|---|---:|---|---|
+| [ntuml2021@hf-1e121cc419e8](../../catalog/ntuml2021.yaml#L1) | 21.5 | 已登记 | 没有 |
+
+- `ntuml2021@hf-1e121cc419e8`：台湾大学李宏毅 2021 年机器学习课的课堂录音（ICASSPW 2024 论文发布，作者含李宏毅），台湾普通话讲课，夹大量英文机器学习术语， 如 network、gradient、self-attention、discriminator、reward；每段带繁体中文转写和英文翻译，可做中英混说识别和语音翻译。 共 35,692 段、21.5 小时，几乎都是同一位讲者；转写里汉字之间以空格分隔，英文小写。约四成中文句子含英文词（train 39.6%、 test 39.0%）。train 20 讲、test 14 讲互不重叠；dev 的 2,997 段全部也在 test 里（同一批片段，不是独立划分），评测时只用 test 即可。音频是 16 kHz 双声道 float WAV。数据卡未说明转写方式。数据集信息标 MIT
 
 ### opendatalab_multilingual
 
@@ -3278,6 +3302,18 @@ YouTube 西语/葡语人工字幕语音（YODAS）
 - `yodas_granary_es_pt@hf-969944574ea3`：YODAS-Granary 里西语、葡语的人工字幕分区（es000、pt000），音频已切成句子；asr_only 与 ast 两个划分都带原文转写，ast 另有英文翻译。自动字幕分区（es100–108、pt100–103，约 4 TB）未下载。地区未区分。es000 的视频 99%（23,976/24,208 个）也在 yodas_es 里，是同一批 YouTube 音频、切分和转写不同，西语部分不要与 yodas_es 一起累计；葡语此前没有登记 YODAS
 - `yodas_granary_es_pt@pt000-clean-v1-20261114`：YODAS-Granary 葡语人工字幕分区 pt000 的清洗版本：Parquet 里嵌的 16 kHz WAV 解成 FLAC 放在本版本目录（约 79 GB）， 547,603 句 / 1,205.96 h 经 Qwen3-ASR-1.7B + whisper-large-v3 双引擎清洗（consensus-v7）保留 544,192 句 / 1,202.34 h （asr_only 18.29 h、ast 1,184.05 h；≥30 s 的长段 241.50 h）。丢弃 0.30% 时长， 主要是字幕只写了音频一部分或与音频不符；不集中在某类时长或某些视频（11,951 个视频里 8 个整段丢弃，丢弃最多的 20 个视频占全部丢弃 8.9%）
 - 含派生版本（与源数据可能重叠）
+
+### yodas_zh_codeswitch
+
+YouTube 中英混说视频片段（YODAS 子集）
+
+语言：en、zh · 任务：语音识别、语码转换语音识别
+
+| 版本 | 时长（小时） | 口径 | COS |
+|---|---:|---|---|
+| [yodas_zh_codeswitch@hf-6def75d98d50](../../catalog/yodas_zh_codeswitch.yaml#L1) | 29.1 | 已登记 | 没有 |
+
+- `yodas_zh_codeswitch@hf-6def75d98d50`：从 espnet/yodas 的 zh000 子集里挑出有中英混说的 176 个 YouTube 视频，46,583 段、29.1 小时，16 kHz 单声道。内容以数码、 硬件、枪械等测评讲解为主，常见英文词有 GPU、CPU、Android、iPhone、pixel。19% 的中文句子含英文词；混说按视频筛选，不保证每段 都有英文。文本是视频字幕（简体为主，少量繁体），不是逐字转写。只下载了 default 配置（原始文本），没有下载上传者清洗过文本的 clean 配置（音频相同）；default 只有 train，不分评测集。CC BY 3.0（随 YODAS 的视频许可）
 
 ### zenless_voice
 

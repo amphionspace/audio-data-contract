@@ -1,6 +1,6 @@
 # 数据总览
 
-当前登记 **269 个数据集**；另有 **34 个下载来源声明**和 **1 个训练混合配方**。登记不代表本机文件已齐备。
+当前登记 **272 个数据集**；另有 **34 个下载来源声明**和 **1 个训练混合配方**。登记不代表本机文件已齐备。
 
 时长取单个版本的最大值，不跨版本相加；≈ 为参考表或估算值，— 为暂无完整时长。各版本的时长、说明、COS 地址和质量证据见[版本明细](data-versions.md)。
 
@@ -185,6 +185,7 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [gigaspeech_bench](data-versions.md#gigaspeech_bench) | ar、en、fil、id、ja、ko、ms、th、vi、yue、zh | 语音识别、语音翻译、带说话人标注的语音识别、说话人分段与归属 | 903.6 | 多方言多语种 ASR 评测（GigaSpeechBench） | 没有 |
 | [hard_hw_sft](data-versions.md#hard_hw_sft) | en、zh | 热词增强语音识别 | 109.4 | 热词难例 SFT 数据（ShareGPT 格式） | `备份桶:audio-data-contract/datasets/hard_hw_sft/` |
 | [hotword_bench](data-versions.md#hotword_bench) | en、es、zh | 热词增强语音识别 | — | 中英热词评测集，仅评测 | 没有 |
+| [hungyi_lee_lectures](data-versions.md#hungyi_lee_lectures) | en、zh | 语音识别、语码转换语音识别 | 16.9 | 李宏毅 2025–2026 课程中英混说讲课 | 没有 |
 | [hw_sft](data-versions.md#hw_sft) | en、zh | 语音识别、热词增强语音识别 | 2,636.5 | 热词 SFT 数据（ShareGPT 格式），含普通转写 | 没有 |
 | [indicvoices](data-versions.md#indicvoices) | as、bn、brx、doi、gu、hi、kn、kok、ks、mai、ml、mni、mr、ne、or、pa、sa、sat、sd、ta、te、ur | 语音识别 | — | 22 种印度语言自然语音（IndicVoices） | 快照 20260914 |
 | [meeting_benchmark](data-versions.md#meeting_benchmark) | en、zh、zh-en | 带说话人标注的语音识别 | 21.2 | 约 180 秒长度的中英会议转写评测集 | `备份桶:audio-data-contract/datasets/meeting_180s_benchmark/` |
@@ -194,6 +195,7 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [mtedx](data-versions.md#mtedx) | es、pt | 语音识别 | 334.1 | TEDx 西语/葡语演讲（mTEDx，非商用） | 部分版本：`备份桶:audio-data-contract/datasets/mtedx/` |
 | [multi-talker-sd](data-versions.md#multi-talker-sd) | en、zh | 语音识别、语码转换语音识别、连续语音分离、重叠语音检测、带说话人标注的语音识别、说话人分段与归属 | — | AISHELL-1、LibriSpeech 合成的多人对话 | 快照 20260914 |
 | [multilingual_asr_bench](data-versions.md#multilingual_asr_bench) | ar、de、en、es、fr、hi、id、ja、ko、pt、ru、zh | 语音识别 | — | 十二种语言公开 ASR 测试集（只用于评测） | `备份桶:audio-data-contract/datasets/multilingual_asr_bench/` |
+| [ntuml2021](data-versions.md#ntuml2021) | en、zh | 语音识别、语码转换语音识别、speech_translation | 21.5 | 台大机器学习课中英混说讲课（ML2021） | 没有 |
 | [opendatalab_multilingual](data-versions.md#opendatalab_multilingual) | ar、cs、hu、ko、ru、sr、th、vi | 语音识别 | 8,588.2 | 8 个语种的语音识别数据（OpenDataLab） | `备份桶:computer-2/audio/`（原始数据）、`备份桶:opendatalab-multilingual/`（原始数据） |
 | [real_t](data-versions.md#real_t) | en、zh | 目标说话人语音识别 | 11.3 | 真实会议目标说话人提取评测（REAL-T） | 没有 |
 | [sot_many_speaker_word_zh_en](data-versions.md#sot_many_speaker_word_zh_en) | en、zh | 带说话人标注的语音识别 | 2,128.0 | — | 没有 |
@@ -222,6 +224,7 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [worldspeech](data-versions.md#worldspeech) | en、zh | 语音识别 | 6,741.7 | 台湾立法院与英语国家议会语音（WorldSpeech） | 没有 |
 | [wutheringwaves](data-versions.md#wutheringwaves) | en、ja、ko、zh | 语音合成 | 134.8 | 《鸣潮》多语配音，TTS 用 | `TTS 桶:WutheringWaves-2.2/`（原始数据） |
 | [yodas_granary_es_pt](data-versions.md#yodas_granary_es_pt) | es、pt | 语音识别 | 3,658.5 | YouTube 西语/葡语人工字幕语音（YODAS） | 部分版本：快照 20260914 |
+| [yodas_zh_codeswitch](data-versions.md#yodas_zh_codeswitch) | en、zh | 语音识别、语码转换语音识别 | 29.1 | YouTube 中英混说视频片段（YODAS 子集） | 没有 |
 | [zenless_voice](data-versions.md#zenless_voice) | en、ja、ko、zh | 语音合成 | 554.4 | 《绝区零》多语配音，TTS 用 | `TTS 桶:zenless-voice/`（原始数据） |
 
 ## 其他语言数据
