@@ -3,6 +3,7 @@
 
     load.sh aliyun-llm -- python scripts/context_correction/generate.py text   --out <source dir>
     load.sh aliyun-llm -- python scripts/context_correction/generate.py review --out <source dir>
+    load.sh aliyun-llm -- python scripts/context_correction/generate.py solve --out <source dir>   # with llm.solver
     python scripts/context_correction/generate.py select --out <source dir>
 
 ``text`` asks the generator LLM for minimal pairs (``pairs.jsonl``); ``review`` asks
@@ -10,6 +11,15 @@ an LLM of another family to judge every pair (``reviews.jsonl``); ``select`` kee
 pairs that pass the review and the mechanical checks, in generation order
 (``items.jsonl``; build.py takes each subtype's target among those whose audio passes
 QC). Everything else is written to ``quarantine.jsonl`` with its reasons. Every LLM call is archived in ``llm-log/``.
+``solve`` (recipe ``llm.solver``) gives each item of the pairs that passed the checks and reviewers to an LLM that
+took no part in writing or reviewing it, with the targets replaced by tone-marked pinyin; an item whose tested
+characters it does not recover from the text alone is not decided by its context, and ``select`` quarantines the
+pair (and, with a solver configured, an implicit pair not solved yet). Only implicit pairs
+are filtered this way: their spelling rests on semantics, which a blind solve tests; an explicit pair's spelling is
+stated in the text and checked by the reviewers, and a solver misses there were its own slips (the pilot's solver
+reasoned "míng = 鸣" and still wrote 陈小明), so explicit items only record the result (``solve``).
+A recipe may list several ``llm.reviewers`` (every one must pass a pair; they run in order, and a later one only
+reviews the pairs that passed the mechanical checks and every earlier reviewer) and pick the v2 prompts (``prompts: v2``).
 All stages resume: finished calls are skipped.
 """
 
@@ -43,6 +53,17 @@ from common import (
 )
 
 HERE = Path(__file__).resolve().parent
+
+
+def prompt_set(recipe: dict) -> tuple[str, str]:
+    """Generator and reviewer system prompts (v2: independent generator, new subtypes)."""
+    if recipe.get("prompts") == "v2":
+        return prompts.GENERATOR_SYSTEM_V2, prompts.REVIEWER_SYSTEM_V2
+    return prompts.GENERATOR_SYSTEM, prompts.REVIEWER_SYSTEM
+
+
+def reviewer_specs(llm_cfg: dict) -> list[dict]:
+    return llm_cfg.get("reviewers") or [llm_cfg["reviewer"]]
 
 
 def weighted(rng: random.Random, table: dict) -> str:
@@ -147,7 +168,7 @@ def cmd_text(recipe: dict, out: Path, limit_calls: int = 0) -> None:
         for segment in row.get("targets", []):
             used[row["subtype"]].append(segment)
     sink = JsonlAppender(pairs_path)
-    system = prompts.GENERATOR_SYSTEM.format(min_chars=recipe["han_chars"][0], max_chars=recipe["han_chars"][1])
+    system = prompt_set(recipe)[0].format(min_chars=recipe["han_chars"][0], max_chars=recipe["han_chars"][1])
 
     def run(call):
         avoid = "、".join(used[call["subtype"]][-60:]) or "无"
@@ -193,16 +214,17 @@ def cmd_text(recipe: dict, out: Path, limit_calls: int = 0) -> None:
 
 def cmd_review(recipe: dict, out: Path) -> None:
     llm_cfg = recipe["llm"]
-    reviewer = LLM(llm_cfg["reviewer"], JsonlAppender(out / "llm-log" / "review.jsonl"),
-                   llm_cfg["base_url"], llm_cfg["api_key_env"])
+    log = JsonlAppender(out / "llm-log" / "review.jsonl")
+    reviewers = [LLM(spec, log, llm_cfg["base_url"], llm_cfg["api_key_env"]) for spec in reviewer_specs(llm_cfg)]
+    system = prompt_set(recipe)[1]
     reviews_path = out / "reviews.jsonl"
-    done = {row["pair_id"] for row in read_jsonl(reviews_path)}
-    pairs = [p for p in read_jsonl(out / "pairs.jsonl") if "pair_id" in p and p["pair_id"] not in done]
+    pairs = [p for p in read_jsonl(out / "pairs.jsonl") if "pair_id" in p]
     sink = JsonlAppender(reviews_path)
 
-    def run(pair):
+    def run(job):
+        pair, reviewer = job
         user = prompts.REVIEWER_USER.format(subtype=pair["subtype"], correct=pair["correct"], confirm=pair["confirm"])
-        reply = reviewer.chat([{"role": "system", "content": prompts.REVIEWER_SYSTEM},
+        reply = reviewer.chat([{"role": "system", "content": system},
                                {"role": "user", "content": user}], tag=pair["pair_id"])
         try:
             verdict = parse_json_reply(reply)
@@ -210,17 +232,35 @@ def cmd_review(recipe: dict, out: Path) -> None:
             verdict = {"error": str(exc)}
         return {"pair_id": pair["pair_id"], "reviewer": reviewer.model, "verdict": verdict}
 
-    with ThreadPoolExecutor(llm_cfg["workers"]) as pool:
-        futures = [pool.submit(run, pair) for pair in pairs]
-        for count, future in enumerate(as_completed(futures), 1):
-            sink.append(future.result())
-            if count % 50 == 0 or count == len(pairs):
-                print(f"[review] {count}/{len(pairs)}", flush=True)
+    for index, reviewer in enumerate(reviewers):
+        rows = read_jsonl(reviews_path)
+        done = {(row["pair_id"], row["reviewer"]) for row in rows}
+        eligible = pairs
+        if index:  # all reviewers must pass: skip pairs already failed by the code checks or an earlier reviewer
+            verdicts = {(row["pair_id"], row["reviewer"]): row for row in rows}
+            eligible = [p for p in pairs if not mechanical_issues(p, recipe) and all(
+                not _review_issues(p, verdicts.get((p["pair_id"], r.model))) for r in reviewers[:index])]
+        jobs = [(p, reviewer) for p in eligible if (p["pair_id"], reviewer.model) not in done]
+        with ThreadPoolExecutor(llm_cfg["workers"]) as pool:
+            futures = [pool.submit(run, job) for job in jobs]
+            for count, future in enumerate(as_completed(futures), 1):
+                sink.append(future.result())
+                if count % 50 == 0 or count == len(jobs):
+                    print(f"[review {reviewer.model}] {count}/{len(jobs)}", flush=True)
 
 
-def review_issues(pair: dict, review: dict | None) -> list[str]:
+def review_issues(pair: dict, reviews: dict[str, dict], models: list[str]) -> list[str]:
+    """Every listed reviewer must have passed the pair (one reviewer in v1)."""
+    issues = []
+    for model in models:
+        tag = "review" if len(models) == 1 else f"review[{model}]"
+        issues += [i.replace("review", tag, 1) for i in _review_issues(pair, reviews.get(model))]
+    return issues
+
+
+def _review_issues(pair: dict, review: dict | None) -> list[str]:
     if review is None:
-        return ["not reviewed"]
+        return ["review missing"]
     verdict = review.get("verdict") or {}
     if "error" in verdict:
         return [f"review unparseable: {verdict['error']}"]
@@ -245,6 +285,11 @@ def to_items(pair: dict) -> list[dict]:
     items = []
     for kind in ("correct", "confirm"):
         segments = parse_markup(pair[kind])
+        # dialogue items put each speaker turn on its own line: TTS reads ``turns`` with alternating
+        # voices; the reference and the segments are the turns joined without the line breaks
+        turns = [t.strip() for t in plain_text(segments).split("\n") if t.strip()]
+        for segment in segments:
+            segment["text"] = segment["text"].replace("\n", "")
         text = plain_text(segments)
         draft = alt_text(segments) if kind == "correct" else text
         edits = []
@@ -271,12 +316,23 @@ def to_items(pair: dict) -> list[dict]:
             "segments": segments,
             "reason": pair.get(f"reason_{kind}") or "",
             "cot": {"draft": draft, "edits": edits, "final": text},
+            **({"turns": turns} if len(turns) > 1 else {}),
         })
     return items
 
 
+def load_reviews(out: Path) -> dict[str, dict[str, dict]]:
+    """{pair_id: {reviewer model: review row}}"""
+    reviews: dict[str, dict[str, dict]] = defaultdict(dict)
+    for row in read_jsonl(out / "reviews.jsonl"):
+        reviews[row["pair_id"]][row["reviewer"]] = row
+    return reviews
+
+
 def cmd_select(recipe: dict, out: Path) -> None:
-    reviews = {r["pair_id"]: r for r in read_jsonl(out / "reviews.jsonl")}
+    reviews = load_reviews(out)
+    models = [spec["model"] for spec in reviewer_specs(recipe["llm"])]
+    solved = {row["item_id"]: row for row in read_jsonl(out / "solve.jsonl")}
     order = {c["call_id"]: i for i, c in enumerate(plan_calls(recipe))}
     pairs = sorted((p for p in read_jsonl(out / "pairs.jsonl") if "pair_id" in p),
                    key=lambda p: (order.get(p["call_id"], 1 << 30), p["pair_id"]))
@@ -284,7 +340,19 @@ def cmd_select(recipe: dict, out: Path) -> None:
     taken, seen_texts = Counter(), set()
     items, quarantine = [], []
     for pair in pairs:
-        issues = mechanical_issues(pair, recipe) + review_issues(pair, reviews.get(pair["pair_id"]))
+        issues = mechanical_issues(pair, recipe) + review_issues(pair, reviews.get(pair["pair_id"], {}), models)
+        if pair["pair_id"] in recipe.get("excluded_pairs", {}):  # confirmed wrong by the spot check
+            issues.append(f"spot check: {recipe['excluded_pairs'][pair['pair_id']]}")
+        for kind in ("correct", "confirm"):
+            result = solved.get(f"{pair['pair_id']}-{kind}")
+            if pair["category"] != "implicit":
+                continue
+            if result is None:
+                # with a solver configured an implicit pair needs its blind solve; without one (v1) it has none
+                if "solver" in recipe["llm"]:
+                    issues.append(f"solve {kind} missing")
+            elif not result["ok"]:
+                issues.append(f"solve {kind}: {result['answer']} for {result['expected']}")
         key = sha1((pair.get("correct") or "") + "\x1f" + (pair.get("confirm") or ""))
         if key in seen_texts:
             issues.append("duplicate pair text")
@@ -296,7 +364,10 @@ def cmd_select(recipe: dict, out: Path) -> None:
             # subtype (plan order) whose audio passes QC, so QC losses do not leave a stratum short
             taken[pair["subtype"]] += 1
             for item in to_items(pair):
-                item["review"] = reviews[pair["pair_id"]]
+                review = reviews[pair["pair_id"]]
+                item["review"] = review[models[0]] if len(models) == 1 else review
+                if item["id"] in solved:
+                    item["solve"] = {k: solved[item["id"]][k] for k in ("solver", "answer", "ok")}
                 items.append(item)
     write_jsonl(out / "items.jsonl", items)
     write_jsonl(out / "quarantine.jsonl", quarantine)
@@ -305,9 +376,75 @@ def cmd_select(recipe: dict, out: Path) -> None:
            "quarantine_reasons": dict(reasons.most_common(20))})
 
 
+def masked_text(segments: list[dict]) -> tuple[str, list[dict]]:
+    """The item's text with every target replaced by its tone-marked pinyin in ⟨⟩, and the targets in order."""
+    from pypinyin import Style, pinyin
+
+    parts, targets = [], []
+    for segment in segments:
+        if segment["role"] == "target":
+            parts.append("⟨" + " ".join(p[0] for p in pinyin(segment["text"], style=Style.TONE)) + "⟩")
+            targets.append(segment)
+        else:
+            parts.append(segment["text"])
+    return "".join(parts), targets
+
+
+def tested_characters_ok(answer: str, target: dict) -> bool:
+    """Same rule as the benchmark scorer: only the characters where the spelling and ``alt`` differ count."""
+    gold, alt = target["text"], target["alt"]
+    if len(answer) != len(gold):
+        return False
+    tested = [i for i, (g, a) in enumerate(zip(gold, alt)) if g != a] or range(len(gold))
+    return all(answer[i] == gold[i] for i in tested)
+
+
+def cmd_solve(recipe: dict, out: Path) -> None:
+    llm_cfg = recipe["llm"]
+    solver = LLM(llm_cfg["solver"], JsonlAppender(out / "llm-log" / "solve.jsonl"),
+                 llm_cfg["base_url"], llm_cfg["api_key_env"])
+    solve_path = out / "solve.jsonl"
+    done = {row["item_id"] for row in read_jsonl(solve_path)}
+    # every item of a pair that passed the code checks and all reviewers; select then needs the solve of each
+    # implicit one, so solve runs between review and select
+    reviews = load_reviews(out)
+    models = [spec["model"] for spec in reviewer_specs(llm_cfg)]
+    pairs = [p for p in read_jsonl(out / "pairs.jsonl") if "pair_id" in p and not mechanical_issues(p, recipe)
+             and not review_issues(p, reviews.get(p["pair_id"], {}), models)]
+    items = [i for p in pairs for i in to_items(p) if i["id"] not in done]
+    sink = JsonlAppender(solve_path)
+
+    def run(item):
+        text, targets = masked_text(item["segments"])
+        reply = solver.chat([{"role": "system", "content": prompts.SOLVE_SYSTEM}, {"role": "user", "content": text}],
+                            tag=item["id"])
+        try:
+            answer = parse_json_reply(reply)
+        except ValueError:
+            answer = None
+        ok = (isinstance(answer, list) and len(answer) == len(targets)
+              and all(isinstance(a, str) and tested_characters_ok(a.strip(), t) for a, t in zip(answer, targets)))
+        return {"item_id": item["id"], "solver": solver.model, "masked": text, "answer": answer,
+                "expected": [t["text"] for t in targets], "ok": ok}
+
+    failed = 0
+    with ThreadPoolExecutor(llm_cfg["solver"].get("workers", llm_cfg["workers"])) as pool:
+        futures = [pool.submit(run, item) for item in items]
+        for count, future in enumerate(as_completed(futures), 1):
+            try:
+                sink.append(future.result())
+            except RuntimeError as exc:  # failed after retries (e.g. rate limit): left for a resumed run
+                failed += 1
+                print(f"[solve] {exc}", flush=True)
+            if count % 50 == 0 or count == len(items):
+                print(f"[solve] {count}/{len(items)}", flush=True)
+    if failed:
+        raise SystemExit(f"[solve] {failed} items failed; rerun to finish them")
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    parser.add_argument("stage", choices=["text", "review", "select"])
+    parser.add_argument("stage", choices=["text", "review", "select", "solve"])
     parser.add_argument("--recipe", type=Path, default=HERE / "recipe.yaml")
     parser.add_argument("--out", type=Path, required=True)
     parser.add_argument("--limit-calls", type=int, default=0, help="only the first N calls (pilot)")
@@ -317,7 +454,7 @@ def main():
     if args.stage == "text":
         cmd_text(recipe, args.out, args.limit_calls)
     else:
-        {"review": cmd_review, "select": cmd_select}[args.stage](recipe, args.out)
+        {"review": cmd_review, "select": cmd_select, "solve": cmd_solve}[args.stage](recipe, args.out)
 
 if __name__ == "__main__":
     main()

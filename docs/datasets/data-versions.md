@@ -1237,8 +1237,10 @@ Common Voice 中文众包朗读；含清洗、热词、加噪版
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
 | [context_correction_zh@v1-20261018](../../catalog/context_correction_zh.yaml#L1) | 17.6 | 已登记 | 没有 |
+| [context_correction_zh@v2-20261116](../../catalog/context_correction_zh.yaml#L108) | 40.5 | 已登记 | 没有 |
 
 - `context_correction_zh@v1-20261018`：上下文纠偏评测集，只用于评测，不进训练。说话人在同一段话里用说明或语境确定了某个同音词的写法 (显式说字、同名一致性、隐式语义)，识别结果应按上下文写。题目由 qwen3.6-plus 生成、 deepseek-v4-pro 独立复核，Qwen3-TTS 用测试划分说话人的声音合成，SenseVoiceSmall 拼音级质检； 另有从 WenetSpeech 播客挖掘的真实录音。生成脚本 scripts/context_correction/
+- `context_correction_zh@v2-20261116`：上下文纠偏评测集 v2 的新增部分，只用于评测，不进训练；与 v1（v1-20261018）的拆分一起组成评测集。 synthetic_indep：kimi-k3.1-pro 出题，deepseek-v4-pro 和 doubao-seed-2.1-pro 依次复核（都通过才收录）， glm-5.2 只看文字盲解隐式题；出题提示、题型（新增专名指代、字义说明、逐字说明、对话问答）、场景、 TTS（CosyVoice3）和音色（aidatatang 及 AISHELL-1、MAGICDATA、THCHS-30 测试划分）都不与训练数据重合。 mined_real：从原版 Emilia-ZH 挖掘的真实录音，本地 Qwen3.6-27B 扫描和预筛，doubao-seed-2.1-pro 与 deepseek-v4-pro 各自标注且一致才收录。两组都用 SenseVoiceSmall 与 FireRedASR2-AED 做拼音级质检（任一家全对即过）， 抽检认定答案不可靠的条目隔离。每条带与训练数据重合的 seen / unseen 标记。 生成脚本 scripts/context_correction/
 
 ### csemotions
 

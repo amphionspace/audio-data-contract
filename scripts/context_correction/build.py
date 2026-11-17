@@ -6,7 +6,9 @@ the version's source directory. Splits:
 
 - ``synthetic`` (asr): synthesized pairs whose two items both pass QC;
 - ``synthetic_ts`` (ts_asr): the same pairs no longer than ``ts_max_seconds``, with
-  a real enrollment clip of the cloned speaker;
+  a real enrollment clip of the cloned speaker (single-speaker items only);
+- v2 names the synthetic splits after ``synthetic_split`` (``synthetic_indep`` / ``synthetic_indep_ts``)
+  and lists its mined corpora in ``mined_corpora`` (their mining settings stay in recipe.yaml);
 - ``mined_real`` (asr): mined real recordings that pass QC;
 - ``quarantine`` (asr): items with audio that failed QC (kept, not scored).
 
@@ -14,7 +16,12 @@ the version's source directory. Splits:
 training sets built from those corpora must leave them out.
 
 Every record has ``labels.context_correction`` (segments, kind, category, pair,
-breakdown fields, CoT supervision) which ``ae open-audio-llm ts-asr`` scores.
+breakdown fields, CoT supervision) which ``ae open-audio-llm ts-asr`` scores. With ``train_overlap`` in
+the recipe it also carries ``train_overlap`` (seen / unseen): a tested spelling (2+ characters) or an
+explanation (4+ characters) that occurs in an explained training transcript makes the item seen.
+
+The new version is added to the repository's ``catalog/``; the published registry copy is synced from the merged
+pull request (it is not a mirror of ``catalog/``, so it is never overwritten wholesale).
 
     python scripts/context_correction/build.py --source <source dir>
 """
@@ -23,7 +30,7 @@ from __future__ import annotations
 
 import argparse
 import hashlib
-import shutil
+import re
 import sys
 from collections import Counter, defaultdict
 from pathlib import Path
@@ -46,8 +53,10 @@ SR = 16000
 SPLITS = {
     "synthetic": ("asr", "合成音频：成对题目（correct 指向少见写法，confirm 指向常用写法），两条都通过质检才收录"),
     "synthetic_ts": ("ts_asr", "同一批合成题目中不超过 TS 时长上限的部分，配被克隆说话人的另一条真实语句作注册音频"),
+    "synthetic_indep": ("asr", "独立合成题：出题和复核模型、说法、题型、场景、TTS、音色都不与训练数据重合；成对，两条都通过质检才收录"),
+    "synthetic_indep_ts": ("ts_asr", "同一批独立合成题中不超过 TS 时长上限的单人题，配被克隆说话人的另一条真实语句作注册音频"),
     "mined_real": ("asr", "从真实语料挖掘的录音：LLM 扫描、两个 LLM 各自写出按上下文修正的转写且一致、只改写法不改读音"),
-    "quarantine": ("asr", "有音频但未通过质检的条目（读错、说明没听清、超长），保留原因，不参与打分"),
+    "quarantine": ("asr", "有音频但未通过质检（读错、说明没听清、超长）或抽检认定答案不可靠的条目，保留原因，不参与打分"),
 }
 
 
@@ -69,7 +78,9 @@ def index_entry(path: Path, cut_id: str) -> dict:
 
 
 def label_of(item: dict, source: str) -> dict:
-    review = (item.get("review") or {}).get("reviewer")
+    review = item.get("review") or {}
+    # one reviewer: the review row; several (v2): {model: review row}
+    review = review["reviewer"] if "reviewer" in review else ", ".join(sorted(review))
     return {
         "segments": item["segments"], "kind": item["kind"], "category": item["category"],
         "subtype": item.get("subtype"), "pair_id": item.get("pair_id"), "position": item.get("position"),
@@ -77,6 +88,30 @@ def label_of(item: dict, source: str) -> dict:
         "source": source, "marked_text": item["marked_text"], "reason": item.get("reason", ""),
         "cot": item["cot"], **({"reviewer": review} if review else {}),
     }
+
+
+def han(text: str) -> str:
+    return re.sub(r"[^\u4e00-\u9fff]", "", text)
+
+
+def explained_training_text(refs: dict) -> str:
+    """Every training transcript that carries an explanation: the synthetic training records and each real
+    record the spelling clean flagged (its transcript, and the corrected one where the clean changed it)."""
+    texts = [r["target"] for path in refs["synthetic_records"] for r in read_jsonl(Path(path))]
+    clean = Path(refs["clean"])
+    texts += [r["text"] for path in sorted(clean.glob("*/positives.jsonl")) for r in read_jsonl(path)]
+    texts += [r["corrected"] for path in sorted(clean.glob("*/decisions.jsonl")) for r in read_jsonl(path)
+              if r.get("corrected")]
+    if not texts:
+        raise ValueError(f"no explained training text under {refs}")
+    return "\n".join(han(t) for t in texts)
+
+
+def overlap_of(segments: list[dict], blob: str) -> dict:
+    target = any(len(han(s["text"])) >= 2 and han(s["text"]) in blob for s in segments if s["role"] == "target")
+    evidence = any(len(han(s["text"])) >= 4 and han(s["text"]) in blob for s in segments if s["role"] == "evidence")
+    return {"train_overlap": "seen" if target or evidence else "unseen",
+            "train_overlap_target": target, "train_overlap_evidence": evidence}
 
 
 def main():
@@ -88,9 +123,13 @@ def main():
     recipe = yaml.safe_load(args.recipe.read_text())
     version, dataset_id = recipe["version"], recipe["dataset_id"]
     version_dir = DATA_ROOT / "datasets" / dataset_id / "versions" / version
-    if version_dir.exists():
+    # the placeholder state.json written when the version is opened may already be there
+    if version_dir.exists() and any(p.name != "state.json" for p in version_dir.iterdir()):
         raise FileExistsError(f"refusing to replace registered version: {version_dir}")
     source = args.source
+    synthetic = recipe.get("synthetic_split", "synthetic")
+    reviewers = ", ".join(s["model"] for s in recipe["llm"].get("reviewers") or [recipe["llm"]["reviewer"]])
+    blob = explained_training_text(recipe["train_overlap"]) if "train_overlap" in recipe else None
     voices = {v["voice_id"]: v for v in read_jsonl(source / "voices.jsonl")}
     index: dict[str, dict] = {}
 
@@ -120,14 +159,14 @@ def main():
     by_split = defaultdict(list)
     stats = Counter()
 
-    def make(item, clip, qc, split, task, source_name, extra_meta):
+    def make(item, clip, qc, split, task, source_name, extra_meta, overlap=None):
         add_audio(clip["path"], item["id"])
         slots = [{"name": "primary", "purpose": "primary", "ref": ref(item["id"], split)}]
         if task == "ts_asr":
             enroll = f"enrollment-{clip['voice_id']}"
             slots = [{"name": "enrollment", "purpose": "enrollment", "ref": ref(enroll, split)},
                      {"name": "mixture", "purpose": "mixture", "ref": ref(item["id"], split)}]
-        labels = {"context_correction": label_of(item, source_name)}
+        labels = {"context_correction": {**label_of(item, source_name), **(overlap or {})}}
         if split == "quarantine":
             labels["qc_issues"] = qc["issues"] if qc else ["no QC result"]
         record = AudioRecord.from_dict({
@@ -152,6 +191,9 @@ def main():
         pairs[item["pair_id"]].append(item)
     for members in pairs.values():
         subtype = members[0]["subtype"]
+        # both items of a pair share the tag of the correct item (the one that carries the explanation)
+        correct = next((m for m in members if m["kind"] == "correct"), members[0])
+        overlap = overlap_of(correct["segments"], blob) if blob is not None else None
         if taken[subtype] >= targets[subtype]:
             stats[f"unused accepted pair: {subtype}"] += 1
             continue
@@ -165,31 +207,41 @@ def main():
             voice = voices[clip["voice_id"]]
             meta = {"voice_id": clip["voice_id"], "speaker": voice["speaker"], "voice_corpus": voice["corpus"],
                     "gender": voice.get("gender"), "tts_model": clip.get("tts_model"),
-                    "generator": recipe["llm"]["generator"]["model"], "reviewer": recipe["llm"]["reviewer"]["model"]}
+                    "generator": recipe["llm"]["generator"]["model"], "reviewer": reviewers}
             if not passed:
-                make(member, clip, qc.get(member["id"]), "quarantine", "asr", "synthetic", meta)
+                make(member, clip, qc.get(member["id"]), "quarantine", "asr", synthetic, meta, overlap)
                 continue
-            make(member, clip, qc[member["id"]], "synthetic", "asr", "synthetic", meta)
-        if passed and all(clips[m["id"]]["duration"] <= recipe["ts_max_seconds"] for m in members):
+            make(member, clip, qc[member["id"]], synthetic, "asr", synthetic, meta, overlap)
+        # a dialogue item has two voices, so it has no single target speaker for TS
+        if passed and not any(m.get("turns") for m in members) and all(
+                clips[m["id"]]["duration"] <= recipe["ts_max_seconds"] for m in members):
             for member in members:
                 clip = clips[member["id"]]
-                make(member, clip, qc[member["id"]], "synthetic_ts", "ts_asr", "synthetic",
-                     {"voice_id": clip["voice_id"], "enrollment_utt": voices[clip["voice_id"]]["enrollment"]["utt_id"]})
+                make(member, clip, qc[member["id"]], f"{synthetic}_ts", "ts_asr", synthetic,
+                     {"voice_id": clip["voice_id"], "enrollment_utt": voices[clip["voice_id"]]["enrollment"]["utt_id"]},
+                     overlap)
 
     # mined real recordings; their source recordings must stay out of any training set
     held_out = set()
-    for corpus in recipe["mining"]["corpora"]:
+    excluded = dict(recipe.get("excluded_mined") or {})  # item id -> why the spot check found it wrong
+    for corpus in recipe.get("mined_corpora") or recipe["mining"]["corpora"]:
         root = source / "mined" / corpus
         mined_clips = {c["id"]: c for c in read_jsonl(root / "clips.jsonl")}
         mined_qc = {r["id"]: r for r in read_jsonl(root / "qc.jsonl")}
         for item in read_jsonl(root / "items.jsonl"):
             check = mined_qc.get(item["id"])
+            if item["id"] in excluded:
+                check = {**(check or {}), "pass": False,
+                         "issues": [*(check or {}).get("issues", []), f"spot check: {excluded.pop(item['id'])}"]}
             split = "mined_real" if check and check["pass"] else "quarantine"
             held_out.add(f"{corpus}:{item['source_recording']}")
             make(item, mined_clips[item["id"]], check, split, "asr", f"mined:{corpus}",
                  {"corpus": corpus, "source_recording": item["source_recording"],
                   "source_start": item["source_start"], "corpus_transcript": item["corpus_transcript"],
-                  "corpus_transcript_correct": item["corpus_transcript_correct"]})
+                  "corpus_transcript_correct": item["corpus_transcript_correct"]},
+                 overlap_of(item["segments"], blob) if blob is not None else None)
+    if excluded:
+        raise ValueError(f"excluded_mined names items that were not mined: {sorted(excluded)}")
 
     for split, rows in by_split.items():
         write_jsonl(version_dir / "records" / f"{split}.jsonl.gz", rows)
@@ -231,12 +283,8 @@ def declaration(recipe, by_split, index, version_dir):
         "artifacts": artifacts, "splits": splits,
         "provenance": {
             "status": "complete", "synthetic": "partial",
-            "description": " ".join(f"""上下文纠偏评测集，只用于评测，不进训练。说话人在同一段话里用说明或语境确定了某个同音词的写法
-                (显式说字、同名一致性、隐式语义)，识别结果应按上下文写。题目由 {recipe['llm']['generator']['model']} 生成、
-                {recipe['llm']['reviewer']['model']} 独立复核，Qwen3-TTS 用测试划分说话人的声音合成，SenseVoiceSmall 拼音级质检；
-                另有从 WenetSpeech 播客挖掘的真实录音。生成脚本 scripts/context_correction/。""".split()),
-            "sources": ["LLM-generated scripts (Aliyun Bailian)", "aishell3@legacy-20260804 test voices",
-                        "kespeech@legacy-20260804 test voices", "wenetspeech_podcast@l-20261014 (mined)"],
+            "description": " ".join(recipe["catalog"]["description"].split()),
+            "sources": recipe["catalog"]["sources"],
         },
     }
 
@@ -249,7 +297,6 @@ def register(spec):
     current = load_catalog(REPO / "catalog")
     validate_catalog([*current, DatasetSpec.from_dict(spec)])
     path.write_text(yaml.safe_dump([*rows, spec], allow_unicode=True, sort_keys=False, width=512), encoding="utf-8")
-    shutil.copy(path, Path("/workspace/data/registry/catalog") / path.name)
 
 
 if __name__ == "__main__":

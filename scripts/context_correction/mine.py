@@ -7,6 +7,10 @@ Stages (each resumable, outputs under ``<source>/mined/``):
   most ``mining.window_seconds`` (the model sees one window per request).
 - ``scan``: a local LLM (served by vLLM, OpenAI API) reads windows in batches and
   flags the ones that contain such context. No regex prefilter.
+- ``prefilter`` (optional): the local scan model applies the label prompt's keep rule to each flagged
+  window first, so the paid two-LLM labeling only sees the windows it keeps (a broad scan prompt flags
+  much more than it keeps: character lessons, riddles, language teaching). Final inclusion still needs
+  both labelers to agree; the prefilter only removes windows, it never adds one.
 - ``label``: for each flagged window the generator LLM writes the context-correct
   transcript with markup, and the reviewer LLM independently writes its own
   context-correct transcript; only agreeing windows whose correction changes no
@@ -15,6 +19,7 @@ Stages (each resumable, outputs under ``<source>/mined/``):
 
     python mine.py windows --source <dir>
     python mine.py scan --source <dir> --server http://127.0.0.1:18301/v1 --served-model qwen3.6-27b
+    python mine.py prefilter --source <dir> --server http://127.0.0.1:18301/v1 --served-model qwen3.6-27b   # optional
     load.sh aliyun-llm -- python mine.py label --source <dir>
     python mine.py extract --source <dir>
 """
@@ -26,7 +31,7 @@ import gzip
 import json
 import sys
 from collections import defaultdict
-from concurrent.futures import ThreadPoolExecutor
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 
 import yaml
@@ -130,11 +135,13 @@ def cmd_scan(recipe, source_dir, corpus, server, served_model, limit, workers):
     batches = [b for b in batches if b[0] not in done]
     client = OpenAI(base_url=server, api_key="EMPTY", timeout=600)
     sink = JsonlAppender(hits_path)
+    # v2 looks for any way of explaining a spelling, not only the four common ones the v1 prompt lists
+    scan_system = prompts.SCAN_SYSTEM_V2 if cfg["corpora"][corpus].get("prompts") == "v2" else prompts.SCAN_SYSTEM
 
     def run(batch):
         index, rows = batch
         listing = "\n".join(f"{k + 1}. {w['text']}" for k, w in enumerate(rows))
-        messages = [{"role": "system", "content": prompts.SCAN_SYSTEM},
+        messages = [{"role": "system", "content": scan_system},
                     {"role": "user", "content": listing}]
         for attempt in range(3):
             try:
@@ -151,11 +158,65 @@ def cmd_scan(recipe, source_dir, corpus, server, served_model, limit, workers):
         return {"batch": index, "flagged": [], "error": error, "model": served_model}
 
     with ThreadPoolExecutor(workers) as pool:
-        for count, result in enumerate(pool.map(run, batches), 1):
+        for count, result in enumerate(as_done(pool, run, batches), 1):
             if "error" not in result:
                 sink.append(result)
             if count % 200 == 0 or count == len(batches):
                 print(f"[scan] {count}/{len(batches)} batches", flush=True)
+
+
+
+def as_done(pool, fn, items):
+    """Results in completion order: an interrupted run keeps everything already finished (resume skips it);
+    ``pool.map`` holds finished results back behind the slowest earlier request."""
+    return (future.result() for future in as_completed([pool.submit(fn, item) for item in items]))
+
+def label_system(recipe, corpus):
+    v2 = recipe["mining"]["corpora"][corpus].get("prompts") == "v2"
+    return prompts.MINE_LABEL_SYSTEM_V2 if v2 else prompts.MINE_LABEL_SYSTEM
+
+
+def cmd_prefilter(recipe, source_dir, corpus, server, served_model, workers, thinking=False, within=None):
+    """``thinking`` needs a server started with a reasoning parser (the reply must not carry the thoughts);
+    ``within`` restricts a second, stricter pass to the windows an earlier pass kept."""
+    from openai import OpenAI
+
+    root = source_dir / "mined" / corpus
+    flagged = {w for row in read_jsonl(root / "scan.jsonl") for w in row["flagged"]}
+    if within:
+        flagged &= {row["window_id"] for row in read_jsonl(Path(within)) if row.get("keep")}
+    path = root / "prefilter.jsonl"
+    done = {row["window_id"] for row in read_jsonl(path)}
+    windows = [w for w in gz_rows(root / "windows.jsonl.gz") if w["window_id"] in flagged and w["window_id"] not in done]
+    client = OpenAI(base_url=server, api_key="EMPTY", timeout=600)
+    sink = JsonlAppender(path)
+    system = label_system(recipe, corpus)
+
+    def run(window):
+        messages = [{"role": "system", "content": system},
+                    {"role": "user", "content": prompts.MINE_LABEL_USER.format(text=window["text"])}]
+        error = None
+        for _ in range(3):
+            try:
+                response = client.chat.completions.create(
+                    model=served_model, messages=messages, temperature=0.0, max_tokens=6144 if thinking else 1024,
+                    extra_body={"chat_template_kwargs": {"enable_thinking": thinking}})
+                reply = response.choices[0].message.content or ""
+                try:
+                    keep = parse_json_reply(reply).get("keep") is True
+                except (ValueError, AttributeError):
+                    keep = True  # unparseable: let the labelers decide rather than drop it
+                return {"window_id": window["window_id"], "keep": keep, "reply": reply, "model": served_model}
+            except Exception as exc:  # noqa: BLE001 - recorded, window retried on resume
+                error = f"{type(exc).__name__}: {exc}"
+        return {"window_id": window["window_id"], "error": error}
+
+    with ThreadPoolExecutor(workers) as pool:
+        for count, result in enumerate(as_done(pool, run, windows), 1):
+            if "error" not in result:
+                sink.append(result)
+            if count % 1000 == 0 or count == len(windows):
+                print(f"[prefilter] {count}/{len(windows)}", flush=True)
 
 
 def correction_issues(original: str, segments: list[dict]) -> list[str]:
@@ -196,9 +257,14 @@ def _han(text: str) -> str:
 
 
 def cmd_label(recipe, source_dir, corpus):
-    llm_cfg = recipe["llm"]
+    # a corpus may name its own labelers (``mining.corpora.<corpus>.llm``), e.g. when the default provider is unavailable
+    llm_cfg = recipe["mining"]["corpora"][corpus].get("llm") or recipe["llm"]
     root = source_dir / "mined" / corpus
     flagged = {w for row in read_jsonl(root / "scan.jsonl") for w in row["flagged"]}
+    if (root / "prefilter.jsonl").exists():
+        kept = {row["window_id"] for row in read_jsonl(root / "prefilter.jsonl") if row["keep"]}
+        print(f"[label] prefilter keeps {len(kept & flagged)}/{len(flagged)} flagged windows", flush=True)
+        flagged &= kept
     windows = {w["window_id"]: w for w in gz_rows(root / "windows.jsonl.gz") if w["window_id"] in flagged}
     labels_path = root / "labels.jsonl"
     done = {row["window_id"] for row in read_jsonl(labels_path)}
@@ -206,10 +272,11 @@ def cmd_label(recipe, source_dir, corpus):
     generator = LLM(llm_cfg["generator"], log, llm_cfg["base_url"], llm_cfg["api_key_env"])
     reviewer = LLM(llm_cfg["reviewer"], log, llm_cfg["base_url"], llm_cfg["api_key_env"])
     sink = JsonlAppender(labels_path)
+    system = label_system(recipe, corpus)
 
     def run(window):
         user = prompts.MINE_LABEL_USER.format(text=window["text"])
-        messages = [{"role": "system", "content": prompts.MINE_LABEL_SYSTEM}, {"role": "user", "content": user}]
+        messages = [{"role": "system", "content": system}, {"role": "user", "content": user}]
         answers = {}
         for role, client in (("generator", generator), ("reviewer", reviewer)):
             try:
@@ -243,7 +310,7 @@ def cmd_label(recipe, source_dir, corpus):
             pending.append(window)
         seen_texts.add(window["text"])
     with ThreadPoolExecutor(llm_cfg["workers"]) as pool:
-        for count, result in enumerate(pool.map(run, pending), 1):
+        for count, result in enumerate(as_done(pool, run, pending), 1):
             sink.append(result)
             if count % 20 == 0 or count == len(pending):
                 print(f"[label] {count}/{len(pending)}", flush=True)
@@ -270,8 +337,9 @@ def cmd_extract(recipe, source_dir, corpus):
     pad = recipe["mining"]["pad_seconds"]
     seen_spans = set()
     for row in kept:
-        # a show repeating its sign-off ("我是小溪，春晓的晓") yields the same question many times: keep one
-        spans = tuple((s["role"], s["text"]) for s in row["segments"] if s["role"] in ("target", "evidence"))
+        # a show repeating its sign-off ("我是小溪，春晓的晓") yields the same question many times: keep one;
+        # compared on Han characters only, since the corpus punctuates the same sign-off differently
+        spans = tuple((s["role"], _han(s["text"])) for s in row["segments"] if s["role"] in ("target", "evidence"))
         if spans in seen_spans:
             continue
         seen_spans.add(spans)
@@ -319,7 +387,7 @@ def cmd_extract(recipe, source_dir, corpus):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    parser.add_argument("stage", choices=["windows", "scan", "label", "extract"])
+    parser.add_argument("stage", choices=["windows", "scan", "prefilter", "label", "extract"])
     parser.add_argument("--recipe", type=Path, default=HERE / "recipe.yaml")
     parser.add_argument("--source", type=Path, required=True)
     parser.add_argument("--corpus", default="wenetspeech_podcast")
@@ -327,12 +395,17 @@ def main():
     parser.add_argument("--served-model", default="qwen3.6-27b")
     parser.add_argument("--limit", type=int, default=0, help="scan an evenly spaced sample of N windows (hit-rate and throughput test)")
     parser.add_argument("--workers", type=int, default=64)
+    parser.add_argument("--thinking", action="store_true", help="prefilter: let the local model think (server needs a reasoning parser)")
+    parser.add_argument("--within", type=Path, help="prefilter: only the windows an earlier prefilter pass kept")
     args = parser.parse_args()
     recipe = yaml.safe_load(args.recipe.read_text())
     if args.stage == "windows":
         cmd_windows(recipe, args.source, args.corpus)
     elif args.stage == "scan":
         cmd_scan(recipe, args.source, args.corpus, args.server, args.served_model, args.limit, args.workers)
+    elif args.stage == "prefilter":
+        cmd_prefilter(recipe, args.source, args.corpus, args.server, args.served_model, args.workers,
+                      args.thinking, args.within)
     elif args.stage == "label":
         cmd_label(recipe, args.source, args.corpus)
     else:
