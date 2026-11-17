@@ -32,7 +32,8 @@ while true; do
     --known "$WORK/ab-noise.json" \
     --output "$WORK/plan.json" \
   && "$AB_PY" "$WORK/cos_mirror.py" push "$WORK/plan.json" \
-    --state "$WORK/state.json" --ledger "$WORK/ab-mirror.json" --workers "${WORKERS:-64}"
+    --state "$WORK/state.json" --ledger "$WORK/ab-mirror.json" --workers "${WORKERS:-64}" \
+    --max-rate "${MAX_RATE:-55}"
   echo "$(date '+%F %T') round exit $?"
   sleep 86400
 done

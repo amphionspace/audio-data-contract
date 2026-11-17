@@ -25,6 +25,7 @@ read the index, then extract the tar (tar x) into the directory.
 import argparse
 import gzip
 import hashlib
+import http.client
 import json
 import os
 import re
@@ -188,6 +189,41 @@ def load_packed(backend, dest):
         if str(response.get("IsTruncated", "false")).lower() != "true":
             return members
         marker = response["NextMarker"]
+
+
+class RateLimiter:
+    """Hand out send slots so the whole process stays under rate bytes per second."""
+
+    def __init__(self, rate, clock=time.monotonic, sleep=time.sleep):
+        self.rate, self.clock, self.sleep = rate, clock, sleep
+        self.free_at, self.lock = 0.0, threading.Lock()
+
+    def acquire(self, nbytes):
+        with self.lock:
+            now = self.clock()
+            start = max(self.free_at, now)
+            self.free_at = start + nbytes / self.rate
+        if start > now:
+            self.sleep(start - now)
+
+
+def limit_upload_rate(mib_per_second, chunk=256 * 1024):
+    """Cap bytes this process sends over HTTP(S), for tar parts and single files alike."""
+    limiter = RateLimiter(mib_per_second * 2**20)
+    send = http.client.HTTPConnection.send
+
+    def limited(self, data):
+        if not isinstance(data, (bytes, bytearray, memoryview)):
+            return send(self, data)
+        view = memoryview(data)
+        for start in range(0, len(view), chunk):
+            piece = view[start:start + chunk]
+            limiter.acquire(len(piece))
+            send(self, piece)
+        return None
+
+    http.client.HTTPConnection.send = limited
+    return limiter
 
 
 class PartWriter:
@@ -629,6 +665,8 @@ def push(args):
         print("refusing --pack-below 0: small files must be packed into tar shards, "
               "not uploaded one by one (--allow-small-files overrides)", file=sys.stderr)
         return 2
+    if args.max_rate > 0:
+        limit_upload_rate(args.max_rate)
     plan_data = json.loads(Path(args.plan).read_text(encoding="utf-8"))
     args.data_root = plan_data["data_root"]
     state = json.loads(Path(args.state).read_text()) if Path(args.state).exists() else {}
@@ -680,6 +718,8 @@ def main(argv=None):
     p.add_argument("--part-inflight", type=int, default=4, help="parts held in memory per shard")
     p.add_argument("--packers", type=int, default=16, help="tar shards streamed at once")
     p.add_argument("--part-workers", type=int, default=64, help="parallel part uploads")
+    p.add_argument("--max-rate", type=float, default=0,
+                   help="cap the upload rate at this many MiB/s, leaving the rest of the uplink to others (0: no cap)")
     p.add_argument("--allow-small-files", action="store_true",
                    help="with --pack-below 0: upload small files one by one (almost never right)")
     p = sub.add_parser("unpack", help="stream a directory's tar shards from COS and extract them")
