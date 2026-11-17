@@ -95,3 +95,37 @@
       Qwen3-ASR-1.7B 加第二个引擎做共识清洗，先试跑看被拒样本。进行中。
     source: yodas_zh_codeswitch@hf-6def75d98d50
     run_dir: /workspace/workspace/mingdong/data/amphiondata/zhen-cs-clean-20261117
+- schema_version: dataset-catalog/2.0
+  dataset_id: emilia2_zhen
+  version: clean-zhen-v1-20261117
+  languages:
+  - zh
+  - en
+  tasks:
+  - asr
+  - code_switch_asr
+  aliases: []
+  derived_from: emilia2@tts-unified-v0.1
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/emilia2_zhen/versions/clean-zhen-v1-20261117/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    summary: Emilia2 中英混合录音里的中文夹英文句
+    description: >-
+      Emilia2 上游 languages 恰为 zh+en 的录音（2026-10-12 解包只取纯中文、纯英文，这部分从未解包，也不在 v4 训练配方里）中，
+      带英文单词的中文短句，按 emilia2@tts-unified-v0.1 统计 429,298 句 / 1,282.5 h，内容多是科技、编程、产品类视频。
+      文本是 Emilia 上游的机器转写。音频从 Lance 解成 16 kHz 单声道 WAV 放本版本目录，生成 lhotse 清单；转写统一为 zhen-norm-v1，
+      再用 Qwen3-ASR-1.7B + MOSS-Transcribe-Diarize 做共识清洗，先试跑看被拒样本。进行中。
+    source: emilia2@tts-unified-v0.1
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/zhen-cs-clean-20261117

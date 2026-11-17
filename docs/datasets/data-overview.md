@@ -175,7 +175,7 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [cs_dialogue_mix](data-versions.md#cs_dialogue_mix) | en、zh | 语音识别 | 31.0 | CS-Dialogue 对话中的中英混说语句 | 部分版本：快照 20260914 |
 | [cumix2017](data-versions.md#cumix2017) | en、yue | 语音识别 | 10.9 | 粤英语码转换语音（CUMIX2017） | 快照 20260914 |
 | [emilia](data-versions.md#emilia) | de、en、fr、ja、ko、zh | 语音识别、语音合成 | 101,655.6 | 多语种视频野外语音（Emilia）；含精修文本版 | 部分版本：`TTS 桶:Emilia/`（原始数据） |
-| [emilia2](data-versions.md#emilia2) | ar、as、bn、cs、da、de、el、en、es、fa、fi、fil、fr、gu、hi、hu、it、ja、kn、ko、mk、ml、mr、ne、nl、pa、pl、pt、ro、ru、sa、sd、sv、ta、te、th、tr、ur、vi、yue、zh | 语音识别、diarization、语音合成 | 146,325.0 | 多语种视频野外语音（Emilia2）；含中英解包版 | 部分版本：`TTS 桶:Emilia2/`（原始数据） |
+| [emilia2](data-versions.md#emilia2) | ar、as、bn、cs、da、de、el、en、es、fa、fi、fil、fr、gu、hi、hu、it、ja、kn、ko、mk、ml、mr、ne、nl、pa、pl、pt、ro、ru、sa、sd、sv、ta、te、th、tr、ur、vi、yue、zh | 语音识别、语码转换语音识别、diarization、语音合成 | 146,325.0 | 多语种视频野外语音（Emilia2）；含中英解包版 | 部分版本：`TTS 桶:Emilia2/`（原始数据） |
 | [emilia2_dialog](data-versions.md#emilia2_dialog) | en、zh | 目标说话人语音识别 | 15,172.8 | Emilia2 中英对话的轮流说话目标说话人数据 | 没有 |
 | [emilia2_mix](data-versions.md#emilia2_mix) | en、zh | 目标说话人语音识别 | 35,744.6 | Emilia2 长音频合成的 2/3 人目标说话人混合 | 没有 |
 | [emilia2_short](data-versions.md#emilia2_short) | en、zh | 语音识别 | 5,102.9 | Emilia2 中英短音频普通转写 | 部分版本：`备份桶:audio-data-contract/datasets/emilia2_short/` |
