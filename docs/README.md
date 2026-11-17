@@ -37,6 +37,7 @@
 
 - [数据声明格式](../catalog/README.md)：YAML 文件结构、字段和统计规则。
 - [数据组织规范](reference/data-organization.md)：Dataset、Layer、View 的身份、血缘和发布规则。
+- [中英混说转写规范](reference/zh-en-transcription.md)：中文里夹英文时英文、缩写和"字母+数字"的写法，以及中英混说评测的计分方式。
 - [JSON Schema](../src/audio_data_contract/schemas/)：数据声明、View、样本与运行状态的字段定义。
 - [Icefall 运行快照](integrations/icefall-runtime.md)：已有消费配置和数据缺口。
 
