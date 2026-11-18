@@ -1085,3 +1085,227 @@
     - cv_bilingual@es-v1-20261111:cv-bilingual-es
     - cv_bilingual@es-v1-20261111:cv-bilingual-en
     - common_voice_es@legacy:cv-interferer-es
+- schema_version: dataset-catalog/2.0
+  dataset_id: ts_asr_crosslingual
+  version: pt-v1-20261117
+  languages:
+  - pt
+  tasks:
+  - ts_asr
+  artifacts:
+  - name: audio-index
+    kind: audio-index
+    root_alias: ts_asr_crosslingual
+    relative_path: versions/pt-v1-20261117/audio-index.jsonl.gz
+    sha256: 0a0ad90a0bd47ec88b02469da14140bb2fa3c65bc4f2e73056d25bef6c4c14f4
+    metadata:
+      record_count: 2400
+  - name: cv-solo-same-records
+    kind: audio-records
+    root_alias: ts_asr_crosslingual
+    relative_path: versions/pt-v1-20261117/records/cv-solo-same.jsonl.gz
+    sha256: d6e02ee4343cd657a63f14dc4eb277e2721c90839bc16b9fde5bee598c12058d
+    metadata:
+      record_count: 120
+  - name: cv-solo-cross-records
+    kind: audio-records
+    root_alias: ts_asr_crosslingual
+    relative_path: versions/pt-v1-20261117/records/cv-solo-cross.jsonl.gz
+    sha256: 5a19d90924402473c4838251ab9c7dfffa1880332d84539f8c752f985b471ec4
+    metadata:
+      record_count: 120
+  - name: cv-k1-same-records
+    kind: audio-records
+    root_alias: ts_asr_crosslingual
+    relative_path: versions/pt-v1-20261117/records/cv-k1-same.jsonl.gz
+    sha256: 0673a20d184c84c2ad7f8519298ea433967c7c8f8c2bf2311d734bee76e1a747
+    metadata:
+      record_count: 120
+  - name: cv-k1-cross-records
+    kind: audio-records
+    root_alias: ts_asr_crosslingual
+    relative_path: versions/pt-v1-20261117/records/cv-k1-cross.jsonl.gz
+    sha256: 211aaf0530b940730879c68446dc109c8b733f5b8fa1a32a6885cbdf93f03cec
+    metadata:
+      record_count: 120
+  - name: cv-k2-same-records
+    kind: audio-records
+    root_alias: ts_asr_crosslingual
+    relative_path: versions/pt-v1-20261117/records/cv-k2-same.jsonl.gz
+    sha256: 3ffa9771123ac1ee40bfe9426dda6d63b0bba4ae80e6634a87990201df6834ec
+    metadata:
+      record_count: 120
+  - name: cv-k2-cross-records
+    kind: audio-records
+    root_alias: ts_asr_crosslingual
+    relative_path: versions/pt-v1-20261117/records/cv-k2-cross.jsonl.gz
+    sha256: e4c9e1fc21d29b8be7bf9a6c7d38755d1c322835abc361d372eec8967c3145d6
+    metadata:
+      record_count: 120
+  - name: cv-abs1-same-records
+    kind: audio-records
+    root_alias: ts_asr_crosslingual
+    relative_path: versions/pt-v1-20261117/records/cv-abs1-same.jsonl.gz
+    sha256: 97a9be88ced902633f82d769d2970c2fff2ee8cc932c3aac4b2639e261b4da61
+    metadata:
+      record_count: 120
+  - name: cv-abs1-cross-records
+    kind: audio-records
+    root_alias: ts_asr_crosslingual
+    relative_path: versions/pt-v1-20261117/records/cv-abs1-cross.jsonl.gz
+    sha256: e4624f85736668389eee97c9bd7b1727437761e59a8198c8882ff901e9700c38
+    metadata:
+      record_count: 120
+  - name: cv-abs2-same-records
+    kind: audio-records
+    root_alias: ts_asr_crosslingual
+    relative_path: versions/pt-v1-20261117/records/cv-abs2-same.jsonl.gz
+    sha256: 3e18272d52377478ec49fa0d20f123094fd0a32b142de6e7cdbd0c13a350b3f5
+    metadata:
+      record_count: 120
+  - name: cv-abs2-cross-records
+    kind: audio-records
+    root_alias: ts_asr_crosslingual
+    relative_path: versions/pt-v1-20261117/records/cv-abs2-cross.jsonl.gz
+    sha256: 5425cfac939a6223bdd73fc65f84c2535353826589ca444305c1b80510c2b1be
+    metadata:
+      record_count: 120
+  splits:
+    cv-solo-same:
+      artifacts:
+        records:
+        - cv-solo-same-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 120
+        duration_hours: 0.2887
+        duration_basis: Mixture duration
+      provenance:
+        description: 'cv-solo: {"kind": "pos", "schedule": "full", "k": 0, "duration": [4, 12], "target_pool": "cv_pt", "interferer_pool": "cvi_pt", "enroll_pool": "cv_pt", "pair": "cv-solo", "noise_floor": {"dbfs": [-65, -35], "kinds": {"white": 0.15, "pink": 0.15, "real": 0.7}, "real_pools": ["wham", "dns5_audioset", "dns5_freesound"]}, "enroll_store_seconds": 10, "language": "pt"}'
+    cv-solo-cross:
+      artifacts:
+        records:
+        - cv-solo-cross-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 120
+        duration_hours: 0.2887
+        duration_basis: Mixture duration
+      provenance:
+        description: 'cv-solo: {"kind": "pos", "schedule": "full", "k": 0, "duration": [4, 12], "target_pool": "cv_pt", "interferer_pool": "cvi_pt", "enroll_pool": "cv_en", "pair": "cv-solo", "noise_floor": {"dbfs": [-65, -35], "kinds": {"white": 0.15, "pink": 0.15, "real": 0.7}, "real_pools": ["wham", "dns5_audioset", "dns5_freesound"]}, "enroll_store_seconds": 10, "language": "pt"}'
+    cv-k1-same:
+      artifacts:
+        records:
+        - cv-k1-same-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 120
+        duration_hours: 0.3675
+        duration_basis: Mixture duration
+      provenance:
+        description: 'cv-k1: {"kind": "pos", "schedule": "full", "k": 1, "duration": [6, 15], "sir_db": [-3, 3], "target_pool": "cv_pt", "interferer_pool": "cvi_pt", "enroll_pool": "cv_pt", "pair": "cv-k1", "noise_floor": {"dbfs": [-65, -35], "kinds": {"white": 0.15, "pink": 0.15, "real": 0.7}, "real_pools": ["wham", "dns5_audioset", "dns5_freesound"]}, "enroll_store_seconds": 10, "language": "pt"}'
+    cv-k1-cross:
+      artifacts:
+        records:
+        - cv-k1-cross-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 120
+        duration_hours: 0.3675
+        duration_basis: Mixture duration
+      provenance:
+        description: 'cv-k1: {"kind": "pos", "schedule": "full", "k": 1, "duration": [6, 15], "sir_db": [-3, 3], "target_pool": "cv_pt", "interferer_pool": "cvi_pt", "enroll_pool": "cv_en", "pair": "cv-k1", "noise_floor": {"dbfs": [-65, -35], "kinds": {"white": 0.15, "pink": 0.15, "real": 0.7}, "real_pools": ["wham", "dns5_audioset", "dns5_freesound"]}, "enroll_store_seconds": 10, "language": "pt"}'
+    cv-k2-same:
+      artifacts:
+        records:
+        - cv-k2-same-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 120
+        duration_hours: 0.3469
+        duration_basis: Mixture duration
+      provenance:
+        description: 'cv-k2: {"kind": "pos", "schedule": "full", "k": 2, "duration": [6, 15], "sir_db": [-3, 3], "target_pool": "cv_pt", "interferer_pool": "cvi_pt", "enroll_pool": "cv_pt", "pair": "cv-k2", "noise_floor": {"dbfs": [-65, -35], "kinds": {"white": 0.15, "pink": 0.15, "real": 0.7}, "real_pools": ["wham", "dns5_audioset", "dns5_freesound"]}, "enroll_store_seconds": 10, "language": "pt"}'
+    cv-k2-cross:
+      artifacts:
+        records:
+        - cv-k2-cross-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 120
+        duration_hours: 0.3469
+        duration_basis: Mixture duration
+      provenance:
+        description: 'cv-k2: {"kind": "pos", "schedule": "full", "k": 2, "duration": [6, 15], "sir_db": [-3, 3], "target_pool": "cv_pt", "interferer_pool": "cvi_pt", "enroll_pool": "cv_en", "pair": "cv-k2", "noise_floor": {"dbfs": [-65, -35], "kinds": {"white": 0.15, "pink": 0.15, "real": 0.7}, "real_pools": ["wham", "dns5_audioset", "dns5_freesound"]}, "enroll_store_seconds": 10, "language": "pt"}'
+    cv-abs1-same:
+      artifacts:
+        records:
+        - cv-abs1-same-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 120
+        duration_hours: 0.3527
+        duration_basis: Mixture duration
+      provenance:
+        description: 'cv-abs1: {"kind": "neg", "k": 1, "duration": [6, 15], "target_pool": "cv_pt", "interferer_pool": "cvi_pt", "enroll_pool": "cv_pt", "pair": "cv-abs1", "noise_floor": {"dbfs": [-65, -35], "kinds": {"white": 0.15, "pink": 0.15, "real": 0.7}, "real_pools": ["wham", "dns5_audioset", "dns5_freesound"]}, "enroll_store_seconds": 10, "language": "pt"}'
+    cv-abs1-cross:
+      artifacts:
+        records:
+        - cv-abs1-cross-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 120
+        duration_hours: 0.3527
+        duration_basis: Mixture duration
+      provenance:
+        description: 'cv-abs1: {"kind": "neg", "k": 1, "duration": [6, 15], "target_pool": "cv_pt", "interferer_pool": "cvi_pt", "enroll_pool": "cv_en", "pair": "cv-abs1", "noise_floor": {"dbfs": [-65, -35], "kinds": {"white": 0.15, "pink": 0.15, "real": 0.7}, "real_pools": ["wham", "dns5_audioset", "dns5_freesound"]}, "enroll_store_seconds": 10, "language": "pt"}'
+    cv-abs2-same:
+      artifacts:
+        records:
+        - cv-abs2-same-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 120
+        duration_hours: 0.3608
+        duration_basis: Mixture duration
+      provenance:
+        description: 'cv-abs2: {"kind": "neg", "k": 2, "duration": [6, 15], "target_pool": "cv_pt", "interferer_pool": "cvi_pt", "enroll_pool": "cv_pt", "pair": "cv-abs2", "noise_floor": {"dbfs": [-65, -35], "kinds": {"white": 0.15, "pink": 0.15, "real": 0.7}, "real_pools": ["wham", "dns5_audioset", "dns5_freesound"]}, "enroll_store_seconds": 10, "language": "pt"}'
+    cv-abs2-cross:
+      artifacts:
+        records:
+        - cv-abs2-cross-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 120
+        duration_hours: 0.3608
+        duration_basis: Mixture duration
+      provenance:
+        description: 'cv-abs2: {"kind": "neg", "k": 2, "duration": [6, 15], "target_pool": "cv_pt", "interferer_pool": "cvi_pt", "enroll_pool": "cv_en", "pair": "cv-abs2", "noise_floor": {"dbfs": [-65, -35], "kinds": {"white": 0.15, "pink": 0.15, "real": 0.7}, "real_pools": ["wham", "dns5_audioset", "dns5_freesound"]}, "enroll_store_seconds": 10, "language": "pt"}'
+  provenance:
+    status: complete
+    synthetic: full
+    description: 跨语言注册 TS-ASR 评测集（混合段葡萄牙语）：Common Voice 同一账号既录葡语（27.0 dev/test）又录英文、从未作为 TS 训练目标、两种语言都核对过是同一人声（ECAPA，每种语言至少 5 句）的 44 人；每个场景配同语言（葡语）与跨语言（英文）两种注册。没有合成音色部分（Common Voice 里没有同时录葡语和中文的说话人）。与西语版 es-v1-20261111 同一配方与随机种子。只用于评测，不进训练。配方见 scripts/ts_benchmark/recipe-crosslingual-pt.yaml。
+    sources:
+    - cv_bilingual@pt-v1-20261117:cv-bilingual-pt
+    - cv_bilingual@pt-v1-20261117:cv-bilingual-en
+    - common_voice_pt@pt-eval-v1-20261117:cv-interferer-pt

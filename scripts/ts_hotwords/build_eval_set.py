@@ -5,7 +5,7 @@ usage: build_eval_set.py [--version V] [--languages zh,en] OUT_DIR LABELS_JSONL 
 Built ts_asr_hotwords@v1-20261102 (zh, en) from the labels now registered as <dataset>@<v>-hotword-labels-20261102
 (metadata.hotword_labels; see register_eval_hotword_labels.py), and ts_asr_hotwords@es-v1-20261111 (--languages es)
 from ts-asr-benchmark-es@v1-20261110 with labels of the same tool and settings (label_hotwords.py, Qwen3.8-27B, review
-on). Label rows that carry ``language`` give that language's random-word pool; rows without it are zh when the text
+on), and ts_asr_hotwords@pt-v1-20261117 (--languages pt) the same way from ts-asr-benchmark-pt@v1-20261117. Label rows that carry ``language`` give that language's random-word pool; rows without it are zh when the text
 has CJK ideographs, else en.
 Every source record whose mixture has words we can label keeps its audio refs, target, labels and metadata; it gains
 - ``hotwords``: hotwords of the enrolled speaker's transcript (empty when the target is absent);
@@ -35,6 +35,7 @@ SETS = {
     "zh": "/workspace/data/ae-state/eval-sets/open-audio-llm/ts-asr-benchmark@v12-20261022/eval-set.yaml",
     "en": "/workspace/data/ae-state/eval-sets/open-audio-llm/ts-asr-benchmark-en@v1-20261031/eval-set.yaml",
     "es": "/workspace/data/ae-state/eval-sets/open-audio-llm/ts-asr-benchmark-es@v1-20261110/eval-set.yaml",
+    "pt": "/workspace/data/ae-state/eval-sets/asr/ts-asr-benchmark-pt@v1-20261117/eval-set.yaml",
 }
 RANDOM_LIST = 10
 INTERFERER_LIST = 20

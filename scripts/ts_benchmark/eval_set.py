@@ -171,8 +171,8 @@ CROSSLINGUAL_SCENES = {"solo": "单人", "k1": "1 个干扰人", "k2": "2 个干
                        "abs2": "目标缺席 · 2 个干扰人"}
 CROSSLINGUAL_ENROLL = {"same": "同语言注册", "cross": "跨语言注册"}
 # Mixture language -> (its name, the cross enrollment's language).
-CROSSLINGUAL_LANGUAGES = {"zh": ("中文", "英文"), "en": ("英文", "中文"), "es": ("西班牙语", "英文")}
-# Tags an eval set may carry; Spanish has none, so an es set is tagged by task only.
+CROSSLINGUAL_LANGUAGES = {"zh": ("中文", "英文"), "en": ("英文", "中文"), "es": ("西班牙语", "英文"), "pt": ("葡萄牙语", "英文")}
+# Tags an eval set may carry; Spanish and Portuguese have none, so es and pt sets are tagged by task only.
 LANGUAGE_TAGS = {"zh", "en"}
 
 

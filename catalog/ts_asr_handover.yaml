@@ -698,3 +698,125 @@
     description: 西班牙语目标说话人 ASR 评测集（ts_asr_handover）：与英文版 en-v1-20261031 同一配方与随机种子，说话人换成 Common Voice es dev（众包朗读、多口音、各自设备）；不含业务真实注册录音条件。只用于评测，不进训练。场景见 scripts/ts_benchmark/recipe-handover-es.yaml。
     sources:
     - common_voice_es@legacy:dev
+- schema_version: dataset-catalog/2.0
+  dataset_id: ts_asr_handover
+  version: pt-v1-20261117
+  languages:
+  - pt
+  tasks:
+  - ts_asr
+  artifacts:
+  - name: audio-index
+    kind: audio-index
+    root_alias: ts_asr_handover
+    relative_path: versions/pt-v1-20261117/audio-index.jsonl.gz
+    sha256: 794c07f6861d18c0709cf7747d2379af71c618e2a50c75f409be8e1adc45dbe7
+    metadata:
+      record_count: 1200
+  - name: abs-rand-k1-records
+    kind: audio-records
+    root_alias: ts_asr_handover
+    relative_path: versions/pt-v1-20261117/records/abs-rand-k1.jsonl.gz
+    sha256: 32736578365b39cbc2bbb2c969887574f6e44bd07b60467328631dae276b88be
+    metadata:
+      record_count: 120
+  - name: abs-hard-k1-records
+    kind: audio-records
+    root_alias: ts_asr_handover
+    relative_path: versions/pt-v1-20261117/records/abs-hard-k1.jsonl.gz
+    sha256: 578c67d69ac1b84d82a12a6d07487fbe75d42e23c0d17b7f9f259fd83fce291d
+    metadata:
+      record_count: 120
+  - name: handover-same-open-records
+    kind: audio-records
+    root_alias: ts_asr_handover
+    relative_path: versions/pt-v1-20261117/records/handover-same-open.jsonl.gz
+    sha256: 589721d5211d8164180956f2deffe5881cb5d316a149883d7b46ad4493772564
+    metadata:
+      record_count: 120
+  - name: handover-rand-records
+    kind: audio-records
+    root_alias: ts_asr_handover
+    relative_path: versions/pt-v1-20261117/records/handover-rand.jsonl.gz
+    sha256: f4ce47d57fb0144052744ac0206e1b72406bf80850d860d3f58b9e6d559b1589
+    metadata:
+      record_count: 120
+  - name: handover-rev-same-open-records
+    kind: audio-records
+    root_alias: ts_asr_handover
+    relative_path: versions/pt-v1-20261117/records/handover-rev-same-open.jsonl.gz
+    sha256: 67da7611ee6cec2074cc942f81dde6579a60cdf676cadd34fe7600854fa13da2
+    metadata:
+      record_count: 120
+  splits:
+    abs-rand-k1:
+      artifacts:
+        records:
+        - abs-rand-k1-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 120
+        duration_hours: 0.4046
+        duration_basis: Mixture duration
+      provenance:
+        description: 'absent: {"kind": "neg", "k": 1, "duration": [6, 18], "pair": "abs1", "noise_floor": {"dbfs": [-65, -35], "kinds": {"white": 0.15, "pink": 0.15, "real": 0.7}, "real_pools": ["wham", "dns5_audioset", "dns5_freesound"]}, "enroll_store_seconds": 10, "language": "pt"}'
+    abs-hard-k1:
+      artifacts:
+        records:
+        - abs-hard-k1-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 120
+        duration_hours: 0.4046
+        duration_basis: Mixture duration
+      provenance:
+        description: 'absent: {"kind": "neg", "k": 1, "duration": [6, 18], "hard": true, "pair": "abs1", "noise_floor": {"dbfs": [-65, -35], "kinds": {"white": 0.15, "pink": 0.15, "real": 0.7}, "real_pools": ["wham", "dns5_audioset", "dns5_freesound"]}, "enroll_store_seconds": 10, "language": "pt"}'
+    handover-same-open:
+      artifacts:
+        records:
+        - handover-same-open-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 120
+        duration_hours: 0.2955
+        duration_basis: Mixture duration
+      provenance:
+        description: 'handover: {"kind": "pos", "schedule": "handover", "handover": "same_open", "pair": "handover", "noise_floor": {"dbfs": [-65, -35], "kinds": {"white": 0.15, "pink": 0.15, "real": 0.7}, "real_pools": ["wham", "dns5_audioset", "dns5_freesound"]}, "enroll_store_seconds": 10, "language": "pt"}'
+    handover-rand:
+      artifacts:
+        records:
+        - handover-rand-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 120
+        duration_hours: 0.2968
+        duration_basis: Mixture duration
+      provenance:
+        description: 'handover: {"kind": "pos", "schedule": "handover", "handover": "rand", "pair": "handover", "noise_floor": {"dbfs": [-65, -35], "kinds": {"white": 0.15, "pink": 0.15, "real": 0.7}, "real_pools": ["wham", "dns5_audioset", "dns5_freesound"]}, "enroll_store_seconds": 10, "language": "pt"}'
+    handover-rev-same-open:
+      artifacts:
+        records:
+        - handover-rev-same-open-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 120
+        duration_hours: 0.2955
+        duration_basis: Mixture duration
+      provenance:
+        description: 'handover: {"kind": "pos", "schedule": "handover", "handover": "rev_same_open", "pair": "handover", "noise_floor": {"dbfs": [-65, -35], "kinds": {"white": 0.15, "pink": 0.15, "real": 0.7}, "real_pools": ["wham", "dns5_audioset", "dns5_freesound"]}, "enroll_store_seconds": 10, "language": "pt"}'
+  provenance:
+    status: complete
+    synthetic: full
+    description: 葡萄牙语目标说话人 ASR 评测集（ts_asr_handover）：与西语版 es-v1-20261111、英文版 en-v1-20261031 同一配方与随机种子，说话人换成 Common Voice 27.0 pt dev（众包朗读，多为巴西口音，各自设备）；不含业务真实注册录音条件。只用于评测，不进训练。场景见 scripts/ts_benchmark/recipe-handover-pt.yaml。
+    sources:
+    - common_voice_pt@pt-eval-v1-20261117:dev

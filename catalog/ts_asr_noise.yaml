@@ -1318,3 +1318,225 @@
     description: 西班牙语目标说话人 ASR 评测集（ts_asr_noise）：与英文版 en-v1-20261031 同一配方与随机种子，说话人换成 Common Voice es dev（众包朗读、多口音、各自设备）；没有英文版的背景人声（babble）各列：已登记的西语 babble 都由训练划分的说话人合成，评测不能用；不含业务真实注册录音条件。只用于评测，不进训练。场景见 scripts/ts_benchmark/recipe-noise-es.yaml。
     sources:
     - common_voice_es@legacy:dev
+- schema_version: dataset-catalog/2.0
+  dataset_id: ts_asr_noise
+  version: pt-v1-20261117
+  languages:
+  - pt
+  tasks:
+  - ts_asr
+  artifacts:
+  - name: audio-index
+    kind: audio-index
+    root_alias: ts_asr_noise
+    relative_path: versions/pt-v1-20261117/audio-index.jsonl.gz
+    sha256: 9cb6b4e4584b0676a159cf9d344bb4d45f9e990b338d9760dcf214e60afa1ce5
+    metadata:
+      record_count: 2400
+  - name: panel-base-pos-records
+    kind: audio-records
+    root_alias: ts_asr_noise
+    relative_path: versions/pt-v1-20261117/records/panel-base-pos.jsonl.gz
+    sha256: f8baa0291a8098ea8456527938b6636fec5686681bef07c127e2d831d5484387
+    metadata:
+      record_count: 120
+  - name: panel-base-neg-records
+    kind: audio-records
+    root_alias: ts_asr_noise
+    relative_path: versions/pt-v1-20261117/records/panel-base-neg.jsonl.gz
+    sha256: a3ae9ac165643802ad08a777a18f9b9db5be6256e9f8a6f6216d380a8b92512d
+    metadata:
+      record_count: 120
+  - name: events20-pos-records
+    kind: audio-records
+    root_alias: ts_asr_noise
+    relative_path: versions/pt-v1-20261117/records/events20-pos.jsonl.gz
+    sha256: 2bfaafa9d18b741ce178dc0a63aa5715286ed440c14c9f20f10834fc1b7ea562
+    metadata:
+      record_count: 120
+  - name: events20-neg-records
+    kind: audio-records
+    root_alias: ts_asr_noise
+    relative_path: versions/pt-v1-20261117/records/events20-neg.jsonl.gz
+    sha256: e93b7e34fb0fe2ba9b6ddf0d0405a34740a3a715ed0721bcff739b74ab0669b0
+    metadata:
+      record_count: 120
+  - name: events10-pos-records
+    kind: audio-records
+    root_alias: ts_asr_noise
+    relative_path: versions/pt-v1-20261117/records/events10-pos.jsonl.gz
+    sha256: 29f689d1c9e1e69cf2f9740c1069d6f2b1b5095f49b32c34e0ff656857ca6599
+    metadata:
+      record_count: 120
+  - name: events10-neg-records
+    kind: audio-records
+    root_alias: ts_asr_noise
+    relative_path: versions/pt-v1-20261117/records/events10-neg.jsonl.gz
+    sha256: 086a3b6e9faf28e096a564340f09b021be31d55126c8bce56e5e11f53ff6cd05
+    metadata:
+      record_count: 120
+  - name: crowd10-pos-records
+    kind: audio-records
+    root_alias: ts_asr_noise
+    relative_path: versions/pt-v1-20261117/records/crowd10-pos.jsonl.gz
+    sha256: 222336707143a6a42771975a335f7a64ff2690114a53eddc8d9b5a2ab2352633
+    metadata:
+      record_count: 120
+  - name: crowd10-neg-records
+    kind: audio-records
+    root_alias: ts_asr_noise
+    relative_path: versions/pt-v1-20261117/records/crowd10-neg.jsonl.gz
+    sha256: b9c877303b920b57267bd5127afaf198bb5770703925216312ca371f20a64017
+    metadata:
+      record_count: 120
+  - name: nonspeech-crowd-records
+    kind: audio-records
+    root_alias: ts_asr_noise
+    relative_path: versions/pt-v1-20261117/records/nonspeech-crowd.jsonl.gz
+    sha256: df9416e3c77c21e35d88fa953426a1b00682663aa63da4ca465d477fe59787f5
+    metadata:
+      record_count: 120
+  - name: nonspeech-events-records
+    kind: audio-records
+    root_alias: ts_asr_noise
+    relative_path: versions/pt-v1-20261117/records/nonspeech-events.jsonl.gz
+    sha256: 9322d0dd381a01118dd05e20256fd7d4568f44de51fc4cd2679dbb5ca4e75027
+    metadata:
+      record_count: 120
+  splits:
+    panel-base-pos:
+      artifacts:
+        records:
+        - panel-base-pos-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 120
+        duration_hours: 0.3647
+        duration_basis: Mixture duration
+      provenance:
+        description: 'noise: {"kind": "pos", "schedule": "full", "k": [1, 2], "duration": [6, 15], "sir_db": [-3, 3], "pair": "panel-pos", "noise_floor": {"dbfs": [-65, -35], "kinds": {"white": 0.15, "pink": 0.15, "real": 0.7}, "real_pools": ["wham", "dns5_audioset", "dns5_freesound"]}, "enroll_store_seconds": 10, "language": "pt"}'
+    panel-base-neg:
+      artifacts:
+        records:
+        - panel-base-neg-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 120
+        duration_hours: 0.3522
+        duration_basis: Mixture duration
+      provenance:
+        description: 'noise: {"kind": "neg", "k": [1, 2], "duration": [6, 15], "pair": "panel-neg", "noise_floor": {"dbfs": [-65, -35], "kinds": {"white": 0.15, "pink": 0.15, "real": 0.7}, "real_pools": ["wham", "dns5_audioset", "dns5_freesound"]}, "enroll_store_seconds": 10, "language": "pt"}'
+    events20-pos:
+      artifacts:
+        records:
+        - events20-pos-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 120
+        duration_hours: 0.3647
+        duration_basis: Mixture duration
+      provenance:
+        description: 'noise: {"kind": "pos", "schedule": "full", "k": [1, 2], "duration": [6, 15], "sir_db": [-3, 3], "noise": {"kind": "fsd_events", "snr_db": [20, 20]}, "pair": "panel-pos", "noise_floor": {"dbfs": [-65, -35], "kinds": {"white": 0.15, "pink": 0.15, "real": 0.7}, "real_pools": ["wham", "dns5_audioset", "dns5_freesound"]}, "enroll_store_seconds": 10, "language": "pt"}'
+    events20-neg:
+      artifacts:
+        records:
+        - events20-neg-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 120
+        duration_hours: 0.3522
+        duration_basis: Mixture duration
+      provenance:
+        description: 'noise: {"kind": "neg", "k": [1, 2], "duration": [6, 15], "noise": {"kind": "fsd_events", "snr_db": [20, 20]}, "pair": "panel-neg", "noise_floor": {"dbfs": [-65, -35], "kinds": {"white": 0.15, "pink": 0.15, "real": 0.7}, "real_pools": ["wham", "dns5_audioset", "dns5_freesound"]}, "enroll_store_seconds": 10, "language": "pt"}'
+    events10-pos:
+      artifacts:
+        records:
+        - events10-pos-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 120
+        duration_hours: 0.3647
+        duration_basis: Mixture duration
+      provenance:
+        description: 'noise: {"kind": "pos", "schedule": "full", "k": [1, 2], "duration": [6, 15], "sir_db": [-3, 3], "noise": {"kind": "fsd_events", "snr_db": [10, 10]}, "pair": "panel-pos", "noise_floor": {"dbfs": [-65, -35], "kinds": {"white": 0.15, "pink": 0.15, "real": 0.7}, "real_pools": ["wham", "dns5_audioset", "dns5_freesound"]}, "enroll_store_seconds": 10, "language": "pt"}'
+    events10-neg:
+      artifacts:
+        records:
+        - events10-neg-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 120
+        duration_hours: 0.3522
+        duration_basis: Mixture duration
+      provenance:
+        description: 'noise: {"kind": "neg", "k": [1, 2], "duration": [6, 15], "noise": {"kind": "fsd_events", "snr_db": [10, 10]}, "pair": "panel-neg", "noise_floor": {"dbfs": [-65, -35], "kinds": {"white": 0.15, "pink": 0.15, "real": 0.7}, "real_pools": ["wham", "dns5_audioset", "dns5_freesound"]}, "enroll_store_seconds": 10, "language": "pt"}'
+    crowd10-pos:
+      artifacts:
+        records:
+        - crowd10-pos-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 120
+        duration_hours: 0.3647
+        duration_basis: Mixture duration
+      provenance:
+        description: 'noise: {"kind": "pos", "schedule": "full", "k": [1, 2], "duration": [6, 15], "sir_db": [-3, 3], "noise": {"kind": "fsd_crowd", "snr_db": [10, 10]}, "pair": "panel-pos", "noise_floor": {"dbfs": [-65, -35], "kinds": {"white": 0.15, "pink": 0.15, "real": 0.7}, "real_pools": ["wham", "dns5_audioset", "dns5_freesound"]}, "enroll_store_seconds": 10, "language": "pt"}'
+    crowd10-neg:
+      artifacts:
+        records:
+        - crowd10-neg-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 120
+        duration_hours: 0.3522
+        duration_basis: Mixture duration
+      provenance:
+        description: 'noise: {"kind": "neg", "k": [1, 2], "duration": [6, 15], "noise": {"kind": "fsd_crowd", "snr_db": [10, 10]}, "pair": "panel-neg", "noise_floor": {"dbfs": [-65, -35], "kinds": {"white": 0.15, "pink": 0.15, "real": 0.7}, "real_pools": ["wham", "dns5_audioset", "dns5_freesound"]}, "enroll_store_seconds": 10, "language": "pt"}'
+    nonspeech-crowd:
+      artifacts:
+        records:
+        - nonspeech-crowd-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 120
+        duration_hours: 0.2839
+        duration_basis: Mixture duration
+      provenance:
+        description: 'noise: {"kind": "nonspeech", "duration": [1, 15], "noise": {"kind": "fsd_crowd", "level_dbfs": [-40, -25]}, "noise_floor": {"dbfs": [-65, -35], "kinds": {"white": 0.15, "pink": 0.15, "real": 0.7}, "real_pools": ["wham", "dns5_audioset", "dns5_freesound"]}, "enroll_store_seconds": 10, "language": "pt"}'
+    nonspeech-events:
+      artifacts:
+        records:
+        - nonspeech-events-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 120
+        duration_hours: 0.3028
+        duration_basis: Mixture duration
+      provenance:
+        description: 'noise: {"kind": "nonspeech", "duration": [1, 15], "noise": {"kind": "fsd_events", "level_dbfs": [-40, -25]}, "noise_floor": {"dbfs": [-65, -35], "kinds": {"white": 0.15, "pink": 0.15, "real": 0.7}, "real_pools": ["wham", "dns5_audioset", "dns5_freesound"]}, "enroll_store_seconds": 10, "language": "pt"}'
+  provenance:
+    status: complete
+    synthetic: full
+    description: 葡萄牙语目标说话人 ASR 评测集（ts_asr_noise）：与西语版 es-v1-20261111、英文版 en-v1-20261031 同一配方与随机种子，说话人换成 Common Voice 27.0 pt dev（众包朗读，多为巴西口音，各自设备）；与西语版一样没有英文版的背景人声（babble）各列：已登记的背景人声里没有葡语评测版（葡语背景人声评测见 asr_babble_bench@pt-v1-20261117，说话人与本集目标同为 CV pt dev，不混用）；不含业务真实注册录音条件。只用于评测，不进训练。场景见 scripts/ts_benchmark/recipe-noise-pt.yaml。
+    sources:
+    - common_voice_pt@pt-eval-v1-20261117:dev

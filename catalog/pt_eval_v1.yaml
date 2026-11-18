@@ -1,0 +1,215 @@
+# 葡萄牙语评测源：CV 27.0 dev/test、MLS dev/test、FLEURS test 的 Lhotse 清单，与葡语训练版本零重叠（pt-benchmarks-20261117）。
+- schema_version: dataset-catalog/2.0
+  dataset_id: common_voice_pt
+  version: pt-eval-v1-20261117
+  languages:
+  - pt
+  tasks:
+  - asr
+  aliases: []
+  derived_from: common_voice_pt@mdc-27.0
+  artifacts:
+  - name: dev_recordings
+    kind: lhotse-recordings
+    root_alias: aidc_data
+    relative_path: datasets/common_voice_pt/versions/pt-eval-v1-20261117/manifests/cv27-pt_recordings_dev.jsonl.gz
+    sha256: 9df0d0d287104c3e4286940632462e5b662f1aab498c937c477d2034197c3a40
+    metadata:
+      record_count: 9705
+  - name: dev_supervisions
+    kind: lhotse-supervisions
+    root_alias: aidc_data
+    relative_path: datasets/common_voice_pt/versions/pt-eval-v1-20261117/manifests/cv27-pt_supervisions_dev.jsonl.gz
+    sha256: d2f65c5998b72da5c0a26665978353daedee1fd92077980dbeeae85df8aa9468
+    metadata:
+      record_count: 9705
+  - name: test_recordings
+    kind: lhotse-recordings
+    root_alias: aidc_data
+    relative_path: datasets/common_voice_pt/versions/pt-eval-v1-20261117/manifests/cv27-pt_recordings_test.jsonl.gz
+    sha256: dae207d100da477eb373923bf40be45db504e66576dc454808ad4cfc9f15b245
+    metadata:
+      record_count: 9707
+  - name: test_supervisions
+    kind: lhotse-supervisions
+    root_alias: aidc_data
+    relative_path: datasets/common_voice_pt/versions/pt-eval-v1-20261117/manifests/cv27-pt_supervisions_test.jsonl.gz
+    sha256: 742b41230aa26047050a21be15069ca80ba4b51d88a012613c90893274710332
+    metadata:
+      record_count: 9707
+  splits:
+    dev:
+      artifacts:
+        recordings:
+        - dev_recordings
+        supervisions:
+        - dev_supervisions
+      group: validation
+      task: asr
+      statistics:
+        records: 9705
+        duration_hours: 12.1073
+        duration_basis: sum of supervision durations
+        speakers: 558
+        train_overlap:
+          speakers: 0
+          sentences: 0
+          against: common_voice_pt / mls_pt @pt-train-v1-20261117 train (kept and pre-clean rows)
+    test:
+      artifacts:
+        recordings:
+        - test_recordings
+        supervisions:
+        - test_supervisions
+      group: test
+      task: asr
+      statistics:
+        records: 9707
+        duration_hours: 13.0423
+        duration_basis: sum of supervision durations
+        speakers: 2195
+        train_overlap:
+          speakers: 0
+          sentences: 0
+          against: common_voice_pt / mls_pt @pt-train-v1-20261117 train (kept and pre-clean rows)
+  provenance:
+    summary: Common Voice 27.0 葡语 dev/test
+    preparation_status: prepared
+    owner: mingdong
+    usage: evaluation_only
+    description: 葡语评测用的 Common Voice 27.0 官方 dev / test 划分的 Lhotse 清单（音频为 mdc-27.0 解包的 mp3 原件，文本为原句，未清洗、未改写）。dev 供 TS-ASR、跨语言注册与背景人声评测集取说话人，test 供普通 ASR、热词与背景人声评测集取目标句。与训练版本 common_voice_pt / mls_pt @pt-train-v1-20261117 说话人、句子（小写去标点后完全相同）均零重叠，dev 与 test 说话人不重叠；核验见版本目录 overlap.json。只用于评测，不进训练。
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/pt-benchmarks-20261117
+    scripts:
+    - /workspace/workspace/mingdong/data/amphiondata/pt-benchmarks-20261117/scripts/build_eval_manifests.py
+- schema_version: dataset-catalog/2.0
+  dataset_id: mls_pt
+  version: pt-eval-v1-20261117
+  languages:
+  - pt
+  tasks:
+  - asr
+  aliases: []
+  derived_from: mls_pt@openslr-94
+  artifacts:
+  - name: dev_recordings
+    kind: lhotse-recordings
+    root_alias: aidc_data
+    relative_path: datasets/mls_pt/versions/pt-eval-v1-20261117/manifests/mls-portuguese_recordings_dev.jsonl.gz
+    sha256: a3a2b8185e9fd12619c130fe098815dfbb1137593bdfe13f2a0acdd9dcd5394f
+    metadata:
+      record_count: 826
+  - name: dev_supervisions
+    kind: lhotse-supervisions
+    root_alias: aidc_data
+    relative_path: datasets/mls_pt/versions/pt-eval-v1-20261117/manifests/mls-portuguese_supervisions_dev.jsonl.gz
+    sha256: f0e8694e396e8e5f58b506eeff352bf2dba3b12d900dd85105f1ceb2a6f8b2b3
+    metadata:
+      record_count: 826
+  - name: test_recordings
+    kind: lhotse-recordings
+    root_alias: aidc_data
+    relative_path: datasets/mls_pt/versions/pt-eval-v1-20261117/manifests/mls-portuguese_recordings_test.jsonl.gz
+    sha256: 06bf2c304551b1fe8a9b77df9a7a99999a2555073af744d8246f1dd246e3ae42
+    metadata:
+      record_count: 871
+  - name: test_supervisions
+    kind: lhotse-supervisions
+    root_alias: aidc_data
+    relative_path: datasets/mls_pt/versions/pt-eval-v1-20261117/manifests/mls-portuguese_supervisions_test.jsonl.gz
+    sha256: c200b71fd650d775b8bdcc708e13becce2cefd7f35e08f1676eb0690e72b840e
+    metadata:
+      record_count: 871
+  splits:
+    dev:
+      artifacts:
+        recordings:
+        - dev_recordings
+        supervisions:
+        - dev_supervisions
+      group: validation
+      task: asr
+      statistics:
+        records: 826
+        duration_hours: 3.6443
+        duration_basis: sum of supervision durations
+        speakers: 10
+        train_overlap:
+          speakers: 0
+          sentences: 0
+          against: common_voice_pt / mls_pt @pt-train-v1-20261117 train (kept and pre-clean rows)
+    test:
+      artifacts:
+        recordings:
+        - test_recordings
+        supervisions:
+        - test_supervisions
+      group: test
+      task: asr
+      statistics:
+        records: 871
+        duration_hours: 3.7382
+        duration_basis: sum of supervision durations
+        speakers: 10
+        train_overlap:
+          speakers: 0
+          sentences: 0
+          against: common_voice_pt / mls_pt @pt-train-v1-20261117 train (kept and pre-clean rows)
+  provenance:
+    summary: MLS 葡语有声书 dev/test
+    preparation_status: prepared
+    owner: mingdong
+    usage: evaluation_only
+    description: MLS 葡语官方 dev / test 划分的 Lhotse 清单（与 mls_pt@pt-train-v1-20261117 一同从 openslr-94 解包建立，原标注全小写无标点，未清洗）。dev / test 各 10 人，与训练 42 人不重叠，句子与训练零重叠；核验见版本目录 overlap.json。只用于评测，不进训练。
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/pt-benchmarks-20261117
+    scripts:
+    - /workspace/workspace/mingdong/data/amphiondata/pt-benchmarks-20261117/scripts/build_eval_manifests.py
+- schema_version: dataset-catalog/2.0
+  dataset_id: fleurs_pt
+  version: pt-eval-v1-20261117
+  languages:
+  - pt
+  tasks:
+  - asr
+  aliases: []
+  derived_from: fleurs_pt@hf-70bb2e84b976
+  artifacts:
+  - name: test_recordings
+    kind: lhotse-recordings
+    root_alias: aidc_data
+    relative_path: datasets/fleurs_pt/versions/pt-eval-v1-20261117/manifests/fleurs-pt_recordings_test.jsonl.gz
+    sha256: e719d8459c1b2fd71aa8d8c7b894a3542cb25d79d513c37cbd8290f2db1be80e
+    metadata:
+      record_count: 919
+  - name: test_supervisions
+    kind: lhotse-supervisions
+    root_alias: aidc_data
+    relative_path: datasets/fleurs_pt/versions/pt-eval-v1-20261117/manifests/fleurs-pt_supervisions_test.jsonl.gz
+    sha256: 104ddcc92155e481c35cc4fce8d3f43cb1c2e417262be319adca77e23f783958
+    metadata:
+      record_count: 919
+  splits:
+    test:
+      artifacts:
+        recordings:
+        - test_recordings
+        supervisions:
+        - test_supervisions
+      group: test
+      task: asr
+      statistics:
+        records: 919
+        duration_hours: 3.2389
+        duration_basis: sum of supervision durations
+        train_overlap:
+          speakers: 0
+          sentences: 0
+          against: common_voice_pt / mls_pt @pt-train-v1-20261117 train (kept and pre-clean rows)
+  provenance:
+    summary: FLEURS 巴西葡语 test
+    preparation_status: prepared
+    owner: mingdong
+    usage: evaluation_only
+    description: FLEURS pt_br 官方 test 划分的 Lhotse 清单，音频与文本取自 multilingual_asr_bench@v1-20261110:fleurs-pt（16 kHz wav，同一来源）。FLEURS 没有说话人编号。句子与葡语训练版本零重叠；核验见版本目录 overlap.json。只用于评测，不进训练。
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/pt-benchmarks-20261117
+    scripts:
+    - /workspace/workspace/mingdong/data/amphiondata/pt-benchmarks-20261117/scripts/build_eval_manifests.py

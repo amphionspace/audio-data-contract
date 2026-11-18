@@ -2218,16 +2218,18 @@ WenetSpeech L 中的 YouTube 部分
 
 普通 ASR 背景人声评测集（中英），仅评测
 
-语言：en、es、zh · 任务：语音识别
+语言：en、es、pt、zh · 任务：语音识别
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
 | [asr_babble_bench@es-v1-20261111](../../catalog/asr_babble_bench.yaml#L1019) | 4.2 | 已登记 | 没有 |
+| [asr_babble_bench@pt-v1-20261117](../../catalog/asr_babble_bench.yaml#L1199) | 3.9 | 已登记 | 没有 |
 | [asr_babble_bench@v1-20261023](../../catalog/asr_babble_bench.yaml#L1) | 10.1 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/asr_babble_bench/` |
 | [asr_babble_bench@v2-20261023](../../catalog/asr_babble_bench.yaml#L399) | 8.8 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/asr_babble_bench/` |
 | [asr_babble_bench@v3-20261104](../../catalog/asr_babble_bench.yaml#L757) | 1.9 | 已登记 | 没有 |
 
 - `asr_babble_bench@es-v1-20261111`：西班牙语普通 ASR 背景人声评测集（对应中英 v2-20261023 的背景人声切分，同一渲染函数与参数）：只有西语背景人声的片段（期望输出为空）， 以及一句话前后和说话时都有西语背景人声的片段（与无背景人声的对照逐条配对）。目标语音是 Common Voice es test 的一句话； 背景人声由不进训练、也不与目标重叠的 Common Voice es dev（约 3,200 人）和 MLS es dev / test（40 人）说话人在模拟房间里混成 （训练用的西语背景人声 babble_noise_train@es-v1-20261110 取自 CV es / MLS es 的 train）。只用于评测，不进训练。 配方 scripts/asr_babble_bench/recipe-es.yaml
+- `asr_babble_bench@pt-v1-20261117`：葡萄牙语普通 ASR 背景人声评测集（与西语版 es-v1-20261111 同一做法，对应中英 v2-20261023 的背景人声切分，同一渲染函数与参数）： 只有葡语背景人声的片段（期望输出为空），以及一句话前后和说话时都有葡语背景人声的片段（与无背景人声的对照逐条配对）。 目标语音是 Common Voice 27.0 pt test 的一句话；背景人声由不进训练、也不与目标重叠的 Common Voice 27.0 pt dev 和 MLS pt dev / test（20 人） 说话人在模拟房间里混成（葡语训练 common_voice_pt / mls_pt @pt-train-v1-20261117 只用 train，且与这些划分说话人、句子零重叠）。 只用于评测，不进训练。配方 scripts/asr_babble_bench/recipe-pt.yaml
 - `asr_babble_bench@v1-20261023`：普通 ASR 背景人声评测集：只有背景人声的片段（合成的中文、英文背景人声和真实录音的人群声，期望输出为空），以及一句话前后和说话时都有背景人声的片段（与无背景人声的对照逐条配对）。合成背景人声由不进训练、也不与目标语音重叠的 test/dev 说话人混成。只用于评测，不进训练。配方 scripts/asr_babble_bench/recipe.yaml
 - `asr_babble_bench@v2-20261023`：普通 ASR 背景人声评测集：只有背景人声的片段（合成的中文、英文背景人声和真实录音的人群声，期望输出为空），以及一句话前后和说话时都有背景人声的片段（与无背景人声的对照逐条配对）。合成背景人声由不进训练、也不与目标语音重叠的 test/dev 说话人在模拟房间里混成。只用于评测，不进训练。配方 scripts/asr_babble_bench/recipe.yaml
 - `asr_babble_bench@v3-20261104`：普通 ASR 空白 / 非人声评测切分（参考全部为空，看误输出率）：鼎桥设备真实录音里三个说话人老师（local-moss, moss-pro, ali）都判为无人说话、FSMN-VAD 也未检出语音的区间（按时长分四档，原电平）；合成的近静音、底噪、50 Hz 电流嗡声；FSD50K 评测划分的稳态噪声、突发声、咳嗽呼吸（不含人声和音乐）；0.3–1.5 秒混合短片段。自动质检隔离 301 条（tdtech-quarantine），未发起人工听审。只用于评测，不进训练。配方 scripts/asr_babble_bench/recipe-blank.yaml；原 16 个背景人声切分仍在 v2-20261023
@@ -2758,7 +2760,7 @@ AISHELL-1、LibriSpeech 合成的多人对话
 
 合成的中文目标说话人 ASR 评测集
 
-语言：en、es、zh · 任务：目标说话人语音识别
+语言：en、es、pt、zh · 任务：目标说话人语音识别
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
@@ -2766,6 +2768,7 @@ AISHELL-1、LibriSpeech 合成的多人对话
 | [ts_asr_benchmark@en-v1-hotword-labels-20261102](../../catalog/ts_benchmark_hotword_labels.yaml#L5793) | 44.4 | 已登记 | 没有 |
 | [ts_asr_benchmark@es-v1-20261110](../../catalog/ts_asr_benchmark.yaml#L9371) | 43.2 | 已登记 | 没有 |
 | [ts_asr_benchmark@listening-review-v1-20261026](../../catalog/listening_review.yaml#L303) | — | 未登记 | 没有 |
+| [ts_asr_benchmark@pt-v1-20261117](../../catalog/ts_asr_benchmark.yaml#L11513) | 42.4 | 已登记 | 没有 |
 | [ts_asr_benchmark@v1-20261013](../../catalog/ts_asr_benchmark.yaml#L1) | 25.0 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_benchmark/` |
 | [ts_asr_benchmark@v2-20261013](../../catalog/ts_asr_benchmark.yaml#L1228) | 26.9 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_benchmark/` |
 | [ts_asr_benchmark@v3-20261013](../../catalog/ts_asr_benchmark.yaml#L2534) | 43.9 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_benchmark/` |
@@ -2776,6 +2779,7 @@ AISHELL-1、LibriSpeech 合成的多人对话
 - `ts_asr_benchmark@en-v1-hotword-labels-20261102`：ts_asr_benchmark@en-v1-20261031 的全部记录，附目标转写和其他说话人转写的热词标注（metadata.hotword_labels：target 为目标转写的标注，others 按顺序对应合成记录的 metadata.interferers[*].utts[*] 或真实记录 metadata.window_utts 里非目标说话人的段落；每条含文本、最终热词、模型抽取、复核结果）。这些标注是评测集 ts_asr_hotwords@v1-20261102 的来源。只是标注载体：除 metadata.hotword_labels 外记录不变，音频索引沿用源版本；评测集仍固定引用源版本。脚本 scripts/ts_hotwords/register_eval_hotword_labels.py
 - `ts_asr_benchmark@es-v1-20261110`：西班牙语目标说话人 ASR 评测集（ts_asr_benchmark）：与英文版 en-v1-20261031 同一配方与随机种子，说话人换成 Common Voice es dev（众包朗读、多口音、各自设备）；没有英文版的手机对话（CS-Dialogue）与录音棚（VCTK）两组设备场景，西语没有对应语料。只用于评测，不进训练。场景见 scripts/ts_benchmark/recipe-es.yaml
 - `ts_asr_benchmark@listening-review-v1-20261026`：ts_asr_benchmark@v4-20261022 中被人工听审过的 9 条数据行（父版本数据行原样照抄，录音和音频索引沿用父版本），每行的 metadata.listening_review（Lhotse custom.listening_review）是关于这条记录的听审答案列表：问题、选项、回答、备注、回答日期、听审名称、片段起止和选项含义（resolved_to）。共 9 条答案（ts-asr-hard-cases-20261026 9 条），9 条已挂到数据行。证据文件 listening_review.jsonl.gz 含该版本全部答案。只含被听过的记录，不是完整数据版本，不用于训练。脚本 scripts/label_registration/register_listening_review.py
+- `ts_asr_benchmark@pt-v1-20261117`：葡萄牙语目标说话人 ASR 评测集（ts_asr_benchmark）：与西语版 es-v1-20261110、英文版 en-v1-20261031 同一配方与随机种子，说话人换成 Common Voice 27.0 pt dev（众包朗读，多为巴西口音，各自设备）；与西语版一样没有英文版的手机对话（CS-Dialogue）与录音棚（VCTK）两组设备场景和 dyn-short。只用于评测，不进训练。场景见 scripts/ts_benchmark/recipe-pt.yaml
 - `ts_asr_benchmark@v1-20261013`、`ts_asr_benchmark@v2-20261013`、`ts_asr_benchmark@v3-20261013`、`ts_asr_benchmark@v4-20261022`：目标说话人 ASR 评测集：由 AISHELL-3、KeSpeech、MagicData、AISHELL-2、AISHELL-1 的官方 test 划分合成，覆盖注册音频劣化、目标说话人进场离场与缺席、纯噪声、环境与设备。只用于评测，不进训练。场景见 scripts/ts_benchmark/recipe.yaml
 - `ts_asr_benchmark@v4-hotword-labels-20261102`：ts_asr_benchmark@v4-20261022 的全部记录，附目标转写和其他说话人转写的热词标注（metadata.hotword_labels：target 为目标转写的标注，others 按顺序对应合成记录的 metadata.interferers[*].utts[*] 或真实记录 metadata.window_utts 里非目标说话人的段落；每条含文本、最终热词、模型抽取、复核结果）。这些标注是评测集 ts_asr_hotwords@v1-20261102 的来源。只是标注载体：除 metadata.hotword_labels 外记录不变，音频索引沿用源版本；评测集仍固定引用源版本。脚本 scripts/ts_hotwords/register_eval_hotword_labels.py
 
@@ -2783,29 +2787,32 @@ AISHELL-1、LibriSpeech 合成的多人对话
 
 —
 
-语言：en、es、zh · 任务：目标说话人语音识别
+语言：en、es、pt、zh · 任务：目标说话人语音识别
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
 | [ts_asr_crosslingual@en-v1-20261109](../../catalog/ts_asr_crosslingual.yaml#L427) | 6.2 | 已登记 | 没有 |
 | [ts_asr_crosslingual@es-v1-20261111](../../catalog/ts_asr_crosslingual.yaml#L853) | 3.5 | 已登记 | 没有 |
+| [ts_asr_crosslingual@pt-v1-20261117](../../catalog/ts_asr_crosslingual.yaml#L1088) | 3.4 | 已登记 | 没有 |
 | [ts_asr_crosslingual@zh-v1-20261109](../../catalog/ts_asr_crosslingual.yaml#L1) | 6.2 | 已登记 | 没有 |
 
 - `ts_asr_crosslingual@en-v1-20261109`：跨语言注册 TS-ASR 评测集（混合段英文）：Common Voice 同一账号既录中文又录英文、从未作为 TS 训练目标的 78 人，以及 Qwen3-TTS-12Hz-1.7B-Base 跨语言克隆的 50 个合成音色（注册与混合段都是合成音）；每个场景配同语言与跨语言两种注册。只用于评测，不进训练。配方见 scripts/ts_benchmark/recipe-crosslingual-en.yaml
 - `ts_asr_crosslingual@es-v1-20261111`：跨语言注册 TS-ASR 评测集（混合段西班牙语）：Common Voice 同一账号既录西语（dev/test）又录英文、从未作为 TS 训练目标、两种语言都核对过是同一人声（ECAPA，每种语言至少 5 句）的 35 人；每个场景配同语言（西语）与跨语言（英文）两种注册。没有合成音色部分（Common Voice 里没有同时录西语和中文的说话人）。只用于评测，不进训练。配方见 scripts/ts_benchmark/recipe-crosslingual-es.yaml
+- `ts_asr_crosslingual@pt-v1-20261117`：跨语言注册 TS-ASR 评测集（混合段葡萄牙语）：Common Voice 同一账号既录葡语（27.0 dev/test）又录英文、从未作为 TS 训练目标、两种语言都核对过是同一人声（ECAPA，每种语言至少 5 句）的 44 人；每个场景配同语言（葡语）与跨语言（英文）两种注册。没有合成音色部分（Common Voice 里没有同时录葡语和中文的说话人）。与西语版 es-v1-20261111 同一配方与随机种子。只用于评测，不进训练。配方见 scripts/ts_benchmark/recipe-crosslingual-pt.yaml
 - `ts_asr_crosslingual@zh-v1-20261109`：跨语言注册 TS-ASR 评测集（混合段中文）：Common Voice 同一账号既录中文又录英文、从未作为 TS 训练目标的 78 人，以及 Qwen3-TTS-12Hz-1.7B-Base 跨语言克隆的 50 个合成音色（注册与混合段都是合成音）；每个场景配同语言与跨语言两种注册。只用于评测，不进训练。配方见 scripts/ts_benchmark/recipe-crosslingual-zh.yaml
 
 ### ts_asr_farfield
 
 目标说话人评测：远场与混响
 
-语言：en、es、zh · 任务：目标说话人语音识别
+语言：en、es、pt、zh · 任务：目标说话人语音识别
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
 | [ts_asr_farfield@en-v1-20261031](../../catalog/ts_asr_farfield.yaml#L614) | 5.0 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_farfield/` |
 | [ts_asr_farfield@en-v1-hotword-labels-20261102](../../catalog/ts_benchmark_hotword_labels.yaml#L8176) | 5.0 | 已登记 | 没有 |
 | [ts_asr_farfield@es-v1-20261111](../../catalog/ts_asr_farfield.yaml#L919) | 5.1 | 已登记 | 没有 |
+| [ts_asr_farfield@pt-v1-20261117](../../catalog/ts_asr_farfield.yaml#L1221) | 5.0 | 已登记 | 没有 |
 | [ts_asr_farfield@v1-20261014](../../catalog/ts_asr_farfield.yaml#L1) | 5.1 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_farfield/` |
 | [ts_asr_farfield@v2-20261022](../../catalog/ts_asr_farfield.yaml#L308) | 5.1 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_farfield/` |
 | [ts_asr_farfield@v2-hotword-labels-20261102](../../catalog/ts_benchmark_hotword_labels.yaml#L2468) | 5.1 | 已登记 | 没有 |
@@ -2813,6 +2820,7 @@ AISHELL-1、LibriSpeech 合成的多人对话
 - `ts_asr_farfield@en-v1-20261031`：英文目标说话人 ASR 评测集（ts_asr_farfield）：与中文版同一配方与随机种子，说话人换成 VCTK、CS-Dialogue 英文 test、LibriSpeech test-clean/test-other；不含业务真实注册录音条件。只用于评测，不进训练。场景见 scripts/ts_benchmark/recipe-farfield-en.yaml
 - `ts_asr_farfield@en-v1-hotword-labels-20261102`：ts_asr_farfield@en-v1-20261031 的全部记录，附目标转写和其他说话人转写的热词标注（metadata.hotword_labels：target 为目标转写的标注，others 按顺序对应合成记录的 metadata.interferers[*].utts[*] 或真实记录 metadata.window_utts 里非目标说话人的段落；每条含文本、最终热词、模型抽取、复核结果）。这些标注是评测集 ts_asr_hotwords@v1-20261102 的来源。只是标注载体：除 metadata.hotword_labels 外记录不变，音频索引沿用源版本；评测集仍固定引用源版本。脚本 scripts/ts_hotwords/register_eval_hotword_labels.py
 - `ts_asr_farfield@es-v1-20261111`：西班牙语目标说话人 ASR 评测集（ts_asr_farfield）：与英文版 en-v1-20261031 同一配方与随机种子，说话人换成 Common Voice es dev（众包朗读、多口音、各自设备）；不含业务真实注册录音条件。只用于评测，不进训练。场景见 scripts/ts_benchmark/recipe-farfield-es.yaml
+- `ts_asr_farfield@pt-v1-20261117`：葡萄牙语目标说话人 ASR 评测集（ts_asr_farfield）：与西语版 es-v1-20261111、英文版 en-v1-20261031 同一配方与随机种子，说话人换成 Common Voice 27.0 pt dev（众包朗读，多为巴西口音，各自设备）；不含业务真实注册录音条件。只用于评测，不进训练。场景见 scripts/ts_benchmark/recipe-farfield-pt.yaml
 - `ts_asr_farfield@v1-20261014`、`ts_asr_farfield@v2-20261022`：目标说话人 ASR 评测集：由 AISHELL-3、KeSpeech、MagicData、AISHELL-2、AISHELL-1 的官方 test 划分合成，覆盖注册音频劣化、目标说话人进场离场与缺席、纯噪声、环境与设备。只用于评测，不进训练。场景见 scripts/ts_benchmark/recipe.yaml
 - `ts_asr_farfield@v2-hotword-labels-20261102`：ts_asr_farfield@v2-20261022 的全部记录，附目标转写和其他说话人转写的热词标注（metadata.hotword_labels：target 为目标转写的标注，others 按顺序对应合成记录的 metadata.interferers[*].utts[*] 或真实记录 metadata.window_utts 里非目标说话人的段落；每条含文本、最终热词、模型抽取、复核结果）。这些标注是评测集 ts_asr_hotwords@v1-20261102 的来源。只是标注载体：除 metadata.hotword_labels 外记录不变，音频索引沿用源版本；评测集仍固定引用源版本。脚本 scripts/ts_hotwords/register_eval_hotword_labels.py
 
@@ -2820,13 +2828,14 @@ AISHELL-1、LibriSpeech 合成的多人对话
 
 目标说话人评测：与他人交替说话
 
-语言：en、es、zh · 任务：目标说话人语音识别
+语言：en、es、pt、zh · 任务：目标说话人语音识别
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
 | [ts_asr_handover@en-v1-20261031](../../catalog/ts_asr_handover.yaml#L454) | 1.6 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_handover/` |
 | [ts_asr_handover@en-v1-hotword-labels-20261102](../../catalog/ts_benchmark_hotword_labels.yaml#L8501) | 1.6 | 已登记 | 没有 |
 | [ts_asr_handover@es-v1-20261111](../../catalog/ts_asr_handover.yaml#L579) | 1.7 | 已登记 | 没有 |
+| [ts_asr_handover@pt-v1-20261117](../../catalog/ts_asr_handover.yaml#L701) | 1.7 | 已登记 | 没有 |
 | [ts_asr_handover@v1-20261020](../../catalog/ts_asr_handover.yaml#L1) | 3.8 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_handover/` |
 | [ts_asr_handover@v2-20261022](../../catalog/ts_asr_handover.yaml#L228) | 3.8 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_handover/` |
 | [ts_asr_handover@v2-hotword-labels-20261102](../../catalog/ts_benchmark_hotword_labels.yaml#L2793) | 3.8 | 已登记 | 没有 |
@@ -2834,6 +2843,7 @@ AISHELL-1、LibriSpeech 合成的多人对话
 - `ts_asr_handover@en-v1-20261031`：英文目标说话人 ASR 评测集（ts_asr_handover）：与中文版同一配方与随机种子，说话人换成 VCTK、CS-Dialogue 英文 test、LibriSpeech test-clean/test-other；不含业务真实注册录音条件。只用于评测，不进训练。场景见 scripts/ts_benchmark/recipe-handover-en.yaml
 - `ts_asr_handover@en-v1-hotword-labels-20261102`：ts_asr_handover@en-v1-20261031 的全部记录，附目标转写和其他说话人转写的热词标注（metadata.hotword_labels：target 为目标转写的标注，others 按顺序对应合成记录的 metadata.interferers[*].utts[*] 或真实记录 metadata.window_utts 里非目标说话人的段落；每条含文本、最终热词、模型抽取、复核结果）。这些标注是评测集 ts_asr_hotwords@v1-20261102 的来源。只是标注载体：除 metadata.hotword_labels 外记录不变，音频索引沿用源版本；评测集仍固定引用源版本。脚本 scripts/ts_hotwords/register_eval_hotword_labels.py
 - `ts_asr_handover@es-v1-20261111`：西班牙语目标说话人 ASR 评测集（ts_asr_handover）：与英文版 en-v1-20261031 同一配方与随机种子，说话人换成 Common Voice es dev（众包朗读、多口音、各自设备）；不含业务真实注册录音条件。只用于评测，不进训练。场景见 scripts/ts_benchmark/recipe-handover-es.yaml
+- `ts_asr_handover@pt-v1-20261117`：葡萄牙语目标说话人 ASR 评测集（ts_asr_handover）：与西语版 es-v1-20261111、英文版 en-v1-20261031 同一配方与随机种子，说话人换成 Common Voice 27.0 pt dev（众包朗读，多为巴西口音，各自设备）；不含业务真实注册录音条件。只用于评测，不进训练。场景见 scripts/ts_benchmark/recipe-handover-pt.yaml
 - `ts_asr_handover@v1-20261020`、`ts_asr_handover@v2-20261022`：目标说话人 ASR 评测集：由 AISHELL-3、KeSpeech、MagicData、AISHELL-2、AISHELL-1 的官方 test 划分合成，覆盖注册音频劣化、目标说话人进场离场与缺席、纯噪声、环境与设备。只用于评测，不进训练。场景见 scripts/ts_benchmark/recipe.yaml
 - `ts_asr_handover@v2-hotword-labels-20261102`：ts_asr_handover@v2-20261022 的全部记录，附目标转写和其他说话人转写的热词标注（metadata.hotword_labels：target 为目标转写的标注，others 按顺序对应合成记录的 metadata.interferers[*].utts[*] 或真实记录 metadata.window_utts 里非目标说话人的段落；每条含文本、最终热词、模型抽取、复核结果）。这些标注是评测集 ts_asr_hotwords@v1-20261102 的来源。只是标注载体：除 metadata.hotword_labels 外记录不变，音频索引沿用源版本；评测集仍固定引用源版本。脚本 scripts/ts_hotwords/register_eval_hotword_labels.py
 
@@ -2875,13 +2885,14 @@ AISHELL-1、LibriSpeech 合成的多人对话
 
 目标说话人评测：噪声与背景人声
 
-语言：en、es、zh · 任务：目标说话人语音识别
+语言：en、es、pt、zh · 任务：目标说话人语音识别
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
 | [ts_asr_noise@en-v1-20261031](../../catalog/ts_asr_noise.yaml#L734) | 5.9 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_noise/` |
 | [ts_asr_noise@en-v1-hotword-labels-20261102](../../catalog/ts_benchmark_hotword_labels.yaml#L8878) | 5.9 | 已登记 | 没有 |
 | [ts_asr_noise@es-v1-20261111](../../catalog/ts_asr_noise.yaml#L1099) | 3.5 | 已登记 | 没有 |
+| [ts_asr_noise@pt-v1-20261117](../../catalog/ts_asr_noise.yaml#L1321) | 3.5 | 已登记 | 没有 |
 | [ts_asr_noise@v1-20261013](../../catalog/ts_asr_noise.yaml#L1) | 5.9 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_noise/` |
 | [ts_asr_noise@v2-20261022](../../catalog/ts_asr_noise.yaml#L368) | 5.9 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_noise/` |
 | [ts_asr_noise@v2-hotword-labels-20261102](../../catalog/ts_benchmark_hotword_labels.yaml#L4356) | 5.9 | 已登记 | 没有 |
@@ -2889,6 +2900,7 @@ AISHELL-1、LibriSpeech 合成的多人对话
 - `ts_asr_noise@en-v1-20261031`：英文目标说话人 ASR 评测集（ts_asr_noise）：与中文版同一配方与随机种子，说话人换成 VCTK、CS-Dialogue 英文 test、LibriSpeech test-clean/test-other；不含业务真实注册录音条件。只用于评测，不进训练。场景见 scripts/ts_benchmark/recipe-noise-en.yaml
 - `ts_asr_noise@en-v1-hotword-labels-20261102`：ts_asr_noise@en-v1-20261031 的全部记录，附目标转写和其他说话人转写的热词标注（metadata.hotword_labels：target 为目标转写的标注，others 按顺序对应合成记录的 metadata.interferers[*].utts[*] 或真实记录 metadata.window_utts 里非目标说话人的段落；每条含文本、最终热词、模型抽取、复核结果）。这些标注是评测集 ts_asr_hotwords@v1-20261102 的来源。只是标注载体：除 metadata.hotword_labels 外记录不变，音频索引沿用源版本；评测集仍固定引用源版本。脚本 scripts/ts_hotwords/register_eval_hotword_labels.py
 - `ts_asr_noise@es-v1-20261111`：西班牙语目标说话人 ASR 评测集（ts_asr_noise）：与英文版 en-v1-20261031 同一配方与随机种子，说话人换成 Common Voice es dev（众包朗读、多口音、各自设备）；没有英文版的背景人声（babble）各列：已登记的西语 babble 都由训练划分的说话人合成，评测不能用；不含业务真实注册录音条件。只用于评测，不进训练。场景见 scripts/ts_benchmark/recipe-noise-es.yaml
+- `ts_asr_noise@pt-v1-20261117`：葡萄牙语目标说话人 ASR 评测集（ts_asr_noise）：与西语版 es-v1-20261111、英文版 en-v1-20261031 同一配方与随机种子，说话人换成 Common Voice 27.0 pt dev（众包朗读，多为巴西口音，各自设备）；与西语版一样没有英文版的背景人声（babble）各列：已登记的背景人声里没有葡语评测版（葡语背景人声评测见 asr_babble_bench@pt-v1-20261117，说话人与本集目标同为 CV pt dev，不混用）；不含业务真实注册录音条件。只用于评测，不进训练。场景见 scripts/ts_benchmark/recipe-noise-pt.yaml
 - `ts_asr_noise@v1-20261013`、`ts_asr_noise@v2-20261022`：目标说话人 ASR 评测集：由 AISHELL-3、KeSpeech、MagicData、AISHELL-2、AISHELL-1 的官方 test 划分合成，覆盖注册音频劣化、目标说话人进场离场与缺席、纯噪声、环境与设备。只用于评测，不进训练。场景见 scripts/ts_benchmark/recipe.yaml
 - `ts_asr_noise@v2-hotword-labels-20261102`：ts_asr_noise@v2-20261022 的全部记录，附目标转写和其他说话人转写的热词标注（metadata.hotword_labels：target 为目标转写的标注，others 按顺序对应合成记录的 metadata.interferers[*].utts[*] 或真实记录 metadata.window_utts 里非目标说话人的段落；每条含文本、最终热词、模型抽取、复核结果）。这些标注是评测集 ts_asr_hotwords@v1-20261102 的来源。只是标注载体：除 metadata.hotword_labels 外记录不变，音频索引沿用源版本；评测集仍固定引用源版本。脚本 scripts/ts_hotwords/register_eval_hotword_labels.py
 
@@ -2931,13 +2943,14 @@ AISHELL-1、LibriSpeech 合成的多人对话
 
 目标说话人评测：他人说话的 1–6 秒短片段
 
-语言：en、es、zh · 任务：目标说话人语音识别
+语言：en、es、pt、zh · 任务：目标说话人语音识别
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
 | [ts_asr_shortseg@en-v1-20261031](../../catalog/ts_asr_shortseg.yaml#L334) | 0.6 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_shortseg/` |
 | [ts_asr_shortseg@en-v1-hotword-labels-20261102](../../catalog/ts_benchmark_hotword_labels.yaml#L10557) | 0.6 | 已登记 | 没有 |
 | [ts_asr_shortseg@es-v1-20261111](../../catalog/ts_asr_shortseg.yaml#L459) | 0.4 | 已登记 | 没有 |
+| [ts_asr_shortseg@pt-v1-20261117](../../catalog/ts_asr_shortseg.yaml#L561) | 0.6 | 已登记 | 没有 |
 | [ts_asr_shortseg@v1-20261017](../../catalog/ts_asr_shortseg.yaml#L1) | 0.8 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_shortseg/` |
 | [ts_asr_shortseg@v2-20261022](../../catalog/ts_asr_shortseg.yaml#L168) | 0.8 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_shortseg/` |
 | [ts_asr_shortseg@v2-hotword-labels-20261102](../../catalog/ts_benchmark_hotword_labels.yaml#L5615) | 0.8 | 已登记 | 没有 |
@@ -2945,6 +2958,7 @@ AISHELL-1、LibriSpeech 合成的多人对话
 - `ts_asr_shortseg@en-v1-20261031`：英文目标说话人 ASR 评测集（ts_asr_shortseg）：与中文版同一配方与随机种子，说话人换成 VCTK、CS-Dialogue 英文 test、LibriSpeech test-clean/test-other；不含业务真实注册录音条件。只用于评测，不进训练。场景见 scripts/ts_benchmark/recipe-shortseg-en.yaml
 - `ts_asr_shortseg@en-v1-hotword-labels-20261102`：ts_asr_shortseg@en-v1-20261031 的全部记录，附目标转写和其他说话人转写的热词标注（metadata.hotword_labels：target 为目标转写的标注，others 按顺序对应合成记录的 metadata.interferers[*].utts[*] 或真实记录 metadata.window_utts 里非目标说话人的段落；每条含文本、最终热词、模型抽取、复核结果）。这些标注是评测集 ts_asr_hotwords@v1-20261102 的来源。只是标注载体：除 metadata.hotword_labels 外记录不变，音频索引沿用源版本；评测集仍固定引用源版本。脚本 scripts/ts_hotwords/register_eval_hotword_labels.py
 - `ts_asr_shortseg@es-v1-20261111`：西班牙语目标说话人 ASR 评测集（ts_asr_shortseg）：与英文版 en-v1-20261031 同一配方与随机种子，说话人换成 Common Voice es dev（众包朗读、多口音、各自设备）；没有英文版的对照 solo-mid（CV es dev 的句子太长，排不出 2–6 秒的单句片段）；不含业务真实注册录音条件。只用于评测，不进训练。场景见 scripts/ts_benchmark/recipe-shortseg-es.yaml
+- `ts_asr_shortseg@pt-v1-20261117`：葡萄牙语目标说话人 ASR 评测集（ts_asr_shortseg）：与西语版 es-v1-20261111、英文版 en-v1-20261031 同一配方与随机种子，说话人换成 Common Voice 27.0 pt dev（众包朗读，多为巴西口音，各自设备）；含英文版的对照 solo-mid（西语版没有）；不含业务真实注册录音条件。只用于评测，不进训练。场景见 scripts/ts_benchmark/recipe-shortseg-pt.yaml
 - `ts_asr_shortseg@v1-20261017`、`ts_asr_shortseg@v2-20261022`：目标说话人 ASR 评测集：由 AISHELL-3、KeSpeech、MagicData、AISHELL-2、AISHELL-1 的官方 test 划分合成，覆盖注册音频劣化、目标说话人进场离场与缺席、纯噪声、环境与设备。只用于评测，不进训练。场景见 scripts/ts_benchmark/recipe.yaml
 - `ts_asr_shortseg@v2-hotword-labels-20261102`：ts_asr_shortseg@v2-20261022 的全部记录，附目标转写和其他说话人转写的热词标注（metadata.hotword_labels：target 为目标转写的标注，others 按顺序对应合成记录的 metadata.interferers[*].utts[*] 或真实记录 metadata.window_utts 里非目标说话人的段落；每条含文本、最终热词、模型抽取、复核结果）。这些标注是评测集 ts_asr_hotwords@v1-20261102 的来源。只是标注载体：除 metadata.hotword_labels 外记录不变，音频索引沿用源版本；评测集仍固定引用源版本。脚本 scripts/ts_hotwords/register_eval_hotword_labels.py
 
@@ -2952,17 +2966,19 @@ AISHELL-1、LibriSpeech 合成的多人对话
 
 目标说话人评测：歌声干扰
 
-语言：en、es、zh · 任务：目标说话人语音识别
+语言：en、es、pt、zh · 任务：目标说话人语音识别
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
 | [ts_asr_singing@en-v1-20261031](../../catalog/ts_asr_singing.yaml#L134) | 0.2 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_singing/` |
 | [ts_asr_singing@es-v1-20261111](../../catalog/ts_asr_singing.yaml#L179) | 0.2 | 已登记 | 没有 |
+| [ts_asr_singing@pt-v1-20261117](../../catalog/ts_asr_singing.yaml#L221) | 0.2 | 已登记 | 没有 |
 | [ts_asr_singing@v1-20261017](../../catalog/ts_asr_singing.yaml#L1) | 0.3 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_singing/` |
 | [ts_asr_singing@v2-20261022](../../catalog/ts_asr_singing.yaml#L68) | 0.3 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_singing/` |
 
 - `ts_asr_singing@en-v1-20261031`：英文目标说话人 ASR 评测集（ts_asr_singing）：与中文版同一配方与随机种子，说话人换成 VCTK、CS-Dialogue 英文 test、LibriSpeech test-clean/test-other；不含业务真实注册录音条件。只用于评测，不进训练。场景见 scripts/ts_benchmark/recipe-singing-en.yaml
 - `ts_asr_singing@es-v1-20261111`：西班牙语目标说话人 ASR 评测集（ts_asr_singing）：与英文版 en-v1-20261031 同一配方与随机种子，说话人换成 Common Voice es dev（众包朗读、多口音、各自设备）；不含业务真实注册录音条件。只用于评测，不进训练。场景见 scripts/ts_benchmark/recipe-singing-es.yaml
+- `ts_asr_singing@pt-v1-20261117`：葡萄牙语目标说话人 ASR 评测集（ts_asr_singing）：与西语版 es-v1-20261111、英文版 en-v1-20261031 同一配方与随机种子，说话人换成 Common Voice 27.0 pt dev（众包朗读，多为巴西口音，各自设备）；不含业务真实注册录音条件。只用于评测，不进训练。场景见 scripts/ts_benchmark/recipe-singing-pt.yaml
 - `ts_asr_singing@v1-20261017`、`ts_asr_singing@v2-20261022`：目标说话人 ASR 评测集：由 AISHELL-3、KeSpeech、MagicData、AISHELL-2、AISHELL-1 的官方 test 划分合成，覆盖注册音频劣化、目标说话人进场离场与缺席、纯噪声、环境与设备。只用于评测，不进训练。场景见 scripts/ts_benchmark/recipe.yaml
 
 ### ts_hw_test
@@ -3611,10 +3627,12 @@ Common Voice 17 葡语朗读
 |---|---:|---|---|
 | [common_voice_pt@hf-8262c16bf297](../../catalog/common_voice_pt.yaml#L31) | 184.3 | 已登记 | 没有 |
 | [common_voice_pt@mdc-27.0](../../catalog/common_voice_27.yaml#L83) | 93.8 | 已登记 | 没有 |
+| [common_voice_pt@pt-eval-v1-20261117](../../catalog/pt_eval_v1.yaml#L2) | — | 未登记 | 没有 |
 | [common_voice_pt@pt-train-v1-20261117](../../catalog/pt_train_v1.yaml#L2) | 93.8 | 已登记 | 没有 |
 
 - `common_voice_pt@hf-8262c16bf297`：Common Voice 17.0 葡语的非官方 HF 镜像（官方 Mozilla 仓库需要授权）。口音字段大多为空，填写的几乎都是巴西口音。镜像另含 validated / other / invalidated（172.6 / 29.0 / 9.4 h），未登记为划分
 - `common_voice_pt@mdc-27.0`：Common Voice Scripted Speech 27.0 葡语（Mozilla Data Collective cmu5wui2w00e8nq07idithpm6）训练版本：validated + other（未投票够的录音）， 去掉 27.0 与 CV 17.0 dev/test 的说话人和句子后 82,417 句 / 94.34 h，经 Qwen3-ASR-1.7B + whisper-large-v3 双引擎清洗（consensus-v7）保留 81,960 句 / 93.82 h（validated 78.10 h、other 15.72 h）。包含 CV 17.0 镜像的全部 train 内容，可替代它用于训练。 试跑、被拒样本和误杀率见 run_dir README
+- `common_voice_pt@pt-eval-v1-20261117`：葡语评测用的 Common Voice 27.0 官方 dev / test 划分的 Lhotse 清单（音频为 mdc-27.0 解包的 mp3 原件，文本为原句，未清洗、未改写）。dev 供 TS-ASR、跨语言注册与背景人声评测集取说话人，test 供普通 ASR、热词与背景人声评测集取目标句。与训练版本 common_voice_pt / mls_pt @pt-train-v1-20261117 说话人、句子（小写去标点后完全相同）均零重叠，dev 与 test 说话人不重叠；核验见版本目录 overlap.json。只用于评测，不进训练
 - `common_voice_pt@pt-train-v1-20261117`：Common Voice 葡语训练版本，同 common_voice_es@es-train-v1-20261108：取 common_voice_pt@mdc-27.0 的清洗结果（CV 27.0 validated + other，已去掉 27.0 与 17.0 dev/test 的说话人和句子；Qwen3-ASR-1.7B + whisper-large-v3 双引擎，consensus-v7），保留 81,960 句 / 93.82 h（源 82,417 句）。文本用原文的词和标点（mdc-27.0 登记的是去标点版本），只规整了 38,361 句的标点前空格、首字母大写和缺失的句末句号；custom.hotwords 是 Qwen3.8-27B 标的热词（24,395 句有）。只含清洗通过的行，录音清单沿用 mdc-27.0。质检见 run_dir finalize.json
 - 含派生版本（与源数据可能重叠）
 
@@ -3870,8 +3888,11 @@ FLEURS 巴西葡语朗读
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
 | [fleurs_pt@hf-70bb2e84b976](../../catalog/fleurs_pt.yaml#L1) | 14.7 | 已登记 | 没有 |
+| [fleurs_pt@pt-eval-v1-20261117](../../catalog/pt_eval_v1.yaml#L166) | — | 未登记 | 没有 |
 
 - `fleurs_pt@hf-70bb2e84b976`：Google FLEURS 的 pt_br 子集（音频归档和 TSV 转写），其余语种未下载
+- `fleurs_pt@pt-eval-v1-20261117`：FLEURS pt_br 官方 test 划分的 Lhotse 清单，音频与文本取自 multilingual_asr_bench@v1-20261110:fleurs-pt（16 kHz wav，同一来源）。FLEURS 没有说话人编号。句子与葡语训练版本零重叠；核验见版本目录 overlap.json。只用于评测，不进训练
+- 含派生版本（与源数据可能重叠）
 
 ### fleurs_ru
 
@@ -4095,9 +4116,11 @@ MLS 葡语有声书朗读
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
 | [mls_pt@openslr-94](../../catalog/mls_pt.yaml#L1) | 168.3 | 已登记 | 快照 20260914 |
+| [mls_pt@pt-eval-v1-20261117](../../catalog/pt_eval_v1.yaml#L84) | — | 未登记 | 没有 |
 | [mls_pt@pt-train-v1-20261117](../../catalog/pt_train_v1.yaml#L87) | 154.9 | 已登记 | 没有 |
 
 - `mls_pt@openslr-94`：Multilingual LibriSpeech 葡语完整 FLAC 归档（含 train/dev/test），LibriVox 有声书；未按巴西/葡萄牙口音区分。OpenSLR 镜像没有这个文件，从官方地址直连下载
+- `mls_pt@pt-eval-v1-20261117`：MLS 葡语官方 dev / test 划分的 Lhotse 清单（与 mls_pt@pt-train-v1-20261117 一同从 openslr-94 解包建立，原标注全小写无标点，未清洗）。dev / test 各 10 人，与训练 42 人不重叠，句子与训练零重叠；核验见版本目录 overlap.json。只用于评测，不进训练
 - `mls_pt@pt-train-v1-20261117`：MLS 葡语 train（LibriVox 有声书，42 人）的训练版本，同 mls_es@es-train-v1-20261108：解包 openslr-94 建 Lhotse 清单（dev/test 20 人与 train 无重合），双引擎清洗（consensus-v7），另丢弃两个引擎彼此一致却都与原标注不符的行（label_mismatch_consensus）和含 Google Books 页脚的行（label_footer），保留 36,140 句 / 154.86 h（源 37,533 句 / 160.96 h）。原标注全小写无标点（旧正字法），文本换成 Qwen3.8-27B 按 pt-v1 规范加的书面化标点和大小写（只插标点、改大小写、补重音；改了词的退回原标注加句号，约 5.9%）；custom.hotwords 是热词（17,485 句有）。只含清洗通过的行。规则、抽样核对和误杀率见 run_dir README
 - 含派生版本（与源数据可能重叠）
 
