@@ -2363,11 +2363,11 @@ CS-Dialogue 对话中的中英混说语句
 |---|---:|---|---|
 | [emilia2@extracted-enzh-flac16k-20261012](../../catalog/emilia2_extracted.yaml#L140) | — | 未登记 | 没有 |
 | [emilia2@tts-unified-v0.1](../../catalog/tts_unified.yaml#L178) | 146,325.0 | 已登记 | `amphion-tts-data-1373259071:Emilia2/`（原始数据） |
-| [emilia2_zhen@clean-zhen-v1-20261117](../../catalog/zhen_cs_clean.yaml#L637) | — | 未登记 | 没有 |
+| [emilia2_zhen@clean-zhen-v1-20261117](../../catalog/zhen_cs_clean.yaml#L637) | 1,282.3 | 已登记 | 没有 |
 
 - `emilia2@extracted-enzh-flac16k-20261012`：基于 extracted-enzh-20261012 的 dialog 和 long（standalone short 已在 emilia2@tts-unified-v0.1 中，不转）：每个 m4a 用与 DATA-TTS-UNIFIED Emilia2 接入相同的 FFmpeg 7.0.2 静态版完整解码（应用 edit list）， soxr 重采样到 16 kHz 单声道，按 round(gain*x*32768) 量化为 FLAC PCM16，峰值超出时整条降增益、不削波，写后逐样本回读核对。 目的：训练读取可随机跳转、不依赖 ffmpeg（原 m4a 读一个 120 秒窗口需 1–5 秒，16 kHz FLAC 约 0.03–0.3 秒）。 这份解包数据不用于 TTS（TTS 用 emilia2@tts-unified-v0.1）。 2026-10-17 转码完成：2,101,933 个文件、112,444 h 全部成功，FLAC 共 7.29 TB，20,240 个降了增益（最小 0.64）。 2026-10-18 删除原 m4a：逐个核对 FLAC 字节数与帧数后删除，保留 23 个仍被训练读取的 m4a（见 extracted-enzh-20261012 的 m4a_removed）。 emilia2_mix、emilia2_dialog、emilia2_zh_dialogue_diarize 的音频索引仍写 .m4a 路径，open-audio-llm（#63 起）读取时自动改读同名 .flac； 其他读取方需要自行把路径换成 .flac
 - `emilia2@tts-unified-v0.1`：音频编码字节存放在 Lance 表内；原始划分在 metadata_json.original_split，统一输出全部为 train。ASR 用 tts_lance.iter_asr_samples（tts-asr-rules/v1）读取，会排除原始 dev/test 等
-- `emilia2_zhen@clean-zhen-v1-20261117`：Emilia2 上游 languages 恰为 zh+en 的录音（2026-10-12 解包只取纯中文、纯英文，这部分从未解包，也不在 v4 训练配方里）中， 带英文单词的中文短句，按 emilia2@tts-unified-v0.1 统计 429,298 句 / 1,282.5 h，内容多是科技、编程、产品类视频。 文本是 Emilia 上游的机器转写。音频从 Lance 解成 16 kHz 单声道 WAV 放本版本目录，生成 lhotse 清单；转写统一为 zhen-norm-v1， 再用 Qwen3-ASR-1.7B + MOSS-Transcribe-Diarize 做共识清洗，先试跑看被拒样本。进行中
+- `emilia2_zhen@clean-zhen-v1-20261117`：emilia2@tts-unified-v0.1 里上游 languages 恰为 zh+en 的录音（2026-10-12 解包只取纯中文、纯英文，这部分不在 v4 训练配方里）中带英文单词的中文短句，内容多是科技、编程、产品、教学类视频。音频从 Lance 解成 16 kHz 单声道 PCM16 WAV 放本版本目录 audio/，lhotse 清单在 manifests/；转写是 Emilia 上游的机器转写，统一为 zhen-norm-v1 写法（原文存 custom.original_text）。试跑 1,500 句显示这份文本基本就是 Qwen3-ASR 的输出（与 Qwen3-ASR-1.7B 的 CER 中位数 0、逐字相同 71%），双引擎一致性清洗近乎自证，所以没有跑全量清洗，按 Qwen3-ASR 蒸馏数据处理。依据：在 asr/zh-en-codeswitch@v1-20261117 上，Qwen3-ASR-1.7B 的英文术语命中率五个切片都高于 AmphionASR 11.06 包，合计 77.3% 对 73.9%（ae run run-20261118T111724Z-4c81add0 / run-20261118T111724Z-30d70a52，配对 bootstrap 95% 区间 +2.9～+4.0 点）。zhen-distill-v1 只去掉没有汉字的句子（424 句，含漏出的 `language Chinese<asr_text>` 标记和听成其他语种的乱码），读取时按 custom.clean.pass 过滤：429,298 句中 pass 428,874（1282.3065 h）。已知风险：Qwen3-ASR 判错语种时会把中文翻成英文；本数据按 language=zh 选取，抽看没有发现这类句子，但没有逐条核对。试跑抽检和对比见 run_dir 的 README
 - 含派生版本（与源数据可能重叠）
 - 已并入的旧版本：`emilia2@extracted-enzh-20261012`（COS：没有）
 
@@ -4512,6 +4512,7 @@ YouTube 多语语音俄语部分（YODAS）
 | [commonvoice_en_clean@clean-v1-20260805](../../catalog/local_lhotse_derived.yaml#L311) | 有自动筛选记录 | 自动筛选通过 1,142,149 条、拒绝 1,127 条，通过率 99.90% | 未登记人工抽检；筛选通过不等于转写完全正确 |
 | [cs_dialogue@clean-dual-qwen-moss-v1-20261009](../../catalog/zh_source_clean_20261009.yaml#L664) | 有自动筛选记录 | 自动筛选通过 13,948 条、拒绝 44 条，通过率 99.69% | 未登记人工抽检；筛选通过不等于转写完全正确 |
 | [cs_dialogue_mix@clean-dual-qwen-moss-v1-20261009](../../catalog/zh_source_clean_20261009.yaml#L824) | 有自动筛选记录 | 自动筛选通过 4,941 条、拒绝 12 条，通过率 99.76% | 未登记人工抽检；筛选通过不等于转写完全正确 |
+| [emilia2_zhen@clean-zhen-v1-20261117](../../catalog/zhen_cs_clean.yaml#L637) | 有自动筛选记录 | 自动筛选通过 428,874 条、拒绝 424 条，通过率 99.90% | 未登记人工抽检；筛选通过不等于转写完全正确 |
 | [kespeech@clean-dual-qwen-moss-v1-20261009](../../catalog/zh_source_clean_20261009.yaml#L165) | 有自动筛选记录 | 自动筛选通过 882,365 条、拒绝 1,656 条，通过率 99.81% | 未登记人工抽检；筛选通过不等于转写完全正确 |
 | [magicdata@clean-dual-qwen-moss-v1-20261008](../../catalog/zh_source_clean.yaml#L499) | 有自动筛选记录 | 自动筛选通过 572,637 条、拒绝 841 条，通过率 99.85% | 未登记人工抽检；筛选通过不等于转写完全正确 |
 | [magicdata_ramc@clean-dual-qwen-moss-v1-20261008](../../catalog/zh_source_clean.yaml#L663) | 有自动筛选记录 | 自动筛选通过 166,711 条、拒绝 1,753 条，通过率 98.96% | 未登记人工抽检；筛选通过不等于转写完全正确 |
