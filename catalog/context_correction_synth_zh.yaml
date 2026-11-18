@@ -244,7 +244,7 @@
       provenance:
         description: 有音频但未通过质检的条目，保留原因，不用于训练
   provenance:
-    summary: 上下文纠偏合成训练数据：隐式语义（带线索 + 目标 think）
+    summary: 上下文纠偏合成训练数据：隐式语义（带 think）
     status: complete
     synthetic: full
     owner: mingdong

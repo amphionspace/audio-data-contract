@@ -1222,7 +1222,7 @@ Common Voice 中文众包朗读；含清洗、热词、加噪版
 
 ### context_correction_synth_zh
 
-上下文纠偏合成训练数据：隐式语义（带线索 + 目标 think）
+上下文纠偏合成训练数据：隐式语义（带 think）
 
 语言：zh · 任务：语音识别、目标说话人语音识别
 
