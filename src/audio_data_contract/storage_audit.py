@@ -27,7 +27,7 @@ from pathlib import Path
 from ruamel.yaml import YAML
 from ruamel.yaml.error import YAMLError
 
-from .catalog import load_catalog
+from .catalog import load_catalog, retirement
 from .errors import ContractError
 from .roots import load_roots, resolve_root_path
 
@@ -162,13 +162,18 @@ def _with_parents(path: str, stop: str):
 
 
 def _catalog_units(config: dict) -> tuple[set[str], list[dict]]:
-    """Directories claimed by registered catalog artifacts, plus missing ones."""
+    """Directories claimed by registered catalog artifacts, plus missing ones.
+
+    Retired versions may point at removed files (see check_dangling), so their
+    missing paths are not reported.
+    """
     catalog = load_catalog(config["path"])
     roots = load_roots(config.get("roots"))
     patterns = [Path(item).parts for item in config.get("unit_patterns", [])]
     units: set[str] = set()
     missing: list[dict] = []
     for spec in catalog:
+        retired = retirement(spec) is not None
         for artifact in spec.artifacts:
             where = f"{spec.key}:{artifact.name}"
             try:
@@ -176,12 +181,14 @@ def _catalog_units(config: dict) -> tuple[set[str], list[dict]]:
                     artifact.root_alias, artifact.relative_path, roots, where
                 )
             except ContractError as exc:
-                missing.append({"artifact": where, "path": None, "error": str(exc)})
+                if not retired:
+                    missing.append({"artifact": where, "path": None, "error": str(exc)})
                 continue
             if not os.path.lexists(path):
-                missing.append(
-                    {"artifact": where, "path": str(path), "error": "path not found"}
-                )
+                if not retired:
+                    missing.append(
+                        {"artifact": where, "path": str(path), "error": "path not found"}
+                    )
                 continue
             for pattern in patterns:
                 if len(path.parts) > len(pattern) and all(

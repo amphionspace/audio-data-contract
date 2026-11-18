@@ -479,6 +479,9 @@
           recordings: 3732323
           supervisions: 3732323
     provenance:
+      retired:
+        date: '2026-11-18'
+        reason: /workspace/data 上的本地副本已删除以释放空间（30 天以上无人读写，没有其他版本引用）；完整备份在 COS amphion-audio-backup-1373259071:audio-data-contract/datasets/open_large_bn/，删除前按路径与大小逐个文件核对一致。需要时用 ab pull 恢复到原路径，再去掉本标记。记录见 /workspace/data/migration/offload-20261118-unused-raw-datasets/
       summary: 孟加拉语大规模语音识别数据
       has_punctuation: true
       has_true_casing:
@@ -833,6 +836,9 @@
           recordings: 2683763
           supervisions: 2683763
     provenance:
+      retired:
+        date: '2026-11-18'
+        reason: /workspace/data 上的本地副本已删除以释放空间（30 天以上无人读写，没有其他版本引用）；完整备份在 COS amphion-audio-backup-1373259071:audio-data-contract/datasets/yodas_de/，删除前按路径与大小逐个文件核对一致。需要时用 ab pull 恢复到原路径，再去掉本标记。记录见 /workspace/data/migration/offload-20261118-unused-raw-datasets/
       summary: YouTube 多语语音德语部分（YODAS）
       has_punctuation: true
       has_true_casing: true
@@ -937,6 +943,9 @@
           recordings: 16685180
           supervisions: 16685180
     provenance:
+      retired:
+        date: '2026-11-18'
+        reason: /workspace/data 上的本地副本已删除以释放空间（30 天以上无人读写，没有其他版本引用）；完整备份在 COS amphion-audio-backup-1373259071:audio-data-contract/datasets/emilia_en/，删除前按路径与大小逐个文件核对一致。需要时用 ab pull 恢复到原路径，再去掉本标记。记录见 /workspace/data/migration/offload-20261118-unused-raw-datasets/
       summary: Emilia 英语野外语音（已清洗）
       has_punctuation: true
       has_true_casing: true
@@ -1585,6 +1594,9 @@
           recordings: 2115480
           supervisions: 2115480
     provenance:
+      retired:
+        date: '2026-11-18'
+        reason: /workspace/data 上的本地副本已删除以释放空间（30 天以上无人读写，没有其他版本引用）；完整备份在 COS amphion-audio-backup-1373259071:audio-data-contract/datasets/yodas_fr/，删除前按路径与大小逐个文件核对一致。需要时用 ab pull 恢复到原路径，再去掉本标记。记录见 /workspace/data/migration/offload-20261118-unused-raw-datasets/
       summary: YouTube 多语语音法语部分（YODAS）
       has_punctuation: true
       has_true_casing: true
@@ -2019,6 +2031,9 @@
           recordings: 142683
           supervisions: 142683
     provenance:
+      retired:
+        date: '2026-11-18'
+        reason: /workspace/data 上的本地副本已删除以释放空间（30 天以上无人读写，没有其他版本引用）；完整备份在 COS amphion-audio-backup-1373259071:audio-data-contract/datasets/koreaspeech/，删除前按路径与大小逐个文件核对一致。需要时用 ab pull 恢复到原路径，再去掉本标记。记录见 /workspace/data/migration/offload-20261118-unused-raw-datasets/
       summary: 韩语语音识别数据（KoreaSpeech）
       has_punctuation: true
       has_true_casing:
@@ -2053,6 +2068,9 @@
           recordings: 2521932
           supervisions: 2521932
     provenance:
+      retired:
+        date: '2026-11-18'
+        reason: /workspace/data 上的本地副本已删除以释放空间（30 天以上无人读写，没有其他版本引用）；完整备份在 COS amphion-audio-backup-1373259071:audio-data-contract/datasets/yodas_ko/，删除前按路径与大小逐个文件核对一致。需要时用 ab pull 恢复到原路径，再去掉本标记。记录见 /workspace/data/migration/offload-20261118-unused-raw-datasets/
       summary: YouTube 多语语音韩语部分（YODAS）
       has_punctuation: true
       has_true_casing: true
@@ -2297,6 +2315,9 @@
           recordings: 4099688
           supervisions: 4099688
     provenance:
+      retired:
+        date: '2026-11-18'
+        reason: /workspace/data 上的本地副本已删除以释放空间（30 天以上无人读写，没有其他版本引用）；完整备份在 COS amphion-audio-backup-1373259071:audio-data-contract/datasets/yodas_ru/，删除前按路径与大小逐个文件核对一致。需要时用 ab pull 恢复到原路径，再去掉本标记。记录见 /workspace/data/migration/offload-20261118-unused-raw-datasets/
       summary: YouTube 多语语音俄语部分（YODAS）
       has_punctuation: true
       has_true_casing: true
