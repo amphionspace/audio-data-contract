@@ -32,6 +32,7 @@ Output: neighbors.json  {language: {speaker: [[neighbor, cosine], ...]}}
     python speaker_neighbors.py --output-dir DIR --ramc
     python speaker_neighbors.py --output-dir DIR --en-accents
     python speaker_neighbors.py --output-dir DIR --es-accents
+    python speaker_neighbors.py --output-dir DIR --pt-split
 """
 
 import argparse
@@ -75,13 +76,20 @@ EN_ACCENT_CORPORA = {
 ES_ACCENT_CORPORA = {
     "es": [("common_voice_es", "legacy", "train", False, None), ("common_voice_es", "legacy", "train", True, None)],
 }
+# --pt-split: the Portuguese pools' two Common Voice pt corpora (build_ts_scene_pool.PT_CORPORA): the target speakers of
+# pt_target_speakers() and the other speakers with enough utterances.
+PT_SPLIT_CORPORA = {
+    "pt": [("common_voice_pt", "pt-train-v1-20261117", "train", False, None),
+           ("common_voice_pt", "pt-train-v1-20261117", "train", True, None)],
+}
 # The corpora a target corpus's scene pool draws other speakers from (XSESSION_CORPORA / MAGICDATA_CORPORA / RAMC_CORPORA /
 # CV_ACCENT_CORPORA / CS_DIALOGUE_CORPORA there).
 POOL_PEERS = {"kespeech": {"aishell2", "kespeech"}, "magicdata": {"aishell2", "magicdata"},
               "magicdata_ramc": {"aishell2", "magicdata_ramc"},
               "common_voice_en": {"librispeech", "common_voice_en"},
               "cs_dialogue_en": {"librispeech", "common_voice_en", "cs_dialogue_en"},
-              "common_voice_es": {"common_voice_es"}}
+              "common_voice_es": {"common_voice_es"},
+              "common_voice_pt": {"common_voice_pt"}}
 COLUMNS = ["speaker", "duration", "root_alias", "relative_path", "start_frame", "num_frames", "sample_rate"]
 
 
@@ -172,20 +180,23 @@ def main():
     parser.add_argument("--ramc", action="store_true", help="neighbours of MagicData-RAMC speakers within their scene pools' corpora")
     parser.add_argument("--es-accents", action="store_true",
                         help="neighbours of the Spanish pools' accent-labelled Common Voice es speakers (build_ts_scene_pool.py --es)")
+    parser.add_argument("--pt-split", action="store_true",
+                        help="neighbours of the Portuguese pools' Common Voice pt target speakers (build_ts_scene_pool.py --pt)")
     parser.add_argument("--en-accents", action="store_true",
                         help="neighbours of the accent-labelled Common Voice and CS-Dialogue speakers within their scene pools' corpora")
     args = parser.parse_args()
-    if sum((args.kespeech_magicdata, args.ramc, args.en_accents, args.es_accents)) > 1:
-        parser.error("--kespeech-magicdata, --ramc, --en-accents and --es-accents embed different corpora; pick one")
+    if sum((args.kespeech_magicdata, args.ramc, args.en_accents, args.es_accents, args.pt_split)) > 1:
+        parser.error("--kespeech-magicdata, --ramc, --en-accents, --es-accents and --pt-split embed different corpora; pick one")
     args.output_dir.mkdir(parents=True, exist_ok=True)
     from modelscope.pipelines import pipeline
 
     model = pipeline(task="speaker-verification", model=MODEL, device=args.device)
     neighbors, report, store = {}, {}, {}
-    accents = args.en_accents or args.es_accents
+    accents = args.en_accents or args.es_accents or args.pt_split
     restricted = args.kespeech_magicdata or args.ramc or accents
     table = KESPEECH_MAGICDATA_CORPORA if args.kespeech_magicdata else RAMC_CORPORA if args.ramc \
-        else EN_ACCENT_CORPORA if args.en_accents else ES_ACCENT_CORPORA if args.es_accents else CORPORA
+        else EN_ACCENT_CORPORA if args.en_accents else ES_ACCENT_CORPORA if args.es_accents \
+        else PT_SPLIT_CORPORA if args.pt_split else CORPORA
     for language, corpora in table.items():
         names, vectors, targets = [], [], []
         for dataset, version, split, can_target, wanted in corpora:

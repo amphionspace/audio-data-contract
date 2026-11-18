@@ -297,3 +297,52 @@
     - yodas_es@legacy:all
     - mls_es@legacy:train
     - common_voice_es@es-train-v1-20261108:train
+- schema_version: dataset-catalog/2.0
+  dataset_id: ts_interference_pool
+  version: pt-v1-20261117
+  languages:
+  - pt
+  tasks:
+  - ts_asr_interference
+  aliases: []
+  artifacts:
+  - name: pt-records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/ts_interference_pool/versions/pt-v1-20261117/records_pt.jsonl.gz
+    sha256: d68b32542edceebc6b29c80e49b60b185358ab5ea960df24109d1b74ea40b10c
+    metadata:
+      record_count: 39000
+  - name: pt-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_interference_pool/versions/pt-v1-20261117/audio_index_pt.jsonl.gz
+    sha256: ddb417e7d817ae81ec7fe827b2229b25d9e3a1cdb5b26567f24f046618208faa
+    metadata:
+      record_count: 39000
+  splits:
+    pt:
+      artifacts:
+        records:
+        - pt-records
+        audio_index:
+        - pt-audio-index
+      task: ts_asr_interference
+      statistics:
+        records: 39000
+        duration_hours: 60.16
+        duration_basis: clip duration (segment span, or the whole file)
+  provenance:
+    status: complete
+    synthetic: none
+    snapshot_date: '2026-11-17'
+    description: 葡萄牙语干扰人素材池（对应西语 es-v2-20261110，同一构建脚本与质量门槛）：YODAS-Granary pt000 清洗通过的句子 30,000 条 / 44.0 h（每个源视频最多 10 条，8,365
+      个视频），MLS pt train 2,000 条 / 7.0 h（31 人），Common Voice pt train 中不是葡语 TS 目标的说话人 7,000 条 / 9.2 h（491 人，每人最多 60 句）。葡语 TS
+      目标（ts_scene_pool pt-*-20261117、pt-1spk-v1-20261117）是 build_ts_scene_pool.pt_target_speakers 选出的 188 人，与这里的 CV 说话人不重叠；CV
+      声音约占 18%（西语 es-v2 为 21%），所以 CV 的声音并不总是目标（西语 v70 误报 102 -> 587 的原因）。CV pt 片段静音较长，质量门槛丢掉 24%（sparse，西语 8%），因此按 1.4 倍超抽。CV
+      27.0 pt dev/test、MLS pt dev/test 的说话人不在 train；与葡语测试集句子相同的片段已剔除（YODAS 有 2,732 句是 Beleza、Sim 这类短语）。共 39,000 条 / 60.2 h。生成脚本
+      scripts/ts_robust/build_interference_pool.py --languages pt --version pt-v1-20261117。
+    sources:
+    - yodas_granary_es_pt@pt000-clean-v1-20261114:train
+    - mls_pt@pt-train-v1-20261117:train
+    - common_voice_pt@pt-train-v1-20261117:train

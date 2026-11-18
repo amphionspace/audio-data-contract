@@ -25,6 +25,9 @@ Spanish (``--languages es --version es-v1-20261110``) is its own version with on
 (YouTube sentences, one file each, grouped by video) and MLS es (audiobooks, real speaker labels). Common Voice es
 is left out for the same reason as LibriSpeech: it holds every Spanish TS-ASR target (ts_scene_pool es-*).
 
+Portuguese (``--languages pt --version pt-v1-20261117``), split ``pt``: YODAS-Granary pt000 (clean pass), MLS pt and
+the Common Voice pt train speakers that are not Portuguese TS targets, built like es-v2-20261110.
+
 ``--version es-v2-20261110`` adds the Common Voice es train speakers without an accent answer. The Spanish TS-ASR
 targets are the accent-labelled speakers (the es scene pools; ts_scene_pool@es-1spk-v2-20261110), so these share no
 speaker with a target, and without them a Common Voice voice was only ever the target: v70 (es-v1) tripled the false
@@ -40,7 +43,12 @@ from concurrent.futures import ProcessPoolExecutor
 from pathlib import Path
 
 import numpy as np
-from build_ts_scene_pool import accent_group
+from build_ts_scene_pool import (
+    _plain,
+    accent_group,
+    pt_target_speakers,
+    pt_test_sentences,
+)
 
 from audio_data_contract import load_catalog, resolve_split
 from audio_data_contract.roots import load_roots
@@ -87,6 +95,14 @@ SOURCES = [
     # unlabelled_accent: only speakers none of whose utterances has an accent group; 2,735 speakers, 33,209 utterances
     # under the cap. Versions before es-v2-20261110 do not have it.
     {"language": "es", "kind": "recordings", "dataset": "common_voice_es", "version": "es-train-v1-20261108", "split": "train", "count": 30000, "cap": 20, "speaker": True, "measure": True, "unlabelled_accent": True, "since": "es-v2-20261110"},
+    # Portuguese (pt-v1-20261117): YODAS-Granary pt000 clean sentences grouped by source video, MLS pt train (clean-pass)
+    # and the Common Voice pt train speakers that are not TS targets (non_target: build_ts_scene_pool.pt_target_speakers).
+    # Common Voice pt has 525 such speakers, so their cap is 60 and YODAS is cut to keep Common Voice near the 21% of
+    # es-v2-20261110 (interferers are drawn uniformly over the pool's clips). 24% of its clips fail the gates (sparse:
+    # Common Voice pt clips carry long silences; es 8%), hence the overdraw. MLS pt has 2,670 clips of 15 s or less.
+    {"language": "pt", "kind": "granary", "dataset": "yodas_granary_es_pt", "version": "pt000-clean-v1-20261114", "split": "train", "count": 30000, "cap": 10, "speaker": False, "measure": True},
+    {"language": "pt", "kind": "recordings", "dataset": "mls_pt", "version": "pt-train-v1-20261117", "split": "train", "count": 2000, "cap": 400, "speaker": True, "measure": True},
+    {"language": "pt", "kind": "recordings", "dataset": "common_voice_pt", "version": "pt-train-v1-20261117", "split": "train", "count": 7000, "cap": 60, "speaker": True, "measure": True, "non_target": True, "overdraw": 1.4},
 ]
 
 
@@ -123,15 +139,22 @@ def emilia_candidates(catalog, roots, source, held_out):
     return rows
 
 
+def test_sentences(source):
+    """Sentences no clip may say: the Portuguese test sets' for the pt sources (build_ts_scene_pool.pt_test_sentences)."""
+    return pt_test_sentences() if source["language"] == "pt" else frozenset()
+
+
 def utterance_candidates(catalog, roots, source):
-    speakers, labelled = {}, set()
+    speakers, labelled, test = {}, set(), test_sentences(source)
     for path in resolve_split(catalog, source["dataset"], source["version"], source["split"], "supervisions", roots):
         for sup in lines(path):
             speaker = sup.get("speaker")
-            if speaker and speaker != "N/A":
+            if speaker and speaker != "N/A" and not (test and _plain(sup.get("text")) in test):
                 speakers[sup["recording_id"]] = speaker
                 if source.get("unlabelled_accent") and accent_group((sup.get("custom") or {}).get("accents"), source["dataset"]):
                     labelled.add(speaker)
+    if source.get("non_target"):
+        labelled = pt_target_speakers()
     if labelled:
         speakers = {rec: spk for rec, spk in speakers.items() if spk not in labelled}
         print(f"  {source['dataset']}: {len(labelled)} accent-labelled (target) speakers left out", flush=True)
@@ -165,6 +188,25 @@ def video_candidates(catalog, roots, source):
             rows.append(candidate(source, rec["id"], rec["id"], rec["sources"][0]["source"], rec["sampling_rate"],
                                   rec["num_samples"], rec["duration"], len(rec["channel_ids"]),
                                   f"{source['dataset']}:{rec['id'].rsplit('-', 3)[0]}"))
+    return rows
+
+
+def granary_candidates(catalog, roots, source):
+    """YODAS-Granary sentence files (one per clean-pass supervision), grouped by the source video (original_audio_id)."""
+    video, test = {}, test_sentences(source)
+    for path in resolve_split(catalog, source["dataset"], source["version"], source["split"], "supervisions", roots):
+        for sup in lines(path):
+            if (sup.get("text") or "").strip() and ((sup.get("custom") or {}).get("clean") or {}).get("pass") \
+                    and _plain(sup["text"]) not in test:
+                video[sup["recording_id"]] = sup["custom"]["original_audio_id"]
+    rows = []
+    for path in resolve_split(catalog, source["dataset"], source["version"], source["split"], "recordings", roots):
+        for rec in lines(path):
+            if rec["id"] not in video or not MIN_SECONDS <= rec["duration"] <= MAX_SECONDS:
+                continue
+            rows.append(candidate(source, rec["id"], rec["id"], rec["sources"][0]["source"], rec["sampling_rate"],
+                                  rec["num_samples"], rec["duration"], len(rec["channel_ids"]),
+                                  f"{source['dataset']}:{video[rec['id']]}"))
     return rows
 
 
@@ -313,12 +355,14 @@ def main():
             rows = segment_candidates(catalog, roots, source, rng)
         elif source["kind"] == "videos":
             rows = video_candidates(catalog, roots, source)
+        elif source["kind"] == "granary":
+            rows = granary_candidates(catalog, roots, source)
         elif source["kind"] == "audio_index":
             rows = emilia_candidates(catalog, roots, source, held_out)
         else:
             rows = utterance_candidates(catalog, roots, source)
         if source["measure"]:
-            drawn = take_with_cap(rng, rows, int(count * OVERDRAW), source["cap"])
+            drawn = take_with_cap(rng, rows, int(count * source.get("overdraw", OVERDRAW)), source["cap"])
             print(f"{name}: {len(rows)} candidates, measuring {len(drawn)}", flush=True)
             stats, dropped = measure(drawn, args.workers)
             passed = [(row, stats[i]) for i, row in enumerate(drawn) if i in stats][:count]

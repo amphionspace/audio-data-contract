@@ -50,7 +50,12 @@ TALKERS = {
     # Spanish (2026-11-10, version es-v1-20261110 with --languages es): the Spanish training corpora.
     "es": [{"dataset": "common_voice_es", "version": "es-train-v1-20261108", "split": "train"},
            {"dataset": "mls_es", "version": "legacy", "split": "train"}],
+    # Portuguese (2026-11-17, version pt-v1-20261117 with --languages pt): the Portuguese training versions.
+    "pt": [{"dataset": "common_voice_pt", "version": "pt-train-v1-20261117", "split": "train"},
+           {"dataset": "mls_pt", "version": "pt-train-v1-20261117", "split": "train"}],
 }
+# The Portuguese benchmark's babble talkers (CV 27.0 pt dev, MLS pt dev / test) are held out too.
+PT_BENCH_MANIFEST = DATA / "datasets/asr_babble_bench/source/pt-v1-20261117/babble/manifest.jsonl"
 DESCRIPTION = (
     "训练用房间背景人声（babble）：按 asr_babble_bench@v2-20261023 的合成方法（同一个渲染函数）用训练划分的说话人生成，"
     "每段 30 秒、16–24 人同时连续说话、每人站在 SLR28 中/大模拟房间的不同位置，听不出某一个人说的内容；"
@@ -73,7 +78,8 @@ def main():
     import yaml
     recipe = {**yaml.safe_load(BENCH_RECIPE.read_text()), "seed": SEED}
     catalog, roots = load_catalog(str(DATA / "registry/catalog")), load_roots(str(DATA / "registry/roots.json"))
-    held = {t["speaker"] for line in BENCH_MANIFEST.read_text().splitlines() if line.strip()
+    manifests = (BENCH_MANIFEST, PT_BENCH_MANIFEST) if "pt" in languages else (BENCH_MANIFEST,)
+    held = {t["speaker"] for manifest in manifests for line in manifest.read_text().splitlines() if line.strip()
             for t in json.loads(line)["talkers"]}
     talkers = {}
     for language, sources in languages.items():
