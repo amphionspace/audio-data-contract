@@ -1,4 +1,4 @@
-# 中英混说训练数据清洗（2026-11-17）：统一转写写法（zhen-norm-v1），双引擎清洗后执行 zhen-post-v1。ascend、ntuml2021、yodas_zh_codeswitch 已转正，emilia2_zhen 为占位。运行目录 zhen-cs-clean-20261117。
+# 中英混说训练数据清洗（2026-11-17）：统一转写写法（zhen-norm-v1），双引擎清洗后执行 zhen-post-v1。ascend、ntuml2021、yodas_zh_codeswitch 已转正，emilia2_zhen 按 Qwen3-ASR 蒸馏数据转正（2026-11-18）。运行目录 zhen-cs-clean-20261117。
 - schema_version: dataset-catalog/2.0
   dataset_id: ascend
   version: clean-zhen-v1-20261117
@@ -646,23 +646,164 @@
   aliases: []
   derived_from: emilia2@tts-unified-v0.1
   artifacts:
+  - name: train_recordings
+    kind: lhotse-recordings
+    root_alias: aidc_data
+    relative_path: datasets/emilia2_zhen/versions/clean-zhen-v1-20261117/manifests/emilia2_zhen_recordings.jsonl.gz
+    expected_bytes: 6346870
+    sha256: ad207b33c1de8f9cf6eb68595d7774ccc7c794212e92f9f7d1be36b695626e7f
+    metadata:
+      record_count: 429298
+  - name: audio
+    kind: source-directory
+    root_alias: aidc_data
+    relative_path: datasets/emilia2_zhen/versions/clean-zhen-v1-20261117/audio
+    metadata:
+      file_count: 429298
+      expected_bytes: 147759843560
+      tree_sha256: 6e68b76bed6c42b7a96ed5df8a4ee1fe1b206acc7a1c2aae41f8589d93f470c6
+      audio_count: 429298
+      audio_format:
+        channels: 1
+        sample_rate: 16000
+        sample_width_bits: 16
+  - name: train_supervisions
+    kind: lhotse-supervisions
+    root_alias: aidc_data
+    relative_path: datasets/emilia2_zhen/versions/clean-zhen-v1-20261117/supervisions/emilia2_zhen_supervisions_train.jsonl.gz
+    expected_bytes: 68921880
+    sha256: ccc1b70cf98b102a953d7714d92ac1d1ec212a8a26f576f12647401f45c7db9e
+    metadata:
+      record_count: 429298
+      pass_count: 428874
+      text: zhen-norm-v1 transcript (upstream Emilia text) with custom.clean
+  - name: raw_supervisions
+    kind: lhotse-supervisions
+    root_alias: aidc_data
+    relative_path: datasets/emilia2_zhen/versions/clean-zhen-v1-20261117/manifests/emilia2_zhen_supervisions_raw.jsonl.gz
+    expected_bytes: 65530037
+    sha256: f67539a23b4a15902df265df5888f64f11fb8a4137c2761d3c01fbafb4a3c2fc
+    metadata:
+      record_count: 429298
+      text: upstream Emilia text as shipped
+  - name: dropped
+    kind: quality-report
+    root_alias: aidc_data
+    relative_path: datasets/emilia2_zhen/versions/clean-zhen-v1-20261117/evidence/dropped.jsonl.gz
+    expected_bytes: 10209
+    sha256: a33083328598ee33ad1ec069a647b289ed1d6406a95b167ce6e4c6969a31d223
+    metadata:
+      record_count: 424
+  - name: pilot_engine_results
+    kind: quality-report
+    root_alias: aidc_data
+    relative_path: datasets/emilia2_zhen/versions/clean-zhen-v1-20261117/evidence/pilot_engine_results.jsonl.gz
+    expected_bytes: 415980
+    sha256: cb5b5b6262923f8b17b9aa40f30674e5a2de0c8e36556e148e507c0d4476287f
+    metadata:
+      record_count: 1500
+  - name: pilot_review
+    kind: markdown-report
+    root_alias: aidc_data
+    relative_path: datasets/emilia2_zhen/versions/clean-zhen-v1-20261117/evidence/pilot_review.md
+    expected_bytes: 8706
+    sha256: c5055d927244809f0ca850a1f1b9272d622ff0e43720a4dd121c78aa9c8dbfe9
+  - name: pilot_filter_report
+    kind: json-metadata
+    root_alias: aidc_data
+    relative_path: datasets/emilia2_zhen/versions/clean-zhen-v1-20261117/evidence/pilot_filter_report.json
+    expected_bytes: 830
+    sha256: 05480c53c8b4f62a871192932e0243c95022feb968791942cf5b4168c2fff2cd
+  - name: pilot_run_manifest
+    kind: json-metadata
+    root_alias: aidc_data
+    relative_path: datasets/emilia2_zhen/versions/clean-zhen-v1-20261117/evidence/pilot_run_manifest.json
+    expected_bytes: 1561
+    sha256: dfe3efb0235c18cd3a523a147f57f58228ddd955cc3e65cb8756f1a3ec7412ba
+  - name: distill_summary
+    kind: json-metadata
+    root_alias: aidc_data
+    relative_path: datasets/emilia2_zhen/versions/clean-zhen-v1-20261117/evidence/distill_summary.json
+    expected_bytes: 766
+    sha256: 3e2213afc81dbdd02b66eaac060b7607da21502d4373f4a9ab472fe0c73639e9
+  - name: extract_summary
+    kind: json-metadata
+    root_alias: aidc_data
+    relative_path: datasets/emilia2_zhen/versions/clean-zhen-v1-20261117/manifests/emilia2_zhen_summary.json
+    expected_bytes: 424
+    sha256: 118b9bd846abd0f4f4e839fcbcda62246efca699fd290868b203ee181b180649
   - name: preparation_state
     kind: dataset-state
     root_alias: aidc_data
     relative_path: datasets/emilia2_zhen/versions/clean-zhen-v1-20261117/state.json
+    expected_bytes: 712
+    sha256: 05c6d5483808fbc6fb8a128d87cf96499fb3c9e39ac274b32e6bc43f0579fb61
   splits:
     train:
       artifacts:
-        preparation_state:
-        - preparation_state
-      provenance:
-        preparation_status: building
+        recordings:
+        - train_recordings
+        supervisions:
+        - train_supervisions
+      statistics:
+        supervisions: 429298
+        pass: 428874
+        reject: 424
+        by_reason:
+          ok: 428874
+          no_han: 424
+        hours_before_filter: 1282.4736
+        duration_hours: 1282.3065
+        duration_basis: sum of supervision durations with custom.clean.pass=true
+        sample_formats:
+          1ch/16000Hz/PCM_16: 429298
+        source_sample_rates:
+          '44100': 429298
+  recipe_parameters:
+    source_version: tts-unified-v0.1
+    source_filter: 'language = ''zh'' AND regexp_like(text, ''[A-Za-z]{2,}'') AND (metadata_json LIKE ''%"languages": ["zh", "en"]%'' OR metadata_json LIKE
+      ''%"languages": ["en", "zh"]%'')'
+    text_convention: zhen-norm-v1
+    label_origin: upstream Emilia ASR pseudo-label (≈ Qwen3-ASR output); used as Qwen3-ASR distillation data
+    filter_rules: zhen-distill-v1 (drop rows without Han characters; scripts/emilia2_finalize.py)
+    writes:
+    - text
+    - custom.clean
+    - custom.original_text
+    filters: custom.clean.pass=false
+    pilot:
+      rows: 1500
+      seed: 20261117
+      engines:
+      - Qwen3-ASR-1.7B
+      - MOSS-Transcribe-Diarize
+      result: 1,500/1,500 pass; full dual-engine clean skipped
   provenance:
-    preparation_status: building
+    preparation_status: prepared
+    lineage_status: exact
+    materialization: full
     owner: mingdong
-    summary: Emilia2 中英混合录音里的中文夹英文句
-    description: Emilia2 上游 languages 恰为 zh+en 的录音（2026-10-12 解包只取纯中文、纯英文，这部分从未解包，也不在 v4 训练配方里）中， 带英文单词的中文短句，按 emilia2@tts-unified-v0.1 统计 429,298 句 / 1,282.5
-      h，内容多是科技、编程、产品类视频。 文本是 Emilia 上游的机器转写。音频从 Lance 解成 16 kHz 单声道 WAV 放本版本目录，生成 lhotse 清单；转写统一为 zhen-norm-v1， 再用 Qwen3-ASR-1.7B + MOSS-Transcribe-Diarize
-      做共识清洗，先试跑看被拒样本。进行中。
     source: emilia2@tts-unified-v0.1
+    summary: Emilia2 中英混合录音里的中文夹英文句
+    description: emilia2@tts-unified-v0.1 里上游 languages 恰为 zh+en 的录音（2026-10-12 解包只取纯中文、纯英文，这部分不在 v4 训练配方里）中带英文单词的中文短句，内容多是科技、编程、产品、教学类视频。音频从 Lance 解成 16
+      kHz 单声道 PCM16 WAV 放本版本目录 audio/，lhotse 清单在 manifests/；转写是 Emilia 上游的机器转写，统一为 zhen-norm-v1 写法（原文存 custom.original_text）。试跑 1,500 句显示这份文本基本就是 Qwen3-ASR
+      的输出（与 Qwen3-ASR-1.7B 的 CER 中位数 0、逐字相同 71%），双引擎一致性清洗近乎自证，所以没有跑全量清洗，按 Qwen3-ASR 蒸馏数据处理。依据：在 asr/zh-en-codeswitch@v1-20261117 上，Qwen3-ASR-1.7B 的英文术语命中率五个切片都高于
+      AmphionASR 11.06 包，合计 77.3% 对 73.9%（ae run run-20261118T111724Z-4c81add0 / run-20261118T111724Z-30d70a52，配对 bootstrap 95% 区间 +2.9～+4.0 点）。zhen-distill-v1
+      只去掉没有汉字的句子（424 句，含漏出的 `language Chinese<asr_text>` 标记和听成其他语种的乱码），读取时按 custom.clean.pass 过滤：429,298 句中 pass 428,874（1282.3065 h）。已知风险：Qwen3-ASR 判错语种时会把中文翻成英文；本数据按
+      language=zh 选取，抽看没有发现这类句子，但没有逐条核对。试跑抽检和对比见 run_dir 的 README。
     run_dir: /workspace/workspace/mingdong/data/amphiondata/zhen-cs-clean-20261117
+    facts:
+      rows: 429298
+      eval:
+        eval_set: asr/zh-en-codeswitch@v1-20261117
+        qwen3_asr_1_7b_run: run-20261118T111724Z-4c81add0
+        amphionasr_1106_run: run-20261118T111724Z-30d70a52
+        term_hit_rate_pooled:
+          qwen3_asr_1_7b: 0.7729
+          amphionasr_1106: 0.7386
+          diff_95ci:
+          - 0.0291
+          - 0.0397
+        note: Qwen3-ASR-1.7B term hit rate higher on all 5 slices (significant on 4); CER difference pooled not significant; on cs_dialogue_mix Qwen sometimes
+          translates Chinese into English when it detects English
+      code: run_dir scripts/emilia2_prepare.py, normalize.py, emilia2_finalize.py, emilia2_register.py
