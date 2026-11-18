@@ -1196,3 +1196,183 @@
     - mls_es@legacy:dev
     - mls_es@legacy:test
     - sim_rir_slr28@legacy-20260804:all
+- schema_version: dataset-catalog/2.0
+  dataset_id: asr_babble_bench
+  version: pt-v1-20261117
+  languages:
+  - pt
+  tasks:
+  - asr
+  artifacts:
+  - name: audio-index
+    kind: audio-index
+    root_alias: asr_babble_bench
+    relative_path: versions/pt-v1-20261117/audio-index.jsonl.gz
+    sha256: 9258c720112b180cf80dbcecff0dbbc36f91c8a494c4bd276f57dd1b94bcf2f1
+    metadata:
+      record_count: 1400
+  - name: babble-manifest
+    kind: jsonl-metadata
+    root_alias: asr_babble_bench
+    relative_path: source/pt-v1-20261117/babble/manifest.jsonl
+    sha256: 4e7f8febdf0e2ab989a6fa9e6b92904b205e04637f23c41750d682a03cd74f21
+    metadata:
+      record_count: 300
+  - name: qc
+    kind: quality-report
+    root_alias: asr_babble_bench
+    relative_path: source/pt-v1-20261117/qc.yaml
+    sha256: d20b2dce87c5c84f6124267cb95e7c2fcdf35c0885cde1862725a1b4e75d4a9b
+    metadata:
+      passed: true
+  - name: pt-babble-far-records
+    kind: audio-records
+    root_alias: asr_babble_bench
+    relative_path: versions/pt-v1-20261117/records/pt-babble-far.jsonl.gz
+    sha256: 9b2fb7237adbe164b5a4b7175ec09e71de58151b8a54e83a86634ff5e730a912
+    metadata:
+      record_count: 200
+  - name: pt-babble-mid-records
+    kind: audio-records
+    root_alias: asr_babble_bench
+    relative_path: versions/pt-v1-20261117/records/pt-babble-mid.jsonl.gz
+    sha256: 038c6b6cef8168628302302ec9574367aaa0535b4eecca236522dc1123f83b6d
+    metadata:
+      record_count: 200
+  - name: pt-clean-records
+    kind: audio-records
+    root_alias: asr_babble_bench
+    relative_path: versions/pt-v1-20261117/records/pt-clean.jsonl.gz
+    sha256: 570206898eb7d97342dc170d7fc929d917698158320bdbc0c5d874da008bdf3c
+    metadata:
+      record_count: 200
+  - name: pt-babble20-records
+    kind: audio-records
+    root_alias: asr_babble_bench
+    relative_path: versions/pt-v1-20261117/records/pt-babble20.jsonl.gz
+    sha256: 5d78e7e64fa051f31a879c97f966969eb1440430fe27fa079877b943ae297d1c
+    metadata:
+      record_count: 200
+  - name: pt-babble10-records
+    kind: audio-records
+    root_alias: asr_babble_bench
+    relative_path: versions/pt-v1-20261117/records/pt-babble10.jsonl.gz
+    sha256: b3332bc554884608d9c086d375b41303ecaefc96f224a99a74dd5521c0e722e7
+    metadata:
+      record_count: 200
+  - name: pt-babble5-records
+    kind: audio-records
+    root_alias: asr_babble_bench
+    relative_path: versions/pt-v1-20261117/records/pt-babble5.jsonl.gz
+    sha256: 3cd8df5f28737baf432bd7f6a4e5aee8406e511563a6a13e12b30390409bdda4
+    metadata:
+      record_count: 200
+  - name: pt-babble10-tight-records
+    kind: audio-records
+    root_alias: asr_babble_bench
+    relative_path: versions/pt-v1-20261117/records/pt-babble10-tight.jsonl.gz
+    sha256: dc4aa152a9f888b8ad42f4a1ccfead65787a572fd212324aa31d177f8571a23f
+    metadata:
+      record_count: 200
+  splits:
+    pt-babble-far:
+      artifacts:
+        records:
+        - pt-babble-far-records
+        audio_index:
+        - audio-index
+      task: asr
+      statistics:
+        records: 200
+        duration_hours: 0.6321
+        duration_basis: clip duration
+      provenance:
+        description: '只有葡语背景人声 · 远：16–24 人在房间里同时说话的葡语背景人声，电平 −45 到 −38 dBFS（正常说话约 −25 dBFS），2–20 秒；期望输出为空。参数 {"kind": "noise", "pair": "pt-babble-only", "noise": "babble_pt", "level_dbfs": [-45, -38], "duration": [2, 20]}'
+    pt-babble-mid:
+      artifacts:
+        records:
+        - pt-babble-mid-records
+        audio_index:
+        - audio-index
+      task: asr
+      statistics:
+        records: 200
+        duration_hours: 0.6321
+        duration_basis: clip duration
+      provenance:
+        description: '只有葡语背景人声 · 中：同一批片段，电平 −38 到 −31 dBFS；期望输出为空。参数 {"kind": "noise", "pair": "pt-babble-only", "noise": "babble_pt", "level_dbfs": [-38, -31], "duration": [2, 20]}'
+    pt-clean:
+      artifacts:
+        records:
+        - pt-clean-records
+        audio_index:
+        - audio-index
+      task: asr
+      statistics:
+        records: 200
+        duration_hours: 0.5933
+        duration_basis: clip duration
+      provenance:
+        description: '葡语 · 无背景人声（对照）：Common Voice 27.0 pt 测试集的一句话，前后各 1–5 秒只有很低的噪声底；下面几列与它逐条配对。参数 {"kind": "speech", "pair": "pt-speech", "language": "pt"}'
+    pt-babble20:
+      artifacts:
+        records:
+        - pt-babble20-records
+        audio_index:
+        - audio-index
+      task: asr
+      statistics:
+        records: 200
+        duration_hours: 0.5933
+        duration_basis: clip duration
+      provenance:
+        description: '葡语 · 背景人声 20 dB：同一句话、同样的前后时长，整段叠加葡语背景人声，信噪比 20 dB（背景很远）；前后 1–5 秒只有背景人声。参数 {"kind": "speech", "pair": "pt-speech", "language": "pt", "noise": "babble_pt", "snr_db": 20}'
+    pt-babble10:
+      artifacts:
+        records:
+        - pt-babble10-records
+        audio_index:
+        - audio-index
+      task: asr
+      statistics:
+        records: 200
+        duration_hours: 0.5933
+        duration_basis: clip duration
+      provenance:
+        description: '葡语 · 背景人声 10 dB：同上，信噪比 10 dB（身边有一群人在聊天）。参数 {"kind": "speech", "pair": "pt-speech", "language": "pt", "noise": "babble_pt", "snr_db": 10}'
+    pt-babble5:
+      artifacts:
+        records:
+        - pt-babble5-records
+        audio_index:
+        - audio-index
+      task: asr
+      statistics:
+        records: 200
+        duration_hours: 0.5933
+        duration_basis: clip duration
+      provenance:
+        description: '葡语 · 背景人声 5 dB：同上，信噪比 5 dB（嘈杂的人群）。参数 {"kind": "speech", "pair": "pt-speech", "language": "pt", "noise": "babble_pt", "snr_db": 5}'
+    pt-babble10-tight:
+      artifacts:
+        records:
+        - pt-babble10-tight-records
+        audio_index:
+        - audio-index
+      task: asr
+      statistics:
+        records: 200
+        duration_hours: 0.2661
+        duration_basis: clip duration
+      provenance:
+        description: '葡语 · 背景人声 10 dB · 无前后空白：与 pt-babble10 同一句话、同一段背景，只是没有前后 1–5 秒；两列之差就是只有背景人声的那几秒带来的错误。参数 {"kind": "speech", "pair": "pt-speech", "language": "pt", "tight": true, "noise": "babble_pt", "snr_db": 10}'
+  provenance:
+    status: complete
+    synthetic: full
+    description: 葡萄牙语普通 ASR 背景人声评测集（与西语版 es-v1-20261111 同一做法，对应中英 v2-20261023 的背景人声切分，同一渲染函数与参数）： 只有葡语背景人声的片段（期望输出为空），以及一句话前后和说话时都有葡语背景人声的片段（与无背景人声的对照逐条配对）。 目标语音是 Common Voice 27.0 pt test 的一句话；背景人声由不进训练、也不与目标重叠的 Common Voice 27.0 pt dev 和 MLS pt dev / test（20 人） 说话人在模拟房间里混成（葡语训练 common_voice_pt / mls_pt @pt-train-v1-20261117 只用 train，且与这些划分说话人、句子零重叠）。 只用于评测，不进训练。配方 scripts/asr_babble_bench/recipe-pt.yaml。
+    sources:
+    - common_voice_pt@pt-eval-v1-20261117:test
+    - common_voice_pt@pt-eval-v1-20261117:dev
+    - mls_pt@pt-eval-v1-20261117:dev
+    - mls_pt@pt-eval-v1-20261117:test
+    - sim_rir_slr28@legacy-20260804:all

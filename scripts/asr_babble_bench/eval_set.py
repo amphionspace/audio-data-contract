@@ -4,6 +4,7 @@
     python scripts/asr_babble_bench/eval_set.py > data.yaml
     ae eval-sets publish data.yaml --project open-audio-llm --name asr-babble-bench --version v3-20261023
     python scripts/asr_babble_bench/eval_set.py --recipe scripts/asr_babble_bench/recipe-es.yaml > data.yaml  # Spanish
+    python scripts/asr_babble_bench/eval_set.py --recipe scripts/asr_babble_bench/recipe-pt.yaml > data.yaml  # Portuguese
 
 With ``--blank-recipe recipe-blank.yaml`` the config also lists the blank / non-speech splits of that recipe's
 version (v4-20261104 onwards); the babble splits keep pointing at ``recipe.yaml``'s version, so their results
@@ -47,15 +48,18 @@ def main():
             return noise
         return [*([language] if language in TAGGED_LANGUAGES else []), "synthetic", *noise]
 
-    if set(recipe["targets"]) == {"es"}:
+    single = {"es": "西语", "pt": "葡语"}
+    if len(recipe["targets"]) == 1 and set(recipe["targets"]) <= set(single):
+        (language,) = recipe["targets"]
+        name = single[language]
         config = {
             "task": "asr",
             "sampling_rate": recipe["sample_rate"],
             "tags": ["synthetic", "noise"],
             "groups": [
-                {"name": "只有西语背景人声", "section": "背景人声", "labels": names("noise"),
-                 "description": "没有人对着设备说话，只有西语背景人声；期望输出为空，指标为误输出率"},
-                {"name": "西语 · 一句话前后有背景人声", "section": "背景人声", "labels": names("speech", "es-"),
+                {"name": f"只有{name}背景人声", "section": "背景人声", "labels": names("noise"),
+                 "description": f"没有人对着设备说话，只有{name}背景人声；期望输出为空，指标为误输出率"},
+                {"name": f"{name} · 一句话前后有背景人声", "section": "背景人声", "labels": names("speech", f"{language}-"),
                  "description": "同一批句子，只改背景人声的信噪比和前后是否留空；与对照之差是背景人声带来的错误"},
             ],
             "evaluation": [

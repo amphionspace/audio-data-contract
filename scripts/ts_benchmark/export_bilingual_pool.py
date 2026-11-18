@@ -19,6 +19,9 @@ source ``{manifest: {alias, path}, dataset, version, split}``; ``path`` is the C
     python scripts/ts_benchmark/export_bilingual_pool.py --languages es en --held-out es \
         --exclude-speakers ts-training-targets.json \
         --output /workspace/data/datasets/ts_asr_crosslingual/source/pools/es-v1-20261111
+    python scripts/ts_benchmark/export_bilingual_pool.py --languages pt en --held-out pt \
+        --exclude-speakers ts-training-targets.json \
+        --output /workspace/data/datasets/ts_asr_crosslingual/source/pools/pt-v1-20261117
 """
 
 import argparse
@@ -34,8 +37,15 @@ MANIFESTS = {
     "zh": LEGACY.format(lang="zh", split="{split}", kind="{kind}") + "/cv-zh-CN_{name}_{split}*.jsonl.gz",
     "en": LEGACY.format(lang="en", split="{split}", kind="{kind}") + "/cv-en_{name}_{split}*.jsonl.gz",
     "es": "/workspace/data/datasets/common_voice_es/versions/legacy/manifests/cv-es_{name}_{split}.jsonl.gz",
+    # Common Voice 27.0 pt dev / test (common_voice_pt@pt-eval-v1-20261117); its train is a training set, so pt is
+    # only used --held-out and the train check reads the training version's supervisions (TRAIN_SUPERVISIONS)
+    "pt": "/workspace/data/datasets/common_voice_pt/versions/pt-eval-v1-20261117/manifests/cv27-pt_{name}_{split}.jsonl.gz",
 }
-INTERFERER_SPLITS = {"zh": ("dev", "test"), "en": ("test",), "es": ("dev", "test")}
+INTERFERER_SPLITS = {"zh": ("dev", "test"), "en": ("test",), "es": ("dev", "test"), "pt": ("dev", "test")}
+# Speakers of a held-out language's training set when it is not the ``train`` split of MANIFESTS
+TRAIN_SUPERVISIONS = {
+    "pt": "/workspace/data/datasets/common_voice_pt/versions/pt-train-v1-20261117/cv27-pt_supervisions_train.jsonl.gz",
+}
 
 
 def rows(lang, split, kind):
@@ -89,7 +99,11 @@ def main():
     stats = {"languages": [a, b], "held_out": args.held_out, "bilingual": len(bilingual),
              "excluded_ts_targets": len(bilingual & excluded), "targets": len(targets)}
     if args.held_out:
-        trained = {r["speaker"] for r in rows(args.held_out, "train", "sup")}
+        if args.held_out in TRAIN_SUPERVISIONS:
+            with gzip.open(TRAIN_SUPERVISIONS[args.held_out], "rt") as handle:
+                trained = {json.loads(line)["speaker"] for line in handle}
+        else:
+            trained = {r["speaker"] for r in rows(args.held_out, "train", "sup")}
         if targets & trained:
             raise SystemExit(f"{len(targets & trained)} targets also speak in {args.held_out} train")
         stats[f"targets_in_{args.held_out}_train"] = 0

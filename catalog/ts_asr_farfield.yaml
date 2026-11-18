@@ -1218,3 +1218,305 @@
     description: 西班牙语目标说话人 ASR 评测集（ts_asr_farfield）：与英文版 en-v1-20261031 同一配方与随机种子，说话人换成 Common Voice es dev（众包朗读、多口音、各自设备）；不含业务真实注册录音条件。只用于评测，不进训练。场景见 scripts/ts_benchmark/recipe-farfield-es.yaml。
     sources:
     - common_voice_es@legacy:dev
+- schema_version: dataset-catalog/2.0
+  dataset_id: ts_asr_farfield
+  version: pt-v1-20261117
+  languages:
+  - pt
+  tasks:
+  - ts_asr
+  artifacts:
+  - name: audio-index
+    kind: audio-index
+    root_alias: ts_asr_farfield
+    relative_path: versions/pt-v1-20261117/audio-index.jsonl.gz
+    sha256: c63b368dc9646850a4f4cbb47bad13abd0ea08ef5407219c78bc968b39bec2e5
+    metadata:
+      record_count: 3360
+  - name: panel-base-pos-records
+    kind: audio-records
+    root_alias: ts_asr_farfield
+    relative_path: versions/pt-v1-20261117/records/panel-base-pos.jsonl.gz
+    sha256: 11435e7b74c3f4ebf1031dad2e4777e06d234bbe5f24e7d9bfb94ab26f1b95c5
+    metadata:
+      record_count: 120
+  - name: panel-base-neg-records
+    kind: audio-records
+    root_alias: ts_asr_farfield
+    relative_path: versions/pt-v1-20261117/records/panel-base-neg.jsonl.gz
+    sha256: 2408c96c7ef044fbf000e45cc2b06e52e9c48463a08b59d542c1f734714d1abc
+    metadata:
+      record_count: 120
+  - name: rirtgt-pos-records
+    kind: audio-records
+    root_alias: ts_asr_farfield
+    relative_path: versions/pt-v1-20261117/records/rirtgt-pos.jsonl.gz
+    sha256: 99c7f07d081c0832fdd0c30d91b4abaf62eada9d9dc252a378379763fc8b1159
+    metadata:
+      record_count: 120
+  - name: rirtgt-neg-records
+    kind: audio-records
+    root_alias: ts_asr_farfield
+    relative_path: versions/pt-v1-20261117/records/rirtgt-neg.jsonl.gz
+    sha256: 0ad836c4fdf9845bca022d9c1380b17dfd7e6080ff9669e102a6fbb857bcdb10
+    metadata:
+      record_count: 120
+  - name: rirint-pos-records
+    kind: audio-records
+    root_alias: ts_asr_farfield
+    relative_path: versions/pt-v1-20261117/records/rirint-pos.jsonl.gz
+    sha256: a3dd0fff4b1751bd07d9ae3494ff2eb8a748a890ede7200ba024e4535324beb7
+    metadata:
+      record_count: 120
+  - name: rirint-neg-records
+    kind: audio-records
+    root_alias: ts_asr_farfield
+    relative_path: versions/pt-v1-20261117/records/rirint-neg.jsonl.gz
+    sha256: 2a16367b5dcba79433578c6cc62c6901ff60a176912ed168dba00917fe201b14
+    metadata:
+      record_count: 120
+  - name: rirsame-pos-records
+    kind: audio-records
+    root_alias: ts_asr_farfield
+    relative_path: versions/pt-v1-20261117/records/rirsame-pos.jsonl.gz
+    sha256: f543fe81e3273c2ae9f054daa144d8fb35a77c75226f67f46627257613ea7325
+    metadata:
+      record_count: 120
+  - name: rirsame-neg-records
+    kind: audio-records
+    root_alias: ts_asr_farfield
+    relative_path: versions/pt-v1-20261117/records/rirsame-neg.jsonl.gz
+    sha256: b2b15d1149e96f2159df173ca8d9bb3bcc44fceda5752dc7c9486c4643a700ea
+    metadata:
+      record_count: 120
+  - name: rirdiff-pos-records
+    kind: audio-records
+    root_alias: ts_asr_farfield
+    relative_path: versions/pt-v1-20261117/records/rirdiff-pos.jsonl.gz
+    sha256: 36244b849a601b19f631b316a039ded078094b918f8ba3de0d97b929f7f0c26c
+    metadata:
+      record_count: 120
+  - name: rirdiff-neg-records
+    kind: audio-records
+    root_alias: ts_asr_farfield
+    relative_path: versions/pt-v1-20261117/records/rirdiff-neg.jsonl.gz
+    sha256: 233d4372fa4ab95cf3274189e6a040d12ca8edae30fde16ff5e2a867084813e1
+    metadata:
+      record_count: 120
+  - name: mmfarfar-pos-records
+    kind: audio-records
+    root_alias: ts_asr_farfield
+    relative_path: versions/pt-v1-20261117/records/mmfarfar-pos.jsonl.gz
+    sha256: 4d09f37828f05fd0258d934db7db89f83e242749405792a6545aa91ac4f4b97d
+    metadata:
+      record_count: 120
+  - name: mmfarfar-neg-records
+    kind: audio-records
+    root_alias: ts_asr_farfield
+    relative_path: versions/pt-v1-20261117/records/mmfarfar-neg.jsonl.gz
+    sha256: f1c6e56289c4f83d52c2a6b5bd3b180fde4fa8ba736a61c14eba9b24c98c26d3
+    metadata:
+      record_count: 120
+  - name: mmfarnear-pos-records
+    kind: audio-records
+    root_alias: ts_asr_farfield
+    relative_path: versions/pt-v1-20261117/records/mmfarnear-pos.jsonl.gz
+    sha256: a28cdbe5c4763777f1564e78ec18451553457183fad6b3d25869660298d7dc10
+    metadata:
+      record_count: 120
+  - name: mmfarnear-neg-records
+    kind: audio-records
+    root_alias: ts_asr_farfield
+    relative_path: versions/pt-v1-20261117/records/mmfarnear-neg.jsonl.gz
+    sha256: 991868ce1b18795857a29e4b93e2eb53cc01505d43f3bb11df3c41776b88ba23
+    metadata:
+      record_count: 120
+  splits:
+    panel-base-pos:
+      artifacts:
+        records:
+        - panel-base-pos-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 120
+        duration_hours: 0.3647
+        duration_basis: Mixture duration
+      provenance:
+        description: 'farfield: {"kind": "pos", "schedule": "full", "k": [1, 2], "duration": [6, 15], "sir_db": [-3, 3], "pair": "panel-pos", "noise_floor": {"dbfs": [-65, -35], "kinds": {"white": 0.15, "pink": 0.15, "real": 0.7}, "real_pools": ["wham", "dns5_audioset", "dns5_freesound"]}, "enroll_store_seconds": 10, "language": "pt"}'
+    panel-base-neg:
+      artifacts:
+        records:
+        - panel-base-neg-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 120
+        duration_hours: 0.3522
+        duration_basis: Mixture duration
+      provenance:
+        description: 'farfield: {"kind": "neg", "k": [1, 2], "duration": [6, 15], "pair": "panel-neg", "noise_floor": {"dbfs": [-65, -35], "kinds": {"white": 0.15, "pink": 0.15, "real": 0.7}, "real_pools": ["wham", "dns5_audioset", "dns5_freesound"]}, "enroll_store_seconds": 10, "language": "pt"}'
+    rirtgt-pos:
+      artifacts:
+        records:
+        - rirtgt-pos-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 120
+        duration_hours: 0.3647
+        duration_basis: Mixture duration
+      provenance:
+        description: 'farfield: {"kind": "pos", "schedule": "full", "k": [1, 2], "duration": [6, 15], "sir_db": [-3, 3], "rir": {"target": "real"}, "pair": "panel-pos", "noise_floor": {"dbfs": [-65, -35], "kinds": {"white": 0.15, "pink": 0.15, "real": 0.7}, "real_pools": ["wham", "dns5_audioset", "dns5_freesound"]}, "enroll_store_seconds": 10, "language": "pt"}'
+    rirtgt-neg:
+      artifacts:
+        records:
+        - rirtgt-neg-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 120
+        duration_hours: 0.3522
+        duration_basis: Mixture duration
+      provenance:
+        description: 'farfield: {"kind": "neg", "k": [1, 2], "duration": [6, 15], "rir": {"target": "real"}, "pair": "panel-neg", "noise_floor": {"dbfs": [-65, -35], "kinds": {"white": 0.15, "pink": 0.15, "real": 0.7}, "real_pools": ["wham", "dns5_audioset", "dns5_freesound"]}, "enroll_store_seconds": 10, "language": "pt"}'
+    rirint-pos:
+      artifacts:
+        records:
+        - rirint-pos-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 120
+        duration_hours: 0.3647
+        duration_basis: Mixture duration
+      provenance:
+        description: 'farfield: {"kind": "pos", "schedule": "full", "k": [1, 2], "duration": [6, 15], "sir_db": [-3, 3], "rir": {"interferer": "real"}, "pair": "panel-pos", "noise_floor": {"dbfs": [-65, -35], "kinds": {"white": 0.15, "pink": 0.15, "real": 0.7}, "real_pools": ["wham", "dns5_audioset", "dns5_freesound"]}, "enroll_store_seconds": 10, "language": "pt"}'
+    rirint-neg:
+      artifacts:
+        records:
+        - rirint-neg-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 120
+        duration_hours: 0.3522
+        duration_basis: Mixture duration
+      provenance:
+        description: 'farfield: {"kind": "neg", "k": [1, 2], "duration": [6, 15], "rir": {"interferer": "real"}, "pair": "panel-neg", "noise_floor": {"dbfs": [-65, -35], "kinds": {"white": 0.15, "pink": 0.15, "real": 0.7}, "real_pools": ["wham", "dns5_audioset", "dns5_freesound"]}, "enroll_store_seconds": 10, "language": "pt"}'
+    rirsame-pos:
+      artifacts:
+        records:
+        - rirsame-pos-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 120
+        duration_hours: 0.3647
+        duration_basis: Mixture duration
+      provenance:
+        description: 'farfield: {"kind": "pos", "schedule": "full", "k": [1, 2], "duration": [6, 15], "sir_db": [-3, 3], "rir": {"target": "real", "interferer": "real", "share": true}, "pair": "panel-pos", "noise_floor": {"dbfs": [-65, -35], "kinds": {"white": 0.15, "pink": 0.15, "real": 0.7}, "real_pools": ["wham", "dns5_audioset", "dns5_freesound"]}, "enroll_store_seconds": 10, "language": "pt"}'
+    rirsame-neg:
+      artifacts:
+        records:
+        - rirsame-neg-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 120
+        duration_hours: 0.3522
+        duration_basis: Mixture duration
+      provenance:
+        description: 'farfield: {"kind": "neg", "k": [1, 2], "duration": [6, 15], "rir": {"target": "real", "interferer": "real", "share": true}, "pair": "panel-neg", "noise_floor": {"dbfs": [-65, -35], "kinds": {"white": 0.15, "pink": 0.15, "real": 0.7}, "real_pools": ["wham", "dns5_audioset", "dns5_freesound"]}, "enroll_store_seconds": 10, "language": "pt"}'
+    rirdiff-pos:
+      artifacts:
+        records:
+        - rirdiff-pos-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 120
+        duration_hours: 0.3647
+        duration_basis: Mixture duration
+      provenance:
+        description: 'farfield: {"kind": "pos", "schedule": "full", "k": [1, 2], "duration": [6, 15], "sir_db": [-3, 3], "rir": {"target": "real", "interferer": "real"}, "pair": "panel-pos", "noise_floor": {"dbfs": [-65, -35], "kinds": {"white": 0.15, "pink": 0.15, "real": 0.7}, "real_pools": ["wham", "dns5_audioset", "dns5_freesound"]}, "enroll_store_seconds": 10, "language": "pt"}'
+    rirdiff-neg:
+      artifacts:
+        records:
+        - rirdiff-neg-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 120
+        duration_hours: 0.3522
+        duration_basis: Mixture duration
+      provenance:
+        description: 'farfield: {"kind": "neg", "k": [1, 2], "duration": [6, 15], "rir": {"target": "real", "interferer": "real"}, "pair": "panel-neg", "noise_floor": {"dbfs": [-65, -35], "kinds": {"white": 0.15, "pink": 0.15, "real": 0.7}, "real_pools": ["wham", "dns5_audioset", "dns5_freesound"]}, "enroll_store_seconds": 10, "language": "pt"}'
+    mmfarfar-pos:
+      artifacts:
+        records:
+        - mmfarfar-pos-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 120
+        duration_hours: 0.3647
+        duration_basis: Mixture duration
+      provenance:
+        description: 'farfield: {"kind": "pos", "schedule": "full", "k": [1, 2], "duration": [6, 15], "sir_db": [-3, 3], "rir": {"target": "real", "interferer": "real"}, "enroll": "reverb", "enroll_rir_pool": "real", "pair": "panel-pos", "noise_floor": {"dbfs": [-65, -35], "kinds": {"white": 0.15, "pink": 0.15, "real": 0.7}, "real_pools": ["wham", "dns5_audioset", "dns5_freesound"]}, "enroll_store_seconds": 10, "language": "pt"}'
+    mmfarfar-neg:
+      artifacts:
+        records:
+        - mmfarfar-neg-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 120
+        duration_hours: 0.3522
+        duration_basis: Mixture duration
+      provenance:
+        description: 'farfield: {"kind": "neg", "k": [1, 2], "duration": [6, 15], "rir": {"target": "real", "interferer": "real"}, "enroll": "reverb", "enroll_rir_pool": "real", "pair": "panel-neg", "noise_floor": {"dbfs": [-65, -35], "kinds": {"white": 0.15, "pink": 0.15, "real": 0.7}, "real_pools": ["wham", "dns5_audioset", "dns5_freesound"]}, "enroll_store_seconds": 10, "language": "pt"}'
+    mmfarnear-pos:
+      artifacts:
+        records:
+        - mmfarnear-pos-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 120
+        duration_hours: 0.3647
+        duration_basis: Mixture duration
+      provenance:
+        description: 'farfield: {"kind": "pos", "schedule": "full", "k": [1, 2], "duration": [6, 15], "sir_db": [-3, 3], "enroll": "reverb", "enroll_rir_pool": "real", "pair": "panel-pos", "noise_floor": {"dbfs": [-65, -35], "kinds": {"white": 0.15, "pink": 0.15, "real": 0.7}, "real_pools": ["wham", "dns5_audioset", "dns5_freesound"]}, "enroll_store_seconds": 10, "language": "pt"}'
+    mmfarnear-neg:
+      artifacts:
+        records:
+        - mmfarnear-neg-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 120
+        duration_hours: 0.3522
+        duration_basis: Mixture duration
+      provenance:
+        description: 'farfield: {"kind": "neg", "k": [1, 2], "duration": [6, 15], "enroll": "reverb", "enroll_rir_pool": "real", "pair": "panel-neg", "noise_floor": {"dbfs": [-65, -35], "kinds": {"white": 0.15, "pink": 0.15, "real": 0.7}, "real_pools": ["wham", "dns5_audioset", "dns5_freesound"]}, "enroll_store_seconds": 10, "language": "pt"}'
+  provenance:
+    status: complete
+    synthetic: full
+    description: 葡萄牙语目标说话人 ASR 评测集（ts_asr_farfield）：与西语版 es-v1-20261111、英文版 en-v1-20261031 同一配方与随机种子，说话人换成 Common Voice 27.0 pt dev（众包朗读，多为巴西口音，各自设备）；不含业务真实注册录音条件。只用于评测，不进训练。场景见 scripts/ts_benchmark/recipe-farfield-pt.yaml。
+    sources:
+    - common_voice_pt@pt-eval-v1-20261117:dev

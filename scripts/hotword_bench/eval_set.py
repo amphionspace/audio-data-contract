@@ -5,6 +5,7 @@
     python scripts/hotword_bench/eval_set.py --recipe scripts/hotword_bench/recipe-v2.yaml > data.yaml  # v2
     python scripts/hotword_bench/eval_set.py --recipe scripts/hotword_bench/recipe-v3.yaml > data.yaml  # v3
     python scripts/hotword_bench/eval_set.py --recipe scripts/hotword_bench/recipe-es-v1.yaml > data.yaml  # es-v1
+    python scripts/hotword_bench/eval_set.py --recipe scripts/hotword_bench/recipe-pt-v1.yaml > data.yaml  # pt-v1
     ae eval-sets publish data.yaml --project open-audio-llm --name hotword-bench --version <version>
 
 Run it with ``ae open-audio-llm after-training`` (evaluator ``hotwords``,
@@ -65,16 +66,26 @@ ES_NOTE = ("主条件 k50（正确词 + 按西语读音键检索出的近音词 
            "k50_no_gold 看误触发率与 WER 变化")
 
 
-def es_config(recipe):
+# pt-v1 (recipe-pt-v1.yaml): the Portuguese splits, laid out as es-v1
+PT_SOURCES = [
+    ("cv_pt", "cv-pt", "Common Voice 葡语", "Common Voice 27.0 pt 测试集，葡语热词标注（Qwen3.8-27B 抽取 + 复核），2,000 条正例"),
+    ("fleurs_pt", "fleurs-pt", "FLEURS 葡语", "FLEURS pt_br 测试集，葡语热词标注，全部 382 条正例（147 句话，多个说话人）"),
+    ("mls_pt", "mls-pt", "MLS 葡语", "MLS pt 测试集（有声书，转写全小写无标点），葡语热词标注，全部 292 条正例"),
+]
+PT_NOTE = ("主条件 k50（正确词 + 按葡语读音键检索出的近音词 + 随机词共 50 个）看 B-WER 与 F1；"
+           "k50_no_gold 看误触发率与 WER 变化")
+
+
+def es_config(recipe, sources=ES_SOURCES, note=ES_NOTE, name="热词 · 西语", section="西班牙语"):
     return {
         "task": "asr",
         "tags": ["hotwords"],
-        "groups": [{"name": "热词 · 西语", "section": "西班牙语", "labels": [s[1] for s in ES_SOURCES],
-                    "aggregate": "macro", "description": ES_NOTE}],
+        "groups": [{"name": name, "section": section, "labels": [s[1] for s in sources],
+                    "aggregate": "macro", "description": note}],
         "sampling_rate": recipe["sample_rate"],
         "evaluation": [{"dataset_id": recipe["dataset_id"], "version": recipe["version"], "split": split,
                         "task": "asr_hotwords", "label": label, "display": display, "description": description}
-                       for split, label, display, description in ES_SOURCES],
+                       for split, label, display, description in sources],
     }
 
 
@@ -84,6 +95,10 @@ def main():
     recipe = yaml.safe_load(parser.parse_args().recipe.read_text())
     if recipe["version"].startswith("es-"):
         print(yaml.safe_dump(es_config(recipe), allow_unicode=True, sort_keys=False, width=200), end="")
+        return
+    if recipe["version"].startswith("pt-"):
+        config = es_config(recipe, PT_SOURCES, PT_NOTE, "热词 · 葡语", "葡萄牙语")
+        print(yaml.safe_dump(config, allow_unicode=True, sort_keys=False, width=200), end="")
         return
     zh_note, en_note = GROUP_NOTES[recipe["version"].split("-", 1)[0]]
 
