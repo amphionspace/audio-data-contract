@@ -76,3 +76,17 @@ def test_segments_are_rejected_for_missing_speech_or_a_wrong_speaker_only_when_j
     assert reasons(shared, "我们现在开始吧", fine) == []  # someone else is annotated: the text check does not apply
     assert [r["reason"] for r in reasons(alone, "我们吧。", wrong)] == ["speaker_label"]
     assert reasons(alone, "我们吧", {**wrong, "solo_s": 2.0}) == []  # too little solo speech to judge
+
+
+nested = runpy.run_path(str(Path(__file__).resolve().parents[1] / "scripts" / "ts_real" / "meeting_nested.py"))
+
+
+def test_a_segment_is_nested_when_one_utterance_of_someone_else_covers_most_of_it():
+    inside = nested["inside_other"]
+    interjection = [{"speaker": "aishell4:B", "start": 0.0, "duration": 2.0},  # B's long turn, clipped to the segment
+                    {"speaker": "aishell4:A", "start": 0.5, "duration": 1.0}]
+    assert inside("A", 2.0, interjection) == 1.0
+    crosstalk = [{"speaker": "aishell4:A", "start": 0.0, "duration": 6.0}, {"speaker": "aishell4:B", "start": 0.0, "duration": 1.0},
+                 {"speaker": "aishell4:C", "start": 4.0, "duration": 2.0}]
+    assert inside("A", 6.0, crosstalk) == pytest.approx(1 / 3)  # the longest single other utterance, not their sum
+    assert inside("A", 3.0, [{"speaker": "aishell4:A", "start": 0.0, "duration": 3.0}]) == 0.0

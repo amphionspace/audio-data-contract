@@ -4287,9 +4287,73 @@
       provenance:
         description: AISHELL-4 test 20 场会议远场通道 0，按人工标注切的每一段发给会上每个注册人；目标在场（本人在这段里说话 ≥0.5 秒，且所说语句都完整落在段内）；去掉了自动核对判定标注有误的段
   provenance:
+    superseded_by: ts_asr_real@meeting-v3-20261117
     summary: 目标说话人评测：AISHELL-4 整场会议逐段发送
     status: complete
     synthetic: none
     description: ts_asr_real@meeting-v1-20261117 去掉自动核对判定标注有误的段（该段上的全部请求），其余记录、ID 与音频不变（音频索引指向 meeting-v1-20261117 的文件）。核对两项，输入在 source/meeting-v2-20261117/qc/：文本：AmphionASR 11.06 交付包普通识别模式转写每段，段内只标了一个人时，转写里有连续 ≥3 个字标注里没有（只比字母、数字和汉字），判为标注漏了说话；说话人：段内独自说话 ≥3 秒时，段的 ECAPA 声纹与会上另一人的平均声纹比与标注的人高 ≥0.1，判为标错人（独自说话更短的段声纹不可靠，不判）。去掉的段与原因见 source/<版本>/quarantine.jsonl，统计见 source/<版本>/report.json。多人同时说话的段只做了说话人核对。只用于评测，不进训练。生成脚本 scripts/ts_real/meeting_quarantine.py。
     sources:
     - ts_asr_real@meeting-v1-20261117
+- schema_version: dataset-catalog/2.0
+  dataset_id: ts_asr_real
+  version: meeting-v3-20261117
+  languages:
+  - zh
+  tasks:
+  - ts_asr
+  artifacts:
+  - name: audio-index
+    kind: audio-index
+    root_alias: ts_asr_real
+    relative_path: versions/meeting-v3-20261117/audio-index.jsonl.gz
+    sha256: 415dac14f7507eb55b971d2c5a40b9921f2e71818fd6175c829c374ccdb0d287
+    metadata:
+      record_count: 5928
+  - name: meeting-aishell4-neg-records
+    kind: audio-records
+    root_alias: ts_asr_real
+    relative_path: versions/meeting-v3-20261117/records/meeting-aishell4-neg.jsonl.gz
+    sha256: 657eb7f8b85502cf40c631000ba89b6217e90e54d4a11bf8f29ec97ce2a4ee79
+    metadata:
+      record_count: 24342
+  - name: meeting-aishell4-pos-records
+    kind: audio-records
+    root_alias: ts_asr_real
+    relative_path: versions/meeting-v3-20261117/records/meeting-aishell4-pos.jsonl.gz
+    sha256: 4dc70f9becd6005cccb19ef05b44f4375af7c21be9ead7e4020dc313cec1ceef
+    metadata:
+      record_count: 6229
+  splits:
+    meeting-aishell4-neg:
+      artifacts:
+        records:
+        - meeting-aishell4-neg-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 24342
+        duration_hours: 48.0591
+        duration_basis: Mixture duration
+      provenance:
+        description: AISHELL-4 test 20 场会议远场通道 0，按人工标注切的每一段发给会上每个注册人；目标缺席（本人在这段前后 0.5 秒内都没有说话）；去掉了自动核对判定标注有误的段；去掉了落在别人话里的插话段
+    meeting-aishell4-pos:
+      artifacts:
+        records:
+        - meeting-aishell4-pos-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 6229
+        duration_hours: 12.1567
+        duration_basis: Mixture duration
+      provenance:
+        description: AISHELL-4 test 20 场会议远场通道 0，按人工标注切的每一段发给会上每个注册人；目标在场（本人在这段里说话 ≥0.5 秒，且所说语句都完整落在段内）；去掉了自动核对判定标注有误的段；去掉了落在别人话里的插话段
+  provenance:
+    summary: 目标说话人评测：AISHELL-4 整场会议逐段发送
+    status: complete
+    synthetic: none
+    description: ts_asr_real@meeting-v2-20261117 去掉落在别人话里的插话段（该段上的全部请求），其余记录、ID 与音频不变（音频索引指向 meeting-v1-20261117 的文件）。按人分段时，别人长句中间的短插话也成了单独一段，同一段音频被发两次；下游 speaker-enroll 的 MOSS 分段沿一条时间轴、互不重叠，不会这样发。规则：段内另一个人的某一句话占本段时长 ≥0.5，就去掉这段（下游 badcase 包 344 段里只有 4 段达到，没有一段达到 0.7）。插话本身仍在外层长段里，作为插话人在场的请求保留。去掉的段见 source/<版本>/nested.jsonl，统计见 source/<版本>/report.json。只用于评测，不进训练。生成脚本 scripts/ts_real/meeting_nested.py。
+    sources:
+    - ts_asr_real@meeting-v2-20261117

@@ -92,6 +92,64 @@ def reasons(segment, transcript, speaker_check):
     return out
 
 
+def derive(data_root, source, version, records, drop, split_note):
+    """Write ``version`` from ``source``: its records except those whose mixture is in ``drop``.
+
+    Records keep their IDs and audio (the index rows are ``source``'s, so they point at the same files); ``split_note``
+    is appended to each split's provenance. Returns (artifacts, split declarations, dropped records per split)."""
+    target = data_root / "versions" / version
+    index = {row["cut_id"]: row for row in read_jsonl(data_root / "versions" / source / "audio-index.jsonl.gz")}
+    kept, used, dropped = {}, set(), Counter()
+    for split, rows in records.items():
+        kept[split] = []
+        for r in rows:
+            cut = r["audio_slots"][1]["ref"]["cut_id"]
+            if cut in drop:
+                dropped[split] += 1
+                continue
+            for slot in r["audio_slots"]:
+                slot["ref"]["version"] = version
+                used.add(slot["ref"]["cut_id"])
+            kept[split].append(r)
+    synth = _synth()
+    artifacts, split_decl = [], {}
+    rows = [index[c] for c in sorted(used)]
+    synth.write_jsonl_gz(target / "audio-index.jsonl.gz", rows)
+    artifacts.append({"name": "audio-index", "kind": "audio-index", "root_alias": DATASET_ID,
+                      "relative_path": f"versions/{version}/audio-index.jsonl.gz",
+                      "sha256": synth.sha256_file(target / "audio-index.jsonl.gz"), "metadata": {"record_count": len(rows)}})
+    source_spec = yaml.safe_load((REPO / "catalog" / f"{DATASET_ID}.yaml").read_text())
+    source_spec = next(s for s in source_spec if s["version"] == source)
+    for split in SPLITS:
+        path = target / "records" / f"{split}.jsonl.gz"
+        synth.write_jsonl_gz(path, kept[split])
+        artifacts.append({"name": f"{split}-records", "kind": "audio-records", "root_alias": DATASET_ID,
+                          "relative_path": f"versions/{version}/records/{split}.jsonl.gz", "sha256": synth.sha256_file(path),
+                          "metadata": {"record_count": len(kept[split])}})
+        seconds = sum(r["audio_slots"][1]["ref"]["duration"] for r in kept[split])
+        split_decl[split] = {"artifacts": {"records": [f"{split}-records"], "audio_index": ["audio-index"]}, "task": "ts_asr",
+                             "statistics": {"records": len(kept[split]), "duration_hours": round(seconds / 3600, 4),
+                                            "duration_basis": "Mixture duration"},
+                             "provenance": {"description": source_spec["splits"][split]["provenance"]["description"]
+                                            + split_note}}
+    return artifacts, split_decl, dropped
+
+
+def register(source, version, declaration):
+    """Append ``declaration`` to the catalog and mark ``source`` superseded by it (other rows stay byte for byte)."""
+    path = REPO / "catalog" / f"{DATASET_ID}.yaml"
+    text = path.read_text()
+    marker = f"  version: {source}\n"
+    head, tail = text.split(marker, 1)
+    # Only the version's top-level provenance sits at this indent (its splits' provenance is deeper).
+    tail = tail.replace("\n  provenance:\n", f"\n  provenance:\n    superseded_by: {DATASET_ID}@{version}\n", 1)
+    new_text = head + marker + tail + yaml.safe_dump([declaration], allow_unicode=True, sort_keys=False, width=512)
+    specs = [s for s in load_catalog(REPO / "catalog") if not (s.dataset_id == DATASET_ID and s.version == source)]
+    validate_catalog([*specs, *(DatasetSpec.from_dict(d) for d in yaml.safe_load(new_text)
+                                if d["version"] in (source, version))])
+    path.write_text(new_text, encoding="utf-8")
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--roots", type=Path, required=True)
@@ -122,47 +180,15 @@ def main():
                              "duration": segment["duration"], "speaker": segment["owner"],
                              "transcript": transcripts[cut], "annotation": "".join(u["text"] for u in segment["utts"]),
                              "reasons": why}
-    index = {row["cut_id"]: row for row in read_jsonl(source / "audio-index.jsonl.gz")}
-    kept, used, dropped = {}, set(), Counter()
-    for split, rows in records.items():
-        kept[split] = []
-        for r in rows:
-            cut = r["audio_slots"][1]["ref"]["cut_id"]
-            if cut in rejected:
-                dropped[split] += 1
-                continue
-            for slot in r["audio_slots"]:
-                slot["ref"]["version"] = VERSION
-                used.add(slot["ref"]["cut_id"])
-            kept[split].append(r)
-    synth = _synth()
-    artifacts, split_decl = [], {}
-    rows = [index[c] for c in sorted(used)]
-    synth.write_jsonl_gz(target / "audio-index.jsonl.gz", rows)
-    artifacts.append({"name": "audio-index", "kind": "audio-index", "root_alias": DATASET_ID,
-                      "relative_path": f"versions/{VERSION}/audio-index.jsonl.gz",
-                      "sha256": synth.sha256_file(target / "audio-index.jsonl.gz"), "metadata": {"record_count": len(rows)}})
-    source_spec = yaml.safe_load((REPO / "catalog" / f"{DATASET_ID}.yaml").read_text())
-    source_spec = next(s for s in source_spec if s["version"] == SOURCE)
-    for split in SPLITS:
-        path = target / "records" / f"{split}.jsonl.gz"
-        synth.write_jsonl_gz(path, kept[split])
-        artifacts.append({"name": f"{split}-records", "kind": "audio-records", "root_alias": DATASET_ID,
-                          "relative_path": f"versions/{VERSION}/records/{split}.jsonl.gz", "sha256": synth.sha256_file(path),
-                          "metadata": {"record_count": len(kept[split])}})
-        seconds = sum(r["audio_slots"][1]["ref"]["duration"] for r in kept[split])
-        split_decl[split] = {"artifacts": {"records": [f"{split}-records"], "audio_index": ["audio-index"]}, "task": "ts_asr",
-                             "statistics": {"records": len(kept[split]), "duration_hours": round(seconds / 3600, 4),
-                                            "duration_basis": "Mixture duration"},
-                             "provenance": {"description": source_spec["splits"][split]["provenance"]["description"]
-                                            + "；去掉了自动核对判定标注有误的段"}}
+    artifacts, split_decl, dropped = derive(data_root, SOURCE, VERSION, records, rejected, "；去掉了自动核对判定标注有误的段")
+    kept = {split: split_decl[split]["statistics"]["records"] for split in SPLITS}
     by_reason = Counter(w["reason"] for q in rejected.values() for w in q["reasons"])
     out = data_root / "source" / VERSION
     with open(out / "quarantine.jsonl", "w", encoding="utf-8") as stream:
         stream.writelines(json.dumps(q, ensure_ascii=False) + "\n" for q in rejected.values())
     report = {"source": f"{DATASET_ID}@{SOURCE}", "segments": len(segments), "rejected_segments": len(rejected),
               "by_reason": dict(by_reason), "by_recording": dict(Counter(q["recording"] for q in rejected.values())),
-              "dropped_records": dict(dropped), "records": {s: len(v) for s, v in kept.items()},
+              "dropped_records": dict(dropped), "records": kept,
               "rule": {"missing_run": MISSING_RUN, "speaker_solo_s": SPEAKER_SOLO, "speaker_margin": SPEAKER_MARGIN}}
     (out / "report.json").write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n")
     print(json.dumps(report, ensure_ascii=False, indent=1), flush=True)
@@ -181,18 +207,8 @@ def main():
                        "sources": [f"{DATASET_ID}@{SOURCE}"]}}
     if args.no_register:
         return
-    path = REPO / "catalog" / f"{DATASET_ID}.yaml"
-    text = path.read_text()
-    marker = f"  version: {SOURCE}\n"
-    head, tail = text.split(marker, 1)
-    # meeting-v1 is superseded: mark it in place (the file's other rows stay byte for byte).
-    tail = tail.replace("\n  provenance:\n", f"\n  provenance:\n    superseded_by: {DATASET_ID}@{VERSION}\n", 1)
-    new_text = head + marker + tail + yaml.safe_dump([declaration], allow_unicode=True, sort_keys=False, width=512)
-    specs = [s for s in load_catalog(REPO / "catalog") if not (s.dataset_id == DATASET_ID and s.version == SOURCE)]
-    validate_catalog([*specs, *(DatasetSpec.from_dict(d) for d in yaml.safe_load(new_text)
-                                if d["version"] in (SOURCE, VERSION))])
-    path.write_text(new_text, encoding="utf-8")
-    print("registered", VERSION, {s: len(v) for s, v in kept.items()}, flush=True)
+    register(SOURCE, VERSION, declaration)
+    print("registered", VERSION, kept, flush=True)
 
 
 def _synth():
