@@ -140,9 +140,12 @@ def test_neighbour_candidates_of_the_accent_pools_are_the_corpora_they_draw_from
     for mode, corpora in (("cv", pool["CV_ACCENT_CORPORA"]), ("csd", pool["CS_DIALOGUE_CORPORA"])):
         target = next(c[0] for c in corpora if c[4])
         assert neighbors["POOL_PEERS"][target] == {c[0] for c in corpora}, mode
-    assert {c[0] for c in neighbors["EN_ACCENT_CORPORA"]["en"]} == set(pool["HELD_OUT_SPEAKERS"]) - {"common_voice_es"}
+    assert {c[0] for c in neighbors["EN_ACCENT_CORPORA"]["en"]} == \
+        set(pool["HELD_OUT_SPEAKERS"]) - {"common_voice_es", "common_voice_pt"}
     assert neighbors["POOL_PEERS"]["common_voice_es"] == {c[0] for c in pool["ES_CORPORA"]}
     assert [c[:3] for c in neighbors["ES_ACCENT_CORPORA"]["es"]] == [c[:3] for c in pool["ES_CORPORA"]]
+    assert neighbors["POOL_PEERS"]["common_voice_pt"] == {c[0] for c in pool["PT_CORPORA"]}
+    assert [c[:3] for c in neighbors["PT_SPLIT_CORPORA"]["pt"]] == [c[:3] for c in pool["PT_CORPORA"]]
 
 
 @pytest.mark.parametrize("answer, group", [
