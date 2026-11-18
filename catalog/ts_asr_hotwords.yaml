@@ -205,3 +205,73 @@
   recipe_parameters:
     builder: scripts/ts_hotwords/build_eval_set.py --languages es --version es-v1-20261111
     labeler: Qwen3.8-27B, amphiondata extract_hotword prompt + review pass
+- schema_version: dataset-catalog/2.0
+  dataset_id: ts_asr_hotwords
+  version: pt-v1-20261117
+  languages:
+  - pt
+  tasks:
+  - ts_asr
+  aliases: []
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/ts_asr_hotwords/versions/pt-v1-20261117/state.json
+  - name: audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_asr_hotwords/versions/pt-v1-20261117/audio-index.jsonl.gz
+    sha256: ebfa8dfeffcd04802d157c37700e071b6570fd552e194fcef70decce79d26c07
+    metadata:
+      record_count: 8520
+    expected_bytes: 443048
+  - name: pt-synthetic-records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/ts_asr_hotwords/versions/pt-v1-20261117/records/pt-synthetic.jsonl.gz
+    sha256: 9eb33c63b69c384a222e10eedad7b805fb93ee2b0142aeef06a955de3de356d7
+    metadata:
+      record_count: 4260
+    expected_bytes: 3557250
+  - name: hotword-labels
+    kind: metadata
+    root_alias: aidc_data
+    relative_path: datasets/ts_asr_hotwords/versions/pt-v1-20261117/hotword-labels.jsonl
+    sha256: 7e47bc8970802638b2c6000ed5acdbd256d34afe3ba109af9d79ae05b5bfb2ba
+    expected_bytes: 4887201
+  - name: hotword-labels-tsbench
+    kind: metadata
+    root_alias: aidc_data
+    relative_path: datasets/ts_asr_hotwords/versions/pt-v1-20261117/hotword-labels-tsbench.jsonl
+    sha256: be958b55c7278b2da7a5ffd1115cc1c4184acfcd96080870a9e2eb5c10b8254b
+    expected_bytes: 296735
+  splits:
+    pt-synthetic:
+      artifacts:
+        records:
+        - pt-synthetic-records
+        audio_index:
+        - audio-index
+      statistics:
+        records: 4260
+        hotword_case:
+          none: 556
+          interferer: 1412
+          gold+interferer: 1216
+          gold: 1076
+      group: test
+      task: ts_asr
+      provenance:
+        preparation_status: prepared
+  provenance:
+    preparation_status: prepared
+    owner: mingdong
+    description: 葡萄牙语 TS-ASR + 热词评测集：从 ts-asr-benchmark-pt@v1-20261117（ts_asr_benchmark@pt-v1-20261117，Common Voice 27.0 pt dev）派生，做法与西语 es-v1-20261111 相同：沿用原音频与目标，记录 id 加 pt 前缀；hotwords = 目标说话人转写里的热词；metadata.bias_lists：random = 正确词 + 随机词共 10 个，interferer = 正确词 + 其他说话人说出的热词 + 随机词共 20 个（只在有人说了热词时给）；抽样同 v1。热词由 amphiondata 的热词提取提示词经 Qwen3.8-27B 标注并复核（label_hotwords.py），词必须在原文里出现；原始标注随版本存为 hotword-labels.jsonl（CV 27.0 pt test、FLEURS pt、MLS pt test 的转写与 CV pt dev 单句，hotword_bench@pt-v1-20261117 也用它）和 hotword-labels-tsbench.jsonl（TS
+      记录里拼接后的目标文本与干扰人文本）。一个 split：pt-synthetic 4,260。
+    source: ts_asr_benchmark@pt-v1-20261117
+    audit: datasets/ts_asr_hotwords/versions/pt-v1-20261117/state.json
+    known_issues: 没有真实会议部分（葡语没有真实会议源数据）。
+  recipe_parameters:
+    builder: scripts/ts_hotwords/build_eval_set.py --languages pt --version pt-v1-20261117
+    labeler: Qwen3.8-27B, amphiondata extract_hotword prompt + review pass

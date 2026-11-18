@@ -184,7 +184,7 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [genshin_voice](data-versions.md#genshin_voice) | en-US、ja、ko、zh | 语音合成 | 1,039.7 | 《原神》多语配音，TTS 用 | `TTS 桶:genshin-voice/`（原始数据） |
 | [gigaspeech_bench](data-versions.md#gigaspeech_bench) | ar、en、fil、id、ja、ko、ms、th、vi、yue、zh | 语音识别、语音翻译、带说话人标注的语音识别、说话人分段与归属 | 903.6 | 多方言多语种 ASR 评测（GigaSpeechBench） | 没有 |
 | [hard_hw_sft](data-versions.md#hard_hw_sft) | en、zh | 热词增强语音识别 | 109.4 | 热词难例 SFT 数据（ShareGPT 格式） | `备份桶:audio-data-contract/datasets/hard_hw_sft/` |
-| [hotword_bench](data-versions.md#hotword_bench) | en、es、zh | 热词增强语音识别 | — | 中英热词评测集，仅评测 | 没有 |
+| [hotword_bench](data-versions.md#hotword_bench) | en、es、pt、zh | 热词增强语音识别 | — | 中英热词评测集，仅评测 | 没有 |
 | [hungyi_lee_lectures](data-versions.md#hungyi_lee_lectures) | en、zh | 语音识别、语码转换语音识别 | 16.9 | 李宏毅 2025–2026 课程中英混说讲课 | 没有 |
 | [hw_sft](data-versions.md#hw_sft) | en、zh | 语音识别、热词增强语音识别 | 2,636.5 | 热词 SFT 数据（ShareGPT 格式），含普通转写 | 没有 |
 | [indicvoices](data-versions.md#indicvoices) | as、bn、brx、doi、gu、hi、kn、kok、ks、mai、ml、mni、mr、ne、or、pa、sa、sat、sd、ta、te、ur | 语音识别 | — | 22 种印度语言自然语音（IndicVoices） | 快照 20260914 |
@@ -207,7 +207,7 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [ts_asr_crosslingual](data-versions.md#ts_asr_crosslingual) | en、es、pt、zh | 目标说话人语音识别 | 6.2 | — | 没有 |
 | [ts_asr_farfield](data-versions.md#ts_asr_farfield) | en、es、pt、zh | 目标说话人语音识别 | 5.1 | 目标说话人评测：远场与混响 | 部分版本：`备份桶:audio-data-contract/datasets/ts_asr_farfield/` |
 | [ts_asr_handover](data-versions.md#ts_asr_handover) | en、es、pt、zh | 目标说话人语音识别 | 3.8 | 目标说话人评测：与他人交替说话 | 部分版本：`备份桶:audio-data-contract/datasets/ts_asr_handover/` |
-| [ts_asr_hotwords](data-versions.md#ts_asr_hotwords) | en、es、zh | 目标说话人语音识别 | — | — | 部分版本：`备份桶:audio-data-contract/datasets/ts_asr_hotwords/` |
+| [ts_asr_hotwords](data-versions.md#ts_asr_hotwords) | en、es、pt、zh | 目标说话人语音识别 | — | — | 部分版本：`备份桶:audio-data-contract/datasets/ts_asr_hotwords/` |
 | [ts_asr_nearshort](data-versions.md#ts_asr_nearshort) | en、zh | 目标说话人语音识别 | 2.5 | 目标说话人评测：他人只说一句约 1 秒短话 | 部分版本：`备份桶:audio-data-contract/datasets/ts_asr_nearshort/` |
 | [ts_asr_noise](data-versions.md#ts_asr_noise) | en、es、pt、zh | 目标说话人语音识别 | 5.9 | 目标说话人评测：噪声与背景人声 | 部分版本：`备份桶:audio-data-contract/datasets/ts_asr_noise/` |
 | [ts_asr_real](data-versions.md#ts_asr_real) | en、zh | 目标说话人语音识别 | 60.2 | 真实会议对话的目标说话人评测集 | 部分版本：`备份桶:audio-data-contract/datasets/ts_asr_real/` |
