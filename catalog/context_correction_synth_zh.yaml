@@ -124,7 +124,7 @@
     - kespeech@legacy-20260804 train voices
     - Qwen3-TTS-12Hz-1.7B-Base
     run_dir: /workspace/workspace/mingdong/data/amphiondata/spelling-synth-zh-20261114
-# 占位登记：隐式语义的上下文纠偏训练数据（没有显式说明，同音词的写法由后文语义决定），生成中，进度见状态文件。
+# 隐式语义的上下文纠偏训练数据：没有显式说明，同音词的写法由后文语义决定。运行记录见 provenance.run_dir 下的 README.md。
 - schema_version: dataset-catalog/2.0
   dataset_id: context_correction_synth_zh
   version: implicit-v1-20261117
@@ -139,22 +139,127 @@
     kind: dataset-state
     root_alias: aidc_data
     relative_path: datasets/context_correction_synth_zh/versions/implicit-v1-20261117/state.json
+  - name: audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/context_correction_synth_zh/versions/implicit-v1-20261117/audio-index.jsonl.gz
+    expected_bytes: 107911
+    sha256: a3fadc86ba6adbaf3f9fbfa5385aafd444a6cdf0ae91afb392bef128556be452
+    metadata:
+      record_count: 1993
+  - name: train-records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/context_correction_synth_zh/versions/implicit-v1-20261117/records/train.jsonl.gz
+    expected_bytes: 414996
+    sha256: bc8adb38dc87b134c117c0c46ca29acb92194a2cc7b9b16e1932eee7e8283571
+    metadata:
+      record_count: 1685
+  - name: train_ts-records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/context_correction_synth_zh/versions/implicit-v1-20261117/records/train_ts.jsonl.gz
+    expected_bytes: 440485
+    sha256: ac6ad7d12945221d53b4a3a6872591dcfe16dd20b2d007a442bacb9dfba5d1f4
+    metadata:
+      record_count: 1684
+  - name: quarantine-records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/context_correction_synth_zh/versions/implicit-v1-20261117/records/quarantine.jsonl.gz
+    expected_bytes: 9040
+    sha256: f4651d9acdb17478fc5d28e354a20c14703648b05a8f55dec6a5ea479c5481c3
+    metadata:
+      record_count: 23
+  - name: think
+    kind: jsonl-metadata
+    root_alias: aidc_data
+    relative_path: datasets/context_correction_synth_zh/versions/implicit-v1-20261117/think.jsonl.gz
+    expected_bytes: 203046
+    sha256: b957cd5f0db91e0aaa1a5256b09ca0cc403345674f7976c267057bf1b51ccc5c
+    metadata:
+      record_count: 3369
+      think_on_records: 3190
+      training_datasets:
+      - context_correction_synth_zh@implicit-v1-20261117
+      description: 按训练记录（dataset + record_id）给出线索 + 目标写法的 think，覆盖 train 和 train_ts 的每条记录；think_on=false 的是语义线索超过 30 字、只按 think 关训练的
+  - name: think-no-explanation
+    kind: jsonl-metadata
+    root_alias: aidc_data
+    relative_path: datasets/context_correction_synth_zh/versions/implicit-v1-20261117/think-no-explanation.jsonl.gz
+    expected_bytes: 23072
+    sha256: a54810c799b702639c5d78742ae0b6dccabb39023804eef052538aa88a4257da
+    metadata:
+      record_count: 3369
+      think_on_records: 3190
+      training_datasets:
+      - context_correction_synth_zh@implicit-v1-20261117
+      description: 对照变体：行和 think 开关与 think 相同，think 文本都换成固定句“这段没有说明字怎么写。”
+  - name: think-summary
+    kind: json-metadata
+    root_alias: aidc_data
+    relative_path: datasets/context_correction_synth_zh/versions/implicit-v1-20261117/think-summary.json
+    expected_bytes: 258
+    sha256: 7fd043d65a044abbcc9086533bed15f40b382954e248920cd482f8dbbc3a860f
+    metadata:
+      description: think 行按划分、条目类型和原因的计数
   splits:
     train:
       artifacts:
-        preparation_state:
-        - preparation_state
+        records:
+        - train-records
+        audio_index:
+        - audio-index
+      task: asr
+      statistics:
+        records: 1685
+        duration_hours: 6.102
+        duration_basis: recognized clip (mixture for ts_asr)
       provenance:
-        preparation_status: building
+        description: 通过质检的隐式语义条目（correct 指向少见写法，confirm 指向常用写法），每条单独收录，不要求成对通过
+    train_ts:
+      artifacts:
+        records:
+        - train_ts-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 1684
+        duration_hours: 6.0941
+        duration_basis: recognized clip (mixture for ts_asr)
+      provenance:
+        description: 同一批通过质检的条目中不超过 TS 时长上限的部分，配被克隆说话人的另一条训练划分真实语句作注册音频
+    quarantine:
+      artifacts:
+        records:
+        - quarantine-records
+        audio_index:
+        - audio-index
+      task: asr
+      statistics:
+        records: 23
+        duration_hours: 0.1466
+        duration_basis: recognized clip (mixture for ts_asr)
+      provenance:
+        description: 有音频但未通过质检的条目，保留原因，不用于训练
   provenance:
-    preparation_status: building
+    summary: 上下文纠偏合成训练数据：隐式语义（带线索 + 目标 think）
+    status: complete
+    synthetic: full
     owner: mingdong
-    summary: 上下文纠偏合成训练数据：隐式语义（生成中）
     description: >-
       train-v1-20261114 只有显式说字和同名一致性；这一版补隐式语义：同音的两个常见词（期中/期终、权利/权力），
-      写法由后文语义决定。沿用 train-v1 的流程和音色（amphiondata scripts/context_correction/），出题和复核改用火山方舟
-      （doubao-seed-2-1-pro 出题、deepseek-v4-pro 复核、glm-5-2 只看文字盲解），场景用与评测集 v1、v2 都不重合的话题 / 子话题种子，
-      评测集 v1、v2 的被测词进回避列表，写法对或朗读文本与评测集相同的进隔离区。每条记录带线索 + 目标写法的 think。
+      写法由后文语义决定。规则同评测集生成器：被测词放在前面，两条文字在被测词之前完全相同，复核要判前半句两种写法都说得通。
+      沿用 train-v1 的流程和音色（amphiondata scripts/context_correction/），出题和复核改用火山方舟（doubao-seed-2-1-pro 出题、
+      deepseek-v4-pro 复核）；试跑中盲解筛掉的题以误杀为主，全量不用盲解。场景用 15 个话题、75 个子话题种子，与评测集 v1、v2 和
+      train-v1 都不重合；评测集 v1、v2 的被测词进回避列表，写法对或朗读文本与评测集相同的进隔离区，同一写法对最多收 3 对。
+      1,980 对收 854 对（542 个写法对），TTS 1,708 条，SenseVoiceSmall 与 Qwen3-ASR 任一通过 1,685 条。每条 train / train_ts
+      记录在 think.jsonl.gz 里有一行线索 + 目标写法的 think，think-no-explanation.jsonl.gz 是固定句对照。
       用于 open-audio-llm runs/zh-ctx-clue-target-20261117。
-    source: LLM-generated scripts (Volcengine Ark), aishell3@legacy-20260804 / kespeech@legacy-20260804 train voices, Qwen3-TTS-12Hz-1.7B-Base
+    sources:
+    - LLM-generated scripts (Volcengine Ark doubao-seed-2-1-pro, reviewed by deepseek-v4-pro)
+    - aishell3@legacy-20260804 train voices
+    - kespeech@legacy-20260804 train voices
+    - Qwen3-TTS-12Hz-1.7B-Base
     run_dir: /workspace/workspace/mingdong/data/amphiondata/ctx-implicit-zh-20261117

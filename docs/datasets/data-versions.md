@@ -1222,16 +1222,16 @@ Common Voice 中文众包朗读；含清洗、热词、加噪版
 
 ### context_correction_synth_zh
 
-上下文纠偏合成训练数据：隐式语义（生成中）
+上下文纠偏合成训练数据：隐式语义（带线索 + 目标 think）
 
 语言：zh · 任务：语音识别、目标说话人语音识别
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
-| [context_correction_synth_zh@implicit-v1-20261117](../../catalog/context_correction_synth_zh.yaml#L128) | — | 未登记 | 没有 |
+| [context_correction_synth_zh@implicit-v1-20261117](../../catalog/context_correction_synth_zh.yaml#L128) | 12.3 | 已登记 | 没有 |
 | [context_correction_synth_zh@train-v1-20261114](../../catalog/context_correction_synth_zh.yaml#L3) | 29.8 | 已登记 | 没有 |
 
-- `context_correction_synth_zh@implicit-v1-20261117`：train-v1-20261114 只有显式说字和同名一致性；这一版补隐式语义：同音的两个常见词（期中/期终、权利/权力）， 写法由后文语义决定。沿用 train-v1 的流程和音色（amphiondata scripts/context_correction/），出题和复核改用火山方舟 （doubao-seed-2-1-pro 出题、deepseek-v4-pro 复核、glm-5-2 只看文字盲解），场景用与评测集 v1、v2 都不重合的话题 / 子话题种子， 评测集 v1、v2 的被测词进回避列表，写法对或朗读文本与评测集相同的进隔离区。每条记录带线索 + 目标写法的 think。 用于 open-audio-llm runs/zh-ctx-clue-target-20261117
+- `context_correction_synth_zh@implicit-v1-20261117`：train-v1-20261114 只有显式说字和同名一致性；这一版补隐式语义：同音的两个常见词（期中/期终、权利/权力）， 写法由后文语义决定。规则同评测集生成器：被测词放在前面，两条文字在被测词之前完全相同，复核要判前半句两种写法都说得通。 沿用 train-v1 的流程和音色（amphiondata scripts/context_correction/），出题和复核改用火山方舟（doubao-seed-2-1-pro 出题、 deepseek-v4-pro 复核）；试跑中盲解筛掉的题以误杀为主，全量不用盲解。场景用 15 个话题、75 个子话题种子，与评测集 v1、v2 和 train-v1 都不重合；评测集 v1、v2 的被测词进回避列表，写法对或朗读文本与评测集相同的进隔离区，同一写法对最多收 3 对。 1,980 对收 854 对（542 个写法对），TTS 1,708 条，SenseVoiceSmall 与 Qwen3-ASR 任一通过 1,685 条。每条 train / train_ts 记录在 think.jsonl.gz 里有一行线索 + 目标写法的 think，think-no-explanation.jsonl.gz 是固定句对照。 用于 open-audio-llm runs/zh-ctx-clue-target-20261117
 - `context_correction_synth_zh@train-v1-20261114`：说话人在一段话里用组词、拆字、偏旁结构或否定对比说明某个同音字怎么写（另含同名一致性），转写应按说明写字。 沿用 context_correction_zh@v1-20261018 的流程：qwen3.6-plus 出题、deepseek-v4-pro 复核（6 项全过）、Qwen3-TTS 克隆音色朗读、 SenseVoiceSmall 与 Qwen3-ASR-1.7B 拼音级质检（任一通过即可，按多音字全部读音比较）。音色取 aishell3、kespeech 训练划分的语句， 排除评测集克隆过的说话人；题目避开评测集的被测词，与评测集写法对或朗读文本相同的进隔离区。每条 train / train_ts 记录在 think.jsonl.gz 里有一行 think（context_correction_clean_zh 的 think 格式）。抽查：说明写错约 2–3%，只靠一个 ASR 通过的条目未见误收。 起因：open-audio-llm runs/zh-spelling-think-20261113 中 think 有效，但真实说明样本只有 2,187 条
 
 ### context_correction_zh

@@ -104,7 +104,7 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [common_voice_zh](data-versions.md#common_voice_zh) | zh | 语音识别、热词增强语音识别 | 76.1 | Common Voice 中文众包朗读；含清洗、热词、加噪版 | 部分版本：快照 20260914、`备份桶:audio-data-contract/datasets/commonvoice_zh_hotwords/` |
 | [common_voice_zh_hk](data-versions.md#common_voice_zh_hk) | yue | 语音识别 | 25.3 | 众包朗读粤语（Common Voice 香港） | 快照 20260914 |
 | [context_correction_clean_zh](data-versions.md#context_correction_clean_zh) | zh | 语音识别 | — | 说字写法句子的 think 文本（CoT） | 没有 |
-| [context_correction_synth_zh](data-versions.md#context_correction_synth_zh) | zh | 语音识别、目标说话人语音识别 | 29.8 | 上下文纠偏合成训练数据：隐式语义（生成中） | 没有 |
+| [context_correction_synth_zh](data-versions.md#context_correction_synth_zh) | zh | 语音识别、目标说话人语音识别 | 29.8 | 上下文纠偏合成训练数据：隐式语义（带线索 + 目标 think） | 没有 |
 | [context_correction_zh](data-versions.md#context_correction_zh) | zh | 语音识别、目标说话人语音识别 | 40.5 | 中文上下文纠偏评测集，同音词按语境写 | 没有 |
 | [csemotions](data-versions.md#csemotions) | zh | 语音合成 | 10.2 | 中文情感语音（CSEMOTIONS），TTS 用 | `TTS 桶:CSEMOTIONS/`（原始数据） |
 | [dingqiao_meeting](data-versions.md#dingqiao_meeting) | zh | 说话人分段与归属 | 0.3 | — | 快照 20260918 |
