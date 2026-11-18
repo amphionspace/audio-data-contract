@@ -48,11 +48,16 @@ sources:
     # 871 条里 292 条含热词（MLS pt test 只有西语的约三分之一）；下限约为其 85%
     min_records: 250
 
-# 近音词：候选词表 = 三个测试集的正确词 + 葡语训练集已有的热词标注（只当干扰词用，不改训练数据）
+# 近音词：候选词表 = 三个测试集的正确词 + 葡语训练集已有的热词标注 + YODAS 葡语字幕的热词标注（都只当干扰词用，不改训练数据）。
+# 只用训练集标注时词表约 1.7 万个词（西语约 12 万），FLEURS 的正确词带上近音词的比例 0.248，低于质检门槛 0.3；
+# 所以与训练集同一设置（Qwen3.8-27B、extract_hotword、12 句一请求、不复核）给 YODAS-Granary pt000 清洗通过的字幕
+# （yodas_granary_es_pt@pt000-clean-v1-20261114，去重后 ≥2 词的 514,898 句；葡语训练不用 YODAS）补标热词，
+# 151,183 句有热词、约 8 万个不同的词（summary.json）。
 confusables:
   vocabulary:
     - common_voice_pt/versions/pt-train-v1-20261117/cv27-pt_supervisions_train.jsonl.gz
     - mls_pt/versions/pt-train-v1-20261117/mls-portuguese_supervisions_train.jsonl.gz
+    - hotword_bench/source/pt-v1-20261117-vocabulary/yodas-pt-hotwords.jsonl.gz
   min_count: 2
   min_key_length: 4
   max_distance: [[6, 1], [10, 2], [999, 3]]

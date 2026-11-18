@@ -1,6 +1,10 @@
 {
   "bucket": "amphion-audio-backup-1373259071",
   "datasets": {
+    "asr_babble_bench@pt-v1-20261117": {
+      "alias": "asr_babble_bench",
+      "synced": "2026-11-18"
+    },
     "asr_babble_bench@v1-20261023": {
       "alias": "asr_babble_bench",
       "synced": "2026-10-27"
@@ -93,6 +97,10 @@
       "alias": "ts_asr_benchmark",
       "synced": "2026-11-01"
     },
+    "ts_asr_benchmark@pt-v1-20261117": {
+      "alias": "ts_asr_benchmark",
+      "synced": "2026-11-18"
+    },
     "ts_asr_benchmark@v1-20261013": {
       "alias": "ts_asr_benchmark",
       "synced": "2026-10-27"
@@ -109,6 +117,10 @@
       "alias": "ts_asr_benchmark",
       "synced": "2026-10-27"
     },
+    "ts_asr_crosslingual@pt-v1-20261117": {
+      "alias": "ts_asr_crosslingual",
+      "synced": "2026-11-18"
+    },
     "ts_asr_dev@v1-20261017": {
       "alias": "ts_asr_dev",
       "synced": "2026-10-27"
@@ -116,6 +128,10 @@
     "ts_asr_farfield@en-v1-20261031": {
       "alias": "ts_asr_farfield",
       "synced": "2026-11-01"
+    },
+    "ts_asr_farfield@pt-v1-20261117": {
+      "alias": "ts_asr_farfield",
+      "synced": "2026-11-18"
     },
     "ts_asr_farfield@v1-20261014": {
       "alias": "ts_asr_farfield",
@@ -128,6 +144,10 @@
     "ts_asr_handover@en-v1-20261031": {
       "alias": "ts_asr_handover",
       "synced": "2026-11-01"
+    },
+    "ts_asr_handover@pt-v1-20261117": {
+      "alias": "ts_asr_handover",
+      "synced": "2026-11-18"
     },
     "ts_asr_handover@v1-20261020": {
       "alias": "ts_asr_handover",
@@ -168,6 +188,10 @@
     "ts_asr_noise@en-v1-20261031": {
       "alias": "ts_asr_noise",
       "synced": "2026-11-01"
+    },
+    "ts_asr_noise@pt-v1-20261117": {
+      "alias": "ts_asr_noise",
+      "synced": "2026-11-18"
     },
     "ts_asr_noise@v1-20261013": {
       "alias": "ts_asr_noise",
@@ -221,6 +245,10 @@
       "alias": "ts_asr_shortseg",
       "synced": "2026-11-01"
     },
+    "ts_asr_shortseg@pt-v1-20261117": {
+      "alias": "ts_asr_shortseg",
+      "synced": "2026-11-18"
+    },
     "ts_asr_shortseg@v1-20261017": {
       "alias": "ts_asr_shortseg",
       "synced": "2026-10-27"
@@ -232,6 +260,10 @@
     "ts_asr_singing@en-v1-20261031": {
       "alias": "ts_asr_singing",
       "synced": "2026-11-01"
+    },
+    "ts_asr_singing@pt-v1-20261117": {
+      "alias": "ts_asr_singing",
+      "synced": "2026-11-18"
     },
     "ts_asr_singing@v1-20261017": {
       "alias": "ts_asr_singing",

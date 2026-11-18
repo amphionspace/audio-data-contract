@@ -2223,7 +2223,7 @@ WenetSpeech L 中的 YouTube 部分
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
 | [asr_babble_bench@es-v1-20261111](../../catalog/asr_babble_bench.yaml#L1019) | 4.2 | 已登记 | 没有 |
-| [asr_babble_bench@pt-v1-20261117](../../catalog/asr_babble_bench.yaml#L1199) | 3.9 | 已登记 | 没有 |
+| [asr_babble_bench@pt-v1-20261117](../../catalog/asr_babble_bench.yaml#L1199) | 3.9 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/asr_babble_bench/` |
 | [asr_babble_bench@v1-20261023](../../catalog/asr_babble_bench.yaml#L1) | 10.1 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/asr_babble_bench/` |
 | [asr_babble_bench@v2-20261023](../../catalog/asr_babble_bench.yaml#L399) | 8.8 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/asr_babble_bench/` |
 | [asr_babble_bench@v3-20261104](../../catalog/asr_babble_bench.yaml#L757) | 1.9 | 已登记 | 没有 |
@@ -2495,16 +2495,18 @@ Emilia-YODAS 多语种 YouTube 语音
 
 中英热词评测集，仅评测
 
-语言：en、es、zh · 任务：热词增强语音识别
+语言：en、es、pt、zh · 任务：热词增强语音识别
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
 | [hotword_bench@es-v1-20261111](../../catalog/hotword_bench.yaml#L1284) | — | 未登记 | 没有 |
+| [hotword_bench@pt-v1-20261117](../../catalog/hotword_bench.yaml#L1414) | — | 未登记 | 没有 |
 | [hotword_bench@v1-20261018](../../catalog/hotword_bench.yaml#L1) | — | 未登记 | 没有 |
 | [hotword_bench@v2-20261019](../../catalog/hotword_bench.yaml#L386) | — | 未登记 | 没有 |
 | [hotword_bench@v3-20261020](../../catalog/hotword_bench.yaml#L774) | — | 未登记 | 没有 |
 
 - `hotword_bench@es-v1-20261111`：西语热词评测集，对应中英 v3-20261020 的 cv_zh / cv_en，只用于评测，不进训练。三个西语测试集（Common Voice es、FLEURS es、MLS es）里含热词的句子，热词沿用已有标注（ts_asr_hotwords@es-v1-20261111 hotword-labels.jsonl，Qwen3.8-27B 抽取 + 复核）。每条记录存好固定的热词列表（metadata.bias_lists，已打乱顺序），评测器另跑不给列表的 none 条件：gold；k50 = 正确词 + 每个正确词最多 3 个近音词 + 同 split 正确词池随机词，补到 50 个；k50_no_gold 为同一批干扰词去掉正确词再补满。近音词是在 119,323 个西语热词（测试集正确词 + 西语训练集热词标注）里按西语读音键的编辑距离检索出的真实词（只用 CPU，不经 LLM），原始候选见 source/es-v1-20261111/mined/confusables.jsonl。生成脚本 scripts/hotword_bench/build_es.py，配方 recipe-es-v1.yaml
+- `hotword_bench@pt-v1-20261117`：葡语热词评测集，与西语 es-v1-20261111 同一做法（对应中英 v3-20261020 的 cv_zh / cv_en），只用于评测，不进训练。三个葡语测试集（Common Voice 27.0 pt、FLEURS pt_br、MLS pt）里含热词的句子，热词由 Qwen3.8-27B 抽取 + 复核 （label_hotwords.py，与西语同设置；原始标注 ts_asr_hotwords/versions/pt-v1-20261117/hotword-labels.jsonl）。每条记录存好固定的热词列表（metadata.bias_lists，已打乱顺序），评测器另跑不给列表的 none 条件：gold；k50 = 正确词 + 每个正确词最多 3 个近音词 + 同 split 正确词池随机词，补到 50 个；k50_no_gold 为同一批干扰词去掉正确词再补满。近音词是在 79,894 个葡语热词（测试集正确词 + 葡语训练集热词标注 + YODAS 葡语字幕热词标注）里按葡语（巴西读法）读音键的编辑距离检索出的真实词（检索只用 CPU），原始候选见 source/pt-v1-20261117/mined/confusables.jsonl。生成脚本 scripts/hotword_bench/build_pt.py，配方 recipe-pt-v1.yaml
 - `hotword_bench@v1-20261018`：热词评测集，只用于评测，不进训练。每条记录存好固定的热词列表（metadata.bias_lists，已打乱顺序），评测器另跑不给列表的 none 条件。中文列表 = 正确词 + doubao-seed-2-1-pro-260915 生成、deepseek-v4-pro-ga-260813 复核的易混词 + 同 split 热词池随机词，补到 50 个；*_no_gold 为同一批干扰词去掉正确词。AISHELL1-NE、LibriSpeech 另含官方列表。生成脚本 scripts/hotword_bench/
 - `hotword_bench@v2-20261019`：热词评测集 v2，只用于评测，不进训练。记录、音频、正确词和其余条件与 v1-20261018 相同；中文切片的 k50 / k50_no_gold 换成从热词池检索的 pool50 / pool50_no_gold： 每个租户（约 200 句，按子集 / 领域语料分组）一个池 = 现网中文万词库（由现网 RAG 返回结果还原，8841 词）+ 租户句子的正确词及其复核易混词；以参考文本为查询，按 open-audio-llm 规则召回的打分公式取得分最高的 50 个（不设阈值）。pool50 = 正确词 + 检索出的干扰词，pool50_no_gold = 检索出的前 50 个干扰词；metadata.distractor_kinds 标出 confusable / tenant / base。各租户的池在 hotword-pools.jsonl.gz。生成脚本 scripts/hotword_bench/pool.py
 - `hotword_bench@v3-20261020`：热词评测集 v3，只用于评测，不进训练。记录、音频、正确词和全部列表与 v2-20261019 相同（请求逐条一致，总指标可与 v2-20261019 直接比较），另加两种标签： metadata.hotword_types 为每个正确词按所在句子的意思标的类型（person / place / organization / product / work / term / other / common），contextasr_speech_zh 的 labels.domain_group 把 ContextASR 自带的自由文本领域归到 13 个大类，自由文本领域本身从 labels.domain 移到 metadata.domain （评测器按每个字符串标签分项，3,957 种取值会让 summary 超过 W&B 的 10 MB 上限）。doubao-seed-2-0-lite-260215 标注，deepseek-v4-pro-ga-260813 看着标注复核并以复核为准（类型复核后不变的占 98.5%）。生成脚本 scripts/hotword_bench/annotate.py，类型定义见 prompts.py
@@ -2768,7 +2770,7 @@ AISHELL-1、LibriSpeech 合成的多人对话
 | [ts_asr_benchmark@en-v1-hotword-labels-20261102](../../catalog/ts_benchmark_hotword_labels.yaml#L5793) | 44.4 | 已登记 | 没有 |
 | [ts_asr_benchmark@es-v1-20261110](../../catalog/ts_asr_benchmark.yaml#L9371) | 43.2 | 已登记 | 没有 |
 | [ts_asr_benchmark@listening-review-v1-20261026](../../catalog/listening_review.yaml#L303) | — | 未登记 | 没有 |
-| [ts_asr_benchmark@pt-v1-20261117](../../catalog/ts_asr_benchmark.yaml#L11513) | 42.4 | 已登记 | 没有 |
+| [ts_asr_benchmark@pt-v1-20261117](../../catalog/ts_asr_benchmark.yaml#L11513) | 42.4 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_benchmark/` |
 | [ts_asr_benchmark@v1-20261013](../../catalog/ts_asr_benchmark.yaml#L1) | 25.0 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_benchmark/` |
 | [ts_asr_benchmark@v2-20261013](../../catalog/ts_asr_benchmark.yaml#L1228) | 26.9 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_benchmark/` |
 | [ts_asr_benchmark@v3-20261013](../../catalog/ts_asr_benchmark.yaml#L2534) | 43.9 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_benchmark/` |
@@ -2793,7 +2795,7 @@ AISHELL-1、LibriSpeech 合成的多人对话
 |---|---:|---|---|
 | [ts_asr_crosslingual@en-v1-20261109](../../catalog/ts_asr_crosslingual.yaml#L427) | 6.2 | 已登记 | 没有 |
 | [ts_asr_crosslingual@es-v1-20261111](../../catalog/ts_asr_crosslingual.yaml#L853) | 3.5 | 已登记 | 没有 |
-| [ts_asr_crosslingual@pt-v1-20261117](../../catalog/ts_asr_crosslingual.yaml#L1088) | 3.4 | 已登记 | 没有 |
+| [ts_asr_crosslingual@pt-v1-20261117](../../catalog/ts_asr_crosslingual.yaml#L1088) | 3.4 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_crosslingual/` |
 | [ts_asr_crosslingual@zh-v1-20261109](../../catalog/ts_asr_crosslingual.yaml#L1) | 6.2 | 已登记 | 没有 |
 
 - `ts_asr_crosslingual@en-v1-20261109`：跨语言注册 TS-ASR 评测集（混合段英文）：Common Voice 同一账号既录中文又录英文、从未作为 TS 训练目标的 78 人，以及 Qwen3-TTS-12Hz-1.7B-Base 跨语言克隆的 50 个合成音色（注册与混合段都是合成音）；每个场景配同语言与跨语言两种注册。只用于评测，不进训练。配方见 scripts/ts_benchmark/recipe-crosslingual-en.yaml
@@ -2812,7 +2814,7 @@ AISHELL-1、LibriSpeech 合成的多人对话
 | [ts_asr_farfield@en-v1-20261031](../../catalog/ts_asr_farfield.yaml#L614) | 5.0 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_farfield/` |
 | [ts_asr_farfield@en-v1-hotword-labels-20261102](../../catalog/ts_benchmark_hotword_labels.yaml#L8176) | 5.0 | 已登记 | 没有 |
 | [ts_asr_farfield@es-v1-20261111](../../catalog/ts_asr_farfield.yaml#L919) | 5.1 | 已登记 | 没有 |
-| [ts_asr_farfield@pt-v1-20261117](../../catalog/ts_asr_farfield.yaml#L1221) | 5.0 | 已登记 | 没有 |
+| [ts_asr_farfield@pt-v1-20261117](../../catalog/ts_asr_farfield.yaml#L1221) | 5.0 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_farfield/` |
 | [ts_asr_farfield@v1-20261014](../../catalog/ts_asr_farfield.yaml#L1) | 5.1 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_farfield/` |
 | [ts_asr_farfield@v2-20261022](../../catalog/ts_asr_farfield.yaml#L308) | 5.1 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_farfield/` |
 | [ts_asr_farfield@v2-hotword-labels-20261102](../../catalog/ts_benchmark_hotword_labels.yaml#L2468) | 5.1 | 已登记 | 没有 |
@@ -2835,7 +2837,7 @@ AISHELL-1、LibriSpeech 合成的多人对话
 | [ts_asr_handover@en-v1-20261031](../../catalog/ts_asr_handover.yaml#L454) | 1.6 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_handover/` |
 | [ts_asr_handover@en-v1-hotword-labels-20261102](../../catalog/ts_benchmark_hotword_labels.yaml#L8501) | 1.6 | 已登记 | 没有 |
 | [ts_asr_handover@es-v1-20261111](../../catalog/ts_asr_handover.yaml#L579) | 1.7 | 已登记 | 没有 |
-| [ts_asr_handover@pt-v1-20261117](../../catalog/ts_asr_handover.yaml#L701) | 1.7 | 已登记 | 没有 |
+| [ts_asr_handover@pt-v1-20261117](../../catalog/ts_asr_handover.yaml#L701) | 1.7 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_handover/` |
 | [ts_asr_handover@v1-20261020](../../catalog/ts_asr_handover.yaml#L1) | 3.8 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_handover/` |
 | [ts_asr_handover@v2-20261022](../../catalog/ts_asr_handover.yaml#L228) | 3.8 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_handover/` |
 | [ts_asr_handover@v2-hotword-labels-20261102](../../catalog/ts_benchmark_hotword_labels.yaml#L2793) | 3.8 | 已登记 | 没有 |
@@ -2851,14 +2853,16 @@ AISHELL-1、LibriSpeech 合成的多人对话
 
 —
 
-语言：en、es、zh · 任务：目标说话人语音识别
+语言：en、es、pt、zh · 任务：目标说话人语音识别
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
 | [ts_asr_hotwords@es-v1-20261111](../../catalog/ts_asr_hotwords.yaml#L145) | — | 未登记 | 没有 |
+| [ts_asr_hotwords@pt-v1-20261117](../../catalog/ts_asr_hotwords.yaml#L208) | — | 未登记 | 没有 |
 | [ts_asr_hotwords@v1-20261102](../../catalog/ts_asr_hotwords.yaml#L2) | — | 未登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_hotwords/` |
 
 - `ts_asr_hotwords@es-v1-20261111`：西班牙语 TS-ASR + 热词评测集：从 ts-asr-benchmark-es@v1-20261110（ts_asr_benchmark@es-v1-20261110，Common Voice es dev）派生，做法与 v1-20261102（中英）相同：沿用原音频与目标，记录 id 加 es 前缀；hotwords = 目标说话人转写里的热词；metadata.bias_lists：random = 正确词 + 随机词共 10 个，interferer = 正确词 + 其他说话人说出的热词 + 随机词共 20 个（只在有人说了热词时给）；抽样同 v1。热词由 amphiondata 的热词提取提示词经 Qwen3.8-27B 标注并复核（label_hotwords.py），词必须在原文里出现；原始标注随版本存为 hotword-labels.jsonl（另含 CV / FLEURS / MLS es test 的转写标注，供普通 ASR 热词评测）。一个 split：es-synthetic 5,360
+- `ts_asr_hotwords@pt-v1-20261117`：葡萄牙语 TS-ASR + 热词评测集：从 ts-asr-benchmark-pt@v1-20261117（ts_asr_benchmark@pt-v1-20261117，Common Voice 27.0 pt dev）派生，做法与西语 es-v1-20261111 相同：沿用原音频与目标，记录 id 加 pt 前缀；hotwords = 目标说话人转写里的热词；metadata.bias_lists：random = 正确词 + 随机词共 10 个，interferer = 正确词 + 其他说话人说出的热词 + 随机词共 20 个（只在有人说了热词时给）；抽样同 v1。热词由 amphiondata 的热词提取提示词经 Qwen3.8-27B 标注并复核（label_hotwords.py），词必须在原文里出现；原始标注随版本存为 hotword-labels.jsonl（CV 27.0 pt test、FLEURS pt、MLS pt test 的转写与 CV pt dev 单句，hotword_bench@pt-v1-20261117 也用它）和 hotword-labels-tsbench.jsonl（TS 记录里拼接后的目标文本与干扰人文本）。一个 split：pt-synthetic 4,260
 - `ts_asr_hotwords@v1-20261102`：TS-ASR + 热词评测集：从 ts-asr-benchmark@v12-20261022（中文）与 ts-asr-benchmark-en@v1-20261031（英文）的记录派生，沿用原音频（audio-index 指向源文件）与目标；记录 id 加语言前缀。hotwords = 目标说话人转写里的热词；metadata.bias_lists：random = 正确词 + 随机词共 10 个，interferer = 正确词 + 其他说话人说出的热词 + 随机词共 20 个（只在有人说了热词时给）；metadata.distractor_kinds 标出 interferer / random。抽样：含目标热词的记录全留，只有其他说话人热词的留 1/4，两者都没有的留 1/8。热词由 amphiondata 的热词提取提示词经 Qwen3.8-27B 标注并复核，词必须在原文里出现。四个 split：zh-synthetic 7,794、zh-real 243、en-synthetic 4,126、en-real 220
 
 ### ts_asr_nearshort
@@ -2892,7 +2896,7 @@ AISHELL-1、LibriSpeech 合成的多人对话
 | [ts_asr_noise@en-v1-20261031](../../catalog/ts_asr_noise.yaml#L734) | 5.9 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_noise/` |
 | [ts_asr_noise@en-v1-hotword-labels-20261102](../../catalog/ts_benchmark_hotword_labels.yaml#L8878) | 5.9 | 已登记 | 没有 |
 | [ts_asr_noise@es-v1-20261111](../../catalog/ts_asr_noise.yaml#L1099) | 3.5 | 已登记 | 没有 |
-| [ts_asr_noise@pt-v1-20261117](../../catalog/ts_asr_noise.yaml#L1321) | 3.5 | 已登记 | 没有 |
+| [ts_asr_noise@pt-v1-20261117](../../catalog/ts_asr_noise.yaml#L1321) | 3.5 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_noise/` |
 | [ts_asr_noise@v1-20261013](../../catalog/ts_asr_noise.yaml#L1) | 5.9 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_noise/` |
 | [ts_asr_noise@v2-20261022](../../catalog/ts_asr_noise.yaml#L368) | 5.9 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_noise/` |
 | [ts_asr_noise@v2-hotword-labels-20261102](../../catalog/ts_benchmark_hotword_labels.yaml#L4356) | 5.9 | 已登记 | 没有 |
@@ -2950,7 +2954,7 @@ AISHELL-1、LibriSpeech 合成的多人对话
 | [ts_asr_shortseg@en-v1-20261031](../../catalog/ts_asr_shortseg.yaml#L334) | 0.6 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_shortseg/` |
 | [ts_asr_shortseg@en-v1-hotword-labels-20261102](../../catalog/ts_benchmark_hotword_labels.yaml#L10557) | 0.6 | 已登记 | 没有 |
 | [ts_asr_shortseg@es-v1-20261111](../../catalog/ts_asr_shortseg.yaml#L459) | 0.4 | 已登记 | 没有 |
-| [ts_asr_shortseg@pt-v1-20261117](../../catalog/ts_asr_shortseg.yaml#L561) | 0.6 | 已登记 | 没有 |
+| [ts_asr_shortseg@pt-v1-20261117](../../catalog/ts_asr_shortseg.yaml#L561) | 0.6 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_shortseg/` |
 | [ts_asr_shortseg@v1-20261017](../../catalog/ts_asr_shortseg.yaml#L1) | 0.8 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_shortseg/` |
 | [ts_asr_shortseg@v2-20261022](../../catalog/ts_asr_shortseg.yaml#L168) | 0.8 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_shortseg/` |
 | [ts_asr_shortseg@v2-hotword-labels-20261102](../../catalog/ts_benchmark_hotword_labels.yaml#L5615) | 0.8 | 已登记 | 没有 |
@@ -2972,7 +2976,7 @@ AISHELL-1、LibriSpeech 合成的多人对话
 |---|---:|---|---|
 | [ts_asr_singing@en-v1-20261031](../../catalog/ts_asr_singing.yaml#L134) | 0.2 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_singing/` |
 | [ts_asr_singing@es-v1-20261111](../../catalog/ts_asr_singing.yaml#L179) | 0.2 | 已登记 | 没有 |
-| [ts_asr_singing@pt-v1-20261117](../../catalog/ts_asr_singing.yaml#L221) | 0.2 | 已登记 | 没有 |
+| [ts_asr_singing@pt-v1-20261117](../../catalog/ts_asr_singing.yaml#L221) | 0.2 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_singing/` |
 | [ts_asr_singing@v1-20261017](../../catalog/ts_asr_singing.yaml#L1) | 0.3 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_singing/` |
 | [ts_asr_singing@v2-20261022](../../catalog/ts_asr_singing.yaml#L68) | 0.3 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_singing/` |
 

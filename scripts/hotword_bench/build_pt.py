@@ -79,11 +79,12 @@ def declaration(recipe, by_split, index, version_dir, source, vocabulary_size, r
         每条记录存好固定的热词列表（metadata.bias_lists，已打乱顺序），评测器另跑不给列表的 none 条件：gold；k50 = 正确词 + 每个正确词最多
         {recipe['confusables_per_word']} 个近音词 + 同 split 正确词池随机词，补到 {recipe['list_size']} 个；
         k50_no_gold 为同一批干扰词去掉正确词再补满。近音词是在 {vocabulary_size:,} 个葡语热词（测试集正确词 +
-        葡语训练集热词标注）里按葡语（巴西读法）读音键的编辑距离检索出的真实词（只用 CPU，不经 LLM），
+        葡语训练集热词标注 + YODAS 葡语字幕热词标注）里按葡语（巴西读法）读音键的编辑距离检索出的真实词（检索只用 CPU），
         原始候选见 source/{version}/mined/confusables.jsonl。生成脚本 scripts/hotword_bench/build_pt.py，配方 recipe-pt-v1.yaml。""")
     spec["provenance"]["sources"] = [*(s["dataset"] for s in recipe["sources"].values()),
                                      f"{recipe['labels']['path']} (Qwen3.8-27B hotword labels)",
-                                     "common_voice_pt@pt-train-v1-20261117:train, mls_pt@pt-train-v1-20261117:train (confusable vocabulary, overlap check)"]
+                                     "common_voice_pt@pt-train-v1-20261117:train, mls_pt@pt-train-v1-20261117:train (confusable vocabulary, overlap check)",
+                                     "yodas_granary_es_pt@pt000-clean-v1-20261114 (confusable vocabulary only: Qwen3.8-27B hotword labels, source/pt-v1-20261117-vocabulary)"]
     spec["provenance"]["limitations"] = cjk_join("""热词来自 LLM 抽取与复核，未经人工核对；没有中文 v3 的 hotword_types（需要 LLM 标注）；
         没有葡语现网词库，不做中文 v2 的 pool50 检索列表；近音词按拼写推出的读音键检索（巴西读法），
         不是声学相似度，也不覆盖英文专名的英语读法；FLEURS 同一句话有多个说话人。MLS 转写全小写无标点（旧正字法），热词也是小写。""")
