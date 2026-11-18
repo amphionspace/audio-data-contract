@@ -258,7 +258,7 @@ Emilia 英语野外语音（已清洗）
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
-| [emilia_en@legacy](../../catalog/legacy_multilingual.yaml#L911) | 43,624.0 | 已登记 | 快照 20260914 |
+| [emilia_en@legacy](../../catalog/legacy_multilingual.yaml#L917) | 43,624.0 | 已登记 | 快照 20260914 |
 
 - `emilia_en@legacy`：参考表注明 clean2604，Whisper + Qwen3ASR 转录、已有清洗；本次未复核实际样本
 - 有含标点版本
@@ -298,7 +298,7 @@ Emilia 英语野外语音（已清洗）
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
 | [fleurs_en@hf-70bb2e84b976](../../catalog/multilingual_asr_sources.yaml#L137) | 1.8 | 已登记 | 没有 |
-| [fleurs_en@legacy](../../catalog/legacy_multilingual.yaml#L841) | 10.3 | 已登记 | 快照 20260914 |
+| [fleurs_en@legacy](../../catalog/legacy_multilingual.yaml#L847) | 10.3 | 已登记 | 快照 20260914 |
 
 - `fleurs_en@hf-70bb2e84b976`：Google FLEURS 的 en_us 子集（音频归档和 TSV 转写），只下载了 test，与 fleurs_pt 同一修订
 - 有含标点版本
@@ -596,8 +596,8 @@ LibriSpeech 混合的目标说话人数据
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
-| [notsofar@hf-ba8fd0f034ce-recorded-240825.1](../../catalog/multilingual_multispeaker.yaml#L358) | — | 未登记 | 快照 20260914 |
-| [notsofar@hf-ba8fd0f034ce-sim-v1.5-200h](../../catalog/multilingual_multispeaker.yaml#L419) | 200.0 | 估算 | 快照 20260914 |
+| [notsofar@hf-ba8fd0f034ce-recorded-240825.1](../../catalog/multilingual_multispeaker.yaml#L367) | — | 未登记 | 快照 20260914 |
+| [notsofar@hf-ba8fd0f034ce-sim-v1.5-200h](../../catalog/multilingual_multispeaker.yaml#L428) | 200.0 | 估算 | 快照 20260914 |
 | [notsofar_sdm@icefall-20260908](../../catalog/icefall_runtime.yaml#L2995) | 176.9 | 已登记：单远场麦克风标注片段 | 快照 20260914、`amphion-audio-backup-1373259071:audio-data-contract/datasets/notsofar_sdm/` |
 | [notsofar_sdm@meeting-windows-v1-20261008](../../catalog/diarization_raw_real-meetings.yaml#L288) | — | 未登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/notsofar_sdm/` |
 | [notsofar_sdm@teacher-calibration-v1-20261009](../../catalog/diarization_raw_teacher-calibration.yaml#L193) | — | 未登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/notsofar_sdm/` |
@@ -1333,7 +1333,7 @@ Emilia 中文野外语音（已清洗）
 |---|---:|---|---|
 | [emilia_zh@clean-dual-qwen-moss-v1-20261009](../../catalog/zh_source_clean_20261009.yaml#L982) | — | 未登记 | 没有 |
 | [emilia_zh@icefall-20260908](../../catalog/icefall_runtime.yaml#L982) | 23,956.0 | 已登记 | 快照 20260914 |
-| [emilia_zh@legacy](../../catalog/legacy_multilingual.yaml#L2375) | 40,848.4 | 已登记 | 快照 20260914 |
+| [emilia_zh@legacy](../../catalog/legacy_multilingual.yaml#L2396) | 40,848.4 | 已登记 | 快照 20260914 |
 | [emilia_zh@legacy-20260804](../../catalog/icefall_base.yaml#L676) | 23,956.0 | 已登记 | 快照 20260914 |
 | [emilia_zh@punc-written-v1-20261109](../../catalog/punc_written_mls_emilia.yaml#L59) | 23,956.0 | 已登记 | 没有 |
 | [emilia_zh@legacy-20260804](../../catalog/icefall_base.yaml#L676) | 23,956.0 | [参考表](https://ccnuebbmik1f.feishu.cn/wiki/CEXFwEjPoi2bIukVjk9c5FdOn12?sheet=3d4d23) | 快照 20260914 |
@@ -1368,7 +1368,7 @@ Emilia 中文野外语音（已清洗）
 |---|---:|---|---|
 | [fleurs_zh@hf-70bb2e84b976](../../catalog/multilingual_asr_sources.yaml#L1) | 3.1 | 已登记 | 没有 |
 | [fleurs_zh@icefall-20260908](../../catalog/icefall_runtime.yaml#L1895) | 14.1 | 已登记 | 快照 20260914 |
-| [fleurs_zh@legacy](../../catalog/legacy_multilingual.yaml#L2305) | 14.1 | 已登记 | 快照 20260914 |
+| [fleurs_zh@legacy](../../catalog/legacy_multilingual.yaml#L2326) | 14.1 | 已登记 | 快照 20260914 |
 | [fleurs_zh@legacy-20260804](../../catalog/icefall_base.yaml#L1498) | 14.1 | 已登记 | 快照 20260914 |
 
 - `fleurs_zh@hf-70bb2e84b976`：Google FLEURS 的 cmn_hans_cn 子集（音频归档和 TSV 转写），只下载了 test，与 fleurs_pt 同一修订
@@ -1784,7 +1784,7 @@ SpeechIO 中文 ASR 排行榜评测集
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
 | [speechio@eval-original-20261011](../../catalog/zh_asr_eval.yaml#L64) | 63.8 | 已登记 | 没有 |
-| [speechio@legacy](../../catalog/legacy_multilingual.yaml#L2415) | 63.8 | 已登记 | 快照 20260914 |
+| [speechio@legacy](../../catalog/legacy_multilingual.yaml#L2436) | 63.8 | 已登记 | 快照 20260914 |
 
 - 有含标点版本
 
@@ -2622,7 +2622,7 @@ AISHELL-1、LibriSpeech 合成的多人对话
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
-| [multi-talker-sd@hf-be2d372003fd](../../catalog/multilingual_multispeaker.yaml#L220) | — | 未登记 | 快照 20260914 |
+| [multi-talker-sd@hf-be2d372003fd](../../catalog/multilingual_multispeaker.yaml#L223) | — | 未登记 | 快照 20260914 |
 
 ### multilingual_asr_bench
 
@@ -2701,7 +2701,7 @@ AISHELL-1、LibriSpeech 合成的多人对话
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
 | [sot_multispeaker_zh_en@synthetic-v2-20260915](../../catalog/sot_multispeaker_zh_en.yaml#L1) | 7,664.4 | 已登记 | 没有 |
-| [sot_multispeaker_zh_en@synthetic-v2-timestamps-v1-20260919](../../catalog/sot_multispeaker_zh_en.yaml#L33216) | — | 未登记 | 没有 |
+| [sot_multispeaker_zh_en@synthetic-v2-timestamps-v1-20260919](../../catalog/sot_multispeaker_zh_en.yaml#L33219) | — | 未登记 | 没有 |
 
 - `sot_multispeaker_zh_en@synthetic-v2-20260915`：1～5 人中英混音，完整按人转写；200 万 train、1 万 dev、1 万 test。原版没有字词对齐时间戳
 - `sot_multispeaker_zh_en@synthetic-v2-timestamps-v1-20260919`：时间戳版本已登记、尚在准备：复用 v2 原混音，新增每次发言起止时间。源对齐和质检未全部完成，尚未发布可训练记录；不将计划条数计为已完成数据
@@ -3351,7 +3351,7 @@ TS-ASR 训练用跨语言 TTS 注册音频
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
-| [waxal-asr@hf-e91442a8989b](../../catalog/multilingual_multispeaker.yaml#L290) | — | 未登记 | 快照 20260914 |
+| [waxal-asr@hf-e91442a8989b](../../catalog/multilingual_multispeaker.yaml#L296) | — | 未登记 | 快照 20260914 |
 
 ### worldspeech
 
@@ -3514,7 +3514,7 @@ Casablanca 八种阿拉伯语方言
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
-| [cml_tts_fr@legacy](../../catalog/legacy_multilingual.yaml#L1237) | 316.0 | 已登记 | 快照 20260914 |
+| [cml_tts_fr@legacy](../../catalog/legacy_multilingual.yaml#L1246) | 316.0 | 已登记 | 快照 20260914 |
 
 - 有含标点版本
 
@@ -3553,7 +3553,7 @@ Casablanca 八种阿拉伯语方言
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
 | [common_voice_de@hf-8262c16bf297](../../catalog/multilingual_asr_sources.yaml#L744) | 27.4 | 已登记 | 没有 |
-| [common_voice_de@legacy](../../catalog/legacy_multilingual.yaml#L555) | 1,034.8 | 已登记 | 快照 20260914 |
+| [common_voice_de@legacy](../../catalog/legacy_multilingual.yaml#L558) | 1,034.8 | 已登记 | 快照 20260914 |
 
 - `common_voice_de@hf-8262c16bf297`：Common Voice 17.0 de 的非官方 HF 镜像（官方 Mozilla 仓库需要授权），只下载了 test，与 common_voice_pt@hf-8262c16bf297 同一修订
 - 有含标点版本
@@ -3572,7 +3572,7 @@ Casablanca 八种阿拉伯语方言
 | [common_voice_es@es-train-hwconf-v1-20261111](../../catalog/es_train_v1.yaml#L195) | 247.6 | 已登记 | 没有 |
 | [common_voice_es@es-train-v1-20261108](../../catalog/es_train_v1.yaml#L2) | 514.0 | 已登记 | 没有 |
 | [common_voice_es@hf-8262c16bf297](../../catalog/multilingual_asr_sources.yaml#L472) | 26.9 | 已登记 | 没有 |
-| [common_voice_es@legacy](../../catalog/legacy_multilingual.yaml#L951) | 568.5 | 已登记 | 快照 20260914 |
+| [common_voice_es@legacy](../../catalog/legacy_multilingual.yaml#L960) | 568.5 | 已登记 | 快照 20260914 |
 | [common_voice_es@mdc-27.0](../../catalog/common_voice_27.yaml#L2) | 1,355.5 | 已登记 | 没有 |
 
 - `common_voice_es@americas-v1-20261103`：从现有 Common Voice 西语（CV 24.0）里按说话人自填口音选出美洲六个预设口音的录音，不复制音频，音频仍读原版本。没填口音的录音（约占六成）无法判断地区，没有收入
@@ -3594,7 +3594,7 @@ Casablanca 八种阿拉伯语方言
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
 | [common_voice_fr@hf-8262c16bf297](../../catalog/multilingual_asr_sources.yaml#L608) | 26.1 | 已登记 | 没有 |
-| [common_voice_fr@legacy](../../catalog/legacy_multilingual.yaml#L1307) | 924.1 | 已登记 | 快照 20260914 |
+| [common_voice_fr@legacy](../../catalog/legacy_multilingual.yaml#L1316) | 924.1 | 已登记 | 快照 20260914 |
 
 - `common_voice_fr@hf-8262c16bf297`：Common Voice 17.0 fr 的非官方 HF 镜像（官方 Mozilla 仓库需要授权），只下载了 test，与 common_voice_pt@hf-8262c16bf297 同一修订
 - 有含标点版本
@@ -3632,7 +3632,7 @@ Common Voice 17 印尼语朗读
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
 | [common_voice_ja@hf-8262c16bf297](../../catalog/multilingual_asr_sources.yaml#L880) | 8.9 | 已登记 | 没有 |
-| [common_voice_ja@legacy](../../catalog/legacy_multilingual.yaml#L1593) | 48.2 | 已登记 | 快照 20260914 |
+| [common_voice_ja@legacy](../../catalog/legacy_multilingual.yaml#L1605) | 48.2 | 已登记 | 快照 20260914 |
 
 - `common_voice_ja@hf-8262c16bf297`：Common Voice 17.0 ja 的非官方 HF 镜像（官方 Mozilla 仓库需要授权），只下载了 test，与 common_voice_pt@hf-8262c16bf297 同一修订
 - 有含标点版本
@@ -3646,7 +3646,7 @@ Common Voice 17 印尼语朗读
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
 | [common_voice_ko@hf-8262c16bf297](../../catalog/multilingual_asr_sources.yaml#L1016) | 0.5 | 已登记 | 没有 |
-| [common_voice_ko@legacy](../../catalog/legacy_multilingual.yaml#L1801) | 2.6 | 已登记 | 快照 20260914、`amphion-audio-backup-1373259071:audio-data-contract/datasets/common_voice_ko/` |
+| [common_voice_ko@legacy](../../catalog/legacy_multilingual.yaml#L1813) | 2.6 | 已登记 | 快照 20260914、`amphion-audio-backup-1373259071:audio-data-contract/datasets/common_voice_ko/` |
 
 - `common_voice_ko@hf-8262c16bf297`：Common Voice 17.0 ko 的非官方 HF 镜像（官方 Mozilla 仓库需要授权），只下载了 test，与 common_voice_pt@hf-8262c16bf297 同一修订
 - 有含标点版本
@@ -3679,7 +3679,7 @@ Common Voice 17 葡语朗读
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
 | [common_voice_ru@hf-8262c16bf297](../../catalog/multilingual_asr_sources.yaml#L1341) | 15.9 | 已登记 | 没有 |
-| [common_voice_ru@legacy](../../catalog/legacy_multilingual.yaml#L2061) | 69.9 | 已登记 | 快照 20260914 |
+| [common_voice_ru@legacy](../../catalog/legacy_multilingual.yaml#L2079) | 69.9 | 已登记 | 快照 20260914 |
 
 - `common_voice_ru@hf-8262c16bf297`：Common Voice 17.0 ru 的非官方 HF 镜像（官方 Mozilla 仓库需要授权），只下载了 test，与 common_voice_pt@hf-8262c16bf297 同一修订
 - 有含标点版本
@@ -3777,7 +3777,7 @@ Emilia 日语野外语音
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
-| [emilia_ja@legacy](../../catalog/legacy_multilingual.yaml#L1663) | 1,715.5 | 已登记 | 快照 20260914 |
+| [emilia_ja@legacy](../../catalog/legacy_multilingual.yaml#L1675) | 1,715.5 | 已登记 | 快照 20260914 |
 
 - 有含标点版本
 
@@ -3789,7 +3789,7 @@ Emilia 韩语野外语音
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
-| [emilia_ko@legacy](../../catalog/legacy_multilingual.yaml#L1871) | 217.2 | 已登记 | 快照 20260914 |
+| [emilia_ko@legacy](../../catalog/legacy_multilingual.yaml#L1883) | 217.2 | 已登记 | 快照 20260914 |
 
 - 有含标点版本
 
@@ -3828,7 +3828,7 @@ Emilia 韩语野外语音
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
 | [fleurs_de@hf-70bb2e84b976](../../catalog/multilingual_asr_sources.yaml#L681) | 3.2 | 已登记 | 没有 |
-| [fleurs_de@legacy](../../catalog/legacy_multilingual.yaml#L625) | 13.4 | 已登记 | 快照 20260914 |
+| [fleurs_de@legacy](../../catalog/legacy_multilingual.yaml#L628) | 13.4 | 已登记 | 快照 20260914 |
 
 - `fleurs_de@hf-70bb2e84b976`：Google FLEURS 的 de_de 子集（音频归档和 TSV 转写），只下载了 test，与 fleurs_pt 同一修订
 - 有含标点版本
@@ -3842,7 +3842,7 @@ Emilia 韩语野外语音
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
 | [fleurs_es@hf-70bb2e84b976](../../catalog/multilingual_asr_sources.yaml#L409) | 3.1 | 已登记 | 没有 |
-| [fleurs_es@legacy](../../catalog/legacy_multilingual.yaml#L1021) | 13.2 | 已登记 | 快照 20260914 |
+| [fleurs_es@legacy](../../catalog/legacy_multilingual.yaml#L1030) | 13.2 | 已登记 | 快照 20260914 |
 
 - `fleurs_es@hf-70bb2e84b976`：Google FLEURS 的 es_419 子集（音频归档和 TSV 转写），只下载了 test，与 fleurs_pt 同一修订
 - 有含标点版本
@@ -3856,7 +3856,7 @@ Emilia 韩语野外语音
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
 | [fleurs_fr@hf-70bb2e84b976](../../catalog/multilingual_asr_sources.yaml#L545) | 2.0 | 已登记 | 没有 |
-| [fleurs_fr@legacy](../../catalog/legacy_multilingual.yaml#L1377) | 13.1 | 已登记 | 快照 20260914 |
+| [fleurs_fr@legacy](../../catalog/legacy_multilingual.yaml#L1386) | 13.1 | 已登记 | 快照 20260914 |
 
 - `fleurs_fr@hf-70bb2e84b976`：Google FLEURS 的 fr_fr 子集（音频归档和 TSV 转写），只下载了 test，与 fleurs_pt 同一修订
 - 有含标点版本
@@ -3894,7 +3894,7 @@ FLEURS 印尼语朗读
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
 | [fleurs_ja@hf-70bb2e84b976](../../catalog/multilingual_asr_sources.yaml#L817) | 2.4 | 已登记 | 没有 |
-| [fleurs_ja@legacy](../../catalog/legacy_multilingual.yaml#L1697) | 10.7 | 已登记 | 快照 20260914 |
+| [fleurs_ja@legacy](../../catalog/legacy_multilingual.yaml#L1709) | 10.7 | 已登记 | 快照 20260914 |
 
 - `fleurs_ja@hf-70bb2e84b976`：Google FLEURS 的 ja_jp 子集（音频归档和 TSV 转写），只下载了 test，与 fleurs_pt 同一修订
 - 有含标点版本
@@ -3908,7 +3908,7 @@ FLEURS 印尼语朗读
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
 | [fleurs_ko@hf-70bb2e84b976](../../catalog/multilingual_asr_sources.yaml#L953) | 1.3 | 已登记 | 没有 |
-| [fleurs_ko@legacy](../../catalog/legacy_multilingual.yaml#L1905) | 10.1 | 已登记 | 快照 20260914 |
+| [fleurs_ko@legacy](../../catalog/legacy_multilingual.yaml#L1917) | 10.1 | 已登记 | 快照 20260914 |
 
 - `fleurs_ko@hf-70bb2e84b976`：Google FLEURS 的 ko_kr 子集（音频归档和 TSV 转写），只下载了 test，与 fleurs_pt 同一修订
 - 有含标点版本
@@ -3937,7 +3937,7 @@ FLEURS 巴西葡语朗读
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
 | [fleurs_ru@hf-70bb2e84b976](../../catalog/multilingual_asr_sources.yaml#L1278) | 2.5 | 已登记 | 没有 |
-| [fleurs_ru@legacy](../../catalog/legacy_multilingual.yaml#L2131) | 11.6 | 已登记 | 快照 20260914 |
+| [fleurs_ru@legacy](../../catalog/legacy_multilingual.yaml#L2149) | 11.6 | 已登记 | 快照 20260914 |
 
 - `fleurs_ru@hf-70bb2e84b976`：Google FLEURS 的 ru_ru 子集（音频归档和 TSV 转写），只下载了 test，与 fleurs_pt 同一修订
 - 有含标点版本
@@ -4043,7 +4043,7 @@ Kathbath 印地语手机朗读评测划分
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
-| [koreaspeech@legacy](../../catalog/legacy_multilingual.yaml#L1975) | 3,828.3 | 已登记 | 快照 20260914 |
+| [koreaspeech@legacy](../../catalog/legacy_multilingual.yaml#L1987) | 3,828.3 | 已登记 | 快照 20260914 |
 
 - 有含标点版本
 
@@ -4108,7 +4108,7 @@ MIT 日常环境实测冲激响应（270 条）
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
-| [mls_de@legacy](../../catalog/legacy_multilingual.yaml#L695) | 1,995.1 | 已登记 | 快照 20260914 |
+| [mls_de@legacy](../../catalog/legacy_multilingual.yaml#L698) | 1,995.1 | 已登记 | 快照 20260914 |
 
 - 有无标点版本
 
@@ -4122,7 +4122,7 @@ MIT 日常环境实测冲激响应（270 条）
 |---|---:|---|---|
 | [mls_es@es-train-hwconf-v1-20261111](../../catalog/es_train_v1.yaml#L326) | 467.8 | 已登记 | 没有 |
 | [mls_es@es-train-v1-20261108](../../catalog/es_train_v1.yaml#L78) | 866.1 | 已登记 | 没有 |
-| [mls_es@legacy](../../catalog/legacy_multilingual.yaml#L1091) | 937.7 | 已登记 | 快照 20260914 |
+| [mls_es@legacy](../../catalog/legacy_multilingual.yaml#L1100) | 937.7 | 已登记 | 快照 20260914 |
 
 - `mls_es@es-train-hwconf-v1-20261111`：mls_es@es-train-v1-20261108 里有热词的行（110,501 条，全部 clean 通过）的热词训练版本：每行一条 asr_hotwords 记录，文本、热词与父版本相同，metadata.confusable_hotwords 为读音相近的真实西语热词，训练时按 hotword_confusable_prob 作为干扰词放进列表（同 police_terms_single_train@hotwords-confusable-v1-20261102）。近音词检索复用评测集 hotword_bench@es-v1-20261111 的西语读音键（拉美读法：seseo、yeísmo、b/v、h 不发音等）与编辑距离，每个热词最多 3 个，读音最近的优先；词库只用 CV es / MLS es 训练集的热词标注（34,441 个），去掉了评测集三个 split 的全部正确词。剔除两类候选：与本条热词只是同一个词不同写法的（读音键忽略空格、ñ/ny/gn 与 n、y 与 i 不区分后相同，如 Sara/Sarah、Cataluña/Catalunya、España/espana、Monte Verde/Monteverde，当负例会教模型拒绝与录音一致的写法），以及出现在本条文本里的。91,888 条（83.2%）有近音词，平均每条 3.657 个；近音词与评测正确词重叠 0。录音不复制，audio_index 指向 legacy 源文件。检索结果见 mined/confusables.jsonl.gz，质检与 20 条样例见 qc.yaml
 - `mls_es@es-train-v1-20261108`：MLS 西班牙语 train（有声书）的训练版本：双引擎清洗（consensus-v7），另丢弃两个引擎彼此一致却都与原标注不符的行（label_mismatch_consensus）和含 Google Books 页脚的行（label_footer），保留 208,356 句 / 866.15 h（源 220,701 句）。原标注全小写无标点，文本换成 Qwen3.8-27B 按 es-v1 规范加的书面化标点和大小写（只插标点、改大小写、补重音；改了词的退回原标注加句号，约 15%）；custom.hotwords 是热词。只含清洗通过的行，录音清单沿用 legacy。规则、抽样核对和误杀率见 run_dir README
@@ -4137,7 +4137,7 @@ MIT 日常环境实测冲激响应（270 条）
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
-| [mls_fr@legacy](../../catalog/legacy_multilingual.yaml#L1447) | 1,096.7 | 已登记 | 快照 20260914 |
+| [mls_fr@legacy](../../catalog/legacy_multilingual.yaml#L1456) | 1,096.7 | 已登记 | 快照 20260914 |
 
 - 有无标点版本
 
@@ -4213,7 +4213,7 @@ MLS 葡语有声书朗读
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
-| [rulibrispeech_ru@legacy](../../catalog/legacy_multilingual.yaml#L2201) | 98.2 | 已登记 | 快照 20260914 |
+| [rulibrispeech_ru@legacy](../../catalog/legacy_multilingual.yaml#L2219) | 98.2 | 已登记 | 快照 20260914 |
 
 - 有含标点版本
 
@@ -4245,7 +4245,7 @@ MLS 葡语有声书朗读
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
-| [slr37_bn@legacy](../../catalog/legacy_multilingual.yaml#L487) | 5.0 | 已登记 | 快照 20260914 |
+| [slr37_bn@legacy](../../catalog/legacy_multilingual.yaml#L490) | 5.0 | 已登记 | 快照 20260914 |
 
 - 有无标点版本
 
@@ -4425,7 +4425,7 @@ YouTube 多语语音孟加拉语部分（YODAS）
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
-| [yodas_bn@legacy](../../catalog/legacy_multilingual.yaml#L521) | 27.1 | 已登记 | 快照 20260914 |
+| [yodas_bn@legacy](../../catalog/legacy_multilingual.yaml#L524) | 27.1 | 已登记 | 快照 20260914 |
 
 - 有含标点版本
 
@@ -4437,7 +4437,7 @@ YouTube 多语语音德语部分（YODAS）
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
-| [yodas_de@legacy](../../catalog/legacy_multilingual.yaml#L807) | 3,062.9 | 已登记 | 快照 20260914 |
+| [yodas_de@legacy](../../catalog/legacy_multilingual.yaml#L810) | 3,062.9 | 已登记 | 快照 20260914 |
 
 - 有含标点版本
 
@@ -4449,7 +4449,7 @@ YouTube 多语语音西班牙语部分（YODAS）
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
-| [yodas_es@legacy](../../catalog/legacy_multilingual.yaml#L1203) | 3,737.8 | 已登记 | 快照 20260914 |
+| [yodas_es@legacy](../../catalog/legacy_multilingual.yaml#L1212) | 3,737.8 | 已登记 | 快照 20260914 |
 
 - 有含标点版本
 
@@ -4461,7 +4461,7 @@ YouTube 多语语音法语部分（YODAS）
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
-| [yodas_fr@legacy](../../catalog/legacy_multilingual.yaml#L1559) | 2,423.7 | 已登记 | 快照 20260914 |
+| [yodas_fr@legacy](../../catalog/legacy_multilingual.yaml#L1568) | 2,423.7 | 已登记 | 快照 20260914 |
 
 - 有含标点版本
 
@@ -4473,7 +4473,7 @@ YouTube 多语语音日语部分（YODAS）
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
-| [yodas_ja@legacy](../../catalog/legacy_multilingual.yaml#L1767) | 1,094.2 | 已登记 | 快照 20260914 |
+| [yodas_ja@legacy](../../catalog/legacy_multilingual.yaml#L1779) | 1,094.2 | 已登记 | 快照 20260914 |
 
 - 有含标点版本
 
@@ -4485,7 +4485,7 @@ YouTube 多语语音韩语部分（YODAS）
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
-| [yodas_ko@legacy](../../catalog/legacy_multilingual.yaml#L2027) | 2,774.3 | 已登记 | 快照 20260914 |
+| [yodas_ko@legacy](../../catalog/legacy_multilingual.yaml#L2042) | 2,774.3 | 已登记 | 快照 20260914 |
 
 - 有含标点版本
 
@@ -4497,7 +4497,7 @@ YouTube 多语语音俄语部分（YODAS）
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
-| [yodas_ru@legacy](../../catalog/legacy_multilingual.yaml#L2271) | 5,596.0 | 已登记 | 快照 20260914 |
+| [yodas_ru@legacy](../../catalog/legacy_multilingual.yaml#L2289) | 5,596.0 | 已登记 | 快照 20260914 |
 
 - 有含标点版本
 

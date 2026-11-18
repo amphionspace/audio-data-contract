@@ -207,6 +207,9 @@
           snapshot:
             - snapshot
     provenance:
+      retired:
+        date: '2026-11-18'
+        reason: /workspace/data 上的本地副本已删除以释放空间（30 天以上无人读写，没有其他版本引用）；完整备份在 COS amphion-audio-backup-1373259071:audio-data-contract/datasets/indicvoices/，删除前按路径与大小逐个文件核对一致。需要时用 ab pull 恢复到原路径，再去掉本标记。记录见 /workspace/data/migration/offload-20261118-unused-raw-datasets/
       summary: 22 种印度语言自然语音（IndicVoices）
       source: Hugging Face
       source_id: ai4bharat/IndicVoices
@@ -268,6 +271,9 @@
           source:
             - test
     provenance:
+      retired:
+        date: '2026-11-18'
+        reason: /workspace/data 上的本地副本已删除以释放空间（30 天以上无人读写，没有其他版本引用）；完整备份在 COS amphion-audio-backup-1373259071:audio-data-contract/datasets/multi-talker-sd/，删除前按路径与大小逐个文件核对一致。需要时用 ab pull 恢复到原路径，再去掉本标记。记录见 /workspace/data/migration/offload-20261118-unused-raw-datasets/
       summary: AISHELL-1、LibriSpeech 合成的多人对话
       source: Hugging Face
       source_id: yihao005/Multi-Talker-SD
@@ -339,6 +345,9 @@
         provenance:
           split_policy: ASR_v2 speaker-disjoint metadata
     provenance:
+      retired:
+        date: '2026-11-18'
+        reason: /workspace/data 上的本地副本已删除以释放空间（30 天以上无人读写，没有其他版本引用）；完整备份在 COS amphion-audio-backup-1373259071:audio-data-contract/datasets/waxal-asr/，删除前按路径与大小逐个文件核对一致。需要时用 ab pull 恢复到原路径，再去掉本标记。记录见 /workspace/data/migration/offload-20261118-unused-raw-datasets/
       summary: 19 种非洲语言语音（WAXAL）
       source: Hugging Face
       source_id: google/WaxalNLP

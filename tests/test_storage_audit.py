@@ -63,7 +63,25 @@ def _setup(tmp_path):
                     },
                 ],
                 "splits": {},
-            }
+            },
+            {
+                # Retired versions may point at removed files: not reported missing.
+                "schema_version": "dataset-catalog/2.0",
+                "dataset_id": "a",
+                "version": "v0",
+                "languages": ["en"],
+                "tasks": ["asr"],
+                "artifacts": [
+                    {
+                        "name": "rec",
+                        "kind": "lhotse-recordings",
+                        "root_alias": "data",
+                        "relative_path": "datasets/a/versions/v0/rec.jsonl.gz",
+                    },
+                ],
+                "splits": {},
+                "provenance": {"retired": {"date": "2026-11-18", "reason": "offloaded"}},
+            },
         ],
     )
     roots = tmp_path / "roots.json"

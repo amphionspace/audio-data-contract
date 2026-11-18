@@ -227,6 +227,9 @@
         duration_hours: 1114.1182
         duration_basis: Sum of audio.duration in the manifest
   provenance:
+    retired:
+      date: '2026-11-18'
+      reason: /workspace/data 上的本地副本已删除以释放空间（30 天以上无人读写，没有其他版本引用）；完整备份在 COS amphion-audio-backup-1373259071:audio-data-contract/datasets/opendatalab_multilingual/，删除前按路径与大小逐个文件核对一致。需要时用 ab pull 恢复到原路径，再去掉本标记。记录见 /workspace/data/migration/offload-20261118-unused-raw-datasets/
     summary: 8 个语种的语音识别数据（OpenDataLab）
     status: complete
     synthetic: none
