@@ -2282,15 +2282,17 @@ WenetSpeech L 中的 YouTube 部分
 
 训练用合成背景人声噪声（中英）
 
-语言：en、es、zh · 任务：noise
+语言：en、es、pt、zh · 任务：noise
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
 | [babble_noise_train@es-v1-20261110](../../catalog/babble_noise_train.yaml#L106) | 25.0 | 已登记 | 没有 |
+| [babble_noise_train@pt-v1-20261117](../../catalog/babble_noise_train.yaml#L142) | 25.0 | 已登记 | 没有 |
 | [babble_noise_train@v1-20261017](../../catalog/babble_noise_train.yaml#L1) | 43.3 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/babble_noise_train/` |
 | [babble_noise_train@v2-20261024](../../catalog/babble_noise_train.yaml#L51) | 50.0 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/babble_noise_train/` |
 
 - `babble_noise_train@es-v1-20261110`：训练用西班牙语房间背景人声（babble）：与 v2-20261024 同一渲染函数与参数（30 秒、16–24 人同时说话、SLR28 中/大模拟房间），说话人取自 Common Voice es（es-train-v1-20261108）与 MLS es train。只有 es 划分；用作普通 ASR 空目标片段（ts_nonspeech_pool babble）和背景人声语音池（asr_babble_speech_pool）的来源。脚本 scripts/ts_robust/build_babble_noise_room.py --languages es
+- `babble_noise_train@pt-v1-20261117`：训练用葡萄牙语房间背景人声（babble）：与 v2-20261024、es-v1-20261110 同一渲染函数与参数（30 秒、16–24 人同时说话、SLR28 中/大模拟房间），说话人取自 common_voice_pt 与 mls_pt @pt-train-v1-20261117 train（与葡语评测集 asr_babble_bench@pt-v1-20261117 的背景人声说话人、CV 27.0 pt dev/test、MLS pt dev/test 零重叠，构建时检查）。只有 pt 划分；用作普通 ASR 空目标片段（ts_nonspeech_pool@pt-babble-20261117）和背景人声语音池（asr_babble_speech_pool@pt-v1-20261117）的来源。脚本 scripts/ts_robust/build_babble_noise_room.py --languages pt
 - `babble_noise_train@v1-20261017`：训练用合成背景人声（babble）：babble_noise_synth 的 zh、en 训练划分（每种语言 2,600 条，30 秒，5–20 位说话人同时说，16 kHz 单声道 FLAC），按 Lhotse 录音清单登记，可作为 noise_sources 或空目标的 nonspeech_sources。评测的 babble 用 dev/test 说话人，与训练说话人互不重叠。脚本 scripts/ts_robust/register_babble_noise.py
 - `babble_noise_train@v2-20261024`：训练用房间背景人声（babble）：按 asr_babble_bench@v2-20261023 的合成方法（同一个渲染函数）用训练划分的说话人生成，每段 30 秒、16–24 人同时连续说话、每人站在 SLR28 中/大模拟房间的不同位置，听不出某一个人说的内容；中文说话人取自 AISHELL-2、KeSpeech train，英文取自 LibriSpeech train，与评测的背景人声和目标说话人互不重叠。按 Lhotse 录音清单登记，可作为 noise_sources、nonspeech_sources 或普通 ASR 空目标片段的来源。v1-20261017 是 5–20 人、无混响，可能听得清某句话。脚本 scripts/ts_robust/build_babble_noise_room.py
 
@@ -3001,18 +3003,20 @@ AISHELL-1、LibriSpeech 合成的多人对话
 
 在线混合用的干扰人语音素材池
 
-语言：en、es、zh · 任务：ts_asr_interference
+语言：en、es、pt、zh · 任务：ts_asr_interference
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
 | [ts_interference_pool@es-v1-20261110](../../catalog/ts_interference_pool.yaml#L207) | 176.6 | 已登记 | 没有 |
 | [ts_interference_pool@es-v2-20261110](../../catalog/ts_interference_pool.yaml#L253) | 225.2 | 已登记 | 没有 |
+| [ts_interference_pool@pt-v1-20261117](../../catalog/ts_interference_pool.yaml#L300) | 60.2 | 已登记 | 没有 |
 | [ts_interference_pool@v1-20261015](../../catalog/ts_interference_pool.yaml#L1) | — | 未登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_interference_pool/` |
 | [ts_interference_pool@v2-20261016](../../catalog/ts_interference_pool.yaml#L38) | 656.6 | 已登记 | 没有 |
 | [ts_interference_pool@v3-20261018](../../catalog/ts_interference_pool.yaml#L130) | 656.6 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_interference_pool/` |
 
 - `ts_interference_pool@es-v1-20261110`：西班牙语干扰人素材池（只有 es 划分，与 zh/en 的 v3-20261018 并列使用）：YODAS es（YouTube 句子，每视频最多 10 条，100,000 条 / 134.8 h / 23,605 个视频）与 MLS es train（有声书，按说话人每人最多 400 条，12,000 条 / 41.8 h / 81 人），1–15 秒，质量门槛同 v2（有声比例 ≥ 0.5、响度 ≥ −50 dBFS）。Common Voice es 不进池：西语 TS 目标（ts_scene_pool es-*）都来自它，同 LibriSpeech / AISHELL-2 不进 zh/en 池的原因。生成脚本 scripts/ts_robust/build_interference_pool.py --languages es --version es-v1-20261110
 - `ts_interference_pool@es-v2-20261110`：西班牙语干扰人素材池 v2 = es-v1-20261110 的全部 112,000 条（YODAS es + MLS es，不变）+ Common Voice es train 里没有口音标注的说话人（30,000 条 / 48.5 h / 2,702 人，每人最多 20 句，质量门槛同 v2）。西语 TS 目标是有口音标注的 CV es 说话人（西语场景池与 ts_scene_pool@es-1spk-v2-20261110），两者不共用说话人。es-v1 里没有 CV 的声音、CV 声音在训练里永远是目标，用它训练的 v70 西语 TS 误报 102 -> 587（ts-asr-benchmark-es 的他人是 CV es dev 说话人）。生成脚本 scripts/ts_robust/build_interference_pool.py --languages es --version es-v2-20261110
+- `ts_interference_pool@pt-v1-20261117`：葡萄牙语干扰人素材池（对应西语 es-v2-20261110，同一构建脚本与质量门槛）：YODAS-Granary pt000 清洗通过的句子 30,000 条 / 44.0 h（每个源视频最多 10 条，8,365 个视频），MLS pt train 2,000 条 / 7.0 h（31 人），Common Voice pt train 中不是葡语 TS 目标的说话人 7,000 条 / 9.2 h（491 人，每人最多 60 句）。葡语 TS 目标（ts_scene_pool pt-*-20261117、pt-1spk-v1-20261117）是 build_ts_scene_pool.pt_target_speakers 选出的 188 人，与这里的 CV 说话人不重叠；CV 声音约占 18%（西语 es-v2 为 21%），所以 CV 的声音并不总是目标（西语 v70 误报 102 -> 587 的原因）。CV pt 片段静音较长，质量门槛丢掉 24%（sparse，西语 8%），因此按 1.4 倍超抽。CV 27.0 pt dev/test、MLS pt dev/test 的说话人不在 train；与葡语测试集句子相同的片段已剔除（YODAS 有 2,732 句是 Beleza、Sim 这类短语）。共 39,000 条 / 60.2 h。生成脚本 scripts/ts_robust/build_interference_pool.py --languages pt --version pt-v1-20261117
 - `ts_interference_pool@v2-20261016`：在线混合 TS 数据的干扰人素材池 v2：单人语音片段 1–15 s，每说话人或每来源视频限量；片段按偏移取自源文件，不复制音频。已排除 AISHELL-2 与 LibriSpeech（AISHELLMix、LibriMix 的目标说话人来源）。质量列 loudness_dbfs、clip_ratio、voiced_ratio 写在 metadata（Emilia2 未测量）
 - `ts_interference_pool@v3-20261018`：干扰人素材池 v3：与 v2-20261016 相同的记录与记录 ID，其中 Emilia2 short 片段（zh 149,999、en 100,000）改为读 emilia2@tts-unified-v0.1 Lance 表内同一条 m4a-128k standalone short（按上游 short ID 与文件名对应，同一 FFmpeg 完整解码存为 FLAC，抽查 40 条与 m4a 解码 SNR ≥ 66.7 dB），训练不再为干扰人启动 ffmpeg；其余来源沿用 v2 的音频索引。Lance 中缺失的 1 条 zh 片段已去掉。生成脚本 scripts/ts_robust/build_interference_pool_v3.py；读取 Lance 片段需要 open-audio-llm 的干扰人池支持指向 Lance 发布的记录（feat/lance-interference-clips）
 
@@ -3079,7 +3083,7 @@ AISHELL-1、LibriSpeech 合成的多人对话
 
 目标说话人难例场景素材（相近声音、交接）
 
-语言：en、es、zh · 任务：目标说话人语音识别
+语言：en、es、pt、zh · 任务：目标说话人语音识别
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
@@ -3151,6 +3155,17 @@ AISHELL-1、LibriSpeech 合成的多人对话
 | [ts_scene_pool@multi-20261017-punchw-20261102](../../catalog/train_punc_v1_pools.yaml#L1109) | 193.4 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_scene_pool/` |
 | [ts_scene_pool@multi-20261017-punchw2-20261102](../../catalog/train_punc_v1_pools_en.yaml#L782) | 59.2 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_scene_pool/` |
 | [ts_scene_pool@multi-20261018](../../catalog/ts_scene_pool.yaml#L257) | 386.2 | 已登记 | 没有 |
+| [ts_scene_pool@pt-1spk-v1-20261117](../../catalog/ts_scene_pool_pt.yaml#L582) | 48.1 | 已登记 | 没有 |
+| [ts_scene_pool@pt-alt-twins-20261117](../../catalog/ts_scene_pool_pt.yaml#L118) | 43.2 | 已登记 | 没有 |
+| [ts_scene_pool@pt-alt-twins-20261117-punchw-20261117](../../catalog/ts_scene_pool_pt.yaml#L175) | 43.2 | 已登记 | 没有 |
+| [ts_scene_pool@pt-handover-20261117](../../catalog/ts_scene_pool_pt.yaml#L350) | 21.3 | 已登记 | 没有 |
+| [ts_scene_pool@pt-handover-20261117-punchw-20261117](../../catalog/ts_scene_pool_pt.yaml#L407) | 21.3 | 已登记 | 没有 |
+| [ts_scene_pool@pt-hard-20261117](../../catalog/ts_scene_pool_pt.yaml#L234) | 27.6 | 已登记 | 没有 |
+| [ts_scene_pool@pt-hard-20261117-punchw-20261117](../../catalog/ts_scene_pool_pt.yaml#L291) | 27.6 | 已登记 | 没有 |
+| [ts_scene_pool@pt-near-20261117](../../catalog/ts_scene_pool_pt.yaml#L2) | 67.9 | 已登记 | 没有 |
+| [ts_scene_pool@pt-near-20261117-punchw-20261117](../../catalog/ts_scene_pool_pt.yaml#L59) | 67.9 | 已登记 | 没有 |
+| [ts_scene_pool@pt-solo-20261117](../../catalog/ts_scene_pool_pt.yaml#L466) | 24.1 | 已登记 | 没有 |
+| [ts_scene_pool@pt-solo-20261117-punchw-20261117](../../catalog/ts_scene_pool_pt.yaml#L523) | 24.1 | 已登记 | 没有 |
 | [ts_scene_pool@ramc-alt-twins-20261028](../../catalog/ts_scene_pool.yaml#L2243) | 37.1 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_scene_pool/` |
 | [ts_scene_pool@ramc-handover-20261028](../../catalog/ts_scene_pool.yaml#L2359) | 24.9 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_scene_pool/` |
 | [ts_scene_pool@ramc-hard-20261028](../../catalog/ts_scene_pool.yaml#L2301) | 24.9 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_scene_pool/` |
@@ -3240,6 +3255,17 @@ AISHELL-1、LibriSpeech 合成的多人对话
 - `ts_scene_pool@multi-20261017-punchw-20261102`：ts_scene_pool@multi-20261017 的 en, zh，供 TS + 热词训练：每条目标句按片段 ID 换成带书面化标点的写法（中文 punc-written-v1，英文 en-v1 加标点并恢复大小写；去掉标点和空格、转小写后与原目标一致才替换，源语料本身带标点的保留原样），hotwords 为目标所说的热词，metadata.interferer_hotwords 为干扰者所说、目标没说的热词（标签：Qwen3.8-27B + amphiondata 热词提示词，已有的 hw_sft 标签复用）。其余字段、场景与音频同源版本（记录仍引用源版本音频）。en：40000 条，目标改写 29613，带目标热词 15546，带干扰者热词 34518；zh：120000 条，目标改写 88789，带目标热词 61499，带干扰者热词 102221
 - `ts_scene_pool@multi-20261017-punchw2-20261102`：ts_scene_pool@multi-20261017 的 en，供 TS + 热词训练：每条目标句按片段 ID 换成带书面化标点的写法（中文 punc-written-v1，英文 en-v1 加标点并恢复大小写；去掉标点和空格、转小写后与原目标一致才替换，源语料本身带标点的保留原样），hotwords 为目标所说的热词，metadata.interferer_hotwords 为干扰者所说、目标没说的热词（标签：Qwen3.8-27B + amphiondata 热词提示词，已有的 hw_sft 标签复用；英文按整词匹配，所有格算同一个词，干扰者热词按其所在句的大小写还原写法）。其余字段、场景与音频同源版本（记录仍引用源版本音频）。en：40000 条，目标改写 29613，带目标热词 16028，带干扰者热词 34518
 - `ts_scene_pool@multi-20261018`：多句目标场景（full）放大版：与 multi-20261017 同一生成方式，规模翻倍（zh 24 万、en 8 万）；目标说 2–5 句，与 1–4 个其他说话人各自按自己的间隔并行说话；约 26% 的记录是缺席孪生——同一批语句和时间线，注册人换成场景外的另一个人（一半是目标的近邻声音），目标为空，同一对共用 labels.pair。用于降低训练里同一批场景的重复次数
+- `ts_scene_pool@pt-1spk-v1-20261117`：葡萄牙语单人 TS-ASR 记录（对应西语 es-1spk-v2-20261110，供 online_mix 在线混音）：目标是 common_voice_pt@pt-train-v1-20261117 train 一句（清洗通过、书面文本与热词），注册是同一人的另一句（≥1.5 s，固定种子）。目标说话人与葡语场景池相同（pt_target_speakers 的 188 人，CV pt 口音标注太少，按说话人对半分）；其余 525 人只作干扰人（ts_interference_pool@pt-v1-20261117），目标不会和干扰人是同一人，CV 的声音也不永远是目标（西语 v70 的错误）。42,009 条、188 个目标说话人、目标 48.1 h，13,108 条带热词。CV 27.0 pt dev / test 说话人不在 train。生成脚本 scripts/ts_robust/build_ts_1spk_es.py --language pt
+- `ts_scene_pool@pt-alt-twins-20261117`：pt-alt-twins-20261117：alternate/burst/short 轮流与插话场景，约 30% 缺席孪生（一半近邻注册）。葡语版的西语同名场景池（es-*-20261109，同一构建脚本、参数与条数）。目标与他人都取 Common Voice pt train（common_voice_pt@pt-train-v1-20261117，清洗通过的句子、原文书面文本；MLS pt 几乎没有 ≤8 s 的句子，不进场景）。CV pt train 只有 713 人、113 人答了口音（够 6 句的 51 人），不能像西语那样按口音定目标，改为按说话人对半分（build_ts_scene_pool.pt_target_speakers）：够 6 句 1–8 秒的 377 人按句数排序两两配对，每对 sha256 较小者作目标，共 188 个目标说话人（42,013 句）；他人一半取目标批、一半取另一半说话人（189 人）；不够 6 句的说话人和另一半一样只作干扰人（ts_interference_pool@pt-v1-20261117）。目标均匀抽取，没有 labels.accent。近邻表 speaker-neighbors-pt-split-20261117（ERes2NetV2）；剔除 CV 27.0 pt dev/test 说话人（葡语测试集所用）。 QC 见版本目录 qc.json（通过）
+- `ts_scene_pool@pt-alt-twins-20261117-punchw-20261117`：ts_scene_pool@pt-alt-twins-20261117 的带标点 + 热词版本（同西语 -punchw-20261109），供 TS + 热词训练：目标文本本身是 CV pt 的书面句子（带标点、大小写），不改；hotwords 为目标所说的热词，metadata.interferer_hotwords 为他人所说、目标没说的热词（common_voice_pt@pt-train-v1-20261117 的 custom.hotwords：Qwen3.8-27B + amphiondata 热词提示词，整词匹配）。其余字段、场景与音频同源版本（记录引用源版本音频）。40000 条，带目标热词 9668，带他人热词 31324
+- `ts_scene_pool@pt-handover-20261117`：pt-handover-20261117：交接场景：目标与另一人各说一句、先后不重叠（一半另一人取目标近邻），约 30% 缺席孪生。葡语版的西语同名场景池（es-*-20261109，同一构建脚本、参数与条数）。目标与他人都取 Common Voice pt train（common_voice_pt@pt-train-v1-20261117，清洗通过的句子、原文书面文本；MLS pt 几乎没有 ≤8 s 的句子，不进场景）。CV pt train 只有 713 人、113 人答了口音（够 6 句的 51 人），不能像西语那样按口音定目标，改为按说话人对半分（build_ts_scene_pool.pt_target_speakers）：够 6 句 1–8 秒的 377 人按句数排序两两配对，每对 sha256 较小者作目标，共 188 个目标说话人（42,013 句）；他人一半取目标批、一半取另一半说话人（189 人）；不够 6 句的说话人和另一半一样只作干扰人（ts_interference_pool@pt-v1-20261117）。目标均匀抽取，没有 labels.accent。近邻表 speaker-neighbors-pt-split-20261117（ERes2NetV2）；剔除 CV 27.0 pt dev/test 说话人（葡语测试集所用）。 QC 见版本目录 qc.json（通过）
+- `ts_scene_pool@pt-handover-20261117-punchw-20261117`：ts_scene_pool@pt-handover-20261117 的带标点 + 热词版本（同西语 -punchw-20261109），供 TS + 热词训练：目标文本本身是 CV pt 的书面句子（带标点、大小写），不改；hotwords 为目标所说的热词，metadata.interferer_hotwords 为他人所说、目标没说的热词（common_voice_pt@pt-train-v1-20261117 的 custom.hotwords：Qwen3.8-27B + amphiondata 热词提示词，整词匹配）。其余字段、场景与音频同源版本（记录引用源版本音频）。20000 条，带目标热词 4277，带他人热词 7160
+- `ts_scene_pool@pt-hard-20261117`：pt-hard-20261117：相近声音场景：他人之一是目标 ERes2NetV2 最近邻前 10 名之一，约 55% 目标缺席（转写为空）。葡语版的西语同名场景池（es-*-20261109，同一构建脚本、参数与条数）。目标与他人都取 Common Voice pt train（common_voice_pt@pt-train-v1-20261117，清洗通过的句子、原文书面文本；MLS pt 几乎没有 ≤8 s 的句子，不进场景）。CV pt train 只有 713 人、113 人答了口音（够 6 句的 51 人），不能像西语那样按口音定目标，改为按说话人对半分（build_ts_scene_pool.pt_target_speakers）：够 6 句 1–8 秒的 377 人按句数排序两两配对，每对 sha256 较小者作目标，共 188 个目标说话人（42,013 句）；他人一半取目标批、一半取另一半说话人（189 人）；不够 6 句的说话人和另一半一样只作干扰人（ts_interference_pool@pt-v1-20261117）。目标均匀抽取，没有 labels.accent。近邻表 speaker-neighbors-pt-split-20261117（ERes2NetV2）；剔除 CV 27.0 pt dev/test 说话人（葡语测试集所用）。 QC 见版本目录 qc.json（通过）
+- `ts_scene_pool@pt-hard-20261117-punchw-20261117`：ts_scene_pool@pt-hard-20261117 的带标点 + 热词版本（同西语 -punchw-20261109），供 TS + 热词训练：目标文本本身是 CV pt 的书面句子（带标点、大小写），不改；hotwords 为目标所说的热词，metadata.interferer_hotwords 为他人所说、目标没说的热词（common_voice_pt@pt-train-v1-20261117 的 custom.hotwords：Qwen3.8-27B + amphiondata 热词提示词，整词匹配）。其余字段、场景与音频同源版本（记录引用源版本音频）。25000 条，带目标热词 3913，带他人热词 19919
+- `ts_scene_pool@pt-near-20261117`：pt-near-20261117：多句场景（目标说 2–5 句，1–4 个他人各一条轨道），约 30% 缺席孪生（同一场景换人注册，一半取目标近邻，转写为空）。葡语版的西语同名场景池（es-*-20261109，同一构建脚本、参数与条数）。目标与他人都取 Common Voice pt train（common_voice_pt@pt-train-v1-20261117，清洗通过的句子、原文书面文本；MLS pt 几乎没有 ≤8 s 的句子，不进场景）。CV pt train 只有 713 人、113 人答了口音（够 6 句的 51 人），不能像西语那样按口音定目标，改为按说话人对半分（build_ts_scene_pool.pt_target_speakers）：够 6 句 1–8 秒的 377 人按句数排序两两配对，每对 sha256 较小者作目标，共 188 个目标说话人（42,013 句）；他人一半取目标批、一半取另一半说话人（189 人）；不够 6 句的说话人和另一半一样只作干扰人（ts_interference_pool@pt-v1-20261117）。目标均匀抽取，没有 labels.accent。近邻表 speaker-neighbors-pt-split-20261117（ERes2NetV2）；剔除 CV 27.0 pt dev/test 说话人（葡语测试集所用）。 QC 见版本目录 qc.json（通过）
+- `ts_scene_pool@pt-near-20261117-punchw-20261117`：ts_scene_pool@pt-near-20261117 的带标点 + 热词版本（同西语 -punchw-20261109），供 TS + 热词训练：目标文本本身是 CV pt 的书面句子（带标点、大小写），不改；hotwords 为目标所说的热词，metadata.interferer_hotwords 为他人所说、目标没说的热词（common_voice_pt@pt-train-v1-20261117 的 custom.hotwords：Qwen3.8-27B + amphiondata 热词提示词，整词匹配）。其余字段、场景与音频同源版本（记录引用源版本音频）。60000 条，带目标热词 23471，带他人热词 48559
+- `ts_scene_pool@pt-solo-20261117`：pt-solo-20261117：短句单人场景：目标单独说一句 1–3.5 秒的话，没有其他说话人，约 30% 缺席孪生（一半近邻注册）。葡语版的西语同名场景池（es-*-20261109，同一构建脚本、参数与条数）。目标与他人都取 Common Voice pt train（common_voice_pt@pt-train-v1-20261117，清洗通过的句子、原文书面文本；MLS pt 几乎没有 ≤8 s 的句子，不进场景）。CV pt train 只有 713 人、113 人答了口音（够 6 句的 51 人），不能像西语那样按口音定目标，改为按说话人对半分（build_ts_scene_pool.pt_target_speakers）：够 6 句 1–8 秒的 377 人按句数排序两两配对，每对 sha256 较小者作目标，共 188 个目标说话人（42,013 句）；他人一半取目标批、一半取另一半说话人（189 人）；不够 6 句的说话人和另一半一样只作干扰人（ts_interference_pool@pt-v1-20261117）。目标均匀抽取，没有 labels.accent。近邻表 speaker-neighbors-pt-split-20261117（ERes2NetV2）；剔除 CV 27.0 pt dev/test 说话人（葡语测试集所用）。 QC 见版本目录 qc.json（通过）
+- `ts_scene_pool@pt-solo-20261117-punchw-20261117`：ts_scene_pool@pt-solo-20261117 的带标点 + 热词版本（同西语 -punchw-20261109），供 TS + 热词训练：目标文本本身是 CV pt 的书面句子（带标点、大小写），不改；hotwords 为目标所说的热词，metadata.interferer_hotwords 为他人所说、目标没说的热词（common_voice_pt@pt-train-v1-20261117 的 custom.hotwords：Qwen3.8-27B + amphiondata 热词提示词，整词匹配）。其余字段、场景与音频同源版本（记录引用源版本音频）。30000 条，带目标热词 7654，带他人热词 3279
 - `ts_scene_pool@ramc-alt-twins-20261028`：magicdata-alt-twins-20261024 的 RAMC 版：交替 / 插话 / 短句场景，约 30% 缺席孪生，孪生注册人一半取相近声音。目标人取自 MagicData-RAMC 清洗版 train（magicdata_ramc@clean-dual-pass-20261027：真实手机电话对话，单声道，双模型转写都与人工标注一致的句子），注册取同一人另一句 2.5–8 秒；他人一半 RAMC、一半 AISHELL-2。RAMC 每段对话给说话人发新编号，同一个人会挂在几个编号下：声纹（ERes2NetV2，每个编号每段录音取 6 句平均）相似度 ≥ 0.60 的不同编号互斥（不在同一场景里分别当目标和他人/孪生注册人，也不互当相近声音），与 dev/test 说话人声纹 ≥ 0.60 的 113 个 train 编号和 17 个 dev/test 编号整体剔除（ramc-voice-identities-20261028）；相近声音取 speaker-neighbors-20261028（候选限于 RAMC 与 AISHELL-2）。用来补训练里没有的真实对话说话人：已有 TS 场景池的目标都是朗读语音（AISHELL-2、KeSpeech、MagicData）
 - `ts_scene_pool@ramc-handover-20261028`：magicdata-handover-20261023 的 RAMC 版：交接场景（目标与另一人各说一句、前后不重叠、先后随机），另一人一半取相近声音，约 30% 缺席孪生。目标人取自 MagicData-RAMC 清洗版 train（magicdata_ramc@clean-dual-pass-20261027：真实手机电话对话，单声道，双模型转写都与人工标注一致的句子），注册取同一人另一句 2.5–8 秒；他人一半 RAMC、一半 AISHELL-2。RAMC 每段对话给说话人发新编号，同一个人会挂在几个编号下：声纹（ERes2NetV2，每个编号每段录音取 6 句平均）相似度 ≥ 0.60 的不同编号互斥（不在同一场景里分别当目标和他人/孪生注册人，也不互当相近声音），与 dev/test 说话人声纹 ≥ 0.60 的 113 个 train 编号和 17 个 dev/test 编号整体剔除（ramc-voice-identities-20261028）；相近声音取 speaker-neighbors-20261028（候选限于 RAMC 与 AISHELL-2）。用来补训练里没有的真实对话说话人：已有 TS 场景池的目标都是朗读语音（AISHELL-2、KeSpeech、MagicData）
 - `ts_scene_pool@ramc-hard-20261028`：magicdata-hard-20261023 的 RAMC 版：交替 / 插话 / 短句场景，他人之一是目标的相近声音，55% 目标缺席（转写为空）。目标人取自 MagicData-RAMC 清洗版 train（magicdata_ramc@clean-dual-pass-20261027：真实手机电话对话，单声道，双模型转写都与人工标注一致的句子），注册取同一人另一句 2.5–8 秒；他人一半 RAMC、一半 AISHELL-2。RAMC 每段对话给说话人发新编号，同一个人会挂在几个编号下：声纹（ERes2NetV2，每个编号每段录音取 6 句平均）相似度 ≥ 0.60 的不同编号互斥（不在同一场景里分别当目标和他人/孪生注册人，也不互当相近声音），与 dev/test 说话人声纹 ≥ 0.60 的 113 个 train 编号和 17 个 dev/test 编号整体剔除（ramc-voice-identities-20261028）；相近声音取 speaker-neighbors-20261028（候选限于 RAMC 与 AISHELL-2）。用来补训练里没有的真实对话说话人：已有 TS 场景池的目标都是朗读语音（AISHELL-2、KeSpeech、MagicData）

@@ -51,6 +51,8 @@ SOURCES = {
                ("babble_noise_train", "v2-20261024", "en", 12000, 40)],
     # Spanish (version es-babble-20261110): the same clip count from the Spanish training babble.
     "babble-es": [("babble_noise_train", "es-v1-20261110", "es", 12000, 40)],
+    # Portuguese (version pt-babble-20261117): the same from the Portuguese training babble.
+    "babble-pt": [("babble_noise_train", "pt-v1-20261117", "pt", 12000, 40)],
 }
 
 

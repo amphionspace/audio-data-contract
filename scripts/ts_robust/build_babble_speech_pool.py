@@ -50,7 +50,11 @@ BABBLE = DATA / "datasets/babble_noise_train/source/v2-20261024"
 # Spanish (version es-v1-20261110, --languages es): Spanish training babble, and Common Voice es targets with their
 # written text (the babble loader keeps only lowercase words).
 BABBLE_ES = DATA / "datasets/babble_noise_train/source/es-v1-20261110"
-WRITTEN_TEXT = {"common_voice_es": ("es-train-v1-20261108", "train")}
+# Portuguese (version pt-v1-20261117, --languages pt): the same with the Portuguese training babble and Common Voice pt.
+BABBLE_PT = DATA / "datasets/babble_noise_train/source/pt-v1-20261117"
+WRITTEN_TEXT = {"common_voice_es": ("es-train-v1-20261108", "train"), "common_voice_pt": ("pt-train-v1-20261117", "train")}
+# The Portuguese benchmark's target sentences (CV 27.0 pt test) are held out like the zh / en recipe's.
+PT_BENCH_RECIPE = REPO / "scripts" / "asr_babble_bench" / "recipe-pt.yaml"
 BENCH_RECIPE = REPO / "scripts" / "asr_babble_bench" / "recipe.yaml"
 SEED = 20261025
 SR = bench.SR
@@ -59,6 +63,7 @@ TARGETS = {
            {"dataset": "kespeech", "version": "legacy-20260804", "split": "train"}],
     "en": [{"dataset": "librispeech", "version": "legacy-20260804", "split": "train"}],
     "es": [{"dataset": "common_voice_es", "version": "es-train-v1-20261108", "split": "train"}],
+    "pt": [{"dataset": "common_voice_pt", "version": "pt-train-v1-20261117", "split": "train"}],
 }
 SECONDS = (1.0, 15.0)
 PAD_SECONDS = (0.0, 5.0)  # the benchmark pads 1-5 s; 0 keeps the plain "babble under the speech" case too
@@ -89,8 +94,8 @@ def plan(language, index, targets, clips):
     lead, trail = (round(rng.uniform(*PAD_SECONDS), 3) for _ in range(2))
     if rng.random() < SAME_LANGUAGE_PROB:
         babble_language = language
-    else:  # zh and en take each other's babble; Spanish takes either
-        babble_language = rng.choice(("zh", "en")) if language == "es" else ("en" if language == "zh" else "zh")
+    else:  # zh and en take each other's babble; Spanish and Portuguese take either
+        babble_language = rng.choice(("zh", "en")) if language in ("es", "pt") else ("en" if language == "zh" else "zh")
     while True:
         clip = rng.choice(clips[babble_language])
         if utt.speaker not in clip["speakers"]:
@@ -140,8 +145,13 @@ def main():
     catalog, roots = load_catalog(str(DATA / "registry/catalog")), load_roots(str(DATA / "registry/roots.json"))
     held = {u.text for language, spec in recipe["targets"].items() for source in spec["sources"]
             for us in bench.load_utterances(source, language, catalog, roots).values() for u in us}
-    clips = {"zh": [], "en": [], "es": []}
-    for root in (BABBLE, BABBLE_ES) if "es" in args.languages else (BABBLE,):
+    if "pt" in args.languages:
+        pt_recipe = yaml.safe_load(PT_BENCH_RECIPE.read_text())
+        held |= {u.text for language, spec in pt_recipe["targets"].items() for source in spec["sources"]
+                 for us in bench.load_utterances(source, language, catalog, roots).values() for u in us}
+    clips = {"zh": [], "en": [], "es": [], "pt": []}
+    extra = [root for language, root in (("es", BABBLE_ES), ("pt", BABBLE_PT)) if language in args.languages]
+    for root in (BABBLE, *extra):
         for line in (root / "manifest.jsonl").read_text().splitlines():
             c = json.loads(line)
             clips[c["language"]].append({"id": c["id"], "path": c["path"], "duration": c["duration"], "root": root,

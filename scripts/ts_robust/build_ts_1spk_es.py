@@ -16,6 +16,10 @@ interferes with itself and a Common Voice voice is not always the target. es-1sp
 target and its pool (es-v1) had no Common Voice; v70 trained on it tripled the false alarms of ts-asr-benchmark-es.
 
     python scripts/ts_robust/build_ts_1spk_es.py --output-dir /workspace/data/datasets/ts_scene_pool/versions/es-1spk-v2-20261110
+
+Portuguese (``--language pt``, ts_scene_pool@pt-1spk-v1-20261117) is the same from common_voice_pt@pt-train-v1-20261117:
+the targets are build_ts_scene_pool.pt_target_speakers() (Common Voice pt has too few accent answers), the other
+speakers are interferers in ts_interference_pool@pt-v1-20261117.
     python scripts/ts_robust/register_records_pool.py --catalog catalog --yaml ts_scene_pool_es.yaml \
         --dataset-id ts_scene_pool --version es-1spk-v2-20261110 --task ts_asr --splits es --languages es ...
 """
@@ -27,7 +31,12 @@ import random
 from collections import defaultdict
 from pathlib import Path
 
-from build_ts_scene_pool import accent_group
+from build_ts_scene_pool import (
+    _plain,
+    accent_group,
+    pt_target_speakers,
+    pt_test_sentences,
+)
 
 from audio_data_contract import load_catalog, resolve_split
 from audio_data_contract.roots import load_roots
@@ -35,9 +44,10 @@ from audio_data_contract.roots import load_roots
 CATALOG = "/workspace/data/registry/catalog"
 ROOTS = "/workspace/data/registry/roots.json"
 ROOT_ALIAS = "aidc_data"
-SOURCE = ("common_voice_es", "es-train-v1-20261108", "train")
-DATASET_ID, VERSION, SPLIT = "ts_scene_pool", "es-1spk-v2-20261110", "es"
-SEED = 20261110
+DATASET_ID = "ts_scene_pool"
+# language: (source dataset, version, split), version, seed
+LANGUAGES = {"es": (("common_voice_es", "es-train-v1-20261108", "train"), "es-1spk-v2-20261110", 20261110),
+             "pt": (("common_voice_pt", "pt-train-v1-20261117", "train"), "pt-1spk-v1-20261117", 20261117)}
 # The online mix crops the enrollment to 1-20 s; a shorter clip leaves almost nothing of the voice.
 MIN_ENROLL_SECONDS = 1.5
 
@@ -50,7 +60,12 @@ def lines(path):
 def main():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--output-dir", type=Path, required=True)
+    parser.add_argument("--language", choices=sorted(LANGUAGES), default="es")
     args = parser.parse_args()
+    SOURCE, VERSION, SEED = LANGUAGES[args.language]
+    SPLIT = args.language
+    chosen = pt_target_speakers() if args.language == "pt" else None
+    test = pt_test_sentences() if args.language == "pt" else frozenset()
     catalog, roots = load_catalog(CATALOG), load_roots(ROOTS)
     root = Path(roots[ROOT_ALIAS])
     recordings = {}
@@ -61,15 +76,15 @@ def main():
     for path in resolve_split(catalog, *SOURCE, "supervisions", roots):
         for sup in lines(path):
             custom = sup.get("custom") or {}
-            if accent_group(custom.get("accents"), "common_voice_es"):
+            if sup["speaker"] in chosen if chosen is not None else accent_group(custom.get("accents"), "common_voice_es"):
                 labelled.add(sup["speaker"])
-            if custom.get("clean", {}).get("pass") and sup["recording_id"] in recordings:
+            if custom.get("clean", {}).get("pass") and sup["recording_id"] in recordings and _plain(sup["text"]) not in test:
                 by_speaker[sup["speaker"]].append(sup)
     unlabelled = set(by_speaker) - labelled
     for speaker in unlabelled:
         del by_speaker[speaker]
     rng = random.Random(SEED)
-    records, index, skipped = [], {}, {"single_utterance": 0, "no_enrollment": 0, "unlabelled_accent_speakers": len(unlabelled)}
+    records, index, skipped = [], {}, {"single_utterance": 0, "no_enrollment": 0, "non_target_speakers": len(unlabelled)}
     for speaker in sorted(by_speaker):
         sups = sorted(by_speaker[speaker], key=lambda s: s["id"])
         if len(sups) < 2:
@@ -95,7 +110,7 @@ def main():
             custom = sup.get("custom") or {}
             records.append({
                 "schema_version": "audio-record/1.0", "id": f"{DATASET_ID}:{SPLIT}:1spk:{sup['id']}", "task": "ts_asr",
-                "target": sup["text"], "language": "es", "labels": {"n_spk": 1, "target_present": True},
+                "target": sup["text"], "language": SPLIT, "labels": {"n_spk": 1, "target_present": True},
                 "hotwords": list(custom.get("hotwords") or []), "audio_slots": slots,
                 "metadata": {"source_dataset": f"{SOURCE[0]}@{SOURCE[1]}", "source_record_id": sup["id"],
                              "target_speaker": f"{SOURCE[0]}:{speaker}", "accent": custom.get("accents", "")}})
