@@ -2223,7 +2223,7 @@ WenetSpeech L 中的 YouTube 部分
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
 | [asr_babble_bench@es-v1-20261111](../../catalog/asr_babble_bench.yaml#L1019) | 4.2 | 已登记 | 没有 |
-| [asr_babble_bench@pt-v1-20261117](../../catalog/asr_babble_bench.yaml#L1199) | 3.9 | 已登记 | 没有 |
+| [asr_babble_bench@pt-v1-20261117](../../catalog/asr_babble_bench.yaml#L1199) | 3.9 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/asr_babble_bench/` |
 | [asr_babble_bench@v1-20261023](../../catalog/asr_babble_bench.yaml#L1) | 10.1 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/asr_babble_bench/` |
 | [asr_babble_bench@v2-20261023](../../catalog/asr_babble_bench.yaml#L399) | 8.8 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/asr_babble_bench/` |
 | [asr_babble_bench@v3-20261104](../../catalog/asr_babble_bench.yaml#L757) | 1.9 | 已登记 | 没有 |
@@ -2770,7 +2770,7 @@ AISHELL-1、LibriSpeech 合成的多人对话
 | [ts_asr_benchmark@en-v1-hotword-labels-20261102](../../catalog/ts_benchmark_hotword_labels.yaml#L5793) | 44.4 | 已登记 | 没有 |
 | [ts_asr_benchmark@es-v1-20261110](../../catalog/ts_asr_benchmark.yaml#L9371) | 43.2 | 已登记 | 没有 |
 | [ts_asr_benchmark@listening-review-v1-20261026](../../catalog/listening_review.yaml#L303) | — | 未登记 | 没有 |
-| [ts_asr_benchmark@pt-v1-20261117](../../catalog/ts_asr_benchmark.yaml#L11513) | 42.4 | 已登记 | 没有 |
+| [ts_asr_benchmark@pt-v1-20261117](../../catalog/ts_asr_benchmark.yaml#L11513) | 42.4 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_benchmark/` |
 | [ts_asr_benchmark@v1-20261013](../../catalog/ts_asr_benchmark.yaml#L1) | 25.0 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_benchmark/` |
 | [ts_asr_benchmark@v2-20261013](../../catalog/ts_asr_benchmark.yaml#L1228) | 26.9 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_benchmark/` |
 | [ts_asr_benchmark@v3-20261013](../../catalog/ts_asr_benchmark.yaml#L2534) | 43.9 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_benchmark/` |
@@ -2795,7 +2795,7 @@ AISHELL-1、LibriSpeech 合成的多人对话
 |---|---:|---|---|
 | [ts_asr_crosslingual@en-v1-20261109](../../catalog/ts_asr_crosslingual.yaml#L427) | 6.2 | 已登记 | 没有 |
 | [ts_asr_crosslingual@es-v1-20261111](../../catalog/ts_asr_crosslingual.yaml#L853) | 3.5 | 已登记 | 没有 |
-| [ts_asr_crosslingual@pt-v1-20261117](../../catalog/ts_asr_crosslingual.yaml#L1088) | 3.4 | 已登记 | 没有 |
+| [ts_asr_crosslingual@pt-v1-20261117](../../catalog/ts_asr_crosslingual.yaml#L1088) | 3.4 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_crosslingual/` |
 | [ts_asr_crosslingual@zh-v1-20261109](../../catalog/ts_asr_crosslingual.yaml#L1) | 6.2 | 已登记 | 没有 |
 
 - `ts_asr_crosslingual@en-v1-20261109`：跨语言注册 TS-ASR 评测集（混合段英文）：Common Voice 同一账号既录中文又录英文、从未作为 TS 训练目标的 78 人，以及 Qwen3-TTS-12Hz-1.7B-Base 跨语言克隆的 50 个合成音色（注册与混合段都是合成音）；每个场景配同语言与跨语言两种注册。只用于评测，不进训练。配方见 scripts/ts_benchmark/recipe-crosslingual-en.yaml
@@ -2814,7 +2814,7 @@ AISHELL-1、LibriSpeech 合成的多人对话
 | [ts_asr_farfield@en-v1-20261031](../../catalog/ts_asr_farfield.yaml#L614) | 5.0 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_farfield/` |
 | [ts_asr_farfield@en-v1-hotword-labels-20261102](../../catalog/ts_benchmark_hotword_labels.yaml#L8176) | 5.0 | 已登记 | 没有 |
 | [ts_asr_farfield@es-v1-20261111](../../catalog/ts_asr_farfield.yaml#L919) | 5.1 | 已登记 | 没有 |
-| [ts_asr_farfield@pt-v1-20261117](../../catalog/ts_asr_farfield.yaml#L1221) | 5.0 | 已登记 | 没有 |
+| [ts_asr_farfield@pt-v1-20261117](../../catalog/ts_asr_farfield.yaml#L1221) | 5.0 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_farfield/` |
 | [ts_asr_farfield@v1-20261014](../../catalog/ts_asr_farfield.yaml#L1) | 5.1 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_farfield/` |
 | [ts_asr_farfield@v2-20261022](../../catalog/ts_asr_farfield.yaml#L308) | 5.1 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_farfield/` |
 | [ts_asr_farfield@v2-hotword-labels-20261102](../../catalog/ts_benchmark_hotword_labels.yaml#L2468) | 5.1 | 已登记 | 没有 |
@@ -2837,7 +2837,7 @@ AISHELL-1、LibriSpeech 合成的多人对话
 | [ts_asr_handover@en-v1-20261031](../../catalog/ts_asr_handover.yaml#L454) | 1.6 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_handover/` |
 | [ts_asr_handover@en-v1-hotword-labels-20261102](../../catalog/ts_benchmark_hotword_labels.yaml#L8501) | 1.6 | 已登记 | 没有 |
 | [ts_asr_handover@es-v1-20261111](../../catalog/ts_asr_handover.yaml#L579) | 1.7 | 已登记 | 没有 |
-| [ts_asr_handover@pt-v1-20261117](../../catalog/ts_asr_handover.yaml#L701) | 1.7 | 已登记 | 没有 |
+| [ts_asr_handover@pt-v1-20261117](../../catalog/ts_asr_handover.yaml#L701) | 1.7 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_handover/` |
 | [ts_asr_handover@v1-20261020](../../catalog/ts_asr_handover.yaml#L1) | 3.8 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_handover/` |
 | [ts_asr_handover@v2-20261022](../../catalog/ts_asr_handover.yaml#L228) | 3.8 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_handover/` |
 | [ts_asr_handover@v2-hotword-labels-20261102](../../catalog/ts_benchmark_hotword_labels.yaml#L2793) | 3.8 | 已登记 | 没有 |
@@ -2896,7 +2896,7 @@ AISHELL-1、LibriSpeech 合成的多人对话
 | [ts_asr_noise@en-v1-20261031](../../catalog/ts_asr_noise.yaml#L734) | 5.9 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_noise/` |
 | [ts_asr_noise@en-v1-hotword-labels-20261102](../../catalog/ts_benchmark_hotword_labels.yaml#L8878) | 5.9 | 已登记 | 没有 |
 | [ts_asr_noise@es-v1-20261111](../../catalog/ts_asr_noise.yaml#L1099) | 3.5 | 已登记 | 没有 |
-| [ts_asr_noise@pt-v1-20261117](../../catalog/ts_asr_noise.yaml#L1321) | 3.5 | 已登记 | 没有 |
+| [ts_asr_noise@pt-v1-20261117](../../catalog/ts_asr_noise.yaml#L1321) | 3.5 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_noise/` |
 | [ts_asr_noise@v1-20261013](../../catalog/ts_asr_noise.yaml#L1) | 5.9 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_noise/` |
 | [ts_asr_noise@v2-20261022](../../catalog/ts_asr_noise.yaml#L368) | 5.9 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_noise/` |
 | [ts_asr_noise@v2-hotword-labels-20261102](../../catalog/ts_benchmark_hotword_labels.yaml#L4356) | 5.9 | 已登记 | 没有 |
@@ -2954,7 +2954,7 @@ AISHELL-1、LibriSpeech 合成的多人对话
 | [ts_asr_shortseg@en-v1-20261031](../../catalog/ts_asr_shortseg.yaml#L334) | 0.6 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_shortseg/` |
 | [ts_asr_shortseg@en-v1-hotword-labels-20261102](../../catalog/ts_benchmark_hotword_labels.yaml#L10557) | 0.6 | 已登记 | 没有 |
 | [ts_asr_shortseg@es-v1-20261111](../../catalog/ts_asr_shortseg.yaml#L459) | 0.4 | 已登记 | 没有 |
-| [ts_asr_shortseg@pt-v1-20261117](../../catalog/ts_asr_shortseg.yaml#L561) | 0.6 | 已登记 | 没有 |
+| [ts_asr_shortseg@pt-v1-20261117](../../catalog/ts_asr_shortseg.yaml#L561) | 0.6 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_shortseg/` |
 | [ts_asr_shortseg@v1-20261017](../../catalog/ts_asr_shortseg.yaml#L1) | 0.8 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_shortseg/` |
 | [ts_asr_shortseg@v2-20261022](../../catalog/ts_asr_shortseg.yaml#L168) | 0.8 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_shortseg/` |
 | [ts_asr_shortseg@v2-hotword-labels-20261102](../../catalog/ts_benchmark_hotword_labels.yaml#L5615) | 0.8 | 已登记 | 没有 |
@@ -2976,7 +2976,7 @@ AISHELL-1、LibriSpeech 合成的多人对话
 |---|---:|---|---|
 | [ts_asr_singing@en-v1-20261031](../../catalog/ts_asr_singing.yaml#L134) | 0.2 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_singing/` |
 | [ts_asr_singing@es-v1-20261111](../../catalog/ts_asr_singing.yaml#L179) | 0.2 | 已登记 | 没有 |
-| [ts_asr_singing@pt-v1-20261117](../../catalog/ts_asr_singing.yaml#L221) | 0.2 | 已登记 | 没有 |
+| [ts_asr_singing@pt-v1-20261117](../../catalog/ts_asr_singing.yaml#L221) | 0.2 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_singing/` |
 | [ts_asr_singing@v1-20261017](../../catalog/ts_asr_singing.yaml#L1) | 0.3 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_singing/` |
 | [ts_asr_singing@v2-20261022](../../catalog/ts_asr_singing.yaml#L68) | 0.3 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_singing/` |
 
