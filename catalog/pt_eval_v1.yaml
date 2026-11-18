@@ -73,7 +73,7 @@
           sentences: 0
           against: common_voice_pt / mls_pt @pt-train-v1-20261117 train (kept and pre-clean rows)
   provenance:
-    summary: Common Voice 27.0 葡语 dev / test（官方划分，众包朗读，原文带标点和大小写）
+    summary: Common Voice 27.0 葡语 dev/test
     preparation_status: prepared
     owner: mingdong
     usage: evaluation_only
@@ -155,7 +155,7 @@
           sentences: 0
           against: common_voice_pt / mls_pt @pt-train-v1-20261117 train (kept and pre-clean rows)
   provenance:
-    summary: MLS 葡语 dev / test（有声书，原标注全小写无标点）
+    summary: MLS 葡语有声书 dev/test
     preparation_status: prepared
     owner: mingdong
     usage: evaluation_only
@@ -205,7 +205,7 @@
           sentences: 0
           against: common_voice_pt / mls_pt @pt-train-v1-20261117 train (kept and pre-clean rows)
   provenance:
-    summary: FLEURS 巴西葡语 test（朗读维基句子）
+    summary: FLEURS 巴西葡语 test
     preparation_status: prepared
     owner: mingdong
     usage: evaluation_only
