@@ -134,3 +134,51 @@
     - babble_noise_train@es-v1-20261110:es
     - babble_noise_train@v2-20261024:zh
     - babble_noise_train@v2-20261024:en
+- schema_version: dataset-catalog/2.0
+  dataset_id: asr_babble_speech_pool
+  version: pt-v1-20261117
+  languages:
+  - pt
+  tasks:
+  - asr
+  aliases: []
+  artifacts:
+  - name: pt-records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/asr_babble_speech_pool/versions/pt-v1-20261117/records_pt.jsonl.gz
+    sha256: 98b4f9cca834c996c59641c4ac720fb41dfb85cb5071da800858b3d39bdd16c1
+    metadata:
+      record_count: 12000
+  - name: pt-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/asr_babble_speech_pool/versions/pt-v1-20261117/audio_index_pt.jsonl.gz
+    sha256: 6612562b2e19480e9b375b8edcb5807f5a45fb5906a07c9a7d8830e7e97ad9d0
+    metadata:
+      record_count: 12000
+  splits:
+    pt:
+      artifacts:
+        records:
+        - pt-records
+        audio_index:
+        - pt-audio-index
+      task: asr
+      statistics:
+        records: 12000
+        duration_hours: 30.28
+        duration_basis: clip duration (segment span, or the whole file)
+  provenance:
+    status: complete
+    synthetic: none
+    snapshot_date: '2026-11-18'
+    description: 葡萄牙语普通 ASR 的语句，前后和下方叠加房间背景人声（对应西语 es-v1-20261110、中英 v1-20261024，同一渲染参数）：每条的目标是 common_voice_pt@pt-train-v1-20261117
+      train 的一句话（1–15 s，书面文本），前后各有 0–5 s 背景人声，语句下方的 SNR 为 0–20 dB。80% 用葡语背景人声（babble_noise_train@pt-v1-20261117），其余 20%（2,398
+      条）随机用中文或英文的（v2-20261024）。已剔除与葡语测试集句子相同的目标（含 asr_babble_bench@pt-v1-20261117 的目标句）。共 12,000 条 / 30.3 h。脚本 scripts/ts_robust/build_babble_speech_pool.py
+      --languages pt。
+    sources:
+    - common_voice_pt@pt-train-v1-20261117:train
+    - babble_noise_train@pt-v1-20261117:pt
+    - babble_noise_train@v2-20261024:zh
+    - babble_noise_train@v2-20261024:en
