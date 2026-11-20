@@ -61,6 +61,7 @@
     owner: mingdong
     description: aishell2@legacy-20260804 的 train 训练版本，目标文本换成带标点的写法（按 id 取自 datasets/aishell2/versions/punc-written-v1-20261029/aishell2_supervisions_train_punc_written.jsonl.gz；去掉标点和空格、转小写后与原文一致才替换，否则保留原文）。其余字段与源版本相同，录音引用源版本。
     source: aishell2@legacy-20260804
+    superseded_by: aishell2@train-punc-v1-20261102-final-v1-20261120
 - schema_version: dataset-catalog/2.0
   dataset_id: kespeech
   version: train-punc-v1-20261102
@@ -140,6 +141,7 @@
     owner: mingdong
     description: kespeech@legacy-20260804 的 train 训练版本，目标文本换成带标点的写法（按 id 取自 datasets/kespeech/versions/punc-written-v1-20261029/kespeech-asr_supervisions_train_phase1_punc_written.jsonl.gz, datasets/kespeech/versions/punc-written-v1-20261029/kespeech-asr_supervisions_train_phase2_punc_written.jsonl.gz；去掉标点和空格、转小写后与原文一致才替换，否则保留原文）。其余字段与源版本相同，录音引用源版本。
     source: kespeech@legacy-20260804
+    superseded_by: kespeech@train-punc-v1-20261102-final-v1-20261120
 - schema_version: dataset-catalog/2.0
   dataset_id: magicdata_ramc
   version: train-punc-v1-20261102
@@ -204,6 +206,7 @@
     owner: mingdong
     description: magicdata_ramc@clean-dual-qwen-moss-v1-20261008 的 train 训练版本，目标文本换成带标点的写法（按 id 取自 datasets/magicdata_ramc/versions/punc-written-v1-20261029/magicdata_ramc_supervisions_train_punc_written.jsonl.gz；去掉标点和空格、转小写后与原文一致才替换，否则保留原文）。其余字段与源版本相同，录音引用源版本。
     source: magicdata_ramc@clean-dual-qwen-moss-v1-20261008
+    superseded_by: magicdata_ramc@train-punc-v1-20261102-final-v1-20261120
 - schema_version: dataset-catalog/2.0
   dataset_id: common_voice_zh
   version: train-punc-v1-20261102
@@ -265,6 +268,7 @@
     owner: mingdong
     description: common_voice_zh@legacy-20260804 的 train 训练版本，目标文本换成带标点的写法（按 id 取自 datasets/common_voice_zh/versions/punc-written-v1-20261102/cv-zh-CN_supervisions_train_punc_written.jsonl.gz；去掉标点和空格、转小写后与原文一致才替换，否则保留原文）。其余字段与源版本相同，录音引用源版本。
     source: common_voice_zh@legacy-20260804
+    superseded_by: common_voice_zh@train-punc-v1-20261102-final-v1-20261120
 - schema_version: dataset-catalog/2.0
   dataset_id: police_terms_single_train
   version: train-punc-v1-20261102
@@ -328,6 +332,7 @@
     owner: mingdong
     description: police_terms_single_train@v1-20261023 的 train 训练版本，目标文本换成带标点的写法（按 id 取自 datasets/police_terms_single_train/versions/punc-written-v1-20261102/police_terms_single_train_supervisions_train_punc_written.jsonl.gz；去掉标点和空格、转小写后与原文一致才替换，否则保留原文）。其余字段与源版本相同，录音引用源版本。
     source: police_terms_single_train@v1-20261023
+    superseded_by: police_terms_single_train@train-punc-v1-20261102-final-v1-20261120
 - schema_version: dataset-catalog/2.0
   dataset_id: threed_speaker_zh_far_asr
   version: train-punc-v1-20261102
@@ -390,6 +395,7 @@
     owner: mingdong
     description: threed_speaker_zh_far_asr@zh-far-replay-clean-v1-20261010 的 train 训练版本，目标文本换成带标点的写法（按 id 取自 datasets/threed_speaker_zh_far_asr/versions/punc-written-v1-20261102/threed_speaker_zh_far_asr_supervisions_train_punc_written.jsonl.gz；去掉标点和空格、转小写后与原文一致才替换，否则保留原文）。其余字段与源版本相同，录音引用源版本。
     source: threed_speaker_zh_far_asr@zh-far-replay-clean-v1-20261010
+    superseded_by: threed_speaker_zh_far_asr@train-punc-v1-20261102-final-v1-20261120
 - schema_version: dataset-catalog/2.0
   dataset_id: police_terms_single_train
   version: hotwords-confusable-v1-20261102

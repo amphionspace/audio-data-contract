@@ -81,3 +81,4 @@
     rules: zhen-fix-en-v1
     changed_records: 3727
     build_script: scripts/zhen_fix/build_wenetspeech.py
+    superseded_by: wenetspeech_clean@train-punc-v1-20261102-final-v1-20261120

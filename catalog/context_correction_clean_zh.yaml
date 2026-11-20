@@ -1472,6 +1472,7 @@
     source: vitw@2m-20261013
     run_dir: /workspace/workspace/mingdong/data/amphiondata/ctx-clean-zh-20261110
     quality_status: spelling_explanations_checked
+    superseded_by: vitw@2m-20261013-final-v1-20261120
 - schema_version: dataset-catalog/2.0
   dataset_id: emilia2_dialog
   version: dialog-turn-taking-20261013-enroll-ctxclean-20261110
@@ -1812,6 +1813,7 @@
       - metadata.recording_id
       - metadata.source_record_id
       pattern: '(?<![0-9a-f])[0-9a-f]{16}(?![0-9a-f])'
+    superseded_by: emilia2_dialog@dialog-turn-taking-20261013-enroll-final-v1-20261120
 - schema_version: dataset-catalog/2.0
   dataset_id: wenetspeech_youtube
   version: l-20261014-ctxclean-20261110
@@ -1967,6 +1969,7 @@
       fields:
       - metadata.recording_id
       pattern: '(?<![0-9a-f])[0-9a-f]{16}(?![0-9a-f])'
+    superseded_by: emilia2_short@short-lance-20261023-final-v1-20261120
 - schema_version: dataset-catalog/2.0
   dataset_id: emilia2_mix
   version: mix-20261013-ctxclean-20261110
@@ -2590,6 +2593,7 @@
     source: wenetspeech_clean@train-punc-v1-20261102
     run_dir: /workspace/workspace/mingdong/data/amphiondata/ctx-clean-zh-20261110
     quality_status: spelling_explanations_checked
+    superseded_by: wenetspeech_clean@train-punc-v1-20261102-final-v1-20261120
 - schema_version: dataset-catalog/2.0
   dataset_id: emilia2_mix
   version: mix-20261013-utts-ctxclean-20261110
@@ -2695,6 +2699,7 @@
     source: emilia2_mix@mix-20261013-utts
     run_dir: /workspace/workspace/mingdong/data/amphiondata/ctx-clean-zh-20261110
     quality_status: spelling_explanations_checked
+    superseded_by: emilia2_mix@mix-20261013-utts-final-v1-20261120
 - schema_version: dataset-catalog/2.0
   dataset_id: magicdata_ramc
   version: train-punc-v1-20261102-ctxclean-20261110
@@ -2763,6 +2768,7 @@
     source: magicdata_ramc@train-punc-v1-20261102
     run_dir: /workspace/workspace/mingdong/data/amphiondata/ctx-clean-zh-20261110
     quality_status: spelling_explanations_checked
+    superseded_by: magicdata_ramc@train-punc-v1-20261102-final-v1-20261120
 - schema_version: dataset-catalog/2.0
   dataset_id: magicdata_ramc
   version: turn-taking-20261014-utts-punc-20261102-ctxclean-20261110
@@ -2861,6 +2867,7 @@
     source: magicdata_ramc@turn-taking-20261014-utts-punc-20261102
     run_dir: /workspace/workspace/mingdong/data/amphiondata/ctx-clean-zh-20261110
     quality_status: spelling_explanations_checked
+    superseded_by: magicdata_ramc@turn-taking-20261014-utts-punc-20261102-final-v1-20261120
 - schema_version: dataset-catalog/2.0
   dataset_id: aishell4
   version: asr-20261014-punc-20261102-ctxclean-20261110
@@ -2929,6 +2936,7 @@
     source: aishell4@asr-20261014-punc-20261102
     run_dir: /workspace/workspace/mingdong/data/amphiondata/ctx-clean-zh-20261110
     quality_status: spelling_explanations_checked
+    superseded_by: aishell4@asr-20261014-punc-20261102-final-v1-20261120
 - schema_version: dataset-catalog/2.0
   dataset_id: aishell4
   version: turn-taking-20261014-utts-punc-20261102-ctxclean-20261110
@@ -3055,6 +3063,7 @@
     source: aishell4@turn-taking-20261014-utts-punc-20261102
     run_dir: /workspace/workspace/mingdong/data/amphiondata/ctx-clean-zh-20261110
     quality_status: spelling_explanations_checked
+    superseded_by: aishell4@turn-taking-20261014-utts-punc-20261102-final-v1-20261120
 - schema_version: dataset-catalog/2.0
   dataset_id: context_correction_clean_zh
   version: think-v2-20261113
