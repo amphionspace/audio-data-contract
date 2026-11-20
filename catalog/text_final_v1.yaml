@@ -1,0 +1,2096 @@
+# 训练文本终版（text-final-v1，2026-11-20）：交付配方 v7set34 的每个文本来源一个终版，规范见 docs/reference/training-text.md（v1）。占位，构建中。
+- schema_version: dataset-catalog/2.0
+  dataset_id: aishellmix
+  version: pack3-current-audio-record-20260910-punc-20261102-final-v1-20261120
+  languages:
+  - zh
+  tasks:
+  - ts_asr
+  aliases: []
+  derived_from: aishellmix@pack3-current-audio-record-20260910-punc-20261102
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/aishellmix/versions/pack3-current-audio-record-20260910-punc-20261102-final-v1-20261120/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: aishellmix@pack3-current-audio-record-20260910-punc-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 docs/reference/training-text.md（v1） 应用全部已执行的文本修正，起点 aishellmix@pack3-current-audio-record-20260910-punc-20261102。构建中。
+    source: aishellmix@pack3-current-audio-record-20260910-punc-20261102
+    method: text-final-v1
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
+- schema_version: dataset-catalog/2.0
+  dataset_id: librimix
+  version: 960-current-audio-record-20260910-punc-20261102-final-v1-20261120
+  languages:
+  - en
+  tasks:
+  - ts_asr
+  aliases: []
+  derived_from: librimix@960-current-audio-record-20260910-punc-20261102
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/librimix/versions/960-current-audio-record-20260910-punc-20261102-final-v1-20261120/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: librimix@960-current-audio-record-20260910-punc-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 docs/reference/training-text.md（v1） 应用全部已执行的文本修正，起点 librimix@960-current-audio-record-20260910-punc-20261102。构建中。
+    source: librimix@960-current-audio-record-20260910-punc-20261102
+    method: text-final-v1
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
+- schema_version: dataset-catalog/2.0
+  dataset_id: ts_scene_pool
+  version: hard-20261016-punchw-20261102-final-v1-20261120
+  languages:
+  - zh
+  - en
+  tasks:
+  - ts_asr
+  aliases: []
+  derived_from: ts_scene_pool@hard-20261016-punchw-20261102
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/hard-20261016-punchw-20261102-final-v1-20261120/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: ts_scene_pool@hard-20261016-punchw-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 docs/reference/training-text.md（v1） 应用全部已执行的文本修正，起点 ts_scene_pool@hard-20261016-punchw-20261102。构建中。
+    source: ts_scene_pool@hard-20261016-punchw-20261102
+    method: text-final-v1
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
+- schema_version: dataset-catalog/2.0
+  dataset_id: ts_scene_pool
+  version: hard-20261016-punchw2-20261102-final-v1-20261120
+  languages:
+  - en
+  tasks:
+  - ts_asr
+  aliases: []
+  derived_from: ts_scene_pool@hard-20261016-punchw2-20261102
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/hard-20261016-punchw2-20261102-final-v1-20261120/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: ts_scene_pool@hard-20261016-punchw2-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 docs/reference/training-text.md（v1） 应用全部已执行的文本修正，起点 ts_scene_pool@hard-20261016-punchw2-20261102。构建中。
+    source: ts_scene_pool@hard-20261016-punchw2-20261102
+    method: text-final-v1
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
+- schema_version: dataset-catalog/2.0
+  dataset_id: emilia2_mix
+  version: mix-20261013-utts-final-v1-20261120
+  languages:
+  - zh
+  - en
+  tasks:
+  - ts_asr
+  aliases: []
+  derived_from: emilia2_mix@mix-20261013-utts-ctxclean-20261110-zhenfix-20261117
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/emilia2_mix/versions/mix-20261013-utts-final-v1-20261120/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: emilia2_mix@mix-20261013-utts（交付配方 v7set34 训练用的版本）的训练文本终版，按 docs/reference/training-text.md（v1） 应用全部已执行的文本修正，起点 emilia2_mix@mix-20261013-utts-ctxclean-20261110-zhenfix-20261117。构建中。
+    source: emilia2_mix@mix-20261013-utts
+    method: text-final-v1
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
+- schema_version: dataset-catalog/2.0
+  dataset_id: emilia2_dialog
+  version: dialog-turn-taking-20261013-enroll-final-v1-20261120
+  languages:
+  - zh
+  - en
+  tasks:
+  - ts_asr
+  aliases: []
+  derived_from: emilia2_dialog@dialog-turn-taking-20261013-enroll-ctxclean-20261110-zhenfix-20261117
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/emilia2_dialog/versions/dialog-turn-taking-20261013-enroll-final-v1-20261120/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    summary: Emilia2 中英对话的轮流说话目标说话人数据
+    description: emilia2_dialog@dialog-turn-taking-20261013-enroll（交付配方 v7set34 训练用的版本）的训练文本终版，按 docs/reference/training-text.md（v1） 应用全部已执行的文本修正，起点 emilia2_dialog@dialog-turn-taking-20261013-enroll-ctxclean-20261110-zhenfix-20261117。构建中。
+    source: emilia2_dialog@dialog-turn-taking-20261013-enroll
+    method: text-final-v1
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
+- schema_version: dataset-catalog/2.0
+  dataset_id: alimeeting_sdm
+  version: turn-taking-20261014-utts-punc-20261102-final-v1-20261120
+  languages:
+  - zh
+  tasks:
+  - ts_asr
+  aliases: []
+  derived_from: alimeeting_sdm@turn-taking-20261014-utts-punc-20261102
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/alimeeting_sdm/versions/turn-taking-20261014-utts-punc-20261102-final-v1-20261120/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: alimeeting_sdm@turn-taking-20261014-utts-punc-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 docs/reference/training-text.md（v1） 应用全部已执行的文本修正，起点 alimeeting_sdm@turn-taking-20261014-utts-punc-20261102。构建中。
+    source: alimeeting_sdm@turn-taking-20261014-utts-punc-20261102
+    method: text-final-v1
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
+- schema_version: dataset-catalog/2.0
+  dataset_id: aishell4
+  version: turn-taking-20261014-utts-punc-20261102-final-v1-20261120
+  languages:
+  - zh
+  tasks:
+  - ts_asr
+  aliases: []
+  derived_from: aishell4@turn-taking-20261014-utts-punc-20261102-ctxclean-20261110-zhenfix-20261117
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/aishell4/versions/turn-taking-20261014-utts-punc-20261102-final-v1-20261120/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: aishell4@turn-taking-20261014-utts-punc-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 docs/reference/training-text.md（v1） 应用全部已执行的文本修正，起点 aishell4@turn-taking-20261014-utts-punc-20261102-ctxclean-20261110-zhenfix-20261117。构建中。
+    source: aishell4@turn-taking-20261014-utts-punc-20261102
+    method: text-final-v1
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
+- schema_version: dataset-catalog/2.0
+  dataset_id: ami_sdm
+  version: turn-taking-20261014-utts-punc-20261102-final-v1-20261120
+  languages:
+  - zh
+  tasks:
+  - ts_asr
+  aliases: []
+  derived_from: ami_sdm@turn-taking-20261014-utts-punc-20261102
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/ami_sdm/versions/turn-taking-20261014-utts-punc-20261102-final-v1-20261120/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: ami_sdm@turn-taking-20261014-utts-punc-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 docs/reference/training-text.md（v1） 应用全部已执行的文本修正，起点 ami_sdm@turn-taking-20261014-utts-punc-20261102。构建中。
+    source: ami_sdm@turn-taking-20261014-utts-punc-20261102
+    method: text-final-v1
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
+- schema_version: dataset-catalog/2.0
+  dataset_id: magicdata_ramc
+  version: turn-taking-20261014-utts-punc-20261102-final-v1-20261120
+  languages:
+  - zh
+  tasks:
+  - ts_asr
+  aliases: []
+  derived_from: magicdata_ramc@turn-taking-20261014-utts-punc-20261102-ctxclean-20261110-zhenfix-20261117
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/magicdata_ramc/versions/turn-taking-20261014-utts-punc-20261102-final-v1-20261120/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: magicdata_ramc@turn-taking-20261014-utts-punc-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 docs/reference/training-text.md（v1） 应用全部已执行的文本修正，起点 magicdata_ramc@turn-taking-20261014-utts-punc-20261102-ctxclean-20261110-zhenfix-20261117。构建中。
+    source: magicdata_ramc@turn-taking-20261014-utts-punc-20261102
+    method: text-final-v1
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
+- schema_version: dataset-catalog/2.0
+  dataset_id: chime6
+  version: turn-taking-20261014-final-v1-20261120
+  languages:
+  - en
+  tasks:
+  - ts_asr
+  aliases: []
+  derived_from: chime6@turn-taking-20261014
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/chime6/versions/turn-taking-20261014-final-v1-20261120/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: chime6@turn-taking-20261014（交付配方 v7set34 训练用的版本）的训练文本终版，按 docs/reference/training-text.md（v1） 应用全部已执行的文本修正，起点 chime6@turn-taking-20261014。构建中。
+    source: chime6@turn-taking-20261014
+    method: text-final-v1
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
+- schema_version: dataset-catalog/2.0
+  dataset_id: gigaspeech
+  version: train-punc-v1-20261102-final-v1-20261120
+  languages:
+  - en
+  tasks:
+  - asr
+  aliases: []
+  derived_from: gigaspeech@train-punc-v1-20261102
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/gigaspeech/versions/train-punc-v1-20261102-final-v1-20261120/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: gigaspeech@train-punc-v1-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 docs/reference/training-text.md（v1） 应用全部已执行的文本修正，起点 gigaspeech@train-punc-v1-20261102。构建中。
+    source: gigaspeech@train-punc-v1-20261102
+    method: text-final-v1
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
+- schema_version: dataset-catalog/2.0
+  dataset_id: wenetspeech_clean
+  version: train-punc-v1-20261102-final-v1-20261120
+  languages:
+  - zh
+  tasks:
+  - asr
+  aliases: []
+  derived_from: wenetspeech_clean@train-punc-v1-20261102-ctxclean-20261110-zhenfix-20261119
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/wenetspeech_clean/versions/train-punc-v1-20261102-final-v1-20261120/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: wenetspeech_clean@train-punc-v1-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 docs/reference/training-text.md（v1） 应用全部已执行的文本修正，起点 wenetspeech_clean@train-punc-v1-20261102-ctxclean-20261110-zhenfix-20261119。构建中。
+    source: wenetspeech_clean@train-punc-v1-20261102
+    method: text-final-v1
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
+- schema_version: dataset-catalog/2.0
+  dataset_id: emilia2_short
+  version: short-lance-20261023-final-v1-20261120
+  languages:
+  - zh
+  - en
+  tasks:
+  - asr
+  aliases: []
+  derived_from: emilia2_short@short-lance-20261023-ctxclean-20261110-zhenfix-20261117
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/emilia2_short/versions/short-lance-20261023-final-v1-20261120/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: emilia2_short@short-lance-20261023（交付配方 v7set34 训练用的版本）的训练文本终版，按 docs/reference/training-text.md（v1） 应用全部已执行的文本修正，起点 emilia2_short@short-lance-20261023-ctxclean-20261110-zhenfix-20261117。构建中。
+    source: emilia2_short@short-lance-20261023
+    method: text-final-v1
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
+- schema_version: dataset-catalog/2.0
+  dataset_id: common_voice_en
+  version: train-punc-v1-20261102-final-v1-20261120
+  languages:
+  - en
+  tasks:
+  - asr
+  aliases: []
+  derived_from: common_voice_en@train-punc-v1-20261102
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/common_voice_en/versions/train-punc-v1-20261102-final-v1-20261120/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: common_voice_en@train-punc-v1-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 docs/reference/training-text.md（v1） 应用全部已执行的文本修正，起点 common_voice_en@train-punc-v1-20261102。构建中。
+    source: common_voice_en@train-punc-v1-20261102
+    method: text-final-v1
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
+- schema_version: dataset-catalog/2.0
+  dataset_id: kespeech
+  version: train-punc-v1-20261102-final-v1-20261120
+  languages:
+  - zh
+  tasks:
+  - asr
+  aliases: []
+  derived_from: kespeech@train-punc-v1-20261102
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/kespeech/versions/train-punc-v1-20261102-final-v1-20261120/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: kespeech@train-punc-v1-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 docs/reference/training-text.md（v1） 应用全部已执行的文本修正，起点 kespeech@train-punc-v1-20261102。构建中。
+    source: kespeech@train-punc-v1-20261102
+    method: text-final-v1
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
+- schema_version: dataset-catalog/2.0
+  dataset_id: police_asr_unified
+  version: train-punc-v1-20261102-final-v1-20261120
+  languages:
+  - zh
+  tasks:
+  - asr
+  aliases: []
+  derived_from: police_asr_unified@train-punc-v1-20261102-zhenfix-20261117
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/police_asr_unified/versions/train-punc-v1-20261102-final-v1-20261120/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: police_asr_unified@train-punc-v1-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 docs/reference/training-text.md（v1） 应用全部已执行的文本修正，起点 police_asr_unified@train-punc-v1-20261102-zhenfix-20261117。构建中。
+    source: police_asr_unified@train-punc-v1-20261102
+    method: text-final-v1
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
+- schema_version: dataset-catalog/2.0
+  dataset_id: police_terms_single_train
+  version: train-punc-v1-20261102-final-v1-20261120
+  languages:
+  - zh
+  tasks:
+  - asr
+  aliases: []
+  derived_from: police_terms_single_train@train-punc-v1-20261102
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/police_terms_single_train/versions/train-punc-v1-20261102-final-v1-20261120/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: police_terms_single_train@train-punc-v1-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 docs/reference/training-text.md（v1） 应用全部已执行的文本修正，起点 police_terms_single_train@train-punc-v1-20261102。构建中。
+    source: police_terms_single_train@train-punc-v1-20261102
+    method: text-final-v1
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
+- schema_version: dataset-catalog/2.0
+  dataset_id: police_terms_single_train
+  version: hotwords-confusable-v1-20261102-final-v1-20261120
+  languages:
+  - zh
+  tasks:
+  - asr_hotwords
+  aliases: []
+  derived_from: police_terms_single_train@hotwords-confusable-v1-20261102
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/police_terms_single_train/versions/hotwords-confusable-v1-20261102-final-v1-20261120/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: police_terms_single_train@hotwords-confusable-v1-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 docs/reference/training-text.md（v1） 应用全部已执行的文本修正，起点 police_terms_single_train@hotwords-confusable-v1-20261102。构建中。
+    source: police_terms_single_train@hotwords-confusable-v1-20261102
+    method: text-final-v1
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
+- schema_version: dataset-catalog/2.0
+  dataset_id: vitw
+  version: 2m-20261013-final-v1-20261120
+  languages:
+  - zh
+  - en
+  tasks:
+  - asr
+  aliases: []
+  derived_from: vitw@2m-20261013-ctxclean-20261110
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/vitw/versions/2m-20261013-final-v1-20261120/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    summary: 真实场景中英语音（VITW）；含回声、远场等评测
+    description: vitw@2m-20261013（交付配方 v7set34 训练用的版本）的训练文本终版，按 docs/reference/training-text.md（v1） 应用全部已执行的文本修正，起点 vitw@2m-20261013-ctxclean-20261110。构建中。
+    source: vitw@2m-20261013
+    method: text-final-v1
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
+- schema_version: dataset-catalog/2.0
+  dataset_id: aishell2
+  version: train-punc-v1-20261102-final-v1-20261120
+  languages:
+  - zh
+  tasks:
+  - asr
+  aliases: []
+  derived_from: aishell2@train-punc-v1-20261102
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/aishell2/versions/train-punc-v1-20261102-final-v1-20261120/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: aishell2@train-punc-v1-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 docs/reference/training-text.md（v1） 应用全部已执行的文本修正，起点 aishell2@train-punc-v1-20261102。构建中。
+    source: aishell2@train-punc-v1-20261102
+    method: text-final-v1
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
+- schema_version: dataset-catalog/2.0
+  dataset_id: librispeech
+  version: train-punc-v1-20261102-final-v1-20261120
+  languages:
+  - en
+  tasks:
+  - asr
+  aliases: []
+  derived_from: librispeech@train-punc-v1-20261102
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/librispeech/versions/train-punc-v1-20261102-final-v1-20261120/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: librispeech@train-punc-v1-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 docs/reference/training-text.md（v1） 应用全部已执行的文本修正，起点 librispeech@train-punc-v1-20261102。构建中。
+    source: librispeech@train-punc-v1-20261102
+    method: text-final-v1
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
+- schema_version: dataset-catalog/2.0
+  dataset_id: alimeeting_sdm
+  version: asr-20261014-punc-20261102-final-v1-20261120
+  languages:
+  - zh
+  tasks:
+  - asr
+  aliases: []
+  derived_from: alimeeting_sdm@asr-20261014-punc-20261102
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/alimeeting_sdm/versions/asr-20261014-punc-20261102-final-v1-20261120/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: alimeeting_sdm@asr-20261014-punc-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 docs/reference/training-text.md（v1） 应用全部已执行的文本修正，起点 alimeeting_sdm@asr-20261014-punc-20261102。构建中。
+    source: alimeeting_sdm@asr-20261014-punc-20261102
+    method: text-final-v1
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
+- schema_version: dataset-catalog/2.0
+  dataset_id: aishell4
+  version: asr-20261014-punc-20261102-final-v1-20261120
+  languages:
+  - zh
+  tasks:
+  - asr
+  aliases: []
+  derived_from: aishell4@asr-20261014-punc-20261102-ctxclean-20261110-zhenfix-20261117
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/aishell4/versions/asr-20261014-punc-20261102-final-v1-20261120/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: aishell4@asr-20261014-punc-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 docs/reference/training-text.md（v1） 应用全部已执行的文本修正，起点 aishell4@asr-20261014-punc-20261102-ctxclean-20261110-zhenfix-20261117。构建中。
+    source: aishell4@asr-20261014-punc-20261102
+    method: text-final-v1
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
+- schema_version: dataset-catalog/2.0
+  dataset_id: threed_speaker_zh_far_asr
+  version: train-punc-v1-20261102-final-v1-20261120
+  languages:
+  - zh
+  tasks:
+  - asr
+  aliases: []
+  derived_from: threed_speaker_zh_far_asr@train-punc-v1-20261102
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/threed_speaker_zh_far_asr/versions/train-punc-v1-20261102-final-v1-20261120/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: threed_speaker_zh_far_asr@train-punc-v1-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 docs/reference/training-text.md（v1） 应用全部已执行的文本修正，起点 threed_speaker_zh_far_asr@train-punc-v1-20261102。构建中。
+    source: threed_speaker_zh_far_asr@train-punc-v1-20261102
+    method: text-final-v1
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
+- schema_version: dataset-catalog/2.0
+  dataset_id: ami_sdm
+  version: asr-20261014-punc-20261102-final-v1-20261120
+  languages:
+  - en
+  tasks:
+  - asr
+  aliases: []
+  derived_from: ami_sdm@asr-20261014-punc-20261102
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/ami_sdm/versions/asr-20261014-punc-20261102-final-v1-20261120/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: ami_sdm@asr-20261014-punc-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 docs/reference/training-text.md（v1） 应用全部已执行的文本修正，起点 ami_sdm@asr-20261014-punc-20261102。构建中。
+    source: ami_sdm@asr-20261014-punc-20261102
+    method: text-final-v1
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
+- schema_version: dataset-catalog/2.0
+  dataset_id: magicdata_ramc
+  version: train-punc-v1-20261102-final-v1-20261120
+  languages:
+  - zh
+  tasks:
+  - asr
+  aliases: []
+  derived_from: magicdata_ramc@train-punc-v1-20261102-ctxclean-20261110-zhenfix-20261117
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/magicdata_ramc/versions/train-punc-v1-20261102-final-v1-20261120/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: magicdata_ramc@train-punc-v1-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 docs/reference/training-text.md（v1） 应用全部已执行的文本修正，起点 magicdata_ramc@train-punc-v1-20261102-ctxclean-20261110-zhenfix-20261117。构建中。
+    source: magicdata_ramc@train-punc-v1-20261102
+    method: text-final-v1
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
+- schema_version: dataset-catalog/2.0
+  dataset_id: magicdata_ramc
+  version: allspk-asr-v1-20261103-final-v1-20261120
+  languages:
+  - zh
+  tasks:
+  - asr
+  aliases: []
+  derived_from: magicdata_ramc@allspk-asr-v1-20261103-zhenfix-20261117
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/magicdata_ramc/versions/allspk-asr-v1-20261103-final-v1-20261120/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: magicdata_ramc@allspk-asr-v1-20261103（交付配方 v7set34 训练用的版本）的训练文本终版，按 docs/reference/training-text.md（v1） 应用全部已执行的文本修正，起点 magicdata_ramc@allspk-asr-v1-20261103-zhenfix-20261117。构建中。
+    source: magicdata_ramc@allspk-asr-v1-20261103
+    method: text-final-v1
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
+- schema_version: dataset-catalog/2.0
+  dataset_id: aishell4
+  version: allspk-asr-v1-20261103-final-v1-20261120
+  languages:
+  - zh
+  tasks:
+  - asr
+  aliases: []
+  derived_from: aishell4@allspk-asr-v1-20261103
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/aishell4/versions/allspk-asr-v1-20261103-final-v1-20261120/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: aishell4@allspk-asr-v1-20261103（交付配方 v7set34 训练用的版本）的训练文本终版，按 docs/reference/training-text.md（v1） 应用全部已执行的文本修正，起点 aishell4@allspk-asr-v1-20261103。构建中。
+    source: aishell4@allspk-asr-v1-20261103
+    method: text-final-v1
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
+- schema_version: dataset-catalog/2.0
+  dataset_id: alimeeting_sdm
+  version: allspk-asr-v1-20261103-final-v1-20261120
+  languages:
+  - zh
+  tasks:
+  - asr
+  aliases: []
+  derived_from: alimeeting_sdm@allspk-asr-v1-20261103
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/alimeeting_sdm/versions/allspk-asr-v1-20261103-final-v1-20261120/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: alimeeting_sdm@allspk-asr-v1-20261103（交付配方 v7set34 训练用的版本）的训练文本终版，按 docs/reference/training-text.md（v1） 应用全部已执行的文本修正，起点 alimeeting_sdm@allspk-asr-v1-20261103。构建中。
+    source: alimeeting_sdm@allspk-asr-v1-20261103
+    method: text-final-v1
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
+- schema_version: dataset-catalog/2.0
+  dataset_id: magicdata_ramc
+  version: allspk-ts-v1-20261104-final-v1-20261120
+  languages:
+  - zh
+  tasks:
+  - ts_asr
+  aliases: []
+  derived_from: magicdata_ramc@allspk-ts-v1-20261104-zhenfix-20261117
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/magicdata_ramc/versions/allspk-ts-v1-20261104-final-v1-20261120/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: magicdata_ramc@allspk-ts-v1-20261104（交付配方 v7set34 训练用的版本）的训练文本终版，按 docs/reference/training-text.md（v1） 应用全部已执行的文本修正，起点 magicdata_ramc@allspk-ts-v1-20261104-zhenfix-20261117。构建中。
+    source: magicdata_ramc@allspk-ts-v1-20261104
+    method: text-final-v1
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
+- schema_version: dataset-catalog/2.0
+  dataset_id: aishell4
+  version: allspk-ts-v1-20261104-final-v1-20261120
+  languages:
+  - zh
+  tasks:
+  - ts_asr
+  aliases: []
+  derived_from: aishell4@allspk-ts-v1-20261104
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/aishell4/versions/allspk-ts-v1-20261104-final-v1-20261120/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: aishell4@allspk-ts-v1-20261104（交付配方 v7set34 训练用的版本）的训练文本终版，按 docs/reference/training-text.md（v1） 应用全部已执行的文本修正，起点 aishell4@allspk-ts-v1-20261104。构建中。
+    source: aishell4@allspk-ts-v1-20261104
+    method: text-final-v1
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
+- schema_version: dataset-catalog/2.0
+  dataset_id: alimeeting_sdm
+  version: allspk-ts-v1-20261104-final-v1-20261120
+  languages:
+  - zh
+  tasks:
+  - ts_asr
+  aliases: []
+  derived_from: alimeeting_sdm@allspk-ts-v1-20261104
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/alimeeting_sdm/versions/allspk-ts-v1-20261104-final-v1-20261120/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: alimeeting_sdm@allspk-ts-v1-20261104（交付配方 v7set34 训练用的版本）的训练文本终版，按 docs/reference/training-text.md（v1） 应用全部已执行的文本修正，起点 alimeeting_sdm@allspk-ts-v1-20261104。构建中。
+    source: alimeeting_sdm@allspk-ts-v1-20261104
+    method: text-final-v1
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
+- schema_version: dataset-catalog/2.0
+  dataset_id: common_voice_zh
+  version: train-punc-v1-20261102-final-v1-20261120
+  languages:
+  - zh
+  tasks:
+  - asr
+  aliases: []
+  derived_from: common_voice_zh@train-punc-v1-20261102
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/common_voice_zh/versions/train-punc-v1-20261102-final-v1-20261120/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: common_voice_zh@train-punc-v1-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 docs/reference/training-text.md（v1） 应用全部已执行的文本修正，起点 common_voice_zh@train-punc-v1-20261102。构建中。
+    source: common_voice_zh@train-punc-v1-20261102
+    method: text-final-v1
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
+- schema_version: dataset-catalog/2.0
+  dataset_id: fleurs_zh
+  version: legacy-20260804-final-v1-20261120
+  languages:
+  - zh
+  tasks:
+  - asr
+  aliases: []
+  derived_from: fleurs_zh@legacy-20260804
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/fleurs_zh/versions/legacy-20260804-final-v1-20261120/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: fleurs_zh@legacy-20260804（交付配方 v7set34 训练用的版本）的训练文本终版，按 docs/reference/training-text.md（v1） 应用全部已执行的文本修正，起点 fleurs_zh@legacy-20260804。构建中。
+    source: fleurs_zh@legacy-20260804
+    method: text-final-v1
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
+- schema_version: dataset-catalog/2.0
+  dataset_id: fleurs_en
+  version: legacy-final-v1-20261120
+  languages:
+  - en
+  tasks:
+  - asr
+  aliases: []
+  derived_from: fleurs_en@legacy
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/fleurs_en/versions/legacy-final-v1-20261120/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    summary: 多语朗读英语部分（FLEURS）
+    description: fleurs_en@legacy（交付配方 v7set34 训练用的版本）的训练文本终版，按 docs/reference/training-text.md（v1） 应用全部已执行的文本修正，起点 fleurs_en@legacy。构建中。
+    source: fleurs_en@legacy
+    method: text-final-v1
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
+- schema_version: dataset-catalog/2.0
+  dataset_id: ts_nonspeech_pool
+  version: v1-20261016-final-v1-20261120
+  languages:
+  - zh
+  - en
+  tasks:
+  - asr
+  aliases: []
+  derived_from: ts_nonspeech_pool@v1-20261016
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/ts_nonspeech_pool/versions/v1-20261016-final-v1-20261120/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: ts_nonspeech_pool@v1-20261016（交付配方 v7set34 训练用的版本）的训练文本终版，按 docs/reference/training-text.md（v1） 应用全部已执行的文本修正，起点 ts_nonspeech_pool@v1-20261016。构建中。
+    source: ts_nonspeech_pool@v1-20261016
+    method: text-final-v1
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
+- schema_version: dataset-catalog/2.0
+  dataset_id: ts_nonspeech_pool
+  version: babble-20261024-final-v1-20261120
+  languages:
+  - zh
+  - en
+  tasks:
+  - asr
+  aliases: []
+  derived_from: ts_nonspeech_pool@babble-20261024
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/ts_nonspeech_pool/versions/babble-20261024-final-v1-20261120/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    summary: 非人声与背景人声的空输出训练片段
+    description: ts_nonspeech_pool@babble-20261024（交付配方 v7set34 训练用的版本）的训练文本终版，按 docs/reference/training-text.md（v1） 应用全部已执行的文本修正，起点 ts_nonspeech_pool@babble-20261024。构建中。
+    source: ts_nonspeech_pool@babble-20261024
+    method: text-final-v1
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
+- schema_version: dataset-catalog/2.0
+  dataset_id: asr_babble_speech_pool
+  version: v1-20261024-punc-20261102-final-v1-20261120
+  languages:
+  - zh
+  - en
+  tasks:
+  - asr
+  aliases: []
+  derived_from: asr_babble_speech_pool@v1-20261024-punc-20261102
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/asr_babble_speech_pool/versions/v1-20261024-punc-20261102-final-v1-20261120/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: asr_babble_speech_pool@v1-20261024-punc-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 docs/reference/training-text.md（v1） 应用全部已执行的文本修正，起点 asr_babble_speech_pool@v1-20261024-punc-20261102。构建中。
+    source: asr_babble_speech_pool@v1-20261024-punc-20261102
+    method: text-final-v1
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
+- schema_version: dataset-catalog/2.0
+  dataset_id: asr_distant_talk_pool
+  version: v1-20261102-punc-20261102-final-v1-20261120
+  languages:
+  - zh
+  - en
+  tasks:
+  - asr
+  aliases: []
+  derived_from: asr_distant_talk_pool@v1-20261102-punc-20261102
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/asr_distant_talk_pool/versions/v1-20261102-punc-20261102-final-v1-20261120/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: asr_distant_talk_pool@v1-20261102-punc-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 docs/reference/training-text.md（v1） 应用全部已执行的文本修正，起点 asr_distant_talk_pool@v1-20261102-punc-20261102。构建中。
+    source: asr_distant_talk_pool@v1-20261102-punc-20261102
+    method: text-final-v1
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
+- schema_version: dataset-catalog/2.0
+  dataset_id: asr_distant_talk_pool
+  version: v1-20261102-final-v1-20261120
+  languages:
+  - zh
+  - en
+  tasks:
+  - asr
+  aliases: []
+  derived_from: asr_distant_talk_pool@v1-20261102
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/asr_distant_talk_pool/versions/v1-20261102-final-v1-20261120/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: asr_distant_talk_pool@v1-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 docs/reference/training-text.md（v1） 应用全部已执行的文本修正，起点 asr_distant_talk_pool@v1-20261102。构建中。
+    source: asr_distant_talk_pool@v1-20261102
+    method: text-final-v1
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
+- schema_version: dataset-catalog/2.0
+  dataset_id: hw_sft
+  version: hw-20261014-final-v1-20261120
+  languages:
+  - en
+  - zh
+  tasks:
+  - asr
+  - asr_hotwords
+  aliases: []
+  derived_from: hw_sft@hw-20261014
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/hw_sft/versions/hw-20261014-final-v1-20261120/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    summary: 热词 SFT 数据（ShareGPT 格式），含普通转写
+    description: hw_sft@hw-20261014（交付配方 v7set34 训练用的版本）的训练文本终版，按 docs/reference/training-text.md（v1） 应用全部已执行的文本修正，起点 hw_sft@hw-20261014。构建中。
+    source: hw_sft@hw-20261014
+    method: text-final-v1
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
+- schema_version: dataset-catalog/2.0
+  dataset_id: hard_hw_sft
+  version: hard-20261014-final-v1-20261120
+  languages:
+  - en
+  - zh
+  tasks:
+  - asr_hotwords
+  aliases: []
+  derived_from: hard_hw_sft@hard-20261014
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/hard_hw_sft/versions/hard-20261014-final-v1-20261120/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    summary: 热词难例 SFT 数据（ShareGPT 格式）
+    description: hard_hw_sft@hard-20261014（交付配方 v7set34 训练用的版本）的训练文本终版，按 docs/reference/training-text.md（v1） 应用全部已执行的文本修正，起点 hard_hw_sft@hard-20261014。构建中。
+    source: hard_hw_sft@hard-20261014
+    method: text-final-v1
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
+- schema_version: dataset-catalog/2.0
+  dataset_id: ts_scene_pool
+  version: multi-20261017-punchw-20261102-final-v1-20261120
+  languages:
+  - zh
+  - en
+  tasks:
+  - ts_asr
+  aliases: []
+  derived_from: ts_scene_pool@multi-20261017-punchw-20261102
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/multi-20261017-punchw-20261102-final-v1-20261120/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: ts_scene_pool@multi-20261017-punchw-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 docs/reference/training-text.md（v1） 应用全部已执行的文本修正，起点 ts_scene_pool@multi-20261017-punchw-20261102。构建中。
+    source: ts_scene_pool@multi-20261017-punchw-20261102
+    method: text-final-v1
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
+- schema_version: dataset-catalog/2.0
+  dataset_id: ts_scene_pool
+  version: multi-20261017-punchw2-20261102-final-v1-20261120
+  languages:
+  - en
+  tasks:
+  - ts_asr
+  aliases: []
+  derived_from: ts_scene_pool@multi-20261017-punchw2-20261102
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/multi-20261017-punchw2-20261102-final-v1-20261120/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: ts_scene_pool@multi-20261017-punchw2-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 docs/reference/training-text.md（v1） 应用全部已执行的文本修正，起点 ts_scene_pool@multi-20261017-punchw2-20261102。构建中。
+    source: ts_scene_pool@multi-20261017-punchw2-20261102
+    method: text-final-v1
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
+- schema_version: dataset-catalog/2.0
+  dataset_id: ts_real_train
+  version: v1-20261017-utts-punc-20261102-final-v1-20261120
+  languages:
+  - zh
+  tasks:
+  - ts_asr
+  aliases: []
+  derived_from: ts_real_train@v1-20261017-utts-punc-20261102
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/ts_real_train/versions/v1-20261017-utts-punc-20261102-final-v1-20261120/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: ts_real_train@v1-20261017-utts-punc-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 docs/reference/training-text.md（v1） 应用全部已执行的文本修正，起点 ts_real_train@v1-20261017-utts-punc-20261102。构建中。
+    source: ts_real_train@v1-20261017-utts-punc-20261102
+    method: text-final-v1
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
+- schema_version: dataset-catalog/2.0
+  dataset_id: ts_real_train
+  version: v2-20261018-utts-punc-20261102-final-v1-20261120
+  languages:
+  - zh
+  tasks:
+  - ts_asr
+  aliases: []
+  derived_from: ts_real_train@v2-20261018-utts-punc-20261102
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/ts_real_train/versions/v2-20261018-utts-punc-20261102-final-v1-20261120/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: ts_real_train@v2-20261018-utts-punc-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 docs/reference/training-text.md（v1） 应用全部已执行的文本修正，起点 ts_real_train@v2-20261018-utts-punc-20261102。构建中。
+    source: ts_real_train@v2-20261018-utts-punc-20261102
+    method: text-final-v1
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
+- schema_version: dataset-catalog/2.0
+  dataset_id: ts_real_train
+  version: v3-20261020-utts-punc-20261102-final-v1-20261120
+  languages:
+  - zh
+  tasks:
+  - ts_asr
+  aliases: []
+  derived_from: ts_real_train@v3-20261020-utts-punc-20261102
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/ts_real_train/versions/v3-20261020-utts-punc-20261102-final-v1-20261120/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: ts_real_train@v3-20261020-utts-punc-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 docs/reference/training-text.md（v1） 应用全部已执行的文本修正，起点 ts_real_train@v3-20261020-utts-punc-20261102。构建中。
+    source: ts_real_train@v3-20261020-utts-punc-20261102
+    method: text-final-v1
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
+- schema_version: dataset-catalog/2.0
+  dataset_id: ts_real_train
+  version: en-v1-20261101-utts-punc-20261102-final-v1-20261120
+  languages:
+  - en
+  tasks:
+  - ts_asr
+  aliases: []
+  derived_from: ts_real_train@en-v1-20261101-utts-punc-20261102
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/ts_real_train/versions/en-v1-20261101-utts-punc-20261102-final-v1-20261120/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: ts_real_train@en-v1-20261101-utts-punc-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 docs/reference/training-text.md（v1） 应用全部已执行的文本修正，起点 ts_real_train@en-v1-20261101-utts-punc-20261102。构建中。
+    source: ts_real_train@en-v1-20261101-utts-punc-20261102
+    method: text-final-v1
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
+- schema_version: dataset-catalog/2.0
+  dataset_id: ts_real_train
+  version: en-v1-20261101-utts-final-v1-20261120
+  languages:
+  - en
+  tasks:
+  - ts_asr
+  aliases: []
+  derived_from: ts_real_train@en-v1-20261101-utts
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/ts_real_train/versions/en-v1-20261101-utts-final-v1-20261120/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: ts_real_train@en-v1-20261101-utts（交付配方 v7set34 训练用的版本）的训练文本终版，按 docs/reference/training-text.md（v1） 应用全部已执行的文本修正，起点 ts_real_train@en-v1-20261101-utts。构建中。
+    source: ts_real_train@en-v1-20261101-utts
+    method: text-final-v1
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
+- schema_version: dataset-catalog/2.0
+  dataset_id: ts_scene_pool
+  version: alt-twins-20261024-punchw-20261102-final-v1-20261120
+  languages:
+  - zh
+  - en
+  tasks:
+  - ts_asr
+  aliases: []
+  derived_from: ts_scene_pool@alt-twins-20261024-punchw-20261102
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/alt-twins-20261024-punchw-20261102-final-v1-20261120/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: ts_scene_pool@alt-twins-20261024-punchw-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 docs/reference/training-text.md（v1） 应用全部已执行的文本修正，起点 ts_scene_pool@alt-twins-20261024-punchw-20261102。构建中。
+    source: ts_scene_pool@alt-twins-20261024-punchw-20261102
+    method: text-final-v1
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
+- schema_version: dataset-catalog/2.0
+  dataset_id: ts_scene_pool
+  version: alt-twins-20261024-punchw2-20261102-final-v1-20261120
+  languages:
+  - en
+  tasks:
+  - ts_asr
+  aliases: []
+  derived_from: ts_scene_pool@alt-twins-20261024-punchw2-20261102
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/alt-twins-20261024-punchw2-20261102-final-v1-20261120/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: ts_scene_pool@alt-twins-20261024-punchw2-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 docs/reference/training-text.md（v1） 应用全部已执行的文本修正，起点 ts_scene_pool@alt-twins-20261024-punchw2-20261102。构建中。
+    source: ts_scene_pool@alt-twins-20261024-punchw2-20261102
+    method: text-final-v1
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
+- schema_version: dataset-catalog/2.0
+  dataset_id: ts_scene_pool
+  version: solo-20261020-punchw-20261102-final-v1-20261120
+  languages:
+  - zh
+  - en
+  tasks:
+  - ts_asr
+  aliases: []
+  derived_from: ts_scene_pool@solo-20261020-punchw-20261102
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/solo-20261020-punchw-20261102-final-v1-20261120/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: ts_scene_pool@solo-20261020-punchw-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 docs/reference/training-text.md（v1） 应用全部已执行的文本修正，起点 ts_scene_pool@solo-20261020-punchw-20261102。构建中。
+    source: ts_scene_pool@solo-20261020-punchw-20261102
+    method: text-final-v1
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
+- schema_version: dataset-catalog/2.0
+  dataset_id: ts_scene_pool
+  version: solo-20261020-punchw2-20261102-final-v1-20261120
+  languages:
+  - en
+  tasks:
+  - ts_asr
+  aliases: []
+  derived_from: ts_scene_pool@solo-20261020-punchw2-20261102
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/solo-20261020-punchw2-20261102-final-v1-20261120/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: ts_scene_pool@solo-20261020-punchw2-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 docs/reference/training-text.md（v1） 应用全部已执行的文本修正，起点 ts_scene_pool@solo-20261020-punchw2-20261102。构建中。
+    source: ts_scene_pool@solo-20261020-punchw2-20261102
+    method: text-final-v1
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
+- schema_version: dataset-catalog/2.0
+  dataset_id: ts_scene_pool
+  version: handover-20261021-punchw-20261102-final-v1-20261120
+  languages:
+  - zh
+  - en
+  tasks:
+  - ts_asr
+  aliases: []
+  derived_from: ts_scene_pool@handover-20261021-punchw-20261102
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/handover-20261021-punchw-20261102-final-v1-20261120/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: ts_scene_pool@handover-20261021-punchw-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 docs/reference/training-text.md（v1） 应用全部已执行的文本修正，起点 ts_scene_pool@handover-20261021-punchw-20261102。构建中。
+    source: ts_scene_pool@handover-20261021-punchw-20261102
+    method: text-final-v1
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
+- schema_version: dataset-catalog/2.0
+  dataset_id: ts_scene_pool
+  version: handover-20261021-punchw2-20261102-final-v1-20261120
+  languages:
+  - en
+  tasks:
+  - ts_asr
+  aliases: []
+  derived_from: ts_scene_pool@handover-20261021-punchw2-20261102
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/handover-20261021-punchw2-20261102-final-v1-20261120/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: ts_scene_pool@handover-20261021-punchw2-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 docs/reference/training-text.md（v1） 应用全部已执行的文本修正，起点 ts_scene_pool@handover-20261021-punchw2-20261102。构建中。
+    source: ts_scene_pool@handover-20261021-punchw2-20261102
+    method: text-final-v1
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
+- schema_version: dataset-catalog/2.0
+  dataset_id: ts_scene_pool
+  version: xsession-near-20261023-punchw-20261102-final-v1-20261120
+  languages:
+  - zh
+  tasks:
+  - ts_asr
+  aliases: []
+  derived_from: ts_scene_pool@xsession-near-20261023-punchw-20261102
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/xsession-near-20261023-punchw-20261102-final-v1-20261120/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: ts_scene_pool@xsession-near-20261023-punchw-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 docs/reference/training-text.md（v1） 应用全部已执行的文本修正，起点 ts_scene_pool@xsession-near-20261023-punchw-20261102。构建中。
+    source: ts_scene_pool@xsession-near-20261023-punchw-20261102
+    method: text-final-v1
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
+- schema_version: dataset-catalog/2.0
+  dataset_id: ts_scene_pool
+  version: xsession-alt-twins-20261024-punchw-20261102-final-v1-20261120
+  languages:
+  - zh
+  tasks:
+  - ts_asr
+  aliases: []
+  derived_from: ts_scene_pool@xsession-alt-twins-20261024-punchw-20261102
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/xsession-alt-twins-20261024-punchw-20261102-final-v1-20261120/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: ts_scene_pool@xsession-alt-twins-20261024-punchw-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 docs/reference/training-text.md（v1） 应用全部已执行的文本修正，起点 ts_scene_pool@xsession-alt-twins-20261024-punchw-20261102。构建中。
+    source: ts_scene_pool@xsession-alt-twins-20261024-punchw-20261102
+    method: text-final-v1
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
+- schema_version: dataset-catalog/2.0
+  dataset_id: ts_scene_pool
+  version: xsession-hard-20261023-punchw-20261102-final-v1-20261120
+  languages:
+  - zh
+  tasks:
+  - ts_asr
+  aliases: []
+  derived_from: ts_scene_pool@xsession-hard-20261023-punchw-20261102
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/xsession-hard-20261023-punchw-20261102-final-v1-20261120/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: ts_scene_pool@xsession-hard-20261023-punchw-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 docs/reference/training-text.md（v1） 应用全部已执行的文本修正，起点 ts_scene_pool@xsession-hard-20261023-punchw-20261102。构建中。
+    source: ts_scene_pool@xsession-hard-20261023-punchw-20261102
+    method: text-final-v1
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
+- schema_version: dataset-catalog/2.0
+  dataset_id: ts_scene_pool
+  version: xsession-handover-20261023-punchw-20261102-final-v1-20261120
+  languages:
+  - zh
+  tasks:
+  - ts_asr
+  aliases: []
+  derived_from: ts_scene_pool@xsession-handover-20261023-punchw-20261102
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/xsession-handover-20261023-punchw-20261102-final-v1-20261120/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: ts_scene_pool@xsession-handover-20261023-punchw-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 docs/reference/training-text.md（v1） 应用全部已执行的文本修正，起点 ts_scene_pool@xsession-handover-20261023-punchw-20261102。构建中。
+    source: ts_scene_pool@xsession-handover-20261023-punchw-20261102
+    method: text-final-v1
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
+- schema_version: dataset-catalog/2.0
+  dataset_id: ts_scene_pool
+  version: magicdata-near-20261023-punchw-20261102-final-v1-20261120
+  languages:
+  - zh
+  tasks:
+  - ts_asr
+  aliases: []
+  derived_from: ts_scene_pool@magicdata-near-20261023-punchw-20261102
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/magicdata-near-20261023-punchw-20261102-final-v1-20261120/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: ts_scene_pool@magicdata-near-20261023-punchw-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 docs/reference/training-text.md（v1） 应用全部已执行的文本修正，起点 ts_scene_pool@magicdata-near-20261023-punchw-20261102。构建中。
+    source: ts_scene_pool@magicdata-near-20261023-punchw-20261102
+    method: text-final-v1
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
+- schema_version: dataset-catalog/2.0
+  dataset_id: ts_scene_pool
+  version: magicdata-alt-twins-20261024-punchw-20261102-final-v1-20261120
+  languages:
+  - zh
+  tasks:
+  - ts_asr
+  aliases: []
+  derived_from: ts_scene_pool@magicdata-alt-twins-20261024-punchw-20261102
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/magicdata-alt-twins-20261024-punchw-20261102-final-v1-20261120/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: ts_scene_pool@magicdata-alt-twins-20261024-punchw-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 docs/reference/training-text.md（v1） 应用全部已执行的文本修正，起点 ts_scene_pool@magicdata-alt-twins-20261024-punchw-20261102。构建中。
+    source: ts_scene_pool@magicdata-alt-twins-20261024-punchw-20261102
+    method: text-final-v1
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
+- schema_version: dataset-catalog/2.0
+  dataset_id: ts_scene_pool
+  version: magicdata-hard-20261023-punchw-20261102-final-v1-20261120
+  languages:
+  - zh
+  tasks:
+  - ts_asr
+  aliases: []
+  derived_from: ts_scene_pool@magicdata-hard-20261023-punchw-20261102
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/magicdata-hard-20261023-punchw-20261102-final-v1-20261120/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: ts_scene_pool@magicdata-hard-20261023-punchw-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 docs/reference/training-text.md（v1） 应用全部已执行的文本修正，起点 ts_scene_pool@magicdata-hard-20261023-punchw-20261102。构建中。
+    source: ts_scene_pool@magicdata-hard-20261023-punchw-20261102
+    method: text-final-v1
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
+- schema_version: dataset-catalog/2.0
+  dataset_id: ts_scene_pool
+  version: magicdata-handover-20261023-punchw-20261102-final-v1-20261120
+  languages:
+  - zh
+  tasks:
+  - ts_asr
+  aliases: []
+  derived_from: ts_scene_pool@magicdata-handover-20261023-punchw-20261102
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/magicdata-handover-20261023-punchw-20261102-final-v1-20261120/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: ts_scene_pool@magicdata-handover-20261023-punchw-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 docs/reference/training-text.md（v1） 应用全部已执行的文本修正，起点 ts_scene_pool@magicdata-handover-20261023-punchw-20261102。构建中。
+    source: ts_scene_pool@magicdata-handover-20261023-punchw-20261102
+    method: text-final-v1
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
+- schema_version: dataset-catalog/2.0
+  dataset_id: ts_scene_pool
+  version: cvaccent-near-20261101-punchw2-20261102-final-v1-20261120
+  languages:
+  - en
+  tasks:
+  - ts_asr
+  aliases: []
+  derived_from: ts_scene_pool@cvaccent-near-20261101-punchw2-20261102
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/cvaccent-near-20261101-punchw2-20261102-final-v1-20261120/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: ts_scene_pool@cvaccent-near-20261101-punchw2-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 docs/reference/training-text.md（v1） 应用全部已执行的文本修正，起点 ts_scene_pool@cvaccent-near-20261101-punchw2-20261102。构建中。
+    source: ts_scene_pool@cvaccent-near-20261101-punchw2-20261102
+    method: text-final-v1
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
+- schema_version: dataset-catalog/2.0
+  dataset_id: ts_scene_pool
+  version: cvaccent-alt-twins-20261101-punchw2-20261102-final-v1-20261120
+  languages:
+  - en
+  tasks:
+  - ts_asr
+  aliases: []
+  derived_from: ts_scene_pool@cvaccent-alt-twins-20261101-punchw2-20261102
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/cvaccent-alt-twins-20261101-punchw2-20261102-final-v1-20261120/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: ts_scene_pool@cvaccent-alt-twins-20261101-punchw2-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 docs/reference/training-text.md（v1） 应用全部已执行的文本修正，起点 ts_scene_pool@cvaccent-alt-twins-20261101-punchw2-20261102。构建中。
+    source: ts_scene_pool@cvaccent-alt-twins-20261101-punchw2-20261102
+    method: text-final-v1
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
+- schema_version: dataset-catalog/2.0
+  dataset_id: ts_scene_pool
+  version: cvaccent-hard-20261101-punchw2-20261102-final-v1-20261120
+  languages:
+  - en
+  tasks:
+  - ts_asr
+  aliases: []
+  derived_from: ts_scene_pool@cvaccent-hard-20261101-punchw2-20261102
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/cvaccent-hard-20261101-punchw2-20261102-final-v1-20261120/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: ts_scene_pool@cvaccent-hard-20261101-punchw2-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 docs/reference/training-text.md（v1） 应用全部已执行的文本修正，起点 ts_scene_pool@cvaccent-hard-20261101-punchw2-20261102。构建中。
+    source: ts_scene_pool@cvaccent-hard-20261101-punchw2-20261102
+    method: text-final-v1
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
+- schema_version: dataset-catalog/2.0
+  dataset_id: ts_scene_pool
+  version: cvaccent-handover-20261101-punchw2-20261102-final-v1-20261120
+  languages:
+  - en
+  tasks:
+  - ts_asr
+  aliases: []
+  derived_from: ts_scene_pool@cvaccent-handover-20261101-punchw2-20261102
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/cvaccent-handover-20261101-punchw2-20261102-final-v1-20261120/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: ts_scene_pool@cvaccent-handover-20261101-punchw2-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 docs/reference/training-text.md（v1） 应用全部已执行的文本修正，起点 ts_scene_pool@cvaccent-handover-20261101-punchw2-20261102。构建中。
+    source: ts_scene_pool@cvaccent-handover-20261101-punchw2-20261102
+    method: text-final-v1
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
+- schema_version: dataset-catalog/2.0
+  dataset_id: ts_scene_pool
+  version: cvaccent-solo-20261101-punchw2-20261102-final-v1-20261120
+  languages:
+  - en
+  tasks:
+  - ts_asr
+  aliases: []
+  derived_from: ts_scene_pool@cvaccent-solo-20261101-punchw2-20261102
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/cvaccent-solo-20261101-punchw2-20261102-final-v1-20261120/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: ts_scene_pool@cvaccent-solo-20261101-punchw2-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 docs/reference/training-text.md（v1） 应用全部已执行的文本修正，起点 ts_scene_pool@cvaccent-solo-20261101-punchw2-20261102。构建中。
+    source: ts_scene_pool@cvaccent-solo-20261101-punchw2-20261102
+    method: text-final-v1
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
+- schema_version: dataset-catalog/2.0
+  dataset_id: ts_scene_pool
+  version: csd-near-20261101-punchw2-20261102-final-v1-20261120
+  languages:
+  - en
+  tasks:
+  - ts_asr
+  aliases: []
+  derived_from: ts_scene_pool@csd-near-20261101-punchw2-20261102
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/csd-near-20261101-punchw2-20261102-final-v1-20261120/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: ts_scene_pool@csd-near-20261101-punchw2-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 docs/reference/training-text.md（v1） 应用全部已执行的文本修正，起点 ts_scene_pool@csd-near-20261101-punchw2-20261102。构建中。
+    source: ts_scene_pool@csd-near-20261101-punchw2-20261102
+    method: text-final-v1
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
+- schema_version: dataset-catalog/2.0
+  dataset_id: ts_scene_pool
+  version: csd-alt-twins-20261101-punchw2-20261102-final-v1-20261120
+  languages:
+  - en
+  tasks:
+  - ts_asr
+  aliases: []
+  derived_from: ts_scene_pool@csd-alt-twins-20261101-punchw2-20261102
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/csd-alt-twins-20261101-punchw2-20261102-final-v1-20261120/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: ts_scene_pool@csd-alt-twins-20261101-punchw2-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 docs/reference/training-text.md（v1） 应用全部已执行的文本修正，起点 ts_scene_pool@csd-alt-twins-20261101-punchw2-20261102。构建中。
+    source: ts_scene_pool@csd-alt-twins-20261101-punchw2-20261102
+    method: text-final-v1
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
+- schema_version: dataset-catalog/2.0
+  dataset_id: ts_scene_pool
+  version: csd-hard-20261101-punchw2-20261102-final-v1-20261120
+  languages:
+  - en
+  tasks:
+  - ts_asr
+  aliases: []
+  derived_from: ts_scene_pool@csd-hard-20261101-punchw2-20261102
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/csd-hard-20261101-punchw2-20261102-final-v1-20261120/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: ts_scene_pool@csd-hard-20261101-punchw2-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 docs/reference/training-text.md（v1） 应用全部已执行的文本修正，起点 ts_scene_pool@csd-hard-20261101-punchw2-20261102。构建中。
+    source: ts_scene_pool@csd-hard-20261101-punchw2-20261102
+    method: text-final-v1
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
+- schema_version: dataset-catalog/2.0
+  dataset_id: ts_scene_pool
+  version: csd-handover-20261101-punchw2-20261102-final-v1-20261120
+  languages:
+  - en
+  tasks:
+  - ts_asr
+  aliases: []
+  derived_from: ts_scene_pool@csd-handover-20261101-punchw2-20261102
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/csd-handover-20261101-punchw2-20261102-final-v1-20261120/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: ts_scene_pool@csd-handover-20261101-punchw2-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 docs/reference/training-text.md（v1） 应用全部已执行的文本修正，起点 ts_scene_pool@csd-handover-20261101-punchw2-20261102。构建中。
+    source: ts_scene_pool@csd-handover-20261101-punchw2-20261102
+    method: text-final-v1
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
+- schema_version: dataset-catalog/2.0
+  dataset_id: ts_scene_pool
+  version: csd-solo-20261101-punchw2-20261102-final-v1-20261120
+  languages:
+  - en
+  tasks:
+  - ts_asr
+  aliases: []
+  derived_from: ts_scene_pool@csd-solo-20261101-punchw2-20261102
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/csd-solo-20261101-punchw2-20261102-final-v1-20261120/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: ts_scene_pool@csd-solo-20261101-punchw2-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 docs/reference/training-text.md（v1） 应用全部已执行的文本修正，起点 ts_scene_pool@csd-solo-20261101-punchw2-20261102。构建中。
+    source: ts_scene_pool@csd-solo-20261101-punchw2-20261102
+    method: text-final-v1
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
