@@ -141,7 +141,7 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [tdtech_badcase](data-versions.md#tdtech_badcase) | zh | 热词增强语音识别 | 0.0 | 鼎桥反馈的识别回退样本（e警保 × 多种热词表），仅评测 | 没有 |
 | [tdtech_customer_bench](data-versions.md#tdtech_customer_bench) | zh | 语音识别、热词增强语音识别、目标说话人语音识别 | 0.1 | 鼎桥客户真实录音的语音识别评测，仅评测 | `备份桶:audio-data-contract/datasets/tdtech_customer_bench/` |
 | [thchs30](data-versions.md#thchs30) | zh | 语音识别、热词增强语音识别 | ≈35.0 | 清华中文朗读（THCHS-30）；含热词版 | 快照 20260914、`备份桶:audio-data-contract/datasets/thchs30_hotwords/` |
-| [threed_speaker_zh_far_asr](data-versions.md#threed_speaker_zh_far_asr) | zh | 语音识别 | 75.5 | 3D-Speaker 远场普通话转写训练数据 | `备份桶:audio-data-contract/datasets/threed_speaker_zh_far_asr/`、`备份桶:audio-data-contract/datasets/zh_far_replay/` |
+| [threed_speaker_zh_far_asr](data-versions.md#threed_speaker_zh_far_asr) | zh | 语音识别 | 75.5 | 3D-Speaker 远场普通话转写训练数据 | 部分版本：`备份桶:audio-data-contract/datasets/threed_speaker_zh_far_asr/`、`备份桶:audio-data-contract/datasets/zh_far_replay/` |
 | [ts_asr_dev](data-versions.md#ts_asr_dev) | zh | 目标说话人语音识别 | 10.7 | 合成的中文目标说话人 ASR 开发集 | `备份桶:audio-data-contract/datasets/ts_asr_dev/` |
 | [ts_asr_enroll_len](data-versions.md#ts_asr_enroll_len) | zh | 目标说话人语音识别 | 1.5 | 目标说话人评测：注册音频长度 | 没有 |
 | [ts_asr_nearfar](data-versions.md#ts_asr_nearfar) | zh | 目标说话人语音识别 | 91.4 | 目标说话人评测：AliMeeting 近远场与谁先开口对照 | 部分版本：`备份桶:audio-data-contract/datasets/ts_asr_nearfar/` |
@@ -183,7 +183,7 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [farfield_speech_noise_1spk](data-versions.md#farfield_speech_noise_1spk) | en、zh | noise | 32.7 | 1–3 人远场人声噪声（Emilia 干声加混响） | `备份桶:audio-data-contract/datasets/` 下 3 个目录 |
 | [genshin_voice](data-versions.md#genshin_voice) | en-US、ja、ko、zh | 语音合成 | 1,039.7 | 《原神》多语配音，TTS 用 | `TTS 桶:genshin-voice/`（原始数据） |
 | [gigaspeech_bench](data-versions.md#gigaspeech_bench) | ar、en、fil、id、ja、ko、ms、th、vi、yue、zh | 语音识别、语音翻译、带说话人标注的语音识别、说话人分段与归属 | 903.6 | 多方言多语种 ASR 评测（GigaSpeechBench） | 没有 |
-| [hard_hw_sft](data-versions.md#hard_hw_sft) | en、zh | 热词增强语音识别 | 109.4 | 热词难例 SFT 数据（ShareGPT 格式） | `备份桶:audio-data-contract/datasets/hard_hw_sft/` |
+| [hard_hw_sft](data-versions.md#hard_hw_sft) | en、zh | 热词增强语音识别 | 109.4 | 热词难例 SFT 数据（ShareGPT 格式） | 部分版本：`备份桶:audio-data-contract/datasets/hard_hw_sft/` |
 | [hotword_bench](data-versions.md#hotword_bench) | en、es、pt、zh | 热词增强语音识别 | — | 中英热词评测集，仅评测 | 没有 |
 | [hungyi_lee_lectures](data-versions.md#hungyi_lee_lectures) | en、zh | 语音识别、语码转换语音识别 | 16.9 | 李宏毅 2025–2026 课程中英混说讲课 | 没有 |
 | [hw_sft](data-versions.md#hw_sft) | en、zh | 语音识别、热词增强语音识别 | 2,636.5 | 热词 SFT 数据（ShareGPT 格式），含普通转写 | 没有 |
