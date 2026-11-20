@@ -8,6 +8,8 @@
 # magicdata_ramc / aishell4 的带标点 asr 与 turn-taking utts 版本，各出 <版本>-ctxclean-20261110；alimeeting_sdm 两个带标点版本无改动。
 # think-v1-20261112：清洗过的训练记录的 think 文本（说字写法 CoT），每个来源一个 think.jsonl.gz。
 # think-v2-20261113：交付配方 v7set34 实际训练的版本（带标点、utts、wenetspeech_clean）的 think 文本和上采样用的记录 ID 名单。
+# think-v3-20261117：think-v2 和合成说字数据的 think 改写成“线索 + 目标”的实验版，只用于 open-audio-llm runs/zh-ctx-clue-target-20261117 的 clue-target 各组，没有进配方。
+# grpo-targets-v1-20261120：按第二轮说字 SFT 配方的训练来源，给出合成与真实说明录音的纠偏目标位置，供 GRPO 奖励 qwen3_asr_context。
 - schema_version: dataset-catalog/2.0
   dataset_id: context_correction_clean_zh
   version: v1-20261110
@@ -3364,4 +3366,286 @@
     description: think-v1-20261112 的做法，换到交付配方 v7set34（open-audio-llm runs/ts-robust-acp-20261015）实际训练的版本上：wenetspeech_clean@train-punc-v1-20261102、emilia2_mix@mix-20261013-utts、magicdata_ramc / aishell4 / alimeeting_sdm 的带标点 asr 与 turn-taking utts 版本，以及与清洗时相同的 emilia2_dialog、emilia2_short、vitw。判定由 clean.py transfer 从 context_correction_clean_zh@v1-20261110 迁来（同一批记录按分段 ID 或去掉标点后的文本对应），训练记录对应各自的派生版本 <版本>-ctxclean-20261110（alimeeting_sdm 无改动，用原版本）。原话按带标点的文本截取，去掉边缘句读并补齐成对的引号；每个来源另有按 split 的 think 记录 ID 名单（include_records 上采样用）。执行者看过 v1→v2 有变化的样本和引号配对，结论在运行目录 README“迁到交付配方的版本”一节。还没有用于训练。
     source: context_correction_clean_zh@v1-20261110
     run_dir: /workspace/workspace/mingdong/data/amphiondata/ctx-clean-zh-20261110
+  derived_from: context_correction_clean_zh@v1-20261110
+- schema_version: dataset-catalog/2.0
+  dataset_id: context_correction_clean_zh
+  version: think-v3-20261117
+  languages:
+  - zh
+  tasks:
+  - asr
+  aliases: []
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/context_correction_clean_zh/versions/think-v3-20261117/state.json
+  - name: summary
+    kind: json-metadata
+    root_alias: aidc_data
+    relative_path: datasets/context_correction_clean_zh/versions/think-v3-20261117/summary.json
+    expected_bytes: 1440
+    sha256: f7b0591c31849e6d7bf7b36a4500a0468da104a4cbd62b6c715bdb00970e0b74
+    metadata:
+      description: 各来源的行数、think 开的行数，以及写出 / 没写出不该写的字（alt / no_alt）的行数
+  - name: samples
+    kind: jsonl-metadata
+    root_alias: aidc_data
+    relative_path: datasets/context_correction_clean_zh/versions/think-v3-20261117/samples.jsonl
+    expected_bytes: 128149
+    sha256: a09da6264591ae0b1edcd3575feabca938234542cb8667fbc1f605eea98d1cd9
+    metadata:
+      description: 改写前后的 think 对照样例（source、record_id、old、new），供核对改写
+  - name: aishell4_punc_think
+    kind: jsonl-metadata
+    root_alias: aidc_data
+    relative_path: datasets/context_correction_clean_zh/versions/think-v3-20261117/aishell4_punc/think.jsonl.gz
+    expected_bytes: 1844
+    sha256: 7347fe2c6798a16ffa6ffa71127c17cb4c933ab6d66e97fccab89a43b9247637
+    metadata:
+      record_count: 70
+      think_on_records: 2
+      training_datasets:
+      - aishell4@asr-20261014-punc-20261102-ctxclean-20261110
+      description: think-v2-20261113（合成数据为 context_correction_synth_zh@train-v1-20261114）同一批行和 think 开关，think 改写成“线索：说话人说「…」。目标：写「…」，不写「…」。”
+  - name: aishell4_tt_punc_think
+    kind: jsonl-metadata
+    root_alias: aidc_data
+    relative_path: datasets/context_correction_clean_zh/versions/think-v3-20261117/aishell4_tt_punc/think.jsonl.gz
+    expected_bytes: 1973
+    sha256: db49fd08167acc154713908e8968ab48a099802f7394270298051775d5ba49ef
+    metadata:
+      record_count: 59
+      think_on_records: 0
+      training_datasets:
+      - aishell4@turn-taking-20261014-utts-punc-20261102-ctxclean-20261110
+      description: think-v2-20261113（合成数据为 context_correction_synth_zh@train-v1-20261114）同一批行和 think 开关，think 改写成“线索：说话人说「…」。目标：写「…」，不写「…」。”
+  - name: alimeeting_sdm_punc_think
+    kind: jsonl-metadata
+    root_alias: aidc_data
+    relative_path: datasets/context_correction_clean_zh/versions/think-v3-20261117/alimeeting_sdm_punc/think.jsonl.gz
+    expected_bytes: 3377
+    sha256: 92f9830701f8f415972c5a83724d35884a5c71209e2b9611f24e193aeb06bba0
+    metadata:
+      record_count: 154
+      think_on_records: 4
+      training_datasets:
+      - alimeeting_sdm@asr-20261014-punc-20261102
+      description: think-v2-20261113（合成数据为 context_correction_synth_zh@train-v1-20261114）同一批行和 think 开关，think 改写成“线索：说话人说「…」。目标：写「…」，不写「…」。”
+  - name: alimeeting_sdm_tt_punc_think
+    kind: jsonl-metadata
+    root_alias: aidc_data
+    relative_path: datasets/context_correction_clean_zh/versions/think-v3-20261117/alimeeting_sdm_tt_punc/think.jsonl.gz
+    expected_bytes: 3949
+    sha256: b7805e6a184955bd1fb40cfaf71fa25bb80b8eb1a1fa929fa745f325ad53ac81
+    metadata:
+      record_count: 132
+      think_on_records: 4
+      training_datasets:
+      - alimeeting_sdm@turn-taking-20261014-utts-punc-20261102
+      description: think-v2-20261113（合成数据为 context_correction_synth_zh@train-v1-20261114）同一批行和 think 开关，think 改写成“线索：说话人说「…」。目标：写「…」，不写「…」。”
+  - name: context_correction_synth_zh_think
+    kind: jsonl-metadata
+    root_alias: aidc_data
+    relative_path: datasets/context_correction_clean_zh/versions/think-v3-20261117/context_correction_synth_zh/think.jsonl.gz
+    expected_bytes: 188520
+    sha256: 411b3182fabeb5b8e1b56f2c98a7193e55ff56c6be8f9948b642339db0a5d945
+    metadata:
+      record_count: 5901
+      think_on_records: 5862
+      training_datasets:
+      - context_correction_synth_zh@train-v1-20261114
+      description: think-v2-20261113（合成数据为 context_correction_synth_zh@train-v1-20261114）同一批行和 think 开关，think 改写成“线索：说话人说「…」。目标：写「…」，不写「…」。”
+  - name: emilia2_dialog_think
+    kind: jsonl-metadata
+    root_alias: aidc_data
+    relative_path: datasets/context_correction_clean_zh/versions/think-v3-20261117/emilia2_dialog/think.jsonl.gz
+    expected_bytes: 72041
+    sha256: 0ebda1cbb9ee8f139d68056877b97386ac2758cfe8afdf48361734e7a04395de
+    metadata:
+      record_count: 1792
+      think_on_records: 289
+      training_datasets:
+      - emilia2_dialog@dialog-turn-taking-20261013-enroll-ctxclean-20261110
+      description: think-v2-20261113（合成数据为 context_correction_synth_zh@train-v1-20261114）同一批行和 think 开关，think 改写成“线索：说话人说「…」。目标：写「…」，不写「…」。”
+  - name: emilia2_mix_utts_think
+    kind: jsonl-metadata
+    root_alias: aidc_data
+    relative_path: datasets/context_correction_clean_zh/versions/think-v3-20261117/emilia2_mix_utts/think.jsonl.gz
+    expected_bytes: 127069
+    sha256: f7e4fbc4baef7645cb3b29e75c5ff24401e2cd0a3b9cff3143f4786d50840770
+    metadata:
+      record_count: 3658
+      think_on_records: 642
+      training_datasets:
+      - emilia2_mix@mix-20261013-utts-ctxclean-20261110
+      description: think-v2-20261113（合成数据为 context_correction_synth_zh@train-v1-20261114）同一批行和 think 开关，think 改写成“线索：说话人说「…」。目标：写「…」，不写「…」。”
+  - name: emilia2_short_think
+    kind: jsonl-metadata
+    root_alias: aidc_data
+    relative_path: datasets/context_correction_clean_zh/versions/think-v3-20261117/emilia2_short/think.jsonl.gz
+    expected_bytes: 53156
+    sha256: e4913c86f395224f084c4193837b436102cc6193ff5a64033a137f187e03b4e1
+    metadata:
+      record_count: 1802
+      think_on_records: 281
+      training_datasets:
+      - emilia2_short@short-lance-20261023-ctxclean-20261110
+      description: think-v2-20261113（合成数据为 context_correction_synth_zh@train-v1-20261114）同一批行和 think 开关，think 改写成“线索：说话人说「…」。目标：写「…」，不写「…」。”
+  - name: magicdata_ramc_punc_think
+    kind: jsonl-metadata
+    root_alias: aidc_data
+    relative_path: datasets/context_correction_clean_zh/versions/think-v3-20261117/magicdata_ramc_punc/think.jsonl.gz
+    expected_bytes: 2502
+    sha256: 03c2e6a14f17d3cbd75de84e6fc6563381fbe3fd2765465bb27fde9f2cf6c823
+    metadata:
+      record_count: 122
+      think_on_records: 14
+      training_datasets:
+      - magicdata_ramc@train-punc-v1-20261102-ctxclean-20261110
+      description: think-v2-20261113（合成数据为 context_correction_synth_zh@train-v1-20261114）同一批行和 think 开关，think 改写成“线索：说话人说「…」。目标：写「…」，不写「…」。”
+  - name: magicdata_ramc_tt_punc_think
+    kind: jsonl-metadata
+    root_alias: aidc_data
+    relative_path: datasets/context_correction_clean_zh/versions/think-v3-20261117/magicdata_ramc_tt_punc/think.jsonl.gz
+    expected_bytes: 3670
+    sha256: 9227e3b7e9a178c8af2fa80b0e71d06027d7c1c2643ee0e8e36520aa1575283f
+    metadata:
+      record_count: 103
+      think_on_records: 9
+      training_datasets:
+      - magicdata_ramc@turn-taking-20261014-utts-punc-20261102-ctxclean-20261110
+      description: think-v2-20261113（合成数据为 context_correction_synth_zh@train-v1-20261114）同一批行和 think 开关，think 改写成“线索：说话人说「…」。目标：写「…」，不写「…」。”
+  - name: vitw_think
+    kind: jsonl-metadata
+    root_alias: aidc_data
+    relative_path: datasets/context_correction_clean_zh/versions/think-v3-20261117/vitw/think.jsonl.gz
+    expected_bytes: 1726
+    sha256: 50165797ab72246805860cf937db6777f3d72e69f58ed5dc696835e0b1d8031b
+    metadata:
+      record_count: 58
+      think_on_records: 19
+      training_datasets:
+      - vitw@2m-20261013-ctxclean-20261110
+      description: think-v2-20261113（合成数据为 context_correction_synth_zh@train-v1-20261114）同一批行和 think 开关，think 改写成“线索：说话人说「…」。目标：写「…」，不写「…」。”
+  - name: wenetspeech_clean_think
+    kind: jsonl-metadata
+    root_alias: aidc_data
+    relative_path: datasets/context_correction_clean_zh/versions/think-v3-20261117/wenetspeech_clean/think.jsonl.gz
+    expected_bytes: 225972
+    sha256: 548ad5e04a2837551e7f3f9d7803b2a1e8cf74bb9ffa6fa53d6e55f73b86a70d
+    metadata:
+      record_count: 26583
+      think_on_records: 923
+      training_datasets:
+      - wenetspeech_clean@train-punc-v1-20261102-ctxclean-20261110
+      description: think-v2-20261113（合成数据为 context_correction_synth_zh@train-v1-20261114）同一批行和 think 开关，think 改写成“线索：说话人说「…」。目标：写「…」，不写「…」。”
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+        summary:
+        - summary
+        think:
+        - aishell4_punc_think
+        - aishell4_tt_punc_think
+        - alimeeting_sdm_punc_think
+        - alimeeting_sdm_tt_punc_think
+        - context_correction_synth_zh_think
+        - emilia2_dialog_think
+        - emilia2_mix_utts_think
+        - emilia2_short_think
+        - magicdata_ramc_punc_think
+        - magicdata_ramc_tt_punc_think
+        - vitw_think
+        - wenetspeech_clean_think
+      statistics:
+        record_count: 40434
+        think_on_records: 8049
+      provenance:
+        preparation_status: complete
+  recipe_parameters:
+    line_format: 线索：说话人说「<原话>」。目标：写「<字>」，不写「<另一种写法>」。
+    alt: 合成数据取记录的同音写法；真实录音在清洗改动过的窗口取原转写的字，其余省略“不写”一句
+    code: open-audio-llm runs/zh-ctx-clue-target-20261117/scripts/make_think_v3.py（分支 feat/ctx-clue-target-think）
+  provenance:
+    preparation_status: complete
+    owner: mingdong
+    summary: 线索 + 目标写法的说字 think（实验版，未进配方）
+    description: think-v2-20261113 的 11 个清洗来源和 context_correction_synth_zh@train-v1-20261114 的 think 行，改写成先写线索、再写目标与不写的字；行和 think 开关不变。用于 open-audio-llm runs/zh-ctx-clue-target-20261117 的 clue-target 三组（第 1、2 问）。这个写法没有通过第 1 问的判定，上下文纠偏 SFT 配方仍用 think-v2；登记是为了能复现这几组训练。
+    source: context_correction_clean_zh@think-v2-20261113
+    run_dir: /workspace/workspace/mingdong/repo/oal-clue-target/runs/zh-ctx-clue-target-20261117
+  derived_from: context_correction_clean_zh@think-v2-20261113
+- schema_version: dataset-catalog/2.0
+  dataset_id: context_correction_clean_zh
+  version: grpo-targets-v1-20261120
+  languages:
+  - zh
+  tasks:
+  - asr
+  - ts_asr
+  aliases: []
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/context_correction_clean_zh/versions/grpo-targets-v1-20261120/state.json
+  - name: summary
+    kind: json-metadata
+    root_alias: aidc_data
+    relative_path: datasets/context_correction_clean_zh/versions/grpo-targets-v1-20261120/summary.json
+    expected_bytes: 2722
+    sha256: da538b1efcdb55a2443f189eabf1a0b4e8a391e2ee46bebc4383edf3e61b1e9c
+    metadata:
+      description: 按来源和类型的记录数、目标数、有易混写法的目标数，以及各来源跳过的原因
+  - name: targets
+    kind: jsonl-metadata
+    root_alias: aidc_data
+    relative_path: datasets/context_correction_clean_zh/versions/grpo-targets-v1-20261120/targets.jsonl
+    expected_bytes: 1732881
+    sha256: cd3adcfcd027f27543590609ed6d9ef252092da9d4b8d9159501e1c588d840c1
+    metadata:
+      record_count: 7011
+      target_count: 9349
+      targets_with_alt: 7381
+      training_datasets:
+      - aishell4@asr-20261014-punc-20261102-ctxclean-20261110
+      - alimeeting_sdm@asr-20261014-punc-20261102
+      - alimeeting_sdm@turn-taking-20261014-utts-punc-20261102
+      - context_correction_synth_zh@train-v1-20261114
+      - emilia2_dialog@dialog-turn-taking-20261013-enroll-ctxclean-20261110
+      - emilia2_mix@mix-20261013-utts-ctxclean-20261110
+      - emilia2_short@short-lance-20261023-ctxclean-20261110
+      - magicdata_ramc@train-punc-v1-20261102-ctxclean-20261110
+      - magicdata_ramc@turn-taking-20261014-utts-punc-20261102-ctxclean-20261110
+      - vitw@2m-20261013-ctxclean-20261110
+      - wenetspeech_clean@train-punc-v1-20261102-ctxclean-20261110
+      description: 每行 {source, record_id, kind, targets}，source 是数据配置里的来源键（dataset@version:split）；目标 {start, text, alt}：text 在记录转写第 start 个字符处，alt 是上下文排除的写法（不知道时为 null）。供 open-audio-llm 的 grpo.context_targets（奖励 qwen3_asr_context）
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+        summary:
+        - summary
+        context_targets:
+        - targets
+      statistics:
+        record_count: 7011
+        target_count: 9349
+      provenance:
+        preparation_status: complete
+  recipe_parameters:
+    synthetic: context_correction_synth_zh 记录标注的 target 段，correct 与 confirm 两类都收
+    real: think 文件 think 开的行，按单元号连接 context_correction_clean_zh@v1-20261110 的 decisions.jsonl，在记录所在分段内套用改动；没有改动的分段取说明原话之外出现的被说明字，alt 为 null
+    skipped: 说明原话之外没有出现被说明字的记录
+    code: open-audio-llm runs/zh-ctx-grpo-20261120/scripts/build_context_targets.py（分支 feat/ctx-grpo-context-plan，提交 85eb2b2）
+  provenance:
+    preparation_status: complete
+    owner: mingdong
+    summary: 上下文纠偏 GRPO 奖励用的目标位置（第二轮配方）
+    description: 按第二轮说字 SFT 配方（open-audio-llm runs/zh-ctx-clue-target-20261117 configs/train-data-template.yaml）的训练来源，给出合成说字数据和带说明的真实录音的纠偏目标：合成 5,901 条，真实录音 1,110 条（有清洗改动的 208 条带易混写法）。还没有用于训练；配方变了要按新配方重建。
+    source: context_correction_synth_zh@train-v1-20261114, context_correction_clean_zh@think-v2-20261113, context_correction_clean_zh@v1-20261110
+    run_dir: /workspace/workspace/mingdong/repo/oal-ctx-grpo/runs/zh-ctx-grpo-20261120
   derived_from: context_correction_clean_zh@v1-20261110

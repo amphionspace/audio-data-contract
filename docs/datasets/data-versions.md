@@ -922,9 +922,9 @@ VoxPopuli 英语欧洲议会发言
 | [aishell4@allspk-ts-v1-20261104](../../catalog/allspk_ts_v1.yaml#L90) | — | 未登记 | 没有 |
 | [aishell4@allspk-ts-v1-20261104-final-v1-20261120](../../catalog/text_final_v1.yaml#L877) | — | 未登记 | 没有 |
 | [aishell4@asr-20261014](../../catalog/amphionasr_v4.yaml#L262) | — | 未登记 | 没有 |
-| [aishell4@asr-20261014-ctxclean-20261110](../../catalog/context_correction_clean_zh.yaml#L857) | — | 未登记 | 没有 |
+| [aishell4@asr-20261014-ctxclean-20261110](../../catalog/context_correction_clean_zh.yaml#L859) | — | 未登记 | 没有 |
 | [aishell4@asr-20261014-punc-20261102](../../catalog/train_punc_v1_derived.yaml#L423) | — | 未登记 | 没有 |
-| [aishell4@asr-20261014-punc-20261102-ctxclean-20261110](../../catalog/context_correction_clean_zh.yaml#L2862) | — | 未登记 | 没有 |
+| [aishell4@asr-20261014-punc-20261102-ctxclean-20261110](../../catalog/context_correction_clean_zh.yaml#L2864) | — | 未登记 | 没有 |
 | [aishell4@asr-20261014-punc-20261102-ctxclean-20261110-zhenfix-20261117](../../catalog/zhen_fix.yaml#L941) | — | 未登记 | 没有 |
 | [aishell4@asr-20261014-punc-20261102-final-v1-20261120](../../catalog/text_final_v1.yaml#L653) | — | 未登记 | 没有 |
 | [aishell4@diarization-benchmark-v1-20261021](../../catalog/diarization_benchmark.yaml#L1) | 12.7 | 已登记 | 没有 |
@@ -934,10 +934,10 @@ VoxPopuli 英语欧洲议会发言
 | [aishell4@punc-written-v1-20261029](../../catalog/zh_punc_written_v1.yaml#L130) | 107.4 | 已登记 | 没有 |
 | [aishell4@teacher-review-v1-20261010](../../catalog/diarization_raw_zh-meeting-review.yaml#L2) | — | 未登记 | 没有 |
 | [aishell4@turn-taking-20261014](../../catalog/amphionasr_v4.yaml#L1) | 322.3 | 已登记 | 没有 |
-| [aishell4@turn-taking-20261014-ctxclean-20261110](../../catalog/context_correction_clean_zh.yaml#L1186) | 322.3 | 已登记 | 没有 |
+| [aishell4@turn-taking-20261014-ctxclean-20261110](../../catalog/context_correction_clean_zh.yaml#L1188) | 322.3 | 已登记 | 没有 |
 | [aishell4@turn-taking-20261014-utts](../../catalog/ts_window_utts.yaml#L115) | 66.9 | 已登记 | 没有 |
 | [aishell4@turn-taking-20261014-utts-punc-20261102](../../catalog/train_punc_v1_derived.yaml#L486) | — | 未登记 | 没有 |
-| [aishell4@turn-taking-20261014-utts-punc-20261102-ctxclean-20261110](../../catalog/context_correction_clean_zh.yaml#L2930) | 301.2 | 已登记 | 没有 |
+| [aishell4@turn-taking-20261014-utts-punc-20261102-ctxclean-20261110](../../catalog/context_correction_clean_zh.yaml#L2932) | 301.2 | 已登记 | 没有 |
 | [aishell4@turn-taking-20261014-utts-punc-20261102-ctxclean-20261110-zhenfix-20261117](../../catalog/zhen_fix.yaml#L1011) | 301.2 | 已登记 | 没有 |
 | [aishell4@turn-taking-20261014-utts-punc-20261102-final-v1-20261120](../../catalog/text_final_v1.yaml#L202) | — | 未登记 | 没有 |
 
@@ -1241,18 +1241,22 @@ Common Voice 中文众包朗读；含清洗、热词、加噪版
 
 ### context_correction_clean_zh
 
-说字写法句子的 think 文本（CoT）
+上下文纠偏 GRPO 奖励用的目标位置（第二轮配方）
 
-语言：zh · 任务：语音识别
+语言：zh · 任务：语音识别、目标说话人语音识别
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
-| [context_correction_clean_zh@think-v1-20261112](../../catalog/context_correction_clean_zh.yaml#L2308) | — | 未登记 | 没有 |
-| [context_correction_clean_zh@think-v2-20261113](../../catalog/context_correction_clean_zh.yaml#L3056) | — | 未登记 | 没有 |
-| [context_correction_clean_zh@v1-20261110](../../catalog/context_correction_clean_zh.yaml#L11) | — | 未登记 | 没有 |
+| [context_correction_clean_zh@grpo-targets-v1-20261120](../../catalog/context_correction_clean_zh.yaml#L3580) | — | 未登记 | 没有 |
+| [context_correction_clean_zh@think-v1-20261112](../../catalog/context_correction_clean_zh.yaml#L2310) | — | 未登记 | 没有 |
+| [context_correction_clean_zh@think-v2-20261113](../../catalog/context_correction_clean_zh.yaml#L3058) | — | 未登记 | 没有 |
+| [context_correction_clean_zh@think-v3-20261117](../../catalog/context_correction_clean_zh.yaml#L3370) | — | 未登记 | 没有 |
+| [context_correction_clean_zh@v1-20261110](../../catalog/context_correction_clean_zh.yaml#L13) | — | 未登记 | 没有 |
 
+- `context_correction_clean_zh@grpo-targets-v1-20261120`：按第二轮说字 SFT 配方（open-audio-llm runs/zh-ctx-clue-target-20261117 configs/train-data-template.yaml）的训练来源，给出合成说字数据和带说明的真实录音的纠偏目标：合成 5,901 条，真实录音 1,110 条（有清洗改动的 208 条带易混写法）。还没有用于训练；配方变了要按新配方重建
 - `context_correction_clean_zh@think-v1-20261112`：从 context_correction_clean_zh@v1-20261110 的判定结果，给清洗过的各来源训练记录生成 think 文本：每个被说明的词一句， 字和原话取两个判定模型的说明，两个模型给的字必须一致（改字窗口里一个模型写的是改前的字、或只多写了同一个词里的字的，对齐后算一致）； 只在"不是…"里出现的字、只点名的偏旁不成句，否定对比并进相邻写法的原话；原话超过 30 字、说话人随后改口、写法不在文本里的，只进 think 关。 每行一条训练记录（dataset + record_id，对应各来源的派生版本；alimeeting_sdm 是原版本；record_id 是 open-audio-llm 加载后的记录 ID， WenetSpeech、VITW 为 <dataset>@<version>:train:<supervision id>）：think_on=true 的给出 think， think_on=false 的只能按 think 关训练（not_hit 和规则候选里仍有讲写法的，判定不一的也不确定），未列出的记录是普通样本，think 开时用固定句"这段没有说明字怎么写。"。 WenetSpeech、VITW 按分段训练：原话整段落在哪个分段，该分段才有 think；原话被分段切开的，只有切开后仍是完整"X的X"的那段保留。 执行者看过全部新增规则放出的样本和各只进 think 关原因的抽样，结论写在运行目录 README 的"CoT 生成"一节。 还没有用于训练
 - `context_correction_clean_zh@think-v2-20261113`：think-v1-20261112 的做法，换到交付配方 v7set34（open-audio-llm runs/ts-robust-acp-20261015）实际训练的版本上：wenetspeech_clean@train-punc-v1-20261102、emilia2_mix@mix-20261013-utts、magicdata_ramc / aishell4 / alimeeting_sdm 的带标点 asr 与 turn-taking utts 版本，以及与清洗时相同的 emilia2_dialog、emilia2_short、vitw。判定由 clean.py transfer 从 context_correction_clean_zh@v1-20261110 迁来（同一批记录按分段 ID 或去掉标点后的文本对应），训练记录对应各自的派生版本 <版本>-ctxclean-20261110（alimeeting_sdm 无改动，用原版本）。原话按带标点的文本截取，去掉边缘句读并补齐成对的引号；每个来源另有按 split 的 think 记录 ID 名单（include_records 上采样用）。执行者看过 v1→v2 有变化的样本和引号配对，结论在运行目录 README“迁到交付配方的版本”一节。还没有用于训练
+- `context_correction_clean_zh@think-v3-20261117`：think-v2-20261113 的 11 个清洗来源和 context_correction_synth_zh@train-v1-20261114 的 think 行，改写成先写线索、再写目标与不写的字；行和 think 开关不变。用于 open-audio-llm runs/zh-ctx-clue-target-20261117 的 clue-target 三组（第 1、2 问）。这个写法没有通过第 1 问的判定，上下文纠偏 SFT 配方仍用 think-v2；登记是为了能复现这几组训练
 - `context_correction_clean_zh@v1-20261110`：清洗对象是 AmphionASR v4 配方里的中文真实口语来源：wenetspeech_podcast、wenetspeech_youtube（l-20261014）、 emilia2_short（short-20261014 与 short-lance-20261023）、emilia2_dialog、emilia2_mix、magicdata_ramc / aishell4 / alimeeting_sdm （asr-20261014 与 turn-taking-20261014）、vitw（2m-20261013）；朗读类（hw_sft 中文部分等）不扫。 找出说话人用组词、拆字、偏旁或否定对比说明字怎么写的句子，由两个不同家族的 LLM 独立判断标注是否与说明一致： 一致的列为正例；两边改法完全相同、只改写法不改读音、说明部分读音经 Qwen3-ASR 核对的才改正；其余隔离、不进训练。 本版本只存判定清单（逐条判定与依据、正例、隔离名单、统计），不是训练集；改正后的训练数据以各来源的派生版本另行登记。 context_correction_zh 评测用过的 190 条 WenetSpeech 播客录音（83,220 段、48.9 h）一并排除。 wenetspeech_podcast 已完成（派生版本 wenetspeech_podcast@l-20261014-ctxclean-20261110）。 会议来源（人工标注）已完成：不做 Qwen3-ASR 音频核对（远场、电话音频上 ASR 不如人工标注准，试跑 4 个音频不符全是 ASR 听错）； 派生版本 magicdata_ramc@asr-20261014-ctxclean-20261110、magicdata_ramc@turn-taking-20261014-ctxclean-20261110、 aishell4@asr-20261014-ctxclean-20261110、aishell4@turn-taking-20261014-ctxclean-20261110；alimeeting_sdm 两个版本没有改动或隔离，继续用原版本。 wenetspeech_youtube 已完成（派生版本 wenetspeech_youtube@l-20261014-ctxclean-20261110）。 vitw 已完成（派生版本 vitw@2m-20261013-ctxclean-20261110，只去掉 3 段存疑，另 2 段已捞回）：音频是加了回声、噪声、丢帧的劣化音频， Qwen3-ASR 识别不出，不做音频核对。 emilia2_dialog 已完成（派生版本 emilia2_dialog@dialog-turn-taking-20261013-enroll-ctxclean-20261110，同时去掉 ts_asr_real 留出的评测源录音）： 混合音频里还有别人说话，音频核对改为在识别结果里找说明、只数标注里没被听到的音节。 emilia2_short 已完成（派生版本 emilia2_short@short-lance-20261023-ctxclean-20261110，音频读 Lance）；m4a 版 short-20261014 已被取代、 音频已删，不出派生版本，只登记它的 exclude_records 名单。 emilia2_mix 已完成（派生版本 emilia2_mix@mix-20261013-ctxclean-20261110，同时去掉 ts_asr_real 留出的评测源录音）： 音频核对读混音协议里目标说话人的干净原片段；抽检发现 8 段改错或多改，改判为隔离。 2026-11-12 捞回：因文本原因隔离、首轮没有模型提出改法的窗口，两个模型再判一次“原标注是否已照说明写对”， 两边都说对、机械检查和音频核对都通过的放回训练（原文不动，不进正例）；执行者逐条看过全部放回的 129 段文本， 判错 6 段、存疑 12 段写进各来源的 review_rejected 名单、仍然隔离，最终放回 111 段不同文本。 2026-11-13 把判定迁到交付配方 v7set34 实际训练的版本（clean.py transfer，不重新判定）：wenetspeech_clean@train-punc-v1-20261102 按分段 ID、emilia2_mix@mix-20261013-utts 与会议带标点版本按去掉标点后的文本对应，改字按字对齐写进带标点的文本，文本对不上的改字窗口隔离；这些来源的判定清单（*_punc、emilia2_mix_utts、wenetspeech_clean）与派生版本一并登记，wenetspeech_clean 同样去掉评测录音
 - 含派生版本（与源数据可能重叠）
 
@@ -1552,7 +1556,7 @@ GRPO 热词挖掘候选（未背过的中文热词提示，含近音易混词）
 | [magicdata_ramc@allspk-ts-v1-20261104-final-v1-20261120](../../catalog/text_final_v1.yaml#L849) | — | 未登记 | 没有 |
 | [magicdata_ramc@allspk-ts-v1-20261104-zhenfix-20261117](../../catalog/zhen_fix.yaml#L837) | — | 未登记 | 没有 |
 | [magicdata_ramc@asr-20261014](../../catalog/amphionasr_v4.yaml#L3157) | — | 未登记 | 没有 |
-| [magicdata_ramc@asr-20261014-ctxclean-20261110](../../catalog/context_correction_clean_zh.yaml#L744) | — | 未登记 | 没有 |
+| [magicdata_ramc@asr-20261014-ctxclean-20261110](../../catalog/context_correction_clean_zh.yaml#L746) | — | 未登记 | 没有 |
 | [magicdata_ramc@clean-dual-pass-20261027](../../catalog/magicdata_ramc_clean_pass.yaml#L1) | 125.0 | 已登记 | 没有 |
 | [magicdata_ramc@clean-dual-qwen-moss-v1-20261008](../../catalog/zh_source_clean.yaml#L663) | 125.0 | 已登记 | 没有 |
 | [magicdata_ramc@diarization-benchmark-v1-20261021](../../catalog/diarization_benchmark.yaml#L275) | 20.6 | 已登记 | 没有 |
@@ -1566,14 +1570,14 @@ GRPO 热词挖掘候选（未背过的中文热词提示，含近音易混词）
 | [magicdata_ramc@speaker-identity-v1-20261028](../../catalog/ramc_speaker_identity.yaml#L2) | 125.0 | 已登记 | 没有 |
 | [magicdata_ramc@teacher-calibration-v1-20261009](../../catalog/diarization_raw_teacher-calibration.yaml#L2) | — | 未登记 | 没有 |
 | [magicdata_ramc@train-punc-v1-20261102](../../catalog/train_punc_v1.yaml#L143) | — | 未登记 | 没有 |
-| [magicdata_ramc@train-punc-v1-20261102-ctxclean-20261110](../../catalog/context_correction_clean_zh.yaml#L2696) | 125.5 | 已登记 | 没有 |
+| [magicdata_ramc@train-punc-v1-20261102-ctxclean-20261110](../../catalog/context_correction_clean_zh.yaml#L2698) | 125.5 | 已登记 | 没有 |
 | [magicdata_ramc@train-punc-v1-20261102-ctxclean-20261110-zhenfix-20261117](../../catalog/zhen_fix.yaml#L587) | 125.5 | 已登记 | 没有 |
 | [magicdata_ramc@train-punc-v1-20261102-final-v1-20261120](../../catalog/text_final_v1.yaml#L737) | — | 未登记 | 没有 |
 | [magicdata_ramc@turn-taking-20261014](../../catalog/amphionasr_v4.yaml#L2884) | 403.5 | 已登记 | 没有 |
-| [magicdata_ramc@turn-taking-20261014-ctxclean-20261110](../../catalog/context_correction_clean_zh.yaml#L947) | 403.5 | 已登记 | 没有 |
+| [magicdata_ramc@turn-taking-20261014-ctxclean-20261110](../../catalog/context_correction_clean_zh.yaml#L949) | 403.5 | 已登记 | 没有 |
 | [magicdata_ramc@turn-taking-20261014-utts](../../catalog/ts_window_utts.yaml#L341) | 41.5 | 已登记 | 没有 |
 | [magicdata_ramc@turn-taking-20261014-utts-punc-20261102](../../catalog/train_punc_v1_derived.yaml#L1161) | — | 未登记 | 没有 |
-| [magicdata_ramc@turn-taking-20261014-utts-punc-20261102-ctxclean-20261110](../../catalog/context_correction_clean_zh.yaml#L2764) | 337.1 | 已登记 | 没有 |
+| [magicdata_ramc@turn-taking-20261014-utts-punc-20261102-ctxclean-20261110](../../catalog/context_correction_clean_zh.yaml#L2766) | 337.1 | 已登记 | 没有 |
 | [magicdata_ramc@turn-taking-20261014-utts-punc-20261102-ctxclean-20261110-zhenfix-20261117](../../catalog/zhen_fix.yaml#L658) | 337.1 | 已登记 | 没有 |
 | [magicdata_ramc@turn-taking-20261014-utts-punc-20261102-final-v1-20261120](../../catalog/text_final_v1.yaml#L258) | — | 未登记 | 没有 |
 
@@ -2021,7 +2025,7 @@ VITW 中文远场转写训练数据
 | [wenetspeech_clean@punc-teacher-v1-20261029](../../catalog/punc_teacher_v1.yaml#L2) | 44.7 | 已登记 | 没有 |
 | [wenetspeech_clean@punc-written-v1-20261029](../../catalog/zh_punc_written_v1.yaml#L792) | 9,971.1 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/wenetspeech_clean/` |
 | [wenetspeech_clean@train-punc-v1-20261102](../../catalog/train_punc_v1_wenetspeech.yaml#L2) | — | 未登记 | 没有 |
-| [wenetspeech_clean@train-punc-v1-20261102-ctxclean-20261110](../../catalog/context_correction_clean_zh.yaml#L2521) | 9,919.3 | 已登记 | 没有 |
+| [wenetspeech_clean@train-punc-v1-20261102-ctxclean-20261110](../../catalog/context_correction_clean_zh.yaml#L2523) | 9,919.3 | 已登记 | 没有 |
 | [wenetspeech_clean@train-punc-v1-20261102-ctxclean-20261110-zhenfix-20261119](../../catalog/zhen_fix_wenetspeech.yaml#L3) | 9,919.3 | 已登记 | 没有 |
 | [wenetspeech_clean@train-punc-v1-20261102-final-v1-20261120](../../catalog/text_final_v1.yaml#L342) | — | 未登记 | 没有 |
 | [wenetspeech_test_meeting@eval-20260804](../../catalog/open_audio_eval.yaml#L764) | 15.2 | 已登记 | 快照 20260914、`amphion-audio-backup-1373259071:audio-data-contract/datasets/wenetspeech/` |
@@ -2126,7 +2130,7 @@ WenetSpeech L 中的播客部分
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
 | [wenetspeech_podcast@l-20261014](../../catalog/amphionasr_v4.yaml#L3722) | 3,892.3 | 已登记 | 没有 |
-| [wenetspeech_podcast@l-20261014-ctxclean-20261110](../../catalog/context_correction_clean_zh.yaml#L672) | 3,840.9 | 已登记 | 没有 |
+| [wenetspeech_podcast@l-20261014-ctxclean-20261110](../../catalog/context_correction_clean_zh.yaml#L674) | 3,840.9 | 已登记 | 没有 |
 
 - `wenetspeech_podcast@l-20261014`：WenetSpeech L 集按录音路径分成 YouTube 或 podcast。这是全集，不是 replay 的 3000 小时抽样
 - `wenetspeech_podcast@l-20261014-ctxclean-20261110`：在 wenetspeech_podcast@l-20261014 上做的上下文纠偏清洗：说话人讲字怎么写（组词、拆字、偏旁、否定对比）而标注写成同音别字的， 按说明改正；拿不准的窗口整窗去掉；context_correction_zh 评测用过的录音整条去掉。判定依据见 context_correction_clean_zh@v1-20261110。 改正抽检 45 段文本，明确改错 2 段、改后仍矛盾或存疑 4 段，均已改判为隔离；未抽到的改正估计约 4% 改错
@@ -2172,7 +2176,7 @@ WenetSpeech L 中的 YouTube 部分
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
 | [wenetspeech_youtube@l-20261014](../../catalog/amphionasr_v4.yaml#L3774) | 6,113.1 | 已登记 | 没有 |
-| [wenetspeech_youtube@l-20261014-ctxclean-20261110](../../catalog/context_correction_clean_zh.yaml#L1813) | 6,112.6 | 已登记 | 没有 |
+| [wenetspeech_youtube@l-20261014-ctxclean-20261110](../../catalog/context_correction_clean_zh.yaml#L1815) | 6,112.6 | 已登记 | 没有 |
 
 - `wenetspeech_youtube@l-20261014`：WenetSpeech L 集按录音路径分成 YouTube 或 podcast。这是全集，不是 replay 的 3000 小时抽样
 - `wenetspeech_youtube@l-20261014-ctxclean-20261110`：在 wenetspeech_youtube@l-20261014 上做的上下文纠偏清洗：说话人讲字怎么写（组词、拆字、偏旁、否定对比）而标注写成同音别字的，按说明改正；拿不准的窗口整窗去掉。判定依据见 context_correction_clean_zh@v1-20261110。标注是机器转写；隔离里约 6 成是误杀（多为字谜和照实写的结构说明），总量 0.55 h；2026-11-12 捞回 86 段，仍去掉 630 段（0.49 h）
@@ -2452,7 +2456,7 @@ Emilia2 中英对话的轮流说话目标说话人数据
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
 | [emilia2_dialog@dialog-turn-taking-20261013-enroll](../../catalog/amphionasr_v4.yaml#L1713) | 15,172.8 | 已登记 | 没有 |
-| [emilia2_dialog@dialog-turn-taking-20261013-enroll-ctxclean-20261110](../../catalog/context_correction_clean_zh.yaml#L1473) | 15,031.0 | 已登记 | 没有 |
+| [emilia2_dialog@dialog-turn-taking-20261013-enroll-ctxclean-20261110](../../catalog/context_correction_clean_zh.yaml#L1475) | 15,031.0 | 已登记 | 没有 |
 | [emilia2_dialog@dialog-turn-taking-20261013-enroll-ctxclean-20261110-zhenfix-20261117](../../catalog/zhen_fix.yaml#L186) | 15,031.0 | 已登记 | 没有 |
 | [emilia2_dialog@dialog-turn-taking-20261013-enroll-final-v1-20261120](../../catalog/text_final_v1.yaml#L144) | — | 未登记 | 没有 |
 
@@ -2471,9 +2475,9 @@ Emilia2 长音频合成的 2/3 人目标说话人混合
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
 | [emilia2_mix@mix-20261013](../../catalog/amphionasr_v4.yaml#L2084) | 35,744.6 | 已登记 | 没有 |
-| [emilia2_mix@mix-20261013-ctxclean-20261110](../../catalog/context_correction_clean_zh.yaml#L1968) | 35,692.0 | 已登记 | 没有 |
+| [emilia2_mix@mix-20261013-ctxclean-20261110](../../catalog/context_correction_clean_zh.yaml#L1970) | 35,692.0 | 已登记 | 没有 |
 | [emilia2_mix@mix-20261013-utts](../../catalog/ts_window_utts.yaml#L428) | 24,358.4 | 已登记 | 没有 |
-| [emilia2_mix@mix-20261013-utts-ctxclean-20261110](../../catalog/context_correction_clean_zh.yaml#L2591) | 17,111.7 | 已登记 | 没有 |
+| [emilia2_mix@mix-20261013-utts-ctxclean-20261110](../../catalog/context_correction_clean_zh.yaml#L2593) | 17,111.7 | 已登记 | 没有 |
 | [emilia2_mix@mix-20261013-utts-ctxclean-20261110-zhenfix-20261117](../../catalog/zhen_fix.yaml#L3) | 17,111.7 | 已登记 | 没有 |
 | [emilia2_mix@mix-20261013-utts-final-v1-20261120](../../catalog/text_final_v1.yaml#L115) | — | 未登记 | 没有 |
 
@@ -2495,7 +2499,7 @@ Emilia2 中英短音频普通转写
 |---|---:|---|---|
 | [emilia2_short@short-20261014](../../catalog/amphionasr_v4.yaml#L2457) | 5,102.9 | 已登记 | 没有 |
 | [emilia2_short@short-lance-20261023](../../catalog/amphionasr_v4.yaml#L3911) | 5,102.9 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/emilia2_short/` |
-| [emilia2_short@short-lance-20261023-ctxclean-20261110](../../catalog/context_correction_clean_zh.yaml#L1881) | 5,096.7 | 已登记 | 没有 |
+| [emilia2_short@short-lance-20261023-ctxclean-20261110](../../catalog/context_correction_clean_zh.yaml#L1883) | 5,096.7 | 已登记 | 没有 |
 | [emilia2_short@short-lance-20261023-ctxclean-20261110-zhenfix-20261117](../../catalog/zhen_fix.yaml#L104) | 5,096.7 | 已登记 | 没有 |
 | [emilia2_short@short-lance-20261023-final-v1-20261120](../../catalog/text_final_v1.yaml#L370) | — | 未登记 | 没有 |
 
@@ -3466,7 +3470,7 @@ TS-ASR 训练用跨语言 TTS 注册音频
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
 | [vitw@2m-20261013](../../catalog/amphionasr_v4.yaml#L3854) | 1,085.4 | 已登记 | 没有 |
-| [vitw@2m-20261013-ctxclean-20261110](../../catalog/context_correction_clean_zh.yaml#L1403) | 1,085.4 | 已登记 | 没有 |
+| [vitw@2m-20261013-ctxclean-20261110](../../catalog/context_correction_clean_zh.yaml#L1405) | 1,085.4 | 已登记 | 没有 |
 | [vitw@2m-20261013-final-v1-20261120](../../catalog/text_final_v1.yaml#L539) | — | 未登记 | 没有 |
 | [vitw@icefall-20260908](../../catalog/icefall_runtime.yaml#L2568) | 1,085.4 | 已登记 | 快照 20260914 |
 | [vitw@legacy-20260804](../../catalog/icefall_base.yaml#L2179) | 1,085.4 | 已登记 | 快照 20260914 |
