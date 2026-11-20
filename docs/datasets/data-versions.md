@@ -1966,6 +1966,7 @@ VITW 中文远场转写训练数据
 | [wenetspeech_clean@punc-written-v1-20261029](../../catalog/zh_punc_written_v1.yaml#L792) | 9,971.1 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/wenetspeech_clean/` |
 | [wenetspeech_clean@train-punc-v1-20261102](../../catalog/train_punc_v1_wenetspeech.yaml#L2) | — | 未登记 | 没有 |
 | [wenetspeech_clean@train-punc-v1-20261102-ctxclean-20261110](../../catalog/context_correction_clean_zh.yaml#L2521) | 9,919.3 | 已登记 | 没有 |
+| [wenetspeech_clean@train-punc-v1-20261102-ctxclean-20261110-zhenfix-20261119](../../catalog/zhen_fix_wenetspeech.yaml#L3) | — | 未登记 | 没有 |
 | [wenetspeech_test_meeting@eval-20260804](../../catalog/open_audio_eval.yaml#L764) | 15.2 | 已登记 | 快照 20260914、`amphion-audio-backup-1373259071:audio-data-contract/datasets/wenetspeech/` |
 | [wenetspeech_test_net@eval-20260804](../../catalog/open_audio_eval.yaml#L729) | 23.1 | 已登记 | 快照 20260914、`amphion-audio-backup-1373259071:audio-data-contract/datasets/wenetspeech/` |
 | [wenetspeech_traffic_snr0@icefall-20260908](../../catalog/icefall_runtime.yaml#L3900) | — | 未登记 | 快照 20260914、`amphion-audio-backup-1373259071:audio-data-contract/datasets/wenetspeech/` |
@@ -1987,6 +1988,7 @@ VITW 中文远场转写训练数据
 - `wenetspeech_clean@punc-written-v1-20261029`：wenetspeech_clean@clean-v3-20260828 训练集原标注加书面化标点（GB/T 15834，逗号从紧）：微调后的 Qwen3-4B（Qwen3.8-27B 的 9.6 万条输出蒸馏）以 Qwen3-ASR-1.7B 听音频得到的带标点转写作语气提示，只往原标注里插标点。模型改动了原文的条目，把模型输出的标点按字对齐搬回原标注；每条以 。？！ 结尾；原标注的字、空格（首尾除外）和大小写不变。没有汉字的条目（英文句子、拼读字母）和标注为空的条目原样保留。文件与源 supervisions 条数、顺序相同，只换 text。试点 200 条人工参照上：WenetSpeech markF1 92.4、其他来源 88.9（老师 93.2 / 88.2，原 FireRedPunc 79.8）。本数据的条目与 wenetspeech（原始 L 标注）同序，标注不同的 244,507 条即 wenetspeech_disfluency，标点取自这两者的结果
 - `wenetspeech_clean@train-punc-v1-20261102`：wenetspeech_clean@clean-v3-pass-20261027 的 train 训练版本，目标文本换成带标点的写法（按 id 取自 datasets/wenetspeech_clean/versions/punc-written-v1-20261029/wenetspeech_supervisions_L_clean_punc_written.jsonl.gz；去掉标点和空格、转小写后与原文一致才替换，否则保留原文）。其余字段与源版本相同，录音引用源版本
 - `wenetspeech_clean@train-punc-v1-20261102-ctxclean-20261110`：在 wenetspeech_clean@train-punc-v1-20261102 上做的上下文纠偏清洗：说话人讲字怎么写（组词、拆字、偏旁、否定对比）而标注写成同音别字的，按说明改正；拿不准的窗口整窗去掉。判定依据见 context_correction_clean_zh@v1-20261110。判定迁自本清洗对 wenetspeech_podcast / wenetspeech_youtube@l-20261014 的判定（clean.py transfer：按分段 ID 对应，去掉标点后文本相同才迁改字，改字窗口文本对不上的整窗隔离），并去掉 context_correction_zh 评测录音
+- `wenetspeech_clean@train-punc-v1-20261102-ctxclean-20261110-zhenfix-20261119`：wenetspeech_clean@train-punc-v1-20261102-ctxclean-20261110 的训练文本里，说话人说英文、标注写成汉字的句子（音译如 艾特斯→iTunes，意译如 派对→party）按 audio-data-contract docs/reference/zh-en-transcription.md 规则 1 换回英文。候选来自 Qwen3-ASR-1.7B 听出英文、标注缺这个英文的 24,336 句，由 LLM 初判类别，再用其他 ASR 模型听音频核对；原文本存进 custom.zhen_fix。其余字段、音频引用照旧。构建中
 - 含派生版本（与源数据可能重叠）
 
 ### wenetspeech4tts
