@@ -72,7 +72,7 @@
     evidence: zhen_fix_patches
   provenance:
     summary: WenetSpeech 训练文本英文写法修正
-    description: wenetspeech_clean@train-punc-v1-20261102-ctxclean-20261110 的训练文本里，说话人说英文、标注写成汉字的句子按 audio-data-contract docs/reference/zh-en-transcription.md 规则 1 换回英文（例：艾特斯→iTunes、五本儿→Uber、对抗→PK，标注漏写的补上：那边的办公室→那边的office办公室）。候选是 Qwen3-ASR-1.7B 听出英文、标注缺这个英文的 24,336 句；whisper-large-v3 和强制中文的 Qwen3-ASR-1.7B 都听出同一个英文才改。通行的人名、地名译名和外来词（大卫、弗洛格、纽约、派对）照中文念和英文发音相近，识别模型分不出来，不改。FireRedASR2-AED 训练时见过本数据的标注，不作依据。共改 3,727 条，原文本存进 custom.zhen_fix；其余字段、录音清单和音频照旧，引用底版本的产物。
+    description: wenetspeech_clean@train-punc-v1-20261102-ctxclean-20261110 的训练文本里，说话人说英文、标注写成汉字的句子按 audio-data-contract docs/reference/zh-en-transcription.md 规则 1 换回英文（例：艾特斯→iTunes、五本儿→Uber、对抗→PK，标注漏写的补上：那边的办公室→那边的office办公室）。候选是 Qwen3-ASR-1.7B 听出英文、标注缺这个英文的 24,336 句；whisper-large-v3 和强制中文的 Qwen3-ASR-1.7B 都听出同一个英文才改。通行的人名、地名译名和外来词（大卫、弗洛格、纽约、派对）照中文念和英文发音相近，识别模型分不出来，不改。FireRedASR2-AED 的转写大多照抄标注里的汉字（品牌名只有约 8% 写成英文），听不出这类错误，不作依据。共改 3,727 条，原文本存进 custom.zhen_fix；其余字段、录音清单和音频照旧，引用底版本的产物。
     owner: mingdong
     snapshot_date: '2026-11-20'
     source: wenetspeech_clean@train-punc-v1-20261102-ctxclean-20261110
