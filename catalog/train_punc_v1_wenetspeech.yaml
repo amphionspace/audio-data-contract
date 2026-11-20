@@ -60,4 +60,4 @@
     owner: mingdong
     description: wenetspeech_clean@clean-v3-pass-20261027 的 train 训练版本，目标文本换成带标点的写法（按 id 取自 datasets/wenetspeech_clean/versions/punc-written-v1-20261029/wenetspeech_supervisions_L_clean_punc_written.jsonl.gz；去掉标点和空格、转小写后与原文一致才替换，否则保留原文）。其余字段与源版本相同，录音引用源版本。
     source: wenetspeech_clean@clean-v3-pass-20261027
-
+    superseded_by: wenetspeech_clean@train-punc-v1-20261102-final-v1-20261120

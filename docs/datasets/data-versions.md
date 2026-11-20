@@ -92,13 +92,13 @@ AudioSet 背景声场景描述评测集
 | [chime6@openslr-150-source-20260911](../../catalog/chime6.yaml#L1) | — | 未登记 | 快照 20260914 |
 | [chime6@speaker-records-v1-20260912](../../catalog/chime6.yaml#L150) | 56.3 | 已登记 | 快照 20260914 |
 | [chime6@turn-taking-20261014](../../catalog/amphionasr_v4.yaml#L1365) | 174.5 | 已登记 | 没有 |
-| [chime6@turn-taking-20261014-final-v1-20261120](../../catalog/text_final_v1.yaml#L286) | — | 未登记 | 没有 |
+| [chime6@turn-taking-20261014-final-v1-20261120](../../catalog/text_final_v1.yaml#L1361) | 174.5 | 已登记 | 没有 |
 
 - `chime6@meeting-windows-v1-20261008`：CHiME-6 真实会议的说话人归属 ASR 窗口（aligned_utterance_timestamps_v1）：人工标注的说话人和时间，mean of the 4 channels of array U01；转写为官方文字原样，只去空白，保留 [noise]、[laughs]、[inaudible] 标记。按 30 / 120 / 300 / 600 s 切窗，每个 split 的 records 一行一个窗口，turns 在 metadata。训练集上整窗目标超过上下文的 113 个窗口和空转写的 4 个窗口列在 train_excluded_windows（导出时已丢弃，不在 records 里）。标注更正 annotation_corrections：eval S21 第 1959 行开始晚于结束，强制对齐不可靠，整行排除，复核对齐结果在 test_correction_alignments。音频是 U01 阵列 4 路的平均（16 kHz 单声道），源数据集里没有，已按原字节复制 20 个文件到本版本 audio/ 下，由 *-audio-index 引用。没有清洗通过标记，也没有伪造。脚本 scripts/diarization_raw_labels/register_raw_labels.py
 - `chime6@openslr-150-source-20260911`：家庭聚会中的多通道远场和重叠语音；包含音频、官方转写、房间布局和许可文件。 官方转写原包保留尾随字节问题；标注入口使用解压内容不变、通过 CRC 校验的修复归档
 - `chime6@speaker-records-v1-20260912`：已解包、实测音频头并生成通用说话人记录；保留官方划分和标注
 - `chime6@turn-taking-20261014`：会议 turn-taking。整句拼成 2/3 人混合窗，时长 0.5～30 秒。注册音是窗外另一句，1～30 秒。有近场时远场:近场 = 3:1
-- `chime6@turn-taking-20261014-final-v1-20261120`：chime6@turn-taking-20261014（交付配方 v7set34 训练用的版本）的训练文本终版，按 docs/reference/training-text.md（v1） 应用全部已执行的文本修正，起点 chime6@turn-taking-20261014。构建中
+- `chime6@turn-taking-20261014-final-v1-20261120`：chime6@turn-taking-20261014（交付配方 v7set34 训练用的版本）的训练文本终版，按 audio-data-contract docs/reference/training-text.md（v1） 应用全部已执行的文本修正，替代配方原来的版本和中间修正版本。起点 chime6@turn-taking-20261014；已含修正：无（各轮修正对本数据都没有改动）。其余字段、录音清单和音频照旧，引用起点版本的产物
 - 含派生版本（与源数据可能重叠）
 
 ### common_voice_en
@@ -115,8 +115,7 @@ Common Voice 英语众包朗读；含清洗、热词、加噪版
 | [common_voice_en@legacy-20260804](../../catalog/icefall_base.yaml#L263) | 1,862.7 | 已登记 | 快照 20260914 |
 | [common_voice_en@punc-teacher-v1-20261102](../../catalog/punc_teacher_v1.yaml#L951) | 39.4 | 已登记 | 没有 |
 | [common_voice_en@punc-written-en-v1-20261102](../../catalog/en_punc_written_v1.yaml#L122) | — | 未登记 | 没有 |
-| [common_voice_en@train-punc-v1-20261102](../../catalog/train_punc_v1_more.yaml#L99) | — | 未登记 | 没有 |
-| [common_voice_en@train-punc-v1-20261102-final-v1-20261120](../../catalog/text_final_v1.yaml#L399) | — | 未登记 | 没有 |
+| [common_voice_en@train-punc-v1-20261102-final-v1-20261120](../../catalog/text_final_v1.yaml#L1898) | — | 未登记 | 没有 |
 | [commonvoice_en@eval-20260804](../../catalog/open_audio_eval.yaml#L280) | 27.2 | 已登记 | 快照 20260914 |
 | [commonvoice_en_clean@clean-v1-20260805](../../catalog/local_lhotse_derived.yaml#L311) | 1,835.4 | 已登记 | 快照 20260914 |
 | [commonvoice_en_hotwords@eval-20260804](../../catalog/open_audio_eval.yaml#L350) | 27.2 | 已登记 | 快照 20260914、`amphion-audio-backup-1373259071:audio-data-contract/datasets/commonvoice_en_hotwords/` |
@@ -149,10 +148,10 @@ Common Voice 英语众包朗读；含清洗、热词、加噪版
 - `common_voice_en@hotwords-v1-20261102`：common_voice_en@train-punc-v1-20261102 中被 TS 场景池（open-audio-llm 训练配方 train-data-v7set30）用作目标或干扰语音的句子，带热词标注：custom.hotwords 是这句里说到的热词，按本行文本的写法（英文按整词匹配、不分大小写，所有格算同一个词；本行文本里找不到的词去掉）；custom.hotword_labeling 记标注来源、标注时看到的文本和模型原始抽取。314807 句里 144126 句有热词，其中 137676 句复用 hw_sft@hw-20261014 的已有标注。只含标过的句子，文本与父版本相同；录音沿用父版本，不复制音频。脚本 scripts/ts_hotwords/register_hotwords.py，标注工具 scripts/ts_hotwords/label_hotwords.py
 - `common_voice_en@punc-teacher-v1-20261102`：common_voice_en@legacy-20260804 的 train 监督片段里的 Qwen3.8-27B 老师给 25000 句加的英文标点（24624 句去掉标点后与输入一致，ok=true）：custom.punctuation_teacher 记输出 text、ok 和模型看到的无标点输入 input。这批句子用来微调 Qwen3-4B 学生，抽样见 amphiondata scripts/punctuation/build_teacher_set_en.py。只含这些句子，text 与父版本相同，不是标点后的文本；录音沿用父版本，不复制音频。中间产物，供复现和比较学生，不直接用于训练。脚本 scripts/punctuation/register_punc_intermediates.py
 - `common_voice_en@punc-written-en-v1-20261102`：common_voice_en@legacy-20260804 训练集原标注加英文书面化标点并恢复大小写（规范 en-v1，amphiondata written_punctuation_en）：Qwen3.8-27B 给 10 万条加标点，蒸馏到 Qwen3-4B 学生（LoRA）跑全量，不带听音提示。只插 , . ? ! ; : 和改大小写，转小写去标点后与原标注逐词一致；模型改了词的条目退回原标注只加句号；代词 I 统一大写，首字母大写，每条以 . ? ! 结尾。文件与源 supervisions 条数、顺序相同，只换 text；导出后逐条回读核对
-- `common_voice_en@train-punc-v1-20261102`：common_voice_en@legacy-20260804 的 train 训练版本，目标文本换成带标点的写法（按 id 取自 datasets/common_voice_en/versions/punc-written-en-v1-20261102/cv-en_supervisions_train_cleaned_punc_written.jsonl.gz；去掉标点和空格、转小写后与原文一致才替换，否则保留原文）。其余字段与源版本相同，录音引用源版本
-- `common_voice_en@train-punc-v1-20261102-final-v1-20261120`：common_voice_en@train-punc-v1-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 docs/reference/training-text.md（v1） 应用全部已执行的文本修正，起点 common_voice_en@train-punc-v1-20261102。构建中
+- `common_voice_en@train-punc-v1-20261102-final-v1-20261120`：common_voice_en@train-punc-v1-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 audio-data-contract docs/reference/training-text.md（v1） 应用全部已执行的文本修正，替代配方原来的版本和中间修正版本。起点 common_voice_en@train-punc-v1-20261102；已含修正：无（各轮修正对本数据都没有改动）。其余字段、录音清单和音频照旧，引用起点版本的产物
 - `commonvoice_en_clean@clean-v1-20260805`：Qwen3-ASR-1.7B + whisper-large-v3 双引擎筛选；train 需过滤 1,127 条失败记录；test 清单尚未应用筛选结果
 - 含派生版本（与源数据可能重叠）
+- 已并入的旧版本：`common_voice_en@train-punc-v1-20261102`（COS：没有）
 
 ### coraal
 
@@ -304,10 +303,10 @@ Emilia 英语野外语音（已清洗）
 |---|---:|---|---|
 | [fleurs_en@hf-70bb2e84b976](../../catalog/multilingual_asr_sources.yaml#L137) | 1.8 | 已登记 | 没有 |
 | [fleurs_en@legacy](../../catalog/legacy_multilingual.yaml#L847) | 10.3 | 已登记 | 快照 20260914 |
-| [fleurs_en@legacy-final-v1-20261120](../../catalog/text_final_v1.yaml#L989) | — | 未登记 | 没有 |
+| [fleurs_en@legacy-final-v1-20261120](../../catalog/text_final_v1.yaml#L3536) | 10.3 | 已登记 | 没有 |
 
 - `fleurs_en@hf-70bb2e84b976`：Google FLEURS 的 en_us 子集（音频归档和 TSV 转写），只下载了 test，与 fleurs_pt 同一修订
-- `fleurs_en@legacy-final-v1-20261120`：fleurs_en@legacy（交付配方 v7set34 训练用的版本）的训练文本终版，按 docs/reference/training-text.md（v1） 应用全部已执行的文本修正，起点 fleurs_en@legacy。构建中
+- `fleurs_en@legacy-final-v1-20261120`：fleurs_en@legacy（交付配方 v7set34 训练用的版本）的训练文本终版，按 audio-data-contract docs/reference/training-text.md（v1） 应用全部已执行的文本修正，替代配方原来的版本和中间修正版本。起点 fleurs_en@legacy；已含修正：无（各轮修正对本数据都没有改动）。其余字段、录音清单和音频照旧，引用起点版本的产物
 - 有含标点版本
 - 含派生版本（与源数据可能重叠）
 
@@ -324,17 +323,16 @@ Emilia 英语野外语音（已清洗）
 | [gigaspeech@legacy-20260804](../../catalog/icefall_base.yaml#L190) | 10,050.7 | 已登记 | 快照 20260914 |
 | [gigaspeech@punc-teacher-v1-20261102](../../catalog/punc_teacher_v1.yaml#L895) | 54.7 | 已登记 | 没有 |
 | [gigaspeech@punc-written-en-v1-20261102](../../catalog/en_punc_written_v1.yaml#L72) | — | 未登记 | 没有 |
-| [gigaspeech@train-punc-v1-20261102](../../catalog/train_punc_v1_more.yaml#L160) | — | 未登记 | 没有 |
-| [gigaspeech@train-punc-v1-20261102-final-v1-20261120](../../catalog/text_final_v1.yaml#L314) | — | 未登记 | 没有 |
+| [gigaspeech@train-punc-v1-20261102-final-v1-20261120](../../catalog/text_final_v1.yaml#L1668) | — | 未登记 | 没有 |
 | [gigaspeech@youtube-diarize-census-v1-20261009](../../catalog/diarization_raw_gigaspeech-census.yaml#L2) | — | 未登记 | 没有 |
 | [gigaspeech@legacy-20260804](../../catalog/icefall_base.yaml#L190) | 10,000.0 | [参考表](https://ccnuebbmik1f.feishu.cn/wiki/CEXFwEjPoi2bIukVjk9c5FdOn12?sheet=3d4d23) | 快照 20260914 |
 
 - `gigaspeech@punc-teacher-v1-20261102`：gigaspeech@legacy-20260804 的 train 监督片段里的 Qwen3.8-27B 老师给 45000 句加的英文标点（44168 句去掉标点后与输入一致，ok=true）：custom.punctuation_teacher 记输出 text、ok 和模型看到的无标点输入 input。这批句子用来微调 Qwen3-4B 学生，抽样见 amphiondata scripts/punctuation/build_teacher_set_en.py。只含这些句子，text 与父版本相同，不是标点后的文本；录音沿用父版本，不复制音频。中间产物，供复现和比较学生，不直接用于训练。脚本 scripts/punctuation/register_punc_intermediates.py
 - `gigaspeech@punc-written-en-v1-20261102`：gigaspeech@legacy-20260804 训练集原标注加英文书面化标点并恢复大小写（规范 en-v1，amphiondata written_punctuation_en）：Qwen3.8-27B 给 10 万条加标点，蒸馏到 Qwen3-4B 学生（LoRA）跑全量，不带听音提示。只插 , . ? ! ; : 和改大小写，转小写去标点后与原标注逐词一致；模型改了词的条目退回原标注只加句号；代词 I 统一大写，首字母大写，每条以 . ? ! 结尾。文件与源 supervisions 条数、顺序相同，只换 text；导出后逐条回读核对
-- `gigaspeech@train-punc-v1-20261102`：gigaspeech@legacy-20260804 的 train 训练版本，目标文本换成带标点的写法（按 id 取自 datasets/gigaspeech/versions/punc-written-en-v1-20261102/gigaspeech_supervisions_XL_punc_written.jsonl.gz；去掉标点和空格、转小写后与原文一致才替换，否则保留原文）。其余字段与源版本相同，录音引用源版本
-- `gigaspeech@train-punc-v1-20261102-final-v1-20261120`：gigaspeech@train-punc-v1-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 docs/reference/training-text.md（v1） 应用全部已执行的文本修正，起点 gigaspeech@train-punc-v1-20261102。构建中
+- `gigaspeech@train-punc-v1-20261102-final-v1-20261120`：gigaspeech@train-punc-v1-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 audio-data-contract docs/reference/training-text.md（v1） 应用全部已执行的文本修正，替代配方原来的版本和中间修正版本。起点 gigaspeech@train-punc-v1-20261102；已含修正：无（各轮修正对本数据都没有改动）。其余字段、录音清单和音频照旧，引用起点版本的产物
 - `gigaspeech@youtube-diarize-census-v1-20261009`：GigaSpeech XL 全部 YouTube 录音（YOU*，21,472 条 / 11,765.9 h）的说话人数普查，只做了一小部分，占位登记，不要用于训练。2026-10-09 用本机 MOSS-Transcribe-Diarize 0.9B 整条打说话人和文本，完成 1082 条成功（共 1087 行，含失败待重试），约占计划 5%；Qwen3-ASR 文本校验只做了 36 条。用户决定先做中文，英文暂缓，没有继续。local_moss_records：每行一条录音，target 是按时间排序的 [说话人][起-止] 文本，metadata.local_moss 保留教师返回的分块、说话人链接、身份断点和 speaker_census（三种说话人数：global_labels 偏高、global_active、max_chunk_active）。qwen3_asr_en_records：Qwen3-ASR 对 MOSS 片段的转写（metadata.qwen3_asr_en）。audio_slots 指向本版本 youtube_xl_recordings 里的同名录音。脚本 scripts/diarization_raw_labels/register_raw_labels.py
 - 含派生版本（与源数据可能重叠）
+- 已并入的旧版本：`gigaspeech@train-punc-v1-20261102`（COS：没有）
 
 ### hifitts
 
@@ -472,19 +470,18 @@ LibriSpeech 混合的目标说话人数据
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
 | [librimix@960-current-audio-record-20260910](../../catalog/librimix.yaml#L156) | 6,921.9 | 已登记：按目标样本累计混合音频，非去重语料时长 | 快照 20260914 |
-| [librimix@960-current-audio-record-20260910-punc-20261102](../../catalog/train_punc_v1_derived.yaml#L191) | — | 未登记 | 没有 |
-| [librimix@960-current-audio-record-20260910-punc-20261102-final-v1-20261120](../../catalog/text_final_v1.yaml#L30) | — | 未登记 | 没有 |
+| [librimix@960-current-audio-record-20260910-punc-20261102-final-v1-20261120](../../catalog/text_final_v1.yaml#L137) | — | 未登记 | 没有 |
 | [librimix@960-current-source-20260910](../../catalog/librimix.yaml#L1) | — | 未登记 | 快照 20260914 |
 | [librimix@960-legacy-audio-record-20260910](../../catalog/librimix.yaml#L483) | 6,865.5 | 已登记：按目标样本累计混合音频，非去重语料时长 | 快照 20260914 |
 | [librimix@960-legacy-source-20260910](../../catalog/librimix.yaml#L440) | — | 未登记 | 快照 20260914 |
 
 - `librimix@960-current-audio-record-20260910`：LibriMix_960 当前训练与测试（英文小写）；纯转写、独立 enrollment/mixture、空转写负样本
-- `librimix@960-current-audio-record-20260910-punc-20261102`：librimix@960-current-audio-record-20260910 的 train_1spk, train_2spk, train_3spk, train_neg，目标文本加书面化标点：中文用 amphiondata 的中文学生模型（punc-student-v1，不带听音提示），英文用英文规范 en-v1 的学生模型（加标点并恢复大小写）；标点按字 / 按词搬回原文，原文的字词不变，找不到输出的目标保留原样。其余字段与源版本相同，音频引用源版本
-- `librimix@960-current-audio-record-20260910-punc-20261102-final-v1-20261120`：librimix@960-current-audio-record-20260910-punc-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 docs/reference/training-text.md（v1） 应用全部已执行的文本修正，起点 librimix@960-current-audio-record-20260910-punc-20261102。构建中
+- `librimix@960-current-audio-record-20260910-punc-20261102-final-v1-20261120`：librimix@960-current-audio-record-20260910-punc-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 audio-data-contract docs/reference/training-text.md（v1） 应用全部已执行的文本修正，替代配方原来的版本和中间修正版本。起点 librimix@960-current-audio-record-20260910-punc-20261102；已含修正：无（各轮修正对本数据都没有改动）。其余字段、录音清单和音频照旧，引用起点版本的产物
 - `librimix@960-current-source-20260910`：LibriMix_960 当前训练与测试（英文小写）；转换输入快照，时长见通用版本
 - `librimix@960-legacy-audio-record-20260910`：LibriMix_960 历史训练入口（保留原英文大小写）；纯转写、独立 enrollment/mixture、空转写负样本
 - `librimix@960-legacy-source-20260910`：LibriMix_960 历史训练入口（保留原英文大小写）；转换输入快照，时长见通用版本
 - 含派生版本（与源数据可能重叠）
+- 已并入的旧版本：`librimix@960-current-audio-record-20260910-punc-20261102`（COS：没有）
 
 ### librispeech
 
@@ -500,8 +497,7 @@ LibriSpeech 混合的目标说话人数据
 | [librispeech@legacy-20260804](../../catalog/icefall_base.yaml#L1) | 971.6 | 已登记 | 快照 20260914 |
 | [librispeech@punc-teacher-v1-20261102](../../catalog/punc_teacher_v1.yaml#L1007) | 51.2 | 已登记 | 没有 |
 | [librispeech@punc-written-en-v1-20261102](../../catalog/en_punc_written_v1.yaml#L2) | — | 未登记 | 没有 |
-| [librispeech@train-punc-v1-20261102](../../catalog/train_punc_v1_more.yaml#L2) | — | 未登记 | 没有 |
-| [librispeech@train-punc-v1-20261102-final-v1-20261120](../../catalog/text_final_v1.yaml#L597) | — | 未登记 | 没有 |
+| [librispeech@train-punc-v1-20261102-final-v1-20261120](../../catalog/text_final_v1.yaml#L2394) | — | 未登记 | 没有 |
 | [librispeech_test_clean@eval-20260804](../../catalog/open_audio_eval.yaml#L665) | 5.4 | 已登记 | 快照 20260914 |
 | [librispeech_test_clean_hotwords@eval-20260804](../../catalog/open_audio_eval.yaml#L510) | 5.4 | 已登记 | 快照 20260914 |
 | [librispeech_test_other@eval-20260804](../../catalog/open_audio_eval.yaml#L697) | 5.3 | 已登记 | 快照 20260914 |
@@ -521,9 +517,9 @@ LibriSpeech 混合的目标说话人数据
 - `librispeech@hotwords-v1-20261102`：librispeech@train-punc-v1-20261102 中被 TS 场景池（open-audio-llm 训练配方 train-data-v7set30）用作目标或干扰语音的句子，带热词标注：custom.hotwords 是这句里说到的热词，按本行文本的写法（英文按整词匹配、不分大小写，所有格算同一个词；本行文本里找不到的词去掉）；custom.hotword_labeling 记标注来源、标注时看到的文本和模型原始抽取。47421 句里 13808 句有热词。只含标过的句子，文本与父版本相同；录音沿用父版本，不复制音频。脚本 scripts/ts_hotwords/register_hotwords.py，标注工具 scripts/ts_hotwords/label_hotwords.py
 - `librispeech@punc-teacher-v1-20261102`：librispeech@legacy-20260804 的 train 监督片段里的 Qwen3.8-27B 老师给 15000 句加的英文标点（14436 句去掉标点后与输入一致，ok=true）：custom.punctuation_teacher 记输出 text、ok 和模型看到的无标点输入 input。这批句子用来微调 Qwen3-4B 学生，抽样见 amphiondata scripts/punctuation/build_teacher_set_en.py。只含这些句子，text 与父版本相同，不是标点后的文本；录音沿用父版本，不复制音频。中间产物，供复现和比较学生，不直接用于训练。脚本 scripts/punctuation/register_punc_intermediates.py
 - `librispeech@punc-written-en-v1-20261102`：librispeech@legacy-20260804 训练集原标注加英文书面化标点并恢复大小写（规范 en-v1，amphiondata written_punctuation_en）：Qwen3.8-27B 给 10 万条加标点，蒸馏到 Qwen3-4B 学生（LoRA）跑全量，不带听音提示。只插 , . ? ! ; : 和改大小写，转小写去标点后与原标注逐词一致；模型改了词的条目退回原标注只加句号；代词 I 统一大写，首字母大写，每条以 . ? ! 结尾。文件与源 supervisions 条数、顺序相同，只换 text；导出后逐条回读核对
-- `librispeech@train-punc-v1-20261102`：librispeech@legacy-20260804 的 train 训练版本，目标文本换成带标点的写法（按 id 取自 datasets/librispeech/versions/punc-written-en-v1-20261102/librispeech_supervisions_train-clean-100_punc_written.jsonl.gz, datasets/librispeech/versions/punc-written-en-v1-20261102/librispeech_supervisions_train-clean-360_punc_written.jsonl.gz, datasets/librispeech/versions/punc-written-en-v1-20261102/librispeech_supervisions_train-other-500_punc_written.jsonl.gz；去掉标点和空格、转小写后与原文一致才替换，否则保留原文）。其余字段与源版本相同，录音引用源版本
-- `librispeech@train-punc-v1-20261102-final-v1-20261120`：librispeech@train-punc-v1-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 docs/reference/training-text.md（v1） 应用全部已执行的文本修正，起点 librispeech@train-punc-v1-20261102。构建中
+- `librispeech@train-punc-v1-20261102-final-v1-20261120`：librispeech@train-punc-v1-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 audio-data-contract docs/reference/training-text.md（v1） 应用全部已执行的文本修正，替代配方原来的版本和中间修正版本。起点 librispeech@train-punc-v1-20261102；已含修正：无（各轮修正对本数据都没有改动）。其余字段、录音清单和音频照旧，引用起点版本的产物
 - 含派生版本（与源数据可能重叠）
+- 已并入的旧版本：`librispeech@train-punc-v1-20261102`（COS：没有）
 
 ### libritts_r
 
@@ -870,8 +866,7 @@ VoxPopuli 英语欧洲议会发言
 | [aishell2@punc-gold-v1-20261029](../../catalog/punc_teacher_v1.yaml#L675) | 0.0 | 已登记 | 没有 |
 | [aishell2@punc-teacher-v1-20261029](../../catalog/punc_teacher_v1.yaml#L323) | 8.0 | 已登记 | 没有 |
 | [aishell2@punc-written-v1-20261029](../../catalog/zh_punc_written_v1.yaml#L66) | 1,000.8 | 已登记 | 没有 |
-| [aishell2@train-punc-v1-20261102](../../catalog/train_punc_v1.yaml#L3) | — | 未登记 | 没有 |
-| [aishell2@train-punc-v1-20261102-final-v1-20261120](../../catalog/text_final_v1.yaml#L569) | — | 未登记 | 没有 |
+| [aishell2@train-punc-v1-20261102-final-v1-20261120](../../catalog/text_final_v1.yaml#L2327) | — | 未登记 | 没有 |
 | [aishell2_clean@clean-v1-20260805](../../catalog/local_lhotse_derived.yaml#L723) | 4.0 | 已登记 | 快照 20260914、`amphion-audio-backup-1373259071:audio-data-contract/datasets/aishell2_clean/` |
 | [aishell2_hotwords@eval-20260804](../../catalog/open_audio_eval.yaml#L446) | 4.0 | 已登记 | 快照 20260914、`amphion-audio-backup-1373259071:audio-data-contract/datasets/aishell2_hotwords/` |
 | [aishell2_hotwords@hotwords-v1-20260805](../../catalog/local_lhotse_derived.yaml#L769) | 4.0 | 已登记 | 快照 20260914、`amphion-audio-backup-1373259071:audio-data-contract/datasets/aishell2_hotwords/` |
@@ -882,9 +877,9 @@ VoxPopuli 英语欧洲议会发言
 - `aishell2@punc-gold-v1-20261029`：aishell2@icefall-20260908 的 train 监督片段里的 普通话标点试点的 20 句手写参照标点（规范 v1，逗号从紧）：custom.punctuation_gold.text 是参照，custom.punctuation_hint 记试点用的 Qwen3-ASR 与 FireRedPunc 带标点转写。只含这些句子，text 与父版本相同，不是标点后的文本；录音沿用父版本，不复制音频。中间产物，供复现和比较学生，不直接用于训练。脚本 scripts/punctuation/register_punc_intermediates.py
 - `aishell2@punc-teacher-v1-20261029`：aishell2@icefall-20260908 的 train 监督片段里的 Qwen3.8-27B 老师给 8000 句加的书面化标点（7985 句去掉标点后与输入一致，ok=true）：custom.punctuation_teacher 记输出 text、ok 和模型看到的无标点输入 input；custom.punctuation_hint.qwen 是提示用的 Qwen3-ASR 转写；其中 142 句是留出的评测句，另带学生 v1 的输出 custom.punctuation_student。这批句子用来微调 Qwen3-4B 学生，抽样见 amphiondata scripts/punctuation/build_teacher_set.py。只含这些句子，text 与父版本相同，不是标点后的文本；录音沿用父版本，不复制音频。中间产物，供复现和比较学生，不直接用于训练。脚本 scripts/punctuation/register_punc_intermediates.py
 - `aishell2@punc-written-v1-20261029`：aishell2@icefall-20260908 训练集原标注加书面化标点（GB/T 15834，逗号从紧）：微调后的 Qwen3-4B（Qwen3.8-27B 的 9.6 万条输出蒸馏）以 Qwen3-ASR-1.7B 听音频得到的带标点转写作语气提示，只往原标注里插标点。模型改动了原文的条目，把模型输出的标点按字对齐搬回原标注；每条以 。？！ 结尾；原标注的字、空格（首尾除外）和大小写不变。没有汉字的条目（英文句子、拼读字母）和标注为空的条目原样保留。文件与源 supervisions 条数、顺序相同，只换 text。试点 200 条人工参照上：WenetSpeech markF1 92.4、其他来源 88.9（老师 93.2 / 88.2，原 FireRedPunc 79.8）
-- `aishell2@train-punc-v1-20261102`：aishell2@legacy-20260804 的 train 训练版本，目标文本换成带标点的写法（按 id 取自 datasets/aishell2/versions/punc-written-v1-20261029/aishell2_supervisions_train_punc_written.jsonl.gz；去掉标点和空格、转小写后与原文一致才替换，否则保留原文）。其余字段与源版本相同，录音引用源版本
-- `aishell2@train-punc-v1-20261102-final-v1-20261120`：aishell2@train-punc-v1-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 docs/reference/training-text.md（v1） 应用全部已执行的文本修正，起点 aishell2@train-punc-v1-20261102。构建中
+- `aishell2@train-punc-v1-20261102-final-v1-20261120`：aishell2@train-punc-v1-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 audio-data-contract docs/reference/training-text.md（v1） 应用全部已执行的文本修正，替代配方原来的版本和中间修正版本。起点 aishell2@train-punc-v1-20261102；已含修正：拆开的大写字母连写补齐（zhen-fix-v1，45 条）。其余字段、录音清单和音频照旧，引用起点版本的产物
 - 含派生版本（与源数据可能重叠）
+- 已并入的旧版本：`aishell2@train-punc-v1-20261102`（COS：没有）
 
 ### aishell3
 
@@ -918,15 +913,12 @@ VoxPopuli 英语欧洲议会发言
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
 | [aishell4@allspk-asr-v1-20261103](../../catalog/allspk_asr_v1.yaml#L67) | — | 未登记 | 没有 |
-| [aishell4@allspk-asr-v1-20261103-final-v1-20261120](../../catalog/text_final_v1.yaml#L793) | — | 未登记 | 没有 |
+| [aishell4@allspk-asr-v1-20261103-final-v1-20261120](../../catalog/text_final_v1.yaml#L2922) | — | 未登记 | 没有 |
 | [aishell4@allspk-ts-v1-20261104](../../catalog/allspk_ts_v1.yaml#L90) | — | 未登记 | 没有 |
-| [aishell4@allspk-ts-v1-20261104-final-v1-20261120](../../catalog/text_final_v1.yaml#L877) | — | 未登记 | 没有 |
+| [aishell4@allspk-ts-v1-20261104-final-v1-20261120](../../catalog/text_final_v1.yaml#L3178) | — | 未登记 | 没有 |
 | [aishell4@asr-20261014](../../catalog/amphionasr_v4.yaml#L262) | — | 未登记 | 没有 |
 | [aishell4@asr-20261014-ctxclean-20261110](../../catalog/context_correction_clean_zh.yaml#L857) | — | 未登记 | 没有 |
-| [aishell4@asr-20261014-punc-20261102](../../catalog/train_punc_v1_derived.yaml#L423) | — | 未登记 | 没有 |
-| [aishell4@asr-20261014-punc-20261102-ctxclean-20261110](../../catalog/context_correction_clean_zh.yaml#L2862) | — | 未登记 | 没有 |
-| [aishell4@asr-20261014-punc-20261102-ctxclean-20261110-zhenfix-20261117](../../catalog/zhen_fix.yaml#L941) | — | 未登记 | 没有 |
-| [aishell4@asr-20261014-punc-20261102-final-v1-20261120](../../catalog/text_final_v1.yaml#L653) | — | 未登记 | 没有 |
+| [aishell4@asr-20261014-punc-20261102-final-v1-20261120](../../catalog/text_final_v1.yaml#L2564) | — | 未登记 | 没有 |
 | [aishell4@diarization-benchmark-v1-20261021](../../catalog/diarization_benchmark.yaml#L1) | 12.7 | 已登记 | 没有 |
 | [aishell4@icefall-20260908](../../catalog/icefall_runtime.yaml#L1206) | 119.5 | 已登记 | 快照 20260914 |
 | [aishell4@legacy-20260804](../../catalog/icefall_base.yaml#L892) | 28.4 | 已登记 | 快照 20260914 |
@@ -936,21 +928,15 @@ VoxPopuli 英语欧洲议会发言
 | [aishell4@turn-taking-20261014](../../catalog/amphionasr_v4.yaml#L1) | 322.3 | 已登记 | 没有 |
 | [aishell4@turn-taking-20261014-ctxclean-20261110](../../catalog/context_correction_clean_zh.yaml#L1186) | 322.3 | 已登记 | 没有 |
 | [aishell4@turn-taking-20261014-utts](../../catalog/ts_window_utts.yaml#L115) | 66.9 | 已登记 | 没有 |
-| [aishell4@turn-taking-20261014-utts-punc-20261102](../../catalog/train_punc_v1_derived.yaml#L486) | — | 未登记 | 没有 |
-| [aishell4@turn-taking-20261014-utts-punc-20261102-ctxclean-20261110](../../catalog/context_correction_clean_zh.yaml#L2930) | 301.2 | 已登记 | 没有 |
-| [aishell4@turn-taking-20261014-utts-punc-20261102-ctxclean-20261110-zhenfix-20261117](../../catalog/zhen_fix.yaml#L1011) | 301.2 | 已登记 | 没有 |
-| [aishell4@turn-taking-20261014-utts-punc-20261102-final-v1-20261120](../../catalog/text_final_v1.yaml#L202) | — | 未登记 | 没有 |
+| [aishell4@turn-taking-20261014-utts-punc-20261102-final-v1-20261120](../../catalog/text_final_v1.yaml#L1004) | 301.2 | 已登记 | 没有 |
 
 - `aishell4@allspk-asr-v1-20261103`：AISHELL-4 训练集的普通 ASR 多人窗口：按 aishell4@icefall-20260908 训练集标注，在每段录音上依次切出不重叠的窗口，每个窗口长度在 10–90 秒间均匀抽取，只在没人说话（前后静音至少 0.2 秒）处下刀；目标文本是窗口内所有说话人每句话的书面化标点文本（aishell4@punc-written-v1-20261029，同一 ID）按开始时间顺序拼接，不区分说话人。重叠语音超过窗口时长 10% 的窗口丢弃（普通转写的字序不确定），有任一句缺标点文本的窗口丢弃。音频引用 aishell4@asr-20261014 训练集（只取第 0 路），不复制。用途：普通 ASR 模式下多人轮流说话时转写每个人、长录音不提前结束（此前普通 ASR 训练数据每条只转写一个说话人）。保留 4267 个窗口，丢弃：重叠 1957、缺标点 0、短于 5 秒 92；说话人数分布 {'1': 512, '2': 1551, '3': 1278, '4+': 926}
-- `aishell4@allspk-asr-v1-20261103-final-v1-20261120`：aishell4@allspk-asr-v1-20261103（交付配方 v7set34 训练用的版本）的训练文本终版，按 docs/reference/training-text.md（v1） 应用全部已执行的文本修正，起点 aishell4@allspk-asr-v1-20261103。构建中
+- `aishell4@allspk-asr-v1-20261103-final-v1-20261120`：aishell4@allspk-asr-v1-20261103（交付配方 v7set34 训练用的版本）的训练文本终版，按 audio-data-contract docs/reference/training-text.md（v1） 应用全部已执行的文本修正，替代配方原来的版本和中间修正版本。起点 aishell4@allspk-asr-v1-20261103；已含修正：拆开的大写字母连写补齐（zhen-fix-v1，97 条）。其余字段、录音清单和音频照旧，引用起点版本的产物
 - `aishell4@allspk-ts-v1-20261104`：AISHELL-4 训练集的目标说话人（TS）多人窗口，与 aishell4@allspk-asr-v1-20261103 用同一批窗口、同一段音频：普通 ASR 版本转写窗口里所有人，这里只转写注册的那个人，让模型在同一段音频上靠提示区分两种任务（只训普通 ASR 版本时，TS 模式在多人轮流说话的音频上会把别人的话也写进来）。train：每个窗口选一个在窗口里说话的人作目标（在有注册音的说话人里均匀抽），目标文本是此人在窗口内各句的书面化标点文本（aishell4@punc-written-v1-20261029）按开始时间顺序拼接；train_neg：每个窗口选一个同一录音里、窗口内没说话的人（有的话），目标为空。注册音取同一录音里此人在窗口外的一句话，长 3–10 秒（没有则放宽到 2–15 秒），且没有其他句子与之重叠。两个音频位都引用 aishell4@asr-20261014 训练集（与窗口同一路），不复制。正样本 4267 条（0 个窗口没有可用注册音），负样本 3511 条（756 个窗口没有不在场的说话人）；正样本窗口的说话人数分布 {'1': 512, '2': 1551, '3': 1278, '4+': 926}
-- `aishell4@allspk-ts-v1-20261104-final-v1-20261120`：aishell4@allspk-ts-v1-20261104（交付配方 v7set34 训练用的版本）的训练文本终版，按 docs/reference/training-text.md（v1） 应用全部已执行的文本修正，起点 aishell4@allspk-ts-v1-20261104。构建中
+- `aishell4@allspk-ts-v1-20261104-final-v1-20261120`：aishell4@allspk-ts-v1-20261104（交付配方 v7set34 训练用的版本）的训练文本终版，按 audio-data-contract docs/reference/training-text.md（v1） 应用全部已执行的文本修正，替代配方原来的版本和中间修正版本。起点 aishell4@allspk-ts-v1-20261104；已含修正：拆开的大写字母连写补齐（zhen-fix-v1，45 条）。其余字段、录音清单和音频照旧，引用起点版本的产物
 - `aishell4@asr-20261014`：会议普通转写。每条 supervision 一条，时长 0.5～30 秒，文本非空。多通道只取第 0 路
 - `aishell4@asr-20261014-ctxclean-20261110`：在 aishell4@asr-20261014 上做的上下文纠偏清洗：说话人讲字怎么写（组词、拆字、偏旁、否定对比）而标注写成同音别字的，按说明改正；拿不准的整条去掉。判定依据见 context_correction_clean_zh@v1-20261110
-- `aishell4@asr-20261014-punc-20261102`：aishell4@asr-20261014 的 train，目标文本加书面化标点：中文用 amphiondata 的中文学生模型（punc-student-v1，不带听音提示），英文用英文规范 en-v1 的学生模型（加标点并恢复大小写）；标点按字 / 按词搬回原文，原文的字词不变，找不到输出的目标保留原样。其余字段与源版本相同，音频引用源版本
-- `aishell4@asr-20261014-punc-20261102-ctxclean-20261110`：在 aishell4@asr-20261014-punc-20261102 上做的上下文纠偏清洗：说话人讲字怎么写（组词、拆字、偏旁、否定对比）而标注写成同音别字的，按说明改正；拿不准的整条去掉。判定依据见 context_correction_clean_zh@v1-20261110。判定迁自同一批记录在清洗时的判定（clean.py transfer：按去掉标点、空格后的文本对应，改字按字对齐写进带标点的文本）
-- `aishell4@asr-20261014-punc-20261102-ctxclean-20261110-zhenfix-20261117`：aishell4@asr-20261014-punc-20261102-ctxclean-20261110 的中文文本按 audio-data-contract docs/reference/zh-en-transcription.md 规则 2 修正：用空格隔开的单个大写字母连写（K T V→KTV、A P P→APP、N F C→NFC），原文本存进 metadata.zhen_fix / custom.zhen_fix。小写或大小写混合的字母串（多是数学变量）和字母数字词里的汉字数字不改。只改 train 划分的文本，共 298 条；其余字段、音频引用和其他划分照旧，引用底版本的产物
-- `aishell4@asr-20261014-punc-20261102-final-v1-20261120`：aishell4@asr-20261014-punc-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 docs/reference/training-text.md（v1） 应用全部已执行的文本修正，起点 aishell4@asr-20261014-punc-20261102-ctxclean-20261110-zhenfix-20261117。构建中
+- `aishell4@asr-20261014-punc-20261102-final-v1-20261120`：aishell4@asr-20261014-punc-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 audio-data-contract docs/reference/training-text.md（v1） 应用全部已执行的文本修正，替代配方原来的版本和中间修正版本。起点 aishell4@asr-20261014-punc-20261102-ctxclean-20261110-zhenfix-20261117；已含修正：说字写法（ctxclean，context_correction_clean_zh@v1-20261110）、拆开的大写字母连写（zhen-fix-v1）。其余字段、录音清单和音频照旧，引用起点版本的产物
 - `aishell4@diarization-benchmark-v1-20261021`：Frozen local evaluation slice; audio and RTTM bytes copied unchanged. Not a claim of official release equivalence or training disjointness.
 - `aishell4@punc-teacher-v1-20261029`：aishell4@icefall-20260908 的 train 监督片段里的 Qwen3.8-27B 老师给 3000 句加的书面化标点（2765 句去掉标点后与输入一致，ok=true）：custom.punctuation_teacher 记输出 text、ok 和模型看到的无标点输入 input；custom.punctuation_hint.qwen 是提示用的 Qwen3-ASR 转写；其中 53 句是留出的评测句，另带学生 v1 的输出 custom.punctuation_student。这批句子用来微调 Qwen3-4B 学生，抽样见 amphiondata scripts/punctuation/build_teacher_set.py。只含这些句子，text 与父版本相同，不是标点后的文本；录音沿用父版本，不复制音频。中间产物，供复现和比较学生，不直接用于训练。脚本 scripts/punctuation/register_punc_intermediates.py
 - `aishell4@punc-written-v1-20261029`：aishell4@icefall-20260908 训练集原标注加书面化标点（GB/T 15834，逗号从紧）：微调后的 Qwen3-4B（Qwen3.8-27B 的 9.6 万条输出蒸馏）以 Qwen3-ASR-1.7B 听音频得到的带标点转写作语气提示，只往原标注里插标点。模型改动了原文的条目，把模型输出的标点按字对齐搬回原标注；每条以 。？！ 结尾；原标注的字、空格（首尾除外）和大小写不变。没有汉字的条目（英文句子、拼读字母）和标注为空的条目原样保留。文件与源 supervisions 条数、顺序相同，只换 text。试点 200 条人工参照上：WenetSpeech markF1 92.4、其他来源 88.9（老师 93.2 / 88.2，原 FireRedPunc 79.8）
@@ -958,11 +944,9 @@ VoxPopuli 英语欧洲议会发言
 - `aishell4@turn-taking-20261014`：会议 turn-taking。整句拼成 2/3 人混合窗，时长 0.5～30 秒。注册音是窗外另一句，1～30 秒。有近场时远场:近场 = 3:1
 - `aishell4@turn-taking-20261014-ctxclean-20261110`：在 aishell4@turn-taking-20261014 上做的上下文纠偏清洗：说话人讲字怎么写（组词、拆字、偏旁、否定对比）而标注写成同音别字的，按说明改正；拿不准的整条去掉。判定依据见 context_correction_clean_zh@v1-20261110
 - `aishell4@turn-taking-20261014-utts`：aishell4@turn-taking-20261014 的 train 划分（不含 eval/test），时间线取自 aishell4@icefall-20260908 的 train 人工标注。加 metadata.window_utts（窗口内每句的说话人与相对混合起点的起止，取自来源标注并截到窗口，截断的标 clipped）与同一命名空间的 metadata.target_speaker，供 open-audio-llm 帧级说话人活动标签（objective.ts_activity_weight）；其余字段不变，音频引用改指本版本，音频索引与原版逐行相同。正样本的目标语句与转写逐字一致（忽略空白和标点；窗口边缘截断的句子允许只转写一部分）才写时间线，负样本只有注册人确实不在窗口里说话才写；其余记录不写时间线（不出帧级标签）。负样本中注册人按标注其实在窗口内说话的记录 ID 列在 excluded-records-<split>.txt，训练配方用 exclude_records 排除。生成脚本 audio-data-contract scripts/ts_robust/add_window_utts.py，逐划分统计见 report.json
-- `aishell4@turn-taking-20261014-utts-punc-20261102`：aishell4@turn-taking-20261014-utts 的 train_2spk, train_3spk, train_neg，目标文本加书面化标点：中文用 amphiondata 的中文学生模型（punc-student-v1，不带听音提示），英文用英文规范 en-v1 的学生模型（加标点并恢复大小写）；标点按字 / 按词搬回原文，原文的字词不变，找不到输出的目标保留原样。其余字段与源版本相同，音频引用源版本
-- `aishell4@turn-taking-20261014-utts-punc-20261102-ctxclean-20261110`：在 aishell4@turn-taking-20261014-utts-punc-20261102 上做的上下文纠偏清洗：说话人讲字怎么写（组词、拆字、偏旁、否定对比）而标注写成同音别字的，按说明改正；拿不准的整条去掉。判定依据见 context_correction_clean_zh@v1-20261110。判定迁自同一批记录在清洗时的判定（clean.py transfer：按去掉标点、空格后的文本对应，改字按字对齐写进带标点的文本）
-- `aishell4@turn-taking-20261014-utts-punc-20261102-ctxclean-20261110-zhenfix-20261117`：aishell4@turn-taking-20261014-utts-punc-20261102-ctxclean-20261110 的中文文本按 audio-data-contract docs/reference/zh-en-transcription.md 规则 2 修正：用空格隔开的单个大写字母连写（K T V→KTV、A P P→APP、N F C→NFC），原文本存进 metadata.zhen_fix / custom.zhen_fix。小写或大小写混合的字母串（多是数学变量）和字母数字词里的汉字数字不改。只改 train 划分的文本，共 254 条；其余字段、音频引用和其他划分照旧，引用底版本的产物
-- `aishell4@turn-taking-20261014-utts-punc-20261102-final-v1-20261120`：aishell4@turn-taking-20261014-utts-punc-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 docs/reference/training-text.md（v1） 应用全部已执行的文本修正，起点 aishell4@turn-taking-20261014-utts-punc-20261102-ctxclean-20261110-zhenfix-20261117。构建中
+- `aishell4@turn-taking-20261014-utts-punc-20261102-final-v1-20261120`：aishell4@turn-taking-20261014-utts-punc-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 audio-data-contract docs/reference/training-text.md（v1） 应用全部已执行的文本修正，替代配方原来的版本和中间修正版本。起点 aishell4@turn-taking-20261014-utts-punc-20261102-ctxclean-20261110-zhenfix-20261117；已含修正：说字写法（ctxclean，context_correction_clean_zh@v1-20261110）、拆开的大写字母连写（zhen-fix-v1）。其余字段、录音清单和音频照旧，引用起点版本的产物
 - 含派生版本（与源数据可能重叠）
+- 已并入的旧版本：`aishell4@asr-20261014-punc-20261102`（COS：没有）、`aishell4@asr-20261014-punc-20261102-ctxclean-20261110`（COS：没有）、`aishell4@asr-20261014-punc-20261102-ctxclean-20261110-zhenfix-20261117`（COS：没有）、`aishell4@turn-taking-20261014-utts-punc-20261102`（COS：没有）、`aishell4@turn-taking-20261014-utts-punc-20261102-ctxclean-20261110`（COS：没有）、`aishell4@turn-taking-20261014-utts-punc-20261102-ctxclean-20261110-zhenfix-20261117`（COS：没有）
 
 ### aishell4_meeting_sot
 
@@ -1002,17 +986,16 @@ AISHELL-2 混合的目标说话人训练与测试数据
 | [aishellmix@original-audio-record-20260910](../../catalog/aishellmix.yaml#L380) | 6,733.1 | 已登记：按目标样本累计混合音频，非去重语料时长 | 快照 20260914 |
 | [aishellmix@original-source-20260910](../../catalog/aishellmix.yaml#L281) | — | 未登记 | 快照 20260914 |
 | [aishellmix@pack3-current-audio-record-20260910](../../catalog/aishellmix.yaml#L114) | 7,489.2 | 已登记：按目标样本累计混合音频，非去重语料时长 | 快照 20260914 |
-| [aishellmix@pack3-current-audio-record-20260910-punc-20261102](../../catalog/train_punc_v1_derived.yaml#L612) | — | 未登记 | 没有 |
-| [aishellmix@pack3-current-audio-record-20260910-punc-20261102-final-v1-20261120](../../catalog/text_final_v1.yaml#L2) | — | 未登记 | 没有 |
+| [aishellmix@pack3-current-audio-record-20260910-punc-20261102-final-v1-20261120](../../catalog/text_final_v1.yaml#L3) | — | 未登记 | 没有 |
 | [aishellmix@pack3-current-source-20260910](../../catalog/aishellmix.yaml#L1) | — | 未登记 | 快照 20260914 |
 
 - `aishellmix@original-audio-record-20260910`：AISHELLMix 原版历史训练（enrollment 至少 2 秒）与项目测试数据；纯转写、独立 enrollment/mixture、空转写负样本
 - `aishellmix@original-source-20260910`：AISHELLMix 原版历史训练（enrollment 至少 2 秒）与项目测试数据；转换输入快照，时长见通用版本
 - `aishellmix@pack3-current-audio-record-20260910`：AISHELLMix pack3 当前与历史等价训练数据；纯转写、独立 enrollment/mixture、空转写负样本
-- `aishellmix@pack3-current-audio-record-20260910-punc-20261102`：aishellmix@pack3-current-audio-record-20260910 的 train_1spk, train_2spk, train_3spk, train_neg，目标文本加书面化标点：中文用 amphiondata 的中文学生模型（punc-student-v1，不带听音提示），英文用英文规范 en-v1 的学生模型（加标点并恢复大小写）；标点按字 / 按词搬回原文，原文的字词不变，找不到输出的目标保留原样。其余字段与源版本相同，音频引用源版本
-- `aishellmix@pack3-current-audio-record-20260910-punc-20261102-final-v1-20261120`：aishellmix@pack3-current-audio-record-20260910-punc-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 docs/reference/training-text.md（v1） 应用全部已执行的文本修正，起点 aishellmix@pack3-current-audio-record-20260910-punc-20261102。构建中
+- `aishellmix@pack3-current-audio-record-20260910-punc-20261102-final-v1-20261120`：aishellmix@pack3-current-audio-record-20260910-punc-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 audio-data-contract docs/reference/training-text.md（v1） 应用全部已执行的文本修正，替代配方原来的版本和中间修正版本。起点 aishellmix@pack3-current-audio-record-20260910-punc-20261102；已含修正：无（各轮修正对本数据都没有改动）。其余字段、录音清单和音频照旧，引用起点版本的产物
 - `aishellmix@pack3-current-source-20260910`：AISHELLMix pack3 当前与历史等价训练数据；转换输入快照，时长见通用版本
 - 含派生版本（与源数据可能重叠）
+- 已并入的旧版本：`aishellmix@pack3-current-audio-record-20260910-punc-20261102`（COS：没有）
 
 ### alimeeting
 
@@ -1027,12 +1010,11 @@ AISHELL-2 混合的目标说话人训练与测试数据
 | [alimeeting@openslr-119-far-local-20260903](../../catalog/alimeeting_far_raw.yaml#L1) | 125.5 | 已登记 | 快照 20260914 |
 | [alimeeting@openslr-119-local-20260826](../../catalog/multilingual_multispeaker.yaml#L1) | 157.9 | 已登记 | 快照 20260914 |
 | [alimeeting_sdm@allspk-asr-v1-20261103](../../catalog/allspk_asr_v1.yaml#L131) | — | 未登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/alimeeting_sdm/` |
-| [alimeeting_sdm@allspk-asr-v1-20261103-final-v1-20261120](../../catalog/text_final_v1.yaml#L821) | — | 未登记 | 没有 |
+| [alimeeting_sdm@allspk-asr-v1-20261103-final-v1-20261120](../../catalog/text_final_v1.yaml#L2998) | — | 未登记 | 没有 |
 | [alimeeting_sdm@allspk-ts-v1-20261104](../../catalog/allspk_ts_v1.yaml#L178) | — | 未登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/alimeeting_sdm/` |
-| [alimeeting_sdm@allspk-ts-v1-20261104-final-v1-20261120](../../catalog/text_final_v1.yaml#L905) | — | 未登记 | 没有 |
+| [alimeeting_sdm@allspk-ts-v1-20261104-final-v1-20261120](../../catalog/text_final_v1.yaml#L3278) | — | 未登记 | 没有 |
 | [alimeeting_sdm@asr-20261014](../../catalog/amphionasr_v4.yaml#L726) | — | 未登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/alimeeting_sdm/` |
-| [alimeeting_sdm@asr-20261014-punc-20261102](../../catalog/train_punc_v1_derived.yaml#L750) | — | 未登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/alimeeting_sdm/` |
-| [alimeeting_sdm@asr-20261014-punc-20261102-final-v1-20261120](../../catalog/text_final_v1.yaml#L625) | — | 未登记 | 没有 |
+| [alimeeting_sdm@asr-20261014-punc-20261102-final-v1-20261120](../../catalog/text_final_v1.yaml#L2496) | — | 未登记 | 没有 |
 | [alimeeting_sdm@icefall-20260908](../../catalog/icefall_runtime.yaml#L2839) | 157.9 | 已登记：单远场麦克风标注片段 | 快照 20260914、`amphion-audio-backup-1373259071:audio-data-contract/datasets/alimeeting_sdm/` |
 | [alimeeting_sdm@punc-gold-v1-20261029](../../catalog/punc_teacher_v1.yaml#L840) | 0.0 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/alimeeting_sdm/` |
 | [alimeeting_sdm@punc-teacher-v1-20261029](../../catalog/punc_teacher_v1.yaml#L439) | 2.3 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/alimeeting_sdm/` |
@@ -1041,18 +1023,16 @@ AISHELL-2 混合的目标说话人训练与测试数据
 | [alimeeting_sdm@teacher-review-v1-20261010](../../catalog/diarization_raw_zh-meeting-review.yaml#L155) | — | 未登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/alimeeting_sdm/` |
 | [alimeeting_sdm@turn-taking-20261014](../../catalog/amphionasr_v4.yaml#L378) | 427.7 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/alimeeting_sdm/` |
 | [alimeeting_sdm@turn-taking-20261014-utts](../../catalog/ts_window_utts.yaml#L1) | 82.7 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/alimeeting_sdm/` |
-| [alimeeting_sdm@turn-taking-20261014-utts-punc-20261102](../../catalog/train_punc_v1_derived.yaml#L813) | — | 未登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/alimeeting_sdm/` |
-| [alimeeting_sdm@turn-taking-20261014-utts-punc-20261102-final-v1-20261120](../../catalog/text_final_v1.yaml#L174) | — | 未登记 | 没有 |
+| [alimeeting_sdm@turn-taking-20261014-utts-punc-20261102-final-v1-20261120](../../catalog/text_final_v1.yaml#L879) | — | 未登记 | 没有 |
 
 - `alimeeting@diarization-benchmark-v1-20261021`、`alimeeting@diarization-benchmark-v1-20261021-2023test`：Frozen local evaluation slice; audio and RTTM bytes copied unchanged. Not a claim of official release equivalence or training disjointness.
 - `alimeeting@openslr-119-far-local-20260903`：远场会议、多说话人、重叠语音；训练集 8 条标注越界，使用前需处理
 - `alimeeting_sdm@allspk-asr-v1-20261103`：AliMeeting 训练集的普通 ASR 多人窗口：按 alimeeting_sdm@icefall-20260908 训练集标注，在每段录音上依次切出不重叠的窗口，每个窗口长度在 10–90 秒间均匀抽取，只在没人说话（前后静音至少 0.2 秒）处下刀；目标文本是窗口内所有说话人每句话的书面化标点文本（alimeeting_sdm@punc-written-v1-20261029，同一 ID）按开始时间顺序拼接，不区分说话人。重叠语音超过窗口时长 10% 的窗口丢弃（普通转写的字序不确定），有任一句缺标点文本的窗口丢弃。音频引用 alimeeting_sdm@asr-20261014 训练集（只取第 0 路），不复制。用途：普通 ASR 模式下多人轮流说话时转写每个人、长录音不提前结束（此前普通 ASR 训练数据每条只转写一个说话人）。保留 2527 个窗口，丢弃：重叠 3811、缺标点 0、短于 5 秒 140；说话人数分布 {'1': 235, '2': 1954, '3': 213, '4+': 125}
-- `alimeeting_sdm@allspk-asr-v1-20261103-final-v1-20261120`：alimeeting_sdm@allspk-asr-v1-20261103（交付配方 v7set34 训练用的版本）的训练文本终版，按 docs/reference/training-text.md（v1） 应用全部已执行的文本修正，起点 alimeeting_sdm@allspk-asr-v1-20261103。构建中
+- `alimeeting_sdm@allspk-asr-v1-20261103-final-v1-20261120`：alimeeting_sdm@allspk-asr-v1-20261103（交付配方 v7set34 训练用的版本）的训练文本终版，按 audio-data-contract docs/reference/training-text.md（v1） 应用全部已执行的文本修正，替代配方原来的版本和中间修正版本。起点 alimeeting_sdm@allspk-asr-v1-20261103；已含修正：无（各轮修正对本数据都没有改动）。其余字段、录音清单和音频照旧，引用起点版本的产物
 - `alimeeting_sdm@allspk-ts-v1-20261104`：AliMeeting 训练集的目标说话人（TS）多人窗口，与 alimeeting_sdm@allspk-asr-v1-20261103 用同一批窗口、同一段音频：普通 ASR 版本转写窗口里所有人，这里只转写注册的那个人，让模型在同一段音频上靠提示区分两种任务（只训普通 ASR 版本时，TS 模式在多人轮流说话的音频上会把别人的话也写进来）。train：每个窗口选一个在窗口里说话的人作目标（在有注册音的说话人里均匀抽），目标文本是此人在窗口内各句的书面化标点文本（alimeeting_sdm@punc-written-v1-20261029）按开始时间顺序拼接；train_neg：每个窗口选一个同一录音里、窗口内没说话的人（有的话），目标为空。注册音取同一录音里此人在窗口外的一句话，长 3–10 秒（没有则放宽到 2–15 秒），且没有其他句子与之重叠。两个音频位都引用 alimeeting_sdm@asr-20261014 训练集（与窗口同一路），不复制。正样本 2521 条（6 个窗口没有可用注册音），负样本 421 条（2106 个窗口没有不在场的说话人）；正样本窗口的说话人数分布 {'1': 231, '2': 1953, '3': 213, '4+': 124}
-- `alimeeting_sdm@allspk-ts-v1-20261104-final-v1-20261120`：alimeeting_sdm@allspk-ts-v1-20261104（交付配方 v7set34 训练用的版本）的训练文本终版，按 docs/reference/training-text.md（v1） 应用全部已执行的文本修正，起点 alimeeting_sdm@allspk-ts-v1-20261104。构建中
+- `alimeeting_sdm@allspk-ts-v1-20261104-final-v1-20261120`：alimeeting_sdm@allspk-ts-v1-20261104（交付配方 v7set34 训练用的版本）的训练文本终版，按 audio-data-contract docs/reference/training-text.md（v1） 应用全部已执行的文本修正，替代配方原来的版本和中间修正版本。起点 alimeeting_sdm@allspk-ts-v1-20261104；已含修正：无（各轮修正对本数据都没有改动）。其余字段、录音清单和音频照旧，引用起点版本的产物
 - `alimeeting_sdm@asr-20261014`：会议普通转写。每条 supervision 一条，时长 0.5～30 秒，文本非空。多通道只取第 0 路
-- `alimeeting_sdm@asr-20261014-punc-20261102`：alimeeting_sdm@asr-20261014 的 train，目标文本加书面化标点：中文用 amphiondata 的中文学生模型（punc-student-v1，不带听音提示），英文用英文规范 en-v1 的学生模型（加标点并恢复大小写）；标点按字 / 按词搬回原文，原文的字词不变，找不到输出的目标保留原样。其余字段与源版本相同，音频引用源版本
-- `alimeeting_sdm@asr-20261014-punc-20261102-final-v1-20261120`：alimeeting_sdm@asr-20261014-punc-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 docs/reference/training-text.md（v1） 应用全部已执行的文本修正，起点 alimeeting_sdm@asr-20261014-punc-20261102。构建中
+- `alimeeting_sdm@asr-20261014-punc-20261102-final-v1-20261120`：alimeeting_sdm@asr-20261014-punc-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 audio-data-contract docs/reference/training-text.md（v1） 应用全部已执行的文本修正，替代配方原来的版本和中间修正版本。起点 alimeeting_sdm@asr-20261014-punc-20261102；已含修正：无（各轮修正对本数据都没有改动）。其余字段、录音清单和音频照旧，引用起点版本的产物
 - `alimeeting_sdm@icefall-20260908`：标注片段时长，重叠语音或多麦克风可能重复计时
 - `alimeeting_sdm@punc-gold-v1-20261029`：alimeeting_sdm@icefall-20260908 的 train 监督片段里的 普通话标点试点的 15 句手写参照标点（规范 v1，逗号从紧）：custom.punctuation_gold.text 是参照，custom.punctuation_hint 记试点用的 Qwen3-ASR 与 FireRedPunc 带标点转写。只含这些句子，text 与父版本相同，不是标点后的文本；录音沿用父版本，不复制音频。中间产物，供复现和比较学生，不直接用于训练。脚本 scripts/punctuation/register_punc_intermediates.py
 - `alimeeting_sdm@punc-teacher-v1-20261029`：alimeeting_sdm@icefall-20260908 的 train 监督片段里的 Qwen3.8-27B 老师给 3000 句加的书面化标点（2780 句去掉标点后与输入一致，ok=true）：custom.punctuation_teacher 记输出 text、ok 和模型看到的无标点输入 input；custom.punctuation_hint.qwen 是提示用的 Qwen3-ASR 转写；其中 58 句是留出的评测句，另带学生 v1 的输出 custom.punctuation_student。这批句子用来微调 Qwen3-4B 学生，抽样见 amphiondata scripts/punctuation/build_teacher_set.py。只含这些句子，text 与父版本相同，不是标点后的文本；录音沿用父版本，不复制音频。中间产物，供复现和比较学生，不直接用于训练。脚本 scripts/punctuation/register_punc_intermediates.py
@@ -1061,9 +1041,9 @@ AISHELL-2 混合的目标说话人训练与测试数据
 - `alimeeting_sdm@teacher-review-v1-20261010`：AliMeeting train 远场（209 场）的老师复核与时间更正（2026-10-10）：本机 MOSS-Transcribe-Diarize 0.9B 和 Qwen3-ASR-1.7B 对整场会议打标，与人工标注逐场对照，估计每场标注相对音频的时间偏移（包络滞后、MOSS 与人工配对偏移、AliMeeting 另有近场对远场 GCC-PHAT 滞后），决定平移或整场排除，并写出更正后的参考标注。train_supervisions_corrected_0：更正后的 train 标注 186360 条（源 186360 条，平移了 949 条的开始时间，去掉 0 条，源里没有的 0 条），Lhotse 格式，字段同源版本；整场排除的会议不从标注里删除，切窗口时按 excluded_meetings 跳过。excluded_meetings：36 场整场排除（19.211 h）及原因。train_supervisions_gap_fills_0：老师补出的 79 条漏标语音（fill / gap / overlap_other，说话人为原标注 ID，custom.diarize 记检查），不可用区间与未采纳片段在 gap_merge_records 的 metadata.gap_merge。moss_records / qwen3_asr_records 是两位教师的整场原始标签（metadata.local_moss / metadata.qwen3_asr）；offsets_records / near_far_lag_records / correction_decision_records 是逐场偏移估计和决定（metadata.time_offset / near_far_lag / correction_decision）；review_example_records 是文字差异等抽样证据。录音沿用 alimeeting_sdm@icefall-20260908，不复制音频。脚本 scripts/diarization_raw_labels/register_raw_labels.py
 - `alimeeting_sdm@turn-taking-20261014`：会议 turn-taking。整句拼成 2/3 人混合窗，时长 0.5～30 秒。注册音是窗外另一句，1～30 秒。有近场时远场:近场 = 3:1
 - `alimeeting_sdm@turn-taking-20261014-utts`：alimeeting_sdm@turn-taking-20261014 的 train 划分（不含 eval/test），时间线取自 alimeeting_sdm@icefall-20260908 的 train 人工标注。加 metadata.window_utts（窗口内每句的说话人与相对混合起点的起止，取自来源标注并截到窗口，截断的标 clipped）与同一命名空间的 metadata.target_speaker，供 open-audio-llm 帧级说话人活动标签（objective.ts_activity_weight）；其余字段不变，音频引用改指本版本，音频索引与原版逐行相同。正样本的目标语句与转写逐字一致（忽略空白和标点；窗口边缘截断的句子允许只转写一部分）才写时间线，负样本只有注册人确实不在窗口里说话才写；其余记录不写时间线（不出帧级标签）。负样本中注册人按标注其实在窗口内说话的记录 ID 列在 excluded-records-<split>.txt，训练配方用 exclude_records 排除。生成脚本 audio-data-contract scripts/ts_robust/add_window_utts.py，逐划分统计见 report.json
-- `alimeeting_sdm@turn-taking-20261014-utts-punc-20261102`：alimeeting_sdm@turn-taking-20261014-utts 的 train_2spk, train_3spk, train_neg，目标文本加书面化标点：中文用 amphiondata 的中文学生模型（punc-student-v1，不带听音提示），英文用英文规范 en-v1 的学生模型（加标点并恢复大小写）；标点按字 / 按词搬回原文，原文的字词不变，找不到输出的目标保留原样。其余字段与源版本相同，音频引用源版本
-- `alimeeting_sdm@turn-taking-20261014-utts-punc-20261102-final-v1-20261120`：alimeeting_sdm@turn-taking-20261014-utts-punc-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 docs/reference/training-text.md（v1） 应用全部已执行的文本修正，起点 alimeeting_sdm@turn-taking-20261014-utts-punc-20261102。构建中
+- `alimeeting_sdm@turn-taking-20261014-utts-punc-20261102-final-v1-20261120`：alimeeting_sdm@turn-taking-20261014-utts-punc-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 audio-data-contract docs/reference/training-text.md（v1） 应用全部已执行的文本修正，替代配方原来的版本和中间修正版本。起点 alimeeting_sdm@turn-taking-20261014-utts-punc-20261102；已含修正：无（各轮修正对本数据都没有改动）。其余字段、录音清单和音频照旧，引用起点版本的产物
 - 含派生版本（与源数据可能重叠）
+- 已并入的旧版本：`alimeeting_sdm@asr-20261014-punc-20261102`（COS：`amphion-audio-backup-1373259071:audio-data-contract/datasets/alimeeting_sdm/`）、`alimeeting_sdm@turn-taking-20261014-utts-punc-20261102`（COS：`amphion-audio-backup-1373259071:audio-data-contract/datasets/alimeeting_sdm/`）
 
 ### alimeeting_near_farsim_meeting_sot
 
@@ -1189,8 +1169,7 @@ Common Voice 中文众包朗读；含清洗、热词、加噪版
 | [common_voice_zh@icefall-20260908](../../catalog/icefall_runtime.yaml#L1685) | 76.1 | 已登记 | 快照 20260914 |
 | [common_voice_zh@legacy-20260804](../../catalog/icefall_base.yaml#L1311) | 76.1 | 已登记 | 快照 20260914 |
 | [common_voice_zh@punc-written-v1-20261102](../../catalog/zh_punc_written_v1_gaps.yaml#L66) | 42.6 | 已登记 | 没有 |
-| [common_voice_zh@train-punc-v1-20261102](../../catalog/train_punc_v1.yaml#L207) | — | 未登记 | 没有 |
-| [common_voice_zh@train-punc-v1-20261102-final-v1-20261120](../../catalog/text_final_v1.yaml#L933) | — | 未登记 | 没有 |
+| [common_voice_zh@train-punc-v1-20261102-final-v1-20261120](../../catalog/text_final_v1.yaml#L3377) | — | 未登记 | 没有 |
 | [commonvoice_zh@eval-20260804](../../catalog/open_audio_eval.yaml#L318) | 17.5 | 已登记 | 快照 20260914 |
 | [commonvoice_zh_clean@clean-v1-20260805](../../catalog/local_lhotse_derived.yaml#L487) | 17.5 | 已登记 | 快照 20260914 |
 | [commonvoice_zh_hotwords@eval-20260804](../../catalog/open_audio_eval.yaml#L382) | 17.5 | 已登记 | 快照 20260914、`amphion-audio-backup-1373259071:audio-data-contract/datasets/commonvoice_zh_hotwords/` |
@@ -1222,9 +1201,9 @@ Common Voice 中文众包朗读；含清洗、热词、加噪版
 - `common_voice_zh@clean-dual-qwen-moss-v1-20261009`：common_voice_zh@icefall-20260908 的 train 监督片段，经 Qwen3-ASR-1.7B 与 MOSS-Transcribe-Diarize 双引擎一致性清洗（与 2026-10-08 的 primewords、aishell3、aidatatang、magicdata、magicdata_ramc 同一流程）；逐条写入 custom.clean（pass、reason、action、engine_status、两引擎各自和互相的 CER、MOSS 说话人段），不删除记录，读取时按 require_clean_pass 过滤。音频沿用源版本，不复制。规则 consensus-v6 / wenetspeech-faithful-v5：29560 条中 pass 28448、reject 1112。少于 2 个字的 too_short 共 0 条按规则不经引擎直接 pass。restore_disfluency 改写了 1 条的 text（原文留在 custom.original_text）；无标点清单另把 192 条的标点和撇号去掉。引擎原始结果和复核清单在 evidence/。脚本 scripts/zh_source_clean/register_clean_dual.py
 - `common_voice_zh@hf-8262c16bf297`：Common Voice 17.0 zh-CN 的非官方 HF 镜像（官方 Mozilla 仓库需要授权），只下载了 test，与 common_voice_pt@hf-8262c16bf297 同一修订
 - `common_voice_zh@punc-written-v1-20261102`：common_voice_zh@legacy-20260804 训练集原标注加书面化标点，方法与 punc-written-v1-20261029 相同（amphiondata docs/written-punctuation.md：GB/T 15834、逗号从紧；Qwen3-4B 学生 punc-student-v1 以 Qwen3-ASR-1.7B 听音频得到的带标点转写作语气提示，只往原标注里插标点）。模型改动原文的条目按字对齐把标点搬回原标注；每条以 。？！ 结尾；没有汉字的条目和空标注原样保留。文件与源 supervisions 条数、顺序相同，只换 text
-- `common_voice_zh@train-punc-v1-20261102`：common_voice_zh@legacy-20260804 的 train 训练版本，目标文本换成带标点的写法（按 id 取自 datasets/common_voice_zh/versions/punc-written-v1-20261102/cv-zh-CN_supervisions_train_punc_written.jsonl.gz；去掉标点和空格、转小写后与原文一致才替换，否则保留原文）。其余字段与源版本相同，录音引用源版本
-- `common_voice_zh@train-punc-v1-20261102-final-v1-20261120`：common_voice_zh@train-punc-v1-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 docs/reference/training-text.md（v1） 应用全部已执行的文本修正，起点 common_voice_zh@train-punc-v1-20261102。构建中
+- `common_voice_zh@train-punc-v1-20261102-final-v1-20261120`：common_voice_zh@train-punc-v1-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 audio-data-contract docs/reference/training-text.md（v1） 应用全部已执行的文本修正，替代配方原来的版本和中间修正版本。起点 common_voice_zh@train-punc-v1-20261102；已含修正：无（各轮修正对本数据都没有改动）。其余字段、录音清单和音频照旧，引用起点版本的产物
 - 含派生版本（与源数据可能重叠）
+- 已并入的旧版本：`common_voice_zh@train-punc-v1-20261102`（COS：没有）
 
 ### common_voice_zh_hk
 
@@ -1247,8 +1226,8 @@ Common Voice 中文众包朗读；含清洗、热词、加噪版
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
-| [context_correction_clean_zh@think-v1-20261112](../../catalog/context_correction_clean_zh.yaml#L2308) | — | 未登记 | 没有 |
-| [context_correction_clean_zh@think-v2-20261113](../../catalog/context_correction_clean_zh.yaml#L3056) | — | 未登记 | 没有 |
+| [context_correction_clean_zh@think-v1-20261112](../../catalog/context_correction_clean_zh.yaml#L2311) | — | 未登记 | 没有 |
+| [context_correction_clean_zh@think-v2-20261113](../../catalog/context_correction_clean_zh.yaml#L3065) | — | 未登记 | 没有 |
 | [context_correction_clean_zh@v1-20261110](../../catalog/context_correction_clean_zh.yaml#L11) | — | 未登记 | 没有 |
 
 - `context_correction_clean_zh@think-v1-20261112`：从 context_correction_clean_zh@v1-20261110 的判定结果，给清洗过的各来源训练记录生成 think 文本：每个被说明的词一句， 字和原话取两个判定模型的说明，两个模型给的字必须一致（改字窗口里一个模型写的是改前的字、或只多写了同一个词里的字的，对齐后算一致）； 只在"不是…"里出现的字、只点名的偏旁不成句，否定对比并进相邻写法的原话；原话超过 30 字、说话人随后改口、写法不在文本里的，只进 think 关。 每行一条训练记录（dataset + record_id，对应各来源的派生版本；alimeeting_sdm 是原版本；record_id 是 open-audio-llm 加载后的记录 ID， WenetSpeech、VITW 为 <dataset>@<version>:train:<supervision id>）：think_on=true 的给出 think， think_on=false 的只能按 think 关训练（not_hit 和规则候选里仍有讲写法的，判定不一的也不确定），未列出的记录是普通样本，think 开时用固定句"这段没有说明字怎么写。"。 WenetSpeech、VITW 按分段训练：原话整段落在哪个分段，该分段才有 think；原话被分段切开的，只有切开后仍是完整"X的X"的那段保留。 执行者看过全部新增规则放出的样本和各只进 think 关原因的抽样，结论写在运行目录 README 的"CoT 生成"一节。 还没有用于训练
@@ -1406,10 +1385,10 @@ Emilia 中文野外语音（已清洗）
 | [fleurs_zh@icefall-20260908](../../catalog/icefall_runtime.yaml#L1895) | 14.1 | 已登记 | 快照 20260914 |
 | [fleurs_zh@legacy](../../catalog/legacy_multilingual.yaml#L2326) | 14.1 | 已登记 | 快照 20260914 |
 | [fleurs_zh@legacy-20260804](../../catalog/icefall_base.yaml#L1498) | 14.1 | 已登记 | 快照 20260914 |
-| [fleurs_zh@legacy-20260804-final-v1-20261120](../../catalog/text_final_v1.yaml#L961) | — | 未登记 | 没有 |
+| [fleurs_zh@legacy-20260804-final-v1-20261120](../../catalog/text_final_v1.yaml#L3443) | 14.1 | 已登记 | 没有 |
 
 - `fleurs_zh@hf-70bb2e84b976`：Google FLEURS 的 cmn_hans_cn 子集（音频归档和 TSV 转写），只下载了 test，与 fleurs_pt 同一修订
-- `fleurs_zh@legacy-20260804-final-v1-20261120`：fleurs_zh@legacy-20260804（交付配方 v7set34 训练用的版本）的训练文本终版，按 docs/reference/training-text.md（v1） 应用全部已执行的文本修正，起点 fleurs_zh@legacy-20260804。构建中
+- `fleurs_zh@legacy-20260804-final-v1-20261120`：fleurs_zh@legacy-20260804（交付配方 v7set34 训练用的版本）的训练文本终版，按 audio-data-contract docs/reference/training-text.md（v1） 应用全部已执行的文本修正，替代配方原来的版本和中间修正版本。起点 fleurs_zh@legacy-20260804；已含修正：拆开的大写字母连写补齐（zhen-fix-v1，2 条）。其余字段、录音清单和音频照旧，引用起点版本的产物
 - 有含标点版本
 - 含派生版本（与源数据可能重叠）
 
@@ -1456,8 +1435,7 @@ GRPO 热词挖掘候选（未背过的中文热词提示，含近音易混词）
 | [kespeech@punc-gold-v1-20261029](../../catalog/punc_teacher_v1.yaml#L610) | 0.0 | 已登记 | 没有 |
 | [kespeech@punc-teacher-v1-20261029](../../catalog/punc_teacher_v1.yaml#L177) | 15.9 | 已登记 | 没有 |
 | [kespeech@punc-written-v1-20261029](../../catalog/zh_punc_written_v1.yaml#L275) | 1,396.9 | 已登记 | 没有 |
-| [kespeech@train-punc-v1-20261102](../../catalog/train_punc_v1.yaml#L64) | — | 未登记 | 没有 |
-| [kespeech@train-punc-v1-20261102-final-v1-20261120](../../catalog/text_final_v1.yaml#L427) | — | 未登记 | 没有 |
+| [kespeech@train-punc-v1-20261102-final-v1-20261120](../../catalog/text_final_v1.yaml#L1964) | — | 未登记 | 没有 |
 | [kespeech_clean@clean-v1-20260805](../../catalog/local_lhotse_derived.yaml#L86) | 31.1 | 已登记 | 快照 20260914 |
 | [kespeech_hotwords@hotwords-v1-20260805](../../catalog/local_lhotse_derived.yaml#L129) | 31.1 | 已登记 | 快照 20260914、`amphion-audio-backup-1373259071:audio-data-contract/datasets/kespeech_hotwords/` |
 | [kespeech@legacy-20260804](../../catalog/icefall_base.yaml#L1150) | 1,428.0 | [参考表](https://ccnuebbmik1f.feishu.cn/wiki/CEXFwEjPoi2bIukVjk9c5FdOn12?sheet=3d4d23) | 快照 20260914 |
@@ -1467,9 +1445,9 @@ GRPO 热词挖掘候选（未背过的中文热词提示，含近音易混词）
 - `kespeech@punc-gold-v1-20261029`：kespeech@icefall-20260908 的 train 监督片段里的 普通话标点试点的 20 句手写参照标点（规范 v1，逗号从紧）：custom.punctuation_gold.text 是参照，custom.punctuation_hint 记试点用的 Qwen3-ASR 与 FireRedPunc 带标点转写。只含这些句子，text 与父版本相同，不是标点后的文本；录音沿用父版本，不复制音频。中间产物，供复现和比较学生，不直接用于训练。脚本 scripts/punctuation/register_punc_intermediates.py
 - `kespeech@punc-teacher-v1-20261029`：kespeech@icefall-20260908 的 train 监督片段里的 Qwen3.8-27B 老师给 10000 句加的书面化标点（9930 句去掉标点后与输入一致，ok=true）：custom.punctuation_teacher 记输出 text、ok 和模型看到的无标点输入 input；custom.punctuation_hint.qwen 是提示用的 Qwen3-ASR 转写；其中 207 句是留出的评测句，另带学生 v1 的输出 custom.punctuation_student。这批句子用来微调 Qwen3-4B 学生，抽样见 amphiondata scripts/punctuation/build_teacher_set.py。只含这些句子，text 与父版本相同，不是标点后的文本；录音沿用父版本，不复制音频。中间产物，供复现和比较学生，不直接用于训练。脚本 scripts/punctuation/register_punc_intermediates.py
 - `kespeech@punc-written-v1-20261029`：kespeech@icefall-20260908 训练集原标注加书面化标点（GB/T 15834，逗号从紧）：微调后的 Qwen3-4B（Qwen3.8-27B 的 9.6 万条输出蒸馏）以 Qwen3-ASR-1.7B 听音频得到的带标点转写作语气提示，只往原标注里插标点。模型改动了原文的条目，把模型输出的标点按字对齐搬回原标注；每条以 。？！ 结尾；原标注的字、空格（首尾除外）和大小写不变。没有汉字的条目（英文句子、拼读字母）和标注为空的条目原样保留。文件与源 supervisions 条数、顺序相同，只换 text。试点 200 条人工参照上：WenetSpeech markF1 92.4、其他来源 88.9（老师 93.2 / 88.2，原 FireRedPunc 79.8）
-- `kespeech@train-punc-v1-20261102`：kespeech@legacy-20260804 的 train 训练版本，目标文本换成带标点的写法（按 id 取自 datasets/kespeech/versions/punc-written-v1-20261029/kespeech-asr_supervisions_train_phase1_punc_written.jsonl.gz, datasets/kespeech/versions/punc-written-v1-20261029/kespeech-asr_supervisions_train_phase2_punc_written.jsonl.gz；去掉标点和空格、转小写后与原文一致才替换，否则保留原文）。其余字段与源版本相同，录音引用源版本
-- `kespeech@train-punc-v1-20261102-final-v1-20261120`：kespeech@train-punc-v1-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 docs/reference/training-text.md（v1） 应用全部已执行的文本修正，起点 kespeech@train-punc-v1-20261102。构建中
+- `kespeech@train-punc-v1-20261102-final-v1-20261120`：kespeech@train-punc-v1-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 audio-data-contract docs/reference/training-text.md（v1） 应用全部已执行的文本修正，替代配方原来的版本和中间修正版本。起点 kespeech@train-punc-v1-20261102；已含修正：无（各轮修正对本数据都没有改动）。其余字段、录音清单和音频照旧，引用起点版本的产物
 - 含派生版本（与源数据可能重叠）
+- 已并入的旧版本：`kespeech@train-punc-v1-20261102`（COS：没有）
 
 ### legco_speech
 
@@ -1546,11 +1524,9 @@ GRPO 热词挖掘候选（未背过的中文热词提示，含近音易混词）
 |---|---:|---|---|
 | [magicdata_ramc@alignment-v1-20261008](../../catalog/zh_source_alignment.yaml#L197) | 125.5 | 已登记 | 没有 |
 | [magicdata_ramc@allspk-asr-v1-20261103](../../catalog/allspk_asr_v1.yaml#L1) | — | 未登记 | 没有 |
-| [magicdata_ramc@allspk-asr-v1-20261103-final-v1-20261120](../../catalog/text_final_v1.yaml#L765) | — | 未登记 | 没有 |
-| [magicdata_ramc@allspk-asr-v1-20261103-zhenfix-20261117](../../catalog/zhen_fix.yaml#L758) | — | 未登记 | 没有 |
+| [magicdata_ramc@allspk-asr-v1-20261103-final-v1-20261120](../../catalog/text_final_v1.yaml#L2842) | — | 未登记 | 没有 |
 | [magicdata_ramc@allspk-ts-v1-20261104](../../catalog/allspk_ts_v1.yaml#L1) | — | 未登记 | 没有 |
-| [magicdata_ramc@allspk-ts-v1-20261104-final-v1-20261120](../../catalog/text_final_v1.yaml#L849) | — | 未登记 | 没有 |
-| [magicdata_ramc@allspk-ts-v1-20261104-zhenfix-20261117](../../catalog/zhen_fix.yaml#L837) | — | 未登记 | 没有 |
+| [magicdata_ramc@allspk-ts-v1-20261104-final-v1-20261120](../../catalog/text_final_v1.yaml#L3073) | — | 未登记 | 没有 |
 | [magicdata_ramc@asr-20261014](../../catalog/amphionasr_v4.yaml#L3157) | — | 未登记 | 没有 |
 | [magicdata_ramc@asr-20261014-ctxclean-20261110](../../catalog/context_correction_clean_zh.yaml#L744) | — | 未登记 | 没有 |
 | [magicdata_ramc@clean-dual-pass-20261027](../../catalog/magicdata_ramc_clean_pass.yaml#L1) | 125.0 | 已登记 | 没有 |
@@ -1565,25 +1541,17 @@ GRPO 热词挖掘候选（未背过的中文热词提示，含近音易混词）
 | [magicdata_ramc@punc-written-v1-20261029](../../catalog/zh_punc_written_v1.yaml#L213) | 125.5 | 已登记 | 没有 |
 | [magicdata_ramc@speaker-identity-v1-20261028](../../catalog/ramc_speaker_identity.yaml#L2) | 125.0 | 已登记 | 没有 |
 | [magicdata_ramc@teacher-calibration-v1-20261009](../../catalog/diarization_raw_teacher-calibration.yaml#L2) | — | 未登记 | 没有 |
-| [magicdata_ramc@train-punc-v1-20261102](../../catalog/train_punc_v1.yaml#L143) | — | 未登记 | 没有 |
-| [magicdata_ramc@train-punc-v1-20261102-ctxclean-20261110](../../catalog/context_correction_clean_zh.yaml#L2696) | 125.5 | 已登记 | 没有 |
-| [magicdata_ramc@train-punc-v1-20261102-ctxclean-20261110-zhenfix-20261117](../../catalog/zhen_fix.yaml#L587) | 125.5 | 已登记 | 没有 |
-| [magicdata_ramc@train-punc-v1-20261102-final-v1-20261120](../../catalog/text_final_v1.yaml#L737) | — | 未登记 | 没有 |
+| [magicdata_ramc@train-punc-v1-20261102-final-v1-20261120](../../catalog/text_final_v1.yaml#L2770) | 125.5 | 已登记 | 没有 |
 | [magicdata_ramc@turn-taking-20261014](../../catalog/amphionasr_v4.yaml#L2884) | 403.5 | 已登记 | 没有 |
 | [magicdata_ramc@turn-taking-20261014-ctxclean-20261110](../../catalog/context_correction_clean_zh.yaml#L947) | 403.5 | 已登记 | 没有 |
 | [magicdata_ramc@turn-taking-20261014-utts](../../catalog/ts_window_utts.yaml#L341) | 41.5 | 已登记 | 没有 |
-| [magicdata_ramc@turn-taking-20261014-utts-punc-20261102](../../catalog/train_punc_v1_derived.yaml#L1161) | — | 未登记 | 没有 |
-| [magicdata_ramc@turn-taking-20261014-utts-punc-20261102-ctxclean-20261110](../../catalog/context_correction_clean_zh.yaml#L2764) | 337.1 | 已登记 | 没有 |
-| [magicdata_ramc@turn-taking-20261014-utts-punc-20261102-ctxclean-20261110-zhenfix-20261117](../../catalog/zhen_fix.yaml#L658) | 337.1 | 已登记 | 没有 |
-| [magicdata_ramc@turn-taking-20261014-utts-punc-20261102-final-v1-20261120](../../catalog/text_final_v1.yaml#L258) | — | 未登记 | 没有 |
+| [magicdata_ramc@turn-taking-20261014-utts-punc-20261102-final-v1-20261120](../../catalog/text_final_v1.yaml#L1260) | 337.1 | 已登记 | 没有 |
 
 - `magicdata_ramc@alignment-v1-20261008`：magicdata_ramc@icefall-20260908 train 全部 168464 句的词级强制对齐（2026-10-08，Qwen3-ForcedAligner-0.6B，amphiondata main 6daabaf）。custom.alignment 含 status（aligned 109797 句 / needs_review 58667 句，后者有零时长或越界的词）、items（每个字或词的文本和起止秒，从该句开头算起）、issues、time_reference、unit、audio_duration。文本是对齐时所用的原标注文本；录音沿用 magicdata_ramc@clean-dual-qwen-moss-v1-20261008 的 train 录音，不复制音频。脚本 scripts/label_registration/register_alignments.py
 - `magicdata_ramc@allspk-asr-v1-20261103`：MagicData-RAMC 训练集的普通 ASR 多人窗口：按 magicdata_ramc@icefall-20260908 训练集标注，在每段录音上依次切出不重叠的窗口，每个窗口长度在 10–90 秒间均匀抽取，只在没人说话（前后静音至少 0.2 秒）处下刀；目标文本是窗口内所有说话人每句话的书面化标点文本（magicdata_ramc@punc-written-v1-20261029，同一 ID）按开始时间顺序拼接，不区分说话人。重叠语音超过窗口时长 10% 的窗口丢弃（普通转写的字序不确定），有任一句缺标点文本的窗口丢弃，有任一句未通过 magicdata_ramc@clean-dual-qwen-moss-v1-20261008 清洗（custom.clean.pass 为 false）的窗口丢弃。音频引用 magicdata_ramc@asr-20261014 训练集（只取第 0 路），不复制。用途：普通 ASR 模式下多人轮流说话时转写每个人、长录音不提前结束（此前普通 ASR 训练数据每条只转写一个说话人）。保留 9902 个窗口，丢弃：重叠 0、缺标点 0、短于 5 秒 72、未过清洗 1388；说话人数分布 {'1': 1767, '2': 8135}
-- `magicdata_ramc@allspk-asr-v1-20261103-final-v1-20261120`：magicdata_ramc@allspk-asr-v1-20261103（交付配方 v7set34 训练用的版本）的训练文本终版，按 docs/reference/training-text.md（v1） 应用全部已执行的文本修正，起点 magicdata_ramc@allspk-asr-v1-20261103-zhenfix-20261117。构建中
-- `magicdata_ramc@allspk-asr-v1-20261103-zhenfix-20261117`：magicdata_ramc@allspk-asr-v1-20261103 的中文文本按 audio-data-contract docs/reference/zh-en-transcription.md 规则 2 修正：用空格隔开的单个大写字母连写（K T V→KTV、A P P→APP、N F C→NFC），原文本存进 metadata.zhen_fix / custom.zhen_fix。小写或大小写混合的字母串（多是数学变量）和字母数字词里的汉字数字不改。只改 train 划分的文本，共 474 条；其余字段、音频引用和其他划分照旧，引用底版本的产物
+- `magicdata_ramc@allspk-asr-v1-20261103-final-v1-20261120`：magicdata_ramc@allspk-asr-v1-20261103（交付配方 v7set34 训练用的版本）的训练文本终版，按 audio-data-contract docs/reference/training-text.md（v1） 应用全部已执行的文本修正，替代配方原来的版本和中间修正版本。起点 magicdata_ramc@allspk-asr-v1-20261103-zhenfix-20261117；已含修正：拆开的大写字母连写（zhen-fix-v1）。其余字段、录音清单和音频照旧，引用起点版本的产物
 - `magicdata_ramc@allspk-ts-v1-20261104`：MagicData-RAMC 训练集的目标说话人（TS）多人窗口，与 magicdata_ramc@allspk-asr-v1-20261103 用同一批窗口、同一段音频：普通 ASR 版本转写窗口里所有人，这里只转写注册的那个人，让模型在同一段音频上靠提示区分两种任务（只训普通 ASR 版本时，TS 模式在多人轮流说话的音频上会把别人的话也写进来）。train：每个窗口选一个在窗口里说话的人作目标（在有注册音的说话人里均匀抽），目标文本是此人在窗口内各句的书面化标点文本（magicdata_ramc@punc-written-v1-20261029）按开始时间顺序拼接；train_neg：每个窗口选一个同一录音里、窗口内没说话的人（有的话），目标为空。注册音取同一录音里此人在窗口外的一句话，长 3–10 秒（没有则放宽到 2–15 秒），且没有其他句子与之重叠、通过 magicdata_ramc@clean-dual-qwen-moss-v1-20261008 清洗。两个音频位都引用 magicdata_ramc@asr-20261014 训练集（与窗口同一路），不复制。正样本 9902 条（0 个窗口没有可用注册音），负样本 1767 条（8135 个窗口没有不在场的说话人）；正样本窗口的说话人数分布 {'1': 1767, '2': 8135}
-- `magicdata_ramc@allspk-ts-v1-20261104-final-v1-20261120`：magicdata_ramc@allspk-ts-v1-20261104（交付配方 v7set34 训练用的版本）的训练文本终版，按 docs/reference/training-text.md（v1） 应用全部已执行的文本修正，起点 magicdata_ramc@allspk-ts-v1-20261104-zhenfix-20261117。构建中
-- `magicdata_ramc@allspk-ts-v1-20261104-zhenfix-20261117`：magicdata_ramc@allspk-ts-v1-20261104 的中文文本按 audio-data-contract docs/reference/zh-en-transcription.md 规则 2 修正：用空格隔开的单个大写字母连写（K T V→KTV、A P P→APP、N F C→NFC），原文本存进 metadata.zhen_fix / custom.zhen_fix。小写或大小写混合的字母串（多是数学变量）和字母数字词里的汉字数字不改。只改 train 划分的文本，共 283 条；其余字段、音频引用和其他划分照旧，引用底版本的产物
+- `magicdata_ramc@allspk-ts-v1-20261104-final-v1-20261120`：magicdata_ramc@allspk-ts-v1-20261104（交付配方 v7set34 训练用的版本）的训练文本终版，按 audio-data-contract docs/reference/training-text.md（v1） 应用全部已执行的文本修正，替代配方原来的版本和中间修正版本。起点 magicdata_ramc@allspk-ts-v1-20261104-zhenfix-20261117；已含修正：拆开的大写字母连写（zhen-fix-v1）。其余字段、录音清单和音频照旧，引用起点版本的产物
 - `magicdata_ramc@asr-20261014`：会议普通转写。每条 supervision 一条，时长 0.5～30 秒，文本非空。多通道只取第 0 路
 - `magicdata_ramc@asr-20261014-ctxclean-20261110`：在 magicdata_ramc@asr-20261014 上做的上下文纠偏清洗：说话人讲字怎么写（组词、拆字、偏旁、否定对比）而标注写成同音别字的，按说明改正；拿不准的整条去掉。判定依据见 context_correction_clean_zh@v1-20261110
 - `magicdata_ramc@clean-dual-pass-20261027`：magicdata_ramc@clean-dual-qwen-moss-v1-20261008 训练集（MagicData-RAMC 电话对话）里清洗标记 custom.clean.pass=true 的分段，共 166711 条 / 125.0 小时（源 168464 条，去掉未通过的 1753 条）；每行原样保留，包括 custom.clean，只用无标点文本。录音清单沿用源版本（与 icefall-20260908 共用），不复制音频；保留所有说话人，留出测试 / 验证集说话人由读取方决定。用途：带 Lance 记录索引的 clean-only 版本，供 RAMC 目标说话人场景池（build_ts_scene_pool.py --ramc）按说话人取句；recipe_parameters.clean_pass_only 声明每行都已通过。脚本 scripts/ramc_clean_pass.py
@@ -1596,18 +1564,13 @@ GRPO 热词挖掘候选（未背过的中文热词提示，含近音易混词）
 - `magicdata_ramc@punc-written-v1-20261029`：magicdata_ramc@icefall-20260908 训练集原标注加书面化标点（GB/T 15834，逗号从紧）：微调后的 Qwen3-4B（Qwen3.8-27B 的 9.6 万条输出蒸馏）以 Qwen3-ASR-1.7B 听音频得到的带标点转写作语气提示，只往原标注里插标点。模型改动了原文的条目，把模型输出的标点按字对齐搬回原标注；每条以 。？！ 结尾；原标注的字、空格（首尾除外）和大小写不变。没有汉字的条目（英文句子、拼读字母）和标注为空的条目原样保留。文件与源 supervisions 条数、顺序相同，只换 text。试点 200 条人工参照上：WenetSpeech markF1 92.4、其他来源 88.9（老师 93.2 / 88.2，原 FireRedPunc 79.8）。原标注约一半条目带部分标点，按新规范重加
 - `magicdata_ramc@speaker-identity-v1-20261028`：magicdata_ramc@clean-dual-pass-20261027 全部 166711 条训练分段，文本等字段与父版本相同，新增 custom.speaker_identity：MagicData-RAMC 每段对话给说话人发新编号，同一个人会挂在几个编号下，部分 train 编号的声纹也与 dev/test 说话人相同。same_voice 列出与本编号声纹相似度 ≥ 0.60 的其他编号（298 对，涉及 383 个编号），heldout_match 记与本编号声纹相同的 dev/test 单元（113 个 train 编号），没有则为 null。identities.json / report.json 是生成器输出，suspects.json（同编号与不同编号的相似度分布、跨录音疑似同人对）和heldout_match.json（各阈值下与 dev/test 匹配的 train 编号）是阈值依据。声纹单元嵌入（.npz）是特征不是标注，不登记。录音沿用父版本，不复制音频。脚本 scripts/label_registration/register_ramc_identity.py，生成器 scripts/ts_robust/ramc_voice_identities.py
 - `magicdata_ramc@teacher-calibration-v1-20261009`：说话人日志老师校准（2026-10-09）：在有人工标注的 RAMC train 6 条 / 3.17 h 上比较本机 MOSS 0.9B、MOSS Pro、百炼 qwen-audio-3.1-asr-flash 三个老师，并用 Qwen3-ASR 对本机 MOSS 的每个片段做文本校验；付费调用经用户批准，仅用于这次校准。每个 *_records 文件一个老师，每行一条录音，target 是按时间排序的 [说话人][起-止] 文本，教师返回的分块、说话人链接、身份断点留在 metadata.<老师>；teacher_agreement_records 每行一个人工标注片段，metadata.teacher_agreement 记各老师的说话人、边界和字错误率（analysis/segments.jsonl，用于确定多老师一致性过滤门槛）。录音沿用 magicdata_ramc@legacy-20260804 train_rec_0（只用其中被抽中的录音），不复制音频。脚本 scripts/diarization_raw_labels/register_raw_labels.py
-- `magicdata_ramc@train-punc-v1-20261102`：magicdata_ramc@clean-dual-qwen-moss-v1-20261008 的 train 训练版本，目标文本换成带标点的写法（按 id 取自 datasets/magicdata_ramc/versions/punc-written-v1-20261029/magicdata_ramc_supervisions_train_punc_written.jsonl.gz；去掉标点和空格、转小写后与原文一致才替换，否则保留原文）。其余字段与源版本相同，录音引用源版本
-- `magicdata_ramc@train-punc-v1-20261102-ctxclean-20261110`：在 magicdata_ramc@train-punc-v1-20261102 上做的上下文纠偏清洗：说话人讲字怎么写（组词、拆字、偏旁、否定对比）而标注写成同音别字的，按说明改正；拿不准的窗口整窗去掉。判定依据见 context_correction_clean_zh@v1-20261110。判定迁自同一批记录在清洗时的判定（clean.py transfer：按去掉标点、空格后的文本对应，改字按字对齐写进带标点的文本）
-- `magicdata_ramc@train-punc-v1-20261102-ctxclean-20261110-zhenfix-20261117`：magicdata_ramc@train-punc-v1-20261102-ctxclean-20261110 的中文文本按 audio-data-contract docs/reference/zh-en-transcription.md 规则 2 修正：用空格隔开的单个大写字母连写（K T V→KTV、A P P→APP、N F C→NFC），原文本存进 metadata.zhen_fix / custom.zhen_fix。小写或大小写混合的字母串（多是数学变量）和字母数字词里的汉字数字不改。只改 train 划分的文本，共 1,052 条；其余字段、音频引用和其他划分照旧，引用底版本的产物
-- `magicdata_ramc@train-punc-v1-20261102-final-v1-20261120`：magicdata_ramc@train-punc-v1-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 docs/reference/training-text.md（v1） 应用全部已执行的文本修正，起点 magicdata_ramc@train-punc-v1-20261102-ctxclean-20261110-zhenfix-20261117。构建中
+- `magicdata_ramc@train-punc-v1-20261102-final-v1-20261120`：magicdata_ramc@train-punc-v1-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 audio-data-contract docs/reference/training-text.md（v1） 应用全部已执行的文本修正，替代配方原来的版本和中间修正版本。起点 magicdata_ramc@train-punc-v1-20261102-ctxclean-20261110-zhenfix-20261117；已含修正：说字写法（ctxclean，context_correction_clean_zh@v1-20261110）、拆开的大写字母连写（zhen-fix-v1）。其余字段、录音清单和音频照旧，引用起点版本的产物
 - `magicdata_ramc@turn-taking-20261014`：会议 turn-taking。整句拼成 2/3 人混合窗，时长 0.5～30 秒。注册音是窗外另一句，1～30 秒。有近场时远场:近场 = 3:1
 - `magicdata_ramc@turn-taking-20261014-ctxclean-20261110`：在 magicdata_ramc@turn-taking-20261014 上做的上下文纠偏清洗：说话人讲字怎么写（组词、拆字、偏旁、否定对比）而标注写成同音别字的，按说明改正；拿不准的整条去掉。判定依据见 context_correction_clean_zh@v1-20261110
 - `magicdata_ramc@turn-taking-20261014-utts`：magicdata_ramc@turn-taking-20261014 的 train 划分（不含 eval/test），时间线取自 magicdata_ramc@icefall-20260908 的 train 人工标注。加 metadata.window_utts（窗口内每句的说话人与相对混合起点的起止，取自来源标注并截到窗口，截断的标 clipped）与同一命名空间的 metadata.target_speaker，供 open-audio-llm 帧级说话人活动标签（objective.ts_activity_weight）；其余字段不变，音频引用改指本版本，音频索引与原版逐行相同。正样本的目标语句与转写逐字一致（忽略空白和标点；窗口边缘截断的句子允许只转写一部分）才写时间线，负样本只有注册人确实不在窗口里说话才写；其余记录不写时间线（不出帧级标签）。负样本中注册人按标注其实在窗口内说话的记录 ID 列在 excluded-records-<split>.txt，训练配方用 exclude_records 排除。生成脚本 audio-data-contract scripts/ts_robust/add_window_utts.py，逐划分统计见 report.json
-- `magicdata_ramc@turn-taking-20261014-utts-punc-20261102`：magicdata_ramc@turn-taking-20261014-utts 的 train_2spk, train_neg，目标文本加书面化标点：中文用 amphiondata 的中文学生模型（punc-student-v1，不带听音提示），英文用英文规范 en-v1 的学生模型（加标点并恢复大小写）；标点按字 / 按词搬回原文，原文的字词不变，找不到输出的目标保留原样。其余字段与源版本相同，音频引用源版本
-- `magicdata_ramc@turn-taking-20261014-utts-punc-20261102-ctxclean-20261110`：在 magicdata_ramc@turn-taking-20261014-utts-punc-20261102 上做的上下文纠偏清洗：说话人讲字怎么写（组词、拆字、偏旁、否定对比）而标注写成同音别字的，按说明改正；拿不准的整条去掉。判定依据见 context_correction_clean_zh@v1-20261110。判定迁自同一批记录在清洗时的判定（clean.py transfer：按去掉标点、空格后的文本对应，改字按字对齐写进带标点的文本）
-- `magicdata_ramc@turn-taking-20261014-utts-punc-20261102-ctxclean-20261110-zhenfix-20261117`：magicdata_ramc@turn-taking-20261014-utts-punc-20261102-ctxclean-20261110 的中文文本按 audio-data-contract docs/reference/zh-en-transcription.md 规则 2 修正：用空格隔开的单个大写字母连写（K T V→KTV、A P P→APP、N F C→NFC），原文本存进 metadata.zhen_fix / custom.zhen_fix。小写或大小写混合的字母串（多是数学变量）和字母数字词里的汉字数字不改。只改 train 划分的文本，共 711 条；其余字段、音频引用和其他划分照旧，引用底版本的产物
-- `magicdata_ramc@turn-taking-20261014-utts-punc-20261102-final-v1-20261120`：magicdata_ramc@turn-taking-20261014-utts-punc-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 docs/reference/training-text.md（v1） 应用全部已执行的文本修正，起点 magicdata_ramc@turn-taking-20261014-utts-punc-20261102-ctxclean-20261110-zhenfix-20261117。构建中
+- `magicdata_ramc@turn-taking-20261014-utts-punc-20261102-final-v1-20261120`：magicdata_ramc@turn-taking-20261014-utts-punc-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 audio-data-contract docs/reference/training-text.md（v1） 应用全部已执行的文本修正，替代配方原来的版本和中间修正版本。起点 magicdata_ramc@turn-taking-20261014-utts-punc-20261102-ctxclean-20261110-zhenfix-20261117；已含修正：说字写法（ctxclean，context_correction_clean_zh@v1-20261110）、拆开的大写字母连写（zhen-fix-v1）。其余字段、录音清单和音频照旧，引用起点版本的产物
 - 含派生版本（与源数据可能重叠）
+- 已并入的旧版本：`magicdata_ramc@allspk-asr-v1-20261103-zhenfix-20261117`（COS：没有）、`magicdata_ramc@allspk-ts-v1-20261104-zhenfix-20261117`（COS：没有）、`magicdata_ramc@train-punc-v1-20261102`（COS：没有）、`magicdata_ramc@train-punc-v1-20261102-ctxclean-20261110`（COS：没有）、`magicdata_ramc@train-punc-v1-20261102-ctxclean-20261110-zhenfix-20261117`（COS：没有）、`magicdata_ramc@turn-taking-20261014-utts-punc-20261102`（COS：没有）、`magicdata_ramc@turn-taking-20261014-utts-punc-20261102-ctxclean-20261110`（COS：没有）、`magicdata_ramc@turn-taking-20261014-utts-punc-20261102-ctxclean-20261110-zhenfix-20261117`（COS：没有）
 
 ### magicdata_ramc_farsim_meeting_sot
 
@@ -1676,18 +1639,14 @@ MagicData-RAMC 对话切窗的按人转写数据
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
 | [police_asr_unified@icefall-20260908](../../catalog/police_asr_unified.yaml#L265) | 805.6 | 已登记 | 没有 |
-| [police_asr_unified@train-punc-v1-20261102](../../catalog/train_punc_v1_more.yaml#L221) | — | 未登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/police_asr_unified/` |
-| [police_asr_unified@train-punc-v1-20261102-final-v1-20261120](../../catalog/text_final_v1.yaml#L455) | — | 未登记 | 没有 |
-| [police_asr_unified@train-punc-v1-20261102-zhenfix-20261117](../../catalog/zhen_fix.yaml#L516) | — | 未登记 | 没有 |
+| [police_asr_unified@train-punc-v1-20261102-final-v1-20261120](../../catalog/text_final_v1.yaml#L2048) | — | 未登记 | 没有 |
 | [police_asr_unified@v1-20261009](../../catalog/police_asr_unified.yaml#L1) | 805.6 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/police_asr_unified/` |
 
 - `police_asr_unified@icefall-20260908`：Icefall consumption view of the V1-V6 merged release; the train/dev/test manifests, splits and text are those of v1-20261009.
-- `police_asr_unified@train-punc-v1-20261102`：police_asr_unified@v1-20261009 的 train 训练版本，目标文本换成带标点的写法（按 id 取自 ，及中文学生模型给派生文本加的标点（按去标点文本匹配）；去掉标点和空格、转小写后与原文一致才替换，否则保留原文）。其余字段与源版本相同，录音引用源版本
-- `police_asr_unified@train-punc-v1-20261102-final-v1-20261120`：police_asr_unified@train-punc-v1-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 docs/reference/training-text.md（v1） 应用全部已执行的文本修正，起点 police_asr_unified@train-punc-v1-20261102-zhenfix-20261117。构建中
-- `police_asr_unified@train-punc-v1-20261102-zhenfix-20261117`：police_asr_unified@train-punc-v1-20261102 的中文文本按 audio-data-contract docs/reference/zh-en-transcription.md 规则 2 修正：用空格隔开的单个大写字母连写（K T V→KTV、A P P→APP、N F C→NFC），原文本存进 metadata.zhen_fix / custom.zhen_fix。小写或大小写混合的字母串（多是数学变量）和字母数字词里的汉字数字不改。只改 train 划分的文本，共 12,247 条；其余字段、音频引用和其他划分照旧，引用底版本的产物
+- `police_asr_unified@train-punc-v1-20261102-final-v1-20261120`：police_asr_unified@train-punc-v1-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 audio-data-contract docs/reference/training-text.md（v1） 应用全部已执行的文本修正，替代配方原来的版本和中间修正版本。起点 police_asr_unified@train-punc-v1-20261102-zhenfix-20261117；已含修正：拆开的大写字母连写（zhen-fix-v1）。其余字段、录音清单和音频照旧，引用起点版本的产物
 - `police_asr_unified@v1-20261009`：警务合成语音统合版：V1-V6 全部批次合并为 train/dev/test 三个集合，不复制音频
 - 含派生版本（与源数据可能重叠）
-- 已并入的旧版本：`police_robust_monitor@icefall-20260908`（COS：快照 20260914、`amphion-audio-backup-1373259071:audio-data-contract/datasets/police_robust_monitor/`）、`police_synthetic_zh_accent@icefall-20260908`（COS：快照 20260914）、`police_synthetic_zh_accent@legacy-rebalance-100k-20260916`（COS：没有）、`police_synthetic_zh_accent@v1-20260817`（COS：快照 20260914）、`police_synthetic_zh_accent@v2-20260818`（COS：快照 20260914）、`police_synthetic_zh_accent@v3-20260820`（COS：快照 20260914）、`police_synthetic_zh_accent@v5-20260830-qc`（COS：快照 20260914）、`police_synthetic_zh_accent@v5-20260830-qwen75-cosy25`（COS：快照 20260914）、`police_terms_v5@icefall-20260908`（COS：快照 20260914）、`police_terms_v5_dev@icefall-20260908`（COS：快照 20260914）、`police_terms_v5_test@icefall-20260908`（COS：快照 20260914、`amphion-audio-backup-1373259071:audio-data-contract/datasets/police_terms_v5_test/`）、`police_v6_8h@icefall-20260908`（COS：没有）、`police_v6_8h@v6-8h-20260915`（COS：没有）、`police_v6_acceptance_205@icefall-20260908`（COS：快照 20260921、`amphion-audio-backup-1373259071:audio-data-contract/datasets/police_v6_acceptance_205/`）、`police_v6_acceptance_205@v6-acceptance-20260921`（COS：快照 20260921、`amphion-audio-backup-1373259071:audio-data-contract/datasets/police_v6_acceptance_205/`）、`police_v6_expanded@icefall-20260908`（COS：没有）、`police_v6_expanded@v6-expanded-20260915`（COS：没有）
+- 已并入的旧版本：`police_asr_unified@train-punc-v1-20261102`（COS：`amphion-audio-backup-1373259071:audio-data-contract/datasets/police_asr_unified/`）、`police_asr_unified@train-punc-v1-20261102-zhenfix-20261117`（COS：没有）、`police_robust_monitor@icefall-20260908`（COS：快照 20260914、`amphion-audio-backup-1373259071:audio-data-contract/datasets/police_robust_monitor/`）、`police_synthetic_zh_accent@icefall-20260908`（COS：快照 20260914）、`police_synthetic_zh_accent@legacy-rebalance-100k-20260916`（COS：没有）、`police_synthetic_zh_accent@v1-20260817`（COS：快照 20260914）、`police_synthetic_zh_accent@v2-20260818`（COS：快照 20260914）、`police_synthetic_zh_accent@v3-20260820`（COS：快照 20260914）、`police_synthetic_zh_accent@v5-20260830-qc`（COS：快照 20260914）、`police_synthetic_zh_accent@v5-20260830-qwen75-cosy25`（COS：快照 20260914）、`police_terms_v5@icefall-20260908`（COS：快照 20260914）、`police_terms_v5_dev@icefall-20260908`（COS：快照 20260914）、`police_terms_v5_test@icefall-20260908`（COS：快照 20260914、`amphion-audio-backup-1373259071:audio-data-contract/datasets/police_terms_v5_test/`）、`police_v6_8h@icefall-20260908`（COS：没有）、`police_v6_8h@v6-8h-20260915`（COS：没有）、`police_v6_acceptance_205@icefall-20260908`（COS：快照 20260921、`amphion-audio-backup-1373259071:audio-data-contract/datasets/police_v6_acceptance_205/`）、`police_v6_acceptance_205@v6-acceptance-20260921`（COS：快照 20260921、`amphion-audio-backup-1373259071:audio-data-contract/datasets/police_v6_acceptance_205/`）、`police_v6_expanded@icefall-20260908`（COS：没有）、`police_v6_expanded@v6-expanded-20260915`（COS：没有）
 
 ### police_robust_monitor
 
@@ -1740,24 +1699,23 @@ MagicData-RAMC 对话切窗的按人转写数据
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
-| [police_terms_single_train@hotwords-confusable-v1-20261102](../../catalog/train_punc_v1.yaml#L393) | — | 未登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/police_terms_single_train/` |
-| [police_terms_single_train@hotwords-confusable-v1-20261102-final-v1-20261120](../../catalog/text_final_v1.yaml#L511) | — | 未登记 | 没有 |
+| [police_terms_single_train@hotwords-confusable-v1-20261102](../../catalog/train_punc_v1.yaml#L399) | — | 未登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/police_terms_single_train/` |
+| [police_terms_single_train@hotwords-confusable-v1-20261102-final-v1-20261120](../../catalog/text_final_v1.yaml#L2188) | — | 未登记 | 没有 |
 | [police_terms_single_train@listening-review-v1-20261024](../../catalog/listening_review.yaml#L247) | — | 未登记 | 没有 |
 | [police_terms_single_train@punc-written-v1-20261102](../../catalog/zh_punc_written_v1_gaps.yaml#L130) | 11.7 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/police_terms_single_train/` |
 | [police_terms_single_train@qc-v1-20261023](../../catalog/police_terms_qc.yaml#L92) | 11.7 | 已登记 | 没有 |
-| [police_terms_single_train@train-punc-v1-20261102](../../catalog/train_punc_v1.yaml#L268) | — | 未登记 | 没有 |
-| [police_terms_single_train@train-punc-v1-20261102-final-v1-20261120](../../catalog/text_final_v1.yaml#L483) | — | 未登记 | 没有 |
+| [police_terms_single_train@train-punc-v1-20261102-final-v1-20261120](../../catalog/text_final_v1.yaml#L2120) | — | 未登记 | 没有 |
 | [police_terms_single_train@v1-20261023](../../catalog/police_terms_single_train.yaml#L2) | 11.7 | 已登记 | 没有 |
 
 - `police_terms_single_train@hotwords-confusable-v1-20261102`：警务术语单说训练集的热词版本：每条录音一条 asr_hotwords 记录，hotwords 为该条的目标术语，metadata.confusable_hotwords 为读音相近的其他警务术语（拼音音节最长公共片段 ≥ 较短术语的一半且 ≥ 2 个音节；字母按中文习惯读法，如 e 读 yi），训练时可作为干扰词放进列表（如 e警保 与 义警）。文本为 punc-written-v1-20261102 的带标点写法，录音同 v1-20261023
-- `police_terms_single_train@hotwords-confusable-v1-20261102-final-v1-20261120`：police_terms_single_train@hotwords-confusable-v1-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 docs/reference/training-text.md（v1） 应用全部已执行的文本修正，起点 police_terms_single_train@hotwords-confusable-v1-20261102。构建中
+- `police_terms_single_train@hotwords-confusable-v1-20261102-final-v1-20261120`：police_terms_single_train@hotwords-confusable-v1-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 audio-data-contract docs/reference/training-text.md（v1） 应用全部已执行的文本修正，替代配方原来的版本和中间修正版本。起点 police_terms_single_train@hotwords-confusable-v1-20261102；已含修正：无（各轮修正对本数据都没有改动）。其余字段、录音清单和音频照旧，引用起点版本的产物
 - `police_terms_single_train@listening-review-v1-20261024`：police_terms_single_train@v1-20261023 中被人工听审过的 10 条数据行（父版本数据行原样照抄，录音和音频索引沿用父版本），每行的 metadata.listening_review（Lhotse custom.listening_review）是关于这条记录的听审答案列表：问题、选项、回答、备注、回答日期、听审名称、片段起止和选项含义（resolved_to）。共 10 条答案（police-terms-single-train-20261023 10 条），10 条已挂到数据行。证据文件 listening_review.jsonl.gz 含该版本全部答案。只含被听过的记录，不是完整数据版本，不用于训练。脚本 scripts/label_registration/register_listening_review.py
 - `police_terms_single_train@punc-written-v1-20261102`：police_terms_single_train@v1-20261023 训练集原标注加书面化标点，方法与 punc-written-v1-20261029 相同（amphiondata docs/written-punctuation.md：GB/T 15834、逗号从紧；Qwen3-4B 学生 punc-student-v1 以 Qwen3-ASR-1.7B 听音频得到的带标点转写作语气提示，只往原标注里插标点）。模型改动原文的条目按字对齐把标点搬回原标注；每条以 。？！ 结尾；没有汉字的条目和空标注原样保留。文件与源 supervisions 条数、顺序相同，只换 text。每条只说一个术语，多数只补句号；120 条没有汉字的术语（如 WPS、DNA）原样保留
 - `police_terms_single_train@qc-v1-20261023`：police_terms_single_train@v1-20261023 的 21760 条录音，加上逐条质检结果：custom.qc 是共享 Qwen3-ASR-1.7B 转写后与术语按拼音对齐得到的多出/缺少/替换音节数、是否字全对、是否通过及未通过原因。合成并检查过但没有入选的 3638 条（被检查拒绝、超出每术语名额或只转写未打分）在证据文件 qc_not_shipped 里，每条一行，没有录音。录音和文本沿用父版本。脚本 scripts/label_registration/register_police_qc.py
-- `police_terms_single_train@train-punc-v1-20261102`：police_terms_single_train@v1-20261023 的 train 训练版本，目标文本换成带标点的写法（按 id 取自 datasets/police_terms_single_train/versions/punc-written-v1-20261102/police_terms_single_train_supervisions_train_punc_written.jsonl.gz；去掉标点和空格、转小写后与原文一致才替换，否则保留原文）。其余字段与源版本相同，录音引用源版本
-- `police_terms_single_train@train-punc-v1-20261102-final-v1-20261120`：police_terms_single_train@train-punc-v1-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 docs/reference/training-text.md（v1） 应用全部已执行的文本修正，起点 police_terms_single_train@train-punc-v1-20261102。构建中
+- `police_terms_single_train@train-punc-v1-20261102-final-v1-20261120`：police_terms_single_train@train-punc-v1-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 audio-data-contract docs/reference/training-text.md（v1） 应用全部已执行的文本修正，替代配方原来的版本和中间修正版本。起点 police_terms_single_train@train-punc-v1-20261102；已含修正：无（各轮修正对本数据都没有改动）。其余字段、录音清单和音频照旧，引用起点版本的产物
 - `police_terms_single_train@v1-20261023`：警务术语单说训练集：每条录音只说一个警务术语，不带句子；文本就是术语，supervision 的 custom.target_terms 为该术语。 术语取自警言警语 V6.0 术语表（police_synthetic_zh_accent@legacy-rebalance-100k-20260916 source_entries 中 term/app 两类，共 1,088 个，全部使用，不按旧的术语划分留出），每个术语 20 个不同说话人。 Qwen3-TTS-12Hz-1.7B-Base 克隆原警务数据的 train 口音说话人（不含粤语、不用 dev/test 说话人；参考音频为本机找回的原片段， 参考文本用 Qwen3-ASR 重新转写），全部是带口音的普通话。起因：实测单说术语时命中率很低， police_asr_unified@v1-20261009 train 里单说术语只有 2,065 条、1.11 h
 - 含派生版本（与源数据可能重叠）
+- 已并入的旧版本：`police_terms_single_train@train-punc-v1-20261102`（COS：没有）
 
 ### primewords
 
@@ -1916,15 +1874,14 @@ TAL 中文语音识别数据
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
 | [threed_speaker_zh_far_asr@punc-written-v1-20261102](../../catalog/zh_punc_written_v1_gaps.yaml#L194) | 71.2 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/threed_speaker_zh_far_asr/` |
-| [threed_speaker_zh_far_asr@train-punc-v1-20261102](../../catalog/train_punc_v1.yaml#L331) | — | 未登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/threed_speaker_zh_far_asr/` |
-| [threed_speaker_zh_far_asr@train-punc-v1-20261102-final-v1-20261120](../../catalog/text_final_v1.yaml#L681) | — | 未登记 | 没有 |
+| [threed_speaker_zh_far_asr@train-punc-v1-20261102-final-v1-20261120](../../catalog/text_final_v1.yaml#L2635) | — | 未登记 | 没有 |
 | [threed_speaker_zh_far_asr@zh-far-replay-clean-v1-20261010](../../catalog/zh_farfield.yaml#L501) | 71.2 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/threed_speaker_zh_far_asr/` |
 | [threed_speaker_zh_far_asr@zh-far-replay-v1-20261009](../../catalog/zh_farfield.yaml#L463) | 75.5 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/zh_far_replay/` |
 
 - `threed_speaker_zh_far_asr@punc-written-v1-20261102`：threed_speaker_zh_far_asr@zh-far-replay-clean-v1-20261010 训练集原标注加书面化标点，方法与 punc-written-v1-20261029 相同（amphiondata docs/written-punctuation.md：GB/T 15834、逗号从紧；Qwen3-4B 学生 punc-student-v1 以 Qwen3-ASR-1.7B 听音频得到的带标点转写作语气提示，只往原标注里插标点）。模型改动原文的条目按字对齐把标点搬回原标注；每条以 。？！ 结尾；没有汉字的条目和空标注原样保留。文件与源 supervisions 条数、顺序相同，只换 text
-- `threed_speaker_zh_far_asr@train-punc-v1-20261102`：threed_speaker_zh_far_asr@zh-far-replay-clean-v1-20261010 的 train 训练版本，目标文本换成带标点的写法（按 id 取自 datasets/threed_speaker_zh_far_asr/versions/punc-written-v1-20261102/threed_speaker_zh_far_asr_supervisions_train_punc_written.jsonl.gz；去掉标点和空格、转小写后与原文一致才替换，否则保留原文）。其余字段与源版本相同，录音引用源版本
-- `threed_speaker_zh_far_asr@train-punc-v1-20261102-final-v1-20261120`：threed_speaker_zh_far_asr@train-punc-v1-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 docs/reference/training-text.md（v1） 应用全部已执行的文本修正，起点 threed_speaker_zh_far_asr@train-punc-v1-20261102。构建中
+- `threed_speaker_zh_far_asr@train-punc-v1-20261102-final-v1-20261120`：threed_speaker_zh_far_asr@train-punc-v1-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 audio-data-contract docs/reference/training-text.md（v1） 应用全部已执行的文本修正，替代配方原来的版本和中间修正版本。起点 threed_speaker_zh_far_asr@train-punc-v1-20261102；已含修正：无（各轮修正对本数据都没有改动）。其余字段、录音清单和音频照旧，引用起点版本的产物
 - 含派生版本（与源数据可能重叠）
+- 已并入的旧版本：`threed_speaker_zh_far_asr@train-punc-v1-20261102`（COS：`amphion-audio-backup-1373259071:audio-data-contract/datasets/threed_speaker_zh_far_asr/`）
 
 ### ts_asr_dev
 
@@ -2020,10 +1977,7 @@ VITW 中文远场转写训练数据
 | [wenetspeech_clean@punc-gold-v1-20261029](../../catalog/punc_teacher_v1.yaml#L555) | 0.1 | 已登记 | 没有 |
 | [wenetspeech_clean@punc-teacher-v1-20261029](../../catalog/punc_teacher_v1.yaml#L2) | 44.7 | 已登记 | 没有 |
 | [wenetspeech_clean@punc-written-v1-20261029](../../catalog/zh_punc_written_v1.yaml#L792) | 9,971.1 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/wenetspeech_clean/` |
-| [wenetspeech_clean@train-punc-v1-20261102](../../catalog/train_punc_v1_wenetspeech.yaml#L2) | — | 未登记 | 没有 |
-| [wenetspeech_clean@train-punc-v1-20261102-ctxclean-20261110](../../catalog/context_correction_clean_zh.yaml#L2521) | 9,919.3 | 已登记 | 没有 |
-| [wenetspeech_clean@train-punc-v1-20261102-ctxclean-20261110-zhenfix-20261119](../../catalog/zhen_fix_wenetspeech.yaml#L3) | 9,919.3 | 已登记 | 没有 |
-| [wenetspeech_clean@train-punc-v1-20261102-final-v1-20261120](../../catalog/text_final_v1.yaml#L342) | — | 未登记 | 没有 |
+| [wenetspeech_clean@train-punc-v1-20261102-final-v1-20261120](../../catalog/text_final_v1.yaml#L1734) | 9,919.3 | 已登记 | 没有 |
 | [wenetspeech_test_meeting@eval-20260804](../../catalog/open_audio_eval.yaml#L764) | 15.2 | 已登记 | 快照 20260914、`amphion-audio-backup-1373259071:audio-data-contract/datasets/wenetspeech/` |
 | [wenetspeech_test_net@eval-20260804](../../catalog/open_audio_eval.yaml#L729) | 23.1 | 已登记 | 快照 20260914、`amphion-audio-backup-1373259071:audio-data-contract/datasets/wenetspeech/` |
 | [wenetspeech_traffic_snr0@icefall-20260908](../../catalog/icefall_runtime.yaml#L3900) | — | 未登记 | 快照 20260914、`amphion-audio-backup-1373259071:audio-data-contract/datasets/wenetspeech/` |
@@ -2043,11 +1997,9 @@ VITW 中文远场转写训练数据
 - `wenetspeech_clean@punc-gold-v1-20261029`：wenetspeech_clean@clean-v3-pass-20261027 的 train 监督片段里的 普通话标点试点的 120 句手写参照标点（规范 v1，逗号从紧）：custom.punctuation_gold.text 是参照，custom.punctuation_hint 记试点用的 Qwen3-ASR 与 FireRedPunc 带标点转写。只含这些句子，text 与父版本相同，不是标点后的文本；录音沿用父版本，不复制音频。中间产物，供复现和比较学生，不直接用于训练。脚本 scripts/punctuation/register_punc_intermediates.py
 - `wenetspeech_clean@punc-teacher-v1-20261029`：wenetspeech_clean@clean-v3-pass-20261027 的 train 监督片段里的 Qwen3.8-27B 老师给 65000 句加的书面化标点（64406 句去掉标点后与输入一致，ok=true）：custom.punctuation_teacher 记输出 text、ok 和模型看到的无标点输入 input；custom.punctuation_hint.qwen 是提示用的 Qwen3-ASR 转写；其中 1309 句是留出的评测句，另带学生 v1 的输出 custom.punctuation_student。这批句子用来微调 Qwen3-4B 学生，抽样见 amphiondata scripts/punctuation/build_teacher_set.py。只含这些句子，text 与父版本相同，不是标点后的文本；录音沿用父版本，不复制音频。中间产物，供复现和比较学生，不直接用于训练。脚本 scripts/punctuation/register_punc_intermediates.py
 - `wenetspeech_clean@punc-written-v1-20261029`：wenetspeech_clean@clean-v3-20260828 训练集原标注加书面化标点（GB/T 15834，逗号从紧）：微调后的 Qwen3-4B（Qwen3.8-27B 的 9.6 万条输出蒸馏）以 Qwen3-ASR-1.7B 听音频得到的带标点转写作语气提示，只往原标注里插标点。模型改动了原文的条目，把模型输出的标点按字对齐搬回原标注；每条以 。？！ 结尾；原标注的字、空格（首尾除外）和大小写不变。没有汉字的条目（英文句子、拼读字母）和标注为空的条目原样保留。文件与源 supervisions 条数、顺序相同，只换 text。试点 200 条人工参照上：WenetSpeech markF1 92.4、其他来源 88.9（老师 93.2 / 88.2，原 FireRedPunc 79.8）。本数据的条目与 wenetspeech（原始 L 标注）同序，标注不同的 244,507 条即 wenetspeech_disfluency，标点取自这两者的结果
-- `wenetspeech_clean@train-punc-v1-20261102`：wenetspeech_clean@clean-v3-pass-20261027 的 train 训练版本，目标文本换成带标点的写法（按 id 取自 datasets/wenetspeech_clean/versions/punc-written-v1-20261029/wenetspeech_supervisions_L_clean_punc_written.jsonl.gz；去掉标点和空格、转小写后与原文一致才替换，否则保留原文）。其余字段与源版本相同，录音引用源版本
-- `wenetspeech_clean@train-punc-v1-20261102-ctxclean-20261110`：在 wenetspeech_clean@train-punc-v1-20261102 上做的上下文纠偏清洗：说话人讲字怎么写（组词、拆字、偏旁、否定对比）而标注写成同音别字的，按说明改正；拿不准的窗口整窗去掉。判定依据见 context_correction_clean_zh@v1-20261110。判定迁自本清洗对 wenetspeech_podcast / wenetspeech_youtube@l-20261014 的判定（clean.py transfer：按分段 ID 对应，去掉标点后文本相同才迁改字，改字窗口文本对不上的整窗隔离），并去掉 context_correction_zh 评测录音
-- `wenetspeech_clean@train-punc-v1-20261102-ctxclean-20261110-zhenfix-20261119`：wenetspeech_clean@train-punc-v1-20261102-ctxclean-20261110 的训练文本里，说话人说英文、标注写成汉字的句子按 audio-data-contract docs/reference/zh-en-transcription.md 规则 1 换回英文（例：艾特斯→iTunes、五本儿→Uber、对抗→PK，标注漏写的补上：那边的办公室→那边的office办公室）。候选是 Qwen3-ASR-1.7B 听出英文、标注缺这个英文的 24,336 句；whisper-large-v3 和强制中文的 Qwen3-ASR-1.7B 都听出同一个英文才改。通行的人名、地名译名和外来词（大卫、弗洛格、纽约、派对）照中文念和英文发音相近，识别模型分不出来，不改。FireRedASR2-AED 的转写大多照抄标注里的汉字（品牌名只有约 8% 写成英文），听不出这类错误，不作依据。共改 3,727 条，原文本存进 custom.zhen_fix；其余字段、录音清单和音频照旧，引用底版本的产物
-- `wenetspeech_clean@train-punc-v1-20261102-final-v1-20261120`：wenetspeech_clean@train-punc-v1-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 docs/reference/training-text.md（v1） 应用全部已执行的文本修正，起点 wenetspeech_clean@train-punc-v1-20261102-ctxclean-20261110-zhenfix-20261119。构建中
+- `wenetspeech_clean@train-punc-v1-20261102-final-v1-20261120`：wenetspeech_clean@train-punc-v1-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 audio-data-contract docs/reference/training-text.md（v1） 应用全部已执行的文本修正，替代配方原来的版本和中间修正版本。起点 wenetspeech_clean@train-punc-v1-20261102-ctxclean-20261110-zhenfix-20261119；已含修正：说字写法（ctxclean，context_correction_clean_zh@v1-20261110）、写成汉字的英文换回英文（zhen-fix-en-v1）。其余字段、录音清单和音频照旧，引用起点版本的产物
 - 含派生版本（与源数据可能重叠）
+- 已并入的旧版本：`wenetspeech_clean@train-punc-v1-20261102`（COS：没有）、`wenetspeech_clean@train-punc-v1-20261102-ctxclean-20261110`（COS：没有）、`wenetspeech_clean@train-punc-v1-20261102-ctxclean-20261110-zhenfix-20261119`（COS：没有）
 
 ### wenetspeech4tts
 
@@ -2172,7 +2124,7 @@ WenetSpeech L 中的 YouTube 部分
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
 | [wenetspeech_youtube@l-20261014](../../catalog/amphionasr_v4.yaml#L3774) | 6,113.1 | 已登记 | 没有 |
-| [wenetspeech_youtube@l-20261014-ctxclean-20261110](../../catalog/context_correction_clean_zh.yaml#L1813) | 6,112.6 | 已登记 | 没有 |
+| [wenetspeech_youtube@l-20261014-ctxclean-20261110](../../catalog/context_correction_clean_zh.yaml#L1815) | 6,112.6 | 已登记 | 没有 |
 
 - `wenetspeech_youtube@l-20261014`：WenetSpeech L 集按录音路径分成 YouTube 或 podcast。这是全集，不是 replay 的 3000 小时抽样
 - `wenetspeech_youtube@l-20261014-ctxclean-20261110`：在 wenetspeech_youtube@l-20261014 上做的上下文纠偏清洗：说话人讲字怎么写（组词、拆字、偏旁、否定对比）而标注写成同音别字的，按说明改正；拿不准的窗口整窗去掉。判定依据见 context_correction_clean_zh@v1-20261110。标注是机器转写；隔离里约 6 成是误杀（多为字谜和照实写的结构说明），总量 0.55 h；2026-11-12 捞回 86 段，仍去掉 630 段（0.49 h）
@@ -2243,24 +2195,21 @@ WenetSpeech L 中的 YouTube 部分
 |---|---:|---|---|
 | [ami@diarization-benchmark-v1-20261021](../../catalog/diarization_benchmark.yaml#L206) | 11.8 | 已登记 | 没有 |
 | [ami_sdm@asr-20261014](../../catalog/amphionasr_v4.yaml#L1219) | — | 未登记 | 没有 |
-| [ami_sdm@asr-20261014-punc-20261102](../../catalog/train_punc_v1_derived.yaml#L2) | — | 未登记 | 没有 |
-| [ami_sdm@asr-20261014-punc-20261102-final-v1-20261120](../../catalog/text_final_v1.yaml#L709) | — | 未登记 | 没有 |
+| [ami_sdm@asr-20261014-punc-20261102-final-v1-20261120](../../catalog/text_final_v1.yaml#L2702) | — | 未登记 | 没有 |
 | [ami_sdm@icefall-20260908](../../catalog/icefall_runtime.yaml#L2916) | 92.1 | 已登记：单远场麦克风标注片段 | 快照 20260914 |
 | [ami_sdm@turn-taking-20261014](../../catalog/amphionasr_v4.yaml#L871) | 259.3 | 已登记 | 没有 |
 | [ami_sdm@turn-taking-20261014-utts](../../catalog/ts_window_utts.yaml#L228) | 45.4 | 已登记 | 没有 |
-| [ami_sdm@turn-taking-20261014-utts-punc-20261102](../../catalog/train_punc_v1_derived.yaml#L65) | — | 未登记 | 没有 |
-| [ami_sdm@turn-taking-20261014-utts-punc-20261102-final-v1-20261120](../../catalog/text_final_v1.yaml#L230) | — | 未登记 | 没有 |
+| [ami_sdm@turn-taking-20261014-utts-punc-20261102-final-v1-20261120](../../catalog/text_final_v1.yaml#L1135) | — | 未登记 | 没有 |
 
 - `ami@diarization-benchmark-v1-20261021`：Frozen local evaluation slice; audio and RTTM bytes copied unchanged. Not a claim of official release equivalence or training disjointness.
 - `ami_sdm@asr-20261014`：会议普通转写。每条 supervision 一条，时长 0.5～30 秒，文本非空。多通道只取第 0 路
-- `ami_sdm@asr-20261014-punc-20261102`：ami_sdm@asr-20261014 的 train，目标文本加书面化标点：中文用 amphiondata 的中文学生模型（punc-student-v1，不带听音提示），英文用英文规范 en-v1 的学生模型（加标点并恢复大小写）；标点按字 / 按词搬回原文，原文的字词不变，找不到输出的目标保留原样。其余字段与源版本相同，音频引用源版本
-- `ami_sdm@asr-20261014-punc-20261102-final-v1-20261120`：ami_sdm@asr-20261014-punc-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 docs/reference/training-text.md（v1） 应用全部已执行的文本修正，起点 ami_sdm@asr-20261014-punc-20261102。构建中
+- `ami_sdm@asr-20261014-punc-20261102-final-v1-20261120`：ami_sdm@asr-20261014-punc-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 audio-data-contract docs/reference/training-text.md（v1） 应用全部已执行的文本修正，替代配方原来的版本和中间修正版本。起点 ami_sdm@asr-20261014-punc-20261102；已含修正：无（各轮修正对本数据都没有改动）。其余字段、录音清单和音频照旧，引用起点版本的产物
 - `ami_sdm@icefall-20260908`：标注片段时长，重叠语音或多麦克风可能重复计时。训练集缺少 2 场会议（134/136）
 - `ami_sdm@turn-taking-20261014`：会议 turn-taking。整句拼成 2/3 人混合窗，时长 0.5～30 秒。注册音是窗外另一句，1～30 秒。有近场时远场:近场 = 3:1
 - `ami_sdm@turn-taking-20261014-utts`：ami_sdm@turn-taking-20261014 的 train 划分（不含 eval/test），时间线取自 ami_sdm@icefall-20260908 的 train 人工标注。加 metadata.window_utts（窗口内每句的说话人与相对混合起点的起止，取自来源标注并截到窗口，截断的标 clipped）与同一命名空间的 metadata.target_speaker，供 open-audio-llm 帧级说话人活动标签（objective.ts_activity_weight）；其余字段不变，音频引用改指本版本，音频索引与原版逐行相同。正样本的目标语句与转写逐字一致（忽略空白和标点；窗口边缘截断的句子允许只转写一部分）才写时间线，负样本只有注册人确实不在窗口里说话才写；其余记录不写时间线（不出帧级标签）。负样本中注册人按标注其实在窗口内说话的记录 ID 列在 excluded-records-<split>.txt，训练配方用 exclude_records 排除。生成脚本 audio-data-contract scripts/ts_robust/add_window_utts.py，逐划分统计见 report.json
-- `ami_sdm@turn-taking-20261014-utts-punc-20261102`：ami_sdm@turn-taking-20261014-utts 的 train_2spk, train_3spk, train_neg，目标文本加书面化标点：中文用 amphiondata 的中文学生模型（punc-student-v1，不带听音提示），英文用英文规范 en-v1 的学生模型（加标点并恢复大小写）；标点按字 / 按词搬回原文，原文的字词不变，找不到输出的目标保留原样。其余字段与源版本相同，音频引用源版本
-- `ami_sdm@turn-taking-20261014-utts-punc-20261102-final-v1-20261120`：ami_sdm@turn-taking-20261014-utts-punc-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 docs/reference/training-text.md（v1） 应用全部已执行的文本修正，起点 ami_sdm@turn-taking-20261014-utts-punc-20261102。构建中
+- `ami_sdm@turn-taking-20261014-utts-punc-20261102-final-v1-20261120`：ami_sdm@turn-taking-20261014-utts-punc-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 audio-data-contract docs/reference/training-text.md（v1） 应用全部已执行的文本修正，替代配方原来的版本和中间修正版本。起点 ami_sdm@turn-taking-20261014-utts-punc-20261102；已含修正：无（各轮修正对本数据都没有改动）。其余字段、录音清单和音频照旧，引用起点版本的产物
 - 含派生版本（与源数据可能重叠）
+- 已并入的旧版本：`ami_sdm@asr-20261014-punc-20261102`（COS：没有）、`ami_sdm@turn-taking-20261014-utts-punc-20261102`（COS：没有）
 
 ### ascend
 
@@ -2309,15 +2258,14 @@ WenetSpeech L 中的 YouTube 部分
 | [asr_babble_speech_pool@es-v1-20261110](../../catalog/asr_babble_speech_pool.yaml#L90) | 33.8 | 已登记 | 没有 |
 | [asr_babble_speech_pool@pt-v1-20261117](../../catalog/asr_babble_speech_pool.yaml#L137) | 30.3 | 已登记 | 没有 |
 | [asr_babble_speech_pool@v1-20261024](../../catalog/asr_babble_speech_pool.yaml#L1) | 85.5 | 已登记 | 没有 |
-| [asr_babble_speech_pool@v1-20261024-punc-20261102](../../catalog/train_punc_v1_derived.yaml#L939) | — | 未登记 | 没有 |
-| [asr_babble_speech_pool@v1-20261024-punc-20261102-final-v1-20261120](../../catalog/text_final_v1.yaml#L1077) | — | 未登记 | 没有 |
+| [asr_babble_speech_pool@v1-20261024-punc-20261102-final-v1-20261120](../../catalog/text_final_v1.yaml#L3772) | — | 未登记 | 没有 |
 
 - `asr_babble_speech_pool@es-v1-20261110`：西班牙语普通 ASR 语句前后与下方叠加房间背景人声（对应 v1-20261024 的 zh / en，同一渲染参数）：目标是 common_voice_es@es-train-v1-20261108 train 的一句（1–15 s，书面化文本），前后各 0–5 s 背景人声、语句下方 0–20 dB SNR；80% 用西语背景人声（babble_noise_train@es-v1-20261110），20% 随机用中文或英文的（v2-20261024）。12,000 条 / 33.8 h。脚本 scripts/ts_robust/build_babble_speech_pool.py --languages es
 - `asr_babble_speech_pool@pt-v1-20261117`：葡萄牙语普通 ASR 的语句，前后和下方叠加房间背景人声（对应西语 es-v1-20261110、中英 v1-20261024，同一渲染参数）：每条的目标是 common_voice_pt@pt-train-v1-20261117 train 的一句话（1–15 s，书面文本），前后各有 0–5 s 背景人声，语句下方的 SNR 为 0–20 dB。80% 用葡语背景人声（babble_noise_train@pt-v1-20261117），其余 20%（2,398 条）随机用中文或英文的（v2-20261024）。已剔除与葡语测试集句子相同的目标（含 asr_babble_bench@pt-v1-20261117 的目标句）。共 12,000 条 / 30.3 h。脚本 scripts/ts_robust/build_babble_speech_pool.py --languages pt
 - `asr_babble_speech_pool@v1-20261024`：普通 ASR 语音前后和说话时都有房间背景人声（babble）：每条是一句训练划分的话（中文 AISHELL-2、KeSpeech train，英文 LibriSpeech train；1–15 秒，剔除与 asr_babble_bench 目标句同文本的句子），前后各 0–5 秒背景人声，说话时背景人声信噪比 0–20 dB（在说话区间内计算），语音电平 −35 到 −18 dBFS，加 −65 到 −55 dBFS 的白/粉红噪声底；背景人声取自 babble_noise_train@v2-20261024（80% 同语言，不用该说话人在其中说话的片段）。目标为该句原文。与 ts_nonspeech_pool@babble-20261024（只有背景人声、目标为空）配对使用，教模型背景人声中间的话照常转写。中英文各 12,000 条。脚本 scripts/ts_robust/build_babble_speech_pool.py
-- `asr_babble_speech_pool@v1-20261024-punc-20261102`：asr_babble_speech_pool@v1-20261024 的 en, zh，目标文本加书面化标点：中文用 amphiondata 的中文学生模型（punc-student-v1，不带听音提示），英文用英文规范 en-v1 的学生模型（加标点并恢复大小写）；标点按字 / 按词搬回原文，原文的字词不变，找不到输出的目标保留原样。其余字段与源版本相同，音频引用源版本
-- `asr_babble_speech_pool@v1-20261024-punc-20261102-final-v1-20261120`：asr_babble_speech_pool@v1-20261024-punc-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 docs/reference/training-text.md（v1） 应用全部已执行的文本修正，起点 asr_babble_speech_pool@v1-20261024-punc-20261102。构建中
+- `asr_babble_speech_pool@v1-20261024-punc-20261102-final-v1-20261120`：asr_babble_speech_pool@v1-20261024-punc-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 audio-data-contract docs/reference/training-text.md（v1） 应用全部已执行的文本修正，替代配方原来的版本和中间修正版本。起点 asr_babble_speech_pool@v1-20261024-punc-20261102；已含修正：无（各轮修正对本数据都没有改动）。其余字段、录音清单和音频照旧，引用起点版本的产物
 - 含派生版本（与源数据可能重叠）
+- 已并入的旧版本：`asr_babble_speech_pool@v1-20261024-punc-20261102`（COS：没有）
 
 ### asr_distant_talk_pool
 
@@ -2328,15 +2276,14 @@ WenetSpeech L 中的 YouTube 部分
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
 | [asr_distant_talk_pool@v1-20261102](../../catalog/asr_distant_talk_pool.yaml#L1) | 55.2 | 已登记 | 没有 |
-| [asr_distant_talk_pool@v1-20261102-final-v1-20261120](../../catalog/text_final_v1.yaml#L1135) | — | 未登记 | 没有 |
-| [asr_distant_talk_pool@v1-20261102-punc-20261102](../../catalog/train_punc_v1_derived.yaml#L1034) | — | 未登记 | 没有 |
-| [asr_distant_talk_pool@v1-20261102-punc-20261102-final-v1-20261120](../../catalog/text_final_v1.yaml#L1106) | — | 未登记 | 没有 |
+| [asr_distant_talk_pool@v1-20261102-final-v1-20261120](../../catalog/text_final_v1.yaml#L3995) | 55.2 | 已登记 | 没有 |
+| [asr_distant_talk_pool@v1-20261102-punc-20261102-final-v1-20261120](../../catalog/text_final_v1.yaml#L3869) | — | 未登记 | 没有 |
 
 - `asr_distant_talk_pool@v1-20261102`：普通 ASR 用的「远处背景人声」训练池：把真实对话（中文 MagicData-RAMC train，英文 ICSI 非评测会议的耳麦混音）渲染成房间另一头的说话声，约 30% 片段同时有两段对话；SLR28 模拟房间冲激响应（中、大房间）并削弱直达声 0–15 dB，高频衰减，叠真实会议室底噪，信噪比 −8 到 8 dB，帧级 p95 −36 到 −21 dBFS。目标不由渲染决定：由基线 Qwen3-ASR-1.7B 与 FireRedASR2-AED 独立转写，对照原转写判定。empty_*：两者都跟不上（都为空，或都偏离原转写且彼此不一致），目标为空；text_*：两者都接近原转写（字错率不超过 0.3），目标为原转写，作为对照，防止安静的真实远场语音也被学成空。其余丢弃。脚本 scripts/ts_robust/{build,label,finalize}_distant_talk_pool.py
-- `asr_distant_talk_pool@v1-20261102-final-v1-20261120`：asr_distant_talk_pool@v1-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 docs/reference/training-text.md（v1） 应用全部已执行的文本修正，起点 asr_distant_talk_pool@v1-20261102。构建中
-- `asr_distant_talk_pool@v1-20261102-punc-20261102`：asr_distant_talk_pool@v1-20261102 的 empty_en, empty_zh, text_zh，目标文本加书面化标点：中文用 amphiondata 的中文学生模型（punc-student-v1，不带听音提示），英文用英文规范 en-v1 的学生模型（加标点并恢复大小写）；标点按字 / 按词搬回原文，原文的字词不变，找不到输出的目标保留原样。其余字段与源版本相同，音频引用源版本
-- `asr_distant_talk_pool@v1-20261102-punc-20261102-final-v1-20261120`：asr_distant_talk_pool@v1-20261102-punc-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 docs/reference/training-text.md（v1） 应用全部已执行的文本修正，起点 asr_distant_talk_pool@v1-20261102-punc-20261102。构建中
+- `asr_distant_talk_pool@v1-20261102-final-v1-20261120`：asr_distant_talk_pool@v1-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 audio-data-contract docs/reference/training-text.md（v1） 应用全部已执行的文本修正，替代配方原来的版本和中间修正版本。起点 asr_distant_talk_pool@v1-20261102；已含修正：无（各轮修正对本数据都没有改动）。其余字段、录音清单和音频照旧，引用起点版本的产物
+- `asr_distant_talk_pool@v1-20261102-punc-20261102-final-v1-20261120`：asr_distant_talk_pool@v1-20261102-punc-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 audio-data-contract docs/reference/training-text.md（v1） 应用全部已执行的文本修正，替代配方原来的版本和中间修正版本。起点 asr_distant_talk_pool@v1-20261102-punc-20261102；已含修正：无（各轮修正对本数据都没有改动）。其余字段、录音清单和音频照旧，引用起点版本的产物
 - 含派生版本（与源数据可能重叠）
+- 已并入的旧版本：`asr_distant_talk_pool@v1-20261102-punc-20261102`（COS：没有）
 
 ### babble_noise_synth
 
@@ -2452,15 +2399,12 @@ Emilia2 中英对话的轮流说话目标说话人数据
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
 | [emilia2_dialog@dialog-turn-taking-20261013-enroll](../../catalog/amphionasr_v4.yaml#L1713) | 15,172.8 | 已登记 | 没有 |
-| [emilia2_dialog@dialog-turn-taking-20261013-enroll-ctxclean-20261110](../../catalog/context_correction_clean_zh.yaml#L1473) | 15,031.0 | 已登记 | 没有 |
-| [emilia2_dialog@dialog-turn-taking-20261013-enroll-ctxclean-20261110-zhenfix-20261117](../../catalog/zhen_fix.yaml#L186) | 15,031.0 | 已登记 | 没有 |
-| [emilia2_dialog@dialog-turn-taking-20261013-enroll-final-v1-20261120](../../catalog/text_final_v1.yaml#L144) | — | 未登记 | 没有 |
+| [emilia2_dialog@dialog-turn-taking-20261013-enroll-final-v1-20261120](../../catalog/text_final_v1.yaml#L548) | 15,031.0 | 已登记 | 没有 |
 
 - `emilia2_dialog@dialog-turn-taking-20261013-enroll`：Emilia2 对话 turn-taking。turn 时间戳来自 dialog tar，音频用 m4a-128k。只保留纯中文或纯英文。混合窗 1～30 秒。注册是同一说话人的连续整句，1～30 秒，按 5 秒分档抽取，正负样本分开保留
-- `emilia2_dialog@dialog-turn-taking-20261013-enroll-ctxclean-20261110`：在 emilia2_dialog@dialog-turn-taking-20261013-enroll 上做的上下文纠偏清洗：说话人讲字怎么写（组词、拆字、偏旁、否定对比）而标注写成同音别字的，按说明改正；拿不准的整条去掉。判定依据见 context_correction_clean_zh@v1-20261110。标注是机器转写。音频是多人混合，Qwen3-ASR 核对时只数标注里没被听到的音节（插话、笑声不算），音频读同名 16 kHz FLAC。改正 38 条记录（0.25 h）、隔离 184 条（1.15 h，2026-11-12 捞回 16 条）；另去掉 ts_asr_real 留出的评测源录音 23,653 条（140.6 h）
-- `emilia2_dialog@dialog-turn-taking-20261013-enroll-ctxclean-20261110-zhenfix-20261117`：emilia2_dialog@dialog-turn-taking-20261013-enroll-ctxclean-20261110 的中文文本按 audio-data-contract docs/reference/zh-en-transcription.md 规则 2 修正：用空格隔开的单个大写字母连写（K T V→KTV、A P P→APP、N F C→NFC），原文本存进 metadata.zhen_fix / custom.zhen_fix。小写或大小写混合的字母串（多是数学变量）和字母数字词里的汉字数字不改。只改 train 划分的文本，共 12,855 条；其余字段、音频引用和其他划分照旧，引用底版本的产物
-- `emilia2_dialog@dialog-turn-taking-20261013-enroll-final-v1-20261120`：emilia2_dialog@dialog-turn-taking-20261013-enroll（交付配方 v7set34 训练用的版本）的训练文本终版，按 docs/reference/training-text.md（v1） 应用全部已执行的文本修正，起点 emilia2_dialog@dialog-turn-taking-20261013-enroll-ctxclean-20261110-zhenfix-20261117。构建中
+- `emilia2_dialog@dialog-turn-taking-20261013-enroll-final-v1-20261120`：emilia2_dialog@dialog-turn-taking-20261013-enroll（交付配方 v7set34 训练用的版本）的训练文本终版，按 audio-data-contract docs/reference/training-text.md（v1） 应用全部已执行的文本修正，替代配方原来的版本和中间修正版本。起点 emilia2_dialog@dialog-turn-taking-20261013-enroll-ctxclean-20261110-zhenfix-20261117；已含修正：说字写法（ctxclean，context_correction_clean_zh@v1-20261110）、拆开的大写字母连写（zhen-fix-v1）。其余字段、录音清单和音频照旧，引用起点版本的产物
 - 含派生版本（与源数据可能重叠）
+- 已并入的旧版本：`emilia2_dialog@dialog-turn-taking-20261013-enroll-ctxclean-20261110`（COS：没有）、`emilia2_dialog@dialog-turn-taking-20261013-enroll-ctxclean-20261110-zhenfix-20261117`（COS：没有）
 
 ### emilia2_mix
 
@@ -2471,19 +2415,16 @@ Emilia2 长音频合成的 2/3 人目标说话人混合
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
 | [emilia2_mix@mix-20261013](../../catalog/amphionasr_v4.yaml#L2084) | 35,744.6 | 已登记 | 没有 |
-| [emilia2_mix@mix-20261013-ctxclean-20261110](../../catalog/context_correction_clean_zh.yaml#L1968) | 35,692.0 | 已登记 | 没有 |
+| [emilia2_mix@mix-20261013-ctxclean-20261110](../../catalog/context_correction_clean_zh.yaml#L1971) | 35,692.0 | 已登记 | 没有 |
 | [emilia2_mix@mix-20261013-utts](../../catalog/ts_window_utts.yaml#L428) | 24,358.4 | 已登记 | 没有 |
-| [emilia2_mix@mix-20261013-utts-ctxclean-20261110](../../catalog/context_correction_clean_zh.yaml#L2591) | 17,111.7 | 已登记 | 没有 |
-| [emilia2_mix@mix-20261013-utts-ctxclean-20261110-zhenfix-20261117](../../catalog/zhen_fix.yaml#L3) | 17,111.7 | 已登记 | 没有 |
-| [emilia2_mix@mix-20261013-utts-final-v1-20261120](../../catalog/text_final_v1.yaml#L115) | — | 未登记 | 没有 |
+| [emilia2_mix@mix-20261013-utts-final-v1-20261120](../../catalog/text_final_v1.yaml#L446) | 17,111.7 | 已登记 | 没有 |
 
 - `emilia2_mix@mix-20261013`：Emilia2 long 合成的 2/3 人混合。目标可以晚开口、按 1～15 秒间隔断续，或在中间短插入。干扰人也可以断续。注册是同一录音上没用过的 1～30 秒片段
 - `emilia2_mix@mix-20261013-ctxclean-20261110`：在 emilia2_mix@mix-20261013 上做的上下文纠偏清洗：说话人讲字怎么写（组词、拆字、偏旁、否定对比）而标注写成同音别字的，按说明改正；拿不准的整条去掉。判定依据见 context_correction_clean_zh@v1-20261110。音频核对读混音协议里目标说话人的干净原片段
 - `emilia2_mix@mix-20261013-utts`：emilia2_mix@mix-20261013 的 train_2spk / train_3spk（不含 eval/test/train_neg），时间线取自混音协议 datasets/emilia2-mix/versions/mix-20261013/supervision/protocol-*.jsonl.gz（每个说话人每段在混音中的起点与时长）。加 metadata.window_utts（窗口内每句的说话人与相对混合起点的起止，取自来源标注并截到窗口，截断的标 clipped）与同一命名空间的 metadata.target_speaker，供 open-audio-llm 帧级说话人活动标签（objective.ts_activity_weight）；其余字段不变，音频引用改指本版本，音频索引与原版逐行相同。正样本的目标语句与转写逐字一致（忽略空白和标点；窗口边缘截断的句子允许只转写一部分）才写时间线，负样本只有注册人确实不在窗口里说话才写；其余记录不写时间线（不出帧级标签）。负样本中注册人按标注其实在窗口内说话的记录 ID 列在 excluded-records-<split>.txt，训练配方用 exclude_records 排除。生成脚本 audio-data-contract scripts/ts_robust/add_window_utts.py，逐划分统计见 report.json
-- `emilia2_mix@mix-20261013-utts-ctxclean-20261110`：在 emilia2_mix@mix-20261013-utts 上做的上下文纠偏清洗：说话人讲字怎么写（组词、拆字、偏旁、否定对比）而标注写成同音别字的，按说明改正；拿不准的整条去掉。判定依据见 context_correction_clean_zh@v1-20261110。判定迁自同一批记录在清洗时的判定（clean.py transfer：按去掉标点、空格后的文本对应，改字按字对齐写进带标点的文本）
-- `emilia2_mix@mix-20261013-utts-ctxclean-20261110-zhenfix-20261117`：emilia2_mix@mix-20261013-utts-ctxclean-20261110 的中文文本按 audio-data-contract docs/reference/zh-en-transcription.md 规则 2 修正：用空格隔开的单个大写字母连写（K T V→KTV、A P P→APP、N F C→NFC），原文本存进 metadata.zhen_fix / custom.zhen_fix。小写或大小写混合的字母串（多是数学变量）和字母数字词里的汉字数字不改。只改 train 划分的文本，共 24,587 条；其余字段、音频引用和其他划分照旧，引用底版本的产物
-- `emilia2_mix@mix-20261013-utts-final-v1-20261120`：emilia2_mix@mix-20261013-utts（交付配方 v7set34 训练用的版本）的训练文本终版，按 docs/reference/training-text.md（v1） 应用全部已执行的文本修正，起点 emilia2_mix@mix-20261013-utts-ctxclean-20261110-zhenfix-20261117。构建中
+- `emilia2_mix@mix-20261013-utts-final-v1-20261120`：emilia2_mix@mix-20261013-utts（交付配方 v7set34 训练用的版本）的训练文本终版，按 audio-data-contract docs/reference/training-text.md（v1） 应用全部已执行的文本修正，替代配方原来的版本和中间修正版本。起点 emilia2_mix@mix-20261013-utts-ctxclean-20261110-zhenfix-20261117；已含修正：说字写法（ctxclean，context_correction_clean_zh@v1-20261110）、拆开的大写字母连写（zhen-fix-v1）。其余字段、录音清单和音频照旧，引用起点版本的产物
 - 含派生版本（与源数据可能重叠）
+- 已并入的旧版本：`emilia2_mix@mix-20261013-utts-ctxclean-20261110`（COS：没有）、`emilia2_mix@mix-20261013-utts-ctxclean-20261110-zhenfix-20261117`（COS：没有）
 
 ### emilia2_short
 
@@ -2495,16 +2436,13 @@ Emilia2 中英短音频普通转写
 |---|---:|---|---|
 | [emilia2_short@short-20261014](../../catalog/amphionasr_v4.yaml#L2457) | 5,102.9 | 已登记 | 没有 |
 | [emilia2_short@short-lance-20261023](../../catalog/amphionasr_v4.yaml#L3911) | 5,102.9 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/emilia2_short/` |
-| [emilia2_short@short-lance-20261023-ctxclean-20261110](../../catalog/context_correction_clean_zh.yaml#L1881) | 5,096.7 | 已登记 | 没有 |
-| [emilia2_short@short-lance-20261023-ctxclean-20261110-zhenfix-20261117](../../catalog/zhen_fix.yaml#L104) | 5,096.7 | 已登记 | 没有 |
-| [emilia2_short@short-lance-20261023-final-v1-20261120](../../catalog/text_final_v1.yaml#L370) | — | 未登记 | 没有 |
+| [emilia2_short@short-lance-20261023-final-v1-20261120](../../catalog/text_final_v1.yaml#L1815) | 5,096.7 | 已登记 | 没有 |
 
 - `emilia2_short@short-20261014`：Emilia2 已抽出的 m4a-128k short。每条短音频是一条普通转写，只保留语言标签为纯中文或纯英文、时长 0.5～30 秒的片段。不使用 m4a-64k 和 asmr
 - `emilia2_short@short-lance-20261023`：与 short-20261014 相同的记录与记录 ID，音频改读 emilia2@tts-unified-v0.1 Lance 发布里的同一条 m4a-128k standalone short（按上游 short ID 与 m4a 文件名对应；发布里存的是同一份完整解码的 FLAC），训练不再为这些片段启动 ffmpeg。音频引用写入 Lance 样本时长。Lance 中没有对应样本的 20 条（zh 11、en 9）已去掉。全部片段都在 Lance 里，没有音频索引，因此也没有 Lance 记录索引，训练端走 JSONL 记录缓存；读取需要 open-audio-llm 支持指向其他数据集 Lance 发布的音频引用（code-v14 起）。生成脚本 scripts/build_emilia2_short_lance.py
-- `emilia2_short@short-lance-20261023-ctxclean-20261110`：在 emilia2_short@short-lance-20261023 上做的上下文纠偏清洗：说话人讲字怎么写（组词、拆字、偏旁、否定对比）而标注写成同音别字的，按说明改正；拿不准的整条去掉。判定依据见 context_correction_clean_zh@v1-20261110。标注是机器转写；音频核对读 Lance 发布里的同一段。与原版本一样没有音频索引和记录索引，训练端走 JSONL 记录缓存
-- `emilia2_short@short-lance-20261023-ctxclean-20261110-zhenfix-20261117`：emilia2_short@short-lance-20261023-ctxclean-20261110 的中文文本按 audio-data-contract docs/reference/zh-en-transcription.md 规则 2 修正：用空格隔开的单个大写字母连写（K T V→KTV、A P P→APP、N F C→NFC），原文本存进 metadata.zhen_fix / custom.zhen_fix。小写或大小写混合的字母串（多是数学变量）和字母数字词里的汉字数字不改。只改 train 划分的文本，共 15,965 条；其余字段、音频引用和其他划分照旧，引用底版本的产物
-- `emilia2_short@short-lance-20261023-final-v1-20261120`：emilia2_short@short-lance-20261023（交付配方 v7set34 训练用的版本）的训练文本终版，按 docs/reference/training-text.md（v1） 应用全部已执行的文本修正，起点 emilia2_short@short-lance-20261023-ctxclean-20261110-zhenfix-20261117。构建中
+- `emilia2_short@short-lance-20261023-final-v1-20261120`：emilia2_short@short-lance-20261023（交付配方 v7set34 训练用的版本）的训练文本终版，按 audio-data-contract docs/reference/training-text.md（v1） 应用全部已执行的文本修正，替代配方原来的版本和中间修正版本。起点 emilia2_short@short-lance-20261023-ctxclean-20261110-zhenfix-20261117；已含修正：说字写法（ctxclean，context_correction_clean_zh@v1-20261110）、拆开的大写字母连写（zhen-fix-v1）。其余字段、录音清单和音频照旧，引用起点版本的产物
 - 含派生版本（与源数据可能重叠）
+- 已并入的旧版本：`emilia2_short@short-lance-20261023-ctxclean-20261110`（COS：没有）、`emilia2_short@short-lance-20261023-ctxclean-20261110-zhenfix-20261117`（COS：没有）
 
 ### emilia_yodas
 
@@ -2568,10 +2506,10 @@ Emilia-YODAS 多语种 YouTube 语音
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
 | [hard_hw_sft@hard-20261014](../../catalog/amphionasr_v4.yaml#L2600) | 109.4 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/hard_hw_sft/` |
-| [hard_hw_sft@hard-20261014-final-v1-20261120](../../catalog/text_final_v1.yaml#L1195) | — | 未登记 | 没有 |
+| [hard_hw_sft@hard-20261014-final-v1-20261120](../../catalog/text_final_v1.yaml#L4241) | 109.4 | 已登记 | 没有 |
 
 - `hard_hw_sft@hard-20261014`：热词难例 ShareGPT。每条系统提示都带 Hotwords。音频指向已注册源文件
-- `hard_hw_sft@hard-20261014-final-v1-20261120`：hard_hw_sft@hard-20261014（交付配方 v7set34 训练用的版本）的训练文本终版，按 docs/reference/training-text.md（v1） 应用全部已执行的文本修正，起点 hard_hw_sft@hard-20261014。构建中
+- `hard_hw_sft@hard-20261014-final-v1-20261120`：hard_hw_sft@hard-20261014（交付配方 v7set34 训练用的版本）的训练文本终版，按 audio-data-contract docs/reference/training-text.md（v1） 应用全部已执行的文本修正，替代配方原来的版本和中间修正版本。起点 hard_hw_sft@hard-20261014；已含修正：无（各轮修正对本数据都没有改动）。其余字段、录音清单和音频照旧，引用起点版本的产物
 - 含派生版本（与源数据可能重叠）
 
 ### hotword_bench
@@ -2615,10 +2553,10 @@ Emilia-YODAS 多语种 YouTube 语音
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
 | [hw_sft@hw-20261014](../../catalog/amphionasr_v4.yaml#L2719) | 2,636.5 | 已登记 | 没有 |
-| [hw_sft@hw-20261014-final-v1-20261120](../../catalog/text_final_v1.yaml#L1164) | — | 未登记 | 没有 |
+| [hw_sft@hw-20261014-final-v1-20261120](../../catalog/text_final_v1.yaml#L4149) | 2,636.5 | 已登记 | 没有 |
 
 - `hw_sft@hw-20261014`：阶段 3 热词 ShareGPT。带 Hotwords 的行是热词转写，系统提示为空的行是普通转写。音频指向已注册源文件
-- `hw_sft@hw-20261014-final-v1-20261120`：hw_sft@hw-20261014（交付配方 v7set34 训练用的版本）的训练文本终版，按 docs/reference/training-text.md（v1） 应用全部已执行的文本修正，起点 hw_sft@hw-20261014。构建中
+- `hw_sft@hw-20261014-final-v1-20261120`：hw_sft@hw-20261014（交付配方 v7set34 训练用的版本）的训练文本终版，按 audio-data-contract docs/reference/training-text.md（v1） 应用全部已执行的文本修正，替代配方原来的版本和中间修正版本。起点 hw_sft@hw-20261014；已含修正：拆开的大写字母连写补齐（zhen-fix-v1，4 条）。其余字段、录音清单和音频照旧，引用起点版本的产物
 - 含派生版本（与源数据可能重叠）
 
 ### indicvoices
@@ -3113,20 +3051,20 @@ AISHELL-1、LibriSpeech 合成的多人对话
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
 | [ts_nonspeech_pool@babble-20261024](../../catalog/ts_nonspeech_pool.yaml#L57) | 38.7 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_nonspeech_pool/` |
-| [ts_nonspeech_pool@babble-20261024-final-v1-20261120](../../catalog/text_final_v1.yaml#L1047) | — | 未登记 | 没有 |
+| [ts_nonspeech_pool@babble-20261024-final-v1-20261120](../../catalog/text_final_v1.yaml#L3700) | 38.7 | 已登记 | 没有 |
 | [ts_nonspeech_pool@env-20261101](../../catalog/ts_nonspeech_pool.yaml#L116) | 22.6 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_nonspeech_pool/` |
 | [ts_nonspeech_pool@es-babble-20261110](../../catalog/ts_nonspeech_pool.yaml#L178) | 18.8 | 已登记 | 没有 |
 | [ts_nonspeech_pool@pt-babble-20261117](../../catalog/ts_nonspeech_pool.yaml#L221) | 19.2 | 已登记 | 没有 |
 | [ts_nonspeech_pool@v1-20261016](../../catalog/ts_nonspeech_pool.yaml#L1) | 65.7 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_nonspeech_pool/` |
-| [ts_nonspeech_pool@v1-20261016-final-v1-20261120](../../catalog/text_final_v1.yaml#L1018) | — | 未登记 | 没有 |
+| [ts_nonspeech_pool@v1-20261016-final-v1-20261120](../../catalog/text_final_v1.yaml#L3629) | 65.7 | 已登记 | 没有 |
 
 - `ts_nonspeech_pool@babble-20261024`：普通 ASR 的背景人声空输出训练数据：babble_noise_train@v2-20261024 的房间背景人声（16–24 人同时说话、各站在模拟房间的不同位置，听不出某一个人说的内容）的片段（0.3–26 s，对数均匀），中英文各 12,000 条，目标为空；片段语言即背景人声的语言。电平在训练时按数据源配置随机。来源：在 asr_babble_bench@v2-20261023 上，普通 ASR 训练里没有只有背景人声、目标为空的样本（v1-20261016 只有 MUSAN 噪声与音乐），模型在只有背景人声时会编出文字。脚本 scripts/ts_robust/build_nonspeech_pool.py --source babble
-- `ts_nonspeech_pool@babble-20261024-final-v1-20261120`：ts_nonspeech_pool@babble-20261024（交付配方 v7set34 训练用的版本）的训练文本终版，按 docs/reference/training-text.md（v1） 应用全部已执行的文本修正，起点 ts_nonspeech_pool@babble-20261024。构建中
+- `ts_nonspeech_pool@babble-20261024-final-v1-20261120`：ts_nonspeech_pool@babble-20261024（交付配方 v7set34 训练用的版本）的训练文本终版，按 audio-data-contract docs/reference/training-text.md（v1） 应用全部已执行的文本修正，替代配方原来的版本和中间修正版本。起点 ts_nonspeech_pool@babble-20261024；已含修正：无（各轮修正对本数据都没有改动）。其余字段、录音清单和音频照旧，引用起点版本的产物
 - `ts_nonspeech_pool@env-20261101`：GRPO 非人声挖掘候选：配方空输出池之外的环境声与音乐片段（0.3–26 s，对数均匀，受源文件长度限制），目标为空，电平在训练时按数据源配置随机。来源 FSD50K dev 的 train 部分（去人声标签）9,000、DNS5 AudioSet 5,000、DNS5 Freesound 2,500、RealMAN train 纯噪声（CH0）3,000、真实会议室底噪 1,000；不用评测集用的 FSD50K eval、DEMAND、audioset_road_traffic。所有片段过 Silero VAD 和 SenseVoiceSmall，检出语音或写出 2 个及以上字词的隔离。只是候选：挖掘阶段用 10.28 采样后只留会编字的片段。脚本 scripts/grpo_candidates/nonspeech.py
 - `ts_nonspeech_pool@es-babble-20261110`：西班牙语普通 ASR 的背景人声空输出训练数据（对应 babble-20261024 的 zh / en）：babble_noise_train@es-v1-20261110 的房间背景人声（16–24 人、听不出某一个人说的内容）片段 0.3–26 s（对数均匀），12,000 条，目标为空，语言 es。电平在训练时按数据源配置随机。脚本 scripts/ts_robust/build_nonspeech_pool.py --source babble-es
 - `ts_nonspeech_pool@pt-babble-20261117`：葡萄牙语普通 ASR 的背景人声空输出训练数据（对应西语 es-babble-20261110、中英 babble-20261024）：取 babble_noise_train@pt-v1-20261117 的房间背景人声（16–24 人同时说话，听不出某一个人说的内容）片段，时长 0.3–26 s（对数均匀），共 12,000 条 / 19.2 h，目标为空，语言 pt。电平在训练时按数据源配置随机。脚本 scripts/ts_robust/build_nonspeech_pool.py --source babble-pt
 - `ts_nonspeech_pool@v1-20261016`：普通 ASR 的非人声空输出训练数据：MUSAN 噪声与音乐的片段（0.3–26 s，对数均匀），目标为空。电平在训练时按数据源配置随机。不含 WHAM（咖啡馆底噪里可能有可懂的人声）
-- `ts_nonspeech_pool@v1-20261016-final-v1-20261120`：ts_nonspeech_pool@v1-20261016（交付配方 v7set34 训练用的版本）的训练文本终版，按 docs/reference/training-text.md（v1） 应用全部已执行的文本修正，起点 ts_nonspeech_pool@v1-20261016。构建中
+- `ts_nonspeech_pool@v1-20261016-final-v1-20261120`：ts_nonspeech_pool@v1-20261016（交付配方 v7set34 训练用的版本）的训练文本终版，按 audio-data-contract docs/reference/training-text.md（v1） 应用全部已执行的文本修正，替代配方原来的版本和中间修正版本。起点 ts_nonspeech_pool@v1-20261016；已含修正：无（各轮修正对本数据都没有改动）。其余字段、录音清单和音频照旧，引用起点版本的产物
 - 含派生版本（与源数据可能重叠）
 
 ### ts_real_train
@@ -3139,46 +3077,39 @@ AISHELL-1、LibriSpeech 合成的多人对话
 |---|---:|---|---|
 | [ts_real_train@en-v1-20261101](../../catalog/ts_real_train.yaml#L684) | 41.9 | 已登记 | 没有 |
 | [ts_real_train@en-v1-20261101-utts](../../catalog/ts_real_train.yaml#L827) | 41.9 | 已登记 | 没有 |
-| [ts_real_train@en-v1-20261101-utts-final-v1-20261120](../../catalog/text_final_v1.yaml#L1394) | — | 未登记 | 没有 |
-| [ts_real_train@en-v1-20261101-utts-punc-20261102](../../catalog/train_punc_v1_derived.yaml#L329) | — | 未登记 | 没有 |
-| [ts_real_train@en-v1-20261101-utts-punc-20261102-final-v1-20261120](../../catalog/text_final_v1.yaml#L1366) | — | 未登记 | 没有 |
+| [ts_real_train@en-v1-20261101-utts-final-v1-20261120](../../catalog/text_final_v1.yaml#L4930) | 41.9 | 已登记 | 没有 |
+| [ts_real_train@en-v1-20261101-utts-punc-20261102-final-v1-20261120](../../catalog/text_final_v1.yaml#L4834) | — | 未登记 | 没有 |
 | [ts_real_train@v1-20261017](../../catalog/ts_real_train.yaml#L1) | 123.6 | 已登记 | 没有 |
 | [ts_real_train@v1-20261017-utts](../../catalog/ts_real_train.yaml#L342) | 123.6 | 已登记 | 没有 |
 | [ts_real_train@v1-20261017-utts-enroll-qc-20261021](../../catalog/ts_real_enroll_qc.yaml#L2) | — | 未登记 | 没有 |
-| [ts_real_train@v1-20261017-utts-punc-20261102](../../catalog/train_punc_v1_derived.yaml#L1255) | — | 未登记 | 没有 |
-| [ts_real_train@v1-20261017-utts-punc-20261102-final-v1-20261120](../../catalog/text_final_v1.yaml#L1282) | — | 未登记 | 没有 |
+| [ts_real_train@v1-20261017-utts-punc-20261102-final-v1-20261120](../../catalog/text_final_v1.yaml#L4488) | — | 未登记 | 没有 |
 | [ts_real_train@v2-20261018](../../catalog/ts_real_train.yaml#L114) | 116.6 | 已登记 | 没有 |
 | [ts_real_train@v2-20261018-enroll-qc-20261021](../../catalog/ts_real_enroll_qc.yaml#L119) | — | 未登记 | 没有 |
 | [ts_real_train@v2-20261018-utts](../../catalog/ts_real_train.yaml#L572) | 116.6 | 已登记 | 没有 |
-| [ts_real_train@v2-20261018-utts-punc-20261102](../../catalog/train_punc_v1_derived.yaml#L1381) | — | 未登记 | 没有 |
-| [ts_real_train@v2-20261018-utts-punc-20261102-final-v1-20261120](../../catalog/text_final_v1.yaml#L1310) | — | 未登记 | 没有 |
+| [ts_real_train@v2-20261018-utts-punc-20261102-final-v1-20261120](../../catalog/text_final_v1.yaml#L4613) | — | 未登记 | 没有 |
 | [ts_real_train@v3-20261020](../../catalog/ts_real_train.yaml#L228) | 105.0 | 已登记 | 没有 |
 | [ts_real_train@v3-20261020-enroll-qc-20261021](../../catalog/ts_real_enroll_qc.yaml#L204) | — | 未登记 | 没有 |
 | [ts_real_train@v3-20261020-utts](../../catalog/ts_real_train.yaml#L457) | 105.0 | 已登记 | 没有 |
-| [ts_real_train@v3-20261020-utts-punc-20261102](../../catalog/train_punc_v1_derived.yaml#L1475) | — | 未登记 | 没有 |
-| [ts_real_train@v3-20261020-utts-punc-20261102-final-v1-20261120](../../catalog/text_final_v1.yaml#L1338) | — | 未登记 | 没有 |
+| [ts_real_train@v3-20261020-utts-punc-20261102-final-v1-20261120](../../catalog/text_final_v1.yaml#L4709) | — | 未登记 | 没有 |
 
 - `ts_real_train@en-v1-20261101`：英文真实会议的目标说话人窗口（训练划分）：AMI train 单远场麦 Array1-01、NOTSOFAR-1 train 与 dev 每场一台单通道设备、DiPCo dev 远场设备通道 1（时间轴按近讲麦对齐）、ICSI 中与 test / dev 会议没有共同说话人的 11 场 Bed 会议（官方近讲耳麦混音，镜像音频写成 WAV 放在 source/en-v1-20261101/icsi/），按 ts_real_train v1 的方法切 8–22 秒、由完整语句组成的窗口，说话人数分 1 / 2 / 3+ 三档，用尽所有可用窗口；每个窗口一对样本，同一段音频：目标在场（注册取窗口外同一录音的另一句，3–6 秒）和目标缺席（同一录音里没在窗口说话的另一人，没有则取其他录音中同样不在窗口说话的人）。转写清洗沿用英文评测 ts_asr_real en-v2-20261031（scripts/ts_real/english.py），目标各句须都有完整转写；每条注册过英文评测的声纹核对（WeSpeaker ECAPA），不过的换一句或丢掉这一对。评测用的 AMI dev/test、NOTSOFAR-1 eval、DiPCo eval、ICSI test/dev 会议及其说话人都不在内（report.json 的 heldout）。不含 CHiME-6（train 标注没有房间信息）。记录带 metadata.window_utts 与 target_speaker。音频是原始长录音的片段，channel: 0。脚本 scripts/ts_robust/build_ts_real_train_en.py
 - `ts_real_train@en-v1-20261101-utts`：ts_real_train@en-v1-20261101 的同一批记录，构建脚本自带的 metadata.window_utts / target_speaker 按与其他 -utts 版本相同的规则复核：正样本的目标语句与转写逐字一致（忽略空白和标点）才保留时间线，负样本只有注册人确实不在窗口里说话才保留；不满足的记录去掉 window_utts（保留 target_speaker），ID 列在 excluded-records-<split>.txt。供 open-audio-llm 帧级说话人活动标签（objective.ts_activity_weight）。其余字段不变，音频引用改指本版本，音频索引与原版逐行相同。生成脚本 audio-data-contract scripts/ts_robust/add_window_utts.py（keep），逐划分统计见 report.json
-- `ts_real_train@en-v1-20261101-utts-final-v1-20261120`：ts_real_train@en-v1-20261101-utts（交付配方 v7set34 训练用的版本）的训练文本终版，按 docs/reference/training-text.md（v1） 应用全部已执行的文本修正，起点 ts_real_train@en-v1-20261101-utts。构建中
-- `ts_real_train@en-v1-20261101-utts-punc-20261102`：ts_real_train@en-v1-20261101-utts 的 ami, dipco，目标文本加书面化标点：中文用 amphiondata 的中文学生模型（punc-student-v1，不带听音提示），英文用英文规范 en-v1 的学生模型（加标点并恢复大小写）；标点按字 / 按词搬回原文，原文的字词不变，找不到输出的目标保留原样。其余字段与源版本相同，音频引用源版本
-- `ts_real_train@en-v1-20261101-utts-punc-20261102-final-v1-20261120`：ts_real_train@en-v1-20261101-utts-punc-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 docs/reference/training-text.md（v1） 应用全部已执行的文本修正，起点 ts_real_train@en-v1-20261101-utts-punc-20261102。构建中
+- `ts_real_train@en-v1-20261101-utts-final-v1-20261120`：ts_real_train@en-v1-20261101-utts（交付配方 v7set34 训练用的版本）的训练文本终版，按 audio-data-contract docs/reference/training-text.md（v1） 应用全部已执行的文本修正，替代配方原来的版本和中间修正版本。起点 ts_real_train@en-v1-20261101-utts；已含修正：无（各轮修正对本数据都没有改动）。其余字段、录音清单和音频照旧，引用起点版本的产物
+- `ts_real_train@en-v1-20261101-utts-punc-20261102-final-v1-20261120`：ts_real_train@en-v1-20261101-utts-punc-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 audio-data-contract docs/reference/training-text.md（v1） 应用全部已执行的文本修正，替代配方原来的版本和中间修正版本。起点 ts_real_train@en-v1-20261101-utts-punc-20261102；已含修正：无（各轮修正对本数据都没有改动）。其余字段、录音清单和音频照旧，引用起点版本的产物
 - `ts_real_train@v1-20261017`：真实会议的目标说话人窗口（训练划分）：AliMeeting 远场、AISHELL-4、MagicData-RAMC 的 train 划分，按 ts_asr_real 的方法切 8–22 秒、由完整语句组成的窗口，说话人数分 1 / 2 / 3+ 三档；每个窗口一对样本，同一段音频：目标在场（注册取窗口外同一录音的另一句）和目标缺席（同一录音里没在窗口说话的另一人，没有则取其他录音）。音频是原始长录音的片段，记录里写 channel: 0，读第 0 声道，与评测一致（现有 turn-taking 训练集读 8 个声道的平均）。脚本 scripts/ts_robust/build_ts_real_train.py
 - `ts_real_train@v1-20261017-utts`：ts_real_train@v1-20261017 的同一批记录，时间线取自 AliMeeting 远场、AISHELL-4、RAMC 的 icefall-20260908 train 人工标注。加 metadata.window_utts（窗口内每句的说话人与相对混合起点的起止，取自来源标注并截到窗口，截断的标 clipped）与同一命名空间的 metadata.target_speaker，供 open-audio-llm 帧级说话人活动标签（objective.ts_activity_weight）；其余字段不变，音频引用改指本版本，音频索引与原版逐行相同。正样本的目标语句与转写逐字一致（忽略空白和标点；窗口边缘截断的句子允许只转写一部分）才写时间线，负样本只有注册人确实不在窗口里说话才写；其余记录不写时间线（不出帧级标签）。负样本中注册人按标注其实在窗口内说话的记录 ID 列在 excluded-records-<split>.txt，训练配方用 exclude_records 排除。生成脚本 audio-data-contract scripts/ts_robust/add_window_utts.py，逐划分统计见 report.json
 - `ts_real_train@v1-20261017-utts-enroll-qc-20261021`：ts_real_train@v1-20261017-utts-punc-20261102 的全部记录（aishell4, alimeeting, ramc），内容与父版本相同，新增 metadata.enrollment_check：目标缺席记录给出注册说话人在窗口内实际说话的秒数（enrolled_speaker_talk_seconds，大于 0 说明这条并不缺席，因为 AliMeeting / AISHELL-4 / RAMC 的说话人编号跨会议通用，从别的会议取的注册人可能也在本窗口里说话）；音频索引沿用父版本，不复制音频；本版本只带标注，训练配方仍引用父版本。脚本 scripts/label_registration/register_ts_real_enroll_qc.py，检查工具 scripts/label_registration/scan_enrolled_in_window.py、scripts/ts_robust/qc_ts_real_train_v3.py
-- `ts_real_train@v1-20261017-utts-punc-20261102`：ts_real_train@v1-20261017-utts 的 aishell4, alimeeting, ramc，目标文本加书面化标点：中文用 amphiondata 的中文学生模型（punc-student-v1，不带听音提示），英文用英文规范 en-v1 的学生模型（加标点并恢复大小写）；标点按字 / 按词搬回原文，原文的字词不变，找不到输出的目标保留原样。其余字段与源版本相同，音频引用源版本
-- `ts_real_train@v1-20261017-utts-punc-20261102-final-v1-20261120`：ts_real_train@v1-20261017-utts-punc-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 docs/reference/training-text.md（v1） 应用全部已执行的文本修正，起点 ts_real_train@v1-20261017-utts-punc-20261102。构建中
+- `ts_real_train@v1-20261017-utts-punc-20261102-final-v1-20261120`：ts_real_train@v1-20261017-utts-punc-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 audio-data-contract docs/reference/training-text.md（v1） 应用全部已执行的文本修正，替代配方原来的版本和中间修正版本。起点 ts_real_train@v1-20261017-utts-punc-20261102；已含修正：无（各轮修正对本数据都没有改动）。其余字段、录音清单和音频照旧，引用起点版本的产物
 - `ts_real_train@v2-20261018`：真实会议的目标说话人重叠窗口（训练划分）：AliMeeting 远场、AISHELL-4、MagicData-RAMC 的 train 划分，按 ts_asr_real overlap 版的方法以目标说话人为锚切 8–26 秒窗口（目标的语句完整，别人的语句截到窗口边界，记录 metadata.window_utts 给出窗口内每句的起止和说话人，截断的标 clipped），按目标语音被别人重叠的比例分 o0（≤5%）/ o20（5–20%）/ o50（20–50%）/ o100（>50%）四档（RAMC 标注没有重叠，只有 o0）；每个窗口一对样本，同一段音频：目标在场（注册取窗口外同一录音的另一句）和目标缺席（同一录音里没在窗口说话的另一人，没有则取其他录音）。去掉含 dev / test 说话人的录音（RAMC 14 段）。音频是原始长录音的片段，记录里写 channel: 0，读第 0 声道，与评测一致。脚本 scripts/ts_robust/build_ts_real_train.py --recipe v2
 - `ts_real_train@v2-20261018-enroll-qc-20261021`：ts_real_train@v2-20261018-utts-punc-20261102 的全部记录（aishell4, alimeeting），内容与父版本相同，新增 metadata.enrollment_check：目标缺席记录给出注册说话人在窗口内实际说话的秒数（enrolled_speaker_talk_seconds，大于 0 说明这条并不缺席，因为 AliMeeting / AISHELL-4 / RAMC 的说话人编号跨会议通用，从别的会议取的注册人可能也在本窗口里说话）；音频索引沿用父版本，不复制音频；本版本只带标注，训练配方仍引用父版本。脚本 scripts/label_registration/register_ts_real_enroll_qc.py，检查工具 scripts/label_registration/scan_enrolled_in_window.py、scripts/ts_robust/qc_ts_real_train_v3.py
 - `ts_real_train@v2-20261018-utts`：ts_real_train@v2-20261018 的同一批记录，v2 自带的 metadata.window_utts / target_speaker 按与其他 -utts 版本相同的规则复核：正样本的目标语句与转写逐字一致（忽略空白和标点；窗口边缘截断的句子允许只转写一部分）才保留时间线，负样本只有注册人确实不在窗口里说话才保留；不满足的记录去掉 window_utts（保留 target_speaker），不出帧级标签。正样本全部通过；45 条负样本（alimeeting 43、ramc 2，都是 other_recording）的注册人与窗口里的说话人是同一人（同一说话人出现在多场录音里），转写为空属于错标，ID 列在 excluded-records-<split>.txt，训练配方用 exclude_records 排除。其余字段不变，音频引用改指本版本，音频索引与原版逐行相同。生成脚本 audio-data-contract scripts/ts_robust/add_window_utts.py（keep），逐划分统计见 report.json
-- `ts_real_train@v2-20261018-utts-punc-20261102`：ts_real_train@v2-20261018-utts 的 aishell4, alimeeting，目标文本加书面化标点：中文用 amphiondata 的中文学生模型（punc-student-v1，不带听音提示），英文用英文规范 en-v1 的学生模型（加标点并恢复大小写）；标点按字 / 按词搬回原文，原文的字词不变，找不到输出的目标保留原样。其余字段与源版本相同，音频引用源版本
-- `ts_real_train@v2-20261018-utts-punc-20261102-final-v1-20261120`：ts_real_train@v2-20261018-utts-punc-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 docs/reference/training-text.md（v1） 应用全部已执行的文本修正，起点 ts_real_train@v2-20261018-utts-punc-20261102。构建中
+- `ts_real_train@v2-20261018-utts-punc-20261102-final-v1-20261120`：ts_real_train@v2-20261018-utts-punc-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 audio-data-contract docs/reference/training-text.md（v1） 应用全部已执行的文本修正，替代配方原来的版本和中间修正版本。起点 ts_real_train@v2-20261018-utts-punc-20261102；已含修正：无（各轮修正对本数据都没有改动）。其余字段、录音清单和音频照旧，引用起点版本的产物
 - `ts_real_train@v3-20261020`：真实录音的目标说话人训练窗口第三版，补 v1 / v2 没有的两类（只生成记录，引用原始录音片段，不复制、不混音）：emilia2_1spk——Emilia2 中文网络对话（emilia2_zh_dialogue_diarize 的 MOSS 伪标签，窗口文本已过 Qwen3-ASR 核对）里只有一个人说话的 8–22 秒整句窗口，每个窗口一对：目标在场（注册取此人窗外另一句）与目标缺席（注册取同一诊断窗口里的另一位说话人），对应评测 real-emilia2-1spk-neg；排除评测留出视频（ts_asr_real v2 的 excluded-recordings）与说话人合并错误窗口；每对用 ERes2NetV2 声纹核对，按对内分布取阈值（同人下限 0.746、异人上限 0.493）剔除 225 对。alimeeting_en_mn / alimeeting_en_mf——AliMeeting train 窗口（窗口切法同 v1，远场人工标注），注册一律取注册人的近场头戴麦，混合取窗口内某位说话人的头戴麦（en_mn，设备离说话人近）或远场第 0 声道（en_mf），在场 / 缺席成对，补评测 nearfar-*-en-mn-neg（近场注册 + 近场混合）的缺席。生成脚本 scripts/ts_robust/build_ts_real_train_v3.py、qc_ts_real_train_v3.py
 - `ts_real_train@v3-20261020-enroll-qc-20261021`：ts_real_train@v3-20261020-utts-punc-20261102 的全部记录（alimeeting_en_mf, alimeeting_en_mn, emilia2_1spk），内容与父版本相同，新增 metadata.enrollment_check：目标缺席记录给出注册说话人在窗口内实际说话的秒数（enrolled_speaker_talk_seconds，大于 0 说明这条并不缺席，因为 AliMeeting / AISHELL-4 / RAMC 的说话人编号跨会议通用，从别的会议取的注册人可能也在本窗口里说话）；Emilia2 单人配对给出注册音频与窗口的 ERes2NetV2 余弦（cosine，expected 为应该相同还是不同的说话人）和整对的两个余弦，另附 pair_cosines.json（15000 对），构建时按 same_floor 0.746 / diff_ceiling 0.493 剔除了 225 对。音频索引沿用父版本，不复制音频；本版本只带标注，训练配方仍引用父版本。脚本 scripts/label_registration/register_ts_real_enroll_qc.py，检查工具 scripts/label_registration/scan_enrolled_in_window.py、scripts/ts_robust/qc_ts_real_train_v3.py
 - `ts_real_train@v3-20261020-utts`：ts_real_train@v3-20261020 的同一批记录：alimeeting_en_mn / en_mf 的时间线取自 AliMeeting 远场 icefall-20260908 train 人工标注（近讲与远场文件对齐在 0.07 秒内），emilia2_1spk 取自记录所引用的 MOSS 日志窗口。加 metadata.window_utts（窗口内每句的说话人与相对混合起点的起止，取自来源标注并截到窗口，截断的标 clipped）与同一命名空间的 metadata.target_speaker，供 open-audio-llm 帧级说话人活动标签（objective.ts_activity_weight）；其余字段不变，音频引用改指本版本，音频索引与原版逐行相同。正样本的目标语句与转写逐字一致（忽略空白和标点；窗口边缘截断的句子允许只转写一部分）才写时间线，负样本只有注册人确实不在窗口里说话才写；其余记录不写时间线（不出帧级标签）。负样本中注册人按标注其实在窗口内说话的记录 ID 列在 excluded-records-<split>.txt，训练配方用 exclude_records 排除。生成脚本 audio-data-contract scripts/ts_robust/add_window_utts.py，逐划分统计见 report.json
-- `ts_real_train@v3-20261020-utts-punc-20261102`：ts_real_train@v3-20261020-utts 的 alimeeting_en_mf, alimeeting_en_mn, emilia2_1spk，目标文本加书面化标点：中文用 amphiondata 的中文学生模型（punc-student-v1，不带听音提示），英文用英文规范 en-v1 的学生模型（加标点并恢复大小写）；标点按字 / 按词搬回原文，原文的字词不变，找不到输出的目标保留原样。其余字段与源版本相同，音频引用源版本
-- `ts_real_train@v3-20261020-utts-punc-20261102-final-v1-20261120`：ts_real_train@v3-20261020-utts-punc-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 docs/reference/training-text.md（v1） 应用全部已执行的文本修正，起点 ts_real_train@v3-20261020-utts-punc-20261102。构建中
+- `ts_real_train@v3-20261020-utts-punc-20261102-final-v1-20261120`：ts_real_train@v3-20261020-utts-punc-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 audio-data-contract docs/reference/training-text.md（v1） 应用全部已执行的文本修正，替代配方原来的版本和中间修正版本。起点 ts_real_train@v3-20261020-utts-punc-20261102；已含修正：无（各轮修正对本数据都没有改动）。其余字段、录音清单和音频照旧，引用起点版本的产物
 - 含派生版本（与源数据可能重叠）
+- 已并入的旧版本：`ts_real_train@en-v1-20261101-utts-punc-20261102`（COS：没有）、`ts_real_train@v1-20261017-utts-punc-20261102`（COS：没有）、`ts_real_train@v2-20261018-utts-punc-20261102`（COS：没有）、`ts_real_train@v3-20261020-utts-punc-20261102`（COS：没有）
 
 ### ts_scene_pool
 
@@ -3189,50 +3120,38 @@ AISHELL-1、LibriSpeech 合成的多人对话
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
 | [ts_scene_pool@alt-twins-20261024](../../catalog/ts_scene_pool.yaml#L1177) | 316.4 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_scene_pool/` |
-| [ts_scene_pool@alt-twins-20261024-punchw-20261102](../../catalog/train_punc_v1_pools.yaml#L2) | 316.4 | 已登记 | 没有 |
-| [ts_scene_pool@alt-twins-20261024-punchw-20261102-final-v1-20261120](../../catalog/text_final_v1.yaml#L1422) | — | 未登记 | 没有 |
-| [ts_scene_pool@alt-twins-20261024-punchw2-20261102](../../catalog/train_punc_v1_pools_en.yaml#L2) | 148.3 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_scene_pool/` |
-| [ts_scene_pool@alt-twins-20261024-punchw2-20261102-final-v1-20261120](../../catalog/text_final_v1.yaml#L1451) | — | 未登记 | 没有 |
+| [ts_scene_pool@alt-twins-20261024-punchw-20261102-final-v1-20261120](../../catalog/text_final_v1.yaml#L5084) | 316.4 | 已登记 | 没有 |
+| [ts_scene_pool@alt-twins-20261024-punchw2-20261102-final-v1-20261120](../../catalog/text_final_v1.yaml#L5187) | 148.3 | 已登记 | 没有 |
 | [ts_scene_pool@csd-alt-twins-20261101](../../catalog/ts_scene_pool.yaml#L1944) | 10.8 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_scene_pool/` |
-| [ts_scene_pool@csd-alt-twins-20261101-punchw-20261102](../../catalog/train_punc_v1_pools.yaml#L91) | 10.8 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_scene_pool/` |
-| [ts_scene_pool@csd-alt-twins-20261101-punchw2-20261102](../../catalog/train_punc_v1_pools_en.yaml#L62) | 10.8 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_scene_pool/` |
-| [ts_scene_pool@csd-alt-twins-20261101-punchw2-20261102-final-v1-20261120](../../catalog/text_final_v1.yaml#L1985) | — | 未登记 | 没有 |
+| [ts_scene_pool@csd-alt-twins-20261101-punchw-20261102](../../catalog/train_punc_v1_pools.yaml#L92) | 10.8 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_scene_pool/` |
+| [ts_scene_pool@csd-alt-twins-20261101-punchw2-20261102-final-v1-20261120](../../catalog/text_final_v1.yaml#L6635) | 10.8 | 已登记 | 没有 |
 | [ts_scene_pool@csd-handover-20261101](../../catalog/ts_scene_pool.yaml#L2064) | 6.8 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_scene_pool/` |
-| [ts_scene_pool@csd-handover-20261101-punchw-20261102](../../catalog/train_punc_v1_pools.yaml#L151) | 6.8 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_scene_pool/` |
-| [ts_scene_pool@csd-handover-20261101-punchw2-20261102](../../catalog/train_punc_v1_pools_en.yaml#L122) | 6.8 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_scene_pool/` |
-| [ts_scene_pool@csd-handover-20261101-punchw2-20261102-final-v1-20261120](../../catalog/text_final_v1.yaml#L2041) | — | 未登记 | 没有 |
+| [ts_scene_pool@csd-handover-20261101-punchw-20261102](../../catalog/train_punc_v1_pools.yaml#L152) | 6.8 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_scene_pool/` |
+| [ts_scene_pool@csd-handover-20261101-punchw2-20261102-final-v1-20261120](../../catalog/text_final_v1.yaml#L6781) | 6.8 | 已登记 | 没有 |
 | [ts_scene_pool@csd-hard-20261101](../../catalog/ts_scene_pool.yaml#L2004) | 6.7 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_scene_pool/` |
-| [ts_scene_pool@csd-hard-20261101-punchw-20261102](../../catalog/train_punc_v1_pools.yaml#L211) | 6.7 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_scene_pool/` |
-| [ts_scene_pool@csd-hard-20261101-punchw2-20261102](../../catalog/train_punc_v1_pools_en.yaml#L182) | 6.7 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_scene_pool/` |
-| [ts_scene_pool@csd-hard-20261101-punchw2-20261102-final-v1-20261120](../../catalog/text_final_v1.yaml#L2013) | — | 未登记 | 没有 |
+| [ts_scene_pool@csd-hard-20261101-punchw-20261102](../../catalog/train_punc_v1_pools.yaml#L212) | 6.7 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_scene_pool/` |
+| [ts_scene_pool@csd-hard-20261101-punchw2-20261102-final-v1-20261120](../../catalog/text_final_v1.yaml#L6708) | 6.7 | 已登记 | 没有 |
 | [ts_scene_pool@csd-near-20261101](../../catalog/ts_scene_pool.yaml#L1884) | 16.3 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_scene_pool/` |
-| [ts_scene_pool@csd-near-20261101-punchw-20261102](../../catalog/train_punc_v1_pools.yaml#L271) | 16.3 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_scene_pool/` |
-| [ts_scene_pool@csd-near-20261101-punchw2-20261102](../../catalog/train_punc_v1_pools_en.yaml#L242) | 16.3 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_scene_pool/` |
-| [ts_scene_pool@csd-near-20261101-punchw2-20261102-final-v1-20261120](../../catalog/text_final_v1.yaml#L1957) | — | 未登记 | 没有 |
+| [ts_scene_pool@csd-near-20261101-punchw-20261102](../../catalog/train_punc_v1_pools.yaml#L272) | 16.3 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_scene_pool/` |
+| [ts_scene_pool@csd-near-20261101-punchw2-20261102-final-v1-20261120](../../catalog/text_final_v1.yaml#L6562) | 16.3 | 已登记 | 没有 |
 | [ts_scene_pool@csd-solo-20261101](../../catalog/ts_scene_pool.yaml#L2124) | 8.3 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_scene_pool/` |
-| [ts_scene_pool@csd-solo-20261101-punchw-20261102](../../catalog/train_punc_v1_pools.yaml#L331) | 8.3 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_scene_pool/` |
-| [ts_scene_pool@csd-solo-20261101-punchw2-20261102](../../catalog/train_punc_v1_pools_en.yaml#L302) | 8.3 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_scene_pool/` |
-| [ts_scene_pool@csd-solo-20261101-punchw2-20261102-final-v1-20261120](../../catalog/text_final_v1.yaml#L2069) | — | 未登记 | 没有 |
+| [ts_scene_pool@csd-solo-20261101-punchw-20261102](../../catalog/train_punc_v1_pools.yaml#L332) | 8.3 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_scene_pool/` |
+| [ts_scene_pool@csd-solo-20261101-punchw2-20261102-final-v1-20261120](../../catalog/text_final_v1.yaml#L6854) | 8.3 | 已登记 | 没有 |
 | [ts_scene_pool@cvaccent-alt-twins-20261101](../../catalog/ts_scene_pool.yaml#L1644) | 60.7 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_scene_pool/` |
-| [ts_scene_pool@cvaccent-alt-twins-20261101-punchw-20261102](../../catalog/train_punc_v1_pools.yaml#L391) | 60.7 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_scene_pool/` |
-| [ts_scene_pool@cvaccent-alt-twins-20261101-punchw2-20261102](../../catalog/train_punc_v1_pools_en.yaml#L362) | 60.7 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_scene_pool/` |
-| [ts_scene_pool@cvaccent-alt-twins-20261101-punchw2-20261102-final-v1-20261120](../../catalog/text_final_v1.yaml#L1845) | — | 未登记 | 没有 |
+| [ts_scene_pool@cvaccent-alt-twins-20261101-punchw-20261102](../../catalog/train_punc_v1_pools.yaml#L392) | 60.7 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_scene_pool/` |
+| [ts_scene_pool@cvaccent-alt-twins-20261101-punchw2-20261102-final-v1-20261120](../../catalog/text_final_v1.yaml#L6270) | 60.7 | 已登记 | 没有 |
 | [ts_scene_pool@cvaccent-handover-20261101](../../catalog/ts_scene_pool.yaml#L1764) | 30.7 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_scene_pool/` |
-| [ts_scene_pool@cvaccent-handover-20261101-punchw-20261102](../../catalog/train_punc_v1_pools.yaml#L451) | 30.7 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_scene_pool/` |
-| [ts_scene_pool@cvaccent-handover-20261101-punchw2-20261102](../../catalog/train_punc_v1_pools_en.yaml#L422) | 30.7 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_scene_pool/` |
-| [ts_scene_pool@cvaccent-handover-20261101-punchw2-20261102-final-v1-20261120](../../catalog/text_final_v1.yaml#L1901) | — | 未登记 | 没有 |
+| [ts_scene_pool@cvaccent-handover-20261101-punchw-20261102](../../catalog/train_punc_v1_pools.yaml#L452) | 30.7 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_scene_pool/` |
+| [ts_scene_pool@cvaccent-handover-20261101-punchw2-20261102-final-v1-20261120](../../catalog/text_final_v1.yaml#L6416) | 30.7 | 已登记 | 没有 |
 | [ts_scene_pool@cvaccent-hard-20261101](../../catalog/ts_scene_pool.yaml#L1704) | 37.9 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_scene_pool/` |
-| [ts_scene_pool@cvaccent-hard-20261101-punchw-20261102](../../catalog/train_punc_v1_pools.yaml#L511) | 37.9 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_scene_pool/` |
-| [ts_scene_pool@cvaccent-hard-20261101-punchw2-20261102](../../catalog/train_punc_v1_pools_en.yaml#L482) | 37.9 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_scene_pool/` |
-| [ts_scene_pool@cvaccent-hard-20261101-punchw2-20261102-final-v1-20261120](../../catalog/text_final_v1.yaml#L1873) | — | 未登记 | 没有 |
+| [ts_scene_pool@cvaccent-hard-20261101-punchw-20261102](../../catalog/train_punc_v1_pools.yaml#L512) | 37.9 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_scene_pool/` |
+| [ts_scene_pool@cvaccent-hard-20261101-punchw2-20261102-final-v1-20261120](../../catalog/text_final_v1.yaml#L6343) | 37.9 | 已登记 | 没有 |
 | [ts_scene_pool@cvaccent-near-20261101](../../catalog/ts_scene_pool.yaml#L1584) | 91.2 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_scene_pool/` |
-| [ts_scene_pool@cvaccent-near-20261101-punchw-20261102](../../catalog/train_punc_v1_pools.yaml#L571) | 91.2 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_scene_pool/` |
-| [ts_scene_pool@cvaccent-near-20261101-punchw2-20261102](../../catalog/train_punc_v1_pools_en.yaml#L542) | 91.2 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_scene_pool/` |
-| [ts_scene_pool@cvaccent-near-20261101-punchw2-20261102-final-v1-20261120](../../catalog/text_final_v1.yaml#L1817) | — | 未登记 | 没有 |
+| [ts_scene_pool@cvaccent-near-20261101-punchw-20261102](../../catalog/train_punc_v1_pools.yaml#L572) | 91.2 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_scene_pool/` |
+| [ts_scene_pool@cvaccent-near-20261101-punchw2-20261102-final-v1-20261120](../../catalog/text_final_v1.yaml#L6197) | 91.2 | 已登记 | 没有 |
 | [ts_scene_pool@cvaccent-solo-20261101](../../catalog/ts_scene_pool.yaml#L1824) | 44.7 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_scene_pool/` |
-| [ts_scene_pool@cvaccent-solo-20261101-punchw-20261102](../../catalog/train_punc_v1_pools.yaml#L631) | 44.7 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_scene_pool/` |
-| [ts_scene_pool@cvaccent-solo-20261101-punchw2-20261102](../../catalog/train_punc_v1_pools_en.yaml#L602) | 44.7 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_scene_pool/` |
-| [ts_scene_pool@cvaccent-solo-20261101-punchw2-20261102-final-v1-20261120](../../catalog/text_final_v1.yaml#L1929) | — | 未登记 | 没有 |
+| [ts_scene_pool@cvaccent-solo-20261101-punchw-20261102](../../catalog/train_punc_v1_pools.yaml#L632) | 44.7 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_scene_pool/` |
+| [ts_scene_pool@cvaccent-solo-20261101-punchw2-20261102-final-v1-20261120](../../catalog/text_final_v1.yaml#L6489) | 44.7 | 已登记 | 没有 |
 | [ts_scene_pool@es-1spk-20261110](../../catalog/ts_scene_pool_es.yaml#L587) | 513.8 | 已登记 | 没有 |
 | [ts_scene_pool@es-1spk-v2-20261110](../../catalog/ts_scene_pool_es.yaml#L631) | 374.0 | 已登记 | 没有 |
 | [ts_scene_pool@es-alt-twins-20261109](../../catalog/ts_scene_pool_es.yaml#L119) | 54.6 | 已登记 | 没有 |
@@ -3247,36 +3166,26 @@ AISHELL-1、LibriSpeech 合成的多人对话
 | [ts_scene_pool@es-solo-20261109-punchw-20261109](../../catalog/ts_scene_pool_es.yaml#L528) | 25.8 | 已登记 | 没有 |
 | [ts_scene_pool@es-v1-20261108](../../catalog/es_train_v1.yaml#L168) | — | 未登记 | 没有 |
 | [ts_scene_pool@handover-20261021](../../catalog/ts_scene_pool.yaml#L515) | 62.9 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_scene_pool/` |
-| [ts_scene_pool@handover-20261021-punchw-20261102](../../catalog/train_punc_v1_pools.yaml#L691) | 62.9 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_scene_pool/` |
-| [ts_scene_pool@handover-20261021-punchw-20261102-final-v1-20261120](../../catalog/text_final_v1.yaml#L1536) | — | 未登记 | 没有 |
-| [ts_scene_pool@handover-20261021-punchw2-20261102](../../catalog/train_punc_v1_pools_en.yaml#L662) | 18.0 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_scene_pool/` |
-| [ts_scene_pool@handover-20261021-punchw2-20261102-final-v1-20261120](../../catalog/text_final_v1.yaml#L1565) | — | 未登记 | 没有 |
+| [ts_scene_pool@handover-20261021-punchw-20261102-final-v1-20261120](../../catalog/text_final_v1.yaml#L5435) | 62.9 | 已登记 | 没有 |
+| [ts_scene_pool@handover-20261021-punchw2-20261102-final-v1-20261120](../../catalog/text_final_v1.yaml#L5538) | 18.0 | 已登记 | 没有 |
 | [ts_scene_pool@hard-20261016](../../catalog/ts_scene_pool.yaml#L86) | 81.7 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_scene_pool/` |
-| [ts_scene_pool@hard-20261016-punchw-20261102](../../catalog/train_punc_v1_pools.yaml#L780) | 81.7 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_scene_pool/` |
-| [ts_scene_pool@hard-20261016-punchw-20261102-final-v1-20261120](../../catalog/text_final_v1.yaml#L58) | — | 未登记 | 没有 |
-| [ts_scene_pool@hard-20261016-punchw2-20261102](../../catalog/train_punc_v1_pools_en.yaml#L722) | 37.0 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_scene_pool/` |
-| [ts_scene_pool@hard-20261016-punchw2-20261102-final-v1-20261120](../../catalog/text_final_v1.yaml#L87) | — | 未登记 | 没有 |
+| [ts_scene_pool@hard-20261016-punchw-20261102-final-v1-20261120](../../catalog/text_final_v1.yaml#L271) | 81.7 | 已登记 | 没有 |
+| [ts_scene_pool@hard-20261016-punchw2-20261102-final-v1-20261120](../../catalog/text_final_v1.yaml#L373) | 37.0 | 已登记 | 没有 |
 | [ts_scene_pool@hard-twins-20261026](../../catalog/ts_scene_pool.yaml#L1497) | 81.9 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_scene_pool/` |
 | [ts_scene_pool@magicdata-20261023](../../catalog/ts_scene_pool.yaml#L660) | 96.2 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_scene_pool/` |
 | [ts_scene_pool@magicdata-alt-20261023](../../catalog/ts_scene_pool.yaml#L948) | 71.0 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_scene_pool/` |
 | [ts_scene_pool@magicdata-alt-twins-20261024](../../catalog/ts_scene_pool.yaml#L1325) | 71.5 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_scene_pool/` |
-| [ts_scene_pool@magicdata-alt-twins-20261024-punchw-20261102](../../catalog/train_punc_v1_pools.yaml#L869) | 71.5 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_scene_pool/` |
-| [ts_scene_pool@magicdata-alt-twins-20261024-punchw-20261102-final-v1-20261120](../../catalog/text_final_v1.yaml#L1733) | — | 未登记 | 没有 |
+| [ts_scene_pool@magicdata-alt-twins-20261024-punchw-20261102-final-v1-20261120](../../catalog/text_final_v1.yaml#L5977) | 71.5 | 已登记 | 没有 |
 | [ts_scene_pool@magicdata-handover-20261023](../../catalog/ts_scene_pool.yaml#L1005) | 48.6 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_scene_pool/` |
-| [ts_scene_pool@magicdata-handover-20261023-punchw-20261102](../../catalog/train_punc_v1_pools.yaml#L929) | 48.6 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_scene_pool/` |
-| [ts_scene_pool@magicdata-handover-20261023-punchw-20261102-final-v1-20261120](../../catalog/text_final_v1.yaml#L1789) | — | 未登记 | 没有 |
+| [ts_scene_pool@magicdata-handover-20261023-punchw-20261102-final-v1-20261120](../../catalog/text_final_v1.yaml#L6124) | 48.6 | 已登记 | 没有 |
 | [ts_scene_pool@magicdata-hard-20261023](../../catalog/ts_scene_pool.yaml#L1120) | 47.8 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_scene_pool/` |
-| [ts_scene_pool@magicdata-hard-20261023-punchw-20261102](../../catalog/train_punc_v1_pools.yaml#L989) | 47.8 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_scene_pool/` |
-| [ts_scene_pool@magicdata-hard-20261023-punchw-20261102-final-v1-20261120](../../catalog/text_final_v1.yaml#L1761) | — | 未登记 | 没有 |
+| [ts_scene_pool@magicdata-hard-20261023-punchw-20261102-final-v1-20261120](../../catalog/text_final_v1.yaml#L6051) | 47.8 | 已登记 | 没有 |
 | [ts_scene_pool@magicdata-hard-twins-20261026](../../catalog/ts_scene_pool.yaml#L1440) | 47.9 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_scene_pool/` |
 | [ts_scene_pool@magicdata-near-20261023](../../catalog/ts_scene_pool.yaml#L776) | 96.0 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_scene_pool/` |
-| [ts_scene_pool@magicdata-near-20261023-punchw-20261102](../../catalog/train_punc_v1_pools.yaml#L1049) | 96.0 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_scene_pool/` |
-| [ts_scene_pool@magicdata-near-20261023-punchw-20261102-final-v1-20261120](../../catalog/text_final_v1.yaml#L1705) | — | 未登记 | 没有 |
+| [ts_scene_pool@magicdata-near-20261023-punchw-20261102-final-v1-20261120](../../catalog/text_final_v1.yaml#L5903) | 96.0 | 已登记 | 没有 |
 | [ts_scene_pool@multi-20261017](../../catalog/ts_scene_pool.yaml#L171) | 193.4 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_scene_pool/` |
-| [ts_scene_pool@multi-20261017-punchw-20261102](../../catalog/train_punc_v1_pools.yaml#L1109) | 193.4 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_scene_pool/` |
-| [ts_scene_pool@multi-20261017-punchw-20261102-final-v1-20261120](../../catalog/text_final_v1.yaml#L1225) | — | 未登记 | 没有 |
-| [ts_scene_pool@multi-20261017-punchw2-20261102](../../catalog/train_punc_v1_pools_en.yaml#L782) | 59.2 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_scene_pool/` |
-| [ts_scene_pool@multi-20261017-punchw2-20261102-final-v1-20261120](../../catalog/text_final_v1.yaml#L1254) | — | 未登记 | 没有 |
+| [ts_scene_pool@multi-20261017-punchw-20261102-final-v1-20261120](../../catalog/text_final_v1.yaml#L4312) | 193.4 | 已登记 | 没有 |
+| [ts_scene_pool@multi-20261017-punchw2-20261102-final-v1-20261120](../../catalog/text_final_v1.yaml#L4415) | 59.2 | 已登记 | 没有 |
 | [ts_scene_pool@multi-20261018](../../catalog/ts_scene_pool.yaml#L257) | 386.2 | 已登记 | 没有 |
 | [ts_scene_pool@pt-1spk-v1-20261117](../../catalog/ts_scene_pool_pt.yaml#L582) | 48.1 | 已登记 | 没有 |
 | [ts_scene_pool@pt-alt-twins-20261117](../../catalog/ts_scene_pool_pt.yaml#L118) | 43.2 | 已登记 | 没有 |
@@ -3295,72 +3204,54 @@ AISHELL-1、LibriSpeech 合成的多人对话
 | [ts_scene_pool@ramc-near-20261028](../../catalog/ts_scene_pool.yaml#L2184) | 49.1 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_scene_pool/` |
 | [ts_scene_pool@solo-20261019](../../catalog/ts_scene_pool.yaml#L343) | 97.2 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_scene_pool/` |
 | [ts_scene_pool@solo-20261020](../../catalog/ts_scene_pool.yaml#L429) | 97.2 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_scene_pool/` |
-| [ts_scene_pool@solo-20261020-punchw-20261102](../../catalog/train_punc_v1_pools.yaml#L1198) | 97.2 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_scene_pool/` |
-| [ts_scene_pool@solo-20261020-punchw-20261102-final-v1-20261120](../../catalog/text_final_v1.yaml#L1479) | — | 未登记 | 没有 |
-| [ts_scene_pool@solo-20261020-punchw2-20261102](../../catalog/train_punc_v1_pools_en.yaml#L842) | 29.9 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_scene_pool/` |
-| [ts_scene_pool@solo-20261020-punchw2-20261102-final-v1-20261120](../../catalog/text_final_v1.yaml#L1508) | — | 未登记 | 没有 |
+| [ts_scene_pool@solo-20261020-punchw-20261102-final-v1-20261120](../../catalog/text_final_v1.yaml#L5260) | 97.2 | 已登记 | 没有 |
+| [ts_scene_pool@solo-20261020-punchw2-20261102-final-v1-20261120](../../catalog/text_final_v1.yaml#L5362) | 29.9 | 已登记 | 没有 |
 | [ts_scene_pool@v2-20261016](../../catalog/ts_scene_pool.yaml#L1) | 315.8 | 已登记 | 没有 |
 | [ts_scene_pool@xsession-20261023](../../catalog/ts_scene_pool.yaml#L602) | 116.1 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_scene_pool/` |
 | [ts_scene_pool@xsession-alt-20261023](../../catalog/ts_scene_pool.yaml#L833) | 83.9 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_scene_pool/` |
 | [ts_scene_pool@xsession-alt-twins-20261024](../../catalog/ts_scene_pool.yaml#L1266) | 85.1 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_scene_pool/` |
-| [ts_scene_pool@xsession-alt-twins-20261024-punchw-20261102](../../catalog/train_punc_v1_pools.yaml#L1287) | 85.1 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_scene_pool/` |
-| [ts_scene_pool@xsession-alt-twins-20261024-punchw-20261102-final-v1-20261120](../../catalog/text_final_v1.yaml#L1621) | — | 未登记 | 没有 |
+| [ts_scene_pool@xsession-alt-twins-20261024-punchw-20261102-final-v1-20261120](../../catalog/text_final_v1.yaml#L5684) | 85.1 | 已登记 | 没有 |
 | [ts_scene_pool@xsession-handover-20261023](../../catalog/ts_scene_pool.yaml#L891) | 58.5 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_scene_pool/` |
-| [ts_scene_pool@xsession-handover-20261023-punchw-20261102](../../catalog/train_punc_v1_pools.yaml#L1347) | 58.5 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_scene_pool/` |
-| [ts_scene_pool@xsession-handover-20261023-punchw-20261102-final-v1-20261120](../../catalog/text_final_v1.yaml#L1677) | — | 未登记 | 没有 |
+| [ts_scene_pool@xsession-handover-20261023-punchw-20261102-final-v1-20261120](../../catalog/text_final_v1.yaml#L5830) | 58.5 | 已登记 | 没有 |
 | [ts_scene_pool@xsession-hard-20261023](../../catalog/ts_scene_pool.yaml#L1062) | 57.4 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_scene_pool/` |
-| [ts_scene_pool@xsession-hard-20261023-punchw-20261102](../../catalog/train_punc_v1_pools.yaml#L1407) | 57.4 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_scene_pool/` |
-| [ts_scene_pool@xsession-hard-20261023-punchw-20261102-final-v1-20261120](../../catalog/text_final_v1.yaml#L1649) | — | 未登记 | 没有 |
+| [ts_scene_pool@xsession-hard-20261023-punchw-20261102-final-v1-20261120](../../catalog/text_final_v1.yaml#L5757) | 57.4 | 已登记 | 没有 |
 | [ts_scene_pool@xsession-hard-twins-20261026](../../catalog/ts_scene_pool.yaml#L1383) | 57.2 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_scene_pool/` |
 | [ts_scene_pool@xsession-near-20261023](../../catalog/ts_scene_pool.yaml#L718) | 116.0 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_scene_pool/` |
-| [ts_scene_pool@xsession-near-20261023-punchw-20261102](../../catalog/train_punc_v1_pools.yaml#L1467) | 116.0 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_scene_pool/` |
-| [ts_scene_pool@xsession-near-20261023-punchw-20261102-final-v1-20261120](../../catalog/text_final_v1.yaml#L1593) | — | 未登记 | 没有 |
+| [ts_scene_pool@xsession-near-20261023-punchw-20261102-final-v1-20261120](../../catalog/text_final_v1.yaml#L5611) | 116.0 | 已登记 | 没有 |
 
 - `ts_scene_pool@alt-twins-20261024`：v2-20261016 的同配方带孪生版：alternate/burst/short 场景（AISHELL-2 / LibriSpeech 目标），30% 为孪生样本，即同一场景换成另一个人注册（一半是 speaker-neighbors-20261016 的相近声音），目标为空；注册音频不选与目标同一句的话。起因：轮流说话场景在训练里几乎只有在场（v2-20261016、xsession-alt-20261023、magicdata-alt-20261023 没有缺席样本，hard 池的缺席只有交替 / 插话、没有短句），模型学成“其中总有一个是目标”；换成同池另一个人注册后，044@5000 在 xsession-alt 场景仍转写 43%（短句 65%），10.21 版本在 v2 场景 17%，带孪生的多人重叠池 4–8%；ts-asr-benchmark@v12 上 KeSpeech 注册人缺席误输出 2.6% → 17.8%
-- `ts_scene_pool@alt-twins-20261024-punchw-20261102`：ts_scene_pool@alt-twins-20261024 的 en, zh，供 TS + 热词训练：每条目标句按片段 ID 换成带书面化标点的写法（中文 punc-written-v1，英文 en-v1 加标点并恢复大小写；去掉标点和空格、转小写后与原目标一致才替换，源语料本身带标点的保留原样），hotwords 为目标所说的热词，metadata.interferer_hotwords 为干扰者所说、目标没说的热词（标签：Qwen3.8-27B + amphiondata 热词提示词，已有的 hw_sft 标签复用）。其余字段、场景与音频同源版本（记录仍引用源版本音频）。en：100000 条，目标改写 70019，带目标热词 19721，带干扰者热词 80998；zh：150000 条，目标改写 104809，带目标热词 42819，带干扰者热词 120243
-- `ts_scene_pool@alt-twins-20261024-punchw-20261102-final-v1-20261120`：ts_scene_pool@alt-twins-20261024-punchw-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 docs/reference/training-text.md（v1） 应用全部已执行的文本修正，起点 ts_scene_pool@alt-twins-20261024-punchw-20261102。构建中
-- `ts_scene_pool@alt-twins-20261024-punchw2-20261102`：ts_scene_pool@alt-twins-20261024 的 en，供 TS + 热词训练：每条目标句按片段 ID 换成带书面化标点的写法（中文 punc-written-v1，英文 en-v1 加标点并恢复大小写；去掉标点和空格、转小写后与原目标一致才替换，源语料本身带标点的保留原样），hotwords 为目标所说的热词，metadata.interferer_hotwords 为干扰者所说、目标没说的热词（标签：Qwen3.8-27B + amphiondata 热词提示词，已有的 hw_sft 标签复用；英文按整词匹配，所有格算同一个词，干扰者热词按其所在句的大小写还原写法）。其余字段、场景与音频同源版本（记录仍引用源版本音频）。en：100000 条，目标改写 70019，带目标热词 20566，带干扰者热词 80998
-- `ts_scene_pool@alt-twins-20261024-punchw2-20261102-final-v1-20261120`：ts_scene_pool@alt-twins-20261024-punchw2-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 docs/reference/training-text.md（v1） 应用全部已执行的文本修正，起点 ts_scene_pool@alt-twins-20261024-punchw2-20261102。构建中
+- `ts_scene_pool@alt-twins-20261024-punchw-20261102-final-v1-20261120`：ts_scene_pool@alt-twins-20261024-punchw-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 audio-data-contract docs/reference/training-text.md（v1） 应用全部已执行的文本修正，替代配方原来的版本和中间修正版本。起点 ts_scene_pool@alt-twins-20261024-punchw-20261102；已含修正：拆开的大写字母连写补齐（zhen-fix-v1，6 条）。其余字段、录音清单和音频照旧，引用起点版本的产物
+- `ts_scene_pool@alt-twins-20261024-punchw2-20261102-final-v1-20261120`：ts_scene_pool@alt-twins-20261024-punchw2-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 audio-data-contract docs/reference/training-text.md（v1） 应用全部已执行的文本修正，替代配方原来的版本和中间修正版本。起点 ts_scene_pool@alt-twins-20261024-punchw2-20261102；已含修正：无（各轮修正对本数据都没有改动）。其余字段、录音清单和音频照旧，引用起点版本的产物
 - `ts_scene_pool@csd-alt-twins-20261101`：csd-alt-twins-20261101：alternate/burst/short 轮流与插话场景，约 30% 缺席孪生（一半近邻注册）。CS-Dialogue 英文 train 140 位说话人（中国人说英语）为目标，含 <NPS/>（旁人说话）或 **（听不清）的句子不用、其余标签去掉（与 ts-asr-benchmark-en 一致），他人一半 CS-Dialogue、Common Voice 口音说话人与 LibriSpeech 各四分之一；孪生注册人取另一位 CS-Dialogue 说话人或近邻，近邻表 speaker-neighbors-en-accents-20261101。CS-Dialogue dev/test 说话人剔除（test 是评测目标），按说话人 ID 核对无重叠。起因：10.28 版本在 ts-asr-benchmark-en 的 CS-Dialogue 目标上词错率 44.6%
 - `ts_scene_pool@csd-alt-twins-20261101-punchw-20261102`：ts_scene_pool@csd-alt-twins-20261101 的 en，供 TS + 热词训练：每条目标句按片段 ID 换成带书面化标点的写法（中文 punc-written-v1，英文 en-v1 加标点并恢复大小写；去掉标点和空格、转小写后与原目标一致才替换，源语料本身带标点的保留原样），hotwords 为目标所说的热词，metadata.interferer_hotwords 为干扰者所说、目标没说的热词（标签：Qwen3.8-27B + amphiondata 热词提示词，已有的 hw_sft 标签复用）。其余字段、场景与音频同源版本（记录仍引用源版本音频）。en：8000 条，目标改写 0，带目标热词 310，带干扰者热词 4911
-- `ts_scene_pool@csd-alt-twins-20261101-punchw2-20261102`：ts_scene_pool@csd-alt-twins-20261101 的 en，供 TS + 热词训练：每条目标句按片段 ID 换成带书面化标点的写法（中文 punc-written-v1，英文 en-v1 加标点并恢复大小写；去掉标点和空格、转小写后与原目标一致才替换，源语料本身带标点的保留原样），hotwords 为目标所说的热词，metadata.interferer_hotwords 为干扰者所说、目标没说的热词（标签：Qwen3.8-27B + amphiondata 热词提示词，已有的 hw_sft 标签复用；英文按整词匹配，所有格算同一个词，干扰者热词按其所在句的大小写还原写法）。其余字段、场景与音频同源版本（记录仍引用源版本音频）。en：8000 条，目标改写 0，带目标热词 313，带干扰者热词 4911
-- `ts_scene_pool@csd-alt-twins-20261101-punchw2-20261102-final-v1-20261120`：ts_scene_pool@csd-alt-twins-20261101-punchw2-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 docs/reference/training-text.md（v1） 应用全部已执行的文本修正，起点 ts_scene_pool@csd-alt-twins-20261101-punchw2-20261102。构建中
+- `ts_scene_pool@csd-alt-twins-20261101-punchw2-20261102-final-v1-20261120`：ts_scene_pool@csd-alt-twins-20261101-punchw2-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 audio-data-contract docs/reference/training-text.md（v1） 应用全部已执行的文本修正，替代配方原来的版本和中间修正版本。起点 ts_scene_pool@csd-alt-twins-20261101-punchw2-20261102；已含修正：无（各轮修正对本数据都没有改动）。其余字段、录音清单和音频照旧，引用起点版本的产物
 - `ts_scene_pool@csd-handover-20261101`：csd-handover-20261101：交接场景：目标与另一人各说一句、先后不重叠（一半另一人取目标近邻），约 30% 缺席孪生。CS-Dialogue 英文 train 140 位说话人（中国人说英语）为目标，含 <NPS/>（旁人说话）或 **（听不清）的句子不用、其余标签去掉（与 ts-asr-benchmark-en 一致），他人一半 CS-Dialogue、Common Voice 口音说话人与 LibriSpeech 各四分之一；孪生注册人取另一位 CS-Dialogue 说话人或近邻，近邻表 speaker-neighbors-en-accents-20261101。CS-Dialogue dev/test 说话人剔除（test 是评测目标），按说话人 ID 核对无重叠。起因：10.28 版本在 ts-asr-benchmark-en 的 CS-Dialogue 目标上词错率 44.6%
 - `ts_scene_pool@csd-handover-20261101-punchw-20261102`：ts_scene_pool@csd-handover-20261101 的 en，供 TS + 热词训练：每条目标句按片段 ID 换成带书面化标点的写法（中文 punc-written-v1，英文 en-v1 加标点并恢复大小写；去掉标点和空格、转小写后与原目标一致才替换，源语料本身带标点的保留原样），hotwords 为目标所说的热词，metadata.interferer_hotwords 为干扰者所说、目标没说的热词（标签：Qwen3.8-27B + amphiondata 热词提示词，已有的 hw_sft 标签复用）。其余字段、场景与音频同源版本（记录仍引用源版本音频）。en：5000 条，目标改写 0，带目标热词 165，带干扰者热词 1214
-- `ts_scene_pool@csd-handover-20261101-punchw2-20261102`：ts_scene_pool@csd-handover-20261101 的 en，供 TS + 热词训练：每条目标句按片段 ID 换成带书面化标点的写法（中文 punc-written-v1，英文 en-v1 加标点并恢复大小写；去掉标点和空格、转小写后与原目标一致才替换，源语料本身带标点的保留原样），hotwords 为目标所说的热词，metadata.interferer_hotwords 为干扰者所说、目标没说的热词（标签：Qwen3.8-27B + amphiondata 热词提示词，已有的 hw_sft 标签复用；英文按整词匹配，所有格算同一个词，干扰者热词按其所在句的大小写还原写法）。其余字段、场景与音频同源版本（记录仍引用源版本音频）。en：5000 条，目标改写 0，带目标热词 165，带干扰者热词 1214
-- `ts_scene_pool@csd-handover-20261101-punchw2-20261102-final-v1-20261120`：ts_scene_pool@csd-handover-20261101-punchw2-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 docs/reference/training-text.md（v1） 应用全部已执行的文本修正，起点 ts_scene_pool@csd-handover-20261101-punchw2-20261102。构建中
+- `ts_scene_pool@csd-handover-20261101-punchw2-20261102-final-v1-20261120`：ts_scene_pool@csd-handover-20261101-punchw2-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 audio-data-contract docs/reference/training-text.md（v1） 应用全部已执行的文本修正，替代配方原来的版本和中间修正版本。起点 ts_scene_pool@csd-handover-20261101-punchw2-20261102；已含修正：无（各轮修正对本数据都没有改动）。其余字段、录音清单和音频照旧，引用起点版本的产物
 - `ts_scene_pool@csd-hard-20261101`：csd-hard-20261101：相近声音场景：他人之一是目标 ERes2NetV2 最近邻前 10 名之一，约 55% 目标缺席（转写为空）。CS-Dialogue 英文 train 140 位说话人（中国人说英语）为目标，含 <NPS/>（旁人说话）或 **（听不清）的句子不用、其余标签去掉（与 ts-asr-benchmark-en 一致），他人一半 CS-Dialogue、Common Voice 口音说话人与 LibriSpeech 各四分之一；孪生注册人取另一位 CS-Dialogue 说话人或近邻，近邻表 speaker-neighbors-en-accents-20261101。CS-Dialogue dev/test 说话人剔除（test 是评测目标），按说话人 ID 核对无重叠。起因：10.28 版本在 ts-asr-benchmark-en 的 CS-Dialogue 目标上词错率 44.6%
 - `ts_scene_pool@csd-hard-20261101-punchw-20261102`：ts_scene_pool@csd-hard-20261101 的 en，供 TS + 热词训练：每条目标句按片段 ID 换成带书面化标点的写法（中文 punc-written-v1，英文 en-v1 加标点并恢复大小写；去掉标点和空格、转小写后与原目标一致才替换，源语料本身带标点的保留原样），hotwords 为目标所说的热词，metadata.interferer_hotwords 为干扰者所说、目标没说的热词（标签：Qwen3.8-27B + amphiondata 热词提示词，已有的 hw_sft 标签复用）。其余字段、场景与音频同源版本（记录仍引用源版本音频）。en：5000 条，目标改写 0，带目标热词 110，带干扰者热词 3537
-- `ts_scene_pool@csd-hard-20261101-punchw2-20261102`：ts_scene_pool@csd-hard-20261101 的 en，供 TS + 热词训练：每条目标句按片段 ID 换成带书面化标点的写法（中文 punc-written-v1，英文 en-v1 加标点并恢复大小写；去掉标点和空格、转小写后与原目标一致才替换，源语料本身带标点的保留原样），hotwords 为目标所说的热词，metadata.interferer_hotwords 为干扰者所说、目标没说的热词（标签：Qwen3.8-27B + amphiondata 热词提示词，已有的 hw_sft 标签复用；英文按整词匹配，所有格算同一个词，干扰者热词按其所在句的大小写还原写法）。其余字段、场景与音频同源版本（记录仍引用源版本音频）。en：5000 条，目标改写 0，带目标热词 110，带干扰者热词 3537
-- `ts_scene_pool@csd-hard-20261101-punchw2-20261102-final-v1-20261120`：ts_scene_pool@csd-hard-20261101-punchw2-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 docs/reference/training-text.md（v1） 应用全部已执行的文本修正，起点 ts_scene_pool@csd-hard-20261101-punchw2-20261102。构建中
+- `ts_scene_pool@csd-hard-20261101-punchw2-20261102-final-v1-20261120`：ts_scene_pool@csd-hard-20261101-punchw2-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 audio-data-contract docs/reference/training-text.md（v1） 应用全部已执行的文本修正，替代配方原来的版本和中间修正版本。起点 ts_scene_pool@csd-hard-20261101-punchw2-20261102；已含修正：无（各轮修正对本数据都没有改动）。其余字段、录音清单和音频照旧，引用起点版本的产物
 - `ts_scene_pool@csd-near-20261101`：csd-near-20261101：多句场景（multi 同款 full 模式，目标说 2–5 句，1–4 个他人各自一条轨道），约 30% 缺席孪生（同一场景换人注册，一半取目标近邻，转写为空，同一对共用 labels.pair）。CS-Dialogue 英文 train 140 位说话人（中国人说英语）为目标，含 <NPS/>（旁人说话）或 **（听不清）的句子不用、其余标签去掉（与 ts-asr-benchmark-en 一致），他人一半 CS-Dialogue、Common Voice 口音说话人与 LibriSpeech 各四分之一；孪生注册人取另一位 CS-Dialogue 说话人或近邻，近邻表 speaker-neighbors-en-accents-20261101。CS-Dialogue dev/test 说话人剔除（test 是评测目标），按说话人 ID 核对无重叠。起因：10.28 版本在 ts-asr-benchmark-en 的 CS-Dialogue 目标上词错率 44.6%
 - `ts_scene_pool@csd-near-20261101-punchw-20261102`：ts_scene_pool@csd-near-20261101 的 en，供 TS + 热词训练：每条目标句按片段 ID 换成带书面化标点的写法（中文 punc-written-v1，英文 en-v1 加标点并恢复大小写；去掉标点和空格、转小写后与原目标一致才替换，源语料本身带标点的保留原样），hotwords 为目标所说的热词，metadata.interferer_hotwords 为干扰者所说、目标没说的热词（标签：Qwen3.8-27B + amphiondata 热词提示词，已有的 hw_sft 标签复用）。其余字段、场景与音频同源版本（记录仍引用源版本音频）。en：12000 条，目标改写 0，带目标热词 1193，带干扰者热词 7735
-- `ts_scene_pool@csd-near-20261101-punchw2-20261102`：ts_scene_pool@csd-near-20261101 的 en，供 TS + 热词训练：每条目标句按片段 ID 换成带书面化标点的写法（中文 punc-written-v1，英文 en-v1 加标点并恢复大小写；去掉标点和空格、转小写后与原目标一致才替换，源语料本身带标点的保留原样），hotwords 为目标所说的热词，metadata.interferer_hotwords 为干扰者所说、目标没说的热词（标签：Qwen3.8-27B + amphiondata 热词提示词，已有的 hw_sft 标签复用；英文按整词匹配，所有格算同一个词，干扰者热词按其所在句的大小写还原写法）。其余字段、场景与音频同源版本（记录仍引用源版本音频）。en：12000 条，目标改写 0，带目标热词 1199，带干扰者热词 7735
-- `ts_scene_pool@csd-near-20261101-punchw2-20261102-final-v1-20261120`：ts_scene_pool@csd-near-20261101-punchw2-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 docs/reference/training-text.md（v1） 应用全部已执行的文本修正，起点 ts_scene_pool@csd-near-20261101-punchw2-20261102。构建中
+- `ts_scene_pool@csd-near-20261101-punchw2-20261102-final-v1-20261120`：ts_scene_pool@csd-near-20261101-punchw2-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 audio-data-contract docs/reference/training-text.md（v1） 应用全部已执行的文本修正，替代配方原来的版本和中间修正版本。起点 ts_scene_pool@csd-near-20261101-punchw2-20261102；已含修正：无（各轮修正对本数据都没有改动）。其余字段、录音清单和音频照旧，引用起点版本的产物
 - `ts_scene_pool@csd-solo-20261101`：csd-solo-20261101：短句单人场景：目标单独说一句 1–3.5 秒的话，没有其他说话人，约 30% 缺席孪生（一半近邻注册）。CS-Dialogue 英文 train 140 位说话人（中国人说英语）为目标，含 <NPS/>（旁人说话）或 **（听不清）的句子不用、其余标签去掉（与 ts-asr-benchmark-en 一致），他人一半 CS-Dialogue、Common Voice 口音说话人与 LibriSpeech 各四分之一；孪生注册人取另一位 CS-Dialogue 说话人或近邻，近邻表 speaker-neighbors-en-accents-20261101。CS-Dialogue dev/test 说话人剔除（test 是评测目标），按说话人 ID 核对无重叠。起因：10.28 版本在 ts-asr-benchmark-en 的 CS-Dialogue 目标上词错率 44.6%
 - `ts_scene_pool@csd-solo-20261101-punchw-20261102`：ts_scene_pool@csd-solo-20261101 的 en，供 TS + 热词训练：每条目标句按片段 ID 换成带书面化标点的写法（中文 punc-written-v1，英文 en-v1 加标点并恢复大小写；去掉标点和空格、转小写后与原目标一致才替换，源语料本身带标点的保留原样），hotwords 为目标所说的热词，metadata.interferer_hotwords 为干扰者所说、目标没说的热词（标签：Qwen3.8-27B + amphiondata 热词提示词，已有的 hw_sft 标签复用）。其余字段、场景与音频同源版本（记录仍引用源版本音频）。en：6000 条，目标改写 0，带目标热词 93，带干扰者热词 33
-- `ts_scene_pool@csd-solo-20261101-punchw2-20261102`：ts_scene_pool@csd-solo-20261101 的 en，供 TS + 热词训练：每条目标句按片段 ID 换成带书面化标点的写法（中文 punc-written-v1，英文 en-v1 加标点并恢复大小写；去掉标点和空格、转小写后与原目标一致才替换，源语料本身带标点的保留原样），hotwords 为目标所说的热词，metadata.interferer_hotwords 为干扰者所说、目标没说的热词（标签：Qwen3.8-27B + amphiondata 热词提示词，已有的 hw_sft 标签复用；英文按整词匹配，所有格算同一个词，干扰者热词按其所在句的大小写还原写法）。其余字段、场景与音频同源版本（记录仍引用源版本音频）。en：6000 条，目标改写 0，带目标热词 93，带干扰者热词 33
-- `ts_scene_pool@csd-solo-20261101-punchw2-20261102-final-v1-20261120`：ts_scene_pool@csd-solo-20261101-punchw2-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 docs/reference/training-text.md（v1） 应用全部已执行的文本修正，起点 ts_scene_pool@csd-solo-20261101-punchw2-20261102。构建中
+- `ts_scene_pool@csd-solo-20261101-punchw2-20261102-final-v1-20261120`：ts_scene_pool@csd-solo-20261101-punchw2-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 audio-data-contract docs/reference/training-text.md（v1） 应用全部已执行的文本修正，替代配方原来的版本和中间修正版本。起点 ts_scene_pool@csd-solo-20261101-punchw2-20261102；已含修正：无（各轮修正对本数据都没有改动）。其余字段、录音清单和音频照旧，引用起点版本的产物
 - `ts_scene_pool@cvaccent-alt-twins-20261101`：cvaccent-alt-twins-20261101：alternate/burst/short 轮流与插话场景，约 30% 缺席孪生（一半近邻注册）。Common Voice 英文 train 带口音标注的目标说话人（至少 6 句 1–8 秒，按口音组抽取：每组占比为说话人数平方根、单组不超过 15%；文本、清洗通过标记与口音取自 common_voice_en@icefall-20260908 的双引擎清洗清单，未通过的句子不用），他人一半同批口音说话人、一半 LibriSpeech train；随机孪生注册人按同样口音占比抽取，近邻孪生取近邻（美式口音注册人约一半缺席，其他口音 21–28%），labels.accent 记注册人口音组；近邻表 speaker-neighbors-en-accents-20261101（ERes2NetV2）。剔除三份语料 dev/test 说话人，不含 VCTK。起因：10.28 版本在 ts-asr-benchmark-en 上 VCTK 口音目标 13.8% 判为缺席（苏格兰、爱尔兰、加拿大约 20%，短目标 27%），LibriSpeech 目标 1.8%；训练英文目标 63% 是 LibriSpeech
 - `ts_scene_pool@cvaccent-alt-twins-20261101-punchw-20261102`：ts_scene_pool@cvaccent-alt-twins-20261101 的 en，供 TS + 热词训练：每条目标句按片段 ID 换成带书面化标点的写法（中文 punc-written-v1，英文 en-v1 加标点并恢复大小写；去掉标点和空格、转小写后与原目标一致才替换，源语料本身带标点的保留原样），hotwords 为目标所说的热词，metadata.interferer_hotwords 为干扰者所说、目标没说的热词（标签：Qwen3.8-27B + amphiondata 热词提示词，已有的 hw_sft 标签复用）。其余字段、场景与音频同源版本（记录仍引用源版本音频）。en：40000 条，目标改写 0，带目标热词 12087，带干扰者热词 33224
-- `ts_scene_pool@cvaccent-alt-twins-20261101-punchw2-20261102`：ts_scene_pool@cvaccent-alt-twins-20261101 的 en，供 TS + 热词训练：每条目标句按片段 ID 换成带书面化标点的写法（中文 punc-written-v1，英文 en-v1 加标点并恢复大小写；去掉标点和空格、转小写后与原目标一致才替换，源语料本身带标点的保留原样），hotwords 为目标所说的热词，metadata.interferer_hotwords 为干扰者所说、目标没说的热词（标签：Qwen3.8-27B + amphiondata 热词提示词，已有的 hw_sft 标签复用；英文按整词匹配，所有格算同一个词，干扰者热词按其所在句的大小写还原写法）。其余字段、场景与音频同源版本（记录仍引用源版本音频）。en：40000 条，目标改写 0，带目标热词 12365，带干扰者热词 33224
-- `ts_scene_pool@cvaccent-alt-twins-20261101-punchw2-20261102-final-v1-20261120`：ts_scene_pool@cvaccent-alt-twins-20261101-punchw2-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 docs/reference/training-text.md（v1） 应用全部已执行的文本修正，起点 ts_scene_pool@cvaccent-alt-twins-20261101-punchw2-20261102。构建中
+- `ts_scene_pool@cvaccent-alt-twins-20261101-punchw2-20261102-final-v1-20261120`：ts_scene_pool@cvaccent-alt-twins-20261101-punchw2-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 audio-data-contract docs/reference/training-text.md（v1） 应用全部已执行的文本修正，替代配方原来的版本和中间修正版本。起点 ts_scene_pool@cvaccent-alt-twins-20261101-punchw2-20261102；已含修正：无（各轮修正对本数据都没有改动）。其余字段、录音清单和音频照旧，引用起点版本的产物
 - `ts_scene_pool@cvaccent-handover-20261101`：cvaccent-handover-20261101：交接场景：目标与另一人各说一句、先后不重叠（一半另一人取目标近邻），约 30% 缺席孪生。Common Voice 英文 train 带口音标注的目标说话人（至少 6 句 1–8 秒，按口音组抽取：每组占比为说话人数平方根、单组不超过 15%；文本、清洗通过标记与口音取自 common_voice_en@icefall-20260908 的双引擎清洗清单，未通过的句子不用），他人一半同批口音说话人、一半 LibriSpeech train；随机孪生注册人按同样口音占比抽取，近邻孪生取近邻（美式口音注册人约一半缺席，其他口音 21–28%），labels.accent 记注册人口音组；近邻表 speaker-neighbors-en-accents-20261101（ERes2NetV2）。剔除三份语料 dev/test 说话人，不含 VCTK。起因：10.28 版本在 ts-asr-benchmark-en 上 VCTK 口音目标 13.8% 判为缺席（苏格兰、爱尔兰、加拿大约 20%，短目标 27%），LibriSpeech 目标 1.8%；训练英文目标 63% 是 LibriSpeech
 - `ts_scene_pool@cvaccent-handover-20261101-punchw-20261102`：ts_scene_pool@cvaccent-handover-20261101 的 en，供 TS + 热词训练：每条目标句按片段 ID 换成带书面化标点的写法（中文 punc-written-v1，英文 en-v1 加标点并恢复大小写；去掉标点和空格、转小写后与原目标一致才替换，源语料本身带标点的保留原样），hotwords 为目标所说的热词，metadata.interferer_hotwords 为干扰者所说、目标没说的热词（标签：Qwen3.8-27B + amphiondata 热词提示词，已有的 hw_sft 标签复用）。其余字段、场景与音频同源版本（记录仍引用源版本音频）。en：20000 条，目标改写 0，带目标热词 5855，带干扰者热词 9339
-- `ts_scene_pool@cvaccent-handover-20261101-punchw2-20261102`：ts_scene_pool@cvaccent-handover-20261101 的 en，供 TS + 热词训练：每条目标句按片段 ID 换成带书面化标点的写法（中文 punc-written-v1，英文 en-v1 加标点并恢复大小写；去掉标点和空格、转小写后与原目标一致才替换，源语料本身带标点的保留原样），hotwords 为目标所说的热词，metadata.interferer_hotwords 为干扰者所说、目标没说的热词（标签：Qwen3.8-27B + amphiondata 热词提示词，已有的 hw_sft 标签复用；英文按整词匹配，所有格算同一个词，干扰者热词按其所在句的大小写还原写法）。其余字段、场景与音频同源版本（记录仍引用源版本音频）。en：20000 条，目标改写 0，带目标热词 6004，带干扰者热词 9339
-- `ts_scene_pool@cvaccent-handover-20261101-punchw2-20261102-final-v1-20261120`：ts_scene_pool@cvaccent-handover-20261101-punchw2-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 docs/reference/training-text.md（v1） 应用全部已执行的文本修正，起点 ts_scene_pool@cvaccent-handover-20261101-punchw2-20261102。构建中
+- `ts_scene_pool@cvaccent-handover-20261101-punchw2-20261102-final-v1-20261120`：ts_scene_pool@cvaccent-handover-20261101-punchw2-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 audio-data-contract docs/reference/training-text.md（v1） 应用全部已执行的文本修正，替代配方原来的版本和中间修正版本。起点 ts_scene_pool@cvaccent-handover-20261101-punchw2-20261102；已含修正：无（各轮修正对本数据都没有改动）。其余字段、录音清单和音频照旧，引用起点版本的产物
 - `ts_scene_pool@cvaccent-hard-20261101`：cvaccent-hard-20261101：相近声音场景：他人之一是目标 ERes2NetV2 最近邻前 10 名之一，约 55% 目标缺席（转写为空）。Common Voice 英文 train 带口音标注的目标说话人（至少 6 句 1–8 秒，按口音组抽取：每组占比为说话人数平方根、单组不超过 15%；文本、清洗通过标记与口音取自 common_voice_en@icefall-20260908 的双引擎清洗清单，未通过的句子不用），他人一半同批口音说话人、一半 LibriSpeech train；随机孪生注册人按同样口音占比抽取，近邻孪生取近邻（美式口音注册人约一半缺席，其他口音 21–28%），labels.accent 记注册人口音组；近邻表 speaker-neighbors-en-accents-20261101（ERes2NetV2）。剔除三份语料 dev/test 说话人，不含 VCTK。起因：10.28 版本在 ts-asr-benchmark-en 上 VCTK 口音目标 13.8% 判为缺席（苏格兰、爱尔兰、加拿大约 20%，短目标 27%），LibriSpeech 目标 1.8%；训练英文目标 63% 是 LibriSpeech
 - `ts_scene_pool@cvaccent-hard-20261101-punchw-20261102`：ts_scene_pool@cvaccent-hard-20261101 的 en，供 TS + 热词训练：每条目标句按片段 ID 换成带书面化标点的写法（中文 punc-written-v1，英文 en-v1 加标点并恢复大小写；去掉标点和空格、转小写后与原目标一致才替换，源语料本身带标点的保留原样），hotwords 为目标所说的热词，metadata.interferer_hotwords 为干扰者所说、目标没说的热词（标签：Qwen3.8-27B + amphiondata 热词提示词，已有的 hw_sft 标签复用）。其余字段、场景与音频同源版本（记录仍引用源版本音频）。en：25000 条，目标改写 0，带目标热词 4898，带干扰者热词 21705
-- `ts_scene_pool@cvaccent-hard-20261101-punchw2-20261102`：ts_scene_pool@cvaccent-hard-20261101 的 en，供 TS + 热词训练：每条目标句按片段 ID 换成带书面化标点的写法（中文 punc-written-v1，英文 en-v1 加标点并恢复大小写；去掉标点和空格、转小写后与原目标一致才替换，源语料本身带标点的保留原样），hotwords 为目标所说的热词，metadata.interferer_hotwords 为干扰者所说、目标没说的热词（标签：Qwen3.8-27B + amphiondata 热词提示词，已有的 hw_sft 标签复用；英文按整词匹配，所有格算同一个词，干扰者热词按其所在句的大小写还原写法）。其余字段、场景与音频同源版本（记录仍引用源版本音频）。en：25000 条，目标改写 0，带目标热词 5019，带干扰者热词 21705
-- `ts_scene_pool@cvaccent-hard-20261101-punchw2-20261102-final-v1-20261120`：ts_scene_pool@cvaccent-hard-20261101-punchw2-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 docs/reference/training-text.md（v1） 应用全部已执行的文本修正，起点 ts_scene_pool@cvaccent-hard-20261101-punchw2-20261102。构建中
+- `ts_scene_pool@cvaccent-hard-20261101-punchw2-20261102-final-v1-20261120`：ts_scene_pool@cvaccent-hard-20261101-punchw2-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 audio-data-contract docs/reference/training-text.md（v1） 应用全部已执行的文本修正，替代配方原来的版本和中间修正版本。起点 ts_scene_pool@cvaccent-hard-20261101-punchw2-20261102；已含修正：无（各轮修正对本数据都没有改动）。其余字段、录音清单和音频照旧，引用起点版本的产物
 - `ts_scene_pool@cvaccent-near-20261101`：cvaccent-near-20261101：多句场景（multi 同款 full 模式，目标说 2–5 句，1–4 个他人各自一条轨道），约 30% 缺席孪生（同一场景换人注册，一半取目标近邻，转写为空，同一对共用 labels.pair）。Common Voice 英文 train 带口音标注的目标说话人（至少 6 句 1–8 秒，按口音组抽取：每组占比为说话人数平方根、单组不超过 15%；文本、清洗通过标记与口音取自 common_voice_en@icefall-20260908 的双引擎清洗清单，未通过的句子不用），他人一半同批口音说话人、一半 LibriSpeech train；随机孪生注册人按同样口音占比抽取，近邻孪生取近邻（美式口音注册人约一半缺席，其他口音 21–28%），labels.accent 记注册人口音组；近邻表 speaker-neighbors-en-accents-20261101（ERes2NetV2）。剔除三份语料 dev/test 说话人，不含 VCTK。起因：10.28 版本在 ts-asr-benchmark-en 上 VCTK 口音目标 13.8% 判为缺席（苏格兰、爱尔兰、加拿大约 20%，短目标 27%），LibriSpeech 目标 1.8%；训练英文目标 63% 是 LibriSpeech
 - `ts_scene_pool@cvaccent-near-20261101-punchw-20261102`：ts_scene_pool@cvaccent-near-20261101 的 en，供 TS + 热词训练：每条目标句按片段 ID 换成带书面化标点的写法（中文 punc-written-v1，英文 en-v1 加标点并恢复大小写；去掉标点和空格、转小写后与原目标一致才替换，源语料本身带标点的保留原样），hotwords 为目标所说的热词，metadata.interferer_hotwords 为干扰者所说、目标没说的热词（标签：Qwen3.8-27B + amphiondata 热词提示词，已有的 hw_sft 标签复用）。其余字段、场景与音频同源版本（记录仍引用源版本音频）。en：60000 条，目标改写 0，带目标热词 31058，带干扰者热词 53816
-- `ts_scene_pool@cvaccent-near-20261101-punchw2-20261102`：ts_scene_pool@cvaccent-near-20261101 的 en，供 TS + 热词训练：每条目标句按片段 ID 换成带书面化标点的写法（中文 punc-written-v1，英文 en-v1 加标点并恢复大小写；去掉标点和空格、转小写后与原目标一致才替换，源语料本身带标点的保留原样），hotwords 为目标所说的热词，metadata.interferer_hotwords 为干扰者所说、目标没说的热词（标签：Qwen3.8-27B + amphiondata 热词提示词，已有的 hw_sft 标签复用；英文按整词匹配，所有格算同一个词，干扰者热词按其所在句的大小写还原写法）。其余字段、场景与音频同源版本（记录仍引用源版本音频）。en：60000 条，目标改写 0，带目标热词 31507，带干扰者热词 53816
-- `ts_scene_pool@cvaccent-near-20261101-punchw2-20261102-final-v1-20261120`：ts_scene_pool@cvaccent-near-20261101-punchw2-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 docs/reference/training-text.md（v1） 应用全部已执行的文本修正，起点 ts_scene_pool@cvaccent-near-20261101-punchw2-20261102。构建中
+- `ts_scene_pool@cvaccent-near-20261101-punchw2-20261102-final-v1-20261120`：ts_scene_pool@cvaccent-near-20261101-punchw2-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 audio-data-contract docs/reference/training-text.md（v1） 应用全部已执行的文本修正，替代配方原来的版本和中间修正版本。起点 ts_scene_pool@cvaccent-near-20261101-punchw2-20261102；已含修正：无（各轮修正对本数据都没有改动）。其余字段、录音清单和音频照旧，引用起点版本的产物
 - `ts_scene_pool@cvaccent-solo-20261101`：cvaccent-solo-20261101：短句单人场景：目标单独说一句 1–3.5 秒的话，没有其他说话人，约 30% 缺席孪生（一半近邻注册）。Common Voice 英文 train 带口音标注的目标说话人（至少 6 句 1–8 秒，按口音组抽取：每组占比为说话人数平方根、单组不超过 15%；文本、清洗通过标记与口音取自 common_voice_en@icefall-20260908 的双引擎清洗清单，未通过的句子不用），他人一半同批口音说话人、一半 LibriSpeech train；随机孪生注册人按同样口音占比抽取，近邻孪生取近邻（美式口音注册人约一半缺席，其他口音 21–28%），labels.accent 记注册人口音组；近邻表 speaker-neighbors-en-accents-20261101（ERes2NetV2）。剔除三份语料 dev/test 说话人，不含 VCTK。起因：10.28 版本在 ts-asr-benchmark-en 上 VCTK 口音目标 13.8% 判为缺席（苏格兰、爱尔兰、加拿大约 20%，短目标 27%），LibriSpeech 目标 1.8%；训练英文目标 63% 是 LibriSpeech
 - `ts_scene_pool@cvaccent-solo-20261101-punchw-20261102`：ts_scene_pool@cvaccent-solo-20261101 的 en，供 TS + 热词训练：每条目标句按片段 ID 换成带书面化标点的写法（中文 punc-written-v1，英文 en-v1 加标点并恢复大小写；去掉标点和空格、转小写后与原目标一致才替换，源语料本身带标点的保留原样），hotwords 为目标所说的热词，metadata.interferer_hotwords 为干扰者所说、目标没说的热词（标签：Qwen3.8-27B + amphiondata 热词提示词，已有的 hw_sft 标签复用）。其余字段、场景与音频同源版本（记录仍引用源版本音频）。en：30000 条，目标改写 0，带目标热词 5494，带干扰者热词 2446
-- `ts_scene_pool@cvaccent-solo-20261101-punchw2-20261102`：ts_scene_pool@cvaccent-solo-20261101 的 en，供 TS + 热词训练：每条目标句按片段 ID 换成带书面化标点的写法（中文 punc-written-v1，英文 en-v1 加标点并恢复大小写；去掉标点和空格、转小写后与原目标一致才替换，源语料本身带标点的保留原样），hotwords 为目标所说的热词，metadata.interferer_hotwords 为干扰者所说、目标没说的热词（标签：Qwen3.8-27B + amphiondata 热词提示词，已有的 hw_sft 标签复用；英文按整词匹配，所有格算同一个词，干扰者热词按其所在句的大小写还原写法）。其余字段、场景与音频同源版本（记录仍引用源版本音频）。en：30000 条，目标改写 0，带目标热词 5567，带干扰者热词 2446
-- `ts_scene_pool@cvaccent-solo-20261101-punchw2-20261102-final-v1-20261120`：ts_scene_pool@cvaccent-solo-20261101-punchw2-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 docs/reference/training-text.md（v1） 应用全部已执行的文本修正，起点 ts_scene_pool@cvaccent-solo-20261101-punchw2-20261102。构建中
+- `ts_scene_pool@cvaccent-solo-20261101-punchw2-20261102-final-v1-20261120`：ts_scene_pool@cvaccent-solo-20261101-punchw2-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 audio-data-contract docs/reference/training-text.md（v1） 应用全部已执行的文本修正，替代配方原来的版本和中间修正版本。起点 ts_scene_pool@cvaccent-solo-20261101-punchw2-20261102；已含修正：无（各轮修正对本数据都没有改动）。其余字段、录音清单和音频照旧，引用起点版本的产物
 - `ts_scene_pool@es-1spk-20261110`：西班牙语单人 TS-ASR 记录（对应 aishellmix / librimix 的 train_1spk），供训练时在线混音（online_mix：干扰人、目标缺席、无人声窗口、进场与前后留白、注册劣化）：目标是 common_voice_es@es-train-v1-20261108 train 的一句（只含清洗通过的行，书面化文本与热词），注册是同一说话人的另一句（≥ 1.5 秒，固定种子抽取）；只有一句的 130 个说话人不用。356,576 条、4,848 个目标说话人、目标 513.8 h，165,633 条带热词。dev / test 说话人不在 train。生成脚本 scripts/ts_robust/build_ts_1spk_es.py
 - `ts_scene_pool@es-1spk-v2-20261110`：西班牙语单人 TS-ASR 记录 v2：同 es-1spk-20261110，但目标只取有口音标注的 Common Voice es 说话人（同西语场景池的目标）；没有口音标注的 2,735 人改作干扰人 （ts_interference_pool@es-v2-20261110），所以目标不会和干扰人是同一人，CV 的声音也不再永远是目标。262,978 条、2,209 个目标说话人、目标 374.0 h，121,222 条带热词；只有一句的 34 个说话人不用。dev / test 说话人不在 train。生成脚本 scripts/ts_robust/build_ts_1spk_es.py
 - `ts_scene_pool@es-alt-twins-20261109`：es-alt-twins-20261109：alternate/burst/short 轮流与插话场景，约 30% 缺席孪生（一半近邻注册）。Common Voice 西语 train 带口音标注的目标说话人（至少 6 句 1–8 秒，按 11 个口音组抽取：每组占比为说话人数平方根、单组不超过 15%），他人一半同批口音说话人、一半无口音标注的CV es 说话人（MLS es 没有 ≤8 s 的句子，不进场景）；文本、清洗通过标记取自 common_voice_es@es-train-v1-20261108（未通过的句子不用），labels.accent 记注册人口音组；近邻表 speaker-neighbors-es-accents-20261109（ERes2NetV2）；剔除 CV es dev/test 说话人。规模、模式同英文 cvaccent-*-20261101。 QC 见版本目录 qc.json（通过）
@@ -3375,36 +3266,26 @@ AISHELL-1、LibriSpeech 合成的多人对话
 - `ts_scene_pool@es-solo-20261109-punchw-20261109`：ts_scene_pool@es-solo-20261109 的带标点 + 热词版本，供 TS + 热词训练：目标文本本身是 CV es 的书面句子（带标点、大小写），不改；hotwords 为目标所说的热词，metadata.interferer_hotwords 为他人所说、目标没说的热词（Qwen3.8-27B + amphiondata 热词提示词，整词匹配，写法同所在句）。其余字段、场景与音频同源版本（记录引用源版本音频）。30000 条，带目标热词 7053，带他人热词 3033
 - `ts_scene_pool@es-v1-20261108`：西班牙语 TS 场景池的开工占位，已完成：按版本正式登记在 catalog/ts_scene_pool_es.yaml（es-near / es-alt-twins / es-hard / es-handover / es-solo-20261109 及各自的 -punchw-20261109）。目标与他人都取 Common Voice es（他人一半无口音标注的 CV es 说话人）；MLS es 没有 ≤8 s 的句子，不进场景
 - `ts_scene_pool@handover-20261021`：交接场景：目标说一句、另一个说话人说一句，前后不重叠、先后随机（alternate，同一注册与转写口径），每句 1–6 秒，注册取同一说话人另一句 2.5–8 秒；另一个说话人一半取目标的近邻声音（speaker-neighbors-20261016，ERes2NetV2 前 10 名，labels.hard_cosine），一半随机。约 30% 是缺席孪生：同两句话，注册人换成另一个人（一半取目标近邻，labels.twin_enrollment），两句都成为干扰人、转写为空，同一对共用 labels.pair。用来补其他场景池缺的“目标 + 仅 1 个他人”轮流场景（alternate 至少 2 个他人，solo 没有他人）：ts-asr-benchmark@v9 的 handover-* 子集里模型约 15% 整条不出字
-- `ts_scene_pool@handover-20261021-punchw-20261102`：ts_scene_pool@handover-20261021 的 en, zh，供 TS + 热词训练：每条目标句按片段 ID 换成带书面化标点的写法（中文 punc-written-v1，英文 en-v1 加标点并恢复大小写；去掉标点和空格、转小写后与原目标一致才替换，源语料本身带标点的保留原样），hotwords 为目标所说的热词，metadata.interferer_hotwords 为干扰者所说、目标没说的热词（标签：Qwen3.8-27B + amphiondata 热词提示词，已有的 hw_sft 标签复用）。其余字段、场景与音频同源版本（记录仍引用源版本音频）。en：12000 条，目标改写 8473，带目标热词 2152，带干扰者热词 4411；zh：40000 条，目标改写 28079，带目标热词 10044，带干扰者热词 16029
-- `ts_scene_pool@handover-20261021-punchw-20261102-final-v1-20261120`：ts_scene_pool@handover-20261021-punchw-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 docs/reference/training-text.md（v1） 应用全部已执行的文本修正，起点 ts_scene_pool@handover-20261021-punchw-20261102。构建中
-- `ts_scene_pool@handover-20261021-punchw2-20261102`：ts_scene_pool@handover-20261021 的 en，供 TS + 热词训练：每条目标句按片段 ID 换成带书面化标点的写法（中文 punc-written-v1，英文 en-v1 加标点并恢复大小写；去掉标点和空格、转小写后与原目标一致才替换，源语料本身带标点的保留原样），hotwords 为目标所说的热词，metadata.interferer_hotwords 为干扰者所说、目标没说的热词（标签：Qwen3.8-27B + amphiondata 热词提示词，已有的 hw_sft 标签复用；英文按整词匹配，所有格算同一个词，干扰者热词按其所在句的大小写还原写法）。其余字段、场景与音频同源版本（记录仍引用源版本音频）。en：12000 条，目标改写 8473，带目标热词 2231，带干扰者热词 4411
-- `ts_scene_pool@handover-20261021-punchw2-20261102-final-v1-20261120`：ts_scene_pool@handover-20261021-punchw2-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 docs/reference/training-text.md（v1） 应用全部已执行的文本修正，起点 ts_scene_pool@handover-20261021-punchw2-20261102。构建中
+- `ts_scene_pool@handover-20261021-punchw-20261102-final-v1-20261120`：ts_scene_pool@handover-20261021-punchw-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 audio-data-contract docs/reference/training-text.md（v1） 应用全部已执行的文本修正，替代配方原来的版本和中间修正版本。起点 ts_scene_pool@handover-20261021-punchw-20261102；已含修正：拆开的大写字母连写补齐（zhen-fix-v1，2 条）。其余字段、录音清单和音频照旧，引用起点版本的产物
+- `ts_scene_pool@handover-20261021-punchw2-20261102-final-v1-20261120`：ts_scene_pool@handover-20261021-punchw2-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 audio-data-contract docs/reference/training-text.md（v1） 应用全部已执行的文本修正，替代配方原来的版本和中间修正版本。起点 ts_scene_pool@handover-20261021-punchw2-20261102；已含修正：无（各轮修正对本数据都没有改动）。其余字段、录音清单和音频照旧，引用起点版本的产物
 - `ts_scene_pool@hard-20261016`：相近声音多句场景：目标缺席且相近声音在场（absent，转写为空）或目标与相近声音同时说话（present）。相近说话人取 ERes2NetV2 说话人向量余弦最近邻前 10 名之一（按排名，不设阈值），邻居表在 source/speaker-neighbors-20261016
-- `ts_scene_pool@hard-20261016-punchw-20261102`：ts_scene_pool@hard-20261016 的 en, zh，供 TS + 热词训练：每条目标句按片段 ID 换成带书面化标点的写法（中文 punc-written-v1，英文 en-v1 加标点并恢复大小写；去掉标点和空格、转小写后与原目标一致才替换，源语料本身带标点的保留原样），hotwords 为目标所说的热词，metadata.interferer_hotwords 为干扰者所说、目标没说的热词（标签：Qwen3.8-27B + amphiondata 热词提示词，已有的 hw_sft 标签复用）。其余字段、场景与音频同源版本（记录仍引用源版本音频）。en：25000 条，目标改写 11184，带目标热词 3146，带干扰者热词 20379；zh：40000 条，目标改写 18015，带目标热词 7421，带干扰者热词 33799
-- `ts_scene_pool@hard-20261016-punchw-20261102-final-v1-20261120`：ts_scene_pool@hard-20261016-punchw-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 docs/reference/training-text.md（v1） 应用全部已执行的文本修正，起点 ts_scene_pool@hard-20261016-punchw-20261102。构建中
-- `ts_scene_pool@hard-20261016-punchw2-20261102`：ts_scene_pool@hard-20261016 的 en，供 TS + 热词训练：每条目标句按片段 ID 换成带书面化标点的写法（中文 punc-written-v1，英文 en-v1 加标点并恢复大小写；去掉标点和空格、转小写后与原目标一致才替换，源语料本身带标点的保留原样），hotwords 为目标所说的热词，metadata.interferer_hotwords 为干扰者所说、目标没说的热词（标签：Qwen3.8-27B + amphiondata 热词提示词，已有的 hw_sft 标签复用；英文按整词匹配，所有格算同一个词，干扰者热词按其所在句的大小写还原写法）。其余字段、场景与音频同源版本（记录仍引用源版本音频）。en：25000 条，目标改写 11184，带目标热词 3271，带干扰者热词 20379
-- `ts_scene_pool@hard-20261016-punchw2-20261102-final-v1-20261120`：ts_scene_pool@hard-20261016-punchw2-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 docs/reference/training-text.md（v1） 应用全部已执行的文本修正，起点 ts_scene_pool@hard-20261016-punchw2-20261102。构建中
+- `ts_scene_pool@hard-20261016-punchw-20261102-final-v1-20261120`：ts_scene_pool@hard-20261016-punchw-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 audio-data-contract docs/reference/training-text.md（v1） 应用全部已执行的文本修正，替代配方原来的版本和中间修正版本。起点 ts_scene_pool@hard-20261016-punchw-20261102；已含修正：无（各轮修正对本数据都没有改动）。其余字段、录音清单和音频照旧，引用起点版本的产物
+- `ts_scene_pool@hard-20261016-punchw2-20261102-final-v1-20261120`：ts_scene_pool@hard-20261016-punchw2-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 audio-data-contract docs/reference/training-text.md（v1） 应用全部已执行的文本修正，替代配方原来的版本和中间修正版本。起点 ts_scene_pool@hard-20261016-punchw2-20261102；已含修正：无（各轮修正对本数据都没有改动）。其余字段、录音清单和音频照旧，引用起点版本的产物
 - `ts_scene_pool@hard-twins-20261026`：hard-20261016 的带孪生版：AISHELL-2 / LibriSpeech 目标的 alternate/burst/short 在场场景，他人之一是目标的相近声音（speaker-neighbors-20261016，ERes2NetV2 最近邻前 10 名之一），每个在场场景后跟一条孪生样本（同一场景换成另一个人注册，一半是目标的另一个相近声音，目标为空），缺席 50%；注册音频不选与目标同一句的话。起因：原 hard 池的缺席场景是单独的场景、没有短句，也不是某个在场场景的孪生，是最后一类没有孪生的场景；048 avg3 在带孪生的场景类别上都好于 10.21 版本，难缺席划分的误输出仍持平或偏高（abs 3.4 对 3.0、realreg 1.6 对 0.8、短片段 11.1 对 10.5）
 - `ts_scene_pool@magicdata-20261023`：MagicData 多句场景（multi 同款 full 模式，目标说 2–5 句、1–4 个他人各有自己的轨道）：目标人取自 MagicData train（手机录制的朗读，1017 人，实际用到 1013 人），注册取同一人另一句 2.5–8 秒；他人一半 MagicData、一半 AISHELL-2。约 30% 是缺席孪生：同一场景，注册换成另一位 MagicData 说话人，目标的话成为干扰、转写为空，同一对共用 labels.pair。MagicData 测试集 73% 的句子在训练集里出现过，训练集中与测试集同文本的 49191 句已剔除。用来补训练里没有的 MagicData 目标人：ts-asr-benchmark@v12 上只留目标一人说话时，10.21 版本对 MagicData 目标的 TS 字错率 14.5%（同句普通识别 1.7%），AISHELL-1/2/3 目标与普通识别持平
 - `ts_scene_pool@magicdata-alt-20261023`：v2-20261016 的 MagicData 版：alternate（轮流不重叠）、burst、short 三种场景，全部在场，目标人取自 MagicData train 1017 人，他人一半 MagicData、一半 AISHELL-2，剔除与测试集同文本的句子。041 在 ts-asr-benchmark@v12 上对 KeSpeech、MagicData 目标把前后紧挨着、不重叠的另一个人也转写进来（交接 15–28%、轮流 18%），而这两个语料库此前只有重叠的 full 场景池，AISHELL-2 目标另有 v2-20261016、hard-20261016、handover-20261021 三个轮流场景池
 - `ts_scene_pool@magicdata-alt-twins-20261024`：magicdata-alt-20261023 的同配方带孪生版：MagicData 目标的 alternate/burst/short 场景，30% 为孪生样本（换成另一个 MagicData 人注册，一半是 speaker-neighbors-20261023 的相近声音，目标为空）。起因：轮流说话场景在训练里几乎只有在场（v2-20261016、xsession-alt-20261023、magicdata-alt-20261023 没有缺席样本，hard 池的缺席只有交替 / 插话、没有短句），模型学成“其中总有一个是目标”；换成同池另一个人注册后，044@5000 在 xsession-alt 场景仍转写 43%（短句 65%），10.21 版本在 v2 场景 17%，带孪生的多人重叠池 4–8%；ts-asr-benchmark@v12 上 KeSpeech 注册人缺席误输出 2.6% → 17.8%
-- `ts_scene_pool@magicdata-alt-twins-20261024-punchw-20261102`：ts_scene_pool@magicdata-alt-twins-20261024 的 zh，供 TS + 热词训练：每条目标句按片段 ID 换成带书面化标点的写法（中文 punc-written-v1，英文 en-v1 加标点并恢复大小写；去掉标点和空格、转小写后与原目标一致才替换，源语料本身带标点的保留原样），hotwords 为目标所说的热词，metadata.interferer_hotwords 为干扰者所说、目标没说的热词（标签：Qwen3.8-27B + amphiondata 热词提示词，已有的 hw_sft 标签复用）。其余字段、场景与音频同源版本（记录仍引用源版本音频）。zh：60000 条，目标改写 42118，带目标热词 8462，带干扰者热词 46424
-- `ts_scene_pool@magicdata-alt-twins-20261024-punchw-20261102-final-v1-20261120`：ts_scene_pool@magicdata-alt-twins-20261024-punchw-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 docs/reference/training-text.md（v1） 应用全部已执行的文本修正，起点 ts_scene_pool@magicdata-alt-twins-20261024-punchw-20261102。构建中
+- `ts_scene_pool@magicdata-alt-twins-20261024-punchw-20261102-final-v1-20261120`：ts_scene_pool@magicdata-alt-twins-20261024-punchw-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 audio-data-contract docs/reference/training-text.md（v1） 应用全部已执行的文本修正，替代配方原来的版本和中间修正版本。起点 ts_scene_pool@magicdata-alt-twins-20261024-punchw-20261102；已含修正：拆开的大写字母连写补齐（zhen-fix-v1，2 条）。其余字段、录音清单和音频照旧，引用起点版本的产物
 - `ts_scene_pool@magicdata-handover-20261023`：handover-20261021 的 MagicData 版：目标与另一人各说一句、先后不重叠，剔除与测试集同文本的句子；一半插话人取目标的相近声音（speaker-neighbors-20261023，ERes2NetV2 最近邻前 10 名之一），约 30% 缺席孪生（同样两句、注册换人，一半取近邻）。041 在 ts-asr-benchmark@v12 上对 KeSpeech、MagicData 目标把前后紧挨着、不重叠的另一个人也转写进来（交接 15–28%、轮流 18%），而这两个语料库此前只有重叠的 full 场景池，AISHELL-2 目标另有 v2-20261016、hard-20261016、handover-20261021 三个轮流场景池
-- `ts_scene_pool@magicdata-handover-20261023-punchw-20261102`：ts_scene_pool@magicdata-handover-20261023 的 zh，供 TS + 热词训练：每条目标句按片段 ID 换成带书面化标点的写法（中文 punc-written-v1，英文 en-v1 加标点并恢复大小写；去掉标点和空格、转小写后与原目标一致才替换，源语料本身带标点的保留原样），hotwords 为目标所说的热词，metadata.interferer_hotwords 为干扰者所说、目标没说的热词（标签：Qwen3.8-27B + amphiondata 热词提示词，已有的 hw_sft 标签复用）。其余字段、场景与音频同源版本（记录仍引用源版本音频）。zh：40000 条，目标改写 28017，带目标热词 6041，带干扰者热词 12404
-- `ts_scene_pool@magicdata-handover-20261023-punchw-20261102-final-v1-20261120`：ts_scene_pool@magicdata-handover-20261023-punchw-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 docs/reference/training-text.md（v1） 应用全部已执行的文本修正，起点 ts_scene_pool@magicdata-handover-20261023-punchw-20261102。构建中
+- `ts_scene_pool@magicdata-handover-20261023-punchw-20261102-final-v1-20261120`：ts_scene_pool@magicdata-handover-20261023-punchw-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 audio-data-contract docs/reference/training-text.md（v1） 应用全部已执行的文本修正，替代配方原来的版本和中间修正版本。起点 ts_scene_pool@magicdata-handover-20261023-punchw-20261102；已含修正：无（各轮修正对本数据都没有改动）。其余字段、录音清单和音频照旧，引用起点版本的产物
 - `ts_scene_pool@magicdata-hard-20261023`：hard-20261016 的 MagicData 版：alternate/burst/short 场景，他人之一是目标的相近声音（speaker-neighbors-20261023，ERes2NetV2 最近邻前 10 名之一），55% 目标缺席（转写为空），剔除与测试集同文本的句子。042 加上 *-alt-20261023（全部在场）后，ts-asr-benchmark@v12 上注册 KeSpeech、MagicData 说话人的缺席样本误输出从 5.2% / 2.4%（041@10000）升到 13.0% / 7.6%（042@5000），多为转写了同语料库的他人；AISHELL-2 目标的轮流场景另有 hard-20261016（55% 缺席、近似声音在场）平衡，这两个语料库没有
-- `ts_scene_pool@magicdata-hard-20261023-punchw-20261102`：ts_scene_pool@magicdata-hard-20261023 的 zh，供 TS + 热词训练：每条目标句按片段 ID 换成带书面化标点的写法（中文 punc-written-v1，英文 en-v1 加标点并恢复大小写；去掉标点和空格、转小写后与原目标一致才替换，源语料本身带标点的保留原样），hotwords 为目标所说的热词，metadata.interferer_hotwords 为干扰者所说、目标没说的热词（标签：Qwen3.8-27B + amphiondata 热词提示词，已有的 hw_sft 标签复用）。其余字段、场景与音频同源版本（记录仍引用源版本音频）。zh：40000 条，目标改写 17921，带目标热词 3618，带干扰者热词 31267
-- `ts_scene_pool@magicdata-hard-20261023-punchw-20261102-final-v1-20261120`：ts_scene_pool@magicdata-hard-20261023-punchw-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 docs/reference/training-text.md（v1） 应用全部已执行的文本修正，起点 ts_scene_pool@magicdata-hard-20261023-punchw-20261102。构建中
+- `ts_scene_pool@magicdata-hard-20261023-punchw-20261102-final-v1-20261120`：ts_scene_pool@magicdata-hard-20261023-punchw-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 audio-data-contract docs/reference/training-text.md（v1） 应用全部已执行的文本修正，替代配方原来的版本和中间修正版本。起点 ts_scene_pool@magicdata-hard-20261023-punchw-20261102；已含修正：无（各轮修正对本数据都没有改动）。其余字段、录音清单和音频照旧，引用起点版本的产物
 - `ts_scene_pool@magicdata-hard-twins-20261026`：magicdata-hard-20261023 的带孪生版：MagicData 目标的 alternate/burst/short 在场场景，他人之一是目标的相近声音（speaker-neighbors-20261023，ERes2NetV2 最近邻前 10 名之一），每个在场场景后跟一条孪生样本（同一场景换成另一个 MagicData 人注册，一半是目标的另一个相近声音，目标为空），缺席 50%；剔除与测试集同文本的句子。起因同 xsession-hard-twins-20261026：原 hard 池的缺席场景不是在场场景的孪生、没有短句，是最后一类没有孪生的场景
 - `ts_scene_pool@magicdata-near-20261023`：magicdata-20261023 的相近声音版：同样的 MagicData 多句场景（目标人取自 MagicData train 1017 人，他人一半 MagicData、一半 AISHELL-2，剔除与测试集同文本的句子），约 30% 缺席孪生中一半的注册人取目标的相近声音（speaker-neighbors-20261023，ERes2NetV2 余弦最近邻前 10 名之一，候选限于 MagicData 与 AISHELL-2；labels.twin_enrollment=near），另一半随机。原版的孪生全是随机说话人（余弦中位数 0.12），040 在 ts-asr-benchmark@v12 上对 MagicData 目标碰上 MagicData 插话人时连带转写的比例从 1.2% 升到 16.9%
-- `ts_scene_pool@magicdata-near-20261023-punchw-20261102`：ts_scene_pool@magicdata-near-20261023 的 zh，供 TS + 热词训练：每条目标句按片段 ID 换成带书面化标点的写法（中文 punc-written-v1，英文 en-v1 加标点并恢复大小写；去掉标点和空格、转小写后与原目标一致才替换，源语料本身带标点的保留原样），hotwords 为目标所说的热词，metadata.interferer_hotwords 为干扰者所说、目标没说的热词（标签：Qwen3.8-27B + amphiondata 热词提示词，已有的 hw_sft 标签复用）。其余字段、场景与音频同源版本（记录仍引用源版本音频）。zh：80000 条，目标改写 56156，带目标热词 25909，带干扰者热词 68316
-- `ts_scene_pool@magicdata-near-20261023-punchw-20261102-final-v1-20261120`：ts_scene_pool@magicdata-near-20261023-punchw-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 docs/reference/training-text.md（v1） 应用全部已执行的文本修正，起点 ts_scene_pool@magicdata-near-20261023-punchw-20261102。构建中
+- `ts_scene_pool@magicdata-near-20261023-punchw-20261102-final-v1-20261120`：ts_scene_pool@magicdata-near-20261023-punchw-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 audio-data-contract docs/reference/training-text.md（v1） 应用全部已执行的文本修正，替代配方原来的版本和中间修正版本。起点 ts_scene_pool@magicdata-near-20261023-punchw-20261102；已含修正：拆开的大写字母连写补齐（zhen-fix-v1，5 条）。其余字段、录音清单和音频照旧，引用起点版本的产物
 - `ts_scene_pool@multi-20261017`：多句目标场景（full）：目标说 2–5 句，与 1–4 个其他说话人各自按自己的间隔并行说话（间隔范围写在记录里）；约 26% 的记录是缺席孪生——同一批语句和时间线，注册人换成场景外的另一个人（一半是目标的近邻声音），目标为空，同一对共用 labels.pair。对应 ts_asr_benchmark 的基础场景（目标几句被别人打断或盖住）
-- `ts_scene_pool@multi-20261017-punchw-20261102`：ts_scene_pool@multi-20261017 的 en, zh，供 TS + 热词训练：每条目标句按片段 ID 换成带书面化标点的写法（中文 punc-written-v1，英文 en-v1 加标点并恢复大小写；去掉标点和空格、转小写后与原目标一致才替换，源语料本身带标点的保留原样），hotwords 为目标所说的热词，metadata.interferer_hotwords 为干扰者所说、目标没说的热词（标签：Qwen3.8-27B + amphiondata 热词提示词，已有的 hw_sft 标签复用）。其余字段、场景与音频同源版本（记录仍引用源版本音频）。en：40000 条，目标改写 29613，带目标热词 15546，带干扰者热词 34518；zh：120000 条，目标改写 88789，带目标热词 61499，带干扰者热词 102221
-- `ts_scene_pool@multi-20261017-punchw-20261102-final-v1-20261120`：ts_scene_pool@multi-20261017-punchw-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 docs/reference/training-text.md（v1） 应用全部已执行的文本修正，起点 ts_scene_pool@multi-20261017-punchw-20261102。构建中
-- `ts_scene_pool@multi-20261017-punchw2-20261102`：ts_scene_pool@multi-20261017 的 en，供 TS + 热词训练：每条目标句按片段 ID 换成带书面化标点的写法（中文 punc-written-v1，英文 en-v1 加标点并恢复大小写；去掉标点和空格、转小写后与原目标一致才替换，源语料本身带标点的保留原样），hotwords 为目标所说的热词，metadata.interferer_hotwords 为干扰者所说、目标没说的热词（标签：Qwen3.8-27B + amphiondata 热词提示词，已有的 hw_sft 标签复用；英文按整词匹配，所有格算同一个词，干扰者热词按其所在句的大小写还原写法）。其余字段、场景与音频同源版本（记录仍引用源版本音频）。en：40000 条，目标改写 29613，带目标热词 16028，带干扰者热词 34518
-- `ts_scene_pool@multi-20261017-punchw2-20261102-final-v1-20261120`：ts_scene_pool@multi-20261017-punchw2-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 docs/reference/training-text.md（v1） 应用全部已执行的文本修正，起点 ts_scene_pool@multi-20261017-punchw2-20261102。构建中
+- `ts_scene_pool@multi-20261017-punchw-20261102-final-v1-20261120`：ts_scene_pool@multi-20261017-punchw-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 audio-data-contract docs/reference/training-text.md（v1） 应用全部已执行的文本修正，替代配方原来的版本和中间修正版本。起点 ts_scene_pool@multi-20261017-punchw-20261102；已含修正：拆开的大写字母连写补齐（zhen-fix-v1，5 条）。其余字段、录音清单和音频照旧，引用起点版本的产物
+- `ts_scene_pool@multi-20261017-punchw2-20261102-final-v1-20261120`：ts_scene_pool@multi-20261017-punchw2-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 audio-data-contract docs/reference/training-text.md（v1） 应用全部已执行的文本修正，替代配方原来的版本和中间修正版本。起点 ts_scene_pool@multi-20261017-punchw2-20261102；已含修正：无（各轮修正对本数据都没有改动）。其余字段、录音清单和音频照旧，引用起点版本的产物
 - `ts_scene_pool@multi-20261018`：多句目标场景（full）放大版：与 multi-20261017 同一生成方式，规模翻倍（zh 24 万、en 8 万）；目标说 2–5 句，与 1–4 个其他说话人各自按自己的间隔并行说话；约 26% 的记录是缺席孪生——同一批语句和时间线，注册人换成场景外的另一个人（一半是目标的近邻声音），目标为空，同一对共用 labels.pair。用于降低训练里同一批场景的重复次数
 - `ts_scene_pool@pt-1spk-v1-20261117`：葡萄牙语单人 TS-ASR 记录（对应西语 es-1spk-v2-20261110，供 online_mix 在线混音）：目标是 common_voice_pt@pt-train-v1-20261117 train 一句（清洗通过、书面文本与热词），注册是同一人的另一句（≥1.5 s，固定种子）。目标说话人与葡语场景池相同（pt_target_speakers 的 188 人，CV pt 口音标注太少，按说话人对半分）；其余 525 人只作干扰人（ts_interference_pool@pt-v1-20261117），目标不会和干扰人是同一人，CV 的声音也不永远是目标（西语 v70 的错误）。42,009 条、188 个目标说话人、目标 48.1 h，13,108 条带热词。CV 27.0 pt dev / test 说话人不在 train。生成脚本 scripts/ts_robust/build_ts_1spk_es.py --language pt
 - `ts_scene_pool@pt-alt-twins-20261117`：pt-alt-twins-20261117：alternate/burst/short 轮流与插话场景，约 30% 缺席孪生（一半近邻注册）。葡语版的西语同名场景池（es-*-20261109，同一构建脚本、参数与条数）。目标与他人都取 Common Voice pt train（common_voice_pt@pt-train-v1-20261117，清洗通过的句子、原文书面文本；MLS pt 几乎没有 ≤8 s 的句子，不进场景）。CV pt train 只有 713 人、113 人答了口音（够 6 句的 51 人），不能像西语那样按口音定目标，改为按说话人对半分（build_ts_scene_pool.pt_target_speakers）：够 6 句 1–8 秒的 377 人按句数排序两两配对，每对 sha256 较小者作目标，共 188 个目标说话人（42,013 句）；他人一半取目标批、一半取另一半说话人（189 人）；不够 6 句的说话人和另一半一样只作干扰人（ts_interference_pool@pt-v1-20261117）。目标均匀抽取，没有 labels.accent。近邻表 speaker-neighbors-pt-split-20261117（ERes2NetV2）；剔除 CV 27.0 pt dev/test 说话人（葡语测试集所用）。 QC 见版本目录 qc.json（通过）
@@ -3423,27 +3304,22 @@ AISHELL-1、LibriSpeech 合成的多人对话
 - `ts_scene_pool@ramc-near-20261028`：magicdata-near-20261023 的 RAMC 版：多句场景（目标说 2–5 句、1–4 个他人各有自己的轨道），约 30% 缺席孪生（同一场景换另一个人注册，目标的话成为干扰、转写为空），孪生注册人一半取目标的相近声音。目标人取自 MagicData-RAMC 清洗版 train（magicdata_ramc@clean-dual-pass-20261027：真实手机电话对话，单声道，双模型转写都与人工标注一致的句子），注册取同一人另一句 2.5–8 秒；他人一半 RAMC、一半 AISHELL-2。RAMC 每段对话给说话人发新编号，同一个人会挂在几个编号下：声纹（ERes2NetV2，每个编号每段录音取 6 句平均）相似度 ≥ 0.60 的不同编号互斥（不在同一场景里分别当目标和他人/孪生注册人，也不互当相近声音），与 dev/test 说话人声纹 ≥ 0.60 的 113 个 train 编号和 17 个 dev/test 编号整体剔除（ramc-voice-identities-20261028）；相近声音取 speaker-neighbors-20261028（候选限于 RAMC 与 AISHELL-2）。用来补训练里没有的真实对话说话人：已有 TS 场景池的目标都是朗读语音（AISHELL-2、KeSpeech、MagicData）
 - `ts_scene_pool@solo-20261019`：目标单独说一句短话（1–3.5 秒）的场景：没有其他说话人，约 30% 是缺席孪生——同一句话，注册人换成另一个人，转写为空。用来补 aishellmix / librimix 的 train_1spk 里几乎没有的 3 秒以内的短目标在场监督（v7 评测的 solo-mid 在场输出为空 11% 以上）
 - `ts_scene_pool@solo-20261020`：短目标单独说话场景的难负例版：与 solo-20261019 同样的生成方式（目标单独说一句 1–3.5 秒的话，没有其他说话人，注册取同一说话人另一句 2.5–8 秒，约 30% 是缺席孪生——同一句话，注册人换成另一个人，转写为空），但孪生的注册人一半取目标的近邻声音（speaker-neighbors-20261016，ERes2NetV2 前 10 名，labels.twin_enrollment=near 并记 hard_cosine），一半随机，与 multi 池一致。用来补 solo-20261019 孪生全是随机注册人、负例太容易分的缺口
-- `ts_scene_pool@solo-20261020-punchw-20261102`：ts_scene_pool@solo-20261020 的 en, zh，供 TS + 热词训练：每条目标句按片段 ID 换成带书面化标点的写法（中文 punc-written-v1，英文 en-v1 加标点并恢复大小写；去掉标点和空格、转小写后与原目标一致才替换，源语料本身带标点的保留原样），hotwords 为目标所说的热词，metadata.interferer_hotwords 为干扰者所说、目标没说的热词（标签：Qwen3.8-27B + amphiondata 热词提示词，已有的 hw_sft 标签复用）。其余字段、场景与音频同源版本（记录仍引用源版本音频）。en：20000 条，目标改写 14050，带目标热词 2841，带干扰者热词 1255；zh：60000 条，目标改写 42046，带目标热词 15508，带干扰者热词 6723
-- `ts_scene_pool@solo-20261020-punchw-20261102-final-v1-20261120`：ts_scene_pool@solo-20261020-punchw-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 docs/reference/training-text.md（v1） 应用全部已执行的文本修正，起点 ts_scene_pool@solo-20261020-punchw-20261102。构建中
-- `ts_scene_pool@solo-20261020-punchw2-20261102`：ts_scene_pool@solo-20261020 的 en，供 TS + 热词训练：每条目标句按片段 ID 换成带书面化标点的写法（中文 punc-written-v1，英文 en-v1 加标点并恢复大小写；去掉标点和空格、转小写后与原目标一致才替换，源语料本身带标点的保留原样），hotwords 为目标所说的热词，metadata.interferer_hotwords 为干扰者所说、目标没说的热词（标签：Qwen3.8-27B + amphiondata 热词提示词，已有的 hw_sft 标签复用；英文按整词匹配，所有格算同一个词，干扰者热词按其所在句的大小写还原写法）。其余字段、场景与音频同源版本（记录仍引用源版本音频）。en：20000 条，目标改写 14050，带目标热词 2980，带干扰者热词 1255
-- `ts_scene_pool@solo-20261020-punchw2-20261102-final-v1-20261120`：ts_scene_pool@solo-20261020-punchw2-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 docs/reference/training-text.md（v1） 应用全部已执行的文本修正，起点 ts_scene_pool@solo-20261020-punchw2-20261102。构建中
+- `ts_scene_pool@solo-20261020-punchw-20261102-final-v1-20261120`：ts_scene_pool@solo-20261020-punchw-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 audio-data-contract docs/reference/training-text.md（v1） 应用全部已执行的文本修正，替代配方原来的版本和中间修正版本。起点 ts_scene_pool@solo-20261020-punchw-20261102；已含修正：无（各轮修正对本数据都没有改动）。其余字段、录音清单和音频照旧，引用起点版本的产物
+- `ts_scene_pool@solo-20261020-punchw2-20261102-final-v1-20261120`：ts_scene_pool@solo-20261020-punchw2-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 audio-data-contract docs/reference/training-text.md（v1） 应用全部已执行的文本修正，替代配方原来的版本和中间修正版本。起点 ts_scene_pool@solo-20261020-punchw2-20261102；已含修正：无（各轮修正对本数据都没有改动）。其余字段、录音清单和音频照旧，引用起点版本的产物
 - `ts_scene_pool@v2-20261016`：Target-speaker scenes (alternate / burst / short, up to 6 other speakers, several utterances per speaker) named from AISHELL-2, KeSpeech, LibriSpeech and Common Voice by speaker label
 - `ts_scene_pool@xsession-20261023`：KeSpeech 跨场次多句场景（multi 同款 full 模式，目标说 2–5 句、1–4 个他人各有自己的轨道）：目标人取自 KeSpeech train 中同时有普通话（phase1）与方言（phase2）录音的 15457 人（实际用到 14406 人），场景里目标的话取自同一场次，注册（2.5–8 秒一句）一半取另一场次（labels.cross_session），一半取同一场次；他人一半 KeSpeech、一半 AISHELL-2。约 30% 是缺席孪生：同一场景，注册换成另一位 KeSpeech 说话人，目标的话成为干扰、转写为空，同一对共用 labels.pair。用来补训练里缺的“同一人、不同场次/口音”正例：其他 zh 场景池的目标几乎全是单场次的 AISHELL-2，ts-asr-benchmark@v12 上注册与目标跨普通话/方言时 10.21 版本漏识 33.9%（同口音 5.7%）
 - `ts_scene_pool@xsession-alt-20261023`：v2-20261016 的 KeSpeech 跨场次版：alternate（轮流不重叠）、burst、short 三种场景，全部在场，目标人取自 KeSpeech train 中同时有普通话与方言录音的 15457 人，目标句取自一个场次、注册一半取另一场次（labels.cross_session），他人一半 KeSpeech、一半 AISHELL-2。041 在 ts-asr-benchmark@v12 上对 KeSpeech、MagicData 目标把前后紧挨着、不重叠的另一个人也转写进来（交接 15–28%、轮流 18%），而这两个语料库此前只有重叠的 full 场景池，AISHELL-2 目标另有 v2-20261016、hard-20261016、handover-20261021 三个轮流场景池
 - `ts_scene_pool@xsession-alt-twins-20261024`：xsession-alt-20261023 的同配方带孪生版：KeSpeech 目标的 alternate/burst/short 场景，场次规则同 xsession-alt-20261023，30% 为孪生样本（换成另一个 KeSpeech 人注册，一半是 speaker-neighbors-20261023 的相近声音，目标为空）；注册音频不选与目标同一句的话（KeSpeech 两个场次念相同提示句，xsession-alt-20261023 有 1.5% 的在场样本注册音频与目标同句）。起因：轮流说话场景在训练里几乎只有在场（v2-20261016、xsession-alt-20261023、magicdata-alt-20261023 没有缺席样本，hard 池的缺席只有交替 / 插话、没有短句），模型学成“其中总有一个是目标”；换成同池另一个人注册后，044@5000 在 xsession-alt 场景仍转写 43%（短句 65%），10.21 版本在 v2 场景 17%，带孪生的多人重叠池 4–8%；ts-asr-benchmark@v12 上 KeSpeech 注册人缺席误输出 2.6% → 17.8%
-- `ts_scene_pool@xsession-alt-twins-20261024-punchw-20261102`：ts_scene_pool@xsession-alt-twins-20261024 的 zh，供 TS + 热词训练：每条目标句按片段 ID 换成带书面化标点的写法（中文 punc-written-v1，英文 en-v1 加标点并恢复大小写；去掉标点和空格、转小写后与原目标一致才替换，源语料本身带标点的保留原样），hotwords 为目标所说的热词，metadata.interferer_hotwords 为干扰者所说、目标没说的热词（标签：Qwen3.8-27B + amphiondata 热词提示词，已有的 hw_sft 标签复用）。其余字段、场景与音频同源版本（记录仍引用源版本音频）。zh：60000 条，目标改写 41982，带目标热词 9713，带干扰者热词 47095
-- `ts_scene_pool@xsession-alt-twins-20261024-punchw-20261102-final-v1-20261120`：ts_scene_pool@xsession-alt-twins-20261024-punchw-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 docs/reference/training-text.md（v1） 应用全部已执行的文本修正，起点 ts_scene_pool@xsession-alt-twins-20261024-punchw-20261102。构建中
+- `ts_scene_pool@xsession-alt-twins-20261024-punchw-20261102-final-v1-20261120`：ts_scene_pool@xsession-alt-twins-20261024-punchw-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 audio-data-contract docs/reference/training-text.md（v1） 应用全部已执行的文本修正，替代配方原来的版本和中间修正版本。起点 ts_scene_pool@xsession-alt-twins-20261024-punchw-20261102；已含修正：无（各轮修正对本数据都没有改动）。其余字段、录音清单和音频照旧，引用起点版本的产物
 - `ts_scene_pool@xsession-handover-20261023`：handover-20261021 的 KeSpeech 跨场次版：目标与另一人各说一句、先后不重叠，场次规则同 xsession-alt-20261023；一半插话人取目标的相近声音（speaker-neighbors-20261023，ERes2NetV2 最近邻前 10 名之一），约 30% 缺席孪生（同样两句、注册换人，一半取近邻）。041 在 ts-asr-benchmark@v12 上对 KeSpeech、MagicData 目标把前后紧挨着、不重叠的另一个人也转写进来（交接 15–28%、轮流 18%），而这两个语料库此前只有重叠的 full 场景池，AISHELL-2 目标另有 v2-20261016、hard-20261016、handover-20261021 三个轮流场景池
-- `ts_scene_pool@xsession-handover-20261023-punchw-20261102`：ts_scene_pool@xsession-handover-20261023 的 zh，供 TS + 热词训练：每条目标句按片段 ID 换成带书面化标点的写法（中文 punc-written-v1，英文 en-v1 加标点并恢复大小写；去掉标点和空格、转小写后与原目标一致才替换，源语料本身带标点的保留原样），hotwords 为目标所说的热词，metadata.interferer_hotwords 为干扰者所说、目标没说的热词（标签：Qwen3.8-27B + amphiondata 热词提示词，已有的 hw_sft 标签复用）。其余字段、场景与音频同源版本（记录仍引用源版本音频）。zh：40000 条，目标改写 28118，带目标热词 6493，带干扰者热词 12876
-- `ts_scene_pool@xsession-handover-20261023-punchw-20261102-final-v1-20261120`：ts_scene_pool@xsession-handover-20261023-punchw-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 docs/reference/training-text.md（v1） 应用全部已执行的文本修正，起点 ts_scene_pool@xsession-handover-20261023-punchw-20261102。构建中
+- `ts_scene_pool@xsession-handover-20261023-punchw-20261102-final-v1-20261120`：ts_scene_pool@xsession-handover-20261023-punchw-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 audio-data-contract docs/reference/training-text.md（v1） 应用全部已执行的文本修正，替代配方原来的版本和中间修正版本。起点 ts_scene_pool@xsession-handover-20261023-punchw-20261102；已含修正：无（各轮修正对本数据都没有改动）。其余字段、录音清单和音频照旧，引用起点版本的产物
 - `ts_scene_pool@xsession-hard-20261023`：hard-20261016 的 KeSpeech 跨场次版：alternate/burst/short 场景，他人之一是目标的相近声音（speaker-neighbors-20261023，ERes2NetV2 最近邻前 10 名之一），55% 目标缺席（注册目标、场景里只有相近声音和他人，转写为空），在场时场次规则同 xsession-alt-20261023。042 加上 *-alt-20261023（全部在场）后，ts-asr-benchmark@v12 上注册 KeSpeech、MagicData 说话人的缺席样本误输出从 5.2% / 2.4%（041@10000）升到 13.0% / 7.6%（042@5000），多为转写了同语料库的他人；AISHELL-2 目标的轮流场景另有 hard-20261016（55% 缺席、近似声音在场）平衡，这两个语料库没有
-- `ts_scene_pool@xsession-hard-20261023-punchw-20261102`：ts_scene_pool@xsession-hard-20261023 的 zh，供 TS + 热词训练：每条目标句按片段 ID 换成带书面化标点的写法（中文 punc-written-v1，英文 en-v1 加标点并恢复大小写；去掉标点和空格、转小写后与原目标一致才替换，源语料本身带标点的保留原样），hotwords 为目标所说的热词，metadata.interferer_hotwords 为干扰者所说、目标没说的热词（标签：Qwen3.8-27B + amphiondata 热词提示词，已有的 hw_sft 标签复用）。其余字段、场景与音频同源版本（记录仍引用源版本音频）。zh：40000 条，目标改写 18013，带目标热词 4143，带干扰者热词 31327
-- `ts_scene_pool@xsession-hard-20261023-punchw-20261102-final-v1-20261120`：ts_scene_pool@xsession-hard-20261023-punchw-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 docs/reference/training-text.md（v1） 应用全部已执行的文本修正，起点 ts_scene_pool@xsession-hard-20261023-punchw-20261102。构建中
+- `ts_scene_pool@xsession-hard-20261023-punchw-20261102-final-v1-20261120`：ts_scene_pool@xsession-hard-20261023-punchw-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 audio-data-contract docs/reference/training-text.md（v1） 应用全部已执行的文本修正，替代配方原来的版本和中间修正版本。起点 ts_scene_pool@xsession-hard-20261023-punchw-20261102；已含修正：无（各轮修正对本数据都没有改动）。其余字段、录音清单和音频照旧，引用起点版本的产物
 - `ts_scene_pool@xsession-hard-twins-20261026`：xsession-hard-20261023 的带孪生版：KeSpeech 目标的 alternate/burst/short 在场场景，他人之一是目标的相近声音（speaker-neighbors-20261023，ERes2NetV2 最近邻前 10 名之一），每个在场场景后跟一条孪生样本（同一场景换成另一个 KeSpeech 人注册，一半是目标的另一个相近声音，目标为空），缺席 50%；注册音频不选与目标同一句的话。起因：原 hard 池的缺席场景是单独的场景、没有短句，也不是某个在场场景的孪生，是最后一类没有孪生的场景；048 avg3 在带孪生的场景类别上都好于 10.21 版本，难缺席划分的误输出仍持平或偏高
 - `ts_scene_pool@xsession-near-20261023`：xsession-20261023 的相近声音版：同样的 KeSpeech 跨场次多句场景（目标人取自 KeSpeech train 中同时有普通话与方言录音的 15457 人，注册一半取另一场次 labels.cross_session，他人一半 KeSpeech、一半 AISHELL-2），约 30% 缺席孪生中一半的注册人取目标的相近声音（speaker-neighbors-20261023，ERes2NetV2 余弦最近邻前 10 名之一，候选限于 KeSpeech 与 AISHELL-2；labels.twin_enrollment=near），另一半随机。原版的孪生全是随机说话人，与目标差得很远（余弦中位数 0.09），040 在 ts-asr-benchmark@v12 上对 KeSpeech、MagicData 目标越来越多地把紧接着说话的另一个人也转写进来
-- `ts_scene_pool@xsession-near-20261023-punchw-20261102`：ts_scene_pool@xsession-near-20261023 的 zh，供 TS + 热词训练：每条目标句按片段 ID 换成带书面化标点的写法（中文 punc-written-v1，英文 en-v1 加标点并恢复大小写；去掉标点和空格、转小写后与原目标一致才替换，源语料本身带标点的保留原样），hotwords 为目标所说的热词，metadata.interferer_hotwords 为干扰者所说、目标没说的热词（标签：Qwen3.8-27B + amphiondata 热词提示词，已有的 hw_sft 标签复用）。其余字段、场景与音频同源版本（记录仍引用源版本音频）。zh：80000 条，目标改写 56041，带目标热词 29215，带干扰者热词 70033
-- `ts_scene_pool@xsession-near-20261023-punchw-20261102-final-v1-20261120`：ts_scene_pool@xsession-near-20261023-punchw-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 docs/reference/training-text.md（v1） 应用全部已执行的文本修正，起点 ts_scene_pool@xsession-near-20261023-punchw-20261102。构建中
+- `ts_scene_pool@xsession-near-20261023-punchw-20261102-final-v1-20261120`：ts_scene_pool@xsession-near-20261023-punchw-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 audio-data-contract docs/reference/training-text.md（v1） 应用全部已执行的文本修正，替代配方原来的版本和中间修正版本。起点 ts_scene_pool@xsession-near-20261023-punchw-20261102；已含修正：无（各轮修正对本数据都没有改动）。其余字段、录音清单和音频照旧，引用起点版本的产物
 - 含派生版本（与源数据可能重叠）
+- 已并入的旧版本：`ts_scene_pool@alt-twins-20261024-punchw-20261102`（COS：没有）、`ts_scene_pool@alt-twins-20261024-punchw2-20261102`（COS：`amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_scene_pool/`）、`ts_scene_pool@csd-alt-twins-20261101-punchw2-20261102`（COS：`amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_scene_pool/`）、`ts_scene_pool@csd-handover-20261101-punchw2-20261102`（COS：`amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_scene_pool/`）、`ts_scene_pool@csd-hard-20261101-punchw2-20261102`（COS：`amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_scene_pool/`）、`ts_scene_pool@csd-near-20261101-punchw2-20261102`（COS：`amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_scene_pool/`）、`ts_scene_pool@csd-solo-20261101-punchw2-20261102`（COS：`amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_scene_pool/`）、`ts_scene_pool@cvaccent-alt-twins-20261101-punchw2-20261102`（COS：`amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_scene_pool/`）、`ts_scene_pool@cvaccent-handover-20261101-punchw2-20261102`（COS：`amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_scene_pool/`）、`ts_scene_pool@cvaccent-hard-20261101-punchw2-20261102`（COS：`amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_scene_pool/`）、`ts_scene_pool@cvaccent-near-20261101-punchw2-20261102`（COS：`amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_scene_pool/`）、`ts_scene_pool@cvaccent-solo-20261101-punchw2-20261102`（COS：`amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_scene_pool/`）、`ts_scene_pool@handover-20261021-punchw-20261102`（COS：`amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_scene_pool/`）、`ts_scene_pool@handover-20261021-punchw2-20261102`（COS：`amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_scene_pool/`）、`ts_scene_pool@hard-20261016-punchw-20261102`（COS：`amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_scene_pool/`）、`ts_scene_pool@hard-20261016-punchw2-20261102`（COS：`amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_scene_pool/`）、`ts_scene_pool@magicdata-alt-twins-20261024-punchw-20261102`（COS：`amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_scene_pool/`）、`ts_scene_pool@magicdata-handover-20261023-punchw-20261102`（COS：`amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_scene_pool/`）、`ts_scene_pool@magicdata-hard-20261023-punchw-20261102`（COS：`amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_scene_pool/`）、`ts_scene_pool@magicdata-near-20261023-punchw-20261102`（COS：`amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_scene_pool/`）、`ts_scene_pool@multi-20261017-punchw-20261102`（COS：`amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_scene_pool/`）、`ts_scene_pool@multi-20261017-punchw2-20261102`（COS：`amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_scene_pool/`）、`ts_scene_pool@solo-20261020-punchw-20261102`（COS：`amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_scene_pool/`）、`ts_scene_pool@solo-20261020-punchw2-20261102`（COS：`amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_scene_pool/`）、`ts_scene_pool@xsession-alt-twins-20261024-punchw-20261102`（COS：`amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_scene_pool/`）、`ts_scene_pool@xsession-handover-20261023-punchw-20261102`（COS：`amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_scene_pool/`）、`ts_scene_pool@xsession-hard-20261023-punchw-20261102`（COS：`amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_scene_pool/`）、`ts_scene_pool@xsession-near-20261023-punchw-20261102`（COS：`amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_scene_pool/`）
 
 ### tts_crosslingual_enroll
 
@@ -3466,8 +3342,7 @@ TS-ASR 训练用跨语言 TTS 注册音频
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
 | [vitw@2m-20261013](../../catalog/amphionasr_v4.yaml#L3854) | 1,085.4 | 已登记 | 没有 |
-| [vitw@2m-20261013-ctxclean-20261110](../../catalog/context_correction_clean_zh.yaml#L1403) | 1,085.4 | 已登记 | 没有 |
-| [vitw@2m-20261013-final-v1-20261120](../../catalog/text_final_v1.yaml#L539) | — | 未登记 | 没有 |
+| [vitw@2m-20261013-final-v1-20261120](../../catalog/text_final_v1.yaml#L2253) | 1,085.4 | 已登记 | 没有 |
 | [vitw@icefall-20260908](../../catalog/icefall_runtime.yaml#L2568) | 1,085.4 | 已登记 | 快照 20260914 |
 | [vitw@legacy-20260804](../../catalog/icefall_base.yaml#L2179) | 1,085.4 | 已登记 | 快照 20260914 |
 | [vitw_far_field@icefall-20260908](../../catalog/icefall_runtime.yaml#L3075) | 77.3 | 已登记：远场子集 | 快照 20260914、`amphion-audio-backup-1373259071:audio-data-contract/datasets/vitw_far_field/` |
@@ -3491,12 +3366,12 @@ TS-ASR 训练用跨语言 TTS 注册音频
 | [vitw_syn_recording@eval-20260804](../../catalog/open_audio_eval.yaml#L3333) | 0.8 | 已登记 | 快照 20260914、`amphion-audio-backup-1373259071:audio-data-contract/datasets/vitw_syn_recording/` |
 
 - `vitw@2m-20261013`：Voices-in-the-Wild 2M 配方全量转写。音频仍在 2M 源目录，按原 jsonl 顺序登记；不是 Bench 的 legacy-20260804
-- `vitw@2m-20261013-ctxclean-20261110`：在 vitw@2m-20261013 上做的上下文纠偏清洗：说话人讲字怎么写（组词、拆字、偏旁、否定对比）而标注写成同音别字的，按说明改正；拿不准的窗口整窗去掉。判定依据见 context_correction_clean_zh@v1-20261110。VITW 音频加了回声、噪声和丢帧，Qwen3-ASR 在上面识别不准（试跑 7 个音频不符约 6 个是 ASR 听错），不做音频核对；标注来自干净原音。命中 28 段，隔离 5 段均为标注本来就对、判定模型拿不准的情况，没有改正；2026-11-12 捞回 2 段（“木子”），仍去掉 3 段（约 0.003 h）
-- `vitw@2m-20261013-final-v1-20261120`：vitw@2m-20261013（交付配方 v7set34 训练用的版本）的训练文本终版，按 docs/reference/training-text.md（v1） 应用全部已执行的文本修正，起点 vitw@2m-20261013-ctxclean-20261110。构建中
+- `vitw@2m-20261013-final-v1-20261120`：vitw@2m-20261013（交付配方 v7set34 训练用的版本）的训练文本终版，按 audio-data-contract docs/reference/training-text.md（v1） 应用全部已执行的文本修正，替代配方原来的版本和中间修正版本。起点 vitw@2m-20261013-ctxclean-20261110；已含修正：说字写法（ctxclean，context_correction_clean_zh@v1-20261110）。其余字段、录音清单和音频照旧，引用起点版本的产物
 - `vitw_far_field@icefall-20260908`：标注片段时长，重叠语音或多麦克风可能重复计时
 - `vitw_far_field@punc-teacher-v1-20261029`：vitw_far_field@icefall-20260908 的 train 监督片段里的 Qwen3.8-27B 老师给 2500 句加的书面化标点（2296 句去掉标点后与输入一致，ok=true）：custom.punctuation_teacher 记输出 text、ok 和模型看到的无标点输入 input；custom.punctuation_hint.qwen 是提示用的 Qwen3-ASR 转写；其中 59 句是留出的评测句，另带学生 v1 的输出 custom.punctuation_student。这批句子用来微调 Qwen3-4B 学生，抽样见 amphiondata scripts/punctuation/build_teacher_set.py。只含这些句子，text 与父版本相同，不是标点后的文本；录音沿用父版本，不复制音频。中间产物，供复现和比较学生，不直接用于训练。脚本 scripts/punctuation/register_punc_intermediates.py
 - `vitw_far_field@punc-written-v1-20261029`：vitw_far_field@icefall-20260908 训练集原标注加书面化标点（GB/T 15834，逗号从紧）：微调后的 Qwen3-4B（Qwen3.8-27B 的 9.6 万条输出蒸馏）以 Qwen3-ASR-1.7B 听音频得到的带标点转写作语气提示，只往原标注里插标点。模型改动了原文的条目，把模型输出的标点按字对齐搬回原标注；每条以 。？！ 结尾；原标注的字、空格（首尾除外）和大小写不变。没有汉字的条目（英文句子、拼读字母）和标注为空的条目原样保留。文件与源 supervisions 条数、顺序相同，只换 text。试点 200 条人工参照上：WenetSpeech markF1 92.4、其他来源 88.9（老师 93.2 / 88.2，原 FireRedPunc 79.8）。约一半条目是英文句子，原样保留（含原有英文标点）；中文条目原有的标点按新规范重加
 - 含派生版本（与源数据可能重叠）
+- 已并入的旧版本：`vitw@2m-20261013-ctxclean-20261110`（COS：没有）
 
 ### waxal-asr
 

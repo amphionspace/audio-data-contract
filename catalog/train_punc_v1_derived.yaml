@@ -62,6 +62,7 @@
     owner: mingdong
     description: ami_sdm@asr-20261014 的 train，目标文本加书面化标点：中文用 amphiondata 的中文学生模型（punc-student-v1，不带听音提示），英文用英文规范 en-v1 的学生模型（加标点并恢复大小写）；标点按字 / 按词搬回原文，原文的字词不变，找不到输出的目标保留原样。其余字段与源版本相同，音频引用源版本。
     source: ami_sdm@asr-20261014
+    superseded_by: ami_sdm@asr-20261014-punc-20261102-final-v1-20261120
 - schema_version: dataset-catalog/2.0
   dataset_id: ami_sdm
   version: turn-taking-20261014-utts-punc-20261102
@@ -188,6 +189,7 @@
     owner: mingdong
     description: ami_sdm@turn-taking-20261014-utts 的 train_2spk, train_3spk, train_neg，目标文本加书面化标点：中文用 amphiondata 的中文学生模型（punc-student-v1，不带听音提示），英文用英文规范 en-v1 的学生模型（加标点并恢复大小写）；标点按字 / 按词搬回原文，原文的字词不变，找不到输出的目标保留原样。其余字段与源版本相同，音频引用源版本。
     source: ami_sdm@turn-taking-20261014-utts
+    superseded_by: ami_sdm@turn-taking-20261014-utts-punc-20261102-final-v1-20261120
 - schema_version: dataset-catalog/2.0
   dataset_id: librimix
   version: 960-current-audio-record-20260910-punc-20261102
@@ -326,6 +328,7 @@
     owner: mingdong
     description: librimix@960-current-audio-record-20260910 的 train_1spk, train_2spk, train_3spk, train_neg，目标文本加书面化标点：中文用 amphiondata 的中文学生模型（punc-student-v1，不带听音提示），英文用英文规范 en-v1 的学生模型（加标点并恢复大小写）；标点按字 / 按词搬回原文，原文的字词不变，找不到输出的目标保留原样。其余字段与源版本相同，音频引用源版本。
     source: librimix@960-current-audio-record-20260910
+    superseded_by: librimix@960-current-audio-record-20260910-punc-20261102-final-v1-20261120
 - schema_version: dataset-catalog/2.0
   dataset_id: ts_real_train
   version: en-v1-20261101-utts-punc-20261102
@@ -420,6 +423,7 @@
     owner: mingdong
     description: ts_real_train@en-v1-20261101-utts 的 ami, dipco，目标文本加书面化标点：中文用 amphiondata 的中文学生模型（punc-student-v1，不带听音提示），英文用英文规范 en-v1 的学生模型（加标点并恢复大小写）；标点按字 / 按词搬回原文，原文的字词不变，找不到输出的目标保留原样。其余字段与源版本相同，音频引用源版本。
     source: ts_real_train@en-v1-20261101-utts
+    superseded_by: ts_real_train@en-v1-20261101-utts-punc-20261102-final-v1-20261120
 - schema_version: dataset-catalog/2.0
   dataset_id: aishell4
   version: asr-20261014-punc-20261102
@@ -483,6 +487,7 @@
     owner: mingdong
     description: aishell4@asr-20261014 的 train，目标文本加书面化标点：中文用 amphiondata 的中文学生模型（punc-student-v1，不带听音提示），英文用英文规范 en-v1 的学生模型（加标点并恢复大小写）；标点按字 / 按词搬回原文，原文的字词不变，找不到输出的目标保留原样。其余字段与源版本相同，音频引用源版本。
     source: aishell4@asr-20261014
+    superseded_by: aishell4@asr-20261014-punc-20261102-final-v1-20261120
 - schema_version: dataset-catalog/2.0
   dataset_id: aishell4
   version: turn-taking-20261014-utts-punc-20261102
@@ -609,6 +614,7 @@
     owner: mingdong
     description: aishell4@turn-taking-20261014-utts 的 train_2spk, train_3spk, train_neg，目标文本加书面化标点：中文用 amphiondata 的中文学生模型（punc-student-v1，不带听音提示），英文用英文规范 en-v1 的学生模型（加标点并恢复大小写）；标点按字 / 按词搬回原文，原文的字词不变，找不到输出的目标保留原样。其余字段与源版本相同，音频引用源版本。
     source: aishell4@turn-taking-20261014-utts
+    superseded_by: aishell4@turn-taking-20261014-utts-punc-20261102-final-v1-20261120
 - schema_version: dataset-catalog/2.0
   dataset_id: aishellmix
   version: pack3-current-audio-record-20260910-punc-20261102
@@ -747,6 +753,7 @@
     owner: mingdong
     description: aishellmix@pack3-current-audio-record-20260910 的 train_1spk, train_2spk, train_3spk, train_neg，目标文本加书面化标点：中文用 amphiondata 的中文学生模型（punc-student-v1，不带听音提示），英文用英文规范 en-v1 的学生模型（加标点并恢复大小写）；标点按字 / 按词搬回原文，原文的字词不变，找不到输出的目标保留原样。其余字段与源版本相同，音频引用源版本。
     source: aishellmix@pack3-current-audio-record-20260910
+    superseded_by: aishellmix@pack3-current-audio-record-20260910-punc-20261102-final-v1-20261120
 - schema_version: dataset-catalog/2.0
   dataset_id: alimeeting_sdm
   version: asr-20261014-punc-20261102
@@ -810,6 +817,7 @@
     owner: mingdong
     description: alimeeting_sdm@asr-20261014 的 train，目标文本加书面化标点：中文用 amphiondata 的中文学生模型（punc-student-v1，不带听音提示），英文用英文规范 en-v1 的学生模型（加标点并恢复大小写）；标点按字 / 按词搬回原文，原文的字词不变，找不到输出的目标保留原样。其余字段与源版本相同，音频引用源版本。
     source: alimeeting_sdm@asr-20261014
+    superseded_by: alimeeting_sdm@asr-20261014-punc-20261102-final-v1-20261120
 - schema_version: dataset-catalog/2.0
   dataset_id: alimeeting_sdm
   version: turn-taking-20261014-utts-punc-20261102
@@ -936,6 +944,7 @@
     owner: mingdong
     description: alimeeting_sdm@turn-taking-20261014-utts 的 train_2spk, train_3spk, train_neg，目标文本加书面化标点：中文用 amphiondata 的中文学生模型（punc-student-v1，不带听音提示），英文用英文规范 en-v1 的学生模型（加标点并恢复大小写）；标点按字 / 按词搬回原文，原文的字词不变，找不到输出的目标保留原样。其余字段与源版本相同，音频引用源版本。
     source: alimeeting_sdm@turn-taking-20261014-utts
+    superseded_by: alimeeting_sdm@turn-taking-20261014-utts-punc-20261102-final-v1-20261120
 - schema_version: dataset-catalog/2.0
   dataset_id: asr_babble_speech_pool
   version: v1-20261024-punc-20261102
@@ -1031,6 +1040,7 @@
     owner: mingdong
     description: asr_babble_speech_pool@v1-20261024 的 en, zh，目标文本加书面化标点：中文用 amphiondata 的中文学生模型（punc-student-v1，不带听音提示），英文用英文规范 en-v1 的学生模型（加标点并恢复大小写）；标点按字 / 按词搬回原文，原文的字词不变，找不到输出的目标保留原样。其余字段与源版本相同，音频引用源版本。
     source: asr_babble_speech_pool@v1-20261024
+    superseded_by: asr_babble_speech_pool@v1-20261024-punc-20261102-final-v1-20261120
 - schema_version: dataset-catalog/2.0
   dataset_id: asr_distant_talk_pool
   version: v1-20261102-punc-20261102
@@ -1158,6 +1168,7 @@
     owner: mingdong
     description: asr_distant_talk_pool@v1-20261102 的 empty_en, empty_zh, text_zh，目标文本加书面化标点：中文用 amphiondata 的中文学生模型（punc-student-v1，不带听音提示），英文用英文规范 en-v1 的学生模型（加标点并恢复大小写）；标点按字 / 按词搬回原文，原文的字词不变，找不到输出的目标保留原样。其余字段与源版本相同，音频引用源版本。
     source: asr_distant_talk_pool@v1-20261102
+    superseded_by: asr_distant_talk_pool@v1-20261102-punc-20261102-final-v1-20261120
 - schema_version: dataset-catalog/2.0
   dataset_id: magicdata_ramc
   version: turn-taking-20261014-utts-punc-20261102
@@ -1252,6 +1263,7 @@
     owner: mingdong
     description: magicdata_ramc@turn-taking-20261014-utts 的 train_2spk, train_neg，目标文本加书面化标点：中文用 amphiondata 的中文学生模型（punc-student-v1，不带听音提示），英文用英文规范 en-v1 的学生模型（加标点并恢复大小写）；标点按字 / 按词搬回原文，原文的字词不变，找不到输出的目标保留原样。其余字段与源版本相同，音频引用源版本。
     source: magicdata_ramc@turn-taking-20261014-utts
+    superseded_by: magicdata_ramc@turn-taking-20261014-utts-punc-20261102-final-v1-20261120
 - schema_version: dataset-catalog/2.0
   dataset_id: ts_real_train
   version: v1-20261017-utts-punc-20261102
@@ -1378,6 +1390,7 @@
     owner: mingdong
     description: ts_real_train@v1-20261017-utts 的 aishell4, alimeeting, ramc，目标文本加书面化标点：中文用 amphiondata 的中文学生模型（punc-student-v1，不带听音提示），英文用英文规范 en-v1 的学生模型（加标点并恢复大小写）；标点按字 / 按词搬回原文，原文的字词不变，找不到输出的目标保留原样。其余字段与源版本相同，音频引用源版本。
     source: ts_real_train@v1-20261017-utts
+    superseded_by: ts_real_train@v1-20261017-utts-punc-20261102-final-v1-20261120
 - schema_version: dataset-catalog/2.0
   dataset_id: ts_real_train
   version: v2-20261018-utts-punc-20261102
@@ -1472,6 +1485,7 @@
     owner: mingdong
     description: ts_real_train@v2-20261018-utts 的 aishell4, alimeeting，目标文本加书面化标点：中文用 amphiondata 的中文学生模型（punc-student-v1，不带听音提示），英文用英文规范 en-v1 的学生模型（加标点并恢复大小写）；标点按字 / 按词搬回原文，原文的字词不变，找不到输出的目标保留原样。其余字段与源版本相同，音频引用源版本。
     source: ts_real_train@v2-20261018-utts
+    superseded_by: ts_real_train@v2-20261018-utts-punc-20261102-final-v1-20261120
 - schema_version: dataset-catalog/2.0
   dataset_id: ts_real_train
   version: v3-20261020-utts-punc-20261102
@@ -1598,3 +1612,4 @@
     owner: mingdong
     description: ts_real_train@v3-20261020-utts 的 alimeeting_en_mf, alimeeting_en_mn, emilia2_1spk，目标文本加书面化标点：中文用 amphiondata 的中文学生模型（punc-student-v1，不带听音提示），英文用英文规范 en-v1 的学生模型（加标点并恢复大小写）；标点按字 / 按词搬回原文，原文的字词不变，找不到输出的目标保留原样。其余字段与源版本相同，音频引用源版本。
     source: ts_real_train@v3-20261020-utts
+    superseded_by: ts_real_train@v3-20261020-utts-punc-20261102-final-v1-20261120

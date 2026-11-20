@@ -88,6 +88,7 @@
     - kespeech:punc-written-v1-20261029
     - magicdata:punc-written-v1-20261102
     - librispeech:punc-written-en-v1-20261102
+    superseded_by: ts_scene_pool@alt-twins-20261024-punchw-20261102-final-v1-20261120
 - schema_version: dataset-catalog/2.0
   dataset_id: ts_scene_pool
   version: csd-alt-twins-20261101-punchw-20261102
@@ -777,6 +778,7 @@
     - kespeech:punc-written-v1-20261029
     - magicdata:punc-written-v1-20261102
     - librispeech:punc-written-en-v1-20261102
+    superseded_by: ts_scene_pool@handover-20261021-punchw-20261102-final-v1-20261120
 - schema_version: dataset-catalog/2.0
   dataset_id: ts_scene_pool
   version: hard-20261016-punchw-20261102
@@ -866,6 +868,7 @@
     - kespeech:punc-written-v1-20261029
     - magicdata:punc-written-v1-20261102
     - librispeech:punc-written-en-v1-20261102
+    superseded_by: ts_scene_pool@hard-20261016-punchw-20261102-final-v1-20261120
 - schema_version: dataset-catalog/2.0
   dataset_id: ts_scene_pool
   version: magicdata-alt-twins-20261024-punchw-20261102
@@ -926,6 +929,7 @@
     - kespeech:punc-written-v1-20261029
     - magicdata:punc-written-v1-20261102
     - librispeech:punc-written-en-v1-20261102
+    superseded_by: ts_scene_pool@magicdata-alt-twins-20261024-punchw-20261102-final-v1-20261120
 - schema_version: dataset-catalog/2.0
   dataset_id: ts_scene_pool
   version: magicdata-handover-20261023-punchw-20261102
@@ -986,6 +990,7 @@
     - kespeech:punc-written-v1-20261029
     - magicdata:punc-written-v1-20261102
     - librispeech:punc-written-en-v1-20261102
+    superseded_by: ts_scene_pool@magicdata-handover-20261023-punchw-20261102-final-v1-20261120
 - schema_version: dataset-catalog/2.0
   dataset_id: ts_scene_pool
   version: magicdata-hard-20261023-punchw-20261102
@@ -1046,6 +1051,7 @@
     - kespeech:punc-written-v1-20261029
     - magicdata:punc-written-v1-20261102
     - librispeech:punc-written-en-v1-20261102
+    superseded_by: ts_scene_pool@magicdata-hard-20261023-punchw-20261102-final-v1-20261120
 - schema_version: dataset-catalog/2.0
   dataset_id: ts_scene_pool
   version: magicdata-near-20261023-punchw-20261102
@@ -1106,6 +1112,7 @@
     - kespeech:punc-written-v1-20261029
     - magicdata:punc-written-v1-20261102
     - librispeech:punc-written-en-v1-20261102
+    superseded_by: ts_scene_pool@magicdata-near-20261023-punchw-20261102-final-v1-20261120
 - schema_version: dataset-catalog/2.0
   dataset_id: ts_scene_pool
   version: multi-20261017-punchw-20261102
@@ -1195,6 +1202,7 @@
     - kespeech:punc-written-v1-20261029
     - magicdata:punc-written-v1-20261102
     - librispeech:punc-written-en-v1-20261102
+    superseded_by: ts_scene_pool@multi-20261017-punchw-20261102-final-v1-20261120
 - schema_version: dataset-catalog/2.0
   dataset_id: ts_scene_pool
   version: solo-20261020-punchw-20261102
@@ -1284,6 +1292,7 @@
     - kespeech:punc-written-v1-20261029
     - magicdata:punc-written-v1-20261102
     - librispeech:punc-written-en-v1-20261102
+    superseded_by: ts_scene_pool@solo-20261020-punchw-20261102-final-v1-20261120
 - schema_version: dataset-catalog/2.0
   dataset_id: ts_scene_pool
   version: xsession-alt-twins-20261024-punchw-20261102
@@ -1344,6 +1353,7 @@
     - kespeech:punc-written-v1-20261029
     - magicdata:punc-written-v1-20261102
     - librispeech:punc-written-en-v1-20261102
+    superseded_by: ts_scene_pool@xsession-alt-twins-20261024-punchw-20261102-final-v1-20261120
 - schema_version: dataset-catalog/2.0
   dataset_id: ts_scene_pool
   version: xsession-handover-20261023-punchw-20261102
@@ -1404,6 +1414,7 @@
     - kespeech:punc-written-v1-20261029
     - magicdata:punc-written-v1-20261102
     - librispeech:punc-written-en-v1-20261102
+    superseded_by: ts_scene_pool@xsession-handover-20261023-punchw-20261102-final-v1-20261120
 - schema_version: dataset-catalog/2.0
   dataset_id: ts_scene_pool
   version: xsession-hard-20261023-punchw-20261102
@@ -1464,6 +1475,7 @@
     - kespeech:punc-written-v1-20261029
     - magicdata:punc-written-v1-20261102
     - librispeech:punc-written-en-v1-20261102
+    superseded_by: ts_scene_pool@xsession-hard-20261023-punchw-20261102-final-v1-20261120
 - schema_version: dataset-catalog/2.0
   dataset_id: ts_scene_pool
   version: xsession-near-20261023-punchw-20261102
@@ -1524,3 +1536,4 @@
     - kespeech:punc-written-v1-20261029
     - magicdata:punc-written-v1-20261102
     - librispeech:punc-written-en-v1-20261102
+    superseded_by: ts_scene_pool@xsession-near-20261023-punchw-20261102-final-v1-20261120

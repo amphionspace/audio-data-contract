@@ -101,6 +101,7 @@
     rules: zhen-fix-v1
     changed_records: 24587
     build_script: scripts/zhen_fix/build.py
+    superseded_by: emilia2_mix@mix-20261013-utts-final-v1-20261120
 - schema_version: dataset-catalog/2.0
   dataset_id: emilia2_short
   version: short-lance-20261023-ctxclean-20261110-zhenfix-20261117
@@ -183,6 +184,7 @@
     rules: zhen-fix-v1
     changed_records: 15965
     build_script: scripts/zhen_fix/build.py
+    superseded_by: emilia2_short@short-lance-20261023-final-v1-20261120
 - schema_version: dataset-catalog/2.0
   dataset_id: emilia2_dialog
   version: dialog-turn-taking-20261013-enroll-ctxclean-20261110-zhenfix-20261117
@@ -513,6 +515,7 @@
     rules: zhen-fix-v1
     changed_records: 12855
     build_script: scripts/zhen_fix/build.py
+    superseded_by: emilia2_dialog@dialog-turn-taking-20261013-enroll-final-v1-20261120
 - schema_version: dataset-catalog/2.0
   dataset_id: police_asr_unified
   version: train-punc-v1-20261102-zhenfix-20261117
@@ -580,6 +583,7 @@
     changed_records: 12247
     run_dir: /workspace/workspace/mingdong/data/amphiondata/zhen-fix-20261117
     build_script: scripts/zhen_fix/build.py
+    superseded_by: police_asr_unified@train-punc-v1-20261102-final-v1-20261120
   recipe_parameters:
     rules: 'zhen-fix-v1: Chinese texts only; space-separated single uppercase letters joined (K T V -> KTV)'
     changed: train 划分 target / text 里命中规则的记录；原文本在 metadata.zhen_fix.original_target 或 custom.zhen_fix.original_text
@@ -655,6 +659,7 @@
     rules: zhen-fix-v1
     changed_records: 1052
     build_script: scripts/zhen_fix/build.py
+    superseded_by: magicdata_ramc@train-punc-v1-20261102-final-v1-20261120
 - schema_version: dataset-catalog/2.0
   dataset_id: magicdata_ramc
   version: turn-taking-20261014-utts-punc-20261102-ctxclean-20261110-zhenfix-20261117
@@ -755,6 +760,7 @@
     rules: zhen-fix-v1
     changed_records: 711
     build_script: scripts/zhen_fix/build.py
+    superseded_by: magicdata_ramc@turn-taking-20261014-utts-punc-20261102-final-v1-20261120
 - schema_version: dataset-catalog/2.0
   dataset_id: magicdata_ramc
   version: allspk-asr-v1-20261103-zhenfix-20261117
@@ -829,6 +835,7 @@
     owner: mingdong
     run_dir: /workspace/workspace/mingdong/data/amphiondata/zhen-fix-20261117
     build_script: scripts/zhen_fix/build.py
+    superseded_by: magicdata_ramc@allspk-asr-v1-20261103-final-v1-20261120
   derived_from: magicdata_ramc@allspk-asr-v1-20261103
   recipe_parameters:
     rules: 'zhen-fix-v1: Chinese texts only; space-separated single uppercase letters joined (K T V -> KTV)'
@@ -933,6 +940,7 @@
     owner: mingdong
     run_dir: /workspace/workspace/mingdong/data/amphiondata/zhen-fix-20261117
     build_script: scripts/zhen_fix/build.py
+    superseded_by: magicdata_ramc@allspk-ts-v1-20261104-final-v1-20261120
   derived_from: magicdata_ramc@allspk-ts-v1-20261104
   recipe_parameters:
     rules: 'zhen-fix-v1: Chinese texts only; space-separated single uppercase letters joined (K T V -> KTV)'
@@ -1008,6 +1016,7 @@
     rules: zhen-fix-v1
     changed_records: 298
     build_script: scripts/zhen_fix/build.py
+    superseded_by: aishell4@asr-20261014-punc-20261102-final-v1-20261120
 - schema_version: dataset-catalog/2.0
   dataset_id: aishell4
   version: turn-taking-20261014-utts-punc-20261102-ctxclean-20261110-zhenfix-20261117
@@ -1138,3 +1147,4 @@
     rules: zhen-fix-v1
     changed_records: 254
     build_script: scripts/zhen_fix/build.py
+    superseded_by: aishell4@turn-taking-20261014-utts-punc-20261102-final-v1-20261120

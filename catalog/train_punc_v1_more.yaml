@@ -96,6 +96,7 @@
     owner: mingdong
     description: librispeech@legacy-20260804 的 train 训练版本，目标文本换成带标点的写法（按 id 取自 datasets/librispeech/versions/punc-written-en-v1-20261102/librispeech_supervisions_train-clean-100_punc_written.jsonl.gz, datasets/librispeech/versions/punc-written-en-v1-20261102/librispeech_supervisions_train-clean-360_punc_written.jsonl.gz, datasets/librispeech/versions/punc-written-en-v1-20261102/librispeech_supervisions_train-other-500_punc_written.jsonl.gz；去掉标点和空格、转小写后与原文一致才替换，否则保留原文）。其余字段与源版本相同，录音引用源版本。
     source: librispeech@legacy-20260804
+    superseded_by: librispeech@train-punc-v1-20261102-final-v1-20261120
 - schema_version: dataset-catalog/2.0
   dataset_id: common_voice_en
   version: train-punc-v1-20261102
@@ -157,6 +158,7 @@
     owner: mingdong
     description: common_voice_en@legacy-20260804 的 train 训练版本，目标文本换成带标点的写法（按 id 取自 datasets/common_voice_en/versions/punc-written-en-v1-20261102/cv-en_supervisions_train_cleaned_punc_written.jsonl.gz；去掉标点和空格、转小写后与原文一致才替换，否则保留原文）。其余字段与源版本相同，录音引用源版本。
     source: common_voice_en@legacy-20260804
+    superseded_by: common_voice_en@train-punc-v1-20261102-final-v1-20261120
 - schema_version: dataset-catalog/2.0
   dataset_id: gigaspeech
   version: train-punc-v1-20261102
@@ -218,6 +220,7 @@
     owner: mingdong
     description: gigaspeech@legacy-20260804 的 train 训练版本，目标文本换成带标点的写法（按 id 取自 datasets/gigaspeech/versions/punc-written-en-v1-20261102/gigaspeech_supervisions_XL_punc_written.jsonl.gz；去掉标点和空格、转小写后与原文一致才替换，否则保留原文）。其余字段与源版本相同，录音引用源版本。
     source: gigaspeech@legacy-20260804
+    superseded_by: gigaspeech@train-punc-v1-20261102-final-v1-20261120
 - schema_version: dataset-catalog/2.0
   dataset_id: police_asr_unified
   version: train-punc-v1-20261102
@@ -281,3 +284,4 @@
     owner: mingdong
     description: police_asr_unified@v1-20261009 的 train 训练版本，目标文本换成带标点的写法（按 id 取自 ，及中文学生模型给派生文本加的标点（按去标点文本匹配）；去掉标点和空格、转小写后与原文一致才替换，否则保留原文）。其余字段与源版本相同，录音引用源版本。
     source: police_asr_unified@v1-20261009
+    superseded_by: police_asr_unified@train-punc-v1-20261102-final-v1-20261120
