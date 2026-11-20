@@ -1,5 +1,5 @@
 # WenetSpeech 训练文本里写成汉字的英文换回英文（zhen-fix-en-v1，2026-11-19）。底版本是 ctxclean 派生版，交付配方 v7set34 用的是 train-punc-v1-20261102。
-# 占位，构建中。运行目录 /workspace/workspace/mingdong/data/amphiondata/zhen-fix-20261117/wenet。
+# 生成脚本 scripts/zhen_fix/build_wenetspeech.py，改动清单在 zhen_fix_patches。
 - schema_version: dataset-catalog/2.0
   dataset_id: wenetspeech_clean
   version: train-punc-v1-20261102-ctxclean-20261110-zhenfix-20261119
@@ -8,24 +8,76 @@
   tasks:
   - asr
   aliases: []
-  derived_from: wenetspeech_clean@train-punc-v1-20261102-ctxclean-20261110
   artifacts:
   - name: preparation_state
     kind: dataset-state
     root_alias: aidc_data
     relative_path: datasets/wenetspeech_clean/versions/train-punc-v1-20261102-ctxclean-20261110-zhenfix-20261119/state.json
+  - name: train_recordings
+    kind: lhotse-recordings
+    root_alias: aidc_data
+    relative_path: datasets/wenetspeech_clean/versions/train-punc-v1-20261102-ctxclean-20261110/recordings/train.jsonl.gz
+    expected_bytes: 1437000
+    sha256: 792596fc3a2d6b0992ae95f7dbad715d85fae66efc748c0d1249c202bac9acd4
+    metadata:
+      record_count: 60937
+  - name: train_supervisions_punc_0
+    kind: lhotse-supervisions
+    root_alias: aidc_data
+    relative_path: datasets/wenetspeech_clean/versions/train-punc-v1-20261102-ctxclean-20261110-zhenfix-20261119/supervisions/train.jsonl.gz
+    expected_bytes: 516907536
+    sha256: 33c2545024dc35d0df9c15f0fe93def43a6e66f7da6436d0e6faf416d0e0c64c
+    metadata:
+      record_count: 14480879
+  - name: zhen_fix_patches
+    kind: jsonl-metadata
+    root_alias: aidc_data
+    relative_path: datasets/wenetspeech_clean/versions/train-punc-v1-20261102-ctxclean-20261110-zhenfix-20261119/evidence/patches.jsonl
+    expected_bytes: 11608656
+    sha256: 1b5cae875ae9ed6f47db72989d82e3eaf36d24357065407bc05e6fdfe6bdbd28
+    metadata:
+      record_count: 20510
+      description: 全部候选（LLM 判为音译 A / 意译 B / 识别错 C）的逐条处理：标注原文、改后文本、替换或插入、标注片段和英文、Qwen3-ASR（自动语种、强制中文）、whisper-large-v3、FireRedASR2-AED 的转写、LLM 片段类别、是否改和不改的原因
+  - name: record_index
+    kind: lance-record-index
+    root_alias: aidc_data
+    relative_path: datasets/wenetspeech_clean/versions/train-punc-v1-20261102-ctxclean-20261110-zhenfix-20261119/record_index/index.json
+    expected_bytes: 813
+    sha256: 5209f257f644279c83c809513decc6df911a1e2fff7c50af872b519351e38a9c
+    metadata:
+      snapshot_version: 13
+      rows: 14480879
+      schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
   splits:
     train:
       artifacts:
-        preparation_state:
-        - preparation_state
-      provenance:
-        preparation_status: building
+        recordings:
+        - train_recordings
+        supervisions:
+        - train_supervisions_punc_0
+        records_lance:
+        - record_index
+      statistics:
+        records: 14480879
+        recordings: 60937
+        recordings_with_supervisions: 60928
+        duration_hours: 9919.264
+        duration_basis: sum of supervision duration
+        zhen_fix_changed_records: 3727
+  derived_from: wenetspeech_clean@train-punc-v1-20261102-ctxclean-20261110
+  recipe_parameters:
+    rules: 'zhen-fix-en-v1: 候选是 Qwen3-ASR-1.7B 听出英文、标注缺这个英文的句子；whisper-large-v3 和强制中文的 Qwen3-ASR 都听出同一个英文才改；替换的标注片段要是意译或生造的音译，通行的人名、地名译名和外来词不改；标注漏写的英文补进去'
+    changed: train 划分 text 里改动的记录；原文本在 custom.zhen_fix.original_text，custom.clean 不变
+    unchanged: 其余记录、字段、录音清单和音频，引用底版本的产物
+    evidence: zhen_fix_patches
   provenance:
-    preparation_status: building
-    owner: mingdong
     summary: WenetSpeech 训练文本英文写法修正
-    description: wenetspeech_clean@train-punc-v1-20261102-ctxclean-20261110 的训练文本里，说话人说英文、标注写成汉字的句子（音译如 艾特斯→iTunes，意译如 派对→party）按 audio-data-contract docs/reference/zh-en-transcription.md 规则 1 换回英文。候选来自 Qwen3-ASR-1.7B 听出英文、标注缺这个英文的 24,336 句，由 LLM 初判类别，再用其他 ASR 模型听音频核对；原文本存进 custom.zhen_fix。其余字段、音频引用照旧。构建中。
+    description: wenetspeech_clean@train-punc-v1-20261102-ctxclean-20261110 的训练文本里，说话人说英文、标注写成汉字的句子按 audio-data-contract docs/reference/zh-en-transcription.md 规则 1 换回英文（例：艾特斯→iTunes、五本儿→Uber、对抗→PK，标注漏写的补上：那边的办公室→那边的office办公室）。候选是 Qwen3-ASR-1.7B 听出英文、标注缺这个英文的 24,336 句；whisper-large-v3 和强制中文的 Qwen3-ASR-1.7B 都听出同一个英文才改。通行的人名、地名译名和外来词（大卫、弗洛格、纽约、派对）照中文念和英文发音相近，识别模型分不出来，不改。FireRedASR2-AED 训练时见过本数据的标注，不作依据。共改 3,727 条，原文本存进 custom.zhen_fix；其余字段、录音清单和音频照旧，引用底版本的产物。
+    owner: mingdong
+    snapshot_date: '2026-11-20'
     source: wenetspeech_clean@train-punc-v1-20261102-ctxclean-20261110
-    method: zhen-fix-en-v1
     run_dir: /workspace/workspace/mingdong/data/amphiondata/zhen-fix-20261117/wenet
+    method: zhen-fix-en-v1
+    rules: zhen-fix-en-v1
+    changed_records: 3727
+    build_script: scripts/zhen_fix/build_wenetspeech.py
