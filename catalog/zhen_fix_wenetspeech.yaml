@@ -1,0 +1,31 @@
+# WenetSpeech 训练文本里写成汉字的英文换回英文（zhen-fix-en-v1，2026-11-19）。底版本是 ctxclean 派生版，交付配方 v7set34 用的是 train-punc-v1-20261102。
+# 占位，构建中。运行目录 /workspace/workspace/mingdong/data/amphiondata/zhen-fix-20261117/wenet。
+- schema_version: dataset-catalog/2.0
+  dataset_id: wenetspeech_clean
+  version: train-punc-v1-20261102-ctxclean-20261110-zhenfix-20261119
+  languages:
+  - zh
+  tasks:
+  - asr
+  aliases: []
+  derived_from: wenetspeech_clean@train-punc-v1-20261102-ctxclean-20261110
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/wenetspeech_clean/versions/train-punc-v1-20261102-ctxclean-20261110-zhenfix-20261119/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    summary: WenetSpeech 训练文本英文写法修正
+    description: wenetspeech_clean@train-punc-v1-20261102-ctxclean-20261110 的训练文本里，说话人说英文、标注写成汉字的句子（音译如 艾特斯→iTunes，意译如 派对→party）按 audio-data-contract docs/reference/zh-en-transcription.md 规则 1 换回英文。候选来自 Qwen3-ASR-1.7B 听出英文、标注缺这个英文的 24,336 句，由 LLM 初判类别，再用 FireRedASR2-AED 核对；原文本存进 custom.zhen_fix。其余字段、音频引用照旧。构建中。
+    source: wenetspeech_clean@train-punc-v1-20261102-ctxclean-20261110
+    method: zhen-fix-en-v1
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/zhen-fix-20261117/wenet
