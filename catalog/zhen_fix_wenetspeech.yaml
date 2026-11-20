@@ -25,7 +25,7 @@
     preparation_status: building
     owner: mingdong
     summary: WenetSpeech 训练文本英文写法修正
-    description: wenetspeech_clean@train-punc-v1-20261102-ctxclean-20261110 的训练文本里，说话人说英文、标注写成汉字的句子（音译如 艾特斯→iTunes，意译如 派对→party）按 audio-data-contract docs/reference/zh-en-transcription.md 规则 1 换回英文。候选来自 Qwen3-ASR-1.7B 听出英文、标注缺这个英文的 24,336 句，由 LLM 初判类别，再用 FireRedASR2-AED 核对；原文本存进 custom.zhen_fix。其余字段、音频引用照旧。构建中。
+    description: wenetspeech_clean@train-punc-v1-20261102-ctxclean-20261110 的训练文本里，说话人说英文、标注写成汉字的句子（音译如 艾特斯→iTunes，意译如 派对→party）按 audio-data-contract docs/reference/zh-en-transcription.md 规则 1 换回英文。候选来自 Qwen3-ASR-1.7B 听出英文、标注缺这个英文的 24,336 句，由 LLM 初判类别，再用其他 ASR 模型听音频核对；原文本存进 custom.zhen_fix。其余字段、音频引用照旧。构建中。
     source: wenetspeech_clean@train-punc-v1-20261102-ctxclean-20261110
     method: zhen-fix-en-v1
     run_dir: /workspace/workspace/mingdong/data/amphiondata/zhen-fix-20261117/wenet
