@@ -259,3 +259,16 @@ def test_pushing_small_files_one_by_one_needs_an_explicit_override(capsys):
 
     assert mirror.push(args) == 2
     assert "tar shards" in capsys.readouterr().err
+
+
+def test_rate_limiter_spaces_sends_to_the_configured_rate():
+    now, slept = [0.0], []
+
+    def sleep(seconds):
+        slept.append(seconds)
+        now[0] += seconds
+
+    limiter = mirror.RateLimiter(1000, clock=lambda: now[0], sleep=sleep)
+    for _ in range(5):
+        limiter.acquire(500)
+    assert now[0] == 2.0  # 2500 bytes at 1000 B/s, the first slot is free
