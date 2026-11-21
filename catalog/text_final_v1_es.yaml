@@ -1,0 +1,337 @@
+# 训练文本终版（text-final-v1）的西语来源，规则 es-v1，规范见 docs/reference/training-text.md（v1，西语 es-v1）。占位，构建中。
+- schema_version: dataset-catalog/2.0
+  dataset_id: asr_babble_speech_pool
+  version: es-v1-20261110-final-v1-20261120
+  languages:
+  - es
+  tasks:
+  - asr
+  aliases: []
+  derived_from: asr_babble_speech_pool@es-v1-20261110
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/asr_babble_speech_pool/versions/es-v1-20261110-final-v1-20261120/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: asr_babble_speech_pool@es-v1-20261110 的西语训练文本终版，按 audio-data-contract docs/reference/training-text.md（v1，西语 es-v1） 规整。构建中。
+    source: asr_babble_speech_pool@es-v1-20261110
+    method: text-final-v1-es
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
+- schema_version: dataset-catalog/2.0
+  dataset_id: common_voice_es
+  version: cv27-train-v1-20261111-final-v1-20261120
+  languages:
+  - es
+  tasks:
+  - asr
+  aliases: []
+  derived_from: common_voice_es@cv27-train-v1-20261111
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/common_voice_es/versions/cv27-train-v1-20261111-final-v1-20261120/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: common_voice_es@cv27-train-v1-20261111 的西语训练文本终版，按 audio-data-contract docs/reference/training-text.md（v1，西语 es-v1） 规整。构建中。
+    source: common_voice_es@cv27-train-v1-20261111
+    method: text-final-v1-es
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
+- schema_version: dataset-catalog/2.0
+  dataset_id: common_voice_es
+  version: es-train-hwconf-v1-20261111-final-v1-20261120
+  languages:
+  - es
+  tasks:
+  - asr_hotwords
+  aliases: []
+  derived_from: common_voice_es@es-train-hwconf-v1-20261111
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/common_voice_es/versions/es-train-hwconf-v1-20261111-final-v1-20261120/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: common_voice_es@es-train-hwconf-v1-20261111 的西语训练文本终版，按 audio-data-contract docs/reference/training-text.md（v1，西语 es-v1） 规整。构建中。
+    source: common_voice_es@es-train-hwconf-v1-20261111
+    method: text-final-v1-es
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
+- schema_version: dataset-catalog/2.0
+  dataset_id: common_voice_es
+  version: es-train-v1-20261108-final-v1-20261120
+  languages:
+  - es
+  tasks:
+  - asr
+  aliases: []
+  derived_from: common_voice_es@es-train-v1-20261108
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/common_voice_es/versions/es-train-v1-20261108-final-v1-20261120/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: common_voice_es@es-train-v1-20261108 的西语训练文本终版，按 audio-data-contract docs/reference/training-text.md（v1，西语 es-v1） 规整。构建中。
+    source: common_voice_es@es-train-v1-20261108
+    method: text-final-v1-es
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
+- schema_version: dataset-catalog/2.0
+  dataset_id: mls_es
+  version: es-train-hwconf-v1-20261111-final-v1-20261120
+  languages:
+  - es
+  tasks:
+  - asr_hotwords
+  aliases: []
+  derived_from: mls_es@es-train-hwconf-v1-20261111
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/mls_es/versions/es-train-hwconf-v1-20261111-final-v1-20261120/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: mls_es@es-train-hwconf-v1-20261111 的西语训练文本终版，按 audio-data-contract docs/reference/training-text.md（v1，西语 es-v1） 规整。构建中。
+    source: mls_es@es-train-hwconf-v1-20261111
+    method: text-final-v1-es
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
+- schema_version: dataset-catalog/2.0
+  dataset_id: mls_es
+  version: es-train-v1-20261108-final-v1-20261120
+  languages:
+  - es
+  tasks:
+  - asr
+  aliases: []
+  derived_from: mls_es@es-train-v1-20261108
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/mls_es/versions/es-train-v1-20261108-final-v1-20261120/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: mls_es@es-train-v1-20261108 的西语训练文本终版，按 audio-data-contract docs/reference/training-text.md（v1，西语 es-v1） 规整。构建中。
+    source: mls_es@es-train-v1-20261108
+    method: text-final-v1-es
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
+- schema_version: dataset-catalog/2.0
+  dataset_id: ts_scene_pool
+  version: es-1spk-v2-20261110-final-v1-20261120
+  languages:
+  - es
+  tasks:
+  - ts_asr
+  aliases: []
+  derived_from: ts_scene_pool@es-1spk-v2-20261110
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/es-1spk-v2-20261110-final-v1-20261120/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: ts_scene_pool@es-1spk-v2-20261110 的西语训练文本终版，按 audio-data-contract docs/reference/training-text.md（v1，西语 es-v1） 规整。构建中。
+    source: ts_scene_pool@es-1spk-v2-20261110
+    method: text-final-v1-es
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
+- schema_version: dataset-catalog/2.0
+  dataset_id: ts_scene_pool
+  version: es-alt-twins-20261109-punchw-20261109-final-v1-20261120
+  languages:
+  - es
+  tasks:
+  - ts_asr
+  aliases: []
+  derived_from: ts_scene_pool@es-alt-twins-20261109-punchw-20261109
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/es-alt-twins-20261109-punchw-20261109-final-v1-20261120/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: ts_scene_pool@es-alt-twins-20261109-punchw-20261109 的西语训练文本终版，按 audio-data-contract docs/reference/training-text.md（v1，西语 es-v1） 规整。构建中。
+    source: ts_scene_pool@es-alt-twins-20261109-punchw-20261109
+    method: text-final-v1-es
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
+- schema_version: dataset-catalog/2.0
+  dataset_id: ts_scene_pool
+  version: es-handover-20261109-punchw-20261109-final-v1-20261120
+  languages:
+  - es
+  tasks:
+  - ts_asr
+  aliases: []
+  derived_from: ts_scene_pool@es-handover-20261109-punchw-20261109
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/es-handover-20261109-punchw-20261109-final-v1-20261120/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: ts_scene_pool@es-handover-20261109-punchw-20261109 的西语训练文本终版，按 audio-data-contract docs/reference/training-text.md（v1，西语 es-v1） 规整。构建中。
+    source: ts_scene_pool@es-handover-20261109-punchw-20261109
+    method: text-final-v1-es
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
+- schema_version: dataset-catalog/2.0
+  dataset_id: ts_scene_pool
+  version: es-hard-20261109-punchw-20261109-final-v1-20261120
+  languages:
+  - es
+  tasks:
+  - ts_asr
+  aliases: []
+  derived_from: ts_scene_pool@es-hard-20261109-punchw-20261109
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/es-hard-20261109-punchw-20261109-final-v1-20261120/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: ts_scene_pool@es-hard-20261109-punchw-20261109 的西语训练文本终版，按 audio-data-contract docs/reference/training-text.md（v1，西语 es-v1） 规整。构建中。
+    source: ts_scene_pool@es-hard-20261109-punchw-20261109
+    method: text-final-v1-es
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
+- schema_version: dataset-catalog/2.0
+  dataset_id: ts_scene_pool
+  version: es-near-20261109-punchw-20261109-final-v1-20261120
+  languages:
+  - es
+  tasks:
+  - ts_asr
+  aliases: []
+  derived_from: ts_scene_pool@es-near-20261109-punchw-20261109
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/es-near-20261109-punchw-20261109-final-v1-20261120/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: ts_scene_pool@es-near-20261109-punchw-20261109 的西语训练文本终版，按 audio-data-contract docs/reference/training-text.md（v1，西语 es-v1） 规整。构建中。
+    source: ts_scene_pool@es-near-20261109-punchw-20261109
+    method: text-final-v1-es
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
+- schema_version: dataset-catalog/2.0
+  dataset_id: ts_scene_pool
+  version: es-solo-20261109-punchw-20261109-final-v1-20261120
+  languages:
+  - es
+  tasks:
+  - ts_asr
+  aliases: []
+  derived_from: ts_scene_pool@es-solo-20261109-punchw-20261109
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/es-solo-20261109-punchw-20261109-final-v1-20261120/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: ts_scene_pool@es-solo-20261109-punchw-20261109 的西语训练文本终版，按 audio-data-contract docs/reference/training-text.md（v1，西语 es-v1） 规整。构建中。
+    source: ts_scene_pool@es-solo-20261109-punchw-20261109
+    method: text-final-v1-es
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
