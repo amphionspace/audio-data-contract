@@ -263,3 +263,90 @@
     - kespeech@legacy-20260804 train voices
     - Qwen3-TTS-12Hz-1.7B-Base
     run_dir: /workspace/workspace/mingdong/data/amphiondata/ctx-implicit-zh-20261117
+# 合成说字数据的 TTS 声音做的 TS 场景（带孪生）：train-v1-20261114 train_ts 的克隆片段之间互为干扰人，30% 换另一个音色注册、答案为空。
+- schema_version: dataset-catalog/2.0
+  dataset_id: context_correction_synth_zh
+  version: ts-twins-v1-20261121
+  languages:
+  - zh
+  tasks:
+  - ts_asr
+  aliases: []
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/context_correction_synth_zh/versions/ts-twins-v1-20261121/state.json
+  - name: audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/context_correction_synth_zh/versions/ts-twins-v1-20261121/audio-index.jsonl.gz
+    expected_bytes: 173251
+    sha256: 4e657bcfc4bd7b44d3b64c378cccab26ef9069f99e154696994272b32a1ff232
+    metadata:
+      record_count: 3201
+      description: 场景用到的克隆片段和注册音频，行照抄 train-v1-20261114 的 audio-index（音频仍在 train-v1-20261114/audio/，没有复制）
+  - name: train_ts_twins-records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/context_correction_synth_zh/versions/ts-twins-v1-20261121/records/train_ts_twins.jsonl.gz
+    expected_bytes: 878759
+    sha256: ba121fe8edf0b34787093a9b61e35eb610d0ed8380e47ad0e7c4fc5ec420b963
+    metadata:
+      record_count: 4184
+  - name: think
+    kind: jsonl-metadata
+    root_alias: aidc_data
+    relative_path: datasets/context_correction_synth_zh/versions/ts-twins-v1-20261121/think.jsonl.gz
+    expected_bytes: 82053
+    sha256: 3903ed86e89265686a36c832cdb4897867a982511bb7d21e8dc80f619f7be439
+    metadata:
+      record_count: 2917
+      think_on_records: 2900
+      training_datasets:
+      - context_correction_synth_zh@ts-twins-v1-20261121
+      description: 在场场景照抄来源 train_ts 记录在 train-v1-20261114 think.jsonl.gz 里的那一行（think 文本和开关不变），只换 dataset 和 record_id；孪生题答案为空，没有 think 行
+  - name: summary
+    kind: json-metadata
+    root_alias: aidc_data
+    relative_path: datasets/context_correction_synth_zh/versions/ts-twins-v1-20261121/summary.json
+    expected_bytes: 344
+    sha256: 35e9477beecfe81657275d8f97bf43878a922b031490ea2d866870f450dff3ab
+    metadata:
+      description: 按模式和在场 / 孪生的记录数、孪生占比、其他音色个数分布、think 行数、片段数和场景总时长
+  splits:
+    train_ts_twins:
+      artifacts:
+        records:
+        - train_ts_twins-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 4184
+        duration_hours: 22.2711
+        duration_basis: scene length without gaps (alternate sums the turns, burst takes the longest track)
+      provenance:
+        description: >-
+          每条 train_ts 记录一个在场场景（目标是它的克隆片段，注册音频不变，另有 1–2 个别的克隆音色说话；轮流、重叠各约一半），
+          其中约 43% 再配一个孪生场景：同样的片段，换一个不在场的音色的注册音频，答案为空。孪生 1,267 条，占 30.3%。
+  provenance:
+    summary: 合成说字数据的 TTS 声音做的 TS 场景（带孪生）
+    status: complete
+    synthetic: full
+    owner: mingdong
+    description: >-
+      train-v1-20261114 的 train_ts 是训练里唯一用 TTS 声音的 TS 数据，目标每条都在场；open-audio-llm
+      runs/zh-ctx-clue-target-20261117 第 4–6 问发现模型因此把 TTS 声音一律当成目标，在全合成的 police_scene_bench 场景 TS 上
+      把对方的话也转写（目标不在场误出字 53/70）；去掉 train_ts 能修好场景 TS，但模型又拒收同一人的克隆声音
+      （上下文纠偏 v2 的 TS 题 943/3672 输出空）。这一版照 ts_scene_pool alt-twins 的做法
+      （scripts/ts_robust/build_ts_scene_pool.py --alt-twins --twin-share 0.3），只用 train-v1-20261114 自己的 284 个克隆音色：
+      每条 train_ts 记录做一个在场场景，其他说话人取别的音色的片段（轮流说话时取 2–8 秒一段，场景不超过 30 秒；
+      重叠时盖住目标的 40–100%），30% 的记录是孪生：同一场景换一个不在场音色的注册音频，答案为空。
+      这样 TTS 声音既会是目标，也会是别人。记录只写片段的位置（metadata.scene），训练时在线混合，同 ts_scene_pool；
+      audio-index 指向 train-v1-20261114 的音频，没有复制。在场场景沿用来源记录的 labels 和 think 行。
+      生成脚本 open-audio-llm runs/zh-ctx-clue-target-20261117/scripts/build_synth_ts_twins.py（种子 20261121）。
+    sources:
+    - context_correction_synth_zh@train-v1-20261114:train_ts
+    run_dir: /workspace/workspace/mingdong/repo/oal-clue-target/runs/zh-ctx-clue-target-20261117
+  derived_from: context_correction_synth_zh@train-v1-20261114
