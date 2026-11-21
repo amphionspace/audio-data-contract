@@ -2314,7 +2314,7 @@
     rounds: 书面化标点（底版本自带）；说字写法（ctxclean，context_correction_clean_zh@v1-20261110）
     unchanged: 规则没有改动的文本文件、录音清单、音频和非 train 划分，引用起点版本的产物
   provenance:
-    summary: VITW 中文说字写法核对，去掉 3 段存疑
+    summary: 真实场景中英语音（VITW）；含回声、远场等评测
     description: vitw@2m-20261013（交付配方 v7set34 训练用的版本）的训练文本终版，按 audio-data-contract docs/reference/training-text.md（v1） 应用全部已执行的文本修正，替代配方原来的版本和中间修正版本。起点 vitw@2m-20261013-ctxclean-20261110；已含修正：说字写法（ctxclean，context_correction_clean_zh@v1-20261110）。其余字段、录音清单和音频照旧，引用起点版本的产物。
     owner: mingdong
     snapshot_date: '2026-11-20'

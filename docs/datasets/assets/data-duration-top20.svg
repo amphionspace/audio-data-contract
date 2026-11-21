@@ -74,10 +74,10 @@
 <rect x="640" y="682" width="52.24" height="23" rx="3" fill="#2563eb"/>
 <text x="1094" y="699" font-size="14">17,373.9 小时</text>
 <text x="24" y="746" font-size="15" font-weight="600">emilia2_dialog</text>
-<text x="24" y="764" font-size="11" fill="#475569">emilia2_dialog@dialog-turn-taking-20261013-enroll</text>
+<text x="24" y="764" font-size="11" fill="#475569">emilia2_dialog@dialog-turn-taking-20261013-enroll-final-v1-20261120</text>
 <rect x="640" y="734" width="440" height="23" rx="3" fill="#f1f5f9"/>
-<rect x="640" y="734" width="45.62" height="23" rx="3" fill="#2563eb"/>
-<text x="1094" y="751" font-size="14">15,172.8 小时</text>
+<rect x="640" y="734" width="45.20" height="23" rx="3" fill="#2563eb"/>
+<text x="1094" y="751" font-size="14">15,031.0 小时</text>
 <text x="24" y="798" font-size="15" font-weight="600">wenetspeech_chuan</text>
 <text x="24" y="816" font-size="11" fill="#475569">wenetspeech_chuan@legacy-20260804</text>
 <rect x="640" y="786" width="440" height="23" rx="3" fill="#f1f5f9"/>

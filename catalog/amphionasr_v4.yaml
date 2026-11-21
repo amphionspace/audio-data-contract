@@ -2081,6 +2081,7 @@
       - metadata.recording_id
       - metadata.source_record_id
       pattern: '(?<![0-9a-f])[0-9a-f]{16}(?![0-9a-f])'
+    superseded_by: emilia2_dialog@dialog-turn-taking-20261013-enroll-final-v1-20261120
 - schema_version: dataset-catalog/2.0
   dataset_id: emilia2_mix
   version: mix-20261013
@@ -2881,6 +2882,7 @@
     skipped_audio: 0
     duplicate_hotword_rows: 1047
     registered_from: lx 私有登记 /workspace/workspace/lx/data/amphionasr（AmphionASR v4 配方，open-audio-llm feat/amphionasr-v4）；清单原样复制到 aidc_data，root_alias amphionasr→aidc_data；生成脚本快照 /workspace/data/migration/register-amphionasr-v4-20261015/scripts/ (2026-10-15 公共登记)
+    superseded_by: hw_sft@hw-20261014-final-v1-20261120
 - schema_version: dataset-catalog/2.0
   dataset_id: magicdata_ramc
   version: turn-taking-20261014
@@ -3908,6 +3910,7 @@
     snapshot_date: '2026-10-13'
     source: checkpoint-34479 sharegpt vitw.jsonl
     registered_from: lx 私有登记 /workspace/workspace/lx/data/amphionasr（AmphionASR v4 配方，open-audio-llm feat/amphionasr-v4）；清单原样复制到 aidc_data，root_alias amphionasr→aidc_data；生成脚本快照 /workspace/data/migration/register-amphionasr-v4-20261015/scripts/ (2026-10-15 公共登记)
+    superseded_by: vitw@2m-20261013-final-v1-20261120
 - schema_version: dataset-catalog/2.0
   dataset_id: emilia2_short
   version: short-lance-20261023
@@ -3982,3 +3985,4 @@
       fields:
       - metadata.recording_id
       pattern: '(?<![0-9a-f])[0-9a-f]{16}(?![0-9a-f])'
+    superseded_by: emilia2_short@short-lance-20261023-final-v1-20261120
