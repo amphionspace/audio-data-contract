@@ -1,4 +1,5 @@
-# 训练文本终版（text-final-v1）的西语来源，规则 es-v1，规范见 docs/reference/training-text.md（v1，西语 es-v1）。占位，构建中。
+# 训练文本终版（text-final-v1）的西语来源，规则 es-v1，规范见 docs/reference/training-text.md（v1，西语 es-v1）。
+# 生成脚本 scripts/text_final/build_es.py；只有规则改动了文本的来源才有终版，其余来源的原版本即终版。
 - schema_version: dataset-catalog/2.0
   dataset_id: asr_babble_speech_pool
   version: es-v1-20261110-final-v1-20261120
@@ -7,26 +8,59 @@
   tasks:
   - asr
   aliases: []
-  derived_from: asr_babble_speech_pool@es-v1-20261110
   artifacts:
   - name: preparation_state
     kind: dataset-state
     root_alias: aidc_data
     relative_path: datasets/asr_babble_speech_pool/versions/es-v1-20261110-final-v1-20261120/state.json
+  - name: es-records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/asr_babble_speech_pool/versions/es-v1-20261110-final-v1-20261120/text/es-records.jsonl.gz
+    sha256: fe0811df81d098a75b3e6e195480e795ac35135a04e18a6639378a7a5714f134
+    metadata:
+      record_count: 12000
+    expected_bytes: 1913311
+  - name: es-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/asr_babble_speech_pool/versions/es-v1-20261110/audio_index_es.jsonl.gz
+    sha256: ceb6d0cf84be82d6445582a7a8e3c6b29fd2c9362e29d0c40129cf2f9acf7b7d
+    metadata:
+      record_count: 12000
   splits:
-    train:
+    es:
       artifacts:
-        preparation_state:
-        - preparation_state
-      provenance:
-        preparation_status: building
+        records:
+        - es-records
+        audio_index:
+        - es-audio-index
+      task: asr
+      statistics:
+        records: 12000
+        duration_hours: 33.82
+        duration_basis: clip duration (segment span, or the whole file)
+        final_es_changed_records: 2
   provenance:
-    preparation_status: building
-    owner: mingdong
-    description: asr_babble_speech_pool@es-v1-20261110 的西语训练文本终版，按 audio-data-contract docs/reference/training-text.md（v1，西语 es-v1） 规整。构建中。
+    synthetic: none
+    snapshot_date: '2026-11-21'
+    description: asr_babble_speech_pool@es-v1-20261110 的西语训练文本终版，按 audio-data-contract docs/reference/training-text.md（v1，西语 es-v1） 规整，替代原版本：单字母词旧写法 á/é/ó 改为 a/e/o（es-2）2 条。同一行里的场景文本、热词标注文本和热词列表一起改；其余字段、录音清单和音频照旧，引用原版本的产物。
+    sources:
+    - common_voice_es@es-train-v1-20261108:train
+    - babble_noise_train@es-v1-20261110:es
+    - babble_noise_train@v2-20261024:zh
+    - babble_noise_train@v2-20261024:en
     source: asr_babble_speech_pool@es-v1-20261110
     method: text-final-v1-es
+    owner: mingdong
     run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
+    build_script: scripts/text_final/build_es.py
+  derived_from: asr_babble_speech_pool@es-v1-20261110
+  recipe_parameters:
+    spec: docs/reference/training-text.md（v1，西语 es-v1）
+    start: asr_babble_speech_pool@es-v1-20261110
+    rounds: 单字母词旧写法 á/é/ó 改为 a/e/o（es-2）2 条
+    unchanged: 规则没有改动的文本文件、录音清单、音频和非 train 划分，引用原版本的产物
 - schema_version: dataset-catalog/2.0
   dataset_id: common_voice_es
   version: cv27-train-v1-20261111-final-v1-20261120
@@ -41,20 +75,56 @@
     kind: dataset-state
     root_alias: aidc_data
     relative_path: datasets/common_voice_es/versions/cv27-train-v1-20261111-final-v1-20261120/state.json
+  - name: train_recordings
+    kind: lhotse-recordings
+    root_alias: aidc_data
+    relative_path: datasets/common_voice_es/versions/mdc-27.0/manifests/cv27-es_recordings.jsonl.gz
+    expected_bytes: 11913367
+    sha256: d40b6b3a66dc0f44a0b396ad90839624a78b89c8dd1dfd600544e4aae7747b72
+    metadata:
+      shared_with: common_voice_es@mdc-27.0
+  - name: train_supervisions
+    kind: lhotse-supervisions
+    root_alias: aidc_data
+    relative_path: datasets/common_voice_es/versions/cv27-train-v1-20261111-final-v1-20261120/text/train_supervisions.jsonl.gz
+    expected_bytes: 75305734
+    sha256: ccfee621f4a6510c7a8d0987c02aea7d2a7ded463257cbb9ce063c4aab3ffbd3
+    metadata:
+      record_count: 980450
+      pass_count: 980450
+      rows_with_hotwords: 469488
   splits:
     train:
       artifacts:
-        preparation_state:
-        - preparation_state
-      provenance:
-        preparation_status: building
+        recordings:
+        - train_recordings
+        supervisions:
+        - train_supervisions
+      statistics:
+        records: 980450
+        duration_hours: 1355.54
+        duration_basis: sum of supervision durations of the kept rows
+        rows_with_hotwords: 469488
+        hotwords: 668558
+        hotwords_dropped_not_whole_word: 1748
+        final_es_changed_records: 980450
+  recipe_parameters:
+    spec: docs/reference/training-text.md（v1，西语 es-v1）
+    start: common_voice_es@cv27-train-v1-20261111
+    rounds: 恢复 Common Voice 27.0 原句的标点并按 es-v1 书面写法规整（es-1）980,450 条；单字母词旧写法 á/é/ó 改为 a/e/o（es-2）482 条
+    unchanged: 规则没有改动的文本文件、录音清单、音频和非 train 划分，引用原版本的产物
   provenance:
-    preparation_status: building
     owner: mingdong
-    description: common_voice_es@cv27-train-v1-20261111 的西语训练文本终版，按 audio-data-contract docs/reference/training-text.md（v1，西语 es-v1） 规整。构建中。
+    description: common_voice_es@cv27-train-v1-20261111 的西语训练文本终版，按 audio-data-contract docs/reference/training-text.md（v1，西语 es-v1） 规整，替代原版本：恢复 Common Voice 27.0 原句的标点并按 es-v1 书面写法规整（es-1）980,450 条；单字母词旧写法 á/é/ó 改为 a/e/o（es-2）482 条。同一行里的场景文本、热词标注文本和热词列表一起改；其余字段、录音清单和音频照旧，引用原版本的产物。
     source: common_voice_es@cv27-train-v1-20261111
-    method: text-final-v1-es
     run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
+    scripts:
+    - /workspace/workspace/mingdong/data/amphiondata/cv27-es-pt-20261111/scripts/hotwords.sh
+    - /workspace/workspace/mingdong/data/amphiondata/cv27-es-pt-20261111/scripts/finalize_hotwords.py
+    limitations: 热词是 LLM 抽取、未经人工核对；文本未做书面化标点（CV 原句自带标点）。
+    snapshot_date: '2026-11-21'
+    method: text-final-v1-es
+    build_script: scripts/text_final/build_es.py
 - schema_version: dataset-catalog/2.0
   dataset_id: common_voice_es
   version: es-train-hwconf-v1-20261111-final-v1-20261120
@@ -69,20 +139,115 @@
     kind: dataset-state
     root_alias: aidc_data
     relative_path: datasets/common_voice_es/versions/es-train-hwconf-v1-20261111-final-v1-20261120/state.json
+  - name: train
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/common_voice_es/versions/es-train-hwconf-v1-20261111-final-v1-20261120/text/train.jsonl.gz
+    expected_bytes: 11283264
+    sha256: be31d3653d22b21c74a80dbf3533b1a1439d4dfe514fadf00ab676bf6a0644b9
+    metadata:
+      record_count: 165693
+  - name: audio_index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/common_voice_es/versions/es-train-hwconf-v1-20261111/audio_index/audio-index.jsonl.gz
+    expected_bytes: 1912857
+    sha256: 9518eb17a113c2f0ef3c739a72b0abe416b77394e4204abf8258ba88d9f4f8db
+    metadata:
+      record_count: 165693
+      audio: legacy source files of common_voice_es@legacy, not copied
+  - name: confusables
+    kind: jsonl-metadata
+    root_alias: aidc_data
+    relative_path: datasets/common_voice_es/versions/es-train-hwconf-v1-20261111/mined/confusables.jsonl.gz
+    expected_bytes: 1888062
+    sha256: a9f59965839a318b986bda3baee5608bb6a01b879b21c43887a92a6213e123f4
+  - name: qc
+    kind: quality-report
+    root_alias: aidc_data
+    relative_path: datasets/common_voice_es/versions/es-train-hwconf-v1-20261111/qc.yaml
+    expected_bytes: 5727
+    sha256: 2bfa0fee7697c85e5805f7772f92f33576860a42695332948c914b72ed9ac87f
+    metadata:
+      passed: true
+  - name: record_index
+    kind: lance-record-index
+    root_alias: aidc_data
+    relative_path: datasets/common_voice_es/versions/es-train-hwconf-v1-20261111-final-v1-20261120/record_index/index.json
+    expected_bytes: 758
+    sha256: 921c8ec02d677d0cefb77cd73485d214ff6ebdef9e1b7376bc421b62c78e7673
+    metadata:
+      snapshot_version: 13
+      rows: 165693
+      schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
   splits:
     train:
       artifacts:
-        preparation_state:
-        - preparation_state
-      provenance:
-        preparation_status: building
+        records:
+        - train
+        audio_index:
+        - audio_index
+        records_lance:
+        - record_index
+      statistics:
+        records: 165693
+        duration_hours: 247.57
+        hotwords: 235150
+        records_with_confusables: 90439
+        records_with_confusables_fraction: 0.5458
+        confusables: 266153
+        mean_confusables_when_any: 2.943
+        confusables_per_hotword: 1.132
+        confusables_per_record:
+          '0': 75254
+          '1': 20479
+          '2': 12996
+          '3': 39821
+          '4': 4749
+          '5': 3353
+          '6': 5775
+          '7': 834
+          '8': 718
+          '9': 875
+          '10': 181
+          '11': 202
+          '12': 207
+          '13': 58
+          '14': 61
+          '15': 45
+          '16': 18
+          '17': 22
+          '18': 21
+          '19': 5
+          '20': 3
+          '21': 10
+          '22': 2
+          '23': 2
+          '26': 1
+          '31': 1
+        duration_basis: sum of supervision durations
+        final_es_changed_records: 9
+      provenance: {}
+  recipe_parameters:
+    spec: docs/reference/training-text.md（v1，西语 es-v1）
+    start: common_voice_es@es-train-hwconf-v1-20261111
+    rounds: 单字母词旧写法 á/é/ó 改为 a/e/o（es-2）9 条
+    unchanged: 规则没有改动的文本文件、录音清单、音频和非 train 划分，引用原版本的产物
   provenance:
-    preparation_status: building
     owner: mingdong
-    description: common_voice_es@es-train-hwconf-v1-20261111 的西语训练文本终版，按 audio-data-contract docs/reference/training-text.md（v1，西语 es-v1） 规整。构建中。
+    description: common_voice_es@es-train-hwconf-v1-20261111 的西语训练文本终版，按 audio-data-contract docs/reference/training-text.md（v1，西语 es-v1） 规整，替代原版本：单字母词旧写法 á/é/ó 改为 a/e/o（es-2）9 条。同一行里的场景文本、热词标注文本和热词列表一起改；其余字段、录音清单和音频照旧，引用原版本的产物。
+    sources:
+    - common_voice_es@es-train-v1-20261108
+    - hotword_bench@es-v1-20261111 (gold words excluded from the vocabulary)
+    scripts:
+    - scripts/hotword_bench/build_es_train_confusables.py
+    - scripts/hotword_bench/recipe-es-train-hwconf-v1.yaml
+    limitations: 近音词按拼写推出的读音键检索，不是声学相似度，也不覆盖英文专名的英语读法；词库只收标注里出现至少两次的词，仍有重复出现的 OCR / 拼写错误词（如 Ingalaterra、jesuchristo），也有同一人名的历史写法（Moctezuma/Montezuma），按规则分不出来；热词是 LLM 抽取、未经人工核对。
+    snapshot_date: '2026-11-21'
     source: common_voice_es@es-train-hwconf-v1-20261111
     method: text-final-v1-es
     run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
+    build_script: scripts/text_final/build_es.py
 - schema_version: dataset-catalog/2.0
   dataset_id: common_voice_es
   version: es-train-v1-20261108-final-v1-20261120
@@ -97,20 +262,62 @@
     kind: dataset-state
     root_alias: aidc_data
     relative_path: datasets/common_voice_es/versions/es-train-v1-20261108-final-v1-20261120/state.json
+  - name: train_recordings
+    kind: lhotse-recordings
+    root_alias: aidc_data
+    relative_path: datasets/common_voice_es/versions/legacy/manifests/cv-es_recordings_train.jsonl.gz
+    expected_bytes: 4216271
+    sha256: 2c9c934c822991b5e1374f2cf21036fa5472bd72c7cfb1c358258ed603fa57dd
+    metadata:
+      shared_with: common_voice_es@legacy
+  - name: train_supervisions
+    kind: lhotse-supervisions
+    root_alias: aidc_data
+    relative_path: datasets/common_voice_es/versions/es-train-v1-20261108-final-v1-20261120/text/train_supervisions.jsonl.gz
+    expected_bytes: 25345090
+    sha256: a18d177ccb5d8b8725332cc94a64f134422c5d42dc5b2d040f37bbf2260b06fd
+    metadata:
+      record_count: 356706
+      pass_count: 356706
+      rows_with_hotwords: 165693
+      punctuated: true
   splits:
     train:
       artifacts:
-        preparation_state:
-        - preparation_state
-      provenance:
-        preparation_status: building
+        recordings:
+        - train_recordings
+        supervisions:
+        - train_supervisions
+      statistics:
+        records: 356706
+        duration_hours: 513.98
+        duration_basis: sum of supervision durations of the kept rows
+        source_records: 357397
+        dropped_records:
+          bad_annotation: 342
+          ambiguous: 330
+          insufficient_engines: 6
+          no_valid_engine: 2
+          implausible_char_rate: 11
+        rows_with_hotwords: 165693
+        final_es_changed_records: 52
+  recipe_parameters:
+    spec: docs/reference/training-text.md（v1，西语 es-v1）
+    start: common_voice_es@es-train-v1-20261108
+    rounds: 单字母词旧写法 á/é/ó 改为 a/e/o（es-2）52 条
+    unchanged: 规则没有改动的文本文件、录音清单、音频和非 train 划分，引用原版本的产物
   provenance:
-    preparation_status: building
     owner: mingdong
-    description: common_voice_es@es-train-v1-20261108 的西语训练文本终版，按 audio-data-contract docs/reference/training-text.md（v1，西语 es-v1） 规整。构建中。
+    description: common_voice_es@es-train-v1-20261108 的西语训练文本终版，按 audio-data-contract docs/reference/training-text.md（v1，西语 es-v1） 规整，替代原版本：单字母词旧写法 á/é/ó 改为 a/e/o（es-2）52 条。同一行里的场景文本、热词标注文本和热词列表一起改；其余字段、录音清单和音频照旧，引用原版本的产物。
     source: common_voice_es@es-train-v1-20261108
-    method: text-final-v1-es
     run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
+    scripts:
+    - /workspace/workspace/mingdong/data/amphiondata/es-data-20261108/scripts/clean.sh
+    - /workspace/workspace/mingdong/data/amphiondata/es-data-20261108/scripts/punc_hotwords.sh
+    - /workspace/workspace/mingdong/data/amphiondata/es-data-20261108/scripts/finalize.py
+    snapshot_date: '2026-11-21'
+    method: text-final-v1-es
+    build_script: scripts/text_final/build_es.py
 - schema_version: dataset-catalog/2.0
   dataset_id: mls_es
   version: es-train-hwconf-v1-20261111-final-v1-20261120
@@ -125,20 +332,123 @@
     kind: dataset-state
     root_alias: aidc_data
     relative_path: datasets/mls_es/versions/es-train-hwconf-v1-20261111-final-v1-20261120/state.json
+  - name: train
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/mls_es/versions/es-train-hwconf-v1-20261111-final-v1-20261120/text/train.jsonl.gz
+    expected_bytes: 13980385
+    sha256: 078923ebe90ade65d6727077e0737632a54f36ecd43ea24c095227dafed2988a
+    metadata:
+      record_count: 110501
+  - name: audio_index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/mls_es/versions/es-train-hwconf-v1-20261111/audio_index/audio-index.jsonl.gz
+    expected_bytes: 1317624
+    sha256: 1372f7566977b51a6cd9b2c123e5bd0ae8268749c64007e0c14dbe2cc36b7230
+    metadata:
+      record_count: 110501
+      audio: legacy source files of mls_es@legacy, not copied
+  - name: confusables
+    kind: jsonl-metadata
+    root_alias: aidc_data
+    relative_path: datasets/mls_es/versions/es-train-hwconf-v1-20261111/mined/confusables.jsonl.gz
+    expected_bytes: 800224
+    sha256: c07e57e58a3cb8f7b3895ff81422353166640e0018bb40e7983366409dc77bbc
+  - name: qc
+    kind: quality-report
+    root_alias: aidc_data
+    relative_path: datasets/mls_es/versions/es-train-hwconf-v1-20261111/qc.yaml
+    expected_bytes: 8857
+    sha256: d8f3e37cfd3b62c7e07d0fbdafbea0d4cadee718810c35ef251a57f0bae8d86d
+    metadata:
+      passed: true
+  - name: record_index
+    kind: lance-record-index
+    root_alias: aidc_data
+    relative_path: datasets/mls_es/versions/es-train-hwconf-v1-20261111-final-v1-20261120/record_index/index.json
+    expected_bytes: 749
+    sha256: 136a4cbc73592bf8011d20dbd1febac779021d806f33490c91fd0461fb7120eb
+    metadata:
+      snapshot_version: 13
+      rows: 110501
+      schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
   splits:
     train:
       artifacts:
-        preparation_state:
-        - preparation_state
-      provenance:
-        preparation_status: building
+        records:
+        - train
+        audio_index:
+        - audio_index
+        records_lance:
+        - record_index
+      statistics:
+        records: 110501
+        duration_hours: 467.76
+        hotwords: 196527
+        records_with_confusables: 91888
+        records_with_confusables_fraction: 0.8316
+        confusables: 335990
+        mean_confusables_when_any: 3.657
+        confusables_per_hotword: 1.71
+        confusables_per_record:
+          '0': 18613
+          '1': 15063
+          '2': 11262
+          '3': 34852
+          '4': 7204
+          '5': 5439
+          '6': 9050
+          '7': 2443
+          '8': 1864
+          '9': 2081
+          '10': 729
+          '11': 555
+          '12': 508
+          '13': 233
+          '14': 150
+          '15': 125
+          '16': 83
+          '17': 62
+          '18': 54
+          '19': 17
+          '20': 29
+          '21': 17
+          '22': 18
+          '23': 13
+          '24': 6
+          '25': 11
+          '26': 4
+          '27': 6
+          '28': 2
+          '29': 2
+          '30': 2
+          '31': 1
+          '33': 2
+          '34': 1
+        duration_basis: sum of supervision durations
+        final_es_changed_records: 26410
+      provenance: {}
+  recipe_parameters:
+    spec: docs/reference/training-text.md（v1，西语 es-v1）
+    start: mls_es@es-train-hwconf-v1-20261111
+    rounds: 单字母词旧写法 á/é/ó 改为 a/e/o（es-2）26,410 条
+    unchanged: 规则没有改动的文本文件、录音清单、音频和非 train 划分，引用原版本的产物
   provenance:
-    preparation_status: building
     owner: mingdong
-    description: mls_es@es-train-hwconf-v1-20261111 的西语训练文本终版，按 audio-data-contract docs/reference/training-text.md（v1，西语 es-v1） 规整。构建中。
+    description: mls_es@es-train-hwconf-v1-20261111 的西语训练文本终版，按 audio-data-contract docs/reference/training-text.md（v1，西语 es-v1） 规整，替代原版本：单字母词旧写法 á/é/ó 改为 a/e/o（es-2）26,410 条。同一行里的场景文本、热词标注文本和热词列表一起改；其余字段、录音清单和音频照旧，引用原版本的产物。
+    sources:
+    - mls_es@es-train-v1-20261108
+    - hotword_bench@es-v1-20261111 (gold words excluded from the vocabulary)
+    scripts:
+    - scripts/hotword_bench/build_es_train_confusables.py
+    - scripts/hotword_bench/recipe-es-train-hwconf-v1.yaml
+    limitations: 近音词按拼写推出的读音键检索，不是声学相似度，也不覆盖英文专名的英语读法；词库只收标注里出现至少两次的词，仍有重复出现的 OCR / 拼写错误词（如 Ingalaterra、jesuchristo），也有同一人名的历史写法（Moctezuma/Montezuma），按规则分不出来；热词是 LLM 抽取、未经人工核对。
+    snapshot_date: '2026-11-21'
     source: mls_es@es-train-hwconf-v1-20261111
     method: text-final-v1-es
     run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
+    build_script: scripts/text_final/build_es.py
 - schema_version: dataset-catalog/2.0
   dataset_id: mls_es
   version: es-train-v1-20261108-final-v1-20261120
@@ -153,20 +463,74 @@
     kind: dataset-state
     root_alias: aidc_data
     relative_path: datasets/mls_es/versions/es-train-v1-20261108-final-v1-20261120/state.json
+  - name: train_recordings
+    kind: lhotse-recordings
+    root_alias: aidc_data
+    relative_path: datasets/mls_es/versions/legacy/manifests/mls-spanish_recordings_train.jsonl.gz
+    expected_bytes: 2851934
+    sha256: b138bf0d4092f96533a156248b69e3802e348b43e0b95e8572ad92e0fcd6f08f
+    metadata:
+      shared_with: mls_es@legacy
+  - name: train_supervisions
+    kind: lhotse-supervisions
+    root_alias: aidc_data
+    relative_path: datasets/mls_es/versions/es-train-v1-20261108-final-v1-20261120/text/train_supervisions.jsonl.gz
+    expected_bytes: 29919335
+    sha256: d6d8cc55281ee4808d2d43f2cde32ff222aaf3e9ed03ad006d75568d68ce2dde
+    metadata:
+      record_count: 208356
+      pass_count: 208356
+      rows_with_hotwords: 110501
+      punctuated: true
+  - name: train_punc_all
+    kind: lhotse-supervisions
+    root_alias: aidc_data
+    relative_path: datasets/mls_es/versions/es-train-v1-20261108-final-v1-20261120/text/train_punc_all.jsonl.gz
+    expected_bytes: 22972037
+    sha256: 3607a88bea6368803cecc2f51e997ddbf916354900e58237a34f4874d98e8a01
+    metadata:
+      record_count: 220701
+      note: es-v1 punctuated text of every legacy train row, before cleaning
   splits:
     train:
       artifacts:
-        preparation_state:
-        - preparation_state
-      provenance:
-        preparation_status: building
+        recordings:
+        - train_recordings
+        supervisions:
+        - train_supervisions
+        punc_all:
+        - train_punc_all
+      statistics:
+        records: 208356
+        duration_hours: 866.15
+        duration_basis: sum of supervision durations of the kept rows
+        source_records: 220701
+        dropped_records:
+          label_mismatch_consensus: 10653
+          bad_annotation: 731
+          ambiguous: 81
+          label_footer: 677
+          insufficient_engines: 95
+          no_valid_engine: 108
+        rows_with_hotwords: 110501
+        final_es_changed_records: 99505
+  recipe_parameters:
+    spec: docs/reference/training-text.md（v1，西语 es-v1）
+    start: mls_es@es-train-v1-20261108
+    rounds: 单字母词旧写法 á/é/ó 改为 a/e/o（es-2）99,505 条
+    unchanged: 规则没有改动的文本文件、录音清单、音频和非 train 划分，引用原版本的产物
   provenance:
-    preparation_status: building
     owner: mingdong
-    description: mls_es@es-train-v1-20261108 的西语训练文本终版，按 audio-data-contract docs/reference/training-text.md（v1，西语 es-v1） 规整。构建中。
+    description: mls_es@es-train-v1-20261108 的西语训练文本终版，按 audio-data-contract docs/reference/training-text.md（v1，西语 es-v1） 规整，替代原版本：单字母词旧写法 á/é/ó 改为 a/e/o（es-2）99,505 条。同一行里的场景文本、热词标注文本和热词列表一起改；其余字段、录音清单和音频照旧，引用原版本的产物。
     source: mls_es@es-train-v1-20261108
-    method: text-final-v1-es
     run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
+    scripts:
+    - /workspace/workspace/mingdong/data/amphiondata/es-data-20261108/scripts/clean.sh
+    - /workspace/workspace/mingdong/data/amphiondata/es-data-20261108/scripts/punc_hotwords.sh
+    - /workspace/workspace/mingdong/data/amphiondata/es-data-20261108/scripts/finalize.py
+    snapshot_date: '2026-11-21'
+    method: text-final-v1-es
+    build_script: scripts/text_final/build_es.py
 - schema_version: dataset-catalog/2.0
   dataset_id: ts_scene_pool
   version: es-1spk-v2-20261110-final-v1-20261120
@@ -175,26 +539,56 @@
   tasks:
   - ts_asr
   aliases: []
-  derived_from: ts_scene_pool@es-1spk-v2-20261110
   artifacts:
   - name: preparation_state
     kind: dataset-state
     root_alias: aidc_data
     relative_path: datasets/ts_scene_pool/versions/es-1spk-v2-20261110-final-v1-20261120/state.json
+  - name: es-records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/es-1spk-v2-20261110-final-v1-20261120/text/es-records.jsonl.gz
+    sha256: d795f05038d30ed36a63dc0efcbc839befff427b2e57ef9fb96ca42c09db69bc
+    metadata:
+      record_count: 262978
+    expected_bytes: 16502722
+  - name: es-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/es-1spk-v2-20261110/audio_index_es.jsonl.gz
+    sha256: f5a5a122aa1cfd28421dbeeae135e7abed08e43efef5a94a749c43dd28fa01b1
+    metadata:
+      record_count: 262978
   splits:
-    train:
+    es:
       artifacts:
-        preparation_state:
-        - preparation_state
-      provenance:
-        preparation_status: building
+        records:
+        - es-records
+        audio_index:
+        - es-audio-index
+      task: ts_asr
+      statistics:
+        records: 262978
+        duration_hours: 374.0
+        duration_basis: duration of the target (mixture slot) files
+        final_es_changed_records: 45
   provenance:
-    preparation_status: building
-    owner: mingdong
-    description: ts_scene_pool@es-1spk-v2-20261110 的西语训练文本终版，按 audio-data-contract docs/reference/training-text.md（v1，西语 es-v1） 规整。构建中。
+    synthetic: none
+    snapshot_date: '2026-11-21'
+    description: ts_scene_pool@es-1spk-v2-20261110 的西语训练文本终版，按 audio-data-contract docs/reference/training-text.md（v1，西语 es-v1） 规整，替代原版本：单字母词旧写法 á/é/ó 改为 a/e/o（es-2）45 条。同一行里的场景文本、热词标注文本和热词列表一起改；其余字段、录音清单和音频照旧，引用原版本的产物。
+    sources:
+    - common_voice_es@es-train-v1-20261108:train
     source: ts_scene_pool@es-1spk-v2-20261110
     method: text-final-v1-es
+    owner: mingdong
     run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
+    build_script: scripts/text_final/build_es.py
+  derived_from: ts_scene_pool@es-1spk-v2-20261110
+  recipe_parameters:
+    spec: docs/reference/training-text.md（v1，西语 es-v1）
+    start: ts_scene_pool@es-1spk-v2-20261110
+    rounds: 单字母词旧写法 á/é/ó 改为 a/e/o（es-2）45 条
+    unchanged: 规则没有改动的文本文件、录音清单、音频和非 train 划分，引用原版本的产物
 - schema_version: dataset-catalog/2.0
   dataset_id: ts_scene_pool
   version: es-alt-twins-20261109-punchw-20261109-final-v1-20261120
@@ -209,20 +603,64 @@
     kind: dataset-state
     root_alias: aidc_data
     relative_path: datasets/ts_scene_pool/versions/es-alt-twins-20261109-punchw-20261109-final-v1-20261120/state.json
+  - name: es-records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/es-alt-twins-20261109-punchw-20261109-final-v1-20261120/text/es-records.jsonl.gz
+    expected_bytes: 16147520
+    sha256: c7e8bdec11e521288b407e4f561f55a82a06650279d99df8c920952c98ffb25c
+    metadata:
+      record_count: 40000
+  - name: es-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/es-alt-twins-20261109/audio_index_es.jsonl.gz
+    expected_bytes: 975435
+    sha256: a696c8379411d7a660757d0633b485252ee7d43b9da22a4a5b8d865d8719526d
+    metadata:
+      record_count: 79999
+  - name: record_index
+    kind: lance-record-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/es-alt-twins-20261109-punchw-20261109-final-v1-20261120/record_index/index.json
+    expected_bytes: 769
+    sha256: bfbe81ef9e4b1644742880c0fca539a6d01a27c4c17166eb4661a2a36c5f3780
+    metadata:
+      snapshot_version: 13
+      rows: 40000
+      schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
   splits:
-    train:
+    es:
       artifacts:
-        preparation_state:
-        - preparation_state
-      provenance:
-        preparation_status: building
+        records:
+        - es-records
+        audio_index:
+        - es-audio-index
+        records_lance:
+        - record_index
+      task: ts_asr
+      statistics:
+        records: 40000
+        duration_hours: 54.59
+        duration_basis: clip duration (segment span, or the whole file)
+        final_es_changed_records: 20
   provenance:
-    preparation_status: building
-    owner: mingdong
-    description: ts_scene_pool@es-alt-twins-20261109-punchw-20261109 的西语训练文本终版，按 audio-data-contract docs/reference/training-text.md（v1，西语 es-v1） 规整。构建中。
+    synthetic: none
+    snapshot_date: '2026-11-21'
+    description: ts_scene_pool@es-alt-twins-20261109-punchw-20261109 的西语训练文本终版，按 audio-data-contract docs/reference/training-text.md（v1，西语 es-v1） 规整，替代原版本：单字母词旧写法 á/é/ó 改为 a/e/o（es-2）20 条。同一行里的场景文本、热词标注文本和热词列表一起改；其余字段、录音清单和音频照旧，引用原版本的产物。
+    sources:
+    - ts_scene_pool:es-alt-twins-20261109
+    - common_voice_es:es-train-v1-20261108
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
     source: ts_scene_pool@es-alt-twins-20261109-punchw-20261109
     method: text-final-v1-es
-    run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
+    owner: mingdong
+    build_script: scripts/text_final/build_es.py
+  recipe_parameters:
+    spec: docs/reference/training-text.md（v1，西语 es-v1）
+    start: ts_scene_pool@es-alt-twins-20261109-punchw-20261109
+    rounds: 单字母词旧写法 á/é/ó 改为 a/e/o（es-2）20 条
+    unchanged: 规则没有改动的文本文件、录音清单、音频和非 train 划分，引用原版本的产物
 - schema_version: dataset-catalog/2.0
   dataset_id: ts_scene_pool
   version: es-handover-20261109-punchw-20261109-final-v1-20261120
@@ -237,20 +675,64 @@
     kind: dataset-state
     root_alias: aidc_data
     relative_path: datasets/ts_scene_pool/versions/es-handover-20261109-punchw-20261109-final-v1-20261120/state.json
+  - name: es-records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/es-handover-20261109-punchw-20261109-final-v1-20261120/text/es-records.jsonl.gz
+    expected_bytes: 4833006
+    sha256: 8bc70df21edb66c4301b51a6e8990ff80ddbf297d5d16b041ee41101e9f5a0f2
+    metadata:
+      record_count: 20000
+  - name: es-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/es-handover-20261109/audio_index_es.jsonl.gz
+    expected_bytes: 369614
+    sha256: 8859a5b44836713823fc539608e4e9fc930662476e49c19b97568fd86d8e7f06
+    metadata:
+      record_count: 30175
+  - name: record_index
+    kind: lance-record-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/es-handover-20261109-punchw-20261109-final-v1-20261120/record_index/index.json
+    expected_bytes: 768
+    sha256: 00a3fce8b6e7dd6f8311b9c372e0b73fd8a12194146f33f4787d49cd7722bddd
+    metadata:
+      snapshot_version: 13
+      rows: 20000
+      schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
   splits:
-    train:
+    es:
       artifacts:
-        preparation_state:
-        - preparation_state
-      provenance:
-        preparation_status: building
+        records:
+        - es-records
+        audio_index:
+        - es-audio-index
+        records_lance:
+        - record_index
+      task: ts_asr
+      statistics:
+        records: 20000
+        duration_hours: 26.21
+        duration_basis: clip duration (segment span, or the whole file)
+        final_es_changed_records: 3
   provenance:
-    preparation_status: building
-    owner: mingdong
-    description: ts_scene_pool@es-handover-20261109-punchw-20261109 的西语训练文本终版，按 audio-data-contract docs/reference/training-text.md（v1，西语 es-v1） 规整。构建中。
+    synthetic: none
+    snapshot_date: '2026-11-21'
+    description: ts_scene_pool@es-handover-20261109-punchw-20261109 的西语训练文本终版，按 audio-data-contract docs/reference/training-text.md（v1，西语 es-v1） 规整，替代原版本：单字母词旧写法 á/é/ó 改为 a/e/o（es-2）3 条。同一行里的场景文本、热词标注文本和热词列表一起改；其余字段、录音清单和音频照旧，引用原版本的产物。
+    sources:
+    - ts_scene_pool:es-handover-20261109
+    - common_voice_es:es-train-v1-20261108
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
     source: ts_scene_pool@es-handover-20261109-punchw-20261109
     method: text-final-v1-es
-    run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
+    owner: mingdong
+    build_script: scripts/text_final/build_es.py
+  recipe_parameters:
+    spec: docs/reference/training-text.md（v1，西语 es-v1）
+    start: ts_scene_pool@es-handover-20261109-punchw-20261109
+    rounds: 单字母词旧写法 á/é/ó 改为 a/e/o（es-2）3 条
+    unchanged: 规则没有改动的文本文件、录音清单、音频和非 train 划分，引用原版本的产物
 - schema_version: dataset-catalog/2.0
   dataset_id: ts_scene_pool
   version: es-hard-20261109-punchw-20261109-final-v1-20261120
@@ -265,20 +747,64 @@
     kind: dataset-state
     root_alias: aidc_data
     relative_path: datasets/ts_scene_pool/versions/es-hard-20261109-punchw-20261109-final-v1-20261120/state.json
+  - name: es-records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/es-hard-20261109-punchw-20261109-final-v1-20261120/text/es-records.jsonl.gz
+    expected_bytes: 12514564
+    sha256: 8c97a0e2242e1305b0130cdb17a13ee9ff081b713e6c0bdea6108452aea9e9e4
+    metadata:
+      record_count: 25000
+  - name: es-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/es-hard-20261109/audio_index_es.jsonl.gz
+    expected_bytes: 919073
+    sha256: c3b5cb0fb95788bc306d0d9d3321a494376dd63ca71f0d4a22e49a60bfbfb3fd
+    metadata:
+      record_count: 75301
+  - name: record_index
+    kind: lance-record-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/es-hard-20261109-punchw-20261109-final-v1-20261120/record_index/index.json
+    expected_bytes: 764
+    sha256: 5abe8d144a0fcedfa00698eb6c3fafce1842358b23ce2b0725e40cf66cd422b6
+    metadata:
+      snapshot_version: 13
+      rows: 25000
+      schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
   splits:
-    train:
+    es:
       artifacts:
-        preparation_state:
-        - preparation_state
-      provenance:
-        preparation_status: building
+        records:
+        - es-records
+        audio_index:
+        - es-audio-index
+        records_lance:
+        - record_index
+      task: ts_asr
+      statistics:
+        records: 25000
+        duration_hours: 35.4
+        duration_basis: clip duration (segment span, or the whole file)
+        final_es_changed_records: 6
   provenance:
-    preparation_status: building
-    owner: mingdong
-    description: ts_scene_pool@es-hard-20261109-punchw-20261109 的西语训练文本终版，按 audio-data-contract docs/reference/training-text.md（v1，西语 es-v1） 规整。构建中。
+    synthetic: none
+    snapshot_date: '2026-11-21'
+    description: ts_scene_pool@es-hard-20261109-punchw-20261109 的西语训练文本终版，按 audio-data-contract docs/reference/training-text.md（v1，西语 es-v1） 规整，替代原版本：单字母词旧写法 á/é/ó 改为 a/e/o（es-2）6 条。同一行里的场景文本、热词标注文本和热词列表一起改；其余字段、录音清单和音频照旧，引用原版本的产物。
+    sources:
+    - ts_scene_pool:es-hard-20261109
+    - common_voice_es:es-train-v1-20261108
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
     source: ts_scene_pool@es-hard-20261109-punchw-20261109
     method: text-final-v1-es
-    run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
+    owner: mingdong
+    build_script: scripts/text_final/build_es.py
+  recipe_parameters:
+    spec: docs/reference/training-text.md（v1，西语 es-v1）
+    start: ts_scene_pool@es-hard-20261109-punchw-20261109
+    rounds: 单字母词旧写法 á/é/ó 改为 a/e/o（es-2）6 条
+    unchanged: 规则没有改动的文本文件、录音清单、音频和非 train 划分，引用原版本的产物
 - schema_version: dataset-catalog/2.0
   dataset_id: ts_scene_pool
   version: es-near-20261109-punchw-20261109-final-v1-20261120
@@ -293,20 +819,64 @@
     kind: dataset-state
     root_alias: aidc_data
     relative_path: datasets/ts_scene_pool/versions/es-near-20261109-punchw-20261109-final-v1-20261120/state.json
+  - name: es-records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/es-near-20261109-punchw-20261109-final-v1-20261120/text/es-records.jsonl.gz
+    expected_bytes: 26336376
+    sha256: 8a9ac6e0f8cad3956ddb049a91c5b82d890cef67e8f77c36cc8adf1e79aa3a64
+    metadata:
+      record_count: 60000
+  - name: es-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/es-near-20261109/audio_index_es.jsonl.gz
+    expected_bytes: 1228054
+    sha256: f51482c2258f3d12c74defa67b69c5c6ebe31b3dbf26dea92cce73fcef999f74
+    metadata:
+      record_count: 101327
+  - name: record_index
+    kind: lance-record-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/es-near-20261109-punchw-20261109-final-v1-20261120/record_index/index.json
+    expected_bytes: 764
+    sha256: 18f6e9f4dc5a102e498b68985e620aff4999d1ac7c7670519c89834d253e13bc
+    metadata:
+      snapshot_version: 13
+      rows: 60000
+      schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
   splits:
-    train:
+    es:
       artifacts:
-        preparation_state:
-        - preparation_state
-      provenance:
-        preparation_status: building
+        records:
+        - es-records
+        audio_index:
+        - es-audio-index
+        records_lance:
+        - record_index
+      task: ts_asr
+      statistics:
+        records: 60000
+        duration_hours: 87.76
+        duration_basis: clip duration (segment span, or the whole file)
+        final_es_changed_records: 53
   provenance:
-    preparation_status: building
-    owner: mingdong
-    description: ts_scene_pool@es-near-20261109-punchw-20261109 的西语训练文本终版，按 audio-data-contract docs/reference/training-text.md（v1，西语 es-v1） 规整。构建中。
+    synthetic: none
+    snapshot_date: '2026-11-21'
+    description: ts_scene_pool@es-near-20261109-punchw-20261109 的西语训练文本终版，按 audio-data-contract docs/reference/training-text.md（v1，西语 es-v1） 规整，替代原版本：单字母词旧写法 á/é/ó 改为 a/e/o（es-2）53 条。同一行里的场景文本、热词标注文本和热词列表一起改；其余字段、录音清单和音频照旧，引用原版本的产物。
+    sources:
+    - ts_scene_pool:es-near-20261109
+    - common_voice_es:es-train-v1-20261108
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
     source: ts_scene_pool@es-near-20261109-punchw-20261109
     method: text-final-v1-es
-    run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
+    owner: mingdong
+    build_script: scripts/text_final/build_es.py
+  recipe_parameters:
+    spec: docs/reference/training-text.md（v1，西语 es-v1）
+    start: ts_scene_pool@es-near-20261109-punchw-20261109
+    rounds: 单字母词旧写法 á/é/ó 改为 a/e/o（es-2）53 条
+    unchanged: 规则没有改动的文本文件、录音清单、音频和非 train 划分，引用原版本的产物
 - schema_version: dataset-catalog/2.0
   dataset_id: ts_scene_pool
   version: es-solo-20261109-punchw-20261109-final-v1-20261120
@@ -321,17 +891,61 @@
     kind: dataset-state
     root_alias: aidc_data
     relative_path: datasets/ts_scene_pool/versions/es-solo-20261109-punchw-20261109-final-v1-20261120/state.json
+  - name: es-records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/es-solo-20261109-punchw-20261109-final-v1-20261120/text/es-records.jsonl.gz
+    expected_bytes: 4536734
+    sha256: 49a19ac35e4b4d58904e1d3fe1b61e70f473bb29a52ff2f53d3885f4f440d6cf
+    metadata:
+      record_count: 30000
+  - name: es-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/es-solo-20261109/audio_index_es.jsonl.gz
+    expected_bytes: 321513
+    sha256: 79680fd44b30acc1b0ae74a4d31539a76144e854d55fb28332d54b5de82b2755
+    metadata:
+      record_count: 25311
+  - name: record_index
+    kind: lance-record-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/es-solo-20261109-punchw-20261109-final-v1-20261120/record_index/index.json
+    expected_bytes: 764
+    sha256: 5d272f4461ecf97a9220e17239d4099896adc50b30cfb91eb5f16dbf557e6158
+    metadata:
+      snapshot_version: 13
+      rows: 30000
+      schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
   splits:
-    train:
+    es:
       artifacts:
-        preparation_state:
-        - preparation_state
-      provenance:
-        preparation_status: building
+        records:
+        - es-records
+        audio_index:
+        - es-audio-index
+        records_lance:
+        - record_index
+      task: ts_asr
+      statistics:
+        records: 30000
+        duration_hours: 25.79
+        duration_basis: clip duration (segment span, or the whole file)
+        final_es_changed_records: 7
   provenance:
-    preparation_status: building
-    owner: mingdong
-    description: ts_scene_pool@es-solo-20261109-punchw-20261109 的西语训练文本终版，按 audio-data-contract docs/reference/training-text.md（v1，西语 es-v1） 规整。构建中。
+    synthetic: none
+    snapshot_date: '2026-11-21'
+    description: ts_scene_pool@es-solo-20261109-punchw-20261109 的西语训练文本终版，按 audio-data-contract docs/reference/training-text.md（v1，西语 es-v1） 规整，替代原版本：单字母词旧写法 á/é/ó 改为 a/e/o（es-2）7 条。同一行里的场景文本、热词标注文本和热词列表一起改；其余字段、录音清单和音频照旧，引用原版本的产物。
+    sources:
+    - ts_scene_pool:es-solo-20261109
+    - common_voice_es:es-train-v1-20261108
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
     source: ts_scene_pool@es-solo-20261109-punchw-20261109
     method: text-final-v1-es
-    run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
+    owner: mingdong
+    build_script: scripts/text_final/build_es.py
+  recipe_parameters:
+    spec: docs/reference/training-text.md（v1，西语 es-v1）
+    start: ts_scene_pool@es-solo-20261109-punchw-20261109
+    rounds: 单字母词旧写法 á/é/ó 改为 a/e/o（es-2）7 条
+    unchanged: 规则没有改动的文本文件、录音清单、音频和非 train 划分，引用原版本的产物
