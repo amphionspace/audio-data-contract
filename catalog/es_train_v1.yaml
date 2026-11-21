@@ -75,6 +75,7 @@
     - /workspace/workspace/mingdong/data/amphiondata/es-data-20261108/scripts/clean.sh
     - /workspace/workspace/mingdong/data/amphiondata/es-data-20261108/scripts/punc_hotwords.sh
     - /workspace/workspace/mingdong/data/amphiondata/es-data-20261108/scripts/finalize.py
+    superseded_by: common_voice_es@es-train-v1-20261108-final-v1-20261120
 - schema_version: dataset-catalog/2.0
   dataset_id: mls_es
   version: es-train-v1-20261108
@@ -165,6 +166,7 @@
     - /workspace/workspace/mingdong/data/amphiondata/es-data-20261108/scripts/clean.sh
     - /workspace/workspace/mingdong/data/amphiondata/es-data-20261108/scripts/punc_hotwords.sh
     - /workspace/workspace/mingdong/data/amphiondata/es-data-20261108/scripts/finalize.py
+    superseded_by: mls_es@es-train-v1-20261108-final-v1-20261120
 - schema_version: dataset-catalog/2.0
   dataset_id: ts_scene_pool
   version: es-v1-20261108
@@ -323,6 +325,7 @@
     - scripts/hotword_bench/build_es_train_confusables.py
     - scripts/hotword_bench/recipe-es-train-hwconf-v1.yaml
     limitations: 近音词按拼写推出的读音键检索，不是声学相似度，也不覆盖英文专名的英语读法；词库只收标注里出现至少两次的词，仍有重复出现的 OCR / 拼写错误词（如 Ingalaterra、jesuchristo），也有同一人名的历史写法（Moctezuma/Montezuma），按规则分不出来；热词是 LLM 抽取、未经人工核对。
+    superseded_by: common_voice_es@es-train-hwconf-v1-20261111-final-v1-20261120
 - schema_version: dataset-catalog/2.0
   dataset_id: mls_es
   version: es-train-hwconf-v1-20261111
@@ -456,3 +459,4 @@
     - scripts/hotword_bench/build_es_train_confusables.py
     - scripts/hotword_bench/recipe-es-train-hwconf-v1.yaml
     limitations: 近音词按拼写推出的读音键检索，不是声学相似度，也不覆盖英文专名的英语读法；词库只收标注里出现至少两次的词，仍有重复出现的 OCR / 拼写错误词（如 Ingalaterra、jesuchristo），也有同一人名的历史写法（Moctezuma/Montezuma），按规则分不出来；热词是 LLM 抽取、未经人工核对。
+    superseded_by: mls_es@es-train-hwconf-v1-20261111-final-v1-20261120

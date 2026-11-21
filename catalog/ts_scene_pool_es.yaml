@@ -116,6 +116,7 @@
     - ts_scene_pool:es-near-20261109
     - common_voice_es:es-train-v1-20261108
     run_dir: /workspace/workspace/mingdong/data/amphiondata/es-data-20261108
+    superseded_by: ts_scene_pool@es-near-20261109-punchw-20261109-final-v1-20261120
 - schema_version: dataset-catalog/2.0
   dataset_id: ts_scene_pool
   version: es-alt-twins-20261109
@@ -233,6 +234,7 @@
     - ts_scene_pool:es-alt-twins-20261109
     - common_voice_es:es-train-v1-20261108
     run_dir: /workspace/workspace/mingdong/data/amphiondata/es-data-20261108
+    superseded_by: ts_scene_pool@es-alt-twins-20261109-punchw-20261109-final-v1-20261120
 - schema_version: dataset-catalog/2.0
   dataset_id: ts_scene_pool
   version: es-hard-20261109
@@ -350,6 +352,7 @@
     - ts_scene_pool:es-hard-20261109
     - common_voice_es:es-train-v1-20261108
     run_dir: /workspace/workspace/mingdong/data/amphiondata/es-data-20261108
+    superseded_by: ts_scene_pool@es-hard-20261109-punchw-20261109-final-v1-20261120
 - schema_version: dataset-catalog/2.0
   dataset_id: ts_scene_pool
   version: es-handover-20261109
@@ -467,6 +470,7 @@
     - ts_scene_pool:es-handover-20261109
     - common_voice_es:es-train-v1-20261108
     run_dir: /workspace/workspace/mingdong/data/amphiondata/es-data-20261108
+    superseded_by: ts_scene_pool@es-handover-20261109-punchw-20261109-final-v1-20261120
 - schema_version: dataset-catalog/2.0
   dataset_id: ts_scene_pool
   version: es-solo-20261109
@@ -584,6 +588,7 @@
     - ts_scene_pool:es-solo-20261109
     - common_voice_es:es-train-v1-20261108
     run_dir: /workspace/workspace/mingdong/data/amphiondata/es-data-20261108
+    superseded_by: ts_scene_pool@es-solo-20261109-punchw-20261109-final-v1-20261120
 - schema_version: dataset-catalog/2.0
   dataset_id: ts_scene_pool
   version: es-1spk-20261110
@@ -672,3 +677,4 @@
       个说话人不用。dev / test 说话人不在 train。生成脚本 scripts/ts_robust/build_ts_1spk_es.py。
     sources:
     - common_voice_es@es-train-v1-20261108:train
+    superseded_by: ts_scene_pool@es-1spk-v2-20261110-final-v1-20261120

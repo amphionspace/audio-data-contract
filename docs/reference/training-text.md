@@ -1,6 +1,6 @@
 # 训练文本规范（终版 v1）
 
-适用于交付配方 v7set34 的中文、英文训练文本。各轮文本修正都按这份规范执行，并合进同一个终版。训练时每个来源只用它的终版。
+适用于 open-audio-llm 训练用的中文、英文和西语训练文本（中英最早按交付配方 v7set34 建，西语见[西语（es-v1）](#西语es-v1)）。各轮文本修正都按这份规范执行，并合进同一个终版。训练时每个来源只用它的终版，范围见[使用范围](#使用范围)。
 
 - **终版版本名**：`<配方原来用的版本>-final-v1-20261120`，登记在 `catalog/text_final_v1.yaml`，生成脚本是 `scripts/text_final/build.py`。
 - **做法**：从每个来源已登记的修正版本里最深的那个出发，再把下表中适用的规则补齐。规则没有改动的文本文件和录音、音频都引用原文件，不复制。
@@ -110,3 +110,49 @@
 | `ts_scene_pool@csd-handover-20261101-punchw2-20261102-final-v1-20261120` | `（配方版本本身）` | — | 0 | 0 | 0 |
 | `ts_scene_pool@csd-solo-20261101-punchw2-20261102-final-v1-20261120` | `（配方版本本身）` | — | 0 | 0 | 0 |
 | **合计** | | | **213** | **141,704** | **77** |
+
+## 使用范围
+
+- **open-audio-llm 的所有训练任务都用终版**（2026-11-21 起）：有 `-final-v1-20261120` 版本的来源用它；规则对它没有改动的来源不另建版本，下表列出的原版本就是终版。已经训完的实验按历史保留，不改。
+- **icefall 暂不切换**：等下一次从头预训练，再按 icefall 的无标点写法另建 `<数据集>@icefall-20260908-final-v1-20261120`（只补改动字词的修正，评测条目一并登记）。
+- 切换时注意带版本号的记录名单，见上文"切换到终版时检查记录名单"。
+
+原版本即终版的来源：
+
+| 来源 | 说明 |
+|---|---|
+| `context_correction_synth_zh@train-v1-20261114`、`@implicit-v1-20261117`、`@ts-twins-v1-20261121` | 各条规则都没有改动。train-v1 和 ts-twins 约 2.2% 的句子没有标点（规则 1 未满足），由下一版合成数据补，同时同步 segments、think 表和场景文本 |
+| `ts_nonspeech_pool@es-babble-20261110` | 目标为空 |
+
+## 西语（es-v1）
+
+适用于 open-audio-llm 训练用的西语来源。中英规则 1–6 改不到西语文本（字母连写只作用于含汉字的文本），西语另按下面两条。生成脚本是 `scripts/text_final/build_es.py`（`--scan` 只读统计）。同一行里的场景文本（`metadata.scene.targets[].text`）、热词标注文本和热词列表与目标文本一起改。
+
+| # | 规则 | 适用范围 | 执行方式 |
+|---|---|---|---|
+| es-1 | Common Voice 句子用原句的词和标点，按书面写法规整：标点 `, ; : . ? !` 前和 `¿ ¡` 后不空格，首字母大写，句末没有 `. ? !` 时补句号 | Common Voice 西语 | `es-train-v1-20261108` 构建时已执行（es-data-20261108 `scripts/finalize.py` 的 `tidy_cv`）。`cv27-train-v1-20261111` 的文本丢了全部标点，部分词粘连（`Reino UnidoNueva Zelanda`、`aquemarropa`）：终版按录音 ID 从 27.0 发布的 validated / other.tsv 取回原句，忽略标点、空格和大小写后字母一致才换（`_` 读作空格），再规整 |
+| es-2 | 单字母词按现代正字法写：`á`→`a`、`é`→`e`、`ó`→`o`（旧式写法的介词和连词，如 `cogemos á este`、`inmóvil é inanimado`） | 全部西语来源 | 只改前后都不是字母的单个 `á é ó`，带重音的普通词（`él`、`café`、`mamá`）不受影响 |
+
+没有执行的：
+
+| 项目 | 现状 | 原因 |
+|---|---|---|
+| 问句补开问号 `¿` | Common Voice、MLS 约 0.1%，场景池约 0.3% 的问句没有 `¿` | 多是英文标题或原文如此；补 `¿` 要判断问句从哪里开始，量少，暂不处理 |
+| 数字写法 | 没有统计 | 同中文规则 3，要和评测参考一起改 |
+
+各来源的终版（"改动行"按配方训练的划分计；mls_es@es-train-v1 的两份文本 supervisions 和 punc_all 分开计）：
+
+| 终版 | es-1 | es-2 |
+|---|---:|---:|
+| `common_voice_es@cv27-train-v1-20261111-final-v1-20261120` | 980,450 | 482 |
+| `common_voice_es@es-train-v1-20261108-final-v1-20261120` | 0 | 52 |
+| `common_voice_es@es-train-hwconf-v1-20261111-final-v1-20261120` | 0 | 9 |
+| `mls_es@es-train-v1-20261108-final-v1-20261120` | 0 | 47,797 + 51,708 |
+| `mls_es@es-train-hwconf-v1-20261111-final-v1-20261120` | 0 | 26,410 |
+| `asr_babble_speech_pool@es-v1-20261110-final-v1-20261120` | 0 | 2 |
+| `ts_scene_pool@es-1spk-v2-20261110-final-v1-20261120` | 0 | 45 |
+| `ts_scene_pool@es-near-20261109-punchw-20261109-final-v1-20261120` | 0 | 53 |
+| `ts_scene_pool@es-alt-twins-20261109-punchw-20261109-final-v1-20261120` | 0 | 20 |
+| `ts_scene_pool@es-solo-20261109-punchw-20261109-final-v1-20261120` | 0 | 7 |
+| `ts_scene_pool@es-hard-20261109-punchw-20261109-final-v1-20261120` | 0 | 6 |
+| `ts_scene_pool@es-handover-20261109-punchw-20261109-final-v1-20261120` | 0 | 3 |

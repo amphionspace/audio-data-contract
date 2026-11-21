@@ -64,6 +64,7 @@
     - /workspace/workspace/mingdong/data/amphiondata/cv27-es-pt-20261111/scripts/hotwords.sh
     - /workspace/workspace/mingdong/data/amphiondata/cv27-es-pt-20261111/scripts/finalize_hotwords.py
     limitations: 热词是 LLM 抽取、未经人工核对；文本未做书面化标点（CV 原句自带标点）。
+    superseded_by: common_voice_es@cv27-train-v1-20261111-final-v1-20261120
 - schema_version: dataset-catalog/2.0
   dataset_id: common_voice_es
   version: cv27-train-hwconf-v1-20261111
