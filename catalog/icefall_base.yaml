@@ -1560,6 +1560,7 @@
       source: icefall pre-migration registry
       snapshot_date: '2026-08-04'
       upstream_version: unknown
+      superseded_by: fleurs_zh@legacy-20260804-final-v1-20261120
   - schema_version: dataset-catalog/2.0
     dataset_id: talcs
     version: legacy-20260804

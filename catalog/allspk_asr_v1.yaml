@@ -64,6 +64,7 @@
     - magicdata_ramc@asr-20261014
     - magicdata_ramc@clean-dual-qwen-moss-v1-20261008
     audit: datasets/magicdata_ramc/versions/allspk-asr-v1-20261103/report.json
+    superseded_by: magicdata_ramc@allspk-asr-v1-20261103-final-v1-20261120
 - schema_version: dataset-catalog/2.0
   dataset_id: aishell4
   version: allspk-asr-v1-20261103
@@ -128,6 +129,7 @@
     - aishell4@punc-written-v1-20261029
     - aishell4@asr-20261014
     audit: datasets/aishell4/versions/allspk-asr-v1-20261103/report.json
+    superseded_by: aishell4@allspk-asr-v1-20261103-final-v1-20261120
 - schema_version: dataset-catalog/2.0
   dataset_id: alimeeting_sdm
   version: allspk-asr-v1-20261103
