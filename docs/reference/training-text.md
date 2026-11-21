@@ -5,6 +5,7 @@
 - **终版版本名**：`<配方原来用的版本>-final-v1-20261120`，登记在 `catalog/text_final_v1.yaml`，生成脚本是 `scripts/text_final/build.py`。
 - **做法**：从每个来源已登记的修正版本里最深的那个出发，再把下表中适用的规则补齐。规则没有改动的文本文件和录音、音频都引用原文件，不复制。
 - **以后增加规则**：先把规则写进本文，再用同一个脚本重建终版 v2，并在 v1 的登记里写 `superseded_by`。不要在终版上再派生一层后缀。
+- **切换到终版时检查记录名单**：大多数来源的记录 ID 是 `<split>:<id>`，与版本无关，`include_records` / `exclude_records` 名单可以照搬。从 Lhotse cut 构建的来源（如 `wenetspeech_clean`）的记录 ID 是 `<dataset_id>@<版本>:<split>:<id>`，带版本号；按旧版本写的名单在终版上一条也匹配不上，会报 `Empty source`。这类名单要把前缀换成终版版本号。只做 dry-run 发现不了这个问题，要真正加载才会报错。v7set34 的名单都不带版本号，不受影响。
 
 ## 规则
 
