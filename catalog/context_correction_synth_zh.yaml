@@ -350,3 +350,80 @@
     - context_correction_synth_zh@train-v1-20261114:train_ts
     run_dir: /workspace/workspace/mingdong/repo/oal-clue-target/runs/zh-ctx-clue-target-20261117
   derived_from: context_correction_synth_zh@train-v1-20261114
+# 合成说字数据的 TTS 声音做的普通识别对话：2–3 个克隆音色轮流说，答案是所有人的话按顺序连起来；ts-twins-v1-20261121 的普通识别对照。
+- schema_version: dataset-catalog/2.0
+  dataset_id: context_correction_synth_zh
+  version: asr-dialog-v1-20261122
+  languages:
+  - zh
+  tasks:
+  - asr
+  aliases: []
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/context_correction_synth_zh/versions/asr-dialog-v1-20261122/state.json
+  - name: audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/context_correction_synth_zh/versions/asr-dialog-v1-20261122/audio-index.jsonl.gz
+    expected_bytes: 115604
+    sha256: c60467ebe71d4b854b409030142346af1ea89b31b8ea071c4e2a2f151afbb2f1
+    metadata:
+      record_count: 2000
+      description: 每条对话一个 FLAC（16 kHz 单声道 PCM_16），在本版本的 audio/ 下
+  - name: train_asr_dialog-records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/context_correction_synth_zh/versions/asr-dialog-v1-20261122/records/train_asr_dialog.jsonl.gz
+    expected_bytes: 933302
+    sha256: bde2fb2aa3f0cf6d5b5064749d4e768429c6241f0320f41f34eba415141c703e
+    metadata:
+      record_count: 2000
+  - name: summary
+    kind: json-metadata
+    root_alias: aidc_data
+    relative_path: datasets/context_correction_synth_zh/versions/asr-dialog-v1-20261122/summary.json
+    expected_bytes: 258
+    sha256: d34defa9aee0c429b4b6815c933f13bc5b69014496b89f51fa3efb99c16390ce
+    metadata:
+      description: 记录数、总时长、用到的片段数和音色数、按音色数和时长（10 秒一档）的对话数、话轮总数
+  splits:
+    train_asr_dialog:
+      artifacts:
+        records:
+        - train_asr_dialog-records
+        audio_index:
+        - audio-index
+      task: asr
+      statistics:
+        records: 2000
+        duration_hours: 33.08
+        duration_basis: rendered dialogue length, gaps included
+      provenance:
+        description: >-
+          2,000 条对话，2 个音色 1,354 条、3 个音色 646 条，共 7,104 个话轮，时长 20–90 秒（30 秒以上 1,906 条）；
+          用到 2,611 个片段、283 个音色。
+  provenance:
+    summary: 合成说字数据的 TTS 声音做的普通识别对话（所有人的话）
+    status: complete
+    synthetic: full
+    owner: mingdong
+    description: >-
+      open-audio-llm runs/zh-ctx-grpo-20261120（README“漏字归因”）发现，配方加了 ts-twins-v1-20261121 的 TTS 对话 TS 场景
+      （答案只有注册音色的话）以后，模型做普通识别时，在 30 秒以上的多人对话里只写一个人：鼎桥 scene-asr 289 条长对话里
+      有 129 条基本漏掉一个人，不加的配方是 41–52 条。主线配方里全说话人的普通识别对话只有真人会议
+      （magicdata_ramc / aishell4 / alimeeting_sdm 的 allspk-asr-v1-20261103）。这一版是 TTS 声音的对照：
+      同样用 train-v1-20261114 train_ts 的克隆片段和音色，不给注册音频，答案是所有人的话。
+      每条对话取 2 个（70%）或 3 个（30%）音色轮流说，每个话轮是一个完整片段（片段只有整段的文字），
+      同一音色不连说，同一对话里片段和说字题对（pair_id）都不重复，抽一个 10–90 秒的长度（同 allspk-asr 的窗口长度），
+      说到这个长度为止，每个音色至少说一次。话轮间隔 0.2–1.0 秒（OnlineMixConfig 的 alternate 间隔）；
+      后面的音色按 ts-twins 的 SIR 范围（−6 到 10 dB）相对第一个音色定电平，只防削波，不加混响和噪声
+      （训练配方的全局增强照常加）。片段文字结尾没有句末标点的（约 2%）补一个句号，再按顺序连起来。
+      训练时加载器只给 TS 记录做在线场景，所以这一版先渲染成音频。
+      生成脚本 open-audio-llm runs/zh-ctx-clue-target-20261117/scripts/build_synth_asr_dialog.py（种子 20261122）。
+    sources:
+    - context_correction_synth_zh@train-v1-20261114:train_ts
+    run_dir: /workspace/workspace/mingdong/repo/oal-clue-target/runs/zh-ctx-clue-target-20261117
+  derived_from: context_correction_synth_zh@train-v1-20261114
