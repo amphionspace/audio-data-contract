@@ -114,6 +114,7 @@
 ## 使用范围
 
 - **open-audio-llm 的所有训练任务都用终版**（2026-11-21 起）：有 `-final-v1-20261120` 版本的来源用它；规则对它没有改动的来源不另建版本，下表列出的原版本就是终版。已经训完的实验按历史保留，不改。
+- **终版登记在多个文件里**：中英 `catalog/text_final_v1.yaml`，西语 `catalog/text_final_v1_es.yaml`。按登记查终版的脚本要读全部 `catalog/text_final_v1*.yaml`，只读第一个会漏掉西语。
 - **icefall 暂不切换**：等下一次从头预训练，再按 icefall 的无标点写法另建 `<数据集>@icefall-20260908-final-v1-20261120`（只补改动字词的修正，评测条目一并登记）。
 - 切换时注意带版本号的记录名单，见上文"切换到终版时检查记录名单"。
 
@@ -123,6 +124,7 @@
 |---|---|
 | `context_correction_synth_zh@train-v1-20261114`、`@implicit-v1-20261117`、`@ts-twins-v1-20261121` | 各条规则都没有改动。train-v1 和 ts-twins 约 2.2% 的句子没有标点（规则 1 未满足），由下一版合成数据补，同时同步 segments、think 表和场景文本 |
 | `ts_nonspeech_pool@es-babble-20261110` | 目标为空 |
+| 葡语：`common_voice_pt@pt-train-v1-20261117`、`mls_pt@pt-train-v1-20261117`、`asr_babble_speech_pool@pt-v1-20261117`、`ts_nonspeech_pool@pt-babble-20261117`、`ts_scene_pool@pt-1spk-v1-20261117`、`ts_scene_pool@pt-{near,alt-twins,solo,hard,handover}-20261117-punchw-20261117` | 见下文[葡语](#葡语) |
 
 ## 西语（es-v1）
 
@@ -156,3 +158,10 @@
 | `ts_scene_pool@es-solo-20261109-punchw-20261109-final-v1-20261120` | 0 | 7 |
 | `ts_scene_pool@es-hard-20261109-punchw-20261109-final-v1-20261120` | 0 | 6 |
 | `ts_scene_pool@es-handover-20261109-punchw-20261109-final-v1-20261120` | 0 | 3 |
+
+## 葡语
+
+葡语来源不另建终版，原版本就是终版（2026-11-21 定）。
+
+- Common Voice 葡语（`common_voice_pt@pt-train-v1-20261117`）构建时已按西语 es-1 的做法用原句的词和标点并规整，没有缺标点、小写开头的句子；场景池和 babble 池的目标取自它，同样已是书面写法。
+- **没有执行**：MLS 葡语（LibriVox 有声书，`mls_pt@pt-train-v1-20261117` 约 3.6 万句）用 1911 年改革前的旧正字法，如 `elle`、`ella`、`aquelle`、`alli`、`n'um`（现代写法 `ele`、`ela`、`aquele`、`ali`、`num`），常见旧词各出现几百次，另有 `ph`、`y`、双写辅音等零散旧写法。要改得用完整的旧新写法对照，只换常见词会混出半旧半新的写法，暂不处理。
