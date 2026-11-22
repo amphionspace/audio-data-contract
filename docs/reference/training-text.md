@@ -117,6 +117,7 @@
 - **终版登记在多个文件里**：中英 `catalog/text_final_v1.yaml`，西语 `catalog/text_final_v1_es.yaml`。按登记查终版的脚本要读全部 `catalog/text_final_v1*.yaml`，只读第一个会漏掉西语。
 - **icefall 暂不切换**：等下一次从头预训练，再按 icefall 的无标点写法另建 `<数据集>@icefall-20260908-final-v1-20261120`（只补改动字词的修正，评测条目一并登记）。
 - 切换时注意带版本号的记录名单，见上文"切换到终版时检查记录名单"。
+- **按记录关联的标注表也要换成对应终版**：它们按 `(dataset@version, record_id)` 关联训练记录，配方切到终版后键对不上（加载器会报错）。已建：`context_correction_clean_zh@think-v2-20261113-final-v1-20261120`（上下文纠偏 SFT 的 think 表，dataset 键按 `superseded_by` 换成终版，Lhotse 来源的 record_id 换前缀）。
 
 原版本即终版的来源：
 
