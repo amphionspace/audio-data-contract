@@ -179,7 +179,7 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [emilia2](data-versions.md#emilia2) | ar、as、bn、cs、da、de、el、en、es、fa、fi、fil、fr、gu、hi、hu、it、ja、kn、ko、mk、ml、mr、ne、nl、pa、pl、pt、ro、ru、sa、sd、sv、ta、te、th、tr、ur、vi、yue、zh | 语音识别、语码转换语音识别、diarization、语音合成 | 146,325.0 | 多语种视频野外语音（Emilia2）；含中英解包版 | 部分版本：`TTS 桶:Emilia2/`（原始数据） |
 | [emilia2_dialog](data-versions.md#emilia2_dialog) | en、zh | 目标说话人语音识别 | 15,031.0 | Emilia2 中英对话的轮流说话目标说话人数据 | 没有 |
 | [emilia2_mix](data-versions.md#emilia2_mix) | en、zh | 目标说话人语音识别 | 35,744.6 | Emilia2 长音频合成的 2/3 人目标说话人混合 | 没有 |
-| [emilia2_short](data-versions.md#emilia2_short) | en、zh | 语音识别 | 5,102.9 | Emilia2 中英短音频普通转写 | 部分版本：`备份桶:audio-data-contract/datasets/emilia2_short/` |
+| [emilia2_short](data-versions.md#emilia2_short) | en、zh | 语音识别 | 5,102.9 | Emilia2 中英短音频普通转写 | 没有 |
 | [emilia_yodas](data-versions.md#emilia_yodas) | de、en、fr、ja、ko、zh | 语音识别、语音合成 | 113,820.6 | Emilia-YODAS 多语种 YouTube 语音 | `TTS 桶:Emilia-YODAS/`（原始数据） |
 | [farfield_speech_noise_1spk](data-versions.md#farfield_speech_noise_1spk) | en、zh | noise | 32.7 | 1–3 人远场人声噪声（Emilia 干声加混响） | `备份桶:audio-data-contract/datasets/` 下 3 个目录 |
 | [genshin_voice](data-versions.md#genshin_voice) | en-US、ja、ko、zh | 语音合成 | 1,039.7 | 《原神》多语配音，TTS 用 | `TTS 桶:genshin-voice/`（原始数据） |
