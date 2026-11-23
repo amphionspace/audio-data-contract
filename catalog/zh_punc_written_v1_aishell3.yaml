@@ -1,0 +1,29 @@
+# AISHELL-3 训练集书面化标点（2026-11-23）：方法同 punc-written-v1-20261029（只插标点、不改字），供训练文本终版 v2 使用。占位，构建中。
+- schema_version: dataset-catalog/2.0
+  dataset_id: aishell3
+  version: punc-written-v1-20261123
+  languages:
+  - zh
+  tasks:
+  - asr
+  aliases: []
+  derived_from: aishell3@legacy-20260804
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/aishell3/versions/punc-written-v1-20261123/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: aishell3@legacy-20260804 训练集原标注加书面化标点，方法与 punc-written-v1-20261029 相同（amphiondata docs/written-punctuation.md：GB/T 15834、逗号从紧；Qwen3-4B 学生 punc-student-v1 以 Qwen3-ASR-1.7B 听音频得到的带标点转写作语气提示，只往原标注里插标点）。构建中。
+    source: aishell3@legacy-20260804
+    method: written-punctuation-v1
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120/v2/aishell3-punc
