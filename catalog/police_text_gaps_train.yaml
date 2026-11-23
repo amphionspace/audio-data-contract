@@ -71,7 +71,7 @@
       （参考同 police_terms_single_train@v1-20261023，不含粤语，去掉其中合成通过率 < 50% 的 20 人），每句 4 人。
     source: icefall egs/amphion/docs/finetune_small70m_police_v3_20261122.md（警务训练文本的缺口清单）
     run_dir: /workspace/workspace/mingdong/data/amphiondata/police-text-gaps-train-20261123
-    code: amphiondata feat/police-text-gaps-train, scripts/synthetic/run_police_text_gaps.py
+    code: amphiondata main（MR !34，8575a35），scripts/synthetic/run_police_text_gaps.py
     qc: >-
       Qwen3-ASR-1.7B 转写后：生成到码字上限的丢弃；数值时长（X十秒、X百秒）按字、暗/亮按拼音 an/liang 的个数必须与标注相同（防读反、读错数值）；
       目标说法按口音宽松的拼音（前后鼻音、平翘舌、n/l 不分）必须整段听到；不带声调的拼音对齐多出加缺少超过 2 个音节、替换超过 15% 的丢弃。
