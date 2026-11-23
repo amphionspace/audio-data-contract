@@ -1,4 +1,4 @@
-# 警务训练文本缺口补量（训练集）：占位登记，合成中，进度见状态文件。
+# 警务训练文本缺口补量（训练集）：按类别补 small70m 警务微调 v3 缺口清单里微调后才大面积出错的 6 个说法（2026-11-23 合成）。
 - schema_version: dataset-catalog/2.0
   dataset_id: police_text_gaps_train
   version: v1-20261123
@@ -8,27 +8,89 @@
   - asr
   aliases: []
   artifacts:
-  - name: preparation_state
-    kind: dataset-state
+  - name: train_recordings
+    kind: lhotse-recordings
     root_alias: aidc_data
-    relative_path: datasets/police_text_gaps_train/versions/v1-20261123/state.json
+    relative_path: datasets/police_text_gaps_train/versions/v1-20261123/manifests/police_text_gaps_train_recordings_train.jsonl.gz
+    expected_bytes: 167244
+    sha256: 1803562fc88ab6c64180fdc13f151f2189334e0aee09051dde4903581e71595c
+    metadata:
+      record_count: 9500
+  - name: train_supervisions
+    kind: lhotse-supervisions
+    root_alias: aidc_data
+    relative_path: datasets/police_text_gaps_train/versions/v1-20261123/manifests/police_text_gaps_train_supervisions_train.jsonl.gz
+    expected_bytes: 910374
+    sha256: 49c02d3053f1237256707275723a49840c1ac595ca4d823ca9ab4392a8a3514a
+    metadata:
+      record_count: 9500
+  - name: report
+    kind: json-metadata
+    root_alias: aidc_data
+    relative_path: datasets/police_text_gaps_train/versions/v1-20261123/report.json
+    expected_bytes: 1085
+    sha256: f1501b37dda1edc90ff2fbee9b8331221446d133c3f407741f173c059d5019a1
   splits:
     train:
       artifacts:
-        preparation_state:
-        - preparation_state
-      provenance:
-        preparation_status: building
+        recordings:
+        - train_recordings
+        supervisions:
+        - train_supervisions
+      statistics:
+        records: 9500
+        duration_hours: 18.378
+        duration_basis: sum_of_recording_durations
+        texts: 3010
+        voices_per_text: {2: 9, 3: 2522, 4: 479}
+        categories:
+          darkest: {records: 3000, texts: 950}
+          hundred_seconds: {records: 3000, texts: 950}
+          auto: {records: 1500, texts: 470}
+          night_vision: {records: 1000, texts: 320}
+          silent_evidence: {records: 500, texts: 160}
+          forest: {records: 500, texts: 160}
+        key_phrases: {调到最暗: 1534, 最暗: 2341, 调暗: 669, 三百秒: 1340, 设为或设置为自动: 970, 红外夜视: 615, 夜视: 1083, 静默取证: 500, 林区: 513, 林区卡口: 133}
+        speakers: 331
+        utterances_per_speaker: {min: 15, median: 28, max: 48}
+        speaker_dataset: {KeSpeech: 8200, WenetSpeech-Chuan: 571, WenetSpeech-Wu: 729}
   provenance:
-    preparation_status: building
+    preparation_status: prepared
     owner: mingdong
     summary: 警务训练文本缺口的按类别补量
     description: >-
       small70m 警务微调 v3 的跟踪分析发现，6 个测试里的说法在两份警务训练文本（police_v6_8h train、police_asr_unified train）里没有，
-      或只有反义、近音的说法，微调后大面积识别错：调到最暗（识别成调到最亮）、三百秒（三十秒）、设为自动、红外夜视（夜市）、静默取证、林区卡口（邻区）。
-      这一版按类别补训练语音：反义词（调暗、最暗）、取值（三百秒等整百秒数、设为自动）、易混词（夜视、林区）和静默取证。
-      这些说法在测试集里来自 V6 留出的 5 条指令（把记录仪亮度调到最暗、把延录时长设置为300秒、把AI识别距离设置为自动、关闭红外、记录仪音量调到最小），
-      按用户 2026-11-23 的选择不使用这 5 条指令，保持 V6 测试集仍测没见过的指令；文本与警务 train/dev/test 去重。
-      Seed 2.0 Pro 生成文本，Qwen3-TTS 1.7B Base 克隆原警务数据的 train 口音说话人，Qwen3-ASR 核对。只有训练集。
+      或只有反义、同音的说法，微调后大面积识别错：调到最暗（识别成调到最亮）、三百秒（三十秒）、设为自动、红外夜视（夜市）、静默取证、林区卡口（邻区）。
+      这一版按类别补训练语音，custom.category 标出类别：darkest 反义（调到最暗、调暗、最暗，约三成同句带最亮/调亮作对比）、
+      hundred_seconds 取值（三百秒等整百秒数，约四分之一同句带三十秒）、auto 取值（设为自动）、night_vision 易混（夜视，部分同句带夜市）、
+      silent_evidence 静默取证、forest 易混（林区，部分同句带邻区）。
+      这些说法在测试集里来自 V6 留在测试集的 5 条指令（把记录仪亮度调到最暗、把延录时长设置为300秒、把AI识别距离设置为自动、关闭红外、记录仪音量调到最小）；
+      按用户 2026-11-23 的选择不使用这 5 条指令，也不使用其他留在 dev/test 的 V6 指令（延录 60 秒、预录 10 秒、分段 5 分钟、识别距离等），
+      保持 V6 测试集仍测没见过的指令。文本由 Seed 2.0 Pro 生成，规则过滤后与 police_asr_unified@v1-20261009 train/dev/test 去重；
+      标注只用汉字和全角“，。？！、；”，以“。？！”结尾，数字写汉字。Qwen3-TTS-12Hz-1.7B-Base 克隆原警务数据 nationwide_v2_480 的 train 口音说话人
+      （参考同 police_terms_single_train@v1-20261023，不含粤语，去掉其中合成通过率 < 50% 的 20 人），每句 4 人。
     source: icefall egs/amphion/docs/finetune_small70m_police_v3_20261122.md（警务训练文本的缺口清单）
     run_dir: /workspace/workspace/mingdong/data/amphiondata/police-text-gaps-train-20261123
+    code: amphiondata feat/police-text-gaps-train, scripts/synthetic/run_police_text_gaps.py
+    qc: >-
+      Qwen3-ASR-1.7B 转写后：生成到码字上限的丢弃；数值时长（X十秒、X百秒）按字、暗/亮按拼音 an/liang 的个数必须与标注相同（防读反、读错数值）；
+      目标说法按口音宽松的拼音（前后鼻音、平翘舌、n/l 不分）必须整段听到；不带声调的拼音对齐多出加缺少超过 2 个音节、替换超过 15% 的丢弃。
+      核对方能力：测试集里含这些说法的 150 条音频，Qwen3-ASR 关键词判对 148 条。合成 12,040 条，通过 11,858 条（98.5%），每类按配额、按轮次取。
+      拒绝原因逐类看过（生成到上限抽 20，其余全看）：生成到上限 72 条约无误杀；读反/数值不符 43 条、目标说法没听到 36 条误杀约 2/3 和 7 成
+      （口音 an→ai、bai→ba，生僻说法被识别成别的词），因为正是关键词读音拿不准的录音、合计只占 0.66%，仍丢弃；多出或缺少音节 23 条误杀约 2 成。
+      被拒率 KeSpeech 0.9%、四川话 5.4%、吴语 5.6%，导出后吴语占比 8.0%→7.7%。与 police_asr_unified dev/test 文本、说话人交集均为 0。
+    known_issues:
+    - 全部为合成语音，没有人工听审
+    - 不含 V6 留出的 5 条指令，V6 测试集上这些说法能改善多少要训完才知道
+    - 林区卡口只有 133 条（林区类整体 513 条）
+    - 方言参考的合成失败率较高，吴语、四川话占比比合成时略低
+  recipe_parameters:
+    text_model: doubao-seed-2-0-pro-260215
+    tts_provider: qwen3_tts
+    tts_model: Qwen3-TTS-12Hz-1.7B-Base
+    max_new_tokens: min(360, max(64, 5 × 字数))
+    voices_per_text: 4
+    asr_check: Qwen3-ASR-1.7B
+    speaker_split: train (nationwide_v2_480 384/48/48)，不含粤语
+    sample_rate: 16000
+    channels: 1

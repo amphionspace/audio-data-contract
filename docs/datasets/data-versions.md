@@ -1759,9 +1759,9 @@ MagicData-RAMC 对话切窗的按人转写数据
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
-| [police_text_gaps_train@v1-20261123](../../catalog/police_text_gaps_train.yaml#L2) | — | 未登记 | 没有 |
+| [police_text_gaps_train@v1-20261123](../../catalog/police_text_gaps_train.yaml#L2) | 18.4 | 已登记 | 没有 |
 
-- `police_text_gaps_train@v1-20261123`：small70m 警务微调 v3 的跟踪分析发现，6 个测试里的说法在两份警务训练文本（police_v6_8h train、police_asr_unified train）里没有， 或只有反义、近音的说法，微调后大面积识别错：调到最暗（识别成调到最亮）、三百秒（三十秒）、设为自动、红外夜视（夜市）、静默取证、林区卡口（邻区）。 这一版按类别补训练语音：反义词（调暗、最暗）、取值（三百秒等整百秒数、设为自动）、易混词（夜视、林区）和静默取证。 这些说法在测试集里来自 V6 留出的 5 条指令（把记录仪亮度调到最暗、把延录时长设置为300秒、把AI识别距离设置为自动、关闭红外、记录仪音量调到最小）， 按用户 2026-11-23 的选择不使用这 5 条指令，保持 V6 测试集仍测没见过的指令；文本与警务 train/dev/test 去重。 Seed 2.0 Pro 生成文本，Qwen3-TTS 1.7B Base 克隆原警务数据的 train 口音说话人，Qwen3-ASR 核对。只有训练集
+- `police_text_gaps_train@v1-20261123`：small70m 警务微调 v3 的跟踪分析发现，6 个测试里的说法在两份警务训练文本（police_v6_8h train、police_asr_unified train）里没有， 或只有反义、同音的说法，微调后大面积识别错：调到最暗（识别成调到最亮）、三百秒（三十秒）、设为自动、红外夜视（夜市）、静默取证、林区卡口（邻区）。 这一版按类别补训练语音，custom.category 标出类别：darkest 反义（调到最暗、调暗、最暗，约三成同句带最亮/调亮作对比）、 hundred_seconds 取值（三百秒等整百秒数，约四分之一同句带三十秒）、auto 取值（设为自动）、night_vision 易混（夜视，部分同句带夜市）、 silent_evidence 静默取证、forest 易混（林区，部分同句带邻区）。 这些说法在测试集里来自 V6 留在测试集的 5 条指令（把记录仪亮度调到最暗、把延录时长设置为300秒、把AI识别距离设置为自动、关闭红外、记录仪音量调到最小）； 按用户 2026-11-23 的选择不使用这 5 条指令，也不使用其他留在 dev/test 的 V6 指令（延录 60 秒、预录 10 秒、分段 5 分钟、识别距离等）， 保持 V6 测试集仍测没见过的指令。文本由 Seed 2.0 Pro 生成，规则过滤后与 police_asr_unified@v1-20261009 train/dev/test 去重； 标注只用汉字和全角“，。？！、；”，以“。？！”结尾，数字写汉字。Qwen3-TTS-12Hz-1.7B-Base 克隆原警务数据 nationwide_v2_480 的 train 口音说话人 （参考同 police_terms_single_train@v1-20261023，不含粤语，去掉其中合成通过率 < 50% 的 20 人），每句 4 人
 
 ### primewords
 

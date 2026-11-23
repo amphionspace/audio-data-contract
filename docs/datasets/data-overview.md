@@ -131,7 +131,7 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [police_scene_bench](data-versions.md#police_scene_bench) | zh | 语音识别、热词增强语音识别、带说话人标注的语音识别、目标说话人语音识别 | 70.7 | 鼎桥验收表各使用场景的模拟评测，仅评测 | `备份桶:audio-data-contract/datasets/police_scene_bench/` |
 | [police_terms_single](data-versions.md#police_terms_single) | zh | 语音识别 | 1.7 | 警务术语单说测试集，仅评测 | `备份桶:audio-data-contract/datasets/police_terms_single/` |
 | [police_terms_single_train](data-versions.md#police_terms_single_train) | zh | 语音识别、热词增强语音识别 | 11.7 | 警务术语单说训练集 | 部分版本：`备份桶:audio-data-contract/datasets/police_terms_single_train/` |
-| [police_text_gaps_train](data-versions.md#police_text_gaps_train) | zh | 语音识别 | — | 警务训练文本缺口的按类别补量 | 没有 |
+| [police_text_gaps_train](data-versions.md#police_text_gaps_train) | zh | 语音识别 | 18.4 | 警务训练文本缺口的按类别补量 | 没有 |
 | [primewords](data-versions.md#primewords) | zh | 语音识别 | 99.0 | 中文手机朗读（Primewords）；含清洗版 | 部分版本：快照 20260914 |
 | [realman](data-versions.md#realman) | zh | 语音识别、noise、sound_source_localization、speech_enhancement | 83.7 | 真实录制的中文多通道阵列语音（RealMAN） | 部分版本：快照 20260914 |
 | [realman_zh_far_asr](data-versions.md#realman_zh_far_asr) | zh | 语音识别 | 64.0 | RealMAN 远场中文转写训练数据 | `备份桶:audio-data-contract/datasets/zh_far_replay/` |
