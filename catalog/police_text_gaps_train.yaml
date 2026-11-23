@@ -94,3 +94,35 @@
     speaker_split: train (nationwide_v2_480 384/48/48)，不含粤语
     sample_rate: 16000
     channels: 1
+# v2：占位登记，补“起点就一直错”的 7 个说法，合成中，进度见状态文件。
+- schema_version: dataset-catalog/2.0
+  dataset_id: police_text_gaps_train
+  version: v2-20261123
+  languages:
+  - zh
+  tasks:
+  - asr
+  aliases: []
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/police_text_gaps_train/versions/v2-20261123/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    summary: 警务训练文本缺口的按类别补量（13 个说法）
+    description: >-
+      v1 的 6 类原样保留，再按类别补 small70m 警务微调 v3 缺口清单里“起点就一直错”的 7 个说法：
+      分辨率帧率（连说）、走私（易混走失）、情指行、即时分享、戴肩灯、H点二六五、冲印。
+      不使用 V6 留在 dev/test 的指令（例如“把记录仪的镜头模式、分辨率、帧率、延录时长都告诉我”），文本与警务 train/dev/test 去重。
+      Seed 2.0 Pro 生成文本，Qwen3-TTS 1.7B Base 克隆原警务数据的 train 口音说话人，Qwen3-ASR 核对。只有训练集。
+    source: icefall egs/amphion/docs/finetune_small70m_police_v3_20261122.md（警务训练文本的缺口清单）
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/police-text-gaps-train-20261123

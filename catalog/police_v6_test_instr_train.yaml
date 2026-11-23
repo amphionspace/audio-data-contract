@@ -1,0 +1,32 @@
+# V6 测试集指令的训练语音：占位登记，合成中，进度见状态文件。用了它，V6 测试集这 5 组就是见过的指令。
+- schema_version: dataset-catalog/2.0
+  dataset_id: police_v6_test_instr_train
+  version: v1-20261123
+  languages:
+  - zh
+  tasks:
+  - asr
+  aliases: []
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/police_v6_test_instr_train/versions/v1-20261123/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    summary: V6 留在测试集的 5 条指令的训练语音
+    description: >-
+      V6 按语义指令组切分，把记录仪亮度调到最暗、把延录时长设置为300秒、把AI识别距离设置为自动、关闭红外、记录仪音量调到最小
+      这 5 条指令整组留在测试集，small70m 警务微调后“调到最暗”几乎全部识别成“调到最亮”、“三百秒”识别成“三十秒”。
+      这一版按用户 2026-11-23 的要求为这 5 条指令新写训练句（与警务 train/dev/test 文本去重，说话人只用 train 口音参考）。
+      与 police_text_gaps_train 分开登记：训练时加上它，V6 测试集这 5 组就变成见过的指令，测试结果要分开看。
+    source: icefall egs/amphion/docs/finetune_small70m_police_v3_20261122.md（警务训练文本的缺口清单）
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/police-v6-test-instr-train-20261123
