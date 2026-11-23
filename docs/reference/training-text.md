@@ -1,10 +1,10 @@
-# 训练文本规范（终版 v1）
+# 训练文本规范（终版 v2）
 
 适用于 open-audio-llm 训练用的中文、英文和西语训练文本（中英最早按交付配方 v7set34 建，西语见[西语（es-v1）](#西语es-v1)）。各轮文本修正都按这份规范执行，并合进同一个终版。训练时每个来源只用它的终版，范围见[使用范围](#使用范围)。
 
-- **终版版本名**：`<配方原来用的版本>-final-v1-20261120`，登记在 `catalog/text_final_v1.yaml`，生成脚本是 `scripts/text_final/build.py`。
+- **终版版本名**：v1 是 `<配方原来用的版本>-final-v1-20261120`，登记在 `catalog/text_final_v1.yaml`，生成脚本是 `scripts/text_final/build.py`。v2（2026-11-23）是 `<配方原来用的版本>-final-v2-20261123`，在 v1 上加规则 7（空格），另含没有 v1 的朗读语料，登记在 `catalog/text_final_v2.yaml`，生成脚本是 `scripts/text_final/build_v2.py`，见[终版 v2](#终版-v2)。规则改不到的来源不建 v2，v1 仍是终版；建了 v2 的 v1 写 `superseded_by` 指向 v2。**查终版时按 `superseded_by` 跳到最后一个版本。**
 - **做法**：从每个来源已登记的修正版本里最深的那个出发，再把下表中适用的规则补齐。规则没有改动的文本文件和录音、音频都引用原文件，不复制。
-- **以后增加规则**：先把规则写进本文，再用同一个脚本重建终版 v2，并在 v1 的登记里写 `superseded_by`。不要在终版上再派生一层后缀。
+- **以后增加规则**：先把规则写进本文，再在当前终版上补做新规则，建下一版（`-final-v3-<日期>`），并在上一版的登记里写 `superseded_by`。不要在终版上再派生一层修正后缀。
 - **切换到终版时检查记录名单**：大多数来源的记录 ID 是 `<split>:<id>`，与版本无关，`include_records` / `exclude_records` 名单可以照搬。从 Lhotse cut 构建的来源（如 `wenetspeech_clean`）的记录 ID 是 `<dataset_id>@<版本>:<split>:<id>`，带版本号；按旧版本写的名单在终版上一条也匹配不上，会报 `Empty source`。这类名单要把前缀换成终版版本号。只做 dry-run 发现不了这个问题，要真正加载才会报错。v7set34 的名单都不带版本号，不受影响。
 
 ## 规则
@@ -17,6 +17,7 @@
 | 4 | 英文按原文写，不音译、不意译（中英规范规则 1） | WenetSpeech 训练集 | `zhen-fix-en-v1`：whisper-large-v3 和强制中文的 Qwen3-ASR 都听出同一个英文，且标注片段是意译或生造的音译才改；通行的人名、地名译名和外来词不改。脚本 `scripts/zhen_fix/build_wenetspeech.py` |
 | 5 | 字母缩写连写、大写（中英规范规则 2）：用空格隔开的单个大写字母连起来，K T V→KTV | 含中文的全部文本 | `zhen-fix-v1`（`scripts/zhen_fix/build.py` 的 `fix`）；终版对全部来源补齐 |
 | 6 | 去掉评测录音 | WenetSpeech、Emilia2 混音和对话 | 随规则 3 一起执行：去掉 context_correction_zh 评测录音、ts_asr_real 留出录音 |
+| 7 | 空格（中英规范规则 5）：英文词之间留一个空格，汉字之间、汉字和英文之间都不加空格 | 含汉字的全部文本 | v2（`build_v2.py` 的 `rule5`）：连续空白压成一个空格；紧挨汉字、假名或全角符号一侧的空格删掉；两侧都是英文、数字或半角符号的空格保留。只处理含汉字的文本，纯英文句子不动。v2 对全部训练划分执行（含 v7set34 以外的划分），同时补做规则 5 |
 
 中英写法的细则和评测口径见 [zh-en-transcription.md](zh-en-transcription.md)。
 
@@ -26,10 +27,9 @@
 |---|---|---|
 | 字母数字词用阿拉伯数字（中英规范规则 3，五G→5G） | 不执行 | 现有评测参考文本大多写汉字数字，ts-asr 评测器不做数字转换；只改训练文本会让评测字错率上升，要改得和评测参考一起改 |
 | 英文写成汉字（规则 4） | 只做了 WenetSpeech，改 3,727 条；估计全量约 1.4 万条 | 剩下约 1 万条拿不准：通行译名两种读法相近，三个音频大模型（豆包 seed-2.1-lite、qwen3.8-omni-flash、qwen3.5-omni-plus）的判断互相矛盾，没有可靠的核对方 |
-| 汉字和英文之间不加空格（中英规范规则 5） | 不执行。终版里有 141,704 条汉字和英文之间带空格，几乎都在 Emilia2 三个来源（约 12.6 万）和警务训练集（约 1.5 万） | 评测时去掉空格再比，不影响分数；要统一写法得另做一轮，并核对英文短语内部的空格不被误删 |
 | 繁简统一、去掉非语音标记（中英规范规则 6、7） | 繁简没有统计；非语音标记（`<…>`、`[UNK]`、`**`）终版里有 77 条，在 Emilia2 三个来源 | 评测集版本已处理；训练文本数量很少，暂不处理 |
 
-## 各来源的终版
+## 各来源的终版（v1）
 
 所有终版的标点（规则 1、2）都已由配方版本带上。"已含修正"列出起点版本上已经做过的修正；"本次补齐连写"是终版新改的条数。最后两列只统计、不修，按配方实际训练的划分计。
 
@@ -111,10 +111,52 @@
 | `ts_scene_pool@csd-solo-20261101-punchw2-20261102-final-v1-20261120` | `（配方版本本身）` | — | 0 | 0 | 0 |
 | **合计** | | | **213** | **141,704** | **77** |
 
+## 终版 v2
+
+2026-11-23 起。需求来自 open-audio-llm（用户要求训练文本按规范统一空格，并补上没有终版的朗读语料）。
+
+- **规则 7（空格）**：在 v1 终版上补做，对全部训练划分执行（含 v7set34 以外的划分，这些划分同时补做规则 5 字母连写）。英文词之间的空格数量改前改后相同（逐行核对）；场景文本 `metadata.scene.targets[].text` 和热词列表跟着目标一起改。纯英文句子不动，所以 csd 英文场景池等没有 v2。
+- **新建朗读语料**：AISHELL-1（`aishell`）、AISHELL-3（`aishell3`）、MagicData 朗读集（`magicdata`）的 train 划分以前没有终版。v2 按 id 套用书面化标点（规则 1；aishell `punc-written-v1-20261029`、magicdata `punc-written-v1-20261102`、aishell3 `punc-written-v1-20261123` 本次新跑），去掉标点、空格和大小写后与原文一致才换，再做规则 7 和规则 5。
+- **没有 v2 的 v1 终版仍是终版**；有 v2 的 v1 写了 `superseded_by`。
+
+| 终版 v2 | 书面化标点 | 空格（规则 7） | 字母连写 |
+|---|---:|---:|---:|
+| `magicdata@legacy-20260804-final-v2-20261123` | 573,477 | 2,708 | 5 |
+| `aishell@legacy-20260804-final-v2-20261123` | 120,098 | 0 | 0 |
+| `aishell3@legacy-20260804-final-v2-20261123` | 63,262 | 0 | 0 |
+| `emilia2_mix@mix-20261013-utts-final-v2-20261123` | 0 | 63,829 | 0 |
+| `emilia2_short@short-lance-20261023-final-v2-20261123` | 0 | 44,876 | 0 |
+| `emilia2_dialog@dialog-turn-taking-20261013-enroll-final-v2-20261123` | 0 | 44,573 | 0 |
+| `police_asr_unified@train-punc-v1-20261102-final-v2-20261123` | 0 | 15,371 | 0 |
+| `hw_sft@hw-20261014-final-v2-20261123` | 0 | 2,865 | 4 |
+| `fleurs_zh@legacy-20260804-final-v2-20261123` | 0 | 1,005 | 0 |
+| `ts_scene_pool@magicdata-near-20261023-punchw-20261102-final-v2-20261123` | 0 | 819 | 0 |
+| `threed_speaker_zh_far_asr@train-punc-v1-20261102-final-v2-20261123` | 0 | 799 | 0 |
+| `aishell4@asr-20261014-punc-20261102-final-v2-20261123` | 0 | 347 | 0 |
+| `aishell4@turn-taking-20261014-utts-punc-20261102-final-v2-20261123` | 0 | 304 | 0 |
+| `ts_scene_pool@magicdata-alt-twins-20261024-punchw-20261102-final-v2-20261123` | 0 | 241 | 0 |
+| `aishell2@train-punc-v1-20261102-final-v2-20261123` | 0 | 215 | 0 |
+| `ts_scene_pool@magicdata-handover-20261023-punchw-20261102-final-v2-20261123` | 0 | 166 | 0 |
+| `aishell4@allspk-asr-v1-20261103-final-v2-20261123` | 0 | 156 | 0 |
+| `magicdata_ramc@turn-taking-20261014-utts-punc-20261102-final-v2-20261123` | 0 | 100 | 0 |
+| `magicdata_ramc@train-punc-v1-20261102-final-v2-20261123` | 0 | 99 | 0 |
+| `ts_scene_pool@magicdata-hard-20261023-punchw-20261102-final-v2-20261123` | 0 | 82 | 0 |
+| `magicdata_ramc@allspk-asr-v1-20261103-final-v2-20261123` | 0 | 73 | 0 |
+| `aishell4@allspk-ts-v1-20261104-final-v2-20261123` | 0 | 63 | 0 |
+| `ts_scene_pool@multi-20261017-punchw-20261102-final-v2-20261123` | 0 | 49 | 0 |
+| `magicdata_ramc@allspk-ts-v1-20261104-final-v2-20261123` | 0 | 35 | 0 |
+| `ts_scene_pool@alt-twins-20261024-punchw-20261102-final-v2-20261123` | 0 | 24 | 0 |
+| `hard_hw_sft@hard-20261014-final-v2-20261123` | 0 | 13 | 0 |
+| `wenetspeech_clean@train-punc-v1-20261102-final-v2-20261123` | 0 | 8 | 0 |
+| `ts_scene_pool@handover-20261021-punchw-20261102-final-v2-20261123` | 0 | 8 | 0 |
+| `ts_scene_pool@hard-20261016-punchw-20261102-final-v2-20261123` | 0 | 5 | 0 |
+| `ts_scene_pool@solo-20261020-punchw-20261102-final-v2-20261123` | 0 | 4 | 0 |
+| **合计** | **756,837** | **178,837** | **9** |
+
 ## 使用范围
 
 - **open-audio-llm 的所有训练任务都用终版**（2026-11-21 起）：有 `-final-v1-20261120` 版本的来源用它；规则对它没有改动的来源不另建版本，下表列出的原版本就是终版。已经训完的实验按历史保留，不改。
-- **终版登记在多个文件里**：中英 `catalog/text_final_v1.yaml`，西语 `catalog/text_final_v1_es.yaml`。按登记查终版的脚本要读全部 `catalog/text_final_v1*.yaml`，只读第一个会漏掉西语。
+- **终版登记在多个文件里**：中英 v1 `catalog/text_final_v1.yaml`、v2 `catalog/text_final_v2.yaml`，西语 `catalog/text_final_v1_es.yaml`。按登记查终版的脚本要读全部 `catalog/text_final_v*.yaml`，并按 `superseded_by` 跳到最后一个版本；只读一个文件会漏掉 v2 或西语。
 - **icefall 暂不切换**：等下一次从头预训练，再按 icefall 的无标点写法另建 `<数据集>@icefall-20260908-final-v1-20261120`（只补改动字词的修正，评测条目一并登记）。
 - 切换时注意带版本号的记录名单，见上文"切换到终版时检查记录名单"。
 - **按记录关联的标注表也要换成对应终版**：它们按 `(dataset@version, record_id)` 关联训练记录，配方切到终版后键对不上（加载器会报错）。已建：`context_correction_clean_zh@think-v2-20261113-final-v1-20261120`（上下文纠偏 SFT 的 think 表，dataset 键按 `superseded_by` 换成终版，Lhotse 来源的 record_id 换前缀）。

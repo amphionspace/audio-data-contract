@@ -1,4 +1,5 @@
-# 训练文本终版 v2（text-final-v2）：v1 加规则 5（空格），另含朗读语料的新终版，规范见 docs/reference/training-text.md（v2）。占位，构建中。
+# 训练文本终版 v2（text-final-v2）：v1 加规则 5（空格），另含朗读语料的新终版，规范见 docs/reference/training-text.md（v2）。
+# 生成脚本 scripts/text_final/build_v2.py；只有规则改动了文本的来源才有 v2，其余 v1 终版仍是终版。
 - schema_version: dataset-catalog/2.0
   dataset_id: ts_scene_pool
   version: hard-20261016-punchw-20261102-final-v2-20261123
@@ -14,20 +15,94 @@
     kind: dataset-state
     root_alias: aidc_data
     relative_path: datasets/ts_scene_pool/versions/hard-20261016-punchw-20261102-final-v2-20261123/state.json
+  - name: en-records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/hard-20261016-punchw-20261102/records_en.jsonl.gz
+    expected_bytes: 7180947
+    sha256: d1f0582d3e1d650d4fe00710e3b1c4aaff57eb08e72a660245b4072182d06888
+    metadata:
+      record_count: 25000
+  - name: en-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/hard-20261016/audio_index_en.jsonl.gz
+    sha256: c81511a9cd852419c4b66d7ab0d1c7bce472ac3ccef8896ddcf90b67323009c3
+    metadata:
+      record_count: 89560
+  - name: zh-records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/hard-20261016-punchw-20261102-final-v2-20261123/text/zh-records.jsonl.gz
+    expected_bytes: 7693602
+    sha256: dcceb671887e0a438f79f3e2cd5eb4377d437ee5aa2a530b8310c8eaa3e49478
+    metadata:
+      record_count: 40000
+  - name: zh-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/hard-20261016/audio_index_zh.jsonl.gz
+    sha256: cdd30e9e29cfae30935b14411fe180cb2d638011d7689798e861ffe6d2021a3e
+    metadata:
+      record_count: 299881
+  - name: record_index
+    kind: lance-record-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/hard-20261016-punchw-20261102-final-v2-20261123/record_index/index.json
+    expected_bytes: 1090
+    sha256: 0c16b4bbf7aff4d106e338f9a7ac11564fb42a6aa71e7181ef0e277c0d716044
+    metadata:
+      snapshot_version: 13
+      rows: 65000
+      schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
   splits:
-    train:
+    en:
       artifacts:
-        preparation_state:
-        - preparation_state
-      provenance:
-        preparation_status: building
+        records:
+        - en-records
+        audio_index:
+        - en-audio-index
+        records_lance:
+        - record_index
+      task: ts_asr
+      statistics:
+        records: 25000
+        duration_hours: 36.95
+        duration_basis: clip duration (segment span, or the whole file)
+    zh:
+      artifacts:
+        records:
+        - zh-records
+        audio_index:
+        - zh-audio-index
+        records_lance:
+        - record_index
+      task: ts_asr
+      statistics:
+        records: 40000
+        duration_hours: 44.77
+        duration_basis: clip duration (segment span, or the whole file)
+        final_v2_changed_records: 5
   provenance:
-    preparation_status: building
-    owner: mingdong
-    description: ts_scene_pool@hard-20261016-punchw-20261102 的训练文本终版 v2，按 audio-data-contract docs/reference/training-text.md（v2） 统一空格等。构建中。
+    synthetic: none
+    snapshot_date: '2026-11-23'
+    description: ts_scene_pool@hard-20261016-punchw-20261102 的训练文本终版 v2：在 v1 终版 ts_scene_pool@hard-20261016-punchw-20261102-final-v1-20261120 上补做空格统一（中英规范规则 5）5 条，按 audio-data-contract docs/reference/training-text.md（v2）。同一行里的场景文本和热词列表一起改；其余字段、录音清单和音频照旧，引用起点版本的产物。
+    sources:
+    - ts_scene_pool:hard-20261016
+    - aishell2:punc-written-v1-20261029
+    - kespeech:punc-written-v1-20261029
+    - magicdata:punc-written-v1-20261102
+    - librispeech:punc-written-en-v1-20261102
     source: ts_scene_pool@hard-20261016-punchw-20261102-final-v1-20261120
     method: text-final-v2
+    owner: mingdong
     run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
+    build_script: scripts/text_final/build_v2.py
+  recipe_parameters:
+    spec: docs/reference/training-text.md（v2）
+    start: ts_scene_pool@hard-20261016-punchw-20261102-final-v1-20261120
+    rounds: 空格统一（中英规范规则 5）5 条
+    unchanged: 规则没有改动的文本文件、录音清单、音频和 dev/test 划分，引用起点版本的产物
 - schema_version: dataset-catalog/2.0
   dataset_id: emilia2_mix
   version: mix-20261013-utts-final-v2-20261123
@@ -37,26 +112,101 @@
   tasks:
   - ts_asr
   aliases: []
-  derived_from: emilia2_mix@mix-20261013-utts-final-v1-20261120
   artifacts:
   - name: preparation_state
     kind: dataset-state
     root_alias: aidc_data
     relative_path: datasets/emilia2_mix/versions/mix-20261013-utts-final-v2-20261123/state.json
+  - name: train_2spk-records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/emilia2_mix/versions/mix-20261013-utts-final-v2-20261123/text/train_2spk-records.jsonl.gz
+    expected_bytes: 932182746
+    sha256: 7a9b6a3c6d3edb2026792b76ed6328f71417cdd68fcc64e1bd93b115a75cca7a
+    metadata:
+      record_count: 2206836
+  - name: train_3spk-records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/emilia2_mix/versions/mix-20261013-utts-final-v2-20261123/text/train_3spk-records.jsonl.gz
+    expected_bytes: 1119162393
+    sha256: d3faf21a88b2dd447303d3a1dc92c6d36ebb94c94a355fd96ba4465caa488747
+    metadata:
+      record_count: 2201597
+  - name: train_2spk-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/emilia2_mix/versions/mix-20261013-utts-ctxclean-20261110/audio_index/audio_index_train_2spk.jsonl.gz
+    sha256: 3324be60c75b501847a2394f56c051ade7940df2b7c32ae7cc41091dbec7b7ec
+    metadata:
+      record_count: 2814665
+    expected_bytes: 184202757
+  - name: train_3spk-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/emilia2_mix/versions/mix-20261013-utts-ctxclean-20261110/audio_index/audio_index_train_3spk.jsonl.gz
+    sha256: 919d303cea3cfec079588097c962bc9777c7205178ce13a6f966f5e52149dc15
+    metadata:
+      record_count: 2810451
+    expected_bytes: 183932154
+  - name: record_index
+    kind: lance-record-index
+    root_alias: aidc_data
+    relative_path: datasets/emilia2_mix/versions/mix-20261013-utts-final-v2-20261123/record_index/index.json
+    expected_bytes: 1130
+    sha256: 3bb4cc397ed1dfec371d74e7cb7728444097bb3d6ee6535cc22acd1d50cfdea1
+    metadata:
+      snapshot_version: 13
+      rows: 4408433
+      schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
   splits:
-    train:
+    train_2spk:
       artifacts:
-        preparation_state:
-        - preparation_state
-      provenance:
-        preparation_status: building
+        records:
+        - train_2spk-records
+        audio_index:
+        - train_2spk-audio-index
+        records_lance:
+        - record_index
+      task: ts_asr
+      statistics:
+        records: 2206836
+        duration_hours: 8557.364
+        duration_basis: clip duration (segment span, or the whole file)
+        zhen_fix_changed_records: 12399
+        final_v2_changed_records: 32107
+    train_3spk:
+      artifacts:
+        records:
+        - train_3spk-records
+        audio_index:
+        - train_3spk-audio-index
+        records_lance:
+        - record_index
+      task: ts_asr
+      statistics:
+        records: 2201597
+        duration_hours: 8554.289
+        duration_basis: clip duration (segment span, or the whole file)
+        zhen_fix_changed_records: 12188
+        final_v2_changed_records: 31722
+  derived_from: emilia2_mix@mix-20261013-utts-final-v1-20261120
+  recipe_parameters:
+    spec: docs/reference/training-text.md（v2）
+    start: emilia2_mix@mix-20261013-utts-final-v1-20261120
+    rounds: 空格统一（中英规范规则 5）63,829 条
+    unchanged: 规则没有改动的文本文件、录音清单、音频和 dev/test 划分，引用起点版本的产物
   provenance:
-    preparation_status: building
+    summary: Emilia2 长音频合成的 2/3 人目标说话人混合
+    description: emilia2_mix@mix-20261013-utts 的训练文本终版 v2：在 v1 终版 emilia2_mix@mix-20261013-utts-final-v1-20261120 上补做空格统一（中英规范规则 5）63,829 条，按 audio-data-contract docs/reference/training-text.md（v2）。同一行里的场景文本和热词列表一起改；其余字段、录音清单和音频照旧，引用起点版本的产物。
     owner: mingdong
-    description: emilia2_mix@mix-20261013-utts 的训练文本终版 v2，按 audio-data-contract docs/reference/training-text.md（v2） 统一空格等。构建中。
+    snapshot_date: '2026-11-23'
     source: emilia2_mix@mix-20261013-utts-final-v1-20261120
-    method: text-final-v2
     run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
+    method: text-final-v2
+    rules: zhen-fix-v1
+    changed_records: 24587
+    build_script: scripts/text_final/build_v2.py
 - schema_version: dataset-catalog/2.0
   dataset_id: emilia2_dialog
   version: dialog-turn-taking-20261013-enroll-final-v2-20261123
@@ -66,26 +216,331 @@
   tasks:
   - ts_asr
   aliases: []
-  derived_from: emilia2_dialog@dialog-turn-taking-20261013-enroll-final-v1-20261120
   artifacts:
   - name: preparation_state
     kind: dataset-state
     root_alias: aidc_data
     relative_path: datasets/emilia2_dialog/versions/dialog-turn-taking-20261013-enroll-final-v2-20261123/state.json
+  - name: train_2spk
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/emilia2_dialog/versions/dialog-turn-taking-20261013-enroll-final-v2-20261123/text/train_2spk.jsonl.gz
+    expected_bytes: 182457547
+    sha256: 67be91ecfce8311a673df5a4c93911f24689186a0f5dc143b988d155e8c9f73f
+    metadata:
+      record_count: 1118820
+  - name: train_3spk
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/emilia2_dialog/versions/dialog-turn-taking-20261013-enroll-final-v2-20261123/text/train_3spk.jsonl.gz
+    expected_bytes: 61445533
+    sha256: dcb89861d0eb4b9c2086b6a3e1db3e386c58eb0015c50d82fcf29f6f5cf83f14
+    metadata:
+      record_count: 436478
+  - name: train_neg
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/emilia2_dialog/versions/dialog-turn-taking-20261013-enroll-ctxclean-20261110-zhenfix-20261117/records/train_neg.jsonl.gz
+    expected_bytes: 93753811
+    sha256: 3f2873526251879620c833a94f2e25d5bc16c063d33eb04b1597795120616202
+    metadata:
+      record_count: 879939
+  - name: eval_2spk
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/emilia2_dialog/versions/dialog-turn-taking-20261013-enroll-ctxclean-20261110/records/eval_2spk.jsonl.gz
+    expected_bytes: 4470312
+    sha256: 9ea1d9c206859e6e679f454d462ed1821dc3d7271494ddbba484f3f03ac537a8
+    metadata:
+      record_count: 22323
+  - name: eval_3spk
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/emilia2_dialog/versions/dialog-turn-taking-20261013-enroll-ctxclean-20261110/records/eval_3spk.jsonl.gz
+    expected_bytes: 1638416
+    sha256: 356508548d304005ba8a782b49b8616cffa8e7a3ac0d6475228b9b21dc72f8d3
+    metadata:
+      record_count: 9368
+  - name: eval_neg
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/emilia2_dialog/versions/dialog-turn-taking-20261013-enroll-ctxclean-20261110/records/eval_neg.jsonl.gz
+    expected_bytes: 2514611
+    sha256: ec827c22fd15fd6c23877585339c0e1adaa55ce82a433f80d0f60425a32b5f6c
+    metadata:
+      record_count: 18069
+  - name: test_2spk
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/emilia2_dialog/versions/dialog-turn-taking-20261013-enroll-ctxclean-20261110/records/test_2spk.jsonl.gz
+    expected_bytes: 4540681
+    sha256: 8c1aa182a8584a00a7dc05abbdf456b1922c5a269bbe2ce27ae606388073e8b7
+    metadata:
+      record_count: 22991
+  - name: test_3spk
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/emilia2_dialog/versions/dialog-turn-taking-20261013-enroll-ctxclean-20261110/records/test_3spk.jsonl.gz
+    expected_bytes: 1409736
+    sha256: 14dd47c258fc39212e51e98db49efe5af760ef0c578d25d2a6d57c3810ed3d70
+    metadata:
+      record_count: 8015
+  - name: test_neg
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/emilia2_dialog/versions/dialog-turn-taking-20261013-enroll-ctxclean-20261110/records/test_neg.jsonl.gz
+    expected_bytes: 2454502
+    sha256: 5f8cd7a3d1ea586295d9fa04af7bfb1001e7771d25532a8c1cef4aad8d8d8d40
+    metadata:
+      record_count: 17837
+  - name: audio_index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/emilia2_dialog/versions/dialog-turn-taking-20261013-enroll-ctxclean-20261110/audio_index/audio-index-flac.jsonl.gz
+    expected_bytes: 12437398
+    sha256: 33ae301b04e413c1b45cf2b769084c1bfa9e89805404b0a16f1acf4fff6ba499
+    metadata:
+      record_count: 189150
+  - name: record_index
+    kind: lance-record-index
+    root_alias: aidc_data
+    relative_path: datasets/emilia2_dialog/versions/dialog-turn-taking-20261013-enroll-final-v2-20261123/record_index/index.json
+    expected_bytes: 2258
+    sha256: 55a93f00104ba49c811f27f9fad9c0872baf250e285a6408edff1ac36d4deeac
+    metadata:
+      snapshot_version: 13
+      rows: 2533840
+      schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
   splits:
+    train_2spk:
+      group: train
+      artifacts:
+        records:
+        - train_2spk
+        audio_index:
+        - audio_index
+        records_lance:
+        - record_index
+      statistics:
+        records: 1118820
+        duration_hours: 6658.435
+        duration_basis: sum of mixture duration per target example; excludes enrollment; repeated mixtures count once per example
+        zhen_fix_changed_records: 9991
+        final_v2_changed_records: 34132
+    train_3spk:
+      group: train
+      artifacts:
+        records:
+        - train_3spk
+        audio_index:
+        - audio_index
+        records_lance:
+        - record_index
+      statistics:
+        records: 436478
+        duration_hours: 2671.929
+        duration_basis: sum of mixture duration per target example; excludes enrollment; repeated mixtures count once per example
+        zhen_fix_changed_records: 2864
+        final_v2_changed_records: 10441
+    train_neg:
+      group: train
+      artifacts:
+        records:
+        - train_neg
+        audio_index:
+        - audio_index
+        records_lance:
+        - record_index
+      statistics:
+        records: 879939
+        duration_hours: 5117.22
+        duration_basis: sum of mixture duration per target example; excludes enrollment; repeated mixtures count once per example
+        zhen_fix_changed_records: 0
+    eval_2spk:
+      group: eval
+      artifacts:
+        records:
+        - eval_2spk
+        audio_index:
+        - audio_index
+        records_lance:
+        - record_index
+      statistics:
+        records: 22323
+        negative_records: 0
+        duration_hours: 132.51531166666766
+        duration_basis: sum of mixture duration per target example; excludes enrollment; repeated mixtures count once per example
+        unique_mixture_count: 13258
+        unique_mixture_duration_hours: 77.06432805555556
+        languages:
+          zh: 11088
+          en: 11235
+    eval_3spk:
+      group: eval
+      artifacts:
+        records:
+        - eval_3spk
+        audio_index:
+        - audio_index
+        records_lance:
+        - record_index
+      statistics:
+        records: 9368
+        negative_records: 0
+        duration_hours: 56.64699611111105
+        duration_basis: sum of mixture duration per target example; excludes enrollment; repeated mixtures count once per example
+        unique_mixture_count: 4271
+        unique_mixture_duration_hours: 25.258053611111112
+        languages:
+          zh: 4174
+          en: 5194
+    eval_neg:
+      group: eval
+      artifacts:
+        records:
+        - eval_neg
+        audio_index:
+        - audio_index
+        records_lance:
+        - record_index
+      statistics:
+        records: 18069
+        negative_records: 18069
+        duration_hours: 104.47867916666682
+        duration_basis: sum of mixture duration per target example; excludes enrollment; repeated mixtures count once per example
+        unique_mixture_count: 18069
+        unique_mixture_duration_hours: 104.47867916666667
+        languages:
+          zh: 9135
+          en: 8934
+    test_2spk:
+      group: test
+      artifacts:
+        records:
+        - test_2spk
+        audio_index:
+        - audio_index
+        records_lance:
+        - record_index
+      statistics:
+        records: 22991
+        negative_records: 0
+        duration_hours: 137.49028000000055
+        duration_basis: sum of mixture duration per target example; excludes enrollment; repeated mixtures count once per example
+        unique_mixture_count: 13580
+        unique_mixture_duration_hours: 79.46416416666666
+        languages:
+          zh: 11703
+          en: 11288
+    test_3spk:
+      group: test
+      artifacts:
+        records:
+        - test_3spk
+        audio_index:
+        - audio_index
+        records_lance:
+        - record_index
+      statistics:
+        records: 8015
+        negative_records: 0
+        duration_hours: 48.71762166666698
+        duration_basis: sum of mixture duration per target example; excludes enrollment; repeated mixtures count once per example
+        unique_mixture_count: 3684
+        unique_mixture_duration_hours: 21.8247825
+        languages:
+          zh: 3481
+          en: 4534
+    test_neg:
+      group: test
+      artifacts:
+        records:
+        - test_neg
+        audio_index:
+        - audio_index
+        records_lance:
+        - record_index
+      statistics:
+        records: 17837
+        negative_records: 17837
+        duration_hours: 103.58737805555553
+        duration_basis: sum of mixture duration per target example; excludes enrollment; repeated mixtures count once per example
+        unique_mixture_count: 17837
+        unique_mixture_duration_hours: 103.58737805555555
+        languages:
+          zh: 9221
+          en: 8616
     train:
       artifacts:
-        preparation_state:
-        - preparation_state
-      provenance:
-        preparation_status: building
+        records:
+        - train_2spk
+        - train_3spk
+        - train_neg
+        audio_index:
+        - audio_index
+        records_lance:
+        - record_index
+      statistics:
+        records: 2435237
+        duration_hours: 14447.584
+        duration_basis: sum of mixture duration per target example; excludes enrollment; repeated mixtures count once per example
+        zhen_fix_changed_records: 12855
+        final_v2_changed_records: 44573
+    eval:
+      artifacts:
+        records:
+        - eval_2spk
+        - eval_3spk
+        - eval_neg
+        audio_index:
+        - audio_index
+        records_lance:
+        - record_index
+      statistics:
+        records: 49760
+        duration_hours: 293.6409869444455
+        duration_basis: sum of mixture duration per target example; excludes enrollment; repeated mixtures count once per example
+        unique_mixture_count: 18069
+        unique_mixture_duration_hours: 104.47867916666667
+    test:
+      artifacts:
+        records:
+        - test_2spk
+        - test_3spk
+        - test_neg
+        audio_index:
+        - audio_index
+        records_lance:
+        - record_index
+      statistics:
+        records: 48843
+        duration_hours: 289.7952797222231
+        duration_basis: sum of mixture duration per target example; excludes enrollment; repeated mixtures count once per example
+        unique_mixture_count: 17837
+        unique_mixture_duration_hours: 103.58737805555555
+  derived_from: emilia2_dialog@dialog-turn-taking-20261013-enroll-final-v1-20261120
+  recipe_parameters:
+    spec: docs/reference/training-text.md（v2）
+    start: emilia2_dialog@dialog-turn-taking-20261013-enroll-final-v1-20261120
+    rounds: 空格统一（中英规范规则 5）44,573 条
+    unchanged: 规则没有改动的文本文件、录音清单、音频和 dev/test 划分，引用起点版本的产物
   provenance:
-    preparation_status: building
+    summary: Emilia2 中英对话的轮流说话目标说话人数据
+    description: emilia2_dialog@dialog-turn-taking-20261013-enroll 的训练文本终版 v2：在 v1 终版 emilia2_dialog@dialog-turn-taking-20261013-enroll-final-v1-20261120 上补做空格统一（中英规范规则 5）44,573 条，按 audio-data-contract docs/reference/training-text.md（v2）。同一行里的场景文本和热词列表一起改；其余字段、录音清单和音频照旧，引用起点版本的产物。
     owner: mingdong
-    description: emilia2_dialog@dialog-turn-taking-20261013-enroll 的训练文本终版 v2，按 audio-data-contract docs/reference/training-text.md（v2） 统一空格等。构建中。
+    snapshot_date: '2026-11-23'
     source: emilia2_dialog@dialog-turn-taking-20261013-enroll-final-v1-20261120
-    method: text-final-v2
     run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
+    source_keys:
+    - namespace: emilia2
+      fields:
+      - metadata.recording_id
+      - metadata.source_record_id
+      pattern: (?<![0-9a-f])[0-9a-f]{16}(?![0-9a-f])
+    method: text-final-v2
+    rules: zhen-fix-v1
+    changed_records: 12855
+    build_script: scripts/text_final/build_v2.py
 - schema_version: dataset-catalog/2.0
   dataset_id: aishell4
   version: turn-taking-20261014-utts-punc-20261102-final-v2-20261123
@@ -94,26 +549,131 @@
   tasks:
   - ts_asr
   aliases: []
-  derived_from: aishell4@turn-taking-20261014-utts-punc-20261102-final-v1-20261120
   artifacts:
   - name: preparation_state
     kind: dataset-state
     root_alias: aidc_data
     relative_path: datasets/aishell4/versions/turn-taking-20261014-utts-punc-20261102-final-v2-20261123/state.json
+  - name: train_2spk_records_punc
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/aishell4/versions/turn-taking-20261014-utts-punc-20261102-final-v2-20261123/text/train_2spk_records_punc.jsonl.gz
+    expected_bytes: 2318024
+    sha256: 81823c7de9fafe95550df46330b597142209fd5839e71d36ccc6476e7a8df560
+    metadata:
+      record_count: 10506
+  - name: train_3spk_records_punc
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/aishell4/versions/turn-taking-20261014-utts-punc-20261102-final-v2-20261123/text/train_3spk_records_punc.jsonl.gz
+    expected_bytes: 3758381
+    sha256: b01a469219330787cf136bfe315ac94e91c4a3026fd999094e879df29e746b60
+    metadata:
+      record_count: 21923
+  - name: train_neg_records_punc
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/aishell4/versions/turn-taking-20261014-utts-punc-20261102-ctxclean-20261110-zhenfix-20261117/records/train_neg.jsonl.gz
+    expected_bytes: 3901480
+    sha256: 878639f2d822c14183f1a80eeb3a2073c532c01945547ffedb8a1db1e759b96b
+    metadata:
+      record_count: 14128
+  - name: train_2spk-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/aishell4/versions/turn-taking-20261014-utts-punc-20261102-ctxclean-20261110/audio_index/audio_index_train_2spk.jsonl.gz
+    sha256: 1fe6171ad0e2620923fe8557dfa293a7eb97ec5f19d3735862904e0f6c458851
+    metadata:
+      record_count: 189
+    expected_bytes: 10989
+  - name: train_3spk-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/aishell4/versions/turn-taking-20261014-utts-punc-20261102-ctxclean-20261110/audio_index/audio_index_train_3spk.jsonl.gz
+    sha256: ba3f767a1ad813be7b61c200dbfd116b37c7ffedcdfccc9330c00e66233d36ff
+    metadata:
+      record_count: 189
+    expected_bytes: 10989
+  - name: train_neg-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/aishell4/versions/turn-taking-20261014-utts-punc-20261102-ctxclean-20261110/audio_index/audio_index_train_neg.jsonl.gz
+    sha256: a3eaaa7d6855fae876dc08763e32232b0c10c1e7dc17692a05dd0919a17c438b
+    metadata:
+      record_count: 189
+    expected_bytes: 10988
+  - name: record_index
+    kind: lance-record-index
+    root_alias: aidc_data
+    relative_path: datasets/aishell4/versions/turn-taking-20261014-utts-punc-20261102-final-v2-20261123/record_index/index.json
+    expected_bytes: 1508
+    sha256: 972f7a30ecd7e928fe9029f2577f6acc143be131e6c5a6c0c0a19492d66e01ca
+    metadata:
+      snapshot_version: 13
+      rows: 46557
+      schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
   splits:
-    train:
+    train_2spk:
+      task: ts_asr
       artifacts:
-        preparation_state:
-        - preparation_state
-      provenance:
-        preparation_status: building
+        records:
+        - train_2spk_records_punc
+        audio_index:
+        - train_2spk-audio-index
+        records_lance:
+        - record_index
+      statistics:
+        records: 10506
+        duration_hours: 73.879
+        zhen_fix_changed_records: 93
+        final_v2_changed_records: 149
+      provenance: {}
+    train_3spk:
+      task: ts_asr
+      artifacts:
+        records:
+        - train_3spk_records_punc
+        audio_index:
+        - train_3spk-audio-index
+        records_lance:
+        - record_index
+      statistics:
+        records: 21923
+        duration_hours: 135.971
+        zhen_fix_changed_records: 161
+        final_v2_changed_records: 155
+      provenance: {}
+    train_neg:
+      task: ts_asr
+      artifacts:
+        records:
+        - train_neg_records_punc
+        audio_index:
+        - train_neg-audio-index
+        records_lance:
+        - record_index
+      statistics:
+        records: 14128
+        duration_hours: 91.374
+        zhen_fix_changed_records: 0
+      provenance: {}
+  derived_from: aishell4@turn-taking-20261014-utts-punc-20261102-final-v1-20261120
+  recipe_parameters:
+    spec: docs/reference/training-text.md（v2）
+    start: aishell4@turn-taking-20261014-utts-punc-20261102-final-v1-20261120
+    rounds: 空格统一（中英规范规则 5）304 条
+    unchanged: 规则没有改动的文本文件、录音清单、音频和 dev/test 划分，引用起点版本的产物
   provenance:
-    preparation_status: building
+    summary: 中文多人会议（AISHELL-4）；含轮流说话混合版
+    description: aishell4@turn-taking-20261014-utts-punc-20261102 的训练文本终版 v2：在 v1 终版 aishell4@turn-taking-20261014-utts-punc-20261102-final-v1-20261120 上补做空格统一（中英规范规则 5）304 条，按 audio-data-contract docs/reference/training-text.md（v2）。同一行里的场景文本和热词列表一起改；其余字段、录音清单和音频照旧，引用起点版本的产物。
     owner: mingdong
-    description: aishell4@turn-taking-20261014-utts-punc-20261102 的训练文本终版 v2，按 audio-data-contract docs/reference/training-text.md（v2） 统一空格等。构建中。
+    snapshot_date: '2026-11-23'
     source: aishell4@turn-taking-20261014-utts-punc-20261102-final-v1-20261120
-    method: text-final-v2
     run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
+    method: text-final-v2
+    rules: zhen-fix-v1
+    changed_records: 254
+    build_script: scripts/text_final/build_v2.py
 - schema_version: dataset-catalog/2.0
   dataset_id: magicdata_ramc
   version: turn-taking-20261014-utts-punc-20261102-final-v2-20261123
@@ -122,26 +682,100 @@
   tasks:
   - ts_asr
   aliases: []
-  derived_from: magicdata_ramc@turn-taking-20261014-utts-punc-20261102-final-v1-20261120
   artifacts:
   - name: preparation_state
     kind: dataset-state
     root_alias: aidc_data
     relative_path: datasets/magicdata_ramc/versions/turn-taking-20261014-utts-punc-20261102-final-v2-20261123/state.json
+  - name: train_2spk_records_punc
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/magicdata_ramc/versions/turn-taking-20261014-utts-punc-20261102-final-v2-20261123/text/train_2spk_records_punc.jsonl.gz
+    expected_bytes: 6816229
+    sha256: ff9a378d2e9477514a5fe2562e856b66721053222a440d0b02781e3082cebd26
+    metadata:
+      record_count: 29504
+  - name: train_neg_records_punc
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/magicdata_ramc/versions/turn-taking-20261014-utts-punc-20261102-ctxclean-20261110-zhenfix-20261117/records/train_neg.jsonl.gz
+    expected_bytes: 6178516
+    sha256: a6086288f6d5c1b475bce894b2182805dca0a4ae5fc54e01b195126af4e847f9
+    metadata:
+      record_count: 15372
+  - name: train_2spk-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/magicdata_ramc/versions/turn-taking-20261014-utts-punc-20261102-ctxclean-20261110/audio_index/audio_index_train_2spk.jsonl.gz
+    sha256: 3ed012e46aead910bb6e1f983ce157737e2f7c73481353b9f53c9094f53c83f2
+    metadata:
+      record_count: 289
+    expected_bytes: 15464
+  - name: train_neg-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/magicdata_ramc/versions/turn-taking-20261014-utts-punc-20261102-ctxclean-20261110/audio_index/audio_index_train_neg.jsonl.gz
+    sha256: 24461b9424fc48ed70e4c50b9cfd676b56e6bedc1a618bcf6e40fd00114dcd15
+    metadata:
+      record_count: 289
+    expected_bytes: 15463
+  - name: record_index
+    kind: lance-record-index
+    root_alias: aidc_data
+    relative_path: datasets/magicdata_ramc/versions/turn-taking-20261014-utts-punc-20261102-final-v2-20261123/record_index/index.json
+    expected_bytes: 1156
+    sha256: 0fbc7ee9e108b85ae11c4d6e9ee60dbf0dd8a4c4253a26a94646eaa0f2889a89
+    metadata:
+      snapshot_version: 13
+      rows: 44876
+      schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
   splits:
-    train:
+    train_2spk:
+      task: ts_asr
       artifacts:
-        preparation_state:
-        - preparation_state
-      provenance:
-        preparation_status: building
+        records:
+        - train_2spk_records_punc
+        audio_index:
+        - train_2spk-audio-index
+        records_lance:
+        - record_index
+      statistics:
+        records: 29504
+        duration_hours: 221.853
+        zhen_fix_changed_records: 711
+        final_v2_changed_records: 100
+      provenance: {}
+    train_neg:
+      task: ts_asr
+      artifacts:
+        records:
+        - train_neg_records_punc
+        audio_index:
+        - train_neg-audio-index
+        records_lance:
+        - record_index
+      statistics:
+        records: 15372
+        duration_hours: 115.208
+        zhen_fix_changed_records: 0
+      provenance: {}
+  derived_from: magicdata_ramc@turn-taking-20261014-utts-punc-20261102-final-v1-20261120
+  recipe_parameters:
+    spec: docs/reference/training-text.md（v2）
+    start: magicdata_ramc@turn-taking-20261014-utts-punc-20261102-final-v1-20261120
+    rounds: 空格统一（中英规范规则 5）100 条
+    unchanged: 规则没有改动的文本文件、录音清单、音频和 dev/test 划分，引用起点版本的产物
   provenance:
-    preparation_status: building
+    summary: 中文手机通话自然对话（MagicData-RAMC）
+    description: magicdata_ramc@turn-taking-20261014-utts-punc-20261102 的训练文本终版 v2：在 v1 终版 magicdata_ramc@turn-taking-20261014-utts-punc-20261102-final-v1-20261120 上补做空格统一（中英规范规则 5）100 条，按 audio-data-contract docs/reference/training-text.md（v2）。同一行里的场景文本和热词列表一起改；其余字段、录音清单和音频照旧，引用起点版本的产物。
     owner: mingdong
-    description: magicdata_ramc@turn-taking-20261014-utts-punc-20261102 的训练文本终版 v2，按 audio-data-contract docs/reference/training-text.md（v2） 统一空格等。构建中。
+    snapshot_date: '2026-11-23'
     source: magicdata_ramc@turn-taking-20261014-utts-punc-20261102-final-v1-20261120
-    method: text-final-v2
     run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
+    method: text-final-v2
+    rules: zhen-fix-v1
+    changed_records: 711
+    build_script: scripts/text_final/build_v2.py
 - schema_version: dataset-catalog/2.0
   dataset_id: wenetspeech_clean
   version: train-punc-v1-20261102-final-v2-20261123
@@ -150,26 +784,80 @@
   tasks:
   - asr
   aliases: []
-  derived_from: wenetspeech_clean@train-punc-v1-20261102-final-v1-20261120
   artifacts:
   - name: preparation_state
     kind: dataset-state
     root_alias: aidc_data
     relative_path: datasets/wenetspeech_clean/versions/train-punc-v1-20261102-final-v2-20261123/state.json
+  - name: train_recordings
+    kind: lhotse-recordings
+    root_alias: aidc_data
+    relative_path: datasets/wenetspeech_clean/versions/train-punc-v1-20261102-ctxclean-20261110/recordings/train.jsonl.gz
+    expected_bytes: 1437000
+    sha256: 792596fc3a2d6b0992ae95f7dbad715d85fae66efc748c0d1249c202bac9acd4
+    metadata:
+      record_count: 60937
+  - name: train_supervisions_punc_0
+    kind: lhotse-supervisions
+    root_alias: aidc_data
+    relative_path: datasets/wenetspeech_clean/versions/train-punc-v1-20261102-final-v2-20261123/text/train_supervisions_punc_0.jsonl.gz
+    expected_bytes: 516907840
+    sha256: 429c12d7cb177d66d70403f8c8e3d399ed7465aebc4a0d314c96891a5384b930
+    metadata:
+      record_count: 14480879
+  - name: zhen_fix_patches
+    kind: jsonl-metadata
+    root_alias: aidc_data
+    relative_path: datasets/wenetspeech_clean/versions/train-punc-v1-20261102-ctxclean-20261110-zhenfix-20261119/evidence/patches.jsonl
+    expected_bytes: 11608656
+    sha256: 1b5cae875ae9ed6f47db72989d82e3eaf36d24357065407bc05e6fdfe6bdbd28
+    metadata:
+      record_count: 20510
+      description: 全部候选（LLM 判为音译 A / 意译 B / 识别错 C）的逐条处理：标注原文、改后文本、替换或插入、标注片段和英文、Qwen3-ASR（自动语种、强制中文）、whisper-large-v3、FireRedASR2-AED 的转写、LLM 片段类别、是否改和不改的原因
+  - name: record_index
+    kind: lance-record-index
+    root_alias: aidc_data
+    relative_path: datasets/wenetspeech_clean/versions/train-punc-v1-20261102-final-v2-20261123/record_index/index.json
+    expected_bytes: 796
+    sha256: 454681799aefbc84eba879d702f0903bd65a976a858f731272133d2285e85483
+    metadata:
+      snapshot_version: 13
+      rows: 14480879
+      schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
   splits:
     train:
       artifacts:
-        preparation_state:
-        - preparation_state
-      provenance:
-        preparation_status: building
+        recordings:
+        - train_recordings
+        supervisions:
+        - train_supervisions_punc_0
+        records_lance:
+        - record_index
+      statistics:
+        records: 14480879
+        recordings: 60937
+        recordings_with_supervisions: 60928
+        duration_hours: 9919.264
+        duration_basis: sum of supervision duration
+        zhen_fix_changed_records: 3727
+        final_v2_changed_records: 8
+  derived_from: wenetspeech_clean@train-punc-v1-20261102-final-v1-20261120
+  recipe_parameters:
+    spec: docs/reference/training-text.md（v2）
+    start: wenetspeech_clean@train-punc-v1-20261102-final-v1-20261120
+    rounds: 空格统一（中英规范规则 5）8 条
+    unchanged: 规则没有改动的文本文件、录音清单、音频和 dev/test 划分，引用起点版本的产物
   provenance:
-    preparation_status: building
+    summary: WenetSpeech 训练文本英文写法修正
+    description: wenetspeech_clean@train-punc-v1-20261102 的训练文本终版 v2：在 v1 终版 wenetspeech_clean@train-punc-v1-20261102-final-v1-20261120 上补做空格统一（中英规范规则 5）8 条，按 audio-data-contract docs/reference/training-text.md（v2）。同一行里的场景文本和热词列表一起改；其余字段、录音清单和音频照旧，引用起点版本的产物。
     owner: mingdong
-    description: wenetspeech_clean@train-punc-v1-20261102 的训练文本终版 v2，按 audio-data-contract docs/reference/training-text.md（v2） 统一空格等。构建中。
+    snapshot_date: '2026-11-23'
     source: wenetspeech_clean@train-punc-v1-20261102-final-v1-20261120
-    method: text-final-v2
     run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
+    method: text-final-v2
+    rules: zhen-fix-en-v1
+    changed_records: 3727
+    build_script: scripts/text_final/build_v2.py
 - schema_version: dataset-catalog/2.0
   dataset_id: emilia2_short
   version: short-lance-20261023-final-v2-20261123
@@ -179,26 +867,83 @@
   tasks:
   - asr
   aliases: []
-  derived_from: emilia2_short@short-lance-20261023-final-v1-20261120
   artifacts:
   - name: preparation_state
     kind: dataset-state
     root_alias: aidc_data
     relative_path: datasets/emilia2_short/versions/short-lance-20261023-final-v2-20261123/state.json
+  - name: train_en
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/emilia2_short/versions/short-lance-20261023-final-v2-20261123/text/train_en.jsonl.gz
+    expected_bytes: 319650625
+    sha256: f6d65d2b4b4e9e77332432c600511755558defc86def951cd04d42763c939d01
+    metadata:
+      record_count: 2081213
+  - name: train_zh
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/emilia2_short/versions/short-lance-20261023-final-v2-20261123/text/train_zh.jsonl.gz
+    expected_bytes: 301053836
+    sha256: a085332fc88391851514752f83f3303ad0e596f260dac06e5022e24e5b144fb0
+    metadata:
+      record_count: 1908804
   splits:
+    train_en:
+      group: train
+      artifacts:
+        records:
+        - train_en
+      statistics:
+        records: 2081213
+        duration_hours: 2740.01
+        duration_basis: sum of Lance sample duration; each sample is one ASR example
+        zhen_fix_changed_records: 180
+        final_v2_changed_records: 4412
+    train_zh:
+      group: train
+      artifacts:
+        records:
+        - train_zh
+      statistics:
+        records: 1908804
+        duration_hours: 2356.643
+        duration_basis: sum of Lance sample duration; each sample is one ASR example
+        zhen_fix_changed_records: 15785
+        final_v2_changed_records: 40464
     train:
       artifacts:
-        preparation_state:
-        - preparation_state
-      provenance:
-        preparation_status: building
+        records:
+        - train_en
+        - train_zh
+      statistics:
+        records: 3990017
+        duration_hours: 5096.653
+        duration_basis: sum of Lance sample duration; each sample is one ASR example
+        zhen_fix_changed_records: 15965
+        final_v2_changed_records: 44876
+  derived_from: emilia2_short@short-lance-20261023-final-v1-20261120
+  recipe_parameters:
+    spec: docs/reference/training-text.md（v2）
+    start: emilia2_short@short-lance-20261023-final-v1-20261120
+    rounds: 空格统一（中英规范规则 5）44,876 条
+    unchanged: 规则没有改动的文本文件、录音清单、音频和 dev/test 划分，引用起点版本的产物
   provenance:
-    preparation_status: building
+    summary: Emilia2 中英短音频普通转写
+    description: emilia2_short@short-lance-20261023 的训练文本终版 v2：在 v1 终版 emilia2_short@short-lance-20261023-final-v1-20261120 上补做空格统一（中英规范规则 5）44,876 条，按 audio-data-contract docs/reference/training-text.md（v2）。同一行里的场景文本和热词列表一起改；其余字段、录音清单和音频照旧，引用起点版本的产物。
     owner: mingdong
-    description: emilia2_short@short-lance-20261023 的训练文本终版 v2，按 audio-data-contract docs/reference/training-text.md（v2） 统一空格等。构建中。
+    snapshot_date: '2026-11-23'
     source: emilia2_short@short-lance-20261023-final-v1-20261120
-    method: text-final-v2
     run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
+    source_keys:
+    - namespace: emilia2
+      fields:
+      - metadata.recording_id
+      pattern: (?<![0-9a-f])[0-9a-f]{16}(?![0-9a-f])
+    method: text-final-v2
+    rules: zhen-fix-v1
+    changed_records: 15965
+    build_script: scripts/text_final/build_v2.py
 - schema_version: dataset-catalog/2.0
   dataset_id: police_asr_unified
   version: train-punc-v1-20261102-final-v2-20261123
@@ -213,20 +958,65 @@
     kind: dataset-state
     root_alias: aidc_data
     relative_path: datasets/police_asr_unified/versions/train-punc-v1-20261102-final-v2-20261123/state.json
+  - name: train_recordings
+    kind: lhotse-recordings
+    root_alias: aidc_data
+    relative_path: datasets/police_asr_unified/versions/v1-20261009/manifests/police_asr_unified_recordings_train.jsonl.gz
+    expected_bytes: 6870628
+    sha256: 175f7162a1ad415adf61dd44902c8c8b7fed42e68eaceb5d6f784bc9f983b970
+    metadata:
+      record_count: 365341
+  - name: train_supervisions_punc_0
+    kind: lhotse-supervisions
+    root_alias: aidc_data
+    relative_path: datasets/police_asr_unified/versions/train-punc-v1-20261102-final-v2-20261123/text/train_supervisions_punc_0.jsonl.gz
+    expected_bytes: 94696713
+    sha256: f4be826d4ef839cdbc6a24bd512280db2d44d75d9bb47f677ad6e7026aa70bb0
+    metadata:
+      record_count: 365341
+      punctuated: true
+      source: datasets/police_asr_unified/versions/v1-20261009/manifests/police_asr_unified_supervisions_train.jsonl.gz
+  - name: record_index
+    kind: lance-record-index
+    root_alias: aidc_data
+    relative_path: datasets/police_asr_unified/versions/train-punc-v1-20261102-final-v2-20261123/record_index/index.json
+    expected_bytes: 793
+    sha256: 5c5755047c0fdb73df32d15763948018629aa4711a350773af1ff7b0527fbfad
+    metadata:
+      snapshot_version: 13
+      rows: 365341
+      schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
   splits:
     train:
       artifacts:
-        preparation_state:
-        - preparation_state
-      provenance:
-        preparation_status: building
+        recordings:
+        - train_recordings
+        supervisions:
+        - train_supervisions_punc_0
+        records_lance:
+        - record_index
+      statistics:
+        records: 365341
+        records_punctuated: 365341
+        zhen_fix_changed_records: 12247
+        final_v2_changed_records: 15371
+      provenance: {}
   provenance:
-    preparation_status: building
     owner: mingdong
-    description: police_asr_unified@train-punc-v1-20261102 的训练文本终版 v2，按 audio-data-contract docs/reference/training-text.md（v2） 统一空格等。构建中。
+    description: police_asr_unified@train-punc-v1-20261102 的训练文本终版 v2：在 v1 终版 police_asr_unified@train-punc-v1-20261102-final-v1-20261120 上补做空格统一（中英规范规则 5）15,371 条，按 audio-data-contract docs/reference/training-text.md（v2）。同一行里的场景文本和热词列表一起改；其余字段、录音清单和音频照旧，引用起点版本的产物。
     source: police_asr_unified@train-punc-v1-20261102-final-v1-20261120
+    summary: 警务合成语音统合版（V1–V6 合并）
+    snapshot_date: '2026-11-23'
     method: text-final-v2
+    rules: zhen-fix-v1
+    changed_records: 12247
     run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
+    build_script: scripts/text_final/build_v2.py
+  recipe_parameters:
+    spec: docs/reference/training-text.md（v2）
+    start: police_asr_unified@train-punc-v1-20261102-final-v1-20261120
+    rounds: 空格统一（中英规范规则 5）15,371 条
+    unchanged: 规则没有改动的文本文件、录音清单、音频和 dev/test 划分，引用起点版本的产物
 - schema_version: dataset-catalog/2.0
   dataset_id: aishell2
   version: train-punc-v1-20261102-final-v2-20261123
@@ -241,20 +1031,60 @@
     kind: dataset-state
     root_alias: aidc_data
     relative_path: datasets/aishell2/versions/train-punc-v1-20261102-final-v2-20261123/state.json
+  - kind: lhotse-recordings
+    name: train_rec_0
+    relative_path: datasets/aishell2/versions/legacy-20260804/train_rec_0/aishell2_recordings_train.jsonl.gz
+    root_alias: aidc_data
+    expected_bytes: 13768214
+    sha256: 6bc4d05821a5d287c0e9c9b402abc49ff87bebbd5f5d97770263bf6f0c732304
+  - name: train_supervisions_punc_0
+    kind: lhotse-supervisions
+    root_alias: aidc_data
+    relative_path: datasets/aishell2/versions/train-punc-v1-20261102-final-v2-20261123/text/train_supervisions_punc_0.jsonl.gz
+    expected_bytes: 31799967
+    sha256: f32dd668d7504f8ebb0638f0013f2280e607ed3860d2611c40f4ba407bafdb34
+    metadata:
+      record_count: 1009223
+      punctuated: true
+      source: datasets/aishell2/versions/legacy-20260804/train_sup_0/aishell2_supervisions_train.jsonl.gz
+  - name: record_index
+    kind: lance-record-index
+    root_alias: aidc_data
+    relative_path: datasets/aishell2/versions/train-punc-v1-20261102-final-v2-20261123/record_index/index.json
+    expected_bytes: 780
+    sha256: 14aaf3806e3d9f94c3157637b0c74994f1cece0ef5039120069e63dd3203b7a9
+    metadata:
+      snapshot_version: 13
+      rows: 1009223
+      schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
   splits:
     train:
       artifacts:
-        preparation_state:
-        - preparation_state
-      provenance:
-        preparation_status: building
+        recordings:
+        - train_rec_0
+        supervisions:
+        - train_supervisions_punc_0
+        records_lance:
+        - record_index
+      statistics:
+        records: 1009223
+        records_punctuated: 1009223
+        final_r1_changed_records: 45
+        final_v2_changed_records: 215
+      provenance: {}
   provenance:
-    preparation_status: building
     owner: mingdong
-    description: aishell2@train-punc-v1-20261102 的训练文本终版 v2，按 audio-data-contract docs/reference/training-text.md（v2） 统一空格等。构建中。
+    description: aishell2@train-punc-v1-20261102 的训练文本终版 v2：在 v1 终版 aishell2@train-punc-v1-20261102-final-v1-20261120 上补做空格统一（中英规范规则 5）215 条，按 audio-data-contract docs/reference/training-text.md（v2）。同一行里的场景文本和热词列表一起改；其余字段、录音清单和音频照旧，引用起点版本的产物。
     source: aishell2@train-punc-v1-20261102-final-v1-20261120
+    snapshot_date: '2026-11-23'
     method: text-final-v2
     run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
+    build_script: scripts/text_final/build_v2.py
+  recipe_parameters:
+    spec: docs/reference/training-text.md（v2）
+    start: aishell2@train-punc-v1-20261102-final-v1-20261120
+    rounds: 空格统一（中英规范规则 5）215 条
+    unchanged: 规则没有改动的文本文件、录音清单、音频和 dev/test 划分，引用起点版本的产物
 - schema_version: dataset-catalog/2.0
   dataset_id: aishell4
   version: asr-20261014-punc-20261102-final-v2-20261123
@@ -263,26 +1093,70 @@
   tasks:
   - asr
   aliases: []
-  derived_from: aishell4@asr-20261014-punc-20261102-final-v1-20261120
   artifacts:
   - name: preparation_state
     kind: dataset-state
     root_alias: aidc_data
     relative_path: datasets/aishell4/versions/asr-20261014-punc-20261102-final-v2-20261123/state.json
+  - name: train_records_punc
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/aishell4/versions/asr-20261014-punc-20261102-final-v2-20261123/text/train_records_punc.jsonl.gz
+    expected_bytes: 4696722
+    sha256: 26445147d4c5d19c5129ea5de8ab9feaf0257864335dd9ad46763a65bac07d16
+    metadata:
+      record_count: 96998
+  - name: audio_index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/aishell4/versions/asr-20261014-punc-20261102-ctxclean-20261110/audio_index/audio-index.jsonl.gz
+    expected_bytes: 13978
+    sha256: 7740f79f34264edad30ceefa593cf078be42e3c6100384217d7d1ef37f5333f5
+    metadata:
+      record_count: 209
+  - name: record_index
+    kind: lance-record-index
+    root_alias: aidc_data
+    relative_path: datasets/aishell4/versions/asr-20261014-punc-20261102-final-v2-20261123/record_index/index.json
+    expected_bytes: 761
+    sha256: bb13a5caeefcc92e0c8a46a7eb6ca26b05954836562fe889b491259f8d309a2f
+    metadata:
+      snapshot_version: 13
+      rows: 96998
+      schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
   splits:
     train:
+      group: train
       artifacts:
-        preparation_state:
-        - preparation_state
-      provenance:
-        preparation_status: building
+        records:
+        - train_records_punc
+        audio_index:
+        - audio_index
+        records_lance:
+        - record_index
+      statistics:
+        records: 96998
+        duration_hours: 105.359
+        zhen_fix_changed_records: 298
+        final_v2_changed_records: 347
+      provenance: {}
+  derived_from: aishell4@asr-20261014-punc-20261102-final-v1-20261120
+  recipe_parameters:
+    spec: docs/reference/training-text.md（v2）
+    start: aishell4@asr-20261014-punc-20261102-final-v1-20261120
+    rounds: 空格统一（中英规范规则 5）347 条
+    unchanged: 规则没有改动的文本文件、录音清单、音频和 dev/test 划分，引用起点版本的产物
   provenance:
-    preparation_status: building
+    summary: 中文多人会议（AISHELL-4）；含轮流说话混合版
+    description: aishell4@asr-20261014-punc-20261102 的训练文本终版 v2：在 v1 终版 aishell4@asr-20261014-punc-20261102-final-v1-20261120 上补做空格统一（中英规范规则 5）347 条，按 audio-data-contract docs/reference/training-text.md（v2）。同一行里的场景文本和热词列表一起改；其余字段、录音清单和音频照旧，引用起点版本的产物。
     owner: mingdong
-    description: aishell4@asr-20261014-punc-20261102 的训练文本终版 v2，按 audio-data-contract docs/reference/training-text.md（v2） 统一空格等。构建中。
+    snapshot_date: '2026-11-23'
     source: aishell4@asr-20261014-punc-20261102-final-v1-20261120
-    method: text-final-v2
     run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
+    method: text-final-v2
+    rules: zhen-fix-v1
+    changed_records: 298
+    build_script: scripts/text_final/build_v2.py
 - schema_version: dataset-catalog/2.0
   dataset_id: threed_speaker_zh_far_asr
   version: train-punc-v1-20261102-final-v2-20261123
@@ -297,20 +1171,60 @@
     kind: dataset-state
     root_alias: aidc_data
     relative_path: datasets/threed_speaker_zh_far_asr/versions/train-punc-v1-20261102-final-v2-20261123/state.json
+  - name: train-recordings
+    kind: lhotse-recordings
+    root_alias: farfield_replay_3dspeaker_clean
+    relative_path: threed_speaker_zh_far_asr_recordings_train.jsonl.gz
+    sha256: b0c1871b3eb257fcf62db5bc7e55e88100defcfe0c6a0763c138552f26d2975e
+    metadata:
+      record_count: 34600
+  - name: train_supervisions_punc_0
+    kind: lhotse-supervisions
+    root_alias: aidc_data
+    relative_path: datasets/threed_speaker_zh_far_asr/versions/train-punc-v1-20261102-final-v2-20261123/text/train_supervisions_punc_0.jsonl.gz
+    expected_bytes: 1463782
+    sha256: c9547a2cceb1cf669d5cd73318a0cdbd10ad9f012c7c106fc07f09c01027ca48
+    metadata:
+      record_count: 34600
+      punctuated: true
+      source: threed_speaker_zh_far_asr_supervisions_train.jsonl.gz
+  - name: record_index
+    kind: lance-record-index
+    root_alias: aidc_data
+    relative_path: datasets/threed_speaker_zh_far_asr/versions/train-punc-v1-20261102-final-v2-20261123/record_index/index.json
+    expected_bytes: 798
+    sha256: 1791af1c2cf5f658c0ef3a5f10456ab0979eefaea0b6b1134bc55536a8e4526c
+    metadata:
+      snapshot_version: 13
+      rows: 34600
+      schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
   splits:
     train:
       artifacts:
-        preparation_state:
-        - preparation_state
-      provenance:
-        preparation_status: building
+        recordings:
+        - train-recordings
+        supervisions:
+        - train_supervisions_punc_0
+        records_lance:
+        - record_index
+      statistics:
+        records: 34600
+        records_punctuated: 34600
+        final_v2_changed_records: 799
+      provenance: {}
   provenance:
-    preparation_status: building
     owner: mingdong
-    description: threed_speaker_zh_far_asr@train-punc-v1-20261102 的训练文本终版 v2，按 audio-data-contract docs/reference/training-text.md（v2） 统一空格等。构建中。
+    description: threed_speaker_zh_far_asr@train-punc-v1-20261102 的训练文本终版 v2：在 v1 终版 threed_speaker_zh_far_asr@train-punc-v1-20261102-final-v1-20261120 上补做空格统一（中英规范规则 5）799 条，按 audio-data-contract docs/reference/training-text.md（v2）。同一行里的场景文本和热词列表一起改；其余字段、录音清单和音频照旧，引用起点版本的产物。
     source: threed_speaker_zh_far_asr@train-punc-v1-20261102-final-v1-20261120
+    snapshot_date: '2026-11-23'
     method: text-final-v2
     run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
+    build_script: scripts/text_final/build_v2.py
+  recipe_parameters:
+    spec: docs/reference/training-text.md（v2）
+    start: threed_speaker_zh_far_asr@train-punc-v1-20261102-final-v1-20261120
+    rounds: 空格统一（中英规范规则 5）799 条
+    unchanged: 规则没有改动的文本文件、录音清单、音频和 dev/test 划分，引用起点版本的产物
 - schema_version: dataset-catalog/2.0
   dataset_id: magicdata_ramc
   version: train-punc-v1-20261102-final-v2-20261123
@@ -319,26 +1233,71 @@
   tasks:
   - asr
   aliases: []
-  derived_from: magicdata_ramc@train-punc-v1-20261102-final-v1-20261120
   artifacts:
   - name: preparation_state
     kind: dataset-state
     root_alias: aidc_data
     relative_path: datasets/magicdata_ramc/versions/train-punc-v1-20261102-final-v2-20261123/state.json
+  - name: train_recordings
+    kind: lhotse-recordings
+    root_alias: aidc_data
+    relative_path: datasets/magicdata_ramc/versions/train-punc-v1-20261102-ctxclean-20261110/recordings/train.jsonl.gz
+    expected_bytes: 4533
+    sha256: c860c48b83ad7b67c340fc2cea2f699fd120fbe7cc947c0984110725e67f3470
+    metadata:
+      record_count: 289
+  - name: train_supervisions_punc_0
+    kind: lhotse-supervisions
+    root_alias: aidc_data
+    relative_path: datasets/magicdata_ramc/versions/train-punc-v1-20261102-final-v2-20261123/text/train_supervisions_punc_0.jsonl.gz
+    expected_bytes: 7547494
+    sha256: f0839d0da989da89fbbe14b2320c7acfe9a9e70fed64a230f463a13860326655
+    metadata:
+      record_count: 168459
+  - name: record_index
+    kind: lance-record-index
+    root_alias: aidc_data
+    relative_path: datasets/magicdata_ramc/versions/train-punc-v1-20261102-final-v2-20261123/record_index/index.json
+    expected_bytes: 789
+    sha256: ab666578fb6441693f8b5a26b249f2efab91c5ea815a5d351293c60d48754b5d
+    metadata:
+      snapshot_version: 13
+      rows: 168459
+      schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
   splits:
     train:
       artifacts:
-        preparation_state:
-        - preparation_state
-      provenance:
-        preparation_status: building
+        recordings:
+        - train_recordings
+        supervisions:
+        - train_supervisions_punc_0
+        records_lance:
+        - record_index
+      statistics:
+        records: 168459
+        recordings: 289
+        recordings_with_supervisions: 289
+        duration_hours: 125.479
+        duration_basis: sum of supervision duration
+        zhen_fix_changed_records: 1052
+        final_v2_changed_records: 99
+  derived_from: magicdata_ramc@train-punc-v1-20261102-final-v1-20261120
+  recipe_parameters:
+    spec: docs/reference/training-text.md（v2）
+    start: magicdata_ramc@train-punc-v1-20261102-final-v1-20261120
+    rounds: 空格统一（中英规范规则 5）99 条
+    unchanged: 规则没有改动的文本文件、录音清单、音频和 dev/test 划分，引用起点版本的产物
   provenance:
-    preparation_status: building
+    summary: 中文手机通话自然对话（MagicData-RAMC）
+    description: magicdata_ramc@train-punc-v1-20261102 的训练文本终版 v2：在 v1 终版 magicdata_ramc@train-punc-v1-20261102-final-v1-20261120 上补做空格统一（中英规范规则 5）99 条，按 audio-data-contract docs/reference/training-text.md（v2）。同一行里的场景文本和热词列表一起改；其余字段、录音清单和音频照旧，引用起点版本的产物。
     owner: mingdong
-    description: magicdata_ramc@train-punc-v1-20261102 的训练文本终版 v2，按 audio-data-contract docs/reference/training-text.md（v2） 统一空格等。构建中。
+    snapshot_date: '2026-11-23'
     source: magicdata_ramc@train-punc-v1-20261102-final-v1-20261120
-    method: text-final-v2
     run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
+    method: text-final-v2
+    rules: zhen-fix-v1
+    changed_records: 1052
+    build_script: scripts/text_final/build_v2.py
 - schema_version: dataset-catalog/2.0
   dataset_id: magicdata_ramc
   version: allspk-asr-v1-20261103-final-v2-20261123
@@ -347,26 +1306,79 @@
   tasks:
   - asr
   aliases: []
-  derived_from: magicdata_ramc@allspk-asr-v1-20261103-final-v1-20261120
   artifacts:
   - name: preparation_state
     kind: dataset-state
     root_alias: aidc_data
     relative_path: datasets/magicdata_ramc/versions/allspk-asr-v1-20261103-final-v2-20261123/state.json
+  - name: train_records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/magicdata_ramc/versions/allspk-asr-v1-20261103-final-v2-20261123/text/train_records.jsonl.gz
+    expected_bytes: 4680150
+    sha256: 6b17c6887a9d34f7c2bdcdd23fcb4a310c060fa2e4fdc874d8ecd111db39d984
+    metadata:
+      record_count: 9902
+      punctuated: true
+  - name: audio_index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/magicdata_ramc/versions/asr-20261014/audio_index/audio-index.jsonl.gz
+    expected_bytes: 20977
+    sha256: 24427d0c166f8e0c71a86aa13856d288d15038fdd3f5598716761aff45237e2d
+    metadata:
+      record_count: 351
+  - name: record_index
+    kind: lance-record-index
+    root_alias: aidc_data
+    relative_path: datasets/magicdata_ramc/versions/allspk-asr-v1-20261103-final-v2-20261123/record_index/index.json
+    expected_bytes: 756
+    sha256: ed88330a5c7aaa5f51fe30cceae752f718bcb558656e058b922fb190cb798f2a
+    metadata:
+      snapshot_version: 13
+      rows: 9902
+      schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
   splits:
     train:
+      group: train
       artifacts:
-        preparation_state:
-        - preparation_state
-      provenance:
-        preparation_status: building
+        records:
+        - train_records
+        audio_index:
+        - audio_index
+        records_lance:
+        - record_index
+      task: asr
+      statistics:
+        records: 9902
+        duration_hours: 124.14
+        duration_basis: window duration (ref.duration)
+        zhen_fix_changed_records: 474
+        final_v2_changed_records: 73
   provenance:
-    preparation_status: building
-    owner: mingdong
-    description: magicdata_ramc@allspk-asr-v1-20261103 的训练文本终版 v2，按 audio-data-contract docs/reference/training-text.md（v2） 统一空格等。构建中。
+    synthetic: none
+    snapshot_date: '2026-11-23'
+    description: magicdata_ramc@allspk-asr-v1-20261103 的训练文本终版 v2：在 v1 终版 magicdata_ramc@allspk-asr-v1-20261103-final-v1-20261120 上补做空格统一（中英规范规则 5）73 条，按 audio-data-contract docs/reference/training-text.md（v2）。同一行里的场景文本和热词列表一起改；其余字段、录音清单和音频照旧，引用起点版本的产物。
+    sources:
+    - magicdata_ramc@icefall-20260908
+    - magicdata_ramc@punc-written-v1-20261029
+    - magicdata_ramc@asr-20261014
+    - magicdata_ramc@clean-dual-qwen-moss-v1-20261008
+    audit: datasets/magicdata_ramc/versions/allspk-asr-v1-20261103/report.json
+    summary: 中文手机通话自然对话（MagicData-RAMC）
     source: magicdata_ramc@allspk-asr-v1-20261103-final-v1-20261120
     method: text-final-v2
+    rules: zhen-fix-v1
+    changed_records: 474
+    owner: mingdong
     run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
+    build_script: scripts/text_final/build_v2.py
+  derived_from: magicdata_ramc@allspk-asr-v1-20261103-final-v1-20261120
+  recipe_parameters:
+    spec: docs/reference/training-text.md（v2）
+    start: magicdata_ramc@allspk-asr-v1-20261103-final-v1-20261120
+    rounds: 空格统一（中英规范规则 5）73 条
+    unchanged: 规则没有改动的文本文件、录音清单、音频和 dev/test 划分，引用起点版本的产物
 - schema_version: dataset-catalog/2.0
   dataset_id: aishell4
   version: allspk-asr-v1-20261103-final-v2-20261123
@@ -375,26 +1387,75 @@
   tasks:
   - asr
   aliases: []
-  derived_from: aishell4@allspk-asr-v1-20261103-final-v1-20261120
   artifacts:
   - name: preparation_state
     kind: dataset-state
     root_alias: aidc_data
     relative_path: datasets/aishell4/versions/allspk-asr-v1-20261103-final-v2-20261123/state.json
+  - name: train_records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/aishell4/versions/allspk-asr-v1-20261103-final-v2-20261123/text/train_records.jsonl.gz
+    expected_bytes: 1833372
+    sha256: f06b4de742af370c74f62690ce340db75214870cbc379b2583af001421047402
+    metadata:
+      record_count: 4267
+      punctuated: true
+  - name: audio_index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/aishell4/versions/asr-20261014/audio_index/audio-index.jsonl.gz
+    expected_bytes: 13978
+    sha256: 7740f79f34264edad30ceefa593cf078be42e3c6100384217d7d1ef37f5333f5
+    metadata:
+      record_count: 209
+  - name: record_index
+    kind: lance-record-index
+    root_alias: aidc_data
+    relative_path: datasets/aishell4/versions/allspk-asr-v1-20261103-final-v2-20261123/record_index/index.json
+    expected_bytes: 750
+    sha256: 40b1b785d95ccab27f41f580d25cb239e4258bc1c59dbb70c2dfd2cb3fbb2fde
+    metadata:
+      snapshot_version: 13
+      rows: 4267
+      schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
   splits:
     train:
+      group: train
       artifacts:
-        preparation_state:
-        - preparation_state
-      provenance:
-        preparation_status: building
+        records:
+        - train_records
+        audio_index:
+        - audio_index
+        records_lance:
+        - record_index
+      task: asr
+      statistics:
+        records: 4267
+        duration_hours: 51.89
+        duration_basis: window duration (ref.duration)
+        final_r1_changed_records: 97
+        final_v2_changed_records: 156
   provenance:
-    preparation_status: building
-    owner: mingdong
-    description: aishell4@allspk-asr-v1-20261103 的训练文本终版 v2，按 audio-data-contract docs/reference/training-text.md（v2） 统一空格等。构建中。
+    synthetic: none
+    snapshot_date: '2026-11-23'
+    description: aishell4@allspk-asr-v1-20261103 的训练文本终版 v2：在 v1 终版 aishell4@allspk-asr-v1-20261103-final-v1-20261120 上补做空格统一（中英规范规则 5）156 条，按 audio-data-contract docs/reference/training-text.md（v2）。同一行里的场景文本和热词列表一起改；其余字段、录音清单和音频照旧，引用起点版本的产物。
+    sources:
+    - aishell4@icefall-20260908
+    - aishell4@punc-written-v1-20261029
+    - aishell4@asr-20261014
+    audit: datasets/aishell4/versions/allspk-asr-v1-20261103/report.json
     source: aishell4@allspk-asr-v1-20261103-final-v1-20261120
     method: text-final-v2
+    owner: mingdong
     run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
+    build_script: scripts/text_final/build_v2.py
+  derived_from: aishell4@allspk-asr-v1-20261103-final-v1-20261120
+  recipe_parameters:
+    spec: docs/reference/training-text.md（v2）
+    start: aishell4@allspk-asr-v1-20261103-final-v1-20261120
+    rounds: 空格统一（中英规范规则 5）156 条
+    unchanged: 规则没有改动的文本文件、录音清单、音频和 dev/test 划分，引用起点版本的产物
 - schema_version: dataset-catalog/2.0
   dataset_id: magicdata_ramc
   version: allspk-ts-v1-20261104-final-v2-20261123
@@ -403,26 +1464,104 @@
   tasks:
   - ts_asr
   aliases: []
-  derived_from: magicdata_ramc@allspk-ts-v1-20261104-final-v1-20261120
   artifacts:
   - name: preparation_state
     kind: dataset-state
     root_alias: aidc_data
     relative_path: datasets/magicdata_ramc/versions/allspk-ts-v1-20261104-final-v2-20261123/state.json
+  - name: train_records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/magicdata_ramc/versions/allspk-ts-v1-20261104-final-v2-20261123/text/train_records.jsonl.gz
+    expected_bytes: 3856436
+    sha256: 623609e826206d8eb3452ac11b9f5df22c539b470e449d8f65adcecd6df141f8
+    metadata:
+      record_count: 9902
+      punctuated: true
+  - name: train_neg_records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/magicdata_ramc/versions/allspk-ts-v1-20261104-zhenfix-20261117/records_train_neg.jsonl.gz
+    expected_bytes: 255563
+    sha256: 92b8f1f591b7bfce372021a92532818a2835556b516c8152a19490e625f2c64f
+    metadata:
+      record_count: 1767
+      punctuated: true
+  - name: audio_index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/magicdata_ramc/versions/asr-20261014/audio_index/audio-index.jsonl.gz
+    expected_bytes: 20977
+    sha256: 24427d0c166f8e0c71a86aa13856d288d15038fdd3f5598716761aff45237e2d
+    metadata:
+      record_count: 351
+  - name: record_index
+    kind: lance-record-index
+    root_alias: aidc_data
+    relative_path: datasets/magicdata_ramc/versions/allspk-ts-v1-20261104-final-v2-20261123/record_index/index.json
+    expected_bytes: 941
+    sha256: 4f07c8588782c85ce6e32eb0e9129478797b25ce4605875f20d4423fe175bf67
+    metadata:
+      snapshot_version: 13
+      rows: 11669
+      schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
   splits:
     train:
+      group: train
       artifacts:
-        preparation_state:
-        - preparation_state
-      provenance:
-        preparation_status: building
+        records:
+        - train_records
+        audio_index:
+        - audio_index
+        records_lance:
+        - record_index
+      task: ts_asr
+      statistics:
+        records: 9902
+        duration_hours: 124.14
+        duration_basis: mixture duration (ref.duration)
+        zhen_fix_changed_records: 283
+        final_v2_changed_records: 35
+    train_neg:
+      group: train
+      artifacts:
+        records:
+        - train_neg_records
+        audio_index:
+        - audio_index
+        records_lance:
+        - record_index
+      task: ts_asr
+      statistics:
+        records: 1767
+        duration_hours: 16.95
+        duration_basis: mixture duration (ref.duration)
+        zhen_fix_changed_records: 0
   provenance:
-    preparation_status: building
-    owner: mingdong
-    description: magicdata_ramc@allspk-ts-v1-20261104 的训练文本终版 v2，按 audio-data-contract docs/reference/training-text.md（v2） 统一空格等。构建中。
+    synthetic: none
+    snapshot_date: '2026-11-23'
+    description: magicdata_ramc@allspk-ts-v1-20261104 的训练文本终版 v2：在 v1 终版 magicdata_ramc@allspk-ts-v1-20261104-final-v1-20261120 上补做空格统一（中英规范规则 5）35 条，按 audio-data-contract docs/reference/training-text.md（v2）。同一行里的场景文本和热词列表一起改；其余字段、录音清单和音频照旧，引用起点版本的产物。
+    sources:
+    - magicdata_ramc@allspk-asr-v1-20261103
+    - magicdata_ramc@icefall-20260908
+    - magicdata_ramc@punc-written-v1-20261029
+    - magicdata_ramc@asr-20261014
+    - magicdata_ramc@clean-dual-qwen-moss-v1-20261008
+    audit: datasets/magicdata_ramc/versions/allspk-ts-v1-20261104/report.json
+    summary: 中文手机通话自然对话（MagicData-RAMC）
     source: magicdata_ramc@allspk-ts-v1-20261104-final-v1-20261120
     method: text-final-v2
+    rules: zhen-fix-v1
+    changed_records: 283
+    owner: mingdong
     run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
+    build_script: scripts/text_final/build_v2.py
+  derived_from: magicdata_ramc@allspk-ts-v1-20261104-final-v1-20261120
+  recipe_parameters:
+    spec: docs/reference/training-text.md（v2）
+    start: magicdata_ramc@allspk-ts-v1-20261104-final-v1-20261120
+    rounds: 空格统一（中英规范规则 5）35 条
+    unchanged: 规则没有改动的文本文件、录音清单、音频和 dev/test 划分，引用起点版本的产物
 - schema_version: dataset-catalog/2.0
   dataset_id: aishell4
   version: allspk-ts-v1-20261104-final-v2-20261123
@@ -431,26 +1570,99 @@
   tasks:
   - ts_asr
   aliases: []
-  derived_from: aishell4@allspk-ts-v1-20261104-final-v1-20261120
   artifacts:
   - name: preparation_state
     kind: dataset-state
     root_alias: aidc_data
     relative_path: datasets/aishell4/versions/allspk-ts-v1-20261104-final-v2-20261123/state.json
+  - name: train_records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/aishell4/versions/allspk-ts-v1-20261104-final-v2-20261123/text/train_records.jsonl.gz
+    expected_bytes: 1345180
+    sha256: e31b0a29b9e68f132c549c7cd798354200b6793cc6f49fc2549426817ae73ef5
+    metadata:
+      record_count: 4267
+      punctuated: true
+  - name: train_neg_records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/aishell4/versions/allspk-ts-v1-20261104/records_train_neg.jsonl.gz
+    expected_bytes: 599094
+    sha256: 5b0bcd4d684315da465a34b03e513d86a59c69e545a1f871c6ca08edb31b5ac9
+    metadata:
+      record_count: 3511
+      punctuated: true
+  - name: audio_index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/aishell4/versions/asr-20261014/audio_index/audio-index.jsonl.gz
+    expected_bytes: 13978
+    sha256: 7740f79f34264edad30ceefa593cf078be42e3c6100384217d7d1ef37f5333f5
+    metadata:
+      record_count: 209
+  - name: record_index
+    kind: lance-record-index
+    root_alias: aidc_data
+    relative_path: datasets/aishell4/versions/allspk-ts-v1-20261104-final-v2-20261123/record_index/index.json
+    expected_bytes: 934
+    sha256: 1d809e6ae74d7f71bb732fa372ee9fd7547897cf22f02db7acee99b8820ee2b8
+    metadata:
+      snapshot_version: 13
+      rows: 7778
+      schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
   splits:
     train:
+      group: train
       artifacts:
-        preparation_state:
-        - preparation_state
-      provenance:
-        preparation_status: building
+        records:
+        - train_records
+        audio_index:
+        - audio_index
+        records_lance:
+        - record_index
+      task: ts_asr
+      statistics:
+        records: 4267
+        duration_hours: 51.89
+        duration_basis: mixture duration (ref.duration)
+        final_r1_changed_records: 45
+        final_v2_changed_records: 63
+    train_neg:
+      group: train
+      artifacts:
+        records:
+        - train_neg_records
+        audio_index:
+        - audio_index
+        records_lance:
+        - record_index
+      task: ts_asr
+      statistics:
+        records: 3511
+        duration_hours: 40.78
+        duration_basis: mixture duration (ref.duration)
   provenance:
-    preparation_status: building
-    owner: mingdong
-    description: aishell4@allspk-ts-v1-20261104 的训练文本终版 v2，按 audio-data-contract docs/reference/training-text.md（v2） 统一空格等。构建中。
+    synthetic: none
+    snapshot_date: '2026-11-23'
+    description: aishell4@allspk-ts-v1-20261104 的训练文本终版 v2：在 v1 终版 aishell4@allspk-ts-v1-20261104-final-v1-20261120 上补做空格统一（中英规范规则 5）63 条，按 audio-data-contract docs/reference/training-text.md（v2）。同一行里的场景文本和热词列表一起改；其余字段、录音清单和音频照旧，引用起点版本的产物。
+    sources:
+    - aishell4@allspk-asr-v1-20261103
+    - aishell4@icefall-20260908
+    - aishell4@punc-written-v1-20261029
+    - aishell4@asr-20261014
+    audit: datasets/aishell4/versions/allspk-ts-v1-20261104/report.json
     source: aishell4@allspk-ts-v1-20261104-final-v1-20261120
     method: text-final-v2
+    owner: mingdong
     run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
+    build_script: scripts/text_final/build_v2.py
+  derived_from: aishell4@allspk-ts-v1-20261104-final-v1-20261120
+  recipe_parameters:
+    spec: docs/reference/training-text.md（v2）
+    start: aishell4@allspk-ts-v1-20261104-final-v1-20261120
+    rounds: 空格统一（中英规范规则 5）63 条
+    unchanged: 规则没有改动的文本文件、录音清单、音频和 dev/test 划分，引用起点版本的产物
 - schema_version: dataset-catalog/2.0
   dataset_id: fleurs_zh
   version: legacy-20260804-final-v2-20261123
@@ -459,26 +1671,92 @@
   tasks:
   - asr
   aliases: []
-  derived_from: fleurs_zh@legacy-20260804-final-v1-20261120
   artifacts:
   - name: preparation_state
     kind: dataset-state
     root_alias: aidc_data
     relative_path: datasets/fleurs_zh/versions/legacy-20260804-final-v2-20261123/state.json
+  - name: train_rec_0
+    kind: lhotse-recordings
+    root_alias: aidc_data
+    relative_path: datasets/fleurs_zh/versions/legacy/manifests/fleurs_zh_recordings_train.jsonl.gz
+    expected_bytes: 37300
+    sha256: 92da0adf67f00505cdb8db3dfd1b318078338aa39029cc218f2bc2c70b025300
+  - name: train_sup_0
+    kind: lhotse-supervisions
+    root_alias: aidc_data
+    relative_path: datasets/fleurs_zh/versions/legacy-20260804-final-v2-20261123/text/train_sup_0.jsonl.gz
+    expected_bytes: 271696
+    sha256: cbbc838046eaca33def5e4d36dd73576f69e1aae3a2c09e67d60fc61bed5e4ed
+  - name: dev_rec_0
+    kind: lhotse-recordings
+    root_alias: aidc_data
+    relative_path: datasets/fleurs_zh/versions/legacy/manifests/fleurs_zh_recordings_validation.jsonl.gz
+    expected_bytes: 4349
+    sha256: a822d5d937ad63f357713432b3690929b77e87cceaf42d348bce1867e5e654ab
+  - name: dev_sup_0
+    kind: lhotse-supervisions
+    root_alias: aidc_data
+    relative_path: datasets/fleurs_zh/versions/legacy/manifests/fleurs_zh_supervisions_validation.jsonl.gz
+    expected_bytes: 22076
+    sha256: ae524d27b47bb5328c0d6cfc08a119d90967f601ed50911b3d9c9f95288cb69f
+  - name: test_rec_0
+    kind: lhotse-recordings
+    root_alias: aidc_data
+    relative_path: datasets/fleurs_zh/versions/legacy/manifests/fleurs_zh_recordings_test.jsonl.gz
+    expected_bytes: 10706
+    sha256: 588fca8ac57109e781e3f9e15814e6fd7d731ed1b3a8d8a242ce673685b4a0b6
+  - name: test_sup_0
+    kind: lhotse-supervisions
+    root_alias: aidc_data
+    relative_path: datasets/fleurs_zh/versions/legacy/manifests/fleurs_zh_supervisions_test.jsonl.gz
+    expected_bytes: 63420
+    sha256: 80a43dec56c588a8672dfd9faa37c365c00185017ad2cdb52bc6c43d84bb294c
   splits:
     train:
       artifacts:
-        preparation_state:
-        - preparation_state
-      provenance:
-        preparation_status: building
+        recordings:
+        - train_rec_0
+        supervisions:
+        - train_sup_0
+      statistics:
+        duration_hours: 9.688333333333333
+        duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: multilingual:zh/fleurs_zh/data/manifests/fleurs_zh_supervisions_train.jsonl.gz'
+        final_r1_changed_records: 2
+        final_v2_changed_records: 1005
+    dev:
+      artifacts:
+        recordings:
+        - dev_rec_0
+        supervisions:
+        - dev_sup_0
+      statistics:
+        duration_hours: 1.280627777777778
+        duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: multilingual:zh/fleurs_zh/data/manifests/fleurs_zh_supervisions_validation.jsonl.gz'
+    test:
+      artifacts:
+        recordings:
+        - test_rec_0
+        supervisions:
+        - test_sup_0
+      statistics:
+        duration_hours: 3.1432777777777776
+        duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: multilingual:zh/fleurs_zh/data/manifests/fleurs_zh_supervisions_test.jsonl.gz'
   provenance:
-    preparation_status: building
-    owner: mingdong
-    description: fleurs_zh@legacy-20260804 的训练文本终版 v2，按 audio-data-contract docs/reference/training-text.md（v2） 统一空格等。构建中。
     source: fleurs_zh@legacy-20260804-final-v1-20261120
+    snapshot_date: '2026-11-23'
+    upstream_version: unknown
+    description: fleurs_zh@legacy-20260804 的训练文本终版 v2：在 v1 终版 fleurs_zh@legacy-20260804-final-v1-20261120 上补做空格统一（中英规范规则 5）1,005 条，按 audio-data-contract docs/reference/training-text.md（v2）。同一行里的场景文本和热词列表一起改；其余字段、录音清单和音频照旧，引用起点版本的产物。
     method: text-final-v2
+    owner: mingdong
     run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
+    build_script: scripts/text_final/build_v2.py
+  derived_from: fleurs_zh@legacy-20260804-final-v1-20261120
+  recipe_parameters:
+    spec: docs/reference/training-text.md（v2）
+    start: fleurs_zh@legacy-20260804-final-v1-20261120
+    rounds: 空格统一（中英规范规则 5）1,005 条
+    unchanged: 规则没有改动的文本文件、录音清单、音频和 dev/test 划分，引用起点版本的产物
 - schema_version: dataset-catalog/2.0
   dataset_id: hw_sft
   version: hw-20261014-final-v2-20261123
@@ -489,26 +1767,90 @@
   - asr
   - asr_hotwords
   aliases: []
-  derived_from: hw_sft@hw-20261014-final-v1-20261120
   artifacts:
   - name: preparation_state
     kind: dataset-state
     root_alias: aidc_data
     relative_path: datasets/hw_sft/versions/hw-20261014-final-v2-20261123/state.json
+  - name: train
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/hw_sft/versions/hw-20261014-final-v2-20261123/text/train.jsonl.gz
+    expected_bytes: 386041719
+    sha256: 3545eecb102bd5c59a37f422a8049c120eb31a9bd52cf5deb5adf7a83d47148a
+    metadata:
+      record_count: 1043317
+  - name: train_hotwords
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/hw_sft/versions/hw-20261014-final-v2-20261123/text/train_hotwords.jsonl.gz
+    expected_bytes: 362451747
+    sha256: 05670f6e5c129416de20fe3d0001ac7ef0cd3ed15b6aaa939ba6925cd6d229a2
+    metadata:
+      record_count: 834336
+  - name: audio_index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/hw_sft/versions/hw-20261014/audio_index/audio-index.jsonl.gz
+    expected_bytes: 70187804
+    sha256: 78c12862b7c69daedb52fd632d2ffefd8bc9080c06bef33f230cdf544fb4f890
+    metadata:
+      record_count: 1043317
+  - name: duration_distribution
+    kind: statistics
+    root_alias: aidc_data
+    relative_path: datasets/hw_sft/versions/hw-20261014/duration_distribution.json
+    expected_bytes: 14459
+    sha256: 69b6a18b031990bfc0574d40a3677a1a52a4397c1adf48604d1f93d3907a1741
   splits:
     train:
       artifacts:
-        preparation_state:
-        - preparation_state
-      provenance:
-        preparation_status: building
+        records:
+        - train
+        audio_index:
+        - audio_index
+      statistics:
+        records: 1043317
+        duration_hours: 1465.01806781245
+        duration_basis: sum of whole-file duration; each jsonl line is one example
+        languages:
+          en: 500000
+          zh: 543317
+        final_v2_changed_records: 1614
+    train_hotwords:
+      artifacts:
+        records:
+        - train_hotwords
+        audio_index:
+        - audio_index
+      statistics:
+        records: 834336
+        duration_hours: 1171.4421282397848
+        duration_basis: sum of whole-file duration; each jsonl line is one example
+        languages:
+          en: 399738
+          zh: 434598
+        final_r1_changed_records: 4
+        final_v2_changed_records: 1255
+  recipe_parameters:
+    spec: docs/reference/training-text.md（v2）
+    start: hw_sft@hw-20261014-final-v1-20261120
+    rounds: 空格统一（中英规范规则 5）2,865 条；拆开的大写字母连写（zhen-fix-v1）4 条
+    unchanged: 规则没有改动的文本文件、录音清单、音频和 dev/test 划分，引用起点版本的产物
   provenance:
-    preparation_status: building
-    owner: mingdong
-    description: hw_sft@hw-20261014 的训练文本终版 v2，按 audio-data-contract docs/reference/training-text.md（v2） 统一空格等。构建中。
+    summary: 热词 SFT 数据（ShareGPT 格式），含普通转写
+    description: hw_sft@hw-20261014 的训练文本终版 v2：在 v1 终版 hw_sft@hw-20261014-final-v1-20261120 上补做空格统一（中英规范规则 5）2,865 条；拆开的大写字母连写（zhen-fix-v1）4 条，按 audio-data-contract docs/reference/training-text.md（v2）。同一行里的场景文本和热词列表一起改；其余字段、录音清单和音频照旧，引用起点版本的产物。
+    snapshot_date: '2026-11-23'
     source: hw_sft@hw-20261014-final-v1-20261120
+    rules: data/amphionasr/scripts/build_hw_sft_catalog.py
+    skipped_audio: 0
+    duplicate_hotword_rows: 1047
+    registered_from: lx 私有登记 /workspace/workspace/lx/data/amphionasr（AmphionASR v4 配方，open-audio-llm feat/amphionasr-v4）；清单原样复制到 aidc_data，root_alias amphionasr→aidc_data；生成脚本快照 /workspace/data/migration/register-amphionasr-v4-20261015/scripts/ (2026-10-15 公共登记)
     method: text-final-v2
+    owner: mingdong
     run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
+    build_script: scripts/text_final/build_v2.py
+  derived_from: hw_sft@hw-20261014-final-v1-20261120
 - schema_version: dataset-catalog/2.0
   dataset_id: hard_hw_sft
   version: hard-20261014-final-v2-20261123
@@ -517,27 +1859,70 @@
   - zh
   tasks:
   - asr_hotwords
-  aliases: []
-  derived_from: hard_hw_sft@hard-20261014-final-v1-20261120
+  aliases:
+  - hard_hw
   artifacts:
   - name: preparation_state
     kind: dataset-state
     root_alias: aidc_data
     relative_path: datasets/hard_hw_sft/versions/hard-20261014-final-v2-20261123/state.json
+  - name: train
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/hard_hw_sft/versions/hard-20261014-final-v2-20261123/text/train.jsonl.gz
+    expected_bytes: 33695204
+    sha256: 5d3fcc6fa3e586f3e2eebcf30abca8004f16f23227caf8f5362ab92d4c479b79
+    metadata:
+      record_count: 69275
+  - name: audio_index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/hard_hw_sft/versions/hard-20261014/audio_index/audio-index.jsonl.gz
+    expected_bytes: 4443261
+    sha256: ca954ec9c40a43edfa39ee5d7e856d8f8a97aeb76ef85bf5719cd1ae2474e259
+    metadata:
+      record_count: 69275
+  - name: duration_distribution
+    kind: statistics
+    root_alias: aidc_data
+    relative_path: datasets/hard_hw_sft/versions/hard-20261014/duration_distribution.json
+    expected_bytes: 11800
+    sha256: d3ceec73b2e8df2c136a55dbfc3d244037f83b6f5e9ee06e18f3041677e285be
+    metadata: {}
   splits:
     train:
       artifacts:
-        preparation_state:
-        - preparation_state
-      provenance:
-        preparation_status: building
+        records:
+        - train
+        audio_index:
+        - audio_index
+      statistics:
+        records: 69275
+        duration_hours: 109.36439313722553
+        duration_basis: sum of whole-file duration; each jsonl line is one example
+        languages:
+          zh: 10828
+          en: 58447
+        final_v2_changed_records: 13
+  recipe_parameters:
+    spec: docs/reference/training-text.md（v2）
+    start: hard_hw_sft@hard-20261014-final-v1-20261120
+    rounds: 空格统一（中英规范规则 5）13 条
+    unchanged: 规则没有改动的文本文件、录音清单、音频和 dev/test 划分，引用起点版本的产物
   provenance:
-    preparation_status: building
-    owner: mingdong
-    description: hard_hw_sft@hard-20261014 的训练文本终版 v2，按 audio-data-contract docs/reference/training-text.md（v2） 统一空格等。构建中。
+    summary: 热词难例 SFT 数据（ShareGPT 格式）
+    description: hard_hw_sft@hard-20261014 的训练文本终版 v2：在 v1 终版 hard_hw_sft@hard-20261014-final-v1-20261120 上补做空格统一（中英规范规则 5）13 条，按 audio-data-contract docs/reference/training-text.md（v2）。同一行里的场景文本和热词列表一起改；其余字段、录音清单和音频照旧，引用起点版本的产物。
+    snapshot_date: '2026-11-23'
     source: hard_hw_sft@hard-20261014-final-v1-20261120
+    rules: data/amphionasr/scripts/build_hw_sft_catalog.py
+    skipped_audio: 0
+    duplicate_hotword_rows: 0
+    registered_from: lx 私有登记 /workspace/workspace/lx/data/amphionasr（AmphionASR v4 配方，open-audio-llm feat/amphionasr-v4）；清单原样复制到 aidc_data，root_alias amphionasr→aidc_data；生成脚本快照 /workspace/data/migration/register-amphionasr-v4-20261015/scripts/ (2026-10-15 公共登记)
     method: text-final-v2
+    owner: mingdong
     run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
+    build_script: scripts/text_final/build_v2.py
+  derived_from: hard_hw_sft@hard-20261014-final-v1-20261120
 - schema_version: dataset-catalog/2.0
   dataset_id: ts_scene_pool
   version: multi-20261017-punchw-20261102-final-v2-20261123
@@ -553,20 +1938,95 @@
     kind: dataset-state
     root_alias: aidc_data
     relative_path: datasets/ts_scene_pool/versions/multi-20261017-punchw-20261102-final-v2-20261123/state.json
+  - name: en-records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/multi-20261017-punchw-20261102/records_en.jsonl.gz
+    expected_bytes: 12772400
+    sha256: 42d7a69ee5b8e2030a1d05a8865176facc4fdd9214228ea9b18cc40c88f16103
+    metadata:
+      record_count: 40000
+  - name: en-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/multi-20261017/audio_index_en.jsonl.gz
+    sha256: 9ceee171b51664406b03633f593216e0e54f4d981be49562100f5773923b304c
+    metadata:
+      record_count: 115458
+  - name: zh-records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/multi-20261017-punchw-20261102-final-v2-20261123/text/zh-records.jsonl.gz
+    expected_bytes: 27103006
+    sha256: 655d77c3bef726780151e7f8ce4fa134f7e71c49475f9d83033e7a42125b863c
+    metadata:
+      record_count: 120000
+  - name: zh-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/multi-20261017/audio_index_zh.jsonl.gz
+    sha256: e8272bd67db06c1d5bdb5258f2cdc01296e56236fdca1fae1efb099cc734dee0
+    metadata:
+      record_count: 697327
+  - name: record_index
+    kind: lance-record-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/multi-20261017-punchw-20261102-final-v2-20261123/record_index/index.json
+    expected_bytes: 1093
+    sha256: e9c4766cb2b1dbb1515db5d1d82bc63d7386ff1e2021d41b7b7a04dac9a6aacd
+    metadata:
+      snapshot_version: 13
+      rows: 160000
+      schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
   splits:
-    train:
+    en:
       artifacts:
-        preparation_state:
-        - preparation_state
-      provenance:
-        preparation_status: building
+        records:
+        - en-records
+        audio_index:
+        - en-audio-index
+        records_lance:
+        - record_index
+      task: ts_asr
+      statistics:
+        records: 40000
+        duration_hours: 59.2
+        duration_basis: clip duration (segment span, or the whole file)
+    zh:
+      artifacts:
+        records:
+        - zh-records
+        audio_index:
+        - zh-audio-index
+        records_lance:
+        - record_index
+      task: ts_asr
+      statistics:
+        records: 120000
+        duration_hours: 134.22
+        duration_basis: clip duration (segment span, or the whole file)
+        final_r1_changed_records: 5
+        final_v2_changed_records: 49
   provenance:
-    preparation_status: building
-    owner: mingdong
-    description: ts_scene_pool@multi-20261017-punchw-20261102 的训练文本终版 v2，按 audio-data-contract docs/reference/training-text.md（v2） 统一空格等。构建中。
+    synthetic: none
+    snapshot_date: '2026-11-23'
+    description: ts_scene_pool@multi-20261017-punchw-20261102 的训练文本终版 v2：在 v1 终版 ts_scene_pool@multi-20261017-punchw-20261102-final-v1-20261120 上补做空格统一（中英规范规则 5）49 条，按 audio-data-contract docs/reference/training-text.md（v2）。同一行里的场景文本和热词列表一起改；其余字段、录音清单和音频照旧，引用起点版本的产物。
+    sources:
+    - ts_scene_pool:multi-20261017
+    - aishell2:punc-written-v1-20261029
+    - kespeech:punc-written-v1-20261029
+    - magicdata:punc-written-v1-20261102
+    - librispeech:punc-written-en-v1-20261102
     source: ts_scene_pool@multi-20261017-punchw-20261102-final-v1-20261120
     method: text-final-v2
+    owner: mingdong
     run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
+    build_script: scripts/text_final/build_v2.py
+  recipe_parameters:
+    spec: docs/reference/training-text.md（v2）
+    start: ts_scene_pool@multi-20261017-punchw-20261102-final-v1-20261120
+    rounds: 空格统一（中英规范规则 5）49 条
+    unchanged: 规则没有改动的文本文件、录音清单、音频和 dev/test 划分，引用起点版本的产物
 - schema_version: dataset-catalog/2.0
   dataset_id: ts_scene_pool
   version: alt-twins-20261024-punchw-20261102-final-v2-20261123
@@ -582,20 +2042,95 @@
     kind: dataset-state
     root_alias: aidc_data
     relative_path: datasets/ts_scene_pool/versions/alt-twins-20261024-punchw-20261102-final-v2-20261123/state.json
+  - name: en-records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/alt-twins-20261024-punchw-20261102/records_en.jsonl.gz
+    expected_bytes: 25093917
+    sha256: 5dacf5d5b425d52532f3a06198e114a77c7516d1f5508908a9123ce6738fc73a
+    metadata:
+      record_count: 100000
+  - name: en-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/alt-twins-20261024/audio_index_en.jsonl.gz
+    sha256: 39304ba4f6be5e6246facd6fcd484215d4d74b5c3e89bdbc4a7ce76445ffb3bd
+    metadata:
+      record_count: 172419
+  - name: zh-records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/alt-twins-20261024-punchw-20261102-final-v2-20261123/text/zh-records.jsonl.gz
+    expected_bytes: 24043938
+    sha256: 62fd9492d7c8cd5dd2457dd68b89f9d372ebd87a69d9fe9d8e661ad118c0ab05
+    metadata:
+      record_count: 150000
+  - name: zh-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/alt-twins-20261024/audio_index_zh.jsonl.gz
+    sha256: 357f2b86cf7b0a07109c4c82bb3541c1039c6c4962585da9a174967c356d05ad
+    metadata:
+      record_count: 674194
+  - name: record_index
+    kind: lance-record-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/alt-twins-20261024-punchw-20261102-final-v2-20261123/record_index/index.json
+    expected_bytes: 1098
+    sha256: 81e47586a187a81f44bea3f92861e1647f86ca1429e7ebf31cd7b63ad15939e3
+    metadata:
+      snapshot_version: 13
+      rows: 250000
+      schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
   splits:
-    train:
+    en:
       artifacts:
-        preparation_state:
-        - preparation_state
-      provenance:
-        preparation_status: building
+        records:
+        - en-records
+        audio_index:
+        - en-audio-index
+        records_lance:
+        - record_index
+      task: ts_asr
+      statistics:
+        records: 100000
+        duration_hours: 148.3
+        duration_basis: clip duration (segment span, or the whole file)
+    zh:
+      artifacts:
+        records:
+        - zh-records
+        audio_index:
+        - zh-audio-index
+        records_lance:
+        - record_index
+      task: ts_asr
+      statistics:
+        records: 150000
+        duration_hours: 168.11
+        duration_basis: clip duration (segment span, or the whole file)
+        final_r1_changed_records: 6
+        final_v2_changed_records: 24
   provenance:
-    preparation_status: building
-    owner: mingdong
-    description: ts_scene_pool@alt-twins-20261024-punchw-20261102 的训练文本终版 v2，按 audio-data-contract docs/reference/training-text.md（v2） 统一空格等。构建中。
+    synthetic: none
+    snapshot_date: '2026-11-23'
+    description: ts_scene_pool@alt-twins-20261024-punchw-20261102 的训练文本终版 v2：在 v1 终版 ts_scene_pool@alt-twins-20261024-punchw-20261102-final-v1-20261120 上补做空格统一（中英规范规则 5）24 条，按 audio-data-contract docs/reference/training-text.md（v2）。同一行里的场景文本和热词列表一起改；其余字段、录音清单和音频照旧，引用起点版本的产物。
+    sources:
+    - ts_scene_pool:alt-twins-20261024
+    - aishell2:punc-written-v1-20261029
+    - kespeech:punc-written-v1-20261029
+    - magicdata:punc-written-v1-20261102
+    - librispeech:punc-written-en-v1-20261102
     source: ts_scene_pool@alt-twins-20261024-punchw-20261102-final-v1-20261120
     method: text-final-v2
+    owner: mingdong
     run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
+    build_script: scripts/text_final/build_v2.py
+  recipe_parameters:
+    spec: docs/reference/training-text.md（v2）
+    start: ts_scene_pool@alt-twins-20261024-punchw-20261102-final-v1-20261120
+    rounds: 空格统一（中英规范规则 5）24 条
+    unchanged: 规则没有改动的文本文件、录音清单、音频和 dev/test 划分，引用起点版本的产物
 - schema_version: dataset-catalog/2.0
   dataset_id: ts_scene_pool
   version: solo-20261020-punchw-20261102-final-v2-20261123
@@ -611,20 +2146,94 @@
     kind: dataset-state
     root_alias: aidc_data
     relative_path: datasets/ts_scene_pool/versions/solo-20261020-punchw-20261102-final-v2-20261123/state.json
+  - name: en-records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/solo-20261020-punchw-20261102/records_en.jsonl.gz
+    expected_bytes: 1604749
+    sha256: da8146ee8a3260009b2106bc379559dba40784779a4948da2060462449db0941
+    metadata:
+      record_count: 20000
+  - name: en-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/solo-20261020/audio_index_en.jsonl.gz
+    sha256: bda2a26891c5660ea51462ff91dcce75dc9cfc3c82cd4d4a4a104396db92dbf6
+    metadata:
+      record_count: 20160
+  - name: zh-records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/solo-20261020-punchw-20261102-final-v2-20261123/text/zh-records.jsonl.gz
+    expected_bytes: 4179424
+    sha256: 80060227f843e8b66849bb32ac336f2b49305bc505a68436a6047b3a780fd5c9
+    metadata:
+      record_count: 60000
+  - name: zh-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/solo-20261020/audio_index_zh.jsonl.gz
+    sha256: c1ab4010e3ac25e3f087a1813be915ca5f58a1ee7ce86e5c2d58852e981b4308
+    metadata:
+      record_count: 95932
+  - name: record_index
+    kind: lance-record-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/solo-20261020-punchw-20261102-final-v2-20261123/record_index/index.json
+    expected_bytes: 1090
+    sha256: 3de19e2955cd6933ceaa7e4a2725a0981f282f6883be1c16469be5fb1b54f3d6
+    metadata:
+      snapshot_version: 13
+      rows: 80000
+      schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
   splits:
-    train:
+    en:
       artifacts:
-        preparation_state:
-        - preparation_state
-      provenance:
-        preparation_status: building
+        records:
+        - en-records
+        audio_index:
+        - en-audio-index
+        records_lance:
+        - record_index
+      task: ts_asr
+      statistics:
+        records: 20000
+        duration_hours: 29.86
+        duration_basis: clip duration (segment span, or the whole file)
+    zh:
+      artifacts:
+        records:
+        - zh-records
+        audio_index:
+        - zh-audio-index
+        records_lance:
+        - record_index
+      task: ts_asr
+      statistics:
+        records: 60000
+        duration_hours: 67.34
+        duration_basis: clip duration (segment span, or the whole file)
+        final_v2_changed_records: 4
   provenance:
-    preparation_status: building
-    owner: mingdong
-    description: ts_scene_pool@solo-20261020-punchw-20261102 的训练文本终版 v2，按 audio-data-contract docs/reference/training-text.md（v2） 统一空格等。构建中。
+    synthetic: none
+    snapshot_date: '2026-11-23'
+    description: ts_scene_pool@solo-20261020-punchw-20261102 的训练文本终版 v2：在 v1 终版 ts_scene_pool@solo-20261020-punchw-20261102-final-v1-20261120 上补做空格统一（中英规范规则 5）4 条，按 audio-data-contract docs/reference/training-text.md（v2）。同一行里的场景文本和热词列表一起改；其余字段、录音清单和音频照旧，引用起点版本的产物。
+    sources:
+    - ts_scene_pool:solo-20261020
+    - aishell2:punc-written-v1-20261029
+    - kespeech:punc-written-v1-20261029
+    - magicdata:punc-written-v1-20261102
+    - librispeech:punc-written-en-v1-20261102
     source: ts_scene_pool@solo-20261020-punchw-20261102-final-v1-20261120
     method: text-final-v2
+    owner: mingdong
     run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
+    build_script: scripts/text_final/build_v2.py
+  recipe_parameters:
+    spec: docs/reference/training-text.md（v2）
+    start: ts_scene_pool@solo-20261020-punchw-20261102-final-v1-20261120
+    rounds: 空格统一（中英规范规则 5）4 条
+    unchanged: 规则没有改动的文本文件、录音清单、音频和 dev/test 划分，引用起点版本的产物
 - schema_version: dataset-catalog/2.0
   dataset_id: ts_scene_pool
   version: handover-20261021-punchw-20261102-final-v2-20261123
@@ -640,20 +2249,95 @@
     kind: dataset-state
     root_alias: aidc_data
     relative_path: datasets/ts_scene_pool/versions/handover-20261021-punchw-20261102-final-v2-20261123/state.json
+  - name: en-records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/handover-20261021-punchw-20261102/records_en.jsonl.gz
+    expected_bytes: 1597965
+    sha256: a87102ead46316cb71bd943589997759989b4b61fe6d1711926c06d44bd4ee0d
+    metadata:
+      record_count: 12000
+  - name: en-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/handover-20261021/audio_index_en.jsonl.gz
+    sha256: 26c6aa76ed7508ed7123ee932ea06a3b820be4de16d1b30b42f3b9407a6d8cac
+    metadata:
+      record_count: 20213
+  - name: zh-records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/handover-20261021-punchw-20261102-final-v2-20261123/text/zh-records.jsonl.gz
+    expected_bytes: 3880926
+    sha256: 487330fe737e7c209a4a1048f0d39aefd4355bef255834132f0e7ad58d84dea3
+    metadata:
+      record_count: 40000
+  - name: zh-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/handover-20261021/audio_index_zh.jsonl.gz
+    sha256: 13b3f6b0d3a61e664fe2cf77861d35ad91d4cb5b191830dd8547d4b1287f903b
+    metadata:
+      record_count: 91728
+  - name: record_index
+    kind: lance-record-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/handover-20261021-punchw-20261102-final-v2-20261123/record_index/index.json
+    expected_bytes: 1094
+    sha256: 797ec392f40cfe1f3b125b835a00c98dc4a08cfdc19883b48ad800af634fc36f
+    metadata:
+      snapshot_version: 13
+      rows: 52000
+      schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
   splits:
-    train:
+    en:
       artifacts:
-        preparation_state:
-        - preparation_state
-      provenance:
-        preparation_status: building
+        records:
+        - en-records
+        audio_index:
+        - en-audio-index
+        records_lance:
+        - record_index
+      task: ts_asr
+      statistics:
+        records: 12000
+        duration_hours: 17.99
+        duration_basis: clip duration (segment span, or the whole file)
+    zh:
+      artifacts:
+        records:
+        - zh-records
+        audio_index:
+        - zh-audio-index
+        records_lance:
+        - record_index
+      task: ts_asr
+      statistics:
+        records: 40000
+        duration_hours: 44.89
+        duration_basis: clip duration (segment span, or the whole file)
+        final_r1_changed_records: 2
+        final_v2_changed_records: 8
   provenance:
-    preparation_status: building
-    owner: mingdong
-    description: ts_scene_pool@handover-20261021-punchw-20261102 的训练文本终版 v2，按 audio-data-contract docs/reference/training-text.md（v2） 统一空格等。构建中。
+    synthetic: none
+    snapshot_date: '2026-11-23'
+    description: ts_scene_pool@handover-20261021-punchw-20261102 的训练文本终版 v2：在 v1 终版 ts_scene_pool@handover-20261021-punchw-20261102-final-v1-20261120 上补做空格统一（中英规范规则 5）8 条，按 audio-data-contract docs/reference/training-text.md（v2）。同一行里的场景文本和热词列表一起改；其余字段、录音清单和音频照旧，引用起点版本的产物。
+    sources:
+    - ts_scene_pool:handover-20261021
+    - aishell2:punc-written-v1-20261029
+    - kespeech:punc-written-v1-20261029
+    - magicdata:punc-written-v1-20261102
+    - librispeech:punc-written-en-v1-20261102
     source: ts_scene_pool@handover-20261021-punchw-20261102-final-v1-20261120
     method: text-final-v2
+    owner: mingdong
     run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
+    build_script: scripts/text_final/build_v2.py
+  recipe_parameters:
+    spec: docs/reference/training-text.md（v2）
+    start: ts_scene_pool@handover-20261021-punchw-20261102-final-v1-20261120
+    rounds: 空格统一（中英规范规则 5）8 条
+    unchanged: 规则没有改动的文本文件、录音清单、音频和 dev/test 划分，引用起点版本的产物
 - schema_version: dataset-catalog/2.0
   dataset_id: ts_scene_pool
   version: magicdata-near-20261023-punchw-20261102-final-v2-20261123
@@ -668,20 +2352,67 @@
     kind: dataset-state
     root_alias: aidc_data
     relative_path: datasets/ts_scene_pool/versions/magicdata-near-20261023-punchw-20261102-final-v2-20261123/state.json
+  - name: zh-records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/magicdata-near-20261023-punchw-20261102-final-v2-20261123/text/zh-records.jsonl.gz
+    expected_bytes: 17252673
+    sha256: cea9b91890d916b24c93cc92265c8c7d28cdc8e67aee3173e3c7b16dec0ad22b
+    metadata:
+      record_count: 80000
+  - name: zh-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/magicdata-near-20261023/audio_index_zh.jsonl.gz
+    sha256: 7f8354f34cd9286a1693eaa430c128dd474188b0cf231e611162f5071d66307a
+    metadata:
+      record_count: 483030
+  - name: record_index
+    kind: lance-record-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/magicdata-near-20261023-punchw-20261102-final-v2-20261123/record_index/index.json
+    expected_bytes: 771
+    sha256: bb6e561b63cc7b14db7d05974c9edd74a77decf4a28e4d6839df0a8825f5fb3e
+    metadata:
+      snapshot_version: 13
+      rows: 80000
+      schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
   splits:
-    train:
+    zh:
       artifacts:
-        preparation_state:
-        - preparation_state
-      provenance:
-        preparation_status: building
+        records:
+        - zh-records
+        audio_index:
+        - zh-audio-index
+        records_lance:
+        - record_index
+      task: ts_asr
+      statistics:
+        records: 80000
+        duration_hours: 96.02
+        duration_basis: clip duration (segment span, or the whole file)
+        final_r1_changed_records: 5
+        final_v2_changed_records: 819
   provenance:
-    preparation_status: building
-    owner: mingdong
-    description: ts_scene_pool@magicdata-near-20261023-punchw-20261102 的训练文本终版 v2，按 audio-data-contract docs/reference/training-text.md（v2） 统一空格等。构建中。
+    synthetic: none
+    snapshot_date: '2026-11-23'
+    description: ts_scene_pool@magicdata-near-20261023-punchw-20261102 的训练文本终版 v2：在 v1 终版 ts_scene_pool@magicdata-near-20261023-punchw-20261102-final-v1-20261120 上补做空格统一（中英规范规则 5）819 条，按 audio-data-contract docs/reference/training-text.md（v2）。同一行里的场景文本和热词列表一起改；其余字段、录音清单和音频照旧，引用起点版本的产物。
+    sources:
+    - ts_scene_pool:magicdata-near-20261023
+    - aishell2:punc-written-v1-20261029
+    - kespeech:punc-written-v1-20261029
+    - magicdata:punc-written-v1-20261102
+    - librispeech:punc-written-en-v1-20261102
     source: ts_scene_pool@magicdata-near-20261023-punchw-20261102-final-v1-20261120
     method: text-final-v2
+    owner: mingdong
     run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
+    build_script: scripts/text_final/build_v2.py
+  recipe_parameters:
+    spec: docs/reference/training-text.md（v2）
+    start: ts_scene_pool@magicdata-near-20261023-punchw-20261102-final-v1-20261120
+    rounds: 空格统一（中英规范规则 5）819 条
+    unchanged: 规则没有改动的文本文件、录音清单、音频和 dev/test 划分，引用起点版本的产物
 - schema_version: dataset-catalog/2.0
   dataset_id: ts_scene_pool
   version: magicdata-alt-twins-20261024-punchw-20261102-final-v2-20261123
@@ -696,20 +2427,67 @@
     kind: dataset-state
     root_alias: aidc_data
     relative_path: datasets/ts_scene_pool/versions/magicdata-alt-twins-20261024-punchw-20261102-final-v2-20261123/state.json
+  - name: zh-records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/magicdata-alt-twins-20261024-punchw-20261102-final-v2-20261123/text/zh-records.jsonl.gz
+    expected_bytes: 9714082
+    sha256: 891a50b57791599dab835a7baa0931866019c6f0717a59a0c8023eccf51fd960
+    metadata:
+      record_count: 60000
+  - name: zh-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/magicdata-alt-twins-20261024/audio_index_zh.jsonl.gz
+    sha256: 9104009deb878479c1534de6ba92ea21e7be63094c47c2e39c92be35cee75a11
+    metadata:
+      record_count: 308519
+  - name: record_index
+    kind: lance-record-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/magicdata-alt-twins-20261024-punchw-20261102-final-v2-20261123/record_index/index.json
+    expected_bytes: 776
+    sha256: 38b07b552d8cf437c3044bb071f033eb668f07a4031363956319f69cf129c015
+    metadata:
+      snapshot_version: 13
+      rows: 60000
+      schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
   splits:
-    train:
+    zh:
       artifacts:
-        preparation_state:
-        - preparation_state
-      provenance:
-        preparation_status: building
+        records:
+        - zh-records
+        audio_index:
+        - zh-audio-index
+        records_lance:
+        - record_index
+      task: ts_asr
+      statistics:
+        records: 60000
+        duration_hours: 71.52
+        duration_basis: clip duration (segment span, or the whole file)
+        final_r1_changed_records: 2
+        final_v2_changed_records: 241
   provenance:
-    preparation_status: building
-    owner: mingdong
-    description: ts_scene_pool@magicdata-alt-twins-20261024-punchw-20261102 的训练文本终版 v2，按 audio-data-contract docs/reference/training-text.md（v2） 统一空格等。构建中。
+    synthetic: none
+    snapshot_date: '2026-11-23'
+    description: ts_scene_pool@magicdata-alt-twins-20261024-punchw-20261102 的训练文本终版 v2：在 v1 终版 ts_scene_pool@magicdata-alt-twins-20261024-punchw-20261102-final-v1-20261120 上补做空格统一（中英规范规则 5）241 条，按 audio-data-contract docs/reference/training-text.md（v2）。同一行里的场景文本和热词列表一起改；其余字段、录音清单和音频照旧，引用起点版本的产物。
+    sources:
+    - ts_scene_pool:magicdata-alt-twins-20261024
+    - aishell2:punc-written-v1-20261029
+    - kespeech:punc-written-v1-20261029
+    - magicdata:punc-written-v1-20261102
+    - librispeech:punc-written-en-v1-20261102
     source: ts_scene_pool@magicdata-alt-twins-20261024-punchw-20261102-final-v1-20261120
     method: text-final-v2
+    owner: mingdong
     run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
+    build_script: scripts/text_final/build_v2.py
+  recipe_parameters:
+    spec: docs/reference/training-text.md（v2）
+    start: ts_scene_pool@magicdata-alt-twins-20261024-punchw-20261102-final-v1-20261120
+    rounds: 空格统一（中英规范规则 5）241 条
+    unchanged: 规则没有改动的文本文件、录音清单、音频和 dev/test 划分，引用起点版本的产物
 - schema_version: dataset-catalog/2.0
   dataset_id: ts_scene_pool
   version: magicdata-hard-20261023-punchw-20261102-final-v2-20261123
@@ -724,20 +2502,66 @@
     kind: dataset-state
     root_alias: aidc_data
     relative_path: datasets/ts_scene_pool/versions/magicdata-hard-20261023-punchw-20261102-final-v2-20261123/state.json
+  - name: zh-records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/magicdata-hard-20261023-punchw-20261102-final-v2-20261123/text/zh-records.jsonl.gz
+    expected_bytes: 7842262
+    sha256: 71cde00941a456aeeb59595e51895381be194142c94152bc1678915af8d307ef
+    metadata:
+      record_count: 40000
+  - name: zh-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/magicdata-hard-20261023/audio_index_zh.jsonl.gz
+    sha256: a545b51e84e9fd2bb817f2c1bebb57960a8a3bfa7441762cfdc855971fc9890c
+    metadata:
+      record_count: 296126
+  - name: record_index
+    kind: lance-record-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/magicdata-hard-20261023-punchw-20261102-final-v2-20261123/record_index/index.json
+    expected_bytes: 771
+    sha256: 6c78ccc31af7a1bd0477880aa2e2b0ca1c67eed4a10e4797d694bda32b15aac8
+    metadata:
+      snapshot_version: 13
+      rows: 40000
+      schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
   splits:
-    train:
+    zh:
       artifacts:
-        preparation_state:
-        - preparation_state
-      provenance:
-        preparation_status: building
+        records:
+        - zh-records
+        audio_index:
+        - zh-audio-index
+        records_lance:
+        - record_index
+      task: ts_asr
+      statistics:
+        records: 40000
+        duration_hours: 47.79
+        duration_basis: clip duration (segment span, or the whole file)
+        final_v2_changed_records: 82
   provenance:
-    preparation_status: building
-    owner: mingdong
-    description: ts_scene_pool@magicdata-hard-20261023-punchw-20261102 的训练文本终版 v2，按 audio-data-contract docs/reference/training-text.md（v2） 统一空格等。构建中。
+    synthetic: none
+    snapshot_date: '2026-11-23'
+    description: ts_scene_pool@magicdata-hard-20261023-punchw-20261102 的训练文本终版 v2：在 v1 终版 ts_scene_pool@magicdata-hard-20261023-punchw-20261102-final-v1-20261120 上补做空格统一（中英规范规则 5）82 条，按 audio-data-contract docs/reference/training-text.md（v2）。同一行里的场景文本和热词列表一起改；其余字段、录音清单和音频照旧，引用起点版本的产物。
+    sources:
+    - ts_scene_pool:magicdata-hard-20261023
+    - aishell2:punc-written-v1-20261029
+    - kespeech:punc-written-v1-20261029
+    - magicdata:punc-written-v1-20261102
+    - librispeech:punc-written-en-v1-20261102
     source: ts_scene_pool@magicdata-hard-20261023-punchw-20261102-final-v1-20261120
     method: text-final-v2
+    owner: mingdong
     run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
+    build_script: scripts/text_final/build_v2.py
+  recipe_parameters:
+    spec: docs/reference/training-text.md（v2）
+    start: ts_scene_pool@magicdata-hard-20261023-punchw-20261102-final-v1-20261120
+    rounds: 空格统一（中英规范规则 5）82 条
+    unchanged: 规则没有改动的文本文件、录音清单、音频和 dev/test 划分，引用起点版本的产物
 - schema_version: dataset-catalog/2.0
   dataset_id: ts_scene_pool
   version: magicdata-handover-20261023-punchw-20261102-final-v2-20261123
@@ -752,20 +2576,66 @@
     kind: dataset-state
     root_alias: aidc_data
     relative_path: datasets/ts_scene_pool/versions/magicdata-handover-20261023-punchw-20261102-final-v2-20261123/state.json
+  - name: zh-records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/magicdata-handover-20261023-punchw-20261102-final-v2-20261123/text/zh-records.jsonl.gz
+    expected_bytes: 3912685
+    sha256: c6f1c108170037573e1bccb7ea2d48126a780a1afa01ed511198966730b10255
+    metadata:
+      record_count: 40000
+  - name: zh-audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/magicdata-handover-20261023/audio_index_zh.jsonl.gz
+    sha256: 4fef4966d08bbed5adfb8275c6d664e59bccabf840b219035c0d36191457714f
+    metadata:
+      record_count: 87820
+  - name: record_index
+    kind: lance-record-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/magicdata-handover-20261023-punchw-20261102-final-v2-20261123/record_index/index.json
+    expected_bytes: 775
+    sha256: 534128242234d96c2bff98689c9f27594a785d3ea0b2c38b1aa8723e9c24e2ad
+    metadata:
+      snapshot_version: 13
+      rows: 40000
+      schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
   splits:
-    train:
+    zh:
       artifacts:
-        preparation_state:
-        - preparation_state
-      provenance:
-        preparation_status: building
+        records:
+        - zh-records
+        audio_index:
+        - zh-audio-index
+        records_lance:
+        - record_index
+      task: ts_asr
+      statistics:
+        records: 40000
+        duration_hours: 48.56
+        duration_basis: clip duration (segment span, or the whole file)
+        final_v2_changed_records: 166
   provenance:
-    preparation_status: building
-    owner: mingdong
-    description: ts_scene_pool@magicdata-handover-20261023-punchw-20261102 的训练文本终版 v2，按 audio-data-contract docs/reference/training-text.md（v2） 统一空格等。构建中。
+    synthetic: none
+    snapshot_date: '2026-11-23'
+    description: ts_scene_pool@magicdata-handover-20261023-punchw-20261102 的训练文本终版 v2：在 v1 终版 ts_scene_pool@magicdata-handover-20261023-punchw-20261102-final-v1-20261120 上补做空格统一（中英规范规则 5）166 条，按 audio-data-contract docs/reference/training-text.md（v2）。同一行里的场景文本和热词列表一起改；其余字段、录音清单和音频照旧，引用起点版本的产物。
+    sources:
+    - ts_scene_pool:magicdata-handover-20261023
+    - aishell2:punc-written-v1-20261029
+    - kespeech:punc-written-v1-20261029
+    - magicdata:punc-written-v1-20261102
+    - librispeech:punc-written-en-v1-20261102
     source: ts_scene_pool@magicdata-handover-20261023-punchw-20261102-final-v1-20261120
     method: text-final-v2
+    owner: mingdong
     run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
+    build_script: scripts/text_final/build_v2.py
+  recipe_parameters:
+    spec: docs/reference/training-text.md（v2）
+    start: ts_scene_pool@magicdata-handover-20261023-punchw-20261102-final-v1-20261120
+    rounds: 空格统一（中英规范规则 5）166 条
+    unchanged: 规则没有改动的文本文件、录音清单、音频和 dev/test 划分，引用起点版本的产物
 - schema_version: dataset-catalog/2.0
   dataset_id: aishell
   version: legacy-20260804-final-v2-20261123
@@ -774,26 +2644,115 @@
   tasks:
   - asr
   aliases: []
-  derived_from: aishell@legacy-20260804
   artifacts:
   - name: preparation_state
     kind: dataset-state
     root_alias: aidc_data
     relative_path: datasets/aishell/versions/legacy-20260804-final-v2-20261123/state.json
+  - name: train_rec_0
+    kind: lhotse-recordings
+    root_alias: aidc_data
+    relative_path: datasets/aishell/versions/legacy-20260804/train_rec_0/aishell_recordings_train.jsonl.gz
+    expected_bytes: 1697500
+    sha256: 2d490287e8d680e030bc276f8def0f15770f23441c7f7baf04e0b0fdb4cd372a
+  - name: train_sup_0
+    kind: lhotse-supervisions
+    root_alias: aidc_data
+    relative_path: datasets/aishell/versions/legacy-20260804-final-v2-20261123/text/train_sup_0.jsonl.gz
+    expected_bytes: 5506953
+    sha256: 435fa37f07be45a94a1184fa21ab6300e06a72de30c9ba25b09162b1e23579ca
+  - name: dev_rec_0
+    kind: lhotse-recordings
+    root_alias: aidc_data
+    relative_path: datasets/aishell/versions/legacy-20260804/dev_rec_0/aishell_recordings_dev.jsonl.gz
+    expected_bytes: 202505
+    sha256: bf3b20e30b1aa97b66910f3b8c6d7bd0604e2490f73232fbd4bdc8e67438f48e
+  - name: dev_sup_0
+    kind: lhotse-supervisions
+    root_alias: aidc_data
+    relative_path: datasets/aishell/versions/legacy-20260804/dev_sup_0/aishell_supervisions_dev.jsonl.gz
+    expected_bytes: 532179
+    sha256: 0ea6d521095da854236c5882632a25e4ba500cd49215328156868069a3f60a54
+  - name: test_rec_0
+    kind: lhotse-recordings
+    root_alias: aidc_data
+    relative_path: datasets/aishell/versions/legacy-20260804/test_rec_0/aishell_recordings_test.jsonl.gz
+    expected_bytes: 102220
+    sha256: ff26d34d5202bb3ff352fbb5eafdbedb81bfa373b2a3430754ac9b34ce24b99b
+  - name: test_sup_0
+    kind: lhotse-supervisions
+    root_alias: aidc_data
+    relative_path: datasets/aishell/versions/legacy-20260804/test_sup_0/aishell_supervisions_test.jsonl.gz
+    expected_bytes: 269127
+    sha256: 37066611e35356034e21d754162decf41ace94f58ff22cf5979b68fbb030097b
+  - name: record_index
+    kind: lance-record-index
+    root_alias: aidc_data
+    relative_path: datasets/aishell/versions/legacy-20260804-final-v2-20261123/record_index/index.json
+    expected_bytes: 1430
+    sha256: 8ebd8242a2fddec79b1f9e6aa2ae548ab5a4375a17f71b80f4ae84cd9a21d8fa
+    metadata:
+      snapshot_version: 13
+      rows: 141600
+      schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
   splits:
     train:
       artifacts:
-        preparation_state:
-        - preparation_state
-      provenance:
-        preparation_status: building
+        recordings:
+        - train_rec_0
+        supervisions:
+        - train_sup_0
+        records_lance:
+        - record_index
+      statistics:
+        duration_hours: 150.8520156076389
+        duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:LHOTSE/data_aishell/data/manifests/aishell_supervisions_train.jsonl.gz'
+        final_v2_changed_records: 120098
+    dev:
+      artifacts:
+        recordings:
+        - dev_rec_0
+        supervisions:
+        - dev_sup_0
+        records_lance:
+        - record_index
+      statistics:
+        duration_hours: 18.089178784722222
+        duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:LHOTSE/data_aishell/data/manifests/aishell_supervisions_dev.jsonl.gz'
+    test:
+      artifacts:
+        recordings:
+        - test_rec_0
+        supervisions:
+        - test_sup_0
+        records_lance:
+        - record_index
+      statistics:
+        duration_hours: 10.030255260416666
+        duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:LHOTSE/data_aishell/data/manifests/aishell_supervisions_test.jsonl.gz'
   provenance:
-    preparation_status: building
-    owner: mingdong
-    description: aishell@legacy-20260804 的训练文本终版 v2，按 audio-data-contract docs/reference/training-text.md（v2） 统一空格等。构建中。
+    summary: 中文朗读（AISHELL-1）；含清洗和热词版
     source: aishell@legacy-20260804
+    snapshot_date: '2026-11-23'
+    upstream_version: unknown
+    reference_duration:
+      hours: 155
+      basis: 参考表登记值；未核实当前文件时长及 split 覆盖
+      url: https://ccnuebbmik1f.feishu.cn/wiki/CEXFwEjPoi2bIukVjk9c5FdOn12?sheet=3d4d23
+      sheet_range: A14:P14
+      sheet_revision: 1594
+      consulted_at: '2026-09-09'
+    description: aishell@legacy-20260804 训练集的训练文本终版（v2 起新建，没有 v1）：书面化标点（规则 1，按 id 取自 aishell@punc-written-v1-20261029）120,098 条，按 audio-data-contract docs/reference/training-text.md（v2）。同一行里的场景文本和热词列表一起改；其余字段、录音清单和音频照旧，引用起点版本的产物。
     method: text-final-v2
+    owner: mingdong
     run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
+    build_script: scripts/text_final/build_v2.py
+  derived_from: aishell@legacy-20260804
+  recipe_parameters:
+    spec: docs/reference/training-text.md（v2）
+    start: aishell@legacy-20260804
+    rounds: 书面化标点（规则 1，按 id 取自 aishell@punc-written-v1-20261029）120,098 条
+    unchanged: 规则没有改动的文本文件、录音清单、音频和 dev/test 划分，引用起点版本的产物
 - schema_version: dataset-catalog/2.0
   dataset_id: magicdata
   version: legacy-20260804-final-v2-20261123
@@ -802,26 +2761,114 @@
   tasks:
   - asr
   aliases: []
-  derived_from: magicdata@legacy-20260804
   artifacts:
   - name: preparation_state
     kind: dataset-state
     root_alias: aidc_data
     relative_path: datasets/magicdata/versions/legacy-20260804-final-v2-20261123/state.json
+  - name: train_rec_0
+    kind: lhotse-recordings
+    root_alias: aidc_data
+    relative_path: datasets/magicdata/versions/legacy-20260804/train_rec_0/magicdata_recordings_train.jsonl.gz
+    expected_bytes: 6440878
+    sha256: 9aa0b9638398ff018558db0ab848bb48c289e0f99dca366f2da4099d43a0e2ba
+  - name: train_sup_0
+    kind: lhotse-supervisions
+    root_alias: aidc_data
+    relative_path: datasets/magicdata/versions/legacy-20260804-final-v2-20261123/text/train_sup_0.jsonl.gz
+    expected_bytes: 21256054
+    sha256: 94c0add264cc2ff686e5d3875ab6b605451712f9621a235ccc157c66bb07317b
+  - name: dev_rec_0
+    kind: lhotse-recordings
+    root_alias: aidc_data
+    relative_path: datasets/magicdata/versions/legacy-20260804/dev_rec_0/magicdata_recordings_dev.jsonl.gz
+    expected_bytes: 132717
+    sha256: 9f2a5592af6dc9e5fb432ebb70070e5e6ed0e4235dd1f06a011aaee6a9943f05
+  - name: dev_sup_0
+    kind: lhotse-supervisions
+    root_alias: aidc_data
+    relative_path: datasets/magicdata/versions/legacy-20260804/dev_sup_0/magicdata_supervisions_dev.jsonl.gz
+    expected_bytes: 339436
+    sha256: dcf61b0766857ecb204a74e6adee506aa2df4065be7c5d61b638dc326ca74699
+  - name: test_rec_0
+    kind: lhotse-recordings
+    root_alias: aidc_data
+    relative_path: datasets/magicdata/versions/legacy-20260804/test_rec_0/magicdata_recordings_test.jsonl.gz
+    expected_bytes: 269130
+    sha256: a84d87684803abaae010984c3611423975b604f61fc4f1b161aabefac337e08b
+  - name: test_sup_0
+    kind: lhotse-supervisions
+    root_alias: aidc_data
+    relative_path: datasets/magicdata/versions/legacy-20260804/test_sup_0/magicdata_supervisions_test.jsonl.gz
+    expected_bytes: 692560
+    sha256: f82a89aa3e7edd29fd6c5934a9d394c90c49907d40572b97ccee9ff37d63f40c
+  - name: record_index
+    kind: lance-record-index
+    root_alias: aidc_data
+    relative_path: datasets/magicdata/versions/legacy-20260804-final-v2-20261123/record_index/index.json
+    expected_bytes: 1433
+    sha256: a02bc7df6a190a3f35d84459701db822fa06bb48533bac1f11ddd1b0da223cbc
+    metadata:
+      snapshot_version: 13
+      rows: 609550
+      schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
   splits:
     train:
       artifacts:
-        preparation_state:
-        - preparation_state
-      provenance:
-        preparation_status: building
+        recordings:
+        - train_rec_0
+        supervisions:
+        - train_sup_0
+        records_lance:
+        - record_index
+      statistics:
+        duration_hours: 711.9156844791667
+        duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:LHOTSE/MAGICDATA/data/manifests/magicdata_supervisions_train.jsonl.gz'
+        final_v2_changed_records: 573477
+    dev:
+      artifacts:
+        recordings:
+        - dev_rec_0
+        supervisions:
+        - dev_sup_0
+        records_lance:
+        - record_index
+      statistics:
+        duration_hours: 14.733415243055555
+        duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:LHOTSE/MAGICDATA/data/manifests/magicdata_supervisions_dev.jsonl.gz'
+    test:
+      artifacts:
+        recordings:
+        - test_rec_0
+        supervisions:
+        - test_sup_0
+        records_lance:
+        - record_index
+      statistics:
+        duration_hours: 28.06071927083333
+        duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:LHOTSE/MAGICDATA/data/manifests/magicdata_supervisions_test.jsonl.gz'
   provenance:
-    preparation_status: building
-    owner: mingdong
-    description: magicdata@legacy-20260804 的训练文本终版 v2，按 audio-data-contract docs/reference/training-text.md（v2） 统一空格等。构建中。
     source: magicdata@legacy-20260804
+    snapshot_date: '2026-11-23'
+    upstream_version: unknown
+    reference_duration:
+      hours: 747
+      basis: 参考表登记值；未核实当前文件时长及 split 覆盖
+      url: https://ccnuebbmik1f.feishu.cn/wiki/CEXFwEjPoi2bIukVjk9c5FdOn12?sheet=3d4d23
+      sheet_range: A17:P17
+      sheet_revision: 1594
+      consulted_at: '2026-09-09'
+    description: magicdata@legacy-20260804 训练集的训练文本终版（v2 起新建，没有 v1）：书面化标点（规则 1，按 id 取自 magicdata@punc-written-v1-20261102）573,477 条；空格统一（中英规范规则 5）2,708 条；拆开的大写字母连写（zhen-fix-v1）5 条，按 audio-data-contract docs/reference/training-text.md（v2）。同一行里的场景文本和热词列表一起改；其余字段、录音清单和音频照旧，引用起点版本的产物。
     method: text-final-v2
+    owner: mingdong
     run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
+    build_script: scripts/text_final/build_v2.py
+  derived_from: magicdata@legacy-20260804
+  recipe_parameters:
+    spec: docs/reference/training-text.md（v2）
+    start: magicdata@legacy-20260804
+    rounds: 书面化标点（规则 1，按 id 取自 magicdata@punc-written-v1-20261102）573,477 条；空格统一（中英规范规则 5）2,708 条；拆开的大写字母连写（zhen-fix-v1）5 条
+    unchanged: 规则没有改动的文本文件、录音清单、音频和 dev/test 划分，引用起点版本的产物
 - schema_version: dataset-catalog/2.0
   dataset_id: aishell3
   version: legacy-20260804-final-v2-20261123
@@ -830,23 +2877,88 @@
   tasks:
   - asr
   aliases: []
-  derived_from: aishell3@legacy-20260804
   artifacts:
   - name: preparation_state
     kind: dataset-state
     root_alias: aidc_data
     relative_path: datasets/aishell3/versions/legacy-20260804-final-v2-20261123/state.json
+  - name: train_rec_0
+    kind: lhotse-recordings
+    root_alias: aidc_data
+    relative_path: datasets/aishell3/versions/legacy-20260804/train_rec_0/aishell3_recordings_train.jsonl.gz
+    expected_bytes: 1017083
+    sha256: 40b5d17e40d479c0c76884b83c4a8ab04b713e245e5ed5c134751515247185fc
+  - name: train_sup_0
+    kind: lhotse-supervisions
+    root_alias: aidc_data
+    relative_path: datasets/aishell3/versions/legacy-20260804-final-v2-20261123/text/train_sup_0.jsonl.gz
+    expected_bytes: 5565913
+    sha256: 77188d610bca60247f4649c03b2cab5c19ee571b42dda86e9a91cb1f2569a7e3
+  - name: test_rec_0
+    kind: lhotse-recordings
+    root_alias: aidc_data
+    relative_path: datasets/aishell3/versions/legacy-20260804/test_rec_0/aishell3_recordings_test.jsonl.gz
+    expected_bytes: 393602
+    sha256: 0544458a7c7d7d5c7ecae85461c210b8bd147b235dee88c24735dff191667e54
+  - name: test_sup_0
+    kind: lhotse-supervisions
+    root_alias: aidc_data
+    relative_path: datasets/aishell3/versions/legacy-20260804/test_sup_0/aishell3_supervisions_test.jsonl.gz
+    expected_bytes: 834129
+    sha256: c55a2da91d07b4226a49567e4f8e8c388f591e32ee22f5435aa47170dc6fbbc1
+  - name: record_index
+    kind: lance-record-index
+    root_alias: aidc_data
+    relative_path: datasets/aishell3/versions/legacy-20260804-final-v2-20261123/record_index/index.json
+    expected_bytes: 1094
+    sha256: 00ee9304782ad8f2e963a8c1d720ade2aad0cc806be7b30c8f1c8820de338e56
+    metadata:
+      snapshot_version: 13
+      rows: 88035
+      schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
   splits:
     train:
       artifacts:
-        preparation_state:
-        - preparation_state
-      provenance:
-        preparation_status: building
+        recordings:
+        - train_rec_0
+        supervisions:
+        - train_sup_0
+        records_lance:
+        - record_index
+      statistics:
+        duration_hours: 63.17237733300264
+        duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:LHOTSE/data_aishell3/data/manifests/aishell3_supervisions_train.jsonl.gz'
+        final_v2_changed_records: 63262
+    test:
+      artifacts:
+        recordings:
+        - test_rec_0
+        supervisions:
+        - test_sup_0
+        records_lance:
+        - record_index
+      statistics:
+        duration_hours: 22.445452006290942
+        duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:LHOTSE/data_aishell3/data/manifests/aishell3_supervisions_test.jsonl.gz'
   provenance:
-    preparation_status: building
-    owner: mingdong
-    description: aishell3@legacy-20260804 的训练文本终版 v2，按 audio-data-contract docs/reference/training-text.md（v2） 统一空格等。构建中。
     source: aishell3@legacy-20260804
+    snapshot_date: '2026-11-23'
+    upstream_version: unknown
+    reference_duration:
+      hours: 65
+      basis: 参考表登记值；未核实当前文件时长及 split 覆盖
+      url: https://ccnuebbmik1f.feishu.cn/wiki/CEXFwEjPoi2bIukVjk9c5FdOn12?sheet=3d4d23
+      sheet_range: A16:P16
+      sheet_revision: 1594
+      consulted_at: '2026-09-09'
+    description: aishell3@legacy-20260804 训练集的训练文本终版（v2 起新建，没有 v1）：书面化标点（规则 1，按 id 取自 aishell3@punc-written-v1-20261123）63,262 条，按 audio-data-contract docs/reference/training-text.md（v2）。同一行里的场景文本和热词列表一起改；其余字段、录音清单和音频照旧，引用起点版本的产物。
     method: text-final-v2
+    owner: mingdong
     run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
+    build_script: scripts/text_final/build_v2.py
+  derived_from: aishell3@legacy-20260804
+  recipe_parameters:
+    spec: docs/reference/training-text.md（v2）
+    start: aishell3@legacy-20260804
+    rounds: 书面化标点（规则 1，按 id 取自 aishell3@punc-written-v1-20261123）63,262 条
+    unchanged: 规则没有改动的文本文件、录音清单、音频和 dev/test 划分，引用起点版本的产物

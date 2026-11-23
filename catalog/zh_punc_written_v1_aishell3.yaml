@@ -1,4 +1,4 @@
-# AISHELL-3 训练集书面化标点（2026-11-23）：方法同 punc-written-v1-20261029（只插标点、不改字），供训练文本终版 v2 使用。占位，构建中。
+# AISHELL-3 训练集书面化标点（2026-11-23）：方法同 punc-written-v1-20261029（只插标点、不改字），供训练文本终版 v2 使用。
 - schema_version: dataset-catalog/2.0
   dataset_id: aishell3
   version: punc-written-v1-20261123
@@ -13,17 +13,56 @@
     kind: dataset-state
     root_alias: aidc_data
     relative_path: datasets/aishell3/versions/punc-written-v1-20261123/state.json
+  - name: train_supervisions_punc_0
+    kind: lhotse-supervisions
+    root_alias: aidc_data
+    relative_path: datasets/aishell3/versions/punc-written-v1-20261123/aishell3_supervisions_train_punc_written.jsonl.gz
+    expected_bytes: 5112794
+    sha256: 4733c3c389fb71764e33e95a21f80dab4a7726b6fa6d2780e2d81551334a44ce
+    metadata:
+      record_count: 63262
+      punctuated: true
+      source: datasets/aishell3/versions/legacy-20260804/train_sup_0/aishell3_supervisions_train.jsonl.gz
   splits:
     train:
       artifacts:
+        punctuated_supervisions:
+        - train_supervisions_punc_0
         preparation_state:
         - preparation_state
+      statistics:
+        records: 63262
+        duration_hours: 63.17
+        duration_basis: sum of supervision durations; same records in the same order as the source supervisions
+        records_punctuated: 63262
+        records_student_kept_label: 63233
+        records_marks_aligned_from_student_output: 29
+        records_without_student_output: 0
+        records_copied_unchanged: 0
+        marks_per_100_chars:
+          。: 7.541
+          ？: 1.038
+          ，: 0.94
+          、: 0.27
+          》: 0.254
+          《: 0.254
+          ：: 0.042
+          “: 0.019
+          ”: 0.019
+          ！: 0.009
+          ；: 0.002
       provenance:
-        preparation_status: building
+        preparation_status: prepared
   provenance:
-    preparation_status: building
+    preparation_status: prepared
     owner: mingdong
-    description: aishell3@legacy-20260804 训练集原标注加书面化标点，方法与 punc-written-v1-20261029 相同（amphiondata docs/written-punctuation.md：GB/T 15834、逗号从紧；Qwen3-4B 学生 punc-student-v1 以 Qwen3-ASR-1.7B 听音频得到的带标点转写作语气提示，只往原标注里插标点）。构建中。
+    description: aishell3@legacy-20260804 训练集原标注加书面化标点，方法与 punc-written-v1-20261029 相同（amphiondata docs/written-punctuation.md：GB/T 15834、逗号从紧；Qwen3-4B 学生 punc-student-v1 以 Qwen3-ASR-1.7B 听音频得到的带标点转写作语气提示，只往原标注里插标点）。模型改动了原文的 29 条，把模型输出的标点按字对齐搬回原标注；16 条补了句末 。；原标注的字、空格和大小写不变。文件与源 supervisions 条数、顺序相同，只换 text，63,262 条逐条回读通过。
     source: aishell3@legacy-20260804
     method: written-punctuation-v1
     run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120/v2/aishell3-punc
+    audit: datasets/aishell3/versions/punc-written-v1-20261123/state.json
+    known_issues: 学生模型没有在 AISHELL-3 上做人工参照评测（试点覆盖 WenetSpeech、KeSpeech、AISHELL-2、AISHELL、RAMC、AliMeeting）；AISHELL-3 有大量语音助手式提问（“……有什么”），7,654 条带问号，问号比例（每百字 1.04）远高于 AISHELL-1，抽查 25 条都是真问句。
+  recipe_parameters:
+    punctuation_model: Qwen3-4B-Instruct-2507 + LoRA distilled from Qwen3.8-27B (punc-student-v1)
+    hint: Qwen3-ASR-1.7B punctuated transcript
+    spec: zh-punc-pilot-20261028 spec v1, compact commas
