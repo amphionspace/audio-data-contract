@@ -1,0 +1,852 @@
+# 训练文本终版 v2（text-final-v2）：v1 加规则 5（空格），另含朗读语料的新终版，规范见 docs/reference/training-text.md（v2）。占位，构建中。
+- schema_version: dataset-catalog/2.0
+  dataset_id: ts_scene_pool
+  version: hard-20261016-punchw-20261102-final-v2-20261123
+  languages:
+  - zh
+  - en
+  tasks:
+  - ts_asr
+  aliases: []
+  derived_from: ts_scene_pool@hard-20261016-punchw-20261102-final-v1-20261120
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/hard-20261016-punchw-20261102-final-v2-20261123/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: ts_scene_pool@hard-20261016-punchw-20261102 的训练文本终版 v2，按 audio-data-contract docs/reference/training-text.md（v2） 统一空格等。构建中。
+    source: ts_scene_pool@hard-20261016-punchw-20261102-final-v1-20261120
+    method: text-final-v2
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
+- schema_version: dataset-catalog/2.0
+  dataset_id: emilia2_mix
+  version: mix-20261013-utts-final-v2-20261123
+  languages:
+  - zh
+  - en
+  tasks:
+  - ts_asr
+  aliases: []
+  derived_from: emilia2_mix@mix-20261013-utts-final-v1-20261120
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/emilia2_mix/versions/mix-20261013-utts-final-v2-20261123/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: emilia2_mix@mix-20261013-utts 的训练文本终版 v2，按 audio-data-contract docs/reference/training-text.md（v2） 统一空格等。构建中。
+    source: emilia2_mix@mix-20261013-utts-final-v1-20261120
+    method: text-final-v2
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
+- schema_version: dataset-catalog/2.0
+  dataset_id: emilia2_dialog
+  version: dialog-turn-taking-20261013-enroll-final-v2-20261123
+  languages:
+  - zh
+  - en
+  tasks:
+  - ts_asr
+  aliases: []
+  derived_from: emilia2_dialog@dialog-turn-taking-20261013-enroll-final-v1-20261120
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/emilia2_dialog/versions/dialog-turn-taking-20261013-enroll-final-v2-20261123/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: emilia2_dialog@dialog-turn-taking-20261013-enroll 的训练文本终版 v2，按 audio-data-contract docs/reference/training-text.md（v2） 统一空格等。构建中。
+    source: emilia2_dialog@dialog-turn-taking-20261013-enroll-final-v1-20261120
+    method: text-final-v2
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
+- schema_version: dataset-catalog/2.0
+  dataset_id: aishell4
+  version: turn-taking-20261014-utts-punc-20261102-final-v2-20261123
+  languages:
+  - zh
+  tasks:
+  - ts_asr
+  aliases: []
+  derived_from: aishell4@turn-taking-20261014-utts-punc-20261102-final-v1-20261120
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/aishell4/versions/turn-taking-20261014-utts-punc-20261102-final-v2-20261123/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: aishell4@turn-taking-20261014-utts-punc-20261102 的训练文本终版 v2，按 audio-data-contract docs/reference/training-text.md（v2） 统一空格等。构建中。
+    source: aishell4@turn-taking-20261014-utts-punc-20261102-final-v1-20261120
+    method: text-final-v2
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
+- schema_version: dataset-catalog/2.0
+  dataset_id: magicdata_ramc
+  version: turn-taking-20261014-utts-punc-20261102-final-v2-20261123
+  languages:
+  - zh
+  tasks:
+  - ts_asr
+  aliases: []
+  derived_from: magicdata_ramc@turn-taking-20261014-utts-punc-20261102-final-v1-20261120
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/magicdata_ramc/versions/turn-taking-20261014-utts-punc-20261102-final-v2-20261123/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: magicdata_ramc@turn-taking-20261014-utts-punc-20261102 的训练文本终版 v2，按 audio-data-contract docs/reference/training-text.md（v2） 统一空格等。构建中。
+    source: magicdata_ramc@turn-taking-20261014-utts-punc-20261102-final-v1-20261120
+    method: text-final-v2
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
+- schema_version: dataset-catalog/2.0
+  dataset_id: wenetspeech_clean
+  version: train-punc-v1-20261102-final-v2-20261123
+  languages:
+  - zh
+  tasks:
+  - asr
+  aliases: []
+  derived_from: wenetspeech_clean@train-punc-v1-20261102-final-v1-20261120
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/wenetspeech_clean/versions/train-punc-v1-20261102-final-v2-20261123/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: wenetspeech_clean@train-punc-v1-20261102 的训练文本终版 v2，按 audio-data-contract docs/reference/training-text.md（v2） 统一空格等。构建中。
+    source: wenetspeech_clean@train-punc-v1-20261102-final-v1-20261120
+    method: text-final-v2
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
+- schema_version: dataset-catalog/2.0
+  dataset_id: emilia2_short
+  version: short-lance-20261023-final-v2-20261123
+  languages:
+  - zh
+  - en
+  tasks:
+  - asr
+  aliases: []
+  derived_from: emilia2_short@short-lance-20261023-final-v1-20261120
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/emilia2_short/versions/short-lance-20261023-final-v2-20261123/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: emilia2_short@short-lance-20261023 的训练文本终版 v2，按 audio-data-contract docs/reference/training-text.md（v2） 统一空格等。构建中。
+    source: emilia2_short@short-lance-20261023-final-v1-20261120
+    method: text-final-v2
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
+- schema_version: dataset-catalog/2.0
+  dataset_id: police_asr_unified
+  version: train-punc-v1-20261102-final-v2-20261123
+  languages:
+  - zh
+  tasks:
+  - asr
+  aliases: []
+  derived_from: police_asr_unified@train-punc-v1-20261102-final-v1-20261120
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/police_asr_unified/versions/train-punc-v1-20261102-final-v2-20261123/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: police_asr_unified@train-punc-v1-20261102 的训练文本终版 v2，按 audio-data-contract docs/reference/training-text.md（v2） 统一空格等。构建中。
+    source: police_asr_unified@train-punc-v1-20261102-final-v1-20261120
+    method: text-final-v2
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
+- schema_version: dataset-catalog/2.0
+  dataset_id: aishell2
+  version: train-punc-v1-20261102-final-v2-20261123
+  languages:
+  - zh
+  tasks:
+  - asr
+  aliases: []
+  derived_from: aishell2@train-punc-v1-20261102-final-v1-20261120
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/aishell2/versions/train-punc-v1-20261102-final-v2-20261123/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: aishell2@train-punc-v1-20261102 的训练文本终版 v2，按 audio-data-contract docs/reference/training-text.md（v2） 统一空格等。构建中。
+    source: aishell2@train-punc-v1-20261102-final-v1-20261120
+    method: text-final-v2
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
+- schema_version: dataset-catalog/2.0
+  dataset_id: aishell4
+  version: asr-20261014-punc-20261102-final-v2-20261123
+  languages:
+  - zh
+  tasks:
+  - asr
+  aliases: []
+  derived_from: aishell4@asr-20261014-punc-20261102-final-v1-20261120
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/aishell4/versions/asr-20261014-punc-20261102-final-v2-20261123/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: aishell4@asr-20261014-punc-20261102 的训练文本终版 v2，按 audio-data-contract docs/reference/training-text.md（v2） 统一空格等。构建中。
+    source: aishell4@asr-20261014-punc-20261102-final-v1-20261120
+    method: text-final-v2
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
+- schema_version: dataset-catalog/2.0
+  dataset_id: threed_speaker_zh_far_asr
+  version: train-punc-v1-20261102-final-v2-20261123
+  languages:
+  - zh
+  tasks:
+  - asr
+  aliases: []
+  derived_from: threed_speaker_zh_far_asr@train-punc-v1-20261102-final-v1-20261120
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/threed_speaker_zh_far_asr/versions/train-punc-v1-20261102-final-v2-20261123/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: threed_speaker_zh_far_asr@train-punc-v1-20261102 的训练文本终版 v2，按 audio-data-contract docs/reference/training-text.md（v2） 统一空格等。构建中。
+    source: threed_speaker_zh_far_asr@train-punc-v1-20261102-final-v1-20261120
+    method: text-final-v2
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
+- schema_version: dataset-catalog/2.0
+  dataset_id: magicdata_ramc
+  version: train-punc-v1-20261102-final-v2-20261123
+  languages:
+  - zh
+  tasks:
+  - asr
+  aliases: []
+  derived_from: magicdata_ramc@train-punc-v1-20261102-final-v1-20261120
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/magicdata_ramc/versions/train-punc-v1-20261102-final-v2-20261123/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: magicdata_ramc@train-punc-v1-20261102 的训练文本终版 v2，按 audio-data-contract docs/reference/training-text.md（v2） 统一空格等。构建中。
+    source: magicdata_ramc@train-punc-v1-20261102-final-v1-20261120
+    method: text-final-v2
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
+- schema_version: dataset-catalog/2.0
+  dataset_id: magicdata_ramc
+  version: allspk-asr-v1-20261103-final-v2-20261123
+  languages:
+  - zh
+  tasks:
+  - asr
+  aliases: []
+  derived_from: magicdata_ramc@allspk-asr-v1-20261103-final-v1-20261120
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/magicdata_ramc/versions/allspk-asr-v1-20261103-final-v2-20261123/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: magicdata_ramc@allspk-asr-v1-20261103 的训练文本终版 v2，按 audio-data-contract docs/reference/training-text.md（v2） 统一空格等。构建中。
+    source: magicdata_ramc@allspk-asr-v1-20261103-final-v1-20261120
+    method: text-final-v2
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
+- schema_version: dataset-catalog/2.0
+  dataset_id: aishell4
+  version: allspk-asr-v1-20261103-final-v2-20261123
+  languages:
+  - zh
+  tasks:
+  - asr
+  aliases: []
+  derived_from: aishell4@allspk-asr-v1-20261103-final-v1-20261120
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/aishell4/versions/allspk-asr-v1-20261103-final-v2-20261123/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: aishell4@allspk-asr-v1-20261103 的训练文本终版 v2，按 audio-data-contract docs/reference/training-text.md（v2） 统一空格等。构建中。
+    source: aishell4@allspk-asr-v1-20261103-final-v1-20261120
+    method: text-final-v2
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
+- schema_version: dataset-catalog/2.0
+  dataset_id: magicdata_ramc
+  version: allspk-ts-v1-20261104-final-v2-20261123
+  languages:
+  - zh
+  tasks:
+  - ts_asr
+  aliases: []
+  derived_from: magicdata_ramc@allspk-ts-v1-20261104-final-v1-20261120
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/magicdata_ramc/versions/allspk-ts-v1-20261104-final-v2-20261123/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: magicdata_ramc@allspk-ts-v1-20261104 的训练文本终版 v2，按 audio-data-contract docs/reference/training-text.md（v2） 统一空格等。构建中。
+    source: magicdata_ramc@allspk-ts-v1-20261104-final-v1-20261120
+    method: text-final-v2
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
+- schema_version: dataset-catalog/2.0
+  dataset_id: aishell4
+  version: allspk-ts-v1-20261104-final-v2-20261123
+  languages:
+  - zh
+  tasks:
+  - ts_asr
+  aliases: []
+  derived_from: aishell4@allspk-ts-v1-20261104-final-v1-20261120
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/aishell4/versions/allspk-ts-v1-20261104-final-v2-20261123/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: aishell4@allspk-ts-v1-20261104 的训练文本终版 v2，按 audio-data-contract docs/reference/training-text.md（v2） 统一空格等。构建中。
+    source: aishell4@allspk-ts-v1-20261104-final-v1-20261120
+    method: text-final-v2
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
+- schema_version: dataset-catalog/2.0
+  dataset_id: fleurs_zh
+  version: legacy-20260804-final-v2-20261123
+  languages:
+  - zh
+  tasks:
+  - asr
+  aliases: []
+  derived_from: fleurs_zh@legacy-20260804-final-v1-20261120
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/fleurs_zh/versions/legacy-20260804-final-v2-20261123/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: fleurs_zh@legacy-20260804 的训练文本终版 v2，按 audio-data-contract docs/reference/training-text.md（v2） 统一空格等。构建中。
+    source: fleurs_zh@legacy-20260804-final-v1-20261120
+    method: text-final-v2
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
+- schema_version: dataset-catalog/2.0
+  dataset_id: hw_sft
+  version: hw-20261014-final-v2-20261123
+  languages:
+  - en
+  - zh
+  tasks:
+  - asr
+  - asr_hotwords
+  aliases: []
+  derived_from: hw_sft@hw-20261014-final-v1-20261120
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/hw_sft/versions/hw-20261014-final-v2-20261123/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: hw_sft@hw-20261014 的训练文本终版 v2，按 audio-data-contract docs/reference/training-text.md（v2） 统一空格等。构建中。
+    source: hw_sft@hw-20261014-final-v1-20261120
+    method: text-final-v2
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
+- schema_version: dataset-catalog/2.0
+  dataset_id: hard_hw_sft
+  version: hard-20261014-final-v2-20261123
+  languages:
+  - en
+  - zh
+  tasks:
+  - asr_hotwords
+  aliases: []
+  derived_from: hard_hw_sft@hard-20261014-final-v1-20261120
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/hard_hw_sft/versions/hard-20261014-final-v2-20261123/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: hard_hw_sft@hard-20261014 的训练文本终版 v2，按 audio-data-contract docs/reference/training-text.md（v2） 统一空格等。构建中。
+    source: hard_hw_sft@hard-20261014-final-v1-20261120
+    method: text-final-v2
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
+- schema_version: dataset-catalog/2.0
+  dataset_id: ts_scene_pool
+  version: multi-20261017-punchw-20261102-final-v2-20261123
+  languages:
+  - zh
+  - en
+  tasks:
+  - ts_asr
+  aliases: []
+  derived_from: ts_scene_pool@multi-20261017-punchw-20261102-final-v1-20261120
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/multi-20261017-punchw-20261102-final-v2-20261123/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: ts_scene_pool@multi-20261017-punchw-20261102 的训练文本终版 v2，按 audio-data-contract docs/reference/training-text.md（v2） 统一空格等。构建中。
+    source: ts_scene_pool@multi-20261017-punchw-20261102-final-v1-20261120
+    method: text-final-v2
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
+- schema_version: dataset-catalog/2.0
+  dataset_id: ts_scene_pool
+  version: alt-twins-20261024-punchw-20261102-final-v2-20261123
+  languages:
+  - zh
+  - en
+  tasks:
+  - ts_asr
+  aliases: []
+  derived_from: ts_scene_pool@alt-twins-20261024-punchw-20261102-final-v1-20261120
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/alt-twins-20261024-punchw-20261102-final-v2-20261123/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: ts_scene_pool@alt-twins-20261024-punchw-20261102 的训练文本终版 v2，按 audio-data-contract docs/reference/training-text.md（v2） 统一空格等。构建中。
+    source: ts_scene_pool@alt-twins-20261024-punchw-20261102-final-v1-20261120
+    method: text-final-v2
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
+- schema_version: dataset-catalog/2.0
+  dataset_id: ts_scene_pool
+  version: solo-20261020-punchw-20261102-final-v2-20261123
+  languages:
+  - zh
+  - en
+  tasks:
+  - ts_asr
+  aliases: []
+  derived_from: ts_scene_pool@solo-20261020-punchw-20261102-final-v1-20261120
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/solo-20261020-punchw-20261102-final-v2-20261123/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: ts_scene_pool@solo-20261020-punchw-20261102 的训练文本终版 v2，按 audio-data-contract docs/reference/training-text.md（v2） 统一空格等。构建中。
+    source: ts_scene_pool@solo-20261020-punchw-20261102-final-v1-20261120
+    method: text-final-v2
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
+- schema_version: dataset-catalog/2.0
+  dataset_id: ts_scene_pool
+  version: handover-20261021-punchw-20261102-final-v2-20261123
+  languages:
+  - zh
+  - en
+  tasks:
+  - ts_asr
+  aliases: []
+  derived_from: ts_scene_pool@handover-20261021-punchw-20261102-final-v1-20261120
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/handover-20261021-punchw-20261102-final-v2-20261123/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: ts_scene_pool@handover-20261021-punchw-20261102 的训练文本终版 v2，按 audio-data-contract docs/reference/training-text.md（v2） 统一空格等。构建中。
+    source: ts_scene_pool@handover-20261021-punchw-20261102-final-v1-20261120
+    method: text-final-v2
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
+- schema_version: dataset-catalog/2.0
+  dataset_id: ts_scene_pool
+  version: magicdata-near-20261023-punchw-20261102-final-v2-20261123
+  languages:
+  - zh
+  tasks:
+  - ts_asr
+  aliases: []
+  derived_from: ts_scene_pool@magicdata-near-20261023-punchw-20261102-final-v1-20261120
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/magicdata-near-20261023-punchw-20261102-final-v2-20261123/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: ts_scene_pool@magicdata-near-20261023-punchw-20261102 的训练文本终版 v2，按 audio-data-contract docs/reference/training-text.md（v2） 统一空格等。构建中。
+    source: ts_scene_pool@magicdata-near-20261023-punchw-20261102-final-v1-20261120
+    method: text-final-v2
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
+- schema_version: dataset-catalog/2.0
+  dataset_id: ts_scene_pool
+  version: magicdata-alt-twins-20261024-punchw-20261102-final-v2-20261123
+  languages:
+  - zh
+  tasks:
+  - ts_asr
+  aliases: []
+  derived_from: ts_scene_pool@magicdata-alt-twins-20261024-punchw-20261102-final-v1-20261120
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/magicdata-alt-twins-20261024-punchw-20261102-final-v2-20261123/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: ts_scene_pool@magicdata-alt-twins-20261024-punchw-20261102 的训练文本终版 v2，按 audio-data-contract docs/reference/training-text.md（v2） 统一空格等。构建中。
+    source: ts_scene_pool@magicdata-alt-twins-20261024-punchw-20261102-final-v1-20261120
+    method: text-final-v2
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
+- schema_version: dataset-catalog/2.0
+  dataset_id: ts_scene_pool
+  version: magicdata-hard-20261023-punchw-20261102-final-v2-20261123
+  languages:
+  - zh
+  tasks:
+  - ts_asr
+  aliases: []
+  derived_from: ts_scene_pool@magicdata-hard-20261023-punchw-20261102-final-v1-20261120
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/magicdata-hard-20261023-punchw-20261102-final-v2-20261123/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: ts_scene_pool@magicdata-hard-20261023-punchw-20261102 的训练文本终版 v2，按 audio-data-contract docs/reference/training-text.md（v2） 统一空格等。构建中。
+    source: ts_scene_pool@magicdata-hard-20261023-punchw-20261102-final-v1-20261120
+    method: text-final-v2
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
+- schema_version: dataset-catalog/2.0
+  dataset_id: ts_scene_pool
+  version: magicdata-handover-20261023-punchw-20261102-final-v2-20261123
+  languages:
+  - zh
+  tasks:
+  - ts_asr
+  aliases: []
+  derived_from: ts_scene_pool@magicdata-handover-20261023-punchw-20261102-final-v1-20261120
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/ts_scene_pool/versions/magicdata-handover-20261023-punchw-20261102-final-v2-20261123/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: ts_scene_pool@magicdata-handover-20261023-punchw-20261102 的训练文本终版 v2，按 audio-data-contract docs/reference/training-text.md（v2） 统一空格等。构建中。
+    source: ts_scene_pool@magicdata-handover-20261023-punchw-20261102-final-v1-20261120
+    method: text-final-v2
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
+- schema_version: dataset-catalog/2.0
+  dataset_id: aishell
+  version: legacy-20260804-final-v2-20261123
+  languages:
+  - zh
+  tasks:
+  - asr
+  aliases: []
+  derived_from: aishell@legacy-20260804
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/aishell/versions/legacy-20260804-final-v2-20261123/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: aishell@legacy-20260804 的训练文本终版 v2，按 audio-data-contract docs/reference/training-text.md（v2） 统一空格等。构建中。
+    source: aishell@legacy-20260804
+    method: text-final-v2
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
+- schema_version: dataset-catalog/2.0
+  dataset_id: magicdata
+  version: legacy-20260804-final-v2-20261123
+  languages:
+  - zh
+  tasks:
+  - asr
+  aliases: []
+  derived_from: magicdata@legacy-20260804
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/magicdata/versions/legacy-20260804-final-v2-20261123/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: magicdata@legacy-20260804 的训练文本终版 v2，按 audio-data-contract docs/reference/training-text.md（v2） 统一空格等。构建中。
+    source: magicdata@legacy-20260804
+    method: text-final-v2
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
+- schema_version: dataset-catalog/2.0
+  dataset_id: aishell3
+  version: legacy-20260804-final-v2-20261123
+  languages:
+  - zh
+  tasks:
+  - asr
+  aliases: []
+  derived_from: aishell3@legacy-20260804
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/aishell3/versions/legacy-20260804-final-v2-20261123/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: aishell3@legacy-20260804 的训练文本终版 v2，按 audio-data-contract docs/reference/training-text.md（v2） 统一空格等。构建中。
+    source: aishell3@legacy-20260804
+    method: text-final-v2
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
