@@ -57,6 +57,10 @@
       "alias": "multilingual_asr_bench",
       "synced": "2026-11-10"
     },
+    "open_asr_leaderboard@v1-20261124": {
+      "alias": "open_asr_leaderboard",
+      "synced": "2026-11-24"
+    },
     "police_robust_monitor@eval-20261113": {
       "alias": "police_robust_monitor",
       "synced": "2026-11-13"

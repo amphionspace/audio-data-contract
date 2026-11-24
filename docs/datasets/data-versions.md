@@ -2708,6 +2708,21 @@ AISHELL-1、LibriSpeech 合成的多人对话
 - `ntuml2021@hf-1e121cc419e8`：台湾大学李宏毅 2021 年机器学习课的课堂录音（ICASSPW 2024 论文发布，作者含李宏毅），台湾普通话讲课，夹大量英文机器学习术语， 如 network、gradient、self-attention、discriminator、reward；每段带繁体中文转写和英文翻译，可做中英混说识别和语音翻译。 共 35,692 段、21.5 小时，几乎都是同一位讲者；转写里汉字之间以空格分隔，英文小写。约四成中文句子含英文词（train 39.6%、 test 39.0%）。train 20 讲、test 14 讲互不重叠；dev 的 2,997 段全部也在 test 里（同一批片段，不是独立划分），评测时只用 test 即可。音频是 16 kHz 双声道 float WAV。数据卡未说明转写方式。数据集信息标 MIT
 - 含派生版本（与源数据可能重叠）
 
+### open_asr_leaderboard
+
+Open ASR 榜公开测试集的 HF 快照
+
+语言：de、en、es、fr、it、nl、pt、zh · 任务：语音识别
+
+| 版本 | 时长（小时） | 口径 | COS |
+|---|---:|---|---|
+| [open_asr_leaderboard@hf-snapshots-20261124](../../catalog/open_asr_leaderboard.yaml#L2) | — | 未登记 | 没有 |
+| [open_asr_leaderboard@v1-20261124](../../catalog/open_asr_leaderboard.yaml#L79) | — | 未登记 | 没有 |
+
+- `open_asr_leaderboard@hf-snapshots-20261124`：https://huggingface.co/spaces/hf-audio/open_asr_leaderboard（v1.16.2，2026-11-20）评分用到的公开数据，按 https://github.com/huggingface/open_asr_leaderboard (commit c4696193a333) 的评测脚本（qwen/submit_jobs.sh、submit_jobs_ml.sh）列出的仓库和配置下载，每个仓库固定一个 revision，文件原样保存。印地语（Voice Arena 私有集与 lattice 打分）和英文私有集不在其中
+- `open_asr_leaderboard@v1-20261124`：open_asr_leaderboard@hf-snapshots-20261124 转成的 AudioRecord：英文 7 个默认公开集加 URGENT24 Clean，多语种 7 种语言的 FLEURS、Common Voice、MLS 和 AISHELL-1。音频取自 Parquet 原样写出；target 是上游原始文本，不做规范化。只用于评测，不进训练
+- 含派生版本（与源数据可能重叠）
+
 ### opendatalab_multilingual
 
 8 个语种的语音识别数据（OpenDataLab）
