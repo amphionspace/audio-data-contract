@@ -1734,17 +1734,16 @@ MagicData-RAMC 对话切窗的按人转写数据
 
 ### police_text_gaps_train
 
-警务训练文本缺口的按类别补量
+警务训练文本缺口的按类别补量（13 个说法）
 
 语言：zh · 任务：语音识别
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
-| [police_text_gaps_train@v1-20261123](../../catalog/police_text_gaps_train.yaml#L2) | 18.4 | 已登记 | 没有 |
-| [police_text_gaps_train@v2-20261123](../../catalog/police_text_gaps_train.yaml#L98) | — | 未登记 | 没有 |
+| [police_text_gaps_train@v2-20261123](../../catalog/police_text_gaps_train.yaml#L99) | 29.6 | 已登记 | 没有 |
 
-- `police_text_gaps_train@v1-20261123`：small70m 警务微调 v3 的跟踪分析发现，6 个测试里的说法在两份警务训练文本（police_v6_8h train、police_asr_unified train）里没有， 或只有反义、同音的说法，微调后大面积识别错：调到最暗（识别成调到最亮）、三百秒（三十秒）、设为自动、红外夜视（夜市）、静默取证、林区卡口（邻区）。 这一版按类别补训练语音，custom.category 标出类别：darkest 反义（调到最暗、调暗、最暗，约三成同句带最亮/调亮作对比）、 hundred_seconds 取值（三百秒等整百秒数，约四分之一同句带三十秒）、auto 取值（设为自动）、night_vision 易混（夜视，部分同句带夜市）、 silent_evidence 静默取证、forest 易混（林区，部分同句带邻区）。 这些说法在测试集里来自 V6 留在测试集的 5 条指令（把记录仪亮度调到最暗、把延录时长设置为300秒、把AI识别距离设置为自动、关闭红外、记录仪音量调到最小）； 按用户 2026-11-23 的选择不使用这 5 条指令，也不使用其他留在 dev/test 的 V6 指令（延录 60 秒、预录 10 秒、分段 5 分钟、识别距离等）， 保持 V6 测试集仍测没见过的指令。文本由 Seed 2.0 Pro 生成，规则过滤后与 police_asr_unified@v1-20261009 train/dev/test 去重； 标注只用汉字和全角“，。？！、；”，以“。？！”结尾，数字写汉字。Qwen3-TTS-12Hz-1.7B-Base 克隆原警务数据 nationwide_v2_480 的 train 口音说话人 （参考同 police_terms_single_train@v1-20261023，不含粤语，去掉其中合成通过率 < 50% 的 20 人），每句 4 人
-- `police_text_gaps_train@v2-20261123`：v1 的 6 类原样保留，再按类别补 small70m 警务微调 v3 缺口清单里“起点就一直错”的 7 个说法： 分辨率帧率（连说）、走私（易混走失）、情指行、即时分享、戴肩灯、H点二六五、冲印。 不使用 V6 留在 dev/test 的指令（例如“把记录仪的镜头模式、分辨率、帧率、延录时长都告诉我”），文本与警务 train/dev/test 去重。 Seed 2.0 Pro 生成文本，Qwen3-TTS 1.7B Base 克隆原警务数据的 train 口音说话人，Qwen3-ASR 核对。只有训练集
+- `police_text_gaps_train@v2-20261123`：small70m 警务微调 v3 缺口清单（icefall finetune_small70m_police_v3_20261122.md）两张表共 13 个说法的按类别补量，custom.category 标出类别。 v1 的 6 类（微调后才大面积出错：darkest、hundred_seconds、auto、night_vision、silent_evidence、forest）沿用 v1 的文本和合成， 9,500 条中 9,493 条与 v1 相同（核对规则修正后多通过 8 条，按轮次选取时换了 7 条）。 新增 7 类（起点就一直错）：resolution_fps“分辨率、帧率”连说（约七成连说或只隔顿号，三成“分辨率和帧率”）、 smuggling 走私（约三分之一同句带走失）、qingzhixing 情指行、instant_share 即时分享、shoulder_lamp 戴肩灯（含戴好、戴上、戴着）、 h265“H点二六五”的读法（V6 train 里只有“H二六五”）、photo_printing 冲印。 仍不使用 V6 留在 dev/test 的指令：新增“把记录仪的镜头模式、分辨率、帧率、延录时长都告诉我”（分辨率帧率不与镜头模式、延录同句，不问记录仪当前的分辨率帧率） 和“把视频编码格式设置为H.264”的留出规则。文本由 Seed 2.0 Pro 生成，规则过滤后与 police_asr_unified@v1-20261009 train/dev/test 去重； 标注只用汉字和全角“，。？！、；”（h265 类含大写 H），以“。？！”结尾，数字写汉字。Qwen3-TTS-12Hz-1.7B-Base 克隆原警务数据 nationwide_v2_480 的 train 口音说话人，每句 4 人。 V6 测试集那 5 条指令本身的训练语音另见 police_v6_test_instr_train
+- 已并入的旧版本：`police_text_gaps_train@v1-20261123`（COS：没有）
 
 ### police_v6_test_instr_train
 
@@ -1754,9 +1753,9 @@ V6 留在测试集的 5 条指令的训练语音
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
-| [police_v6_test_instr_train@v1-20261123](../../catalog/police_v6_test_instr_train.yaml#L2) | — | 未登记 | 没有 |
+| [police_v6_test_instr_train@v1-20261123](../../catalog/police_v6_test_instr_train.yaml#L2) | 18.1 | 已登记 | 没有 |
 
-- `police_v6_test_instr_train@v1-20261123`：V6 按语义指令组切分，把记录仪亮度调到最暗、把延录时长设置为300秒、把AI识别距离设置为自动、关闭红外、记录仪音量调到最小 这 5 条指令整组留在测试集，small70m 警务微调后“调到最暗”几乎全部识别成“调到最亮”、“三百秒”识别成“三十秒”。 这一版按用户 2026-11-23 的要求为这 5 条指令新写训练句（与警务 train/dev/test 文本去重，说话人只用 train 口音参考）。 与 police_text_gaps_train 分开登记：训练时加上它，V6 测试集这 5 组就变成见过的指令，测试结果要分开看
+- `police_v6_test_instr_train@v1-20261123`：V6 按语义指令组切分，把记录仪亮度调到最暗、把延录时长设置为300秒、把AI识别距离设置为自动、关闭红外、记录仪音量调到最小 这 5 条指令整组留在测试集，small70m 警务微调后“调到最暗”几乎全部识别成“调到最亮”、“三百秒”识别成“三十秒”。 按用户 2026-11-23 的要求为这 5 条指令新写训练句，custom.category 标出指令（dim_recorder、delay_300s、ai_distance_auto、infrared_off、volume_min）， 每条 2,000 条语音（V6 train 里同类指令每条约 1,700–2,800 条）。句子多是“场景或缘由 + 指令”，指令有原话也有换说法， 例如“记录仪亮度给我调到最暗”“延录时长调成三百秒”“识别距离切换到自动”“把红外关了”；三百秒不换算成五分钟。 与警务 train/dev/test 文本去重（去标点相同或相似度 ≥ 0.88 算重复，原话单独成句的都和测试句重复被去掉），说话人只用 train 口音参考； 其余 V6 dev/test 指令照样不碰（延录六十秒和查询延录、识别距离近距离、通话等其他音量、静音、预录、分段、休眠等）， 也不写缺口说法在测试集里的场景词（走私、肩灯、冲印、夜视、林区、邻区、静默、即时分享、情指行），这些说法仍由 police_text_gaps_train 按类别补。 与 police_text_gaps_train 分开登记：训练时加上它，V6 测试集这 5 组就变成见过的指令（句子和说话人仍没见过），测试结果要分开看。 标注只用汉字和全角“，。？！、；”（含大写 AI），以“。？！”结尾，数字写汉字。Seed 2.0 Pro 生成文本，Qwen3-TTS-12Hz-1.7B-Base 克隆原警务数据 nationwide_v2_480 的 train 口音说话人，每句 4 人
 
 ### primewords
 
