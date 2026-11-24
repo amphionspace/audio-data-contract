@@ -1,4 +1,4 @@
-# V6 测试集指令的训练语音：占位登记，合成中，进度见状态文件。用了它，V6 测试集这 5 组就是见过的指令。
+# V6 测试集指令的训练语音（训练集，2026-11-23 合成）。用了它，V6 测试集这 5 组就是见过的指令。
 - schema_version: dataset-catalog/2.0
   dataset_id: police_v6_test_instr_train
   version: v1-20261123
@@ -8,25 +8,101 @@
   - asr
   aliases: []
   artifacts:
-  - name: preparation_state
-    kind: dataset-state
+  - name: train_recordings
+    kind: lhotse-recordings
     root_alias: aidc_data
-    relative_path: datasets/police_v6_test_instr_train/versions/v1-20261123/state.json
+    relative_path: datasets/police_v6_test_instr_train/versions/v1-20261123/manifests/police_v6_test_instr_train_recordings_train.jsonl.gz
+    expected_bytes: 176896
+    sha256: 5f22bac5e763b49556b8f16b8eb751e1a97add385067e846c20b12e5dc6228ab
+    metadata:
+      record_count: 10000
+  - name: train_supervisions
+    kind: lhotse-supervisions
+    root_alias: aidc_data
+    relative_path: datasets/police_v6_test_instr_train/versions/v1-20261123/manifests/police_v6_test_instr_train_supervisions_train.jsonl.gz
+    expected_bytes: 811811
+    sha256: adece2653a950fef6ed66b93f13eb05e50478abeb9acac7616b2b31071abacad
+    metadata:
+      record_count: 10000
+  - name: report
+    kind: json-metadata
+    root_alias: aidc_data
+    relative_path: datasets/police_v6_test_instr_train/versions/v1-20261123/report.json
+    expected_bytes: 962
+    sha256: a3a01573226a4779554ed17f43448f5bf435edc1c3deb70baadbd1d5bec8737b
+  - name: record_index
+    kind: lance-record-index
+    root_alias: aidc_data
+    relative_path: datasets/police_v6_test_instr_train/versions/v1-20261123/record_index/index.json
+    expected_bytes: 763
+    sha256: 1ea64fdb1e01c50a341126ae04e55b7fe6606701e534d0fa5ddf15a0b0d9b11e
+    metadata:
+      snapshot_version: 13
+      rows: 10000
+      schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
   splits:
     train:
       artifacts:
-        preparation_state:
-        - preparation_state
-      provenance:
-        preparation_status: building
+        recordings:
+        - train_recordings
+        supervisions:
+        - train_supervisions
+        records_lance:
+        - record_index
+      statistics:
+        records: 10000
+        duration_hours: 18.061
+        duration_basis: sum_of_recording_durations
+        texts: 3150
+        voices_per_text: {2: 4, 3: 2592, 4: 554}
+        categories:
+          dim_recorder: {records: 2000, texts: 630}
+          delay_300s: {records: 2000, texts: 630}
+          ai_distance_auto: {records: 2000, texts: 630}
+          infrared_off: {records: 2000, texts: 630}
+          volume_min: {records: 2000, texts: 630}
+        key_phrases: {把记录仪亮度调到最暗: 753, 最暗: 2000, 延录与三百秒同句: 2000, 把延录时长设置为三百秒: 248, AI识别距离: 1410, 识别距离设为自动类: 2000, 关闭红外: 133, 红外与关闭类同句: 2000, 记录仪音量调到最小: 1616}
+        speakers: 331
+        utterances_per_speaker: {min: 14, median: 30, max: 49}
+        speaker_dataset: {KeSpeech: 8645, WenetSpeech-Chuan: 583, WenetSpeech-Wu: 772}
   provenance:
-    preparation_status: building
+    preparation_status: prepared
     owner: mingdong
     summary: V6 留在测试集的 5 条指令的训练语音
     description: >-
       V6 按语义指令组切分，把记录仪亮度调到最暗、把延录时长设置为300秒、把AI识别距离设置为自动、关闭红外、记录仪音量调到最小
       这 5 条指令整组留在测试集，small70m 警务微调后“调到最暗”几乎全部识别成“调到最亮”、“三百秒”识别成“三十秒”。
-      这一版按用户 2026-11-23 的要求为这 5 条指令新写训练句（与警务 train/dev/test 文本去重，说话人只用 train 口音参考）。
-      与 police_text_gaps_train 分开登记：训练时加上它，V6 测试集这 5 组就变成见过的指令，测试结果要分开看。
+      按用户 2026-11-23 的要求为这 5 条指令新写训练句，custom.category 标出指令（dim_recorder、delay_300s、ai_distance_auto、infrared_off、volume_min），
+      每条 2,000 条语音（V6 train 里同类指令每条约 1,700–2,800 条）。句子多是“场景或缘由 + 指令”，指令有原话也有换说法，
+      例如“记录仪亮度给我调到最暗”“延录时长调成三百秒”“识别距离切换到自动”“把红外关了”；三百秒不换算成五分钟。
+      与警务 train/dev/test 文本去重（去标点相同或相似度 ≥ 0.88 算重复，原话单独成句的都和测试句重复被去掉），说话人只用 train 口音参考；
+      其余 V6 dev/test 指令照样不碰（延录六十秒和查询延录、识别距离近距离、通话等其他音量、静音、预录、分段、休眠等），
+      也不写缺口说法在测试集里的场景词（走私、肩灯、冲印、夜视、林区、邻区、静默、即时分享、情指行），这些说法仍由 police_text_gaps_train 按类别补。
+      与 police_text_gaps_train 分开登记：训练时加上它，V6 测试集这 5 组就变成见过的指令（句子和说话人仍没见过），测试结果要分开看。
+      标注只用汉字和全角“，。？！、；”（含大写 AI），以“。？！”结尾，数字写汉字。Seed 2.0 Pro 生成文本，Qwen3-TTS-12Hz-1.7B-Base 克隆原警务数据 nationwide_v2_480 的 train 口音说话人，每句 4 人。
     source: icefall egs/amphion/docs/finetune_small70m_police_v3_20261122.md（警务训练文本的缺口清单）
     run_dir: /workspace/workspace/mingdong/data/amphiondata/police-v6-test-instr-train-20261123
+    code: amphiondata main（MR !35，ea23327），scripts/synthetic/run_police_text_gaps.py --profile v6_test_instr
+    qc: >-
+      与 police_text_gaps_train@v2-20261123 相同的规则：生成到码字上限的丢弃；数值时长按字、“最暗、最亮、调暗、调亮”按拼音的次数必须与标注相同；
+      目标说法（最暗、三百秒、识别距离和自动、红外、音量和最小）字面出现或按口音宽松的拼音整段听到；拼音对齐多出加缺少超过 2 个音节、替换超过 15% 的丢弃。
+      核对方能力：测试集里这 5 条指令的音频各抽 30 条，Qwen3-ASR 目标说法字面听对 30、30、30、30、29 条。
+      合成 12,600 条，通过 12,467 条（98.9%）：生成到上限 72 条（重复乱读，误杀约 1 条），替换过多 23 条（口音重、前半句识别乱，误杀约一半），
+      目标说法没听到 18 条（红外识别成红卫、户外等；有 2 条“音量调到最小”听成“调到最响”），多出或缺少音节 12 条（接着说参考音频里的话、口吃），
+      数值不符 8 条（“延录”识别成“沿路”后“三百秒”写成“三百米”，多半误杀）。被拒率 KeSpeech 0.7%、四川话 2.0%、吴语 4.5%，导出后吴语占比 7.9%→7.7%。
+      与 police_asr_unified dev/test 文本、说话人交集均为 0，其余留出规则命中 0。
+    known_issues:
+    - 全部为合成语音，没有人工听审
+    - 用了它，V6 测试集这 5 组是见过的指令，和没用它的模型比时要把这 5 组分开看
+    - “关闭红外”原话只有 133 条，其余是关掉、关上、停用红外等说法；“把延录时长设置为三百秒”原话 248 条
+    - 方言参考的合成失败率较高，吴语占比比合成时略低
+  recipe_parameters:
+    text_model: doubao-seed-2-0-pro-260215
+    tts_provider: qwen3_tts
+    tts_model: Qwen3-TTS-12Hz-1.7B-Base
+    max_new_tokens: min(360, max(64, 5 × 字数))
+    voices_per_text: 4
+    asr_check: Qwen3-ASR-1.7B
+    speaker_split: train (nationwide_v2_480 384/48/48)，不含粤语
+    sample_rate: 16000
+    channels: 1

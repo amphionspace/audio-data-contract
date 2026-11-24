@@ -56,6 +56,7 @@
         speaker_dataset: {KeSpeech: 8200, WenetSpeech-Chuan: 571, WenetSpeech-Wu: 729}
   provenance:
     preparation_status: prepared
+    superseded_by: police_text_gaps_train@v2-20261123
     owner: mingdong
     summary: 警务训练文本缺口的按类别补量
     description: >-
@@ -94,7 +95,7 @@
     speaker_split: train (nationwide_v2_480 384/48/48)，不含粤语
     sample_rate: 16000
     channels: 1
-# v2：占位登记，补“起点就一直错”的 7 个说法，合成中，进度见状态文件。
+# v2：v1 的 6 类加上“起点就一直错”的 7 个说法（2026-11-23 合成），共 13 类。
 - schema_version: dataset-catalog/2.0
   dataset_id: police_text_gaps_train
   version: v2-20261123
@@ -104,25 +105,109 @@
   - asr
   aliases: []
   artifacts:
-  - name: preparation_state
-    kind: dataset-state
+  - name: train_recordings
+    kind: lhotse-recordings
     root_alias: aidc_data
-    relative_path: datasets/police_text_gaps_train/versions/v2-20261123/state.json
+    relative_path: datasets/police_text_gaps_train/versions/v2-20261123/manifests/police_text_gaps_train_recordings_train.jsonl.gz
+    expected_bytes: 264093
+    sha256: 0555cb3dc84acdadc610bb7b679433b9c236595f8e9e36e2341505331d7ded0d
+    metadata:
+      record_count: 15000
+  - name: train_supervisions
+    kind: lhotse-supervisions
+    root_alias: aidc_data
+    relative_path: datasets/police_text_gaps_train/versions/v2-20261123/manifests/police_text_gaps_train_supervisions_train.jsonl.gz
+    expected_bytes: 1461246
+    sha256: 4ae695ff9d4df07d5b62861b43f93d87f090b27372fc0fe9260cb8f32b218d47
+    metadata:
+      record_count: 15000
+  - name: report
+    kind: json-metadata
+    root_alias: aidc_data
+    relative_path: datasets/police_text_gaps_train/versions/v2-20261123/report.json
+    expected_bytes: 1984
+    sha256: 353205d18572dea6adfbf4a6d1bc84672dccb0940f69488e40eda807be38613a
+  - name: record_index
+    kind: lance-record-index
+    root_alias: aidc_data
+    relative_path: datasets/police_text_gaps_train/versions/v2-20261123/record_index/index.json
+    expected_bytes: 759
+    sha256: 1b745b94d519a4d1f9bd4c44b6f4b44591ca2fd66218b4cdaca4b0d39c7773cc
+    metadata:
+      snapshot_version: 13
+      rows: 15000
+      schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
   splits:
     train:
       artifacts:
-        preparation_state:
-        - preparation_state
-      provenance:
-        preparation_status: building
+        recordings:
+        - train_recordings
+        supervisions:
+        - train_supervisions
+        records_lance:
+        - record_index
+      statistics:
+        records: 15000
+        duration_hours: 29.612
+        duration_basis: sum_of_recording_durations
+        texts: 4760
+        voices_per_text: {1: 1, 2: 19, 3: 3999, 4: 741}
+        categories:
+          darkest: {records: 3000, texts: 950}
+          hundred_seconds: {records: 3000, texts: 950}
+          auto: {records: 1500, texts: 470}
+          night_vision: {records: 1000, texts: 320}
+          silent_evidence: {records: 500, texts: 160}
+          forest: {records: 500, texts: 160}
+          resolution_fps: {records: 2000, texts: 630}
+          smuggling: {records: 1000, texts: 320}
+          qingzhixing: {records: 500, texts: 160}
+          instant_share: {records: 500, texts: 160}
+          shoulder_lamp: {records: 500, texts: 160}
+          h265: {records: 500, texts: 160}
+          photo_printing: {records: 500, texts: 160}
+        key_phrases: {调到最暗: 1534, 最暗: 2341, 调暗: 669, 三百秒: 1340, 设为或设置为自动: 970, 红外夜视: 615, 夜视: 1083, 静默取证: 500, 林区: 516, 林区卡口: 133, 分辨率帧率连说: 1374, 分辨率和帧率: 626, 走私: 1000, 走私同句带走失: 333, 情指行: 500, 即时分享: 500, 戴肩灯: 187, 戴好或戴上或戴着肩灯: 313, H点二六五: 500, 冲印: 500}
+        speakers: 331
+        utterances_per_speaker: {min: 21, median: 46, max: 63}
+        speaker_dataset: {KeSpeech: 12968, WenetSpeech-Chuan: 886, WenetSpeech-Wu: 1146}
   provenance:
-    preparation_status: building
+    preparation_status: prepared
     owner: mingdong
     summary: 警务训练文本缺口的按类别补量（13 个说法）
     description: >-
-      v1 的 6 类原样保留，再按类别补 small70m 警务微调 v3 缺口清单里“起点就一直错”的 7 个说法：
-      分辨率帧率（连说）、走私（易混走失）、情指行、即时分享、戴肩灯、H点二六五、冲印。
-      不使用 V6 留在 dev/test 的指令（例如“把记录仪的镜头模式、分辨率、帧率、延录时长都告诉我”），文本与警务 train/dev/test 去重。
-      Seed 2.0 Pro 生成文本，Qwen3-TTS 1.7B Base 克隆原警务数据的 train 口音说话人，Qwen3-ASR 核对。只有训练集。
+      small70m 警务微调 v3 缺口清单（icefall finetune_small70m_police_v3_20261122.md）两张表共 13 个说法的按类别补量，custom.category 标出类别。
+      v1 的 6 类（微调后才大面积出错：darkest、hundred_seconds、auto、night_vision、silent_evidence、forest）沿用 v1 的文本和合成，
+      9,500 条中 9,493 条与 v1 相同（核对规则修正后多通过 8 条，按轮次选取时换了 7 条）。
+      新增 7 类（起点就一直错）：resolution_fps“分辨率、帧率”连说（约七成连说或只隔顿号，三成“分辨率和帧率”）、
+      smuggling 走私（约三分之一同句带走失）、qingzhixing 情指行、instant_share 即时分享、shoulder_lamp 戴肩灯（含戴好、戴上、戴着）、
+      h265“H点二六五”的读法（V6 train 里只有“H二六五”）、photo_printing 冲印。
+      仍不使用 V6 留在 dev/test 的指令：新增“把记录仪的镜头模式、分辨率、帧率、延录时长都告诉我”（分辨率帧率不与镜头模式、延录同句，不问记录仪当前的分辨率帧率）
+      和“把视频编码格式设置为H.264”的留出规则。文本由 Seed 2.0 Pro 生成，规则过滤后与 police_asr_unified@v1-20261009 train/dev/test 去重；
+      标注只用汉字和全角“，。？！、；”（h265 类含大写 H），以“。？！”结尾，数字写汉字。Qwen3-TTS-12Hz-1.7B-Base 克隆原警务数据 nationwide_v2_480 的 train 口音说话人，每句 4 人。
+      V6 测试集那 5 条指令本身的训练语音另见 police_v6_test_instr_train。
     source: icefall egs/amphion/docs/finetune_small70m_police_v3_20261122.md（警务训练文本的缺口清单）
     run_dir: /workspace/workspace/mingdong/data/amphiondata/police-text-gaps-train-20261123
+    code: amphiondata main（MR !35，ea23327），scripts/synthetic/run_police_text_gaps.py --profile gaps
+    qc: >-
+      Qwen3-ASR-1.7B 转写后：生成到码字上限的丢弃；数值时长（X十秒、X百秒）按字、“最暗、最亮、调暗、调亮”按拼音的次数必须与标注相同；
+      目标说法字面出现或按口音宽松的拼音整段听到（情指行 Qwen3-ASR 不认识，不查）；不带声调的拼音对齐多出加缺少超过 2 个音节、替换超过 15% 的丢弃。
+      v2 修正了 v1 的两处误杀：暗/亮原来数整句的 an/liang 音节（“亮处”识别成“两处”会被拒），目标说法原来只比拼音（“帧率先调”的多音字注音不同）。
+      核对方能力：测试集里含新说法的音频，分辨率帧率、走私、H点二六五各 30/30、30/30、13/13 字面听对；即时分享、戴肩灯、冲印字面常写成同音字，宽松拼音 16/16、14/15、11/12；情指行 8 条字面 0 条。
+      新 7 类合成 7,000 条，通过 6,822 条：目标说法没听到 110 条（戴肩灯识别成带街灯、带警灯 58 条，H点二六五识别成 HDR 二六五等 26 条，冲印识别成冲洗、复印 19 条；
+      多是识别器不熟这些词，误杀估计约 7 成，因为正是读音拿不准的录音且配额够，仍丢弃），生成到上限 51 条（全是重复乱读），多出或缺少音节 13 条，替换过多 4 条。
+      新 7 类被拒率 KeSpeech 1.9%、四川话 3.4%、吴语 8.6%，导出后吴语占比 8.3%→7.5%。与 police_asr_unified dev/test 文本、说话人交集均为 0，留出规则命中 0。
+    known_issues:
+    - 全部为合成语音，没有人工听审
+    - 不含 V6 留出的 5 条指令（见 police_v6_test_instr_train）
+    - 林区卡口只有 133 条（林区类整体 516 条）；戴肩灯原话 187 条，其余是戴好、戴上、戴着肩灯
+    - 方言参考的合成失败率较高，吴语、四川话占比比合成时略低
+  recipe_parameters:
+    text_model: doubao-seed-2-0-pro-260215
+    tts_provider: qwen3_tts
+    tts_model: Qwen3-TTS-12Hz-1.7B-Base
+    max_new_tokens: min(360, max(64, 5 × 字数))
+    voices_per_text: 4
+    asr_check: Qwen3-ASR-1.7B
+    speaker_split: train (nationwide_v2_480 384/48/48)，不含粤语
+    sample_rate: 16000
+    channels: 1
