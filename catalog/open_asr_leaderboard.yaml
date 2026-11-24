@@ -1,0 +1,657 @@
+# Open ASR Leaderboard 公开测试集（scripts/open_asr_leaderboard/build.py 生成）。
+- schema_version: dataset-catalog/2.0
+  dataset_id: open_asr_leaderboard
+  version: hf-snapshots-20261124
+  languages:
+  - de
+  - en
+  - es
+  - fr
+  - it
+  - nl
+  - pt
+  - zh
+  tasks:
+  - asr
+  aliases: []
+  artifacts:
+  - name: hf-audio__open-asr-leaderboard-de79e57adf99
+    kind: hf-snapshot
+    root_alias: open_asr_leaderboard
+    relative_path: source/hf-audio__open-asr-leaderboard-de79e57adf99
+    metadata:
+      repository: https://huggingface.co/datasets/hf-audio/open-asr-leaderboard
+      revision: de79e57adf9983993bcc72586d7313460825f5eb
+      license: 各子集沿用原始许可：AMI CC BY 4.0；GigaSpeech 需同意使用条款（非商业研究）；SPGISpeech 仅限非商业用途；VoxPopuli CC0；URGENT 2024 加噪版含 CC BY-NC 4.0 与仅限研究的噪声
+      file_count: 54
+      expected_bytes: 18390463449
+      tree_sha256: 6a0edbca77fa46407893eee3debc77a1af1347c204c8222a72577529b1c6f8ca
+  - name: ArtificialAnalysis__Earnings22-Cleaned-AA-chunked-27f7d0056d59
+    kind: hf-snapshot
+    root_alias: open_asr_leaderboard
+    relative_path: source/ArtificialAnalysis__Earnings22-Cleaned-AA-chunked-27f7d0056d59
+    metadata:
+      repository: https://huggingface.co/datasets/ArtificialAnalysis/Earnings22-Cleaned-AA-chunked
+      revision: 27f7d0056d593231974a752ce03c1e965da69b3f
+      license: CC BY-SA 4.0（Earnings-22）
+      file_count: 343
+      expected_bytes: 220928943
+      tree_sha256: 8ac3865c21fcbaa7ce6e7daf3d545f5946407bc4592ac333a737721165fbd592
+  - name: ArtificialAnalysis__Earnings22-Cleaned-AA-5999936ee3d8
+    kind: hf-snapshot
+    root_alias: open_asr_leaderboard
+    relative_path: source/ArtificialAnalysis__Earnings22-Cleaned-AA-5999936ee3d8
+    metadata:
+      repository: https://huggingface.co/datasets/ArtificialAnalysis/Earnings22-Cleaned-AA
+      revision: 5999936ee3d8d3cde160e3c65a8cc6ff5b7c5276
+      license: CC BY-SA 4.0（Earnings-22）
+      file_count: 2
+      expected_bytes: 100653
+      tree_sha256: 83e62b749759709272e48c3346d6522902906ec16aa8de48fc104fbe27b4ee28
+  - name: VoiceArena__MonsoonASR-Open-ASR-leaderboard-en-IN-bc1da7b42ef6
+    kind: hf-snapshot
+    root_alias: open_asr_leaderboard
+    relative_path: source/VoiceArena__MonsoonASR-Open-ASR-leaderboard-en-IN-bc1da7b42ef6
+    metadata:
+      repository: https://huggingface.co/datasets/VoiceArena/MonsoonASR-Open-ASR-leaderboard-en-IN
+      revision: bc1da7b42ef6e2853123c97bf6d22067e4802d11
+      license: CC BY 4.0（Voice Arena）
+      file_count: 5
+      expected_bytes: 1569438537
+      tree_sha256: 40eed82d374f006edd962148a6c1ef8e21224536dfa288622f363940364184b2
+  - name: hf-audio__open-asr-leaderboard-multilingual-datasets-2a6022fd57ee
+    kind: hf-snapshot
+    root_alias: open_asr_leaderboard
+    relative_path: source/hf-audio__open-asr-leaderboard-multilingual-datasets-2a6022fd57ee
+    metadata:
+      repository: https://huggingface.co/datasets/hf-audio/open-asr-leaderboard-multilingual-datasets
+      revision: 2a6022fd57eea78ca23a54ec4325644fe248edd6
+      license: FLEURS CC BY 4.0；Common Voice CC0；MLS CC BY 4.0；AISHELL-1 Apache 2.0
+      file_count: 19
+      expected_bytes: 16458382300
+      tree_sha256: fe1b965922881c196f27d712619fad41677484fe343d7c645c9952ea01c4dba0
+  splits: {}
+  provenance:
+    summary: Open ASR 榜公开测试集的 HF 快照
+    description: https://huggingface.co/spaces/hf-audio/open_asr_leaderboard（v1.16.2，2026-11-20）评分用到的公开数据，按 https://github.com/huggingface/open_asr_leaderboard (commit c4696193a333) 的评测脚本（qwen/submit_jobs.sh、submit_jobs_ml.sh）列出的仓库和配置下载，每个仓库固定一个 revision，文件原样保存。印地语（Voice Arena 私有集与 lattice 打分）和英文私有集不在其中。
+    license: 见各 artifact 的 metadata.license；整体只用于评测，多数子集限非商业使用
+    build_script: scripts/open_asr_leaderboard/build.py
+- schema_version: dataset-catalog/2.0
+  dataset_id: open_asr_leaderboard
+  version: v1-20261124
+  languages:
+  - de
+  - en
+  - es
+  - fr
+  - it
+  - nl
+  - pt
+  - zh
+  tasks:
+  - asr
+  aliases: []
+  derived_from: open_asr_leaderboard@hf-snapshots-20261124
+  artifacts:
+  - name: audio-index
+    kind: audio-index
+    root_alias: open_asr_leaderboard
+    relative_path: versions/v1-20261124/audio-index.jsonl.gz
+    sha256: c5615b5f37d7206295b3806c6cfe0735392a6b562c5f9349788ab2fbfe7fe785
+    metadata:
+      record_count: 140295
+  - name: ami-cleaned-records
+    kind: audio-records
+    root_alias: open_asr_leaderboard
+    relative_path: versions/v1-20261124/records/ami-cleaned.jsonl.gz
+    sha256: bda63d6094865367899babb44b5651a40f73164872baf86a4c93b93a19cc57af
+    metadata:
+      record_count: 7805
+  - name: earnings22-cleaned-aa-chunked-records
+    kind: audio-records
+    root_alias: open_asr_leaderboard
+    relative_path: versions/v1-20261124/records/earnings22-cleaned-aa-chunked.jsonl.gz
+    sha256: fa2d12a98ddc809d3c5f53404022304af742feff762cb81fca7fde3e7129d43e
+    metadata:
+      record_count: 341
+  - name: gigaspeech-cleaned-records
+    kind: audio-records
+    root_alias: open_asr_leaderboard
+    relative_path: versions/v1-20261124/records/gigaspeech-cleaned.jsonl.gz
+    sha256: c26589e2c11386ba7c9ed9b794675169a9c42d5c49219d2fbda1f0825c30aba8
+    metadata:
+      record_count: 18768
+  - name: spgispeech-records
+    kind: audio-records
+    root_alias: open_asr_leaderboard
+    relative_path: versions/v1-20261124/records/spgispeech.jsonl.gz
+    sha256: 21b7b8543b3fdbfad6e59440d9b0bbbbc2ce9bc0e46d0bde17b3fdcc71137f56
+    metadata:
+      record_count: 39341
+  - name: urgent24-records
+    kind: audio-records
+    root_alias: open_asr_leaderboard
+    relative_path: versions/v1-20261124/records/urgent24.jsonl.gz
+    sha256: 3b8e7b514cdf4ae80c7b9d6e233511d0d2b8a4351e394a1621b3367d0903eecd
+    metadata:
+      record_count: 1000
+  - name: urgent24-clean-records
+    kind: audio-records
+    root_alias: open_asr_leaderboard
+    relative_path: versions/v1-20261124/records/urgent24-clean.jsonl.gz
+    sha256: b31d41b96bc56f3797f5ecffc430bd3d216f7398e78bbc1d7c58541148f5a90e
+    metadata:
+      record_count: 1000
+  - name: monsoon-en-in-records
+    kind: audio-records
+    root_alias: open_asr_leaderboard
+    relative_path: versions/v1-20261124/records/monsoon-en-in.jsonl.gz
+    sha256: 7743c33f470441bfe926e5f8e2b0e7a51477b7e5cf8aeb8bed85b21e81f5a528
+    metadata:
+      record_count: 2102
+  - name: voxpopuli-cleaned-aa-records
+    kind: audio-records
+    root_alias: open_asr_leaderboard
+    relative_path: versions/v1-20261124/records/voxpopuli-cleaned-aa.jsonl.gz
+    sha256: 69e24296fd023a9f6c60627fd4e4c7258afb3f0db53891f5a55f8b068adacaed
+    metadata:
+      record_count: 628
+  - name: fleurs-zh-records
+    kind: audio-records
+    root_alias: open_asr_leaderboard
+    relative_path: versions/v1-20261124/records/fleurs-zh.jsonl.gz
+    sha256: e29cf9d837d4c206e8173a938612f1a2bb81637e2fc391d052ffe4acbff23910
+    metadata:
+      record_count: 945
+  - name: fleurs-de-records
+    kind: audio-records
+    root_alias: open_asr_leaderboard
+    relative_path: versions/v1-20261124/records/fleurs-de.jsonl.gz
+    sha256: 7ae06cf6badd7523d17315626dd045a8c7d4d15acdca69d2da82075fbf03870a
+    metadata:
+      record_count: 862
+  - name: fleurs-fr-records
+    kind: audio-records
+    root_alias: open_asr_leaderboard
+    relative_path: versions/v1-20261124/records/fleurs-fr.jsonl.gz
+    sha256: fc76c50f913e04cd4c03c0a6a4fc8183720d7c85999797a5047e5bcea9b24779
+    metadata:
+      record_count: 676
+  - name: fleurs-it-records
+    kind: audio-records
+    root_alias: open_asr_leaderboard
+    relative_path: versions/v1-20261124/records/fleurs-it.jsonl.gz
+    sha256: 7557e1334da69e93b525eb472c2165db4aa5459b938e321c14057040a4dd4297
+    metadata:
+      record_count: 865
+  - name: fleurs-es-records
+    kind: audio-records
+    root_alias: open_asr_leaderboard
+    relative_path: versions/v1-20261124/records/fleurs-es.jsonl.gz
+    sha256: 1012c16f7b900e9b93ec146e16bab83e452a5053afaa91b7b02bb5282f4583de
+    metadata:
+      record_count: 908
+  - name: fleurs-pt-records
+    kind: audio-records
+    root_alias: open_asr_leaderboard
+    relative_path: versions/v1-20261124/records/fleurs-pt.jsonl.gz
+    sha256: b4f48ad5917b4eb3e58b362c308154cdc718fc1f51850796d4118db616c1d234
+    metadata:
+      record_count: 919
+  - name: fleurs-nl-records
+    kind: audio-records
+    root_alias: open_asr_leaderboard
+    relative_path: versions/v1-20261124/records/fleurs-nl.jsonl.gz
+    sha256: 896229cd0d542ae012bc6fffb6552354fa70d338439f3ab523a814645582d8b1
+    metadata:
+      record_count: 364
+  - name: aishell1-zh-records
+    kind: audio-records
+    root_alias: open_asr_leaderboard
+    relative_path: versions/v1-20261124/records/aishell1-zh.jsonl.gz
+    sha256: f5a15b7527ebfa3812e51cb5ccd51d17234e89cda4a088036cdc7499dcde62f4
+    metadata:
+      record_count: 7176
+  - name: mcv-de-records
+    kind: audio-records
+    root_alias: open_asr_leaderboard
+    relative_path: versions/v1-20261124/records/mcv-de.jsonl.gz
+    sha256: 2a87e7ac13a36ea6c4c318bbd7571d9e4e2ca16cfabc7e71208f568c7c301854
+    metadata:
+      record_count: 13511
+  - name: mcv-es-records
+    kind: audio-records
+    root_alias: open_asr_leaderboard
+    relative_path: versions/v1-20261124/records/mcv-es.jsonl.gz
+    sha256: e020791bc5ac326497ca1504b0d39f543fec71a2d13377e643dd10ef833495ff
+    metadata:
+      record_count: 13221
+  - name: mcv-fr-records
+    kind: audio-records
+    root_alias: open_asr_leaderboard
+    relative_path: versions/v1-20261124/records/mcv-fr.jsonl.gz
+    sha256: 15dce13cffd8665e716f74d9c087d9600fc7bdb3d66417f4aaa42a98041e9ed0
+    metadata:
+      record_count: 14760
+  - name: mcv-it-records
+    kind: audio-records
+    root_alias: open_asr_leaderboard
+    relative_path: versions/v1-20261124/records/mcv-it.jsonl.gz
+    sha256: e0260b9d6ccfb65f5bed41e65725eb2b0a493d5d0ca99dde4b8ca526f325e40c
+    metadata:
+      record_count: 8951
+  - name: mcv-nl-records
+    kind: audio-records
+    root_alias: open_asr_leaderboard
+    relative_path: versions/v1-20261124/records/mcv-nl.jsonl.gz
+    sha256: fd6f4c4783714e7c09242547b5678cb69e0c43db368c4090ab6d3caca98fdd50
+    metadata:
+      record_count: 1699
+  - name: mls-es-records
+    kind: audio-records
+    root_alias: open_asr_leaderboard
+    relative_path: versions/v1-20261124/records/mls-es.jsonl.gz
+    sha256: 4c01a3aa0b68266586717fe08a644de5de6b5827d586bf560576cc96a3abfc16
+    metadata:
+      record_count: 1527
+  - name: mls-fr-records
+    kind: audio-records
+    root_alias: open_asr_leaderboard
+    relative_path: versions/v1-20261124/records/mls-fr.jsonl.gz
+    sha256: f8c8c048782c0c2feae5c9e55ca67d993f01bbd8405f838ffdbd959c4d378186
+    metadata:
+      record_count: 1449
+  - name: mls-it-records
+    kind: audio-records
+    root_alias: open_asr_leaderboard
+    relative_path: versions/v1-20261124/records/mls-it.jsonl.gz
+    sha256: e901e02d9a4193b34de7760a4a6abcad40cc709528e75e72dcdd3c9a187f51e5
+    metadata:
+      record_count: 657
+  - name: mls-pt-records
+    kind: audio-records
+    root_alias: open_asr_leaderboard
+    relative_path: versions/v1-20261124/records/mls-pt.jsonl.gz
+    sha256: ef3485c57e2f7247c35264d43d494285993a2d95e7f2690ef73be216e1515468
+    metadata:
+      record_count: 192
+  - name: mls-nl-records
+    kind: audio-records
+    root_alias: open_asr_leaderboard
+    relative_path: versions/v1-20261124/records/mls-nl.jsonl.gz
+    sha256: 632de1ed723fd186779cd46a9624d547cbf6bf350290db10bb5165af25c7325b
+    metadata:
+      record_count: 628
+  splits:
+    ami-cleaned:
+      artifacts:
+        records:
+        - ami-cleaned-records
+        audio_index:
+        - audio-index
+      group: test
+      task: asr
+      statistics:
+        records: 7805
+        duration_hours: 8.0158
+        duration_basis: sum of Lhotse recording durations
+      provenance:
+        description: AMI 会议录音 test，Hugging Face 清洗过参考文本的版本（榜单默认集 AMI-Cleaned）。
+    earnings22-cleaned-aa-chunked:
+      artifacts:
+        records:
+        - earnings22-cleaned-aa-chunked-records
+        audio_index:
+        - audio-index
+      group: test
+      task: asr
+      statistics:
+        records: 341
+        duration_hours: 1.9169
+        duration_basis: sum of Lhotse recording durations
+      provenance:
+        description: Artificial Analysis 清洗的 Earnings-22 六场财报电话会，切成不超过 30 秒的段；target 是整场转写，按场拼接后打分（榜单默认集 Earnings22-Cleaned-AA-chunked）。
+    gigaspeech-cleaned:
+      artifacts:
+        records:
+        - gigaspeech-cleaned-records
+        audio_index:
+        - audio-index
+      group: test
+      task: asr
+      statistics:
+        records: 18768
+        duration_hours: 35.1469
+        duration_basis: sum of Lhotse recording durations
+      provenance:
+        description: GigaSpeech test，清洗过参考文本的版本（榜单默认集 Gigaspeech-Cleaned）。
+    spgispeech:
+      artifacts:
+        records:
+        - spgispeech-records
+        audio_index:
+        - audio-index
+      group: test
+      task: asr
+      statistics:
+        records: 39341
+        duration_hours: 100.0021
+        duration_basis: sum of Lhotse recording durations
+      provenance:
+        description: SPGISpeech test：财报电话会片段（榜单默认集 SPGISpeech）。
+    urgent24:
+      artifacts:
+        records:
+        - urgent24-records
+        audio_index:
+        - audio-index
+      group: test
+      task: asr
+      statistics:
+        records: 1000
+        duration_hours: 1.9246
+        duration_basis: sum of Lhotse recording durations
+      provenance:
+        description: URGENT 2024 挑战赛 1,000 条，叠加噪声和混响（榜单默认集 URGENT24）。
+    urgent24-clean:
+      artifacts:
+        records:
+        - urgent24-clean-records
+        audio_index:
+        - audio-index
+      group: test
+      task: asr
+      statistics:
+        records: 1000
+        duration_hours: 1.9246
+        duration_basis: sum of Lhotse recording durations
+      provenance:
+        description: 与 urgent24 同一批语音的干净版（榜单可选集 URGENT24 Clean，不在默认平均里）。
+    monsoon-en-in:
+      artifacts:
+        records:
+        - monsoon-en-in-records
+        audio_index:
+        - audio-index
+      group: test
+      task: asr
+      statistics:
+        records: 2102
+        duration_hours: 5.6243
+        duration_basis: sum of Lhotse recording durations
+      provenance:
+        description: Voice Arena 为榜单提供的印度口音英语双人对话，按声道切成单人片段（榜单默认集 Voice Arena Monsoon）。
+    voxpopuli-cleaned-aa:
+      artifacts:
+        records:
+        - voxpopuli-cleaned-aa-records
+        audio_index:
+        - audio-index
+      group: test
+      task: asr
+      statistics:
+        records: 628
+        duration_hours: 1.9784
+        duration_basis: sum of Lhotse recording durations
+      provenance:
+        description: Artificial Analysis 清洗参考文本后的 VoxPopuli 英语子集，628 条（榜单默认集 Voxpopuli-AA-Cleaned）。
+    fleurs-zh:
+      artifacts:
+        records:
+        - fleurs-zh-records
+        audio_index:
+        - audio-index
+      group: test
+      task: asr
+      statistics:
+        records: 945
+        duration_hours: 3.0737
+        duration_basis: sum of Lhotse recording durations
+      provenance:
+        description: FLEURS zh test（榜单多语种 zh 的 FLEURS 部分）。
+    fleurs-de:
+      artifacts:
+        records:
+        - fleurs-de-records
+        audio_index:
+        - audio-index
+      group: test
+      task: asr
+      statistics:
+        records: 862
+        duration_hours: 3.1526
+        duration_basis: sum of Lhotse recording durations
+      provenance:
+        description: FLEURS de test（榜单多语种 de 的 FLEURS 部分）。
+    fleurs-fr:
+      artifacts:
+        records:
+        - fleurs-fr-records
+        audio_index:
+        - audio-index
+      group: test
+      task: asr
+      statistics:
+        records: 676
+        duration_hours: 1.9511
+        duration_basis: sum of Lhotse recording durations
+      provenance:
+        description: FLEURS fr test（榜单多语种 fr 的 FLEURS 部分）。
+    fleurs-it:
+      artifacts:
+        records:
+        - fleurs-it-records
+        audio_index:
+        - audio-index
+      group: test
+      task: asr
+      statistics:
+        records: 865
+        duration_hours: 3.5212
+        duration_basis: sum of Lhotse recording durations
+      provenance:
+        description: FLEURS it test（榜单多语种 it 的 FLEURS 部分）。
+    fleurs-es:
+      artifacts:
+        records:
+        - fleurs-es-records
+        audio_index:
+        - audio-index
+      group: test
+      task: asr
+      statistics:
+        records: 908
+        duration_hours: 3.0906
+        duration_basis: sum of Lhotse recording durations
+      provenance:
+        description: FLEURS es test（榜单多语种 es 的 FLEURS 部分）。
+    fleurs-pt:
+      artifacts:
+        records:
+        - fleurs-pt-records
+        audio_index:
+        - audio-index
+      group: test
+      task: asr
+      statistics:
+        records: 919
+        duration_hours: 3.2389
+        duration_basis: sum of Lhotse recording durations
+      provenance:
+        description: FLEURS pt test（榜单多语种 pt 的 FLEURS 部分）。
+    fleurs-nl:
+      artifacts:
+        records:
+        - fleurs-nl-records
+        audio_index:
+        - audio-index
+      group: test
+      task: asr
+      statistics:
+        records: 364
+        duration_hours: 0.9687
+        duration_basis: sum of Lhotse recording durations
+      provenance:
+        description: FLEURS nl test（榜单多语种 nl 的 FLEURS 部分）。
+    aishell1-zh:
+      artifacts:
+        records:
+        - aishell1-zh-records
+        audio_index:
+        - audio-index
+      group: test
+      task: asr
+      statistics:
+        records: 7176
+        duration_hours: 10.0303
+        duration_basis: sum of Lhotse recording durations
+      provenance:
+        description: AISHELL-1 test（榜单多语种中文的另一部分，按字计分）。
+    mcv-de:
+      artifacts:
+        records:
+        - mcv-de-records
+        audio_index:
+        - audio-index
+      group: test
+      task: asr
+      statistics:
+        records: 13511
+        duration_hours: 21.5459
+        duration_basis: sum of Lhotse recording durations
+      provenance:
+        description: Common Voice de test（榜单多语种 de 的 MCV 部分）。
+    mcv-es:
+      artifacts:
+        records:
+        - mcv-es-records
+        audio_index:
+        - audio-index
+      group: test
+      task: asr
+      statistics:
+        records: 13221
+        duration_hours: 22.7129
+        duration_basis: sum of Lhotse recording durations
+      provenance:
+        description: Common Voice es test（榜单多语种 es 的 MCV 部分）。
+    mcv-fr:
+      artifacts:
+        records:
+        - mcv-fr-records
+        audio_index:
+        - audio-index
+      group: test
+      task: asr
+      statistics:
+        records: 14760
+        duration_hours: 23.3041
+        duration_basis: sum of Lhotse recording durations
+      provenance:
+        description: Common Voice fr test（榜单多语种 fr 的 MCV 部分）。
+    mcv-it:
+      artifacts:
+        records:
+        - mcv-it-records
+        audio_index:
+        - audio-index
+      group: test
+      task: asr
+      statistics:
+        records: 8951
+        duration_hours: 15.3982
+        duration_basis: sum of Lhotse recording durations
+      provenance:
+        description: Common Voice it test（榜单多语种 it 的 MCV 部分）。
+    mcv-nl:
+      artifacts:
+        records:
+        - mcv-nl-records
+        audio_index:
+        - audio-index
+      group: test
+      task: asr
+      statistics:
+        records: 1699
+        duration_hours: 2.0324
+        duration_basis: sum of Lhotse recording durations
+      provenance:
+        description: Common Voice nl test（榜单多语种 nl 的 MCV 部分）。
+    mls-es:
+      artifacts:
+        records:
+        - mls-es-records
+        audio_index:
+        - audio-index
+      group: test
+      task: asr
+      statistics:
+        records: 1527
+        duration_hours: 6.3329
+        duration_basis: sum of Lhotse recording durations
+      provenance:
+        description: Multilingual LibriSpeech es test（榜单多语种 es 的 MLS 部分）。
+    mls-fr:
+      artifacts:
+        records:
+        - mls-fr-records
+        audio_index:
+        - audio-index
+      group: test
+      task: asr
+      statistics:
+        records: 1449
+        duration_hours: 5.9458
+        duration_basis: sum of Lhotse recording durations
+      provenance:
+        description: Multilingual LibriSpeech fr test（榜单多语种 fr 的 MLS 部分）。
+    mls-it:
+      artifacts:
+        records:
+        - mls-it-records
+        audio_index:
+        - audio-index
+      group: test
+      task: asr
+      statistics:
+        records: 657
+        duration_hours: 2.6812
+        duration_basis: sum of Lhotse recording durations
+      provenance:
+        description: Multilingual LibriSpeech it test（榜单多语种 it 的 MLS 部分）。
+    mls-pt:
+      artifacts:
+        records:
+        - mls-pt-records
+        audio_index:
+        - audio-index
+      group: test
+      task: asr
+      statistics:
+        records: 192
+        duration_hours: 0.7928
+        duration_basis: sum of Lhotse recording durations
+      provenance:
+        description: Multilingual LibriSpeech pt test（榜单多语种 pt 的 MLS 部分）。
+    mls-nl:
+      artifacts:
+        records:
+        - mls-nl-records
+        audio_index:
+        - audio-index
+      group: test
+      task: asr
+      statistics:
+        records: 628
+        duration_hours: 2.511
+        duration_basis: sum of Lhotse recording durations
+      provenance:
+        description: Multilingual LibriSpeech nl test（榜单多语种 nl 的 MLS 部分）。
+  provenance:
+    summary: Open ASR 榜公开测试集的评测记录
+    description: open_asr_leaderboard@hf-snapshots-20261124 转成的 AudioRecord：英文 7 个默认公开集加 URGENT24 Clean，多语种 7 种语言的 FLEURS、Common Voice、MLS 和 AISHELL-1。音频取自 Parquet 原样写出；target 是上游原始文本，不做规范化。只用于评测，不进训练。
+    license: 见 hf-snapshots-20261124 各 artifact；多数子集限非商业使用
+    known_issues:
+    - earnings22-cleaned-aa-chunked 每条的 target 是整场转写，逐条错误率没有意义，要按场拼接打分。
+    - 榜单会去掉规范化后为空的参考文本，这一步需要榜单规范化器，留给打分器。
+    build_script: scripts/open_asr_leaderboard/build.py

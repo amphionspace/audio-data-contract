@@ -1,6 +1,6 @@
 # 数据总览
 
-当前登记 **274 个数据集**；另有 **34 个下载来源声明**和 **1 个训练混合配方**。登记不代表本机文件已齐备。
+当前登记 **275 个数据集**；另有 **34 个下载来源声明**和 **1 个训练混合配方**。登记不代表本机文件已齐备。
 
 时长取单个版本的最大值，不跨版本相加；≈ 为参考表或估算值，— 为暂无完整时长。各版本的时长、说明、COS 地址和质量证据见[版本明细](data-versions.md)。
 
@@ -198,6 +198,7 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [multi-talker-sd](data-versions.md#multi-talker-sd) | en、zh | 语音识别、语码转换语音识别、连续语音分离、重叠语音检测、带说话人标注的语音识别、说话人分段与归属 | — | AISHELL-1、LibriSpeech 合成的多人对话 | 快照 20260914 |
 | [multilingual_asr_bench](data-versions.md#multilingual_asr_bench) | ar、de、en、es、fr、hi、id、ja、ko、pt、ru、zh | 语音识别 | — | 十二种语言公开 ASR 测试集（只用于评测） | `备份桶:audio-data-contract/datasets/multilingual_asr_bench/` |
 | [ntuml2021](data-versions.md#ntuml2021) | en、zh | 语音识别、语码转换语音识别、speech_translation | 21.5 | 台大机器学习课中英混说讲课（ML2021） | 没有 |
+| [open_asr_leaderboard](data-versions.md#open_asr_leaderboard) | de、en、es、fr、it、nl、pt、zh | 语音识别 | — | Open ASR 榜公开测试集的 HF 快照 | 没有 |
 | [opendatalab_multilingual](data-versions.md#opendatalab_multilingual) | ar、cs、hu、ko、ru、sr、th、vi | 语音识别 | 8,588.2 | 8 个语种的语音识别数据（OpenDataLab） | `备份桶:computer-2/audio/`（原始数据）、`备份桶:opendatalab-multilingual/`（原始数据） |
 | [real_t](data-versions.md#real_t) | en、zh | 目标说话人语音识别 | 11.3 | 真实会议目标说话人提取评测（REAL-T） | 没有 |
 | [sot_many_speaker_word_zh_en](data-versions.md#sot_many_speaker_word_zh_en) | en、zh | 带说话人标注的语音识别 | 2,128.0 | — | 没有 |

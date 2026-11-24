@@ -2,6 +2,7 @@
   "diarization_benchmark": "/path/to/diarization-benchmark-v1-20261021",
   "dingqiao_meeting": "/path/to/dingqiao-meeting-20260918",
   "dns5_noise_rir": "/path/to/dns5",
+  "open_asr_leaderboard": "/workspace/data/datasets/open_asr_leaderboard",
   "open_noise": "/path/to/noise_open",
   "alimeeting_far_raw": "/data/alimeeting/original/far",
   "audio_data_contract": "/path/to/audio-data-contract",
