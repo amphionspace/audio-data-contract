@@ -1,0 +1,29 @@
+# 训练文本终版 v3（text-final-v3，2026-11-24）：v2 加规则 8（中文文本删掉不读出来的拉丁文括注，issue #299），规范见 docs/reference/training-text.md（v3）。占位，构建中。
+- schema_version: dataset-catalog/2.0
+  dataset_id: fleurs_zh
+  version: legacy-20260804-final-v3-20261124
+  languages:
+  - zh
+  tasks:
+  - asr
+  aliases: []
+  derived_from: fleurs_zh@legacy-20260804-final-v2-20261123
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/fleurs_zh/versions/legacy-20260804-final-v3-20261124/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: fleurs_zh@legacy-20260804 的训练文本终版 v3：在 v2 终版上删掉训练文本里音频中没读的拉丁文括注（如“孙德尔本斯（Sundarbans）”），读了的只去括号（issue amphionspace/audio-data-contract#299）。构建中。
+    source: fleurs_zh@legacy-20260804-final-v2-20261123
+    method: text-final-v3
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
