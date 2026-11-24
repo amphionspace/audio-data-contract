@@ -132,7 +132,8 @@ def main():
                     "两个 ASR 写出的括注逐处人工复核，改判 13 处。Qwen3-ASR 单独写出括注不算证据（它会复现 FLEURS 的括注写法）。",
         "unchanged": "括号里有汉字的括注、录音清单、音频和 dev/test 划分，引用起点版本的产物",
     }
-    prov = dict(e.get("provenance") or {})
+    # The v2 entry may already say superseded_by this v3 final; the new final must not inherit it.
+    prov = {k: v for k, v in (e.get("provenance") or {}).items() if k != "superseded_by"}
     prov.update({
         "snapshot_date": now[:10],
         "description": (
