@@ -2729,6 +2729,18 @@ AISHELL-1、LibriSpeech 合成的多人对话
 
 - `real_t@hf-39ca3b88ffd4`：REAL-TSE 挑战赛（IEEE SLT 2026 卫星挑战赛）的目标说话人提取评测包：给定真实多人对话的混合片段和目标说话人的注册语音， 恢复目标说话人的语音；没有干净参考，用目标说话人的转写算识别错误率评估。每个试次是一对混合片段和注册片段，多个试次可共用 同一段混合音频；混合片段平均 17–18 秒，约一半时间有两人以上同时说话。dev 与 Interspeech 2025 论文的 PRIMARY 划分试次相同， eval1 取自同一批公开语料但会话不重叠，eval2 是新录制的中英文会议。全部为 16 kHz 单声道 16 bit WAV，每个试次附目标说话人 转写（eval 的转写已按 Whisper large-v2 分词器重新规范化）和重叠时段 JSON。本发布 v1.0.1 只新增了挑战赛剔除样本表，音频和 元数据与 v1.0.0（2026-08-23）相同。CC BY-SA 4.0；dev 和 eval1 派生自 AISHELL-4、AliMeeting、CHiME-6（CC BY-SA 4.0）、 AMI（CC BY 4.0）、DiPCo（CDLA-Permissive-1.0），使用时需同时引用来源语料
 
+### retention_replay
+
+原版 Qwen3-ASR 标注的多语种保持数据
+
+语言：ar、de、fr、it、ja、ko、nl、pt、ru · 任务：语音识别
+
+| 版本 | 时长（小时） | 口径 | COS |
+|---|---:|---|---|
+| [retention_replay@qwen3-base-v1-20261124](../../catalog/retention_replay.yaml#L2) | — | 未登记 | 没有 |
+
+- `retention_replay@qwen3-base-v1-20261124`：9 种语言（德、法、葡、意、荷、日、韩、俄、阿）的训练音频，每种抽 6,000 条 2–20 秒，目标为冻结的 Qwen3-ASR-1.7B 强制语言后的转写，用于训练时保持原版在这些语言上的能力（KL 保持）。Common Voice、MLS 引用原文件；mls_sidon 的意、荷只取原始 MLS train 划分，转成 16 kHz FLAC 存在本版本 audio/。与语料原文的错误率超过 0.5 的条目丢弃，原文保留在 metadata.corpus_text
+
 ### sot_many_speaker_word_zh_en
 
 —
