@@ -1751,6 +1751,7 @@
     owner: mingdong
     run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
     build_script: scripts/text_final/build_v2.py
+    superseded_by: fleurs_zh@legacy-20260804-final-v3-20261124
   derived_from: fleurs_zh@legacy-20260804-final-v1-20261120
   recipe_parameters:
     spec: docs/reference/training-text.md（v2）

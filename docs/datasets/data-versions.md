@@ -837,7 +837,7 @@ VoxPopuli 英语欧洲议会发言
 | [aishell@eval-20260804](../../catalog/open_audio_eval.yaml#L1) | 10.0 | 已登记 | 快照 20260914 |
 | [aishell@icefall-20260908](../../catalog/icefall_runtime.yaml#L1012) | 179.0 | 已登记 | 快照 20260914 |
 | [aishell@legacy-20260804](../../catalog/icefall_base.yaml#L708) | 179.0 | 已登记 | 快照 20260914 |
-| [aishell@legacy-20260804-final-v2-20261123](../../catalog/text_final_v2.yaml#L2639) | 179.0 | 已登记 | 没有 |
+| [aishell@legacy-20260804-final-v2-20261123](../../catalog/text_final_v2.yaml#L2640) | 179.0 | 已登记 | 没有 |
 | [aishell@punc-gold-v1-20261029](../../catalog/punc_teacher_v1.yaml#L730) | 0.0 | 已登记 | 没有 |
 | [aishell@punc-teacher-v1-20261029](../../catalog/punc_teacher_v1.yaml#L381) | 3.7 | 已登记 | 没有 |
 | [aishell@punc-written-v1-20261029](../../catalog/zh_punc_written_v1.yaml#L2) | 150.9 | 已登记 | 没有 |
@@ -845,7 +845,7 @@ VoxPopuli 英语欧洲议会发言
 | [aishell_hotwords@eval-20260804](../../catalog/open_audio_eval.yaml#L414) | 10.0 | 已登记 | 快照 20260914、`amphion-audio-backup-1373259071:audio-data-contract/datasets/aishell_hotwords/` |
 | [aishell_hotwords@hotwords-v1-20260805](../../catalog/local_lhotse_derived.yaml#L652) | 160.9 | 已登记 | 快照 20260914、`amphion-audio-backup-1373259071:audio-data-contract/datasets/aishell_hotwords/` |
 | [aishell@legacy-20260804](../../catalog/icefall_base.yaml#L708) | 155.0 | [参考表](https://ccnuebbmik1f.feishu.cn/wiki/CEXFwEjPoi2bIukVjk9c5FdOn12?sheet=3d4d23) | 快照 20260914 |
-| [aishell@legacy-20260804-final-v2-20261123](../../catalog/text_final_v2.yaml#L2639) | 155.0 | [参考表](https://ccnuebbmik1f.feishu.cn/wiki/CEXFwEjPoi2bIukVjk9c5FdOn12?sheet=3d4d23) | 没有 |
+| [aishell@legacy-20260804-final-v2-20261123](../../catalog/text_final_v2.yaml#L2640) | 155.0 | [参考表](https://ccnuebbmik1f.feishu.cn/wiki/CEXFwEjPoi2bIukVjk9c5FdOn12?sheet=3d4d23) | 没有 |
 
 - `aishell@legacy-20260804-final-v2-20261123`：aishell@legacy-20260804 训练集的训练文本终版（v2 起新建，没有 v1）：书面化标点（规则 1，按 id 取自 aishell@punc-written-v1-20261029）120,098 条，按 audio-data-contract docs/reference/training-text.md（v2）。同一行里的场景文本和热词列表一起改；其余字段、录音清单和音频照旧，引用起点版本的产物
 - `aishell@punc-gold-v1-20261029`：aishell@icefall-20260908 的 train 监督片段里的 普通话标点试点的 10 句手写参照标点（规范 v1，逗号从紧）：custom.punctuation_gold.text 是参照，custom.punctuation_hint 记试点用的 Qwen3-ASR 与 FireRedPunc 带标点转写。只含这些句子，text 与父版本相同，不是标点后的文本；录音沿用父版本，不复制音频。中间产物，供复现和比较学生，不直接用于训练。脚本 scripts/punctuation/register_punc_intermediates.py
@@ -897,13 +897,13 @@ VoxPopuli 英语欧洲议会发言
 | [aishell3@eval-20260804](../../catalog/open_audio_eval.yaml#L63) | 22.4 | 已登记 | 快照 20260914 |
 | [aishell3@icefall-20260908](../../catalog/icefall_runtime.yaml#L1147) | 85.6 | 已登记 | 快照 20260914 |
 | [aishell3@legacy-20260804](../../catalog/icefall_base.yaml#L837) | 85.6 | 已登记 | 快照 20260914 |
-| [aishell3@legacy-20260804-final-v2-20261123](../../catalog/text_final_v2.yaml#L2872) | 85.6 | 已登记 | 没有 |
+| [aishell3@legacy-20260804-final-v2-20261123](../../catalog/text_final_v2.yaml#L2873) | 85.6 | 已登记 | 没有 |
 | [aishell3@punc-written-v1-20261123](../../catalog/zh_punc_written_v1_aishell3.yaml#L2) | 63.2 | 已登记 | 没有 |
 | [aishell3@tts-unified-v0.1](../../catalog/tts_unified.yaml#L1) | 85.6 | 已登记 | `amphion-tts-data-1373259071:AISHELL-3/`（原始数据） |
 | [aishell3_hotwords@eval-20260804](../../catalog/open_audio_eval.yaml#L478) | 22.4 | 已登记 | 快照 20260914、`amphion-audio-backup-1373259071:audio-data-contract/datasets/aishell3_hotwords/` |
 | [aishell3_hotwords@hotwords-v1-20260805](../../catalog/local_lhotse_derived.yaml#L815) | 85.6 | 已登记 | 快照 20260914、`amphion-audio-backup-1373259071:audio-data-contract/datasets/aishell3_hotwords/` |
 | [aishell3@legacy-20260804](../../catalog/icefall_base.yaml#L837) | 65.0 | [参考表](https://ccnuebbmik1f.feishu.cn/wiki/CEXFwEjPoi2bIukVjk9c5FdOn12?sheet=3d4d23) | 快照 20260914 |
-| [aishell3@legacy-20260804-final-v2-20261123](../../catalog/text_final_v2.yaml#L2872) | 65.0 | [参考表](https://ccnuebbmik1f.feishu.cn/wiki/CEXFwEjPoi2bIukVjk9c5FdOn12?sheet=3d4d23) | 没有 |
+| [aishell3@legacy-20260804-final-v2-20261123](../../catalog/text_final_v2.yaml#L2873) | 65.0 | [参考表](https://ccnuebbmik1f.feishu.cn/wiki/CEXFwEjPoi2bIukVjk9c5FdOn12?sheet=3d4d23) | 没有 |
 
 - `aishell3@alignment-v1-20261008`：aishell3@icefall-20260908 train 全部 63262 句的词级强制对齐（2026-10-08，Qwen3-ForcedAligner-0.6B，amphiondata main 6daabaf）。custom.alignment 含 status（aligned 57990 句 / needs_review 5272 句，后者有零时长或越界的词）、items（每个字或词的文本和起止秒，从该句开头算起）、issues、time_reference、unit、audio_duration。文本是对齐时所用的原标注文本；录音沿用 aishell3@clean-dual-qwen-moss-v1-20261008 的 train 录音，不复制音频。脚本 scripts/label_registration/register_alignments.py
 - `aishell3@clean-dual-qwen-moss-v1-20261008`：aishell3@icefall-20260908 的 train 监督片段，经 Qwen3-ASR-1.7B 与 MOSS-Transcribe-Diarize 双引擎一致性清洗；逐条写入 custom.clean（pass、reason、action、engine_status），不删除记录，读取时按 require_clean_pass 过滤。音频沿用源版本，不复制。规则 consensus-v6 / wenetspeech-faithful-v5：pass 63219、reject 43。少于 2 个字的 too_short 共 1982 条按规则不经引擎直接 pass。用于合成时建议在 pass 之外再要求：两引擎均有效、MOSS 只输出 1 个说话人、action 不是 review_consensus；too_short 另要求两引擎规范化后与原文完全一致。按此筛选保留 57965 条、57.77 小时（too_short 通过 1898/1982）
@@ -1400,15 +1400,10 @@ Emilia 中文野外语音（已清洗）
 | [fleurs_zh@hf-70bb2e84b976](../../catalog/multilingual_asr_sources.yaml#L1) | 3.1 | 已登记 | 没有 |
 | [fleurs_zh@icefall-20260908](../../catalog/icefall_runtime.yaml#L1895) | 14.1 | 已登记 | 快照 20260914 |
 | [fleurs_zh@legacy](../../catalog/legacy_multilingual.yaml#L2326) | 14.1 | 已登记 | 快照 20260914 |
-| [fleurs_zh@legacy-20260804-final-v2-20261123](../../catalog/text_final_v2.yaml#L1666) | 14.1 | 已登记 | 没有 |
-| [fleurs_zh@legacy-20260804-final-v3-20261124](../../catalog/text_final_v3.yaml#L2) | — | 未登记 | 没有 |
 
 - `fleurs_zh@hf-70bb2e84b976`：Google FLEURS 的 cmn_hans_cn 子集（音频归档和 TSV 转写），只下载了 test，与 fleurs_pt 同一修订
-- `fleurs_zh@legacy-20260804-final-v2-20261123`：fleurs_zh@legacy-20260804 的训练文本终版 v2：在 v1 终版 fleurs_zh@legacy-20260804-final-v1-20261120 上补做空格统一（中英规范规则 5）1,005 条，按 audio-data-contract docs/reference/training-text.md（v2）。同一行里的场景文本和热词列表一起改；其余字段、录音清单和音频照旧，引用起点版本的产物
-- `fleurs_zh@legacy-20260804-final-v3-20261124`：fleurs_zh@legacy-20260804 的训练文本终版 v3：在 v2 终版上删掉训练文本里音频中没读的拉丁文括注（如“孙德尔本斯（Sundarbans）”），读了的只去括号（issue amphionspace/audio-data-contract#299）。构建中
 - 有含标点版本
 - 含派生版本（与源数据可能重叠）
-- 已并入的旧版本：`fleurs_zh@legacy-20260804-final-v1-20261120`（COS：没有）
 
 ### hi_mia
 
@@ -1510,11 +1505,11 @@ GRPO 热词挖掘候选（未背过的中文热词提示，含近音易混词）
 | [magicdata@hotwords-v1-20261102](../../catalog/hotwords_v1_20261102.yaml#L128) | 466.6 | 已登记 | 没有 |
 | [magicdata@icefall-20260908](../../catalog/icefall_runtime.yaml#L1355) | 754.7 | 已登记 | 快照 20260914 |
 | [magicdata@legacy-20260804](../../catalog/icefall_base.yaml#L1013) | 754.7 | 已登记 | 快照 20260914 |
-| [magicdata@legacy-20260804-final-v2-20261123](../../catalog/text_final_v2.yaml#L2756) | 754.7 | 已登记 | 没有 |
+| [magicdata@legacy-20260804-final-v2-20261123](../../catalog/text_final_v2.yaml#L2757) | 754.7 | 已登记 | 没有 |
 | [magicdata@punc-written-v1-20261102](../../catalog/zh_punc_written_v1_gaps.yaml#L2) | 711.9 | 已登记 | 没有 |
 | [magicdata_hotwords@hotwords-v1-20260805](../../catalog/local_lhotse_derived.yaml#L176) | 711.9 | 已登记 | 快照 20260914、`amphion-audio-backup-1373259071:audio-data-contract/datasets/magicdata_hotwords/` |
 | [magicdata@legacy-20260804](../../catalog/icefall_base.yaml#L1013) | 747.0 | [参考表](https://ccnuebbmik1f.feishu.cn/wiki/CEXFwEjPoi2bIukVjk9c5FdOn12?sheet=3d4d23) | 快照 20260914 |
-| [magicdata@legacy-20260804-final-v2-20261123](../../catalog/text_final_v2.yaml#L2756) | 747.0 | [参考表](https://ccnuebbmik1f.feishu.cn/wiki/CEXFwEjPoi2bIukVjk9c5FdOn12?sheet=3d4d23) | 没有 |
+| [magicdata@legacy-20260804-final-v2-20261123](../../catalog/text_final_v2.yaml#L2757) | 747.0 | [参考表](https://ccnuebbmik1f.feishu.cn/wiki/CEXFwEjPoi2bIukVjk9c5FdOn12?sheet=3d4d23) | 没有 |
 
 - `magicdata@alignment-v1-20261008`：magicdata@icefall-20260908 train 全部 573478 句的词级强制对齐（2026-10-08，Qwen3-ForcedAligner-0.6B，amphiondata main 6daabaf）。custom.alignment 含 status（aligned 402005 句 / needs_review 171473 句，后者有零时长或越界的词）、items（每个字或词的文本和起止秒，从该句开头算起）、issues、time_reference、unit、audio_duration。文本是对齐时所用的原标注文本；录音沿用 magicdata@clean-dual-qwen-moss-v1-20261008 的 train 录音，不复制音频。脚本 scripts/label_registration/register_alignments.py
 - `magicdata@clean-dual-qwen-moss-v1-20261008`：magicdata@icefall-20260908 的 train 监督片段，经 Qwen3-ASR-1.7B 与 MOSS-Transcribe-Diarize 双引擎一致性清洗；逐条写入 custom.clean（pass、reason、action、engine_status），不删除记录，读取时按 require_clean_pass 过滤。音频沿用源版本，不复制。规则 consensus-v6 / wenetspeech-faithful-v5：pass 572637、reject 841。少于 2 个字的 too_short 共 241 条按规则不经引擎直接 pass。用于合成时建议在 pass 之外再要求：两引擎均有效、MOSS 只输出 1 个说话人、action 不是 review_consensus；too_short 另要求两引擎规范化后与原文完全一致。按此筛选保留 525329 条、644.54 小时（too_short 通过 136/241）
@@ -2542,7 +2537,7 @@ Emilia-YODAS 多语种 YouTube 语音
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
 | [hard_hw_sft@hard-20261014](../../catalog/amphionasr_v4.yaml#L2601) | 109.4 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/hard_hw_sft/` |
-| [hard_hw_sft@hard-20261014-final-v2-20261123](../../catalog/text_final_v2.yaml#L1854) | 109.4 | 已登记 | 没有 |
+| [hard_hw_sft@hard-20261014-final-v2-20261123](../../catalog/text_final_v2.yaml#L1855) | 109.4 | 已登记 | 没有 |
 
 - `hard_hw_sft@hard-20261014`：热词难例 ShareGPT。每条系统提示都带 Hotwords。音频指向已注册源文件
 - `hard_hw_sft@hard-20261014-final-v2-20261123`：hard_hw_sft@hard-20261014 的训练文本终版 v2：在 v1 终版 hard_hw_sft@hard-20261014-final-v1-20261120 上补做空格统一（中英规范规则 5）13 条，按 audio-data-contract docs/reference/training-text.md（v2）。同一行里的场景文本和热词列表一起改；其余字段、录音清单和音频照旧，引用起点版本的产物
@@ -2589,7 +2584,7 @@ Emilia-YODAS 多语种 YouTube 语音
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
-| [hw_sft@hw-20261014-final-v2-20261123](../../catalog/text_final_v2.yaml#L1760) | 2,636.5 | 已登记 | 没有 |
+| [hw_sft@hw-20261014-final-v2-20261123](../../catalog/text_final_v2.yaml#L1761) | 2,636.5 | 已登记 | 没有 |
 
 - `hw_sft@hw-20261014-final-v2-20261123`：hw_sft@hw-20261014 的训练文本终版 v2：在 v1 终版 hw_sft@hw-20261014-final-v1-20261120 上补做空格统一（中英规范规则 5）2,865 条；拆开的大写字母连写（zhen-fix-v1）4 条，按 audio-data-contract docs/reference/training-text.md（v2）。同一行里的场景文本和热词列表一起改；其余字段、录音清单和音频照旧，引用起点版本的产物
 - 含派生版本（与源数据可能重叠）
@@ -3156,7 +3151,7 @@ AISHELL-1、LibriSpeech 合成的多人对话
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
 | [ts_scene_pool@alt-twins-20261024](../../catalog/ts_scene_pool.yaml#L1177) | 316.4 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_scene_pool/` |
-| [ts_scene_pool@alt-twins-20261024-punchw-20261102-final-v2-20261123](../../catalog/text_final_v2.yaml#L2030) | 316.4 | 已登记 | 没有 |
+| [ts_scene_pool@alt-twins-20261024-punchw-20261102-final-v2-20261123](../../catalog/text_final_v2.yaml#L2031) | 316.4 | 已登记 | 没有 |
 | [ts_scene_pool@alt-twins-20261024-punchw2-20261102-final-v1-20261120](../../catalog/text_final_v1.yaml#L5206) | 148.3 | 已登记 | 没有 |
 | [ts_scene_pool@csd-alt-twins-20261101](../../catalog/ts_scene_pool.yaml#L1944) | 10.8 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_scene_pool/` |
 | [ts_scene_pool@csd-alt-twins-20261101-punchw-20261102](../../catalog/train_punc_v1_pools.yaml#L92) | 10.8 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_scene_pool/` |
@@ -3202,7 +3197,7 @@ AISHELL-1、LibriSpeech 合成的多人对话
 | [ts_scene_pool@es-solo-20261109-punchw-20261109-final-v1-20261120](../../catalog/text_final_v1_es.yaml#L880) | 25.8 | 已登记 | 没有 |
 | [ts_scene_pool@es-v1-20261108](../../catalog/es_train_v1.yaml#L170) | — | 未登记 | 没有 |
 | [ts_scene_pool@handover-20261021](../../catalog/ts_scene_pool.yaml#L515) | 62.9 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_scene_pool/` |
-| [ts_scene_pool@handover-20261021-punchw-20261102-final-v2-20261123](../../catalog/text_final_v2.yaml#L2237) | 62.9 | 已登记 | 没有 |
+| [ts_scene_pool@handover-20261021-punchw-20261102-final-v2-20261123](../../catalog/text_final_v2.yaml#L2238) | 62.9 | 已登记 | 没有 |
 | [ts_scene_pool@handover-20261021-punchw2-20261102-final-v1-20261120](../../catalog/text_final_v1.yaml#L5559) | 18.0 | 已登记 | 没有 |
 | [ts_scene_pool@hard-20261016](../../catalog/ts_scene_pool.yaml#L86) | 81.7 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_scene_pool/` |
 | [ts_scene_pool@hard-20261016-punchw-20261102-final-v2-20261123](../../catalog/text_final_v2.yaml#L3) | 81.7 | 已登记 | 没有 |
@@ -3211,16 +3206,16 @@ AISHELL-1、LibriSpeech 合成的多人对话
 | [ts_scene_pool@magicdata-20261023](../../catalog/ts_scene_pool.yaml#L660) | 96.2 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_scene_pool/` |
 | [ts_scene_pool@magicdata-alt-20261023](../../catalog/ts_scene_pool.yaml#L948) | 71.0 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_scene_pool/` |
 | [ts_scene_pool@magicdata-alt-twins-20261024](../../catalog/ts_scene_pool.yaml#L1325) | 71.5 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_scene_pool/` |
-| [ts_scene_pool@magicdata-alt-twins-20261024-punchw-20261102-final-v2-20261123](../../catalog/text_final_v2.yaml#L2416) | 71.5 | 已登记 | 没有 |
+| [ts_scene_pool@magicdata-alt-twins-20261024-punchw-20261102-final-v2-20261123](../../catalog/text_final_v2.yaml#L2417) | 71.5 | 已登记 | 没有 |
 | [ts_scene_pool@magicdata-handover-20261023](../../catalog/ts_scene_pool.yaml#L1005) | 48.6 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_scene_pool/` |
-| [ts_scene_pool@magicdata-handover-20261023-punchw-20261102-final-v2-20261123](../../catalog/text_final_v2.yaml#L2565) | 48.6 | 已登记 | 没有 |
+| [ts_scene_pool@magicdata-handover-20261023-punchw-20261102-final-v2-20261123](../../catalog/text_final_v2.yaml#L2566) | 48.6 | 已登记 | 没有 |
 | [ts_scene_pool@magicdata-hard-20261023](../../catalog/ts_scene_pool.yaml#L1120) | 47.8 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_scene_pool/` |
-| [ts_scene_pool@magicdata-hard-20261023-punchw-20261102-final-v2-20261123](../../catalog/text_final_v2.yaml#L2491) | 47.8 | 已登记 | 没有 |
+| [ts_scene_pool@magicdata-hard-20261023-punchw-20261102-final-v2-20261123](../../catalog/text_final_v2.yaml#L2492) | 47.8 | 已登记 | 没有 |
 | [ts_scene_pool@magicdata-hard-twins-20261026](../../catalog/ts_scene_pool.yaml#L1440) | 47.9 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_scene_pool/` |
 | [ts_scene_pool@magicdata-near-20261023](../../catalog/ts_scene_pool.yaml#L776) | 96.0 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_scene_pool/` |
-| [ts_scene_pool@magicdata-near-20261023-punchw-20261102-final-v2-20261123](../../catalog/text_final_v2.yaml#L2341) | 96.0 | 已登记 | 没有 |
+| [ts_scene_pool@magicdata-near-20261023-punchw-20261102-final-v2-20261123](../../catalog/text_final_v2.yaml#L2342) | 96.0 | 已登记 | 没有 |
 | [ts_scene_pool@multi-20261017](../../catalog/ts_scene_pool.yaml#L171) | 193.4 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_scene_pool/` |
-| [ts_scene_pool@multi-20261017-punchw-20261102-final-v2-20261123](../../catalog/text_final_v2.yaml#L1926) | 193.4 | 已登记 | 没有 |
+| [ts_scene_pool@multi-20261017-punchw-20261102-final-v2-20261123](../../catalog/text_final_v2.yaml#L1927) | 193.4 | 已登记 | 没有 |
 | [ts_scene_pool@multi-20261017-punchw2-20261102-final-v1-20261120](../../catalog/text_final_v1.yaml#L4433) | 59.2 | 已登记 | 没有 |
 | [ts_scene_pool@multi-20261018](../../catalog/ts_scene_pool.yaml#L257) | 386.2 | 已登记 | 没有 |
 | [ts_scene_pool@pt-1spk-v1-20261117](../../catalog/ts_scene_pool_pt.yaml#L582) | 48.1 | 已登记 | 没有 |
@@ -3240,7 +3235,7 @@ AISHELL-1、LibriSpeech 合成的多人对话
 | [ts_scene_pool@ramc-near-20261028](../../catalog/ts_scene_pool.yaml#L2184) | 49.1 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_scene_pool/` |
 | [ts_scene_pool@solo-20261019](../../catalog/ts_scene_pool.yaml#L343) | 97.2 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_scene_pool/` |
 | [ts_scene_pool@solo-20261020](../../catalog/ts_scene_pool.yaml#L429) | 97.2 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_scene_pool/` |
-| [ts_scene_pool@solo-20261020-punchw-20261102-final-v2-20261123](../../catalog/text_final_v2.yaml#L2134) | 97.2 | 已登记 | 没有 |
+| [ts_scene_pool@solo-20261020-punchw-20261102-final-v2-20261123](../../catalog/text_final_v2.yaml#L2135) | 97.2 | 已登记 | 没有 |
 | [ts_scene_pool@solo-20261020-punchw2-20261102-final-v1-20261120](../../catalog/text_final_v1.yaml#L5382) | 29.9 | 已登记 | 没有 |
 | [ts_scene_pool@v2-20261016](../../catalog/ts_scene_pool.yaml#L1) | 315.8 | 已登记 | 没有 |
 | [ts_scene_pool@xsession-20261023](../../catalog/ts_scene_pool.yaml#L602) | 116.1 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_scene_pool/` |

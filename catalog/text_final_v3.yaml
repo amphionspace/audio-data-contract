@@ -1,4 +1,5 @@
-# 训练文本终版 v3（text-final-v3，2026-11-24）：v2 加规则 8（中文文本删掉不读出来的拉丁文括注，issue #299），规范见 docs/reference/training-text.md（v3）。占位，构建中。
+# 训练文本终版 v3（text-final-v3，2026-11-24）：v2 加规则 8（删掉没读的拉丁文括注，issue #299），规范见 docs/reference/training-text.md（v3）。
+# 生成脚本 scripts/text_final/build_v3.py；只有 fleurs_zh 有 v3，其余来源的 v2 或 v1 终版仍是终版。
 - schema_version: dataset-catalog/2.0
   dataset_id: fleurs_zh
   version: legacy-20260804-final-v3-20261124
@@ -7,23 +8,92 @@
   tasks:
   - asr
   aliases: []
-  derived_from: fleurs_zh@legacy-20260804-final-v2-20261123
   artifacts:
   - name: preparation_state
     kind: dataset-state
     root_alias: aidc_data
     relative_path: datasets/fleurs_zh/versions/legacy-20260804-final-v3-20261124/state.json
+  - name: train_rec_0
+    kind: lhotse-recordings
+    root_alias: aidc_data
+    relative_path: datasets/fleurs_zh/versions/legacy/manifests/fleurs_zh_recordings_train.jsonl.gz
+    expected_bytes: 37300
+    sha256: 92da0adf67f00505cdb8db3dfd1b318078338aa39029cc218f2bc2c70b025300
+  - name: train_sup_0
+    kind: lhotse-supervisions
+    root_alias: aidc_data
+    relative_path: datasets/fleurs_zh/versions/legacy-20260804-final-v3-20261124/text/train_sup_0.jsonl.gz
+    expected_bytes: 267943
+    sha256: 3ef784d5a3c5c00b7c6c8de1f1fb5905d90e58f9006a6840147179ef35a625d7
+  - name: dev_rec_0
+    kind: lhotse-recordings
+    root_alias: aidc_data
+    relative_path: datasets/fleurs_zh/versions/legacy/manifests/fleurs_zh_recordings_validation.jsonl.gz
+    expected_bytes: 4349
+    sha256: a822d5d937ad63f357713432b3690929b77e87cceaf42d348bce1867e5e654ab
+  - name: dev_sup_0
+    kind: lhotse-supervisions
+    root_alias: aidc_data
+    relative_path: datasets/fleurs_zh/versions/legacy/manifests/fleurs_zh_supervisions_validation.jsonl.gz
+    expected_bytes: 22076
+    sha256: ae524d27b47bb5328c0d6cfc08a119d90967f601ed50911b3d9c9f95288cb69f
+  - name: test_rec_0
+    kind: lhotse-recordings
+    root_alias: aidc_data
+    relative_path: datasets/fleurs_zh/versions/legacy/manifests/fleurs_zh_recordings_test.jsonl.gz
+    expected_bytes: 10706
+    sha256: 588fca8ac57109e781e3f9e15814e6fd7d731ed1b3a8d8a242ce673685b4a0b6
+  - name: test_sup_0
+    kind: lhotse-supervisions
+    root_alias: aidc_data
+    relative_path: datasets/fleurs_zh/versions/legacy/manifests/fleurs_zh_supervisions_test.jsonl.gz
+    expected_bytes: 63420
+    sha256: 80a43dec56c588a8672dfd9faa37c365c00185017ad2cdb52bc6c43d84bb294c
   splits:
     train:
       artifacts:
-        preparation_state:
-        - preparation_state
-      provenance:
-        preparation_status: building
+        recordings:
+        - train_rec_0
+        supervisions:
+        - train_sup_0
+      statistics:
+        duration_hours: 9.688333333333333
+        duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: multilingual:zh/fleurs_zh/data/manifests/fleurs_zh_supervisions_train.jsonl.gz'
+        final_r1_changed_records: 2
+        final_v2_changed_records: 1005
+        final_v3_changed_records: 399
+    dev:
+      artifacts:
+        recordings:
+        - dev_rec_0
+        supervisions:
+        - dev_sup_0
+      statistics:
+        duration_hours: 1.280627777777778
+        duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: multilingual:zh/fleurs_zh/data/manifests/fleurs_zh_supervisions_validation.jsonl.gz'
+    test:
+      artifacts:
+        recordings:
+        - test_rec_0
+        supervisions:
+        - test_sup_0
+      statistics:
+        duration_hours: 3.1432777777777776
+        duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: multilingual:zh/fleurs_zh/data/manifests/fleurs_zh_supervisions_test.jsonl.gz'
   provenance:
-    preparation_status: building
-    owner: mingdong
-    description: fleurs_zh@legacy-20260804 的训练文本终版 v3：在 v2 终版上删掉训练文本里音频中没读的拉丁文括注（如“孙德尔本斯（Sundarbans）”），读了的只去括号（issue amphionspace/audio-data-contract#299）。构建中。
     source: fleurs_zh@legacy-20260804-final-v2-20261123
+    snapshot_date: '2026-11-24'
+    upstream_version: unknown
+    description: 'fleurs_zh@legacy-20260804 的训练文本终版 v3：在 v2 终版 fleurs_zh@legacy-20260804-final-v2-20261123 上处理拉丁文括注（规则 8）399 条：没读的 480 处整段删掉，读了的 79 处只去括号，按 audio-data-contract docs/reference/training-text.md（v3）（issue #299：训练文本里的“孙德尔本斯（Sundarbans）”这类括注朗读人多数没读，模型学会了凭空输出括注）。其余字段、录音清单和音频照旧，引用起点版本的产物。'
     method: text-final-v3
+    owner: mingdong
     run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
+    build_script: scripts/text_final/build_v3.py
+    superseded_by: fleurs_zh@legacy-20260804-final-v3-20261124
+  derived_from: fleurs_zh@legacy-20260804-final-v2-20261123
+  recipe_parameters:
+    spec: docs/reference/training-text.md（v3）
+    start: fleurs_zh@legacy-20260804-final-v2-20261123
+    rounds: 拉丁文括注（规则 8）399 条：没读的 480 处整段删掉，读了的 79 处只去括号
+    evidence: 每条录音逐处判断：whisper-large-v3（语种 zh）写出括注里的字母，或 whisper 与 Qwen3-ASR-1.7B 都在括注处多出音译汉字，算读了；两个 ASR 写出的括注逐处人工复核，改判 13 处。Qwen3-ASR 单独写出括注不算证据（它会复现 FLEURS 的括注写法）。
+    unchanged: 括号里有汉字的括注、录音清单、音频和 dev/test 划分，引用起点版本的产物
