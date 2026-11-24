@@ -72,7 +72,12 @@ LHOTSE = {
     "ar": [("common_voice_ar", "legacy", "train")],
 }
 SIDON_LANGUAGES = ("it", "nl")
-BY_CHARACTER = {"ja"}
+# Scored by character: Japanese has no spaces; Korean spacing varies ("투표해 주시기" / "투표해주시기").
+BY_CHARACTER = {"ja", "ko"}
+KEEP_MARKS = {"ja"}
+# Files of this dataset are addressed through the shared data root, as AGENTS.md writes them.
+ROOT_ALIAS = "aidc_data"
+ROOT_PREFIX = f"datasets/{DATASET_ID}"
 _NON_WORD = re.compile(r"[\W_]+")
 
 
@@ -286,14 +291,24 @@ def label(args):
 
 # --- build ----------------------------------------------------------------------------------------
 
-def norm(text):
-    return _NON_WORD.sub(" ", unicodedata.normalize("NFKC", text or "").lower()).split()
+def norm(text, language):
+    """Words of a text for the label check, combining marks removed on both sides.
+
+    Arabic harakat (category Mn) are not \\w: left in, they split one word into pieces, and Common
+    Voice ar writes them where Qwen3-ASR does not, so voweled sentences were rejected. NFC after the
+    removal keeps Hangul syllables whole. Japanese keeps its marks: NFKD splits off the dakuten.
+    """
+    text = unicodedata.normalize("NFKC", text or "")
+    if language not in KEEP_MARKS:
+        text = unicodedata.normalize("NFKD", text)
+        text = unicodedata.normalize("NFC", "".join(c for c in text if unicodedata.category(c) != "Mn"))
+    return _NON_WORD.sub(" ", text.lower()).split()
 
 
 def label_error(reference, hypothesis, language):
     from rapidfuzz.distance import Levenshtein
 
-    ref, hyp = norm(reference), norm(hypothesis)
+    ref, hyp = norm(reference, language), norm(hypothesis, language)
     if language in BY_CHARACTER:
         ref, hyp = list("".join(ref)), list("".join(hyp))
     return Levenshtein.distance(ref, hyp) / max(len(ref), 1)
@@ -304,12 +319,18 @@ def audio_facts(location):
 
     alias, relative = location
     roots = json.loads((REGISTRY / "roots.json").read_text())
-    base = ROOT if alias == DATASET_ID else Path(roots[alias])
-    path = base / relative
+    path = Path(roots[alias]) / relative
     recording = Recording.from_file(str(path))
     return {"root_alias": alias, "relative_path": relative, "channels": len(recording.channel_ids),
             "sample_rate": recording.sampling_rate, "num_frames": recording.num_samples,
             "duration": round(recording.duration, 6), "sha256": sha256_file(path)}
+
+
+def artifact(name, kind, path, count):
+    return {"name": name, "kind": kind, "root_alias": ROOT_ALIAS,
+            "relative_path": f"{ROOT_PREFIX}/{path.relative_to(ROOT).as_posix()}",
+            "expected_bytes": path.stat().st_size, "sha256": sha256_file(path),
+            "metadata": {"record_count": count}}
 
 
 def build(args):
@@ -318,22 +339,26 @@ def build(args):
     for line in (VERSION_DIR / "labels.jsonl").read_text().splitlines():
         row = json.loads(line)
         labels[row["key"]] = row
-    kept = {}
+    kept, rejected = {}, []
     for language, items in plan.items():
         rows = []
         for item in items:
             labelled = labels.get(item["key"])
             if labelled is None:
                 raise SystemExit(f"not labelled yet: {item['key']}; run label first")
-            if not labelled["label"]:
+            error = label_error(item["text"], labelled["label"], language) if labelled["label"] else None
+            if error is None or error > MAX_LABEL_ERROR:
+                rejected.append({"language": language, "key": item["key"], "corpus_text": item["text"],
+                                 "label": labelled["label"], "label_error": None if error is None else round(error, 4)})
                 continue
-            error = label_error(item["text"], labelled["label"], language)
-            if error > MAX_LABEL_ERROR:
-                continue
-            location = (labelled.get("root_alias") or item["root_alias"],
-                        labelled.get("relative_path") or item["relative_path"])
+            if labelled.get("root_alias") == DATASET_ID:
+                # Written by label as this dataset's own file; addressed through the shared data root.
+                location = (ROOT_ALIAS, f"{ROOT_PREFIX}/{labelled['relative_path']}")
+            else:
+                location = (item["root_alias"], item["relative_path"])
             rows.append((item, labelled["label"], round(error, 4), location))
         kept[language] = rows
+    write_jsonl_gz(ROOT / "rejected.jsonl.gz", rejected)
     locations = sorted({row[3] for rows in kept.values() for row in rows})
     with cf.ProcessPoolExecutor(args.workers) as pool:
         facts = dict(zip(locations, pool.map(audio_facts, locations, chunksize=64)))
@@ -357,9 +382,7 @@ def build(args):
             })
         path = VERSION_DIR / "records" / f"{language}.jsonl.gz"
         write_jsonl_gz(path, records)
-        artifacts.append({"name": f"{language}-records", "kind": "audio-records", "root_alias": DATASET_ID,
-                          "relative_path": path.relative_to(ROOT).as_posix(), "sha256": sha256_file(path),
-                          "metadata": {"record_count": len(records)}})
+        artifacts.append(artifact(f"{language}-records", "audio-records", path, len(records)))
         hours = sum(r["audio_slots"][0]["ref"]["duration"] for r in records) / 3600
         origins = sorted({item["origin"] for item, *_ in rows})
         splits[language] = {
@@ -375,9 +398,9 @@ def build(args):
     index.sort(key=lambda row: row["cut_id"])
     index_path = VERSION_DIR / "audio-index.jsonl.gz"
     write_jsonl_gz(index_path, index)
-    artifacts.insert(0, {"name": "audio-index", "kind": "audio-index", "root_alias": DATASET_ID,
-                         "relative_path": index_path.relative_to(ROOT).as_posix(), "sha256": sha256_file(index_path),
-                         "metadata": {"record_count": len(index)}})
+    artifacts.insert(0, artifact("audio-index", "audio-index", index_path, len(index)))
+    sources = sorted({f"{d}@{v}:{s}" for language in LHOTSE for d, v, s in LHOTSE[language]}
+                     | {"mls_sidon@v0.1:train (original MLS split train; it, nl)"})
     entry = {
         "schema_version": "dataset-catalog/2.0", "dataset_id": DATASET_ID, "version": VERSION,
         "languages": sorted(NAMES), "tasks": ["asr"], "aliases": [], "artifacts": artifacts, "splits": splits,
@@ -389,6 +412,25 @@ def build(args):
                 "Common Voice、MLS 引用原文件；mls_sidon 的意、荷只取原始 MLS train 划分，转成 16 kHz FLAC 存在本版本 audio/。"
                 f"与语料原文的错误率超过 {MAX_LABEL_ERROR} 的条目丢弃，原文保留在 metadata.corpus_text。"
             ),
+            "owner": "mingdong",
+            "snapshot_date": "2026-11-24",
+            "run_dir": str(ROOT),
+            "source": sources,
+            "method": "原版模型强制语言转写作为目标（自蒸馏），按与语料原文的错误率筛选",
+            "recipe_parameters": {
+                "label_model": "Qwen3-ASR-1.7B（/workspace/model/Qwen3-ASR-1.7B），vLLM 0.18.0",
+                "chat_template": "amphion-eval defaults/chat-templates/qwen3-asr-force-language.jinja，chat_template_kwargs.force_language",
+                "temperature": 0.0, "max_tokens": 256,
+                "per_language": PER_LANGUAGE, "duration_seconds": [MIN_SECONDS, MAX_SECONDS],
+                "selection": "每个来源按片段 ID 的 SHA-256 取最小的若干条",
+                "max_label_error": MAX_LABEL_ERROR,
+                "label_error": "两边 NFKC、去组合符号（日语除外）、小写、去非文字字符；日、韩按字，其余按词",
+            },
+            "known_issues": [
+                "未按文本排除与公开测试集相同的句子：留到训练配置里统一做（open-audio-llm #175 decontaminate_training_data.py），直接拿来训练前要先做这一步。",
+                "韩语 Common Voice 训练集只有 657 条可用，训练权重应按条数缩小。",
+                "目标是原版模型的输出，包含原版自己的错误；只适合作保持目标，不适合当真值评测。",
+            ],
             "license": "Common Voice CC0；MLS CC BY 4.0",
             "build_script": "scripts/retention_replay/build.py",
         },
