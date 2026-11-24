@@ -1,0 +1,229 @@
+# 多语种保持数据（scripts/retention_replay/build.py 生成）。
+- schema_version: dataset-catalog/2.0
+  dataset_id: retention_replay
+  version: qwen3-base-v1-20261124
+  languages:
+  - ar
+  - de
+  - fr
+  - it
+  - ja
+  - ko
+  - nl
+  - pt
+  - ru
+  tasks:
+  - asr
+  aliases: []
+  artifacts:
+  - name: audio-index
+    kind: audio-index
+    root_alias: retention_replay
+    relative_path: versions/qwen3-base-v1-20261124/audio-index.jsonl.gz
+    sha256: 74fd6e32b68b92d842f1c86afe06d6aabec79792f08417da71f14e7be47bae5a
+    metadata:
+      record_count: 45072
+  - name: de-records
+    kind: audio-records
+    root_alias: retention_replay
+    relative_path: versions/qwen3-base-v1-20261124/records/de.jsonl.gz
+    sha256: 60a65c8fdeaf2622b717ddd3416786515ef10b46b8c6a1adc8f11e6c651d1e52
+    metadata:
+      record_count: 5963
+  - name: fr-records
+    kind: audio-records
+    root_alias: retention_replay
+    relative_path: versions/qwen3-base-v1-20261124/records/fr.jsonl.gz
+    sha256: 3b5b992d60571d39d55f6c69e788b078238d16f7836c00f164b062b13661d29e
+    metadata:
+      record_count: 5948
+  - name: pt-records
+    kind: audio-records
+    root_alias: retention_replay
+    relative_path: versions/qwen3-base-v1-20261124/records/pt.jsonl.gz
+    sha256: a08ceaca614e0728afa9f859240a9c2743c519c685be98dff2a8ee71db89bf07
+    metadata:
+      record_count: 5848
+  - name: it-records
+    kind: audio-records
+    root_alias: retention_replay
+    relative_path: versions/qwen3-base-v1-20261124/records/it.jsonl.gz
+    sha256: 33480abcbc8a3b5cae66759d33eb6ffcc5a2ef713b50db54bf412dbb96dde436
+    metadata:
+      record_count: 5970
+  - name: nl-records
+    kind: audio-records
+    root_alias: retention_replay
+    relative_path: versions/qwen3-base-v1-20261124/records/nl.jsonl.gz
+    sha256: 71a59447bb33b5ba78139faf1bf825152a1fac3f9b2c48a6f9b0fe0bbacb5a6e
+    metadata:
+      record_count: 5912
+  - name: ja-records
+    kind: audio-records
+    root_alias: retention_replay
+    relative_path: versions/qwen3-base-v1-20261124/records/ja.jsonl.gz
+    sha256: cd5df9c268302f10b1ea465f5c994d18cb5d3b4f8dc49f7efbebdc37ef90460a
+    metadata:
+      record_count: 5731
+  - name: ko-records
+    kind: audio-records
+    root_alias: retention_replay
+    relative_path: versions/qwen3-base-v1-20261124/records/ko.jsonl.gz
+    sha256: 20136191c89d33d82f2a9a3c08a85411c6785bf66ae19aebb1037994e024c892
+    metadata:
+      record_count: 563
+  - name: ru-records
+    kind: audio-records
+    root_alias: retention_replay
+    relative_path: versions/qwen3-base-v1-20261124/records/ru.jsonl.gz
+    sha256: 814412ba58169bebfae1658f83699c8efa1f27ccf06ccb823101208a9572bebb
+    metadata:
+      record_count: 5912
+  - name: ar-records
+    kind: audio-records
+    root_alias: retention_replay
+    relative_path: versions/qwen3-base-v1-20261124/records/ar.jsonl.gz
+    sha256: dfc15f602e2a325184d48447b95a687ee30ec589681c2c8383e93229038d10be
+    metadata:
+      record_count: 3225
+  splits:
+    de:
+      artifacts:
+        records:
+        - de-records
+        audio_index:
+        - audio-index
+      group: train
+      task: asr
+      statistics:
+        records: 5963
+        selected: 6000
+        duration_hours: 17.166
+        duration_basis: sum of Lhotse recording durations
+      provenance:
+        description: German：common_voice_de@legacy:train, mls_de@legacy:train_punc 训练划分抽样，目标是 Qwen3-ASR-1.7B 强制 German 的转写。
+    fr:
+      artifacts:
+        records:
+        - fr-records
+        audio_index:
+        - audio-index
+      group: train
+      task: asr
+      statistics:
+        records: 5948
+        selected: 6000
+        duration_hours: 16.7147
+        duration_basis: sum of Lhotse recording durations
+      provenance:
+        description: French：common_voice_fr@legacy:train, mls_fr@legacy:train_punc 训练划分抽样，目标是 Qwen3-ASR-1.7B 强制 French 的转写。
+    pt:
+      artifacts:
+        records:
+        - pt-records
+        audio_index:
+        - audio-index
+      group: train
+      task: asr
+      statistics:
+        records: 5848
+        selected: 6000
+        duration_hours: 16.2848
+        duration_basis: sum of Lhotse recording durations
+      provenance:
+        description: Portuguese：common_voice_pt@pt-train-v1-20261117:train, mls_pt@pt-train-v1-20261117:train 训练划分抽样，目标是 Qwen3-ASR-1.7B 强制 Portuguese 的转写。
+    it:
+      artifacts:
+        records:
+        - it-records
+        audio_index:
+        - audio-index
+      group: train
+      task: asr
+      statistics:
+        records: 5970
+        selected: 6000
+        duration_hours: 24.852
+        duration_basis: sum of Lhotse recording durations
+      provenance:
+        description: Italian：mls_sidon@v0.1:train 训练划分抽样，目标是 Qwen3-ASR-1.7B 强制 Italian 的转写。
+    nl:
+      artifacts:
+        records:
+        - nl-records
+        audio_index:
+        - audio-index
+      group: train
+      task: asr
+      statistics:
+        records: 5912
+        selected: 6000
+        duration_hours: 24.6342
+        duration_basis: sum of Lhotse recording durations
+      provenance:
+        description: Dutch：mls_sidon@v0.1:train 训练划分抽样，目标是 Qwen3-ASR-1.7B 强制 Dutch 的转写。
+    ja:
+      artifacts:
+        records:
+        - ja-records
+        audio_index:
+        - audio-index
+      group: train
+      task: asr
+      statistics:
+        records: 5731
+        selected: 6000
+        duration_hours: 7.5105
+        duration_basis: sum of Lhotse recording durations
+      provenance:
+        description: Japanese：common_voice_ja@legacy:train 训练划分抽样，目标是 Qwen3-ASR-1.7B 强制 Japanese 的转写。
+    ko:
+      artifacts:
+        records:
+        - ko-records
+        audio_index:
+        - audio-index
+      group: train
+      task: asr
+      statistics:
+        records: 563
+        selected: 657
+        duration_hours: 0.9598
+        duration_basis: sum of Lhotse recording durations
+      provenance:
+        description: Korean：common_voice_ko@legacy:train 训练划分抽样，目标是 Qwen3-ASR-1.7B 强制 Korean 的转写。
+    ru:
+      artifacts:
+        records:
+        - ru-records
+        audio_index:
+        - audio-index
+      group: train
+      task: asr
+      statistics:
+        records: 5912
+        selected: 6000
+        duration_hours: 8.5847
+        duration_basis: sum of Lhotse recording durations
+      provenance:
+        description: Russian：common_voice_ru@legacy:train 训练划分抽样，目标是 Qwen3-ASR-1.7B 强制 Russian 的转写。
+    ar:
+      artifacts:
+        records:
+        - ar-records
+        audio_index:
+        - audio-index
+      group: train
+      task: asr
+      statistics:
+        records: 3225
+        selected: 6000
+        duration_hours: 3.4979
+        duration_basis: sum of Lhotse recording durations
+      provenance:
+        description: Arabic：common_voice_ar@legacy:train 训练划分抽样，目标是 Qwen3-ASR-1.7B 强制 Arabic 的转写。
+  provenance:
+    summary: 原版 Qwen3-ASR 标注的多语种保持数据
+    description: 9 种语言（德、法、葡、意、荷、日、韩、俄、阿）的训练音频，每种抽 6,000 条 2–20 秒，目标为冻结的 Qwen3-ASR-1.7B 强制语言后的转写，用于训练时保持原版在这些语言上的能力（KL 保持）。Common Voice、MLS 引用原文件；mls_sidon 的意、荷只取原始 MLS train 划分，转成 16 kHz FLAC 存在本版本 audio/。与语料原文的错误率超过 0.5 的条目丢弃，原文保留在 metadata.corpus_text。
+    license: Common Voice CC0；MLS CC BY 4.0
+    build_script: scripts/retention_replay/build.py
