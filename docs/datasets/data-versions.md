@@ -1400,10 +1400,13 @@ Emilia 中文野外语音（已清洗）
 | [fleurs_zh@hf-70bb2e84b976](../../catalog/multilingual_asr_sources.yaml#L1) | 3.1 | 已登记 | 没有 |
 | [fleurs_zh@icefall-20260908](../../catalog/icefall_runtime.yaml#L1895) | 14.1 | 已登记 | 快照 20260914 |
 | [fleurs_zh@legacy](../../catalog/legacy_multilingual.yaml#L2326) | 14.1 | 已登记 | 快照 20260914 |
+| [fleurs_zh@legacy-20260804-final-v3-20261124](../../catalog/text_final_v3.yaml#L3) | 14.1 | 已登记 | 没有 |
 
 - `fleurs_zh@hf-70bb2e84b976`：Google FLEURS 的 cmn_hans_cn 子集（音频归档和 TSV 转写），只下载了 test，与 fleurs_pt 同一修订
+- `fleurs_zh@legacy-20260804-final-v3-20261124`：fleurs_zh@legacy-20260804 的训练文本终版 v3：在 v2 终版 fleurs_zh@legacy-20260804-final-v2-20261123 上处理拉丁文括注（规则 8）399 条：没读的 480 处整段删掉，读了的 79 处只去括号，按 audio-data-contract docs/reference/training-text.md（v3）（issue #299：训练文本里的“孙德尔本斯（Sundarbans）”这类括注朗读人多数没读，模型学会了凭空输出括注）。其余字段、录音清单和音频照旧，引用起点版本的产物
 - 有含标点版本
 - 含派生版本（与源数据可能重叠）
+- 已并入的旧版本：`fleurs_zh@legacy-20260804-final-v2-20261123`（COS：没有）
 
 ### hi_mia
 
