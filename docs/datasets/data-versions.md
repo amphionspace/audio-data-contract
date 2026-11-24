@@ -1401,9 +1401,11 @@ Emilia 中文野外语音（已清洗）
 | [fleurs_zh@icefall-20260908](../../catalog/icefall_runtime.yaml#L1895) | 14.1 | 已登记 | 快照 20260914 |
 | [fleurs_zh@legacy](../../catalog/legacy_multilingual.yaml#L2326) | 14.1 | 已登记 | 快照 20260914 |
 | [fleurs_zh@legacy-20260804-final-v2-20261123](../../catalog/text_final_v2.yaml#L1666) | 14.1 | 已登记 | 没有 |
+| [fleurs_zh@legacy-20260804-final-v3-20261124](../../catalog/text_final_v3.yaml#L2) | — | 未登记 | 没有 |
 
 - `fleurs_zh@hf-70bb2e84b976`：Google FLEURS 的 cmn_hans_cn 子集（音频归档和 TSV 转写），只下载了 test，与 fleurs_pt 同一修订
 - `fleurs_zh@legacy-20260804-final-v2-20261123`：fleurs_zh@legacy-20260804 的训练文本终版 v2：在 v1 终版 fleurs_zh@legacy-20260804-final-v1-20261120 上补做空格统一（中英规范规则 5）1,005 条，按 audio-data-contract docs/reference/training-text.md（v2）。同一行里的场景文本和热词列表一起改；其余字段、录音清单和音频照旧，引用起点版本的产物
+- `fleurs_zh@legacy-20260804-final-v3-20261124`：fleurs_zh@legacy-20260804 的训练文本终版 v3：在 v2 终版上删掉训练文本里音频中没读的拉丁文括注（如“孙德尔本斯（Sundarbans）”），读了的只去括号（issue amphionspace/audio-data-contract#299）。构建中
 - 有含标点版本
 - 含派生版本（与源数据可能重叠）
 - 已并入的旧版本：`fleurs_zh@legacy-20260804-final-v1-20261120`（COS：没有）
