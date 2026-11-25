@@ -8,8 +8,10 @@ finalize: target = raw_text with the rule-2 fixes below; empty raw_text rows tak
           normalized_text (amphiondata written_punctuation_en.written_text). Keeps 0.5-30 s.
 
 raw_text fixes (no word changes): an em dash after a letter or digit is a hyphen ("trust—building"), other em dashes
-become a comma; a ' with no letter on either side is a quote mark and is removed; the first letter is capitalized; a
-trailing , ; : becomes . and a missing final mark becomes . (rule 2: every utterance ends in . ? !).
+become a comma; a ' with no letter on either side is a quote mark and is removed; a word-final ' after a letter other
+than s is a closing quote whose opening quote the source already lost ("the word dignity'") and is removed, also in the
+normalized_text label and the student output; the first letter is capitalized; a trailing , ; : becomes . and a missing
+final mark becomes . (rule 2: every utterance ends in . ? !).
 
     python -I scripts/text_final/en_board/voxpopuli.py extract --workers 8 --amphiondata <repo>
     python -I scripts/text_final/en_board/voxpopuli.py finalize --punc <student output jsonl> --amphiondata <repo>
@@ -50,6 +52,8 @@ VER = f"{SRC}-{FINAL}"
 VDIR = version_dir(DS, VER)
 PARQUET = DATA / "datasets" / DS / "source" / SRC / "en"
 STAGE = Path(RUN_DIR) / "voxpopuli"
+# a word-final ' after s may be a plural possessive ("workers' rights") and is kept
+CLOSING_QUOTE = re.compile(r"(?<=[^\W\d_sS])'(?![^\W\d_])")
 COLS = ["audio_id", "audio", "raw_text", "normalized_text", "gender", "speaker_id", "is_gold_transcript", "accent"]
 
 
@@ -88,6 +92,8 @@ def fix_raw(text: str, n: Counter) -> str:
     n["other em dash -> comma"] += s != t
     s, t = t, re.sub(r"(?<![^\W\d_])'(?![^\W\d_])", "", t)
     n["quote mark ' removed"] += s != t
+    s, t = t, CLOSING_QUOTE.sub("", t)
+    n["closing quote ' after a word (not s) removed"] += s != t
     s = re.sub(r"\s+([,.?!;:])", r"\1", " ".join(t.split()))
     s = re.sub(r",\s*([.?!;:])", r"\1", s)
     if s[:1].islower():
@@ -140,11 +146,12 @@ def finalize(args):
             if raw:
                 target, src = fix_raw(raw, n), "raw_text"
             else:
-                label = normalize_label(r["normalized_text"])
+                label = CLOSING_QUOTE.sub("", normalize_label(r["normalized_text"]))
                 if not re.search(r"[a-z]", label):
                     n["dropped: raw_text and normalized_text empty"] += 1
                     continue
-                target, src = written_text(label, punc.get(r["cut_id"]), n), "normalized_text+en-v1"
+                out = punc.get(r["cut_id"])
+                target, src = written_text(label, out and CLOSING_QUOTE.sub("", out), n), "normalized_text+en-v1"
                 n["empty raw_text: normalized_text punctuated by the en-v1 student"] += 1
             meta = {"source_record_id": r["audio_id"], "speaker_id": r["speaker_id"], "gender": r["gender"],
                     "accent": r["accent"], "text_source": src}

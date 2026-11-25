@@ -111,20 +111,92 @@
     kind: dataset-state
     root_alias: aidc_data
     relative_path: datasets/voxpopuli_en/versions/hf-42f01879c780-final-v3-20261125/state.json
+    expected_bytes: 1101
+    sha256: 39528e0b9c8f1b83ec12f32b99ac94b78c553958c81ce487ae87776c7977c222
+  - name: train
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/voxpopuli_en/versions/hf-42f01879c780-final-v3-20261125/records/train.jsonl.gz
+    expected_bytes: 20143920
+    sha256: 61e21d34de122f887b63d7b33d5897e2d30b8cbb1551672a9f6a337667764c92
+    metadata:
+      record_count: 181050
+  - name: audio_index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/voxpopuli_en/versions/hf-42f01879c780-final-v3-20261125/audio_index/audio-index.jsonl.gz
+    expected_bytes: 2800614
+    sha256: 3ecfe4b62e37456430e5bb5194cdc3a4976f45847a35d48931562c874a2083c4
+    metadata:
+      record_count: 182482
+  - name: duration_distribution
+    kind: statistics
+    root_alias: aidc_data
+    relative_path: datasets/voxpopuli_en/versions/hf-42f01879c780-final-v3-20261125/duration_distribution.json
+    expected_bytes: 168
+    sha256: b7bf251ccbb8029a25f91b5a23ab54701690f08ee8059eec1a56ec703a9b6c53
+    metadata:
+      record_count: 1
   splits:
     train:
+      group: train
       artifacts:
+        records:
+        - train
+        audio_index:
+        - audio_index
         preparation_state:
         - preparation_state
-      provenance:
-        preparation_status: building
+      statistics:
+        records: 181050
+        duration_hours: 507.9517
+        duration_basis: sum of record durations
+        languages:
+          en: 181050
+  recipe_parameters:
+    spec: docs/reference/training-text.md（v3）
+    duration_seconds:
+    - 0.5
+    - 30.0
+    text: raw_text；空的用 normalized_text + en-v1 学生模型（amphiondata written_punctuation_en.written_text）
+    rule2_fixes: "词中 em dash→连字符，其余 em dash→逗号；两侧没有字母的 ' 删掉；s 以外字母后的词尾 ' 是闭引号，删掉（normalized_text 的标签和学生输出同样处理）；句首大写；句末 , ; : 改 .，没有句末标点补 ."
+    audio_policy: 'parquet 里的 wav 字节原样写成 <version>/audio/<年份>/<audio_id>.wav（: 换成 -），不重新编码'
+    counts:
+      closing quote ' after a word (not s) removed: 2194
+      'dropped: duration outside 0.5-30.0 s': 1432
+      em dash after a word -> hyphen: 3192
+      'empty raw_text: normalized_text punctuated by the en-v1 student': 5305
+      'final , ; : -> .': 1482
+      final . added: 16046
+      first letter capitalized: 14549
+      other em dash -> comma: 1
+      'output changed words: label + .': 90
+      'output differed in hyphens only: marks moved to the label': 0
+      output kept words: 5215
+      pronoun I capitalized: 32
+      quote mark ' removed: 231
+      source rows: 182482
+    duration_distribution:
+      train:
+        count: 181050
+        hours: 507.9517
+        min: 0.52
+        p50: 9.0
+        p90: 18.78
+        p99: 26.24
+        max: 30.0
+        mean: 10.1
   provenance:
-    preparation_status: building
-    owner: mingdong
-    description: VoxPopuli 英文 train 的训练文本终版（规范 v3）：目标用 raw_text（带大小写和标点），按规则 2 补句首大写和句末标点；raw_text 为空的行用 normalized_text 经 en-v1 学生模型补标点和大小写；wav 从 parquet 原样落盘。A 线英文榜单版训练数据。构建中。
+    snapshot_date: '2026-11-25'
+    description: VoxPopuli 英文 train（欧洲议会演讲）的训练文本终版，直接按训练文本规范 v3 建，供 open-audio-llm A 线（英文榜单版）训练。目标用 raw_text（带大小写和标点），按规则 2 只补句首大写和句末标点，词中的破折号改连字符、两侧没有字母的引号删掉，源文本丢了开引号后留在词尾的闭引号（s 以外字母后的 '，如 dignity'）删掉，不改词；raw_text 为空的行用 normalized_text 经 en-v1 学生模型补标点和大小写。wav 从 parquet 原样落盘（32 位浮点，16 kHz）。
     source: voxpopuli_en@hf-42f01879c780
+    license: CC0-1.0
     method: text-final-v3
+    owner: mingdong
+    requested_by: 'open-audio-llm A 线（open-audio-llm PR #174）'
     run_dir: /workspace/workspace/mingdong/data/amphiondata/aline-en-20261125
+    build_script: scripts/text_final/en_board/voxpopuli.py
+    quality_status: whisper-large-v3 spot check in run_dir/verify
 - schema_version: dataset-catalog/2.0
   dataset_id: earnings22
   version: github-c05ab6fd8b4b-final-v3-20261125
@@ -314,20 +386,85 @@
     kind: dataset-state
     root_alias: aidc_data
     relative_path: datasets/ami_ihm/versions/hf-edinburghcstr-20261023-final-v3-20261125/state.json
+    expected_bytes: 821
+    sha256: 374979755548b357a8128f4ec53d6a4dbdb00699a1a52503773352bf23e7abd3
+  - name: train
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/ami_ihm/versions/hf-edinburghcstr-20261023-final-v3-20261125/records/train.jsonl.gz
+    expected_bytes: 7671036
+    sha256: 1857b215ec4f89184c2d1b4c0f1cda3288be4965f330fcaaeefa63c377fc7ed3
+    metadata:
+      record_count: 86417
+  - name: audio_index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/ami_ihm/versions/hf-edinburghcstr-20261023-final-v3-20261125/audio_index/audio-index.jsonl.gz
+    expected_bytes: 1920604
+    sha256: 02b4598284e4404a24b688d753bcd14f64903e912f5475c15b4c9a6071d74236
+    metadata:
+      record_count: 108502
+  - name: duration_distribution
+    kind: statistics
+    root_alias: aidc_data
+    relative_path: datasets/ami_ihm/versions/hf-edinburghcstr-20261023-final-v3-20261125/duration_distribution.json
+    expected_bytes: 167
+    sha256: df520957b933e8fb1841ececa96cecf1db8dbe206489d8a55bcd008f5df2c529
+    metadata:
+      record_count: 1
   splits:
     train:
+      group: train
       artifacts:
+        records:
+        - train
+        audio_index:
+        - audio_index
         preparation_state:
         - preparation_state
-      provenance:
-        preparation_status: building
+      statistics:
+        records: 86417
+        duration_hours: 75.9078
+        duration_basis: sum of record durations
+        languages:
+          en: 86417
+  recipe_parameters:
+    spec: docs/reference/training-text.md（v3）
+    duration_seconds:
+    - 0.5
+    - 30.0
+    text: normalize_label(Kaldi 文本) + en-v1 学生模型（amphiondata written_punctuation_en.written_text）
+    audio_policy: parquet 里的 wav 字节原样写成 <version>/audio/<meeting>/<audio_id>.wav，不重新编码
+    counts:
+      'dropped: duration outside 0.5-30.0 s': 22085
+      final . added: 52
+      first letter capitalized: 43
+      'output changed words: label + .': 52
+      'output differed in hyphens only: marks moved to the label': 0
+      output kept words: 86365
+      pronoun I capitalized: 151
+      source rows: 108502
+    duration_distribution:
+      train:
+        count: 86417
+        hours: 75.9078
+        min: 0.5
+        p50: 2.27
+        p90: 6.88
+        p99: 12.01
+        max: 27.62
+        mean: 3.162
   provenance:
-    preparation_status: building
-    owner: mingdong
-    description: AMI 近讲耳麦 train 的训练文本终版（规范 v3）：Kaldi 全大写无标点文本经 en-v1 学生模型补标点和大小写（规则 2），词不改、口语重复保留。A 线英文榜单版训练数据。构建中。
+    snapshot_date: '2026-11-25'
+    description: AMI 会议近讲耳麦 train 的训练文本终版，直接按训练文本规范 v3 建，供 open-audio-llm A 线（英文榜单版）训练。Kaldi s5 的全大写无标点文本经 en-v1 学生模型补标点和大小写（规则 2），输出改了词的按原词只补句末标点；词、口语重复和语气词都保留。dev、test 会议不在 train 里（Kaldi 划分）。不足 0.5 秒的段（22,081 条、1.95 h，几乎都是 yeah、mm-hmm 这类单字附和）不收；0.5 秒以上的单字附和仍有 1.3 万条。wav 从 parquet 原样落盘（32 位浮点，16 kHz）。
     source: ami_ihm@hf-edinburghcstr-20261023
+    license: CC BY 4.0
     method: text-final-v3
+    owner: mingdong
+    requested_by: 'open-audio-llm A 线（open-audio-llm PR #174）'
     run_dir: /workspace/workspace/mingdong/data/amphiondata/aline-en-20261125
+    build_script: scripts/text_final/en_board/ami_ihm.py
+    quality_status: whisper-large-v3 spot check in run_dir/verify
 - schema_version: dataset-catalog/2.0
   dataset_id: spgispeech2
   version: hf-f4ce91de393c-final-v3-20261125

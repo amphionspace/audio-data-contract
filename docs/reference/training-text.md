@@ -174,12 +174,27 @@ open-audio-llm A 线（英文榜单版，open-audio-llm PR #174）用的新英�
 | 版本 | 划分 | 文本来源 |
 |---|---|---|
 | `earnings22@github-c05ab6fd8b4b-final-v3-20261125` | train、dev | `nlp_references` 的书面写法，时间取 `force_aligned_nlp_references` |
+| `voxpopuli_en@hf-42f01879c780-final-v3-20261125` | train | `raw_text`；为空的 2.9% 用 `normalized_text` 经 en-v1 学生模型补标点和大小写 |
+| `ami_ihm@hf-edinburghcstr-20261023-final-v3-20261125` | train | Kaldi 全大写文本经 en-v1 学生模型补标点和大小写 |
 
 - **Earnings-22**：
   - 排除 Open ASR 榜单测试用的 6 场；按口音组各取 1 场，共 4 场作 dev。
   - 强制对齐表把实体换成了读法（MTN→`M T N`、2019→`twenty nineteen`），所以文本用参考转写，两表按单元匹配后只取时间；口语重复和 uh/um 保留。
   - 官方对齐有 28% 的词没有时间，对齐失败区域里零星对上的词时间常常放错。处理方法：整场跳过未对齐 ≥40% 的 32 场；其余段用 whisper-large-v3 核对，归一化后 WER > 0.5 的丢掉（23%）。人工看被拒样本，估计误杀约 8%。
   - 结果：train 65.7 h、dev 1.9 h，保留段上 whisper WER 为 10.3%。
+- **VoxPopuli 英文**：
+  - `raw_text` 按规则 2 只补句首大写和句末标点，不改词。
+  - 源文本丢了开引号，留下 2,194 处孤立闭引号（`the word dignity'`），已删掉；s 后面的 `'` 可能是复数所有格，保留。
+  - 学生模型输出改了词的 90 条，只补句末标点，保持小写。
+  - 超过 30 秒的 1,432 条（14.7 h）没有词级时间，切不开，不收。
+  - 结果：train 181,050 条、508.0 h。
+  - 抽 300 条 whisper 核对：3% 是 whisper 幻觉（整段输出 “Thank you very much.”，截短后能正确识别），去掉后 WER 6.9%。
+- **AMI 近讲**：
+  - 人工标注，词、口语重复和半截词都保留，不按 whisper 丢弃。
+  - 学生模型保留原词的占 99.9%。
+  - 不足 0.5 秒的 22,081 条（1.95 h，几乎都是单字附和）不收；0.5 秒以上的单字附和仍有 1.3 万条。
+  - 结果：train 86,417 条、75.9 h。
+  - 抽 300 条 whisper 核对：WER 18.7%，其中不足 1 秒的段 43%、5 秒以上 16.5%。差异主要来自 whisper 删掉了重复和 uh，以及近讲话筒串进旁人的声音。
 
 ## 使用范围
 
