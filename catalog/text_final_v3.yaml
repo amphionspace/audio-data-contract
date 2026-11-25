@@ -547,29 +547,159 @@
     kind: dataset-state
     root_alias: aidc_data
     relative_path: datasets/spgispeech2/versions/hf-f4ce91de393c-final-v3-20261125/state.json
+    expected_bytes: 1213
+    sha256: a924ea5a1ddb753c7b6efe7a992cdd7e54e9be661a713baafeb21ebc3e82fee6
+  - name: dev
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/spgispeech2/versions/hf-f4ce91de393c-final-v3-20261125/records/dev.jsonl.gz
+    expected_bytes: 3745598
+    sha256: 4dfa1aae4ea2450422ad878776493a8fc7bec9fcfff9a2266977b37fe6f1f651
+    metadata:
+      record_count: 34647
+  - name: test
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/spgispeech2/versions/hf-f4ce91de393c-final-v3-20261125/records/test.jsonl.gz
+    expected_bytes: 4198232
+    sha256: 4f33d70cd410725522d1fb98ccbf1373b507f72c86aefe7f6e45ac605d455a77
+    metadata:
+      record_count: 38744
+  - name: train
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/spgispeech2/versions/hf-f4ce91de393c-final-v3-20261125/records/train.jsonl.gz
+    expected_bytes: 95039053
+    sha256: dcebbcc8a9a26614669fe9dee3a86f99bf63d4710795a701b8d94be09f770149
+    metadata:
+      record_count: 877748
+  - name: audio_index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/spgispeech2/versions/hf-f4ce91de393c-final-v3-20261125/audio_index/audio-index.jsonl.gz
+    expected_bytes: 2119934
+    sha256: 33a17b1d92a23a1d485cbfa5371341f54bacd31e61a5c6ae03f03bbcf006ff25
+    metadata:
+      record_count: 169880
+  - name: duration_distribution
+    kind: statistics
+    root_alias: aidc_data
+    relative_path: datasets/spgispeech2/versions/hf-f4ce91de393c-final-v3-20261125/duration_distribution.json
+    expected_bytes: 500
+    sha256: 14bd3fc232e99cf5196152ba049b78525c5ee34560c708d981ee0652cd8b5dd2
+    metadata:
+      record_count: 1
   splits:
-    train:
-      artifacts:
-        preparation_state:
-        - preparation_state
-      provenance:
-        preparation_status: building
     dev:
+      group: eval
       artifacts:
+        records:
+        - dev
+        audio_index:
+        - audio_index
         preparation_state:
         - preparation_state
-      provenance:
-        preparation_status: building
+      statistics:
+        records: 34647
+        duration_hours: 122.7585
+        duration_basis: sum of record durations
+        languages:
+          en: 34647
     test:
+      group: eval
       artifacts:
+        records:
+        - test
+        audio_index:
+        - audio_index
         preparation_state:
         - preparation_state
-      provenance:
-        preparation_status: building
+      statistics:
+        records: 38744
+        duration_hours: 137.356
+        duration_basis: sum of record durations
+        languages:
+          en: 38744
+    train:
+      group: train
+      artifacts:
+        records:
+        - train
+        audio_index:
+        - audio_index
+        preparation_state:
+        - preparation_state
+      statistics:
+        records: 877748
+        duration_hours: 3106.3229
+        duration_basis: sum of record durations
+        languages:
+          en: 877748
+  recipe_parameters:
+    spec: docs/reference/training-text.md（v3）
+    duration_seconds:
+    - 0.5
+    - 30.0
+    text: raw_transcript 原样（| 处换说话人），按规则 2 补句首大写和句末标点；-- 改逗号
+    timing: supplemental_data/alignment_files 的词级时间；两边都拆成字母数字片段后 difflib 匹配
+    cutting: 一段只含一个说话人；停顿 2 秒断开；超过每段随机目标（4–25 秒）后在句末断开，最长 30 秒；前后各留最多 0.15 秒；片段开头 0.1 秒内开始的首词、未完句且离结尾不到 0.1 秒的尾词不进文本；每秒超过 8 个词的段丢掉
+    spgispeech1_test: 与 SPGISpeech 1.0 test（open_asr_leaderboard 副本）按 10 词片段比文本，1.0 句子 80% 以上的词按序出现在记录里时记入 metadata.spgispeech1_test_ids；没有同一录音（一场 1.0 会议最多 4 句对上一场 2.0 会议，都是套话）
+    audio_policy: parquet 里的 WAV 转成 <version>/audio/<call_id>/<snippet_id>.flac（16 kHz 单声道 PCM16），记录按 start/duration 引用
+    counts:
+      break token <edge>: 4006
+      clipped first word left out: 2235
+      clipped last word left out: 1771
+      dev records overlapping SPGISpeech 1.0 test: 589
+      dev segments: 34647
+      dev snippets: 6195
+      'dropped: duration outside 0.5-30.0 s': 15612
+      'dropped: more than 8 words per second (collapsed alignment)': 2201
+      first word ends past 30 s: 67
+      test records overlapping SPGISpeech 1.0 test: 680
+      test segments: 38744
+      test snippets: 6932
+      tokens: 33162610
+      tokens without a time: 1
+      train records overlapping SPGISpeech 1.0 test: 16058
+      train segments: 877748
+      train snippets: 156753
+      unaligned words: 6853
+    duration_distribution:
+      dev:
+        count: 34647
+        hours: 122.7585
+        min: 0.5
+        p50: 12.17
+        p90: 23.25
+        p99: 28.82
+        max: 29.98
+        mean: 12.755
+      test:
+        count: 38744
+        hours: 137.356
+        min: 0.5
+        p50: 12.2
+        p90: 23.43
+        p99: 28.8
+        max: 30.0
+        mean: 12.763
+      train:
+        count: 877748
+        hours: 3106.3229
+        min: 0.5
+        p50: 12.12
+        p90: 23.34
+        p99: 28.78
+        max: 30.0
+        mean: 12.74
   provenance:
-    preparation_status: building
-    owner: mingdong
-    description: SPGISpeech 2.0 的训练文本终版（规范 v3）：train/dev/test 全部登记，并尽量标出与 SPGISpeech 1.0 榜单测试集对应的录音。A 线英文榜单版第二轮训练数据。排在前三份之后，构建中。
+    snapshot_date: '2026-11-25'
+    description: SPGISpeech 2.0 财报电话会议（50–90 秒多说话人片段）切成不超过 30 秒的单说话人短句，train/dev/test 沿用原划分，直接按训练文本规范 v3 建，供 open-audio-llm A 线（英文榜单版）第二轮训练。文本用 raw_transcript（S&P Global 专业转写：书面写法，删了口吃和大部分语气词，不是逐字稿），时间取 supplemental_data 的词级对齐（按字母数字拆分后匹配，词全部有时间）。片段边缘可能被截断的首尾词不进文本；对齐把多个词挤在很短时间里的段（每秒超过 8 个词）丢掉。没有找到与 SPGISpeech 1.0 test（Open ASR 榜单）同一录音的条目；与 1.0 test 句子文本近乎相同的记录（多是主持人结束语等套话）在 metadata.spgispeech1_test_ids 标出。Kensho 研究许可：仅限非商用研究，用它训练的模型须免费提供。音频转成 16 kHz 单声道 FLAC。
     source: spgispeech2@hf-f4ce91de393c
+    license: other (Kensho research terms, July 2025)
     method: text-final-v3
+    owner: mingdong
+    requested_by: 'open-audio-llm A 线（open-audio-llm PR #174）'
     run_dir: /workspace/workspace/mingdong/data/amphiondata/aline-en-20261125
+    build_script: scripts/text_final/en_board/spgispeech2.py
+    quality_status: whisper-large-v3 spot check in run_dir/verify
