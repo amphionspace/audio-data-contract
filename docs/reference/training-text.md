@@ -167,6 +167,20 @@
 - **范围以外**：括号里夹着汉字的括注、正文里没读的外文、其他来源的缩写括注，见[没有执行或只部分执行的](#没有执行或只部分执行的)。`fleurs_en`、`fleurs_es` 的括号内容是读出来的，不删。
 - `fleurs_zh@legacy-20260804-final-v2-20261123` 写了 `superseded_by` 指向 v3。
 
+### 英文榜单版新增来源（2026-11-25）
+
+open-audio-llm A 线（英文榜单版，open-audio-llm PR #174）用的新英文来源，没有旧版本，直接按 v3 建终版，版本名 `<源版本>-final-v3-20261125`，登记在 `catalog/text_final_v3.yaml`，生成脚本在 `scripts/text_final/en_board/`。记录格式与 `ami_sdm@asr-20261014` 相同（audio-record/1.0 加音频索引），时长 0.5–30 秒。
+
+| 版本 | 划分 | 文本来源 |
+|---|---|---|
+| `earnings22@github-c05ab6fd8b4b-final-v3-20261125` | train、dev | `nlp_references` 的书面写法，时间取 `force_aligned_nlp_references` |
+
+- **Earnings-22**：
+  - 排除 Open ASR 榜单测试用的 6 场；按口音组各取 1 场，共 4 场作 dev。
+  - 强制对齐表把实体换成了读法（MTN→`M T N`、2019→`twenty nineteen`），所以文本用参考转写，两表按单元匹配后只取时间；口语重复和 uh/um 保留。
+  - 官方对齐有 28% 的词没有时间，对齐失败区域里零星对上的词时间常常放错。处理方法：整场跳过未对齐 ≥40% 的 32 场；其余段用 whisper-large-v3 核对，归一化后 WER > 0.5 的丢掉（23%）。人工看被拒样本，估计误杀约 8%。
+  - 结果：train 65.7 h、dev 1.9 h，保留段上 whisper WER 为 10.3%。
+
 ## 使用范围
 
 - **open-audio-llm 的所有训练任务都用终版**（2026-11-21 起）：有 `-final-v1-20261120` 版本的来源用它；规则对它没有改动的来源不另建版本，下表列出的原版本就是终版。已经训完的实验按历史保留，不改。
