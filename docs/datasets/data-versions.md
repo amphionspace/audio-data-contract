@@ -2992,7 +2992,7 @@ AISHELL-1、LibriSpeech 合成的多人对话
 | [ts_asr_real@listening-review-v1-20261022](../../catalog/listening_review.yaml#L667) | — | 未登记 | 没有 |
 | [ts_asr_real@listening-review-v1-20261026](../../catalog/listening_review.yaml#L849) | — | 未登记 | 没有 |
 | [ts_asr_real@meeting-v3-20261117](../../catalog/ts_asr_real.yaml#L4297) | 60.2 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_real/` |
-| [ts_asr_real@meeting-v5-20261125](../../catalog/ts_asr_real.yaml#L4631) | 96.5 | 已登记 | 没有 |
+| [ts_asr_real@meeting-v5-20261125](../../catalog/ts_asr_real.yaml#L4631) | 96.5 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_real/` |
 | [ts_asr_real@overlap-v1-20261017](../../catalog/ts_asr_real.yaml#L822) | 12.0 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_real/` |
 | [ts_asr_real@v1-20261013](../../catalog/ts_asr_real.yaml#L1) | 3.9 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_real/` |
 | [ts_asr_real@v2-20261013](../../catalog/ts_asr_real.yaml#L345) | 5.4 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_real/` |
