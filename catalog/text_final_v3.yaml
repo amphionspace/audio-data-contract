@@ -139,26 +139,139 @@
     kind: dataset-state
     root_alias: aidc_data
     relative_path: datasets/earnings22/versions/github-c05ab6fd8b4b-final-v3-20261125/state.json
+    expected_bytes: 1256
+    sha256: f754beb74fed66ffcc7bf6e0fb201c3e231f5ec277f936467790e4e93398004d
+  - name: dev
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/earnings22/versions/github-c05ab6fd8b4b-final-v3-20261125/records/dev.jsonl.gz
+    expected_bytes: 52869
+    sha256: 31b0b24beaddfd4b4a4ce8de13eba5bff459b02e304c956ac70435a486729467
+    metadata:
+      record_count: 501
+  - name: train
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/earnings22/versions/github-c05ab6fd8b4b-final-v3-20261125/records/train.jsonl.gz
+    expected_bytes: 1791815
+    sha256: e9b105558681e85efef6f64c547f4330ecb01a30f7be8f6e3d730a1ef85e6c2a
+    metadata:
+      record_count: 17747
+  - name: audio_index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/earnings22/versions/github-c05ab6fd8b4b-final-v3-20261125/audio_index/audio-index.jsonl.gz
+    expected_bytes: 2681
+    sha256: 15742e2505543b2db4b8b5850ff839ca3c68006cc81fae5028aec49355b7d72a
+    metadata:
+      record_count: 119
+  - name: duration_distribution
+    kind: statistics
+    root_alias: aidc_data
+    relative_path: datasets/earnings22/versions/github-c05ab6fd8b4b-final-v3-20261125/duration_distribution.json
+    expected_bytes: 332
+    sha256: 83bca056cc44e9922fe0a74e37e9945e97f0f73cf05de41243a532ad858f1360
+    metadata:
+      record_count: 1
   splits:
-    train:
-      artifacts:
-        preparation_state:
-        - preparation_state
-      provenance:
-        preparation_status: building
     dev:
+      group: eval
       artifacts:
+        records:
+        - dev
+        audio_index:
+        - audio_index
         preparation_state:
         - preparation_state
-      provenance:
-        preparation_status: building
+      statistics:
+        records: 501
+        duration_hours: 1.9006
+        duration_basis: sum of record durations
+        languages:
+          en: 501
+    train:
+      group: train
+      artifacts:
+        records:
+        - train
+        audio_index:
+        - audio_index
+        preparation_state:
+        - preparation_state
+      statistics:
+        records: 17747
+        duration_hours: 65.6719
+        duration_basis: sum of record durations
+        languages:
+          en: 17747
+  recipe_parameters:
+    spec: docs/reference/training-text.md（v3）
+    duration_seconds:
+    - 0.5
+    - 30.0
+    excluded_board_test_meetings:
+    - '4468919'
+    - '4471586'
+    - '4474955'
+    - '4475604'
+    - '4482968'
+    - '4483046'
+    dev_meetings:
+    - '4469528'
+    - '4481221'
+    - '4483668'
+    - '4482110'
+    cutting: 一段只含一个说话人；起止都落在有时间的词上，段内最多连续 2 个没对齐的词；<inaudible> 等标记处断开，<laugh>/<silence> 只从文本删掉；停顿 2 秒断开；超过每段随机目标（4–25 秒）后在句末断开，最长 30 秒；前后各留最多 0.15 秒（不超过到邻词间隔的一半）；窗口里混进其他词的段丢掉
+    audio_policy: ffmpeg 把 media 转成 <version>/audio/<file id>.flac（16 kHz 单声道 PCM16），记录按 start/duration 引用
+    counts:
+      board test meetings excluded: 6
+      break token <affirmative>: 31
+      break token <cough>: 2
+      break token <crosstalk>: 151
+      break token <foreign>: 1
+      break token <inaudible>: 2703
+      break token <phonetic>: 8
+      break token <unk>: 695
+      dev segments: 501
+      'dropped: duration outside 0.5-30.0 s': 2025
+      'dropped: whisper-large-v3 WER > 0.5 (whisper_qc.py)': 3228
+      'dropped: window overlaps other words (cross-talk)': 877
+      first word ends past 30 s: 4
+      'meetings skipped: >= 40% of words without times': 32
+      reference units without an aligned match: 11501
+      train segments: 17747
+      'unaligned run longer than 2 words: cut': 3761
+      unaligned words: 74231
+    duration_distribution:
+      dev:
+        count: 501
+        hours: 1.9006
+        min: 0.53
+        p50: 13.45
+        p90: 23.94
+        p99: 28.73
+        max: 29.86
+        mean: 13.657
+      train:
+        count: 17747
+        hours: 65.6719
+        min: 0.5
+        p50: 13.11
+        p90: 24.72
+        p99: 29.39
+        max: 30.0
+        mean: 13.322
   provenance:
-    preparation_status: building
-    owner: mingdong
-    description: Earnings-22 按 force_aligned_nlp_references 切成不超过 30 秒的短句，大小写和标点按参考转写的 case/punctuation 列还原（规范 v3），保留口语重复；排除 Open ASR 榜单测试用的 6 场（4468919、4471586、4474955、4475604、4482968、4483046），另留 4 场作 dev。A 线英文榜单版训练数据。构建中。
+    snapshot_date: '2026-11-25'
+    description: Earnings-22 财报电话会议切成不超过 30 秒的短句，直接按训练文本规范 v3 建，供 open-audio-llm A 线（英文榜单版）训练。文本用 nlp_references 的书面写法（大小写、标点、MTN/2019/31st 这类实体原样），时间取 force_aligned_nlp_references，两表按单元匹配；口语重复和 uh/um 保留。排除 Open ASR 榜单测试用的 6 场（4468919、4471586、4474955、4475604、4482968、4483046），另按口音组各取 1 场共 4 场作 dev。音频转成 16 kHz 单声道 FLAC。
     source: earnings22@github-c05ab6fd8b4b
+    license: CC-BY-SA-4.0
     method: text-final-v3
+    owner: mingdong
+    requested_by: 'open-audio-llm A 线（open-audio-llm PR #174）'
     run_dir: /workspace/workspace/mingdong/data/amphiondata/aline-en-20261125
+    build_script: scripts/text_final/en_board/earnings.py
+    quality_status: whisper-large-v3 spot check in run_dir/verify
 - schema_version: dataset-catalog/2.0
   dataset_id: earnings21
   version: github-c05ab6fd8b4b-final-v3-20261125
