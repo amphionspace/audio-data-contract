@@ -213,7 +213,7 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [ts_asr_hotwords](data-versions.md#ts_asr_hotwords) | en、es、pt、zh | 目标说话人语音识别 | — | — | 部分版本：`备份桶:audio-data-contract/datasets/ts_asr_hotwords/` |
 | [ts_asr_nearshort](data-versions.md#ts_asr_nearshort) | en、zh | 目标说话人语音识别 | 2.5 | 目标说话人评测：他人只说一句约 1 秒短话 | 部分版本：`备份桶:audio-data-contract/datasets/ts_asr_nearshort/` |
 | [ts_asr_noise](data-versions.md#ts_asr_noise) | en、es、pt、zh | 目标说话人语音识别 | 5.9 | 目标说话人评测：噪声与背景人声 | 部分版本：`备份桶:audio-data-contract/datasets/ts_asr_noise/` |
-| [ts_asr_real](data-versions.md#ts_asr_real) | en、zh | 目标说话人语音识别 | 60.2 | 真实会议对话的目标说话人评测集 | 部分版本：`备份桶:audio-data-contract/datasets/ts_asr_real/` |
+| [ts_asr_real](data-versions.md#ts_asr_real) | en、zh | 目标说话人语音识别 | 96.5 | 真实会议对话的目标说话人评测集 | 部分版本：`备份桶:audio-data-contract/datasets/ts_asr_real/` |
 | [ts_asr_shortseg](data-versions.md#ts_asr_shortseg) | en、es、pt、zh | 目标说话人语音识别 | 0.8 | 目标说话人评测：他人说话的 1–6 秒短片段 | 部分版本：`备份桶:audio-data-contract/datasets/ts_asr_shortseg/` |
 | [ts_asr_singing](data-versions.md#ts_asr_singing) | en、es、pt、zh | 目标说话人语音识别 | 0.3 | 目标说话人评测：歌声干扰 | 部分版本：`备份桶:audio-data-contract/datasets/ts_asr_singing/` |
 | [ts_hw_test](data-versions.md#ts_hw_test) | en、zh | 目标说话人语音识别 | 7.7 | 目标说话人加热词评测（LibriSpeech 风格） | 快照 20260914 |

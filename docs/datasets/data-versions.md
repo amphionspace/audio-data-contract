@@ -3007,6 +3007,7 @@ AISHELL-1、LibriSpeech 合成的多人对话
 | [ts_asr_real@listening-review-v1-20261022](../../catalog/listening_review.yaml#L667) | — | 未登记 | 没有 |
 | [ts_asr_real@listening-review-v1-20261026](../../catalog/listening_review.yaml#L849) | — | 未登记 | 没有 |
 | [ts_asr_real@meeting-v3-20261117](../../catalog/ts_asr_real.yaml#L4297) | 60.2 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_real/` |
+| [ts_asr_real@meeting-v5-20261125](../../catalog/ts_asr_real.yaml#L4631) | 96.5 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_real/` |
 | [ts_asr_real@overlap-v1-20261017](../../catalog/ts_asr_real.yaml#L822) | 12.0 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_real/` |
 | [ts_asr_real@v1-20261013](../../catalog/ts_asr_real.yaml#L1) | 3.9 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_real/` |
 | [ts_asr_real@v2-20261013](../../catalog/ts_asr_real.yaml#L345) | 5.4 | 已登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_real/` |
@@ -3020,13 +3021,14 @@ AISHELL-1、LibriSpeech 合成的多人对话
 - `ts_asr_real@listening-review-v1-20261022`：ts_asr_real@v2-20261013 中被人工听审过的 12 条数据行（父版本数据行原样照抄，录音和音频索引沿用父版本），每行的 metadata.listening_review（Lhotse custom.listening_review）是关于这条记录的听审答案列表：问题、选项、回答、备注、回答日期、听审名称、片段起止和选项含义（resolved_to）。共 12 条答案（listen-1021-vs-1022 12 条），12 条已挂到数据行。证据文件 listening_review.jsonl.gz 含该版本全部答案。只含被听过的记录，不是完整数据版本，不用于训练。脚本 scripts/label_registration/register_listening_review.py
 - `ts_asr_real@listening-review-v1-20261026`：ts_asr_real@v4-20261022 中被人工听审过的 1 条数据行（父版本数据行原样照抄，录音和音频索引沿用父版本），每行的 metadata.listening_review（Lhotse custom.listening_review）是关于这条记录的听审答案列表：问题、选项、回答、备注、回答日期、听审名称、片段起止和选项含义（resolved_to）。共 1 条答案（ts-asr-hard-cases-20261026 1 条），1 条已挂到数据行。证据文件 listening_review.jsonl.gz 含该版本全部答案。只含被听过的记录，不是完整数据版本，不用于训练。脚本 scripts/label_registration/register_listening_review.py
 - `ts_asr_real@meeting-v3-20261117`：ts_asr_real@meeting-v2-20261117 去掉落在别人话里的插话段（该段上的全部请求），其余记录、ID 与音频不变（音频索引指向 meeting-v1-20261117 的文件）。按人分段时，别人长句中间的短插话也成了单独一段，同一段音频被发两次；下游 speaker-enroll 的 MOSS 分段沿一条时间轴、互不重叠，不会这样发。规则：段内另一个人的某一句话占本段时长 ≥0.5，就去掉这段（下游 badcase 包 344 段里只有 4 段达到，没有一段达到 0.7）。插话本身仍在外层长段里，作为插话人在场的请求保留。去掉的段见 source/<版本>/nested.jsonl，统计见 source/<版本>/report.json。只用于评测，不进训练。生成脚本 scripts/ts_real/meeting_nested.py
+- `ts_asr_real@meeting-v5-20261125`：ts_asr_real@meeting-v4-20261125 去掉文本核对判定标注漏字的段（该段在所有对照里的全部请求），其余记录、ID 与音频不变（音频索引指向 meeting-v4-20261125 的文件）。核对同 meeting_quarantine.py：AmphionASR 11.17 交付包普通识别模式（temperature 0）转写每段，段内只标了一个人时，转写里有连续 ≥3 个字标注里没有（只比字母、数字和汉字），判为标注漏了说话。输入在 source/<版本>/qc/，去掉的段与原因见 quarantine.jsonl，统计见 report.json。说话人核对已在 meeting-v4 生成时做过。只用于评测，不进训练。生成脚本 scripts/ts_real/meeting_text_check.py
 - `ts_asr_real@overlap-v1-20261017`：真实会议的目标重叠窗口：从 AliMeeting 远场、AISHELL-4 远场的人工标注测试集里以目标说话人为锚切 8–26 秒窗口 （目标的语句完整，别人的语句截到窗口边界），按目标语音被别人重叠的比例分 5–20%、20–50%、50% 以上三档， 不做任何混合；同一窗口配一条目标在场和一条目标缺席的样本。只用于评测，不进训练
 - `ts_asr_real@v1-20261013`：真实对话的目标说话人窗口：从 AliMeeting 远场、AISHELL-4 远场、MagicData-RAMC 手机通话的人工标注测试集里按完整语句切出 8–22 秒窗口，不做任何混合；同一窗口配一条目标在场（注册取窗外的另一条语句）和一条目标缺席的样本。只用于评测，不进训练
 - `ts_asr_real@v2-20261013`：真实对话的目标说话人窗口：从 AliMeeting 远场、AISHELL-4 远场、MagicData-RAMC 手机通话的人工标注测试集，以及 Emilia2 网络爬取的对话（MOSS 说话人日志伪标签）里按完整语句切出 8–22 秒窗口，不做任何混合；同一窗口配一条目标在场（注册取窗外的另一条语句）和一条目标缺席的样本。只用于评测，不进训练；所用 Emilia2 录音列在 source/<版本>/excluded-recordings.txt，训练必须排除
 - `ts_asr_real@v3-20261022`：ts_asr_real@v2-20261013 的修正版，窗口和混合音频不变：每条记录加注册前 3 秒里他人说话的秒数（labels.enroll_others_s），不少于 0.3 秒的记为注册含他人声（enroll_condition = others_speech）并移入同名加 -enrollmix 的划分；AISHELL-4 有 3 条目标在场样本的注册其实是同场另一个人，改取目标的另一条语句，1 条无法确认目标而删除。生成脚本 scripts/ts_real/enroll_overlap.py
 - `ts_asr_real@v4-20261022`：ts_asr_real@v3-20261022 的 5 秒注册版，窗口和混合音频不变：注册保留原第一句，后接同一人在窗口外、无他人重叠的其他语句，共存 10 秒（labels.enroll_seconds，metadata.enrollment_pieces）；他人说话秒数改按前 5 秒计（labels.enroll_others_s），不少于 0.3 秒的在 -enrollmix 划分。生成脚本 scripts/ts_real/enroll_long.py
 - `ts_asr_real@v4-hotword-labels-20261102`：ts_asr_real@v4-20261022 的全部记录，附目标转写和其他说话人转写的热词标注（metadata.hotword_labels：target 为目标转写的标注，others 按顺序对应合成记录的 metadata.interferers[*].utts[*] 或真实记录 metadata.window_utts 里非目标说话人的段落；每条含文本、最终热词、模型抽取、复核结果）。这些标注是评测集 ts_asr_hotwords@v1-20261102 的来源。只是标注载体：除 metadata.hotword_labels 外记录不变，音频索引沿用源版本；评测集仍固定引用源版本。脚本 scripts/ts_hotwords/register_eval_hotword_labels.py
-- 已并入的旧版本：`ts_asr_real@meeting-v2-20261117`（COS：`amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_real/`）
+- 已并入的旧版本：`ts_asr_real@meeting-v2-20261117`（COS：`amphion-audio-backup-1373259071:audio-data-contract/datasets/ts_asr_real/`）、`ts_asr_real@meeting-v4-20261125`（COS：没有）
 
 ### ts_asr_shortseg
 
