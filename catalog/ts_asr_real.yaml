@@ -4357,3 +4357,537 @@
     description: ts_asr_real@meeting-v2-20261117 去掉落在别人话里的插话段（该段上的全部请求），其余记录、ID 与音频不变（音频索引指向 meeting-v1-20261117 的文件）。按人分段时，别人长句中间的短插话也成了单独一段，同一段音频被发两次；下游 speaker-enroll 的 MOSS 分段沿一条时间轴、互不重叠，不会这样发。规则：段内另一个人的某一句话占本段时长 ≥0.5，就去掉这段（下游 badcase 包 344 段里只有 4 段达到，没有一段达到 0.7）。插话本身仍在外层长段里，作为插话人在场的请求保留。去掉的段见 source/<版本>/nested.jsonl，统计见 source/<版本>/report.json。只用于评测，不进训练。生成脚本 scripts/ts_real/meeting_nested.py。
     sources:
     - ts_asr_real@meeting-v2-20261117
+- schema_version: dataset-catalog/2.0
+  dataset_id: ts_asr_real
+  version: meeting-v4-20261125
+  languages:
+  - zh
+  tasks:
+  - ts_asr
+  artifacts:
+  - name: audio-index
+    kind: audio-index
+    root_alias: ts_asr_real
+    relative_path: versions/meeting-v4-20261125/audio-index.jsonl.gz
+    sha256: d8d511987e7bf8cc40b0051dcbe3faca6f396292064e88b4935eaa0fd9ad4955
+    metadata:
+      record_count: 26262
+  - name: meeting-alimeeting-neg-records
+    kind: audio-records
+    root_alias: ts_asr_real
+    relative_path: versions/meeting-v4-20261125/records/meeting-alimeeting-neg.jsonl.gz
+    sha256: c44ca5b5d0be5891114f74fa9be8d6f945b1ed8d6dd0803fbd1f282ceb5bfddf
+    metadata:
+      record_count: 3118
+  - name: meeting-alimeeting-neg-enear-records
+    kind: audio-records
+    root_alias: ts_asr_real
+    relative_path: versions/meeting-v4-20261125/records/meeting-alimeeting-neg-enear.jsonl.gz
+    sha256: 65f216f53cac4087e46bd760fd42ba44c3545f7765f07b0478e292071dd4f03b
+    metadata:
+      record_count: 3118
+  - name: meeting-alimeeting-neg-near-records
+    kind: audio-records
+    root_alias: ts_asr_real
+    relative_path: versions/meeting-v4-20261125/records/meeting-alimeeting-neg-near.jsonl.gz
+    sha256: d107d1d096419f3438bbb30909a3b788b0c0893acbf9e8359508a247643a1a51
+    metadata:
+      record_count: 3118
+  - name: meeting-alimeeting-neg-snr-records
+    kind: audio-records
+    root_alias: ts_asr_real
+    relative_path: versions/meeting-v4-20261125/records/meeting-alimeeting-neg-snr.jsonl.gz
+    sha256: f9d4eaf6b29a766b4fcf8ac67049afd90d52274529be0916bde2495d9fa75582
+    metadata:
+      record_count: 3118
+  - name: meeting-alimeeting-neg-xrec-records
+    kind: audio-records
+    root_alias: ts_asr_real
+    relative_path: versions/meeting-v4-20261125/records/meeting-alimeeting-neg-xrec.jsonl.gz
+    sha256: 30c0a9026bbbd484294a1794862f1cf4851076b75168319016317f090e8b09a5
+    metadata:
+      record_count: 3116
+  - name: meeting-alimeeting-pos-records
+    kind: audio-records
+    root_alias: ts_asr_real
+    relative_path: versions/meeting-v4-20261125/records/meeting-alimeeting-pos.jsonl.gz
+    sha256: 6ae1b9867b7dd41782a784e9ea9e7086d0a2e22b66a49ae83648e68d06556666
+    metadata:
+      record_count: 5932
+  - name: meeting-alimeeting-pos-enear-records
+    kind: audio-records
+    root_alias: ts_asr_real
+    relative_path: versions/meeting-v4-20261125/records/meeting-alimeeting-pos-enear.jsonl.gz
+    sha256: a837903a26662acf014ca73a98ddc91fc82aed0025fb7f86a6b07b2aba7c1214
+    metadata:
+      record_count: 5932
+  - name: meeting-alimeeting-pos-near-records
+    kind: audio-records
+    root_alias: ts_asr_real
+    relative_path: versions/meeting-v4-20261125/records/meeting-alimeeting-pos-near.jsonl.gz
+    sha256: 8d3b917457fbcef4bed68a9c781d97011afbdbbd59f290dd648ef58e03b66f99
+    metadata:
+      record_count: 5932
+  - name: meeting-alimeeting-pos-snr-records
+    kind: audio-records
+    root_alias: ts_asr_real
+    relative_path: versions/meeting-v4-20261125/records/meeting-alimeeting-pos-snr.jsonl.gz
+    sha256: 51d58511fdcaeca241dbb8115aac1adebbbd0ffdc2b883ba2de101522e178345
+    metadata:
+      record_count: 5932
+  - name: meeting-ramc-neg-records
+    kind: audio-records
+    root_alias: ts_asr_real
+    relative_path: versions/meeting-v4-20261125/records/meeting-ramc-neg.jsonl.gz
+    sha256: 949485bc54e998cacdadf8d4d506e5f0b0e27145221b2302de0b79fdc91c7532
+    metadata:
+      record_count: 4453
+  - name: meeting-ramc-neg-xrec-records
+    kind: audio-records
+    root_alias: ts_asr_real
+    relative_path: versions/meeting-v4-20261125/records/meeting-ramc-neg-xrec.jsonl.gz
+    sha256: 2bc1ca90de49482e093f7afecc6920bf7a9f57f62ba9067a7188c75e25484677
+    metadata:
+      record_count: 4453
+  - name: meeting-ramc-pos-records
+    kind: audio-records
+    root_alias: ts_asr_real
+    relative_path: versions/meeting-v4-20261125/records/meeting-ramc-pos.jsonl.gz
+    sha256: 7c4a6ca7d2afa50d9bd9d6d9e55d1c3751925615a96ad856b2df303fa11182cf
+    metadata:
+      record_count: 10468
+  splits:
+    meeting-alimeeting-neg:
+      artifacts:
+        records:
+        - meeting-alimeeting-neg-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 3118
+        duration_hours: 5.0637
+        duration_basis: Mixture duration
+      provenance:
+        description: AliMeeting 远场会议 test 整场，按人工标注切的每一段发给会上每个注册人；目标缺席（本人在这段前后 0.5 秒内都没有说话）
+    meeting-alimeeting-neg-enear:
+      artifacts:
+        records:
+        - meeting-alimeeting-neg-enear-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 3118
+        duration_hours: 5.0637
+        duration_basis: Mixture duration
+      provenance:
+        description: AliMeeting 远场会议 test 整场，按人工标注切的每一段发给会上每个注册人；目标缺席，注册取同一批语句的本人头戴麦录音，段仍为远场通道 0
+    meeting-alimeeting-neg-near:
+      artifacts:
+        records:
+        - meeting-alimeeting-neg-near-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 3118
+        duration_hours: 5.0637
+        duration_basis: Mixture duration
+      provenance:
+        description: AliMeeting 远场会议 test 整场，按人工标注切的每一段发给会上每个注册人；目标缺席，注册取本人头戴麦，段为全部头戴麦之和（按远场 RMS 缩放）
+    meeting-alimeeting-neg-snr:
+      artifacts:
+        records:
+        - meeting-alimeeting-neg-snr-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 3118
+        duration_hours: 5.0637
+        duration_basis: Mixture duration
+      provenance:
+        description: AliMeeting 远场会议 test 整场，按人工标注切的每一段发给会上每个注册人；目标缺席，段与注册都加同一条真实会议室底噪（按会议时间对齐），每场一个增益，使段的中位信噪比为 8 dB
+    meeting-alimeeting-neg-xrec:
+      artifacts:
+        records:
+        - meeting-alimeeting-neg-xrec-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 3116
+        duration_hours: 5.063
+        duration_basis: Mixture duration
+      provenance:
+        description: AliMeeting 远场会议 test 整场，按人工标注切的每一段发给会上每个注册人；目标缺席，注册换成同语料另一场录音里的人：与段内最像的在场人的声纹相似度最接近原注册（labels.base_impostor_sim、xrec_sim_gap），段不变
+    meeting-alimeeting-pos:
+      artifacts:
+        records:
+        - meeting-alimeeting-pos-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 5932
+        duration_hours: 10.5746
+        duration_basis: Mixture duration
+      provenance:
+        description: AliMeeting 远场会议 test 整场，按人工标注切的每一段发给会上每个注册人；目标在场（本人在这段里说话 ≥0.5 秒，且所说语句都完整落在段内）
+    meeting-alimeeting-pos-enear:
+      artifacts:
+        records:
+        - meeting-alimeeting-pos-enear-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 5932
+        duration_hours: 10.5746
+        duration_basis: Mixture duration
+      provenance:
+        description: AliMeeting 远场会议 test 整场，按人工标注切的每一段发给会上每个注册人；目标在场，注册取同一批语句的本人头戴麦录音，段仍为远场通道 0
+    meeting-alimeeting-pos-near:
+      artifacts:
+        records:
+        - meeting-alimeeting-pos-near-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 5932
+        duration_hours: 10.5746
+        duration_basis: Mixture duration
+      provenance:
+        description: AliMeeting 远场会议 test 整场，按人工标注切的每一段发给会上每个注册人；目标在场，注册取本人头戴麦，段为全部头戴麦之和（按远场 RMS 缩放）
+    meeting-alimeeting-pos-snr:
+      artifacts:
+        records:
+        - meeting-alimeeting-pos-snr-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 5932
+        duration_hours: 10.5746
+        duration_basis: Mixture duration
+      provenance:
+        description: AliMeeting 远场会议 test 整场，按人工标注切的每一段发给会上每个注册人；目标在场，段与注册都加同一条真实会议室底噪（按会议时间对齐），每场一个增益，使段的中位信噪比为 8 dB
+    meeting-ramc-neg:
+      artifacts:
+        records:
+        - meeting-ramc-neg-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 4453
+        duration_hours: 7.1754
+        duration_basis: Mixture duration
+      provenance:
+        description: MagicData-RAMC 手机对话 test 整场，按人工标注切的每一段发给会上每个注册人；目标缺席（本人在这段前后 0.5 秒内都没有说话）
+    meeting-ramc-neg-xrec:
+      artifacts:
+        records:
+        - meeting-ramc-neg-xrec-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 4453
+        duration_hours: 7.1754
+        duration_basis: Mixture duration
+      provenance:
+        description: MagicData-RAMC 手机对话 test 整场，按人工标注切的每一段发给会上每个注册人；目标缺席，注册换成同语料另一场录音里的人：与段内最像的在场人的声纹相似度最接近原注册（labels.base_impostor_sim、xrec_sim_gap），段不变
+    meeting-ramc-pos:
+      artifacts:
+        records:
+        - meeting-ramc-pos-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 10468
+        duration_hours: 14.9046
+        duration_basis: Mixture duration
+      provenance:
+        description: MagicData-RAMC 手机对话 test 整场，按人工标注切的每一段发给会上每个注册人；目标在场（本人在这段里说话 ≥0.5 秒，且所说语句都完整落在段内）
+  provenance:
+    superseded_by: ts_asr_real@meeting-v5-20261125
+    summary: 目标说话人评测：整场会议逐段发送与定位对照
+    status: complete
+    synthetic: none
+    description: 下游 badcase tsasr-farfield-target-absent-20261124：手机远场的 2–3 人会议里，目标人不在场时 11.17 有 47.9% 的请求仍有输出，AISHELL-4（meeting-v3-20261117）是 3.8%。这一版按 meeting-v3 的规则（meeting_segments.py 的分段、注册与声纹核对，meeting_nested.py 去掉插话段，meeting_quarantine.py 的说话人核对在远场音频上做：段内独自说话 ≥3 秒且另一人声纹比标注的人高 ≥0.1 则去掉该段）发送 AliMeeting 与 MagicData-RAMC test 整场录音，每条请求另按对照各发一次，每个对照只改一处：基础（meeting-<语料>-<pos|neg>）：AliMeeting 远场通道 0、RAMC 原录音，注册取同一录音，没有可作注册的语句的人不建框（AliMeeting R8005_M8009 全部 4 人、R8004_M8006 3 人：按标注每句话都有人同时在说）；-xrec（目标缺席）：注册换成同语料另一场录音（test
+      或 dev，两划分说话人不重合）的人，选与段内最像的在场人的声纹相似度最接近原注册的那位，检验同一录音的注册是否被当成目标的证据；-enear（AliMeeting）：同一批注册语句改取本人头戴麦，段不变，注册不再带会议室远场声学；-near（AliMeeting）：注册取头戴麦，段为全部头戴麦之和（按远场 RMS 缩放，同 near_far.py），两边都是近讲；-snr（AliMeeting）：段与注册都加同一条真实会议室底噪（meeting_room_noise@v2-20261014，训练划分的房间，≥30 秒，循环处交叉淡化），按会议时间对齐，每场一个增益，使该场段的中位信噪比为 8 dB（下游手机录音比底噪高 6–10 dB）；注册用同一条底噪，必要时调轻到注册比底噪高 ≥6 dB（下游服务只取信噪比 ≥6 dB 的注册片段）；-enear/-near 的头戴麦注册按远场注册的 RMS 缩放，只差声学不差音量。对照记录有 labels.control 和 metadata.base（基础记录的划分、录音、段号、目标人），可逐条配对；-enear/-near/-snr 的声纹相似度标签沿用基础记录（远场、无噪声）。RAMC
+      去掉含训练划分说话人的录音（test 9 人在 train 里）。meeting_quarantine.py 的文本核对需要每段的普通识别转写，在下一版做。只用于评测，不进训练。生成脚本 scripts/ts_real/meeting_controls.py，统计见 source/<版本>/report.json。
+    sources:
+    - alimeeting_sdm@icefall-20260908:test
+    - alimeeting_sdm@icefall-20260908:dev
+    - magicdata_ramc@icefall-20260908:test
+    - magicdata_ramc@icefall-20260908:dev
+    - alimeeting@openslr-119-local-20260826:test
+    - meeting_room_noise@v2-20261014:train
+- schema_version: dataset-catalog/2.0
+  dataset_id: ts_asr_real
+  version: meeting-v5-20261125
+  languages:
+  - zh
+  tasks:
+  - ts_asr
+  artifacts:
+  - name: audio-index
+    kind: audio-index
+    root_alias: ts_asr_real
+    relative_path: versions/meeting-v5-20261125/audio-index.jsonl.gz
+    sha256: 039c0ef6902ea5a8ff698016123ed7179479a7ba9daa02f029394c3049b42aa0
+    metadata:
+      record_count: 26149
+  - name: meeting-alimeeting-neg-records
+    kind: audio-records
+    root_alias: ts_asr_real
+    relative_path: versions/meeting-v5-20261125/records/meeting-alimeeting-neg.jsonl.gz
+    sha256: 24964139d152be0fed1cc97e300088c39a87300b48a4891b4f56dd70280c5f4e
+    metadata:
+      record_count: 3113
+  - name: meeting-alimeeting-neg-enear-records
+    kind: audio-records
+    root_alias: ts_asr_real
+    relative_path: versions/meeting-v5-20261125/records/meeting-alimeeting-neg-enear.jsonl.gz
+    sha256: 49dc6e651bf9c4ef5af694c4a75e38238f29133e15177d75e08ae218e016080f
+    metadata:
+      record_count: 3113
+  - name: meeting-alimeeting-neg-near-records
+    kind: audio-records
+    root_alias: ts_asr_real
+    relative_path: versions/meeting-v5-20261125/records/meeting-alimeeting-neg-near.jsonl.gz
+    sha256: e08270744f3f05b802898844f4c505960b3d1b97f32a746c5309cf302d2e9cb3
+    metadata:
+      record_count: 3113
+  - name: meeting-alimeeting-neg-snr-records
+    kind: audio-records
+    root_alias: ts_asr_real
+    relative_path: versions/meeting-v5-20261125/records/meeting-alimeeting-neg-snr.jsonl.gz
+    sha256: 5544a7f225fd1b5e6c984c1c13544fb6d47ae94abda5f60b3799e04acd8eca16
+    metadata:
+      record_count: 3113
+  - name: meeting-alimeeting-neg-xrec-records
+    kind: audio-records
+    root_alias: ts_asr_real
+    relative_path: versions/meeting-v5-20261125/records/meeting-alimeeting-neg-xrec.jsonl.gz
+    sha256: a9058b472d44c753384f459fae5fe0beca226f5e3f906e378e14ac55aa408ab6
+    metadata:
+      record_count: 3111
+  - name: meeting-alimeeting-pos-records
+    kind: audio-records
+    root_alias: ts_asr_real
+    relative_path: versions/meeting-v5-20261125/records/meeting-alimeeting-pos.jsonl.gz
+    sha256: 1f3f42661a6cdc274be657d282a53fa1a0eb8ff42fe90860cc8d6c9aee2f03e3
+    metadata:
+      record_count: 5927
+  - name: meeting-alimeeting-pos-enear-records
+    kind: audio-records
+    root_alias: ts_asr_real
+    relative_path: versions/meeting-v5-20261125/records/meeting-alimeeting-pos-enear.jsonl.gz
+    sha256: 51ec14ce34985f78e074bb0a5c0d8623974f43c71b99444db04ec519f48a9be7
+    metadata:
+      record_count: 5927
+  - name: meeting-alimeeting-pos-near-records
+    kind: audio-records
+    root_alias: ts_asr_real
+    relative_path: versions/meeting-v5-20261125/records/meeting-alimeeting-pos-near.jsonl.gz
+    sha256: f8bc2de99136ff93db53df3ea8d2806b8c5e97ed43a2d757fa26cfb830439ddc
+    metadata:
+      record_count: 5927
+  - name: meeting-alimeeting-pos-snr-records
+    kind: audio-records
+    root_alias: ts_asr_real
+    relative_path: versions/meeting-v5-20261125/records/meeting-alimeeting-pos-snr.jsonl.gz
+    sha256: d1670cea50c89c678a450e09a4528abd492c46b820189101e32300d89c2eca1a
+    metadata:
+      record_count: 5927
+  - name: meeting-ramc-neg-records
+    kind: audio-records
+    root_alias: ts_asr_real
+    relative_path: versions/meeting-v5-20261125/records/meeting-ramc-neg.jsonl.gz
+    sha256: 5a60e40aeba95c1f1c0c5ffdb2c651d30f016dd1290128aaa4cd6e8399d171b3
+    metadata:
+      record_count: 4419
+  - name: meeting-ramc-neg-xrec-records
+    kind: audio-records
+    root_alias: ts_asr_real
+    relative_path: versions/meeting-v5-20261125/records/meeting-ramc-neg-xrec.jsonl.gz
+    sha256: a69ea0ac622329ea23008851b2db75dd68682ef89522a0d0746467378f9f8409
+    metadata:
+      record_count: 4419
+  - name: meeting-ramc-pos-records
+    kind: audio-records
+    root_alias: ts_asr_real
+    relative_path: versions/meeting-v5-20261125/records/meeting-ramc-pos.jsonl.gz
+    sha256: c044fb2ffb03845ba8a3a352a7207dd81cf6e0033f7831352e66de88bd89e685
+    metadata:
+      record_count: 10370
+  splits:
+    meeting-alimeeting-neg:
+      artifacts:
+        records:
+        - meeting-alimeeting-neg-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 3113
+        duration_hours: 5.0519
+        duration_basis: Mixture duration
+      provenance:
+        description: AliMeeting 远场会议 test 整场，按人工标注切的每一段发给会上每个注册人；目标缺席（本人在这段前后 0.5 秒内都没有说话）；去掉了文本核对判定标注漏字的段
+    meeting-alimeeting-neg-enear:
+      artifacts:
+        records:
+        - meeting-alimeeting-neg-enear-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 3113
+        duration_hours: 5.0519
+        duration_basis: Mixture duration
+      provenance:
+        description: AliMeeting 远场会议 test 整场，按人工标注切的每一段发给会上每个注册人；目标缺席，注册取同一批语句的本人头戴麦录音，段仍为远场通道 0；去掉了文本核对判定标注漏字的段
+    meeting-alimeeting-neg-near:
+      artifacts:
+        records:
+        - meeting-alimeeting-neg-near-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 3113
+        duration_hours: 5.0519
+        duration_basis: Mixture duration
+      provenance:
+        description: AliMeeting 远场会议 test 整场，按人工标注切的每一段发给会上每个注册人；目标缺席，注册取本人头戴麦，段为全部头戴麦之和（按远场 RMS 缩放）；去掉了文本核对判定标注漏字的段
+    meeting-alimeeting-neg-snr:
+      artifacts:
+        records:
+        - meeting-alimeeting-neg-snr-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 3113
+        duration_hours: 5.0519
+        duration_basis: Mixture duration
+      provenance:
+        description: AliMeeting 远场会议 test 整场，按人工标注切的每一段发给会上每个注册人；目标缺席，段与注册都加同一条真实会议室底噪（按会议时间对齐），每场一个增益，使段的中位信噪比为 8 dB；去掉了文本核对判定标注漏字的段
+    meeting-alimeeting-neg-xrec:
+      artifacts:
+        records:
+        - meeting-alimeeting-neg-xrec-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 3111
+        duration_hours: 5.0512
+        duration_basis: Mixture duration
+      provenance:
+        description: AliMeeting 远场会议 test 整场，按人工标注切的每一段发给会上每个注册人；目标缺席，注册换成同语料另一场录音里的人：与段内最像的在场人的声纹相似度最接近原注册（labels.base_impostor_sim、xrec_sim_gap），段不变；去掉了文本核对判定标注漏字的段
+    meeting-alimeeting-pos:
+      artifacts:
+        records:
+        - meeting-alimeeting-pos-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 5927
+        duration_hours: 10.5644
+        duration_basis: Mixture duration
+      provenance:
+        description: AliMeeting 远场会议 test 整场，按人工标注切的每一段发给会上每个注册人；目标在场（本人在这段里说话 ≥0.5 秒，且所说语句都完整落在段内）；去掉了文本核对判定标注漏字的段
+    meeting-alimeeting-pos-enear:
+      artifacts:
+        records:
+        - meeting-alimeeting-pos-enear-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 5927
+        duration_hours: 10.5644
+        duration_basis: Mixture duration
+      provenance:
+        description: AliMeeting 远场会议 test 整场，按人工标注切的每一段发给会上每个注册人；目标在场，注册取同一批语句的本人头戴麦录音，段仍为远场通道 0；去掉了文本核对判定标注漏字的段
+    meeting-alimeeting-pos-near:
+      artifacts:
+        records:
+        - meeting-alimeeting-pos-near-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 5927
+        duration_hours: 10.5644
+        duration_basis: Mixture duration
+      provenance:
+        description: AliMeeting 远场会议 test 整场，按人工标注切的每一段发给会上每个注册人；目标在场，注册取本人头戴麦，段为全部头戴麦之和（按远场 RMS 缩放）；去掉了文本核对判定标注漏字的段
+    meeting-alimeeting-pos-snr:
+      artifacts:
+        records:
+        - meeting-alimeeting-pos-snr-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 5927
+        duration_hours: 10.5644
+        duration_basis: Mixture duration
+      provenance:
+        description: AliMeeting 远场会议 test 整场，按人工标注切的每一段发给会上每个注册人；目标在场，段与注册都加同一条真实会议室底噪（按会议时间对齐），每场一个增益，使段的中位信噪比为 8 dB；去掉了文本核对判定标注漏字的段
+    meeting-ramc-neg:
+      artifacts:
+        records:
+        - meeting-ramc-neg-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 4419
+        duration_hours: 7.112
+        duration_basis: Mixture duration
+      provenance:
+        description: MagicData-RAMC 手机对话 test 整场，按人工标注切的每一段发给会上每个注册人；目标缺席（本人在这段前后 0.5 秒内都没有说话）；去掉了文本核对判定标注漏字的段
+    meeting-ramc-neg-xrec:
+      artifacts:
+        records:
+        - meeting-ramc-neg-xrec-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 4419
+        duration_hours: 7.112
+        duration_basis: Mixture duration
+      provenance:
+        description: MagicData-RAMC 手机对话 test 整场，按人工标注切的每一段发给会上每个注册人；目标缺席，注册换成同语料另一场录音里的人：与段内最像的在场人的声纹相似度最接近原注册（labels.base_impostor_sim、xrec_sim_gap），段不变；去掉了文本核对判定标注漏字的段
+    meeting-ramc-pos:
+      artifacts:
+        records:
+        - meeting-ramc-pos-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 10370
+        duration_hours: 14.7361
+        duration_basis: Mixture duration
+      provenance:
+        description: MagicData-RAMC 手机对话 test 整场，按人工标注切的每一段发给会上每个注册人；目标在场（本人在这段里说话 ≥0.5 秒，且所说语句都完整落在段内）；去掉了文本核对判定标注漏字的段
+  provenance:
+    summary: 目标说话人评测：整场会议逐段发送与定位对照
+    status: complete
+    synthetic: none
+    description: ts_asr_real@meeting-v4-20261125 去掉文本核对判定标注漏字的段（该段在所有对照里的全部请求），其余记录、ID 与音频不变（音频索引指向 meeting-v4-20261125 的文件）。核对同 meeting_quarantine.py：AmphionASR 11.17 交付包普通识别模式（temperature 0）转写每段，段内只标了一个人时，转写里有连续 ≥3 个字标注里没有（只比字母、数字和汉字），判为标注漏了说话。输入在 source/<版本>/qc/，去掉的段与原因见 quarantine.jsonl，统计见 report.json。说话人核对已在 meeting-v4 生成时做过。只用于评测，不进训练。生成脚本 scripts/ts_real/meeting_text_check.py。
+    sources:
+    - ts_asr_real@meeting-v4-20261125

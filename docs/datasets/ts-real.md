@@ -136,6 +136,56 @@ v1/v2 的窗口要求“与窗口重叠的语句都完整”，重叠多的地�
   - 用同一个 ECAPA 和会上平均声纹比，下游注册与本人的余弦中位数是 0.84，本版是 0.76。48 个能对上的框里，有 36 个本版注册领先最像旁人的幅度更小。
   - 所以本版缺席误输出会比线上略高：11.06 在下游 12 场是 5.1%，下游报告的是 3.8%。
 
+## 整场会议的定位对照（meeting-v4-20261125）
+
+下游 badcase `anfeiweng-audiollm-resource-1373259071:diagnostics/tsasr-farfield-target-absent-20261124/`：一场 2–3 人的手机远场会议里，目标人不在场时 11.17 有 47.9% 的请求仍有输出；AISHELL-4（meeting-v3）只有 3.78%。meeting-v3 上 11.17 的误输出随注册与段内最像的在场人的声纹相似度（`impostor_sim`）从 < 0.3 时约 2% 升到 ≥ 0.5 时约 20%，短段、重叠段也更高，但一场会议分不出是哪个因素把它推到 48%。这一版（`scripts/ts_real/meeting_controls.py`）用 meeting-v3 的发送规则处理另外两个语料，并让每条请求再按几种对照各发一次，每种对照只改一处。
+
+- 发送规则同 meeting-v3：分段、注册与声纹核对（`meeting_segments.py`），去掉插话段（`meeting_nested.py`），说话人核对（`meeting_quarantine.py` 的规则，在远场音频上做）。文本核对需要普通识别转写，在下一版做。
+- 语料：
+  - AliMeeting test 20 场（2–4 人），远场通道 0。
+  - MagicData-RAMC test（两人手机对话），去掉含 train 划分说话人的 11 段录音，剩 37 段。
+- 划分：`meeting-<语料>-<pos|neg>` 为基础，带后缀的是对照。对照记录有 `labels.control` 和 `metadata.base`（基础记录的划分、录音、段号、目标人），可以逐条配对。
+
+  | 后缀 | 语料 | 改了什么 |
+  |---|---|---|
+  | `-xrec`（只有缺席） | AliMeeting、RAMC | 注册换成同语料另一场录音（test 或 dev，两划分说话人不重合）里的人，选与段内最像的在场人的声纹相似度最接近原注册的那位。`labels.base_impostor_sim` 是原注册的值，`xrec_sim_gap` 是两者之差 |
+  | `-enear` | AliMeeting | 同一批注册语句改取本人头戴麦，按远场注册的 RMS 缩放；段不变 |
+  | `-near` | AliMeeting | 注册取头戴麦，段为全部头戴麦之和（按远场 RMS 缩放，同 `near_far.py`） |
+  | `-snr` | AliMeeting | 段与注册都加同一条真实会议室底噪（`meeting_room_noise@v2-20261014`，train 划分的房间，≥ 30 秒，循环处交叉淡化），按会议时间对齐。每场一个增益，使该场段的中位信噪比为 8 dB（下游手机录音比底噪高 6–10 dB）。注册用同一条底噪，必要时调轻到比底噪高 ≥ 6 dB：下游服务只取信噪比 ≥ 6 dB 的注册片段，AliMeeting 的注册又比段轻，不调的话会压到 −1 到 5 dB |
+
+  `-enear`、`-near`、`-snr` 的声纹相似度标签沿用基础记录（远场、无噪声）。
+- 结果：58,690 条记录。
+
+  | 划分 | 条数 |
+  |---|---:|
+  | `meeting-alimeeting-pos` / `-neg` | 5,932 / 3,118 |
+  | `meeting-alimeeting-neg-xrec` | 3,116 |
+  | `-enear`、`-near`、`-snr`（各自 pos / neg） | 5,932 / 3,118 |
+  | `meeting-ramc-pos` / `-neg` / `-neg-xrec` | 10,468 / 4,453 / 4,453 |
+
+  - AliMeeting：60 人里 51 人建了框。R8005_M8009 的 4 人、R8004_M8006 的 3 人、R8005_M8007 的 2 人没有可作注册的语句：按标注，他们 3 秒以上的语句被别人覆盖的比例中位数都超过 100%，也没有 ≥ 1 秒的单人语句。8,513 段里发出 5,235 段，去掉插话段 1,920 段。
+  - RAMC：74 人都建了框；说话人核对去掉 64 段。两人对话里对方常在 0.5 秒边界内接话，缺席请求只占三成。
+  - `-xrec` 的相似度匹配：AliMeeting 96.1%、RAMC 100% 的配对差 ≤ 0.05。陌生人分别有 934、2,142 条取自 dev。
+  - 缺席请求的 `impostor_sim` 中位数：AliMeeting 0.25，RAMC 0.29；≥ 0.5 的分别有 130、215 条。
+  - `-snr` 段的信噪比中位数 7.5 dB，注册 7.2 dB。
+  - 统计见 `source/meeting-v4-20261125/report.json`。
+- 评测集数据配置由 `scripts/ts_real/meeting_eval_set.py` 生成：AISHELL-4 取 meeting-v3，其余取本版或其派生版。
+- 只用于评测，不进训练。
+- 已被 `meeting-v5-20261125` 取代。
+
+`meeting-v5-20261125`（`scripts/ts_real/meeting_text_check.py`）由 v4 去掉文本核对判定标注漏字的段得到。这些段在所有对照里的请求一并去掉，其余记录、ID 和音频都不变，音频索引指向 v4 的文件。
+
+- 核对：同 `meeting_quarantine.py`。用 AmphionASR 11.17 交付包的普通识别模式转写每段（temperature 0）；段内只标了一个人时，转写里有连续 ≥ 3 个字是标注里没有的，判为标注漏了说话。输入在 `source/meeting-v5-20261125/qc/`。
+- 结果：
+  - AliMeeting 每个划分去掉 5 条，剩 `meeting-alimeeting-pos` 5,927 条、`-neg` 3,113 条；
+  - RAMC 去掉 34 条缺席、98 条在场，剩 `meeting-ramc-pos` 10,370 条、`-neg` 4,419 条；
+  - 明细在 `quarantine.jsonl`，统计在 `report.json`。
+- 11.17 的基线和定位结果见 open-audio-llm `runs/ts-overlap-20261119/tasks/27-meeting-bench/`：
+  - 误报以声音相近为前提；
+  - 此时同场注册的误报是相似度相同的别场注册的 3–6 倍；
+  - 注册改用头戴麦时，误报大幅下降，但在场漏识上升。
+- 只用于评测，不进训练。
+
 ## 注意
 
 - 34479 的训练用过前三个语料的训练集（不同的录音和说话人），所以这里测的是同域表现，不是脆弱点；它的作用是校准：合成评测集的失败率与同域真实数据差多少。
