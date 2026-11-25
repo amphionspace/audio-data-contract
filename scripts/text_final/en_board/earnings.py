@@ -21,12 +21,15 @@ Cutting rules (a segment is one speaker's consecutive words):
 - a segment whose padded window overlaps an aligned word of any other segment or speaker is dropped (cross-talk);
 - meetings with FILE_MAX_UNALIGNED or more words without times are skipped, and segments whose whisper-large-v3
   transcript is far from the text (--reject from whisper_qc.py) are dropped: misplaced times of the few aligned
-  words in badly aligned stretches give short texts on long audio;
+  words in badly aligned stretches give short texts on long audio (Earnings-22). Earnings-21 is aligned by
+  earnings21_align.py instead and its test segments are all kept, with their whisper WER in metadata (--wer): about
+  a third to a half of its WER > 0.5 segments are whisper's errors, and a test set must not be chosen by one ASR;
 - the text gets a capital first letter and ends in . ? or ! (a trailing , … - becomes .); … - – inside become ,;
   fillers (uh, um) and repetitions stay as transcribed.
 
     python -I scripts/text_final/en_board/earnings.py transcode --ds earnings22 --workers 8
     python -I scripts/text_final/en_board/earnings.py segment --ds earnings22 [--reject <whisper_qc.py output>]
+    python -I scripts/text_final/en_board/earnings.py segment --ds earnings21 --aligned <dir> [--wer <all WERs>]
 """
 
 from __future__ import annotations
@@ -248,6 +251,7 @@ def segment(args):
 
     n, recs, index, durs, skipped = Counter(), {}, [], {}, []
     reject = json.loads(Path(args.reject).read_text()) if args.reject else {}
+    wer = json.loads(Path(args.wer).read_text()) if args.wer else {}
     for path in sorted(aligned_dir.glob("*.nlp")):
         fid = path.name.split(".")[0]
         if ds == "earnings22" and fid in BOARD_TEST:
@@ -287,6 +291,8 @@ def segment(args):
             m = meta.get(fid, {})
             md = {"meeting_id": fid, "speaker": first["spk"], "start": round(start, 3), "end": round(end, 3),
                   "unaligned_words": sum(tokens[i]["ts"] is None for i in seg)}
+            if wer:
+                md["whisper_wer"] = wer[f"{split}:{fid}-{k:05d}"]
             if ds == "earnings22":
                 md.update(country=m.get("Country by Ticker"), language_family=m.get("Language Family + Area Based"))
             recs.setdefault(split, []).append(record(ds, V, split, fid, start, dur, render(words), md,
@@ -329,6 +335,7 @@ def main():
     s.add_argument("--ds", required=True, choices=["earnings22", "earnings21"])
     s.add_argument("--aligned", help="aligned .nlp directory (Earnings-21)")
     s.add_argument("--reject", help="whisper_qc.py output: record ids to drop")
+    s.add_argument("--wer", help="whisper_qc.py output with --max-wer -1: every record's WER, kept as metadata.whisper_wer")
     args = ap.parse_args()
     {"transcode": transcode, "segment": segment}[args.cmd](args)
 
