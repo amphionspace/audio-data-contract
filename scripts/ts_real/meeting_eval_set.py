@@ -4,8 +4,12 @@
 AISHELL-4 from meeting-v3-20261117; AliMeeting and MagicData-RAMC, with the controls of ``meeting_controls.py``,
 from ``--version`` (meeting-v4-20261125 or a version derived from it).
 
-    python scripts/ts_real/meeting_eval_set.py --version meeting-v4-20261125 > data.yaml
-    ae eval-sets publish data.yaml --project open-audio-llm --name ts-asr-meeting --version v1-20261125
+The output is the whole-meeting part of ``asr/ts-asr-benchmark`` (section 真实对话 · 整场会议 and its controls), written
+as ``ae eval-sets derive`` changes: same labels and group names replace the previous version's, the rest is appended.
+
+    python scripts/ts_real/meeting_eval_set.py --version meeting-v5-20261125 > changes.yaml
+    ae eval-sets derive asr/ts-asr-benchmark@v14-20261117 changes.yaml -o v15.yaml
+    ae eval-sets publish v15.yaml --namespace asr --name ts-asr-benchmark --version v15-20261125
 """
 
 import argparse

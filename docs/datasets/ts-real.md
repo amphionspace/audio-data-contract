@@ -173,7 +173,7 @@ v1/v2 的窗口要求“与窗口重叠的语句都完整”，重叠多的地�
 - 只用于评测，不进训练。
 - 已被 `meeting-v5-20261125` 取代。
 
-`meeting-v5-20261125`（`scripts/ts_real/meeting_text_check.py`）由 v4 去掉文本核对判定标注漏字的段得到。这些段在所有对照里的请求一并去掉，其余记录、ID 和音频都不变，音频索引指向 v4 的文件。
+`meeting-v5-20261125`（`scripts/ts_real/meeting_text_check.py`）由 v4 去掉文本核对判定标注漏字的段得到。这些段在所有对照里的请求一并去掉，其余记录、ID 和音频都不变，音频索引指向 v4 的文件。评测集登记为 AmphionEval `asr/ts-asr-benchmark@v15-20261125` 的「真实对话 · 整场会议」和「真实对话 · 整场会议对照」。
 
 - 核对：同 `meeting_quarantine.py`。用 AmphionASR 11.17 交付包的普通识别模式转写每段（temperature 0）；段内只标了一个人时，转写里有连续 ≥ 3 个字是标注里没有的，判为标注漏了说话。输入在 `source/meeting-v5-20261125/qc/`。
 - 结果：
