@@ -70,6 +70,28 @@ SOURCES = {
             "audio_policy": "ffmpeg 把 media 转成 <version>/audio/<file id>.flac（16 kHz 单声道 PCM16），记录按 start/duration 引用",
         },
     },
+    "spgispeech2": {
+        "dataset_id": "spgispeech2", "src": "hf-f4ce91de393c", "license": "other (Kensho research terms, July 2025)",
+        "script": "scripts/text_final/en_board/spgispeech2.py",
+        "description": (
+            "SPGISpeech 2.0 财报电话会议（50–90 秒多说话人片段）切成不超过 30 秒的单说话人短句，train/dev/test 沿用原划分，直接按训练文本"
+            "规范 v3 建，供 open-audio-llm A 线（英文榜单版）第二轮训练。文本用 raw_transcript（S&P Global 专业转写：书面写法，"
+            "删了口吃和大部分语气词，不是逐字稿），时间取 supplemental_data 的词级对齐（按字母数字拆分后匹配，词全部有时间）。"
+            "片段边缘可能被截断的首尾词不进文本；对齐把多个词挤在很短时间里的段（每秒超过 8 个词）丢掉。"
+            "没有找到与 SPGISpeech 1.0 test（Open ASR 榜单）同一录音的条目；与 1.0 test 句子文本近乎相同的记录"
+            "（多是主持人结束语等套话）在 metadata.spgispeech1_test_ids 标出。Kensho 研究许可：仅限非商用研究，"
+            "用它训练的模型须免费提供。音频转成 16 kHz 单声道 FLAC。"
+        ),
+        "recipe": {
+            "text": "raw_transcript 原样（| 处换说话人），按规则 2 补句首大写和句末标点；-- 改逗号",
+            "timing": "supplemental_data/alignment_files 的词级时间；两边都拆成字母数字片段后 difflib 匹配",
+            "cutting": "一段只含一个说话人；停顿 2 秒断开；超过每段随机目标（4–25 秒）后在句末断开，最长 30 秒；前后各留最多 0.15 秒；"
+                       "片段开头 0.1 秒内开始的首词、未完句且离结尾不到 0.1 秒的尾词不进文本；每秒超过 8 个词的段丢掉",
+            "spgispeech1_test": "与 SPGISpeech 1.0 test（open_asr_leaderboard 副本）按 10 词片段比文本，1.0 句子 80% 以上的词按序出现在记录里时"
+                                "记入 metadata.spgispeech1_test_ids；没有同一录音（一场 1.0 会议最多 4 句对上一场 2.0 会议，都是套话）",
+            "audio_policy": "parquet 里的 WAV 转成 <version>/audio/<call_id>/<snippet_id>.flac（16 kHz 单声道 PCM16），记录按 start/duration 引用",
+        },
+    },
     "earnings22": {
         "dataset_id": "earnings22", "src": "github-c05ab6fd8b4b", "license": "CC-BY-SA-4.0",
         "script": "scripts/text_final/en_board/earnings.py",

@@ -177,6 +177,7 @@ open-audio-llm A 线（英文榜单版，open-audio-llm PR #174）用的新英�
 | `voxpopuli_en@hf-42f01879c780-final-v3-20261125` | train | `raw_text`；为空的 2.9% 用 `normalized_text` 经 en-v1 学生模型补标点和大小写 |
 | `ami_ihm@hf-edinburghcstr-20261023-final-v3-20261125` | train | Kaldi 全大写文本经 en-v1 学生模型补标点和大小写 |
 | `earnings21@github-c05ab6fd8b4b-final-v3-20261125` | test | `nlp_references` 的书面写法，时间由 `earnings21_align.py` 自己对齐 |
+| `spgispeech2@hf-f4ce91de393c-final-v3-20261125` | train、dev、test | `raw_transcript`（S&P Global 专业转写，非逐字），时间取官方词级对齐 |
 
 - **Earnings-22**：
   - 排除 Open ASR 榜单测试用的 6 场；按口音组各取 1 场，共 4 场作 dev。
@@ -206,6 +207,14 @@ open-audio-llm A 线（英文榜单版，open-audio-llm PR #174）用的新英�
   - 不按 whisper 丢段，每段的 whisper WER 记在 `metadata.whisper_wer`。WER > 0.5 的有 420 段（0.3 h），按词数分档各看 22 条，约三到五成是 whisper 自己的错（省掉重复、幻觉、听错）。测试集不能按某一个 ASR 认不认得出来挑段，所以只作标记。
   - 源转写里有少量标点和大小写错位一格的地方（如 `Go. ahead`），每场最多 2.4%，Earnings-22 也一样，保持原样。
   - 结果：test 9,466 段、36.2 h，whisper WER 10.2%。
+- **SPGISpeech 2.0**：
+  - 文本特点：S&P Global 的转写是书面写法，删了口吃和大部分语气词，不是逐字稿，与上面几个来源的“口语重复保留”不同。
+  - 切法：原始片段 50–90 秒，按官方词级对齐切成 30 秒以内的单说话人短句。对齐文件把 `U.S.`、`long-term`、`1.5` 拆开写，两边都拆成字母数字再匹配，词全部有时间。
+  - 片段边缘可能被截断的首尾词不进文本。
+  - 对齐常让相邻词的时间重叠，Earnings 用的“窗口压到别的词就丢”的规则在这里误杀为主（被丢的样本 60 段里 49 段 whisper WER ≤ 0.2），不用。改为丢掉每秒超过 8 个词的段：这些是对齐把一串词挤进很短时间的地方，样本 40 段里 39 段 WER > 0.5。
+  - 结果：train 877,748 段、3,106 h，dev 34,647 段、122.8 h，test 38,744 段、137.4 h。whisper 各抽 300 段，WER 5.9–6.7%。
+  - 与 Open ASR 榜单的 SPGISpeech 1.0 test 没有同一录音。有 669 条 1.0 test 句子的文本近乎原样出现在 2.0 里，多是主持人结束语和开场免责声明。对应记录在 `metadata.spgispeech1_test_ids` 标出：train 16,058 条、51.1 h，dev 589 条，test 680 条。
+  - 许可：Kensho 研究许可，仅限非商用研究，用它训练的模型须免费提供。
 
 ## 使用范围
 

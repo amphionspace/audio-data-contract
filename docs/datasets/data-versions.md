@@ -715,7 +715,7 @@ LibriSpeech 混合的目标说话人数据
 | [spgispeech2@hf-f4ce91de393c-final-v3-20261125](../../catalog/text_final_v3.yaml#L536) | — | 未登记 | 没有 |
 
 - `spgispeech2@hf-f4ce91de393c`：Kensho（S&P Global）发布的 SPGISpeech 多说话人版本（Interspeech 2025）：2021–2024 年上市公司财报电话会议录音，多取自 问答环节，切成 50–90 秒的片段，每段至少 2 位说话人（2 人约 83%、3 人约 16%，最多 6 人），口音覆盖母语和非母语商务英语。 转写是 S&P Global 的专业人工转写（官方称准确率 99% 以上），用“\|”标出说话人切换，并附每段的数字说话人编号列表； supplemental_data/alignment_files.tar.gz 是每段的对齐 JSON。本地共 3,649.2 小时（README 写 3,780 h，v1.0.0 因法律原因 删掉约 3% 的片段）：train 156,753 段、39,864 人、3,367.0 h；dev 6,195 段、4,914 人、133.2 h；test 6,932 段、5,371 人、 149.0 h；共 41,117 个说话人编号，16 kHz 单声道 PCM WAV 嵌在 parquet 中。三个划分没有共享会议（call_id 互斥），但有共享 说话人（train 与 test 共 4,702 人）。转写按编辑规范而非逐字：口吃、重复和部分寒暄会被删掉，长片段里残留较多。数据有 访问门控，已用用户的 HF 账号同意 Kensho 条款（2025 年 7 月版，上游 LICENSE 文件为空，条款以 README 门控文本为准）： 仅限内部非商业研究；用它训练的模型及其输出若对外提供，必须免费且条款不宽于本条款；不得用于与 Kensho 竞争的商用转写或 ASR 产品、声纹识别或验证、语音克隆、说话人画像；不得识别或联系说话人真实身份；不得再分发
-- `spgispeech2@hf-f4ce91de393c-final-v3-20261125`：SPGISpeech 2.0 的训练文本终版（规范 v3）：train/dev/test 全部登记，并尽量标出与 SPGISpeech 1.0 榜单测试集对应的录音。A 线英文榜单版第二轮训练数据。排在前三份之后，构建中
+- `spgispeech2@hf-f4ce91de393c-final-v3-20261125`：SPGISpeech 2.0 财报电话会议（50–90 秒多说话人片段）切成不超过 30 秒的单说话人短句，train/dev/test 沿用原划分，直接按训练文本规范 v3 建，供 open-audio-llm A 线（英文榜单版）第二轮训练。文本用 raw_transcript（S&P Global 专业转写：书面写法，删了口吃和大部分语气词，不是逐字稿），时间取 supplemental_data 的词级对齐（按字母数字拆分后匹配，词全部有时间）。片段边缘可能被截断的首尾词不进文本；对齐把多个词挤在很短时间里的段（每秒超过 8 个词）丢掉。没有找到与 SPGISpeech 1.0 test（Open ASR 榜单）同一录音的条目；与 1.0 test 句子文本近乎相同的记录（多是主持人结束语等套话）在 metadata.spgispeech1_test_ids 标出。Kensho 研究许可：仅限非商用研究，用它训练的模型须免费提供。音频转成 16 kHz 单声道 FLAC
 - 含派生版本（与源数据可能重叠）
 
 ### tal100_en
