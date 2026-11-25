@@ -50,6 +50,26 @@ SOURCES = {
             "audio_policy": "parquet 里的 wav 字节原样写成 <version>/audio/<meeting>/<audio_id>.wav，不重新编码",
         },
     },
+    "earnings21": {
+        "dataset_id": "earnings21", "src": "github-c05ab6fd8b4b", "license": "CC-BY-SA-4.0",
+        "script": "scripts/text_final/en_board/earnings.py",
+        "description": (
+            "Earnings-21 财报电话会议（44 场）切成不超过 30 秒的短句，只作 test，直接按训练文本规范 v3 建，供 open-audio-llm A 线"
+            "（英文榜单版）评测。文本用 nlp_references 的书面写法（大小写、标点、实体原样），口语重复和 uh/um 保留。参考转写没有时间："
+            "whisper-large-v3 按 30 秒窗口识别、Qwen3-ForcedAligner 打时间作锚点，在锚点处的停顿把会议切成不超过 60 秒的块，"
+            "再用 Qwen3-ForcedAligner 对齐每块的参考转写（earnings21_align.py），可对齐的词全部有时间。切句规则与 Earnings-22 相同；"
+            "不按 whisper 丢段，每段的 whisper-large-v3 WER 记在 metadata.whisper_wer（> 0.5 的 420 段，约三到五成是 whisper 自己的错）。"
+            "音频转成 16 kHz 单声道 FLAC。"
+        ),
+        "recipe": {
+            "alignment": "earnings21_align.py：whisper-large-v3 30 秒窗口文本 + Qwen3-ForcedAligner 作锚点（连续 3 词以上匹配），"
+                         "锚点间停顿处切块（≤60 秒，没有切点时 ≤180 秒），Qwen3-ForcedAligner-0.6B 对齐每块参考转写",
+            "cutting": "同 Earnings-22：一段只含一个说话人；<inaudible> 等标记处断开，<laugh>/<silence> 只从文本删掉；停顿 2 秒断开；"
+                       "超过每段随机目标（4–25 秒）后在句末断开，最长 30 秒；前后各留最多 0.15 秒；窗口里混进其他词的段丢掉",
+            "whisper_wer": "metadata.whisper_wer：whisper-large-v3 对该段的 WER（Whisper 英文归一化后），只作标记，不据此丢段",
+            "audio_policy": "ffmpeg 把 media 转成 <version>/audio/<file id>.flac（16 kHz 单声道 PCM16），记录按 start/duration 引用",
+        },
+    },
     "earnings22": {
         "dataset_id": "earnings22", "src": "github-c05ab6fd8b4b", "license": "CC-BY-SA-4.0",
         "script": "scripts/text_final/en_board/earnings.py",

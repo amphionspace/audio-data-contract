@@ -358,20 +358,88 @@
     kind: dataset-state
     root_alias: aidc_data
     relative_path: datasets/earnings21/versions/github-c05ab6fd8b4b-final-v3-20261125/state.json
+    expected_bytes: 836
+    sha256: e1723be679dcb74d88ec009b2651b07d2abf2795e4ed0d798c52503d4bb4e8fc
+  - name: test
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/earnings21/versions/github-c05ab6fd8b4b-final-v3-20261125/records/test.jsonl.gz
+    expected_bytes: 1059400
+    sha256: d1fc60de6848bb769ba41eefe831d1c31c45a93cefdc367d87bd5da64ffddb0a
+    metadata:
+      record_count: 9466
+  - name: audio_index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/earnings21/versions/github-c05ab6fd8b4b-final-v3-20261125/audio_index/audio-index.jsonl.gz
+    expected_bytes: 1135
+    sha256: 68b86bcb314fb750db155e5e281b9050fc111028446ea6c2678da1a58aaf1515
+    metadata:
+      record_count: 44
+  - name: duration_distribution
+    kind: statistics
+    root_alias: aidc_data
+    relative_path: datasets/earnings21/versions/github-c05ab6fd8b4b-final-v3-20261125/duration_distribution.json
+    expected_bytes: 168
+    sha256: a76d8d7c64f49b312fe74d9225b3edb5f1fcde719db2384d772ce07768501d5a
+    metadata:
+      record_count: 1
   splits:
     test:
+      group: eval
       artifacts:
+        records:
+        - test
+        audio_index:
+        - audio_index
         preparation_state:
         - preparation_state
-      provenance:
-        preparation_status: building
+      statistics:
+        records: 9466
+        duration_hours: 36.1627
+        duration_basis: sum of record durations
+        languages:
+          en: 9466
+  recipe_parameters:
+    spec: docs/reference/training-text.md（v3）
+    duration_seconds:
+    - 0.5
+    - 30.0
+    alignment: earnings21_align.py：whisper-large-v3 30 秒窗口文本 + Qwen3-ForcedAligner 作锚点（连续 3 词以上匹配），锚点间停顿处切块（≤60 秒，没有切点时 ≤180 秒），Qwen3-ForcedAligner-0.6B 对齐每块参考转写
+    cutting: 同 Earnings-22：一段只含一个说话人；<inaudible> 等标记处断开，<laugh>/<silence> 只从文本删掉；停顿 2 秒断开；超过每段随机目标（4–25 秒）后在句末断开，最长 30 秒；前后各留最多 0.15 秒；窗口里混进其他词的段丢掉
+    whisper_wer: metadata.whisper_wer：whisper-large-v3 对该段的 WER（Whisper 英文归一化后），只作标记，不据此丢段
+    audio_policy: ffmpeg 把 media 转成 <version>/audio/<file id>.flac（16 kHz 单声道 PCM16），记录按 start/duration 引用
+    counts:
+      break token <affirmative>: 22
+      break token <crosstalk>: 81
+      break token <foreign>: 1
+      break token <inaudible>: 725
+      break token <unk>: 106
+      'dropped: duration outside 0.5-30.0 s': 360
+      'dropped: window overlaps other words (cross-talk)': 14
+      test segments: 9466
+      unaligned words: 131
+    duration_distribution:
+      test:
+        count: 9466
+        hours: 36.1627
+        min: 0.51
+        p50: 13.87
+        p90: 24.98
+        p99: 29.34
+        max: 30.0
+        mean: 13.753
   provenance:
-    preparation_status: building
-    owner: mingdong
-    description: Earnings-21 按词级时间戳切成不超过 30 秒的短句（规范 v3），只作测试集，用于核验 A 线英文榜单版。构建中。
+    snapshot_date: '2026-11-25'
+    description: Earnings-21 财报电话会议（44 场）切成不超过 30 秒的短句，只作 test，直接按训练文本规范 v3 建，供 open-audio-llm A 线（英文榜单版）评测。文本用 nlp_references 的书面写法（大小写、标点、实体原样），口语重复和 uh/um 保留。参考转写没有时间：whisper-large-v3 按 30 秒窗口识别、Qwen3-ForcedAligner 打时间作锚点，在锚点处的停顿把会议切成不超过 60 秒的块，再用 Qwen3-ForcedAligner 对齐每块的参考转写（earnings21_align.py），可对齐的词全部有时间。切句规则与 Earnings-22 相同；不按 whisper 丢段，每段的 whisper-large-v3 WER 记在 metadata.whisper_wer（> 0.5 的 420 段，约三到五成是 whisper 自己的错）。音频转成 16 kHz 单声道 FLAC。
     source: earnings21@github-c05ab6fd8b4b
+    license: CC-BY-SA-4.0
     method: text-final-v3
+    owner: mingdong
+    requested_by: 'open-audio-llm A 线（open-audio-llm PR #174）'
     run_dir: /workspace/workspace/mingdong/data/amphiondata/aline-en-20261125
+    build_script: scripts/text_final/en_board/earnings.py
+    quality_status: whisper-large-v3 spot check in run_dir/verify
 - schema_version: dataset-catalog/2.0
   dataset_id: ami_ihm
   version: hf-edinburghcstr-20261023-final-v3-20261125

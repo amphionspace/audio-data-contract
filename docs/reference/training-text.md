@@ -176,6 +176,7 @@ open-audio-llm A 线（英文榜单版，open-audio-llm PR #174）用的新英�
 | `earnings22@github-c05ab6fd8b4b-final-v3-20261125` | train、dev | `nlp_references` 的书面写法，时间取 `force_aligned_nlp_references` |
 | `voxpopuli_en@hf-42f01879c780-final-v3-20261125` | train | `raw_text`；为空的 2.9% 用 `normalized_text` 经 en-v1 学生模型补标点和大小写 |
 | `ami_ihm@hf-edinburghcstr-20261023-final-v3-20261125` | train | Kaldi 全大写文本经 en-v1 学生模型补标点和大小写 |
+| `earnings21@github-c05ab6fd8b4b-final-v3-20261125` | test | `nlp_references` 的书面写法，时间由 `earnings21_align.py` 自己对齐 |
 
 - **Earnings-22**：
   - 排除 Open ASR 榜单测试用的 6 场；按口音组各取 1 场，共 4 场作 dev。
@@ -195,6 +196,16 @@ open-audio-llm A 线（英文榜单版，open-audio-llm PR #174）用的新英�
   - 不足 0.5 秒的 22,081 条（1.95 h，几乎都是单字附和）不收；0.5 秒以上的单字附和仍有 1.3 万条。
   - 结果：train 86,417 条、75.9 h。
   - 抽 300 条 whisper 核对：WER 18.7%，其中不足 1 秒的段 43%、5 秒以上 16.5%。差异主要来自 whisper 删掉了重复和 uh，以及近讲话筒串进旁人的声音。
+- **Earnings-21**（只作 test）：
+  - 参考转写没有时间，自己对齐：
+    - whisper-large-v3 按 30 秒窗口识别，Qwen3-ForcedAligner 给识别结果打时间，作为锚点；
+    - 在锚点之间的停顿处把会议切成不超过 60 秒的块；
+    - 每块用 Qwen3-ForcedAligner 对齐参考转写。
+  - whisper 只决定块的边界，所以哪些词有时间与 whisper 认不认得出无关。可对齐的 361,243 个词全部有时间。
+  - 切句规则与 Earnings-22 相同。不足 0.5 秒的 360 段（几乎都是 yeah、okay 这类单字）不收。
+  - 不按 whisper 丢段，每段的 whisper WER 记在 `metadata.whisper_wer`。WER > 0.5 的有 420 段（0.3 h），按词数分档各看 22 条，约三到五成是 whisper 自己的错（省掉重复、幻觉、听错）。测试集不能按某一个 ASR 认不认得出来挑段，所以只作标记。
+  - 源转写里有少量标点和大小写错位一格的地方（如 `Go. ahead`），每场最多 2.4%，Earnings-22 也一样，保持原样。
+  - 结果：test 9,466 段、36.2 h，whisper WER 10.2%。
 
 ## 使用范围
 
