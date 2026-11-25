@@ -96,3 +96,162 @@
     rounds: 拉丁文括注（规则 8）399 条：没读的 480 处整段删掉，读了的 79 处只去括号
     evidence: 每条录音逐处判断：whisper-large-v3（语种 zh）写出括注里的字母，或 whisper 与 Qwen3-ASR-1.7B 都在括注处多出音译汉字，算读了；两个 ASR 写出的括注逐处人工复核，改判 13 处。Qwen3-ASR 单独写出括注不算证据（它会复现 FLEURS 的括注写法）。
     unchanged: 括号里有汉字的括注、录音清单、音频和 dev/test 划分，引用起点版本的产物
+# 英文榜单版（A 线，open-audio-llm PR #174）训练数据：VoxPopuli、Earnings-22/21、AMI 近讲、SPGISpeech 2.0 直接按规范 v3 建终版。占位，构建中。
+- schema_version: dataset-catalog/2.0
+  dataset_id: voxpopuli_en
+  version: hf-42f01879c780-final-v3-20261125
+  languages:
+  - en
+  tasks:
+  - asr
+  aliases: []
+  derived_from: voxpopuli_en@hf-42f01879c780
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/voxpopuli_en/versions/hf-42f01879c780-final-v3-20261125/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: VoxPopuli 英文 train 的训练文本终版（规范 v3）：目标用 raw_text（带大小写和标点），按规则 2 补句首大写和句末标点；raw_text 为空的行用 normalized_text 经 en-v1 学生模型补标点和大小写；wav 从 parquet 原样落盘。A 线英文榜单版训练数据。构建中。
+    source: voxpopuli_en@hf-42f01879c780
+    method: text-final-v3
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/aline-en-20261125
+- schema_version: dataset-catalog/2.0
+  dataset_id: earnings22
+  version: github-c05ab6fd8b4b-final-v3-20261125
+  languages:
+  - en
+  tasks:
+  - asr
+  aliases: []
+  derived_from: earnings22@github-c05ab6fd8b4b
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/earnings22/versions/github-c05ab6fd8b4b-final-v3-20261125/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+    dev:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: Earnings-22 按 force_aligned_nlp_references 切成不超过 30 秒的短句，大小写和标点按参考转写的 case/punctuation 列还原（规范 v3），保留口语重复；排除 Open ASR 榜单测试用的 6 场（4468919、4471586、4474955、4475604、4482968、4483046），另留 4 场作 dev。A 线英文榜单版训练数据。构建中。
+    source: earnings22@github-c05ab6fd8b4b
+    method: text-final-v3
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/aline-en-20261125
+- schema_version: dataset-catalog/2.0
+  dataset_id: earnings21
+  version: github-c05ab6fd8b4b-final-v3-20261125
+  languages:
+  - en
+  tasks:
+  - asr
+  aliases: []
+  derived_from: earnings21@github-c05ab6fd8b4b
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/earnings21/versions/github-c05ab6fd8b4b-final-v3-20261125/state.json
+  splits:
+    test:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: Earnings-21 按词级时间戳切成不超过 30 秒的短句（规范 v3），只作测试集，用于核验 A 线英文榜单版。构建中。
+    source: earnings21@github-c05ab6fd8b4b
+    method: text-final-v3
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/aline-en-20261125
+- schema_version: dataset-catalog/2.0
+  dataset_id: ami_ihm
+  version: hf-edinburghcstr-20261023-final-v3-20261125
+  languages:
+  - en
+  tasks:
+  - asr
+  aliases: []
+  derived_from: ami_ihm@hf-edinburghcstr-20261023
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/ami_ihm/versions/hf-edinburghcstr-20261023-final-v3-20261125/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: AMI 近讲耳麦 train 的训练文本终版（规范 v3）：Kaldi 全大写无标点文本经 en-v1 学生模型补标点和大小写（规则 2），词不改、口语重复保留。A 线英文榜单版训练数据。构建中。
+    source: ami_ihm@hf-edinburghcstr-20261023
+    method: text-final-v3
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/aline-en-20261125
+- schema_version: dataset-catalog/2.0
+  dataset_id: spgispeech2
+  version: hf-f4ce91de393c-final-v3-20261125
+  languages:
+  - en
+  tasks:
+  - asr
+  aliases: []
+  derived_from: spgispeech2@hf-f4ce91de393c
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/spgispeech2/versions/hf-f4ce91de393c-final-v3-20261125/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+    dev:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+    test:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: SPGISpeech 2.0 的训练文本终版（规范 v3）：train/dev/test 全部登记，并尽量标出与 SPGISpeech 1.0 榜单测试集对应的录音。A 线英文榜单版第二轮训练数据。排在前三份之后，构建中。
+    source: spgispeech2@hf-f4ce91de393c
+    method: text-final-v3
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/aline-en-20261125
