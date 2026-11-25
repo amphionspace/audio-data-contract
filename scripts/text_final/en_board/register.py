@@ -29,11 +29,11 @@ SOURCES = {
         "description": (
             "VoxPopuli 英文 train（欧洲议会演讲）的训练文本终版，直接按训练文本规范 v3 建，供 open-audio-llm A 线（英文榜单版）"
             "训练。目标用 raw_text（带大小写和标点），按规则 2 只补句首大写和句末标点，词中的破折号改连字符、两侧没有字母的引号删掉，"
-            "不改词；raw_text 为空的行用 normalized_text 经 en-v1 学生模型补标点和大小写。wav 从 parquet 原样落盘（32 位浮点，16 kHz）。"
+            "源文本丢了开引号后留在词尾的闭引号（s 以外字母后的 '，如 dignity'）删掉，不改词；raw_text 为空的行用 normalized_text 经 en-v1 学生模型补标点和大小写。wav 从 parquet 原样落盘（32 位浮点，16 kHz）。"
         ),
         "recipe": {
             "text": "raw_text；空的用 normalized_text + en-v1 学生模型（amphiondata written_punctuation_en.written_text）",
-            "rule2_fixes": "词中 em dash→连字符，其余 em dash→逗号；两侧没有字母的 ' 删掉；句首大写；句末 , ; : 改 .，没有句末标点补 .",
+            "rule2_fixes": "词中 em dash→连字符，其余 em dash→逗号；两侧没有字母的 ' 删掉；s 以外字母后的词尾 ' 是闭引号，删掉（normalized_text 的标签和学生输出同样处理）；句首大写；句末 , ; : 改 .，没有句末标点补 .",
             "audio_policy": "parquet 里的 wav 字节原样写成 <version>/audio/<年份>/<audio_id>.wav（: 换成 -），不重新编码",
         },
     },
@@ -43,7 +43,7 @@ SOURCES = {
         "description": (
             "AMI 会议近讲耳麦 train 的训练文本终版，直接按训练文本规范 v3 建，供 open-audio-llm A 线（英文榜单版）训练。"
             "Kaldi s5 的全大写无标点文本经 en-v1 学生模型补标点和大小写（规则 2），输出改了词的按原词只补句末标点；"
-            "词、口语重复和语气词都保留。dev、test 会议不在 train 里（Kaldi 划分）。wav 从 parquet 原样落盘（32 位浮点，16 kHz）。"
+            "词、口语重复和语气词都保留。dev、test 会议不在 train 里（Kaldi 划分）。不足 0.5 秒的段（22,081 条、1.95 h，几乎都是 yeah、mm-hmm 这类单字附和）不收；0.5 秒以上的单字附和仍有 1.3 万条。wav 从 parquet 原样落盘（32 位浮点，16 kHz）。"
         ),
         "recipe": {
             "text": "normalize_label(Kaldi 文本) + en-v1 学生模型（amphiondata written_punctuation_en.written_text）",

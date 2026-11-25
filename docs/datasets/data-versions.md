@@ -39,10 +39,10 @@ AMI 英文会议的近讲耳麦版
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
 | [ami_ihm@hf-edinburghcstr-20261023](../../catalog/ami_ihm.yaml#L1) | 95.5 | 已登记 | 没有 |
-| [ami_ihm@hf-edinburghcstr-20261023-final-v3-20261125](../../catalog/text_final_v3.yaml#L303) | — | 未登记 | 没有 |
+| [ami_ihm@hf-edinburghcstr-20261023-final-v3-20261125](../../catalog/text_final_v3.yaml#L375) | — | 未登记 | 没有 |
 
 - `ami_ihm@hf-edinburghcstr-20261023`：AMI 会议语料的近讲耳麦（IHM）版本：英文 16 kHz 单声道，按 Kaldi AMI s5 切句、文本大写归一化，带会议、说话人和耳麦编号。train / dev / test 分别 108502、13098、12643 句，共 95.5 小时，会议划分与 Kaldi full-corpus-ASR 一致。本机已有 AMI 单远场麦克风版 `ami_sdm`，可与这份近讲版对照近场和远场
-- `ami_ihm@hf-edinburghcstr-20261023-final-v3-20261125`：AMI 近讲耳麦 train 的训练文本终版（规范 v3）：Kaldi 全大写无标点文本经 en-v1 学生模型补标点和大小写（规则 2），词不改、口语重复保留。A 线英文榜单版训练数据。构建中
+- `ami_ihm@hf-edinburghcstr-20261023-final-v3-20261125`：AMI 会议近讲耳麦 train 的训练文本终版，直接按训练文本规范 v3 建，供 open-audio-llm A 线（英文榜单版）训练。Kaldi s5 的全大写无标点文本经 en-v1 学生模型补标点和大小写（规则 2），输出改了词的按原词只补句末标点；词、口语重复和语气词都保留。dev、test 会议不在 train 里（Kaldi 划分）。不足 0.5 秒的段（22,081 条、1.95 h，几乎都是 yeah、mm-hmm 这类单字附和）不收；0.5 秒以上的单字附和仍有 1.3 万条。wav 从 parquet 原样落盘（32 位浮点，16 kHz）
 - 含派生版本（与源数据可能重叠）
 
 ### apptek_callcenter
@@ -206,7 +206,7 @@ CS-Dialogue 对话中的纯英文语句
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
 | [earnings21@github-c05ab6fd8b4b](../../catalog/earnings.yaml#L1) | 39.3 | 已登记 | 没有 |
-| [earnings21@github-c05ab6fd8b4b-final-v3-20261125](../../catalog/text_final_v3.yaml#L275) | — | 未登记 | 没有 |
+| [earnings21@github-c05ab6fd8b4b-final-v3-20261125](../../catalog/text_final_v3.yaml#L347) | — | 未登记 | 没有 |
 
 - `earnings21@github-c05ab6fd8b4b`：Rev 发布的真实财报电话会议长音频评测集：44 场、39.3 小时，覆盖 9 个行业，共 466 位说话人（主持人、高管、分析师），带电话和会议软件 的各种采样率和压缩。transcripts/nlp_references 是逐词的人工转写，带说话人编号、标点、大小写和实体标签（数字、日期、机构名等）， 另有归一化规则、wer_tags、说话人 RTTM 和实体偏置词表（bias_lists），可做长音频识别、带说话人的识别、数字和实体识别评测。 仓库里各家商用 ASR 的输出（earnings21/output）不属于数据本身，未下载。CC BY-SA 4.0
 - `earnings21@github-c05ab6fd8b4b-final-v3-20261125`：Earnings-21 按词级时间戳切成不超过 30 秒的短句（规范 v3），只作测试集，用于核验 A 线英文榜单版。构建中
@@ -221,7 +221,7 @@ CS-Dialogue 对话中的纯英文语句
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
 | [earnings22@github-c05ab6fd8b4b](../../catalog/earnings.yaml#L66) | 119.9 | 已登记 | 没有 |
-| [earnings22@github-c05ab6fd8b4b-final-v3-20261125](../../catalog/text_final_v3.yaml#L128) | — | 未登记 | 没有 |
+| [earnings22@github-c05ab6fd8b4b-final-v3-20261125](../../catalog/text_final_v3.yaml#L200) | — | 未登记 | 没有 |
 
 - `earnings22@github-c05ab6fd8b4b`：Rev 发布的带口音英文真实财报电话会议评测集：125 场、119.9 小时，公司来自 27 个国家，metadata.csv 按语言背景分组（西葡 31 场、 亚洲 28、英语 26、其他罗曼语 13、日耳曼语 12、斯拉夫语 10、非洲 5）。transcripts 下有逐词人工转写（带说话人编号、标点、大小写和 实体标签）、强制对齐版本和归一化规则；subset10 另给 10 场的非逐字转写，其余 subset10 条目是指向主目录的符号链接，未重复下载。 用于口音、长音频和实体识别的真实场景评测。CC BY-SA 4.0
 - `earnings22@github-c05ab6fd8b4b-final-v3-20261125`：Earnings-22 财报电话会议切成不超过 30 秒的短句，直接按训练文本规范 v3 建，供 open-audio-llm A 线（英文榜单版）训练。文本用 nlp_references 的书面写法（大小写、标点、MTN/2019/31st 这类实体原样），时间取 force_aligned_nlp_references，两表按单元匹配；口语重复和 uh/um 保留。排除 Open ASR 榜单测试用的 6 场（4468919、4471586、4474955、4475604、4482968、4483046），另按口音组各取 1 场共 4 场作 dev。音频转成 16 kHz 单声道 FLAC
@@ -712,7 +712,7 @@ LibriSpeech 混合的目标说话人数据
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
 | [spgispeech2@hf-f4ce91de393c](../../catalog/spgispeech2.yaml#L1) | 3,649.2 | 已登记 | 没有 |
-| [spgispeech2@hf-f4ce91de393c-final-v3-20261125](../../catalog/text_final_v3.yaml#L331) | — | 未登记 | 没有 |
+| [spgispeech2@hf-f4ce91de393c-final-v3-20261125](../../catalog/text_final_v3.yaml#L468) | — | 未登记 | 没有 |
 
 - `spgispeech2@hf-f4ce91de393c`：Kensho（S&P Global）发布的 SPGISpeech 多说话人版本（Interspeech 2025）：2021–2024 年上市公司财报电话会议录音，多取自 问答环节，切成 50–90 秒的片段，每段至少 2 位说话人（2 人约 83%、3 人约 16%，最多 6 人），口音覆盖母语和非母语商务英语。 转写是 S&P Global 的专业人工转写（官方称准确率 99% 以上），用“\|”标出说话人切换，并附每段的数字说话人编号列表； supplemental_data/alignment_files.tar.gz 是每段的对齐 JSON。本地共 3,649.2 小时（README 写 3,780 h，v1.0.0 因法律原因 删掉约 3% 的片段）：train 156,753 段、39,864 人、3,367.0 h；dev 6,195 段、4,914 人、133.2 h；test 6,932 段、5,371 人、 149.0 h；共 41,117 个说话人编号，16 kHz 单声道 PCM WAV 嵌在 parquet 中。三个划分没有共享会议（call_id 互斥），但有共享 说话人（train 与 test 共 4,702 人）。转写按编辑规范而非逐字：口吃、重复和部分寒暄会被删掉，长片段里残留较多。数据有 访问门控，已用用户的 HF 账号同意 Kensho 条款（2025 年 7 月版，上游 LICENSE 文件为空，条款以 README 门控文本为准）： 仅限内部非商业研究；用它训练的模型及其输出若对外提供，必须免费且条款不宽于本条款；不得用于与 Kensho 竞争的商用转写或 ASR 产品、声纹识别或验证、语音克隆、说话人画像；不得识别或联系说话人真实身份；不得再分发
 - `spgispeech2@hf-f4ce91de393c-final-v3-20261125`：SPGISpeech 2.0 的训练文本终版（规范 v3）：train/dev/test 全部登记，并尽量标出与 SPGISpeech 1.0 榜单测试集对应的录音。A 线英文榜单版第二轮训练数据。排在前三份之后，构建中
@@ -791,7 +791,7 @@ VoxPopuli 英语欧洲议会发言
 | [voxpopuli_en@hf-42f01879c780-final-v3-20261125](../../catalog/text_final_v3.yaml#L100) | — | 未登记 | 没有 |
 
 - `voxpopuli_en@hf-42f01879c780`：VoxPopuli 人工转写 ASR 数据的英语全部划分（HF parquet 转换版，音频以 16 kHz WAV 字节存在 parquet 内）： 2009–2020 年欧洲议会全会的现场发言，不少议员以英语为外语，口音多样，以即席或半即席讲话为主，train 中男声约占 57%（按条数）。 train 182,482 条、639 人、522.6 小时；test 1,842 条、286 人、4.9 小时；validation 1,753 条、71 人、5.0 小时；全部标为 gold transcript。raw_text 为空的有 train 5,463 条、test 52 条、validation 58 条，这些行只有 normalized_text，使用时需回退到 规范化文本。Granary v2（已登记）也含 train 这部分。与已有 voxpopuli_fr/de 取自同一 HF 修订。CC0
-- `voxpopuli_en@hf-42f01879c780-final-v3-20261125`：VoxPopuli 英文 train 的训练文本终版（规范 v3）：目标用 raw_text（带大小写和标点），按规则 2 补句首大写和句末标点；raw_text 为空的行用 normalized_text 经 en-v1 学生模型补标点和大小写；wav 从 parquet 原样落盘。A 线英文榜单版训练数据。构建中
+- `voxpopuli_en@hf-42f01879c780-final-v3-20261125`：VoxPopuli 英文 train（欧洲议会演讲）的训练文本终版，直接按训练文本规范 v3 建，供 open-audio-llm A 线（英文榜单版）训练。目标用 raw_text（带大小写和标点），按规则 2 只补句首大写和句末标点，词中的破折号改连字符、两侧没有字母的引号删掉，源文本丢了开引号后留在词尾的闭引号（s 以外字母后的 '，如 dignity'）删掉，不改词；raw_text 为空的行用 normalized_text 经 en-v1 学生模型补标点和大小写。wav 从 parquet 原样落盘（32 位浮点，16 kHz）
 - 含派生版本（与源数据可能重叠）
 
 ## 中文及粤语数据
