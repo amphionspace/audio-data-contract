@@ -1,0 +1,142 @@
+# 占位登记：A 线（英文榜单版）序列级蒸馏训练数据，2026-11-27。用户确认财报会类录音采用 SPGISpeech 的整理稿写法。
+# 老师是 Musci-ASR，目标换成它的贪心解码；运行目录 /workspace/workspace/mingdong/data/aline-kd-20261127（make_pool.py / label/ / build_kd.py），构建中，进度见各版本状态文件。
+- schema_version: dataset-catalog/2.0
+  dataset_id: gigaspeech
+  version: train-punc-v1-20261102-final-v1-20261120-kd-pool-v1-20261127
+  languages:
+    - en
+  tasks:
+    - asr
+  aliases: []
+  artifacts:
+    - name: preparation_state
+      kind: dataset-state
+      root_alias: aidc_data
+      relative_path: datasets/gigaspeech/versions/train-punc-v1-20261102-final-v1-20261120-kd-pool-v1-20261127/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+          - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    summary: A 线蒸馏用 GigaSpeech 标注池
+    description: >-
+      gigaspeech@train-punc-v1-20261102-final-v1-20261120 训练集的随机子集 25,000 条（种子 20261127），已排除 A 线去重清单，作为 Musci 打标的输入池。文本是原终版文本，未改。make_pool.py 生成。
+    source: gigaspeech@train-punc-v1-20261102-final-v1-20261120
+    run_dir: /workspace/workspace/mingdong/data/aline-kd-20261127
+- schema_version: dataset-catalog/2.0
+  dataset_id: ami_ihm
+  version: hf-edinburghcstr-20261023-final-v3-20261125-musci-kd-v1-20261127
+  languages:
+    - en
+  tasks:
+    - asr
+  aliases: []
+  artifacts:
+    - name: preparation_state
+      kind: dataset-state
+      root_alias: aidc_data
+      relative_path: datasets/ami_ihm/versions/hf-edinburghcstr-20261023-final-v3-20261125-musci-kd-v1-20261127/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+          - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    summary: A 线蒸馏：AMI 近讲，Musci 解码作目标
+    description: >-
+      ami_ihm@hf-edinburghcstr-20261023-final-v3-20261125 训练集（随机 25,000 条，已排除 A 线去重清单），音频不变，目标换成 Musci-ASR-qwen-1019@c376e9c（11.17 服务栈，贪心解码，force_language en） 的输出。错误数 > max(1, 0.3 × 参考词数) 的记录当作老师失败丢弃（参考只用来抓幻觉和截断，保留 Musci 自己的写法）。被拒样本每源抽查 20 条，误杀率写进运行目录 README。build_kd.py 生成。
+    source: ami_ihm@hf-edinburghcstr-20261023-final-v3-20261125
+    run_dir: /workspace/workspace/mingdong/data/aline-kd-20261127
+- schema_version: dataset-catalog/2.0
+  dataset_id: spgispeech2
+  version: hf-f4ce91de393c-final-v3-20261125-musci-kd-v1-20261127
+  languages:
+    - en
+  tasks:
+    - asr
+  aliases: []
+  artifacts:
+    - name: preparation_state
+      kind: dataset-state
+      root_alias: aidc_data
+      relative_path: datasets/spgispeech2/versions/hf-f4ce91de393c-final-v3-20261125-musci-kd-v1-20261127/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+          - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    summary: A 线蒸馏：SPGISpeech 2.0，Musci 解码
+    description: >-
+      spgispeech2@hf-f4ce91de393c-final-v3-20261125 训练集（随机 25,000 条，已排除 A 线去重清单和能对上 SPGISpeech 1.0 test 的记录），音频不变，目标换成 Musci-ASR-qwen-1019@c376e9c（11.17 服务栈，贪心解码，force_language en） 的输出。错误数 > max(1, 0.3 × 参考词数) 的记录当作老师失败丢弃（参考只用来抓幻觉和截断，保留 Musci 自己的写法）。被拒样本每源抽查 20 条，误杀率写进运行目录 README。build_kd.py 生成。
+    source: spgispeech2@hf-f4ce91de393c-final-v3-20261125
+    run_dir: /workspace/workspace/mingdong/data/aline-kd-20261127
+- schema_version: dataset-catalog/2.0
+  dataset_id: earnings22
+  version: github-c05ab6fd8b4b-final-v3-20261125-musci-kd-v1-20261127
+  languages:
+    - en
+  tasks:
+    - asr
+  aliases: []
+  artifacts:
+    - name: preparation_state
+      kind: dataset-state
+      root_alias: aidc_data
+      relative_path: datasets/earnings22/versions/github-c05ab6fd8b4b-final-v3-20261125-musci-kd-v1-20261127/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+          - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    summary: A 线蒸馏：Earnings-22，Musci 解码
+    description: >-
+      earnings22@github-c05ab6fd8b4b-final-v3-20261125 训练集（全部记录，已排除 A 线去重清单），音频不变，目标换成 Musci-ASR-qwen-1019@c376e9c（11.17 服务栈，贪心解码，force_language en） 的输出。错误数 > max(1, 0.3 × 参考词数) 的记录当作老师失败丢弃（参考只用来抓幻觉和截断，保留 Musci 自己的写法）。被拒样本每源抽查 20 条，误杀率写进运行目录 README。build_kd.py 生成。
+    source: earnings22@github-c05ab6fd8b4b-final-v3-20261125
+    run_dir: /workspace/workspace/mingdong/data/aline-kd-20261127
+- schema_version: dataset-catalog/2.0
+  dataset_id: gigaspeech
+  version: train-punc-v1-20261102-final-v1-20261120-kd-pool-v1-20261127-musci-kd-v1-20261127
+  languages:
+    - en
+  tasks:
+    - asr
+  aliases: []
+  artifacts:
+    - name: preparation_state
+      kind: dataset-state
+      root_alias: aidc_data
+      relative_path: datasets/gigaspeech/versions/train-punc-v1-20261102-final-v1-20261120-kd-pool-v1-20261127-musci-kd-v1-20261127/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+          - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    summary: A 线蒸馏：GigaSpeech 池，Musci 解码
+    description: >-
+      gigaspeech@train-punc-v1-20261102-final-v1-20261120-kd-pool-v1-20261127 训练集（即上面的标注池 25,000 条），音频不变，目标换成 Musci-ASR-qwen-1019@c376e9c（11.17 服务栈，贪心解码，force_language en） 的输出。错误数 > max(1, 0.3 × 参考词数) 的记录当作老师失败丢弃（参考只用来抓幻觉和截断，保留 Musci 自己的写法）。被拒样本每源抽查 20 条，误杀率写进运行目录 README。build_kd.py 生成。
+    source: gigaspeech@train-punc-v1-20261102-final-v1-20261120-kd-pool-v1-20261127
+    run_dir: /workspace/workspace/mingdong/data/aline-kd-20261127
