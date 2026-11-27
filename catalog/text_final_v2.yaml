@@ -98,6 +98,7 @@
     owner: mingdong
     run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
     build_script: scripts/text_final/build_v2.py
+    superseded_by: ts_scene_pool@hard-20261016-punchw-20261102-final-v4-20261127
   recipe_parameters:
     spec: docs/reference/training-text.md（v2）
     start: ts_scene_pool@hard-20261016-punchw-20261102-final-v1-20261120
@@ -207,6 +208,7 @@
     rules: zhen-fix-v1
     changed_records: 24587
     build_script: scripts/text_final/build_v2.py
+    superseded_by: emilia2_mix@mix-20261013-utts-final-v4-20261127
 - schema_version: dataset-catalog/2.0
   dataset_id: emilia2_dialog
   version: dialog-turn-taking-20261013-enroll-final-v2-20261123
@@ -541,6 +543,7 @@
     rules: zhen-fix-v1
     changed_records: 12855
     build_script: scripts/text_final/build_v2.py
+    superseded_by: emilia2_dialog@dialog-turn-taking-20261013-enroll-final-v4-20261127
 - schema_version: dataset-catalog/2.0
   dataset_id: aishell4
   version: turn-taking-20261014-utts-punc-20261102-final-v2-20261123
@@ -674,6 +677,7 @@
     rules: zhen-fix-v1
     changed_records: 254
     build_script: scripts/text_final/build_v2.py
+    superseded_by: aishell4@turn-taking-20261014-utts-punc-20261102-final-v4-20261127
 - schema_version: dataset-catalog/2.0
   dataset_id: magicdata_ramc
   version: turn-taking-20261014-utts-punc-20261102-final-v2-20261123
@@ -776,6 +780,7 @@
     rules: zhen-fix-v1
     changed_records: 711
     build_script: scripts/text_final/build_v2.py
+    superseded_by: magicdata_ramc@turn-taking-20261014-utts-punc-20261102-final-v4-20261127
 - schema_version: dataset-catalog/2.0
   dataset_id: wenetspeech_clean
   version: train-punc-v1-20261102-final-v2-20261123
@@ -858,6 +863,7 @@
     rules: zhen-fix-en-v1
     changed_records: 3727
     build_script: scripts/text_final/build_v2.py
+    superseded_by: wenetspeech_clean@train-punc-v1-20261102-final-v4-20261127
 - schema_version: dataset-catalog/2.0
   dataset_id: emilia2_short
   version: short-lance-20261023-final-v2-20261123
@@ -944,6 +950,7 @@
     rules: zhen-fix-v1
     changed_records: 15965
     build_script: scripts/text_final/build_v2.py
+    superseded_by: emilia2_short@short-lance-20261023-final-v4-20261127
 - schema_version: dataset-catalog/2.0
   dataset_id: police_asr_unified
   version: train-punc-v1-20261102-final-v2-20261123
@@ -1012,6 +1019,7 @@
     changed_records: 12247
     run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
     build_script: scripts/text_final/build_v2.py
+    superseded_by: police_asr_unified@train-punc-v1-20261102-final-v4-20261127
   recipe_parameters:
     spec: docs/reference/training-text.md（v2）
     start: police_asr_unified@train-punc-v1-20261102-final-v1-20261120
@@ -1080,6 +1088,7 @@
     method: text-final-v2
     run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
     build_script: scripts/text_final/build_v2.py
+    superseded_by: aishell2@train-punc-v1-20261102-final-v4-20261127
   recipe_parameters:
     spec: docs/reference/training-text.md（v2）
     start: aishell2@train-punc-v1-20261102-final-v1-20261120
@@ -1157,6 +1166,7 @@
     rules: zhen-fix-v1
     changed_records: 298
     build_script: scripts/text_final/build_v2.py
+    superseded_by: aishell4@asr-20261014-punc-20261102-final-v4-20261127
 - schema_version: dataset-catalog/2.0
   dataset_id: threed_speaker_zh_far_asr
   version: train-punc-v1-20261102-final-v2-20261123
@@ -1220,6 +1230,7 @@
     method: text-final-v2
     run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
     build_script: scripts/text_final/build_v2.py
+    superseded_by: threed_speaker_zh_far_asr@train-punc-v1-20261102-final-v4-20261127
   recipe_parameters:
     spec: docs/reference/training-text.md（v2）
     start: threed_speaker_zh_far_asr@train-punc-v1-20261102-final-v1-20261120
@@ -1298,6 +1309,7 @@
     rules: zhen-fix-v1
     changed_records: 1052
     build_script: scripts/text_final/build_v2.py
+    superseded_by: magicdata_ramc@train-punc-v1-20261102-final-v4-20261127
 - schema_version: dataset-catalog/2.0
   dataset_id: magicdata_ramc
   version: allspk-asr-v1-20261103-final-v2-20261123
@@ -1373,6 +1385,7 @@
     owner: mingdong
     run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
     build_script: scripts/text_final/build_v2.py
+    superseded_by: magicdata_ramc@allspk-asr-v1-20261103-final-v4-20261127
   derived_from: magicdata_ramc@allspk-asr-v1-20261103-final-v1-20261120
   recipe_parameters:
     spec: docs/reference/training-text.md（v2）
@@ -1450,6 +1463,7 @@
     owner: mingdong
     run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
     build_script: scripts/text_final/build_v2.py
+    superseded_by: aishell4@allspk-asr-v1-20261103-final-v4-20261127
   derived_from: aishell4@allspk-asr-v1-20261103-final-v1-20261120
   recipe_parameters:
     spec: docs/reference/training-text.md（v2）
@@ -1556,6 +1570,7 @@
     owner: mingdong
     run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
     build_script: scripts/text_final/build_v2.py
+    superseded_by: magicdata_ramc@allspk-ts-v1-20261104-final-v4-20261127
   derived_from: magicdata_ramc@allspk-ts-v1-20261104-final-v1-20261120
   recipe_parameters:
     spec: docs/reference/training-text.md（v2）
@@ -1657,6 +1672,7 @@
     owner: mingdong
     run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
     build_script: scripts/text_final/build_v2.py
+    superseded_by: aishell4@allspk-ts-v1-20261104-final-v4-20261127
   derived_from: aishell4@allspk-ts-v1-20261104-final-v1-20261120
   recipe_parameters:
     spec: docs/reference/training-text.md（v2）
@@ -1851,6 +1867,7 @@
     owner: mingdong
     run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
     build_script: scripts/text_final/build_v2.py
+    superseded_by: hw_sft@hw-20261014-final-v4-20261127
   derived_from: hw_sft@hw-20261014-final-v1-20261120
 - schema_version: dataset-catalog/2.0
   dataset_id: hard_hw_sft
@@ -1923,6 +1940,7 @@
     owner: mingdong
     run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
     build_script: scripts/text_final/build_v2.py
+    superseded_by: hard_hw_sft@hard-20261014-final-v4-20261127
   derived_from: hard_hw_sft@hard-20261014-final-v1-20261120
 - schema_version: dataset-catalog/2.0
   dataset_id: ts_scene_pool
@@ -2023,6 +2041,7 @@
     owner: mingdong
     run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
     build_script: scripts/text_final/build_v2.py
+    superseded_by: ts_scene_pool@multi-20261017-punchw-20261102-final-v4-20261127
   recipe_parameters:
     spec: docs/reference/training-text.md（v2）
     start: ts_scene_pool@multi-20261017-punchw-20261102-final-v1-20261120
@@ -2127,6 +2146,7 @@
     owner: mingdong
     run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
     build_script: scripts/text_final/build_v2.py
+    superseded_by: ts_scene_pool@alt-twins-20261024-punchw-20261102-final-v4-20261127
   recipe_parameters:
     spec: docs/reference/training-text.md（v2）
     start: ts_scene_pool@alt-twins-20261024-punchw-20261102-final-v1-20261120
@@ -2230,6 +2250,7 @@
     owner: mingdong
     run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
     build_script: scripts/text_final/build_v2.py
+    superseded_by: ts_scene_pool@solo-20261020-punchw-20261102-final-v4-20261127
   recipe_parameters:
     spec: docs/reference/training-text.md（v2）
     start: ts_scene_pool@solo-20261020-punchw-20261102-final-v1-20261120
@@ -2334,6 +2355,7 @@
     owner: mingdong
     run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
     build_script: scripts/text_final/build_v2.py
+    superseded_by: ts_scene_pool@handover-20261021-punchw-20261102-final-v4-20261127
   recipe_parameters:
     spec: docs/reference/training-text.md（v2）
     start: ts_scene_pool@handover-20261021-punchw-20261102-final-v1-20261120
@@ -2409,6 +2431,7 @@
     owner: mingdong
     run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
     build_script: scripts/text_final/build_v2.py
+    superseded_by: ts_scene_pool@magicdata-near-20261023-punchw-20261102-final-v4-20261127
   recipe_parameters:
     spec: docs/reference/training-text.md（v2）
     start: ts_scene_pool@magicdata-near-20261023-punchw-20261102-final-v1-20261120
@@ -2484,6 +2507,7 @@
     owner: mingdong
     run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
     build_script: scripts/text_final/build_v2.py
+    superseded_by: ts_scene_pool@magicdata-alt-twins-20261024-punchw-20261102-final-v4-20261127
   recipe_parameters:
     spec: docs/reference/training-text.md（v2）
     start: ts_scene_pool@magicdata-alt-twins-20261024-punchw-20261102-final-v1-20261120
@@ -2558,6 +2582,7 @@
     owner: mingdong
     run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
     build_script: scripts/text_final/build_v2.py
+    superseded_by: ts_scene_pool@magicdata-hard-20261023-punchw-20261102-final-v4-20261127
   recipe_parameters:
     spec: docs/reference/training-text.md（v2）
     start: ts_scene_pool@magicdata-hard-20261023-punchw-20261102-final-v1-20261120
@@ -2632,6 +2657,7 @@
     owner: mingdong
     run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
     build_script: scripts/text_final/build_v2.py
+    superseded_by: ts_scene_pool@magicdata-handover-20261023-punchw-20261102-final-v4-20261127
   recipe_parameters:
     spec: docs/reference/training-text.md（v2）
     start: ts_scene_pool@magicdata-handover-20261023-punchw-20261102-final-v1-20261120
@@ -2748,6 +2774,7 @@
     owner: mingdong
     run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
     build_script: scripts/text_final/build_v2.py
+    superseded_by: aishell@legacy-20260804-final-v4-20261127
   derived_from: aishell@legacy-20260804
   recipe_parameters:
     spec: docs/reference/training-text.md（v2）
@@ -2864,6 +2891,7 @@
     owner: mingdong
     run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
     build_script: scripts/text_final/build_v2.py
+    superseded_by: magicdata@legacy-20260804-final-v4-20261127
   derived_from: magicdata@legacy-20260804
   recipe_parameters:
     spec: docs/reference/training-text.md（v2）
@@ -2957,6 +2985,7 @@
     owner: mingdong
     run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
     build_script: scripts/text_final/build_v2.py
+    superseded_by: aishell3@legacy-20260804-final-v4-20261127
   derived_from: aishell3@legacy-20260804
   recipe_parameters:
     spec: docs/reference/training-text.md（v2）

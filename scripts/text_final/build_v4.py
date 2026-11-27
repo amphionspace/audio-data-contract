@@ -84,7 +84,16 @@ def fix_row(row: dict, field: str, punc, n: Counter) -> tuple[str, str] | None:
     for holder in (row, meta, row.get("custom") or {}):
         for key in ("hotwords", "interferer_hotwords"):
             if isinstance(holder.get(key), list):
-                holder[key] = [fix(w) if isinstance(w, str) else w for w in holder[key]]
+                # two spellings of one word (大明王朝一五六六, 大明王朝1566) become one: keep the first
+                words, seen = [], set()
+                for w in holder[key]:
+                    if isinstance(w, str):
+                        w = fix(w)
+                        if w in seen:
+                            continue
+                        seen.add(w)
+                    words.append(w)
+                holder[key] = words
     key = "metadata" if field == "target" else "custom"
     row[key] = {**(row.get(key) or {}), "text_final": {"original_text": old, "rules": "text-final-v4"}}
     return old, new

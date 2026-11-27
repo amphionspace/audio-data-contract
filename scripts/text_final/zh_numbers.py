@@ -1,4 +1,4 @@
-"""Chinese numerals -> Arabic digits for training text (draft rule zh-num-v1, 2026-11-27).
+"""Chinese numerals -> Arabic digits for training text (rule zh-num-v1, 2026-11-27).
 
 Only numeral characters change (plus 百分之X -> X% and X点Y -> X.Y). Every other character stays as it was:
 no unit symbols (公斤 stays 公斤), no date reformatting, no spaces. Follows GB/T 15835-2011 where it is
