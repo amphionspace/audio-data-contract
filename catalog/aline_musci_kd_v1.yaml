@@ -23,7 +23,7 @@
   provenance:
     preparation_status: building
     owner: mingdong
-    summary: A 线序列级蒸馏的 GigaSpeech 标注池（训练集随机 25,000 条）
+    summary: A 线蒸馏用 GigaSpeech 标注池
     description: >-
       gigaspeech@train-punc-v1-20261102-final-v1-20261120 训练集的随机子集 25,000 条（种子 20261127），已排除 A 线去重清单，作为 Musci 打标的输入池。文本是原终版文本，未改。make_pool.py 生成。
     source: gigaspeech@train-punc-v1-20261102-final-v1-20261120
@@ -51,7 +51,7 @@
   provenance:
     preparation_status: building
     owner: mingdong
-    summary: A 线序列级蒸馏：AMI 近讲训练集，目标换成 Musci 的解码
+    summary: A 线蒸馏：AMI 近讲，Musci 解码作目标
     description: >-
       ami_ihm@hf-edinburghcstr-20261023-final-v3-20261125 训练集（随机 25,000 条，已排除 A 线去重清单），音频不变，目标换成 Musci-ASR-qwen-1019@c376e9c（11.17 服务栈，贪心解码，force_language en） 的输出。错误数 > max(1, 0.3 × 参考词数) 的记录当作老师失败丢弃（参考只用来抓幻觉和截断，保留 Musci 自己的写法）。被拒样本每源抽查 20 条，误杀率写进运行目录 README。build_kd.py 生成。
     source: ami_ihm@hf-edinburghcstr-20261023-final-v3-20261125
@@ -79,7 +79,7 @@
   provenance:
     preparation_status: building
     owner: mingdong
-    summary: A 线序列级蒸馏：SPGISpeech 2.0 训练集，目标换成 Musci 的解码（整理稿写法）
+    summary: A 线蒸馏：SPGISpeech 2.0，Musci 解码
     description: >-
       spgispeech2@hf-f4ce91de393c-final-v3-20261125 训练集（随机 25,000 条，已排除 A 线去重清单和能对上 SPGISpeech 1.0 test 的记录），音频不变，目标换成 Musci-ASR-qwen-1019@c376e9c（11.17 服务栈，贪心解码，force_language en） 的输出。错误数 > max(1, 0.3 × 参考词数) 的记录当作老师失败丢弃（参考只用来抓幻觉和截断，保留 Musci 自己的写法）。被拒样本每源抽查 20 条，误杀率写进运行目录 README。build_kd.py 生成。
     source: spgispeech2@hf-f4ce91de393c-final-v3-20261125
@@ -107,7 +107,7 @@
   provenance:
     preparation_status: building
     owner: mingdong
-    summary: A 线序列级蒸馏：Earnings-22 训练集，目标换成 Musci 的解码
+    summary: A 线蒸馏：Earnings-22，Musci 解码
     description: >-
       earnings22@github-c05ab6fd8b4b-final-v3-20261125 训练集（全部记录，已排除 A 线去重清单），音频不变，目标换成 Musci-ASR-qwen-1019@c376e9c（11.17 服务栈，贪心解码，force_language en） 的输出。错误数 > max(1, 0.3 × 参考词数) 的记录当作老师失败丢弃（参考只用来抓幻觉和截断，保留 Musci 自己的写法）。被拒样本每源抽查 20 条，误杀率写进运行目录 README。build_kd.py 生成。
     source: earnings22@github-c05ab6fd8b4b-final-v3-20261125
@@ -135,7 +135,7 @@
   provenance:
     preparation_status: building
     owner: mingdong
-    summary: A 线序列级蒸馏：GigaSpeech 标注池，目标换成 Musci 的解码
+    summary: A 线蒸馏：GigaSpeech 池，Musci 解码
     description: >-
       gigaspeech@train-punc-v1-20261102-final-v1-20261120-kd-pool-v1-20261127 训练集（即上面的标注池 25,000 条），音频不变，目标换成 Musci-ASR-qwen-1019@c376e9c（11.17 服务栈，贪心解码，force_language en） 的输出。错误数 > max(1, 0.3 × 参考词数) 的记录当作老师失败丢弃（参考只用来抓幻觉和截断，保留 Musci 自己的写法）。被拒样本每源抽查 20 条，误杀率写进运行目录 README。build_kd.py 生成。
     source: gigaspeech@train-punc-v1-20261102-final-v1-20261120-kd-pool-v1-20261127
