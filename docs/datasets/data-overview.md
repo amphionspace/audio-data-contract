@@ -1,6 +1,6 @@
 # 数据总览
 
-当前登记 **276 个数据集**；另有 **34 个下载来源声明**和 **1 个训练混合配方**。登记不代表本机文件已齐备。
+当前登记 **277 个数据集**；另有 **34 个下载来源声明**和 **1 个训练混合配方**。登记不代表本机文件已齐备。
 
 时长取单个版本的最大值，不跨版本相加；≈ 为参考表或估算值，— 为暂无完整时长。各版本的时长、说明、COS 地址和质量证据见[版本明细](data-versions.md)。
 
@@ -60,6 +60,7 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [libritts_r](data-versions.md#libritts_r) | en | 语音识别、语音合成 | 583.1 | 英文有声书 TTS 语料，音频经修复（LibriTTS-R） | `TTS 桶:LibriTTS-R/`（原始数据） |
 | [ljspeech](data-versions.md#ljspeech) | en | 语音识别、语音合成 | 23.9 | 单人英文朗读（LJSpeech） | `TTS 桶:LJSpeech/`（原始数据） |
 | [magicdata_multistream_en](data-versions.md#magicdata_multistream_en) | en | 语音识别、带说话人标注的语音识别 | 2.8 | 英文双人自然对话分轨录音（MagicData 样本） | 没有 |
+| [maryland_bill_hearings](data-versions.md#maryland_bill_hearings) | en | 语音识别 | 95.7 | 马里兰州议会委员会听证英语 | 没有 |
 | [meld_ser](data-versions.md#meld_ser) | en | 语音情感识别 | 2.3 | 美剧《老友记》对话情感识别评测（MELD） | 快照 20260914 |
 | [mls](data-versions.md#mls) | en | 语音识别 | 44,691.0 | 英文有声书朗读（MLS 英语） | 部分版本：快照 20260914 |
 | [msp_podcast_ser](data-versions.md#msp_podcast_ser) | en | 语音情感识别 | — | 英文播客情感识别评测（MSP-Podcast） | 快照 20260914 |
