@@ -275,3 +275,67 @@
   recipe_parameters:
     builder: scripts/ts_hotwords/build_eval_set.py --languages pt --version pt-v1-20261117
     labeler: Qwen3.8-27B, amphiondata extract_hotword prompt + review pass
+- schema_version: dataset-catalog/2.0
+  dataset_id: ts_asr_hotwords
+  version: ar-v1-20261127
+  languages:
+  - ar
+  tasks:
+  - ts_asr
+  aliases: []
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/ts_asr_hotwords/versions/ar-v1-20261127/state.json
+  - name: audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/ts_asr_hotwords/versions/ar-v1-20261127/audio-index.jsonl.gz
+    sha256: 3dc921b40297ab3ac9771d5b0a5711beaea17b63b3b2bee103b633180f6f3fd5
+    metadata:
+      record_count: 6038
+    expected_bytes: 313239
+  - name: ar-synthetic-records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/ts_asr_hotwords/versions/ar-v1-20261127/records/ar-synthetic.jsonl.gz
+    sha256: f93f7fab54555ef844cc4fc55317c0470ce4062a8e6923108c1aa0bdf07fe9ab
+    metadata:
+      record_count: 3019
+    expected_bytes: 2492258
+  - name: hotword-labels
+    kind: metadata
+    root_alias: aidc_data
+    relative_path: datasets/ts_asr_hotwords/versions/ar-v1-20261127/hotword-labels.jsonl
+    sha256: 65854d0df08a4a4e99ec228f924feb90dc6c3f1b5cda453b0b71bfb13083362b
+    expected_bytes: 5098049
+  splits:
+    ar-synthetic:
+      artifacts:
+        records:
+        - ar-synthetic-records
+        audio_index:
+        - audio-index
+      statistics:
+        records: 3019
+        hotword_case:
+          interferer: 1128
+          gold: 632
+          gold+interferer: 392
+          none: 867
+      group: test
+      task: ts_asr
+      provenance:
+        preparation_status: prepared
+  provenance:
+    preparation_status: prepared
+    owner: mingdong
+    description: 阿拉伯语 TS-ASR + 热词评测集：从 ts-asr-benchmark-ar@v1-20261127（ts_asr_benchmark@ar-v1-20261127，Common Voice 24.0 ar dev+test）派生，做法与西语 es-v1-20261111、葡语 pt-v1-20261117 相同：沿用原音频与目标，记录 id 加 ar 前缀；hotwords = 目标说话人转写里的热词；metadata.bias_lists：random = 正确词 + 随机词共 10 个，interferer = 正确词 + 其他说话人说出的热词 + 随机词共 20 个（只在有人说了热词时给）；抽样同 v1。热词由 amphiondata 的热词提取提示词经 Qwen3.8-27B 标注并复核（label_hotwords.py），词必须在原文里出现；原始标注随版本存为 hotword-labels.jsonl（CV 24.0 ar test、FLEURS ar、MGB-2 test 的转写，以及 TS 记录里的目标与干扰人文本，一次标完；hotword_bench@ar-v1-20261127
+      也用它）。一个 split：ar-synthetic 3,019。
+    source: ts_asr_benchmark@ar-v1-20261127
+    audit: datasets/ts_asr_hotwords/versions/ar-v1-20261127/state.json
+    known_issues: 没有真实会议部分（阿拉伯语没有真实会议源数据）。
+  recipe_parameters:
+    builder: scripts/ts_hotwords/build_eval_set.py --languages ar --version ar-v1-20261127
+    labeler: Qwen3.8-27B, amphiondata extract_hotword prompt + review pass

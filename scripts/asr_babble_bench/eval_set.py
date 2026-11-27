@@ -48,7 +48,7 @@ def main():
             return noise
         return [*([language] if language in TAGGED_LANGUAGES else []), "synthetic", *noise]
 
-    single = {"es": "西语", "pt": "葡语"}
+    single = {"es": "西语", "pt": "葡语", "ar": "阿拉伯语"}
     if len(recipe["targets"]) == 1 and set(recipe["targets"]) <= set(single):
         (language,) = recipe["targets"]
         name = single[language]

@@ -22,6 +22,9 @@ source ``{manifest: {alias, path}, dataset, version, split}``; ``path`` is the C
     python scripts/ts_benchmark/export_bilingual_pool.py --languages pt en --held-out pt \
         --exclude-speakers ts-training-targets.json \
         --output /workspace/data/datasets/ts_asr_crosslingual/source/pools/pt-v1-20261117
+    python scripts/ts_benchmark/export_bilingual_pool.py --languages ar en --held-out ar \
+        --exclude-speakers ts-training-targets.json \
+        --output /workspace/data/datasets/ts_asr_crosslingual/source/pools/ar-v1-20261127
 """
 
 import argparse
@@ -40,11 +43,16 @@ MANIFESTS = {
     # Common Voice 27.0 pt dev / test (common_voice_pt@pt-eval-v1-20261117); its train is a training set, so pt is
     # only used --held-out and the train check reads the training version's supervisions (TRAIN_SUPERVISIONS)
     "pt": "/workspace/data/datasets/common_voice_pt/versions/pt-eval-v1-20261117/manifests/cv27-pt_{name}_{split}.jsonl.gz",
+    # Common Voice 24.0 ar dev / test (common_voice_ar@ar-eval-v1-20261127); only used --held-out, the train check
+    # reads the CV 24.0 train split of common_voice_ar@legacy (TRAIN_SUPERVISIONS)
+    "ar": "/workspace/data/datasets/common_voice_ar/versions/ar-eval-v1-20261127/manifests/cv24-ar_{name}_{split}.jsonl.gz",
 }
-INTERFERER_SPLITS = {"zh": ("dev", "test"), "en": ("test",), "es": ("dev", "test"), "pt": ("dev", "test")}
+INTERFERER_SPLITS = {"zh": ("dev", "test"), "en": ("test",), "es": ("dev", "test"), "pt": ("dev", "test"),
+                     "ar": ("dev", "test")}
 # Speakers of a held-out language's training set when it is not the ``train`` split of MANIFESTS
 TRAIN_SUPERVISIONS = {
     "pt": "/workspace/data/datasets/common_voice_pt/versions/pt-train-v1-20261117/cv27-pt_supervisions_train.jsonl.gz",
+    "ar": "/workspace/data/datasets/common_voice_ar/versions/legacy/manifests/cv-ar_supervisions_train.jsonl.gz",
 }
 
 

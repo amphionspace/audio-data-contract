@@ -1542,3 +1542,134 @@
     - common_voice_pt@pt-train-v1-20261117:train, mls_pt@pt-train-v1-20261117:train (confusable vocabulary, overlap check)
     - 'yodas_granary_es_pt@pt000-clean-v1-20261114 (confusable vocabulary only: Qwen3.8-27B hotword labels, source/pt-v1-20261117-vocabulary)'
     limitations: 热词来自 LLM 抽取与复核，未经人工核对；没有中文 v3 的 hotword_types（需要 LLM 标注）；没有葡语现网词库，不做中文 v2 的 pool50 检索列表；近音词按拼写推出的读音键检索（巴西读法），不是声学相似度，也不覆盖英文专名的英语读法；FLEURS 同一句话有多个说话人。MLS 转写全小写无标点（旧正字法），热词也是小写。
+- schema_version: dataset-catalog/2.0
+  dataset_id: hotword_bench
+  version: ar-v1-20261127
+  languages:
+  - ar
+  tasks:
+  - asr_hotwords
+  artifacts:
+  - name: audio-index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/hotword_bench/versions/ar-v1-20261127/audio-index.jsonl.gz
+    sha256: 94dced681a047f973b7bf44297d249b263744fa5e0bc0c0f51c2eaf446c993dd
+    metadata:
+      record_count: 2798
+  - name: confusables
+    kind: jsonl-metadata
+    root_alias: aidc_data
+    relative_path: datasets/hotword_bench/source/ar-v1-20261127/mined/confusables.jsonl
+    sha256: d18eefa3443ef47b83cb78aa19cb8209cf1e53db10fb70d7ccc9a1c6d29ab9a6
+    metadata:
+      record_count: 1687
+  - name: qc
+    kind: quality-report
+    root_alias: aidc_data
+    relative_path: datasets/hotword_bench/versions/ar-v1-20261127/qc.yaml
+    sha256: c2fc4bc79c76a0a4f32a5ab962730a37966186ed0ede1eae6ba1228815c36408
+    metadata:
+      passed: true
+  - name: cv_ar-records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/hotword_bench/versions/ar-v1-20261127/records/cv_ar.jsonl.gz
+    sha256: 60554a851d089c3a7a5083b81ce1769e884255a1eadeb7c03cab351ea9214b5e
+    metadata:
+      record_count: 1247
+  - name: fleurs_ar-records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/hotword_bench/versions/ar-v1-20261127/records/fleurs_ar.jsonl.gz
+    sha256: 3f6aacd5ae9739d9dc91fc10e463432b423fff8b4ee272c49ac273a108db0cb9
+    metadata:
+      record_count: 153
+  - name: mgb2_ar-records
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/hotword_bench/versions/ar-v1-20261127/records/mgb2_ar.jsonl.gz
+    sha256: eddb9fac1a22f6e6b2630b0fa12240ac3ccd72084fae969823a4fd8bc2822ed0
+    metadata:
+      record_count: 1398
+  splits:
+    cv_ar:
+      artifacts:
+        records:
+        - cv_ar-records
+        audio_index:
+        - audio-index
+      group: test
+      task: asr_hotwords
+      statistics:
+        records: 1247
+        duration_hours: 1.5979
+        duration_basis: recognized clip
+        records_with_hotwords: 1247
+        gold_words: 1410
+        conditions:
+          gold: 1247
+          k50: 1247
+          k50_no_gold: 1247
+        gold_with_confusable: 0.619
+        train_text_overlap: 37
+      provenance:
+        description: Common Voice 24.0 ar 测试集（众包朗读，句子以标准阿拉伯语为主，部分带元音符号），阿拉伯语热词标注（Qwen3.8-27B 抽取 + 复核），按 sha256(id) 取前 N 条正例
+    fleurs_ar:
+      artifacts:
+        records:
+        - fleurs_ar-records
+        audio_index:
+        - audio-index
+      group: test
+      task: asr_hotwords
+      statistics:
+        records: 153
+        duration_hours: 0.5055
+        duration_basis: recognized clip
+        records_with_hotwords: 153
+        gold_words: 208
+        conditions:
+          gold: 153
+          k50: 153
+          k50_no_gold: 153
+        gold_with_confusable: 0.462
+        train_text_overlap: 0
+      provenance:
+        description: FLEURS ar_eg 测试集（朗读维基句子，同一句话有多个说话人），阿拉伯语热词标注，全部正例
+    mgb2_ar:
+      artifacts:
+        records:
+        - mgb2_ar-records
+        audio_index:
+        - audio-index
+      group: test
+      task: asr_hotwords
+      statistics:
+        records: 1398
+        duration_hours: 2.6008
+        duration_basis: recognized clip
+        records_with_hotwords: 1398
+        gold_words: 1777
+        conditions:
+          gold: 1398
+          k50: 1398
+          k50_no_gold: 1398
+        gold_with_confusable: 0.711
+        train_text_overlap: 6
+      provenance:
+        description: MGB-2 测试集（半岛电视台节目分段，以标准阿拉伯语为主、夹杂方言，真实广播），阿拉伯语热词标注，全部正例
+  provenance:
+    status: complete
+    synthetic: none
+    usage: evaluation_only
+    description: 阿拉伯语热词评测集，与西语 es-v1-20261111、葡语 pt-v1-20261117 同一做法（对应中英 v3-20261020 的 cv_zh / cv_en），只用于评测，不进训练。三个阿拉伯语测试集（Common Voice 24.0 ar、FLEURS ar_eg、MGB-2 广播）里含热词的句子，热词由 Qwen3.8-27B 抽取 + 复核 （label_hotwords.py，与西语、葡语同设置；原始标注 ts_asr_hotwords/versions/ar-v1-20261127/hotword-labels.jsonl）。每条记录存好固定的热词列表（metadata.bias_lists，已打乱顺序），评测器另跑不给列表的 none 条件：gold；k50 = 正确词 + 每个正确词最多 3 个近音词 + 同 split 正确词池随机词，补到 50 个；k50_no_gold 为同一批干扰词去掉正确词再补满。近音词是在 20,185 个阿拉伯语热词（测试集正确词 + MGB-2 train 与 CV 24.0 ar train 转写的热词标注）里按阿拉伯语读音键（强调音与普通音、ث/س、ذ/ز、ح/ه、ق/ك、غ/خ、ع/ا
+      等归为一类）的编辑距离检索出的真实词（检索只用 CPU）；只差元音符号或 hamza 写法的词算同一个词，不当近音词。原始候选见 source/ar-v1-20261127/mined/confusables.jsonl。生成脚本 scripts/hotword_bench/build_ar.py，配方 recipe-ar-v1.yaml。
+    sources:
+    - common_voice_ar@ar-eval-v1-20261127:test
+    - fleurs_ar@ar-eval-v1-20261127:test
+    - mgb2@ar-eval-v1-20261127:test
+    - ts_asr_hotwords/versions/ar-v1-20261127/hotword-labels.jsonl (Qwen3.8-27B hotword labels)
+    - common_voice_ar@legacy:train, mgb2@legacy:train (overlap check)
+    - 'mgb2@legacy:train, common_voice_ar@legacy:train transcripts (confusable vocabulary only: Qwen3.8-27B hotword labels, source/ar-v1-20261127-vocabulary)'
+    limitations: 热词来自 LLM 抽取与复核，未经人工核对；没有中文 v3 的 hotword_types（需要 LLM 标注）；没有阿拉伯语现网词库，不做中文 v2 的 pool50 检索列表；近音词按拼写推出的读音键检索，不是声学相似度，也不覆盖方言读法与外来专名的原语读法；少数近音词只是同一专名带不带冠词 ال 的写法（如 رجب طيب أردوغان / رجب الطيب أردوغان）；CV 原文部分带元音符号，热词保留原文写法（打分时 AmphionEval 去掉元音符号、统一 hamza 写法）；FLEURS 同一句话有多个说话人。

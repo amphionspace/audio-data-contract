@@ -1,0 +1,235 @@
+# 阿拉伯语评测源：CV 24.0 dev/test、MGB-2 dev/test、FLEURS ar_eg test 的 Lhotse 清单（ar-benchmarks-20261127）。
+- schema_version: dataset-catalog/2.0
+  dataset_id: common_voice_ar
+  version: ar-eval-v1-20261127
+  languages:
+  - ar
+  tasks:
+  - asr
+  aliases: []
+  derived_from: common_voice_ar@legacy
+  artifacts:
+  - name: dev_recordings
+    kind: lhotse-recordings
+    root_alias: aidc_data
+    relative_path: datasets/common_voice_ar/versions/ar-eval-v1-20261127/manifests/cv24-ar_recordings_dev.jsonl.gz
+    sha256: 041e920d00c4937e68687593e14893aba2e56cce8977d9d4e85f5ccd6c0769d2
+    metadata:
+      record_count: 10219
+  - name: dev_supervisions
+    kind: lhotse-supervisions
+    root_alias: aidc_data
+    relative_path: datasets/common_voice_ar/versions/ar-eval-v1-20261127/manifests/cv24-ar_supervisions_dev.jsonl.gz
+    sha256: 24ce09811489d7f806159b6edc7ae3e70cd0a26df1ddb5fae0072ae471c0642b
+    metadata:
+      record_count: 10219
+  - name: test_recordings
+    kind: lhotse-recordings
+    root_alias: aidc_data
+    relative_path: datasets/common_voice_ar/versions/ar-eval-v1-20261127/manifests/cv24-ar_recordings_test.jsonl.gz
+    sha256: 5c64abef2b26eb4761dba69d7619f806a2019f449c493e8ae13d33efc2095596
+    metadata:
+      record_count: 10498
+  - name: test_supervisions
+    kind: lhotse-supervisions
+    root_alias: aidc_data
+    relative_path: datasets/common_voice_ar/versions/ar-eval-v1-20261127/manifests/cv24-ar_supervisions_test.jsonl.gz
+    sha256: ec5d0d92a03ca60e2b6acb71ea35c32f69b1f0bd94bffb25d559d2e7af7cdbd0
+    metadata:
+      record_count: 10498
+  splits:
+    dev:
+      artifacts:
+        recordings:
+        - dev_recordings
+        supervisions:
+        - dev_supervisions
+      group: validation
+      task: asr
+      statistics:
+        records: 10219
+        duration_hours: 12.6089
+        duration_basis: sum of supervision durations
+        speakers: 64
+        training_overlap:
+          speakers: 0
+          sentence_rows:
+            common_voice_ar@legacy:train: 2315
+            mgb2@legacy:train: 6
+            fleurs_ar@legacy:train: 0
+            fleurs_ar@legacy:validation: 0
+            yodas_ar@legacy:all: 280
+          note: Arabic training versions must drop these speakers and sentences
+    test:
+      artifacts:
+        recordings:
+        - test_recordings
+        supervisions:
+        - test_supervisions
+      group: test
+      task: asr
+      statistics:
+        records: 10498
+        duration_hours: 12.6734
+        duration_basis: sum of supervision durations
+        speakers: 1016
+        training_overlap:
+          speakers: 0
+          sentence_rows:
+            common_voice_ar@legacy:train: 1568
+            mgb2@legacy:train: 2
+            fleurs_ar@legacy:train: 0
+            fleurs_ar@legacy:validation: 0
+            yodas_ar@legacy:all: 251
+          note: Arabic training versions must drop these speakers and sentences
+  provenance:
+    summary: CV 24.0 阿拉伯语 dev/test
+    preparation_status: prepared
+    owner: mingdong
+    usage: evaluation_only
+    description: 阿拉伯语评测用的 Common Voice 24.0 官方 dev / test 划分的 Lhotse 清单（common_voice_ar@legacy 的同名划分，音频为 mp3 原件，文本为原句，部分句子带元音符号，未清洗、未改写）。dev（64 人）与 test（1,016 人）一起供 TS-ASR、跨语言注册与背景人声评测集取说话人，test 供普通 ASR 与热词评测集取目标句。说话人与 CV 24.0 train 零重叠，dev 与 test 说话人不重叠；去元音符号后有部分句子与 train 相同，数目记在版本目录 overlap.json，阿拉伯语训练版本须去掉这些说话人和句子。只用于评测，不进训练。
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/ar-benchmarks-20261127
+    scripts:
+    - /workspace/workspace/mingdong/data/amphiondata/ar-benchmarks-20261127/scripts/build_eval_manifests.py
+- schema_version: dataset-catalog/2.0
+  dataset_id: mgb2
+  version: ar-eval-v1-20261127
+  languages:
+  - ar
+  tasks:
+  - asr
+  aliases: []
+  derived_from: mgb2@legacy
+  artifacts:
+  - name: dev_recordings
+    kind: lhotse-recordings
+    root_alias: aidc_data
+    relative_path: datasets/mgb2/versions/ar-eval-v1-20261127/manifests/mgb2_recordings_dev.jsonl.gz
+    sha256: bcf65f6d4eb366658134e3329fb47fe9568360e1c7b2cf7ecb97db58beed8669
+    metadata:
+      record_count: 17
+  - name: dev_supervisions
+    kind: lhotse-supervisions
+    root_alias: aidc_data
+    relative_path: datasets/mgb2/versions/ar-eval-v1-20261127/manifests/mgb2_supervisions_dev.jsonl.gz
+    sha256: 2684a00531368b5878464d6bf49dc8f761ca3f3511af62210df846faa259a683
+    metadata:
+      record_count: 5002
+  - name: test_recordings
+    kind: lhotse-recordings
+    root_alias: aidc_data
+    relative_path: datasets/mgb2/versions/ar-eval-v1-20261127/manifests/mgb2_recordings_test.jsonl.gz
+    sha256: bac76bef2cc860fa4595c408522b78a7748e42f960777c4350a5504799637e5b
+    metadata:
+      record_count: 17
+  - name: test_supervisions
+    kind: lhotse-supervisions
+    root_alias: aidc_data
+    relative_path: datasets/mgb2/versions/ar-eval-v1-20261127/manifests/mgb2_supervisions_test.jsonl.gz
+    sha256: 395cfe5d047a7b018a5fb283864f4c3b98e820631791d24007c5c0af9adac1ff
+    metadata:
+      record_count: 5365
+  splits:
+    dev:
+      artifacts:
+        recordings:
+        - dev_recordings
+        supervisions:
+        - dev_supervisions
+      group: validation
+      task: asr
+      statistics:
+        records: 5002
+        duration_hours: 8.4655
+        duration_basis: sum of supervision durations
+        training_overlap:
+          sentence_rows:
+            common_voice_ar@legacy:train: 0
+            mgb2@legacy:train: 5
+            fleurs_ar@legacy:train: 0
+            fleurs_ar@legacy:validation: 0
+            yodas_ar@legacy:all: 1
+          note: Arabic training versions must drop these speakers and sentences
+    test:
+      artifacts:
+        recordings:
+        - test_recordings
+        supervisions:
+        - test_supervisions
+      group: test
+      task: asr
+      statistics:
+        records: 5365
+        duration_hours: 9.5799
+        duration_basis: sum of supervision durations
+        training_overlap:
+          sentence_rows:
+            common_voice_ar@legacy:train: 0
+            mgb2@legacy:train: 13
+            fleurs_ar@legacy:train: 0
+            fleurs_ar@legacy:validation: 0
+            yodas_ar@legacy:all: 4
+          note: Arabic training versions must drop these speakers and sentences
+  provenance:
+    summary: MGB-2 半岛电视台广播 dev/test
+    preparation_status: prepared
+    owner: mingdong
+    usage: evaluation_only
+    description: MGB-2 官方 dev / test 划分的 Lhotse 清单（mgb2@legacy 的同名划分，半岛电视台节目长录音按分段切出，以标准阿拉伯语为主，夹杂方言）。没有说话人编号。与 MGB-2 train 只有少量寒暄短句文本相同，数目记在版本目录 overlap.json，训练版本须去掉。只用于评测，不进训练。
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/ar-benchmarks-20261127
+    scripts:
+    - /workspace/workspace/mingdong/data/amphiondata/ar-benchmarks-20261127/scripts/build_eval_manifests.py
+- schema_version: dataset-catalog/2.0
+  dataset_id: fleurs_ar
+  version: ar-eval-v1-20261127
+  languages:
+  - ar
+  tasks:
+  - asr
+  aliases: []
+  derived_from: fleurs_ar@hf-70bb2e84b976
+  artifacts:
+  - name: test_recordings
+    kind: lhotse-recordings
+    root_alias: aidc_data
+    relative_path: datasets/fleurs_ar/versions/ar-eval-v1-20261127/manifests/fleurs-ar_recordings_test.jsonl.gz
+    sha256: c1078b71b02e81893e7f59dbd1d91a4c03fec954221c555aa65ad23895e24c3e
+    metadata:
+      record_count: 428
+  - name: test_supervisions
+    kind: lhotse-supervisions
+    root_alias: aidc_data
+    relative_path: datasets/fleurs_ar/versions/ar-eval-v1-20261127/manifests/fleurs-ar_supervisions_test.jsonl.gz
+    sha256: ef1055797872c5b31ee34679474288d79209465538ca49d8133ae9fd47e041a4
+    metadata:
+      record_count: 428
+  splits:
+    test:
+      artifacts:
+        recordings:
+        - test_recordings
+        supervisions:
+        - test_supervisions
+      group: test
+      task: asr
+      statistics:
+        records: 428
+        duration_hours: 1.3015
+        duration_basis: sum of supervision durations
+        training_overlap:
+          sentence_rows:
+            common_voice_ar@legacy:train: 0
+            mgb2@legacy:train: 0
+            fleurs_ar@legacy:train: 0
+            fleurs_ar@legacy:validation: 0
+            yodas_ar@legacy:all: 0
+          note: Arabic training versions must drop these speakers and sentences
+  provenance:
+    summary: FLEURS 阿拉伯语 test
+    preparation_status: prepared
+    owner: mingdong
+    usage: evaluation_only
+    description: FLEURS ar_eg 官方 test 划分的 Lhotse 清单，音频与文本取自 multilingual_asr_bench@v1-20261110:fleurs-ar（16 kHz wav，同一来源）。朗读维基句子，没有说话人编号。句子与 FLEURS train / validation 零重叠；核验见版本目录 overlap.json。只用于评测，不进训练。
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/ar-benchmarks-20261127
+    scripts:
+    - /workspace/workspace/mingdong/data/amphiondata/ar-benchmarks-20261127/scripts/build_eval_manifests.py

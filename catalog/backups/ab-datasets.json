@@ -1,6 +1,10 @@
 {
   "bucket": "amphion-audio-backup-1373259071",
   "datasets": {
+    "asr_babble_bench@ar-v1-20261127": {
+      "alias": "asr_babble_bench",
+      "synced": "2026-11-27"
+    },
     "asr_babble_bench@pt-v1-20261117": {
       "alias": "asr_babble_bench",
       "synced": "2026-11-18"
@@ -37,6 +41,18 @@
       "alias": "business_feedback",
       "synced": "2026-10-27"
     },
+    "common_voice_ar@ar-eval-v1-20261127": {
+      "alias": "common_voice_ar",
+      "synced": "2026-11-27"
+    },
+    "fleurs_ar@ar-eval-v1-20261127": {
+      "alias": "fleurs_ar",
+      "synced": "2026-11-27"
+    },
+    "hotword_bench@ar-v1-20261127": {
+      "alias": "hotword_bench",
+      "synced": "2026-11-27"
+    },
     "meeting_180s_benchmark@v1-20261008": {
       "alias": "meeting_180s_benchmark",
       "synced": "2026-10-27"
@@ -44,6 +60,10 @@
     "meeting_selection_panel@v1-20261008": {
       "alias": "meeting_selection_panel",
       "synced": "2026-10-27"
+    },
+    "mgb2@ar-eval-v1-20261127": {
+      "alias": "mgb2",
+      "synced": "2026-11-27"
     },
     "mtedx@test-v1-20261114": {
       "alias": "mtedx",
@@ -93,6 +113,10 @@
       "alias": "tdtech_customer_bench",
       "synced": "2026-11-05"
     },
+    "ts_asr_benchmark@ar-v1-20261127": {
+      "alias": "ts_asr_benchmark",
+      "synced": "2026-11-27"
+    },
     "ts_asr_benchmark@en-v1-20261031": {
       "alias": "ts_asr_benchmark",
       "synced": "2026-11-01"
@@ -117,6 +141,10 @@
       "alias": "ts_asr_benchmark",
       "synced": "2026-10-27"
     },
+    "ts_asr_crosslingual@ar-v1-20261127": {
+      "alias": "ts_asr_crosslingual",
+      "synced": "2026-11-27"
+    },
     "ts_asr_crosslingual@pt-v1-20261117": {
       "alias": "ts_asr_crosslingual",
       "synced": "2026-11-18"
@@ -124,6 +152,10 @@
     "ts_asr_dev@v1-20261017": {
       "alias": "ts_asr_dev",
       "synced": "2026-10-27"
+    },
+    "ts_asr_farfield@ar-v1-20261127": {
+      "alias": "ts_asr_farfield",
+      "synced": "2026-11-27"
     },
     "ts_asr_farfield@en-v1-20261031": {
       "alias": "ts_asr_farfield",
@@ -141,6 +173,10 @@
       "alias": "ts_asr_farfield",
       "synced": "2026-10-27"
     },
+    "ts_asr_handover@ar-v1-20261127": {
+      "alias": "ts_asr_handover",
+      "synced": "2026-11-27"
+    },
     "ts_asr_handover@en-v1-20261031": {
       "alias": "ts_asr_handover",
       "synced": "2026-11-01"
@@ -156,6 +192,10 @@
     "ts_asr_handover@v2-20261022": {
       "alias": "ts_asr_handover",
       "synced": "2026-10-27"
+    },
+    "ts_asr_hotwords@ar-v1-20261127": {
+      "alias": "ts_asr_hotwords",
+      "synced": "2026-11-27"
     },
     "ts_asr_nearfar@firstother-v3-20261105": {
       "alias": "ts_asr_nearfar",
@@ -184,6 +224,10 @@
     "ts_asr_nearshort@v3-20261022": {
       "alias": "ts_asr_nearshort",
       "synced": "2026-10-27"
+    },
+    "ts_asr_noise@ar-v1-20261127": {
+      "alias": "ts_asr_noise",
+      "synced": "2026-11-27"
     },
     "ts_asr_noise@en-v1-20261031": {
       "alias": "ts_asr_noise",
@@ -245,6 +289,10 @@
       "alias": "ts_asr_real",
       "synced": "2026-10-27"
     },
+    "ts_asr_shortseg@ar-v1-20261127": {
+      "alias": "ts_asr_shortseg",
+      "synced": "2026-11-27"
+    },
     "ts_asr_shortseg@en-v1-20261031": {
       "alias": "ts_asr_shortseg",
       "synced": "2026-11-01"
@@ -260,6 +308,10 @@
     "ts_asr_shortseg@v2-20261022": {
       "alias": "ts_asr_shortseg",
       "synced": "2026-10-27"
+    },
+    "ts_asr_singing@ar-v1-20261127": {
+      "alias": "ts_asr_singing",
+      "synced": "2026-11-27"
     },
     "ts_asr_singing@en-v1-20261031": {
       "alias": "ts_asr_singing",
