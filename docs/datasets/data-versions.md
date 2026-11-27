@@ -574,6 +574,18 @@ LibriSpeech 混合的目标说话人数据
 
 - `magicdata_multistream_en@hf-6b3e11aea621`：MagicData 多声道自然对话数据的英文开源样本：8 段两人手机自由对话（消费、人文、金融、娱乐、情感等话题），8 位美国说话人 （纽约和加州，5 男 3 女），每人一条独立音轨，16 kHz 单声道 WAV，逐句人工转写带起止时间和事件标记，格式与中文样本相同。 规模很小，适合作分轨对话和全双工流程的小样本检查。卡片正文限定仅供学术研究、不得商用（YAML 未写许可证）
 
+### maryland_bill_hearings
+
+马里兰州议会委员会听证英语
+
+语言：en · 任务：语音识别
+
+| 版本 | 时长（小时） | 口径 | COS |
+|---|---:|---|---|
+| [maryland_bill_hearings@hf-0083f57f7d5d](../../catalog/maryland_bill_hearings.yaml#L1) | 95.7 | 已登记 | 没有 |
+
+- `maryland_bill_hearings@hf-0083f57f7d5d`：马里兰州议会（Maryland General Assembly）委员会法案听证的转写评测集，音频取自议会官方 YouTube 频道的听证录像： 71 场听证、19 个委员会，按停顿切成约 2 分钟的片段，共 2,834 段、95.65 小时，16 kHz 单声道 FLAC（与 MP4 视频片段同存于 parquet）。 真实会议场景：议员、证人、工作人员轮流发言，有专名（议员姓名、法案编号）与数字，803 段标为多人重叠说话。 只下载 100h 配置（它包含 10h、1h 两个配置的全部样本），不下载 96 GB 的原始整场视频。 转写分两类，用 label_source 区分：human 300 段（10.20 小时，即 10h 配置）由两三个商用模型初稿、按分歧逐处人工听音核对改写，可作人工转写； auto_3model_rover 2,534 段（85.45 小时）是 mai-transcribe-2、gemini-3.5-transcribe、Nemotron-3.5-Transcribe 三模型 ROVER 共识， 未经人工核对（agreement_score ≥ 0.85），相当于模型伪标签，用作训练前须按 AmphionData 规则另行清洗。 CC0（州政府发布）
+
 ### meld_ser
 
 美剧《老友记》对话情感识别评测（MELD）

@@ -1,0 +1,62 @@
+- schema_version: dataset-catalog/2.0
+  dataset_id: maryland_bill_hearings
+  version: hf-0083f57f7d5d
+  languages:
+    - en
+  tasks:
+    - asr
+  aliases: []
+  artifacts:
+    - name: source
+      kind: hf-dataset-snapshot
+      root_alias: maryland_bill_hearings
+      relative_path: source/hf-0083f57f7d5d
+      metadata:
+        file_count: 60
+        expected_bytes: 27490938599
+        tree_sha256: 6eb224cf5a1330d1c61e1aee609af1ee197ee3d2323daa55383de0f3b47dfc62
+    - name: download_state
+      kind: dataset-state
+      root_alias: maryland_bill_hearings
+      relative_path: versions/hf-0083f57f7d5d/download_state/state.json
+      expected_bytes: 1016
+      sha256: cffc7b8061c44b3d078b9e24b80211b6d1ad089ae5203cbb4cb49c05a4005a2a
+  splits:
+    test:
+      artifacts:
+        source:
+          - source
+      statistics:
+        count: 2834
+        duration_hours: 95.6521
+        human_verified_count: 300
+        human_verified_hours: 10.2011
+        recordings: 71
+        duration_basis: soundfile header duration of every embedded FLAC in 100h/data/test-*.parquet (57 files, equal to duration_sec); pinned upstream file hashes verified
+        sample_formats:
+          1ch/16000Hz/PCM_24: 2834
+  provenance:
+    summary: 马里兰州议会委员会听证英语
+    source: Hugging Face
+    source_id: stateofmaryland/maryland-bill-hearings
+    revision: 0083f57f7d5da2520ce69e3a8b4c38b9d07ad9a6
+    url: https://huggingface.co/datasets/stateofmaryland/maryland-bill-hearings
+    download_mirror: https://hf-mirror.com
+    release_date: '2026-11-20'
+    description: >-
+      马里兰州议会（Maryland General Assembly）委员会法案听证的转写评测集，音频取自议会官方 YouTube 频道的听证录像：
+      71 场听证、19 个委员会，按停顿切成约 2 分钟的片段，共 2,834 段、95.65 小时，16 kHz 单声道 FLAC（与 MP4 视频片段同存于 parquet）。
+      真实会议场景：议员、证人、工作人员轮流发言，有专名（议员姓名、法案编号）与数字，803 段标为多人重叠说话。
+      只下载 100h 配置（它包含 10h、1h 两个配置的全部样本），不下载 96 GB 的原始整场视频。
+      转写分两类，用 label_source 区分：human 300 段（10.20 小时，即 10h 配置）由两三个商用模型初稿、按分歧逐处人工听音核对改写，可作人工转写；
+      auto_3model_rover 2,534 段（85.45 小时）是 mai-transcribe-2、gemini-3.5-transcribe、Nemotron-3.5-Transcribe 三模型 ROVER 共识，
+      未经人工核对（agreement_score ≥ 0.85），相当于模型伪标签，用作训练前须按 AmphionData 规则另行清洗。
+      CC0（州政府发布）。
+    license:
+      - cc0-1.0
+    download_scope: 100h configuration only (57 parquet files and metadata.csv, superset of the 10h and 1h configurations), plus README.md and .gitattributes; raw_videos/ excluded
+    expected_download_files: 60
+    expected_download_bytes: 27490938599
+    integrity: verified
+    integrity_method: pinned upstream LFS sha256 per file
+    local_scan_date: '2026-11-27'
