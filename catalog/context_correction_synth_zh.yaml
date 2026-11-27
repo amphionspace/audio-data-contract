@@ -124,6 +124,7 @@
     - kespeech@legacy-20260804 train voices
     - Qwen3-TTS-12Hz-1.7B-Base
     run_dir: /workspace/workspace/mingdong/data/amphiondata/spelling-synth-zh-20261114
+    superseded_by: context_correction_synth_zh@train-v1-20261114-final-v4-20261127
 # 隐式语义的上下文纠偏训练数据：没有显式说明，同音词的写法由后文语义决定。运行记录见 provenance.run_dir 下的 README.md。
 - schema_version: dataset-catalog/2.0
   dataset_id: context_correction_synth_zh
@@ -263,6 +264,7 @@
     - kespeech@legacy-20260804 train voices
     - Qwen3-TTS-12Hz-1.7B-Base
     run_dir: /workspace/workspace/mingdong/data/amphiondata/ctx-implicit-zh-20261117
+    superseded_by: context_correction_synth_zh@implicit-v1-20261117-final-v4-20261127
 # 合成说字数据的 TTS 声音做的 TS 场景（带孪生）：train-v1-20261114 train_ts 的克隆片段之间互为干扰人，30% 换另一个音色注册、答案为空。
 - schema_version: dataset-catalog/2.0
   dataset_id: context_correction_synth_zh
@@ -349,6 +351,7 @@
     sources:
     - context_correction_synth_zh@train-v1-20261114:train_ts
     run_dir: /workspace/workspace/mingdong/repo/oal-clue-target/runs/zh-ctx-clue-target-20261117
+    superseded_by: context_correction_synth_zh@ts-twins-v1-20261121-final-v4-20261127
   derived_from: context_correction_synth_zh@train-v1-20261114
 # 合成说字数据的 TTS 声音做的普通识别对话：2–3 个克隆音色轮流说，答案是所有人的话按顺序连起来；ts-twins-v1-20261121 的普通识别对照。
 - schema_version: dataset-catalog/2.0

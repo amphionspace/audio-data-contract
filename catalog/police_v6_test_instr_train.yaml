@@ -96,6 +96,7 @@
     - 用了它，V6 测试集这 5 组是见过的指令，和没用它的模型比时要把这 5 组分开看
     - “关闭红外”原话只有 133 条，其余是关掉、关上、停用红外等说法；“把延录时长设置为三百秒”原话 248 条
     - 方言参考的合成失败率较高，吴语占比比合成时略低
+    superseded_by: police_v6_test_instr_train@v1-20261123-final-v4-20261127
   recipe_parameters:
     text_model: doubao-seed-2-0-pro-260215
     tts_provider: qwen3_tts

@@ -201,6 +201,7 @@
     - 不含 V6 留出的 5 条指令（见 police_v6_test_instr_train）
     - 林区卡口只有 133 条（林区类整体 516 条）；戴肩灯原话 187 条，其余是戴好、戴上、戴着肩灯
     - 方言参考的合成失败率较高，吴语、四川话占比比合成时略低
+    superseded_by: police_text_gaps_train@v2-20261123-final-v4-20261127
   recipe_parameters:
     text_model: doubao-seed-2-0-pro-260215
     tts_provider: qwen3_tts

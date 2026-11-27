@@ -129,6 +129,7 @@
     method: text-final-v1
     run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
     build_script: scripts/text_final/build.py
+    superseded_by: aishellmix@pack3-current-audio-record-20260910-punc-20261102-final-v4-20261127
   recipe_parameters:
     spec: docs/reference/training-text.md（v1）
     start: aishellmix@pack3-current-audio-record-20260910-punc-20261102（pack3-current-audio-record-20260910-punc-20261102 之后已登记的修正版本里最深的一个）
@@ -999,6 +1000,7 @@
     method: text-final-v1
     run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
     build_script: scripts/text_final/build.py
+    superseded_by: alimeeting_sdm@turn-taking-20261014-utts-punc-20261102-final-v4-20261127
   recipe_parameters:
     spec: docs/reference/training-text.md（v1）
     start: alimeeting_sdm@turn-taking-20261014-utts-punc-20261102（turn-taking-20261014-utts-punc-20261102 之后已登记的修正版本里最深的一个）
@@ -2045,6 +2047,7 @@
     method: text-final-v1
     run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
     build_script: scripts/text_final/build.py
+    superseded_by: kespeech@train-punc-v1-20261102-final-v4-20261127
   recipe_parameters:
     spec: docs/reference/training-text.md（v1）
     start: kespeech@train-punc-v1-20261102（train-punc-v1-20261102 之后已登记的修正版本里最深的一个）
@@ -2186,6 +2189,7 @@
     method: text-final-v1
     run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
     build_script: scripts/text_final/build.py
+    superseded_by: police_terms_single_train@train-punc-v1-20261102-final-v4-20261127
   recipe_parameters:
     spec: docs/reference/training-text.md（v1）
     start: police_terms_single_train@train-punc-v1-20261102（train-punc-v1-20261102 之后已登记的修正版本里最深的一个）
@@ -2251,6 +2255,7 @@
     method: text-final-v1
     run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
     build_script: scripts/text_final/build.py
+    superseded_by: police_terms_single_train@hotwords-confusable-v1-20261102-final-v4-20261127
   recipe_parameters:
     spec: docs/reference/training-text.md（v1）
     start: police_terms_single_train@hotwords-confusable-v1-20261102（hotwords-confusable-v1-20261102 之后已登记的修正版本里最深的一个）
@@ -2330,6 +2335,7 @@
     run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
     method: text-final-v1
     build_script: scripts/text_final/build.py
+    superseded_by: vitw@2m-20261013-final-v4-20261127
 - schema_version: dataset-catalog/2.0
   dataset_id: aishell2
   version: train-punc-v1-20261102-final-v1-20261120
@@ -2563,6 +2569,7 @@
     method: text-final-v1
     run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
     build_script: scripts/text_final/build.py
+    superseded_by: alimeeting_sdm@asr-20261014-punc-20261102-final-v4-20261127
   recipe_parameters:
     spec: docs/reference/training-text.md（v1）
     start: alimeeting_sdm@asr-20261014-punc-20261102（asr-20261014-punc-20261102 之后已登记的修正版本里最深的一个）
@@ -3076,6 +3083,7 @@
     owner: mingdong
     run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
     build_script: scripts/text_final/build.py
+    superseded_by: alimeeting_sdm@allspk-asr-v1-20261103-final-v4-20261127
   derived_from: alimeeting_sdm@allspk-asr-v1-20261103
   recipe_parameters:
     spec: docs/reference/training-text.md（v1）
@@ -3382,6 +3390,7 @@
     owner: mingdong
     run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
     build_script: scripts/text_final/build.py
+    superseded_by: alimeeting_sdm@allspk-ts-v1-20261104-final-v4-20261127
   derived_from: alimeeting_sdm@allspk-ts-v1-20261104
   recipe_parameters:
     spec: docs/reference/training-text.md（v1）
@@ -3449,6 +3458,7 @@
     method: text-final-v1
     run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
     build_script: scripts/text_final/build.py
+    superseded_by: common_voice_zh@train-punc-v1-20261102-final-v4-20261127
   recipe_parameters:
     spec: docs/reference/training-text.md（v1）
     start: common_voice_zh@train-punc-v1-20261102（train-punc-v1-20261102 之后已登记的修正版本里最深的一个）
@@ -3876,6 +3886,7 @@
     method: text-final-v1
     run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
     build_script: scripts/text_final/build.py
+    superseded_by: asr_babble_speech_pool@v1-20261024-punc-20261102-final-v4-20261127
   recipe_parameters:
     spec: docs/reference/training-text.md（v1）
     start: asr_babble_speech_pool@v1-20261024-punc-20261102（v1-20261024-punc-20261102 之后已登记的修正版本里最深的一个）
@@ -4002,6 +4013,7 @@
     method: text-final-v1
     run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
     build_script: scripts/text_final/build.py
+    superseded_by: asr_distant_talk_pool@v1-20261102-punc-20261102-final-v4-20261127
   recipe_parameters:
     spec: docs/reference/training-text.md（v1）
     start: asr_distant_talk_pool@v1-20261102-punc-20261102（v1-20261102-punc-20261102 之后已登记的修正版本里最深的一个）
@@ -4155,6 +4167,7 @@
     owner: mingdong
     run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
     build_script: scripts/text_final/build.py
+    superseded_by: asr_distant_talk_pool@v1-20261102-final-v4-20261127
   derived_from: asr_distant_talk_pool@v1-20261102
   recipe_parameters:
     spec: docs/reference/training-text.md（v1）
@@ -4623,6 +4636,7 @@
     method: text-final-v1
     run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
     build_script: scripts/text_final/build.py
+    superseded_by: ts_real_train@v1-20261017-utts-punc-20261102-final-v4-20261127
   recipe_parameters:
     spec: docs/reference/training-text.md（v1）
     start: ts_real_train@v1-20261017-utts-punc-20261102（v1-20261017-utts-punc-20261102 之后已登记的修正版本里最深的一个）
@@ -4719,6 +4733,7 @@
     method: text-final-v1
     run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
     build_script: scripts/text_final/build.py
+    superseded_by: ts_real_train@v2-20261018-utts-punc-20261102-final-v4-20261127
   recipe_parameters:
     spec: docs/reference/training-text.md（v1）
     start: ts_real_train@v2-20261018-utts-punc-20261102（v2-20261018-utts-punc-20261102 之后已登记的修正版本里最深的一个）
@@ -4844,6 +4859,7 @@
     method: text-final-v1
     run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
     build_script: scripts/text_final/build.py
+    superseded_by: ts_real_train@v3-20261020-utts-punc-20261102-final-v4-20261127
   recipe_parameters:
     spec: docs/reference/training-text.md（v1）
     start: ts_real_train@v3-20261020-utts-punc-20261102（v3-20261020-utts-punc-20261102 之后已登记的修正版本里最深的一个）
@@ -5697,6 +5713,7 @@
     owner: mingdong
     run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
     build_script: scripts/text_final/build.py
+    superseded_by: ts_scene_pool@xsession-near-20261023-punchw-20261102-final-v4-20261127
   recipe_parameters:
     spec: docs/reference/training-text.md（v1）
     start: ts_scene_pool@xsession-near-20261023-punchw-20261102（xsession-near-20261023-punchw-20261102 之后已登记的修正版本里最深的一个）
@@ -5770,6 +5787,7 @@
     owner: mingdong
     run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
     build_script: scripts/text_final/build.py
+    superseded_by: ts_scene_pool@xsession-alt-twins-20261024-punchw-20261102-final-v4-20261127
   recipe_parameters:
     spec: docs/reference/training-text.md（v1）
     start: ts_scene_pool@xsession-alt-twins-20261024-punchw-20261102（xsession-alt-twins-20261024-punchw-20261102 之后已登记的修正版本里最深的一个）
@@ -5843,6 +5861,7 @@
     owner: mingdong
     run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
     build_script: scripts/text_final/build.py
+    superseded_by: ts_scene_pool@xsession-hard-20261023-punchw-20261102-final-v4-20261127
   recipe_parameters:
     spec: docs/reference/training-text.md（v1）
     start: ts_scene_pool@xsession-hard-20261023-punchw-20261102（xsession-hard-20261023-punchw-20261102 之后已登记的修正版本里最深的一个）
@@ -5916,6 +5935,7 @@
     owner: mingdong
     run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
     build_script: scripts/text_final/build.py
+    superseded_by: ts_scene_pool@xsession-handover-20261023-punchw-20261102-final-v4-20261127
   recipe_parameters:
     spec: docs/reference/training-text.md（v1）
     start: ts_scene_pool@xsession-handover-20261023-punchw-20261102（xsession-handover-20261023-punchw-20261102 之后已登记的修正版本里最深的一个）
