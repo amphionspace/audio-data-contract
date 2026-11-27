@@ -24,7 +24,11 @@ NUMCH = f"{DIGIT}{UNIT}两幺拐洞"
 RUN = re.compile(f"[{NUMCH}]+")
 HOUR = f"[{DIGIT}两十]{{1,3}}"
 MINUTE = f"[{DIGIT}十]{{1,3}}"
-TIME = re.compile(f"({HOUR})点(?:({MINUTE})分|(钟|半|整|一刻|三刻)|(零[{DIGIT[1:]}])(?![{NUMCH}分倍米元块克斤吨升度秒%公]))(?!之)")
+# 八点四十五: minutes read as a value (10-59) without 分 are a clock time, since decimals are read digit by digit
+MINUTE_VALUE = f"([二三四五]?十[{DIGIT[1:]}]?)(?![{NUMCH}分倍米元块克斤吨升度秒%公个人岁年月日号天次位名条张台辆家件页章节集层楼栋路种等只本口道项场间座点几])"
+TIME = re.compile(
+    f"({HOUR})点(?:({MINUTE})分|(钟|半|整|一刻|三刻)|(零[{DIGIT[1:]}])(?![{NUMCH}分倍米元块克斤吨升度秒%公])|{MINUTE_VALUE})(?!之)"
+)
 TIME_RANGE = re.compile(f"({HOUR})点(?:到|至)({HOUR})点")
 TIME_PREFIX = re.compile(f"(?:凌晨|早上|早晨|上午|中午|下午|傍晚|晚上|夜里|半夜|今晚|昨晚|明晚|今早|明早|每天|每晚)({HOUR})点")
 DECIMAL = re.compile(f"([{DIGIT}{UNIT}两]+)点([{DIGIT}]+)([万亿])?(?![{NUMCH}钟]|分之)")
@@ -44,7 +48,7 @@ LEXICON = [
     "五四青年", "三三两两", "七七八八", "九九八十一", "百万富翁", "三十而立", "四十不惑", "七十二变", "十八般",
     "十八罗汉", "九九归一", "二八年华", "三七开", "二八开", "九五至尊", "一千零一夜", "星期", "礼拜", "周一", "周二",
     "周三", "周四", "周五", "周六", "初一", "初二", "初三", "初四", "初五", "初六", "初七", "初八", "初九", "初十",
-    "十一长假", "十一假期", "国庆十一", "一一对应", "一一列举", "一一道来", "十二分", "万分", "两两", "一二九运动", "一二·九", "九一八", "七七事变", "一二八事变", "八一三", "四一二", "三点一线", "一点一点", "一点点", "一点一滴", "十月围城", "五月天", "九月九",
+    "十一长假", "十一假期", "国庆十一", "一一对应", "一一列举", "一一道来", "十二分", "万分", "两两", "一二九运动", "一二·九", "九一八", "七七事变", "一二八事变", "八一三", "四一二", "三点一线", "一点一点", "一点点", "一点一滴", "十月围城", "五月天", "九月九", "十三香",
 ]
 TWO_DIGIT_BEFORE = set("年后届级号路次期班栋楼层室")  # 九八年, 零零后, 二三号 convert; other two-digit strings stay
 WORDS_WITH_ONE = {"一样", "一个", "一下", "一些", "一起", "一直", "一定", "一般", "一点", "一种", "一次", "一边", "一共", "一切", "一面", "一会", "一句", "一天"}
@@ -107,6 +111,9 @@ def _plain(text, i, j):
         return "latin" if _value(run) else None
     if _in_lexicon(text, i, j):
         return None
+    named = _at(text, j + 1)
+    if nxt == "的" and named and named in UNIT and named in run and _at(text, j + 2) in ("", "字") + tuple("，。？！、；：,.?!;:"):
+        return None  # 数字一百的百，: the numeral names its own unit character (not 七十的十七次方)
     if nxt == "几" or prev == "几":
         return None  # 十几个, 二十几岁
     if nxt2 == "分之" or text[i - 2: i] == "分之":
@@ -144,6 +151,18 @@ def _plain(text, i, j):
 
 
 def convert(text):
+    out, pos, changes = [], 0, []
+    for s, e, cat, new in edits(text):
+        out.append(text[pos:s])
+        out.append(new)
+        changes.append((cat, text[s:e], new))
+        pos = e
+    out.append(text[pos:])
+    return "".join(out), changes
+
+
+def edits(text):
+    """The replacements convert() makes, as sorted (start, end, category, new) spans of text."""
     edits = []  # (start, end, category, new)
     taken = [False] * len(text)
 
@@ -174,12 +193,18 @@ def convert(text):
         if m.group(4):
             claim(m.start(1), m.end(1), "time", h)
             claim(m.start(4), m.end(4), "time", _digits(m.group(4)))
-        elif m.group(2):
-            mi = _value(m.group(2))
+        elif m.group(2) or m.group(5):
+            g = 2 if m.group(2) else 5
+            before = _at(text, m.start() - 1)
+            if g == 5 and ((before and before in NUMCH) or text[max(0, m.start() - 3): m.start()] == "百分之"):
+                continue  # 百分之一百一十六点三十, 百分之十六点二十六: part of a longer number, not a clock time
+            if m.group(1) == "一" and m.group(2) == "十" and _at(text, m.start() - 1) in ("这", "那", "第", "每", "哪", "有"):
+                continue  # 这一点十分重要: 十分 is "very", not ten past one
+            mi = _value(m.group(g))
             if mi is None or int(mi) > 59:
                 continue
             claim(m.start(1), m.end(1), "time", h)
-            claim(m.start(2), m.end(2), "time", mi)
+            claim(m.start(g), m.end(g), "time", mi)
         else:
             claim(m.start(1), m.end(1), "time", h)
     for m in TIME_RANGE.finditer(text):
@@ -241,14 +266,7 @@ def convert(text):
             if cat:
                 claim(k, e2, cat, _value(text[k:e2]) if cat != "digits" else _digits(text[k:e2]))
             k = e
-    out, pos, changes = [], 0, []
-    for s, e, cat, new in sorted(edits):
-        out.append(text[pos:s])
-        out.append(new)
-        changes.append((cat, text[s:e], new))
-        pos = e
-    out.append(text[pos:])
-    return "".join(out), changes
+    return sorted(edits)
 
 
 if __name__ == "__main__":
