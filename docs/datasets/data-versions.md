@@ -40,11 +40,11 @@ AMI 英文会议的近讲耳麦版
 |---|---:|---|---|
 | [ami_ihm@hf-edinburghcstr-20261023](../../catalog/ami_ihm.yaml#L1) | 95.5 | 已登记 | 没有 |
 | [ami_ihm@hf-edinburghcstr-20261023-final-v3-20261125](../../catalog/text_final_v3.yaml#L443) | — | 未登记 | 没有 |
-| [ami_ihm@hf-edinburghcstr-20261023-final-v3-20261125-musci-kd-v1-20261127](../../catalog/aline_musci_kd_v1.yaml#L31) | — | 未登记 | 没有 |
+| [ami_ihm@hf-edinburghcstr-20261023-final-v3-20261125-musci-kd-v1-20261127](../../catalog/aline_musci_kd_v1.yaml#L67) | — | 未登记 | 没有 |
 
 - `ami_ihm@hf-edinburghcstr-20261023`：AMI 会议语料的近讲耳麦（IHM）版本：英文 16 kHz 单声道，按 Kaldi AMI s5 切句、文本大写归一化，带会议、说话人和耳麦编号。train / dev / test 分别 108502、13098、12643 句，共 95.5 小时，会议划分与 Kaldi full-corpus-ASR 一致。本机已有 AMI 单远场麦克风版 `ami_sdm`，可与这份近讲版对照近场和远场
 - `ami_ihm@hf-edinburghcstr-20261023-final-v3-20261125`：AMI 会议近讲耳麦 train 的训练文本终版，直接按训练文本规范 v3 建，供 open-audio-llm A 线（英文榜单版）训练。Kaldi s5 的全大写无标点文本经 en-v1 学生模型补标点和大小写（规则 2），输出改了词的按原词只补句末标点；词、口语重复和语气词都保留。dev、test 会议不在 train 里（Kaldi 划分）。不足 0.5 秒的段（22,081 条、1.95 h，几乎都是 yeah、mm-hmm 这类单字附和）不收；0.5 秒以上的单字附和仍有 1.3 万条。wav 从 parquet 原样落盘（32 位浮点，16 kHz）
-- `ami_ihm@hf-edinburghcstr-20261023-final-v3-20261125-musci-kd-v1-20261127`：ami_ihm@hf-edinburghcstr-20261023-final-v3-20261125 训练集（随机 25,000 条，已排除 A 线去重清单），音频不变，目标换成 Musci-ASR-qwen-1019@c376e9c（11.17 服务栈，贪心解码，force_language en） 的输出。错误数 > max(1, 0.3 × 参考词数) 的记录当作老师失败丢弃（参考只用来抓幻觉和截断，保留 Musci 自己的写法）。被拒样本每源抽查 20 条，误杀率写进运行目录 README。build_kd.py 生成
+- `ami_ihm@hf-edinburghcstr-20261023-final-v3-20261125-musci-kd-v1-20261127`：A 线序列级蒸馏：ami_ihm@hf-edinburghcstr-20261023-final-v3-20261125 的随机子集，目标换成 Musci 的贪心解码（与参考的榜单归一化 WER > 0.3 的丢弃，按 A 线去重清单排除），音频不变
 - 含派生版本（与源数据可能重叠）
 
 ### apptek_callcenter
@@ -224,11 +224,11 @@ CS-Dialogue 对话中的纯英文语句
 |---|---:|---|---|
 | [earnings22@github-c05ab6fd8b4b](../../catalog/earnings.yaml#L66) | 119.9 | 已登记 | 没有 |
 | [earnings22@github-c05ab6fd8b4b-final-v3-20261125](../../catalog/text_final_v3.yaml#L200) | — | 未登记 | 没有 |
-| [earnings22@github-c05ab6fd8b4b-final-v3-20261125-musci-kd-v1-20261127](../../catalog/aline_musci_kd_v1.yaml#L87) | — | 未登记 | 没有 |
+| [earnings22@github-c05ab6fd8b4b-final-v3-20261125-musci-kd-v1-20261127](../../catalog/aline_musci_kd_v1.yaml#L229) | — | 未登记 | 没有 |
 
 - `earnings22@github-c05ab6fd8b4b`：Rev 发布的带口音英文真实财报电话会议评测集：125 场、119.9 小时，公司来自 27 个国家，metadata.csv 按语言背景分组（西葡 31 场、 亚洲 28、英语 26、其他罗曼语 13、日耳曼语 12、斯拉夫语 10、非洲 5）。transcripts 下有逐词人工转写（带说话人编号、标点、大小写和 实体标签）、强制对齐版本和归一化规则；subset10 另给 10 场的非逐字转写，其余 subset10 条目是指向主目录的符号链接，未重复下载。 用于口音、长音频和实体识别的真实场景评测。CC BY-SA 4.0
 - `earnings22@github-c05ab6fd8b4b-final-v3-20261125`：Earnings-22 财报电话会议切成不超过 30 秒的短句，直接按训练文本规范 v3 建，供 open-audio-llm A 线（英文榜单版）训练。文本用 nlp_references 的书面写法（大小写、标点、MTN/2019/31st 这类实体原样），时间取 force_aligned_nlp_references，两表按单元匹配；口语重复和 uh/um 保留。排除 Open ASR 榜单测试用的 6 场（4468919、4471586、4474955、4475604、4482968、4483046），另按口音组各取 1 场共 4 场作 dev。音频转成 16 kHz 单声道 FLAC
-- `earnings22@github-c05ab6fd8b4b-final-v3-20261125-musci-kd-v1-20261127`：earnings22@github-c05ab6fd8b4b-final-v3-20261125 训练集（全部记录，已排除 A 线去重清单），音频不变，目标换成 Musci-ASR-qwen-1019@c376e9c（11.17 服务栈，贪心解码，force_language en） 的输出。错误数 > max(1, 0.3 × 参考词数) 的记录当作老师失败丢弃（参考只用来抓幻觉和截断，保留 Musci 自己的写法）。被拒样本每源抽查 20 条，误杀率写进运行目录 README。build_kd.py 生成
+- `earnings22@github-c05ab6fd8b4b-final-v3-20261125-musci-kd-v1-20261127`：A 线序列级蒸馏：earnings22@github-c05ab6fd8b4b-final-v3-20261125 的随机子集，目标换成 Musci 的贪心解码（与参考的榜单归一化 WER > 0.3 的丢弃，按 A 线去重清单排除），音频不变
 - 含派生版本（与源数据可能重叠）
 
 ### earnings25
@@ -338,15 +338,15 @@ Emilia 英语野外语音（已清洗）
 | [gigaspeech@punc-written-en-v1-20261102](../../catalog/en_punc_written_v1.yaml#L72) | — | 未登记 | 没有 |
 | [gigaspeech@train-punc-v1-20261102-final-v1-20261120](../../catalog/text_final_v1.yaml#L1671) | — | 未登记 | 没有 |
 | [gigaspeech@train-punc-v1-20261102-final-v1-20261120-kd-pool-v1-20261127](../../catalog/aline_musci_kd_v1.yaml#L3) | — | 未登记 | 没有 |
-| [gigaspeech@train-punc-v1-20261102-final-v1-20261120-kd-pool-v1-20261127-musci-kd-v1-20261127](../../catalog/aline_musci_kd_v1.yaml#L115) | — | 未登记 | 没有 |
+| [gigaspeech@train-punc-v1-20261102-final-v1-20261120-kd-pool-v1-20261127-musci-kd-v1-20261127](../../catalog/aline_musci_kd_v1.yaml#L310) | — | 未登记 | 没有 |
 | [gigaspeech@youtube-diarize-census-v1-20261009](../../catalog/diarization_raw_gigaspeech-census.yaml#L2) | — | 未登记 | 没有 |
 | [gigaspeech@legacy-20260804](../../catalog/icefall_base.yaml#L190) | 10,000.0 | [参考表](https://ccnuebbmik1f.feishu.cn/wiki/CEXFwEjPoi2bIukVjk9c5FdOn12?sheet=3d4d23) | 快照 20260914 |
 
 - `gigaspeech@punc-teacher-v1-20261102`：gigaspeech@legacy-20260804 的 train 监督片段里的 Qwen3.8-27B 老师给 45000 句加的英文标点（44168 句去掉标点后与输入一致，ok=true）：custom.punctuation_teacher 记输出 text、ok 和模型看到的无标点输入 input。这批句子用来微调 Qwen3-4B 学生，抽样见 amphiondata scripts/punctuation/build_teacher_set_en.py。只含这些句子，text 与父版本相同，不是标点后的文本；录音沿用父版本，不复制音频。中间产物，供复现和比较学生，不直接用于训练。脚本 scripts/punctuation/register_punc_intermediates.py
 - `gigaspeech@punc-written-en-v1-20261102`：gigaspeech@legacy-20260804 训练集原标注加英文书面化标点并恢复大小写（规范 en-v1，amphiondata written_punctuation_en）：Qwen3.8-27B 给 10 万条加标点，蒸馏到 Qwen3-4B 学生（LoRA）跑全量，不带听音提示。只插 , . ? ! ; : 和改大小写，转小写去标点后与原标注逐词一致；模型改了词的条目退回原标注只加句号；代词 I 统一大写，首字母大写，每条以 . ? ! 结尾。文件与源 supervisions 条数、顺序相同，只换 text；导出后逐条回读核对
 - `gigaspeech@train-punc-v1-20261102-final-v1-20261120`：gigaspeech@train-punc-v1-20261102（交付配方 v7set34 训练用的版本）的训练文本终版，按 audio-data-contract docs/reference/training-text.md（v1） 应用全部已执行的文本修正，替代配方原来的版本和中间修正版本。起点 gigaspeech@train-punc-v1-20261102；已含修正：无（各轮修正对本数据都没有改动）。其余字段、录音清单和音频照旧，引用起点版本的产物
-- `gigaspeech@train-punc-v1-20261102-final-v1-20261120-kd-pool-v1-20261127`：gigaspeech@train-punc-v1-20261102-final-v1-20261120 训练集的随机子集 25,000 条（种子 20261127），已排除 A 线去重清单，作为 Musci 打标的输入池。文本是原终版文本，未改。make_pool.py 生成
-- `gigaspeech@train-punc-v1-20261102-final-v1-20261120-kd-pool-v1-20261127-musci-kd-v1-20261127`：gigaspeech@train-punc-v1-20261102-final-v1-20261120-kd-pool-v1-20261127 训练集（即上面的标注池 25,000 条），音频不变，目标换成 Musci-ASR-qwen-1019@c376e9c（11.17 服务栈，贪心解码，force_language en） 的输出。错误数 > max(1, 0.3 × 参考词数) 的记录当作老师失败丢弃（参考只用来抓幻觉和截断，保留 Musci 自己的写法）。被拒样本每源抽查 20 条，误杀率写进运行目录 README。build_kd.py 生成
+- `gigaspeech@train-punc-v1-20261102-final-v1-20261120-kd-pool-v1-20261127`：A 线序列级蒸馏的伪标注池：gigaspeech@train-punc-v1-20261102-final-v1-20261120 随机 25000 条（种子 20261127），排除 A 线去重清单，文本、录音和音频不变
+- `gigaspeech@train-punc-v1-20261102-final-v1-20261120-kd-pool-v1-20261127-musci-kd-v1-20261127`：A 线序列级蒸馏：gigaspeech@train-punc-v1-20261102-final-v1-20261120-kd-pool-v1-20261127 的随机子集，目标换成 Musci 的贪心解码（与参考的榜单归一化 WER > 0.3 的丢弃，按 A 线去重清单排除），音频不变
 - `gigaspeech@youtube-diarize-census-v1-20261009`：GigaSpeech XL 全部 YouTube 录音（YOU*，21,472 条 / 11,765.9 h）的说话人数普查，只做了一小部分，占位登记，不要用于训练。2026-10-09 用本机 MOSS-Transcribe-Diarize 0.9B 整条打说话人和文本，完成 1082 条成功（共 1087 行，含失败待重试），约占计划 5%；Qwen3-ASR 文本校验只做了 36 条。用户决定先做中文，英文暂缓，没有继续。local_moss_records：每行一条录音，target 是按时间排序的 [说话人][起-止] 文本，metadata.local_moss 保留教师返回的分块、说话人链接、身份断点和 speaker_census（三种说话人数：global_labels 偏高、global_active、max_chunk_active）。qwen3_asr_en_records：Qwen3-ASR 对 MOSS 片段的转写（metadata.qwen3_asr_en）。audio_slots 指向本版本 youtube_xl_recordings 里的同名录音。脚本 scripts/diarization_raw_labels/register_raw_labels.py
 - 含派生版本（与源数据可能重叠）
 - 已并入的旧版本：`gigaspeech@train-punc-v1-20261102`（COS：没有）
@@ -721,11 +721,11 @@ LibriSpeech 混合的目标说话人数据
 |---|---:|---|---|
 | [spgispeech2@hf-f4ce91de393c](../../catalog/spgispeech2.yaml#L1) | 3,649.2 | 已登记 | 没有 |
 | [spgispeech2@hf-f4ce91de393c-final-v3-20261125](../../catalog/text_final_v3.yaml#L536) | — | 未登记 | 没有 |
-| [spgispeech2@hf-f4ce91de393c-final-v3-20261125-musci-kd-v1-20261127](../../catalog/aline_musci_kd_v1.yaml#L59) | — | 未登记 | 没有 |
+| [spgispeech2@hf-f4ce91de393c-final-v3-20261125-musci-kd-v1-20261127](../../catalog/aline_musci_kd_v1.yaml#L149) | — | 未登记 | 没有 |
 
 - `spgispeech2@hf-f4ce91de393c`：Kensho（S&P Global）发布的 SPGISpeech 多说话人版本（Interspeech 2025）：2021–2024 年上市公司财报电话会议录音，多取自 问答环节，切成 50–90 秒的片段，每段至少 2 位说话人（2 人约 83%、3 人约 16%，最多 6 人），口音覆盖母语和非母语商务英语。 转写是 S&P Global 的专业人工转写（官方称准确率 99% 以上），用“\|”标出说话人切换，并附每段的数字说话人编号列表； supplemental_data/alignment_files.tar.gz 是每段的对齐 JSON。本地共 3,649.2 小时（README 写 3,780 h，v1.0.0 因法律原因 删掉约 3% 的片段）：train 156,753 段、39,864 人、3,367.0 h；dev 6,195 段、4,914 人、133.2 h；test 6,932 段、5,371 人、 149.0 h；共 41,117 个说话人编号，16 kHz 单声道 PCM WAV 嵌在 parquet 中。三个划分没有共享会议（call_id 互斥），但有共享 说话人（train 与 test 共 4,702 人）。转写按编辑规范而非逐字：口吃、重复和部分寒暄会被删掉，长片段里残留较多。数据有 访问门控，已用用户的 HF 账号同意 Kensho 条款（2025 年 7 月版，上游 LICENSE 文件为空，条款以 README 门控文本为准）： 仅限内部非商业研究；用它训练的模型及其输出若对外提供，必须免费且条款不宽于本条款；不得用于与 Kensho 竞争的商用转写或 ASR 产品、声纹识别或验证、语音克隆、说话人画像；不得识别或联系说话人真实身份；不得再分发
 - `spgispeech2@hf-f4ce91de393c-final-v3-20261125`：SPGISpeech 2.0 财报电话会议（50–90 秒多说话人片段）切成不超过 30 秒的单说话人短句，train/dev/test 沿用原划分，直接按训练文本规范 v3 建，供 open-audio-llm A 线（英文榜单版）第二轮训练。文本用 raw_transcript（S&P Global 专业转写：书面写法，删了口吃和大部分语气词，不是逐字稿），时间取 supplemental_data 的词级对齐（按字母数字拆分后匹配，词全部有时间）。片段边缘可能被截断的首尾词不进文本；对齐把多个词挤在很短时间里的段（每秒超过 8 个词）丢掉。没有找到与 SPGISpeech 1.0 test（Open ASR 榜单）同一录音的条目；与 1.0 test 句子文本近乎相同的记录（多是主持人结束语等套话）在 metadata.spgispeech1_test_ids 标出。Kensho 研究许可：仅限非商用研究，用它训练的模型须免费提供。音频转成 16 kHz 单声道 FLAC
-- `spgispeech2@hf-f4ce91de393c-final-v3-20261125-musci-kd-v1-20261127`：spgispeech2@hf-f4ce91de393c-final-v3-20261125 训练集（随机 25,000 条，已排除 A 线去重清单和能对上 SPGISpeech 1.0 test 的记录），音频不变，目标换成 Musci-ASR-qwen-1019@c376e9c（11.17 服务栈，贪心解码，force_language en） 的输出。错误数 > max(1, 0.3 × 参考词数) 的记录当作老师失败丢弃（参考只用来抓幻觉和截断，保留 Musci 自己的写法）。被拒样本每源抽查 20 条，误杀率写进运行目录 README。build_kd.py 生成
+- `spgispeech2@hf-f4ce91de393c-final-v3-20261125-musci-kd-v1-20261127`：A 线序列级蒸馏：spgispeech2@hf-f4ce91de393c-final-v3-20261125 的随机子集，目标换成 Musci 的贪心解码（与参考的榜单归一化 WER > 0.3 的丢弃，按 A 线去重清单排除），音频不变
 - 含派生版本（与源数据可能重叠）
 
 ### tal100_en
