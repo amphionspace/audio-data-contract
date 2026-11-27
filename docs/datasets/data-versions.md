@@ -733,9 +733,11 @@ SPGISpeech 1.0 S train 原始下载
 |---|---:|---|---|
 | [spgispeech@hf-14e69dd3b80e-s](../../catalog/spgispeech.yaml#L3) | — | 未登记 | 没有 |
 | [spgispeech@hf-14e69dd3b80e-s-final-v3-20261127](../../catalog/spgispeech.yaml#L48) | — | 未登记 | 没有 |
+| [spgispeech@hf-14e69dd3b80e-s-final-v3-20261127-musci-kd-v1-20261127](../../catalog/aline_musci_kd_v1.yaml#L387) | — | 未登记 | 没有 |
 
 - `spgispeech@hf-14e69dd3b80e-s`：Kensho（S&P Global）SPGISpeech 1.0 的 S 配置 train：2007–2020 年上市公司财报电话会议切成 5–15 秒的单人片段，77,073 段、196.2 小时，16 kHz 单声道。转写是 S&P Global 的专业转写，按编辑规范写成书面形式（大小写、标点、非标准词书面化），口吃和语气词大多删掉。数据有访问门控，用户 2026-11-27 用 HF 账号接受了条款：仅限非商业研究，不得再分发。只下载了 S 的 train（6 个 parquet）；validation、test 没下（榜单 test 在 open_asr_leaderboard 副本里）
 - `spgispeech@hf-14e69dd3b80e-s-final-v3-20261127`：spgispeech@hf-14e69dd3b80e-s 的 train 按训练文本规范 v3 建的训练版本，供 open-audio-llm A 线（英文榜单版）用 Musci 做序列级蒸馏，学榜单 SPGISpeech test 的整理稿写法（Musci 在 SPGISpeech 2.0 音频上按逐字写，只在与 test 同分布的 1.0 音频上按整理稿写）。目标是 S&P Global 转写原文（规则 2 只补句首大写和句末标点）。与榜单 test 句子文本近乎相同的记录在 metadata.spgispeech1_test_ids 标出，训练配方按它排除。Kensho 条款：仅限非商业研究
+- `spgispeech@hf-14e69dd3b80e-s-final-v3-20261127-musci-kd-v1-20261127`：A 线序列级蒸馏：spgispeech@hf-14e69dd3b80e-s-final-v3-20261127 的随机子集，目标换成 Musci 的贪心解码（与参考的榜单归一化 WER > 0.3 的丢弃，按 A 线去重清单排除），音频不变
 - 含派生版本（与源数据可能重叠）
 
 ### spgispeech2

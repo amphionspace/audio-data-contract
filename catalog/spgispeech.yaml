@@ -22,7 +22,7 @@
     root_alias: aidc_data
     relative_path: datasets/spgispeech/versions/hf-14e69dd3b80e-s/state.json
     expected_bytes: 445
-    sha256: ef2857fce1e8c66d618c9cbea4db9297c0487889091cd979326d8f5e51f95804
+    sha256: 55aa5a24cdc8217b5d4a422fb53bcab2733bcf5b33c714a2766b12ebfc2703b5
   splits:
     train:
       artifacts:
@@ -60,13 +60,13 @@
     root_alias: aidc_data
     relative_path: datasets/spgispeech/versions/hf-14e69dd3b80e-s-final-v3-20261127/state.json
     expected_bytes: 622
-    sha256: 85fdc1dfbb8ec29d144cf54cf9a8beea96ed3efe9260c9aa265e973dfb9f3574
+    sha256: 767ef859defe233a49586c66ab58352abb0375d2009c0879aaf71606f4428d01
   - name: train
     kind: audio-records
     root_alias: aidc_data
     relative_path: datasets/spgispeech/versions/hf-14e69dd3b80e-s-final-v3-20261127/records/train.jsonl.gz
-    expected_bytes: 8469161
-    sha256: f61c18b1d6d7d4b07e04649c4b7a32cb5453206c1bddbd75003d11cc36d7e294
+    expected_bytes: 8469831
+    sha256: ad174f3c946c5037029979ff8d5c304cd101a6e182758e9819e5a72220046d1d
     metadata:
       record_count: 77073
   - name: audio_index
@@ -88,7 +88,7 @@
     root_alias: aidc_data
     relative_path: datasets/spgispeech/versions/hf-14e69dd3b80e-s-final-v3-20261127/record_index/index.json
     expected_bytes: 741
-    sha256: 70de4d1afe46d485ab099202d04188f2f2a304bf4c35147e918a6eb014ddd6ba
+    sha256: e79f7b7b659bed255eb42ff912a7523dc3d7834adba08783392ca2617e27b09f
     metadata:
       snapshot_version: 13
       rows: 77073
@@ -143,5 +143,6 @@
     license: *id001
     method: text-final-v3
     requested_by: open-audio-llm A 线（open-audio-llm-45 会话，2026-11-27）
+    record_correction: '2026-11-27 登记（PR #315）后修正：记录时长原来四舍五入到毫秒，553 条比音频长不到 1 个采样点，其中 95 条在 Musci 打标时报 Audio slice exceeds duration；改为向下取整到毫秒，只改了 records 和 state.json（Lance 记录索引随之重建），文本、音频、音频清单和时长统计不变。原 records sha256 f61c18b1d6d7d4b07e04649c4b7a32cb5453206c1bddbd75003d11cc36d7e294（8,469,161 字节）。'
     run_dir: /workspace/workspace/mingdong/data/amphiondata/aline-en-20261125
     build_script: scripts/text_final/en_board/spgispeech1.py

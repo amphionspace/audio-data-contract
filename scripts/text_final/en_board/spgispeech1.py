@@ -417,6 +417,12 @@ def register(args):
             "license": lic,
             "method": "text-final-v3",
             "requested_by": "open-audio-llm A 线（open-audio-llm-45 会话，2026-11-27）",
+            "record_correction": (
+                "2026-11-27 登记（PR #315）后修正：记录时长原来四舍五入到毫秒，553 条比音频长不到 1 个采样点，"
+                "其中 95 条在 Musci 打标时报 Audio slice exceeds duration；改为向下取整到毫秒，只改了 records 和 "
+                "state.json（Lance 记录索引随之重建），文本、音频、音频清单和时长统计不变。原 records sha256 "
+                "f61c18b1d6d7d4b07e04649c4b7a32cb5453206c1bddbd75003d11cc36d7e294（8,469,161 字节）。"
+            ),
             "run_dir": RUN_DIR,
             "build_script": SCRIPT,
         },

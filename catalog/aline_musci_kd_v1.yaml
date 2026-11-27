@@ -384,3 +384,84 @@
       'dropped: WER > 0.3': 459
       'dropped: empty reference': 10
       kept: 24531
+- schema_version: dataset-catalog/2.0
+  dataset_id: spgispeech
+  version: hf-14e69dd3b80e-s-final-v3-20261127-musci-kd-v1-20261127
+  languages:
+  - en
+  tasks:
+  - asr
+  aliases: []
+  derived_from: spgispeech@hf-14e69dd3b80e-s-final-v3-20261127
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/spgispeech/versions/hf-14e69dd3b80e-s-final-v3-20261127-musci-kd-v1-20261127/state.json
+    expected_bytes: 639
+    sha256: 38112bd22d3107aa95a5e6c2e66e02d1fad63c9fba94014ac9da1a9552add615
+  - name: train
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/spgispeech/versions/hf-14e69dd3b80e-s-final-v3-20261127-musci-kd-v1-20261127/records/train.jsonl.gz
+    expected_bytes: 3281861
+    sha256: 16cbec4a3af3ef5567924640ce78cc06ed86d7f9bb5d545cce39a565e6dee01d
+    metadata:
+      record_count: 24662
+  - name: audio_index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/spgispeech/versions/hf-14e69dd3b80e-s-final-v3-20261127/audio_index/audio-index.jsonl.gz
+    expected_bytes: 2019503
+    sha256: 287a8df7e837553c657e7207465f6b664668ce828fbfead7ebf87fc940120cb6
+    metadata:
+      record_count: 77073
+  - name: record_index
+    kind: lance-record-index
+    root_alias: aidc_data
+    relative_path: datasets/spgispeech/versions/hf-14e69dd3b80e-s-final-v3-20261127-musci-kd-v1-20261127/record_index/index.json
+    expected_bytes: 762
+    sha256: bb8d6053c3caadae37bccc6b6fa25f070e13aeb38383f4985f74067fcf65e068
+    metadata:
+      snapshot_version: 13
+      rows: 24662
+      schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
+  splits:
+    train:
+      group: train
+      artifacts:
+        records:
+        - train
+        audio_index:
+        - audio_index
+        preparation_state:
+        - preparation_state
+        records_lance:
+        - record_index
+      statistics:
+        records: 24662
+        duration_hours: 62.8275
+        duration_basis: sum of record durations
+        languages:
+          en: 24662
+  provenance:
+    owner: mingdong
+    summary: A 线蒸馏：SPGI 1.0，Musci 解码作目标
+    source: spgispeech@hf-14e69dd3b80e-s-final-v3-20261127
+    snapshot_date: '2026-11-27'
+    method: sequence-level KD
+    run_dir: /workspace/workspace/mingdong/data/aline-kd-20261127
+    build_script: build_kd.py
+    description: A 线序列级蒸馏：spgispeech@hf-14e69dd3b80e-s-final-v3-20261127 的随机子集，目标换成 Musci 的贪心解码（与参考的榜单归一化 WER > 0.3 的丢弃，按 A 线去重清单排除），音频不变。
+    requested_by: open-audio-llm A 线（open-audio-llm-45 会话，2026-11-27）
+    quality_status: 被拒（错误过多）6 条，全部看过：4 条是写法或参考差异（误杀），2 条是 Musci 漏了段首一句；请求失败 95 条，都是源版本记录时长超出音频不到 1 个采样点（源版本已修正）；去重排除 237 条（源版本 metadata.spgispeech1_test_ids）；写法核对：Musci 的 you know / 相邻重复词每千词 0.21 / 0.47，参考 0.18 / 0.45，与它在榜单 test 上一致，可以学整理稿写法；详见 run_dir/README.md
+    record_correction: 登记时（2026-11-27）把 77 条的 start/duration 换成修正后源版本的值（原来比音频长不到 1 个采样点，见源版本 record_correction），target 和其余字段不变；生成脚本 /workspace/workspace/mingdong/data/amphiondata/aline-en-20261125/scripts/copy_spgi1_kd.py；原 records sha256 0ae503fc5bdfd9c946d3fd98027dd205afdaf426c81de68e22dfbbe7f9248aa5（3,281,770 字节）
+  recipe_parameters:
+    teacher: Musci-ASR-qwen-1019@c376e9c on the 11.17 serving stack (greedy, force_language en, max_new_tokens 512)
+    max_wer_vs_reference: 0.3
+    counts:
+      labelled: 25000
+      'dropped: teacher request failed': 95
+      'dropped: WER > 0.3': 6
+      'dropped: decontamination list': 237
+      kept: 24662
