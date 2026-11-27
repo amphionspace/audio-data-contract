@@ -1,58 +1,147 @@
-# 占位登记：SPGISpeech 1.0（Kensho）S 配置 train，2026-11-27。open-audio-llm A 线要学榜单 SPGISpeech test 的整理稿写法（Musci 只在与 test 同分布的 1.0 音频上按整理稿写）。
-# 用户 2026-11-27 接受 HF 门控条款并确认下载 S 子集；许可风险用户 11-25 已说不用管。构建中，进度见状态文件。
+# SPGISpeech 1.0（Kensho）S 配置 train，2026-11-27。open-audio-llm A 线要学榜单 SPGISpeech test 的整理稿写法（Musci 只在与 test 同分布的 1.0 音频上按整理稿写）。
+# 用户 2026-11-27 接受 HF 门控条款并确认下载 S 子集；许可风险用户 11-25 已说不用管。生成脚本 scripts/text_final/en_board/spgispeech1.py。
 - schema_version: dataset-catalog/2.0
   dataset_id: spgispeech
   version: hf-14e69dd3b80e-s
   languages:
-    - en
+  - en
   tasks:
-    - asr
+  - asr
   aliases: []
   artifacts:
-    - name: preparation_state
-      kind: dataset-state
-      root_alias: aidc_data
-      relative_path: datasets/spgispeech/versions/hf-14e69dd3b80e-s/state.json
+  - name: source
+    kind: hf-dataset-snapshot
+    root_alias: aidc_data
+    relative_path: datasets/spgispeech/source/hf-14e69dd3b80e-s
+    metadata:
+      file_count: 8
+      expected_bytes: 22300521953
+      tree_sha256: 27dcc6f9e739a2c651140898850a7fcf7d89484d38379c7d7e8a3ca24f6ebda9
+  - name: download_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/spgispeech/versions/hf-14e69dd3b80e-s/state.json
+    expected_bytes: 445
+    sha256: ef2857fce1e8c66d618c9cbea4db9297c0487889091cd979326d8f5e51f95804
   splits:
     train:
       artifacts:
-        preparation_state:
-          - preparation_state
-      provenance:
-        preparation_status: building
+        source:
+        - source
+      statistics:
+        count: 77073
+        duration_basis: sum of WAV durations
   provenance:
-    preparation_status: building
     owner: mingdong
     summary: SPGISpeech 1.0 S train 原始下载
-    description: >-
-      Hugging Face kensho/spgispeech（修订 14e69dd3b80e968282ca55d3eb2b39cc9db2b62e）的 S 配置 train：6 个 parquet，77,073 段、约 200 小时，5–15 秒，16 kHz 单声道；S&P Global 专业转写（带大小写、标点，非标准词已书面化）。下载中，按上游 sha256 逐文件校验。
-    source: Hugging Face kensho/spgispeech
-    run_dir: /workspace/data/staging/open-speech-20261113
+    source: Hugging Face
+    source_id: kensho/spgispeech
+    revision: 14e69dd3b80e968282ca55d3eb2b39cc9db2b62e
+    url: https://huggingface.co/datasets/kensho/spgispeech
+    paper: https://arxiv.org/abs/2104.02014
+    license: &id001
+    - other (Kensho SPGISpeech terms; gated)
+    description: Kensho（S&P Global）SPGISpeech 1.0 的 S 配置 train：2007–2020 年上市公司财报电话会议切成 5–15 秒的单人片段，77,073 段、196.2 小时，16 kHz 单声道。转写是 S&P Global 的专业转写，按编辑规范写成书面形式（大小写、标点、非标准词书面化），口吃和语气词大多删掉。数据有访问门控，用户 2026-11-27 用 HF 账号接受了条款：仅限非商业研究，不得再分发。只下载了 S 的 train（6 个 parquet）；validation、test 没下（榜单 test 在 open_asr_leaderboard 副本里）。
+    download_scope: SPGISpeech 1.0 configuration S, train split (S/train-0000[0-5]-of-00006.parquet), README, .gitattributes
+    integrity: verified
+    local_scan_date: '2026-11-27'
 - schema_version: dataset-catalog/2.0
   dataset_id: spgispeech
   version: hf-14e69dd3b80e-s-final-v3-20261127
   languages:
-    - en
+  - en
   tasks:
-    - asr
+  - asr
   aliases: []
+  derived_from: spgispeech@hf-14e69dd3b80e-s
   artifacts:
-    - name: preparation_state
-      kind: dataset-state
-      root_alias: aidc_data
-      relative_path: datasets/spgispeech/versions/hf-14e69dd3b80e-s-final-v3-20261127/state.json
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/spgispeech/versions/hf-14e69dd3b80e-s-final-v3-20261127/state.json
+    expected_bytes: 622
+    sha256: 85fdc1dfbb8ec29d144cf54cf9a8beea96ed3efe9260c9aa265e973dfb9f3574
+  - name: train
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/spgispeech/versions/hf-14e69dd3b80e-s-final-v3-20261127/records/train.jsonl.gz
+    expected_bytes: 8469161
+    sha256: f61c18b1d6d7d4b07e04649c4b7a32cb5453206c1bddbd75003d11cc36d7e294
+    metadata:
+      record_count: 77073
+  - name: audio_index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/spgispeech/versions/hf-14e69dd3b80e-s-final-v3-20261127/audio_index/audio-index.jsonl.gz
+    expected_bytes: 2019503
+    sha256: 287a8df7e837553c657e7207465f6b664668ce828fbfead7ebf87fc940120cb6
+    metadata:
+      record_count: 77073
+  - name: duration_distribution
+    kind: json-metadata
+    root_alias: aidc_data
+    relative_path: datasets/spgispeech/versions/hf-14e69dd3b80e-s-final-v3-20261127/duration_distribution.json
+    expected_bytes: 151
+    sha256: 7f6177e739a90a47520bcc20771bbdbe93dd21094fe10a34e9ca27f25a591531
+  - name: record_index
+    kind: lance-record-index
+    root_alias: aidc_data
+    relative_path: datasets/spgispeech/versions/hf-14e69dd3b80e-s-final-v3-20261127/record_index/index.json
+    expected_bytes: 741
+    sha256: 70de4d1afe46d485ab099202d04188f2f2a304bf4c35147e918a6eb014ddd6ba
+    metadata:
+      snapshot_version: 13
+      rows: 77073
+      schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
   splits:
     train:
+      group: train
       artifacts:
+        records:
+        - train
+        audio_index:
+        - audio_index
         preparation_state:
-          - preparation_state
-      provenance:
-        preparation_status: building
+        - preparation_state
+        records_lance:
+        - record_index
+      statistics:
+        records: 77073
+        duration_hours: 196.2418
+        duration_basis: sum of record durations
+        languages:
+          en: 77073
+        spgispeech1_test_marked: 649
+  recipe_parameters:
+    spec: docs/reference/training-text.md（v3）
+    duration_seconds:
+    - 0.5
+    - 30.0
+    text: transcript 原样，按规则 2 只补句首大写和句末标点；原文在 metadata.raw_transcript
+    board_test: 与 Open ASR 榜单 SPGISpeech test 比：同一会议编号，以及按 10 词片段比文本、test 句子 80% 以上的词按序出现时记入 metadata.spgispeech1_test_ids（不删）
+    audio_policy: parquet 里的 WAV 转成 <version>/audio/<call>/<n>.flac（16 kHz 单声道 PCM16），整段引用
+    counts:
+      target differs from the transcript (rule 2 fixes): 48611
+      'marked: text of a board test utterance': 649
+      records: 77073
+    duration_distribution:
+      train:
+        count: 77073
+        hours: 196.2418
+        min: 5.01
+        p50: 8.88
+        p90: 13.14
+        p99: 14.79
+        max: 15.0
+        mean: 9.166
   provenance:
-    preparation_status: building
     owner: mingdong
     summary: SPGISpeech 1.0 S train 训练文本终版
-    description: >-
-      spgispeech@hf-14e69dd3b80e-s 的 train 按训练文本规范 v3 建的训练版本，供 open-audio-llm A 线（英文榜单版）用 Musci 做序列级蒸馏、学 SPGISpeech test 的整理稿写法。原参考文本保留；与榜单 SPGISpeech test 文本近乎相同的记录在 metadata 标出（不删）。构建中。
+    snapshot_date: '2026-11-27'
+    description: spgispeech@hf-14e69dd3b80e-s 的 train 按训练文本规范 v3 建的训练版本，供 open-audio-llm A 线（英文榜单版）用 Musci 做序列级蒸馏，学榜单 SPGISpeech test 的整理稿写法（Musci 在 SPGISpeech 2.0 音频上按逐字写，只在与 test 同分布的 1.0 音频上按整理稿写）。目标是 S&P Global 转写原文（规则 2 只补句首大写和句末标点）。与榜单 test 句子文本近乎相同的记录在 metadata.spgispeech1_test_ids 标出，训练配方按它排除。Kensho 条款：仅限非商业研究。
     source: spgispeech@hf-14e69dd3b80e-s
+    license: *id001
+    method: text-final-v3
+    requested_by: open-audio-llm A 线（open-audio-llm-45 会话，2026-11-27）
     run_dir: /workspace/workspace/mingdong/data/amphiondata/aline-en-20261125
+    build_script: scripts/text_final/en_board/spgispeech1.py
