@@ -711,6 +711,20 @@ LibriSpeech 混合的目标说话人数据
 - `singaporean@legacy-20260804`：新加坡英语；登记 cleaned 标注，尚未核实清洗引擎和规则
 - 含派生版本（与源数据可能重叠）
 
+### spgispeech
+
+SPGISpeech 1.0 S train 原始下载
+
+语言：en · 任务：语音识别
+
+| 版本 | 时长（小时） | 口径 | COS |
+|---|---:|---|---|
+| [spgispeech@hf-14e69dd3b80e-s](../../catalog/spgispeech.yaml#L3) | — | 未登记 | 没有 |
+| [spgispeech@hf-14e69dd3b80e-s-final-v3-20261127](../../catalog/spgispeech.yaml#L31) | — | 未登记 | 没有 |
+
+- `spgispeech@hf-14e69dd3b80e-s`：Hugging Face kensho/spgispeech（修订 14e69dd3b80e968282ca55d3eb2b39cc9db2b62e）的 S 配置 train：6 个 parquet，77,073 段、约 200 小时，5–15 秒，16 kHz 单声道；S&P Global 专业转写（带大小写、标点，非标准词已书面化）。下载中，按上游 sha256 逐文件校验
+- `spgispeech@hf-14e69dd3b80e-s-final-v3-20261127`：spgispeech@hf-14e69dd3b80e-s 的 train 按训练文本规范 v3 建的训练版本，供 open-audio-llm A 线（英文榜单版）用 Musci 做序列级蒸馏、学 SPGISpeech test 的整理稿写法。原参考文本保留；与榜单 SPGISpeech test 文本近乎相同的记录在 metadata 标出（不删）。构建中
+
 ### spgispeech2
 
 财报电话会议多说话人英语（SPGISpeech 2.0）
