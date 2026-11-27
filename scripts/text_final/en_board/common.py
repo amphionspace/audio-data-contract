@@ -10,6 +10,7 @@ import gzip
 import hashlib
 import io
 import json
+import math
 from pathlib import Path
 
 DATA = Path("/workspace/data")
@@ -46,13 +47,18 @@ def write_jsonl_gz(path: Path, rows) -> int:
 
 
 def record(ds, ver, split, cut_id, start, duration, target, metadata, rid=None) -> dict:
+    # Milliseconds, with the end rounded down: a slice that ends past the audio by a fraction of a sample fails to
+    # load (amphion-eval allows one sample, float error does the rest; 95 SPGISpeech 1.0 records on 2026-11-27).
+    end = start + duration
+    start = round(start, 3)
+    duration = math.floor((end - start) * 1000 + 1e-6) / 1000
     return {
         "schema_version": "audio-record/1.0",
         "id": f"{split}:{rid or cut_id}",
         "task": "asr",
         "audio_slots": [{"name": "primary", "purpose": "primary", "ref": {
             "dataset_id": ds, "version": ver, "split": split, "cut_id": cut_id, "channel": 0,
-            "start": round(start, 3), "duration": round(duration, 3)}}],
+            "start": start, "duration": duration}}],
         "target": target,
         "language": "en",
         "labels": {},
