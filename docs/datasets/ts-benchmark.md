@@ -160,6 +160,23 @@ python scripts/ts_benchmark/build.py --recipe scripts/ts_benchmark/recipe-pt.yam
 # 补充集同理：recipe-{farfield,handover,noise,singing}-pt.yaml --reference-version es-v1-20261111；recipe-shortseg-pt.yaml --reference-version en-v1-20261031
 ```
 
+## 阿拉伯语版（各数据集的 ar-v1-20261127）
+
+`ts_asr_benchmark`、`ts_asr_farfield`、`ts_asr_handover`、`ts_asr_noise`、`ts_asr_shortseg`、`ts_asr_singing` 各有 `ar-v1-20261127`，配方是 `scripts/ts_benchmark/recipe-ar.yaml` 与 `recipe-*-ar.yaml`：与葡语版 `pt-v1-20261117`、西语版同一场景、随机种子、噪声与房间响应缓存（英文 `en-v1-20261031`），只换说话人。评测集 `ts-asr-benchmark-ar@v1-20261127`（主集 106 个划分）与 `@v2-20261127`（并入补充集，137 个划分），由葡语评测集定义派生（同标签、同分组）。
+
+- **说话人**：Common Voice 24.0 ar dev + test（`common_voice_ar@ar-eval-v1-20261127`），至少 6 句 1.5–9 秒的 448 人。dev 只有 64 人，所以与 test 合用（葡语、西语只用 dev）。说话人与 CV 24.0 train 零重叠，dev 与 test 不重叠；阿拉伯语还没有训练版本，建训练版本时须去掉这些说话人和句子（`overlap.json` 记有与 train 去元音符号后相同的句子数）。
+- **与葡语版相同的缺口**：没有 `dom-phone-*` / `dom-studio-*`、`dyn-short-k1/k3` 与整个 `ts_asr_nearshort`（CV ar dev+test 的 20,717 句里只有 3 句 0.5–1.6 秒）、`ts_asr_noise` 的背景人声各列（阿拉伯语背景人声只能用本集目标所在的 CV ar dev 说话人合成）。与葡语版一样有 `ts_asr_shortseg` 的对照 `solo-mid`（不长于 3.6 秒的句子有 6,539 句）。
+- **质检**：每个数据集用 `build.py --reference-version pt-v1-20261117` 逐 split 对照葡语同名版本，141 个划分全部 PASS：条数与目标在场比例一致，平均时长是参考的 0.99–1.02 倍（门槛 0.8–1.25）。
+- 说话人向量（ECAPA）`source/ar-v1-20261127/speaker-embeddings.npz`，补充集复用。
+
+```bash
+python scripts/ts_benchmark/speaker_embeddings.py --recipe scripts/ts_benchmark/recipe-ar.yaml --roots roots.json --output ar.npz
+python scripts/ts_benchmark/build.py --recipe scripts/ts_benchmark/recipe-ar.yaml --roots roots.json --embeddings ar.npz \
+    --noise-cache /workspace/data/datasets/ts_asr_benchmark/source/en-v1-20261031/noise \
+    --rir-cache /workspace/data/datasets/ts_asr_benchmark/source/en-v1-20261031/rir --reference-version pt-v1-20261117
+# 补充集同理：recipe-{farfield,handover,noise,shortseg,singing}-ar.yaml --reference-version pt-v1-20261117
+```
+
 ## 跨语言注册补充集（ts_asr_crosslingual）
 
 问题来源：业务录音里，注册音频是目标说话人说中文，混合段里他说英文。模型在混合段里只能认出同语言注册的那个人，换成中文注册就几乎全判"目标不在场"。
@@ -192,6 +209,10 @@ python scripts/ts_benchmark/build.py --recipe scripts/ts_benchmark/recipe-pt.yam
   - Common Voice 同一账号录葡语（27.0 dev/test）又录英文、每种语言至少 5 句的 92 人，去掉 TS 训练目标（与西语版同一份名单）40 人，剩 52 人；ECAPA 逐句身份核对去掉 8 人，剩 **44 人**（葡语 539 句、英文 1,412 句，`source/pools/pt-v1-20261117/cv-bilingual-identity.json`）。同一账号录葡语与中文的 0 人，所以没有中文注册。
   - 葡语语句只取 dev/test，导出时核对目标不在葡语训练版本 `common_voice_pt@pt-train-v1-20261117` 里（`export_bilingual_pool.py --languages pt en --held-out pt`）。干扰人取 CV 葡语 dev/test 的其他说话人。
   - 质检（`qc_crosslingual.py`）通过：10 个划分各 120 条，600/600 对混合段完全相同，目标在场 60%。缺口同西语：没有合成音色部分，没有中文注册。
+- **阿拉伯语版 `ar-v1-20261127`**（混合段阿拉伯语，配方 `recipe-crosslingual-ar.yaml`，评测集 `ts-asr-crosslingual-ar@v1-20261127`），做法与西语、葡语版相同：
+  - Common Voice 同一账号录阿拉伯语（24.0 dev/test）又录英文、每种语言至少 5 句的 59 人，去掉 TS 训练目标（与西语、葡语版同一份名单）21 人，剩 38 人；ECAPA 逐句身份核对去掉 6 人，剩 **32 人**（阿拉伯语 951 句、英文 871 句，`source/pools/ar-v1-20261127/cv-bilingual-identity.json`）。同一账号录阿拉伯语与中文的 0 人，所以没有中文注册。
+  - 阿拉伯语语句只取 dev/test，导出时核对目标不在 CV 24.0 ar train 里（`export_bilingual_pool.py --languages ar en --held-out ar`）。干扰人取 CV 阿拉伯语 dev/test 的其他说话人。
+  - 质检（`qc_crosslingual.py`）通过：10 个划分各 120 条，597/600 对混合段完全相同（k2 117），目标在场 60%。缺口同西语、葡语：没有合成音色部分，没有中文注册。
 
 ## 开发集（ts_asr_dev）
 

@@ -59,9 +59,12 @@ GENERATOR_VERSION = "2"
 TEXT = {"zh": re.compile(r"^[一-鿿]+$"), "en": re.compile(r"^[a-z']+( [a-z']+)*$"),
         "es": re.compile(r"^[a-záéíóúüñ]+( [a-záéíóúüñ]+)*$"),
         # Portuguese keeps hyphenated clitics (dá-me, disse-lhe) as one word
-        "pt": re.compile(r"^[a-záàâãéêíóôõúüç]+(-[a-záàâãéêíóôõúüç]+)*( [a-záàâãéêíóôõúüç]+(-[a-záàâãéêíóôõúüç]+)*)*$")}
-# Spanish and Portuguese sources (Common Voice) are written sentences: marks are dropped before the plain-words check.
+        "pt": re.compile(r"^[a-záàâãéêíóôõúüç]+(-[a-záàâãéêíóôõúüç]+)*( [a-záàâãéêíóôõúüç]+(-[a-záàâãéêíóôõúüç]+)*)*$"),
+        # Arabic letters (no tatweel, no Persian letters) with their diacritics
+        "ar": re.compile(r"^[\u0621-\u063a\u0641-\u064a\u064b-\u0652\u0670]+( [\u0621-\u063a\u0641-\u064a\u064b-\u0652\u0670]+)*$")}
+# Spanish, Portuguese and Arabic sources (Common Voice) are written sentences: marks are dropped before the plain-words check.
 ES_MARKS = re.compile(r"[¿¡.,;:!?\"«»()]")
+AR_MARKS = re.compile(r"[.,;:!?\"«»()،؛؟…\-–—']")
 G = {}  # worker-global state, set before the pool forks
 FORK = multiprocessing.get_context("fork")  # Python 3.14 defaults to forkserver, which would not see G
 
@@ -80,6 +83,8 @@ def load_utterances(source, language, catalog, roots):
         text = text.replace(" ", "") if language == "zh" else text.lower()
         if language in ("es", "pt"):
             text = " ".join(ES_MARKS.sub(" ", text).split())
+        elif language == "ar":
+            text = " ".join(AR_MARKS.sub(" ", text).split())
         if not TEXT[language].match(text) or row.get("start", 0) != 0 or row["recording_id"] not in audio:
             continue
         speaker = f"{source['dataset']}:{row['speaker']}"

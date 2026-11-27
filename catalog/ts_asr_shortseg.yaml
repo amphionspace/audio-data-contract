@@ -680,3 +680,126 @@
     description: 葡萄牙语目标说话人 ASR 评测集（ts_asr_shortseg）：与西语版 es-v1-20261111、英文版 en-v1-20261031 同一配方与随机种子，说话人换成 Common Voice 27.0 pt dev（众包朗读，多为巴西口音，各自设备）；含英文版的对照 solo-mid（西语版没有）；不含业务真实注册录音条件。只用于评测，不进训练。场景见 scripts/ts_benchmark/recipe-shortseg-pt.yaml。
     sources:
     - common_voice_pt@pt-eval-v1-20261117:dev
+- schema_version: dataset-catalog/2.0
+  dataset_id: ts_asr_shortseg
+  version: ar-v1-20261127
+  languages:
+  - ar
+  tasks:
+  - ts_asr
+  artifacts:
+  - name: audio-index
+    kind: audio-index
+    root_alias: ts_asr_shortseg
+    relative_path: versions/ar-v1-20261127/audio-index.jsonl.gz
+    sha256: 89099ddeef6e7cb771b6f9bd95e339dd9739f6f4e13c1580243cb10eab2ed458
+    metadata:
+      record_count: 1200
+  - name: abs-mid1-k1-records
+    kind: audio-records
+    root_alias: ts_asr_shortseg
+    relative_path: versions/ar-v1-20261127/records/abs-mid1-k1.jsonl.gz
+    sha256: 672a0e3e7eaaae156ac04ca2bc8d076c6ed42eefeb860978577c16d84b61b605
+    metadata:
+      record_count: 120
+  - name: abs-mid1-k2-records
+    kind: audio-records
+    root_alias: ts_asr_shortseg
+    relative_path: versions/ar-v1-20261127/records/abs-mid1-k2.jsonl.gz
+    sha256: dce76b74de7ec82d99701c2da1a4eaf61149742ca1c8b8311bb967bed54613b4
+    metadata:
+      record_count: 120
+  - name: abs-mid2-k1-records
+    kind: audio-records
+    root_alias: ts_asr_shortseg
+    relative_path: versions/ar-v1-20261127/records/abs-mid2-k1.jsonl.gz
+    sha256: c182535cc5d616568e5f2d06689d78326fd15674c11aa2d4126bff5f312666ae
+    metadata:
+      record_count: 120
+  - name: abs-mid2-k2-records
+    kind: audio-records
+    root_alias: ts_asr_shortseg
+    relative_path: versions/ar-v1-20261127/records/abs-mid2-k2.jsonl.gz
+    sha256: 7be729c4220fd9e5e66f4b354cdfc8dfddaf81e423d86dbae6bc6991108ff974
+    metadata:
+      record_count: 120
+  - name: solo-mid-records
+    kind: audio-records
+    root_alias: ts_asr_shortseg
+    relative_path: versions/ar-v1-20261127/records/solo-mid.jsonl.gz
+    sha256: 4ad3fbd5aa26429f8efbcf5c494fdabb7a1697425c3fca0fc2fe6e6c259935b0
+    metadata:
+      record_count: 120
+  splits:
+    abs-mid1-k1:
+      artifacts:
+        records:
+        - abs-mid1-k1-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 120
+        duration_hours: 0.0698
+        duration_basis: Mixture duration
+      provenance:
+        description: 'shortseg: {"kind": "neg", "k": 1, "duration": [1.2, 3.0], "interferer_start": [0.0, 0.3], "noise_floor": {"dbfs": [-65, -35], "kinds": {"white": 0.15, "pink": 0.15, "real": 0.7}, "real_pools": ["wham", "dns5_audioset", "dns5_freesound"]}, "enroll_store_seconds": 10, "language": "ar"}'
+    abs-mid1-k2:
+      artifacts:
+        records:
+        - abs-mid1-k2-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 120
+        duration_hours: 0.0687
+        duration_basis: Mixture duration
+      provenance:
+        description: 'shortseg: {"kind": "neg", "k": 2, "duration": [1.2, 3.0], "interferer_start": [0.0, 0.3], "noise_floor": {"dbfs": [-65, -35], "kinds": {"white": 0.15, "pink": 0.15, "real": 0.7}, "real_pools": ["wham", "dns5_audioset", "dns5_freesound"]}, "enroll_store_seconds": 10, "language": "ar"}'
+    abs-mid2-k1:
+      artifacts:
+        records:
+        - abs-mid2-k1-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 120
+        duration_hours: 0.1493
+        duration_basis: Mixture duration
+      provenance:
+        description: 'shortseg: {"kind": "neg", "k": 1, "duration": [3.0, 6.0], "interferer_start": [0.0, 0.3], "noise_floor": {"dbfs": [-65, -35], "kinds": {"white": 0.15, "pink": 0.15, "real": 0.7}, "real_pools": ["wham", "dns5_audioset", "dns5_freesound"]}, "enroll_store_seconds": 10, "language": "ar"}'
+    abs-mid2-k2:
+      artifacts:
+        records:
+        - abs-mid2-k2-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 120
+        duration_hours: 0.148
+        duration_basis: Mixture duration
+      provenance:
+        description: 'shortseg: {"kind": "neg", "k": 2, "duration": [3.0, 6.0], "interferer_start": [0.0, 0.3], "noise_floor": {"dbfs": [-65, -35], "kinds": {"white": 0.15, "pink": 0.15, "real": 0.7}, "real_pools": ["wham", "dns5_audioset", "dns5_freesound"]}, "enroll_store_seconds": 10, "language": "ar"}'
+    solo-mid:
+      artifacts:
+        records:
+        - solo-mid-records
+        audio_index:
+        - audio-index
+      task: ts_asr
+      statistics:
+        records: 120
+        duration_hours: 0.1656
+        duration_basis: Mixture duration
+      provenance:
+        description: 'shortseg: {"kind": "pos", "schedule": "full", "k": 0, "duration": [2.0, 6.0], "noise_floor": {"dbfs": [-65, -35], "kinds": {"white": 0.15, "pink": 0.15, "real": 0.7}, "real_pools": ["wham", "dns5_audioset", "dns5_freesound"]}, "enroll_store_seconds": 10, "language": "ar"}'
+  provenance:
+    status: complete
+    synthetic: full
+    description: 阿拉伯语目标说话人 ASR 评测集（ts_asr_shortseg）：与葡语版 pt-v1-20261117、西语版 es-v1-20261111、英文版 en-v1-20261031 同一配方与随机种子，说话人换成 Common Voice 24.0 ar dev+test（众包朗读，句子以标准阿拉伯语为主，各自设备）；含英文版的对照 solo-mid（西语版没有）；不含业务真实注册录音条件。只用于评测，不进训练。场景见 scripts/ts_benchmark/recipe-shortseg-ar.yaml。
+    sources:
+    - common_voice_ar@ar-eval-v1-20261127:dev
+    - common_voice_ar@ar-eval-v1-20261127:test

@@ -1376,3 +1376,181 @@
     - mls_pt@pt-eval-v1-20261117:dev
     - mls_pt@pt-eval-v1-20261117:test
     - sim_rir_slr28@legacy-20260804:all
+- schema_version: dataset-catalog/2.0
+  dataset_id: asr_babble_bench
+  version: ar-v1-20261127
+  languages:
+  - ar
+  tasks:
+  - asr
+  artifacts:
+  - name: audio-index
+    kind: audio-index
+    root_alias: asr_babble_bench
+    relative_path: versions/ar-v1-20261127/audio-index.jsonl.gz
+    sha256: 26987b3f2846e9f9bbd566b961451d5518a62dba447beca6113a3d2394085a4c
+    metadata:
+      record_count: 1400
+  - name: babble-manifest
+    kind: jsonl-metadata
+    root_alias: asr_babble_bench
+    relative_path: source/ar-v1-20261127/babble/manifest.jsonl
+    sha256: eb2d7adbb5b2d8f33c5f7c353dcfb247a02c5a7cdc4dfc7c46b429c00e9f3901
+    metadata:
+      record_count: 300
+  - name: qc
+    kind: quality-report
+    root_alias: asr_babble_bench
+    relative_path: source/ar-v1-20261127/qc.yaml
+    sha256: 9d06feac49a49eaa8f0bf732816327203a33d825c4f90b1a3cccdad00d8160d0
+    metadata:
+      passed: true
+  - name: ar-babble-far-records
+    kind: audio-records
+    root_alias: asr_babble_bench
+    relative_path: versions/ar-v1-20261127/records/ar-babble-far.jsonl.gz
+    sha256: c8ff6668ed79d22c004981890d40cfd9f2e40f0dbe9556cc8bdd1d752907925e
+    metadata:
+      record_count: 200
+  - name: ar-babble-mid-records
+    kind: audio-records
+    root_alias: asr_babble_bench
+    relative_path: versions/ar-v1-20261127/records/ar-babble-mid.jsonl.gz
+    sha256: 47a807ff022e7f3ef1bcc7a7cdddd7cf3358bf3dfb6ced4bcdbc9ded48ad8390
+    metadata:
+      record_count: 200
+  - name: ar-clean-records
+    kind: audio-records
+    root_alias: asr_babble_bench
+    relative_path: versions/ar-v1-20261127/records/ar-clean.jsonl.gz
+    sha256: 31c99ca68beaca453b54887c25b22e2b84dcdb321d8771856bd3125352e92d96
+    metadata:
+      record_count: 200
+  - name: ar-babble20-records
+    kind: audio-records
+    root_alias: asr_babble_bench
+    relative_path: versions/ar-v1-20261127/records/ar-babble20.jsonl.gz
+    sha256: a9edd10d8594132d9433e55ae0f2a58541d96fd60c1fe100ad2c595a4ecbd6f1
+    metadata:
+      record_count: 200
+  - name: ar-babble10-records
+    kind: audio-records
+    root_alias: asr_babble_bench
+    relative_path: versions/ar-v1-20261127/records/ar-babble10.jsonl.gz
+    sha256: 3c9f844e4ba34c273370dc4d043dc6b817c9ee009deff0a26fa9838b3ff3a7c6
+    metadata:
+      record_count: 200
+  - name: ar-babble5-records
+    kind: audio-records
+    root_alias: asr_babble_bench
+    relative_path: versions/ar-v1-20261127/records/ar-babble5.jsonl.gz
+    sha256: 6e8dfed9714be1dd7878c8b1b3486f93c97eb6bbbbaa433f0d5d2f53fae73d20
+    metadata:
+      record_count: 200
+  - name: ar-babble10-tight-records
+    kind: audio-records
+    root_alias: asr_babble_bench
+    relative_path: versions/ar-v1-20261127/records/ar-babble10-tight.jsonl.gz
+    sha256: 192c16eabf589f3449ee5578dd131f732198fbf0676b833a96f95b3fb502958f
+    metadata:
+      record_count: 200
+  splits:
+    ar-babble-far:
+      artifacts:
+        records:
+        - ar-babble-far-records
+        audio_index:
+        - audio-index
+      task: asr
+      statistics:
+        records: 200
+        duration_hours: 0.5415
+        duration_basis: clip duration
+      provenance:
+        description: '只有阿拉伯语背景人声 · 远：16–24 人在房间里同时说话的阿拉伯语背景人声，电平 −45 到 −38 dBFS（正常说话约 −25 dBFS），2–20 秒；期望输出为空。参数 {"kind": "noise", "pair": "ar-babble-only", "noise": "babble_ar", "level_dbfs": [-45, -38], "duration": [2, 20]}'
+    ar-babble-mid:
+      artifacts:
+        records:
+        - ar-babble-mid-records
+        audio_index:
+        - audio-index
+      task: asr
+      statistics:
+        records: 200
+        duration_hours: 0.5415
+        duration_basis: clip duration
+      provenance:
+        description: '只有阿拉伯语背景人声 · 中：同一批片段，电平 −38 到 −31 dBFS；期望输出为空。参数 {"kind": "noise", "pair": "ar-babble-only", "noise": "babble_ar", "level_dbfs": [-38, -31], "duration": [2, 20]}'
+    ar-clean:
+      artifacts:
+        records:
+        - ar-clean-records
+        audio_index:
+        - audio-index
+      task: asr
+      statistics:
+        records: 200
+        duration_hours: 0.5801
+        duration_basis: clip duration
+      provenance:
+        description: '阿拉伯语 · 无背景人声（对照）：Common Voice 24.0 ar 测试集的一句话，前后各 1–5 秒只有很低的噪声底；下面几列与它逐条配对。参数 {"kind": "speech", "pair": "ar-speech", "language": "ar"}'
+    ar-babble20:
+      artifacts:
+        records:
+        - ar-babble20-records
+        audio_index:
+        - audio-index
+      task: asr
+      statistics:
+        records: 200
+        duration_hours: 0.5801
+        duration_basis: clip duration
+      provenance:
+        description: '阿拉伯语 · 背景人声 20 dB：同一句话、同样的前后时长，整段叠加阿拉伯语背景人声，信噪比 20 dB（背景很远）；前后 1–5 秒只有背景人声。参数 {"kind": "speech", "pair": "ar-speech", "language": "ar", "noise": "babble_ar", "snr_db": 20}'
+    ar-babble10:
+      artifacts:
+        records:
+        - ar-babble10-records
+        audio_index:
+        - audio-index
+      task: asr
+      statistics:
+        records: 200
+        duration_hours: 0.5801
+        duration_basis: clip duration
+      provenance:
+        description: '阿拉伯语 · 背景人声 10 dB：同上，信噪比 10 dB（身边有一群人在聊天）。参数 {"kind": "speech", "pair": "ar-speech", "language": "ar", "noise": "babble_ar", "snr_db": 10}'
+    ar-babble5:
+      artifacts:
+        records:
+        - ar-babble5-records
+        audio_index:
+        - audio-index
+      task: asr
+      statistics:
+        records: 200
+        duration_hours: 0.5801
+        duration_basis: clip duration
+      provenance:
+        description: '阿拉伯语 · 背景人声 5 dB：同上，信噪比 5 dB（嘈杂的人群）。参数 {"kind": "speech", "pair": "ar-speech", "language": "ar", "noise": "babble_ar", "snr_db": 5}'
+    ar-babble10-tight:
+      artifacts:
+        records:
+        - ar-babble10-tight-records
+        audio_index:
+        - audio-index
+      task: asr
+      statistics:
+        records: 200
+        duration_hours: 0.2401
+        duration_basis: clip duration
+      provenance:
+        description: '阿拉伯语 · 背景人声 10 dB · 无前后空白：与 ar-babble10 同一句话、同一段背景，只是没有前后 1–5 秒；两列之差就是只有背景人声的那几秒带来的错误。参数 {"kind": "speech", "pair": "ar-speech", "language": "ar", "tight": true, "noise": "babble_ar", "snr_db": 10}'
+  provenance:
+    status: complete
+    synthetic: full
+    description: 阿拉伯语普通 ASR 背景人声评测集（与西语版 es-v1-20261111、葡语版 pt-v1-20261117 同一做法，对应中英 v2-20261023 的背景人声切分，同一渲染函数与参数）： 只有阿拉伯语背景人声的片段（期望输出为空），以及一句话前后和说话时都有阿拉伯语背景人声的片段（与无背景人声的对照逐条配对）。 目标语音是 Common Voice 24.0 ar test 的一句话；背景人声由不进训练、也不与目标重叠的 Common Voice 24.0 ar dev（64 人）说话人在模拟房间里混成 （CV 24.0 ar 各划分说话人不重叠；阿拉伯语训练版本须去掉 dev / test 的说话人和句子，见 catalog/ar_eval_v1.yaml）。 只用于评测，不进训练。配方 scripts/asr_babble_bench/recipe-ar.yaml。
+    sources:
+    - common_voice_ar@ar-eval-v1-20261127:test
+    - common_voice_ar@ar-eval-v1-20261127:dev
+    - sim_rir_slr28@legacy-20260804:all

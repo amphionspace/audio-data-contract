@@ -6,6 +6,7 @@
     python scripts/hotword_bench/eval_set.py --recipe scripts/hotword_bench/recipe-v3.yaml > data.yaml  # v3
     python scripts/hotword_bench/eval_set.py --recipe scripts/hotword_bench/recipe-es-v1.yaml > data.yaml  # es-v1
     python scripts/hotword_bench/eval_set.py --recipe scripts/hotword_bench/recipe-pt-v1.yaml > data.yaml  # pt-v1
+    python scripts/hotword_bench/eval_set.py --recipe scripts/hotword_bench/recipe-ar-v1.yaml > data.yaml  # ar-v1
     ae eval-sets publish data.yaml --project open-audio-llm --name hotword-bench --version <version>
 
 Run it with ``ae open-audio-llm after-training`` (evaluator ``hotwords``,
@@ -75,6 +76,15 @@ PT_SOURCES = [
 PT_NOTE = ("主条件 k50（正确词 + 按葡语读音键检索出的近音词 + 随机词共 50 个）看 B-WER 与 F1；"
            "k50_no_gold 看误触发率与 WER 变化")
 
+# ar-v1 (recipe-ar-v1.yaml): the Arabic splits, laid out as es-v1; MGB-2 broadcast takes MLS's place
+AR_SOURCES = [
+    ("cv_ar", "cv-ar", "Common Voice 阿拉伯语", "Common Voice 24.0 ar 测试集，阿拉伯语热词标注（Qwen3.8-27B 抽取 + 复核），全部 1,247 条正例"),
+    ("fleurs_ar", "fleurs-ar", "FLEURS 阿拉伯语", "FLEURS ar_eg 测试集，阿拉伯语热词标注，全部 153 条正例（同一句话有多个说话人）"),
+    ("mgb2_ar", "mgb2-ar", "MGB-2 阿拉伯语广播", "MGB-2 测试集（半岛电视台节目分段，真实广播），阿拉伯语热词标注，全部 1,398 条正例"),
+]
+AR_NOTE = ("主条件 k50（正确词 + 按阿拉伯语读音键检索出的近音词 + 随机词共 50 个）看 B-WER 与 F1；"
+           "k50_no_gold 看误触发率与 WER 变化")
+
 
 def es_config(recipe, sources=ES_SOURCES, note=ES_NOTE, name="热词 · 西语", section="西班牙语"):
     return {
@@ -98,6 +108,10 @@ def main():
         return
     if recipe["version"].startswith("pt-"):
         config = es_config(recipe, PT_SOURCES, PT_NOTE, "热词 · 葡语", "葡萄牙语")
+        print(yaml.safe_dump(config, allow_unicode=True, sort_keys=False, width=200), end="")
+        return
+    if recipe["version"].startswith("ar-"):
+        config = es_config(recipe, AR_SOURCES, AR_NOTE, "热词 · 阿拉伯语", "阿拉伯语")
         print(yaml.safe_dump(config, allow_unicode=True, sort_keys=False, width=200), end="")
         return
     zh_note, en_note = GROUP_NOTES[recipe["version"].split("-", 1)[0]]

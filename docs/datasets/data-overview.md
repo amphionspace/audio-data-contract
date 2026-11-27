@@ -169,7 +169,7 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [BAAI/CS-Dialogue long_wav (ModelScope master)](data-versions.md#baaics-dialogue-long_wav-modelscope-master) | en、zh、zh-en | 语音识别、带说话人标注的语音识别 | 98.3 | 中英语码转换双人对话（CS-Dialogue） | 部分版本：快照 20260914 |
 | [ami](data-versions.md#ami) | en、zh | 语音识别、说话人分段与归属、目标说话人语音识别 | 259.3 | 英文会议远场版（AMI SDM）；含轮流说话混合版 | 部分版本：快照 20260914 |
 | [ascend](data-versions.md#ascend) | en、zh | 语音识别、语码转换语音识别 | 10.6 | 香港中英混说自然对话（ASCEND） | 没有 |
-| [asr_babble_bench](data-versions.md#asr_babble_bench) | en、es、pt、zh | 语音识别 | 10.1 | 普通 ASR 背景人声评测集（中英），仅评测 | 部分版本：`备份桶:audio-data-contract/datasets/asr_babble_bench/` |
+| [asr_babble_bench](data-versions.md#asr_babble_bench) | ar、en、es、pt、zh | 语音识别 | 10.1 | 普通 ASR 背景人声评测集（中英），仅评测 | 部分版本：`备份桶:audio-data-contract/datasets/asr_babble_bench/` |
 | [asr_babble_speech_pool](data-versions.md#asr_babble_speech_pool) | en、es、pt、zh | 语音识别 | 85.5 | 带房间背景人声的中英 ASR 训练句 | 没有 |
 | [asr_distant_talk_pool](data-versions.md#asr_distant_talk_pool) | en、zh | 语音识别 | 55.2 | — | 没有 |
 | [babble_noise_synth](data-versions.md#babble_noise_synth) | en、zh | noise | 50.0 | 合成中英背景人声噪声（5–20 人叠加） | `备份桶:audio-data-contract/datasets/noise_open/` |
@@ -187,7 +187,7 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [genshin_voice](data-versions.md#genshin_voice) | en-US、ja、ko、zh | 语音合成 | 1,039.7 | 《原神》多语配音，TTS 用 | `TTS 桶:genshin-voice/`（原始数据） |
 | [gigaspeech_bench](data-versions.md#gigaspeech_bench) | ar、en、fil、id、ja、ko、ms、th、vi、yue、zh | 语音识别、语音翻译、带说话人标注的语音识别、说话人分段与归属 | 903.6 | 多方言多语种 ASR 评测（GigaSpeechBench） | 没有 |
 | [hard_hw_sft](data-versions.md#hard_hw_sft) | en、zh | 热词增强语音识别 | 109.4 | 热词难例 SFT 数据（ShareGPT 格式） | 部分版本：`备份桶:audio-data-contract/datasets/hard_hw_sft/` |
-| [hotword_bench](data-versions.md#hotword_bench) | en、es、pt、zh | 热词增强语音识别 | — | 中英热词评测集，仅评测 | 没有 |
+| [hotword_bench](data-versions.md#hotword_bench) | ar、en、es、pt、zh | 热词增强语音识别 | — | 中英热词评测集，仅评测 | 部分版本：`备份桶:audio-data-contract/datasets/hotword_bench/` |
 | [hungyi_lee_lectures](data-versions.md#hungyi_lee_lectures) | en、zh | 语音识别、语码转换语音识别 | 16.9 | 李宏毅 2025–2026 课程中英混说讲课 | 没有 |
 | [hw_sft](data-versions.md#hw_sft) | en、zh | 语音识别、热词增强语音识别 | 2,636.5 | 热词 SFT 数据（ShareGPT 格式），含普通转写 | 没有 |
 | [indicvoices](data-versions.md#indicvoices) | as、bn、brx、doi、gu、hi、kn、kok、ks、mai、ml、mni、mr、ne、or、pa、sa、sat、sd、ta、te、ur | 语音识别 | — | 22 种印度语言自然语音（IndicVoices） | 快照 20260914 |
@@ -207,16 +207,16 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [speech_deepfake_bench](data-versions.md#speech_deepfake_bench) | ar、de、en、es、ro、ru、zh | deepfake_detection | 3,463.7 | 伪造语音检测评测集（SpoofRadar、DF-Arena） | `备份桶:audio-data-contract/datasets/speech_deepfake_bench/` |
 | [starrail_voice](data-versions.md#starrail_voice) | en、ja、ko、zh-CN | 语音合成 | 692.6 | 《崩坏：星穹铁道》多语配音，TTS 用 | `TTS 桶:starrail-voice/`（原始数据） |
 | [talcs](data-versions.md#talcs) | en、zh | 语音识别、热词增强语音识别 | 587.6 | 中英语码转换课堂语音（TALCS）；含热词和加噪版 | 部分版本：快照 20260914、`备份桶:audio-data-contract/datasets/` 下 5 个目录 |
-| [ts_asr_benchmark](data-versions.md#ts_asr_benchmark) | en、es、pt、zh | 目标说话人语音识别 | 46.5 | 合成的中文目标说话人 ASR 评测集 | 部分版本：`备份桶:audio-data-contract/datasets/ts_asr_benchmark/` |
-| [ts_asr_crosslingual](data-versions.md#ts_asr_crosslingual) | en、es、pt、zh | 目标说话人语音识别 | 6.2 | — | 部分版本：`备份桶:audio-data-contract/datasets/ts_asr_crosslingual/` |
-| [ts_asr_farfield](data-versions.md#ts_asr_farfield) | en、es、pt、zh | 目标说话人语音识别 | 5.1 | 目标说话人评测：远场与混响 | 部分版本：`备份桶:audio-data-contract/datasets/ts_asr_farfield/` |
-| [ts_asr_handover](data-versions.md#ts_asr_handover) | en、es、pt、zh | 目标说话人语音识别 | 3.8 | 目标说话人评测：与他人交替说话 | 部分版本：`备份桶:audio-data-contract/datasets/ts_asr_handover/` |
-| [ts_asr_hotwords](data-versions.md#ts_asr_hotwords) | en、es、pt、zh | 目标说话人语音识别 | — | — | 部分版本：`备份桶:audio-data-contract/datasets/ts_asr_hotwords/` |
+| [ts_asr_benchmark](data-versions.md#ts_asr_benchmark) | ar、en、es、pt、zh | 目标说话人语音识别 | 46.5 | 合成的中文目标说话人 ASR 评测集 | 部分版本：`备份桶:audio-data-contract/datasets/ts_asr_benchmark/` |
+| [ts_asr_crosslingual](data-versions.md#ts_asr_crosslingual) | ar、en、es、pt、zh | 目标说话人语音识别 | 6.2 | — | 部分版本：`备份桶:audio-data-contract/datasets/ts_asr_crosslingual/` |
+| [ts_asr_farfield](data-versions.md#ts_asr_farfield) | ar、en、es、pt、zh | 目标说话人语音识别 | 5.1 | 目标说话人评测：远场与混响 | 部分版本：`备份桶:audio-data-contract/datasets/ts_asr_farfield/` |
+| [ts_asr_handover](data-versions.md#ts_asr_handover) | ar、en、es、pt、zh | 目标说话人语音识别 | 3.8 | 目标说话人评测：与他人交替说话 | 部分版本：`备份桶:audio-data-contract/datasets/ts_asr_handover/` |
+| [ts_asr_hotwords](data-versions.md#ts_asr_hotwords) | ar、en、es、pt、zh | 目标说话人语音识别 | — | — | 部分版本：`备份桶:audio-data-contract/datasets/ts_asr_hotwords/` |
 | [ts_asr_nearshort](data-versions.md#ts_asr_nearshort) | en、zh | 目标说话人语音识别 | 2.5 | 目标说话人评测：他人只说一句约 1 秒短话 | 部分版本：`备份桶:audio-data-contract/datasets/ts_asr_nearshort/` |
-| [ts_asr_noise](data-versions.md#ts_asr_noise) | en、es、pt、zh | 目标说话人语音识别 | 5.9 | 目标说话人评测：噪声与背景人声 | 部分版本：`备份桶:audio-data-contract/datasets/ts_asr_noise/` |
+| [ts_asr_noise](data-versions.md#ts_asr_noise) | ar、en、es、pt、zh | 目标说话人语音识别 | 5.9 | 目标说话人评测：噪声与背景人声 | 部分版本：`备份桶:audio-data-contract/datasets/ts_asr_noise/` |
 | [ts_asr_real](data-versions.md#ts_asr_real) | en、zh | 目标说话人语音识别 | 96.5 | 真实会议对话的目标说话人评测集 | 部分版本：`备份桶:audio-data-contract/datasets/ts_asr_real/` |
-| [ts_asr_shortseg](data-versions.md#ts_asr_shortseg) | en、es、pt、zh | 目标说话人语音识别 | 0.8 | 目标说话人评测：他人说话的 1–6 秒短片段 | 部分版本：`备份桶:audio-data-contract/datasets/ts_asr_shortseg/` |
-| [ts_asr_singing](data-versions.md#ts_asr_singing) | en、es、pt、zh | 目标说话人语音识别 | 0.3 | 目标说话人评测：歌声干扰 | 部分版本：`备份桶:audio-data-contract/datasets/ts_asr_singing/` |
+| [ts_asr_shortseg](data-versions.md#ts_asr_shortseg) | ar、en、es、pt、zh | 目标说话人语音识别 | 0.8 | 目标说话人评测：他人说话的 1–6 秒短片段 | 部分版本：`备份桶:audio-data-contract/datasets/ts_asr_shortseg/` |
+| [ts_asr_singing](data-versions.md#ts_asr_singing) | ar、en、es、pt、zh | 目标说话人语音识别 | 0.3 | 目标说话人评测：歌声干扰 | 部分版本：`备份桶:audio-data-contract/datasets/ts_asr_singing/` |
 | [ts_hw_test](data-versions.md#ts_hw_test) | en、zh | 目标说话人语音识别 | 7.7 | 目标说话人加热词评测（LibriSpeech 风格） | 快照 20260914 |
 | [ts_interference_pool](data-versions.md#ts_interference_pool) | en、es、pt、zh | ts_asr_interference | 656.6 | 在线混合用的干扰人语音素材池 | 部分版本：`备份桶:audio-data-contract/datasets/ts_interference_pool/` |
 | [ts_nonspeech_pool](data-versions.md#ts_nonspeech_pool) | en、es、pt、zh | 语音识别 | 65.7 | 非人声与背景人声的空输出训练片段 | 部分版本：`备份桶:audio-data-contract/datasets/ts_nonspeech_pool/` |
@@ -242,7 +242,7 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [cetuc](data-versions.md#cetuc) | pt | 语音识别 | 144.7 | 巴西葡语朗读，101 人各约 1,000 句（CETUC） | 没有 |
 | [ciempiess](data-versions.md#ciempiess) | es | 语音识别 | 18.4 | 墨西哥西班牙语广播语音（CIEMPIESS LIGHT） | 部分版本：快照 20260914、`备份桶:audio-data-contract/datasets/ciempiess_complementary/`、`备份桶:audio-data-contract/datasets/ciempiess_test/` |
 | [cml_tts_fr](data-versions.md#cml_tts_fr) | fr | 语音识别 | 316.0 | 法语有声书朗读（CML-TTS） | 快照 20260914 |
-| [common_voice_ar](data-versions.md#common_voice_ar) | ar | 语音识别 | 58.2 | 众包朗读阿拉伯语（Common Voice） | 部分版本：快照 20260914 |
+| [common_voice_ar](data-versions.md#common_voice_ar) | ar | 语音识别 | 58.2 | CV 24.0 阿拉伯语 dev/test | 部分版本：快照 20260914、`备份桶:audio-data-contract/datasets/common_voice_ar/` |
 | [common_voice_bn](data-versions.md#common_voice_bn) | bn | 语音识别 | 67.4 | 众包朗读孟加拉语（Common Voice） | 快照 20260914 |
 | [common_voice_de](data-versions.md#common_voice_de) | de | 语音识别 | 1,034.8 | 众包朗读德语（Common Voice） | 部分版本：快照 20260914 |
 | [common_voice_es](data-versions.md#common_voice_es) | es | 语音识别、热词增强语音识别 | 1,355.5 | 众包朗读西班牙语（Common Voice） | 部分版本：快照 20260914 |
@@ -261,7 +261,7 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [dns5_noise_train](data-versions.md#dns5_noise_train) | und | noise、rir | 252.6 | 训练用 DNS5 噪声与模拟房间响应 | `备份桶:audio-data-contract/datasets/dns5_noise_train/` |
 | [emilia_ja](data-versions.md#emilia_ja) | ja | 语音识别 | 1,715.5 | Emilia 日语野外语音 | 快照 20260914 |
 | [emilia_ko](data-versions.md#emilia_ko) | ko | 语音识别 | 217.2 | Emilia 韩语野外语音 | 快照 20260914 |
-| [fleurs_ar](data-versions.md#fleurs_ar) | ar | 语音识别 | 8.2 | 多语朗读阿拉伯语部分（FLEURS） | 部分版本：快照 20260914、`备份桶:audio-data-contract/datasets/fleurs_ar/` |
+| [fleurs_ar](data-versions.md#fleurs_ar) | ar | 语音识别 | 8.2 | FLEURS 阿拉伯语 test | 部分版本：快照 20260914、`备份桶:audio-data-contract/datasets/fleurs_ar/` |
 | [fleurs_bn](data-versions.md#fleurs_bn) | bn | 语音识别 | 15.6 | 多语朗读孟加拉语部分（FLEURS） | 快照 20260914 |
 | [fleurs_de](data-versions.md#fleurs_de) | de | 语音识别 | 13.4 | 多语朗读德语部分（FLEURS） | 部分版本：快照 20260914 |
 | [fleurs_es](data-versions.md#fleurs_es) | es | 语音识别 | 13.2 | 多语朗读西班牙语部分（FLEURS） | 部分版本：快照 20260914 |
@@ -282,7 +282,7 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [koreaspeech](data-versions.md#koreaspeech) | ko | 语音识别 | 3,828.3 | 韩语语音识别数据（KoreaSpeech） | 快照 20260914 |
 | [librivox_spanish](data-versions.md#librivox_spanish) | es | 语音识别 | 73.0 | LibriVox 西语有声书 | 没有 |
 | [meeting_room_noise](data-versions.md#meeting_room_noise) | und | noise | 2.5 | 真实会议室底噪（AliMeeting、AISHELL-4） | `备份桶:audio-data-contract/datasets/meeting_room_noise/` |
-| [mgb2](data-versions.md#mgb2) | ar | 语音识别 | 1,215.5 | 半岛电视台阿拉伯语广播（MGB-2） | 快照 20260914 |
+| [mgb2](data-versions.md#mgb2) | ar | 语音识别 | 1,215.5 | MGB-2 半岛电视台广播 dev/test | 快照 20260914、`备份桶:audio-data-contract/datasets/mgb2/` |
 | [mit_ir_survey](data-versions.md#mit_ir_survey) | und | rir | 0.0 | MIT 日常环境实测冲激响应（270 条） | `备份桶:audio-data-contract/datasets/mit_ir_survey/` |
 | [mls_de](data-versions.md#mls_de) | de | 语音识别 | 1,995.1 | 德语有声书朗读（MLS） | 快照 20260914 |
 | [mls_es](data-versions.md#mls_es) | es | 语音识别、热词增强语音识别 | 937.7 | 西班牙语有声书朗读（MLS） | 部分版本：快照 20260914 |

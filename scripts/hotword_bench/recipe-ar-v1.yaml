@@ -1,0 +1,72 @@
+# 阿拉伯语热词评测集 ar-v1：与西语 es-v1、葡语 pt-v1（recipe-es-v1.yaml / recipe-pt-v1.yaml）同一做法，对应中英 v3-20261020 里的 cv_zh / cv_en。脚本 build_ar.py，只用 CPU。
+#
+# 每条记录存好固定的列表（metadata.bias_lists，顺序已打乱），评测器另跑不给列表的 none 条件：
+# - gold：只有正确词；
+# - k50：正确词 + 每个正确词最多 3 个近音/近形词 + 同 split 正确词池的随机词，补到 50 个；
+# - k50_no_gold：同一批干扰词去掉正确词再补满 50 个，测"说的词不在列表里"时的误触发。
+# 近音词与西语、葡语相同地不经 LLM：在阿拉伯语热词（测试集正确词 + MGB-2 train / CV 24.0 ar train 转写的热词标注）里按阿拉伯语读音键
+# （去元音符号、统一 hamza 写法后，强调音与普通音、ث/س、ذ/ز、ح/ه、ق/ك、غ/خ、ع/ا 等归为一类）的编辑距离检索出的真实词；
+# 只差元音符号或 hamza 写法的词算同一个词（与 AmphionEval 打分口径版本 5 的阿拉伯语规整一致）。没有阿拉伯语现网词库，不做 pool50；不含 hotword_types。
+version: ar-v1-20261127
+dataset_id: hotword_bench
+seed: 20261127
+sample_rate: 16000
+list_size: 50
+confusables_per_word: 3
+local_positive_cap: 2000
+min_seconds: 0.1
+max_seconds: 120.0
+
+# 阿拉伯语热词标注（Qwen3.8-27B 抽取 + 复核，scripts/ts_hotwords/label_hotwords.py；与西语、葡语同一提示词与设置）。
+# 每行 {id, text, source, source_id, hotwords, ...}；source_id 为 supervision id。FLEURS 同一句话有多个说话人，标注按文本去重，
+# 按 supervision id 找不到时按完全相同的文本取。同一文件也含 ts_asr_benchmark@ar-v1-20261127 记录里的目标与干扰人文本（source tsbench）。
+labels:
+  path: ts_asr_hotwords/versions/ar-v1-20261127/hotword-labels.jsonl
+  sha256: 65854d0df08a4a4e99ec228f924feb90dc6c3f1b5cda453b0b71bfb13083362b
+
+# 路径相对 /workspace/data/datasets；说话人与 CV 24.0 ar train 零重叠（common_voice_ar / mgb2 / fleurs_ar @ar-eval-v1-20261127 的 overlap.json）
+sources:
+  cv_ar:
+    label_source: common_voice_ar
+    dataset: common_voice_ar@ar-eval-v1-20261127:test
+    recordings: common_voice_ar/versions/ar-eval-v1-20261127/manifests/cv24-ar_recordings_test.jsonl.gz
+    supervisions: common_voice_ar/versions/ar-eval-v1-20261127/manifests/cv24-ar_supervisions_test.jsonl.gz
+    # 10,498 条里 1,337 条标出热词、1,247 条的正确词能在原文里对上（不到 2,000 条，全部取用）；下限约为标注数的 85%
+    min_records: 1130
+  fleurs_ar:
+    label_source: fleurs_ar
+    dataset: fleurs_ar@ar-eval-v1-20261127:test
+    recordings: fleurs_ar/versions/ar-eval-v1-20261127/manifests/fleurs-ar_recordings_test.jsonl.gz
+    supervisions: fleurs_ar/versions/ar-eval-v1-20261127/manifests/fleurs-ar_supervisions_test.jsonl.gz
+    # 428 条录音里 155 条标出热词（103 句不同的话），153 条能对上；下限约为标注数的 85%
+    min_records: 130
+  mgb2_ar:
+    label_source: mgb2
+    dataset: mgb2@ar-eval-v1-20261127:test
+    recordings: mgb2/versions/ar-eval-v1-20261127/manifests/mgb2_recordings_test.jsonl.gz
+    # 半岛电视台节目长录音按官方分段切出（音频按 start / duration 截取后另存），真实广播，专名密集
+    supervisions: mgb2/versions/ar-eval-v1-20261127/manifests/mgb2_supervisions_test.jsonl.gz
+    # 5,365 段里 1,450 段标出热词、1,398 段能对上；下限约为标注数的 85%
+    min_records: 1230
+
+# 近音词：候选词表 = 三个测试集的正确词 + MGB-2 train 与 CV 24.0 ar train 转写的热词标注（只当干扰词用，不改训练数据）。
+# 阿拉伯语还没有训练集热词标注，所以与葡语补标 YODAS 同一设置（Qwen3.8-27B、extract_hotword、12 句一请求、不复核）
+# 给两份训练转写（去重后 ≥2 词的 402,238 句）标热词（summary.json）。阿拉伯语没有大小写，词表只收出现至少 min_count 次的词。
+confusables:
+  vocabulary:
+    - hotword_bench/source/ar-v1-20261127-vocabulary/ar-train-hotwords.jsonl.gz
+  min_count: 2
+  min_key_length: 4
+  max_distance: [[6, 1], [10, 2], [999, 3]]
+
+# 训练重叠：规范化文本与这些训练转写完全相同的条目在 labels.train_text_overlap 标出来源（不隔离；阿拉伯语训练版本须去掉）
+overlap:
+  supervisions:
+    - common_voice_ar/versions/legacy/manifests/cv-ar_supervisions_train.jsonl.gz
+    - mgb2/versions/legacy/manifests/mgb2_supervisions_train.jsonl.gz
+
+# 质检门槛（按 split，同西语、葡语）：不满足时非零退出、不登记
+qc:
+  max_quarantine_fraction: 0.02
+  min_gold_with_confusable: 0.3
+  max_duration_drift: 0.1
