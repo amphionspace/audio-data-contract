@@ -50,7 +50,12 @@ EXTRA = [
     "context_correction_synth_zh@train-v1-20261114", "context_correction_synth_zh@implicit-v1-20261117",
     "context_correction_synth_zh@ts-twins-v1-20261121", "police_text_gaps_train@v2-20261123",
     "police_v6_test_instr_train@v1-20261123",
+    "context_correction_synth_zh@asr-dialog-v1-20261122",
 ]
+# Records moved to a quarantine split instead of training (context-correction line, 2026-11-27): a protected word
+# expanded with its alternative ("必须|必需") was read twice by the TTS, so audio and target disagree.
+PIPE_QUARANTINE = {"context_correction_synth_zh"}
+QUARANTINE_WHY = "受保护词展开时没去掉备选，TTS 两种写法都念了；纠偏线 2026-11-27 确认"
 RUN_DIR = text_final.RUN_DIR
 EVAL = ("eval", "dev", "validation", "test")
 FIELDS = {"audio-records": "target", "lhotse-supervisions": "text"}
@@ -94,14 +99,112 @@ def fix_row(row: dict, field: str, punc, n: Counter) -> tuple[str, str] | None:
                         seen.add(w)
                     words.append(w)
                 holder[key] = words
+    cc = (row.get("labels") or {}).get("context_correction")
+    if isinstance(cc, dict):
+        fix_context_labels(cc, old, new, n)
+    turns = meta.get("turns")
+    if isinstance(turns, list) and all(isinstance(t, dict) and isinstance(t.get("text"), str) for t in turns):
+        cut = cut_like([t["text"] for t in turns], old, new)
+        if cut is None:
+            n["turns_not_target"] += 1
+        else:
+            for t, text in zip(turns, cut, strict=True):
+                t["text"] = text
+            n["turns_records"] += 1
     key = "metadata" if field == "target" else "custom"
     row[key] = {**(row.get(key) or {}), "text_final": {"original_text": old, "rules": "text-final-v4"}}
     return old, new
 
 
+def cut_like(pieces: list, old: str, new: str) -> list | None:
+    """Cut new (old converted) into pieces at the old pieces' boundaries moved through the replacements, so they
+    still join to it; None when the pieces do not join to old or a boundary falls inside a converted number."""
+    if "".join(pieces) != old:
+        return None
+    spans = zh_numbers.edits(old)
+
+    def moved(b):
+        shift = 0
+        for s, e, _, rep in spans:
+            if e <= b:
+                shift += len(rep) - (e - s)
+            elif s < b:
+                return None
+        return b + shift
+
+    ends, pos = [], 0
+    for piece in pieces:
+        pos += len(piece)
+        ends.append(moved(pos))
+    if None in ends:
+        return None
+    return [new[a:b] for a, b in zip([0, *ends[:-1]], ends, strict=True)]
+
+
+MARK = {"target": "[[T:{text}|{alt}]]", "evidence": "[[D:{text}]]", "protected": "[[P:{text}]]"}
+
+
+def fix_context_labels(cc: dict, old: str, new: str, n: Counter) -> None:
+    """labels.context_correction follows the converted target: segments are cut from the new target at the old
+    boundaries moved through the replacements (so they still join to the target), marked_text and the draft are
+    rebuilt from them, and the free-text fields (alt, edits, reasons) get the rule on their own."""
+    segs = cc.get("segments") or []
+    before = [dict(s) for s in segs]
+    if segs:
+        cut = cut_like([s["text"] for s in segs], old, new)
+        if cut is None:
+            n["cc_segments_not_cut"] += 1
+            cut = [fix(s["text"]) for s in segs]
+        for s, text in zip(segs, cut, strict=True):
+            s["text"] = text
+    for s in segs:
+        if isinstance(s.get("alt"), str):
+            s["alt"] = fix(s["alt"])
+
+    def marked(ss):
+        return "".join(MARK[s["role"]].format(**s) if s.get("role") in MARK else s["text"] for s in ss)
+
+    def misheard(ss):
+        return "".join(s.get("alt", s["text"]) if s.get("role") == "target" else s["text"] for s in ss)
+
+    if isinstance(cc.get("marked_text"), str):
+        if cc["marked_text"] == marked(before):
+            cc["marked_text"] = marked(segs)
+        else:
+            n["cc_marked_text_fixed_alone"] += 1
+            cc["marked_text"] = fix(cc["marked_text"])
+    cot = cc.get("cot") if isinstance(cc.get("cot"), dict) else {}
+    if isinstance(cot.get("final"), str):
+        cot["final"] = new if cot["final"] == old else fix(cot["final"])
+    if isinstance(cot.get("draft"), str):
+        if cot["draft"] == old:
+            cot["draft"] = new
+        elif cot["draft"] == misheard(before):
+            cot["draft"] = misheard(segs)
+        else:
+            n["cc_draft_fixed_alone"] += 1
+            cot["draft"] = fix(cot["draft"])
+    same = {}
+    for b, s in zip(before, segs, strict=True):
+        same[b["text"]] = s["text"]
+        if "alt" in b:
+            same[b["alt"]] = s["alt"]
+    for e in cot.get("edits") or []:
+        for k in ("evidence", "from", "to"):
+            if isinstance(e.get(k), str):
+                e[k] = same.get(e[k], fix(e[k]))
+        if isinstance(e.get("reason"), str):
+            e["reason"] = fix(e["reason"])
+    if isinstance(cc.get("reason"), str):
+        cc["reason"] = fix(cc["reason"])
+    n["cc_records"] += 1
+
+
 def process(job: tuple) -> dict:
-    """Scan (dst None) or rewrite one text file; dst is kept only when a row changed."""
-    src, dst, field, punc_path = job
+    """Scan (dst None) or rewrite one text file; dst is kept only when a row changed. With ``quarantine``, rows whose
+    text holds a "|" go to <dst>-quarantine instead (PIPE_QUARANTINE)."""
+    src, dst, field, punc_path, quarantine = job
+    held = []
     punc = None
     if punc_path:
         with gzip.open(punc_path, "rt", encoding="utf-8") as f:
@@ -122,6 +225,11 @@ def process(job: tuple) -> dict:
                 line = json.dumps(row, ensure_ascii=False) + "\n"
                 if len(review) < REVIEW:
                     review.append({"id": row.get("id"), "from": edit[0], "to": edit[1]})
+            if quarantine and "|" in (row.get(field) or ""):
+                n["quarantined"] += 1
+                n["quarantined_ms"] += round(1000 * sum(s["ref"]["duration"] for s in row["audio_slots"][:1]))
+                held.append(line)
+                continue
             if gz:
                 gz.write(line.encode("utf-8"))
     out = {"counts": dict(n), "review": review}
@@ -129,15 +237,35 @@ def process(job: tuple) -> dict:
         return out
     gz.close()
     raw.close()
-    if not n["changed_records"]:
+    if not n["changed_records"] and not held:
         tmp.unlink()
         return out
     os.replace(tmp, dst)
+    out.update(expected_bytes=dst.stat().st_size, sha256=_sha256(dst))
+    if held:
+        q = quarantine_path(dst)
+        with q.open("wb") as raw_q, gzip.GzipFile(fileobj=raw_q, mode="wb", mtime=0) as gz_q:
+            for line in held:
+                gz_q.write(line.encode("utf-8"))
+        out["quarantine"] = {"expected_bytes": q.stat().st_size, "sha256": _sha256(q)}
+    return out
+
+
+def held_already(entry: dict) -> set:
+    """Record artifacts of an existing quarantine split (nothing to move there)."""
+    return set(((entry.get("splits") or {}).get("quarantine") or {}).get("artifacts", {}).get("records") or [])
+
+
+def quarantine_path(path: Path) -> Path:
+    return path.with_name(path.name.removesuffix(".jsonl.gz") + "-quarantine.jsonl.gz")
+
+
+def _sha256(path: Path) -> str:
     h = hashlib.sha256()
-    with dst.open("rb") as f:
+    with path.open("rb") as f:
         for chunk in iter(lambda: f.read(1 << 22), b""):
             h.update(chunk)
-    return {**out, "expected_bytes": dst.stat().st_size, "sha256": h.hexdigest()}
+    return h.hexdigest()
 
 
 def relocate(entry: dict, deployed: dict | None, roots: dict) -> None:
@@ -286,7 +414,7 @@ def main():
                 src = Path(roots[a.get("root_alias", "aidc_data")]) / a["relative_path"]
                 dst = None if args.scan else args.root / vdir / "text" / f"{name}.jsonl.gz"
                 jobs[(ds, version, name)] = pool.submit(
-                    process, (src, dst, FIELDS[a["kind"]], None)
+                    process, (src, dst, FIELDS[a["kind"]], None, ds in PIPE_QUARANTINE and name not in held_already(e))
                 )
         results = {k: f.result() for k, f in jobs.items()}
 
@@ -318,9 +446,47 @@ def main():
                    if n in files and files[n].get("changed_records")}
             if hit:
                 s.setdefault("statistics", {})["final_v4_changed_records"] = sum(hit.values())
+        for name in names:
+            res = results[(ds, version, name)]
+            if "quarantine" not in res:
+                continue
+            a, k, ms = arts[name], res["counts"]["quarantined"], res["counts"]["quarantined_ms"]
+            q = {**a, "name": f"{name}-quarantine", **res["quarantine"],
+                 "relative_path": str(quarantine_path(vdir / "text" / f"{name}.jsonl.gz")),
+                 "metadata": {**(a.get("metadata") or {}), "record_count": k}}
+            if isinstance((a.get("metadata") or {}).get("record_count"), int):
+                a["metadata"] = {**a["metadata"], "record_count": a["metadata"]["record_count"] - k}
+            e["artifacts"].append(q)
+            if "quarantine" not in e["splits"]:
+                first = next(sp for sp in e["splits"].values() if name in (sp.get("artifacts") or {}).get("records", []))
+                e["splits"]["quarantine"] = {"artifacts": {"records": []}, "statistics": {
+                    "records": 0, "duration_hours": 0.0,
+                    **{x: v for x, v in (first.get("statistics") or {}).items() if x == "duration_basis"}}}
+            qs = e["splits"]["quarantine"]
+            qs["artifacts"].setdefault("records", []).append(q["name"])
+            qst = qs.setdefault("statistics", {})
+            if isinstance(qst.get("records"), int):
+                qst["records"] += k
+            if isinstance(qst.get("duration_hours"), (int, float)):
+                qst["duration_hours"] = round(qst["duration_hours"] + ms / 3.6e6, 4)
+            qst["pipe_records"] = qst.get("pipe_records", 0) + k
+            for split, sp in e["splits"].items():
+                if split == "quarantine" or name not in ((sp.get("artifacts") or {}).get("records") or []):
+                    continue
+                for x in sp["artifacts"].get("audio_index") or []:
+                    if x not in qs["artifacts"].setdefault("audio_index", []):
+                        qs["artifacts"]["audio_index"].append(x)
+                st = sp.setdefault("statistics", {})
+                if isinstance(st.get("records"), int):
+                    st["records"] -= k
+                if isinstance(st.get("duration_hours"), (int, float)):
+                    st["duration_hours"] = round(st["duration_hours"] - ms / 3.6e6, 4)
+                st["quarantined_pipe_records"] = st.get("quarantined_pipe_records", 0) + k
         cats = {k[len("rule9_"):]: v for k, v in totals.items() if k.startswith("rule9_")}
         parts = [f"数字写成阿拉伯数字（规则 9，zh-num-v1）{totals['changed_records']:,} 条，" +
                  "、".join(f"{c} {v:,} 处" for c, v in sorted(cats.items(), key=lambda x: -x[1]))]
+        if totals["quarantined"]:
+            parts.append(f"target 含竖线的 {totals['quarantined']:,} 条移到 quarantine 划分（{QUARANTINE_WHY}；记录内容不变）")
         what = "；".join(parts)
         rel = vdir / "state.json"
         (args.root / vdir).mkdir(parents=True, exist_ok=True)
@@ -346,7 +512,8 @@ def main():
         prov.update({
             "snapshot_date": now[:10],
             "description": (
-                f"{lead}{what}，按 audio-data-contract {SPEC}。同一行里的场景文本和热词列表一起改；"
+                f"{lead}{what}，按 audio-data-contract {SPEC}。同一行里的场景文本"
+                f"{'、热词列表和上下文纠偏标签' if totals['cc_records'] else '和热词列表'}一起改；"
                 "其余字段、录音清单和音频照旧，引用起点版本的产物。"
             ),
             "source": f"{ds}@{start}",
