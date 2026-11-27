@@ -1,6 +1,6 @@
 # 数据总览
 
-当前登记 **275 个数据集**；另有 **34 个下载来源声明**和 **1 个训练混合配方**。登记不代表本机文件已齐备。
+当前登记 **276 个数据集**；另有 **34 个下载来源声明**和 **1 个训练混合配方**。登记不代表本机文件已齐备。
 
 时长取单个版本的最大值，不跨版本相加；≈ 为参考表或估算值，— 为暂无完整时长。各版本的时长、说明、COS 地址和质量证据见[版本明细](data-versions.md)。
 
@@ -70,6 +70,7 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [sbcsae](data-versions.md#sbcsae) | en | 语音识别、带说话人标注的语音识别 | 23.3 | 美式英语自然口语对话（SBCSAE） | 没有 |
 | [singapore_english](data-versions.md#singapore_english) | en | 语音识别 | 3.9 | 新加坡口音英语（Hugging Face 来源） | 快照 20260914 |
 | [singaporean](data-versions.md#singaporean) | en | 语音识别 | ≈0.2 | 新加坡口音英语小样本 | 快照 20260914、`备份桶:audio-data-contract/datasets/singaporean/` |
+| [spgispeech](data-versions.md#spgispeech) | en | 语音识别 | — | SPGISpeech 1.0 S train 原始下载 | 没有 |
 | [spgispeech2](data-versions.md#spgispeech2) | en | 语音识别、带说话人标注的语音识别 | 3,649.2 | 财报电话会议多说话人英语（SPGISpeech 2.0） | 没有 |
 | [tal100_en](data-versions.md#tal100_en) | en | 语音识别 | 4.8 | TAL 英语语音识别数据 | 快照 20260914、`备份桶:audio-data-contract/datasets/tal100_en/` |
 | [uwb_atcc](data-versions.md#uwb_atcc) | en | 语音识别 | 13.0 | 捷克空域真实空管通话英语（UWB-ATCC） | 没有 |

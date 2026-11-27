@@ -1,0 +1,58 @@
+# 占位登记：SPGISpeech 1.0（Kensho）S 配置 train，2026-11-27。open-audio-llm A 线要学榜单 SPGISpeech test 的整理稿写法（Musci 只在与 test 同分布的 1.0 音频上按整理稿写）。
+# 用户 2026-11-27 接受 HF 门控条款并确认下载 S 子集；许可风险用户 11-25 已说不用管。构建中，进度见状态文件。
+- schema_version: dataset-catalog/2.0
+  dataset_id: spgispeech
+  version: hf-14e69dd3b80e-s
+  languages:
+    - en
+  tasks:
+    - asr
+  aliases: []
+  artifacts:
+    - name: preparation_state
+      kind: dataset-state
+      root_alias: aidc_data
+      relative_path: datasets/spgispeech/versions/hf-14e69dd3b80e-s/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+          - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    summary: SPGISpeech 1.0 S train 原始下载
+    description: >-
+      Hugging Face kensho/spgispeech（修订 14e69dd3b80e968282ca55d3eb2b39cc9db2b62e）的 S 配置 train：6 个 parquet，77,073 段、约 200 小时，5–15 秒，16 kHz 单声道；S&P Global 专业转写（带大小写、标点，非标准词已书面化）。下载中，按上游 sha256 逐文件校验。
+    source: Hugging Face kensho/spgispeech
+    run_dir: /workspace/data/staging/open-speech-20261113
+- schema_version: dataset-catalog/2.0
+  dataset_id: spgispeech
+  version: hf-14e69dd3b80e-s-final-v3-20261127
+  languages:
+    - en
+  tasks:
+    - asr
+  aliases: []
+  artifacts:
+    - name: preparation_state
+      kind: dataset-state
+      root_alias: aidc_data
+      relative_path: datasets/spgispeech/versions/hf-14e69dd3b80e-s-final-v3-20261127/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+          - preparation_state
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    summary: SPGISpeech 1.0 S train 训练文本终版
+    description: >-
+      spgispeech@hf-14e69dd3b80e-s 的 train 按训练文本规范 v3 建的训练版本，供 open-audio-llm A 线（英文榜单版）用 Musci 做序列级蒸馏、学 SPGISpeech test 的整理稿写法。原参考文本保留；与榜单 SPGISpeech test 文本近乎相同的记录在 metadata 标出（不删）。构建中。
+    source: spgispeech@hf-14e69dd3b80e-s
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/aline-en-20261125
