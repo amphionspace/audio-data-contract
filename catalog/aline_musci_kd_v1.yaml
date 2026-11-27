@@ -1,142 +1,386 @@
-# 占位登记：A 线（英文榜单版）序列级蒸馏训练数据，2026-11-27。用户确认财报会类录音采用 SPGISpeech 的整理稿写法。
-# 老师是 Musci-ASR，目标换成它的贪心解码；运行目录 /workspace/workspace/mingdong/data/aline-kd-20261127（make_pool.py / label/ / build_kd.py），构建中，进度见各版本状态文件。
+# A 线（英文榜单版）序列级蒸馏训练数据，2026-11-27。老师 Musci-ASR，目标换成它的贪心解码；音频不变，引用源版本。
+# 运行目录 /workspace/workspace/mingdong/data/aline-kd-20261127（make_pool.py、label/、build_kd.py、README.md 里有过滤规则、被拒样本抽查和写法核对）。
 - schema_version: dataset-catalog/2.0
   dataset_id: gigaspeech
   version: train-punc-v1-20261102-final-v1-20261120-kd-pool-v1-20261127
   languages:
-    - en
+  - en
   tasks:
-    - asr
+  - asr
   aliases: []
+  derived_from: gigaspeech@train-punc-v1-20261102-final-v1-20261120
   artifacts:
-    - name: preparation_state
-      kind: dataset-state
-      root_alias: aidc_data
-      relative_path: datasets/gigaspeech/versions/train-punc-v1-20261102-final-v1-20261120-kd-pool-v1-20261127/state.json
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/gigaspeech/versions/train-punc-v1-20261102-final-v1-20261120-kd-pool-v1-20261127/state.json
+    expected_bytes: 584
+    sha256: a11250229593824877d29d2ce769e4491d9c7a55d4836932fa6c6cdc7fc78a6f
+  - kind: lhotse-recordings
+    name: train_rec_0
+    relative_path: datasets/gigaspeech/versions/legacy-20260804/train_rec_0/gigaspeech_recordings_XL.jsonl.gz
+    root_alias: aidc_data
+    expected_bytes: 631262
+    sha256: b1e711b713e19395b118482936f2ea2bec3ad22bc4dbd875c1217001991c949c
+  - name: train_supervisions_pool_0
+    kind: lhotse-supervisions
+    root_alias: aidc_data
+    relative_path: datasets/gigaspeech/versions/train-punc-v1-20261102-final-v1-20261120-kd-pool-v1-20261127/supervisions/train.jsonl.gz
+    expected_bytes: 1289475
+    sha256: 7b66de6a2c2b664886cd4ebca52f105b1f0a10292cc6496250469854dfdc59f6
+    metadata:
+      record_count: 25000
+  - name: record_index
+    kind: lance-record-index
+    root_alias: aidc_data
+    relative_path: datasets/gigaspeech/versions/train-punc-v1-20261102-final-v1-20261120-kd-pool-v1-20261127/record_index/index.json
+    expected_bytes: 798
+    sha256: 81793cd33f9bd20472f9c17e80bf194795b8a782f844f61bddc843f269cfbeaa
+    metadata:
+      snapshot_version: 13
+      rows: 25000
+      schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
   splits:
     train:
+      group: train
       artifacts:
-        preparation_state:
-          - preparation_state
-      provenance:
-        preparation_status: building
+        recordings:
+        - train_rec_0
+        supervisions:
+        - train_supervisions_pool_0
+        records_lance:
+        - record_index
+      statistics:
+        records: 25000
+        duration_hours: 30.3726
+        duration_basis: sum of supervision durations
   provenance:
-    preparation_status: building
     owner: mingdong
     summary: A 线蒸馏用 GigaSpeech 标注池
-    description: >-
-      gigaspeech@train-punc-v1-20261102-final-v1-20261120 训练集的随机子集 25,000 条（种子 20261127），已排除 A 线去重清单，作为 Musci 打标的输入池。文本是原终版文本，未改。make_pool.py 生成。
     source: gigaspeech@train-punc-v1-20261102-final-v1-20261120
+    snapshot_date: '2026-11-27'
+    method: random subset for KD labelling
     run_dir: /workspace/workspace/mingdong/data/aline-kd-20261127
+    build_script: make_pool.py
+    description: A 线序列级蒸馏的伪标注池：gigaspeech@train-punc-v1-20261102-final-v1-20261120 随机 25000 条（种子 20261127），排除 A 线去重清单，文本、录音和音频不变。
+    requested_by: open-audio-llm A 线（open-audio-llm-45 会话，2026-11-27）
 - schema_version: dataset-catalog/2.0
   dataset_id: ami_ihm
   version: hf-edinburghcstr-20261023-final-v3-20261125-musci-kd-v1-20261127
   languages:
-    - en
+  - en
   tasks:
-    - asr
+  - asr
   aliases: []
+  derived_from: ami_ihm@hf-edinburghcstr-20261023-final-v3-20261125
   artifacts:
-    - name: preparation_state
-      kind: dataset-state
-      root_alias: aidc_data
-      relative_path: datasets/ami_ihm/versions/hf-edinburghcstr-20261023-final-v3-20261125-musci-kd-v1-20261127/state.json
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/ami_ihm/versions/hf-edinburghcstr-20261023-final-v3-20261125-musci-kd-v1-20261127/state.json
+    expected_bytes: 727
+    sha256: 8a0d0ab9d0f918e5451abee342302bee8eca5a89150c0f4a753fc6fdf89d04e3
+  - name: train
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/ami_ihm/versions/hf-edinburghcstr-20261023-final-v3-20261125-musci-kd-v1-20261127/records/train.jsonl.gz
+    expected_bytes: 2350230
+    sha256: 3970e776b3b3536ee4be14c1c312446fb964b111f53e44f750e9a94b23fb9968
+    metadata:
+      record_count: 22128
+  - name: audio_index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/ami_ihm/versions/hf-edinburghcstr-20261023-final-v3-20261125/audio_index/audio-index.jsonl.gz
+    expected_bytes: 1920604
+    sha256: 02b4598284e4404a24b688d753bcd14f64903e912f5475c15b4c9a6071d74236
+    metadata:
+      record_count: 108502
+  - name: record_index
+    kind: lance-record-index
+    root_alias: aidc_data
+    relative_path: datasets/ami_ihm/versions/hf-edinburghcstr-20261023-final-v3-20261125-musci-kd-v1-20261127/record_index/index.json
+    expected_bytes: 767
+    sha256: d1a036202365822e6aba20a73503b393d8a105f1110f5fcffc0f98570d53d6c4
+    metadata:
+      snapshot_version: 13
+      rows: 22128
+      schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
   splits:
     train:
+      group: train
       artifacts:
+        records:
+        - train
+        audio_index:
+        - audio_index
         preparation_state:
-          - preparation_state
-      provenance:
-        preparation_status: building
+        - preparation_state
+        records_lance:
+        - record_index
+      statistics:
+        records: 22128
+        duration_hours: 20.5319
+        duration_basis: sum of record durations
+        languages:
+          en: 22128
   provenance:
-    preparation_status: building
     owner: mingdong
     summary: A 线蒸馏：AMI 近讲，Musci 解码作目标
-    description: >-
-      ami_ihm@hf-edinburghcstr-20261023-final-v3-20261125 训练集（随机 25,000 条，已排除 A 线去重清单），音频不变，目标换成 Musci-ASR-qwen-1019@c376e9c（11.17 服务栈，贪心解码，force_language en） 的输出。错误数 > max(1, 0.3 × 参考词数) 的记录当作老师失败丢弃（参考只用来抓幻觉和截断，保留 Musci 自己的写法）。被拒样本每源抽查 20 条，误杀率写进运行目录 README。build_kd.py 生成。
     source: ami_ihm@hf-edinburghcstr-20261023-final-v3-20261125
+    snapshot_date: '2026-11-27'
+    method: sequence-level KD
     run_dir: /workspace/workspace/mingdong/data/aline-kd-20261127
+    build_script: build_kd.py
+    description: A 线序列级蒸馏：ami_ihm@hf-edinburghcstr-20261023-final-v3-20261125 的随机子集，目标换成 Musci 的贪心解码（与参考的榜单归一化 WER > 0.3 的丢弃，按 A 线去重清单排除），音频不变。
+    requested_by: open-audio-llm A 线（open-audio-llm-45 会话，2026-11-27）
+    quality_status: 被拒（错误过多）1,898 条（7.6%），抽 20 条误杀 5 条（25%，参考保留半截词）；参考为空 897 条（纯附和句）；67 条请求失败，都是源版本里记录时长超过音频长度；详见 run_dir/README.md
+  recipe_parameters:
+    teacher: Musci-ASR-qwen-1019@c376e9c on the 11.17 serving stack (greedy, force_language en, max_new_tokens 512)
+    max_wer_vs_reference: 0.3
+    counts:
+      labelled: 25000
+      'dropped: WER > 0.3': 1898
+      'dropped: empty reference': 897
+      'dropped: teacher request failed': 67
+      'dropped: empty transcript': 3
+      'dropped: decontamination list': 7
+      kept: 22128
 - schema_version: dataset-catalog/2.0
   dataset_id: spgispeech2
   version: hf-f4ce91de393c-final-v3-20261125-musci-kd-v1-20261127
   languages:
-    - en
+  - en
   tasks:
-    - asr
+  - asr
   aliases: []
+  derived_from: spgispeech2@hf-f4ce91de393c-final-v3-20261125
   artifacts:
-    - name: preparation_state
-      kind: dataset-state
-      root_alias: aidc_data
-      relative_path: datasets/spgispeech2/versions/hf-f4ce91de393c-final-v3-20261125-musci-kd-v1-20261127/state.json
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/spgispeech2/versions/hf-f4ce91de393c-final-v3-20261125-musci-kd-v1-20261127/state.json
+    expected_bytes: 633
+    sha256: b78978b2b1670db22b24f19c9a4a1d4a68e66db1b7e5d7f4def455ceac3a984d
+  - name: train
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/spgispeech2/versions/hf-f4ce91de393c-final-v3-20261125-musci-kd-v1-20261127/records/train.jsonl.gz
+    expected_bytes: 3501666
+    sha256: 278804c1c13573bdab22936ccbd263c71ee06fd32cb8352e420815feb6255676
+    metadata:
+      record_count: 23461
+  - name: audio_index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/spgispeech2/versions/hf-f4ce91de393c-final-v3-20261125/audio_index/audio-index.jsonl.gz
+    expected_bytes: 2119934
+    sha256: 33a17b1d92a23a1d485cbfa5371341f54bacd31e61a5c6ae03f03bbcf006ff25
+    metadata:
+      record_count: 169880
+  - name: record_index
+    kind: lance-record-index
+    root_alias: aidc_data
+    relative_path: datasets/spgispeech2/versions/hf-f4ce91de393c-final-v3-20261125-musci-kd-v1-20261127/record_index/index.json
+    expected_bytes: 761
+    sha256: 287b612f561bf590e257d5491dd35e8f780750795f8822a6034019fee3eaa732
+    metadata:
+      snapshot_version: 13
+      rows: 23461
+      schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
   splits:
     train:
+      group: train
       artifacts:
+        records:
+        - train
+        audio_index:
+        - audio_index
         preparation_state:
-          - preparation_state
-      provenance:
-        preparation_status: building
+        - preparation_state
+        records_lance:
+        - record_index
+      statistics:
+        records: 23461
+        duration_hours: 85.1003
+        duration_basis: sum of record durations
+        languages:
+          en: 23461
   provenance:
-    preparation_status: building
     owner: mingdong
     summary: A 线蒸馏：SPGISpeech 2.0，Musci 解码
-    description: >-
-      spgispeech2@hf-f4ce91de393c-final-v3-20261125 训练集（随机 25,000 条，已排除 A 线去重清单和能对上 SPGISpeech 1.0 test 的记录），音频不变，目标换成 Musci-ASR-qwen-1019@c376e9c（11.17 服务栈，贪心解码，force_language en） 的输出。错误数 > max(1, 0.3 × 参考词数) 的记录当作老师失败丢弃（参考只用来抓幻觉和截断，保留 Musci 自己的写法）。被拒样本每源抽查 20 条，误杀率写进运行目录 README。build_kd.py 生成。
     source: spgispeech2@hf-f4ce91de393c-final-v3-20261125
+    snapshot_date: '2026-11-27'
+    method: sequence-level KD
     run_dir: /workspace/workspace/mingdong/data/aline-kd-20261127
+    build_script: build_kd.py
+    description: A 线序列级蒸馏：spgispeech2@hf-f4ce91de393c-final-v3-20261125 的随机子集，目标换成 Musci 的贪心解码（与参考的榜单归一化 WER > 0.3 的丢弃，按 A 线去重清单排除），音频不变。
+    requested_by: open-audio-llm A 线（open-audio-llm-45 会话，2026-11-27）
+    quality_status: 被拒 1,112 条（4.4%），抽 20 条误杀 10 条（50%：Musci 按逐字写 5、段边界外多识别 3、小差 2）。注意：Musci 在这批训练音频上按逐字写（每千词 you know 4.78、相邻重复 9.73，参考 0.23 / 1.04），不适合作整理稿写法的监督，v99k 不用；详见 run_dir/README.md
+  recipe_parameters:
+    teacher: Musci-ASR-qwen-1019@c376e9c on the 11.17 serving stack (greedy, force_language en, max_new_tokens 512)
+    max_wer_vs_reference: 0.3
+    counts:
+      labelled: 25000
+      'dropped: WER > 0.3': 1112
+      'dropped: empty transcript': 1
+      'dropped: decontamination list': 426
+      kept: 23461
 - schema_version: dataset-catalog/2.0
   dataset_id: earnings22
   version: github-c05ab6fd8b4b-final-v3-20261125-musci-kd-v1-20261127
   languages:
-    - en
+  - en
   tasks:
-    - asr
+  - asr
   aliases: []
+  derived_from: earnings22@github-c05ab6fd8b4b-final-v3-20261125
   artifacts:
-    - name: preparation_state
-      kind: dataset-state
-      root_alias: aidc_data
-      relative_path: datasets/earnings22/versions/github-c05ab6fd8b4b-final-v3-20261125-musci-kd-v1-20261127/state.json
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/earnings22/versions/github-c05ab6fd8b4b-final-v3-20261125-musci-kd-v1-20261127/state.json
+    expected_bytes: 675
+    sha256: 3f514b2621ff86f5c45b5c0584b005184056ffa2f796a19be6d4676b1c94da67
+  - name: train
+    kind: audio-records
+    root_alias: aidc_data
+    relative_path: datasets/earnings22/versions/github-c05ab6fd8b4b-final-v3-20261125-musci-kd-v1-20261127/records/train.jsonl.gz
+    expected_bytes: 2262237
+    sha256: 0a5d0b91dcc7a850f06919ee2b95d15a8bac1ee86be72e7eb36da823f8c817c2
+    metadata:
+      record_count: 16965
+  - name: audio_index
+    kind: audio-index
+    root_alias: aidc_data
+    relative_path: datasets/earnings22/versions/github-c05ab6fd8b4b-final-v3-20261125/audio_index/audio-index.jsonl.gz
+    expected_bytes: 2681
+    sha256: 15742e2505543b2db4b8b5850ff839ca3c68006cc81fae5028aec49355b7d72a
+    metadata:
+      record_count: 119
+  - name: record_index
+    kind: lance-record-index
+    root_alias: aidc_data
+    relative_path: datasets/earnings22/versions/github-c05ab6fd8b4b-final-v3-20261125-musci-kd-v1-20261127/record_index/index.json
+    expected_bytes: 764
+    sha256: 4ba087e8ca3775487fc7d64e54c008f69cf3aad8b2dcaddf3b64be427e70edb8
+    metadata:
+      snapshot_version: 13
+      rows: 16965
+      schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
   splits:
     train:
+      group: train
       artifacts:
+        records:
+        - train
+        audio_index:
+        - audio_index
         preparation_state:
-          - preparation_state
-      provenance:
-        preparation_status: building
+        - preparation_state
+        records_lance:
+        - record_index
+      statistics:
+        records: 16965
+        duration_hours: 64.3505
+        duration_basis: sum of record durations
+        languages:
+          en: 16965
   provenance:
-    preparation_status: building
     owner: mingdong
     summary: A 线蒸馏：Earnings-22，Musci 解码
-    description: >-
-      earnings22@github-c05ab6fd8b4b-final-v3-20261125 训练集（全部记录，已排除 A 线去重清单），音频不变，目标换成 Musci-ASR-qwen-1019@c376e9c（11.17 服务栈，贪心解码，force_language en） 的输出。错误数 > max(1, 0.3 × 参考词数) 的记录当作老师失败丢弃（参考只用来抓幻觉和截断，保留 Musci 自己的写法）。被拒样本每源抽查 20 条，误杀率写进运行目录 README。build_kd.py 生成。
     source: earnings22@github-c05ab6fd8b4b-final-v3-20261125
+    snapshot_date: '2026-11-27'
+    method: sequence-level KD
     run_dir: /workspace/workspace/mingdong/data/aline-kd-20261127
+    build_script: build_kd.py
+    description: A 线序列级蒸馏：earnings22@github-c05ab6fd8b4b-final-v3-20261125 的随机子集，目标换成 Musci 的贪心解码（与参考的榜单归一化 WER > 0.3 的丢弃，按 A 线去重清单排除），音频不变。
+    requested_by: open-audio-llm A 线（open-audio-llm-45 会话，2026-11-27）
+    quality_status: 被拒 670 条（3.8%），抽 20 条误杀 9 条（45%，多为参考有误或名字拼写），4 条判不了；参考为空 105 条；详见 run_dir/README.md
+  recipe_parameters:
+    teacher: Musci-ASR-qwen-1019@c376e9c on the 11.17 serving stack (greedy, force_language en, max_new_tokens 512)
+    max_wer_vs_reference: 0.3
+    counts:
+      labelled: 17747
+      'dropped: WER > 0.3': 670
+      'dropped: empty reference': 105
+      'dropped: empty transcript': 3
+      'dropped: decontamination list': 4
+      kept: 16965
 - schema_version: dataset-catalog/2.0
   dataset_id: gigaspeech
   version: train-punc-v1-20261102-final-v1-20261120-kd-pool-v1-20261127-musci-kd-v1-20261127
   languages:
-    - en
+  - en
   tasks:
-    - asr
+  - asr
   aliases: []
+  derived_from: gigaspeech@train-punc-v1-20261102-final-v1-20261120-kd-pool-v1-20261127
   artifacts:
-    - name: preparation_state
-      kind: dataset-state
-      root_alias: aidc_data
-      relative_path: datasets/gigaspeech/versions/train-punc-v1-20261102-final-v1-20261120-kd-pool-v1-20261127-musci-kd-v1-20261127/state.json
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/gigaspeech/versions/train-punc-v1-20261102-final-v1-20261120-kd-pool-v1-20261127-musci-kd-v1-20261127/state.json
+    expected_bytes: 640
+    sha256: 36493a1552bf7552d2a33eb01dfb53b36849c103c42f4652a7b4f240c89aa0ad
+  - kind: lhotse-recordings
+    name: train_rec_0
+    relative_path: datasets/gigaspeech/versions/legacy-20260804/train_rec_0/gigaspeech_recordings_XL.jsonl.gz
+    root_alias: aidc_data
+    expected_bytes: 631262
+    sha256: b1e711b713e19395b118482936f2ea2bec3ad22bc4dbd875c1217001991c949c
+  - name: train_supervisions_kd_0
+    kind: lhotse-supervisions
+    root_alias: aidc_data
+    relative_path: datasets/gigaspeech/versions/train-punc-v1-20261102-final-v1-20261120-kd-pool-v1-20261127-musci-kd-v1-20261127/supervisions/train.jsonl.gz
+    expected_bytes: 1502414
+    sha256: 3f137d22f931281b6389f23d6071117c859785d09ae35ece1c94312a501575cb
+    metadata:
+      record_count: 24531
+  - name: record_index
+    kind: lance-record-index
+    root_alias: aidc_data
+    relative_path: datasets/gigaspeech/versions/train-punc-v1-20261102-final-v1-20261120-kd-pool-v1-20261127-musci-kd-v1-20261127/record_index/index.json
+    expected_bytes: 817
+    sha256: 2a2c8658484f08398a67a6fdb0239e48bbffa2291749a50d7f1c75994d32f75a
+    metadata:
+      snapshot_version: 13
+      rows: 24531
+      schema_hash: 65313b8531adce3b2160e6cde8e2e0e4bb8c42a7f544c2aaa50de2d7bedb08b0
   splits:
     train:
+      group: train
       artifacts:
+        recordings:
+        - train_rec_0
+        supervisions:
+        - train_supervisions_kd_0
         preparation_state:
-          - preparation_state
-      provenance:
-        preparation_status: building
+        - preparation_state
+        records_lance:
+        - record_index
+      statistics:
+        records: 24531
+        duration_hours: 30.0927
+        duration_basis: sum of record durations
+        languages:
+          en: 24531
   provenance:
-    preparation_status: building
     owner: mingdong
     summary: A 线蒸馏：GigaSpeech 池，Musci 解码
-    description: >-
-      gigaspeech@train-punc-v1-20261102-final-v1-20261120-kd-pool-v1-20261127 训练集（即上面的标注池 25,000 条），音频不变，目标换成 Musci-ASR-qwen-1019@c376e9c（11.17 服务栈，贪心解码，force_language en） 的输出。错误数 > max(1, 0.3 × 参考词数) 的记录当作老师失败丢弃（参考只用来抓幻觉和截断，保留 Musci 自己的写法）。被拒样本每源抽查 20 条，误杀率写进运行目录 README。build_kd.py 生成。
     source: gigaspeech@train-punc-v1-20261102-final-v1-20261120-kd-pool-v1-20261127
+    snapshot_date: '2026-11-27'
+    method: sequence-level KD
     run_dir: /workspace/workspace/mingdong/data/aline-kd-20261127
+    build_script: build_kd.py
+    description: A 线序列级蒸馏：gigaspeech@train-punc-v1-20261102-final-v1-20261120-kd-pool-v1-20261127 的随机子集，目标换成 Musci 的贪心解码（与参考的榜单归一化 WER > 0.3 的丢弃，按 A 线去重清单排除），音频不变。
+    requested_by: open-audio-llm A 线（open-audio-llm-45 会话，2026-11-27）
+    quality_status: 被拒 459 条（1.8%），抽 20 条误杀 7 条（35%，拼写合写差异或参考有误）；详见 run_dir/README.md
+  recipe_parameters:
+    teacher: Musci-ASR-qwen-1019@c376e9c on the 11.17 serving stack (greedy, force_language en, max_new_tokens 512)
+    max_wer_vs_reference: 0.3
+    counts:
+      labelled: 25000
+      'dropped: WER > 0.3': 459
+      'dropped: empty reference': 10
+      kept: 24531
