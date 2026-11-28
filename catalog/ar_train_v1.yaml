@@ -1,4 +1,4 @@
-# 占位登记：阿拉伯语训练数据（同葡语 pt_train_v1：去评测重叠、双引擎清洗、训练文本规整、热词），进行中，进度见各版本状态文件。
+# 阿拉伯语训练数据正式版本（去评测重叠、双引擎清洗、训练文本 ar-v1、热词），同葡语 pt_train_v1。
 - schema_version: dataset-catalog/2.0
   dataset_id: common_voice_ar
   version: ar-train-v1-20261128
@@ -7,7 +7,26 @@
   tasks:
   - asr
   aliases: []
+  derived_from: common_voice_ar@legacy
   artifacts:
+  - name: train_recordings
+    kind: lhotse-recordings
+    root_alias: aidc_data
+    relative_path: datasets/common_voice_ar/versions/ar-train-v1-20261128/cv-ar_recordings_train.jsonl.gz
+    expected_bytes: 341134
+    sha256: 87b672dca20be106d7d4934569c945de981881c23ec3e04e84a5e23044241989
+    metadata:
+      record_count: 32353
+  - name: train_supervisions
+    kind: lhotse-supervisions
+    root_alias: aidc_data
+    relative_path: datasets/common_voice_ar/versions/ar-train-v1-20261128/cv-ar_supervisions_train.jsonl.gz
+    expected_bytes: 2202248
+    sha256: 40e8eaf225c7548d6aec39cbf7b16c5d410e4b1e90f31a53581800752f542004
+    metadata:
+      record_count: 32353
+      pass_count: 32353
+      rows_with_hotwords: 5615
   - name: preparation_state
     kind: dataset-state
     root_alias: aidc_data
@@ -15,21 +34,68 @@
   splits:
     train:
       artifacts:
+        recordings:
+        - train_recordings
+        supervisions:
+        - train_supervisions
         preparation_state:
         - preparation_state
       statistics:
+        records: 32353
+        duration_hours: 37.27
+        duration_basis: sum of supervision durations of the kept rows
         source_records: 32793
         source_hours: 37.7
-      provenance:
-        preparation_status: building
+        dropped_records:
+          clean bad_annotation: 210
+          clean ambiguous: 160
+          ar-4 Persian letters: 48
+          clean insufficient_engines: 19
+          clean implausible_char_rate: 3
+        rows_with_hotwords: 5615
+        hotwords: 6671
+  recipe_parameters:
+    filter_rules: consensus-v9
+    engines:
+    - Qwen3-ASR-1.7B
+    - whisper-large-v3
+    language: ar
+    clean_pass_only: true
+    duration_seconds:
+    - 0.3
+    - 30.0
+    eval_exclusion: ar-eval-v1-20261127 speakers (CV 24.0 / 17.0 dev+test) and sentences (build_manifests.norm)
+    text: 'ar-v1 (scripts/ar_text.py: ar-1 no diacritics or tatweel, NFKC; ar-2 Western digits; ar-3 Arabic marks, final mark;
+      ar-4 drop Persian / Urdu letters; ar-5 drop scripts other than Arabic and Latin)'
+    hotwords: Qwen3.8-27B, amphiondata extract_hotword prompt, 12 rows per request, no review; kept when the word occurs in
+      the text as a whole word after the same mark removal; custom.hotwords; rows whose source text was labelled for the ar-benchmarks
+      vocabulary reuse that label
   provenance:
-    preparation_status: building
+    preparation_status: prepared
     owner: mingdong
-    description: Common Voice 阿拉伯语训练版本：CV 24.0 train（23,680 句 / 26.84 h，24 人）加 CV 17.0 other（录了音、投票未满，9,113 句 / 10.86 h，330 人）。去掉阿拉伯语评测集（ar-eval-v1-20261127）的 Common Voice 24.0 / 17.0 dev+test 说话人，以及去元音符号后与评测句（CV 24.0 dev/test、MGB-2 dev/test、FLEURS test、Casablanca、CV 17.0 test）相同的句子；时长 0.3–30 秒。随后双引擎清洗（consensus-v8，先试跑 3,000 句）、按阿拉伯语训练文本规则 ar-v1 规整（去元音符号与延长符、东阿拉伯数字改西式，与 AmphionEval 打分口径版本 5 一致）、Qwen3.8-27B 标热词。
+    description: Common Voice 阿拉伯语训练版本：CV 24.0 train 加 CV 17.0 other（录了音、投票未满）。去掉阿拉伯语评测集（ar-eval-v1-20261127）的 Common Voice
+      24.0 / 17.0 dev+test 说话人（1,081 人），以及去元音符号、统一 alef / ya / ta marbuta、去标点后与评测句相同的句子（37,204 句：CV 24.0 dev/test、MGB-2 dev/test、FLEURS
+      test、Casablanca、CV 17.0 test）；时长 0.3–30 秒。Qwen3-ASR-1.7B + whisper-large-v3 双引擎清洗（consensus-v9：阿拉伯语按 AmphionEval 原生打分口径统一写法后再比较），先抽样试跑、看过被拒样本。训练文本
+      ar-v1：去元音符号与延长符、东阿拉伯数字改西式、阿拉伯标点（، ؛ ؟）且句末有标点，与 AmphionEval 原生打分口径一致；含波斯 / 乌尔都字母的行（ar-4）和含阿拉伯、拉丁以外文字的行（ar-5）去掉。保留 32,353
+      句 / 37.27 h（源 32,793 句 / 37.7 h）。只含清洗通过的行；custom.hotwords 是 Qwen3.8-27B 标的热词（5,615 句有），custom.source_text 是规整前的原文。规则、试跑与质检见
+      run_dir README 和 finalize.json。
     source: common_voice_ar@legacy (Common Voice 24.0 train) + common_voice_ar@hf-8262c16bf297 (Common Voice 17.0 other)
     license:
     - cc0-1.0
     run_dir: /workspace/workspace/mingdong/data/amphiondata/ar-train-20261128
+    scripts:
+    - /workspace/workspace/mingdong/data/amphiondata/ar-train-20261128/scripts/build_manifests.py
+    - /workspace/workspace/mingdong/data/amphiondata/ar-train-20261128/scripts/build_cv17_other.py
+    - /workspace/workspace/mingdong/data/amphiondata/ar-train-20261128/scripts/build_masc.py
+    - /workspace/workspace/mingdong/data/amphiondata/ar-train-20261128/scripts/sample_pilot.py
+    - /workspace/workspace/mingdong/data/amphiondata/ar-train-20261128/scripts/pilot_report.py
+    - /workspace/workspace/mingdong/data/amphiondata/ar-train-20261128/scripts/clean.sh
+    - /workspace/workspace/mingdong/data/amphiondata/ar-train-20261128/scripts/masc_spelling.py
+    - /workspace/workspace/mingdong/data/amphiondata/ar-train-20261128/scripts/masc_rejudge.py
+    - /workspace/workspace/mingdong/data/amphiondata/ar-train-20261128/scripts/ar_text.py
+    - /workspace/workspace/mingdong/data/amphiondata/ar-train-20261128/scripts/label_hotwords.sh
+    - /workspace/workspace/mingdong/data/amphiondata/ar-train-20261128/scripts/finalize.py
+    - /workspace/workspace/mingdong/data/amphiondata/ar-train-20261128/scripts/register.py
 - schema_version: dataset-catalog/2.0
   dataset_id: fleurs_ar
   version: ar-train-v1-20261128
@@ -38,7 +104,26 @@
   tasks:
   - asr
   aliases: []
+  derived_from: fleurs_ar@legacy
   artifacts:
+  - name: train_recordings
+    kind: lhotse-recordings
+    root_alias: aidc_data
+    relative_path: datasets/fleurs_ar/versions/ar-train-v1-20261128/fleurs-ar_recordings_train.jsonl.gz
+    expected_bytes: 24206
+    sha256: 63a558b5012580981fd31b2274886d06531ee33feb6c6ce2a144ae45fe0e8aad
+    metadata:
+      record_count: 2088
+  - name: train_supervisions
+    kind: lhotse-supervisions
+    root_alias: aidc_data
+    relative_path: datasets/fleurs_ar/versions/ar-train-v1-20261128/fleurs-ar_supervisions_train.jsonl.gz
+    expected_bytes: 232366
+    sha256: 270633b84877431e16d8e4cd73b50382cb5f48fc9744a2faa897ff7f811ae92b
+    metadata:
+      record_count: 2088
+      pass_count: 2088
+      rows_with_hotwords: 918
   - name: preparation_state
     kind: dataset-state
     root_alias: aidc_data
@@ -46,21 +131,64 @@
   splits:
     train:
       artifacts:
+        recordings:
+        - train_recordings
+        supervisions:
+        - train_supervisions
         preparation_state:
         - preparation_state
       statistics:
+        records: 2088
+        duration_hours: 5.98
+        duration_basis: sum of supervision durations of the kept rows
         source_records: 2102
         source_hours: 6.04
-      provenance:
-        preparation_status: building
+        dropped_records:
+          clean bad_annotation: 13
+          ar-4 Persian letters: 1
+        rows_with_hotwords: 918
+        hotwords: 1467
+  recipe_parameters:
+    filter_rules: consensus-v9
+    engines:
+    - Qwen3-ASR-1.7B
+    - whisper-large-v3
+    language: ar
+    clean_pass_only: true
+    duration_seconds:
+    - 0.3
+    - 30.0
+    eval_exclusion: ar-eval-v1-20261127 speakers (CV 24.0 / 17.0 dev+test) and sentences (build_manifests.norm)
+    text: 'ar-v1 (scripts/ar_text.py: ar-1 no diacritics or tatweel, NFKC; ar-2 Western digits; ar-3 Arabic marks, final mark;
+      ar-4 drop Persian / Urdu letters; ar-5 drop scripts other than Arabic and Latin)'
+    hotwords: Qwen3.8-27B, amphiondata extract_hotword prompt, 12 rows per request, no review; kept when the word occurs in
+      the text as a whole word after the same mark removal; custom.hotwords
   provenance:
-    preparation_status: building
+    preparation_status: prepared
     owner: mingdong
-    description: FLEURS ar_eg train（埃及口音标准语朗读）训练版本，2,102 句 / 6.04 h。去掉阿拉伯语评测集（ar-eval-v1-20261127）的 Common Voice 24.0 / 17.0 dev+test 说话人，以及去元音符号后与评测句（CV 24.0 dev/test、MGB-2 dev/test、FLEURS test、Casablanca、CV 17.0 test）相同的句子；时长 0.3–30 秒。随后双引擎清洗（consensus-v8，先试跑 3,000 句）、按阿拉伯语训练文本规则 ar-v1 规整（去元音符号与延长符、东阿拉伯数字改西式，与 AmphionEval 打分口径版本 5 一致）、Qwen3.8-27B 标热词。
+    description: FLEURS ar_eg train（埃及口音标准语朗读）训练版本。去掉阿拉伯语评测集（ar-eval-v1-20261127）的 Common Voice 24.0 / 17.0 dev+test 说话人（1,081
+      人），以及去元音符号、统一 alef / ya / ta marbuta、去标点后与评测句相同的句子（37,204 句：CV 24.0 dev/test、MGB-2 dev/test、FLEURS test、Casablanca、CV
+      17.0 test）；时长 0.3–30 秒。Qwen3-ASR-1.7B + whisper-large-v3 双引擎清洗（consensus-v9：阿拉伯语按 AmphionEval 原生打分口径统一写法后再比较），先抽样试跑、看过被拒样本。训练文本
+      ar-v1：去元音符号与延长符、东阿拉伯数字改西式、阿拉伯标点（، ؛ ؟）且句末有标点，与 AmphionEval 原生打分口径一致；含波斯 / 乌尔都字母的行（ar-4）和含阿拉伯、拉丁以外文字的行（ar-5）去掉。保留 2,088
+      句 / 5.98 h（源 2,102 句 / 6.04 h）。只含清洗通过的行；custom.hotwords 是 Qwen3.8-27B 标的热词（918 句有），custom.source_text 是规整前的原文。规则、试跑与质检见
+      run_dir README 和 finalize.json。
     source: fleurs_ar@legacy (FLEURS ar_eg train)
     license:
     - cc-by-4.0
     run_dir: /workspace/workspace/mingdong/data/amphiondata/ar-train-20261128
+    scripts:
+    - /workspace/workspace/mingdong/data/amphiondata/ar-train-20261128/scripts/build_manifests.py
+    - /workspace/workspace/mingdong/data/amphiondata/ar-train-20261128/scripts/build_cv17_other.py
+    - /workspace/workspace/mingdong/data/amphiondata/ar-train-20261128/scripts/build_masc.py
+    - /workspace/workspace/mingdong/data/amphiondata/ar-train-20261128/scripts/sample_pilot.py
+    - /workspace/workspace/mingdong/data/amphiondata/ar-train-20261128/scripts/pilot_report.py
+    - /workspace/workspace/mingdong/data/amphiondata/ar-train-20261128/scripts/clean.sh
+    - /workspace/workspace/mingdong/data/amphiondata/ar-train-20261128/scripts/masc_spelling.py
+    - /workspace/workspace/mingdong/data/amphiondata/ar-train-20261128/scripts/masc_rejudge.py
+    - /workspace/workspace/mingdong/data/amphiondata/ar-train-20261128/scripts/ar_text.py
+    - /workspace/workspace/mingdong/data/amphiondata/ar-train-20261128/scripts/label_hotwords.sh
+    - /workspace/workspace/mingdong/data/amphiondata/ar-train-20261128/scripts/finalize.py
+    - /workspace/workspace/mingdong/data/amphiondata/ar-train-20261128/scripts/register.py
 - schema_version: dataset-catalog/2.0
   dataset_id: mgb2
   version: ar-train-v1-20261128
@@ -69,7 +197,26 @@
   tasks:
   - asr
   aliases: []
+  derived_from: mgb2@legacy
   artifacts:
+  - name: train_recordings
+    kind: lhotse-recordings
+    root_alias: aidc_data
+    relative_path: datasets/mgb2/versions/ar-train-v1-20261128/mgb2_recordings_train.jsonl.gz
+    expected_bytes: 90445
+    sha256: 889840cb4d77d027d207fa4df18418addfe7fc3324151b321b8b7d73c6c89ab2
+    metadata:
+      record_count: 2214
+  - name: train_supervisions
+    kind: lhotse-supervisions
+    root_alias: aidc_data
+    relative_path: datasets/mgb2/versions/ar-train-v1-20261128/mgb2_supervisions_train.jsonl.gz
+    expected_bytes: 38922734
+    sha256: a2f3a1fac336cbf49f1df29d0a932b82195d886d02e52aab7883eefddab7f3c1
+    metadata:
+      record_count: 352186
+      pass_count: 352186
+      rows_with_hotwords: 195343
   - name: preparation_state
     kind: dataset-state
     root_alias: aidc_data
@@ -77,21 +224,68 @@
   splits:
     train:
       artifacts:
+        recordings:
+        - train_recordings
+        supervisions:
+        - train_supervisions
         preparation_state:
         - preparation_state
       statistics:
+        records: 352186
+        duration_hours: 914.13
+        duration_basis: sum of supervision durations of the kept rows
         source_records: 358845
         source_hours: 924.35
-      provenance:
-        preparation_status: building
+        dropped_records:
+          clean bad_annotation: 3670
+          clean ambiguous: 2467
+          clean implausible_char_rate: 329
+          clean insufficient_engines: 126
+          clean no_valid_engine: 67
+        rows_with_hotwords: 195343
+        hotwords: 329617
+  recipe_parameters:
+    filter_rules: consensus-v9
+    engines:
+    - Qwen3-ASR-1.7B
+    - whisper-large-v3
+    language: ar
+    clean_pass_only: true
+    duration_seconds:
+    - 0.3
+    - 30.0
+    eval_exclusion: ar-eval-v1-20261127 speakers (CV 24.0 / 17.0 dev+test) and sentences (build_manifests.norm)
+    text: 'ar-v1 (scripts/ar_text.py: ar-1 no diacritics or tatweel, NFKC; ar-2 Western digits; ar-3 Arabic marks, final mark;
+      ar-4 drop Persian / Urdu letters; ar-5 drop scripts other than Arabic and Latin)'
+    hotwords: Qwen3.8-27B, amphiondata extract_hotword prompt, 12 rows per request, no review; kept when the word occurs in
+      the text as a whole word after the same mark removal; custom.hotwords; rows whose source text was labelled for the ar-benchmarks
+      vocabulary reuse that label
   provenance:
-    preparation_status: building
+    preparation_status: prepared
     owner: mingdong
-    description: MGB-2 train（半岛电视台广播，以标准语为主、夹方言，轻监督转写）训练版本，358,845 段 / 924.35 h（30 秒以上的长段 202.03 h 不进）。**商用受限**：QCRI-ALT 研究许可，商用须另与 QF / 半岛台签协议，交付模型是否使用待用户决定。去掉阿拉伯语评测集（ar-eval-v1-20261127）的 Common Voice 24.0 / 17.0 dev+test 说话人，以及去元音符号后与评测句（CV 24.0 dev/test、MGB-2 dev/test、FLEURS test、Casablanca、CV 17.0 test）相同的句子；时长 0.3–30 秒。随后双引擎清洗（consensus-v8，先试跑 3,000 句）、按阿拉伯语训练文本规则 ar-v1 规整（去元音符号与延长符、东阿拉伯数字改西式，与 AmphionEval 打分口径版本 5 一致）、Qwen3.8-27B 标热词。
+    description: MGB-2 train（半岛电视台节目，轻监督对齐的分段）训练版本；≥30 秒的分段不进。去掉阿拉伯语评测集（ar-eval-v1-20261127）的 Common Voice 24.0 / 17.0 dev+test
+      说话人（1,081 人），以及去元音符号、统一 alef / ya / ta marbuta、去标点后与评测句相同的句子（37,204 句：CV 24.0 dev/test、MGB-2 dev/test、FLEURS test、Casablanca、CV
+      17.0 test）；时长 0.3–30 秒。Qwen3-ASR-1.7B + whisper-large-v3 双引擎清洗（consensus-v9：阿拉伯语按 AmphionEval 原生打分口径统一写法后再比较），先抽样试跑、看过被拒样本。训练文本
+      ar-v1：去元音符号与延长符、东阿拉伯数字改西式、阿拉伯标点（، ؛ ؟）且句末有标点，与 AmphionEval 原生打分口径一致；含波斯 / 乌尔都字母的行（ar-4）和含阿拉伯、拉丁以外文字的行（ar-5）去掉。保留 352,186
+      句 / 914.13 h（源 358,845 句 / 924.35 h）。许可是 QCRI-ALT 研究许可，商用须另与 QCRI 签协议。只含清洗通过的行；custom.hotwords 是 Qwen3.8-27B 标的热词（195,343
+      句有），custom.source_text 是规整前的原文。规则、试跑与质检见 run_dir README 和 finalize.json。
     source: mgb2@legacy (MGB-2 train)
     license:
     - other (QCRI-ALT research license)
     run_dir: /workspace/workspace/mingdong/data/amphiondata/ar-train-20261128
+    scripts:
+    - /workspace/workspace/mingdong/data/amphiondata/ar-train-20261128/scripts/build_manifests.py
+    - /workspace/workspace/mingdong/data/amphiondata/ar-train-20261128/scripts/build_cv17_other.py
+    - /workspace/workspace/mingdong/data/amphiondata/ar-train-20261128/scripts/build_masc.py
+    - /workspace/workspace/mingdong/data/amphiondata/ar-train-20261128/scripts/sample_pilot.py
+    - /workspace/workspace/mingdong/data/amphiondata/ar-train-20261128/scripts/pilot_report.py
+    - /workspace/workspace/mingdong/data/amphiondata/ar-train-20261128/scripts/clean.sh
+    - /workspace/workspace/mingdong/data/amphiondata/ar-train-20261128/scripts/masc_spelling.py
+    - /workspace/workspace/mingdong/data/amphiondata/ar-train-20261128/scripts/masc_rejudge.py
+    - /workspace/workspace/mingdong/data/amphiondata/ar-train-20261128/scripts/ar_text.py
+    - /workspace/workspace/mingdong/data/amphiondata/ar-train-20261128/scripts/label_hotwords.sh
+    - /workspace/workspace/mingdong/data/amphiondata/ar-train-20261128/scripts/finalize.py
+    - /workspace/workspace/mingdong/data/amphiondata/ar-train-20261128/scripts/register.py
 - schema_version: dataset-catalog/2.0
   dataset_id: yodas_ar
   version: ar-train-v1-20261128
@@ -100,7 +294,26 @@
   tasks:
   - asr
   aliases: []
+  derived_from: yodas_ar@legacy
   artifacts:
+  - name: train_recordings
+    kind: lhotse-recordings
+    root_alias: aidc_data
+    relative_path: datasets/yodas_ar/versions/ar-train-v1-20261128/yodas-ar_recordings_train.jsonl.gz
+    expected_bytes: 3762706
+    sha256: c54a0a6717619ac150cec2af042522f3bba8604b9aad52da40f4fa418184461c
+    metadata:
+      record_count: 196073
+  - name: train_supervisions
+    kind: lhotse-supervisions
+    root_alias: aidc_data
+    relative_path: datasets/yodas_ar/versions/ar-train-v1-20261128/yodas-ar_supervisions_train.jsonl.gz
+    expected_bytes: 11898089
+    sha256: 3ffc34826860769efdc50fda7976576cf337344fddd8b2b3195bdb90dc853887
+    metadata:
+      record_count: 196073
+      pass_count: 196073
+      rows_with_hotwords: 36612
   - name: preparation_state
     kind: dataset-state
     root_alias: aidc_data
@@ -108,21 +321,69 @@
   splits:
     train:
       artifacts:
+        recordings:
+        - train_recordings
+        supervisions:
+        - train_supervisions
         preparation_state:
         - preparation_state
       statistics:
+        records: 196073
+        duration_hours: 203.45
+        duration_basis: sum of supervision durations of the kept rows
         source_records: 269419
         source_hours: 284.07
-      provenance:
-        preparation_status: building
+        dropped_records:
+          clean ambiguous: 43332
+          clean bad_annotation: 10802
+          clean implausible_char_rate: 6488
+          clean no_valid_engine: 1312
+          clean insufficient_engines: 10163
+          ar-5 other script: 1117
+          ar-4 Persian letters: 132
+        rows_with_hotwords: 36612
+        hotwords: 44122
+  recipe_parameters:
+    filter_rules: consensus-v9
+    engines:
+    - Qwen3-ASR-1.7B
+    - whisper-large-v3
+    language: ar
+    clean_pass_only: true
+    duration_seconds:
+    - 0.3
+    - 30.0
+    eval_exclusion: ar-eval-v1-20261127 speakers (CV 24.0 / 17.0 dev+test) and sentences (build_manifests.norm)
+    text: 'ar-v1 (scripts/ar_text.py: ar-1 no diacritics or tatweel, NFKC; ar-2 Western digits; ar-3 Arabic marks, final mark;
+      ar-4 drop Persian / Urdu letters; ar-5 drop scripts other than Arabic and Latin)'
+    hotwords: Qwen3.8-27B, amphiondata extract_hotword prompt, 12 rows per request, no review; kept when the word occurs in
+      the text as a whole word after the same mark removal; custom.hotwords
   provenance:
-    preparation_status: building
+    preparation_status: prepared
     owner: mingdong
-    description: YODAS 阿拉伯语（YouTube 字幕，质量不一）训练版本，269,419 段 / 284.07 h。西语、葡语训练因 YODAS 误报变多没有用它，阿拉伯语是否使用看清洗与对照结果。去掉阿拉伯语评测集（ar-eval-v1-20261127）的 Common Voice 24.0 / 17.0 dev+test 说话人，以及去元音符号后与评测句（CV 24.0 dev/test、MGB-2 dev/test、FLEURS test、Casablanca、CV 17.0 test）相同的句子；时长 0.3–30 秒。随后双引擎清洗（consensus-v8，先试跑 3,000 句）、按阿拉伯语训练文本规则 ar-v1 规整（去元音符号与延长符、东阿拉伯数字改西式，与 AmphionEval 打分口径版本 5 一致）、Qwen3.8-27B 标热词。
+    description: YODAS 阿拉伯语（YouTube 字幕）训练版本。去掉阿拉伯语评测集（ar-eval-v1-20261127）的 Common Voice 24.0 / 17.0 dev+test 说话人（1,081 人），以及去元音符号、统一
+      alef / ya / ta marbuta、去标点后与评测句相同的句子（37,204 句：CV 24.0 dev/test、MGB-2 dev/test、FLEURS test、Casablanca、CV 17.0 test）；时长
+      0.3–30 秒。Qwen3-ASR-1.7B + whisper-large-v3 双引擎清洗（consensus-v9：阿拉伯语按 AmphionEval 原生打分口径统一写法后再比较），先抽样试跑、看过被拒样本；约四分之一被拒，主要是翻译字幕、音乐和片头。训练文本
+      ar-v1：去元音符号与延长符、东阿拉伯数字改西式、阿拉伯标点（، ؛ ؟）且句末有标点，与 AmphionEval 原生打分口径一致；含波斯 / 乌尔都字母的行（ar-4）和含阿拉伯、拉丁以外文字的行（ar-5）去掉。保留 196,073
+      句 / 203.45 h（源 269,419 句 / 284.07 h）。只含清洗通过的行；custom.hotwords 是 Qwen3.8-27B 标的热词（36,612 句有），custom.source_text 是规整前的原文。规则、试跑与质检见
+      run_dir README 和 finalize.json。
     source: yodas_ar@legacy (YODAS ar)
     license:
     - cc-by-3.0
     run_dir: /workspace/workspace/mingdong/data/amphiondata/ar-train-20261128
+    scripts:
+    - /workspace/workspace/mingdong/data/amphiondata/ar-train-20261128/scripts/build_manifests.py
+    - /workspace/workspace/mingdong/data/amphiondata/ar-train-20261128/scripts/build_cv17_other.py
+    - /workspace/workspace/mingdong/data/amphiondata/ar-train-20261128/scripts/build_masc.py
+    - /workspace/workspace/mingdong/data/amphiondata/ar-train-20261128/scripts/sample_pilot.py
+    - /workspace/workspace/mingdong/data/amphiondata/ar-train-20261128/scripts/pilot_report.py
+    - /workspace/workspace/mingdong/data/amphiondata/ar-train-20261128/scripts/clean.sh
+    - /workspace/workspace/mingdong/data/amphiondata/ar-train-20261128/scripts/masc_spelling.py
+    - /workspace/workspace/mingdong/data/amphiondata/ar-train-20261128/scripts/masc_rejudge.py
+    - /workspace/workspace/mingdong/data/amphiondata/ar-train-20261128/scripts/ar_text.py
+    - /workspace/workspace/mingdong/data/amphiondata/ar-train-20261128/scripts/label_hotwords.sh
+    - /workspace/workspace/mingdong/data/amphiondata/ar-train-20261128/scripts/finalize.py
+    - /workspace/workspace/mingdong/data/amphiondata/ar-train-20261128/scripts/register.py
 - schema_version: dataset-catalog/2.0
   dataset_id: masc
   version: ar-train-v1-20261128
@@ -131,7 +392,26 @@
   tasks:
   - asr
   aliases: []
+  derived_from: masc@hf-cb7f1f0618bd
   artifacts:
+  - name: train_recordings
+    kind: lhotse-recordings
+    root_alias: aidc_data
+    relative_path: datasets/masc/versions/ar-train-v1-20261128/masc_recordings_train.jsonl.gz
+    expected_bytes: 9624052
+    sha256: 28cc1ec97b86dc5b43190c137ae9ac45b807d5665bdba332d223a7cc1dc664d1
+    metadata:
+      record_count: 799866
+  - name: train_supervisions
+    kind: lhotse-supervisions
+    root_alias: aidc_data
+    relative_path: datasets/masc/versions/ar-train-v1-20261128/masc_supervisions_train.jsonl.gz
+    expected_bytes: 58376583
+    sha256: 6e44fc1e503ffe91e0ec533a707e183ecbf5c254dd57445824b88b5c03acd88b
+    metadata:
+      record_count: 799866
+      pass_count: 799866
+      rows_with_hotwords: 117296
   - name: preparation_state
     kind: dataset-state
     root_alias: aidc_data
@@ -139,18 +419,69 @@
   splits:
     train:
       artifacts:
+        recordings:
+        - train_recordings
+        supervisions:
+        - train_supervisions
         preparation_state:
         - preparation_state
       statistics:
+        records: 799866
+        duration_hours: 795.49
+        duration_basis: sum of supervision durations of the kept rows
         source_records: 866174
         source_hours: 860.57
-      provenance:
-        preparation_status: building
+        dropped_records:
+          clean bad_annotation: 36943
+          clean ambiguous: 25117
+          clean implausible_char_rate: 1205
+          clean insufficient_engines: 2576
+          clean no_valid_engine: 463
+          eval sentence after text rules: 4
+        rows_with_hotwords: 117296
+        hotwords: 136242
+  recipe_parameters:
+    filter_rules: consensus-v9
+    engines:
+    - Qwen3-ASR-1.7B
+    - whisper-large-v3
+    language: ar
+    clean_pass_only: true
+    duration_seconds:
+    - 0.3
+    - 30.0
+    eval_exclusion: ar-eval-v1-20261127 speakers (CV 24.0 / 17.0 dev+test) and sentences (build_manifests.norm)
+    text: 'ar-v1 (scripts/ar_text.py: ar-1 no diacritics or tatweel, NFKC; ar-2 Western digits; ar-3 Arabic marks, final mark;
+      ar-4 drop Persian / Urdu letters; ar-5 drop scripts other than Arabic and Latin)'
+    hotwords: Qwen3.8-27B, amphiondata extract_hotword prompt, 12 rows per request, no review; kept when the word occurs in
+      the text as a whole word after the same mark removal; custom.hotwords
+    spelling: masc_spelling.restore (hypothesis spellings; a spelling that only adds marks wins) + masc_rejudge.py (same consensus-v9
+      decision on the restored label); final ha -> ta marbuta when the corpus lexicon has the ta marbuta form >= 20 times
+      and >= 20x the ha form
   provenance:
-    preparation_status: building
+    preparation_status: prepared
     owner: mingdong
-    description: MASC train（YouTube 多方言，12,190 个视频）训练版本：音频从 parquet 解成 16 位 FLAC，866,174 段 / 860.57 h（clean 390.53 h、noisy 470.04 h），去掉与评测句相同的 9,080 段。随后双引擎清洗（consensus-v9，先试跑 3,000 段），按引擎输出恢复 hamza 与 ta marbuta 写法，再按阿拉伯语训练文本规则 ar-v1 规整、Qwen3.8-27B 标热词。
+    description: MASC train（YouTube 多方言阿拉伯语，c 干净 / n 嘈杂两类）训练版本，音频由 masc@hf-cb7f1f0618bd 的 parquet 解出为 16 kHz FLAC。去掉阿拉伯语评测集（ar-eval-v1-20261127）的
+      Common Voice 24.0 / 17.0 dev+test 说话人（1,081 人），以及去元音符号、统一 alef / ya / ta marbuta、去标点后与评测句相同的句子（37,204 句：CV 24.0 dev/test、MGB-2
+      dev/test、FLEURS test、Casablanca、CV 17.0 test）；时长 0.3–30 秒。Qwen3-ASR-1.7B + whisper-large-v3 双引擎清洗（consensus-v9：阿拉伯语按
+      AmphionEval 原生打分口径统一写法后再比较），先抽样试跑、看过被拒样本。MASC 原标注把 hamza 写成光 alef、词尾 ة 写成 ه：先按两个引擎的写法还原拼写再按同一规则重判（还原 1,048,716 个词，重判后多保留
+      22,515 句），没有引擎依据的词尾 ه 按全语料词表改为 ة（74,544 处）。训练文本 ar-v1：去元音符号与延长符、东阿拉伯数字改西式、阿拉伯标点（، ؛ ؟）且句末有标点，与 AmphionEval 原生打分口径一致；含波斯
+      / 乌尔都字母的行（ar-4）和含阿拉伯、拉丁以外文字的行（ar-5）去掉。保留 799,866 句 / 795.49 h（源 866,174 句 / 860.57 h）。只含清洗通过的行；custom.hotwords 是 Qwen3.8-27B
+      标的热词（117,296 句有），custom.source_text 是规整前的原文。规则、试跑与质检见 run_dir README 和 finalize.json。
     source: masc@hf-cb7f1f0618bd (train)
     license:
     - cc-by-4.0
     run_dir: /workspace/workspace/mingdong/data/amphiondata/ar-train-20261128
+    scripts:
+    - /workspace/workspace/mingdong/data/amphiondata/ar-train-20261128/scripts/build_manifests.py
+    - /workspace/workspace/mingdong/data/amphiondata/ar-train-20261128/scripts/build_cv17_other.py
+    - /workspace/workspace/mingdong/data/amphiondata/ar-train-20261128/scripts/build_masc.py
+    - /workspace/workspace/mingdong/data/amphiondata/ar-train-20261128/scripts/sample_pilot.py
+    - /workspace/workspace/mingdong/data/amphiondata/ar-train-20261128/scripts/pilot_report.py
+    - /workspace/workspace/mingdong/data/amphiondata/ar-train-20261128/scripts/clean.sh
+    - /workspace/workspace/mingdong/data/amphiondata/ar-train-20261128/scripts/masc_spelling.py
+    - /workspace/workspace/mingdong/data/amphiondata/ar-train-20261128/scripts/masc_rejudge.py
+    - /workspace/workspace/mingdong/data/amphiondata/ar-train-20261128/scripts/ar_text.py
+    - /workspace/workspace/mingdong/data/amphiondata/ar-train-20261128/scripts/label_hotwords.sh
+    - /workspace/workspace/mingdong/data/amphiondata/ar-train-20261128/scripts/finalize.py
+    - /workspace/workspace/mingdong/data/amphiondata/ar-train-20261128/scripts/register.py

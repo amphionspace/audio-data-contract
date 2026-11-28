@@ -1,6 +1,6 @@
 # 训练文本规范（终版 v4）
 
-适用于 open-audio-llm 训练用的中文、英文和西语训练文本（中英最早按交付配方 v7set34 建，西语见[西语（es-v1）](#西语es-v1)）。各轮文本修正都按这份规范执行，并合进同一个终版。训练时每个来源只用它的终版，范围见[使用范围](#使用范围)。
+适用于 open-audio-llm 训练用的中文、英文和西语训练文本（中英最早按交付配方 v7set34 建，西语见[西语（es-v1）](#西语es-v1)，阿拉伯语见[阿拉伯语（ar-v1）](#阿拉伯语ar-v1)）。各轮文本修正都按这份规范执行，并合进同一个终版。训练时每个来源只用它的终版，范围见[使用范围](#使用范围)。
 
 - **终版版本名**：v1 是 `<配方原来用的版本>-final-v1-20261120`，登记在 `catalog/text_final_v1.yaml`，生成脚本是 `scripts/text_final/build.py`。v2（2026-11-23）是 `<配方原来用的版本>-final-v2-20261123`，在 v1 上加规则 7（空格），另含没有 v1 的朗读语料，登记在 `catalog/text_final_v2.yaml`，生成脚本是 `scripts/text_final/build_v2.py`，见[终版 v2](#终版-v2)。规则改不到的来源不建 v2，v1 仍是终版；建了 v2 的 v1 写 `superseded_by` 指向 v2。v3（2026-11-24）是 `<配方原来用的版本>-final-v3-20261124`，在 v2 上加规则 8（拉丁文括注），目前只有 `fleurs_zh`，登记在 `catalog/text_final_v3.yaml`，生成脚本是 `scripts/text_final/build_v3.py`，见[终版 v3](#终版-v3)。v4（2026-11-27）是 `<配方原来用的版本>-final-v4-20261127`，在各来源最新终版上加规则 9（数字写成阿拉伯数字），登记在 `catalog/text_final_v4.yaml`，生成脚本是 `scripts/text_final/build_v4.py`，见[终版 v4](#终版-v4)。**查终版时按 `superseded_by` 跳到最后一个版本。**
 - **做法**：从每个来源已登记的修正版本里最深的那个出发，再把下表中适用的规则补齐。规则没有改动的文本文件和录音、音频都引用原文件，不复制。
@@ -245,6 +245,7 @@ open-audio-llm A 线（英文榜单版，open-audio-llm PR #174）用的新英�
 |---|---|
 | `context_correction_synth_zh@train-v1-20261114`、`@implicit-v1-20261117`、`@ts-twins-v1-20261121` | 各条规则都没有改动。train-v1 和 ts-twins 约 2.2% 的句子没有标点（规则 1 未满足），由下一版合成数据补，同时同步 segments、think 表和场景文本 |
 | `ts_nonspeech_pool@es-babble-20261110` | 目标为空 |
+| 阿拉伯语：`common_voice_ar@ar-train-v1-20261128`、`fleurs_ar@ar-train-v1-20261128`、`mgb2@ar-train-v1-20261128`、`yodas_ar@ar-train-v1-20261128`、`masc@ar-train-v1-20261128` | 构建时已按 ar-v1 写成，见下文[阿拉伯语（ar-v1）](#阿拉伯语ar-v1) |
 | 葡语：`common_voice_pt@pt-train-v1-20261117`、`mls_pt@pt-train-v1-20261117`、`asr_babble_speech_pool@pt-v1-20261117`、`ts_nonspeech_pool@pt-babble-20261117`、`ts_scene_pool@pt-1spk-v1-20261117`、`ts_scene_pool@pt-{near,alt-twins,solo,hard,handover}-20261117-punchw-20261117` | 见下文[葡语](#葡语) |
 
 ## 西语（es-v1）
@@ -286,3 +287,21 @@ open-audio-llm A 线（英文榜单版，open-audio-llm PR #174）用的新英�
 
 - Common Voice 葡语（`common_voice_pt@pt-train-v1-20261117`）构建时已按西语 es-1 的做法用原句的词和标点并规整，没有缺标点、小写开头的句子；场景池和 babble 池的目标取自它，同样已是书面写法。
 - **没有执行**：MLS 葡语（LibriVox 有声书，`mls_pt@pt-train-v1-20261117` 约 3.6 万句）用 1911 年改革前的旧正字法，如 `elle`、`ella`、`aquelle`、`alli`、`n'um`（现代写法 `ele`、`ela`、`aquele`、`ali`、`num`），常见旧词各出现几百次，另有 `ph`、`y`、双写辅音等零散旧写法。要改得用完整的旧新写法对照，只换常见词会混出半旧半新的写法，暂不处理。
+
+## 阿拉伯语（ar-v1）
+
+阿拉伯语来源不另建终版，构建时就按 ar-v1 写成（2026-11-28），原版本就是终版。规则与 AmphionEval 原生打分口径一致（阿拉伯语部分与
+Open Universal Arabic ASR Leaderboard 的 normalize_arabic_text 相同）：打分时会去掉的写法，训练文本里也不写。实现是
+run_dir `/workspace/workspace/mingdong/data/amphiondata/ar-train-20261128` 的 `scripts/ar_text.py`。
+
+| 规则 | 内容 |
+|---|---|
+| ar-1 | 去元音符号（tashkeel、上标 alef、古兰经标记）和延长符（tatweel）；表现形式写成普通字母（NFKC） |
+| ar-2 | 东阿拉伯数字、波斯数字改成西式数字；数字写成词的保持词 |
+| ar-3 | 标点用阿拉伯写法（`, ; ?` → `، ؛ ؟`，数字中间的逗号不改）；标点前不空格；句末没有 `. ؟ !` 时补句号（句末的 `، ؛ :` 换成句号） |
+| ar-4 | 含波斯 / 乌尔都字母（ک گ چ ژ ی ہ ۃ ھ ے ە）的行去掉：ی 同时代表 ي 和 ى，无法照字换 |
+| ar-5 | 含阿拉伯、拉丁以外文字（西里尔、希伯来、泰文等）的行去掉；拉丁字母保留（英文夹杂、الCIA 这类缩写） |
+
+- 不改：hamza 写法、ta marbuta（ة）和 alef maqsura（ى）按原文写；打分时 hamza 座折叠，ة / ى 两边都保留。
+- MASC 原标注把 hamza 写成光 alef、词尾 ة 写成 ه，构建时按清洗引擎的写法还原后再判，见 `masc@ar-train-v1-20261128` 的登记说明。
+- ar-4、ar-5 和去评测句都在规整后的文本上检查：NFKC 会把表现形式（如 U+FB7C）变成波斯字母，还原拼写也可能补出 ء。

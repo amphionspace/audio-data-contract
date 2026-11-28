@@ -3684,12 +3684,12 @@ CV 24.0 阿拉伯语 dev/test
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
 | [common_voice_ar@ar-eval-v1-20261127](../../catalog/ar_eval_v1.yaml#L2) | — | 未登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/common_voice_ar/` |
-| [common_voice_ar@ar-train-v1-20261128](../../catalog/ar_train_v1.yaml#L2) | — | 未登记 | 没有 |
+| [common_voice_ar@ar-train-v1-20261128](../../catalog/ar_train_v1.yaml#L2) | 37.3 | 已登记 | 没有 |
 | [common_voice_ar@hf-8262c16bf297](../../catalog/multilingual_asr_sources.yaml#L336) | 60.3 | 已登记 | 没有 |
 | [common_voice_ar@legacy](../../catalog/legacy_multilingual.yaml#L1) | 58.2 | 已登记 | 快照 20260914 |
 
 - `common_voice_ar@ar-eval-v1-20261127`：阿拉伯语评测用的 Common Voice 24.0 官方 dev / test 划分的 Lhotse 清单（common_voice_ar@legacy 的同名划分，音频为 mp3 原件，文本为原句，部分句子带元音符号，未清洗、未改写）。dev（64 人）与 test（1,016 人）一起供 TS-ASR、跨语言注册与背景人声评测集取说话人，test 供普通 ASR 与热词评测集取目标句。说话人与 CV 24.0 train 零重叠，dev 与 test 说话人不重叠；去元音符号后有部分句子与 train 相同，数目记在版本目录 overlap.json，阿拉伯语训练版本须去掉这些说话人和句子。只用于评测，不进训练
-- `common_voice_ar@ar-train-v1-20261128`：Common Voice 阿拉伯语训练版本：CV 24.0 train（23,680 句 / 26.84 h，24 人）加 CV 17.0 other（录了音、投票未满，9,113 句 / 10.86 h，330 人）。去掉阿拉伯语评测集（ar-eval-v1-20261127）的 Common Voice 24.0 / 17.0 dev+test 说话人，以及去元音符号后与评测句（CV 24.0 dev/test、MGB-2 dev/test、FLEURS test、Casablanca、CV 17.0 test）相同的句子；时长 0.3–30 秒。随后双引擎清洗（consensus-v8，先试跑 3,000 句）、按阿拉伯语训练文本规则 ar-v1 规整（去元音符号与延长符、东阿拉伯数字改西式，与 AmphionEval 打分口径版本 5 一致）、Qwen3.8-27B 标热词
+- `common_voice_ar@ar-train-v1-20261128`：Common Voice 阿拉伯语训练版本：CV 24.0 train 加 CV 17.0 other（录了音、投票未满）。去掉阿拉伯语评测集（ar-eval-v1-20261127）的 Common Voice 24.0 / 17.0 dev+test 说话人（1,081 人），以及去元音符号、统一 alef / ya / ta marbuta、去标点后与评测句相同的句子（37,204 句：CV 24.0 dev/test、MGB-2 dev/test、FLEURS test、Casablanca、CV 17.0 test）；时长 0.3–30 秒。Qwen3-ASR-1.7B + whisper-large-v3 双引擎清洗（consensus-v9：阿拉伯语按 AmphionEval 原生打分口径统一写法后再比较），先抽样试跑、看过被拒样本。训练文本 ar-v1：去元音符号与延长符、东阿拉伯数字改西式、阿拉伯标点（، ؛ ؟）且句末有标点，与 AmphionEval 原生打分口径一致；含波斯 / 乌尔都字母的行（ar-4）和含阿拉伯、拉丁以外文字的行（ar-5）去掉。保留 32,353 句 / 37.27 h（源 32,793 句 / 37.7 h）。只含清洗通过的行；custom.hotwords 是 Qwen3.8-27B 标的热词（5,615 句有），custom.source_text 是规整前的原文。规则、试跑与质检见 run_dir README 和 finalize.json
 - `common_voice_ar@hf-8262c16bf297`：Common Voice 17.0 ar 的非官方 HF 镜像（官方 Mozilla 仓库需要授权），与 common_voice_pt@hf-8262c16bf297 同一修订。2026-11-10 只下载了 test；2026-11-28 补下 other（录了音、投票未满的录音）的音频，以及 other / dev / train / validated 表，给阿拉伯语训练补充说话人（common_voice_ar@ar-train-v1-20261128）。dev、train、validated 只有表、没有音频（train 音频用 Common Voice 24.0，即 common_voice_ar@legacy）。other 音频解包在 versions/ar-train-v1-20261128/audio/，不在本快照目录内
 - 有含标点版本
 - 含派生版本（与源数据可能重叠）
@@ -3965,12 +3965,12 @@ FLEURS 阿拉伯语 test
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
 | [fleurs_ar@ar-eval-v1-20261127](../../catalog/ar_eval_v1.yaml#L182) | — | 未登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/fleurs_ar/` |
-| [fleurs_ar@ar-train-v1-20261128](../../catalog/ar_train_v1.yaml#L33) | — | 未登记 | 没有 |
+| [fleurs_ar@ar-train-v1-20261128](../../catalog/ar_train_v1.yaml#L99) | 6.0 | 已登记 | 没有 |
 | [fleurs_ar@hf-70bb2e84b976](../../catalog/multilingual_asr_sources.yaml#L273) | 1.3 | 已登记 | 没有 |
 | [fleurs_ar@legacy](../../catalog/legacy_multilingual.yaml#L71) | 8.2 | 已登记 | 快照 20260914、`amphion-audio-backup-1373259071:audio-data-contract/datasets/fleurs_ar/` |
 
 - `fleurs_ar@ar-eval-v1-20261127`：FLEURS ar_eg 官方 test 划分的 Lhotse 清单，音频与文本取自 multilingual_asr_bench@v1-20261110:fleurs-ar（16 kHz wav，同一来源）。朗读维基句子，没有说话人编号。句子与 FLEURS train / validation 零重叠；核验见版本目录 overlap.json。只用于评测，不进训练
-- `fleurs_ar@ar-train-v1-20261128`：FLEURS ar_eg train（埃及口音标准语朗读）训练版本，2,102 句 / 6.04 h。去掉阿拉伯语评测集（ar-eval-v1-20261127）的 Common Voice 24.0 / 17.0 dev+test 说话人，以及去元音符号后与评测句（CV 24.0 dev/test、MGB-2 dev/test、FLEURS test、Casablanca、CV 17.0 test）相同的句子；时长 0.3–30 秒。随后双引擎清洗（consensus-v8，先试跑 3,000 句）、按阿拉伯语训练文本规则 ar-v1 规整（去元音符号与延长符、东阿拉伯数字改西式，与 AmphionEval 打分口径版本 5 一致）、Qwen3.8-27B 标热词
+- `fleurs_ar@ar-train-v1-20261128`：FLEURS ar_eg train（埃及口音标准语朗读）训练版本。去掉阿拉伯语评测集（ar-eval-v1-20261127）的 Common Voice 24.0 / 17.0 dev+test 说话人（1,081 人），以及去元音符号、统一 alef / ya / ta marbuta、去标点后与评测句相同的句子（37,204 句：CV 24.0 dev/test、MGB-2 dev/test、FLEURS test、Casablanca、CV 17.0 test）；时长 0.3–30 秒。Qwen3-ASR-1.7B + whisper-large-v3 双引擎清洗（consensus-v9：阿拉伯语按 AmphionEval 原生打分口径统一写法后再比较），先抽样试跑、看过被拒样本。训练文本 ar-v1：去元音符号与延长符、东阿拉伯数字改西式、阿拉伯标点（، ؛ ؟）且句末有标点，与 AmphionEval 原生打分口径一致；含波斯 / 乌尔都字母的行（ar-4）和含阿拉伯、拉丁以外文字的行（ar-5）去掉。保留 2,088 句 / 5.98 h（源 2,102 句 / 6.04 h）。只含清洗通过的行；custom.hotwords 是 Qwen3.8-27B 标的热词（918 句有），custom.source_text 是规整前的原文。规则、试跑与质检见 run_dir README 和 finalize.json
 - `fleurs_ar@hf-70bb2e84b976`：Google FLEURS 的 ar_eg 子集（音频归档和 TSV 转写），只下载了 test，与 fleurs_pt 同一修订
 - 有含标点版本
 - 含派生版本（与源数据可能重叠）
@@ -4238,11 +4238,12 @@ LibriVox 西语有声书
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
-| [masc@ar-train-v1-20261128](../../catalog/ar_train_v1.yaml#L126) | — | 未登记 | 没有 |
+| [masc@ar-train-v1-20261128](../../catalog/ar_train_v1.yaml#L387) | 795.5 | 已登记 | 没有 |
 | [masc@hf-cb7f1f0618bd](../../catalog/masc.yaml#L1) | 907.4 | 已登记 | 没有 |
 
-- `masc@ar-train-v1-20261128`：MASC train（YouTube 多方言，12,190 个视频）训练版本：音频从 parquet 解成 16 位 FLAC，866,174 段 / 860.57 h（clean 390.53 h、noisy 470.04 h），去掉与评测句相同的 9,080 段。随后双引擎清洗（consensus-v9，先试跑 3,000 段），按引擎输出恢复 hamza 与 ta marbuta 写法，再按阿拉伯语训练文本规则 ar-v1 规整、Qwen3.8-27B 标热词
+- `masc@ar-train-v1-20261128`：MASC train（YouTube 多方言阿拉伯语，c 干净 / n 嘈杂两类）训练版本，音频由 masc@hf-cb7f1f0618bd 的 parquet 解出为 16 kHz FLAC。去掉阿拉伯语评测集（ar-eval-v1-20261127）的 Common Voice 24.0 / 17.0 dev+test 说话人（1,081 人），以及去元音符号、统一 alef / ya / ta marbuta、去标点后与评测句相同的句子（37,204 句：CV 24.0 dev/test、MGB-2 dev/test、FLEURS test、Casablanca、CV 17.0 test）；时长 0.3–30 秒。Qwen3-ASR-1.7B + whisper-large-v3 双引擎清洗（consensus-v9：阿拉伯语按 AmphionEval 原生打分口径统一写法后再比较），先抽样试跑、看过被拒样本。MASC 原标注把 hamza 写成光 alef、词尾 ة 写成 ه：先按两个引擎的写法还原拼写再按同一规则重判（还原 1,048,716 个词，重判后多保留 22,515 句），没有引擎依据的词尾 ه 按全语料词表改为 ة（74,544 处）。训练文本 ar-v1：去元音符号与延长符、东阿拉伯数字改西式、阿拉伯标点（، ؛ ؟）且句末有标点，与 AmphionEval 原生打分口径一致；含波斯 / 乌尔都字母的行（ar-4）和含阿拉伯、拉丁以外文字的行（ar-5）去掉。保留 799,866 句 / 795.49 h（源 866,174 句 / 860.57 h）。只含清洗通过的行；custom.hotwords 是 Qwen3.8-27B 标的热词（117,296 句有），custom.source_text 是规整前的原文。规则、试跑与质检见 run_dir README 和 finalize.json
 - `masc@hf-cb7f1f0618bd`：MASC（Massive Arabic Speech Corpus，原发布在 IEEE DataPort，开放获取）的 Hugging Face 转存：16 kHz 阿拉伯语，取自 700 多个 YouTube 频道，覆盖多个地区、方言和节目类型。分 train 875,873 段 / 867.2 h、validation 19,521 段 / 20.8 h、test 18,006 段 / 19.4 h，每段带 video_id 和 type（c 为 clean，n 为 noisy），音频是嵌在 parquet 里的 32 位浮点 WAV，没有说话人标注。转写是规整过的写法：去了元音符号，hamza 写成 ا（اول、ارادنا），词尾 ta marbuta 写成 ه（دوله）；AmphionEval 打分口径版本 5 区分 ة 与 ه，训练版本（masc@ar-train-v1-20261128）按引擎输出恢复写法。2026-11-28 为阿拉伯语训练数据下载全部 421 个文件，按上游 LFS sha256 逐个校验。CC BY 4.0（可商用，须署名）
+- 含派生版本（与源数据可能重叠）
 
 ### meeting_room_noise
 
@@ -4265,11 +4266,11 @@ MGB-2 半岛电视台广播 dev/test
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
 | [mgb2@ar-eval-v1-20261127](../../catalog/ar_eval_v1.yaml#L94) | — | 未登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/mgb2/` |
-| [mgb2@ar-train-v1-20261128](../../catalog/ar_train_v1.yaml#L64) | — | 未登记 | 没有 |
+| [mgb2@ar-train-v1-20261128](../../catalog/ar_train_v1.yaml#L192) | 914.1 | 已登记 | 没有 |
 | [mgb2@legacy](../../catalog/legacy_multilingual.yaml#L141) | 1,215.5 | 已登记 | 快照 20260914 |
 
 - `mgb2@ar-eval-v1-20261127`：MGB-2 官方 dev / test 划分的 Lhotse 清单（mgb2@legacy 的同名划分，半岛电视台节目长录音按分段切出，以标准阿拉伯语为主，夹杂方言）。没有说话人编号。与 MGB-2 train 只有少量寒暄短句文本相同，数目记在版本目录 overlap.json，训练版本须去掉。只用于评测，不进训练
-- `mgb2@ar-train-v1-20261128`：MGB-2 train（半岛电视台广播，以标准语为主、夹方言，轻监督转写）训练版本，358,845 段 / 924.35 h（30 秒以上的长段 202.03 h 不进）。**商用受限**：QCRI-ALT 研究许可，商用须另与 QF / 半岛台签协议，交付模型是否使用待用户决定。去掉阿拉伯语评测集（ar-eval-v1-20261127）的 Common Voice 24.0 / 17.0 dev+test 说话人，以及去元音符号后与评测句（CV 24.0 dev/test、MGB-2 dev/test、FLEURS test、Casablanca、CV 17.0 test）相同的句子；时长 0.3–30 秒。随后双引擎清洗（consensus-v8，先试跑 3,000 句）、按阿拉伯语训练文本规则 ar-v1 规整（去元音符号与延长符、东阿拉伯数字改西式，与 AmphionEval 打分口径版本 5 一致）、Qwen3.8-27B 标热词
+- `mgb2@ar-train-v1-20261128`：MGB-2 train（半岛电视台节目，轻监督对齐的分段）训练版本；≥30 秒的分段不进。去掉阿拉伯语评测集（ar-eval-v1-20261127）的 Common Voice 24.0 / 17.0 dev+test 说话人（1,081 人），以及去元音符号、统一 alef / ya / ta marbuta、去标点后与评测句相同的句子（37,204 句：CV 24.0 dev/test、MGB-2 dev/test、FLEURS test、Casablanca、CV 17.0 test）；时长 0.3–30 秒。Qwen3-ASR-1.7B + whisper-large-v3 双引擎清洗（consensus-v9：阿拉伯语按 AmphionEval 原生打分口径统一写法后再比较），先抽样试跑、看过被拒样本。训练文本 ar-v1：去元音符号与延长符、东阿拉伯数字改西式、阿拉伯标点（، ؛ ؟）且句末有标点，与 AmphionEval 原生打分口径一致；含波斯 / 乌尔都字母的行（ar-4）和含阿拉伯、拉丁以外文字的行（ar-5）去掉。保留 352,186 句 / 914.13 h（源 358,845 句 / 924.35 h）。许可是 QCRI-ALT 研究许可，商用须另与 QCRI 签协议。只含清洗通过的行；custom.hotwords 是 Qwen3.8-27B 标的热词（195,343 句有），custom.source_text 是规整前的原文。规则、试跑与质检见 run_dir README 和 finalize.json
 - 有无标点版本
 - 含派生版本（与源数据可能重叠）
 
@@ -4601,11 +4602,12 @@ YouTube 多语语音阿拉伯语部分（YODAS）
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
-| [yodas_ar@ar-train-v1-20261128](../../catalog/ar_train_v1.yaml#L95) | — | 未登记 | 没有 |
+| [yodas_ar@ar-train-v1-20261128](../../catalog/ar_train_v1.yaml#L289) | 203.4 | 已登记 | 没有 |
 | [yodas_ar@legacy](../../catalog/legacy_multilingual.yaml#L211) | 289.7 | 已登记 | 快照 20260914 |
 
-- `yodas_ar@ar-train-v1-20261128`：YODAS 阿拉伯语（YouTube 字幕，质量不一）训练版本，269,419 段 / 284.07 h。西语、葡语训练因 YODAS 误报变多没有用它，阿拉伯语是否使用看清洗与对照结果。去掉阿拉伯语评测集（ar-eval-v1-20261127）的 Common Voice 24.0 / 17.0 dev+test 说话人，以及去元音符号后与评测句（CV 24.0 dev/test、MGB-2 dev/test、FLEURS test、Casablanca、CV 17.0 test）相同的句子；时长 0.3–30 秒。随后双引擎清洗（consensus-v8，先试跑 3,000 句）、按阿拉伯语训练文本规则 ar-v1 规整（去元音符号与延长符、东阿拉伯数字改西式，与 AmphionEval 打分口径版本 5 一致）、Qwen3.8-27B 标热词
+- `yodas_ar@ar-train-v1-20261128`：YODAS 阿拉伯语（YouTube 字幕）训练版本。去掉阿拉伯语评测集（ar-eval-v1-20261127）的 Common Voice 24.0 / 17.0 dev+test 说话人（1,081 人），以及去元音符号、统一 alef / ya / ta marbuta、去标点后与评测句相同的句子（37,204 句：CV 24.0 dev/test、MGB-2 dev/test、FLEURS test、Casablanca、CV 17.0 test）；时长 0.3–30 秒。Qwen3-ASR-1.7B + whisper-large-v3 双引擎清洗（consensus-v9：阿拉伯语按 AmphionEval 原生打分口径统一写法后再比较），先抽样试跑、看过被拒样本；约四分之一被拒，主要是翻译字幕、音乐和片头。训练文本 ar-v1：去元音符号与延长符、东阿拉伯数字改西式、阿拉伯标点（، ؛ ؟）且句末有标点，与 AmphionEval 原生打分口径一致；含波斯 / 乌尔都字母的行（ar-4）和含阿拉伯、拉丁以外文字的行（ar-5）去掉。保留 196,073 句 / 203.45 h（源 269,419 句 / 284.07 h）。只含清洗通过的行；custom.hotwords 是 Qwen3.8-27B 标的热词（36,612 句有），custom.source_text 是规整前的原文。规则、试跑与质检见 run_dir README 和 finalize.json
 - 有含标点版本
+- 含派生版本（与源数据可能重叠）
 
 ### yodas_bn
 
