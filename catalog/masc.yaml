@@ -12,11 +12,45 @@
         kind: hf-dataset-snapshot
         root_alias: masc
         relative_path: source/hf-cb7f1f0618bd
+        metadata:
+          file_count: 421
+          expected_bytes: 184871738243
+          tree_sha256: 290acf282ffb1df5a2df8f2ec15c56c4a72c57eab3c6d96f89c14efdab04f801
+      - name: download_state
+        kind: dataset-state
+        root_alias: masc
+        relative_path: versions/hf-cb7f1f0618bd/download_state/state.json
+        expected_bytes: 911
+        sha256: 8156120153aeb2f2508d555cad7966148e42705946eb8c24dd5e391d53d95492
     splits:
-      all:
+      train:
         artifacts:
           source:
             - source
+        statistics:
+          count: 875873
+          duration_hours: 867.2
+          clean_count: 358367
+          clean_hours: 393.1
+          noisy_count: 517506
+          noisy_hours: 474.1
+          duration_basis: sum of the duration column of every row in data/<split>-*.parquet (embedded 16 kHz mono WAV, 32-bit float); pinned upstream file hashes verified
+      validation:
+        artifacts:
+          source:
+            - source
+        statistics:
+          count: 19521
+          duration_hours: 20.8
+          duration_basis: sum of the duration column of every row in data/<split>-*.parquet (embedded 16 kHz mono WAV, 32-bit float); pinned upstream file hashes verified
+      test:
+        artifacts:
+          source:
+            - source
+        statistics:
+          count: 18006
+          duration_hours: 19.4
+          duration_basis: sum of the duration column of every row in data/<split>-*.parquet (embedded 16 kHz mono WAV, 32-bit float); pinned upstream file hashes verified
     provenance:
       summary: 1,000 小时多方言阿拉伯语网络视频语音（MASC）
       source: Hugging Face
@@ -27,12 +61,13 @@
       release_date: '2025-12-27'
       license:
         - cc-by-4.0
-      inventory_status: download_planned
+      inventory_status: complete
       description: >-
-        MASC（Massive Arabic Speech Corpus，原发布在 IEEE DataPort，开放获取）的 Hugging Face 转存：约 1,000 小时 16 kHz 阿拉伯语，
-        取自 700 多个 YouTube 频道，覆盖多个地区、方言和节目类型（数据卡未说明转写来源）。分 train（400 个分片，177 GB）、validation、test，
-        每条用 type 字段标出 clean 或 noisy。本项目已有的阿拉伯语训练数据是 MGB-2、YODAS、Common Voice，MASC 能补充方言覆盖。
-        体积 185 GB，超过本轮自动下载的单个上限，先登记来源。CC BY 4.0。
+        MASC（Massive Arabic Speech Corpus，原发布在 IEEE DataPort，开放获取）的 Hugging Face 转存：16 kHz 阿拉伯语，取自 700 多个 YouTube 频道，覆盖多个地区、方言和节目类型。分 train 875,873 段 / 867.2 h、validation 19,521 段 / 20.8 h、test 18,006 段 / 19.4 h，每段带 video_id 和 type（c 为 clean，n 为 noisy），音频是嵌在 parquet 里的 32 位浮点 WAV，没有说话人标注。转写是规整过的写法：去了元音符号，hamza 写成 ا（اول、ارادنا），词尾 ta marbuta 写成 ه（دوله）；AmphionEval 打分口径版本 5 区分 ة 与 ه，训练版本（masc@ar-train-v1-20261128）按引擎输出恢复写法。2026-11-28 为阿拉伯语训练数据下载全部 421 个文件，按上游 LFS sha256 逐个校验。CC BY 4.0（可商用，须署名）。
       download_scope: Complete MASC Hugging Face re-upload (train, validation and test Parquet)
       expected_download_files: 421
       expected_download_bytes: 184871738243
+      download_mirror: https://hf-mirror.com
+      integrity: verified
+      integrity_method: pinned upstream LFS sha256 per file
+      local_scan_date: '2026-11-28'

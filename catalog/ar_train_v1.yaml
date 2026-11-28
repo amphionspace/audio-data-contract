@@ -123,3 +123,34 @@
     license:
     - cc-by-3.0
     run_dir: /workspace/workspace/mingdong/data/amphiondata/ar-train-20261128
+- schema_version: dataset-catalog/2.0
+  dataset_id: masc
+  version: ar-train-v1-20261128
+  languages:
+  - ar
+  tasks:
+  - asr
+  aliases: []
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/masc/versions/ar-train-v1-20261128/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      statistics:
+        source_records: 866174
+        source_hours: 860.57
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: MASC train（YouTube 多方言，12,190 个视频）训练版本：音频从 parquet 解成 16 位 FLAC，866,174 段 / 860.57 h（clean 390.53 h、noisy 470.04 h），去掉与评测句相同的 9,080 段。随后双引擎清洗（consensus-v9，先试跑 3,000 段），按引擎输出恢复 hamza 与 ta marbuta 写法，再按阿拉伯语训练文本规则 ar-v1 规整、Qwen3.8-27B 标热词。
+    source: masc@hf-cb7f1f0618bd (train)
+    license:
+    - cc-by-4.0
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/ar-train-20261128
