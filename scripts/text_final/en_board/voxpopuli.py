@@ -172,7 +172,7 @@ def finalize(args):
     arts = [artifact("preparation_state", "dataset-state", VDIR / "state.json"),
             artifact("train", "audio-records", rec_rel, len(records)),
             artifact("audio_index", "audio-index", idx_rel, len(index)),
-            artifact("duration_distribution", "statistics", VDIR / "duration_distribution.json", 1)]
+            artifact("duration_distribution", "statistics", VDIR / "duration_distribution.json")]
     (STAGE / "artifacts.json").write_text(json.dumps({"artifacts": arts, "counts": counts, "distribution": dist},
                                                      ensure_ascii=False, indent=1) + "\n")
 
