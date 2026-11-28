@@ -54,6 +54,8 @@
           clean implausible_char_rate: 3
         rows_with_hotwords: 5615
         hotwords: 6671
+        speaker_groups: 308
+        speaker_groups_with_6_rows_1_8s: 72
   recipe_parameters:
     filter_rules: consensus-v9
     engines:
@@ -79,6 +81,7 @@
       ar-v1：去元音符号与延长符、东阿拉伯数字改西式、阿拉伯标点（، ؛ ؟）且句末有标点，与 AmphionEval 原生打分口径一致；含波斯 / 乌尔都字母的行（ar-4）和含阿拉伯、拉丁以外文字的行（ar-5）去掉。保留 32,353
       句 / 37.27 h（源 32,793 句 / 37.7 h）。只含清洗通过的行；custom.hotwords 是 Qwen3.8-27B 标的热词（5,615 句有），custom.source_text 是规整前的原文。规则、试跑与质检见
       run_dir README 和 finalize.json。
+    speaker_label: speaker 是 Common Voice client_id，真实说话人，跨句一致。按说话人分组共 308 组，其中 1–8 秒的句子 ≥6 句的 72 组
     source: common_voice_ar@legacy (Common Voice 24.0 train) + common_voice_ar@hf-8262c16bf297 (Common Voice 17.0 other)
     license:
     - cc0-1.0
@@ -172,6 +175,7 @@
       ar-v1：去元音符号与延长符、东阿拉伯数字改西式、阿拉伯标点（، ؛ ؟）且句末有标点，与 AmphionEval 原生打分口径一致；含波斯 / 乌尔都字母的行（ar-4）和含阿拉伯、拉丁以外文字的行（ar-5）去掉。保留 2,088
       句 / 5.98 h（源 2,102 句 / 6.04 h）。只含清洗通过的行；custom.hotwords 是 Qwen3.8-27B 标的热词（918 句有），custom.source_text 是规整前的原文。规则、试跑与质检见
       run_dir README 和 finalize.json。
+    speaker_label: 没有说话人标签（speaker 为空）
     source: fleurs_ar@legacy (FLEURS ar_eg train)
     license:
     - cc-by-4.0
@@ -244,6 +248,8 @@
           clean no_valid_engine: 67
         rows_with_hotwords: 195343
         hotwords: 329617
+        speaker_groups: 14380
+        speaker_groups_with_6_rows_1_8s: 7920
   recipe_parameters:
     filter_rules: consensus-v9
     engines:
@@ -269,6 +275,8 @@
       ar-v1：去元音符号与延长符、东阿拉伯数字改西式、阿拉伯标点（، ؛ ؟）且句末有标点，与 AmphionEval 原生打分口径一致；含波斯 / 乌尔都字母的行（ar-4）和含阿拉伯、拉丁以外文字的行（ar-5）去掉。保留 352,186
       句 / 914.13 h（源 358,845 句 / 924.35 h）。许可是 QCRI-ALT 研究许可，商用须另与 QCRI 签协议。只含清洗通过的行；custom.hotwords 是 Qwen3.8-27B 标的热词（195,343
       句有），custom.source_text 是规整前的原文。规则、试跑与质检见 run_dir README 和 finalize.json。
+    speaker_label: speaker 是节目内的说话人序号（1–43），要与 recording_id（节目）合用：不同节目的同一序号不是同一人，同一主持人在不同节目里序号也不同，跨节目的身份未知。按（节目, 序号）分组共 14,380
+      组，其中 1–8 秒的句子 ≥6 句的 7,920 组
     source: mgb2@legacy (MGB-2 train)
     license:
     - other (QCRI-ALT research license)
@@ -343,6 +351,8 @@
           ar-4 Persian letters: 132
         rows_with_hotwords: 36612
         hotwords: 44122
+        speaker_groups: 5325
+        speaker_groups_with_6_rows_1_8s: 3012
   recipe_parameters:
     filter_rules: consensus-v9
     engines:
@@ -367,6 +377,8 @@
       ar-v1：去元音符号与延长符、东阿拉伯数字改西式、阿拉伯标点（، ؛ ؟）且句末有标点，与 AmphionEval 原生打分口径一致；含波斯 / 乌尔都字母的行（ar-4）和含阿拉伯、拉丁以外文字的行（ar-5）去掉。保留 196,073
       句 / 203.45 h（源 269,419 句 / 284.07 h）。只含清洗通过的行；custom.hotwords 是 Qwen3.8-27B 标的热词（36,612 句有），custom.source_text 是规整前的原文。规则、试跑与质检见
       run_dir README 和 finalize.json。
+    speaker_label: 没有说话人标签（speaker 为空）；recording_id 前 11 位是 YouTube 视频 ID，一个视频可能有多人。按视频分组共 5,325 组，其中 1–8 秒的句子 ≥6 句的 3,012
+      组
     source: yodas_ar@legacy (YODAS ar)
     license:
     - cc-by-3.0
@@ -440,6 +452,8 @@
           eval sentence after text rules: 4
         rows_with_hotwords: 117296
         hotwords: 136242
+        speaker_groups: 11928
+        speaker_groups_with_6_rows_1_8s: 10634
   recipe_parameters:
     filter_rules: consensus-v9
     engines:
@@ -468,6 +482,8 @@
       22,515 句），没有引擎依据的词尾 ه 按全语料词表改为 ة（74,544 处）。训练文本 ar-v1：去元音符号与延长符、东阿拉伯数字改西式、阿拉伯标点（، ؛ ؟）且句末有标点，与 AmphionEval 原生打分口径一致；含波斯
       / 乌尔都字母的行（ar-4）和含阿拉伯、拉丁以外文字的行（ar-5）去掉。保留 799,866 句 / 795.49 h（源 866,174 句 / 860.57 h）。只含清洗通过的行；custom.hotwords 是 Qwen3.8-27B
       标的热词（117,296 句有），custom.source_text 是规整前的原文。规则、试跑与质检见 run_dir README 和 finalize.json。
+    speaker_label: 没有说话人标签（speaker 为空）；custom.video_id 是 YouTube 视频 ID，一个视频可能有多人。按视频分组共 11,928 组，其中 1–8 秒的句子 ≥6 句的 10,634
+      组
     source: masc@hf-cb7f1f0618bd (train)
     license:
     - cc-by-4.0
