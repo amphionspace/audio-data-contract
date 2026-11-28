@@ -1,6 +1,6 @@
 # 数据总览
 
-当前登记 **277 个数据集**；另有 **34 个下载来源声明**和 **1 个训练混合配方**。登记不代表本机文件已齐备。
+当前登记 **278 个数据集**；另有 **33 个下载来源声明**和 **1 个训练混合配方**。登记不代表本机文件已齐备。
 
 时长取单个版本的最大值，不跨版本相加；≈ 为参考表或估算值，— 为暂无完整时长。各版本的时长、说明、COS 地址和质量证据见[版本明细](data-versions.md)。
 
@@ -282,6 +282,7 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [kathbath](data-versions.md#kathbath) | hi | 语音识别 | — | Kathbath 印地语手机朗读评测划分 | 没有 |
 | [koreaspeech](data-versions.md#koreaspeech) | ko | 语音识别 | 3,828.3 | 韩语语音识别数据（KoreaSpeech） | 快照 20260914 |
 | [librivox_spanish](data-versions.md#librivox_spanish) | es | 语音识别 | 73.0 | LibriVox 西语有声书 | 没有 |
+| [masc](data-versions.md#masc) | ar | 语音识别 | 907.4 | 1,000 小时多方言阿拉伯语网络视频语音（MASC） | 没有 |
 | [meeting_room_noise](data-versions.md#meeting_room_noise) | und | noise | 2.5 | 真实会议室底噪（AliMeeting、AISHELL-4） | `备份桶:audio-data-contract/datasets/meeting_room_noise/` |
 | [mgb2](data-versions.md#mgb2) | ar | 语音识别 | 1,215.5 | MGB-2 半岛电视台广播 dev/test | 部分版本：快照 20260914、`备份桶:audio-data-contract/datasets/mgb2/` |
 | [mit_ir_survey](data-versions.md#mit_ir_survey) | und | rir | 0.0 | MIT 日常环境实测冲激响应（270 条） | `备份桶:audio-data-contract/datasets/mit_ir_survey/` |
@@ -344,7 +345,6 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [kasaspeech](../../catalog/kasaspeech.yaml#L1) | hf-4bbaf47a5a46 | en、tw | 语音识别、语码转换语音识别 |
 | [lemas](../../catalog/download_queue.yaml#L250) | hf-91f0c1b9a29f | multi | 语音识别 |
 | [loquacious_set](../../catalog/loquacious_set.yaml#L1) | hf-0e84cdb9e4b8 | en | 语音识别 |
-| [masc](../../catalog/masc.yaml#L1) | hf-cb7f1f0618bd | ar | 语音识别 |
 | [multitalk_ft](../../catalog/multitalk.yaml#L38) | hf-18038b5d4cdd | zh、en | 带说话人标注的语音识别 |
 | [multitalk_pt](../../catalog/multitalk.yaml#L1) | hf-8196ea3cadda | zh、en | 带说话人标注的语音识别 |
 | [omnilingual-asr-corpus](../../catalog/download_queue.yaml#L225) | hf-8648ba894637 | multi | 语音识别 |

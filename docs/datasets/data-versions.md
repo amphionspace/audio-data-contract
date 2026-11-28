@@ -4230,6 +4230,20 @@ LibriVox 西语有声书
 - `librivox_spanish@hf-ef936a31638d`：LibriVox 西语有声书人工切分转写（LDC2020S01 的 HF 版本），讲者口音未标注
 - 含派生版本（与源数据可能重叠）
 
+### masc
+
+1,000 小时多方言阿拉伯语网络视频语音（MASC）
+
+语言：ar · 任务：语音识别
+
+| 版本 | 时长（小时） | 口径 | COS |
+|---|---:|---|---|
+| [masc@ar-train-v1-20261128](../../catalog/ar_train_v1.yaml#L126) | — | 未登记 | 没有 |
+| [masc@hf-cb7f1f0618bd](../../catalog/masc.yaml#L1) | 907.4 | 已登记 | 没有 |
+
+- `masc@ar-train-v1-20261128`：MASC train（YouTube 多方言，12,190 个视频）训练版本：音频从 parquet 解成 16 位 FLAC，866,174 段 / 860.57 h（clean 390.53 h、noisy 470.04 h），去掉与评测句相同的 9,080 段。随后双引擎清洗（consensus-v9，先试跑 3,000 段），按引擎输出恢复 hamza 与 ta marbuta 写法，再按阿拉伯语训练文本规则 ar-v1 规整、Qwen3.8-27B 标热词
+- `masc@hf-cb7f1f0618bd`：MASC（Massive Arabic Speech Corpus，原发布在 IEEE DataPort，开放获取）的 Hugging Face 转存：16 kHz 阿拉伯语，取自 700 多个 YouTube 频道，覆盖多个地区、方言和节目类型。分 train 875,873 段 / 867.2 h、validation 19,521 段 / 20.8 h、test 18,006 段 / 19.4 h，每段带 video_id 和 type（c 为 clean，n 为 noisy），音频是嵌在 parquet 里的 32 位浮点 WAV，没有说话人标注。转写是规整过的写法：去了元音符号，hamza 写成 ا（اول、ارادنا），词尾 ta marbuta 写成 ه（دوله）；AmphionEval 打分口径版本 5 区分 ة 与 ه，训练版本（masc@ar-train-v1-20261128）按引擎输出恢复写法。2026-11-28 为阿拉伯语训练数据下载全部 421 个文件，按上游 LFS sha256 逐个校验。CC BY 4.0（可商用，须署名）
+
 ### meeting_room_noise
 
 真实会议室底噪（AliMeeting、AISHELL-4）
