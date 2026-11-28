@@ -18,8 +18,8 @@
     kind: audio-records
     root_alias: aidc_data
     relative_path: datasets/aishellmix/versions/pack3-current-audio-record-20260910-punc-20261102-final-v4-20261127/text/train_1spk_records_punc.jsonl.gz
-    expected_bytes: 49375909
-    sha256: d880b9c9c4131c9b2989d9f982a2bf0faaf0dc2b4caa3b1d77d921fe9b9fc183
+    expected_bytes: 49370918
+    sha256: 269b4106d56b508c2c9ccdf221164eda5ee043c7bc50daff4a1f68f02c0bddef
     metadata:
       record_count: 326176
       punctuated: true
@@ -36,8 +36,8 @@
     kind: audio-records
     root_alias: aidc_data
     relative_path: datasets/aishellmix/versions/pack3-current-audio-record-20260910-punc-20261102-final-v4-20261127/text/train_2spk_records_punc.jsonl.gz
-    expected_bytes: 109404794
-    sha256: 23da56aadf2ff79c26b1c5949a24d01db2255791ea7d67fa7734979e8e367b22
+    expected_bytes: 109395680
+    sha256: 1e556e5479deebd18a83ef84fed2f0020365ed794c3c19d61665961b4a48acbe
     metadata:
       record_count: 652200
       punctuated: true
@@ -46,8 +46,8 @@
     kind: audio-records
     root_alias: aidc_data
     relative_path: datasets/aishellmix/versions/pack3-current-audio-record-20260910-punc-20261102-final-v4-20261127/text/train_3spk_records_punc.jsonl.gz
-    expected_bytes: 157937355
-    sha256: b3c8c4e7f5bc6ec3c633f6beebc830465d21cbb8138b4771658e753f2908bffa
+    expected_bytes: 157923418
+    sha256: 671026a1f3ed5931c1c03eac3df266237f5a0734d490515edd1187ba0cd8dafe
     metadata:
       record_count: 978300
       punctuated: true
@@ -67,7 +67,7 @@
     root_alias: aidc_data
     relative_path: datasets/aishellmix/versions/pack3-current-audio-record-20260910-punc-20261102-final-v4-20261127/record_index/index.json
     expected_bytes: 1378
-    sha256: fad9d746d9d39488a73e72af44997bce6cce317fb88d9d7e7963f2e55be3aaac
+    sha256: a4053e400057176c34b870dc350ddb10a79c282cd9fb6e8e2ecaf1f1bf98c230
     metadata:
       snapshot_version: 13
       rows: 2054506
@@ -84,7 +84,7 @@
         - record_index
       statistics:
         records: 326176
-        final_v4_changed_records: 98899
+        final_v4_changed_records: 98562
       provenance: {}
     train_2spk:
       group: train
@@ -97,7 +97,7 @@
         - record_index
       statistics:
         records: 652200
-        final_v4_changed_records: 198831
+        final_v4_changed_records: 198145
       provenance: {}
     train_3spk:
       group: train
@@ -110,7 +110,7 @@
         - record_index
       statistics:
         records: 978300
-        final_v4_changed_records: 299053
+        final_v4_changed_records: 298043
       provenance: {}
     train_neg:
       group: train
@@ -126,17 +126,17 @@
       provenance: {}
   provenance:
     owner: mingdong
-    description: aishellmix@pack3-current-audio-record-20260910-punc-20261102 的训练文本终版 v4：在 aishellmix@pack3-current-audio-record-20260910-punc-20261102-final-v1-20261120 上补做数字写成阿拉伯数字（规则 9，zh-num-v1）596,783 条，value 588,969 处、digits 145,042 处、date 106,821 处、decimal 94,042 处、percent 53,213 处、latin 33,513 处、time 15,567 处，按 audio-data-contract docs/reference/training-text.md（v4）。同一行里的场景文本和热词列表一起改；其余字段、录音清单和音频照旧，引用起点版本的产物。
+    description: aishellmix@pack3-current-audio-record-20260910-punc-20261102 的训练文本终版 v4：在 aishellmix@pack3-current-audio-record-20260910-punc-20261102-final-v1-20261120 上补做数字写成阿拉伯数字（规则 9，zh-num-v1）594,750 条，value 586,245 处、digits 144,929 处、date 106,785 处、decimal 94,410 处、percent 53,213 处、latin 33,220 处、time 15,567 处，按 audio-data-contract docs/reference/training-text.md（v4）。同一行里的场景文本跟着 target 改，热词表的词各自转换（原样出现在 target 里的不动）；其余字段、录音清单和音频照旧，引用起点版本的产物。
     source: aishellmix@pack3-current-audio-record-20260910-punc-20261102-final-v1-20261120
-    snapshot_date: '2026-11-27'
+    snapshot_date: '2026-11-28'
     method: text-final-v4
     run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
     build_script: scripts/text_final/build_v4.py
-    record_correction: '2026-11-27 登记（PR #318）后修正，版本名不变：钟点“八点四十五”原来只改了分钟（写成“八点45”），改为“8点45”；“数字一百的百”这类说一个字怎么写的保留汉字；“十三香”“这一点十分重要”不改；labels.context_correction （segments、marked_text、cot）跟着 target 改。被替换文件的原 sha256：train_1spk_records_punc 1614722244dc899c62ee73ee7f0b9ac59789a0a6d511d109388c3ab2e0a68edd；train_2spk_records_punc d961bfafb46664514c0ccd1e2b75536bb4a896bfaaad7da69202435ecdb7dede；train_3spk_records_punc c6f998e975ea7aa8e41afd430f4059359e1791095983bab8421b10864321fccc'
+    record_correction: "2026-11-27 登记（PR #318）后修正，版本名不变：钟点“八点四十五”原来只改了分钟（写成“八点45”），改为“8点45”；“数字一百的百”这类说一个字怎么写的保留汉字；“十三香”“这一点十分重要”不改；labels.context_correction （segments、marked_text、cot）跟着 target 改。被替换文件的原 sha256：train_1spk_records_punc 1614722244dc899c62ee73ee7f0b9ac59789a0a6d511d109388c3ab2e0a68edd；train_2spk_records_punc d961bfafb46664514c0ccd1e2b75536bb4a896bfaaad7da69202435ecdb7dede；train_3spk_records_punc c6f998e975ea7aa8e41afd430f4059359e1791095983bab8421b10864321fccc\n2026-11-28 再次原地修正，版本名不变：专名保留约定写法（春风十里、降龙十八掌、党的十八大、十八届三中全会、十二指肠、十里堡、四句话十六字等，zh_numbers 专名词表）；字母后面的型号和版本号连小数一起改（PM2点五改为 PM2.5、Web3点零改为 Web3.0、iOS26点四点一改为 iOS26.4.1）；热词表里不在 target 中的词各自按规则 9 转换（原样出现在 target 里的不动）。被替换文件的原 sha256：train_1spk_records_punc d880b9c9c4131c9b2989d9f982a2bf0faaf0dc2b4caa3b1d77d921fe9b9fc183；train_2spk_records_punc 23da56aadf2ff79c26b1c5949a24d01db2255791ea7d67fa7734979e8e367b22；train_3spk_records_punc b3c8c4e7f5bc6ec3c633f6beebc830465d21cbb8138b4771658e753f2908bffa"
   recipe_parameters:
     spec: docs/reference/training-text.md（v4）
     start: aishellmix@pack3-current-audio-record-20260910-punc-20261102-final-v1-20261120
-    rounds: 数字写成阿拉伯数字（规则 9，zh-num-v1）596,783 条，value 588,969 处、digits 145,042 处、date 106,821 处、decimal 94,042 处、percent 53,213 处、latin 33,513 处、time 15,567 处
+    rounds: 数字写成阿拉伯数字（规则 9，zh-num-v1）594,750 条，value 586,245 处、digits 144,929 处、date 106,785 处、decimal 94,410 处、percent 53,213 处、latin 33,220 处、time 15,567 处
     unchanged: 规则没有改动的文本文件、录音清单、音频和 dev/test 划分，引用起点版本的产物
 - schema_version: dataset-catalog/2.0
   dataset_id: alimeeting_sdm
@@ -173,8 +173,8 @@
     kind: audio-records
     root_alias: aidc_data
     relative_path: datasets/alimeeting_sdm/versions/turn-taking-20261014-utts-punc-20261102-final-v4-20261127/text/train_3spk_records_punc.jsonl.gz
-    expected_bytes: 7991115
-    sha256: 1eda05f8f6d6dfa7255cf037ab5ff2171564dee70746e2bcb17f1bd50dca1855
+    expected_bytes: 7991091
+    sha256: 96c51ebf90f6602d3e91238cb45112aaa9fa74126301b59cb9a7b3132eee0821
     metadata:
       record_count: 47348
       punctuated: true
@@ -208,7 +208,7 @@
     root_alias: aidc_data
     relative_path: datasets/alimeeting_sdm/versions/turn-taking-20261014-utts-punc-20261102-final-v4-20261127/record_index/index.json
     expected_bytes: 1514
-    sha256: f3d850b60116462a35933de61a8649eeb87410f9bb014b8e03c19d0177074b80
+    sha256: 8bd9e084c1cf68295ac4d3d143d040e8e01c26595c79c74bcf77768582628ffd
     metadata:
       snapshot_version: 13
       rows: 83949
@@ -238,7 +238,7 @@
         - record_index
       statistics:
         records: 47348
-        final_v4_changed_records: 2878
+        final_v4_changed_records: 2876
       provenance: {}
     train_neg:
       task: ts_asr
@@ -254,17 +254,17 @@
       provenance: {}
   provenance:
     owner: mingdong
-    description: alimeeting_sdm@turn-taking-20261014-utts-punc-20261102 的训练文本终版 v4：在 alimeeting_sdm@turn-taking-20261014-utts-punc-20261102-final-v1-20261120 上补做数字写成阿拉伯数字（规则 9，zh-num-v1）4,329 条，value 5,715 处、time 549 处、date 392 处、digits 308 处、latin 291 处、percent 268 处、decimal 26 处，按 audio-data-contract docs/reference/training-text.md（v4）。同一行里的场景文本和热词列表一起改；其余字段、录音清单和音频照旧，引用起点版本的产物。
+    description: alimeeting_sdm@turn-taking-20261014-utts-punc-20261102 的训练文本终版 v4：在 alimeeting_sdm@turn-taking-20261014-utts-punc-20261102-final-v1-20261120 上补做数字写成阿拉伯数字（规则 9，zh-num-v1）4,327 条，value 5,713 处、time 549 处、date 392 处、digits 308 处、latin 291 处、percent 268 处、decimal 26 处，按 audio-data-contract docs/reference/training-text.md（v4）。同一行里的场景文本跟着 target 改，热词表的词各自转换（原样出现在 target 里的不动）；其余字段、录音清单和音频照旧，引用起点版本的产物。
     source: alimeeting_sdm@turn-taking-20261014-utts-punc-20261102-final-v1-20261120
-    snapshot_date: '2026-11-27'
+    snapshot_date: '2026-11-28'
     method: text-final-v4
     run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
     build_script: scripts/text_final/build_v4.py
-    record_correction: '2026-11-27 登记（PR #318）后修正，版本名不变：钟点“八点四十五”原来只改了分钟（写成“八点45”），改为“8点45”；“数字一百的百”这类说一个字怎么写的保留汉字；“十三香”“这一点十分重要”不改；labels.context_correction （segments、marked_text、cot）跟着 target 改。被替换文件的原 sha256：train_2spk_records_punc 15e49bf518c26eb6043553eadea0ebe2b76b71f5163342775458aa6dcb6fb386；train_3spk_records_punc 885046a3435252cae7940e66c9827d1afc09d67873ebde59a4c5c1a1d0f1f5f3'
+    record_correction: "2026-11-27 登记（PR #318）后修正，版本名不变：钟点“八点四十五”原来只改了分钟（写成“八点45”），改为“8点45”；“数字一百的百”这类说一个字怎么写的保留汉字；“十三香”“这一点十分重要”不改；labels.context_correction （segments、marked_text、cot）跟着 target 改。被替换文件的原 sha256：train_2spk_records_punc 15e49bf518c26eb6043553eadea0ebe2b76b71f5163342775458aa6dcb6fb386；train_3spk_records_punc 885046a3435252cae7940e66c9827d1afc09d67873ebde59a4c5c1a1d0f1f5f3\n2026-11-28 再次原地修正，版本名不变：专名保留约定写法（春风十里、降龙十八掌、党的十八大、十八届三中全会、十二指肠、十里堡、四句话十六字等，zh_numbers 专名词表）；字母后面的型号和版本号连小数一起改（PM2点五改为 PM2.5、Web3点零改为 Web3.0、iOS26点四点一改为 iOS26.4.1）；热词表里不在 target 中的词各自按规则 9 转换（原样出现在 target 里的不动）。被替换文件的原 sha256：train_3spk_records_punc 1eda05f8f6d6dfa7255cf037ab5ff2171564dee70746e2bcb17f1bd50dca1855"
   recipe_parameters:
     spec: docs/reference/training-text.md（v4）
     start: alimeeting_sdm@turn-taking-20261014-utts-punc-20261102-final-v1-20261120
-    rounds: 数字写成阿拉伯数字（规则 9，zh-num-v1）4,329 条，value 5,715 处、time 549 处、date 392 处、digits 308 处、latin 291 处、percent 268 处、decimal 26 处
+    rounds: 数字写成阿拉伯数字（规则 9，zh-num-v1）4,327 条，value 5,713 处、time 549 处、date 392 处、digits 308 处、latin 291 处、percent 268 处、decimal 26 处
     unchanged: 规则没有改动的文本文件、录音清单、音频和 dev/test 划分，引用起点版本的产物
 - schema_version: dataset-catalog/2.0
   dataset_id: kespeech
@@ -296,8 +296,8 @@
     kind: lhotse-supervisions
     root_alias: aidc_data
     relative_path: datasets/kespeech/versions/train-punc-v1-20261102-final-v4-20261127/text/train_supervisions_punc_0.jsonl.gz
-    expected_bytes: 25901370
-    sha256: 3d68abda0738cb2a04bec42b3bb8c485cfe0e9b174d4e6837fd0ab1c3f3217e5
+    expected_bytes: 25899425
+    sha256: e4d4b6cc90ee34f3fc393b9414bdd2720c9eb049437838490353b9663668611f
     metadata:
       record_count: 543634
       punctuated: true
@@ -306,8 +306,8 @@
     kind: lhotse-supervisions
     root_alias: aidc_data
     relative_path: datasets/kespeech/versions/train-punc-v1-20261102-final-v4-20261127/text/train_supervisions_punc_1.jsonl.gz
-    expected_bytes: 16170322
-    sha256: 37c8bbaefd7003060e15110366fe98e5af72a36a5584d225e4433fa0fbae2e9b
+    expected_bytes: 16169131
+    sha256: 1aa35bca9d6d31e0afa22f5cdb7a22a3620abeac2a8707093200283d6bffe271
     metadata:
       record_count: 340387
       punctuated: true
@@ -317,7 +317,7 @@
     root_alias: aidc_data
     relative_path: datasets/kespeech/versions/train-punc-v1-20261102-final-v4-20261127/record_index/index.json
     expected_bytes: 1114
-    sha256: 891eee966a2b36e0052020cdc5acc3c1a1d3ec2ab4d42226cbf70fc7d33d7a83
+    sha256: 3304b369108f1f2f0826da185f44cf0f63c33960d3d756099143819ed2b010a7
     metadata:
       snapshot_version: 13
       rows: 884021
@@ -336,21 +336,21 @@
       statistics:
         records: 884021
         records_punctuated: 884021
-        final_v4_changed_records: 103087
+        final_v4_changed_records: 102859
       provenance: {}
   provenance:
     owner: mingdong
-    description: kespeech@train-punc-v1-20261102 的训练文本终版 v4：在 kespeech@train-punc-v1-20261102-final-v1-20261120 上补做数字写成阿拉伯数字（规则 9，zh-num-v1）103,087 条，value 68,638 处、digits 35,330 处、date 22,754 处、time 1,340 处、percent 311 处、decimal 11 处，按 audio-data-contract docs/reference/training-text.md（v4）。同一行里的场景文本和热词列表一起改；其余字段、录音清单和音频照旧，引用起点版本的产物。
+    description: kespeech@train-punc-v1-20261102 的训练文本终版 v4：在 kespeech@train-punc-v1-20261102-final-v1-20261120 上补做数字写成阿拉伯数字（规则 9，zh-num-v1）102,859 条，value 68,383 处、digits 35,313 处、date 22,754 处、time 1,340 处、percent 311 处、decimal 11 处，按 audio-data-contract docs/reference/training-text.md（v4）。同一行里的场景文本跟着 target 改，热词表的词各自转换（原样出现在 target 里的不动）；其余字段、录音清单和音频照旧，引用起点版本的产物。
     source: kespeech@train-punc-v1-20261102-final-v1-20261120
-    snapshot_date: '2026-11-27'
+    snapshot_date: '2026-11-28'
     method: text-final-v4
     run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
     build_script: scripts/text_final/build_v4.py
-    record_correction: '2026-11-27 登记（PR #318）后修正，版本名不变：钟点“八点四十五”原来只改了分钟（写成“八点45”），改为“8点45”；“数字一百的百”这类说一个字怎么写的保留汉字；“十三香”“这一点十分重要”不改；labels.context_correction （segments、marked_text、cot）跟着 target 改。被替换文件的原 sha256：train_supervisions_punc_0 462368a97407cdd20b08eac2bde7175e69da49985447779b06f3d54c90f0c015；train_supervisions_punc_1 c0e76796cbd8b407ef775ed4c2fe7126ccf23d458691b3e30aeb5585aa34a16e'
+    record_correction: "2026-11-27 登记（PR #318）后修正，版本名不变：钟点“八点四十五”原来只改了分钟（写成“八点45”），改为“8点45”；“数字一百的百”这类说一个字怎么写的保留汉字；“十三香”“这一点十分重要”不改；labels.context_correction （segments、marked_text、cot）跟着 target 改。被替换文件的原 sha256：train_supervisions_punc_0 462368a97407cdd20b08eac2bde7175e69da49985447779b06f3d54c90f0c015；train_supervisions_punc_1 c0e76796cbd8b407ef775ed4c2fe7126ccf23d458691b3e30aeb5585aa34a16e\n2026-11-28 再次原地修正，版本名不变：专名保留约定写法（春风十里、降龙十八掌、党的十八大、十八届三中全会、十二指肠、十里堡、四句话十六字等，zh_numbers 专名词表）；字母后面的型号和版本号连小数一起改（PM2点五改为 PM2.5、Web3点零改为 Web3.0、iOS26点四点一改为 iOS26.4.1）；热词表里不在 target 中的词各自按规则 9 转换（原样出现在 target 里的不动）。被替换文件的原 sha256：train_supervisions_punc_0 3d68abda0738cb2a04bec42b3bb8c485cfe0e9b174d4e6837fd0ab1c3f3217e5；train_supervisions_punc_1 37c8bbaefd7003060e15110366fe98e5af72a36a5584d225e4433fa0fbae2e9b"
   recipe_parameters:
     spec: docs/reference/training-text.md（v4）
     start: kespeech@train-punc-v1-20261102-final-v1-20261120
-    rounds: 数字写成阿拉伯数字（规则 9，zh-num-v1）103,087 条，value 68,638 处、digits 35,330 处、date 22,754 处、time 1,340 处、percent 311 处、decimal 11 处
+    rounds: 数字写成阿拉伯数字（规则 9，zh-num-v1）102,859 条，value 68,383 处、digits 35,313 处、date 22,754 处、time 1,340 处、percent 311 处、decimal 11 处
     unchanged: 规则没有改动的文本文件、录音清单、音频和 dev/test 划分，引用起点版本的产物
 - schema_version: dataset-catalog/2.0
   dataset_id: police_terms_single_train
@@ -377,9 +377,9 @@
   - name: train_supervisions_punc_0
     kind: lhotse-supervisions
     root_alias: aidc_data
-    relative_path: datasets/police_terms_single_train/versions/train-punc-v1-20261102-final-v4-20261127/text/train_supervisions_punc_0.jsonl.gz
-    expected_bytes: 721174
-    sha256: 955e802018b60e8395ca1858837b5cf1df35701a215a22f7920c87f479dec070
+    relative_path: datasets/police_terms_single_train/versions/train-punc-v1-20261102/police_terms_single_train_supervisions_train_punc.jsonl.gz
+    expected_bytes: 721100
+    sha256: 1f81045c957dabbaac15f0bbb4243d0d9d38e3e582894c3de3041a8bd47acb87
     metadata:
       record_count: 21760
       punctuated: true
@@ -389,7 +389,7 @@
     root_alias: aidc_data
     relative_path: datasets/police_terms_single_train/versions/train-punc-v1-20261102-final-v4-20261127/record_index/index.json
     expected_bytes: 798
-    sha256: 018100a99000ab8c2e5063cbeb595b54e39ea13c8e508333494906003c8cbd4c
+    sha256: 419e7cfa0c8afbfbf2a62b95827f0ad01f7eb3d9cd0256bc6f9a29c9bc093db6
     metadata:
       snapshot_version: 13
       rows: 21760
@@ -406,20 +406,20 @@
       statistics:
         records: 21760
         records_punctuated: 21760
-        final_v4_changed_records: 20
       provenance: {}
   provenance:
     owner: mingdong
-    description: police_terms_single_train@train-punc-v1-20261102 的训练文本终版 v4：在 police_terms_single_train@train-punc-v1-20261102-final-v1-20261120 上补做数字写成阿拉伯数字（规则 9，zh-num-v1）20 条，value 20 处，按 audio-data-contract docs/reference/training-text.md（v4）。同一行里的场景文本和热词列表一起改；其余字段、录音清单和音频照旧，引用起点版本的产物。
+    description: police_terms_single_train@train-punc-v1-20261102 的训练文本终版 v4：按规则 9（zh-num-v1）检查后没有要改的数字（“四句话，十六字”是固定说法，保留汉字），文本与起点版本 police_terms_single_train@train-punc-v1-20261102-final-v1-20261120 相同。
     source: police_terms_single_train@train-punc-v1-20261102-final-v1-20261120
     snapshot_date: '2026-11-27'
     method: text-final-v4
     run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
     build_script: scripts/text_final/build_v4.py
+    record_correction: 2026-11-28 原地修正，版本名不变：专名词表加入“四句话，十六字”后，规则 9 在本版本没有要改的数字，text 产物改为引用起点版本 police_terms_single_train@train-punc-v1-20261102-final-v1-20261120 的文件；原 v4 文件移到 /workspace/data/migration/text-final-v4-20261128/，原 sha256：train_supervisions_punc_0 955e802018b60e8395ca1858837b5cf1df35701a215a22f7920c87f479dec070
   recipe_parameters:
     spec: docs/reference/training-text.md（v4）
     start: police_terms_single_train@train-punc-v1-20261102-final-v1-20261120
-    rounds: 数字写成阿拉伯数字（规则 9，zh-num-v1）20 条，value 20 处
+    rounds: 按规则 9（zh-num-v1）检查后没有要改的数字（“四句话，十六字”是固定说法，保留汉字），文本与起点版本 police_terms_single_train@train-punc-v1-20261102-final-v1-20261120 相同
     unchanged: 规则没有改动的文本文件、录音清单、音频和 dev/test 划分，引用起点版本的产物
 - schema_version: dataset-catalog/2.0
   dataset_id: police_terms_single_train
@@ -438,9 +438,9 @@
   - name: train
     kind: audio-records
     root_alias: aidc_data
-    relative_path: datasets/police_terms_single_train/versions/hotwords-confusable-v1-20261102-final-v4-20261127/text/train.jsonl.gz
-    expected_bytes: 583580
-    sha256: bac636e257a957450c486a30382dcb5c1830b21010e77f4d257a3aef37f9d49a
+    relative_path: datasets/police_terms_single_train/versions/hotwords-confusable-v1-20261102/records/train.jsonl.gz
+    expected_bytes: 583559
+    sha256: ca7d078bcaef5e7daa41f0dee56805019ba1c2c3da346f51a3a5424980bb4ec9
     metadata:
       record_count: 21760
   - name: audio_index
@@ -456,7 +456,7 @@
     root_alias: aidc_data
     relative_path: datasets/police_terms_single_train/versions/hotwords-confusable-v1-20261102-final-v4-20261127/record_index/index.json
     expected_bytes: 770
-    sha256: e1facb94bbb84fd961976af0c336dcd8e05e1a030de1a26648892a2f387875e7
+    sha256: 82b76c1ca35656f9a6906ff00d5462e2fe24686ee8c5b3c77ec0cf8448a0d9b3
     metadata:
       snapshot_version: 13
       rows: 21760
@@ -472,20 +472,20 @@
         - record_index
       statistics:
         records: 21760
-        final_v4_changed_records: 20
       provenance: {}
   provenance:
     owner: mingdong
-    description: police_terms_single_train@hotwords-confusable-v1-20261102 的训练文本终版 v4：在 police_terms_single_train@hotwords-confusable-v1-20261102-final-v1-20261120 上补做数字写成阿拉伯数字（规则 9，zh-num-v1）20 条，value 20 处，按 audio-data-contract docs/reference/training-text.md（v4）。同一行里的场景文本和热词列表一起改；其余字段、录音清单和音频照旧，引用起点版本的产物。
+    description: police_terms_single_train@hotwords-confusable-v1-20261102 的训练文本终版 v4：按规则 9（zh-num-v1）检查后没有要改的数字（“四句话，十六字”是固定说法，保留汉字），文本与起点版本 police_terms_single_train@hotwords-confusable-v1-20261102-final-v1-20261120 相同。
     source: police_terms_single_train@hotwords-confusable-v1-20261102-final-v1-20261120
     snapshot_date: '2026-11-27'
     method: text-final-v4
     run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
     build_script: scripts/text_final/build_v4.py
+    record_correction: 2026-11-28 原地修正，版本名不变：专名词表加入“四句话，十六字”后，规则 9 在本版本没有要改的数字，text 产物改为引用起点版本 police_terms_single_train@hotwords-confusable-v1-20261102-final-v1-20261120 的文件；原 v4 文件移到 /workspace/data/migration/text-final-v4-20261128/，原 sha256：train bac636e257a957450c486a30382dcb5c1830b21010e77f4d257a3aef37f9d49a
   recipe_parameters:
     spec: docs/reference/training-text.md（v4）
     start: police_terms_single_train@hotwords-confusable-v1-20261102-final-v1-20261120
-    rounds: 数字写成阿拉伯数字（规则 9，zh-num-v1）20 条，value 20 处
+    rounds: 按规则 9（zh-num-v1）检查后没有要改的数字（“四句话，十六字”是固定说法，保留汉字），文本与起点版本 police_terms_single_train@hotwords-confusable-v1-20261102-final-v1-20261120 相同
     unchanged: 规则没有改动的文本文件、录音清单、音频和 dev/test 划分，引用起点版本的产物
 - schema_version: dataset-catalog/2.0
   dataset_id: vitw
@@ -513,8 +513,8 @@
     kind: lhotse-supervisions
     root_alias: aidc_data
     relative_path: datasets/vitw/versions/2m-20261013-final-v4-20261127/text/train_supervisions.jsonl.gz
-    expected_bytes: 44022340
-    sha256: 84fc6b8a48b5fe479c7279ac526532d8491981d329f5e4a72008d16d2ea9b8c9
+    expected_bytes: 44021578
+    sha256: 2d87c40a7bde62cad6970bda1e4be7ddd5a31090503e3f1c2eb1a1545e41fcb1
     metadata:
       record_count: 556411
   - name: record_index
@@ -522,7 +522,7 @@
     root_alias: aidc_data
     relative_path: datasets/vitw/versions/2m-20261013-final-v4-20261127/record_index/index.json
     expected_bytes: 761
-    sha256: 9a60e67228016740156f4c952e24126693ea42dceb8c53ce7b37e93ba48cffb7
+    sha256: ba95df155b04456c84d7906255dd4f682664327729d480870f30773424c375d3
     metadata:
       snapshot_version: 13
       rows: 556411
@@ -546,23 +546,23 @@
           zh: 244492
           en: 311919
         duration_basis: sum of supervision duration
-        final_v4_changed_records: 24214
+        final_v4_changed_records: 24153
   derived_from: vitw@2m-20261013-final-v1-20261120
   recipe_parameters:
     spec: docs/reference/training-text.md（v4）
     start: vitw@2m-20261013-final-v1-20261120
-    rounds: 数字写成阿拉伯数字（规则 9，zh-num-v1）24,214 条，value 14,970 处、date 7,827 处、digits 4,200 处、percent 2,644 处、decimal 1,126 处、time 665 处、latin 45 处
+    rounds: 数字写成阿拉伯数字（规则 9，zh-num-v1）24,153 条，value 14,894 处、date 7,827 处、digits 4,195 处、percent 2,644 处、decimal 1,126 处、time 665 处、latin 45 处
     unchanged: 规则没有改动的文本文件、录音清单、音频和 dev/test 划分，引用起点版本的产物
   provenance:
     summary: 真实场景中英语音（VITW）；含回声、远场等评测
-    description: vitw@2m-20261013 的训练文本终版 v4：在 vitw@2m-20261013-final-v1-20261120 上补做数字写成阿拉伯数字（规则 9，zh-num-v1）24,214 条，value 14,970 处、date 7,827 处、digits 4,200 处、percent 2,644 处、decimal 1,126 处、time 665 处、latin 45 处，按 audio-data-contract docs/reference/training-text.md（v4）。同一行里的场景文本和热词列表一起改；其余字段、录音清单和音频照旧，引用起点版本的产物。
+    description: vitw@2m-20261013 的训练文本终版 v4：在 vitw@2m-20261013-final-v1-20261120 上补做数字写成阿拉伯数字（规则 9，zh-num-v1）24,153 条，value 14,894 处、date 7,827 处、digits 4,195 处、percent 2,644 处、decimal 1,126 处、time 665 处、latin 45 处，按 audio-data-contract docs/reference/training-text.md（v4）。同一行里的场景文本跟着 target 改，热词表的词各自转换（原样出现在 target 里的不动）；其余字段、录音清单和音频照旧，引用起点版本的产物。
     owner: mingdong
-    snapshot_date: '2026-11-27'
+    snapshot_date: '2026-11-28'
     source: vitw@2m-20261013-final-v1-20261120
     run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
     method: text-final-v4
     build_script: scripts/text_final/build_v4.py
-    record_correction: '2026-11-27 登记（PR #318）后修正，版本名不变：钟点“八点四十五”原来只改了分钟（写成“八点45”），改为“8点45”；“数字一百的百”这类说一个字怎么写的保留汉字；“十三香”“这一点十分重要”不改；labels.context_correction （segments、marked_text、cot）跟着 target 改。被替换文件的原 sha256：train_supervisions d4a79212b89011b86abc52ecfbdfc1bf18146216dda3fe66e78fea0c787afa95'
+    record_correction: "2026-11-27 登记（PR #318）后修正，版本名不变：钟点“八点四十五”原来只改了分钟（写成“八点45”），改为“8点45”；“数字一百的百”这类说一个字怎么写的保留汉字；“十三香”“这一点十分重要”不改；labels.context_correction （segments、marked_text、cot）跟着 target 改。被替换文件的原 sha256：train_supervisions d4a79212b89011b86abc52ecfbdfc1bf18146216dda3fe66e78fea0c787afa95\n2026-11-28 再次原地修正，版本名不变：专名保留约定写法（春风十里、降龙十八掌、党的十八大、十八届三中全会、十二指肠、十里堡、四句话十六字等，zh_numbers 专名词表）；字母后面的型号和版本号连小数一起改（PM2点五改为 PM2.5、Web3点零改为 Web3.0、iOS26点四点一改为 iOS26.4.1）；热词表里不在 target 中的词各自按规则 9 转换（原样出现在 target 里的不动）。被替换文件的原 sha256：train_supervisions 84fc6b8a48b5fe479c7279ac526532d8491981d329f5e4a72008d16d2ea9b8c9"
 - schema_version: dataset-catalog/2.0
   dataset_id: alimeeting_sdm
   version: asr-20261014-punc-20261102-final-v4-20261127
@@ -581,8 +581,8 @@
     kind: audio-records
     root_alias: aidc_data
     relative_path: datasets/alimeeting_sdm/versions/asr-20261014-punc-20261102-final-v4-20261127/text/train_records_punc.jsonl.gz
-    expected_bytes: 6722672
-    sha256: 20efb4629a26edb25451dd1112a74a8344748edfadff879ad1beb7d22c217490
+    expected_bytes: 6722670
+    sha256: 637ab7acb1d59f57da22891bfdb3ec126d657a3af372f52a204b4da724ac4fb5
     metadata:
       record_count: 152368
       punctuated: true
@@ -600,7 +600,7 @@
     root_alias: aidc_data
     relative_path: datasets/alimeeting_sdm/versions/asr-20261014-punc-20261102-final-v4-20261127/record_index/index.json
     expected_bytes: 769
-    sha256: 0bbbed018a71defb510b004fdf84c494e4e1530a7885e48f25a2f810b6501368
+    sha256: a5a0c3b819bdbd3a65eadb624ce4174e597e13199fd60abe8a26452ec71ad7c4
     metadata:
       snapshot_version: 13
       rows: 152368
@@ -617,21 +617,21 @@
         - record_index
       statistics:
         records: 152368
-        final_v4_changed_records: 5963
+        final_v4_changed_records: 5960
       provenance: {}
   provenance:
     owner: mingdong
-    description: alimeeting_sdm@asr-20261014-punc-20261102 的训练文本终版 v4：在 alimeeting_sdm@asr-20261014-punc-20261102-final-v1-20261120 上补做数字写成阿拉伯数字（规则 9，zh-num-v1）5,963 条，value 6,284 处、time 582 处、date 417 处、digits 352 处、latin 344 处、percent 310 处、decimal 24 处，按 audio-data-contract docs/reference/training-text.md（v4）。同一行里的场景文本和热词列表一起改；其余字段、录音清单和音频照旧，引用起点版本的产物。
+    description: alimeeting_sdm@asr-20261014-punc-20261102 的训练文本终版 v4：在 alimeeting_sdm@asr-20261014-punc-20261102-final-v1-20261120 上补做数字写成阿拉伯数字（规则 9，zh-num-v1）5,960 条，value 6,281 处、time 582 处、date 417 处、digits 352 处、latin 344 处、percent 310 处、decimal 24 处，按 audio-data-contract docs/reference/training-text.md（v4）。同一行里的场景文本跟着 target 改，热词表的词各自转换（原样出现在 target 里的不动）；其余字段、录音清单和音频照旧，引用起点版本的产物。
     source: alimeeting_sdm@asr-20261014-punc-20261102-final-v1-20261120
-    snapshot_date: '2026-11-27'
+    snapshot_date: '2026-11-28'
     method: text-final-v4
     run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
     build_script: scripts/text_final/build_v4.py
-    record_correction: '2026-11-27 登记（PR #318）后修正，版本名不变：钟点“八点四十五”原来只改了分钟（写成“八点45”），改为“8点45”；“数字一百的百”这类说一个字怎么写的保留汉字；“十三香”“这一点十分重要”不改；labels.context_correction （segments、marked_text、cot）跟着 target 改。被替换文件的原 sha256：train_records_punc 32b2989ce8546f0a5ba0111ee9f7f1cb01669bcb75619fde1f071fcfdc1cf1e6'
+    record_correction: "2026-11-27 登记（PR #318）后修正，版本名不变：钟点“八点四十五”原来只改了分钟（写成“八点45”），改为“8点45”；“数字一百的百”这类说一个字怎么写的保留汉字；“十三香”“这一点十分重要”不改；labels.context_correction （segments、marked_text、cot）跟着 target 改。被替换文件的原 sha256：train_records_punc 32b2989ce8546f0a5ba0111ee9f7f1cb01669bcb75619fde1f071fcfdc1cf1e6\n2026-11-28 再次原地修正，版本名不变：专名保留约定写法（春风十里、降龙十八掌、党的十八大、十八届三中全会、十二指肠、十里堡、四句话十六字等，zh_numbers 专名词表）；字母后面的型号和版本号连小数一起改（PM2点五改为 PM2.5、Web3点零改为 Web3.0、iOS26点四点一改为 iOS26.4.1）；热词表里不在 target 中的词各自按规则 9 转换（原样出现在 target 里的不动）。被替换文件的原 sha256：train_records_punc 20efb4629a26edb25451dd1112a74a8344748edfadff879ad1beb7d22c217490"
   recipe_parameters:
     spec: docs/reference/training-text.md（v4）
     start: alimeeting_sdm@asr-20261014-punc-20261102-final-v1-20261120
-    rounds: 数字写成阿拉伯数字（规则 9，zh-num-v1）5,963 条，value 6,284 处、time 582 处、date 417 处、digits 352 处、latin 344 处、percent 310 处、decimal 24 处
+    rounds: 数字写成阿拉伯数字（规则 9，zh-num-v1）5,960 条，value 6,281 处、time 582 处、date 417 处、digits 352 处、latin 344 处、percent 310 处、decimal 24 处
     unchanged: 规则没有改动的文本文件、录音清单、音频和 dev/test 划分，引用起点版本的产物
 - schema_version: dataset-catalog/2.0
   dataset_id: alimeeting_sdm
@@ -835,8 +835,8 @@
     kind: lhotse-supervisions
     root_alias: aidc_data
     relative_path: datasets/common_voice_zh/versions/train-punc-v1-20261102-final-v4-20261127/text/train_supervisions_punc_0.jsonl.gz
-    expected_bytes: 1467831
-    sha256: c64776df72c83a1021ed416b8f911c9b4ddaa8262a7fc3dc453fe4b675df5d7a
+    expected_bytes: 1467754
+    sha256: 11e3002e11079f0618d2c00dce5ff3bc53b16219fb3be5c46ae3248db2934ae8
     metadata:
       record_count: 29560
       punctuated: true
@@ -846,7 +846,7 @@
     root_alias: aidc_data
     relative_path: datasets/common_voice_zh/versions/train-punc-v1-20261102-final-v4-20261127/record_index/index.json
     expected_bytes: 783
-    sha256: 30a2fb2fa35629a6122efe87b25696a2549ec0be4d73dd13609d5b09dc4fe75d
+    sha256: 792a74c192f0f9107aee328dcb1157197ac5028410be9f436fa70db8c97dcc14
     metadata:
       snapshot_version: 13
       rows: 29560
@@ -863,20 +863,21 @@
       statistics:
         records: 29560
         records_punctuated: 29560
-        final_v4_changed_records: 992
+        final_v4_changed_records: 984
       provenance: {}
   provenance:
     owner: mingdong
-    description: common_voice_zh@train-punc-v1-20261102 的训练文本终版 v4：在 common_voice_zh@train-punc-v1-20261102-final-v1-20261120 上补做数字写成阿拉伯数字（规则 9，zh-num-v1）992 条，value 1,038 处、date 96 处、digits 12 处、time 4 处、percent 1 处，按 audio-data-contract docs/reference/training-text.md（v4）。同一行里的场景文本和热词列表一起改；其余字段、录音清单和音频照旧，引用起点版本的产物。
+    description: common_voice_zh@train-punc-v1-20261102 的训练文本终版 v4：在 common_voice_zh@train-punc-v1-20261102-final-v1-20261120 上补做数字写成阿拉伯数字（规则 9，zh-num-v1）984 条，value 1,029 处、date 96 处、digits 12 处、time 4 处、percent 1 处，按 audio-data-contract docs/reference/training-text.md（v4）。同一行里的场景文本跟着 target 改，热词表的词各自转换（原样出现在 target 里的不动）；其余字段、录音清单和音频照旧，引用起点版本的产物。
     source: common_voice_zh@train-punc-v1-20261102-final-v1-20261120
-    snapshot_date: '2026-11-27'
+    snapshot_date: '2026-11-28'
     method: text-final-v4
     run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
     build_script: scripts/text_final/build_v4.py
+    record_correction: 2026-11-28 再次原地修正，版本名不变：专名保留约定写法（春风十里、降龙十八掌、党的十八大、十八届三中全会、十二指肠、十里堡、四句话十六字等，zh_numbers 专名词表）；字母后面的型号和版本号连小数一起改（PM2点五改为 PM2.5、Web3点零改为 Web3.0、iOS26点四点一改为 iOS26.4.1）；热词表里不在 target 中的词各自按规则 9 转换（原样出现在 target 里的不动）。被替换文件的原 sha256：train_supervisions_punc_0 c64776df72c83a1021ed416b8f911c9b4ddaa8262a7fc3dc453fe4b675df5d7a
   recipe_parameters:
     spec: docs/reference/training-text.md（v4）
     start: common_voice_zh@train-punc-v1-20261102-final-v1-20261120
-    rounds: 数字写成阿拉伯数字（规则 9，zh-num-v1）992 条，value 1,038 处、date 96 处、digits 12 处、time 4 处、percent 1 处
+    rounds: 数字写成阿拉伯数字（规则 9，zh-num-v1）984 条，value 1,029 处、date 96 处、digits 12 处、time 4 处、percent 1 处
     unchanged: 规则没有改动的文本文件、录音清单、音频和 dev/test 划分，引用起点版本的产物
 - schema_version: dataset-catalog/2.0
   dataset_id: asr_babble_speech_pool
@@ -914,8 +915,8 @@
     kind: audio-records
     root_alias: aidc_data
     relative_path: datasets/asr_babble_speech_pool/versions/v1-20261024-punc-20261102-final-v4-20261127/text/zh_records_punc.jsonl.gz
-    expected_bytes: 1207852
-    sha256: bdfb8e33b35773f720f82af5db3cf0f5094dcbdba7b58c9d9962d1ac155bcaed
+    expected_bytes: 1207795
+    sha256: f2fc734c0e25810e522cc24ddb4b34e7c06b30453b580d6e02bd5e64937ac099
     metadata:
       record_count: 12000
       punctuated: true
@@ -932,7 +933,7 @@
     root_alias: aidc_data
     relative_path: datasets/asr_babble_speech_pool/versions/v1-20261024-punc-20261102-final-v4-20261127/record_index/index.json
     expected_bytes: 1105
-    sha256: 1db1367cb1e2c8f3b3f80f79abf64ab9f4969e34f1f6595a4640cc4a31c2907d
+    sha256: 04b71044c5d0980cbd7bed40e61b4f0f7a4914471b545e5037612d123355c1a6
     metadata:
       snapshot_version: 13
       rows: 24000
@@ -961,20 +962,21 @@
         - record_index
       statistics:
         records: 12000
-        final_v4_changed_records: 1748
+        final_v4_changed_records: 1743
       provenance: {}
   provenance:
     owner: mingdong
-    description: asr_babble_speech_pool@v1-20261024-punc-20261102 的训练文本终版 v4：在 asr_babble_speech_pool@v1-20261024-punc-20261102-final-v1-20261120 上补做数字写成阿拉伯数字（规则 9，zh-num-v1）1,748 条，value 1,087 处、digits 476 处、date 261 处、decimal 132 处、percent 50 处、time 25 处，按 audio-data-contract docs/reference/training-text.md（v4）。同一行里的场景文本和热词列表一起改；其余字段、录音清单和音频照旧，引用起点版本的产物。
+    description: asr_babble_speech_pool@v1-20261024-punc-20261102 的训练文本终版 v4：在 asr_babble_speech_pool@v1-20261024-punc-20261102-final-v1-20261120 上补做数字写成阿拉伯数字（规则 9，zh-num-v1）1,743 条，value 1,082 处、digits 476 处、date 261 处、decimal 132 处、percent 50 处、time 25 处，按 audio-data-contract docs/reference/training-text.md（v4）。同一行里的场景文本跟着 target 改，热词表的词各自转换（原样出现在 target 里的不动）；其余字段、录音清单和音频照旧，引用起点版本的产物。
     source: asr_babble_speech_pool@v1-20261024-punc-20261102-final-v1-20261120
-    snapshot_date: '2026-11-27'
+    snapshot_date: '2026-11-28'
     method: text-final-v4
     run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
     build_script: scripts/text_final/build_v4.py
+    record_correction: 2026-11-28 再次原地修正，版本名不变：专名保留约定写法（春风十里、降龙十八掌、党的十八大、十八届三中全会、十二指肠、十里堡、四句话十六字等，zh_numbers 专名词表）；字母后面的型号和版本号连小数一起改（PM2点五改为 PM2.5、Web3点零改为 Web3.0、iOS26点四点一改为 iOS26.4.1）；热词表里不在 target 中的词各自按规则 9 转换（原样出现在 target 里的不动）。被替换文件的原 sha256：zh_records_punc bdfb8e33b35773f720f82af5db3cf0f5094dcbdba7b58c9d9962d1ac155bcaed
   recipe_parameters:
     spec: docs/reference/training-text.md（v4）
     start: asr_babble_speech_pool@v1-20261024-punc-20261102-final-v1-20261120
-    rounds: 数字写成阿拉伯数字（规则 9，zh-num-v1）1,748 条，value 1,087 处、digits 476 处、date 261 处、decimal 132 处、percent 50 处、time 25 处
+    rounds: 数字写成阿拉伯数字（规则 9，zh-num-v1）1,743 条，value 1,082 处、digits 476 处、date 261 处、decimal 132 处、percent 50 处、time 25 处
     unchanged: 规则没有改动的文本文件、录音清单、音频和 dev/test 划分，引用起点版本的产物
 - schema_version: dataset-catalog/2.0
   dataset_id: asr_distant_talk_pool
@@ -1277,8 +1279,8 @@
     kind: audio-records
     root_alias: aidc_data
     relative_path: datasets/ts_real_train/versions/v1-20261017-utts-punc-20261102-final-v4-20261127/text/aishell4_records_punc.jsonl.gz
-    expected_bytes: 5655762
-    sha256: 3142a4975b4fc4a8b86c814e0895957ec095512c77b0967ca386e7915bd3d661
+    expected_bytes: 5655590
+    sha256: 79080d85b2aac264d8f6f6d8e5b2841f91d1a9883fe2ea94a54082b8ec7cce42
     metadata:
       record_count: 30012
       punctuated: true
@@ -1311,8 +1313,8 @@
     kind: audio-records
     root_alias: aidc_data
     relative_path: datasets/ts_real_train/versions/v1-20261017-utts-punc-20261102-final-v4-20261127/text/ramc_records_punc.jsonl.gz
-    expected_bytes: 7076581
-    sha256: 99c0a298f1c79e0eb70ca2345e601ed886b02a180203f94baea16894fcbce647
+    expected_bytes: 7076438
+    sha256: a4b9db9807716fd63cc88e4eab0c9eb6bb5f340dfaa27e1e07d0d1efb7cff5dc
     metadata:
       record_count: 36648
       punctuated: true
@@ -1329,7 +1331,7 @@
     root_alias: aidc_data
     relative_path: datasets/ts_real_train/versions/v1-20261017-utts-punc-20261102-final-v4-20261127/record_index/index.json
     expected_bytes: 1483
-    sha256: c6e0f40af042e262f04813650dfc9f46fe0026fcf29670c7f9427cd498b85d3c
+    sha256: a8f338fba0cd7944bf2772bfcebf383ce104c1f2a6acc226cc8052e6a465c5db
     metadata:
       snapshot_version: 13
       rows: 91410
@@ -1346,7 +1348,7 @@
         - record_index
       statistics:
         records: 30012
-        final_v4_changed_records: 933
+        final_v4_changed_records: 931
       provenance: {}
     alimeeting:
       task: ts_asr
@@ -1372,21 +1374,21 @@
         - record_index
       statistics:
         records: 36648
-        final_v4_changed_records: 1305
+        final_v4_changed_records: 1301
       provenance: {}
   provenance:
     owner: mingdong
-    description: ts_real_train@v1-20261017-utts-punc-20261102 的训练文本终版 v4：在 ts_real_train@v1-20261017-utts-punc-20261102-final-v1-20261120 上补做数字写成阿拉伯数字（规则 9，zh-num-v1）3,481 条，value 3,643 处、digits 767 处、date 495 处、latin 366 处、time 320 处、percent 195 处、decimal 30 处，按 audio-data-contract docs/reference/training-text.md（v4）。同一行里的场景文本和热词列表一起改；其余字段、录音清单和音频照旧，引用起点版本的产物。
+    description: ts_real_train@v1-20261017-utts-punc-20261102 的训练文本终版 v4：在 ts_real_train@v1-20261017-utts-punc-20261102-final-v1-20261120 上补做数字写成阿拉伯数字（规则 9，zh-num-v1）3,475 条，value 3,633 处、digits 767 处、date 495 处、latin 365 处、time 320 处、percent 195 处、decimal 31 处，按 audio-data-contract docs/reference/training-text.md（v4）。同一行里的场景文本跟着 target 改，热词表的词各自转换（原样出现在 target 里的不动）；其余字段、录音清单和音频照旧，引用起点版本的产物。
     source: ts_real_train@v1-20261017-utts-punc-20261102-final-v1-20261120
-    snapshot_date: '2026-11-27'
+    snapshot_date: '2026-11-28'
     method: text-final-v4
     run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
     build_script: scripts/text_final/build_v4.py
-    record_correction: '2026-11-27 登记（PR #318）后修正，版本名不变：钟点“八点四十五”原来只改了分钟（写成“八点45”），改为“8点45”；“数字一百的百”这类说一个字怎么写的保留汉字；“十三香”“这一点十分重要”不改；labels.context_correction （segments、marked_text、cot）跟着 target 改。被替换文件的原 sha256：alimeeting_records_punc 79b99fe8716a9dd5763419f9365b72948d999f3a2ff11990033a1d3d96c19394；ramc_records_punc 91fe5de9d1266de292d519d0066d86ebd00f6221d571406c6deb4b506e0ad701'
+    record_correction: "2026-11-27 登记（PR #318）后修正，版本名不变：钟点“八点四十五”原来只改了分钟（写成“八点45”），改为“8点45”；“数字一百的百”这类说一个字怎么写的保留汉字；“十三香”“这一点十分重要”不改；labels.context_correction （segments、marked_text、cot）跟着 target 改。被替换文件的原 sha256：alimeeting_records_punc 79b99fe8716a9dd5763419f9365b72948d999f3a2ff11990033a1d3d96c19394；ramc_records_punc 91fe5de9d1266de292d519d0066d86ebd00f6221d571406c6deb4b506e0ad701\n2026-11-28 再次原地修正，版本名不变：专名保留约定写法（春风十里、降龙十八掌、党的十八大、十八届三中全会、十二指肠、十里堡、四句话十六字等，zh_numbers 专名词表）；字母后面的型号和版本号连小数一起改（PM2点五改为 PM2.5、Web3点零改为 Web3.0、iOS26点四点一改为 iOS26.4.1）；热词表里不在 target 中的词各自按规则 9 转换（原样出现在 target 里的不动）。被替换文件的原 sha256：aishell4_records_punc 3142a4975b4fc4a8b86c814e0895957ec095512c77b0967ca386e7915bd3d661；ramc_records_punc 99c0a298f1c79e0eb70ca2345e601ed886b02a180203f94baea16894fcbce647"
   recipe_parameters:
     spec: docs/reference/training-text.md（v4）
     start: ts_real_train@v1-20261017-utts-punc-20261102-final-v1-20261120
-    rounds: 数字写成阿拉伯数字（规则 9，zh-num-v1）3,481 条，value 3,643 处、digits 767 处、date 495 处、latin 366 处、time 320 处、percent 195 处、decimal 30 处
+    rounds: 数字写成阿拉伯数字（规则 9，zh-num-v1）3,475 条，value 3,633 处、digits 767 处、date 495 处、latin 365 处、time 320 处、percent 195 处、decimal 31 处
     unchanged: 规则没有改动的文本文件、录音清单、音频和 dev/test 划分，引用起点版本的产物
 - schema_version: dataset-catalog/2.0
   dataset_id: ts_real_train
@@ -1406,8 +1408,8 @@
     kind: audio-records
     root_alias: aidc_data
     relative_path: datasets/ts_real_train/versions/v2-20261018-utts-punc-20261102-final-v4-20261127/text/aishell4_records_punc.jsonl.gz
-    expected_bytes: 6374962
-    sha256: c4925dbb9678234c46480526b4c7f699ea9bb9d1451f161635c0466e4f7978f2
+    expected_bytes: 6374793
+    sha256: 83314095229f7f03ea740791c5f7fd4cfea27cc27a166f974339e2a092b9bbec
     metadata:
       record_count: 29918
       punctuated: true
@@ -1441,7 +1443,7 @@
     root_alias: aidc_data
     relative_path: datasets/ts_real_train/versions/v2-20261018-utts-punc-20261102-final-v4-20261127/record_index/index.json
     expected_bytes: 1143
-    sha256: c6c5feed01168ecf86124bca06feae796b085146a5d5dd6b04a316aa4f37beee
+    sha256: 5644240b4c731848450335f92f327cf1f9016b979ae6395df7c3989759a89fd3
     metadata:
       snapshot_version: 13
       rows: 71918
@@ -1458,7 +1460,7 @@
         - record_index
       statistics:
         records: 29918
-        final_v4_changed_records: 892
+        final_v4_changed_records: 889
       provenance: {}
     alimeeting:
       task: ts_asr
@@ -1475,17 +1477,17 @@
       provenance: {}
   provenance:
     owner: mingdong
-    description: ts_real_train@v2-20261018-utts-punc-20261102 的训练文本终版 v4：在 ts_real_train@v2-20261018-utts-punc-20261102-final-v1-20261120 上补做数字写成阿拉伯数字（规则 9，zh-num-v1）2,905 条，value 3,429 处、digits 414 处、time 348 处、date 253 处、percent 193 处、latin 183 处、decimal 9 处，按 audio-data-contract docs/reference/training-text.md（v4）。同一行里的场景文本和热词列表一起改；其余字段、录音清单和音频照旧，引用起点版本的产物。
+    description: ts_real_train@v2-20261018-utts-punc-20261102 的训练文本终版 v4：在 ts_real_train@v2-20261018-utts-punc-20261102-final-v1-20261120 上补做数字写成阿拉伯数字（规则 9，zh-num-v1）2,902 条，value 3,422 处、digits 414 处、time 348 处、date 253 处、percent 193 处、latin 183 处、decimal 9 处，按 audio-data-contract docs/reference/training-text.md（v4）。同一行里的场景文本跟着 target 改，热词表的词各自转换（原样出现在 target 里的不动）；其余字段、录音清单和音频照旧，引用起点版本的产物。
     source: ts_real_train@v2-20261018-utts-punc-20261102-final-v1-20261120
-    snapshot_date: '2026-11-27'
+    snapshot_date: '2026-11-28'
     method: text-final-v4
     run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
     build_script: scripts/text_final/build_v4.py
-    record_correction: '2026-11-27 登记（PR #318）后修正，版本名不变：钟点“八点四十五”原来只改了分钟（写成“八点45”），改为“8点45”；“数字一百的百”这类说一个字怎么写的保留汉字；“十三香”“这一点十分重要”不改；labels.context_correction （segments、marked_text、cot）跟着 target 改。被替换文件的原 sha256：alimeeting_records_punc 94dfc9c71be9270241b4c06b4c47e5c627a91cc8f693b4e10fda7f2e74c92a0d'
+    record_correction: "2026-11-27 登记（PR #318）后修正，版本名不变：钟点“八点四十五”原来只改了分钟（写成“八点45”），改为“8点45”；“数字一百的百”这类说一个字怎么写的保留汉字；“十三香”“这一点十分重要”不改；labels.context_correction （segments、marked_text、cot）跟着 target 改。被替换文件的原 sha256：alimeeting_records_punc 94dfc9c71be9270241b4c06b4c47e5c627a91cc8f693b4e10fda7f2e74c92a0d\n2026-11-28 再次原地修正，版本名不变：专名保留约定写法（春风十里、降龙十八掌、党的十八大、十八届三中全会、十二指肠、十里堡、四句话十六字等，zh_numbers 专名词表）；字母后面的型号和版本号连小数一起改（PM2点五改为 PM2.5、Web3点零改为 Web3.0、iOS26点四点一改为 iOS26.4.1）；热词表里不在 target 中的词各自按规则 9 转换（原样出现在 target 里的不动）。被替换文件的原 sha256：aishell4_records_punc c4925dbb9678234c46480526b4c7f699ea9bb9d1451f161635c0466e4f7978f2"
   recipe_parameters:
     spec: docs/reference/training-text.md（v4）
     start: ts_real_train@v2-20261018-utts-punc-20261102-final-v1-20261120
-    rounds: 数字写成阿拉伯数字（规则 9，zh-num-v1）2,905 条，value 3,429 处、digits 414 处、time 348 处、date 253 处、percent 193 处、latin 183 处、decimal 9 处
+    rounds: 数字写成阿拉伯数字（规则 9，zh-num-v1）2,902 条，value 3,422 处、digits 414 处、time 348 处、date 253 处、percent 193 处、latin 183 处、decimal 9 处
     unchanged: 规则没有改动的文本文件、录音清单、音频和 dev/test 划分，引用起点版本的产物
 - schema_version: dataset-catalog/2.0
   dataset_id: ts_real_train
@@ -1539,8 +1541,8 @@
     kind: audio-records
     root_alias: aidc_data
     relative_path: datasets/ts_real_train/versions/v3-20261020-utts-punc-20261102-final-v4-20261127/text/emilia2_1spk_records_punc.jsonl.gz
-    expected_bytes: 5998022
-    sha256: 664f4b66ec738e3965f66ca6f51b861029eead5560971a9b585e9717af9f0f21
+    expected_bytes: 5997958
+    sha256: ee95941acc116ba227e458f2d911a6f1477b1ee1154bf3a68de74d61ef1e720f
     metadata:
       record_count: 29550
       punctuated: true
@@ -1557,7 +1559,7 @@
     root_alias: aidc_data
     relative_path: datasets/ts_real_train/versions/v3-20261020-utts-punc-20261102-final-v4-20261127/record_index/index.json
     expected_bytes: 1549
-    sha256: ba90271b5ad2b17c51d380576e87bd27558e95826e0a35f2a26e3db1a957ac26
+    sha256: e612cf1d7af71f3d56e9627ea930f3e9375cd47c9ea2f178cd77c72df480dd71
     metadata:
       snapshot_version: 13
       rows: 79152
@@ -1600,21 +1602,21 @@
         - record_index
       statistics:
         records: 29550
-        final_v4_changed_records: 2248
+        final_v4_changed_records: 2245
       provenance: {}
   provenance:
     owner: mingdong
-    description: ts_real_train@v3-20261020-utts-punc-20261102 的训练文本终版 v4：在 ts_real_train@v3-20261020-utts-punc-20261102-final-v1-20261120 上补做数字写成阿拉伯数字（规则 9，zh-num-v1）4,757 条，value 5,682 处、digits 704 处、date 565 处、time 519 处、latin 385 处、percent 368 处、decimal 136 处，按 audio-data-contract docs/reference/training-text.md（v4）。同一行里的场景文本和热词列表一起改；其余字段、录音清单和音频照旧，引用起点版本的产物。
+    description: ts_real_train@v3-20261020-utts-punc-20261102 的训练文本终版 v4：在 ts_real_train@v3-20261020-utts-punc-20261102-final-v1-20261120 上补做数字写成阿拉伯数字（规则 9，zh-num-v1）4,754 条，value 5,674 处、digits 704 处、date 565 处、time 519 处、latin 382 处、percent 368 处、decimal 140 处，按 audio-data-contract docs/reference/training-text.md（v4）。同一行里的场景文本跟着 target 改，热词表的词各自转换（原样出现在 target 里的不动）；其余字段、录音清单和音频照旧，引用起点版本的产物。
     source: ts_real_train@v3-20261020-utts-punc-20261102-final-v1-20261120
-    snapshot_date: '2026-11-27'
+    snapshot_date: '2026-11-28'
     method: text-final-v4
     run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
     build_script: scripts/text_final/build_v4.py
-    record_correction: '2026-11-27 登记（PR #318）后修正，版本名不变：钟点“八点四十五”原来只改了分钟（写成“八点45”），改为“8点45”；“数字一百的百”这类说一个字怎么写的保留汉字；“十三香”“这一点十分重要”不改；labels.context_correction （segments、marked_text、cot）跟着 target 改。被替换文件的原 sha256：alimeeting_en_mf_records_punc a867dda420f1083e3924cb82afdafe0a32cd663ae12214852f1e37e30fb91f60；alimeeting_en_mn_records_punc e8cd423cf50f369f2a56ee1edd4d753df7920b5b4b659d3a85349433944558e0；emilia2_1spk_records_punc ebed2ef2a4d5e9faf3c37dfc044822f1babd2b78326a19e349d3c94bf17f4071'
+    record_correction: "2026-11-27 登记（PR #318）后修正，版本名不变：钟点“八点四十五”原来只改了分钟（写成“八点45”），改为“8点45”；“数字一百的百”这类说一个字怎么写的保留汉字；“十三香”“这一点十分重要”不改；labels.context_correction （segments、marked_text、cot）跟着 target 改。被替换文件的原 sha256：alimeeting_en_mf_records_punc a867dda420f1083e3924cb82afdafe0a32cd663ae12214852f1e37e30fb91f60；alimeeting_en_mn_records_punc e8cd423cf50f369f2a56ee1edd4d753df7920b5b4b659d3a85349433944558e0；emilia2_1spk_records_punc ebed2ef2a4d5e9faf3c37dfc044822f1babd2b78326a19e349d3c94bf17f4071\n2026-11-28 再次原地修正，版本名不变：专名保留约定写法（春风十里、降龙十八掌、党的十八大、十八届三中全会、十二指肠、十里堡、四句话十六字等，zh_numbers 专名词表）；字母后面的型号和版本号连小数一起改（PM2点五改为 PM2.5、Web3点零改为 Web3.0、iOS26点四点一改为 iOS26.4.1）；热词表里不在 target 中的词各自按规则 9 转换（原样出现在 target 里的不动）。被替换文件的原 sha256：emilia2_1spk_records_punc 664f4b66ec738e3965f66ca6f51b861029eead5560971a9b585e9717af9f0f21"
   recipe_parameters:
     spec: docs/reference/training-text.md（v4）
     start: ts_real_train@v3-20261020-utts-punc-20261102-final-v1-20261120
-    rounds: 数字写成阿拉伯数字（规则 9，zh-num-v1）4,757 条，value 5,682 处、digits 704 处、date 565 处、time 519 处、latin 385 处、percent 368 处、decimal 136 处
+    rounds: 数字写成阿拉伯数字（规则 9，zh-num-v1）4,754 条，value 5,674 处、digits 704 处、date 565 处、time 519 处、latin 382 处、percent 368 处、decimal 140 处
     unchanged: 规则没有改动的文本文件、录音清单、音频和 dev/test 划分，引用起点版本的产物
 - schema_version: dataset-catalog/2.0
   dataset_id: ts_scene_pool
@@ -1634,8 +1636,8 @@
     kind: audio-records
     root_alias: aidc_data
     relative_path: datasets/ts_scene_pool/versions/xsession-near-20261023-punchw-20261102-final-v4-20261127/text/zh-records.jsonl.gz
-    expected_bytes: 20301214
-    sha256: 9bf049c02cc5b8058d0674d04479f246ba8129f04c1cb1d413d4979338ac399d
+    expected_bytes: 20348786
+    sha256: fcd3a20f24a78a009b6be2a12a9d8c530135cceacdf431c1a603c9644a1ce526
     metadata:
       record_count: 80000
   - name: zh-audio-index
@@ -1650,7 +1652,7 @@
     root_alias: aidc_data
     relative_path: datasets/ts_scene_pool/versions/xsession-near-20261023-punchw-20261102-final-v4-20261127/record_index/index.json
     expected_bytes: 770
-    sha256: daeb00e2c130cb8c463dbdaba659b9dc069bdf821ec77e3e75f72e0c5573910e
+    sha256: 1a9016c3ca528c81cea2311cfc2da40b3b73d628e2d9706217c23db346afbf09
     metadata:
       snapshot_version: 13
       rows: 80000
@@ -1669,11 +1671,11 @@
         records: 80000
         duration_hours: 115.99
         duration_basis: clip duration (segment span, or the whole file)
-        final_v4_changed_records: 13530
+        final_v4_changed_records: 16010
   provenance:
     synthetic: none
-    snapshot_date: '2026-11-27'
-    description: ts_scene_pool@xsession-near-20261023-punchw-20261102 的训练文本终版 v4：在 ts_scene_pool@xsession-near-20261023-punchw-20261102-final-v1-20261120 上补做数字写成阿拉伯数字（规则 9，zh-num-v1）13,530 条，value 10,461 处、digits 5,296 处、date 3,543 处、time 176 处、percent 55 处、decimal 1 处，按 audio-data-contract docs/reference/training-text.md（v4）。同一行里的场景文本和热词列表一起改；其余字段、录音清单和音频照旧，引用起点版本的产物。
+    snapshot_date: '2026-11-28'
+    description: ts_scene_pool@xsession-near-20261023-punchw-20261102 的训练文本终版 v4：在 ts_scene_pool@xsession-near-20261023-punchw-20261102-final-v1-20261120 上补做数字写成阿拉伯数字（规则 9，zh-num-v1）16,010 条，value 10,418 处、digits 5,294 处、date 3,543 处、time 176 处、percent 55 处、decimal 1 处；其中 2,509 条只改了热词（热词表里不在 target 中的词各自按规则 9 转换），按 audio-data-contract docs/reference/training-text.md（v4）。同一行里的场景文本跟着 target 改，热词表的词各自转换（原样出现在 target 里的不动）；其余字段、录音清单和音频照旧，引用起点版本的产物。
     sources:
     - ts_scene_pool:xsession-near-20261023
     - aishell2:punc-written-v1-20261029
@@ -1685,11 +1687,11 @@
     owner: mingdong
     run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
     build_script: scripts/text_final/build_v4.py
-    record_correction: '2026-11-27 登记（PR #318）后修正，版本名不变：钟点“八点四十五”原来只改了分钟（写成“八点45”），改为“8点45”；“数字一百的百”这类说一个字怎么写的保留汉字；“十三香”“这一点十分重要”不改；labels.context_correction （segments、marked_text、cot）跟着 target 改。被替换文件的原 sha256：zh-records 74180de70a0b5af7a6071d3eb52f8115b6ec7a880441730aa0582168a909e2a6'
+    record_correction: "2026-11-27 登记（PR #318）后修正，版本名不变：钟点“八点四十五”原来只改了分钟（写成“八点45”），改为“8点45”；“数字一百的百”这类说一个字怎么写的保留汉字；“十三香”“这一点十分重要”不改；labels.context_correction （segments、marked_text、cot）跟着 target 改。被替换文件的原 sha256：zh-records 74180de70a0b5af7a6071d3eb52f8115b6ec7a880441730aa0582168a909e2a6\n2026-11-28 再次原地修正，版本名不变：专名保留约定写法（春风十里、降龙十八掌、党的十八大、十八届三中全会、十二指肠、十里堡、四句话十六字等，zh_numbers 专名词表）；字母后面的型号和版本号连小数一起改（PM2点五改为 PM2.5、Web3点零改为 Web3.0、iOS26点四点一改为 iOS26.4.1）；热词表里不在 target 中的词各自按规则 9 转换（原样出现在 target 里的不动）。被替换文件的原 sha256：zh-records 9bf049c02cc5b8058d0674d04479f246ba8129f04c1cb1d413d4979338ac399d"
   recipe_parameters:
     spec: docs/reference/training-text.md（v4）
     start: ts_scene_pool@xsession-near-20261023-punchw-20261102-final-v1-20261120
-    rounds: 数字写成阿拉伯数字（规则 9，zh-num-v1）13,530 条，value 10,461 处、digits 5,296 处、date 3,543 处、time 176 处、percent 55 处、decimal 1 处
+    rounds: 数字写成阿拉伯数字（规则 9，zh-num-v1）16,010 条，value 10,418 处、digits 5,294 处、date 3,543 处、time 176 处、percent 55 处、decimal 1 处；其中 2,509 条只改了热词（热词表里不在 target 中的词各自按规则 9 转换）
     unchanged: 规则没有改动的文本文件、录音清单、音频和 dev/test 划分，引用起点版本的产物
 - schema_version: dataset-catalog/2.0
   dataset_id: ts_scene_pool
@@ -1709,8 +1711,8 @@
     kind: audio-records
     root_alias: aidc_data
     relative_path: datasets/ts_scene_pool/versions/xsession-alt-twins-20261024-punchw-20261102-final-v4-20261127/text/zh-records.jsonl.gz
-    expected_bytes: 10702566
-    sha256: 7880453d456dc404f9745b67e0d4d20b9249f3778d370f0a3d82f6ef34b77c75
+    expected_bytes: 10725790
+    sha256: 1f1947756d5f1161980dcf97d9d34fda43db27c5c44bf869d1ae39e010c547b4
     metadata:
       record_count: 60000
   - name: zh-audio-index
@@ -1725,7 +1727,7 @@
     root_alias: aidc_data
     relative_path: datasets/ts_scene_pool/versions/xsession-alt-twins-20261024-punchw-20261102-final-v4-20261127/record_index/index.json
     expected_bytes: 775
-    sha256: 1257fcaba8f72e742d7a1d7919233b59507ead57fe17b6f2473a1bf1c6f25922
+    sha256: 59e4feaef74b6a3875634c0f98609e548de2a08ede38a62dd992b3787172a074
     metadata:
       snapshot_version: 13
       rows: 60000
@@ -1744,11 +1746,11 @@
         records: 60000
         duration_hours: 85.14
         duration_basis: clip duration (segment span, or the whole file)
-        final_v4_changed_records: 4536
+        final_v4_changed_records: 6021
   provenance:
     synthetic: none
-    snapshot_date: '2026-11-27'
-    description: ts_scene_pool@xsession-alt-twins-20261024-punchw-20261102 的训练文本终版 v4：在 ts_scene_pool@xsession-alt-twins-20261024-punchw-20261102-final-v1-20261120 上补做数字写成阿拉伯数字（规则 9，zh-num-v1）4,536 条，value 3,215 处、digits 1,432 处、date 930 处、time 49 处、percent 10 处、decimal 1 处，按 audio-data-contract docs/reference/training-text.md（v4）。同一行里的场景文本和热词列表一起改；其余字段、录音清单和音频照旧，引用起点版本的产物。
+    snapshot_date: '2026-11-28'
+    description: ts_scene_pool@xsession-alt-twins-20261024-punchw-20261102 的训练文本终版 v4：在 ts_scene_pool@xsession-alt-twins-20261024-punchw-20261102-final-v1-20261120 上补做数字写成阿拉伯数字（规则 9，zh-num-v1）6,021 条，value 3,207 处、digits 1,432 处、date 930 处、time 49 处、percent 10 处、decimal 1 处；其中 1,493 条只改了热词（热词表里不在 target 中的词各自按规则 9 转换），按 audio-data-contract docs/reference/training-text.md（v4）。同一行里的场景文本跟着 target 改，热词表的词各自转换（原样出现在 target 里的不动）；其余字段、录音清单和音频照旧，引用起点版本的产物。
     sources:
     - ts_scene_pool:xsession-alt-twins-20261024
     - aishell2:punc-written-v1-20261029
@@ -1760,11 +1762,11 @@
     owner: mingdong
     run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
     build_script: scripts/text_final/build_v4.py
-    record_correction: '2026-11-27 登记（PR #318）后修正，版本名不变：钟点“八点四十五”原来只改了分钟（写成“八点45”），改为“8点45”；“数字一百的百”这类说一个字怎么写的保留汉字；“十三香”“这一点十分重要”不改；labels.context_correction （segments、marked_text、cot）跟着 target 改。被替换文件的原 sha256：zh-records 74709473861599a2114c567003794b4583dabb893d5ace4bc95698c9325e05fd'
+    record_correction: "2026-11-27 登记（PR #318）后修正，版本名不变：钟点“八点四十五”原来只改了分钟（写成“八点45”），改为“8点45”；“数字一百的百”这类说一个字怎么写的保留汉字；“十三香”“这一点十分重要”不改；labels.context_correction （segments、marked_text、cot）跟着 target 改。被替换文件的原 sha256：zh-records 74709473861599a2114c567003794b4583dabb893d5ace4bc95698c9325e05fd\n2026-11-28 再次原地修正，版本名不变：专名保留约定写法（春风十里、降龙十八掌、党的十八大、十八届三中全会、十二指肠、十里堡、四句话十六字等，zh_numbers 专名词表）；字母后面的型号和版本号连小数一起改（PM2点五改为 PM2.5、Web3点零改为 Web3.0、iOS26点四点一改为 iOS26.4.1）；热词表里不在 target 中的词各自按规则 9 转换（原样出现在 target 里的不动）。被替换文件的原 sha256：zh-records 7880453d456dc404f9745b67e0d4d20b9249f3778d370f0a3d82f6ef34b77c75"
   recipe_parameters:
     spec: docs/reference/training-text.md（v4）
     start: ts_scene_pool@xsession-alt-twins-20261024-punchw-20261102-final-v1-20261120
-    rounds: 数字写成阿拉伯数字（规则 9，zh-num-v1）4,536 条，value 3,215 处、digits 1,432 处、date 930 处、time 49 处、percent 10 处、decimal 1 处
+    rounds: 数字写成阿拉伯数字（规则 9，zh-num-v1）6,021 条，value 3,207 处、digits 1,432 处、date 930 处、time 49 处、percent 10 处、decimal 1 处；其中 1,493 条只改了热词（热词表里不在 target 中的词各自按规则 9 转换）
     unchanged: 规则没有改动的文本文件、录音清单、音频和 dev/test 划分，引用起点版本的产物
 - schema_version: dataset-catalog/2.0
   dataset_id: ts_scene_pool
@@ -1784,8 +1786,8 @@
     kind: audio-records
     root_alias: aidc_data
     relative_path: datasets/ts_scene_pool/versions/xsession-hard-20261023-punchw-20261102-final-v4-20261127/text/zh-records.jsonl.gz
-    expected_bytes: 8484912
-    sha256: 66be07acd4e0084b669186a7d05f646a137ca68cb3af4aad2f488bc0cd98ee2a
+    expected_bytes: 8504864
+    sha256: 16abb1b9694d387e6218cdb09ce5e02d5ab10fc977d6ea52457c59a60559860c
     metadata:
       record_count: 40000
   - name: zh-audio-index
@@ -1800,7 +1802,7 @@
     root_alias: aidc_data
     relative_path: datasets/ts_scene_pool/versions/xsession-hard-20261023-punchw-20261102-final-v4-20261127/record_index/index.json
     expected_bytes: 770
-    sha256: 43f1d86a03c3efec0fb2a6527b9e8b84629eda2238ac9c895fb050d0cebcd7cf
+    sha256: 8b9b831cd3e3eddae09ff93950aefd13e12488f35d0dd6ea5bb0b1bf58cc4267
     metadata:
       snapshot_version: 13
       rows: 40000
@@ -1819,11 +1821,11 @@
         records: 40000
         duration_hours: 57.43
         duration_basis: clip duration (segment span, or the whole file)
-        final_v4_changed_records: 2032
+        final_v4_changed_records: 3139
   provenance:
     synthetic: none
-    snapshot_date: '2026-11-27'
-    description: ts_scene_pool@xsession-hard-20261023-punchw-20261102 的训练文本终版 v4：在 ts_scene_pool@xsession-hard-20261023-punchw-20261102-final-v1-20261120 上补做数字写成阿拉伯数字（规则 9，zh-num-v1）2,032 条，value 1,404 处、digits 682 处、date 433 处、time 21 处、percent 6 处，按 audio-data-contract docs/reference/training-text.md（v4）。同一行里的场景文本和热词列表一起改；其余字段、录音清单和音频照旧，引用起点版本的产物。
+    snapshot_date: '2026-11-28'
+    description: ts_scene_pool@xsession-hard-20261023-punchw-20261102 的训练文本终版 v4：在 ts_scene_pool@xsession-hard-20261023-punchw-20261102-final-v1-20261120 上补做数字写成阿拉伯数字（规则 9，zh-num-v1）3,139 条，value 1,399 处、digits 682 处、date 433 处、time 21 处、percent 6 处；其中 1,111 条只改了热词（热词表里不在 target 中的词各自按规则 9 转换），按 audio-data-contract docs/reference/training-text.md（v4）。同一行里的场景文本跟着 target 改，热词表的词各自转换（原样出现在 target 里的不动）；其余字段、录音清单和音频照旧，引用起点版本的产物。
     sources:
     - ts_scene_pool:xsession-hard-20261023
     - aishell2:punc-written-v1-20261029
@@ -1835,10 +1837,11 @@
     owner: mingdong
     run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
     build_script: scripts/text_final/build_v4.py
+    record_correction: 2026-11-28 再次原地修正，版本名不变：专名保留约定写法（春风十里、降龙十八掌、党的十八大、十八届三中全会、十二指肠、十里堡、四句话十六字等，zh_numbers 专名词表）；字母后面的型号和版本号连小数一起改（PM2点五改为 PM2.5、Web3点零改为 Web3.0、iOS26点四点一改为 iOS26.4.1）；热词表里不在 target 中的词各自按规则 9 转换（原样出现在 target 里的不动）。被替换文件的原 sha256：zh-records 66be07acd4e0084b669186a7d05f646a137ca68cb3af4aad2f488bc0cd98ee2a
   recipe_parameters:
     spec: docs/reference/training-text.md（v4）
     start: ts_scene_pool@xsession-hard-20261023-punchw-20261102-final-v1-20261120
-    rounds: 数字写成阿拉伯数字（规则 9，zh-num-v1）2,032 条，value 1,404 处、digits 682 处、date 433 处、time 21 处、percent 6 处
+    rounds: 数字写成阿拉伯数字（规则 9，zh-num-v1）3,139 条，value 1,399 处、digits 682 处、date 433 处、time 21 处、percent 6 处；其中 1,111 条只改了热词（热词表里不在 target 中的词各自按规则 9 转换）
     unchanged: 规则没有改动的文本文件、录音清单、音频和 dev/test 划分，引用起点版本的产物
 - schema_version: dataset-catalog/2.0
   dataset_id: ts_scene_pool
@@ -1858,8 +1861,8 @@
     kind: audio-records
     root_alias: aidc_data
     relative_path: datasets/ts_scene_pool/versions/xsession-handover-20261023-punchw-20261102-final-v4-20261127/text/zh-records.jsonl.gz
-    expected_bytes: 4649381
-    sha256: 72db4993d02de82fddcd8e3ab633e2737bbf4c4cf4bc2a528240aace9f078c68
+    expected_bytes: 4652666
+    sha256: d2444e8c88062a77587952ab3b8368c3bf74db483626729acaa2fb405cc58544
     metadata:
       record_count: 40000
   - name: zh-audio-index
@@ -1874,7 +1877,7 @@
     root_alias: aidc_data
     relative_path: datasets/ts_scene_pool/versions/xsession-handover-20261023-punchw-20261102-final-v4-20261127/record_index/index.json
     expected_bytes: 774
-    sha256: 1532bebeb56cc68aeba2bf7d2e014da8b4ee9cad2f729d43af316582ac299571
+    sha256: 8126bee2b4c295c31f1dc9c87e358080cd46bdeea2bd289bdf70bce6321eae72
     metadata:
       snapshot_version: 13
       rows: 40000
@@ -1893,11 +1896,11 @@
         records: 40000
         duration_hours: 58.55
         duration_basis: clip duration (segment span, or the whole file)
-        final_v4_changed_records: 2974
+        final_v4_changed_records: 3136
   provenance:
     synthetic: none
-    snapshot_date: '2026-11-27'
-    description: ts_scene_pool@xsession-handover-20261023-punchw-20261102 的训练文本终版 v4：在 ts_scene_pool@xsession-handover-20261023-punchw-20261102-final-v1-20261120 上补做数字写成阿拉伯数字（规则 9，zh-num-v1）2,974 条，value 1,955 处、digits 968 处、date 701 处、time 56 处、percent 7 处，按 audio-data-contract docs/reference/training-text.md（v4）。同一行里的场景文本和热词列表一起改；其余字段、录音清单和音频照旧，引用起点版本的产物。
+    snapshot_date: '2026-11-28'
+    description: ts_scene_pool@xsession-handover-20261023-punchw-20261102 的训练文本终版 v4：在 ts_scene_pool@xsession-handover-20261023-punchw-20261102-final-v1-20261120 上补做数字写成阿拉伯数字（规则 9，zh-num-v1）3,136 条，value 1,947 处、digits 967 处、date 701 处、time 56 处、percent 7 处；其中 170 条只改了热词（热词表里不在 target 中的词各自按规则 9 转换），按 audio-data-contract docs/reference/training-text.md（v4）。同一行里的场景文本跟着 target 改，热词表的词各自转换（原样出现在 target 里的不动）；其余字段、录音清单和音频照旧，引用起点版本的产物。
     sources:
     - ts_scene_pool:xsession-handover-20261023
     - aishell2:punc-written-v1-20261029
@@ -1909,10 +1912,11 @@
     owner: mingdong
     run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
     build_script: scripts/text_final/build_v4.py
+    record_correction: 2026-11-28 再次原地修正，版本名不变：专名保留约定写法（春风十里、降龙十八掌、党的十八大、十八届三中全会、十二指肠、十里堡、四句话十六字等，zh_numbers 专名词表）；字母后面的型号和版本号连小数一起改（PM2点五改为 PM2.5、Web3点零改为 Web3.0、iOS26点四点一改为 iOS26.4.1）；热词表里不在 target 中的词各自按规则 9 转换（原样出现在 target 里的不动）。被替换文件的原 sha256：zh-records 72db4993d02de82fddcd8e3ab633e2737bbf4c4cf4bc2a528240aace9f078c68
   recipe_parameters:
     spec: docs/reference/training-text.md（v4）
     start: ts_scene_pool@xsession-handover-20261023-punchw-20261102-final-v1-20261120
-    rounds: 数字写成阿拉伯数字（规则 9，zh-num-v1）2,974 条，value 1,955 处、digits 968 处、date 701 处、time 56 处、percent 7 处
+    rounds: 数字写成阿拉伯数字（规则 9，zh-num-v1）3,136 条，value 1,947 处、digits 967 处、date 701 处、time 56 处、percent 7 处；其中 170 条只改了热词（热词表里不在 target 中的词各自按规则 9 转换）
     unchanged: 规则没有改动的文本文件、录音清单、音频和 dev/test 划分，引用起点版本的产物
 - schema_version: dataset-catalog/2.0
   dataset_id: ts_scene_pool
@@ -1948,8 +1952,8 @@
     kind: audio-records
     root_alias: aidc_data
     relative_path: datasets/ts_scene_pool/versions/hard-20261016-punchw-20261102-final-v4-20261127/text/zh-records.jsonl.gz
-    expected_bytes: 7761997
-    sha256: 7a0aab3c325ddbda4f1d8babea801d3bdb20a715d7708d330358c31518b6505a
+    expected_bytes: 7781459
+    sha256: d915f84ec5f9d37240782179a6a2926e0a0c3dda611d04ddcdc14face242991f
     metadata:
       record_count: 40000
   - name: zh-audio-index
@@ -1964,7 +1968,7 @@
     root_alias: aidc_data
     relative_path: datasets/ts_scene_pool/versions/hard-20261016-punchw-20261102-final-v4-20261127/record_index/index.json
     expected_bytes: 1090
-    sha256: ae65f283e0aef1a903e759ef2715d174662248483a53cd31b711e1197723c2f5
+    sha256: 32c8b08e7bac265b409a66532a89aa55795c2922c564a15aa7c43eb25b0032a3
     metadata:
       snapshot_version: 13
       rows: 65000
@@ -1997,11 +2001,11 @@
         duration_hours: 44.77
         duration_basis: clip duration (segment span, or the whole file)
         final_v2_changed_records: 5
-        final_v4_changed_records: 2864
+        final_v4_changed_records: 4260
   provenance:
     synthetic: none
-    snapshot_date: '2026-11-27'
-    description: ts_scene_pool@hard-20261016-punchw-20261102 的训练文本终版 v4：在 ts_scene_pool@hard-20261016-punchw-20261102-final-v2-20261123 上补做数字写成阿拉伯数字（规则 9，zh-num-v1）2,864 条，value 1,685 处、digits 623 处、decimal 414 处、date 248 处、percent 117 处、latin 76 处、time 63 处，按 audio-data-contract docs/reference/training-text.md（v4）。同一行里的场景文本和热词列表一起改；其余字段、录音清单和音频照旧，引用起点版本的产物。
+    snapshot_date: '2026-11-28'
+    description: ts_scene_pool@hard-20261016-punchw-20261102 的训练文本终版 v4：在 ts_scene_pool@hard-20261016-punchw-20261102-final-v2-20261123 上补做数字写成阿拉伯数字（规则 9，zh-num-v1）4,260 条，value 1,677 处、digits 622 处、decimal 415 处、date 248 处、percent 117 处、latin 75 处、time 63 处；其中 1,405 条只改了热词（热词表里不在 target 中的词各自按规则 9 转换），按 audio-data-contract docs/reference/training-text.md（v4）。同一行里的场景文本跟着 target 改，热词表的词各自转换（原样出现在 target 里的不动）；其余字段、录音清单和音频照旧，引用起点版本的产物。
     sources:
     - ts_scene_pool:hard-20261016
     - aishell2:punc-written-v1-20261029
@@ -2013,11 +2017,11 @@
     owner: mingdong
     run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
     build_script: scripts/text_final/build_v4.py
-    record_correction: '2026-11-27 登记（PR #318）后修正，版本名不变：钟点“八点四十五”原来只改了分钟（写成“八点45”），改为“8点45”；“数字一百的百”这类说一个字怎么写的保留汉字；“十三香”“这一点十分重要”不改；labels.context_correction （segments、marked_text、cot）跟着 target 改。被替换文件的原 sha256：zh-records fc09d2f12cc537f09bb634d40ac3d42d6ff13dcf0d4fc5eca9b83d9f0f9cdec6'
+    record_correction: "2026-11-27 登记（PR #318）后修正，版本名不变：钟点“八点四十五”原来只改了分钟（写成“八点45”），改为“8点45”；“数字一百的百”这类说一个字怎么写的保留汉字；“十三香”“这一点十分重要”不改；labels.context_correction （segments、marked_text、cot）跟着 target 改。被替换文件的原 sha256：zh-records fc09d2f12cc537f09bb634d40ac3d42d6ff13dcf0d4fc5eca9b83d9f0f9cdec6\n2026-11-28 再次原地修正，版本名不变：专名保留约定写法（春风十里、降龙十八掌、党的十八大、十八届三中全会、十二指肠、十里堡、四句话十六字等，zh_numbers 专名词表）；字母后面的型号和版本号连小数一起改（PM2点五改为 PM2.5、Web3点零改为 Web3.0、iOS26点四点一改为 iOS26.4.1）；热词表里不在 target 中的词各自按规则 9 转换（原样出现在 target 里的不动）。被替换文件的原 sha256：zh-records 7a0aab3c325ddbda4f1d8babea801d3bdb20a715d7708d330358c31518b6505a"
   recipe_parameters:
     spec: docs/reference/training-text.md（v4）
     start: ts_scene_pool@hard-20261016-punchw-20261102-final-v2-20261123
-    rounds: 数字写成阿拉伯数字（规则 9，zh-num-v1）2,864 条，value 1,685 处、digits 623 处、decimal 414 处、date 248 处、percent 117 处、latin 76 处、time 63 处
+    rounds: 数字写成阿拉伯数字（规则 9，zh-num-v1）4,260 条，value 1,677 处、digits 622 处、decimal 415 处、date 248 处、percent 117 处、latin 75 处、time 63 处；其中 1,405 条只改了热词（热词表里不在 target 中的词各自按规则 9 转换）
     unchanged: 规则没有改动的文本文件、录音清单、音频和 dev/test 划分，引用起点版本的产物
 - schema_version: dataset-catalog/2.0
   dataset_id: emilia2_mix
@@ -2037,16 +2041,16 @@
     kind: audio-records
     root_alias: aidc_data
     relative_path: datasets/emilia2_mix/versions/mix-20261013-utts-final-v4-20261127/text/train_2spk-records.jsonl.gz
-    expected_bytes: 934188430
-    sha256: 31b8e422ac7feacc3766c1758159c3d43ba6a2e3993c1ce4d97c258541649057
+    expected_bytes: 934185746
+    sha256: 84a99694807a21fe41e9cfff2a2cb4dc39819698795f73b87cc5780d0e85d45f
     metadata:
       record_count: 2206836
   - name: train_3spk-records
     kind: audio-records
     root_alias: aidc_data
     relative_path: datasets/emilia2_mix/versions/mix-20261013-utts-final-v4-20261127/text/train_3spk-records.jsonl.gz
-    expected_bytes: 1121436746
-    sha256: baeeb058f2c7bd992d569d50a6270818ff4676edd09b6ad7238b06452e44d07a
+    expected_bytes: 1121432425
+    sha256: a9e7e74f35a63fc8fe85cf0e0d896bebc28beed6253c4f15949840bc829bc842
     metadata:
       record_count: 2201597
   - name: train_2spk-audio-index
@@ -2070,7 +2074,7 @@
     root_alias: aidc_data
     relative_path: datasets/emilia2_mix/versions/mix-20261013-utts-final-v4-20261127/record_index/index.json
     expected_bytes: 1130
-    sha256: ffb633086f3a95608d27bad60f044b6c3bf03c82636da589bb76562cfabddfe5
+    sha256: c681059f821e6c6089cbe2c31feb1353819877b7eeea2da89ebbb721618aadd1
     metadata:
       snapshot_version: 13
       rows: 4408433
@@ -2091,7 +2095,7 @@
         duration_basis: clip duration (segment span, or the whole file)
         zhen_fix_changed_records: 12399
         final_v2_changed_records: 32107
-        final_v4_changed_records: 116463
+        final_v4_changed_records: 116257
     train_3spk:
       artifacts:
         records:
@@ -2107,25 +2111,25 @@
         duration_basis: clip duration (segment span, or the whole file)
         zhen_fix_changed_records: 12188
         final_v2_changed_records: 31722
-        final_v4_changed_records: 116024
+        final_v4_changed_records: 115811
   derived_from: emilia2_mix@mix-20261013-utts-final-v2-20261123
   recipe_parameters:
     spec: docs/reference/training-text.md（v4）
     start: emilia2_mix@mix-20261013-utts-final-v2-20261123
-    rounds: 数字写成阿拉伯数字（规则 9，zh-num-v1）232,487 条，value 227,504 处、latin 65,505 处、digits 65,441 处、date 25,324 处、percent 22,206 处、decimal 19,845 处、time 8,818 处
+    rounds: 数字写成阿拉伯数字（规则 9，zh-num-v1）232,068 条，value 226,694 处、digits 65,437 处、latin 64,908 处、date 25,324 处、percent 22,206 处、decimal 20,531 处、time 8,818 处
     unchanged: 规则没有改动的文本文件、录音清单、音频和 dev/test 划分，引用起点版本的产物
   provenance:
     summary: Emilia2 长音频合成的 2/3 人目标说话人混合
-    description: emilia2_mix@mix-20261013-utts 的训练文本终版 v4：在 emilia2_mix@mix-20261013-utts-final-v2-20261123 上补做数字写成阿拉伯数字（规则 9，zh-num-v1）232,487 条，value 227,504 处、latin 65,505 处、digits 65,441 处、date 25,324 处、percent 22,206 处、decimal 19,845 处、time 8,818 处，按 audio-data-contract docs/reference/training-text.md（v4）。同一行里的场景文本和热词列表一起改；其余字段、录音清单和音频照旧，引用起点版本的产物。
+    description: emilia2_mix@mix-20261013-utts 的训练文本终版 v4：在 emilia2_mix@mix-20261013-utts-final-v2-20261123 上补做数字写成阿拉伯数字（规则 9，zh-num-v1）232,068 条，value 226,694 处、digits 65,437 处、latin 64,908 处、date 25,324 处、percent 22,206 处、decimal 20,531 处、time 8,818 处，按 audio-data-contract docs/reference/training-text.md（v4）。同一行里的场景文本跟着 target 改，热词表的词各自转换（原样出现在 target 里的不动）；其余字段、录音清单和音频照旧，引用起点版本的产物。
     owner: mingdong
-    snapshot_date: '2026-11-27'
+    snapshot_date: '2026-11-28'
     source: emilia2_mix@mix-20261013-utts-final-v2-20261123
     run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
     method: text-final-v4
     rules: zhen-fix-v1
     changed_records: 24587
     build_script: scripts/text_final/build_v4.py
-    record_correction: '2026-11-27 登记（PR #318）后修正，版本名不变：钟点“八点四十五”原来只改了分钟（写成“八点45”），改为“8点45”；“数字一百的百”这类说一个字怎么写的保留汉字；“十三香”“这一点十分重要”不改；labels.context_correction （segments、marked_text、cot）跟着 target 改。被替换文件的原 sha256：train_2spk-records a03e03864b1d2434b90622ac534f59ed17e3972e15909f019279eeba7ef5ea26；train_3spk-records 375d6cdd8a875e29ecb932a1065650e5f89f3d53a5e7ab1c95e7bc2ec939e746'
+    record_correction: "2026-11-27 登记（PR #318）后修正，版本名不变：钟点“八点四十五”原来只改了分钟（写成“八点45”），改为“8点45”；“数字一百的百”这类说一个字怎么写的保留汉字；“十三香”“这一点十分重要”不改；labels.context_correction （segments、marked_text、cot）跟着 target 改。被替换文件的原 sha256：train_2spk-records a03e03864b1d2434b90622ac534f59ed17e3972e15909f019279eeba7ef5ea26；train_3spk-records 375d6cdd8a875e29ecb932a1065650e5f89f3d53a5e7ab1c95e7bc2ec939e746\n2026-11-28 再次原地修正，版本名不变：专名保留约定写法（春风十里、降龙十八掌、党的十八大、十八届三中全会、十二指肠、十里堡、四句话十六字等，zh_numbers 专名词表）；字母后面的型号和版本号连小数一起改（PM2点五改为 PM2.5、Web3点零改为 Web3.0、iOS26点四点一改为 iOS26.4.1）；热词表里不在 target 中的词各自按规则 9 转换（原样出现在 target 里的不动）。被替换文件的原 sha256：train_2spk-records 31b8e422ac7feacc3766c1758159c3d43ba6a2e3993c1ce4d97c258541649057；train_3spk-records baeeb058f2c7bd992d569d50a6270818ff4676edd09b6ad7238b06452e44d07a"
 - schema_version: dataset-catalog/2.0
   dataset_id: emilia2_dialog
   version: dialog-turn-taking-20261013-enroll-final-v4-20261127
@@ -2144,16 +2148,16 @@
     kind: audio-records
     root_alias: aidc_data
     relative_path: datasets/emilia2_dialog/versions/dialog-turn-taking-20261013-enroll-final-v4-20261127/text/train_2spk.jsonl.gz
-    expected_bytes: 183628891
-    sha256: 134e8c5ecf0c9718cfcf19a2da2b55ac1b040e36eb85bbf84704043f5b16262e
+    expected_bytes: 183627268
+    sha256: 9ecc0392a90a8baa30dd4ca09a3e16877374199805e67827dc7866574f416a25
     metadata:
       record_count: 1118820
   - name: train_3spk
     kind: audio-records
     root_alias: aidc_data
     relative_path: datasets/emilia2_dialog/versions/dialog-turn-taking-20261013-enroll-final-v4-20261127/text/train_3spk.jsonl.gz
-    expected_bytes: 61749388
-    sha256: a3a7f555315a145a23031acde9dd035c98109da7a8852b089d3b71ba1d8b8560
+    expected_bytes: 61749039
+    sha256: a1f3d06dc9c21b0967280c50fa07a32877e4b47445a4275f471173d513b1b0f1
     metadata:
       record_count: 436478
   - name: train_neg
@@ -2225,7 +2229,7 @@
     root_alias: aidc_data
     relative_path: datasets/emilia2_dialog/versions/dialog-turn-taking-20261013-enroll-final-v4-20261127/record_index/index.json
     expected_bytes: 2258
-    sha256: 77b961aff04f3ce9e08fe411957d0b005f45b8ee85f969ed7d8f33f6cf52ed69
+    sha256: ad1742a55b4a6842d4a91fcc1081ee08810e7f2a45ee957747d170cec01f7a72
     metadata:
       snapshot_version: 13
       rows: 2533840
@@ -2246,7 +2250,7 @@
         duration_basis: sum of mixture duration per target example; excludes enrollment; repeated mixtures count once per example
         zhen_fix_changed_records: 9991
         final_v2_changed_records: 34132
-        final_v4_changed_records: 68121
+        final_v4_changed_records: 68017
     train_3spk:
       group: train
       artifacts:
@@ -2262,7 +2266,7 @@
         duration_basis: sum of mixture duration per target example; excludes enrollment; repeated mixtures count once per example
         zhen_fix_changed_records: 2864
         final_v2_changed_records: 10441
-        final_v4_changed_records: 18219
+        final_v4_changed_records: 18187
     train_neg:
       group: train
       artifacts:
@@ -2407,7 +2411,7 @@
         duration_basis: sum of mixture duration per target example; excludes enrollment; repeated mixtures count once per example
         zhen_fix_changed_records: 12855
         final_v2_changed_records: 44573
-        final_v4_changed_records: 86340
+        final_v4_changed_records: 86204
     eval:
       artifacts:
         records:
@@ -2444,13 +2448,13 @@
   recipe_parameters:
     spec: docs/reference/training-text.md（v4）
     start: emilia2_dialog@dialog-turn-taking-20261013-enroll-final-v2-20261123
-    rounds: 数字写成阿拉伯数字（规则 9，zh-num-v1）86,340 条，value 88,921 处、digits 18,201 处、latin 15,396 处、date 6,295 处、decimal 5,174 处、time 4,771 处、percent 4,724 处
+    rounds: 数字写成阿拉伯数字（规则 9，zh-num-v1）86,204 条，value 88,696 处、digits 18,201 处、latin 15,250 处、date 6,295 处、decimal 5,341 处、time 4,771 处、percent 4,724 处
     unchanged: 规则没有改动的文本文件、录音清单、音频和 dev/test 划分，引用起点版本的产物
   provenance:
     summary: Emilia2 中英对话的轮流说话目标说话人数据
-    description: emilia2_dialog@dialog-turn-taking-20261013-enroll 的训练文本终版 v4：在 emilia2_dialog@dialog-turn-taking-20261013-enroll-final-v2-20261123 上补做数字写成阿拉伯数字（规则 9，zh-num-v1）86,340 条，value 88,921 处、digits 18,201 处、latin 15,396 处、date 6,295 处、decimal 5,174 处、time 4,771 处、percent 4,724 处，按 audio-data-contract docs/reference/training-text.md（v4）。同一行里的场景文本和热词列表一起改；其余字段、录音清单和音频照旧，引用起点版本的产物。
+    description: emilia2_dialog@dialog-turn-taking-20261013-enroll 的训练文本终版 v4：在 emilia2_dialog@dialog-turn-taking-20261013-enroll-final-v2-20261123 上补做数字写成阿拉伯数字（规则 9，zh-num-v1）86,204 条，value 88,696 处、digits 18,201 处、latin 15,250 处、date 6,295 处、decimal 5,341 处、time 4,771 处、percent 4,724 处，按 audio-data-contract docs/reference/training-text.md（v4）。同一行里的场景文本跟着 target 改，热词表的词各自转换（原样出现在 target 里的不动）；其余字段、录音清单和音频照旧，引用起点版本的产物。
     owner: mingdong
-    snapshot_date: '2026-11-27'
+    snapshot_date: '2026-11-28'
     source: emilia2_dialog@dialog-turn-taking-20261013-enroll-final-v2-20261123
     run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
     source_keys:
@@ -2463,7 +2467,7 @@
     rules: zhen-fix-v1
     changed_records: 12855
     build_script: scripts/text_final/build_v4.py
-    record_correction: '2026-11-27 登记（PR #318）后修正，版本名不变：钟点“八点四十五”原来只改了分钟（写成“八点45”），改为“8点45”；“数字一百的百”这类说一个字怎么写的保留汉字；“十三香”“这一点十分重要”不改；labels.context_correction （segments、marked_text、cot）跟着 target 改。被替换文件的原 sha256：train_2spk 485ff37280b9898a241b55bac95dc2ba3084f60c5734e679a9baccf18802201f；train_3spk c58ec8be5de78c75b26a2342231e9c0e4176879381d00e302b34ecf890cd7fa7'
+    record_correction: "2026-11-27 登记（PR #318）后修正，版本名不变：钟点“八点四十五”原来只改了分钟（写成“八点45”），改为“8点45”；“数字一百的百”这类说一个字怎么写的保留汉字；“十三香”“这一点十分重要”不改；labels.context_correction （segments、marked_text、cot）跟着 target 改。被替换文件的原 sha256：train_2spk 485ff37280b9898a241b55bac95dc2ba3084f60c5734e679a9baccf18802201f；train_3spk c58ec8be5de78c75b26a2342231e9c0e4176879381d00e302b34ecf890cd7fa7\n2026-11-28 再次原地修正，版本名不变：专名保留约定写法（春风十里、降龙十八掌、党的十八大、十八届三中全会、十二指肠、十里堡、四句话十六字等，zh_numbers 专名词表）；字母后面的型号和版本号连小数一起改（PM2点五改为 PM2.5、Web3点零改为 Web3.0、iOS26点四点一改为 iOS26.4.1）；热词表里不在 target 中的词各自按规则 9 转换（原样出现在 target 里的不动）。被替换文件的原 sha256：train_2spk 134e8c5ecf0c9718cfcf19a2da2b55ac1b040e36eb85bbf84704043f5b16262e；train_3spk a3a7f555315a145a23031acde9dd035c98109da7a8852b089d3b71ba1d8b8560"
 - schema_version: dataset-catalog/2.0
   dataset_id: aishell4
   version: turn-taking-20261014-utts-punc-20261102-final-v4-20261127
@@ -2481,16 +2485,16 @@
     kind: audio-records
     root_alias: aidc_data
     relative_path: datasets/aishell4/versions/turn-taking-20261014-utts-punc-20261102-final-v4-20261127/text/train_2spk_records_punc.jsonl.gz
-    expected_bytes: 2337083
-    sha256: 85a5893c198555ad16d4b10287a3d0443ea52b7e719eab03c986998d2218e4f3
+    expected_bytes: 2337061
+    sha256: 47b46c52b9e6c39ca61d2fac1bd5e2e835132f25f7d3140bcefe0e056f6dc256
     metadata:
       record_count: 10506
   - name: train_3spk_records_punc
     kind: audio-records
     root_alias: aidc_data
     relative_path: datasets/aishell4/versions/turn-taking-20261014-utts-punc-20261102-final-v4-20261127/text/train_3spk_records_punc.jsonl.gz
-    expected_bytes: 3795530
-    sha256: d867abd1cbb08e3e4886d50bae19fc7684d245117ac390488f4b264e06dd788e
+    expected_bytes: 3795422
+    sha256: 73060fa00dc8f5bae3f8edc38cff5ec12a689d5d3188af8a878ff3339531757e
     metadata:
       record_count: 21923
   - name: train_neg_records_punc
@@ -2530,7 +2534,7 @@
     root_alias: aidc_data
     relative_path: datasets/aishell4/versions/turn-taking-20261014-utts-punc-20261102-final-v4-20261127/record_index/index.json
     expected_bytes: 1508
-    sha256: cb47c3d10ff2fe668bd73dcd38742a86858352641de3a2b463dbfd384cd9beef
+    sha256: 5020ca8664c663f69a76e71f3babddcdeb7173d166b764b0c21cb6cd29fb1df7
     metadata:
       snapshot_version: 13
       rows: 46557
@@ -2550,7 +2554,7 @@
         duration_hours: 73.879
         zhen_fix_changed_records: 93
         final_v2_changed_records: 149
-        final_v4_changed_records: 660
+        final_v4_changed_records: 659
       provenance: {}
     train_3spk:
       task: ts_asr
@@ -2566,7 +2570,7 @@
         duration_hours: 135.971
         zhen_fix_changed_records: 161
         final_v2_changed_records: 155
-        final_v4_changed_records: 1758
+        final_v4_changed_records: 1755
       provenance: {}
     train_neg:
       task: ts_asr
@@ -2586,19 +2590,20 @@
   recipe_parameters:
     spec: docs/reference/training-text.md（v4）
     start: aishell4@turn-taking-20261014-utts-punc-20261102-final-v2-20261123
-    rounds: 数字写成阿拉伯数字（规则 9，zh-num-v1）2,418 条，value 1,829 处、digits 1,053 处、date 113 处、percent 105 处、latin 103 处、time 71 处、decimal 1 处
+    rounds: 数字写成阿拉伯数字（规则 9，zh-num-v1）2,414 条，value 1,818 处、digits 1,053 处、date 113 处、percent 105 处、latin 103 处、time 71 处、decimal 1 处
     unchanged: 规则没有改动的文本文件、录音清单、音频和 dev/test 划分，引用起点版本的产物
   provenance:
     summary: 中文多人会议（AISHELL-4）；含轮流说话混合版
-    description: aishell4@turn-taking-20261014-utts-punc-20261102 的训练文本终版 v4：在 aishell4@turn-taking-20261014-utts-punc-20261102-final-v2-20261123 上补做数字写成阿拉伯数字（规则 9，zh-num-v1）2,418 条，value 1,829 处、digits 1,053 处、date 113 处、percent 105 处、latin 103 处、time 71 处、decimal 1 处，按 audio-data-contract docs/reference/training-text.md（v4）。同一行里的场景文本和热词列表一起改；其余字段、录音清单和音频照旧，引用起点版本的产物。
+    description: aishell4@turn-taking-20261014-utts-punc-20261102 的训练文本终版 v4：在 aishell4@turn-taking-20261014-utts-punc-20261102-final-v2-20261123 上补做数字写成阿拉伯数字（规则 9，zh-num-v1）2,414 条，value 1,818 处、digits 1,053 处、date 113 处、percent 105 处、latin 103 处、time 71 处、decimal 1 处，按 audio-data-contract docs/reference/training-text.md（v4）。同一行里的场景文本跟着 target 改，热词表的词各自转换（原样出现在 target 里的不动）；其余字段、录音清单和音频照旧，引用起点版本的产物。
     owner: mingdong
-    snapshot_date: '2026-11-27'
+    snapshot_date: '2026-11-28'
     source: aishell4@turn-taking-20261014-utts-punc-20261102-final-v2-20261123
     run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
     method: text-final-v4
     rules: zhen-fix-v1
     changed_records: 254
     build_script: scripts/text_final/build_v4.py
+    record_correction: 2026-11-28 再次原地修正，版本名不变：专名保留约定写法（春风十里、降龙十八掌、党的十八大、十八届三中全会、十二指肠、十里堡、四句话十六字等，zh_numbers 专名词表）；字母后面的型号和版本号连小数一起改（PM2点五改为 PM2.5、Web3点零改为 Web3.0、iOS26点四点一改为 iOS26.4.1）；热词表里不在 target 中的词各自按规则 9 转换（原样出现在 target 里的不动）。被替换文件的原 sha256：train_2spk_records_punc 85a5893c198555ad16d4b10287a3d0443ea52b7e719eab03c986998d2218e4f3；train_3spk_records_punc d867abd1cbb08e3e4886d50bae19fc7684d245117ac390488f4b264e06dd788e
 - schema_version: dataset-catalog/2.0
   dataset_id: magicdata_ramc
   version: turn-taking-20261014-utts-punc-20261102-final-v4-20261127
@@ -2616,8 +2621,8 @@
     kind: audio-records
     root_alias: aidc_data
     relative_path: datasets/magicdata_ramc/versions/turn-taking-20261014-utts-punc-20261102-final-v4-20261127/text/train_2spk_records_punc.jsonl.gz
-    expected_bytes: 6885555
-    sha256: dd1ace030143e53382d976c4aa1e45d1e1e970be6755b6d5aecb028bd560edb6
+    expected_bytes: 6885376
+    sha256: 0faf4c962ac8dcc67fa026bcbf38cbd8ab9949fd69de017101687e671a3609ef
     metadata:
       record_count: 29504
   - name: train_neg_records_punc
@@ -2649,7 +2654,7 @@
     root_alias: aidc_data
     relative_path: datasets/magicdata_ramc/versions/turn-taking-20261014-utts-punc-20261102-final-v4-20261127/record_index/index.json
     expected_bytes: 1156
-    sha256: 46624a8d40b8f06461d45e3c163e35c373c44e94aba8b6e4f8c7c0e9bb84bcfd
+    sha256: 5eda621cef7edacc144e7fe7c77198e8e5a7ae7bc001ed61f2f570ef9c61ad97
     metadata:
       snapshot_version: 13
       rows: 44876
@@ -2669,7 +2674,7 @@
         duration_hours: 221.853
         zhen_fix_changed_records: 711
         final_v2_changed_records: 100
-        final_v4_changed_records: 2387
+        final_v4_changed_records: 2377
       provenance: {}
     train_neg:
       task: ts_asr
@@ -2689,20 +2694,20 @@
   recipe_parameters:
     spec: docs/reference/training-text.md（v4）
     start: magicdata_ramc@turn-taking-20261014-utts-punc-20261102-final-v2-20261123
-    rounds: 数字写成阿拉伯数字（规则 9，zh-num-v1）2,387 条，value 2,357 处、digits 695 处、date 586 处、latin 351 处、time 205 处、percent 75 处、decimal 35 处
+    rounds: 数字写成阿拉伯数字（规则 9，zh-num-v1）2,377 条，value 2,345 处、digits 695 处、date 586 处、latin 351 处、time 205 处、percent 75 处、decimal 35 处
     unchanged: 规则没有改动的文本文件、录音清单、音频和 dev/test 划分，引用起点版本的产物
   provenance:
     summary: 中文手机通话自然对话（MagicData-RAMC）
-    description: magicdata_ramc@turn-taking-20261014-utts-punc-20261102 的训练文本终版 v4：在 magicdata_ramc@turn-taking-20261014-utts-punc-20261102-final-v2-20261123 上补做数字写成阿拉伯数字（规则 9，zh-num-v1）2,387 条，value 2,357 处、digits 695 处、date 586 处、latin 351 处、time 205 处、percent 75 处、decimal 35 处，按 audio-data-contract docs/reference/training-text.md（v4）。同一行里的场景文本和热词列表一起改；其余字段、录音清单和音频照旧，引用起点版本的产物。
+    description: magicdata_ramc@turn-taking-20261014-utts-punc-20261102 的训练文本终版 v4：在 magicdata_ramc@turn-taking-20261014-utts-punc-20261102-final-v2-20261123 上补做数字写成阿拉伯数字（规则 9，zh-num-v1）2,377 条，value 2,345 处、digits 695 处、date 586 处、latin 351 处、time 205 处、percent 75 处、decimal 35 处，按 audio-data-contract docs/reference/training-text.md（v4）。同一行里的场景文本跟着 target 改，热词表的词各自转换（原样出现在 target 里的不动）；其余字段、录音清单和音频照旧，引用起点版本的产物。
     owner: mingdong
-    snapshot_date: '2026-11-27'
+    snapshot_date: '2026-11-28'
     source: magicdata_ramc@turn-taking-20261014-utts-punc-20261102-final-v2-20261123
     run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
     method: text-final-v4
     rules: zhen-fix-v1
     changed_records: 711
     build_script: scripts/text_final/build_v4.py
-    record_correction: '2026-11-27 登记（PR #318）后修正，版本名不变：钟点“八点四十五”原来只改了分钟（写成“八点45”），改为“8点45”；“数字一百的百”这类说一个字怎么写的保留汉字；“十三香”“这一点十分重要”不改；labels.context_correction （segments、marked_text、cot）跟着 target 改。被替换文件的原 sha256：train_2spk_records_punc 12d604cb13b6490413eeaeb7b56f69b3f2f14cbf916b77883776ee1e6acf4996'
+    record_correction: "2026-11-27 登记（PR #318）后修正，版本名不变：钟点“八点四十五”原来只改了分钟（写成“八点45”），改为“8点45”；“数字一百的百”这类说一个字怎么写的保留汉字；“十三香”“这一点十分重要”不改；labels.context_correction （segments、marked_text、cot）跟着 target 改。被替换文件的原 sha256：train_2spk_records_punc 12d604cb13b6490413eeaeb7b56f69b3f2f14cbf916b77883776ee1e6acf4996\n2026-11-28 再次原地修正，版本名不变：专名保留约定写法（春风十里、降龙十八掌、党的十八大、十八届三中全会、十二指肠、十里堡、四句话十六字等，zh_numbers 专名词表）；字母后面的型号和版本号连小数一起改（PM2点五改为 PM2.5、Web3点零改为 Web3.0、iOS26点四点一改为 iOS26.4.1）；热词表里不在 target 中的词各自按规则 9 转换（原样出现在 target 里的不动）。被替换文件的原 sha256：train_2spk_records_punc dd1ace030143e53382d976c4aa1e45d1e1e970be6755b6d5aecb028bd560edb6"
 - schema_version: dataset-catalog/2.0
   dataset_id: wenetspeech_clean
   version: train-punc-v1-20261102-final-v4-20261127
@@ -2728,8 +2733,8 @@
     kind: lhotse-supervisions
     root_alias: aidc_data
     relative_path: datasets/wenetspeech_clean/versions/train-punc-v1-20261102-final-v4-20261127/text/train_supervisions_punc_0.jsonl.gz
-    expected_bytes: 525071279
-    sha256: 8eec94fd549f122485b6a5ec9970923dc7b04a2d45092d8a8da0ba9e4663d166
+    expected_bytes: 525050474
+    sha256: ce993c42af84a53e138f60e338c4fb9d1c920a78f0c54d8edd9577069f0b2f45
     metadata:
       record_count: 14480879
   - name: zhen_fix_patches
@@ -2746,7 +2751,7 @@
     root_alias: aidc_data
     relative_path: datasets/wenetspeech_clean/versions/train-punc-v1-20261102-final-v4-20261127/record_index/index.json
     expected_bytes: 796
-    sha256: a6c4ac6313ab8d136808a917456618a1f63cd6cb87f534c24d1f831b0fc82e36
+    sha256: 5e9e3da8c28a1ecf1600dc2e522a8c0163172266585c0693a75c4a88b6bac871
     metadata:
       snapshot_version: 13
       rows: 14480879
@@ -2768,25 +2773,25 @@
         duration_basis: sum of supervision duration
         zhen_fix_changed_records: 3727
         final_v2_changed_records: 8
-        final_v4_changed_records: 447693
+        final_v4_changed_records: 446486
   derived_from: wenetspeech_clean@train-punc-v1-20261102-final-v2-20261123
   recipe_parameters:
     spec: docs/reference/training-text.md（v4）
     start: wenetspeech_clean@train-punc-v1-20261102-final-v2-20261123
-    rounds: 数字写成阿拉伯数字（规则 9，zh-num-v1）447,693 条，value 323,003 处、digits 78,466 处、date 76,528 处、percent 29,113 处、time 25,096 处、decimal 13,666 处、latin 2,781 处
+    rounds: 数字写成阿拉伯数字（规则 9，zh-num-v1）446,486 条，value 321,612 处、digits 78,457 处、date 76,526 处、percent 29,113 处、time 25,096 处、decimal 13,681 处、latin 2,767 处
     unchanged: 规则没有改动的文本文件、录音清单、音频和 dev/test 划分，引用起点版本的产物
   provenance:
     summary: WenetSpeech 训练文本英文写法修正
-    description: wenetspeech_clean@train-punc-v1-20261102 的训练文本终版 v4：在 wenetspeech_clean@train-punc-v1-20261102-final-v2-20261123 上补做数字写成阿拉伯数字（规则 9，zh-num-v1）447,693 条，value 323,003 处、digits 78,466 处、date 76,528 处、percent 29,113 处、time 25,096 处、decimal 13,666 处、latin 2,781 处，按 audio-data-contract docs/reference/training-text.md（v4）。同一行里的场景文本和热词列表一起改；其余字段、录音清单和音频照旧，引用起点版本的产物。
+    description: wenetspeech_clean@train-punc-v1-20261102 的训练文本终版 v4：在 wenetspeech_clean@train-punc-v1-20261102-final-v2-20261123 上补做数字写成阿拉伯数字（规则 9，zh-num-v1）446,486 条，value 321,612 处、digits 78,457 处、date 76,526 处、percent 29,113 处、time 25,096 处、decimal 13,681 处、latin 2,767 处，按 audio-data-contract docs/reference/training-text.md（v4）。同一行里的场景文本跟着 target 改，热词表的词各自转换（原样出现在 target 里的不动）；其余字段、录音清单和音频照旧，引用起点版本的产物。
     owner: mingdong
-    snapshot_date: '2026-11-27'
+    snapshot_date: '2026-11-28'
     source: wenetspeech_clean@train-punc-v1-20261102-final-v2-20261123
     run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
     method: text-final-v4
     rules: zhen-fix-en-v1
     changed_records: 3727
     build_script: scripts/text_final/build_v4.py
-    record_correction: '2026-11-27 登记（PR #318）后修正，版本名不变：钟点“八点四十五”原来只改了分钟（写成“八点45”），改为“8点45”；“数字一百的百”这类说一个字怎么写的保留汉字；“十三香”“这一点十分重要”不改；labels.context_correction （segments、marked_text、cot）跟着 target 改。被替换文件的原 sha256：train_supervisions_punc_0 b0fe758c95cda4db1f453a20ea7ec2756823ebffe94b2fc461f9e89b0de69623'
+    record_correction: "2026-11-27 登记（PR #318）后修正，版本名不变：钟点“八点四十五”原来只改了分钟（写成“八点45”），改为“8点45”；“数字一百的百”这类说一个字怎么写的保留汉字；“十三香”“这一点十分重要”不改；labels.context_correction （segments、marked_text、cot）跟着 target 改。被替换文件的原 sha256：train_supervisions_punc_0 b0fe758c95cda4db1f453a20ea7ec2756823ebffe94b2fc461f9e89b0de69623\n2026-11-28 再次原地修正，版本名不变：专名保留约定写法（春风十里、降龙十八掌、党的十八大、十八届三中全会、十二指肠、十里堡、四句话十六字等，zh_numbers 专名词表）；字母后面的型号和版本号连小数一起改（PM2点五改为 PM2.5、Web3点零改为 Web3.0、iOS26点四点一改为 iOS26.4.1）；热词表里不在 target 中的词各自按规则 9 转换（原样出现在 target 里的不动）。被替换文件的原 sha256：train_supervisions_punc_0 8eec94fd549f122485b6a5ec9970923dc7b04a2d45092d8a8da0ba9e4663d166"
 - schema_version: dataset-catalog/2.0
   dataset_id: emilia2_short
   version: short-lance-20261023-final-v4-20261127
@@ -2813,8 +2818,8 @@
     kind: audio-records
     root_alias: aidc_data
     relative_path: datasets/emilia2_short/versions/short-lance-20261023-final-v4-20261127/text/train_zh.jsonl.gz
-    expected_bytes: 303112060
-    sha256: 2e29697c7b66912ff39efecc37a71846be59656ffb3222704147219b2c855040
+    expected_bytes: 303109217
+    sha256: 6b8d5a93783cac3f3b9094f1d50506716def8452773d25cd5dcab60385406302
     metadata:
       record_count: 1908804
   splits:
@@ -2841,7 +2846,7 @@
         duration_basis: sum of Lance sample duration; each sample is one ASR example
         zhen_fix_changed_records: 15785
         final_v2_changed_records: 40464
-        final_v4_changed_records: 131141
+        final_v4_changed_records: 130931
     train:
       artifacts:
         records:
@@ -2853,18 +2858,18 @@
         duration_basis: sum of Lance sample duration; each sample is one ASR example
         zhen_fix_changed_records: 15965
         final_v2_changed_records: 44876
-        final_v4_changed_records: 131583
+        final_v4_changed_records: 131373
   derived_from: emilia2_short@short-lance-20261023-final-v2-20261123
   recipe_parameters:
     spec: docs/reference/training-text.md（v4）
     start: emilia2_short@short-lance-20261023-final-v2-20261123
-    rounds: 数字写成阿拉伯数字（规则 9，zh-num-v1）131,583 条，value 108,259 处、digits 28,392 处、latin 24,260 处、date 11,858 处、percent 7,624 处、decimal 7,011 处、time 6,028 处
+    rounds: 数字写成阿拉伯数字（规则 9，zh-num-v1）131,373 条，value 107,948 处、digits 28,390 处、latin 24,117 处、date 11,858 处、percent 7,624 处、decimal 7,176 处、time 6,028 处
     unchanged: 规则没有改动的文本文件、录音清单、音频和 dev/test 划分，引用起点版本的产物
   provenance:
     summary: Emilia2 中英短音频普通转写
-    description: emilia2_short@short-lance-20261023 的训练文本终版 v4：在 emilia2_short@short-lance-20261023-final-v2-20261123 上补做数字写成阿拉伯数字（规则 9，zh-num-v1）131,583 条，value 108,259 处、digits 28,392 处、latin 24,260 处、date 11,858 处、percent 7,624 处、decimal 7,011 处、time 6,028 处，按 audio-data-contract docs/reference/training-text.md（v4）。同一行里的场景文本和热词列表一起改；其余字段、录音清单和音频照旧，引用起点版本的产物。
+    description: emilia2_short@short-lance-20261023 的训练文本终版 v4：在 emilia2_short@short-lance-20261023-final-v2-20261123 上补做数字写成阿拉伯数字（规则 9，zh-num-v1）131,373 条，value 107,948 处、digits 28,390 处、latin 24,117 处、date 11,858 处、percent 7,624 处、decimal 7,176 处、time 6,028 处，按 audio-data-contract docs/reference/training-text.md（v4）。同一行里的场景文本跟着 target 改，热词表的词各自转换（原样出现在 target 里的不动）；其余字段、录音清单和音频照旧，引用起点版本的产物。
     owner: mingdong
-    snapshot_date: '2026-11-27'
+    snapshot_date: '2026-11-28'
     source: emilia2_short@short-lance-20261023-final-v2-20261123
     run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
     source_keys:
@@ -2876,7 +2881,7 @@
     rules: zhen-fix-v1
     changed_records: 15965
     build_script: scripts/text_final/build_v4.py
-    record_correction: '2026-11-27 登记（PR #318）后修正，版本名不变：钟点“八点四十五”原来只改了分钟（写成“八点45”），改为“8点45”；“数字一百的百”这类说一个字怎么写的保留汉字；“十三香”“这一点十分重要”不改；labels.context_correction （segments、marked_text、cot）跟着 target 改。被替换文件的原 sha256：train_zh 6dd24c2bd9e6c3126199c8295557708a0a289e99f1d0793a61a1d5347657ee74'
+    record_correction: "2026-11-27 登记（PR #318）后修正，版本名不变：钟点“八点四十五”原来只改了分钟（写成“八点45”），改为“8点45”；“数字一百的百”这类说一个字怎么写的保留汉字；“十三香”“这一点十分重要”不改；labels.context_correction （segments、marked_text、cot）跟着 target 改。被替换文件的原 sha256：train_zh 6dd24c2bd9e6c3126199c8295557708a0a289e99f1d0793a61a1d5347657ee74\n2026-11-28 再次原地修正，版本名不变：专名保留约定写法（春风十里、降龙十八掌、党的十八大、十八届三中全会、十二指肠、十里堡、四句话十六字等，zh_numbers 专名词表）；字母后面的型号和版本号连小数一起改（PM2点五改为 PM2.5、Web3点零改为 Web3.0、iOS26点四点一改为 iOS26.4.1）；热词表里不在 target 中的词各自按规则 9 转换（原样出现在 target 里的不动）。被替换文件的原 sha256：train_zh 2e29697c7b66912ff39efecc37a71846be59656ffb3222704147219b2c855040"
 - schema_version: dataset-catalog/2.0
   dataset_id: police_asr_unified
   version: train-punc-v1-20261102-final-v4-20261127
@@ -2903,8 +2908,8 @@
     kind: lhotse-supervisions
     root_alias: aidc_data
     relative_path: datasets/police_asr_unified/versions/train-punc-v1-20261102-final-v4-20261127/text/train_supervisions_punc_0.jsonl.gz
-    expected_bytes: 95566135
-    sha256: 06ceaf403a583ec7490c4f641e70c3ec6246c6d965d192d110ca4344aa76152b
+    expected_bytes: 95564995
+    sha256: 484e988378782cca19fd0ba2e8ed2d6ce196d90c41a34fbbac9579d973db5547
     metadata:
       record_count: 365341
       punctuated: true
@@ -2914,7 +2919,7 @@
     root_alias: aidc_data
     relative_path: datasets/police_asr_unified/versions/train-punc-v1-20261102-final-v4-20261127/record_index/index.json
     expected_bytes: 793
-    sha256: 7ec6db9eaa7991d30ed9db85a8f85060e9bfef934cbec01ba6ebbf43eabbe24b
+    sha256: 164843c40c1bd8b3b9145295502de78dc345dd70488b059347db5e951a95eb28
     metadata:
       snapshot_version: 13
       rows: 365341
@@ -2933,24 +2938,24 @@
         records_punctuated: 365341
         zhen_fix_changed_records: 12247
         final_v2_changed_records: 15371
-        final_v4_changed_records: 67588
+        final_v4_changed_records: 67527
       provenance: {}
   provenance:
     owner: mingdong
-    description: police_asr_unified@train-punc-v1-20261102 的训练文本终版 v4：在 police_asr_unified@train-punc-v1-20261102-final-v2-20261123 上补做数字写成阿拉伯数字（规则 9，zh-num-v1）67,588 条，value 34,580 处、latin 20,854 处、digits 18,038 处、time 2,395 处、date 252 处、percent 191 处、decimal 9 处，按 audio-data-contract docs/reference/training-text.md（v4）。同一行里的场景文本和热词列表一起改；其余字段、录音清单和音频照旧，引用起点版本的产物。
+    description: police_asr_unified@train-punc-v1-20261102 的训练文本终版 v4：在 police_asr_unified@train-punc-v1-20261102-final-v2-20261123 上补做数字写成阿拉伯数字（规则 9，zh-num-v1）67,527 条，value 34,519 处、latin 20,842 处、digits 18,038 处、time 2,395 处、date 252 处、percent 191 处、decimal 21 处，按 audio-data-contract docs/reference/training-text.md（v4）。同一行里的场景文本跟着 target 改，热词表的词各自转换（原样出现在 target 里的不动）；其余字段、录音清单和音频照旧，引用起点版本的产物。
     source: police_asr_unified@train-punc-v1-20261102-final-v2-20261123
     summary: 警务合成语音统合版（V1–V6 合并）
-    snapshot_date: '2026-11-27'
+    snapshot_date: '2026-11-28'
     method: text-final-v4
     rules: zhen-fix-v1
     changed_records: 12247
     run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
     build_script: scripts/text_final/build_v4.py
-    record_correction: '2026-11-27 登记（PR #318）后修正，版本名不变：钟点“八点四十五”原来只改了分钟（写成“八点45”），改为“8点45”；“数字一百的百”这类说一个字怎么写的保留汉字；“十三香”“这一点十分重要”不改；labels.context_correction （segments、marked_text、cot）跟着 target 改。被替换文件的原 sha256：train_supervisions_punc_0 506d73b457de4ee5bb10b09e1d827f63bf299fe2a3ce0ff2bb555f66b121a2eb'
+    record_correction: "2026-11-27 登记（PR #318）后修正，版本名不变：钟点“八点四十五”原来只改了分钟（写成“八点45”），改为“8点45”；“数字一百的百”这类说一个字怎么写的保留汉字；“十三香”“这一点十分重要”不改；labels.context_correction （segments、marked_text、cot）跟着 target 改。被替换文件的原 sha256：train_supervisions_punc_0 506d73b457de4ee5bb10b09e1d827f63bf299fe2a3ce0ff2bb555f66b121a2eb\n2026-11-28 再次原地修正，版本名不变：专名保留约定写法（春风十里、降龙十八掌、党的十八大、十八届三中全会、十二指肠、十里堡、四句话十六字等，zh_numbers 专名词表）；字母后面的型号和版本号连小数一起改（PM2点五改为 PM2.5、Web3点零改为 Web3.0、iOS26点四点一改为 iOS26.4.1）；热词表里不在 target 中的词各自按规则 9 转换（原样出现在 target 里的不动）。被替换文件的原 sha256：train_supervisions_punc_0 06ceaf403a583ec7490c4f641e70c3ec6246c6d965d192d110ca4344aa76152b"
   recipe_parameters:
     spec: docs/reference/training-text.md（v4）
     start: police_asr_unified@train-punc-v1-20261102-final-v2-20261123
-    rounds: 数字写成阿拉伯数字（规则 9，zh-num-v1）67,588 条，value 34,580 处、latin 20,854 处、digits 18,038 处、time 2,395 处、date 252 处、percent 191 处、decimal 9 处
+    rounds: 数字写成阿拉伯数字（规则 9，zh-num-v1）67,527 条，value 34,519 处、latin 20,842 处、digits 18,038 处、time 2,395 处、date 252 处、percent 191 处、decimal 21 处
     unchanged: 规则没有改动的文本文件、录音清单、音频和 dev/test 划分，引用起点版本的产物
 - schema_version: dataset-catalog/2.0
   dataset_id: aishell2
@@ -2976,8 +2981,8 @@
     kind: lhotse-supervisions
     root_alias: aidc_data
     relative_path: datasets/aishell2/versions/train-punc-v1-20261102-final-v4-20261127/text/train_supervisions_punc_0.jsonl.gz
-    expected_bytes: 33917052
-    sha256: 41073482dc388cbede4a6fbcfddd75168328b8a7ba484a43945250b2b5bf560d
+    expected_bytes: 33911867
+    sha256: bbeac3fbeed09b6a1cb77d7316d778a718f382c70f0487ee9f1ddd2070f66244
     metadata:
       record_count: 1009223
       punctuated: true
@@ -2987,7 +2992,7 @@
     root_alias: aidc_data
     relative_path: datasets/aishell2/versions/train-punc-v1-20261102-final-v4-20261127/record_index/index.json
     expected_bytes: 780
-    sha256: 5a47665c00a01088d4dea63217486f43f0ba13ef9c29ead61f405a6931a1bcfd
+    sha256: e4153b4ce270199e79aa849348b39251af0fa76c71142108d010da7b7c1ab9e2
     metadata:
       snapshot_version: 13
       rows: 1009223
@@ -3006,21 +3011,21 @@
         records_punctuated: 1009223
         final_r1_changed_records: 45
         final_v2_changed_records: 215
-        final_v4_changed_records: 181397
+        final_v4_changed_records: 180996
       provenance: {}
   provenance:
     owner: mingdong
-    description: aishell2@train-punc-v1-20261102 的训练文本终版 v4：在 aishell2@train-punc-v1-20261102-final-v2-20261123 上补做数字写成阿拉伯数字（规则 9，zh-num-v1）181,397 条，value 103,262 处、digits 40,392 处、decimal 23,590 处、date 17,823 处、percent 9,033 处、latin 6,032 处、time 2,655 处，按 audio-data-contract docs/reference/training-text.md（v4）。同一行里的场景文本和热词列表一起改；其余字段、录音清单和音频照旧，引用起点版本的产物。
+    description: aishell2@train-punc-v1-20261102 的训练文本终版 v4：在 aishell2@train-punc-v1-20261102-final-v2-20261123 上补做数字写成阿拉伯数字（规则 9，zh-num-v1）180,996 条，value 102,811 处、digits 40,377 处、decimal 23,652 处、date 17,815 处、percent 9,033 处、latin 5,972 处、time 2,655 处，按 audio-data-contract docs/reference/training-text.md（v4）。同一行里的场景文本跟着 target 改，热词表的词各自转换（原样出现在 target 里的不动）；其余字段、录音清单和音频照旧，引用起点版本的产物。
     source: aishell2@train-punc-v1-20261102-final-v2-20261123
-    snapshot_date: '2026-11-27'
+    snapshot_date: '2026-11-28'
     method: text-final-v4
     run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
     build_script: scripts/text_final/build_v4.py
-    record_correction: '2026-11-27 登记（PR #318）后修正，版本名不变：钟点“八点四十五”原来只改了分钟（写成“八点45”），改为“8点45”；“数字一百的百”这类说一个字怎么写的保留汉字；“十三香”“这一点十分重要”不改；labels.context_correction （segments、marked_text、cot）跟着 target 改。被替换文件的原 sha256：train_supervisions_punc_0 6c28218784eb2d511f0eb80a039384076546c49c5621dd45ff0cb8d66474794a'
+    record_correction: "2026-11-27 登记（PR #318）后修正，版本名不变：钟点“八点四十五”原来只改了分钟（写成“八点45”），改为“8点45”；“数字一百的百”这类说一个字怎么写的保留汉字；“十三香”“这一点十分重要”不改；labels.context_correction （segments、marked_text、cot）跟着 target 改。被替换文件的原 sha256：train_supervisions_punc_0 6c28218784eb2d511f0eb80a039384076546c49c5621dd45ff0cb8d66474794a\n2026-11-28 再次原地修正，版本名不变：专名保留约定写法（春风十里、降龙十八掌、党的十八大、十八届三中全会、十二指肠、十里堡、四句话十六字等，zh_numbers 专名词表）；字母后面的型号和版本号连小数一起改（PM2点五改为 PM2.5、Web3点零改为 Web3.0、iOS26点四点一改为 iOS26.4.1）；热词表里不在 target 中的词各自按规则 9 转换（原样出现在 target 里的不动）。被替换文件的原 sha256：train_supervisions_punc_0 41073482dc388cbede4a6fbcfddd75168328b8a7ba484a43945250b2b5bf560d"
   recipe_parameters:
     spec: docs/reference/training-text.md（v4）
     start: aishell2@train-punc-v1-20261102-final-v2-20261123
-    rounds: 数字写成阿拉伯数字（规则 9，zh-num-v1）181,397 条，value 103,262 处、digits 40,392 处、decimal 23,590 处、date 17,823 处、percent 9,033 处、latin 6,032 处、time 2,655 处
+    rounds: 数字写成阿拉伯数字（规则 9，zh-num-v1）180,996 条，value 102,811 处、digits 40,377 处、decimal 23,652 处、date 17,815 处、percent 9,033 处、latin 5,972 处、time 2,655 处
     unchanged: 规则没有改动的文本文件、录音清单、音频和 dev/test 划分，引用起点版本的产物
 - schema_version: dataset-catalog/2.0
   dataset_id: aishell4
@@ -3039,8 +3044,8 @@
     kind: audio-records
     root_alias: aidc_data
     relative_path: datasets/aishell4/versions/asr-20261014-punc-20261102-final-v4-20261127/text/train_records_punc.jsonl.gz
-    expected_bytes: 4755403
-    sha256: ae2fa29d156709498839b2ee5d7ac4694d3c344c5c5ad09a977b943b23c8e4d6
+    expected_bytes: 4755325
+    sha256: 9c1d61ed187c8b7073604e6f82c67fb0a5e2190b45440c83a135d0ff342b4996
     metadata:
       record_count: 96998
   - name: audio_index
@@ -3056,7 +3061,7 @@
     root_alias: aidc_data
     relative_path: datasets/aishell4/versions/asr-20261014-punc-20261102-final-v4-20261127/record_index/index.json
     expected_bytes: 761
-    sha256: d9979df027bd52c0c5fc159454727fcebc3a22a97aa5675d9fc642b7214032bc
+    sha256: 4088f976995d1a6832e184b68b48546a5b4455f2a97cd55c8cbd098296a45fa0
     metadata:
       snapshot_version: 13
       rows: 96998
@@ -3076,25 +3081,26 @@
         duration_hours: 105.359
         zhen_fix_changed_records: 298
         final_v2_changed_records: 347
-        final_v4_changed_records: 2961
+        final_v4_changed_records: 2954
       provenance: {}
   derived_from: aishell4@asr-20261014-punc-20261102-final-v2-20261123
   recipe_parameters:
     spec: docs/reference/training-text.md（v4）
     start: aishell4@asr-20261014-punc-20261102-final-v2-20261123
-    rounds: 数字写成阿拉伯数字（规则 9，zh-num-v1）2,961 条，value 2,028 处、digits 1,101 处、date 128 处、percent 120 处、latin 118 处、time 82 处、decimal 1 处
+    rounds: 数字写成阿拉伯数字（规则 9，zh-num-v1）2,954 条，value 2,017 处、digits 1,101 处、date 128 处、percent 120 处、latin 118 处、time 82 处、decimal 1 处
     unchanged: 规则没有改动的文本文件、录音清单、音频和 dev/test 划分，引用起点版本的产物
   provenance:
     summary: 中文多人会议（AISHELL-4）；含轮流说话混合版
-    description: aishell4@asr-20261014-punc-20261102 的训练文本终版 v4：在 aishell4@asr-20261014-punc-20261102-final-v2-20261123 上补做数字写成阿拉伯数字（规则 9，zh-num-v1）2,961 条，value 2,028 处、digits 1,101 处、date 128 处、percent 120 处、latin 118 处、time 82 处、decimal 1 处，按 audio-data-contract docs/reference/training-text.md（v4）。同一行里的场景文本和热词列表一起改；其余字段、录音清单和音频照旧，引用起点版本的产物。
+    description: aishell4@asr-20261014-punc-20261102 的训练文本终版 v4：在 aishell4@asr-20261014-punc-20261102-final-v2-20261123 上补做数字写成阿拉伯数字（规则 9，zh-num-v1）2,954 条，value 2,017 处、digits 1,101 处、date 128 处、percent 120 处、latin 118 处、time 82 处、decimal 1 处，按 audio-data-contract docs/reference/training-text.md（v4）。同一行里的场景文本跟着 target 改，热词表的词各自转换（原样出现在 target 里的不动）；其余字段、录音清单和音频照旧，引用起点版本的产物。
     owner: mingdong
-    snapshot_date: '2026-11-27'
+    snapshot_date: '2026-11-28'
     source: aishell4@asr-20261014-punc-20261102-final-v2-20261123
     run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
     method: text-final-v4
     rules: zhen-fix-v1
     changed_records: 298
     build_script: scripts/text_final/build_v4.py
+    record_correction: 2026-11-28 再次原地修正，版本名不变：专名保留约定写法（春风十里、降龙十八掌、党的十八大、十八届三中全会、十二指肠、十里堡、四句话十六字等，zh_numbers 专名词表）；字母后面的型号和版本号连小数一起改（PM2点五改为 PM2.5、Web3点零改为 Web3.0、iOS26点四点一改为 iOS26.4.1）；热词表里不在 target 中的词各自按规则 9 转换（原样出现在 target 里的不动）。被替换文件的原 sha256：train_records_punc ae2fa29d156709498839b2ee5d7ac4694d3c344c5c5ad09a977b943b23c8e4d6
 - schema_version: dataset-catalog/2.0
   dataset_id: threed_speaker_zh_far_asr
   version: train-punc-v1-20261102-final-v4-20261127
@@ -3190,8 +3196,8 @@
     kind: lhotse-supervisions
     root_alias: aidc_data
     relative_path: datasets/magicdata_ramc/versions/train-punc-v1-20261102-final-v4-20261127/text/train_supervisions_punc_0.jsonl.gz
-    expected_bytes: 7642021
-    sha256: cf87ebd00285031cc0bcd665b69ef31c382a7586be45487606aabe41bdacfb99
+    expected_bytes: 7641799
+    sha256: 7810df8f738c9c84aaf6d700887f0d2f8d6ef6175d97c12ada18aca5a293d1ba
     metadata:
       record_count: 168459
   - name: record_index
@@ -3199,7 +3205,7 @@
     root_alias: aidc_data
     relative_path: datasets/magicdata_ramc/versions/train-punc-v1-20261102-final-v4-20261127/record_index/index.json
     expected_bytes: 789
-    sha256: fcd77922e830c141fade982e931f1f1f012e23cdb3c166ab1224ef7d4d36275c
+    sha256: af8b0449c1f9a5e22127485e117ddbdb53d01fc15e1c020e3f6d01ae9109122c
     metadata:
       snapshot_version: 13
       rows: 168459
@@ -3221,25 +3227,25 @@
         duration_basis: sum of supervision duration
         zhen_fix_changed_records: 1052
         final_v2_changed_records: 99
-        final_v4_changed_records: 4000
+        final_v4_changed_records: 3985
   derived_from: magicdata_ramc@train-punc-v1-20261102-final-v2-20261123
   recipe_parameters:
     spec: docs/reference/training-text.md（v4）
     start: magicdata_ramc@train-punc-v1-20261102-final-v2-20261123
-    rounds: 数字写成阿拉伯数字（规则 9，zh-num-v1）4,000 条，value 2,947 处、digits 898 处、date 724 处、latin 522 处、time 254 处、percent 92 处、decimal 50 处
+    rounds: 数字写成阿拉伯数字（规则 9，zh-num-v1）3,985 条，value 2,932 处、digits 898 处、date 724 处、latin 521 处、time 254 处、percent 92 处、decimal 51 处
     unchanged: 规则没有改动的文本文件、录音清单、音频和 dev/test 划分，引用起点版本的产物
   provenance:
     summary: 中文手机通话自然对话（MagicData-RAMC）
-    description: magicdata_ramc@train-punc-v1-20261102 的训练文本终版 v4：在 magicdata_ramc@train-punc-v1-20261102-final-v2-20261123 上补做数字写成阿拉伯数字（规则 9，zh-num-v1）4,000 条，value 2,947 处、digits 898 处、date 724 处、latin 522 处、time 254 处、percent 92 处、decimal 50 处，按 audio-data-contract docs/reference/training-text.md（v4）。同一行里的场景文本和热词列表一起改；其余字段、录音清单和音频照旧，引用起点版本的产物。
+    description: magicdata_ramc@train-punc-v1-20261102 的训练文本终版 v4：在 magicdata_ramc@train-punc-v1-20261102-final-v2-20261123 上补做数字写成阿拉伯数字（规则 9，zh-num-v1）3,985 条，value 2,932 处、digits 898 处、date 724 处、latin 521 处、time 254 处、percent 92 处、decimal 51 处，按 audio-data-contract docs/reference/training-text.md（v4）。同一行里的场景文本跟着 target 改，热词表的词各自转换（原样出现在 target 里的不动）；其余字段、录音清单和音频照旧，引用起点版本的产物。
     owner: mingdong
-    snapshot_date: '2026-11-27'
+    snapshot_date: '2026-11-28'
     source: magicdata_ramc@train-punc-v1-20261102-final-v2-20261123
     run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
     method: text-final-v4
     rules: zhen-fix-v1
     changed_records: 1052
     build_script: scripts/text_final/build_v4.py
-    record_correction: '2026-11-27 登记（PR #318）后修正，版本名不变：钟点“八点四十五”原来只改了分钟（写成“八点45”），改为“8点45”；“数字一百的百”这类说一个字怎么写的保留汉字；“十三香”“这一点十分重要”不改；labels.context_correction （segments、marked_text、cot）跟着 target 改。被替换文件的原 sha256：train_supervisions_punc_0 8e1ffae576c73c51745b5d14684534fd5f3fac2e746f3e5783f1880682d087ac'
+    record_correction: "2026-11-27 登记（PR #318）后修正，版本名不变：钟点“八点四十五”原来只改了分钟（写成“八点45”），改为“8点45”；“数字一百的百”这类说一个字怎么写的保留汉字；“十三香”“这一点十分重要”不改；labels.context_correction （segments、marked_text、cot）跟着 target 改。被替换文件的原 sha256：train_supervisions_punc_0 8e1ffae576c73c51745b5d14684534fd5f3fac2e746f3e5783f1880682d087ac\n2026-11-28 再次原地修正，版本名不变：专名保留约定写法（春风十里、降龙十八掌、党的十八大、十八届三中全会、十二指肠、十里堡、四句话十六字等，zh_numbers 专名词表）；字母后面的型号和版本号连小数一起改（PM2点五改为 PM2.5、Web3点零改为 Web3.0、iOS26点四点一改为 iOS26.4.1）；热词表里不在 target 中的词各自按规则 9 转换（原样出现在 target 里的不动）。被替换文件的原 sha256：train_supervisions_punc_0 cf87ebd00285031cc0bcd665b69ef31c382a7586be45487606aabe41bdacfb99"
 - schema_version: dataset-catalog/2.0
   dataset_id: magicdata_ramc
   version: allspk-asr-v1-20261103-final-v4-20261127
@@ -3257,8 +3263,8 @@
     kind: audio-records
     root_alias: aidc_data
     relative_path: datasets/magicdata_ramc/versions/allspk-asr-v1-20261103-final-v4-20261127/text/train_records.jsonl.gz
-    expected_bytes: 4741663
-    sha256: 21f30e9612c2e35b5df59960deae5c6507e0a8763f4092766cbb9ba074700328
+    expected_bytes: 4741464
+    sha256: 937cea5bab0ae09c2dee3ab7009138febb0b455933bdaddfe970a904f991eb38
     metadata:
       record_count: 9902
       punctuated: true
@@ -3275,7 +3281,7 @@
     root_alias: aidc_data
     relative_path: datasets/magicdata_ramc/versions/allspk-asr-v1-20261103-final-v4-20261127/record_index/index.json
     expected_bytes: 756
-    sha256: 6b802bfd74dabc960d4c81cf23610f6625daae3d252e4e0af724a2fc68ee5d63
+    sha256: 5215efbb3ab65b59804d55ca68b72e5cd286a983a1f3ce6a0435d2e17908a05b
     metadata:
       snapshot_version: 13
       rows: 9902
@@ -3297,11 +3303,11 @@
         duration_basis: window duration (ref.duration)
         zhen_fix_changed_records: 474
         final_v2_changed_records: 73
-        final_v4_changed_records: 1894
+        final_v4_changed_records: 1887
   provenance:
     synthetic: none
-    snapshot_date: '2026-11-27'
-    description: magicdata_ramc@allspk-asr-v1-20261103 的训练文本终版 v4：在 magicdata_ramc@allspk-asr-v1-20261103-final-v2-20261123 上补做数字写成阿拉伯数字（规则 9，zh-num-v1）1,894 条，value 2,444 处、digits 739 处、date 647 处、latin 410 处、time 217 处、percent 73 处、decimal 44 处，按 audio-data-contract docs/reference/training-text.md（v4）。同一行里的场景文本和热词列表一起改；其余字段、录音清单和音频照旧，引用起点版本的产物。
+    snapshot_date: '2026-11-28'
+    description: magicdata_ramc@allspk-asr-v1-20261103 的训练文本终版 v4：在 magicdata_ramc@allspk-asr-v1-20261103-final-v2-20261123 上补做数字写成阿拉伯数字（规则 9，zh-num-v1）1,887 条，value 2,432 处、digits 739 处、date 647 处、latin 409 处、time 217 处、percent 73 处、decimal 45 处，按 audio-data-contract docs/reference/training-text.md（v4）。同一行里的场景文本跟着 target 改，热词表的词各自转换（原样出现在 target 里的不动）；其余字段、录音清单和音频照旧，引用起点版本的产物。
     sources:
     - magicdata_ramc@icefall-20260908
     - magicdata_ramc@punc-written-v1-20261029
@@ -3316,12 +3322,12 @@
     owner: mingdong
     run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
     build_script: scripts/text_final/build_v4.py
-    record_correction: '2026-11-27 登记（PR #318）后修正，版本名不变：钟点“八点四十五”原来只改了分钟（写成“八点45”），改为“8点45”；“数字一百的百”这类说一个字怎么写的保留汉字；“十三香”“这一点十分重要”不改；labels.context_correction （segments、marked_text、cot）跟着 target 改。被替换文件的原 sha256：train_records 7ba414b0eeddd12b9cd28f95f22af1591adf64f524b0dad6f607e114e0fb353d'
+    record_correction: "2026-11-27 登记（PR #318）后修正，版本名不变：钟点“八点四十五”原来只改了分钟（写成“八点45”），改为“8点45”；“数字一百的百”这类说一个字怎么写的保留汉字；“十三香”“这一点十分重要”不改；labels.context_correction （segments、marked_text、cot）跟着 target 改。被替换文件的原 sha256：train_records 7ba414b0eeddd12b9cd28f95f22af1591adf64f524b0dad6f607e114e0fb353d\n2026-11-28 再次原地修正，版本名不变：专名保留约定写法（春风十里、降龙十八掌、党的十八大、十八届三中全会、十二指肠、十里堡、四句话十六字等，zh_numbers 专名词表）；字母后面的型号和版本号连小数一起改（PM2点五改为 PM2.5、Web3点零改为 Web3.0、iOS26点四点一改为 iOS26.4.1）；热词表里不在 target 中的词各自按规则 9 转换（原样出现在 target 里的不动）。被替换文件的原 sha256：train_records 21f30e9612c2e35b5df59960deae5c6507e0a8763f4092766cbb9ba074700328"
   derived_from: magicdata_ramc@allspk-asr-v1-20261103-final-v2-20261123
   recipe_parameters:
     spec: docs/reference/training-text.md（v4）
     start: magicdata_ramc@allspk-asr-v1-20261103-final-v2-20261123
-    rounds: 数字写成阿拉伯数字（规则 9，zh-num-v1）1,894 条，value 2,444 处、digits 739 处、date 647 处、latin 410 处、time 217 处、percent 73 处、decimal 44 处
+    rounds: 数字写成阿拉伯数字（规则 9，zh-num-v1）1,887 条，value 2,432 处、digits 739 处、date 647 处、latin 409 处、time 217 处、percent 73 处、decimal 45 处
     unchanged: 规则没有改动的文本文件、录音清单、音频和 dev/test 划分，引用起点版本的产物
 - schema_version: dataset-catalog/2.0
   dataset_id: aishell4
@@ -3340,8 +3346,8 @@
     kind: audio-records
     root_alias: aidc_data
     relative_path: datasets/aishell4/versions/allspk-asr-v1-20261103-final-v4-20261127/text/train_records.jsonl.gz
-    expected_bytes: 1855545
-    sha256: 6a40bfb3411d27f47c83cadb999ff6a0fc760591af310f9f567db7a443e2d646
+    expected_bytes: 1855490
+    sha256: 8b3fff7596d49b572afb37a6ca5315c1d487b0904f8a70a6d6c54c06dc272949
     metadata:
       record_count: 4267
       punctuated: true
@@ -3358,7 +3364,7 @@
     root_alias: aidc_data
     relative_path: datasets/aishell4/versions/allspk-asr-v1-20261103-final-v4-20261127/record_index/index.json
     expected_bytes: 750
-    sha256: 8a4db712a3be4cc1004b1be9c2b34ec88300a6338c792f3320a070de73bfa581
+    sha256: ab5c81958da1a1a5cb6f97bbcb69defa311dff4f0a2349fd337aff3784bcc3b7
     metadata:
       snapshot_version: 13
       rows: 4267
@@ -3380,11 +3386,11 @@
         duration_basis: window duration (ref.duration)
         final_r1_changed_records: 97
         final_v2_changed_records: 156
-        final_v4_changed_records: 785
+        final_v4_changed_records: 783
   provenance:
     synthetic: none
-    snapshot_date: '2026-11-27'
-    description: aishell4@allspk-asr-v1-20261103 的训练文本终版 v4：在 aishell4@allspk-asr-v1-20261103-final-v2-20261123 上补做数字写成阿拉伯数字（规则 9，zh-num-v1）785 条，value 967 处、digits 966 处、percent 80 处、latin 59 处、date 50 处、time 30 处、decimal 1 处，按 audio-data-contract docs/reference/training-text.md（v4）。同一行里的场景文本和热词列表一起改；其余字段、录音清单和音频照旧，引用起点版本的产物。
+    snapshot_date: '2026-11-28'
+    description: aishell4@allspk-asr-v1-20261103 的训练文本终版 v4：在 aishell4@allspk-asr-v1-20261103-final-v2-20261123 上补做数字写成阿拉伯数字（规则 9，zh-num-v1）783 条，digits 966 处、value 962 处、percent 80 处、latin 59 处、date 50 处、time 30 处、decimal 1 处，按 audio-data-contract docs/reference/training-text.md（v4）。同一行里的场景文本跟着 target 改，热词表的词各自转换（原样出现在 target 里的不动）；其余字段、录音清单和音频照旧，引用起点版本的产物。
     sources:
     - aishell4@icefall-20260908
     - aishell4@punc-written-v1-20261029
@@ -3395,11 +3401,12 @@
     owner: mingdong
     run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
     build_script: scripts/text_final/build_v4.py
+    record_correction: 2026-11-28 再次原地修正，版本名不变：专名保留约定写法（春风十里、降龙十八掌、党的十八大、十八届三中全会、十二指肠、十里堡、四句话十六字等，zh_numbers 专名词表）；字母后面的型号和版本号连小数一起改（PM2点五改为 PM2.5、Web3点零改为 Web3.0、iOS26点四点一改为 iOS26.4.1）；热词表里不在 target 中的词各自按规则 9 转换（原样出现在 target 里的不动）。被替换文件的原 sha256：train_records 6a40bfb3411d27f47c83cadb999ff6a0fc760591af310f9f567db7a443e2d646
   derived_from: aishell4@allspk-asr-v1-20261103-final-v2-20261123
   recipe_parameters:
     spec: docs/reference/training-text.md（v4）
     start: aishell4@allspk-asr-v1-20261103-final-v2-20261123
-    rounds: 数字写成阿拉伯数字（规则 9，zh-num-v1）785 条，value 967 处、digits 966 处、percent 80 处、latin 59 处、date 50 处、time 30 处、decimal 1 处
+    rounds: 数字写成阿拉伯数字（规则 9，zh-num-v1）783 条，digits 966 处、value 962 处、percent 80 处、latin 59 处、date 50 处、time 30 处、decimal 1 处
     unchanged: 规则没有改动的文本文件、录音清单、音频和 dev/test 划分，引用起点版本的产物
 - schema_version: dataset-catalog/2.0
   dataset_id: magicdata_ramc
@@ -3418,8 +3425,8 @@
     kind: audio-records
     root_alias: aidc_data
     relative_path: datasets/magicdata_ramc/versions/allspk-ts-v1-20261104-final-v4-20261127/text/train_records.jsonl.gz
-    expected_bytes: 3897750
-    sha256: c956e1070e15ac44270eaf2d6c2061cc54cd3a24a9df4157d9b8726aea8a6573
+    expected_bytes: 3897559
+    sha256: 7147f244bd3cf4df136ac311d352bf280bab9df8200a856af0414d27b88389e5
     metadata:
       record_count: 9902
       punctuated: true
@@ -3445,7 +3452,7 @@
     root_alias: aidc_data
     relative_path: datasets/magicdata_ramc/versions/allspk-ts-v1-20261104-final-v4-20261127/record_index/index.json
     expected_bytes: 941
-    sha256: 5279f50285d96e8748b3bffb19d798e087a5921e4c6ed3be720b4a6794a5b5e2
+    sha256: f4616dc0e6ac0f1d34d8e6a363b4e9b355be5e8bb235f5d2f63e1305d7b9d90a
     metadata:
       snapshot_version: 13
       rows: 11669
@@ -3467,7 +3474,7 @@
         duration_basis: mixture duration (ref.duration)
         zhen_fix_changed_records: 283
         final_v2_changed_records: 35
-        final_v4_changed_records: 1209
+        final_v4_changed_records: 1204
     train_neg:
       group: train
       artifacts:
@@ -3485,8 +3492,8 @@
         zhen_fix_changed_records: 0
   provenance:
     synthetic: none
-    snapshot_date: '2026-11-27'
-    description: magicdata_ramc@allspk-ts-v1-20261104 的训练文本终版 v4：在 magicdata_ramc@allspk-ts-v1-20261104-final-v2-20261123 上补做数字写成阿拉伯数字（规则 9，zh-num-v1）1,209 条，value 1,319 处、digits 420 处、date 393 处、latin 252 处、time 147 处、percent 41 处、decimal 23 处，按 audio-data-contract docs/reference/training-text.md（v4）。同一行里的场景文本和热词列表一起改；其余字段、录音清单和音频照旧，引用起点版本的产物。
+    snapshot_date: '2026-11-28'
+    description: magicdata_ramc@allspk-ts-v1-20261104 的训练文本终版 v4：在 magicdata_ramc@allspk-ts-v1-20261104-final-v2-20261123 上补做数字写成阿拉伯数字（规则 9，zh-num-v1）1,204 条，value 1,311 处、digits 420 处、date 393 处、latin 252 处、time 147 处、percent 41 处、decimal 23 处，按 audio-data-contract docs/reference/training-text.md（v4）。同一行里的场景文本跟着 target 改，热词表的词各自转换（原样出现在 target 里的不动）；其余字段、录音清单和音频照旧，引用起点版本的产物。
     sources:
     - magicdata_ramc@allspk-asr-v1-20261103
     - magicdata_ramc@icefall-20260908
@@ -3502,12 +3509,12 @@
     owner: mingdong
     run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
     build_script: scripts/text_final/build_v4.py
-    record_correction: '2026-11-27 登记（PR #318）后修正，版本名不变：钟点“八点四十五”原来只改了分钟（写成“八点45”），改为“8点45”；“数字一百的百”这类说一个字怎么写的保留汉字；“十三香”“这一点十分重要”不改；labels.context_correction （segments、marked_text、cot）跟着 target 改。被替换文件的原 sha256：train_records de6e58d50982ee2b5ee1ea40cd8a1b1d8e5ab0008d9e7cc988c76ad09093404c'
+    record_correction: "2026-11-27 登记（PR #318）后修正，版本名不变：钟点“八点四十五”原来只改了分钟（写成“八点45”），改为“8点45”；“数字一百的百”这类说一个字怎么写的保留汉字；“十三香”“这一点十分重要”不改；labels.context_correction （segments、marked_text、cot）跟着 target 改。被替换文件的原 sha256：train_records de6e58d50982ee2b5ee1ea40cd8a1b1d8e5ab0008d9e7cc988c76ad09093404c\n2026-11-28 再次原地修正，版本名不变：专名保留约定写法（春风十里、降龙十八掌、党的十八大、十八届三中全会、十二指肠、十里堡、四句话十六字等，zh_numbers 专名词表）；字母后面的型号和版本号连小数一起改（PM2点五改为 PM2.5、Web3点零改为 Web3.0、iOS26点四点一改为 iOS26.4.1）；热词表里不在 target 中的词各自按规则 9 转换（原样出现在 target 里的不动）。被替换文件的原 sha256：train_records c956e1070e15ac44270eaf2d6c2061cc54cd3a24a9df4157d9b8726aea8a6573"
   derived_from: magicdata_ramc@allspk-ts-v1-20261104-final-v2-20261123
   recipe_parameters:
     spec: docs/reference/training-text.md（v4）
     start: magicdata_ramc@allspk-ts-v1-20261104-final-v2-20261123
-    rounds: 数字写成阿拉伯数字（规则 9，zh-num-v1）1,209 条，value 1,319 处、digits 420 处、date 393 处、latin 252 处、time 147 处、percent 41 处、decimal 23 处
+    rounds: 数字写成阿拉伯数字（规则 9，zh-num-v1）1,204 条，value 1,311 处、digits 420 处、date 393 处、latin 252 处、time 147 处、percent 41 处、decimal 23 处
     unchanged: 规则没有改动的文本文件、录音清单、音频和 dev/test 划分，引用起点版本的产物
 - schema_version: dataset-catalog/2.0
   dataset_id: aishell4
@@ -3526,8 +3533,8 @@
     kind: audio-records
     root_alias: aidc_data
     relative_path: datasets/aishell4/versions/allspk-ts-v1-20261104-final-v4-20261127/text/train_records.jsonl.gz
-    expected_bytes: 1356810
-    sha256: e5f7eae97e207a88117cdd4e0f72ce9d685cfea49412758299c6ae58f574e5fb
+    expected_bytes: 1356797
+    sha256: 128c38a3f54519e4f3ad319ab1608932d0246cd428faa3a8ae0ad1d63dc231f8
     metadata:
       record_count: 4267
       punctuated: true
@@ -3553,7 +3560,7 @@
     root_alias: aidc_data
     relative_path: datasets/aishell4/versions/allspk-ts-v1-20261104-final-v4-20261127/record_index/index.json
     expected_bytes: 934
-    sha256: 79e932070c109612bc5b5dcf57de42d855a0b953a0d81ceb006fb504be02f851
+    sha256: 59371edaebbbccd8b3217332e20ea8637374c5f251c18394133d729b4d6bffda
     metadata:
       snapshot_version: 13
       rows: 7778
@@ -3575,7 +3582,7 @@
         duration_basis: mixture duration (ref.duration)
         final_r1_changed_records: 45
         final_v2_changed_records: 63
-        final_v4_changed_records: 432
+        final_v4_changed_records: 431
     train_neg:
       group: train
       artifacts:
@@ -3592,8 +3599,8 @@
         duration_basis: mixture duration (ref.duration)
   provenance:
     synthetic: none
-    snapshot_date: '2026-11-27'
-    description: aishell4@allspk-ts-v1-20261104 的训练文本终版 v4：在 aishell4@allspk-ts-v1-20261104-final-v2-20261123 上补做数字写成阿拉伯数字（规则 9，zh-num-v1）432 条，value 300 处、digits 221 处、percent 34 处、latin 27 处、date 21 处、time 11 处，按 audio-data-contract docs/reference/training-text.md（v4）。同一行里的场景文本和热词列表一起改；其余字段、录音清单和音频照旧，引用起点版本的产物。
+    snapshot_date: '2026-11-28'
+    description: aishell4@allspk-ts-v1-20261104 的训练文本终版 v4：在 aishell4@allspk-ts-v1-20261104-final-v2-20261123 上补做数字写成阿拉伯数字（规则 9，zh-num-v1）431 条，value 299 处、digits 221 处、percent 34 处、latin 27 处、date 21 处、time 11 处，按 audio-data-contract docs/reference/training-text.md（v4）。同一行里的场景文本跟着 target 改，热词表的词各自转换（原样出现在 target 里的不动）；其余字段、录音清单和音频照旧，引用起点版本的产物。
     sources:
     - aishell4@allspk-asr-v1-20261103
     - aishell4@icefall-20260908
@@ -3605,11 +3612,12 @@
     owner: mingdong
     run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
     build_script: scripts/text_final/build_v4.py
+    record_correction: 2026-11-28 再次原地修正，版本名不变：专名保留约定写法（春风十里、降龙十八掌、党的十八大、十八届三中全会、十二指肠、十里堡、四句话十六字等，zh_numbers 专名词表）；字母后面的型号和版本号连小数一起改（PM2点五改为 PM2.5、Web3点零改为 Web3.0、iOS26点四点一改为 iOS26.4.1）；热词表里不在 target 中的词各自按规则 9 转换（原样出现在 target 里的不动）。被替换文件的原 sha256：train_records e5f7eae97e207a88117cdd4e0f72ce9d685cfea49412758299c6ae58f574e5fb
   derived_from: aishell4@allspk-ts-v1-20261104-final-v2-20261123
   recipe_parameters:
     spec: docs/reference/training-text.md（v4）
     start: aishell4@allspk-ts-v1-20261104-final-v2-20261123
-    rounds: 数字写成阿拉伯数字（规则 9，zh-num-v1）432 条，value 300 处、digits 221 处、percent 34 处、latin 27 处、date 21 处、time 11 处
+    rounds: 数字写成阿拉伯数字（规则 9，zh-num-v1）431 条，value 299 处、digits 221 处、percent 34 处、latin 27 处、date 21 处、time 11 处
     unchanged: 规则没有改动的文本文件、录音清单、音频和 dev/test 划分，引用起点版本的产物
 - schema_version: dataset-catalog/2.0
   dataset_id: hw_sft
@@ -3630,16 +3638,16 @@
     kind: audio-records
     root_alias: aidc_data
     relative_path: datasets/hw_sft/versions/hw-20261014-final-v4-20261127/text/train.jsonl.gz
-    expected_bytes: 389455889
-    sha256: 68a83530a390d0e239ff45c1424e722baf206fb2e9f54524cca8e5bbe432c020
+    expected_bytes: 393338044
+    sha256: 22eaaca7f14fe09efa40bd46c248be86a36a7b1e9c3010126796fe74cb8cce59
     metadata:
       record_count: 1043317
   - name: train_hotwords
     kind: audio-records
     root_alias: aidc_data
     relative_path: datasets/hw_sft/versions/hw-20261014-final-v4-20261127/text/train_hotwords.jsonl.gz
-    expected_bytes: 365559145
-    sha256: f88231ce43ccca72b22937f2b5b43f70be86df2c0a69b96ec37cd0dc18fcafd2
+    expected_bytes: 369456334
+    sha256: 0ed351dbb1c524a44b923f939e596ba06777e243e720bf29fb69e30ffd924444
     metadata:
       record_count: 834336
   - name: audio_index
@@ -3661,7 +3669,7 @@
     root_alias: aidc_data
     relative_path: datasets/hw_sft/versions/hw-20261014-final-v4-20261127/record_index/index.json
     expected_bytes: 924
-    sha256: c67efeb9fdf3143700cf56d38f635882c4017d0723bcb6675a989f5f7a9a83e5
+    sha256: 99f7d39cdbe8b174ee4531e8c8cad7ba6c66c8de3f4515be0c0a07e6b0ae2074
     metadata:
       snapshot_version: 13
       rows: 1877653
@@ -3683,7 +3691,7 @@
           en: 500000
           zh: 543317
         final_v2_changed_records: 1614
-        final_v4_changed_records: 41037
+        final_v4_changed_records: 104803
     train_hotwords:
       artifacts:
         records:
@@ -3701,16 +3709,16 @@
           zh: 434598
         final_r1_changed_records: 4
         final_v2_changed_records: 1255
-        final_v4_changed_records: 32903
+        final_v4_changed_records: 96772
   recipe_parameters:
     spec: docs/reference/training-text.md（v4）
     start: hw_sft@hw-20261014-final-v2-20261123
-    rounds: 数字写成阿拉伯数字（规则 9，zh-num-v1）73,940 条，value 46,875 处、date 12,031 处、time 10,219 处、digits 10,125 处、percent 5,740 处、decimal 4,109 处、latin 6 处
+    rounds: 数字写成阿拉伯数字（规则 9，zh-num-v1）201,575 条，value 46,107 处、date 11,989 处、time 10,219 处、digits 10,101 处、percent 5,740 处、decimal 4,109 处、latin 6 处；其中 128,408 条只改了热词（热词表里不在 target 中的词各自按规则 9 转换）
     unchanged: 规则没有改动的文本文件、录音清单、音频和 dev/test 划分，引用起点版本的产物
   provenance:
     summary: 热词 SFT 数据（ShareGPT 格式），含普通转写
-    description: hw_sft@hw-20261014 的训练文本终版 v4：在 hw_sft@hw-20261014-final-v2-20261123 上补做数字写成阿拉伯数字（规则 9，zh-num-v1）73,940 条，value 46,875 处、date 12,031 处、time 10,219 处、digits 10,125 处、percent 5,740 处、decimal 4,109 处、latin 6 处，按 audio-data-contract docs/reference/training-text.md（v4）。同一行里的场景文本和热词列表一起改；其余字段、录音清单和音频照旧，引用起点版本的产物。
-    snapshot_date: '2026-11-27'
+    description: hw_sft@hw-20261014 的训练文本终版 v4：在 hw_sft@hw-20261014-final-v2-20261123 上补做数字写成阿拉伯数字（规则 9，zh-num-v1）201,575 条，value 46,107 处、date 11,989 处、time 10,219 处、digits 10,101 处、percent 5,740 处、decimal 4,109 处、latin 6 处；其中 128,408 条只改了热词（热词表里不在 target 中的词各自按规则 9 转换），按 audio-data-contract docs/reference/training-text.md（v4）。同一行里的场景文本跟着 target 改，热词表的词各自转换（原样出现在 target 里的不动）；其余字段、录音清单和音频照旧，引用起点版本的产物。
+    snapshot_date: '2026-11-28'
     source: hw_sft@hw-20261014-final-v2-20261123
     rules: data/amphionasr/scripts/build_hw_sft_catalog.py
     skipped_audio: 0
@@ -3720,7 +3728,7 @@
     owner: mingdong
     run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
     build_script: scripts/text_final/build_v4.py
-    record_correction: '2026-11-27 登记（PR #318）后修正，版本名不变：钟点“八点四十五”原来只改了分钟（写成“八点45”），改为“8点45”；“数字一百的百”这类说一个字怎么写的保留汉字；“十三香”“这一点十分重要”不改；labels.context_correction （segments、marked_text、cot）跟着 target 改。被替换文件的原 sha256：train 1ffb88bddd5c1949bd794847184f601d015ceb8edda9f5ea8299f1c7f92d1ef3；train_hotwords 60e7cb78533baae0441e0c18bed806a4a399cbd3beeee9d27de3a38ae51dea2b'
+    record_correction: "2026-11-27 登记（PR #318）后修正，版本名不变：钟点“八点四十五”原来只改了分钟（写成“八点45”），改为“8点45”；“数字一百的百”这类说一个字怎么写的保留汉字；“十三香”“这一点十分重要”不改；labels.context_correction （segments、marked_text、cot）跟着 target 改。被替换文件的原 sha256：train 1ffb88bddd5c1949bd794847184f601d015ceb8edda9f5ea8299f1c7f92d1ef3；train_hotwords 60e7cb78533baae0441e0c18bed806a4a399cbd3beeee9d27de3a38ae51dea2b\n2026-11-28 再次原地修正，版本名不变：专名保留约定写法（春风十里、降龙十八掌、党的十八大、十八届三中全会、十二指肠、十里堡、四句话十六字等，zh_numbers 专名词表）；字母后面的型号和版本号连小数一起改（PM2点五改为 PM2.5、Web3点零改为 Web3.0、iOS26点四点一改为 iOS26.4.1）；热词表里不在 target 中的词各自按规则 9 转换（原样出现在 target 里的不动）。被替换文件的原 sha256：train 68a83530a390d0e239ff45c1424e722baf206fb2e9f54524cca8e5bbe432c020；train_hotwords f88231ce43ccca72b22937f2b5b43f70be86df2c0a69b96ec37cd0dc18fcafd2"
   derived_from: hw_sft@hw-20261014-final-v2-20261123
 - schema_version: dataset-catalog/2.0
   dataset_id: hard_hw_sft
@@ -3741,8 +3749,8 @@
     kind: audio-records
     root_alias: aidc_data
     relative_path: datasets/hard_hw_sft/versions/hard-20261014-final-v4-20261127/text/train.jsonl.gz
-    expected_bytes: 33774736
-    sha256: 3617488252d432495980625d51553a3e4b701e25ae1a173b573a2e99949ca277
+    expected_bytes: 33838746
+    sha256: 97766da5373a25813fbd50f6ef4d98d8cec1a195644cc9ed12a9e391e098947a
     metadata:
       record_count: 69275
   - name: audio_index
@@ -3765,7 +3773,7 @@
     root_alias: aidc_data
     relative_path: datasets/hard_hw_sft/versions/hard-20261014-final-v4-20261127/record_index/index.json
     expected_bytes: 738
-    sha256: af22e5f7af230e5fdda2640d399a582c9be664978545aa9dc583500889bc103a
+    sha256: 482f9cd25f660e6cd22a2cc84a93e2f52cbce995514870d151b7bb5611300f1a
     metadata:
       snapshot_version: 13
       rows: 69275
@@ -3787,16 +3795,16 @@
           zh: 10828
           en: 58447
         final_v2_changed_records: 13
-        final_v4_changed_records: 851
+        final_v4_changed_records: 1608
   recipe_parameters:
     spec: docs/reference/training-text.md（v4）
     start: hard_hw_sft@hard-20261014-final-v2-20261123
-    rounds: 数字写成阿拉伯数字（规则 9，zh-num-v1）851 条，value 579 处、date 262 处、digits 129 处、time 38 处、decimal 26 处、percent 24 处
+    rounds: 数字写成阿拉伯数字（规则 9，zh-num-v1）1,608 条，value 574 处、date 260 处、digits 128 处、time 38 处、decimal 26 处、percent 24 处；其中 764 条只改了热词（热词表里不在 target 中的词各自按规则 9 转换）
     unchanged: 规则没有改动的文本文件、录音清单、音频和 dev/test 划分，引用起点版本的产物
   provenance:
     summary: 热词难例 SFT 数据（ShareGPT 格式）
-    description: hard_hw_sft@hard-20261014 的训练文本终版 v4：在 hard_hw_sft@hard-20261014-final-v2-20261123 上补做数字写成阿拉伯数字（规则 9，zh-num-v1）851 条，value 579 处、date 262 处、digits 129 处、time 38 处、decimal 26 处、percent 24 处，按 audio-data-contract docs/reference/training-text.md（v4）。同一行里的场景文本和热词列表一起改；其余字段、录音清单和音频照旧，引用起点版本的产物。
-    snapshot_date: '2026-11-27'
+    description: hard_hw_sft@hard-20261014 的训练文本终版 v4：在 hard_hw_sft@hard-20261014-final-v2-20261123 上补做数字写成阿拉伯数字（规则 9，zh-num-v1）1,608 条，value 574 处、date 260 处、digits 128 处、time 38 处、decimal 26 处、percent 24 处；其中 764 条只改了热词（热词表里不在 target 中的词各自按规则 9 转换），按 audio-data-contract docs/reference/training-text.md（v4）。同一行里的场景文本跟着 target 改，热词表的词各自转换（原样出现在 target 里的不动）；其余字段、录音清单和音频照旧，引用起点版本的产物。
+    snapshot_date: '2026-11-28'
     source: hard_hw_sft@hard-20261014-final-v2-20261123
     rules: data/amphionasr/scripts/build_hw_sft_catalog.py
     skipped_audio: 0
@@ -3806,7 +3814,7 @@
     owner: mingdong
     run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
     build_script: scripts/text_final/build_v4.py
-    record_correction: '2026-11-27 登记（PR #318）后修正，版本名不变：钟点“八点四十五”原来只改了分钟（写成“八点45”），改为“8点45”；“数字一百的百”这类说一个字怎么写的保留汉字；“十三香”“这一点十分重要”不改；labels.context_correction （segments、marked_text、cot）跟着 target 改。被替换文件的原 sha256：train 0d21e97792ec70fd21b73e0ff07fd4dfdc86d5b6336896e9a7dc4809a6894de5'
+    record_correction: "2026-11-27 登记（PR #318）后修正，版本名不变：钟点“八点四十五”原来只改了分钟（写成“八点45”），改为“8点45”；“数字一百的百”这类说一个字怎么写的保留汉字；“十三香”“这一点十分重要”不改；labels.context_correction （segments、marked_text、cot）跟着 target 改。被替换文件的原 sha256：train 0d21e97792ec70fd21b73e0ff07fd4dfdc86d5b6336896e9a7dc4809a6894de5\n2026-11-28 再次原地修正，版本名不变：专名保留约定写法（春风十里、降龙十八掌、党的十八大、十八届三中全会、十二指肠、十里堡、四句话十六字等，zh_numbers 专名词表）；字母后面的型号和版本号连小数一起改（PM2点五改为 PM2.5、Web3点零改为 Web3.0、iOS26点四点一改为 iOS26.4.1）；热词表里不在 target 中的词各自按规则 9 转换（原样出现在 target 里的不动）。被替换文件的原 sha256：train 3617488252d432495980625d51553a3e4b701e25ae1a173b573a2e99949ca277"
   derived_from: hard_hw_sft@hard-20261014-final-v2-20261123
 - schema_version: dataset-catalog/2.0
   dataset_id: ts_scene_pool
@@ -3842,8 +3850,8 @@
     kind: audio-records
     root_alias: aidc_data
     relative_path: datasets/ts_scene_pool/versions/multi-20261017-punchw-20261102-final-v4-20261127/text/zh-records.jsonl.gz
-    expected_bytes: 27637654
-    sha256: 1851ff4302e11e0970cd802aa38feb50db6e96437b4c4972cda506c0e1541bae
+    expected_bytes: 27718117
+    sha256: 811edb77c39c9c5b42f7c86ef7f49e29250dedea4a7670712fa83c5f2c4de6ec
     metadata:
       record_count: 120000
   - name: zh-audio-index
@@ -3858,7 +3866,7 @@
     root_alias: aidc_data
     relative_path: datasets/ts_scene_pool/versions/multi-20261017-punchw-20261102-final-v4-20261127/record_index/index.json
     expected_bytes: 1093
-    sha256: 1de65857b244072d2bf39b11e9add19df9b6b0e6cf995526f8f427621aea49f7
+    sha256: 16b6d71b24d4ee8addf32322846be3fab390eaa52e5c9d118251020335406e2e
     metadata:
       snapshot_version: 13
       rows: 160000
@@ -3892,11 +3900,11 @@
         duration_basis: clip duration (segment span, or the whole file)
         final_r1_changed_records: 5
         final_v2_changed_records: 49
-        final_v4_changed_records: 36668
+        final_v4_changed_records: 39709
   provenance:
     synthetic: none
-    snapshot_date: '2026-11-27'
-    description: ts_scene_pool@multi-20261017-punchw-20261102 的训练文本终版 v4：在 ts_scene_pool@multi-20261017-punchw-20261102-final-v2-20261123 上补做数字写成阿拉伯数字（规则 9，zh-num-v1）36,668 条，value 25,769 处、digits 9,894 处、decimal 5,757 处、date 4,257 处、percent 2,128 处、latin 1,543 处、time 621 处，按 audio-data-contract docs/reference/training-text.md（v4）。同一行里的场景文本和热词列表一起改；其余字段、录音清单和音频照旧，引用起点版本的产物。
+    snapshot_date: '2026-11-28'
+    description: ts_scene_pool@multi-20261017-punchw-20261102 的训练文本终版 v4：在 ts_scene_pool@multi-20261017-punchw-20261102-final-v2-20261123 上补做数字写成阿拉伯数字（规则 9，zh-num-v1）39,709 条，value 25,653 处、digits 9,892 处、decimal 5,777 处、date 4,253 处、percent 2,128 处、latin 1,524 处、time 621 处；其中 3,109 条只改了热词（热词表里不在 target 中的词各自按规则 9 转换），按 audio-data-contract docs/reference/training-text.md（v4）。同一行里的场景文本跟着 target 改，热词表的词各自转换（原样出现在 target 里的不动）；其余字段、录音清单和音频照旧，引用起点版本的产物。
     sources:
     - ts_scene_pool:multi-20261017
     - aishell2:punc-written-v1-20261029
@@ -3908,11 +3916,11 @@
     owner: mingdong
     run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
     build_script: scripts/text_final/build_v4.py
-    record_correction: '2026-11-27 登记（PR #318）后修正，版本名不变：钟点“八点四十五”原来只改了分钟（写成“八点45”），改为“8点45”；“数字一百的百”这类说一个字怎么写的保留汉字；“十三香”“这一点十分重要”不改；labels.context_correction （segments、marked_text、cot）跟着 target 改。被替换文件的原 sha256：zh-records 68277bfa37777e0664da52b1598528a9de1e8e44ec936741a2d191d2f13c3bb1'
+    record_correction: "2026-11-27 登记（PR #318）后修正，版本名不变：钟点“八点四十五”原来只改了分钟（写成“八点45”），改为“8点45”；“数字一百的百”这类说一个字怎么写的保留汉字；“十三香”“这一点十分重要”不改；labels.context_correction （segments、marked_text、cot）跟着 target 改。被替换文件的原 sha256：zh-records 68277bfa37777e0664da52b1598528a9de1e8e44ec936741a2d191d2f13c3bb1\n2026-11-28 再次原地修正，版本名不变：专名保留约定写法（春风十里、降龙十八掌、党的十八大、十八届三中全会、十二指肠、十里堡、四句话十六字等，zh_numbers 专名词表）；字母后面的型号和版本号连小数一起改（PM2点五改为 PM2.5、Web3点零改为 Web3.0、iOS26点四点一改为 iOS26.4.1）；热词表里不在 target 中的词各自按规则 9 转换（原样出现在 target 里的不动）。被替换文件的原 sha256：zh-records 1851ff4302e11e0970cd802aa38feb50db6e96437b4c4972cda506c0e1541bae"
   recipe_parameters:
     spec: docs/reference/training-text.md（v4）
     start: ts_scene_pool@multi-20261017-punchw-20261102-final-v2-20261123
-    rounds: 数字写成阿拉伯数字（规则 9，zh-num-v1）36,668 条，value 25,769 处、digits 9,894 处、decimal 5,757 处、date 4,257 处、percent 2,128 处、latin 1,543 处、time 621 处
+    rounds: 数字写成阿拉伯数字（规则 9，zh-num-v1）39,709 条，value 25,653 处、digits 9,892 处、decimal 5,777 处、date 4,253 处、percent 2,128 处、latin 1,524 处、time 621 处；其中 3,109 条只改了热词（热词表里不在 target 中的词各自按规则 9 转换）
     unchanged: 规则没有改动的文本文件、录音清单、音频和 dev/test 划分，引用起点版本的产物
 - schema_version: dataset-catalog/2.0
   dataset_id: ts_scene_pool
@@ -3948,8 +3956,8 @@
     kind: audio-records
     root_alias: aidc_data
     relative_path: datasets/ts_scene_pool/versions/alt-twins-20261024-punchw-20261102-final-v4-20261127/text/zh-records.jsonl.gz
-    expected_bytes: 24328227
-    sha256: 7736a1c93eb601f9e1278849925819f2186d841d71e8876a511000985b804195
+    expected_bytes: 24393024
+    sha256: 530c05ec79d2c9462a8bb7ebe818a398eca375f1aa6a2886dcc2a57287d9ae25
     metadata:
       record_count: 150000
   - name: zh-audio-index
@@ -3964,7 +3972,7 @@
     root_alias: aidc_data
     relative_path: datasets/ts_scene_pool/versions/alt-twins-20261024-punchw-20261102-final-v4-20261127/record_index/index.json
     expected_bytes: 1098
-    sha256: 6282d4868b5394ad590b307ab30d1f21ffbf0abc590680568400f61dde39b8e4
+    sha256: 63fb733197967f83325ae47f9fe1b013d48d53748f594744b81c4a4170601ca7
     metadata:
       snapshot_version: 13
       rows: 250000
@@ -3998,11 +4006,11 @@
         duration_basis: clip duration (segment span, or the whole file)
         final_r1_changed_records: 6
         final_v2_changed_records: 24
-        final_v4_changed_records: 17077
+        final_v4_changed_records: 21041
   provenance:
     synthetic: none
-    snapshot_date: '2026-11-27'
-    description: ts_scene_pool@alt-twins-20261024-punchw-20261102 的训练文本终版 v4：在 ts_scene_pool@alt-twins-20261024-punchw-20261102-final-v2-20261123 上补做数字写成阿拉伯数字（规则 9，zh-num-v1）17,077 条，value 9,850 处、digits 3,741 处、decimal 2,536 处、date 1,648 处、percent 728 处、latin 535 处、time 386 处，按 audio-data-contract docs/reference/training-text.md（v4）。同一行里的场景文本和热词列表一起改；其余字段、录音清单和音频照旧，引用起点版本的产物。
+    snapshot_date: '2026-11-28'
+    description: ts_scene_pool@alt-twins-20261024-punchw-20261102 的训练文本终版 v4：在 ts_scene_pool@alt-twins-20261024-punchw-20261102-final-v2-20261123 上补做数字写成阿拉伯数字（规则 9，zh-num-v1）21,041 条，value 9,808 处、digits 3,737 处、decimal 2,542 处、date 1,648 处、percent 728 处、latin 529 处、time 386 处；其中 4,004 条只改了热词（热词表里不在 target 中的词各自按规则 9 转换），按 audio-data-contract docs/reference/training-text.md（v4）。同一行里的场景文本跟着 target 改，热词表的词各自转换（原样出现在 target 里的不动）；其余字段、录音清单和音频照旧，引用起点版本的产物。
     sources:
     - ts_scene_pool:alt-twins-20261024
     - aishell2:punc-written-v1-20261029
@@ -4014,11 +4022,11 @@
     owner: mingdong
     run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
     build_script: scripts/text_final/build_v4.py
-    record_correction: '2026-11-27 登记（PR #318）后修正，版本名不变：钟点“八点四十五”原来只改了分钟（写成“八点45”），改为“8点45”；“数字一百的百”这类说一个字怎么写的保留汉字；“十三香”“这一点十分重要”不改；labels.context_correction （segments、marked_text、cot）跟着 target 改。被替换文件的原 sha256：zh-records 3992512b5f0808305ae7b62d1f88e7bd58dc5f8717d204ea857e8fe58b5de227'
+    record_correction: "2026-11-27 登记（PR #318）后修正，版本名不变：钟点“八点四十五”原来只改了分钟（写成“八点45”），改为“8点45”；“数字一百的百”这类说一个字怎么写的保留汉字；“十三香”“这一点十分重要”不改；labels.context_correction （segments、marked_text、cot）跟着 target 改。被替换文件的原 sha256：zh-records 3992512b5f0808305ae7b62d1f88e7bd58dc5f8717d204ea857e8fe58b5de227\n2026-11-28 再次原地修正，版本名不变：专名保留约定写法（春风十里、降龙十八掌、党的十八大、十八届三中全会、十二指肠、十里堡、四句话十六字等，zh_numbers 专名词表）；字母后面的型号和版本号连小数一起改（PM2点五改为 PM2.5、Web3点零改为 Web3.0、iOS26点四点一改为 iOS26.4.1）；热词表里不在 target 中的词各自按规则 9 转换（原样出现在 target 里的不动）。被替换文件的原 sha256：zh-records 7736a1c93eb601f9e1278849925819f2186d841d71e8876a511000985b804195"
   recipe_parameters:
     spec: docs/reference/training-text.md（v4）
     start: ts_scene_pool@alt-twins-20261024-punchw-20261102-final-v2-20261123
-    rounds: 数字写成阿拉伯数字（规则 9，zh-num-v1）17,077 条，value 9,850 处、digits 3,741 处、decimal 2,536 处、date 1,648 处、percent 728 处、latin 535 处、time 386 处
+    rounds: 数字写成阿拉伯数字（规则 9，zh-num-v1）21,041 条，value 9,808 处、digits 3,737 处、decimal 2,542 处、date 1,648 处、percent 728 处、latin 529 处、time 386 处；其中 4,004 条只改了热词（热词表里不在 target 中的词各自按规则 9 转换）
     unchanged: 规则没有改动的文本文件、录音清单、音频和 dev/test 划分，引用起点版本的产物
 - schema_version: dataset-catalog/2.0
   dataset_id: ts_scene_pool
@@ -4054,8 +4062,8 @@
     kind: audio-records
     root_alias: aidc_data
     relative_path: datasets/ts_scene_pool/versions/solo-20261020-punchw-20261102-final-v4-20261127/text/zh-records.jsonl.gz
-    expected_bytes: 4250413
-    sha256: 2bc4fe0d019af514b6dda4ccf9c7b3f9a7a1dedf4f0e5750a6327148f5ff8e52
+    expected_bytes: 4253533
+    sha256: f75dd09867f3e555a96d3c53b4ef61c68aac1ffae459f6dd8e6db09bfca8d379
     metadata:
       record_count: 60000
   - name: zh-audio-index
@@ -4070,7 +4078,7 @@
     root_alias: aidc_data
     relative_path: datasets/ts_scene_pool/versions/solo-20261020-punchw-20261102-final-v4-20261127/record_index/index.json
     expected_bytes: 1090
-    sha256: 158ad5d3d301d52319c0557c9384dff43c83574746a60c022a6e3c41f621d3dd
+    sha256: c3c15eb21fad224f60f695fb2f4f1f0d9c2b2a4b39abddab728a8f0ea146687a
     metadata:
       snapshot_version: 13
       rows: 80000
@@ -4103,11 +4111,11 @@
         duration_hours: 67.34
         duration_basis: clip duration (segment span, or the whole file)
         final_v2_changed_records: 4
-        final_v4_changed_records: 5669
+        final_v4_changed_records: 5726
   provenance:
     synthetic: none
-    snapshot_date: '2026-11-27'
-    description: ts_scene_pool@solo-20261020-punchw-20261102 的训练文本终版 v4：在 ts_scene_pool@solo-20261020-punchw-20261102-final-v2-20261123 上补做数字写成阿拉伯数字（规则 9，zh-num-v1）5,669 条，value 3,058 处、decimal 1,077 处、digits 1,063 处、date 446 处、latin 149 处、percent 126 处、time 103 处，按 audio-data-contract docs/reference/training-text.md（v4）。同一行里的场景文本和热词列表一起改；其余字段、录音清单和音频照旧，引用起点版本的产物。
+    snapshot_date: '2026-11-28'
+    description: ts_scene_pool@solo-20261020-punchw-20261102 的训练文本终版 v4：在 ts_scene_pool@solo-20261020-punchw-20261102-final-v2-20261123 上补做数字写成阿拉伯数字（规则 9，zh-num-v1）5,726 条，value 3,035 处、decimal 1,077 处、digits 1,062 处、date 444 处、latin 149 处、percent 126 处、time 103 处；其中 82 条只改了热词（热词表里不在 target 中的词各自按规则 9 转换），按 audio-data-contract docs/reference/training-text.md（v4）。同一行里的场景文本跟着 target 改，热词表的词各自转换（原样出现在 target 里的不动）；其余字段、录音清单和音频照旧，引用起点版本的产物。
     sources:
     - ts_scene_pool:solo-20261020
     - aishell2:punc-written-v1-20261029
@@ -4119,10 +4127,11 @@
     owner: mingdong
     run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
     build_script: scripts/text_final/build_v4.py
+    record_correction: 2026-11-28 再次原地修正，版本名不变：专名保留约定写法（春风十里、降龙十八掌、党的十八大、十八届三中全会、十二指肠、十里堡、四句话十六字等，zh_numbers 专名词表）；字母后面的型号和版本号连小数一起改（PM2点五改为 PM2.5、Web3点零改为 Web3.0、iOS26点四点一改为 iOS26.4.1）；热词表里不在 target 中的词各自按规则 9 转换（原样出现在 target 里的不动）。被替换文件的原 sha256：zh-records 2bc4fe0d019af514b6dda4ccf9c7b3f9a7a1dedf4f0e5750a6327148f5ff8e52
   recipe_parameters:
     spec: docs/reference/training-text.md（v4）
     start: ts_scene_pool@solo-20261020-punchw-20261102-final-v2-20261123
-    rounds: 数字写成阿拉伯数字（规则 9，zh-num-v1）5,669 条，value 3,058 处、decimal 1,077 处、digits 1,063 处、date 446 处、latin 149 处、percent 126 处、time 103 处
+    rounds: 数字写成阿拉伯数字（规则 9，zh-num-v1）5,726 条，value 3,035 处、decimal 1,077 处、digits 1,062 处、date 444 处、latin 149 处、percent 126 处、time 103 处；其中 82 条只改了热词（热词表里不在 target 中的词各自按规则 9 转换）
     unchanged: 规则没有改动的文本文件、录音清单、音频和 dev/test 划分，引用起点版本的产物
 - schema_version: dataset-catalog/2.0
   dataset_id: ts_scene_pool
@@ -4158,8 +4167,8 @@
     kind: audio-records
     root_alias: aidc_data
     relative_path: datasets/ts_scene_pool/versions/handover-20261021-punchw-20261102-final-v4-20261127/text/zh-records.jsonl.gz
-    expected_bytes: 3944623
-    sha256: 470c5a69d7580338848f3f48f201eb89cebec17ff5fbe27085f3a2be3c7a85a5
+    expected_bytes: 3950032
+    sha256: 2b0c48752a12f3e62f51071deeaa01dbcf2ac905a960853cceee0ca1662467e6
     metadata:
       record_count: 40000
   - name: zh-audio-index
@@ -4174,7 +4183,7 @@
     root_alias: aidc_data
     relative_path: datasets/ts_scene_pool/versions/handover-20261021-punchw-20261102-final-v4-20261127/record_index/index.json
     expected_bytes: 1094
-    sha256: 617c102ba9b1cbd51d11389f84f7f45f3124849136cf9ee495e1c1e77700d946
+    sha256: d9cd473583a7c3e0139b59f6fcb8a211598ca0acba37c5364a9e65a0a96d4e11
     metadata:
       snapshot_version: 13
       rows: 52000
@@ -4208,11 +4217,11 @@
         duration_basis: clip duration (segment span, or the whole file)
         final_r1_changed_records: 2
         final_v2_changed_records: 8
-        final_v4_changed_records: 4920
+        final_v4_changed_records: 5160
   provenance:
     synthetic: none
-    snapshot_date: '2026-11-27'
-    description: ts_scene_pool@handover-20261021-punchw-20261102 的训练文本终版 v4：在 ts_scene_pool@handover-20261021-punchw-20261102-final-v2-20261123 上补做数字写成阿拉伯数字（规则 9，zh-num-v1）4,920 条，value 2,815 处、digits 1,024 处、decimal 655 处、date 439 处、percent 228 处、latin 167 处、time 58 处，按 audio-data-contract docs/reference/training-text.md（v4）。同一行里的场景文本和热词列表一起改；其余字段、录音清单和音频照旧，引用起点版本的产物。
+    snapshot_date: '2026-11-28'
+    description: ts_scene_pool@handover-20261021-punchw-20261102 的训练文本终版 v4：在 ts_scene_pool@handover-20261021-punchw-20261102-final-v2-20261123 上补做数字写成阿拉伯数字（规则 9，zh-num-v1）5,160 条，value 2,797 处、digits 1,024 处、decimal 658 处、date 439 处、percent 228 处、latin 164 处、time 58 处；其中 256 条只改了热词（热词表里不在 target 中的词各自按规则 9 转换），按 audio-data-contract docs/reference/training-text.md（v4）。同一行里的场景文本跟着 target 改，热词表的词各自转换（原样出现在 target 里的不动）；其余字段、录音清单和音频照旧，引用起点版本的产物。
     sources:
     - ts_scene_pool:handover-20261021
     - aishell2:punc-written-v1-20261029
@@ -4224,10 +4233,11 @@
     owner: mingdong
     run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
     build_script: scripts/text_final/build_v4.py
+    record_correction: 2026-11-28 再次原地修正，版本名不变：专名保留约定写法（春风十里、降龙十八掌、党的十八大、十八届三中全会、十二指肠、十里堡、四句话十六字等，zh_numbers 专名词表）；字母后面的型号和版本号连小数一起改（PM2点五改为 PM2.5、Web3点零改为 Web3.0、iOS26点四点一改为 iOS26.4.1）；热词表里不在 target 中的词各自按规则 9 转换（原样出现在 target 里的不动）。被替换文件的原 sha256：zh-records 470c5a69d7580338848f3f48f201eb89cebec17ff5fbe27085f3a2be3c7a85a5
   recipe_parameters:
     spec: docs/reference/training-text.md（v4）
     start: ts_scene_pool@handover-20261021-punchw-20261102-final-v2-20261123
-    rounds: 数字写成阿拉伯数字（规则 9，zh-num-v1）4,920 条，value 2,815 处、digits 1,024 处、decimal 655 处、date 439 处、percent 228 处、latin 167 处、time 58 处
+    rounds: 数字写成阿拉伯数字（规则 9，zh-num-v1）5,160 条，value 2,797 处、digits 1,024 处、decimal 658 处、date 439 处、percent 228 处、latin 164 处、time 58 处；其中 256 条只改了热词（热词表里不在 target 中的词各自按规则 9 转换）
     unchanged: 规则没有改动的文本文件、录音清单、音频和 dev/test 划分，引用起点版本的产物
 - schema_version: dataset-catalog/2.0
   dataset_id: ts_scene_pool
@@ -4247,8 +4257,8 @@
     kind: audio-records
     root_alias: aidc_data
     relative_path: datasets/ts_scene_pool/versions/magicdata-near-20261023-punchw-20261102-final-v4-20261127/text/zh-records.jsonl.gz
-    expected_bytes: 17377938
-    sha256: 1482013ad8c4af252db11a68d641e51daabbfbee2ed0017db5d6a124b2370087
+    expected_bytes: 17411012
+    sha256: d9f960874ca5a2c864c712c86ab69062237eba0290dd6696f46447ea63a26d5d
     metadata:
       record_count: 80000
   - name: zh-audio-index
@@ -4263,7 +4273,7 @@
     root_alias: aidc_data
     relative_path: datasets/ts_scene_pool/versions/magicdata-near-20261023-punchw-20261102-final-v4-20261127/record_index/index.json
     expected_bytes: 771
-    sha256: 0242c1dde4b5de058885670d7eee27237f017568dc99935ce4bfedeccec8d395
+    sha256: f0fa60316372067bb0da519561225812b0826854b10fc032d516d4a0aea9a87f
     metadata:
       snapshot_version: 13
       rows: 80000
@@ -4284,11 +4294,11 @@
         duration_basis: clip duration (segment span, or the whole file)
         final_r1_changed_records: 5
         final_v2_changed_records: 819
-        final_v4_changed_records: 5472
+        final_v4_changed_records: 7508
   provenance:
     synthetic: none
-    snapshot_date: '2026-11-27'
-    description: ts_scene_pool@magicdata-near-20261023-punchw-20261102 的训练文本终版 v4：在 ts_scene_pool@magicdata-near-20261023-punchw-20261102-final-v2-20261123 上补做数字写成阿拉伯数字（规则 9，zh-num-v1）5,472 条，value 3,795 处、time 2,081 处、digits 202 处、date 134 处、decimal 5 处、percent 3 处，按 audio-data-contract docs/reference/training-text.md（v4）。同一行里的场景文本和热词列表一起改；其余字段、录音清单和音频照旧，引用起点版本的产物。
+    snapshot_date: '2026-11-28'
+    description: ts_scene_pool@magicdata-near-20261023-punchw-20261102 的训练文本终版 v4：在 ts_scene_pool@magicdata-near-20261023-punchw-20261102-final-v2-20261123 上补做数字写成阿拉伯数字（规则 9，zh-num-v1）7,508 条，value 3,667 处、time 2,081 处、digits 200 处、date 128 处、decimal 5 处、percent 3 处；其中 2,154 条只改了热词（热词表里不在 target 中的词各自按规则 9 转换），按 audio-data-contract docs/reference/training-text.md（v4）。同一行里的场景文本跟着 target 改，热词表的词各自转换（原样出现在 target 里的不动）；其余字段、录音清单和音频照旧，引用起点版本的产物。
     sources:
     - ts_scene_pool:magicdata-near-20261023
     - aishell2:punc-written-v1-20261029
@@ -4300,11 +4310,11 @@
     owner: mingdong
     run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
     build_script: scripts/text_final/build_v4.py
-    record_correction: '2026-11-27 登记（PR #318）后修正，版本名不变：钟点“八点四十五”原来只改了分钟（写成“八点45”），改为“8点45”；“数字一百的百”这类说一个字怎么写的保留汉字；“十三香”“这一点十分重要”不改；labels.context_correction （segments、marked_text、cot）跟着 target 改。被替换文件的原 sha256：zh-records f54c5cc3c16f98c95a7a43cabb1beff126c43b5878e2f38d7489af04a2d180fb'
+    record_correction: "2026-11-27 登记（PR #318）后修正，版本名不变：钟点“八点四十五”原来只改了分钟（写成“八点45”），改为“8点45”；“数字一百的百”这类说一个字怎么写的保留汉字；“十三香”“这一点十分重要”不改；labels.context_correction （segments、marked_text、cot）跟着 target 改。被替换文件的原 sha256：zh-records f54c5cc3c16f98c95a7a43cabb1beff126c43b5878e2f38d7489af04a2d180fb\n2026-11-28 再次原地修正，版本名不变：专名保留约定写法（春风十里、降龙十八掌、党的十八大、十八届三中全会、十二指肠、十里堡、四句话十六字等，zh_numbers 专名词表）；字母后面的型号和版本号连小数一起改（PM2点五改为 PM2.5、Web3点零改为 Web3.0、iOS26点四点一改为 iOS26.4.1）；热词表里不在 target 中的词各自按规则 9 转换（原样出现在 target 里的不动）。被替换文件的原 sha256：zh-records 1482013ad8c4af252db11a68d641e51daabbfbee2ed0017db5d6a124b2370087"
   recipe_parameters:
     spec: docs/reference/training-text.md（v4）
     start: ts_scene_pool@magicdata-near-20261023-punchw-20261102-final-v2-20261123
-    rounds: 数字写成阿拉伯数字（规则 9，zh-num-v1）5,472 条，value 3,795 处、time 2,081 处、digits 202 处、date 134 处、decimal 5 处、percent 3 处
+    rounds: 数字写成阿拉伯数字（规则 9，zh-num-v1）7,508 条，value 3,667 处、time 2,081 处、digits 200 处、date 128 处、decimal 5 处、percent 3 处；其中 2,154 条只改了热词（热词表里不在 target 中的词各自按规则 9 转换）
     unchanged: 规则没有改动的文本文件、录音清单、音频和 dev/test 划分，引用起点版本的产物
 - schema_version: dataset-catalog/2.0
   dataset_id: ts_scene_pool
@@ -4324,8 +4334,8 @@
     kind: audio-records
     root_alias: aidc_data
     relative_path: datasets/ts_scene_pool/versions/magicdata-alt-twins-20261024-punchw-20261102-final-v4-20261127/text/zh-records.jsonl.gz
-    expected_bytes: 9762186
-    sha256: af18dd1f4aa710dac609b269806584518443a62f19c4836acfa56978b0d03ee7
+    expected_bytes: 9793377
+    sha256: 26a5aadb4d6ad961ffbbd22ac79d86b323fde1de630734d4f8dd5acb084bc83b
     metadata:
       record_count: 60000
   - name: zh-audio-index
@@ -4340,7 +4350,7 @@
     root_alias: aidc_data
     relative_path: datasets/ts_scene_pool/versions/magicdata-alt-twins-20261024-punchw-20261102-final-v4-20261127/record_index/index.json
     expected_bytes: 776
-    sha256: 700bbbb08426b84d8f46c81e31be095254654844816e0021d8cc87de9bd4b206
+    sha256: 4aa98e645b8da5ec6c1c5d95c490ba86fcf44afa60be5268f4b136199b6aff27
     metadata:
       snapshot_version: 13
       rows: 60000
@@ -4361,11 +4371,11 @@
         duration_basis: clip duration (segment span, or the whole file)
         final_r1_changed_records: 2
         final_v2_changed_records: 241
-        final_v4_changed_records: 1314
+        final_v4_changed_records: 2645
   provenance:
     synthetic: none
-    snapshot_date: '2026-11-27'
-    description: ts_scene_pool@magicdata-alt-twins-20261024-punchw-20261102 的训练文本终版 v4：在 ts_scene_pool@magicdata-alt-twins-20261024-punchw-20261102-final-v2-20261123 上补做数字写成阿拉伯数字（规则 9，zh-num-v1）1,314 条，value 883 处、time 475 处、date 51 处、digits 49 处、percent 3 处、decimal 3 处，按 audio-data-contract docs/reference/training-text.md（v4）。同一行里的场景文本和热词列表一起改；其余字段、录音清单和音频照旧，引用起点版本的产物。
+    snapshot_date: '2026-11-28'
+    description: ts_scene_pool@magicdata-alt-twins-20261024-punchw-20261102 的训练文本终版 v4：在 ts_scene_pool@magicdata-alt-twins-20261024-punchw-20261102-final-v2-20261123 上补做数字写成阿拉伯数字（规则 9，zh-num-v1）2,645 条，value 855 处、time 475 处、digits 48 处、date 45 处、percent 3 处、decimal 3 处；其中 1,363 条只改了热词（热词表里不在 target 中的词各自按规则 9 转换），按 audio-data-contract docs/reference/training-text.md（v4）。同一行里的场景文本跟着 target 改，热词表的词各自转换（原样出现在 target 里的不动）；其余字段、录音清单和音频照旧，引用起点版本的产物。
     sources:
     - ts_scene_pool:magicdata-alt-twins-20261024
     - aishell2:punc-written-v1-20261029
@@ -4377,11 +4387,11 @@
     owner: mingdong
     run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
     build_script: scripts/text_final/build_v4.py
-    record_correction: '2026-11-27 登记（PR #318）后修正，版本名不变：钟点“八点四十五”原来只改了分钟（写成“八点45”），改为“8点45”；“数字一百的百”这类说一个字怎么写的保留汉字；“十三香”“这一点十分重要”不改；labels.context_correction （segments、marked_text、cot）跟着 target 改。被替换文件的原 sha256：zh-records 351f40644f488504e458bd8ccf7eeea880362ee26c31cee270a91ac1be880a7a'
+    record_correction: "2026-11-27 登记（PR #318）后修正，版本名不变：钟点“八点四十五”原来只改了分钟（写成“八点45”），改为“8点45”；“数字一百的百”这类说一个字怎么写的保留汉字；“十三香”“这一点十分重要”不改；labels.context_correction （segments、marked_text、cot）跟着 target 改。被替换文件的原 sha256：zh-records 351f40644f488504e458bd8ccf7eeea880362ee26c31cee270a91ac1be880a7a\n2026-11-28 再次原地修正，版本名不变：专名保留约定写法（春风十里、降龙十八掌、党的十八大、十八届三中全会、十二指肠、十里堡、四句话十六字等，zh_numbers 专名词表）；字母后面的型号和版本号连小数一起改（PM2点五改为 PM2.5、Web3点零改为 Web3.0、iOS26点四点一改为 iOS26.4.1）；热词表里不在 target 中的词各自按规则 9 转换（原样出现在 target 里的不动）。被替换文件的原 sha256：zh-records af18dd1f4aa710dac609b269806584518443a62f19c4836acfa56978b0d03ee7"
   recipe_parameters:
     spec: docs/reference/training-text.md（v4）
     start: ts_scene_pool@magicdata-alt-twins-20261024-punchw-20261102-final-v2-20261123
-    rounds: 数字写成阿拉伯数字（规则 9，zh-num-v1）1,314 条，value 883 处、time 475 处、date 51 处、digits 49 处、percent 3 处、decimal 3 处
+    rounds: 数字写成阿拉伯数字（规则 9，zh-num-v1）2,645 条，value 855 处、time 475 处、digits 48 处、date 45 处、percent 3 处、decimal 3 处；其中 1,363 条只改了热词（热词表里不在 target 中的词各自按规则 9 转换）
     unchanged: 规则没有改动的文本文件、录音清单、音频和 dev/test 划分，引用起点版本的产物
 - schema_version: dataset-catalog/2.0
   dataset_id: ts_scene_pool
@@ -4401,8 +4411,8 @@
     kind: audio-records
     root_alias: aidc_data
     relative_path: datasets/ts_scene_pool/versions/magicdata-hard-20261023-punchw-20261102-final-v4-20261127/text/zh-records.jsonl.gz
-    expected_bytes: 7868338
-    sha256: abdae6da2d3d2c3f35173487ed7a84a7f560a5eaba51fde5a5baf643f6493211
+    expected_bytes: 7898944
+    sha256: a43d5c32255786c4e7bdf116799597ddd69973c56f5bb5fc8cba6294df584c87
     metadata:
       record_count: 40000
   - name: zh-audio-index
@@ -4417,7 +4427,7 @@
     root_alias: aidc_data
     relative_path: datasets/ts_scene_pool/versions/magicdata-hard-20261023-punchw-20261102-final-v4-20261127/record_index/index.json
     expected_bytes: 771
-    sha256: f6e9e325e858ba1b4f2048a492f213c9c553e13e7208fe4bb321a8a3f7d5381f
+    sha256: 3ccc8fd1c2a31d0ad987774b6204e196fb11a84f8480bacf78128748d841619a
     metadata:
       snapshot_version: 13
       rows: 40000
@@ -4437,11 +4447,11 @@
         duration_hours: 47.79
         duration_basis: clip duration (segment span, or the whole file)
         final_v2_changed_records: 82
-        final_v4_changed_records: 558
+        final_v4_changed_records: 1447
   provenance:
     synthetic: none
-    snapshot_date: '2026-11-27'
-    description: ts_scene_pool@magicdata-hard-20261023-punchw-20261102 的训练文本终版 v4：在 ts_scene_pool@magicdata-hard-20261023-punchw-20261102-final-v2-20261123 上补做数字写成阿拉伯数字（规则 9，zh-num-v1）558 条，value 383 处、time 194 处、digits 20 处、date 20 处、latin 1 处，按 audio-data-contract docs/reference/training-text.md（v4）。同一行里的场景文本和热词列表一起改；其余字段、录音清单和音频照旧，引用起点版本的产物。
+    snapshot_date: '2026-11-28'
+    description: ts_scene_pool@magicdata-hard-20261023-punchw-20261102 的训练文本终版 v4：在 ts_scene_pool@magicdata-hard-20261023-punchw-20261102-final-v2-20261123 上补做数字写成阿拉伯数字（规则 9，zh-num-v1）1,447 条，value 371 处、time 194 处、digits 20 处、date 20 处、latin 1 处；其中 901 条只改了热词（热词表里不在 target 中的词各自按规则 9 转换），按 audio-data-contract docs/reference/training-text.md（v4）。同一行里的场景文本跟着 target 改，热词表的词各自转换（原样出现在 target 里的不动）；其余字段、录音清单和音频照旧，引用起点版本的产物。
     sources:
     - ts_scene_pool:magicdata-hard-20261023
     - aishell2:punc-written-v1-20261029
@@ -4453,11 +4463,11 @@
     owner: mingdong
     run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
     build_script: scripts/text_final/build_v4.py
-    record_correction: '2026-11-27 登记（PR #318）后修正，版本名不变：钟点“八点四十五”原来只改了分钟（写成“八点45”），改为“8点45”；“数字一百的百”这类说一个字怎么写的保留汉字；“十三香”“这一点十分重要”不改；labels.context_correction （segments、marked_text、cot）跟着 target 改。被替换文件的原 sha256：zh-records 60f186dd2f9c359b7d983de431bda636dd9e0124d25a530acf21567b90b08175'
+    record_correction: "2026-11-27 登记（PR #318）后修正，版本名不变：钟点“八点四十五”原来只改了分钟（写成“八点45”），改为“8点45”；“数字一百的百”这类说一个字怎么写的保留汉字；“十三香”“这一点十分重要”不改；labels.context_correction （segments、marked_text、cot）跟着 target 改。被替换文件的原 sha256：zh-records 60f186dd2f9c359b7d983de431bda636dd9e0124d25a530acf21567b90b08175\n2026-11-28 再次原地修正，版本名不变：专名保留约定写法（春风十里、降龙十八掌、党的十八大、十八届三中全会、十二指肠、十里堡、四句话十六字等，zh_numbers 专名词表）；字母后面的型号和版本号连小数一起改（PM2点五改为 PM2.5、Web3点零改为 Web3.0、iOS26点四点一改为 iOS26.4.1）；热词表里不在 target 中的词各自按规则 9 转换（原样出现在 target 里的不动）。被替换文件的原 sha256：zh-records abdae6da2d3d2c3f35173487ed7a84a7f560a5eaba51fde5a5baf643f6493211"
   recipe_parameters:
     spec: docs/reference/training-text.md（v4）
     start: ts_scene_pool@magicdata-hard-20261023-punchw-20261102-final-v2-20261123
-    rounds: 数字写成阿拉伯数字（规则 9，zh-num-v1）558 条，value 383 处、time 194 处、digits 20 处、date 20 处、latin 1 处
+    rounds: 数字写成阿拉伯数字（规则 9，zh-num-v1）1,447 条，value 371 处、time 194 处、digits 20 处、date 20 处、latin 1 处；其中 901 条只改了热词（热词表里不在 target 中的词各自按规则 9 转换）
     unchanged: 规则没有改动的文本文件、录音清单、音频和 dev/test 划分，引用起点版本的产物
 - schema_version: dataset-catalog/2.0
   dataset_id: ts_scene_pool
@@ -4477,8 +4487,8 @@
     kind: audio-records
     root_alias: aidc_data
     relative_path: datasets/ts_scene_pool/versions/magicdata-handover-20261023-punchw-20261102-final-v4-20261127/text/zh-records.jsonl.gz
-    expected_bytes: 3942684
-    sha256: 7c90f07d2e6e73c613f552026f222a2643c780d8d3418cdd0e187d73fb58b991
+    expected_bytes: 3944788
+    sha256: f967f49056a4f299f94fcf6efcd9161aff0729f254d6b43e6ce0c34059c37afd
     metadata:
       record_count: 40000
   - name: zh-audio-index
@@ -4493,7 +4503,7 @@
     root_alias: aidc_data
     relative_path: datasets/ts_scene_pool/versions/magicdata-handover-20261023-punchw-20261102-final-v4-20261127/record_index/index.json
     expected_bytes: 775
-    sha256: 5654c1c9fd255555f914c2b34f03c73eaecc5fe69334fd51eef1a80509d979b9
+    sha256: ebad1d7f0e207bb174426bbd3ef2d4c9d6e56fcdff2680a0499dd060621d0f34
     metadata:
       snapshot_version: 13
       rows: 40000
@@ -4513,11 +4523,11 @@
         duration_hours: 48.56
         duration_basis: clip duration (segment span, or the whole file)
         final_v2_changed_records: 166
-        final_v4_changed_records: 955
+        final_v4_changed_records: 1048
   provenance:
     synthetic: none
-    snapshot_date: '2026-11-27'
-    description: ts_scene_pool@magicdata-handover-20261023-punchw-20261102 的训练文本终版 v4：在 ts_scene_pool@magicdata-handover-20261023-punchw-20261102-final-v2-20261123 上补做数字写成阿拉伯数字（规则 9，zh-num-v1）955 条，value 633 处、time 336 处、digits 33 处、date 28 处、latin 1 处、percent 1 处、decimal 1 处，按 audio-data-contract docs/reference/training-text.md（v4）。同一行里的场景文本和热词列表一起改；其余字段、录音清单和音频照旧，引用起点版本的产物。
+    snapshot_date: '2026-11-28'
+    description: ts_scene_pool@magicdata-handover-20261023-punchw-20261102 的训练文本终版 v4：在 ts_scene_pool@magicdata-handover-20261023-punchw-20261102-final-v2-20261123 上补做数字写成阿拉伯数字（规则 9，zh-num-v1）1,048 条，value 616 处、time 336 处、digits 33 处、date 24 处、latin 1 处、percent 1 处、decimal 1 处；其中 112 条只改了热词（热词表里不在 target 中的词各自按规则 9 转换），按 audio-data-contract docs/reference/training-text.md（v4）。同一行里的场景文本跟着 target 改，热词表的词各自转换（原样出现在 target 里的不动）；其余字段、录音清单和音频照旧，引用起点版本的产物。
     sources:
     - ts_scene_pool:magicdata-handover-20261023
     - aishell2:punc-written-v1-20261029
@@ -4529,11 +4539,11 @@
     owner: mingdong
     run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
     build_script: scripts/text_final/build_v4.py
-    record_correction: '2026-11-27 登记（PR #318）后修正，版本名不变：钟点“八点四十五”原来只改了分钟（写成“八点45”），改为“8点45”；“数字一百的百”这类说一个字怎么写的保留汉字；“十三香”“这一点十分重要”不改；labels.context_correction （segments、marked_text、cot）跟着 target 改。被替换文件的原 sha256：zh-records 383b7039f321713398effe4de1b98bd3552ccf923020e72e5c1db293b669a00b'
+    record_correction: "2026-11-27 登记（PR #318）后修正，版本名不变：钟点“八点四十五”原来只改了分钟（写成“八点45”），改为“8点45”；“数字一百的百”这类说一个字怎么写的保留汉字；“十三香”“这一点十分重要”不改；labels.context_correction （segments、marked_text、cot）跟着 target 改。被替换文件的原 sha256：zh-records 383b7039f321713398effe4de1b98bd3552ccf923020e72e5c1db293b669a00b\n2026-11-28 再次原地修正，版本名不变：专名保留约定写法（春风十里、降龙十八掌、党的十八大、十八届三中全会、十二指肠、十里堡、四句话十六字等，zh_numbers 专名词表）；字母后面的型号和版本号连小数一起改（PM2点五改为 PM2.5、Web3点零改为 Web3.0、iOS26点四点一改为 iOS26.4.1）；热词表里不在 target 中的词各自按规则 9 转换（原样出现在 target 里的不动）。被替换文件的原 sha256：zh-records 7c90f07d2e6e73c613f552026f222a2643c780d8d3418cdd0e187d73fb58b991"
   recipe_parameters:
     spec: docs/reference/training-text.md（v4）
     start: ts_scene_pool@magicdata-handover-20261023-punchw-20261102-final-v2-20261123
-    rounds: 数字写成阿拉伯数字（规则 9，zh-num-v1）955 条，value 633 处、time 336 处、digits 33 处、date 28 处、latin 1 处、percent 1 处、decimal 1 处
+    rounds: 数字写成阿拉伯数字（规则 9，zh-num-v1）1,048 条，value 616 处、time 336 处、digits 33 处、date 24 处、latin 1 处、percent 1 处、decimal 1 处；其中 112 条只改了热词（热词表里不在 target 中的词各自按规则 9 转换）
     unchanged: 规则没有改动的文本文件、录音清单、音频和 dev/test 划分，引用起点版本的产物
 - schema_version: dataset-catalog/2.0
   dataset_id: aishell
@@ -4558,8 +4568,8 @@
     kind: lhotse-supervisions
     root_alias: aidc_data
     relative_path: datasets/aishell/versions/legacy-20260804-final-v4-20261127/text/train_sup_0.jsonl.gz
-    expected_bytes: 5603697
-    sha256: 35976f02c9a83e97c1102c2a27fef8652450e30e167ad88503cd936411839c55
+    expected_bytes: 5603466
+    sha256: 2f50d7ab1aae12215843b5b956eef5f7ef909c0945f5c5b66aaf22de88086dfd
   - name: dev_rec_0
     kind: lhotse-recordings
     root_alias: aidc_data
@@ -4589,7 +4599,7 @@
     root_alias: aidc_data
     relative_path: datasets/aishell/versions/legacy-20260804-final-v4-20261127/record_index/index.json
     expected_bytes: 1430
-    sha256: 1bd993126c02003ecf28eb500106211b9d48e11a13218234a174cae5f9e0cdc1
+    sha256: 0156631e0be218314318a80b930272d4baeaf6a6810e4936eef88080d7d8c3d3
     metadata:
       snapshot_version: 13
       rows: 141600
@@ -4607,7 +4617,7 @@
         duration_hours: 150.8520156076389
         duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:LHOTSE/data_aishell/data/manifests/aishell_supervisions_train.jsonl.gz'
         final_v2_changed_records: 120098
-        final_v4_changed_records: 18156
+        final_v4_changed_records: 18098
     dev:
       artifacts:
         recordings:
@@ -4633,7 +4643,7 @@
   provenance:
     summary: 中文朗读（AISHELL-1）；含清洗和热词版
     source: aishell@legacy-20260804-final-v2-20261123
-    snapshot_date: '2026-11-27'
+    snapshot_date: '2026-11-28'
     upstream_version: unknown
     reference_duration:
       hours: 155
@@ -4642,17 +4652,17 @@
       sheet_range: A14:P14
       sheet_revision: 1594
       consulted_at: '2026-09-09'
-    description: aishell@legacy-20260804 的训练文本终版 v4：在 aishell@legacy-20260804-final-v2-20261123 上补做数字写成阿拉伯数字（规则 9，zh-num-v1）18,156 条，value 10,961 处、date 4,491 处、digits 3,386 处、percent 2,543 处、decimal 1,079 处、time 430 处，按 audio-data-contract docs/reference/training-text.md（v4）。同一行里的场景文本和热词列表一起改；其余字段、录音清单和音频照旧，引用起点版本的产物。
+    description: aishell@legacy-20260804 的训练文本终版 v4：在 aishell@legacy-20260804-final-v2-20261123 上补做数字写成阿拉伯数字（规则 9，zh-num-v1）18,098 条，value 10,892 处、date 4,491 处、digits 3,380 处、percent 2,543 处、decimal 1,079 处、time 430 处，按 audio-data-contract docs/reference/training-text.md（v4）。同一行里的场景文本跟着 target 改，热词表的词各自转换（原样出现在 target 里的不动）；其余字段、录音清单和音频照旧，引用起点版本的产物。
     method: text-final-v4
     owner: mingdong
     run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
     build_script: scripts/text_final/build_v4.py
-    record_correction: '2026-11-27 登记（PR #318）后修正，版本名不变：钟点“八点四十五”原来只改了分钟（写成“八点45”），改为“8点45”；“数字一百的百”这类说一个字怎么写的保留汉字；“十三香”“这一点十分重要”不改；labels.context_correction （segments、marked_text、cot）跟着 target 改。被替换文件的原 sha256：train_sup_0 1de7086713598e2b9e17a3726895574aeea8ac8e1ec0a852cf11395ea2e6ee47'
+    record_correction: "2026-11-27 登记（PR #318）后修正，版本名不变：钟点“八点四十五”原来只改了分钟（写成“八点45”），改为“8点45”；“数字一百的百”这类说一个字怎么写的保留汉字；“十三香”“这一点十分重要”不改；labels.context_correction （segments、marked_text、cot）跟着 target 改。被替换文件的原 sha256：train_sup_0 1de7086713598e2b9e17a3726895574aeea8ac8e1ec0a852cf11395ea2e6ee47\n2026-11-28 再次原地修正，版本名不变：专名保留约定写法（春风十里、降龙十八掌、党的十八大、十八届三中全会、十二指肠、十里堡、四句话十六字等，zh_numbers 专名词表）；字母后面的型号和版本号连小数一起改（PM2点五改为 PM2.5、Web3点零改为 Web3.0、iOS26点四点一改为 iOS26.4.1）；热词表里不在 target 中的词各自按规则 9 转换（原样出现在 target 里的不动）。被替换文件的原 sha256：train_sup_0 35976f02c9a83e97c1102c2a27fef8652450e30e167ad88503cd936411839c55"
   derived_from: aishell@legacy-20260804-final-v2-20261123
   recipe_parameters:
     spec: docs/reference/training-text.md（v4）
     start: aishell@legacy-20260804-final-v2-20261123
-    rounds: 数字写成阿拉伯数字（规则 9，zh-num-v1）18,156 条，value 10,961 处、date 4,491 处、digits 3,386 处、percent 2,543 处、decimal 1,079 处、time 430 处
+    rounds: 数字写成阿拉伯数字（规则 9，zh-num-v1）18,098 条，value 10,892 处、date 4,491 处、digits 3,380 处、percent 2,543 处、decimal 1,079 处、time 430 处
     unchanged: 规则没有改动的文本文件、录音清单、音频和 dev/test 划分，引用起点版本的产物
 - schema_version: dataset-catalog/2.0
   dataset_id: magicdata
@@ -4677,8 +4687,8 @@
     kind: lhotse-supervisions
     root_alias: aidc_data
     relative_path: datasets/magicdata/versions/legacy-20260804-final-v4-20261127/text/train_sup_0.jsonl.gz
-    expected_bytes: 21349477
-    sha256: 5b5ee0389af114938d488bccc13b80c2141a0a5fe37b29a1e838ddb61348510b
+    expected_bytes: 21347777
+    sha256: e5c92b6c3f3a754cf33e5c3070b2b1c0b9bc5b361c4eb691844dc3be4149d78f
   - name: dev_rec_0
     kind: lhotse-recordings
     root_alias: aidc_data
@@ -4708,7 +4718,7 @@
     root_alias: aidc_data
     relative_path: datasets/magicdata/versions/legacy-20260804-final-v4-20261127/record_index/index.json
     expected_bytes: 1433
-    sha256: 5677c7cec92a78874b9f4e751dd98a0816ba6da4c5971668e4ad1cefdfba3eee
+    sha256: 961ef14b22ba5033da88320b79255e6c7ad29acb92fd3ea09647adad42060c4c
     metadata:
       snapshot_version: 13
       rows: 609550
@@ -4726,7 +4736,7 @@
         duration_hours: 711.9156844791667
         duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:LHOTSE/MAGICDATA/data/manifests/magicdata_supervisions_train.jsonl.gz'
         final_v2_changed_records: 573477
-        final_v4_changed_records: 22013
+        final_v4_changed_records: 21504
     dev:
       artifacts:
         recordings:
@@ -4751,7 +4761,7 @@
         duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:LHOTSE/MAGICDATA/data/manifests/magicdata_supervisions_test.jsonl.gz'
   provenance:
     source: magicdata@legacy-20260804-final-v2-20261123
-    snapshot_date: '2026-11-27'
+    snapshot_date: '2026-11-28'
     upstream_version: unknown
     reference_duration:
       hours: 747
@@ -4760,17 +4770,17 @@
       sheet_range: A17:P17
       sheet_revision: 1594
       consulted_at: '2026-09-09'
-    description: magicdata@legacy-20260804 的训练文本终版 v4：在 magicdata@legacy-20260804-final-v2-20261123 上补做数字写成阿拉伯数字（规则 9，zh-num-v1）22,013 条，value 14,634 处、time 8,268 处、digits 853 处、date 639 处、decimal 38 处、percent 26 处、latin 4 处，按 audio-data-contract docs/reference/training-text.md（v4）。同一行里的场景文本和热词列表一起改；其余字段、录音清单和音频照旧，引用起点版本的产物。
+    description: magicdata@legacy-20260804 的训练文本终版 v4：在 magicdata@legacy-20260804-final-v2-20261123 上补做数字写成阿拉伯数字（规则 9，zh-num-v1）21,504 条，value 14,131 处、time 8,268 处、digits 847 处、date 617 处、decimal 38 处、percent 26 处、latin 4 处，按 audio-data-contract docs/reference/training-text.md（v4）。同一行里的场景文本跟着 target 改，热词表的词各自转换（原样出现在 target 里的不动）；其余字段、录音清单和音频照旧，引用起点版本的产物。
     method: text-final-v4
     owner: mingdong
     run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
     build_script: scripts/text_final/build_v4.py
-    record_correction: '2026-11-27 登记（PR #318）后修正，版本名不变：钟点“八点四十五”原来只改了分钟（写成“八点45”），改为“8点45”；“数字一百的百”这类说一个字怎么写的保留汉字；“十三香”“这一点十分重要”不改；labels.context_correction （segments、marked_text、cot）跟着 target 改。被替换文件的原 sha256：train_sup_0 a33b45d8b7bf6de59973ce197d261d3bead8640a86c1c4b54f7f9ccffb38c1c1'
+    record_correction: "2026-11-27 登记（PR #318）后修正，版本名不变：钟点“八点四十五”原来只改了分钟（写成“八点45”），改为“8点45”；“数字一百的百”这类说一个字怎么写的保留汉字；“十三香”“这一点十分重要”不改；labels.context_correction （segments、marked_text、cot）跟着 target 改。被替换文件的原 sha256：train_sup_0 a33b45d8b7bf6de59973ce197d261d3bead8640a86c1c4b54f7f9ccffb38c1c1\n2026-11-28 再次原地修正，版本名不变：专名保留约定写法（春风十里、降龙十八掌、党的十八大、十八届三中全会、十二指肠、十里堡、四句话十六字等，zh_numbers 专名词表）；字母后面的型号和版本号连小数一起改（PM2点五改为 PM2.5、Web3点零改为 Web3.0、iOS26点四点一改为 iOS26.4.1）；热词表里不在 target 中的词各自按规则 9 转换（原样出现在 target 里的不动）。被替换文件的原 sha256：train_sup_0 5b5ee0389af114938d488bccc13b80c2141a0a5fe37b29a1e838ddb61348510b"
   derived_from: magicdata@legacy-20260804-final-v2-20261123
   recipe_parameters:
     spec: docs/reference/training-text.md（v4）
     start: magicdata@legacy-20260804-final-v2-20261123
-    rounds: 数字写成阿拉伯数字（规则 9，zh-num-v1）22,013 条，value 14,634 处、time 8,268 处、digits 853 处、date 639 处、decimal 38 处、percent 26 处、latin 4 处
+    rounds: 数字写成阿拉伯数字（规则 9，zh-num-v1）21,504 条，value 14,131 处、time 8,268 处、digits 847 处、date 617 处、decimal 38 处、percent 26 处、latin 4 处
     unchanged: 规则没有改动的文本文件、录音清单、音频和 dev/test 划分，引用起点版本的产物
 - schema_version: dataset-catalog/2.0
   dataset_id: aishell3
@@ -4795,8 +4805,8 @@
     kind: lhotse-supervisions
     root_alias: aidc_data
     relative_path: datasets/aishell3/versions/legacy-20260804-final-v4-20261127/text/train_sup_0.jsonl.gz
-    expected_bytes: 5607140
-    sha256: 03236489e0374b1c15ea2efee1887bea97bf0e28af8189ef98c2e6e9ea784878
+    expected_bytes: 5606918
+    sha256: c06289cfd10880f3ec7d3d699b5d5be6d3198642654c64d6f024c06043503978
   - name: test_rec_0
     kind: lhotse-recordings
     root_alias: aidc_data
@@ -4814,7 +4824,7 @@
     root_alias: aidc_data
     relative_path: datasets/aishell3/versions/legacy-20260804-final-v4-20261127/record_index/index.json
     expected_bytes: 1094
-    sha256: 578e2d937176fd9583cb617bca390093b3280b9f1a7c35863f2dc1041499c193
+    sha256: b63c638cc023060e55de03b1fa19d4b0ceaa783a424ab44583cb090db0214233
     metadata:
       snapshot_version: 13
       rows: 88035
@@ -4832,7 +4842,7 @@
         duration_hours: 63.17237733300264
         duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:LHOTSE/data_aishell3/data/manifests/aishell3_supervisions_train.jsonl.gz'
         final_v2_changed_records: 63262
-        final_v4_changed_records: 8096
+        final_v4_changed_records: 8051
     test:
       artifacts:
         recordings:
@@ -4846,7 +4856,7 @@
         duration_basis: 'sum of supervisions durations; overlapping segments may count speech more than once; sources: legacy_asr:LHOTSE/data_aishell3/data/manifests/aishell3_supervisions_test.jsonl.gz'
   provenance:
     source: aishell3@legacy-20260804-final-v2-20261123
-    snapshot_date: '2026-11-27'
+    snapshot_date: '2026-11-28'
     upstream_version: unknown
     reference_duration:
       hours: 65
@@ -4855,17 +4865,17 @@
       sheet_range: A16:P16
       sheet_revision: 1594
       consulted_at: '2026-09-09'
-    description: aishell3@legacy-20260804 的训练文本终版 v4：在 aishell3@legacy-20260804-final-v2-20261123 上补做数字写成阿拉伯数字（规则 9，zh-num-v1）8,096 条，value 4,376 处、digits 1,804 处、decimal 1,209 处、date 1,101 处、percent 626 处、time 145 处，按 audio-data-contract docs/reference/training-text.md（v4）。同一行里的场景文本和热词列表一起改；其余字段、录音清单和音频照旧，引用起点版本的产物。
+    description: aishell3@legacy-20260804 的训练文本终版 v4：在 aishell3@legacy-20260804-final-v2-20261123 上补做数字写成阿拉伯数字（规则 9，zh-num-v1）8,051 条，value 4,333 处、digits 1,802 处、decimal 1,209 处、date 1,095 处、percent 626 处、time 145 处，按 audio-data-contract docs/reference/training-text.md（v4）。同一行里的场景文本跟着 target 改，热词表的词各自转换（原样出现在 target 里的不动）；其余字段、录音清单和音频照旧，引用起点版本的产物。
     method: text-final-v4
     owner: mingdong
     run_dir: /workspace/workspace/mingdong/data/amphiondata/text-final-20261120
     build_script: scripts/text_final/build_v4.py
-    record_correction: '2026-11-27 登记（PR #318）后修正，版本名不变：钟点“八点四十五”原来只改了分钟（写成“八点45”），改为“8点45”；“数字一百的百”这类说一个字怎么写的保留汉字；“十三香”“这一点十分重要”不改；labels.context_correction （segments、marked_text、cot）跟着 target 改。被替换文件的原 sha256：train_sup_0 b8ce9f8fb10b4a1d2e23226ab5bf06a67033d6517fc3f31cfb575b7928cf06f0'
+    record_correction: "2026-11-27 登记（PR #318）后修正，版本名不变：钟点“八点四十五”原来只改了分钟（写成“八点45”），改为“8点45”；“数字一百的百”这类说一个字怎么写的保留汉字；“十三香”“这一点十分重要”不改；labels.context_correction （segments、marked_text、cot）跟着 target 改。被替换文件的原 sha256：train_sup_0 b8ce9f8fb10b4a1d2e23226ab5bf06a67033d6517fc3f31cfb575b7928cf06f0\n2026-11-28 再次原地修正，版本名不变：专名保留约定写法（春风十里、降龙十八掌、党的十八大、十八届三中全会、十二指肠、十里堡、四句话十六字等，zh_numbers 专名词表）；字母后面的型号和版本号连小数一起改（PM2点五改为 PM2.5、Web3点零改为 Web3.0、iOS26点四点一改为 iOS26.4.1）；热词表里不在 target 中的词各自按规则 9 转换（原样出现在 target 里的不动）。被替换文件的原 sha256：train_sup_0 03236489e0374b1c15ea2efee1887bea97bf0e28af8189ef98c2e6e9ea784878"
   derived_from: aishell3@legacy-20260804-final-v2-20261123
   recipe_parameters:
     spec: docs/reference/training-text.md（v4）
     start: aishell3@legacy-20260804-final-v2-20261123
-    rounds: 数字写成阿拉伯数字（规则 9，zh-num-v1）8,096 条，value 4,376 处、digits 1,804 处、decimal 1,209 处、date 1,101 处、percent 626 处、time 145 处
+    rounds: 数字写成阿拉伯数字（规则 9，zh-num-v1）8,051 条，value 4,333 处、digits 1,802 处、decimal 1,209 处、date 1,095 处、percent 626 处、time 145 处
     unchanged: 规则没有改动的文本文件、录音清单、音频和 dev/test 划分，引用起点版本的产物
 - schema_version: dataset-catalog/2.0
   dataset_id: fleurs_zh

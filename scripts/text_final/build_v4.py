@@ -77,28 +77,22 @@ def fix_row(row: dict, field: str, punc, n: Counter) -> tuple[str, str] | None:
     if not isinstance(old, str):
         return None
     new, changes = zh_numbers.convert(old)
+    meta = row.get("metadata") or {}
+    hotwords = fix_hotwords(row, meta, new, n)
     if not changes:
-        return None
+        if not hotwords:
+            return None
+        n["hotword_only_records"] += 1
+        key = "metadata" if field == "target" else "custom"
+        mark = {"original_text": old, "rules": "text-final-v4", "original_hotwords": hotwords}
+        row[key] = {**(row.get(key) or {}), "text_final": mark}
+        return " / ".join(map(str, hotwords)), "（热词）"
     for cat, _, _ in changes:
         n[f"rule9_{cat}"] += 1
     row[field] = new
-    meta = row.get("metadata") or {}
     for t in (meta.get("scene") or {}).get("targets") or []:
         if isinstance(t.get("text"), str):
             t["text"] = fix(t["text"])
-    for holder in (row, meta, row.get("custom") or {}):
-        for key in ("hotwords", "interferer_hotwords"):
-            if isinstance(holder.get(key), list):
-                # two spellings of one word (大明王朝一五六六, 大明王朝1566) become one: keep the first
-                words, seen = [], set()
-                for w in holder[key]:
-                    if isinstance(w, str):
-                        w = fix(w)
-                        if w in seen:
-                            continue
-                        seen.add(w)
-                    words.append(w)
-                holder[key] = words
     cc = (row.get("labels") or {}).get("context_correction")
     if isinstance(cc, dict):
         fix_context_labels(cc, old, new, n)
@@ -112,8 +106,37 @@ def fix_row(row: dict, field: str, punc, n: Counter) -> tuple[str, str] | None:
                 t["text"] = text
             n["turns_records"] += 1
     key = "metadata" if field == "target" else "custom"
-    row[key] = {**(row.get(key) or {}), "text_final": {"original_text": old, "rules": "text-final-v4"}}
+    mark = {"original_text": old, "rules": "text-final-v4"}
+    if hotwords:
+        mark["original_hotwords"] = hotwords
+    row[key] = {**(row.get(key) or {}), "text_final": mark}
     return old, new
+
+
+def fix_hotwords(row: dict, meta: dict, target: str, n: Counter) -> list:
+    """Hotword lists take rule 9 in every row (user decision 2026-11-28), each word converted on its own; a word that
+    occurs in the final target as it is keeps that spelling, so the list still matches the target (蓝牙四点二 where
+    the target keeps it). Two spellings of one word (大明王朝一五六六, 大明王朝1566) become one: the first is kept.
+    Returns the original words of every list it changed."""
+    changed = []
+    for holder in (row, meta, row.get("custom") or {}):
+        for key in ("hotwords", "interferer_hotwords"):
+            if not isinstance(holder.get(key), list):
+                continue
+            words, seen, converted = [], set(), 0
+            for w in holder[key]:
+                if isinstance(w, str):
+                    if w not in target and fix(w) != w:
+                        w, converted = fix(w), converted + 1
+                    if w in seen:
+                        continue
+                    seen.add(w)
+                words.append(w)
+            if words != holder[key]:
+                n["hotwords_converted"] += converted
+                changed += holder[key]
+                holder[key] = words
+    return changed
 
 
 def cut_like(pieces: list, old: str, new: str) -> list | None:
@@ -485,6 +508,8 @@ def main():
         cats = {k[len("rule9_"):]: v for k, v in totals.items() if k.startswith("rule9_")}
         parts = [f"数字写成阿拉伯数字（规则 9，zh-num-v1）{totals['changed_records']:,} 条，" +
                  "、".join(f"{c} {v:,} 处" for c, v in sorted(cats.items(), key=lambda x: -x[1]))]
+        if totals["hotword_only_records"]:
+            parts.append(f"其中 {totals['hotword_only_records']:,} 条只改了热词（热词表里不在 target 中的词各自按规则 9 转换）")
         if totals["quarantined"]:
             parts.append(f"target 含竖线的 {totals['quarantined']:,} 条移到 quarantine 划分（{QUARANTINE_WHY}；记录内容不变）")
         what = "；".join(parts)
@@ -513,7 +538,8 @@ def main():
             "snapshot_date": now[:10],
             "description": (
                 f"{lead}{what}，按 audio-data-contract {SPEC}。同一行里的场景文本"
-                f"{'、热词列表和上下文纠偏标签' if totals['cc_records'] else '和热词列表'}一起改；"
+                f"{'和上下文纠偏标签' if totals['cc_records'] else ''}跟着 target 改，热词表的词各自转换"
+                "（原样出现在 target 里的不动）；"
                 "其余字段、录音清单和音频照旧，引用起点版本的产物。"
             ),
             "source": f"{ds}@{start}",

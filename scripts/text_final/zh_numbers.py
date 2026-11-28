@@ -50,6 +50,21 @@ LEXICON = [
     "周三", "周四", "周五", "周六", "初一", "初二", "初三", "初四", "初五", "初六", "初七", "初八", "初九", "初十",
     "十一长假", "十一假期", "国庆十一", "一一对应", "一一列举", "一一道来", "十二分", "万分", "两两", "一二九运动", "一二·九", "九一八", "七七事变", "一二八事变", "八一三", "四一二", "三点一线", "一点一点", "一点点", "一点一滴", "十月围城", "五月天", "九月九", "十三香",
 ]
+# Proper names whose conventional spelling keeps the Chinese numeral (GB/T 15835-2011: idioms, set phrases and names keep
+# 汉字): place and road names, titles, medicines, and Party / NPC sessions. Found in the hotword lists of hw_sft
+# (2026-11-28); names conventionally written with digits (恋曲1990, 360安全卫士, 58同城, 波音777) are not listed.
+_CN_ORD = ["十一", "十二", "十三", "十四", "十五", "十六", "十七", "十八", "十九", "二十"]
+LEXICON += [
+    "十里堡", "十里河", "十里店", "十里铺", "十里居", "十八里店", "东四十条", "八一路", "五一路", "五四路", "六一路", "七一路",
+    "八万人体育场", "八万人主体育场", "十三陵", "八百伴", "十二指肠", "降龙十八掌", "十二生肖", "山路十八弯", "十里埋伏",
+    "十里桃花", "春风十里", "七月七日晴", "弱水三千", "三十六计", "萧十一郎", "二十四史", "二十五史", "二十四节气",
+    "十五的月亮", "敌营十八年", "十八岁的天空", "十六岁的花季", "十七岁的雨季", "十七岁那年的雨季", "二环十三郎", "十二国记",
+    "十二猴子", "千里寻母记", "向天再借五百年", "爱你一万年", "五十六朵花", "八十八佛", "十五味", "十一味", "二十五味",
+    "三万英尺", "十二金鸭", "国十条", "十一黄金周", "四句话十六字", "四句话，十六字", "四句话,十六字", "十六字方针", "二十四字方针",
+    *(f"{n}大" for n in _CN_ORD[4:]),  # 十五大 .. 二十大
+    *(f"{n}届{m}中全会" for n in _CN_ORD for m in "一二三四五六七"),
+    *(f"{n}届全国{body}" for n in _CN_ORD for body in ("人大", "政协")),
+]
 TWO_DIGIT_BEFORE = set("年后届级号路次期班栋楼层室")  # 九八年, 零零后, 二三号 convert; other two-digit strings stay
 WORDS_WITH_ONE = {"一样", "一个", "一下", "一些", "一起", "一直", "一定", "一般", "一点", "一种", "一次", "一边", "一共", "一切", "一面", "一会", "一句", "一天"}
 COUNT_WORDS = set("项种只本套份批支根头匹双对场段篇首部款门所座间把块片台道封轮张条位名家件")  # GPO一项, 两A股
@@ -234,6 +249,17 @@ def edits(text):
         if _in_lexicon(text, m.start(), m.end()):
             continue
         w, f, unit, nxt = _value(m.group(1)), _digits(m.group(2)), m.group(3) or "", _at(text, m.end())
+        if LATIN.match(_at(text, m.start() - 1)) and not unit and f is not None:
+            # PM二点五, Web三点零, FM幺零五点四, iOS二十六点四点一: a model or version number after Latin letters,
+            # whatever follows it (the latin rule alone wrote PM2点五)
+            w = w if w is not None else _digits(m.group(1))
+            end, parts = m.end(), [f]
+            while (more := re.match(f"点([{DIGIT}]+)", text[end:])) and _digits(more.group(1)):
+                parts.append(_digits(more.group(1)))
+                end += more.end()
+            if w is not None:
+                claim(m.start(), end, "decimal", ".".join([w, *parts]))
+            continue
         if w is None or f is None:
             continue
         if m.group(2) == "一" and not unit and nxt in ONE_WORD_AFTER:
