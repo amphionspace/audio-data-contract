@@ -136,8 +136,6 @@
     relative_path: datasets/voxpopuli_en/versions/hf-42f01879c780-final-v3-20261125/duration_distribution.json
     expected_bytes: 168
     sha256: b7bf251ccbb8029a25f91b5a23ab54701690f08ee8059eec1a56ec703a9b6c53
-    metadata:
-      record_count: 1
   splits:
     train:
       group: train
@@ -244,8 +242,6 @@
     relative_path: datasets/earnings22/versions/github-c05ab6fd8b4b-final-v3-20261125/duration_distribution.json
     expected_bytes: 332
     sha256: 83bca056cc44e9922fe0a74e37e9945e97f0f73cf05de41243a532ad858f1360
-    metadata:
-      record_count: 1
   splits:
     dev:
       group: eval
@@ -383,8 +379,6 @@
     relative_path: datasets/earnings21/versions/github-c05ab6fd8b4b-final-v3-20261125/duration_distribution.json
     expected_bytes: 168
     sha256: a76d8d7c64f49b312fe74d9225b3edb5f1fcde719db2384d772ce07768501d5a
-    metadata:
-      record_count: 1
   splits:
     test:
       group: eval
@@ -461,8 +455,8 @@
     kind: audio-records
     root_alias: aidc_data
     relative_path: datasets/ami_ihm/versions/hf-edinburghcstr-20261023-final-v3-20261125/records/train.jsonl.gz
-    expected_bytes: 7671036
-    sha256: 1857b215ec4f89184c2d1b4c0f1cda3288be4965f330fcaaeefa63c377fc7ed3
+    expected_bytes: 7671514
+    sha256: 57d10a797719ea9ecdc5e4839e97e2fb455aa792534553fa92eb5b6bfe6d3b9a
     metadata:
       record_count: 86417
   - name: audio_index
@@ -478,9 +472,7 @@
     root_alias: aidc_data
     relative_path: datasets/ami_ihm/versions/hf-edinburghcstr-20261023-final-v3-20261125/duration_distribution.json
     expected_bytes: 167
-    sha256: df520957b933e8fb1841ececa96cecf1db8dbe206489d8a55bcd008f5df2c529
-    metadata:
-      record_count: 1
+    sha256: 0e4565ab3ae0619e7489fc43f07d54056dd85bf3c71329ee9e2b0bebf284d336
   splits:
     train:
       group: train
@@ -493,7 +485,7 @@
         - preparation_state
       statistics:
         records: 86417
-        duration_hours: 75.9078
+        duration_hours: 75.9077
         duration_basis: sum of record durations
         languages:
           en: 86417
@@ -534,6 +526,7 @@
     run_dir: /workspace/workspace/mingdong/data/amphiondata/aline-en-20261125
     build_script: scripts/text_final/en_board/ami_ihm.py
     quality_status: whisper-large-v3 spot check in run_dir/verify
+    record_correction: 2026-11-28 原地修正，版本名不变（用户决定修）：时长原来四舍五入到毫秒，446 条记录比片段音频长不到 1 个采样点（最多 0.0625 ms），amphion-eval 只容许 1 个采样点，浮点误差会越过（A 线 KD 因此有 67 条请求失败）。这些记录的 audio_slots[].ref.duration 改为向下取整到毫秒，不再超出音频；只改 records、duration_distribution.json，音频和 audio_index 不变。原 records sha256 1857b215ec4f89184c2d1b4c0f1cda3288be4965f330fcaaeefa63c377fc7ed3
 - schema_version: dataset-catalog/2.0
   dataset_id: spgispeech2
   version: hf-f4ce91de393c-final-v3-20261125
@@ -588,8 +581,6 @@
     relative_path: datasets/spgispeech2/versions/hf-f4ce91de393c-final-v3-20261125/duration_distribution.json
     expected_bytes: 500
     sha256: 14bd3fc232e99cf5196152ba049b78525c5ee34560c708d981ee0652cd8b5dd2
-    metadata:
-      record_count: 1
   splits:
     dev:
       group: eval

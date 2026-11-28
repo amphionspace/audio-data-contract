@@ -39,7 +39,7 @@ AMI 英文会议的近讲耳麦版
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
 | [ami_ihm@hf-edinburghcstr-20261023](../../catalog/ami_ihm.yaml#L1) | 95.5 | 已登记 | 没有 |
-| [ami_ihm@hf-edinburghcstr-20261023-final-v3-20261125](../../catalog/text_final_v3.yaml#L444) | — | 未登记 | 没有 |
+| [ami_ihm@hf-edinburghcstr-20261023-final-v3-20261125](../../catalog/text_final_v3.yaml#L438) | — | 未登记 | 没有 |
 | [ami_ihm@hf-edinburghcstr-20261023-final-v3-20261125-musci-kd-v1-20261127](../../catalog/aline_musci_kd_v1.yaml#L67) | — | 未登记 | 没有 |
 
 - `ami_ihm@hf-edinburghcstr-20261023`：AMI 会议语料的近讲耳麦（IHM）版本：英文 16 kHz 单声道，按 Kaldi AMI s5 切句、文本大写归一化，带会议、说话人和耳麦编号。train / dev / test 分别 108502、13098、12643 句，共 95.5 小时，会议划分与 Kaldi full-corpus-ASR 一致。本机已有 AMI 单远场麦克风版 `ami_sdm`，可与这份近讲版对照近场和远场
@@ -208,7 +208,7 @@ CS-Dialogue 对话中的纯英文语句
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
 | [earnings21@github-c05ab6fd8b4b](../../catalog/earnings.yaml#L1) | 39.3 | 已登记 | 没有 |
-| [earnings21@github-c05ab6fd8b4b-final-v3-20261125](../../catalog/text_final_v3.yaml#L348) | — | 未登记 | 没有 |
+| [earnings21@github-c05ab6fd8b4b-final-v3-20261125](../../catalog/text_final_v3.yaml#L344) | — | 未登记 | 没有 |
 
 - `earnings21@github-c05ab6fd8b4b`：Rev 发布的真实财报电话会议长音频评测集：44 场、39.3 小时，覆盖 9 个行业，共 466 位说话人（主持人、高管、分析师），带电话和会议软件 的各种采样率和压缩。transcripts/nlp_references 是逐词的人工转写，带说话人编号、标点、大小写和实体标签（数字、日期、机构名等）， 另有归一化规则、wer_tags、说话人 RTTM 和实体偏置词表（bias_lists），可做长音频识别、带说话人的识别、数字和实体识别评测。 仓库里各家商用 ASR 的输出（earnings21/output）不属于数据本身，未下载。CC BY-SA 4.0
 - `earnings21@github-c05ab6fd8b4b-final-v3-20261125`：Earnings-21 财报电话会议（44 场）切成不超过 30 秒的短句，只作 test，直接按训练文本规范 v3 建，供 open-audio-llm A 线（英文榜单版）评测。文本用 nlp_references 的书面写法（大小写、标点、实体原样），口语重复和 uh/um 保留。参考转写没有时间：whisper-large-v3 按 30 秒窗口识别、Qwen3-ForcedAligner 打时间作锚点，在锚点处的停顿把会议切成不超过 60 秒的块，再用 Qwen3-ForcedAligner 对齐每块的参考转写（earnings21_align.py），可对齐的词全部有时间。切句规则与 Earnings-22 相同；不按 whisper 丢段，每段的 whisper-large-v3 WER 记在 metadata.whisper_wer（> 0.5 的 420 段，约三到五成是 whisper 自己的错）。音频转成 16 kHz 单声道 FLAC
@@ -223,8 +223,8 @@ CS-Dialogue 对话中的纯英文语句
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
 | [earnings22@github-c05ab6fd8b4b](../../catalog/earnings.yaml#L66) | 119.9 | 已登记 | 没有 |
-| [earnings22@github-c05ab6fd8b4b-final-v3-20261125](../../catalog/text_final_v3.yaml#L201) | — | 未登记 | 没有 |
-| [earnings22@github-c05ab6fd8b4b-final-v3-20261125-musci-kd-v1-20261127](../../catalog/aline_musci_kd_v1.yaml#L229) | — | 未登记 | 没有 |
+| [earnings22@github-c05ab6fd8b4b-final-v3-20261125](../../catalog/text_final_v3.yaml#L199) | — | 未登记 | 没有 |
+| [earnings22@github-c05ab6fd8b4b-final-v3-20261125-musci-kd-v1-20261127](../../catalog/aline_musci_kd_v1.yaml#L230) | — | 未登记 | 没有 |
 
 - `earnings22@github-c05ab6fd8b4b`：Rev 发布的带口音英文真实财报电话会议评测集：125 场、119.9 小时，公司来自 27 个国家，metadata.csv 按语言背景分组（西葡 31 场、 亚洲 28、英语 26、其他罗曼语 13、日耳曼语 12、斯拉夫语 10、非洲 5）。transcripts 下有逐词人工转写（带说话人编号、标点、大小写和 实体标签）、强制对齐版本和归一化规则；subset10 另给 10 场的非逐字转写，其余 subset10 条目是指向主目录的符号链接，未重复下载。 用于口音、长音频和实体识别的真实场景评测。CC BY-SA 4.0
 - `earnings22@github-c05ab6fd8b4b-final-v3-20261125`：Earnings-22 财报电话会议切成不超过 30 秒的短句，直接按训练文本规范 v3 建，供 open-audio-llm A 线（英文榜单版）训练。文本用 nlp_references 的书面写法（大小写、标点、MTN/2019/31st 这类实体原样），时间取 force_aligned_nlp_references，两表按单元匹配；口语重复和 uh/um 保留。排除 Open ASR 榜单测试用的 6 场（4468919、4471586、4474955、4475604、4482968、4483046），另按口音组各取 1 场共 4 场作 dev。音频转成 16 kHz 单声道 FLAC
@@ -338,7 +338,7 @@ Emilia 英语野外语音（已清洗）
 | [gigaspeech@punc-written-en-v1-20261102](../../catalog/en_punc_written_v1.yaml#L72) | — | 未登记 | 没有 |
 | [gigaspeech@train-punc-v1-20261102-final-v1-20261120](../../catalog/text_final_v1.yaml#L1673) | — | 未登记 | 没有 |
 | [gigaspeech@train-punc-v1-20261102-final-v1-20261120-kd-pool-v1-20261127](../../catalog/aline_musci_kd_v1.yaml#L3) | — | 未登记 | 没有 |
-| [gigaspeech@train-punc-v1-20261102-final-v1-20261120-kd-pool-v1-20261127-musci-kd-v1-20261127](../../catalog/aline_musci_kd_v1.yaml#L310) | — | 未登记 | 没有 |
+| [gigaspeech@train-punc-v1-20261102-final-v1-20261120-kd-pool-v1-20261127-musci-kd-v1-20261127](../../catalog/aline_musci_kd_v1.yaml#L311) | — | 未登记 | 没有 |
 | [gigaspeech@youtube-diarize-census-v1-20261009](../../catalog/diarization_raw_gigaspeech-census.yaml#L2) | — | 未登记 | 没有 |
 | [gigaspeech@legacy-20260804](../../catalog/icefall_base.yaml#L190) | 10,000.0 | [参考表](https://ccnuebbmik1f.feishu.cn/wiki/CEXFwEjPoi2bIukVjk9c5FdOn12?sheet=3d4d23) | 快照 20260914 |
 
@@ -733,7 +733,7 @@ SPGISpeech 1.0 S train 原始下载
 |---|---:|---|---|
 | [spgispeech@hf-14e69dd3b80e-s](../../catalog/spgispeech.yaml#L3) | — | 未登记 | 没有 |
 | [spgispeech@hf-14e69dd3b80e-s-final-v3-20261127](../../catalog/spgispeech.yaml#L48) | — | 未登记 | 没有 |
-| [spgispeech@hf-14e69dd3b80e-s-final-v3-20261127-musci-kd-v1-20261127](../../catalog/aline_musci_kd_v1.yaml#L387) | — | 未登记 | 没有 |
+| [spgispeech@hf-14e69dd3b80e-s-final-v3-20261127-musci-kd-v1-20261127](../../catalog/aline_musci_kd_v1.yaml#L388) | — | 未登记 | 没有 |
 
 - `spgispeech@hf-14e69dd3b80e-s`：Kensho（S&P Global）SPGISpeech 1.0 的 S 配置 train：2007–2020 年上市公司财报电话会议切成 5–15 秒的单人片段，77,073 段、196.2 小时，16 kHz 单声道。转写是 S&P Global 的专业转写，按编辑规范写成书面形式（大小写、标点、非标准词书面化），口吃和语气词大多删掉。数据有访问门控，用户 2026-11-27 用 HF 账号接受了条款：仅限非商业研究，不得再分发。只下载了 S 的 train（6 个 parquet）；validation、test 没下（榜单 test 在 open_asr_leaderboard 副本里）
 - `spgispeech@hf-14e69dd3b80e-s-final-v3-20261127`：spgispeech@hf-14e69dd3b80e-s 的 train 按训练文本规范 v3 建的训练版本，供 open-audio-llm A 线（英文榜单版）用 Musci 做序列级蒸馏，学榜单 SPGISpeech test 的整理稿写法（Musci 在 SPGISpeech 2.0 音频上按逐字写，只在与 test 同分布的 1.0 音频上按整理稿写）。目标是 S&P Global 转写原文（规则 2 只补句首大写和句末标点）。与榜单 test 句子文本近乎相同的记录在 metadata.spgispeech1_test_ids 标出，训练配方按它排除。Kensho 条款：仅限非商业研究
@@ -749,8 +749,8 @@ SPGISpeech 1.0 S train 原始下载
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
 | [spgispeech2@hf-f4ce91de393c](../../catalog/spgispeech2.yaml#L1) | 3,649.2 | 已登记 | 没有 |
-| [spgispeech2@hf-f4ce91de393c-final-v3-20261125](../../catalog/text_final_v3.yaml#L537) | — | 未登记 | 没有 |
-| [spgispeech2@hf-f4ce91de393c-final-v3-20261125-musci-kd-v1-20261127](../../catalog/aline_musci_kd_v1.yaml#L149) | — | 未登记 | 没有 |
+| [spgispeech2@hf-f4ce91de393c-final-v3-20261125](../../catalog/text_final_v3.yaml#L530) | — | 未登记 | 没有 |
+| [spgispeech2@hf-f4ce91de393c-final-v3-20261125-musci-kd-v1-20261127](../../catalog/aline_musci_kd_v1.yaml#L150) | — | 未登记 | 没有 |
 
 - `spgispeech2@hf-f4ce91de393c`：Kensho（S&P Global）发布的 SPGISpeech 多说话人版本（Interspeech 2025）：2021–2024 年上市公司财报电话会议录音，多取自 问答环节，切成 50–90 秒的片段，每段至少 2 位说话人（2 人约 83%、3 人约 16%，最多 6 人），口音覆盖母语和非母语商务英语。 转写是 S&P Global 的专业人工转写（官方称准确率 99% 以上），用“\|”标出说话人切换，并附每段的数字说话人编号列表； supplemental_data/alignment_files.tar.gz 是每段的对齐 JSON。本地共 3,649.2 小时（README 写 3,780 h，v1.0.0 因法律原因 删掉约 3% 的片段）：train 156,753 段、39,864 人、3,367.0 h；dev 6,195 段、4,914 人、133.2 h；test 6,932 段、5,371 人、 149.0 h；共 41,117 个说话人编号，16 kHz 单声道 PCM WAV 嵌在 parquet 中。三个划分没有共享会议（call_id 互斥），但有共享 说话人（train 与 test 共 4,702 人）。转写按编辑规范而非逐字：口吃、重复和部分寒暄会被删掉，长片段里残留较多。数据有 访问门控，已用用户的 HF 账号同意 Kensho 条款（2025 年 7 月版，上游 LICENSE 文件为空，条款以 README 门控文本为准）： 仅限内部非商业研究；用它训练的模型及其输出若对外提供，必须免费且条款不宽于本条款；不得用于与 Kensho 竞争的商用转写或 ASR 产品、声纹识别或验证、语音克隆、说话人画像；不得识别或联系说话人真实身份；不得再分发
 - `spgispeech2@hf-f4ce91de393c-final-v3-20261125`：SPGISpeech 2.0 财报电话会议（50–90 秒多说话人片段）切成不超过 30 秒的单说话人短句，train/dev/test 沿用原划分，直接按训练文本规范 v3 建，供 open-audio-llm A 线（英文榜单版）第二轮训练。文本用 raw_transcript（S&P Global 专业转写：书面写法，删了口吃和大部分语气词，不是逐字稿），时间取 supplemental_data 的词级对齐（按字母数字拆分后匹配，词全部有时间）。片段边缘可能被截断的首尾词不进文本；对齐把多个词挤在很短时间里的段（每秒超过 8 个词）丢掉。没有找到与 SPGISpeech 1.0 test（Open ASR 榜单）同一录音的条目；与 1.0 test 句子文本近乎相同的记录（多是主持人结束语等套话）在 metadata.spgispeech1_test_ids 标出。Kensho 研究许可：仅限非商用研究，用它训练的模型须免费提供。音频转成 16 kHz 单声道 FLAC

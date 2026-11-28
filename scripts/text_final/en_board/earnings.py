@@ -309,7 +309,7 @@ def segment(args):
     arts.append(artifact("audio_index", "audio-index", idx_rel, len(index)))
     dist = {s: distribution(d) for s, d in sorted(durs.items())}
     (DATA / vdir / "duration_distribution.json").write_text(json.dumps(dist, indent=2) + "\n")
-    arts.append(artifact("duration_distribution", "statistics", vdir / "duration_distribution.json", 1))
+    arts.append(artifact("duration_distribution", "statistics", vdir / "duration_distribution.json"))
     counts = dict(sorted(n.items()))
     print(json.dumps(counts, ensure_ascii=False, indent=1), json.dumps(dist, indent=1))
     now = datetime.now(UTC).strftime("%Y-%m-%dT%H:%M:%SZ")

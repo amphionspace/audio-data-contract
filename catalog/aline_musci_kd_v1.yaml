@@ -84,8 +84,8 @@
     kind: audio-records
     root_alias: aidc_data
     relative_path: datasets/ami_ihm/versions/hf-edinburghcstr-20261023-final-v3-20261125-musci-kd-v1-20261127/records/train.jsonl.gz
-    expected_bytes: 2350230
-    sha256: 3970e776b3b3536ee4be14c1c312446fb964b111f53e44f750e9a94b23fb9968
+    expected_bytes: 2350286
+    sha256: 461c0f9fe201249e467f95395f816703769600f23b8bdcadc23337c27b6a27ed
     metadata:
       record_count: 22128
   - name: audio_index
@@ -101,7 +101,7 @@
     root_alias: aidc_data
     relative_path: datasets/ami_ihm/versions/hf-edinburghcstr-20261023-final-v3-20261125-musci-kd-v1-20261127/record_index/index.json
     expected_bytes: 767
-    sha256: d1a036202365822e6aba20a73503b393d8a105f1110f5fcffc0f98570d53d6c4
+    sha256: c5ef31771d8be0e005bc40970a988d68ab6615e8e55556e65ce0951439a49d13
     metadata:
       snapshot_version: 13
       rows: 22128
@@ -135,6 +135,7 @@
     description: A 线序列级蒸馏：ami_ihm@hf-edinburghcstr-20261023-final-v3-20261125 的随机子集，目标换成 Musci 的贪心解码（与参考的榜单归一化 WER > 0.3 的丢弃，按 A 线去重清单排除），音频不变。
     requested_by: open-audio-llm A 线（open-audio-llm-45 会话，2026-11-27）
     quality_status: 被拒（错误过多）1,898 条（7.6%），抽 20 条误杀 5 条（25%，参考保留半截词）；参考为空 897 条（纯附和句）；67 条请求失败，都是源版本里记录时长超过音频长度；详见 run_dir/README.md
+    record_correction: 2026-11-28 原地修正，版本名不变（用户决定修）：时长原来四舍五入到毫秒，53 条记录比片段音频长不到 1 个采样点（最多 0.0625 ms），amphion-eval 只容许 1 个采样点，浮点误差会越过（A 线 KD 因此有 67 条请求失败）。这些记录的 audio_slots[].ref.duration 改为向下取整到毫秒，不再超出音频；只改 records（Lance 记录索引随之重建），音频和 audio_index 不变。原 records sha256 3970e776b3b3536ee4be14c1c312446fb964b111f53e44f750e9a94b23fb9968
   recipe_parameters:
     teacher: Musci-ASR-qwen-1019@c376e9c on the 11.17 serving stack (greedy, force_language en, max_new_tokens 512)
     max_wer_vs_reference: 0.3
