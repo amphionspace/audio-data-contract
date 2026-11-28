@@ -3610,7 +3610,7 @@ Casablanca 八种阿拉伯语方言
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
-| [casablanca@hf-8951b1b88e28](../../catalog/multilingual_asr_sources.yaml#L1687) | — | 未登记 | 没有 |
+| [casablanca@hf-8951b1b88e28](../../catalog/multilingual_asr_sources.yaml#L1739) | — | 未登记 | 没有 |
 
 - `casablanca@hf-8951b1b88e28`：UBC-NLP Casablanca 的 test 划分（阿尔及利亚、埃及、约旦、毛里塔尼亚、摩洛哥、巴勒斯坦、阿联酋、也门），音频以 wav 字节存在 parquet 内；validation 未下载。仅限非商业用途
 
@@ -3684,11 +3684,13 @@ CV 24.0 阿拉伯语 dev/test
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
 | [common_voice_ar@ar-eval-v1-20261127](../../catalog/ar_eval_v1.yaml#L2) | — | 未登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/common_voice_ar/` |
-| [common_voice_ar@hf-8262c16bf297](../../catalog/multilingual_asr_sources.yaml#L336) | 12.7 | 已登记 | 没有 |
+| [common_voice_ar@ar-train-v1-20261128](../../catalog/ar_train_v1.yaml#L2) | — | 未登记 | 没有 |
+| [common_voice_ar@hf-8262c16bf297](../../catalog/multilingual_asr_sources.yaml#L336) | 60.3 | 已登记 | 没有 |
 | [common_voice_ar@legacy](../../catalog/legacy_multilingual.yaml#L1) | 58.2 | 已登记 | 快照 20260914 |
 
 - `common_voice_ar@ar-eval-v1-20261127`：阿拉伯语评测用的 Common Voice 24.0 官方 dev / test 划分的 Lhotse 清单（common_voice_ar@legacy 的同名划分，音频为 mp3 原件，文本为原句，部分句子带元音符号，未清洗、未改写）。dev（64 人）与 test（1,016 人）一起供 TS-ASR、跨语言注册与背景人声评测集取说话人，test 供普通 ASR 与热词评测集取目标句。说话人与 CV 24.0 train 零重叠，dev 与 test 说话人不重叠；去元音符号后有部分句子与 train 相同，数目记在版本目录 overlap.json，阿拉伯语训练版本须去掉这些说话人和句子。只用于评测，不进训练
-- `common_voice_ar@hf-8262c16bf297`：Common Voice 17.0 ar 的非官方 HF 镜像（官方 Mozilla 仓库需要授权），只下载了 test，与 common_voice_pt@hf-8262c16bf297 同一修订
+- `common_voice_ar@ar-train-v1-20261128`：Common Voice 阿拉伯语训练版本：CV 24.0 train（23,680 句 / 26.84 h，24 人）加 CV 17.0 other（录了音、投票未满，9,113 句 / 10.86 h，330 人）。去掉阿拉伯语评测集（ar-eval-v1-20261127）的 Common Voice 24.0 / 17.0 dev+test 说话人，以及去元音符号后与评测句（CV 24.0 dev/test、MGB-2 dev/test、FLEURS test、Casablanca、CV 17.0 test）相同的句子；时长 0.3–30 秒。随后双引擎清洗（consensus-v8，先试跑 3,000 句）、按阿拉伯语训练文本规则 ar-v1 规整（去元音符号与延长符、东阿拉伯数字改西式，与 AmphionEval 打分口径版本 5 一致）、Qwen3.8-27B 标热词
+- `common_voice_ar@hf-8262c16bf297`：Common Voice 17.0 ar 的非官方 HF 镜像（官方 Mozilla 仓库需要授权），与 common_voice_pt@hf-8262c16bf297 同一修订。2026-11-10 只下载了 test；2026-11-28 补下 other（录了音、投票未满的录音）的音频，以及 other / dev / train / validated 表，给阿拉伯语训练补充说话人（common_voice_ar@ar-train-v1-20261128）。dev、train、validated 只有表、没有音频（train 音频用 Common Voice 24.0，即 common_voice_ar@legacy）。other 音频解包在 versions/ar-train-v1-20261128/audio/，不在本快照目录内
 - 有含标点版本
 - 含派生版本（与源数据可能重叠）
 
@@ -3712,7 +3714,7 @@ CV 24.0 阿拉伯语 dev/test
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
-| [common_voice_de@hf-8262c16bf297](../../catalog/multilingual_asr_sources.yaml#L744) | 27.4 | 已登记 | 没有 |
+| [common_voice_de@hf-8262c16bf297](../../catalog/multilingual_asr_sources.yaml#L796) | 27.4 | 已登记 | 没有 |
 | [common_voice_de@legacy](../../catalog/legacy_multilingual.yaml#L558) | 1,034.8 | 已登记 | 快照 20260914 |
 
 - `common_voice_de@hf-8262c16bf297`：Common Voice 17.0 de 的非官方 HF 镜像（官方 Mozilla 仓库需要授权），只下载了 test，与 common_voice_pt@hf-8262c16bf297 同一修订
@@ -3731,7 +3733,7 @@ CV 24.0 阿拉伯语 dev/test
 | [common_voice_es@cv27-train-v1-20261111-final-v1-20261120](../../catalog/text_final_v1_es.yaml#L64) | 1,355.5 | 已登记 | 没有 |
 | [common_voice_es@es-train-hwconf-v1-20261111-final-v1-20261120](../../catalog/text_final_v1_es.yaml#L128) | 247.6 | 已登记 | 没有 |
 | [common_voice_es@es-train-v1-20261108-final-v1-20261120](../../catalog/text_final_v1_es.yaml#L251) | 514.0 | 已登记 | 没有 |
-| [common_voice_es@hf-8262c16bf297](../../catalog/multilingual_asr_sources.yaml#L472) | 26.9 | 已登记 | 没有 |
+| [common_voice_es@hf-8262c16bf297](../../catalog/multilingual_asr_sources.yaml#L524) | 26.9 | 已登记 | 没有 |
 | [common_voice_es@legacy](../../catalog/legacy_multilingual.yaml#L960) | 568.5 | 已登记 | 快照 20260914 |
 | [common_voice_es@mdc-27.0](../../catalog/common_voice_27.yaml#L2) | 1,355.5 | 已登记 | 没有 |
 
@@ -3754,7 +3756,7 @@ CV 24.0 阿拉伯语 dev/test
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
-| [common_voice_fr@hf-8262c16bf297](../../catalog/multilingual_asr_sources.yaml#L608) | 26.1 | 已登记 | 没有 |
+| [common_voice_fr@hf-8262c16bf297](../../catalog/multilingual_asr_sources.yaml#L660) | 26.1 | 已登记 | 没有 |
 | [common_voice_fr@legacy](../../catalog/legacy_multilingual.yaml#L1316) | 924.1 | 已登记 | 快照 20260914 |
 
 - `common_voice_fr@hf-8262c16bf297`：Common Voice 17.0 fr 的非官方 HF 镜像（官方 Mozilla 仓库需要授权），只下载了 test，与 common_voice_pt@hf-8262c16bf297 同一修订
@@ -3768,7 +3770,7 @@ Common Voice 17 印地语朗读
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
-| [common_voice_hi@hf-8262c16bf297](../../catalog/multilingual_asr_sources.yaml#L1177) | 7.6 | 已登记 | 没有 |
+| [common_voice_hi@hf-8262c16bf297](../../catalog/multilingual_asr_sources.yaml#L1229) | 7.6 | 已登记 | 没有 |
 
 - `common_voice_hi@hf-8262c16bf297`：Common Voice 17.0 hi 的非官方 HF 镜像（官方 Mozilla 仓库需要授权），只下载了 dev/test，与 common_voice_pt@hf-8262c16bf297 同一修订
 
@@ -3780,7 +3782,7 @@ Common Voice 17 印尼语朗读
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
-| [common_voice_id@hf-8262c16bf297](../../catalog/multilingual_asr_sources.yaml#L1502) | 8.0 | 已登记 | 没有 |
+| [common_voice_id@hf-8262c16bf297](../../catalog/multilingual_asr_sources.yaml#L1554) | 8.0 | 已登记 | 没有 |
 
 - `common_voice_id@hf-8262c16bf297`：Common Voice 17.0 id 的非官方 HF 镜像（官方 Mozilla 仓库需要授权），只下载了 dev/test，与 common_voice_pt@hf-8262c16bf297 同一修订
 
@@ -3792,7 +3794,7 @@ Common Voice 17 印尼语朗读
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
-| [common_voice_ja@hf-8262c16bf297](../../catalog/multilingual_asr_sources.yaml#L880) | 8.9 | 已登记 | 没有 |
+| [common_voice_ja@hf-8262c16bf297](../../catalog/multilingual_asr_sources.yaml#L932) | 8.9 | 已登记 | 没有 |
 | [common_voice_ja@legacy](../../catalog/legacy_multilingual.yaml#L1605) | 48.2 | 已登记 | 快照 20260914 |
 
 - `common_voice_ja@hf-8262c16bf297`：Common Voice 17.0 ja 的非官方 HF 镜像（官方 Mozilla 仓库需要授权），只下载了 test，与 common_voice_pt@hf-8262c16bf297 同一修订
@@ -3806,7 +3808,7 @@ Common Voice 17 印尼语朗读
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
-| [common_voice_ko@hf-8262c16bf297](../../catalog/multilingual_asr_sources.yaml#L1016) | 0.5 | 已登记 | 没有 |
+| [common_voice_ko@hf-8262c16bf297](../../catalog/multilingual_asr_sources.yaml#L1068) | 0.5 | 已登记 | 没有 |
 | [common_voice_ko@legacy](../../catalog/legacy_multilingual.yaml#L1813) | 2.6 | 已登记 | 快照 20260914、`amphion-audio-backup-1373259071:audio-data-contract/datasets/common_voice_ko/` |
 
 - `common_voice_ko@hf-8262c16bf297`：Common Voice 17.0 ko 的非官方 HF 镜像（官方 Mozilla 仓库需要授权），只下载了 test，与 common_voice_pt@hf-8262c16bf297 同一修订
@@ -3839,7 +3841,7 @@ Common Voice 17 葡语朗读
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
-| [common_voice_ru@hf-8262c16bf297](../../catalog/multilingual_asr_sources.yaml#L1341) | 15.9 | 已登记 | 没有 |
+| [common_voice_ru@hf-8262c16bf297](../../catalog/multilingual_asr_sources.yaml#L1393) | 15.9 | 已登记 | 没有 |
 | [common_voice_ru@legacy](../../catalog/legacy_multilingual.yaml#L2079) | 69.9 | 已登记 | 快照 20260914 |
 
 - `common_voice_ru@hf-8262c16bf297`：Common Voice 17.0 ru 的非官方 HF 镜像（官方 Mozilla 仓库需要授权），只下载了 test，与 common_voice_pt@hf-8262c16bf297 同一修订
@@ -3963,10 +3965,12 @@ FLEURS 阿拉伯语 test
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
 | [fleurs_ar@ar-eval-v1-20261127](../../catalog/ar_eval_v1.yaml#L182) | — | 未登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/fleurs_ar/` |
+| [fleurs_ar@ar-train-v1-20261128](../../catalog/ar_train_v1.yaml#L33) | — | 未登记 | 没有 |
 | [fleurs_ar@hf-70bb2e84b976](../../catalog/multilingual_asr_sources.yaml#L273) | 1.3 | 已登记 | 没有 |
 | [fleurs_ar@legacy](../../catalog/legacy_multilingual.yaml#L71) | 8.2 | 已登记 | 快照 20260914、`amphion-audio-backup-1373259071:audio-data-contract/datasets/fleurs_ar/` |
 
 - `fleurs_ar@ar-eval-v1-20261127`：FLEURS ar_eg 官方 test 划分的 Lhotse 清单，音频与文本取自 multilingual_asr_bench@v1-20261110:fleurs-ar（16 kHz wav，同一来源）。朗读维基句子，没有说话人编号。句子与 FLEURS train / validation 零重叠；核验见版本目录 overlap.json。只用于评测，不进训练
+- `fleurs_ar@ar-train-v1-20261128`：FLEURS ar_eg train（埃及口音标准语朗读）训练版本，2,102 句 / 6.04 h。去掉阿拉伯语评测集（ar-eval-v1-20261127）的 Common Voice 24.0 / 17.0 dev+test 说话人，以及去元音符号后与评测句（CV 24.0 dev/test、MGB-2 dev/test、FLEURS test、Casablanca、CV 17.0 test）相同的句子；时长 0.3–30 秒。随后双引擎清洗（consensus-v8，先试跑 3,000 句）、按阿拉伯语训练文本规则 ar-v1 规整（去元音符号与延长符、东阿拉伯数字改西式，与 AmphionEval 打分口径版本 5 一致）、Qwen3.8-27B 标热词
 - `fleurs_ar@hf-70bb2e84b976`：Google FLEURS 的 ar_eg 子集（音频归档和 TSV 转写），只下载了 test，与 fleurs_pt 同一修订
 - 有含标点版本
 - 含派生版本（与源数据可能重叠）
@@ -3991,7 +3995,7 @@ FLEURS 阿拉伯语 test
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
-| [fleurs_de@hf-70bb2e84b976](../../catalog/multilingual_asr_sources.yaml#L681) | 3.2 | 已登记 | 没有 |
+| [fleurs_de@hf-70bb2e84b976](../../catalog/multilingual_asr_sources.yaml#L733) | 3.2 | 已登记 | 没有 |
 | [fleurs_de@legacy](../../catalog/legacy_multilingual.yaml#L628) | 13.4 | 已登记 | 快照 20260914 |
 
 - `fleurs_de@hf-70bb2e84b976`：Google FLEURS 的 de_de 子集（音频归档和 TSV 转写），只下载了 test，与 fleurs_pt 同一修订
@@ -4005,7 +4009,7 @@ FLEURS 阿拉伯语 test
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
-| [fleurs_es@hf-70bb2e84b976](../../catalog/multilingual_asr_sources.yaml#L409) | 3.1 | 已登记 | 没有 |
+| [fleurs_es@hf-70bb2e84b976](../../catalog/multilingual_asr_sources.yaml#L461) | 3.1 | 已登记 | 没有 |
 | [fleurs_es@legacy](../../catalog/legacy_multilingual.yaml#L1030) | 13.2 | 已登记 | 快照 20260914 |
 
 - `fleurs_es@hf-70bb2e84b976`：Google FLEURS 的 es_419 子集（音频归档和 TSV 转写），只下载了 test，与 fleurs_pt 同一修订
@@ -4019,7 +4023,7 @@ FLEURS 阿拉伯语 test
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
-| [fleurs_fr@hf-70bb2e84b976](../../catalog/multilingual_asr_sources.yaml#L545) | 2.0 | 已登记 | 没有 |
+| [fleurs_fr@hf-70bb2e84b976](../../catalog/multilingual_asr_sources.yaml#L597) | 2.0 | 已登记 | 没有 |
 | [fleurs_fr@legacy](../../catalog/legacy_multilingual.yaml#L1386) | 13.1 | 已登记 | 快照 20260914 |
 
 - `fleurs_fr@hf-70bb2e84b976`：Google FLEURS 的 fr_fr 子集（音频归档和 TSV 转写），只下载了 test，与 fleurs_pt 同一修订
@@ -4033,7 +4037,7 @@ FLEURS 印地语朗读
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
-| [fleurs_hi@hf-70bb2e84b976](../../catalog/multilingual_asr_sources.yaml#L1089) | 2.1 | 已登记 | 没有 |
+| [fleurs_hi@hf-70bb2e84b976](../../catalog/multilingual_asr_sources.yaml#L1141) | 2.1 | 已登记 | 没有 |
 
 - `fleurs_hi@hf-70bb2e84b976`：Google FLEURS 的 hi_in 子集（音频归档和 TSV 转写），只下载了 dev/test，与 fleurs_pt 同一修订
 
@@ -4045,7 +4049,7 @@ FLEURS 印尼语朗读
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
-| [fleurs_id@hf-70bb2e84b976](../../catalog/multilingual_asr_sources.yaml#L1414) | 3.5 | 已登记 | 没有 |
+| [fleurs_id@hf-70bb2e84b976](../../catalog/multilingual_asr_sources.yaml#L1466) | 3.5 | 已登记 | 没有 |
 
 - `fleurs_id@hf-70bb2e84b976`：Google FLEURS 的 id_id 子集（音频归档和 TSV 转写），只下载了 dev/test，与 fleurs_pt 同一修订
 
@@ -4057,7 +4061,7 @@ FLEURS 印尼语朗读
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
-| [fleurs_ja@hf-70bb2e84b976](../../catalog/multilingual_asr_sources.yaml#L817) | 2.4 | 已登记 | 没有 |
+| [fleurs_ja@hf-70bb2e84b976](../../catalog/multilingual_asr_sources.yaml#L869) | 2.4 | 已登记 | 没有 |
 | [fleurs_ja@legacy](../../catalog/legacy_multilingual.yaml#L1709) | 10.7 | 已登记 | 快照 20260914 |
 
 - `fleurs_ja@hf-70bb2e84b976`：Google FLEURS 的 ja_jp 子集（音频归档和 TSV 转写），只下载了 test，与 fleurs_pt 同一修订
@@ -4071,7 +4075,7 @@ FLEURS 印尼语朗读
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
-| [fleurs_ko@hf-70bb2e84b976](../../catalog/multilingual_asr_sources.yaml#L953) | 1.3 | 已登记 | 没有 |
+| [fleurs_ko@hf-70bb2e84b976](../../catalog/multilingual_asr_sources.yaml#L1005) | 1.3 | 已登记 | 没有 |
 | [fleurs_ko@legacy](../../catalog/legacy_multilingual.yaml#L1917) | 10.1 | 已登记 | 快照 20260914 |
 
 - `fleurs_ko@hf-70bb2e84b976`：Google FLEURS 的 ko_kr 子集（音频归档和 TSV 转写），只下载了 test，与 fleurs_pt 同一修订
@@ -4100,7 +4104,7 @@ FLEURS 巴西葡语朗读
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
-| [fleurs_ru@hf-70bb2e84b976](../../catalog/multilingual_asr_sources.yaml#L1278) | 2.5 | 已登记 | 没有 |
+| [fleurs_ru@hf-70bb2e84b976](../../catalog/multilingual_asr_sources.yaml#L1330) | 2.5 | 已登记 | 没有 |
 | [fleurs_ru@legacy](../../catalog/legacy_multilingual.yaml#L2149) | 11.6 | 已登记 | 快照 20260914 |
 
 - `fleurs_ru@hf-70bb2e84b976`：Google FLEURS 的 ru_ru 子集（音频归档和 TSV 转写），只下载了 test，与 fleurs_pt 同一修订
@@ -4138,7 +4142,7 @@ FLEURS 巴西葡语朗读
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
-| [gigaspeech2_id@hf-8dc0d0e502b7](../../catalog/multilingual_asr_sources.yaml#L1603) | — | 未登记 | 没有 |
+| [gigaspeech2_id@hf-8dc0d0e502b7](../../catalog/multilingual_asr_sources.yaml#L1655) | — | 未登记 | 没有 |
 | [gigaspeech2_id@local-20260805](../../catalog/local_lhotse_derived.yaml#L1) | 1,980.1 | 已登记 | 快照 20260914 |
 | [gigaspeech2_id_hotwords@hotwords-v1-20260805](../../catalog/local_lhotse_derived.yaml#L41) | 214.9 | 已登记 | 快照 20260914 |
 
@@ -4153,7 +4157,7 @@ Golos 俄语语音助手指令评测划分
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
-| [golos@sberdevices-20250324](../../catalog/multilingual_asr_sources.yaml#L2049) | — | 未登记 | 没有 |
+| [golos@sberdevices-20250324](../../catalog/multilingual_asr_sources.yaml#L2101) | — | 未登记 | 没有 |
 
 - `golos@sberdevices-20250324`：SberDevices Golos 的 test.tar（WAV，16 kHz 单声道），含 crowd 和 farfield 两个测试集。CDN 的 HTTPS 证书已过期，用 HTTP 下载，按 salute-developers/golos 仓库 golos/md5sum.txt 公布的 md5 校验
 
@@ -4195,7 +4199,7 @@ Kathbath 印地语手机朗读评测划分
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
-| [kathbath@ai4bharat-20250409](../../catalog/multilingual_asr_sources.yaml#L1972) | — | 未登记 | 没有 |
+| [kathbath@ai4bharat-20250409](../../catalog/multilingual_asr_sources.yaml#L2024) | — | 未登记 | 没有 |
 
 - `kathbath@ai4bharat-20250409`：AI4Bharat Kathbath clean 版的 test-known、test-unknown 音频包（m4a，含 12 种印度语言）和 n2w 转写包，只登记印地语两个划分。上游没有发布文件哈希：三个文件按服务器给出的大小下载，再按 16 MiB 分片算出 S3 分片 ETag，与对象存储的 ETag 一致；sha256 为本地计算。转写与音频逐条对齐
 
@@ -4247,9 +4251,11 @@ MGB-2 半岛电视台广播 dev/test
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
 | [mgb2@ar-eval-v1-20261127](../../catalog/ar_eval_v1.yaml#L94) | — | 未登记 | `amphion-audio-backup-1373259071:audio-data-contract/datasets/mgb2/` |
+| [mgb2@ar-train-v1-20261128](../../catalog/ar_train_v1.yaml#L64) | — | 未登记 | 没有 |
 | [mgb2@legacy](../../catalog/legacy_multilingual.yaml#L141) | 1,215.5 | 已登记 | 快照 20260914 |
 
 - `mgb2@ar-eval-v1-20261127`：MGB-2 官方 dev / test 划分的 Lhotse 清单（mgb2@legacy 的同名划分，半岛电视台节目长录音按分段切出，以标准阿拉伯语为主，夹杂方言）。没有说话人编号。与 MGB-2 train 只有少量寒暄短句文本相同，数目记在版本目录 overlap.json，训练版本须去掉。只用于评测，不进训练
+- `mgb2@ar-train-v1-20261128`：MGB-2 train（半岛电视台广播，以标准语为主、夹方言，轻监督转写）训练版本，358,845 段 / 924.35 h（30 秒以上的长段 202.03 h 不进）。**商用受限**：QCRI-ALT 研究许可，商用须另与 QF / 半岛台签协议，交付模型是否使用待用户决定。去掉阿拉伯语评测集（ar-eval-v1-20261127）的 Common Voice 24.0 / 17.0 dev+test 说话人，以及去元音符号后与评测句（CV 24.0 dev/test、MGB-2 dev/test、FLEURS test、Casablanca、CV 17.0 test）相同的句子；时长 0.3–30 秒。随后双引擎清洗（consensus-v8，先试跑 3,000 句）、按阿拉伯语训练文本规则 ar-v1 规整（去元音符号与延长符、东阿拉伯数字改西式，与 AmphionEval 打分口径版本 5 一致）、Qwen3.8-27B 标热词
 - 有无标点版本
 - 含派生版本（与源数据可能重叠）
 
@@ -4518,7 +4524,7 @@ VoxPopuli 德语欧洲议会发言
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
-| [voxpopuli_de@hf-42f01879c780](../../catalog/multilingual_asr_sources.yaml#L1917) | — | 未登记 | 没有 |
+| [voxpopuli_de@hf-42f01879c780](../../catalog/multilingual_asr_sources.yaml#L1969) | — | 未登记 | 没有 |
 
 - `voxpopuli_de@hf-42f01879c780`：VoxPopuli 人工转写 ASR 数据的 de test（HF parquet 转换版，音频以 wav 字节存在 parquet 内）；train/validation 未下载
 
@@ -4530,7 +4536,7 @@ VoxPopuli 法语欧洲议会发言
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
-| [voxpopuli_fr@hf-42f01879c780](../../catalog/multilingual_asr_sources.yaml#L1862) | — | 未登记 | 没有 |
+| [voxpopuli_fr@hf-42f01879c780](../../catalog/multilingual_asr_sources.yaml#L1914) | — | 未登记 | 没有 |
 
 - `voxpopuli_fr@hf-42f01879c780`：VoxPopuli 人工转写 ASR 数据的 fr test（HF parquet 转换版，音频以 wav 字节存在 parquet 内）；train/validation 未下载
 
@@ -4581,8 +4587,10 @@ YouTube 多语语音阿拉伯语部分（YODAS）
 
 | 版本 | 时长（小时） | 口径 | COS |
 |---|---:|---|---|
+| [yodas_ar@ar-train-v1-20261128](../../catalog/ar_train_v1.yaml#L95) | — | 未登记 | 没有 |
 | [yodas_ar@legacy](../../catalog/legacy_multilingual.yaml#L211) | 289.7 | 已登记 | 快照 20260914 |
 
+- `yodas_ar@ar-train-v1-20261128`：YODAS 阿拉伯语（YouTube 字幕，质量不一）训练版本，269,419 段 / 284.07 h。西语、葡语训练因 YODAS 误报变多没有用它，阿拉伯语是否使用看清洗与对照结果。去掉阿拉伯语评测集（ar-eval-v1-20261127）的 Common Voice 24.0 / 17.0 dev+test 说话人，以及去元音符号后与评测句（CV 24.0 dev/test、MGB-2 dev/test、FLEURS test、Casablanca、CV 17.0 test）相同的句子；时长 0.3–30 秒。随后双引擎清洗（consensus-v8，先试跑 3,000 句）、按阿拉伯语训练文本规则 ar-v1 规整（去元音符号与延长符、东阿拉伯数字改西式，与 AmphionEval 打分口径版本 5 一致）、Qwen3.8-27B 标热词
 - 有含标点版本
 
 ### yodas_bn

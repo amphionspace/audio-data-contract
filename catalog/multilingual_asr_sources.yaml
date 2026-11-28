@@ -347,9 +347,9 @@
     root_alias: common_voice_ar
     relative_path: source/hf-8262c16bf297
     metadata:
-      file_count: 4
-      expected_bytes: 320230717
-      tree_sha256: 82fb5344ff0793dfa5bca0a6fb2d9b0663a69c82c0213273c73295f605ccc6b5
+      file_count: 10
+      expected_bytes: 1497328716
+      tree_sha256: bb6aac295744a07ddb2aa62b181af998913206a40e4cdfd736aacf83db086071
   - name: audio_ar_test_ar_test_0_tar
     kind: source-archive
     root_alias: common_voice_ar
@@ -368,12 +368,48 @@
     relative_path: source/hf-8262c16bf297/transcript/ar/clip_durations.tsv
     expected_bytes: 4586607
     sha256: 9fbab083dcbf24ba08fc98134c59c6f0c8686ef067e838b63987d7639576b53d
+  - name: audio_ar_other_ar_other_0_tar
+    kind: source-archive
+    root_alias: common_voice_ar
+    relative_path: source/hf-8262c16bf297/audio/ar/other/ar_other_0.tar
+    expected_bytes: 1092944384
+    sha256: acfe44dbbfe745e5bef9b0975e9aecad164b0cdd37fd9bc3d49502cf611a6cd8
+  - name: audio_ar_other_ar_other_1_tar
+    kind: source-archive
+    root_alias: common_voice_ar
+    relative_path: source/hf-8262c16bf297/audio/ar/other/ar_other_1.tar
+    expected_bytes: 34850304
+    sha256: f6ba1a4b15da7701666422030c68b6d9b2960124f03ba13d9f497ef8c616e1a5
+  - name: transcript_ar_other_tsv
+    kind: transcript-table
+    root_alias: common_voice_ar
+    relative_path: source/hf-8262c16bf297/transcript/ar/other.tsv
+    expected_bytes: 12804773
+    sha256: 4463f1e0486a43a70177f6b14c96bf4e27f69e47a6b34a0ad5a5a58edd3910f8
+  - name: transcript_ar_dev_tsv
+    kind: transcript-table
+    root_alias: common_voice_ar
+    relative_path: source/hf-8262c16bf297/transcript/ar/dev.tsv
+    expected_bytes: 3299670
+    sha256: 8a638a21bf538d87ef9632e484519b79db0867a3b431a4e67c33b2ca469bad7a
+  - name: transcript_ar_train_tsv
+    kind: transcript-table
+    root_alias: common_voice_ar
+    relative_path: source/hf-8262c16bf297/transcript/ar/train.tsv
+    expected_bytes: 8961254
+    sha256: 059e787108f6d647080735faf17004c0de1c350f61d31b37bd5e51a3f69f6de4
+  - name: transcript_ar_validated_tsv
+    kind: transcript-table
+    root_alias: common_voice_ar
+    relative_path: source/hf-8262c16bf297/transcript/ar/validated.tsv
+    expected_bytes: 24237614
+    sha256: f2df16c35d01a91de022ade0b7218bf76b2117d23397469d4bc3f1196bad6b34
   - name: download_state
     kind: dataset-state
     root_alias: common_voice_ar
     relative_path: versions/hf-8262c16bf297/download_state/state.json
-    expected_bytes: 964
-    sha256: 485802fa47ac01858325307430c0e2151466aef6d25ecc5161f35ebad18f2105
+    expected_bytes: 954
+    sha256: eece83cc5b8b432a3fe753b0c2933c223d2d17e859fd4d4ade1726f04d286f30
   splits:
     test:
       artifacts:
@@ -390,20 +426,36 @@
         speakers: 970
         duration_hours: 12.6656
         duration_basis: sum of clip_durations.tsv for the split TSV rows; every row has its clip in the split tar
+    other:
+      artifacts:
+        source:
+        - source
+        audio_archive:
+        - audio_ar_other_ar_other_0_tar
+        - audio_ar_other_ar_other_1_tar
+        transcripts:
+        - transcript_ar_other_tsv
+        clip_durations:
+        - transcript_ar_clip_durations_tsv
+      statistics:
+        count: 41628
+        speakers: 966
+        duration_hours: 47.617
+        duration_basis: sum of clip_durations.tsv for the split TSV rows; every row has its clip in the split tars
   provenance:
     locale: ar
     release: Common Voice 17.0
     dataset_family: common_voice_ar
-    description: Common Voice 17.0 ar 的非官方 HF 镜像（官方 Mozilla 仓库需要授权），只下载了 test，与 common_voice_pt@hf-8262c16bf297 同一修订。
+    description: Common Voice 17.0 ar 的非官方 HF 镜像（官方 Mozilla 仓库需要授权），与 common_voice_pt@hf-8262c16bf297 同一修订。2026-11-10 只下载了 test；2026-11-28 补下 other（录了音、投票未满的录音）的音频，以及 other / dev / train / validated 表，给阿拉伯语训练补充说话人（common_voice_ar@ar-train-v1-20261128）。dev、train、validated 只有表、没有音频（train 音频用 Common Voice 24.0，即 common_voice_ar@legacy）。other 音频解包在 versions/ar-train-v1-20261128/audio/，不在本快照目录内。
     source: Hugging Face
     source_id: fsicoli/common_voice_17_0
     revision: 8262c16bf297c87a9cd88c51997c4758ed7a8ba2
     url: https://huggingface.co/datasets/fsicoli/common_voice_17_0
     download_mirror: https://hf-mirror.com
     license: cc0-1.0
-    download_scope: 'Unofficial Common Voice 17.0 ar mirror: test audio, test transcripts and clip durations only'
-    expected_download_files: 4
-    expected_download_bytes: 320230717
+    download_scope: 'Unofficial Common Voice 17.0 ar mirror: test and other audio, split TSVs (test, other, dev, train, validated) and clip durations'
+    expected_download_files: 10
+    expected_download_bytes: 1497328716
     integrity: verified
     used_by: multilingual_asr_bench@v1-20261110
 - schema_version: dataset-catalog/2.0
