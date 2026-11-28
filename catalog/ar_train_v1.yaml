@@ -1,0 +1,125 @@
+# 占位登记：阿拉伯语训练数据（同葡语 pt_train_v1：去评测重叠、双引擎清洗、训练文本规整、热词），进行中，进度见各版本状态文件。
+- schema_version: dataset-catalog/2.0
+  dataset_id: common_voice_ar
+  version: ar-train-v1-20261128
+  languages:
+  - ar
+  tasks:
+  - asr
+  aliases: []
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/common_voice_ar/versions/ar-train-v1-20261128/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      statistics:
+        source_records: 32793
+        source_hours: 37.7
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: Common Voice 阿拉伯语训练版本：CV 24.0 train（23,680 句 / 26.84 h，24 人）加 CV 17.0 other（录了音、投票未满，9,113 句 / 10.86 h，330 人）。去掉阿拉伯语评测集（ar-eval-v1-20261127）的 Common Voice 24.0 / 17.0 dev+test 说话人，以及去元音符号后与评测句（CV 24.0 dev/test、MGB-2 dev/test、FLEURS test、Casablanca、CV 17.0 test）相同的句子；时长 0.3–30 秒。随后双引擎清洗（consensus-v8，先试跑 3,000 句）、按阿拉伯语训练文本规则 ar-v1 规整（去元音符号与延长符、东阿拉伯数字改西式，与 AmphionEval 打分口径版本 5 一致）、Qwen3.8-27B 标热词。
+    source: common_voice_ar@legacy (Common Voice 24.0 train) + common_voice_ar@hf-8262c16bf297 (Common Voice 17.0 other)
+    license:
+    - cc0-1.0
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/ar-train-20261128
+- schema_version: dataset-catalog/2.0
+  dataset_id: fleurs_ar
+  version: ar-train-v1-20261128
+  languages:
+  - ar
+  tasks:
+  - asr
+  aliases: []
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/fleurs_ar/versions/ar-train-v1-20261128/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      statistics:
+        source_records: 2102
+        source_hours: 6.04
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: FLEURS ar_eg train（埃及口音标准语朗读）训练版本，2,102 句 / 6.04 h。去掉阿拉伯语评测集（ar-eval-v1-20261127）的 Common Voice 24.0 / 17.0 dev+test 说话人，以及去元音符号后与评测句（CV 24.0 dev/test、MGB-2 dev/test、FLEURS test、Casablanca、CV 17.0 test）相同的句子；时长 0.3–30 秒。随后双引擎清洗（consensus-v8，先试跑 3,000 句）、按阿拉伯语训练文本规则 ar-v1 规整（去元音符号与延长符、东阿拉伯数字改西式，与 AmphionEval 打分口径版本 5 一致）、Qwen3.8-27B 标热词。
+    source: fleurs_ar@legacy (FLEURS ar_eg train)
+    license:
+    - cc-by-4.0
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/ar-train-20261128
+- schema_version: dataset-catalog/2.0
+  dataset_id: mgb2
+  version: ar-train-v1-20261128
+  languages:
+  - ar
+  tasks:
+  - asr
+  aliases: []
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/mgb2/versions/ar-train-v1-20261128/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      statistics:
+        source_records: 358845
+        source_hours: 924.35
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: MGB-2 train（半岛电视台广播，以标准语为主、夹方言，轻监督转写）训练版本，358,845 段 / 924.35 h（30 秒以上的长段 202.03 h 不进）。**商用受限**：QCRI-ALT 研究许可，商用须另与 QF / 半岛台签协议，交付模型是否使用待用户决定。去掉阿拉伯语评测集（ar-eval-v1-20261127）的 Common Voice 24.0 / 17.0 dev+test 说话人，以及去元音符号后与评测句（CV 24.0 dev/test、MGB-2 dev/test、FLEURS test、Casablanca、CV 17.0 test）相同的句子；时长 0.3–30 秒。随后双引擎清洗（consensus-v8，先试跑 3,000 句）、按阿拉伯语训练文本规则 ar-v1 规整（去元音符号与延长符、东阿拉伯数字改西式，与 AmphionEval 打分口径版本 5 一致）、Qwen3.8-27B 标热词。
+    source: mgb2@legacy (MGB-2 train)
+    license:
+    - other (QCRI-ALT research license)
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/ar-train-20261128
+- schema_version: dataset-catalog/2.0
+  dataset_id: yodas_ar
+  version: ar-train-v1-20261128
+  languages:
+  - ar
+  tasks:
+  - asr
+  aliases: []
+  artifacts:
+  - name: preparation_state
+    kind: dataset-state
+    root_alias: aidc_data
+    relative_path: datasets/yodas_ar/versions/ar-train-v1-20261128/state.json
+  splits:
+    train:
+      artifacts:
+        preparation_state:
+        - preparation_state
+      statistics:
+        source_records: 269419
+        source_hours: 284.07
+      provenance:
+        preparation_status: building
+  provenance:
+    preparation_status: building
+    owner: mingdong
+    description: YODAS 阿拉伯语（YouTube 字幕，质量不一）训练版本，269,419 段 / 284.07 h。西语、葡语训练因 YODAS 误报变多没有用它，阿拉伯语是否使用看清洗与对照结果。去掉阿拉伯语评测集（ar-eval-v1-20261127）的 Common Voice 24.0 / 17.0 dev+test 说话人，以及去元音符号后与评测句（CV 24.0 dev/test、MGB-2 dev/test、FLEURS test、Casablanca、CV 17.0 test）相同的句子；时长 0.3–30 秒。随后双引擎清洗（consensus-v8，先试跑 3,000 句）、按阿拉伯语训练文本规则 ar-v1 规整（去元音符号与延长符、东阿拉伯数字改西式，与 AmphionEval 打分口径版本 5 一致）、Qwen3.8-27B 标热词。
+    source: yodas_ar@legacy (YODAS ar)
+    license:
+    - cc-by-3.0
+    run_dir: /workspace/workspace/mingdong/data/amphiondata/ar-train-20261128

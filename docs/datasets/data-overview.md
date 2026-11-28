@@ -243,7 +243,7 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [cetuc](data-versions.md#cetuc) | pt | 语音识别 | 144.7 | 巴西葡语朗读，101 人各约 1,000 句（CETUC） | 没有 |
 | [ciempiess](data-versions.md#ciempiess) | es | 语音识别 | 18.4 | 墨西哥西班牙语广播语音（CIEMPIESS LIGHT） | 部分版本：快照 20260914、`备份桶:audio-data-contract/datasets/ciempiess_complementary/`、`备份桶:audio-data-contract/datasets/ciempiess_test/` |
 | [cml_tts_fr](data-versions.md#cml_tts_fr) | fr | 语音识别 | 316.0 | 法语有声书朗读（CML-TTS） | 快照 20260914 |
-| [common_voice_ar](data-versions.md#common_voice_ar) | ar | 语音识别 | 58.2 | CV 24.0 阿拉伯语 dev/test | 部分版本：快照 20260914、`备份桶:audio-data-contract/datasets/common_voice_ar/` |
+| [common_voice_ar](data-versions.md#common_voice_ar) | ar | 语音识别 | 60.3 | CV 24.0 阿拉伯语 dev/test | 部分版本：快照 20260914、`备份桶:audio-data-contract/datasets/common_voice_ar/` |
 | [common_voice_bn](data-versions.md#common_voice_bn) | bn | 语音识别 | 67.4 | 众包朗读孟加拉语（Common Voice） | 快照 20260914 |
 | [common_voice_de](data-versions.md#common_voice_de) | de | 语音识别 | 1,034.8 | 众包朗读德语（Common Voice） | 部分版本：快照 20260914 |
 | [common_voice_es](data-versions.md#common_voice_es) | es | 语音识别、热词增强语音识别 | 1,355.5 | 众包朗读西班牙语（Common Voice） | 部分版本：快照 20260914 |
@@ -283,7 +283,7 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [koreaspeech](data-versions.md#koreaspeech) | ko | 语音识别 | 3,828.3 | 韩语语音识别数据（KoreaSpeech） | 快照 20260914 |
 | [librivox_spanish](data-versions.md#librivox_spanish) | es | 语音识别 | 73.0 | LibriVox 西语有声书 | 没有 |
 | [meeting_room_noise](data-versions.md#meeting_room_noise) | und | noise | 2.5 | 真实会议室底噪（AliMeeting、AISHELL-4） | `备份桶:audio-data-contract/datasets/meeting_room_noise/` |
-| [mgb2](data-versions.md#mgb2) | ar | 语音识别 | 1,215.5 | MGB-2 半岛电视台广播 dev/test | 快照 20260914、`备份桶:audio-data-contract/datasets/mgb2/` |
+| [mgb2](data-versions.md#mgb2) | ar | 语音识别 | 1,215.5 | MGB-2 半岛电视台广播 dev/test | 部分版本：快照 20260914、`备份桶:audio-data-contract/datasets/mgb2/` |
 | [mit_ir_survey](data-versions.md#mit_ir_survey) | und | rir | 0.0 | MIT 日常环境实测冲激响应（270 条） | `备份桶:audio-data-contract/datasets/mit_ir_survey/` |
 | [mls_de](data-versions.md#mls_de) | de | 语音识别 | 1,995.1 | 德语有声书朗读（MLS） | 快照 20260914 |
 | [mls_es](data-versions.md#mls_es) | es | 语音识别、热词增强语音识别 | 937.7 | 西班牙语有声书朗读（MLS） | 部分版本：快照 20260914 |
@@ -309,7 +309,7 @@ Top 20 与下表取值相同；覆盖图按数据集计数，至少一个版本�
 | [wham](data-versions.md#wham) | und | noise | — | WHAM! 噪声训练划分 | `备份桶:audio-data-contract/datasets/wham/` |
 | [wham_noise](data-versions.md#wham_noise) | und | noise | 81.7 | 湾区餐厅、咖啡馆等真实环境噪声（WHAM!） | `备份桶:audio-data-contract/datasets/noise_open/` |
 | [wikipedia_spanish](data-versions.md#wikipedia_spanish) | es | 语音识别 | 25.6 | 西语维基百科条目朗读 | 没有 |
-| [yodas_ar](data-versions.md#yodas_ar) | ar | 语音识别 | 289.7 | YouTube 多语语音阿拉伯语部分（YODAS） | 快照 20260914 |
+| [yodas_ar](data-versions.md#yodas_ar) | ar | 语音识别 | 289.7 | YouTube 多语语音阿拉伯语部分（YODAS） | 部分版本：快照 20260914 |
 | [yodas_bn](data-versions.md#yodas_bn) | bn | 语音识别 | 27.1 | YouTube 多语语音孟加拉语部分（YODAS） | 快照 20260914 |
 | [yodas_de](data-versions.md#yodas_de) | de | 语音识别 | 3,062.9 | YouTube 多语语音德语部分（YODAS） | 快照 20260914 |
 | [yodas_es](data-versions.md#yodas_es) | es | 语音识别 | 3,737.8 | YouTube 多语语音西班牙语部分（YODAS） | 快照 20260914 |
